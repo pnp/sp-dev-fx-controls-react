@@ -1,8 +1,10 @@
-# sp-dev-fx-controls-react
+# SharePoint Framework React Controls
 
-React controls for the SharePoint Framework solutions.
+This is a open source library that shares a set of reusable React control that can be used in your SharePoint Framework solutions.
 
-# work in progress
+# Get Started
+
+More information to get started can be found in the wiki section of this repository: [wiki / documentation](./wiki).
 
 # Contributing
 
