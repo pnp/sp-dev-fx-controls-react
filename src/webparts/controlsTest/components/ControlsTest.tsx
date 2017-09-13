@@ -7,6 +7,7 @@ import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/components
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode } from '../../../ListView';
 import { SPHttpClient } from '@microsoft/sp-http';
+import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   constructor(props: IControlsTestProps) {
@@ -118,7 +119,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <p className="ms-font-l">
                 File type icon control
               </p>
-              <p className="ms-font-m">
+              <div className="ms-font-m">
                 Font icons:&nbsp;
                 <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
                 <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
@@ -126,21 +127,25 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />&nbsp;
                 <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />&nbsp;
                 <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
-              </p>
-              <p className="ms-font-m">
+              </div>
+              <div className="ms-font-m">
                 Image icons:&nbsp;
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
                 <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
-              </p>
-              <p className="ms-font-m">Icon size tester:
+              </div>
+              <div className="ms-font-m">Icon size tester:
                 <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
-              </p>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className={styles.siteBreadcrumb}>
+          <SiteBreadcrumb context={this.props.context} />
         </div>
 
         <Placeholder

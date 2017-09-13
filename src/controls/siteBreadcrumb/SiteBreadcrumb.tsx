@@ -4,6 +4,7 @@ import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcru
 import { SPHttpClient, HttpClientResponse } from "@microsoft/sp-http";
 import styles from './SiteBreadcrumb.module.scss';
 import * as strings from 'ControlStrings';
+import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 
 /**
  * Site breadcrumb component
@@ -40,11 +41,11 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
       text: this.props.context.pageContext.web.title,
       key: this.props.context.pageContext.web.id.toString(),
       href: this.props.context.pageContext.web.absoluteUrl,
-      isCurrentItem: !this.props.context.pageContext.list.serverRelativeUrl
+      isCurrentItem: !!this.props.context.pageContext.list && !this.props.context.pageContext.list.serverRelativeUrl
     });
 
     // Check if the current list URL is available
-    if (!!this.props.context.pageContext.list.serverRelativeUrl) {
+    if (!!this.props.context.pageContext.list && !!this.props.context.pageContext.list.serverRelativeUrl) {
       // Add the current list to the links list
       this._linkItems.push({
         text: this.props.context.pageContext.list.title,
@@ -58,8 +59,13 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
     if (this.props.context.pageContext.site.serverRelativeUrl === this.props.context.pageContext.web.serverRelativeUrl) {
       this._setBreadcrumbData();
     } else {
-      // Retrieve the parent webs information
-      this._getParentWeb(this.props.context.pageContext.web.absoluteUrl);
+      if (Environment.type === EnvironmentType.Local) {
+        // Nothing to do right now
+        this._setBreadcrumbData();
+      } else {
+        // Retrieve the parent webs information
+        this._getParentWeb(this.props.context.pageContext.web.absoluteUrl);
+      }
     }
   }
 

@@ -6,6 +6,9 @@
   }
   .row {
     padding: 20px;
+    >div>div {
+      margin-bottom: 10px;
+    }
   }
   .listItem {
     max-width: 715px;
@@ -39,6 +42,21 @@
       margin: 0 4px;
       vertical-align: top;
       display: inline-block;
+    }
+  }
+  .siteBreadcrumb {
+    background-color: #0078d7;
+    margin-bottom: 10px;
+    i,
+    a {
+      color: #fff;
+    }
+    ol {
+      height: 30px;
+      a {
+        height: 100%;
+        line-height: 30px;
+      }
     }
   }
 }
