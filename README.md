@@ -1,3 +1,8 @@
+# sp-dev-fx-controls-react
+
+React controls for the SharePoint Framework solutions.
+
+# work in progress
 
 # Contributing
 

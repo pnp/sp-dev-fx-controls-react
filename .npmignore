@@ -1,0 +1,22 @@
+# Folders
+.vscode
+coverage
+node_modules
+sharepoint
+src
+temp
+config
+typings
+lib/webparts
+assets
+dist
+
+# Files
+*.csproj
+.git*
+.yo-rc.json
+.editorconfig
+gulpfile.js
+tsconfig.json
+yarn.lock
+*.tgz
