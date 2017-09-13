@@ -4,7 +4,7 @@ This is a open source library that shares a set of reusable React control that c
 
 # Get Started
 
-More information to get started can be found in the wiki section of this repository: [wiki / documentation](./wiki).
+More information to get started can be found in the wiki section of this repository: [wiki / documentation](https://github.com/SharePoint/sp-dev-fx-controls-react/wiki).
 
 # Contributing
 
