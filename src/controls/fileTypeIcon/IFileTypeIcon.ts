@@ -2,32 +2,32 @@
  * Available icon types
  */
 export enum IconType {
-    font,
-    image
+  font,
+  image
 }
 
 /**
  * Available applications / types
  */
 export enum ApplicationType {
-    Access = 0,
-    ASPX,
-    Code,
-    CSS,
-    CSV,
-    Excel,
-    HTML,
-    Image,
-    Mail,
-    OneNote,
-    PDF,
-    PowerApps,
-    PowerPoint,
-    Project,
-    Publisher,
-    SASS,
-    Visio,
-    Word
+  Access = 0,
+  ASPX,
+  Code,
+  CSS,
+  CSV,
+  Excel,
+  HTML,
+  Image,
+  Mail,
+  OneNote,
+  PDF,
+  PowerApps,
+  PowerPoint,
+  Project,
+  Publisher,
+  SASS,
+  Visio,
+  Word
 }
 
 /**
@@ -35,9 +35,9 @@ export enum ApplicationType {
  * Available image sizes
  */
 export enum ImageSize {
-    small,
-    medium,
-    large
+  small,
+  medium,
+  large
 }
 
 /**
@@ -45,142 +45,142 @@ export enum ImageSize {
  * Interface for the application icons list
  */
 export interface IApplicationIcons {
-    application: ApplicationType;
-    extensions: string[];
-    iconName: string;
-    imageName: string[];
+  application: ApplicationType;
+  extensions: string[];
+  iconName: string;
+  imageName: string[];
 }
 
 /**
  * Array with all the known applications and their icon and image names
  */
 export const ApplicationIconList: IApplicationIcons[] = [
-    {
-        application: ApplicationType.Access,
-        extensions: ["accdb", "accde", "accdt", "accdr", "mdb"],
-        iconName: "AccessLogo",
-        imageName: ["accdb"]
-    },
-    {
-        application: ApplicationType.ASPX,
-        extensions: ["aspx", "master"],
-        iconName: "FileASPX",
-        imageName: []
-    },
-    {
-        application: ApplicationType.Code,
-        extensions: ["js", "ts", "cs"],
-        iconName: "FileCode",
-        imageName: []
-    },
-    {
-        application: ApplicationType.CSS,
-        extensions: ["css"],
-        iconName: "FileCSS",
-        imageName: []
-    },
-    {
-        application: ApplicationType.CSV,
-        extensions: ["csv"],
-        iconName: "ExcelDocument",
-        imageName: ["csv"]
-    },
-    {
-        application: ApplicationType.Excel,
-        extensions: ["xls", "xlt", "xlm", "xlsx", "xlsm", "xltx", "xltm", "ods"],
-        iconName: "ExcelDocument",
-        imageName: ["xlsx", "xls", "xltx", "ods"]
-    },
-    {
-        application: ApplicationType.HTML,
-        extensions: ["html"],
-        iconName: "FileHTML",
-        imageName: []
-    },
-    {
-        application: ApplicationType.Image,
-        extensions: ["jpg", "jpeg", "gif", "png"],
-        iconName: "FileImage",
-        imageName: []
-    },
-    {
-        application: ApplicationType.Mail,
-        extensions: ["msg"],
-        iconName: "Mail",
-        imageName: []
-    },
-    {
-        application: ApplicationType.OneNote,
-        extensions: ["one", "onepkg", "onetoc"],
-        iconName: "OneNoteLogo",
-        imageName: ["one", "onepkg", "onetoc"]
-    },
-    {
-        application: ApplicationType.PDF,
-        extensions: ["pdf"],
-        iconName: "PDF",
-        imageName: []
-    },
-    {
-        application: ApplicationType.PowerApps,
-        extensions: ["msapp"],
-        iconName: "PowerApps",
-        imageName: []
-    },
-    {
-        application: ApplicationType.PowerPoint,
-        extensions: ["ppt", "pot", "pps", "pptx", "pptm", "potx", "potm", "ppam", "ppsx", "ppsm", "sldx", "sldx"],
-        iconName: "PowerPointDocument",
-        imageName: ["odp", "potx", "ppsx", "pptx"]
-    },
-    {
-        application: ApplicationType.Project,
-        extensions: ["mpp", "mpt", "mpx", "mpd"],
-        iconName: "ProjectLogoInverse",
-        imageName: ["mpp", "mpt"]
-    },
-    {
-        application: ApplicationType.Publisher,
-        extensions: ["pub"],
-        iconName: "PublisherLogo",
-        imageName: ["pub"]
-    },
-    {
-        application: ApplicationType.SASS,
-        extensions: ["scss", "sass"],
-        iconName: "FileSass",
-        imageName: []
-    },
-    {
-        application: ApplicationType.Visio,
-        extensions: ["vsd", "vss", "vst", "vdx", "vsx", "vtx", "vsdx"],
-        iconName: "VisioDocument",
-        imageName: ["vsdx", "vssx", "vstx"]
-    },
-    {
-        application: ApplicationType.Word,
-        extensions: ["doc", "dot", "docx", "docm", "dotx", "dotm", "docb", "odt"],
-        iconName: "WordDocument",
-        imageName: ["docx", "dotx", "odt"]
-    }
+  {
+    application: ApplicationType.Access,
+    extensions: ["accdb", "accde", "accdt", "accdr", "mdb"],
+    iconName: "AccessLogo",
+    imageName: ["accdb"]
+  },
+  {
+    application: ApplicationType.ASPX,
+    extensions: ["aspx", "master"],
+    iconName: "FileASPX",
+    imageName: []
+  },
+  {
+    application: ApplicationType.Code,
+    extensions: ["js", "ts", "cs"],
+    iconName: "FileCode",
+    imageName: []
+  },
+  {
+    application: ApplicationType.CSS,
+    extensions: ["css"],
+    iconName: "FileCSS",
+    imageName: []
+  },
+  {
+    application: ApplicationType.CSV,
+    extensions: ["csv"],
+    iconName: "ExcelDocument",
+    imageName: ["csv"]
+  },
+  {
+    application: ApplicationType.Excel,
+    extensions: ["xls", "xlt", "xlm", "xlsx", "xlsm", "xltx", "xltm", "ods"],
+    iconName: "ExcelDocument",
+    imageName: ["xlsx", "xls", "xltx", "ods"]
+  },
+  {
+    application: ApplicationType.HTML,
+    extensions: ["html"],
+    iconName: "FileHTML",
+    imageName: []
+  },
+  {
+    application: ApplicationType.Image,
+    extensions: ["jpg", "jpeg", "gif", "png"],
+    iconName: "FileImage",
+    imageName: []
+  },
+  {
+    application: ApplicationType.Mail,
+    extensions: ["msg"],
+    iconName: "Mail",
+    imageName: []
+  },
+  {
+    application: ApplicationType.OneNote,
+    extensions: ["one", "onepkg", "onetoc"],
+    iconName: "OneNoteLogo",
+    imageName: ["one", "onepkg", "onetoc"]
+  },
+  {
+    application: ApplicationType.PDF,
+    extensions: ["pdf"],
+    iconName: "PDF",
+    imageName: []
+  },
+  {
+    application: ApplicationType.PowerApps,
+    extensions: ["msapp"],
+    iconName: "PowerApps",
+    imageName: []
+  },
+  {
+    application: ApplicationType.PowerPoint,
+    extensions: ["ppt", "pot", "pps", "pptx", "pptm", "potx", "potm", "ppam", "ppsx", "ppsm", "sldx", "sldx"],
+    iconName: "PowerPointDocument",
+    imageName: ["odp", "potx", "ppsx", "pptx"]
+  },
+  {
+    application: ApplicationType.Project,
+    extensions: ["mpp", "mpt", "mpx", "mpd"],
+    iconName: "ProjectLogoInverse",
+    imageName: ["mpp", "mpt"]
+  },
+  {
+    application: ApplicationType.Publisher,
+    extensions: ["pub"],
+    iconName: "PublisherLogo",
+    imageName: ["pub"]
+  },
+  {
+    application: ApplicationType.SASS,
+    extensions: ["scss", "sass"],
+    iconName: "FileSass",
+    imageName: []
+  },
+  {
+    application: ApplicationType.Visio,
+    extensions: ["vsd", "vss", "vst", "vdx", "vsx", "vtx", "vsdx"],
+    iconName: "VisioDocument",
+    imageName: ["vsdx", "vssx", "vstx"]
+  },
+  {
+    application: ApplicationType.Word,
+    extensions: ["doc", "dot", "docx", "docm", "dotx", "dotm", "docb", "odt"],
+    iconName: "WordDocument",
+    imageName: ["docx", "dotx", "odt"]
+  }
 ];
 
 /**
  * Array with the known icon image sizes
  */
 export const IconSizes = [
-    {
-        size: ImageSize.small,
-        name: "icon16"
-    },
-    {
-        size: ImageSize.medium,
-        name: "icon48"
-    },
-    {
-        size: ImageSize.large,
-        name: "icon96"
-    }
+  {
+    size: ImageSize.small,
+    name: "icon16"
+  },
+  {
+    size: ImageSize.medium,
+    name: "icon48"
+  },
+  {
+    size: ImageSize.large,
+    name: "icon96"
+  }
 ];
 
 /**
@@ -188,8 +188,8 @@ export const IconSizes = [
  * Interface for the image result when return the image instead of the icon font
  */
 export interface IImageResult {
-    size: string;
-    image: string;
+  size: string;
+  image: string;
 }
 
 /**
@@ -197,10 +197,10 @@ export interface IImageResult {
  * Interface for the FileTypeIcon component properties
  */
 export interface IFileTypeIconProps {
-    type: IconType;
-    application?: ApplicationType;
-    path?: string;
-    size?: ImageSize;
+  type: IconType;
+  application?: ApplicationType;
+  path?: string;
+  size?: ImageSize;
 }
 
 /**
