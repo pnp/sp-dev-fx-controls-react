@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { assert, expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
-// import { sinon } from 'sinon';
 import { FileTypeIcon } from './FileTypeIcon';
 import { IFileTypeIconProps, IconType, ApplicationType, ImageSize } from './IFileTypeIcon';
 
