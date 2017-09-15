@@ -133,5 +133,35 @@ describe('<ListView />', () => {
     expect(listView.state('columns')[2]).to.have.property('onRender');
     done();
   });
+
+  it('Test out the sorting method', (done) => {
+    listView = mount(<ListView items={dummyItems} viewFields={dummyViewFields} />).update();
+
+    // Check if the ID column is not yet sorted
+    expect(listView.state('columns')[0]).not.to.have.property('isSorted');
+
+    // Test the column click event, this will trigger to sort the items
+    listView.instance()["_columnClick"](null, listView.state('columns')[0]);
+
+    // Check if the column is set to sorted
+    expect(listView.state('columns')[0]).to.have.property('isSorted', true);
+    expect(listView.state('columns')[0]).to.have.property('isSortedDescending', false);
+    // Check if the first item has ID 0 (ascending order)
+    expect(listView.state('items')[0]).to.have.property('id', 0);
+
+    // Do another sorting test, this should sort the items in descending order
+    listView.instance()["_columnClick"](null, listView.state('columns')[0]);
+    expect(listView.state('columns')[0]).to.have.property('isSorted', true);
+    expect(listView.state('columns')[0]).to.have.property('isSortedDescending', true);
+    // Check if the first item has ID 0 (ascending order)
+    expect(listView.state('items')[0]).to.have.property('id', 1);
+
+    // Just to be sure, we should go back to ascending order
+    listView.instance()["_columnClick"](null, listView.state('columns')[0]);
+    // Check if the first item has ID 0 (ascending order)
+    expect(listView.state('items')[0]).to.have.property('id', 0);
+
+    done();
+  });
 });
 /* tslint:enable */
