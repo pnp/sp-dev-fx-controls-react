@@ -24,6 +24,11 @@ describe('<Placeholder />', () => {
 
   it('Test placeholder without button', (done) => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} />);
+    done();
+  });
+
+  it('Test placeholder without button', (done) => {
+    placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} />);
 
     expect(placeholder.find('i.ms-Icon--Add')).to.have.length(1);
 
@@ -73,7 +78,9 @@ describe('<Placeholder />', () => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} buttonLabel={dummyLabel} onConfigure={dummyOnConfigure} />);
 
     placeholder.find('button').simulate('click');
+    /* tslint:disable */
     expect(dummyOnConfigure.called).to.be.true;
+    /* tslint:enable */
 
     done();
   });

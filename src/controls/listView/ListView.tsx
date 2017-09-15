@@ -2,7 +2,7 @@ import * as React from "react";
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField } from "./IListView";
 import { IColumn } from "office-ui-fabric-react/lib/components/DetailsList";
-import { findIndex, has, sortBy, isEqual } from '@microsoft/sp-lodash-subset';
+import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from "../fileTypeIcon/index";
 
 /**
@@ -47,9 +47,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param nextProps
    */
   public componentWillReceiveProps(nextProps: IListViewProps): void {
-    let tempState: IListViewState = this.state;
-    let columns: IColumn[] = [];
-
+    let tempState: IListViewState = cloneDeep(this.state);
+    let columns: IColumn[] = null;
     // Check if a set of items was provided
     if (typeof nextProps.items !== "undefined" && nextProps.items !== null) {
       tempState.items = this._flattenItems(nextProps.items);
@@ -57,12 +56,14 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Check if an icon needs to be shown
     if (typeof nextProps.iconFieldName !== "undefined" && nextProps.iconFieldName !== null) {
+      if (columns === null) { columns = []; }
       const iconColumn = this._createIconColumn(nextProps.iconFieldName);
       columns.push(iconColumn);
     }
 
     // Check if view fields were provided
     if (typeof nextProps.viewFields !== "undefined" && nextProps.viewFields !== null) {
+      if (columns === null) { columns = []; }
       columns = this._createColumns(nextProps.viewFields, columns);
     }
 
@@ -221,13 +222,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    */
   public render(): React.ReactElement<IListViewProps> {
     return (
-      <DetailsList
-        items={this.state.items}
-        columns={this.state.columns}
-        selectionMode={this.props.selectionMode || SelectionMode.none}
-        selection={this._selection}
-        layoutMode={DetailsListLayoutMode.justified}
-        compact={this.props.compact} />
+      <div>
+        <DetailsList
+          items={this.state.items}
+          columns={this.state.columns}
+          selectionMode={this.props.selectionMode || SelectionMode.none}
+          selection={this._selection}
+          layoutMode={DetailsListLayoutMode.justified}
+          compact={this.props.compact} />
+      </div>
     );
   }
 }
