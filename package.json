@@ -1,7 +1,7 @@
 {
-  "name": "sp-dev-fx-controls-react",
-  "version": "0.0.1",
-  "private": true,
+  "name": "@pnp/spfx-controls-react",
+  "description": "Reusable React controls for SharePoint Framework solutions",
+  "version": "v1.0.0-beta.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -33,5 +33,21 @@
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
     "react-addons-test-utils": "15.6.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:SharePoint/sp-dev-fx-controls-react"
+  },
+  "license": "MIT",
+  "keywords": [
+    "sharepoint",
+    "office365",
+    "tools",
+    "spfx",
+    "sharepoint framework"
+  ],
+  "bugs": {
+    "url": "https://github.com/SharePoint/sp-dev-fx-controls-react/issues"
+  },
+  "homepage": "https://github.com/SharePoint/sp-dev-fx-controls-react"
 }
