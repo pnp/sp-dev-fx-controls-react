@@ -20,3 +20,5 @@ gulpfile.js
 tsconfig.json
 yarn.lock
 *.tgz
+*.test.js
+*.test.js.map

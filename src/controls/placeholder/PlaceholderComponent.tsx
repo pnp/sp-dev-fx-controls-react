@@ -50,7 +50,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
               <PrimaryButton
                 ariaLabel={this.props.buttonLabel}
                 ariaDescription={this.props.description}
-                onClick={this._handleBtnClick}>
+                onClick={this._handleBtnClick}
                 {this.props.buttonLabel}>
               </PrimaryButton>
             }
