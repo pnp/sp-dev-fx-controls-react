@@ -22,49 +22,55 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     // Binding the functions
     this._columnClick = this._columnClick.bind(this);
 
-    // Initialize the selection
-    this._selection = new Selection({
-      // Create the event handler when a selection changes
-      onSelectionChanged: () => this.props.selection(this._selection.getSelection())
-    });
-  }
-
-  /**
-   * Lifecycle hook to check if the component has to get updated
-   * @param nextProps
-   * @param nextState
-   */
-  public shouldComponentUpdate?(nextProps: IListViewProps, nextState: IListViewState): boolean {
-    // Check if the new property set is updated or not
-    if (isEqual(this.props, nextProps) && isEqual(this.state, nextState)) {
-      return false;
+    if (typeof this.props.selection !== "undefined" && this.props.selection !== null) {
+      // Initialize the selection
+      this._selection = new Selection({
+        // Create the event handler when a selection changes
+        onSelectionChanged: () => this.props.selection(this._selection.getSelection())
+      });
     }
-    return true;
   }
 
   /**
-   * Lifecycle hook when new properties are retrieved
-   * @param nextProps
+   * Lifecycle hook when component is mounted
    */
-  public componentWillReceiveProps(nextProps: IListViewProps): void {
+  public componentDidMount(): void {
+    this._processProperties();
+  }
+
+  /**
+   * Lifecycle hook when component did update after state or property changes
+   * @param prevProps
+   * @param prevState
+   */
+  public componentDidUpdate(prevProps: IListViewProps, prevState: IListViewState): void {
+    if (!isEqual(prevProps, this.props)) {
+      this._processProperties();
+    }
+  }
+
+  /**
+   * Process all the component properties
+   */
+  private _processProperties() {
     let tempState: IListViewState = cloneDeep(this.state);
     let columns: IColumn[] = null;
     // Check if a set of items was provided
-    if (typeof nextProps.items !== "undefined" && nextProps.items !== null) {
-      tempState.items = this._flattenItems(nextProps.items);
+    if (typeof this.props.items !== "undefined" && this.props.items !== null) {
+      tempState.items = this._flattenItems(this.props.items);
     }
 
     // Check if an icon needs to be shown
-    if (typeof nextProps.iconFieldName !== "undefined" && nextProps.iconFieldName !== null) {
+    if (typeof this.props.iconFieldName !== "undefined" && this.props.iconFieldName !== null) {
       if (columns === null) { columns = []; }
-      const iconColumn = this._createIconColumn(nextProps.iconFieldName);
+      const iconColumn = this._createIconColumn(this.props.iconFieldName);
       columns.push(iconColumn);
     }
 
     // Check if view fields were provided
-    if (typeof nextProps.viewFields !== "undefined" && nextProps.viewFields !== null) {
+    if (typeof this.props.viewFields !== "undefined" && this.props.viewFields !== null) {
       if (columns === null) { columns = []; }
-      columns = this._createColumns(nextProps.viewFields, columns);
+      columns = this._createColumns(this.props.viewFields, columns);
     }
 
     // Add the columns to the temporary state
@@ -142,7 +148,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         key: field.name,
         name: field.displayName || field.name,
         fieldName: field.name,
-        minWidth: 0,
+        minWidth: field.minWidth || 50,
         maxWidth: field.maxWidth,
         onRender: this._fieldRender(field),
         onColumnClick: this._columnClick
