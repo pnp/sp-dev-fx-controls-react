@@ -27,3 +27,5 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 ## Disclaimer
 
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react)
