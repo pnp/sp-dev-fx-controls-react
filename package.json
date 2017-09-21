@@ -33,6 +33,7 @@
     "@types/sinon": "2.3.4",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
+    "karma-remap-coverage": "^0.1.4",
     "react-addons-test-utils": "15.6.0"
   },
   "repository": {
