@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
-import { IListViewProps, IListViewState, IViewField } from "./IListView";
-import { IColumn } from "office-ui-fabric-react/lib/components/DetailsList";
+import { IListViewProps, IListViewState, IViewField } from './IListView';
+import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
-import { FileTypeIcon, IconType } from "../fileTypeIcon/index";
+import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 
 /**
  * File type icon component
@@ -22,7 +22,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     // Binding the functions
     this._columnClick = this._columnClick.bind(this);
 
-    if (typeof this.props.selection !== "undefined" && this.props.selection !== null) {
+    if (typeof this.props.selection !== 'undefined' && this.props.selection !== null) {
       // Initialize the selection
       this._selection = new Selection({
         // Create the event handler when a selection changes
@@ -56,19 +56,19 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     let tempState: IListViewState = cloneDeep(this.state);
     let columns: IColumn[] = null;
     // Check if a set of items was provided
-    if (typeof this.props.items !== "undefined" && this.props.items !== null) {
+    if (typeof this.props.items !== 'undefined' && this.props.items !== null) {
       tempState.items = this._flattenItems(this.props.items);
     }
 
     // Check if an icon needs to be shown
-    if (typeof this.props.iconFieldName !== "undefined" && this.props.iconFieldName !== null) {
+    if (typeof this.props.iconFieldName !== 'undefined' && this.props.iconFieldName !== null) {
       if (columns === null) { columns = []; }
       const iconColumn = this._createIconColumn(this.props.iconFieldName);
       columns.push(iconColumn);
     }
 
     // Check if view fields were provided
-    if (typeof this.props.viewFields !== "undefined" && this.props.viewFields !== null) {
+    if (typeof this.props.viewFields !== 'undefined' && this.props.viewFields !== null) {
       if (columns === null) { columns = []; }
       columns = this._createColumns(this.props.viewFields, columns);
     }
@@ -187,10 +187,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (columnIdx !== -1) {
       const field = this.props.viewFields[columnIdx];
       // Check if the field needs to be sorted
-      if (has(field, "sorting")) {
+      if (has(field, 'sorting')) {
         // Check if the sorting option is true
         if (field.sorting) {
-          const sortDescending = typeof column.isSortedDescending === "undefined" ? false : !column.isSortedDescending;
+          const sortDescending = typeof column.isSortedDescending === 'undefined' ? false : !column.isSortedDescending;
           const sortedItems = this._sortItems(this.state.items, column.key, sortDescending);
           // Update the columns
           const sortedColumns = this.state.columns.map(c => {

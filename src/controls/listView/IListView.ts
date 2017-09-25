@@ -4,6 +4,7 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 export { SelectionMode };
 
 export interface IListViewProps {
+
   /**
    * Specify the name of the file URL path which will be used to show the file icon.
    */
@@ -33,6 +34,7 @@ export interface IListViewProps {
 }
 
 export interface IListViewState {
+
   /**
    * The items to render.
    */
@@ -45,6 +47,7 @@ export interface IListViewState {
 }
 
 export interface IViewField {
+
   /**
    * Name of the field
    */

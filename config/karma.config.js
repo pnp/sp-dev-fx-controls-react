@@ -2,9 +2,8 @@
 var existingKarmaConfig = require('@microsoft/sp-build-web/lib/karma/karma.config');
 var gulp_core_build = require("@microsoft/gulp-core-build");
 var htmlReporter = require('karma-html-reporter');
-var path = require('path');
-
 var remapCoverageReporter = require('karma-remap-coverage');
+var path = require('path');
 
 module.exports = function (config) {
   existingKarmaConfig(config);

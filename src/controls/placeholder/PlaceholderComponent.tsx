@@ -1,5 +1,5 @@
-import * as React from "react";
-import { IPlaceholderProps } from "./IPlaceholderComponent";
+import * as React from 'react';
+import { IPlaceholderProps } from './IPlaceholderComponent';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
 import styles from './PlaceholderComponent.module.scss';
 
@@ -27,7 +27,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
    * Default React component render method
    */
   public render(): React.ReactElement<IPlaceholderProps> {
-    const iconName = typeof this.props.iconName !== "undefined" && this.props.iconName !== null ? `ms-Icon--${this.props.iconName}` : '';
+    const iconName = typeof this.props.iconName !== 'undefined' && this.props.iconName !== null ? `ms-Icon--${this.props.iconName}` : '';
 
     return (
       <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`}>

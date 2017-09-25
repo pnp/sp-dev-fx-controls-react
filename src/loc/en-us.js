@@ -1,5 +1,5 @@
 define([], function () {
   return {
-    "SiteBreadcrumbLabel": "Website breadcrumb"
+    'SiteBreadcrumbLabel': 'Website breadcrumb'
   }
 });

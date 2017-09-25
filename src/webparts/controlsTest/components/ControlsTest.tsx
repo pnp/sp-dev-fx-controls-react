@@ -3,12 +3,15 @@ import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
-import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
+import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode } from '../../../ListView';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 
+/**
+ * Component that can be used to test out the React controls from this project
+ */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   constructor(props: IControlsTestProps) {
     super(props);
@@ -87,25 +90,25 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
       {
-        name: "ListItemAllFields.Id",
-        displayName: "ID",
+        name: 'ListItemAllFields.Id',
+        displayName: 'ID',
         maxWidth: 20,
         sorting: true
       },
       {
-        name: "Name",
-        linkPropertyName: "ServerRelativeUrl",
+        name: 'Name',
+        linkPropertyName: 'ServerRelativeUrl',
         sorting: true
       },
       {
-        name: "ServerRelativeUrl",
-        displayName: "Path",
+        name: 'ServerRelativeUrl',
+        displayName: 'Path',
         render: (item: any) => {
-          return <a href={item["ServerRelativeUrl"]}>Link</a>;
+          return <a href={item['ServerRelativeUrl']}>Link</a>;
         }
       },
       {
-        name: "Title"
+        name: 'Title'
       }
     ];
 
@@ -158,7 +161,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <ListView
           items={this.state.items}
           viewFields={viewFields}
-          iconFieldName="ServerRelativeUrl"
+          iconFieldName='ServerRelativeUrl'
           compact={true}
           selectionMode={SelectionMode.multiple}
           selection={this._getSelection} />

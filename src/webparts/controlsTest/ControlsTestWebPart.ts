@@ -12,6 +12,9 @@ import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
 import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
 
+/**
+ * Web part to test the React controls
+ */
 export default class ControlsTestWebPart extends BaseClientSideWebPart<IControlsTestWebPartProps> {
 
   public render(): void {

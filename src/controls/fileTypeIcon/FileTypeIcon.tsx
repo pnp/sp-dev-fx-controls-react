@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from "./IFileTypeIcon";
+import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from './IFileTypeIcon';
 
-const ICON_GENERIC = "Page";
-const ICON_DEFAULT_SIZE = "icon16";
+const ICON_GENERIC = 'Page';
+const ICON_DEFAULT_SIZE = 'icon16';
 
 /**
  * File type icon component
@@ -14,14 +14,13 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     /**
-     * @function
      * Function which returns the font icon
      */
     private _getIconClassName(): string {
         let className = ICON_GENERIC;
 
         // Check if the path property is provided
-        if (typeof this.props.path !== "undefined" && this.props.path !== null) {
+        if (typeof this.props.path !== 'undefined' && this.props.path !== null) {
             const path: string = this.props.path;
             const fileExtension: string = this._getFileExtension(path);
             // Check the known file extensions list
@@ -31,7 +30,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
             }
         }
         // Check if the application name has been provided
-        else if (typeof this.props.application !== "undefined" && this.props.application !== null) {
+        else if (typeof this.props.application !== 'undefined' && this.props.application !== null) {
             const application: ApplicationType = this.props.application;
             const iconName = this._getIconByApplicationType(application, IconType.font);
             if (iconName !== null) {
@@ -44,7 +43,6 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
 
 
     /**
-     * @function
      * Function which returns the image icon
      */
     private _getIconImageName(): IImageResult {
@@ -52,20 +50,20 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
         let image: string | null = null;
 
         // Get the right icon size to display
-        if (typeof this.props.size !== "undefined" && this.props.size !== null) {
+        if (typeof this.props.size !== 'undefined' && this.props.size !== null) {
             // Retrieve the right icon size
             size = this._getFileSizeName(this.props.size);
         }
 
         // Check if the path is provided
-        if (typeof this.props.path !== "undefined" && this.props.path !== null) {
+        if (typeof this.props.path !== 'undefined' && this.props.path !== null) {
             const path: string = this.props.path;
             const fileExtension: string = this._getFileExtension(path);
             // Get the image for the current file extension
             image = this._getIconByExtension(fileExtension.toLowerCase(), IconType.image);
         }
         // Check if the application name has been provided
-        else if (typeof this.props.application !== "undefined" && this.props.application !== null) {
+        else if (typeof this.props.application !== 'undefined' && this.props.application !== null) {
             const application: ApplicationType = this.props.application;
             image = this._getIconByApplicationType(application, IconType.image);
         }
@@ -77,7 +75,6 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     /**
-     * @function
      * Function to retrieve the file extension from the path
      *
      * @param value File path
@@ -97,7 +94,6 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     /**
-     * @function
      * Find the icon name for the provided extension
      *
      * @param extension File extension
@@ -128,7 +124,6 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     /**
-     * @function
      * Find the icon name for the application
      *
      * @param application
@@ -154,7 +149,6 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     /**
-     * @function
      * Return the right image size for the provided value
      *
      * @param value Image size value
@@ -183,20 +177,20 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
             // Return an image icon element
             const iconImage = this._getIconImageName();
             // Check if the image was found, otherwise a generic image will be returned
-            if (typeof iconImage.image !== "undefined" && iconImage.image !== null) {
+            if (typeof iconImage.image !== 'undefined' && iconImage.image !== null) {
                 iconElm = <div style={{ display: 'inline-block' }} className={`ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}`}></div>;
             } else {
                 // Return a generic image
                 let imgElm = <img />;
                 // Check the size of the generic image which has to be returned
                 switch (iconImage.size) {
-                    case "icon16":
+                    case 'icon16':
                         imgElm = <img src={ICON_GENERIC_16} />;
                         break;
-                    case "icon48":
+                    case 'icon48':
                         imgElm = <img src={ICON_GENERIC_48} />;
                         break;
-                    case "icon96":
+                    case 'icon96':
                         imgElm = <img src={ICON_GENERIC_96} />;
                         break;
                     default:
@@ -213,7 +207,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
         } else {
             // Return the icon font element
             const iconClass = this._getIconClassName();
-            iconElm = <i className={`ms-Icon ms-Icon--${iconClass}`} aria-hidden="true"></i>;
+            iconElm = <i className={`ms-Icon ms-Icon--${iconClass}`} aria-hidden='true'></i>;
         }
 
         // Return the icon element

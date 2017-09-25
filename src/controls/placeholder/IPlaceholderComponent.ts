@@ -1,9 +1,9 @@
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
  *
- * @public
  */
 export interface IPlaceholderProps {
+
   /**
    * Text description for the placeholder. Appears bellow the Icon and IconText.
    */

@@ -2,6 +2,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+
     .placeholderContainer {
         -webkit-box-align: center;
         -ms-flex-align: center;
@@ -11,24 +12,29 @@
         background-color: "[theme:neutralLighter, default: #f4f4f4]";
         width: 100%;
         padding: 80px 0;
+
         .placeholderHead {
             color: "[theme:neutralPrimary, default: #333333]";
+
             .placeholderHeadContainer {
                 height: 100%;
                 white-space: nowrap;
                 text-align: center;
             }
+
             .placeholderIcon {
                 display: inline-block;
                 vertical-align: middle;
                 white-space: normal;
             }
+
             .placeholderText {
                 display: inline-block;
                 vertical-align: middle;
                 white-space: normal
             }
         }
+
         .placeholderDescription {
             width: 65%;
             vertical-align: middle;
@@ -47,8 +53,11 @@
 
 [dir=ltr] .placeholder,
 [dir=rtl] .placeholder {
+
     .placeholderContainer {
+
         .placeholderHead {
+
             .placeholderText {
                 padding-left: 20px;
             }
@@ -60,6 +69,7 @@
     position: relative;
     height: 100%;
     z-index: 1;
+
     .placeholderSpinnerContainer {
         position: relative;
         width: 100%;

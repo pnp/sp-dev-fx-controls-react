@@ -1,10 +1,10 @@
-import * as React from "react";
-import { ISiteBreadcrumbProps, ISiteBreadcrumbState, IWebInfo } from "./ISiteBreadcrumb";
+import * as React from 'react';
+import { ISiteBreadcrumbProps, ISiteBreadcrumbState, IWebInfo } from './ISiteBreadcrumb';
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-import { SPHttpClient, HttpClientResponse } from "@microsoft/sp-http";
+import { SPHttpClient, HttpClientResponse } from '@microsoft/sp-http';
 import styles from './SiteBreadcrumb.module.scss';
 import * as strings from 'ControlStrings';
-import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 
 /**
  * Site breadcrumb component
