@@ -1,22 +1,22 @@
 "use strict";
-var existingKarmaConfig = require('@microsoft/sp-build-web/lib/karma/karma.config');
-var gulp_core_build = require("@microsoft/gulp-core-build");
-var htmlReporter = require('karma-html-reporter');
-var remapCoverageReporter = require('karma-remap-coverage');
-var path = require('path');
+const existingKarmaConfig = require('@microsoft/sp-build-web/lib/karma/karma.config');
+const gulp_core_build = require("@microsoft/gulp-core-build");
+const htmlReporter = require('karma-html-reporter');
+const remapCoverageReporter = require('karma-remap-coverage');
+const path = require('path');
 
 module.exports = function (config) {
   existingKarmaConfig(config);
   // Add the HTML reporter
   config.reporters.push('html');
   config.htmlReporter = {
-    outputDir: path.join(gulp_core_build.getConfig().tempFolder, 'karma-html-report'), // where to put the reports
-    templatePath: null, // set if you moved jasmine_template.html
-    focusOnFailures: true, // reports show failures on start
-    namedFiles: true, // name files instead of creating sub-directories
-    pageTitle: 'sp-dev-fx-controls-react unit-tests report', // page title for reports; browser info by default
-    urlFriendlyName: false, // simply replaces spaces with _ for files/dirs
-    reportName: 'sp-dev-fx-controls-react-report', // report summary filename; browser info by default
+    outputDir: path.join(gulp_core_build.getConfig().tempFolder, 'karma-html-report'),
+    templatePath: null,
+    focusOnFailures: true,
+    namedFiles: true,
+    pageTitle: 'sp-dev-fx-controls-react unit-tests report',
+    urlFriendlyName: false,
+    reportName: 'sp-dev-fx-controls-react-report',
   };
   config.plugins.push(htmlReporter);
 
