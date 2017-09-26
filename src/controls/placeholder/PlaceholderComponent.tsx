@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IPlaceholderProps } from './IPlaceholderComponent';
-import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import styles from './PlaceholderComponent.module.scss';
 
 /**
@@ -46,13 +46,16 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
           {this.props.children}
           <div className={styles.placeholderDescription}>
             {
-              this.props.buttonLabel &&
+              /*
               <PrimaryButton
                 ariaLabel={this.props.buttonLabel}
                 ariaDescription={this.props.description}
                 onClick={this._handleBtnClick}>
                 {this.props.buttonLabel}
               </PrimaryButton>
+              */
+              this.props.buttonLabel &&
+              <button onClick={this._handleBtnClick}>{this.props.buttonLabel}</button>
             }
           </div>
         </div>
@@ -60,3 +63,6 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
     );
   }
 }
+
+
+
