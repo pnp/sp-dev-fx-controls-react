@@ -46,16 +46,12 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
           {this.props.children}
           <div className={styles.placeholderDescription}>
             {
-              /*
+              this.props.buttonLabel &&
               <PrimaryButton
+                text={this.props.buttonLabel}
                 ariaLabel={this.props.buttonLabel}
                 ariaDescription={this.props.description}
-                onClick={this._handleBtnClick}>
-                {this.props.buttonLabel}
-              </PrimaryButton>
-              */
-              this.props.buttonLabel &&
-              <button onClick={this._handleBtnClick}>{this.props.buttonLabel}</button>
+                onClick={this._handleBtnClick} />
             }
           </div>
         </div>
