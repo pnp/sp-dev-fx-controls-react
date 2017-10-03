@@ -4,9 +4,19 @@
 
 This is a open source library that shares a set of reusable React control that can be used in your SharePoint Framework solutions.
 
+> If you are looking for web part property controls, please check following repository for those - [https://github.com/SharePoint/sp-dev-fx-property-controls](https://github.com/SharePoint/sp-dev-fx-property-controls)
+
 ## Get Started
 
 More information to get started can be found in the wiki section of this repository: [wiki / documentation](https://github.com/SharePoint/sp-dev-fx-controls-react/wiki).
+
+# Have issues or questions?
+
+Please use following logic on submitting your questions or issues to right location to ensure that they are noticed and addressed as soon as possible.
+
+* You have general question or challenge with SPFx - use [sp-dev-docs repository issue list](https://github.com/SharePoint/sp-dev-docs/issues).
+* You have issue on specific controls in this package - use [issue list in this repository](https://github.com/SharePoint/sp-dev-fx-controls-react/issues).
+
 
 ## Contributing
 
@@ -27,5 +37,3 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 ## Disclaimer
 
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
-
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react)
