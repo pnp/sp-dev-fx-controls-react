@@ -18,6 +18,14 @@ export interface IListViewProps {
    */
   viewFields?: IViewField[];
   /**
+   * The fields you want to group your list view by
+   */
+  groupByFields?: string[];
+   /**
+   * The fields you want to sort your list view by
+   */
+  sortByFields?: string[];
+  /**
    * Boolean value to indicate if the component should render in compact mode.
    * Set to false by default
    */
