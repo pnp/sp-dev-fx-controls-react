@@ -29,6 +29,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * React componentDidMount lifecycle hook
    */
   public componentDidMount() {
+    debugger;
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
     this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
       .then(resp => { return resp.json(); })
@@ -92,7 +93,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       {
         name: 'ListItemAllFields.Id',
         displayName: 'ID',
-        maxWidth: 20,
+        minWidth: 40,
         sorting: true
       },
       {
@@ -111,7 +112,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'Title'
       }
     ];
-
+    const groupByFields: string[] = ["Title"]
+    debugger;
     return (
       <div className={styles.controlsTest}>
         <div className={styles.container}>
@@ -164,7 +166,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconFieldName='ServerRelativeUrl'
           compact={true}
           selectionMode={SelectionMode.multiple}
-          selection={this._getSelection} />
+          selection={this._getSelection}
+          groupByFields={groupByFields}
+        />
       </div>
     );
   }

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField } from './IListView';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
+import { findIndex, has, sortBy, isEqual, cloneDeep, countBy } from 'lodash';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 
 /**
@@ -75,6 +75,24 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Add the columns to the temporary state
     tempState.columns = columns;
+
+    //setup groups
+    debugger;
+    if (this.props.groupByFields && this.props.groupByFields.length > 0) {
+      tempState.items = this._sortItems(tempState.items, this.props.groupByFields[0], false)
+      var properties = countBy(tempState.items, (item: any) => { return item[this.props.groupByFields[0]] });// an object with an element for each propert, the value of the elemnt is the count of tsts with that property
+      var groups: Array<IGroup> = [];
+      for (const property in properties) {
+        groups.push({
+          name: property,
+          key: property,
+          startIndex: findIndex(tempState.items, (item) => { return item[this.props.groupByFields[0]] === property; }),
+          count: properties[property],
+        });
+      }
+      tempState.groups = groups;
+    }
+
     // Update the current component state with the new values
     this.setState(tempState);
   }
@@ -228,11 +246,13 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Default React component render method
    */
   public render(): React.ReactElement<IListViewProps> {
+
     return (
       <div>
         <DetailsList
           items={this.state.items}
           columns={this.state.columns}
+          groups={this.state.groups}
           selectionMode={this.props.selectionMode || SelectionMode.none}
           selection={this._selection}
           layoutMode={DetailsListLayoutMode.justified}

@@ -11,6 +11,7 @@ declare const sinon;
 
 class Wrapper extends React.Component {
   public render() {
+    debugger;
     return React.Children.only(this.props.children);
   }
 }
@@ -18,7 +19,7 @@ class Wrapper extends React.Component {
 /* tslint:disable */
 describe('<ListView />', () => {
   let listView: ReactWrapper;
-
+  debugger;
   const dummyItems = [{
     id: 0,
     title: 'Dummy item 1',

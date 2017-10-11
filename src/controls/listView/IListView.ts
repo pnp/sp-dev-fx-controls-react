@@ -1,5 +1,5 @@
 import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn ,IGroup} from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export { SelectionMode };
 
@@ -52,6 +52,8 @@ export interface IListViewState {
    * If none are provided, default columns will be created based on the item's properties.
    */
   columns?: IColumn[];
+
+  groups?: IGroup[];
 }
 
 export interface IViewField {
