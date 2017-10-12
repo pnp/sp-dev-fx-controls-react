@@ -53,7 +53,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (level >= groupByFields.length) {
       return [];
     }
-    let groupItems=items.slice(parentGroup.startIndex,parentGroup.startIndex+parentGroup.count)
+    let groupItems = items.slice(parentGroup.startIndex, parentGroup.startIndex + parentGroup.count)
     var groups: Array<IGroup> = [];
     var properties = countBy(groupItems, (item: any) => { return item[groupByFields[level]] });// an object with an element for each propert, the value of the elemnt is the count of tsts with that property
     debugger;
@@ -62,11 +62,11 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         name: property,
         key: property,
         isCollapsed: true,
-       startIndex: parentGroup.startIndex+ findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
-       // startIndex: findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
+        startIndex: parentGroup.startIndex + findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
+        // startIndex: findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
         count: properties[property],
       }
-      group.children = this._getSubGroups(groupItems, groupByFields, group, level+1);// start at level1, recdurse from there
+      group.children = this._getSubGroups(groupItems, groupByFields, group, level + 1);// start at level1, recdurse from there
       groups.push(group);
     }
     return groups;
@@ -268,8 +268,21 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param descending
    */
   private _sortItems(items: any[], columnName: string, descending = false): any[] {
-    const ascItems = sortBy(items, [columnName]);
-    return descending ? ascItems.reverse() : ascItems;
+    let columnNames: string[] = this.props.groupByFields ? this.props.groupByFields : [];
+    columnNames.push(columnName);
+    const sortDir: string[] = [];
+
+    for (let idx: number = 0; idx <= this.props.groupByFields.length; idx++) {//  sort groupbyfields ascending
+      sortDir.push("asc");
+    }
+    if (descending) {
+      sortDir.push("desc");
+    }
+    else {
+      sortDir.push("asc");
+    }
+    return sortBy(items, columnNames, sortDir);
+
   }
 
   /**
