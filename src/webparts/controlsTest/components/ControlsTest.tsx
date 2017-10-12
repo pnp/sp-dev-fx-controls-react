@@ -112,7 +112,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'Title'
       }
     ];
-    const groupByFields: string[] = ["Title"]
+    const groupByFields: string[] = ["ListItemAllFields.Field1","ListItemAllFields.Field2","ListItemAllFields.field3"]
     debugger;
     return (
       <div className={styles.controlsTest}>

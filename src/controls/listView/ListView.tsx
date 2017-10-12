@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField } from './IListView';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { findIndex, has, sortBy, isEqual, cloneDeep, countBy } from 'lodash';
+import { findIndex, has, sortBy, isEqual, cloneDeep, countBy, groupBy } from 'lodash';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 
 /**
@@ -48,7 +48,49 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       this._processProperties();
     }
   }
+  private _getSubGroups(items: any[], groupByFields: string[], parentGroup: IGroup, level: number): IGroup[] {
+    debugger;
+    if (level >= groupByFields.length) {
+      return [];
+    }
+    let groupItems=items.slice(parentGroup.startIndex,parentGroup.startIndex+parentGroup.count)
+    var groups: Array<IGroup> = [];
+    var properties = countBy(groupItems, (item: any) => { return item[groupByFields[level]] });// an object with an element for each propert, the value of the elemnt is the count of tsts with that property
+    debugger;
+    for (const property in properties) {
+      var group: IGroup = {
+        name: property,
+        key: property,
+        isCollapsed: true,
+       startIndex: parentGroup.startIndex+ findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
+       // startIndex: findIndex(groupItems, (item) => { return item[this.props.groupByFields[level]] === property; }),
+        count: properties[property],
+      }
+      group.children = this._getSubGroups(groupItems, groupByFields, group, level+1);// start at level1, recdurse from there
+      groups.push(group);
+    }
+    return groups;
 
+  }
+  private _getGroups(items: any[], groupByFields: string[]): IGroup[] {
+    debugger;
+    var groups: Array<IGroup> = [];
+    if (groupByFields && groupByFields.length > 0) {
+      var properties = countBy(items, (item: any) => { return item[groupByFields[0]] });// an object with an element for each propert, the value of the elemnt is the count of tsts with that property
+      for (const property in properties) {
+        var group: IGroup = {
+          name: property,
+          key: property,
+          isCollapsed: true,
+          startIndex: findIndex(items, (item) => { return item[this.props.groupByFields[0]] === property; }),
+          count: properties[property],
+        }
+        group.children = this._getSubGroups(items, groupByFields, group, 1);// start at level1, recdurse from there
+        groups.push(group);
+      }
+    }
+    return groups;
+  }
   /**
    * Process all the component properties
    */
@@ -78,20 +120,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     //setup groups
     debugger;
-    if (this.props.groupByFields && this.props.groupByFields.length > 0) {
-      tempState.items = this._sortItems(tempState.items, this.props.groupByFields[0], false)
-      var properties = countBy(tempState.items, (item: any) => { return item[this.props.groupByFields[0]] });// an object with an element for each propert, the value of the elemnt is the count of tsts with that property
-      var groups: Array<IGroup> = [];
-      for (const property in properties) {
-        groups.push({
-          name: property,
-          key: property,
-          startIndex: findIndex(tempState.items, (item) => { return item[this.props.groupByFields[0]] === property; }),
-          count: properties[property],
-        });
-      }
-      tempState.groups = groups;
-    }
+    tempState.groups = this._getGroups(tempState.items, this.props.groupByFields);
+
 
     // Update the current component state with the new values
     this.setState(tempState);
