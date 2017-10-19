@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField } from './IListView';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
+import * as strings from 'ControlStrings';
 
 /**
  * File type icon component
@@ -50,6 +51,74 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   }
 
   /**
+   * Specify result grouping for the list rendering
+   * @param items
+   * @param groupByFields
+   */
+  private _getGroups(items: any[], groupByFields: string[], level: number = 0, startIndex: number = 0): {items: any[], groups: IGroup[]} {
+    // Group array which stores the configured grouping
+    let groups: IGroup[] = [];
+    let updatedItemsOrder: any[] = [];
+    // Check if there are groupby fields set
+    if (groupByFields) {
+      const groupField = groupByFields[level];
+      // Check if grouping is configured
+      if (groupByFields && groupByFields.length > 0) {
+        // Create grouped items object
+        const groupedItems = {};
+        items.forEach((item: any) => {
+          let groupName = item[groupField];
+          // Check if the group name exists
+          if (typeof groupName === "undefined") {
+            // Set the default empty label for the field
+            groupName = strings.ListViewGroupEmptyLabel;
+          }
+          // Check if group name is a number, this can cause sorting issues
+          if (typeof groupName === "number") {
+            groupName = `${groupName}.`;
+          }
+
+          // Check if current group already exists
+          if (typeof groupedItems[groupName] === "undefined") {
+            // Create a new group of items
+            groupedItems[groupName] = [];
+          }
+          groupedItems[groupName].push(item);
+        });
+
+        // Loop over all the groups
+        for (const groupItems in groupedItems) {
+          // Add the items to the updated items order array
+          groupedItems[groupItems].forEach((item) => {
+            updatedItemsOrder.push(item);
+          });
+          // Retrieve the total number of items per group
+          const totalItems = groupedItems[groupItems].length;
+          // Create the new group
+          const group: IGroup = {
+            name: groupItems === "undefined" ? strings.ListViewGroupEmptyLabel : groupItems,
+            key: groupItems === "undefined" ? strings.ListViewGroupEmptyLabel : groupItems,
+            startIndex: startIndex,
+            count: totalItems,
+          };
+          // Check if child grouping available
+          if (groupByFields[level + 1]) {
+            // Get the child groups
+            group.children = this._getGroups(groupedItems[groupItems], groupByFields, (level + 1), startIndex).groups;
+          }
+          // Increase the start index for the next group
+          startIndex = startIndex + totalItems;
+          groups.push(group);
+        }
+      }
+    }
+    return {
+      items: updatedItemsOrder,
+      groups
+    };
+  }
+
+  /**
    * Process all the component properties
    */
   private _processProperties() {
@@ -75,6 +144,17 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Add the columns to the temporary state
     tempState.columns = columns;
+
+    // Add grouping to the list view
+    const grouping = this._getGroups(tempState.items, this.props.groupByFields);
+    if (grouping.groups.length > 0) {
+      tempState.groups = grouping.groups;
+      // Update the items
+      tempState.items = grouping.items;
+    } else {
+      tempState.groups = null;
+    }
+
     // Update the current component state with the new values
     this.setState(tempState);
   }
@@ -203,10 +283,13 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             }
             return c;
           });
+          // Update the grouping
+          const groupedItems = this._getGroups(sortedItems, this.props.groupByFields);
           // Update the items and columns
           this.setState({
-            items: sortedItems,
-            columns: sortedColumns
+            items: groupedItems.groups.length > 0 ? groupedItems.items : sortedItems,
+            columns: sortedColumns,
+            groups: groupedItems.groups.length > 0 ? groupedItems.groups : null,
           });
         }
       }
@@ -228,11 +311,13 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Default React component render method
    */
   public render(): React.ReactElement<IListViewProps> {
+
     return (
       <div>
         <DetailsList
           items={this.state.items}
           columns={this.state.columns}
+          groups={this.state.groups}
           selectionMode={this.props.selectionMode || SelectionMode.none}
           selection={this._selection}
           layoutMode={DetailsListLayoutMode.justified}

@@ -1,5 +1,6 @@
 declare interface IControlStrings {
   SiteBreadcrumbLabel: string;
+  ListViewGroupEmptyLabel: string;
 }
 
 declare module 'ControlStrings' {

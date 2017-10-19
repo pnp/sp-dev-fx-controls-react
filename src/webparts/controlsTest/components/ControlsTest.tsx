@@ -92,7 +92,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       {
         name: 'ListItemAllFields.Id',
         displayName: 'ID',
-        maxWidth: 20,
+        maxWidth: 40,
         sorting: true
       },
       {
@@ -111,6 +111,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'Title'
       }
     ];
+
+    // Specify the fields on which you want to group your items
+    // Grouping is takes the field order into account from the array
+    const groupByFields: string[] = ["ListItemAllFields.Title"];
 
     return (
       <div className={styles.controlsTest}>
@@ -162,6 +166,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={this.state.items}
           viewFields={viewFields}
           iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
           compact={true}
           selectionMode={SelectionMode.multiple}
           selection={this._getSelection} />
