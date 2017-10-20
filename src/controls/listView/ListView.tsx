@@ -88,10 +88,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
         // Loop over all the groups
         for (const groupItems in groupedItems) {
-          // Add the items to the updated items order array
-          groupedItems[groupItems].forEach((item) => {
-            updatedItemsOrder.push(item);
-          });
           // Retrieve the total number of items per group
           const totalItems = groupedItems[groupItems].length;
           // Create the new group
@@ -104,7 +100,16 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           // Check if child grouping available
           if (groupByFields[level + 1]) {
             // Get the child groups
-            group.children = this._getGroups(groupedItems[groupItems], groupByFields, (level + 1), startIndex).groups;
+            const subGroup = this._getGroups(groupedItems[groupItems], groupByFields, (level + 1), startIndex);
+            subGroup.items.forEach((item) => {
+              updatedItemsOrder.push(item);
+            });
+            group.children = subGroup.groups;
+          } else {
+            // Add the items to the updated items order array
+            groupedItems[groupItems].forEach((item) => {
+              updatedItemsOrder.push(item);
+            });
           }
           // Increase the start index for the next group
           startIndex = startIndex + totalItems;
