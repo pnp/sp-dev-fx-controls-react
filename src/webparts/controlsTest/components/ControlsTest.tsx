@@ -5,7 +5,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { Placeholder } from '../../../Placeholder';
-import { ListView, IViewField, SelectionMode } from '../../../ListView';
+import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 
@@ -114,7 +114,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     // Specify the fields on which you want to group your items
     // Grouping is takes the field order into account from the array
-    const groupByFields: string[] = ["ListItemAllFields.Title"];
+    const groupByFields: IGrouping[] = [{name: "ListItemAllFields.City", order: GroupOrder.ascending }, {name: "ListItemAllFields.Country.Label", order: GroupOrder.descending}];
 
     return (
       <div className={styles.controlsTest}>

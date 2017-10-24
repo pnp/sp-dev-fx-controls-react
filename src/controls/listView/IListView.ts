@@ -3,6 +3,11 @@ import { IColumn ,IGroup} from 'office-ui-fabric-react/lib/components/DetailsLis
 
 export { SelectionMode };
 
+export enum GroupOrder {
+  ascending = 1,
+  descending
+}
+
 export interface IListViewProps {
 
   /**
@@ -20,7 +25,7 @@ export interface IListViewProps {
   /**
    * The fields you want to group your list view by
    */
-  groupByFields?: string[];
+  groupByFields?: IGrouping[];
   /**
    * Boolean value to indicate if the component should render in compact mode.
    * Set to false by default
@@ -50,6 +55,16 @@ export interface IListViewState {
   columns?: IColumn[];
 
   groups?: IGroup[];
+}
+
+export interface IGrouping {
+  name: string;
+  order: GroupOrder;
+}
+
+export interface IGroupsItems {
+  items: any[];
+  groups: IGroup[];
 }
 
 export interface IViewField {

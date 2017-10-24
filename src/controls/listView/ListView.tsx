@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
-import { IListViewProps, IListViewState, IViewField } from './IListView';
+import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
 import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
+import { IGroupsItems } from '../../../lib/ListView';
 
 /**
  * File type icon component
@@ -55,7 +56,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param items
    * @param groupByFields
    */
-  private _getGroups(items: any[], groupByFields: string[], level: number = 0, startIndex: number = 0): {items: any[], groups: IGroup[]} {
+  private _getGroups(items: any[], groupByFields: IGrouping[], level: number = 0, startIndex: number = 0): IGroupsItems {
     // Group array which stores the configured grouping
     let groups: IGroup[] = [];
     let updatedItemsOrder: any[] = [];
@@ -67,7 +68,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         // Create grouped items object
         const groupedItems = {};
         items.forEach((item: any) => {
-          let groupName = item[groupField];
+          let groupName = item[groupField.name];
           // Check if the group name exists
           if (typeof groupName === "undefined") {
             // Set the default empty label for the field
@@ -86,8 +87,16 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           groupedItems[groupName].push(item);
         });
 
+        // Sort the grouped items object by its key
+        const sortedGroups = {};
+        let groupNames = Object.keys(groupedItems);
+        groupNames = groupField.order === GroupOrder.ascending ? groupNames.sort() : groupNames.sort().reverse();
+        groupNames.forEach((key: string) => {
+          sortedGroups[key] = groupedItems[key];
+        });
+
         // Loop over all the groups
-        for (const groupItems in groupedItems) {
+        for (const groupItems in sortedGroups) {
           // Retrieve the total number of items per group
           const totalItems = groupedItems[groupItems].length;
           // Create the new group
