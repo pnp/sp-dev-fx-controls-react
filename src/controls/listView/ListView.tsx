@@ -46,8 +46,25 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param prevState
    */
   public componentDidUpdate(prevProps: IListViewProps, prevState: IListViewState): void {
+    // select default items
+    this._setSelectedItems();
+
     if (!isEqual(prevProps, this.props)) {
       this._processProperties();
+    }
+  }
+
+  /**
+   * Select all the items that should be selected by default
+   */
+  private _setSelectedItems(): void {
+    if (this.props.items && this.props.items.length > 0) {
+      for (const item of this.props.selectIems) {
+        const index: number = findIndex(this.props.items, element => isEqual(element, item));
+        if (index > -1) {
+          this._selection.setIndexSelected(index, true, false);
+        }
+      }
     }
   }
 
