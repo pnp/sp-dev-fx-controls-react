@@ -1,5 +1,5 @@
 import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
-import { IColumn ,IGroup} from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroup } from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export { SelectionMode };
 
@@ -18,6 +18,10 @@ export interface IListViewProps {
    * The items to render.
    */
   items: any[];
+  /**
+   * The items to select by default.
+   */
+  selectIems?: any[];
   /**
    * The fields you want to view in your list view
    */
