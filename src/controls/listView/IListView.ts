@@ -14,6 +14,10 @@ export interface IListViewProps {
    */
   items: any[];
   /**
+   * The items to select by default.
+   */
+  selectIems?: any[];
+  /**
    * The fields you want to view in your list view
    */
   viewFields?: IViewField[];
