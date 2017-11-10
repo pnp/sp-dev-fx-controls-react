@@ -335,7 +335,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           selectionMode={this.props.selectionMode || SelectionMode.none}
           selection={this._selection}
           layoutMode={DetailsListLayoutMode.justified}
-          compact={this.props.compact} />
+          compact={this.props.compact}
+          setKey="ListViewControl" />
       </div>
     );
   }
