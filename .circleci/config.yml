@@ -35,11 +35,11 @@ jobs:
           name: Test
           command: npm test
       - run:
-        name: Run coveralls
-        command: 'cat temp/coverage/coverage.txt'
+          name: Run coveralls
+          command: 'cat temp/coverage/coverage.txt'
       - run:
           name: Run coveralls
-          command: 'cat temp/coverage/coverage.txt | ./node_modules/.bin/coveralls'
+          command: 'cat temp/coverage/coverage.txt | ./node_modules/coveralls/bin/coveralls.js'
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
