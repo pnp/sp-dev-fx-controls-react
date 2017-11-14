@@ -38,7 +38,7 @@ jobs:
           name: Run coveralls
           command: 'cat temp/coverage/coverage.txt | ./node_modules/.bin/coveralls'
       - store_artifacts:
-          path: coverage
+          path: temp/coverage
           prefix: coverage
   publish_next:
     <<: *defaults
