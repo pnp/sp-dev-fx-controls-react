@@ -5,7 +5,7 @@ import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
-import { IGroupsItems } from '../../../lib/ListView';
+import { IGroupsItems } from './IListView';
 
 /**
  * File type icon component
