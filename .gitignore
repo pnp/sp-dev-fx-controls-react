@@ -36,3 +36,6 @@ obj
 
 # VSCode
 .vscode
+
+# Documentation
+docs/documentation/site

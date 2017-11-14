@@ -1,0 +1,15 @@
+site_name: SharePoint Framework React Controls
+pages:
+  - Home: 'index.md'
+  - 'Getting started': 'getting-started.md'
+  - Controls:
+    - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - ListView: 'controls/ListView.md'
+    - Placeholder: 'controls/Placeholder.md'
+    - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
+  - About:
+    - 'Release notes': 'about/release-notes.md'
+    - License: 'about/license.md'
+theme: readthedocs
+repo_url: https://github.com/SharePoint/sp-dev-fx-controls-react
+edit_uri: blob/master/docs/documentation/docs

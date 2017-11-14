@@ -28,7 +28,8 @@ module.exports = function (config) {
   config.remapCoverageReporter = {
     'text-summary': null,
     html: path.join(gulp_core_build.getConfig().tempFolder, 'coverage/html'),
-    cobertura: path.join(gulp_core_build.getConfig().tempFolder, 'coverage/cobertura.xml')
+    cobertura: path.join(gulp_core_build.getConfig().tempFolder, 'coverage/cobertura.xml'),
+    lcovonly: path.join(gulp_core_build.getConfig().tempFolder, 'coverage/coverage.txt')
   };
   config.plugins.push(remapCoverageReporter);
 };

@@ -1,0 +1,46 @@
+# FileTypeIcon component
+
+This component returns the file type icon based on a specified file path or application.
+
+![FileTypeIcon component output](../assets/FileTypeIcon.png)
+
+## How to use this component in your solutions
+
+1. Check that you installed the `@pnp/dev-controls` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
+2. Import the following modules to your component:
+
+```TypeScript
+import { FileTypeIcon, ApplicationType, IconType, ImageSize } from "@pnp/spfx-controls-react/lib/FileTypeIcon";
+```
+
+3. Use the `FileTypeIcon` component in your code as follows:
+
+```TypeScript
+/* Showing the icons font */
+<FileTypeIcon type={IconType.font} application={ApplicationType.Word} />
+<FileTypeIcon type={IconType.font} application={ApplicationType.Excel} />
+<FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />
+<FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.xslx" />
+
+/* Showing the icon image */
+<FileTypeIcon type={IconType.image} application={ApplicationType.Word} />
+<FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />
+
+/* Icon image allows three different sizes */
+<FileTypeIcon type={IconType.image} size={ImageSize.small} application={ApplicationType.Excel} />
+<FileTypeIcon type={IconType.image} size={ImageSize.medium} application={ApplicationType.Excel} />
+<FileTypeIcon type={IconType.image} size={ImageSize.large} application={ApplicationType.Excel} />
+```
+
+## Implementation
+
+The FileTypeIcon component can be configured with the following properties:
+
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| application | ApplicationType | no | Type of the application for which you want to show the icon. Use the **ApplicationType** enum to get the list of available applications. |
+| path | string | no | Path to the document. If this is provided, the component will use the file extension to display the corresponding icon. |
+| size | ImageSize | no | This is a property that only needs to be used when the type is set to image. It allows you to specify the image size. Small (16px), medium (48px) and large (96px) are possible. Use the **ImageSize** enum to get the list of available images sizes. |
+| type | IconType | yes | This property specifies is you want to use the icon font or image. Use the **IconType** enum to get the list of available icon types. |
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FileTypeIcon)

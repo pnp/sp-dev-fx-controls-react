@@ -10,6 +10,9 @@ typings
 lib/webparts
 assets
 dist
+docs
+scripts
+.circleci
 
 # Files
 *.csproj
