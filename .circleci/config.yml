@@ -39,7 +39,7 @@ jobs:
           command: 'cat temp/coverage/coverage.txt'
       - run:
           name: Run coveralls
-          command: 'cat temp/coverage/coverage.txt | ./node_modules/coveralls/bin/coveralls.js'
+          command: 'cat temp/coverage/coverage.txt | ./node_modules/coveralls/bin/coveralls.js -v'
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
