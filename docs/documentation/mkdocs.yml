@@ -10,6 +10,26 @@ pages:
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'
-theme: readthedocs
+theme:
+  name: 'material'
+  palette:
+    primary: 'blue'
+  logo: 'assets/sharepoint.png'
+  feature:
+    tabs: true
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+extra:
+  social:
+    - type: 'twitter'
+      link: 'https://twitter.com/officedevpnp'
+    - type: 'youtube'
+      link: 'http://aka.ms/sppnp-videos'
+    - type: 'link'
+      link: 'https://aka.ms/sppnp'
 repo_url: https://github.com/SharePoint/sp-dev-fx-controls-react
 edit_uri: blob/master/docs/documentation/docs

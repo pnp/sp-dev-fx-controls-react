@@ -6,7 +6,7 @@ To get started you have to install the following dependency to your project: `@p
 
 Enter the following command to install the dependency to your project:
 
-```
+```bash
 npm install @pnp/spfx-controls-react --save --save-exact
 ```
 
