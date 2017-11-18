@@ -36,10 +36,13 @@ jobs:
           command: npm test
       - run:
           name: Run coveralls
-          command: 'cat temp/coverage/coverage.txt'
+          command: 'cat temp/coverage/coverage.info'
       - run:
           name: Run coveralls
-          command: 'cat temp/coverage/coverage.txt | ./node_modules/coveralls/bin/coveralls.js -v'
+          command: 'cat temp/coverage/coverage.info | ./node_modules/coveralls/bin/coveralls.js -v true'
+          environment:
+            - COVERALLS_REPO_TOKEN: "VPsVN6sCVWupc3Sh4SKTm5zgGL4pDatDp"
+            - COVERALLS_SERVICE_NAME: "circle-ci"
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
@@ -93,6 +96,18 @@ jobs:
 
 workflows:
   version: 2
+  check_pr:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /^(dev|master)/
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /^(dev|master)/
   release_next:
     jobs:
       - build:
