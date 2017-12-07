@@ -1,5 +1,5 @@
 import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
-import { IColumn ,IGroup} from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroup } from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export { SelectionMode };
 
@@ -40,6 +40,10 @@ export interface IListViewProps {
    * Selection event that passes the selected item(s)
    */
   selection?: (items: any[]) => void;
+  /**
+   * The index if items to be select by default.
+   */
+  defaultSelection?: number[];
 }
 
 export interface IListViewState {
