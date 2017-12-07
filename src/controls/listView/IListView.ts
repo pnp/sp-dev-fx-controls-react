@@ -19,10 +19,6 @@ export interface IListViewProps {
    */
   items: any[];
   /**
-   * The items to select by default.
-   */
-  selectIems?: any[];
-  /**
    * The fields you want to view in your list view
    */
   viewFields?: IViewField[];
@@ -44,6 +40,10 @@ export interface IListViewProps {
    * Selection event that passes the selected item(s)
    */
   selection?: (items: any[]) => void;
+  /**
+   * The index if items to be select by default.
+   */
+  defaultSelection?: number[];
 }
 
 export interface IListViewState {
