@@ -58,7 +58,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Select all the items that should be selected by default
    */
   private _setSelectedItems(): void {
-    if (this.props.items && this.props.items.length > 0 && this.props.defaultSelection && this.props.defaultSelection.length > 0) {
+    if (this.props.items &&
+        this.props.items.length > 0 &&
+        this.props.defaultSelection &&
+        this.props.defaultSelection.length > 0) {
       for (const index of this.props.defaultSelection) {
         if (index > -1) {
           this._selection.setIndexSelected(index, true, false);

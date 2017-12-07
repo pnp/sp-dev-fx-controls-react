@@ -41,7 +41,7 @@ export interface IListViewProps {
    */
   selection?: (items: any[]) => void;
   /**
-   * The index if items to be select by default.
+   * The index of the items to be select by default
    */
   defaultSelection?: number[];
 }

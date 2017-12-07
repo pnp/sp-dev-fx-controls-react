@@ -67,6 +67,7 @@ The Placeholder component can be configured with the following properties:
 | selectionMode | SelectionMode | no | Specify if the items in the list view can be selected and how. Options are: none, single, multi. |
 | selection | function | no | Selection event that passes the selected item(s) from the list view. |
 | groupByFields | IGrouping[] | no | Defines the field on which you want to group the items in the list view. |
+| defaultSelection | number[] | no | The index of the items to be select by default |
 
 The `IViewField` has the following implementation:
 
