@@ -8,6 +8,7 @@ import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
+import { WebPartTitle } from '../../../WebPartTitle';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -96,6 +97,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         sorting: true
       },
       {
+        name: 'ListItemAllFields.Underscore_Field',
+        displayName: "Underscore_Field",
+        sorting: true
+      },
+      {
         name: 'Name',
         linkPropertyName: 'ServerRelativeUrl',
         sorting: true
@@ -118,6 +124,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <WebPartTitle displayMode={this.props.displayMode}
+                      title={this.props.title}
+                      updateProperty={this.props.updateProperty} />
+
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">

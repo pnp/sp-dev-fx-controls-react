@@ -7,6 +7,7 @@ pages:
     - ListView: 'controls/ListView.md'
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
+    - WebPartTitle: 'controls/WebPartTitle.md'
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'

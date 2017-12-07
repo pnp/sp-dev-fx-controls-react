@@ -1,0 +1,30 @@
+.webPartTitle {
+  font-size: 24px;
+  font-weight: 100;
+  margin-bottom: 11px;
+
+  // Edit mode
+  textarea {
+    background-color: transparent;
+    border: none;
+    box-sizing: border-box;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    height: 40px;
+    line-height: inherit;
+    margin: 0;
+    outline: 0;
+    overflow: hidden;
+    resize: none;
+    text-align: inherit;
+    white-space: pre;
+    width: 100%;
+  }
+
+  // View mode
+  span {
+    // Nothing at the moment
+  }
+}

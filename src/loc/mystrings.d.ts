@@ -1,6 +1,8 @@
 declare interface IControlStrings {
   SiteBreadcrumbLabel: string;
   ListViewGroupEmptyLabel: string;
+  WebPartTitlePlaceholder: string;
+  WebPartTitleLabel: string;
 }
 
 declare module 'ControlStrings' {

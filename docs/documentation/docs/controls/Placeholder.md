@@ -1,19 +1,19 @@
-# Placeholder component
+# Placeholder control
 
-This component renders a placeholder which can be used to show a message that the web part still has to be configured.
+This control renders a placeholder which can be used to show a message that the web part still has to be configured.
 
-![Placeholder component output](../assets/Placeholder.png)
+![Placeholder control output](../assets/Placeholder.png)
 
-## How to use this component in your solutions
+## How to use this control in your solutions
 
-1. Check that you installed the `@pnp/dev-controls` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
-2. Import the following modules to your component:
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
+- Import the following modules to your component:
 
 ```TypeScript
 import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 ```
 
-3. Use the `Placeholder` component in your code as follows:
+- Use the `Placeholder` control in your code as follows:
 
 ```TypeScript
 <Placeholder
@@ -24,7 +24,7 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
   onConfigure={this._onConfigure} />
 ```
 
-4. With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
+- With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
 
 ```typescript
 private _onConfigure() {
@@ -35,7 +35,7 @@ private _onConfigure() {
 
 ## Implementation
 
-The placeholder component can be configured with the following properties:
+The placeholder control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |

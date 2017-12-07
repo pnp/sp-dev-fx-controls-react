@@ -1,20 +1,20 @@
-# SiteBreadcrumb component
+# SiteBreadcrumb control
 
-This component returns a breadcrumb based on the current location.
+This control returns a breadcrumb based on the current location.
 
-![SiteBreadcrumb component output](../assets/SiteBreadcrumb.png)
+![SiteBreadcrumb control output](../assets/SiteBreadcrumb.png)
 ![Hover over an item](../assets/SiteBreadcrumb-selected.png)
 
-## How to use this component in your solutions
+## How to use this control in your solutions
 
-1. Check that you installed the `@pnp/dev-controls` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
-2. Import the following modules to your component:
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
+- Import the following modules to your component:
 
 ```TypeScript
 import { SiteBreadcrumb } from "@pnp/spfx-controls-react/lib/SiteBreadcrumb";
 ```
 
-3. Use the `SiteBreadcrumb` component in your code as follows:
+- Use the `SiteBreadcrumb` control in your code as follows:
 
 ```TypeScript
 <SiteBreadcrumb context={this.props.context} />
@@ -22,7 +22,7 @@ import { SiteBreadcrumb } from "@pnp/spfx-controls-react/lib/SiteBreadcrumb";
 
 ## Implementation
 
-The SiteBreadcrumb component can be configured with the following properties:
+The SiteBreadcrumb control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |

@@ -22,7 +22,12 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
       ControlsTest,
       {
         context: this.context,
-        description: this.properties.description
+        description: this.properties.description,
+        title: this.properties.title,
+        displayMode: this.displayMode,
+        updateProperty: (value: string) => {
+          this.properties.title = value;
+        }
       }
     );
 

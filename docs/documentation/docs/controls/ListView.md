@@ -1,23 +1,23 @@
-# ListView component
+# ListView control
 
-This component renders a list view for the given set of items.
+This control renders a list view for the given set of items.
 
-![ListView component output](../assets/ListView.png)
+![ListView control output](../assets/ListView.png)
 
 **List view control with grouping applied**
 
-![ListView component with grouping](../assets/ListView-grouping.png)
+![ListView control with grouping](../assets/ListView-grouping.png)
 
-## How to use this component in your solutions
+## How to use this control in your solutions
 
-1. Check that you installed the `@pnp/dev-controls` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
-2. Import the following modules to your component:
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
+- Import the following modules to your component:
 
 ```TypeScript
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp/spfx-controls-react/lib/ListView";
 ```
 
-3. Use the `ListView` component in your code as follows:
+- Use the `ListView` control in your code as follows:
 
 ```TypeScript
 <ListView
@@ -30,7 +30,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   groupByFields={groupByFields} />
 ```
 
-4. With the `selection` property you can define a method that which gets called when the user selects one or more items in the list view:
+- With the `selection` property you can define a method that which gets called when the user selects one or more items in the list view:
 
 ```typescript
 private _getSelection(items: any[]) {
@@ -38,7 +38,7 @@ private _getSelection(items: any[]) {
 }
 ```
 
-5. With the `groupByFields` property you can define an array of field objects which will be used for grouping. 
+- With the `groupByFields` property you can define an array of field objects which will be used for grouping. 
 
 **Important**: the same order of the fields defines how grouping will be applied. In the snippet the `ListView` control will first group by the `Extension` and after that by the `Author` field.
 
@@ -56,14 +56,14 @@ const groupByFields: IGrouping[] = [
 
 ## Implementation
 
-The Placeholder component can be configured with the following properties:
+The ListView control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | iconFieldName | string | no | Specify the name of the file URL path which will be used to show the file icon. |
 | items | any[]| yes | Items to render in the list view. |
 | viewFields | IViewField[] | no | The fields you want to render in the list view. Check the `IViewField` implementation to see which properties you can define. |
-| compact | boolean | no | Boolean value to indicate if the component should render in compact mode. By default this is set to `false`. |
+| compact | boolean | no | Boolean value to indicate if the control should render in compact mode. By default this is set to `false`. |
 | selectionMode | SelectionMode | no | Specify if the items in the list view can be selected and how. Options are: none, single, multi. |
 | selection | function | no | Selection event that passes the selected item(s) from the list view. |
 | groupByFields | IGrouping[] | no | Defines the field on which you want to group the items in the list view. |
