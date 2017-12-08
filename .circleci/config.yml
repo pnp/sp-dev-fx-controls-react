@@ -38,14 +38,10 @@ jobs:
           name: Show coverage output in Circle
           command: 'cat temp/coverage/coverage.txt'
       - run:
-          name: Run coveralls
-          command: 'cat temp/coverage/coverage.info'
-      - run:
-          name: Run coveralls
-          command: 'cat temp/coverage/coverage.info | ./node_modules/coveralls/bin/coveralls.js -v true'
+          name: Run codevoc
+          command: './node_modules/.bin/codecov -t $CODECOV_TOKEN'
           environment:
-            - COVERALLS_REPO_TOKEN: "VPsVN6sCVWupc3Sh4SKTm5zgGL4pDatDp"
-            - COVERALLS_SERVICE_NAME: "circle-ci"
+            - CODECOV_TOKEN: "83a5682f-4c9f-4ed7-9da8-ccc04416f364"
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
