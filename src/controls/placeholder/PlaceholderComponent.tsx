@@ -14,7 +14,14 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
   constructor(props: IPlaceholderProps) {
     super(props);
 
-    appInsights.track('ReactPlaceholder');
+    appInsights.track('ReactPlaceholder', {
+      description: !!props.description,
+      iconName: !!props.iconName,
+      iconText: !!props.iconText,
+      buttonLabel: !!props.buttonLabel,
+      onConfigure: !!props.onConfigure,
+      contentClassName: !!props.contentClassName
+    });
 
     this._handleBtnClick = this._handleBtnClick.bind(this);
   }

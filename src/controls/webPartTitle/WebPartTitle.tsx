@@ -21,7 +21,11 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
   constructor(props: IWebPartTitleProps) {
     super(props);
 
-    appInsights.track('ReactWebPartTitle');
+    appInsights.track('ReactWebPartTitle', {
+        title: !!props.title,
+        updateProperty: !!props.updateProperty,
+        className: !!props.className
+    });
 
     this._onChange = this._onChange.bind(this);
   }

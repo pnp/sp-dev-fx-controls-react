@@ -17,7 +17,13 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   constructor(props: IListViewProps) {
     super(props);
 
-    appInsights.track('ReactListView');
+    appInsights.track('ReactListView', {
+      viewFields: !!props.viewFields,
+      groupByFields: !!props.groupByFields,
+      selectionMode: !!props.selectionMode,
+      selection: !!props.selection,
+      defaultSelection: !!props.defaultSelection
+    });
 
     // Initialize state
     this.state = {
