@@ -6,6 +6,7 @@ import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
+import * as appInsights from '../../common/appInsights';
 
 /**
  * File type icon component
@@ -15,6 +16,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
   constructor(props: IListViewProps) {
     super(props);
+
+    appInsights.track('ReactListView');
 
     // Initialize state
     this.state = {

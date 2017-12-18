@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from './IFileTypeIcon';
+import * as appInsights from '../../common/appInsights';
 
 const ICON_GENERIC = 'Page';
 const ICON_DEFAULT_SIZE = 'icon16';
@@ -11,6 +12,8 @@ const ICON_DEFAULT_SIZE = 'icon16';
 export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     constructor(props: IFileTypeIconProps) {
         super(props);
+
+        appInsights.track('ReactFileTypeIcon');
     }
 
     /**

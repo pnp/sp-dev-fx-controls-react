@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IPlaceholderProps } from './IPlaceholderComponent';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import styles from './PlaceholderComponent.module.scss';
+import * as appInsights from '../../common/appInsights';
 
 /**
  * Placeholder component
@@ -12,6 +13,8 @@ export class Placeholder extends React.Component<IPlaceholderProps, {}> {
    */
   constructor(props: IPlaceholderProps) {
     super(props);
+
+    appInsights.track('ReactPlaceholder');
 
     this._handleBtnClick = this._handleBtnClick.bind(this);
   }

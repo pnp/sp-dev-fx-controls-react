@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import styles from './WebPartTitle.module.scss';
+import * as appInsights from '../../common/appInsights';
 
 export interface IWebPartTitleProps {
   displayMode: DisplayMode;
@@ -19,6 +20,8 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
    */
   constructor(props: IWebPartTitleProps) {
     super(props);
+
+    appInsights.track('ReactWebPartTitle');
 
     this._onChange = this._onChange.bind(this);
   }

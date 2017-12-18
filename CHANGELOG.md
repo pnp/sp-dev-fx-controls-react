@@ -1,5 +1,9 @@
 # Releases
 
+## 1.1.0
+
+- Telemetry added
+
 ## 1.0.0
 - **New control**: WebPartTilte control got added.
 - **Enhancement**: ListView control got extended with the ability to specify a set of preselected items.
