@@ -21,6 +21,9 @@ jobs:
           paths:
             - ./node_modules
       - run:
+          name: Update version number for telemetry
+          command: npm run versionUpdater
+      - run:
           name: build
           command: npm run build
       - persist_to_workspace:
