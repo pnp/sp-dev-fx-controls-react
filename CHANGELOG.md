@@ -1,5 +1,9 @@
 # Releases
 
+## 1.1.1
+
+- Removed operation name from telemetry
+
 ## 1.1.0
 
 - Telemetry added
