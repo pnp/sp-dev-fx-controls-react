@@ -17,7 +17,7 @@ Before you start contributing to this project, you will need Node.js. This proje
 
 ### Documentation
 
-SharePoint Framework Property Controls uses [MkDocs](http://www.mkdocs.org) to publish documentation pages. See more information about installing MkDocs on your operating system at http://www.mkdocs.org/#installation.
+SharePoint Framework React Controls uses [MkDocs](http://www.mkdocs.org) to publish documentation pages. See more information about installing MkDocs on your operating system at http://www.mkdocs.org/#installation.
 
 Also, documentation uses custom MkDocs theme that should be installed as well. See [Material theme for MkDocs](https://squidfunk.github.io/mkdocs-material/).
 
