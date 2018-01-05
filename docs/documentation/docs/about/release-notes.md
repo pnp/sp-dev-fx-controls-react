@@ -3,6 +3,7 @@
 ## 1.1.2
 
 - Fix for WebPartTitle control to inherit color
+- Improved telemetry with some object checks
 
 ## 1.1.1
 
