@@ -5,7 +5,9 @@ import {Environment,EnvironmentType} from "@microsoft/sp-core-library";
 AppInsights.downloadAndSetup({ instrumentationKey: "9f59b81e-d2ed-411e-a961-8bcf3f7f04d0" });
 
 // Remove operation name from the telemetry
-AppInsights.context.operation.name = null;
+if (AppInsights.context && AppInsights.context.operation && AppInsights.context.operation.name) {
+  AppInsights.context.operation.name = null;
+}
 
 export function track(componentName: string, properties: any = {}): void {
   AppInsights.trackEvent(componentName, {

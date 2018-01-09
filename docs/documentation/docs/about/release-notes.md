@@ -1,5 +1,10 @@
 # Releases
 
+## 1.1.2
+
+- Fix for WebPartTitle control to inherit color
+- Improved telemetry with some object checks
+
 ## 1.1.1
 
 - Removed operation name from telemetry
@@ -9,7 +14,7 @@
 - Telemetry added
 
 ## 1.0.0
-- **New control**: WebPartTilte control got added.
+- **New control**: WebPartTitle control got added.
 - **Enhancement**: ListView control got extended with the ability to specify a set of preselected items.
 
 ## Beta 1.0.0-beta.8
