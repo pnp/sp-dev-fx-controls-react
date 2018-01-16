@@ -2,6 +2,8 @@ import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from './IFileTypeIcon';
 import * as appInsights from '../../common/appInsights';
+import { Icon, IconType as IconUIType } from 'office-ui-fabric-react/lib/components/Icon';
+import * as styles from './FileTypeIcon.module.scss';
 
 const ICON_GENERIC = 'Page';
 const ICON_DEFAULT_SIZE = 'icon16';
@@ -186,23 +188,23 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       const iconImage = this._getIconImageName();
       // Check if the image was found, otherwise a generic image will be returned
       if (typeof iconImage.image !== 'undefined' && iconImage.image !== null) {
-        iconElm = <div style={{ display: 'inline-block' }} className={`ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}`}></div>;
+        iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
       } else {
         // Return a generic image
         let imgElm = <img />;
         // Check the size of the generic image which has to be returned
         switch (iconImage.size) {
           case 'icon16':
-          imgElm = <img src={ICON_GENERIC_16} />;
+          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_16 }} />;
           break;
           case 'icon48':
-          imgElm = <img src={ICON_GENERIC_48} />;
+          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_48}} />;
           break;
           case 'icon96':
-          imgElm = <img src={ICON_GENERIC_96} />;
+          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_96}} />;
           break;
           default:
-          imgElm = <img src={ICON_GENERIC_16} />;
+          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_16}} />;
           break;
         }
 
@@ -215,7 +217,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     } else {
       // Return the icon font element
       const iconClass = this._getIconClassName();
-      iconElm = <i className={`ms-Icon ms-Icon--${iconClass}`} aria-hidden='true'></i>;
+      iconElm = <Icon iconName={iconClass} />;
     }
 
     // Return the icon element

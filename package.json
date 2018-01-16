@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -58,6 +58,6 @@
     "url": "https://github.com/SharePoint/sp-dev-fx-controls-react/issues"
   },
    "main":"lib/index.js",
-  
+
   "homepage": "https://github.com/SharePoint/sp-dev-fx-controls-react"
 }

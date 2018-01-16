@@ -1,5 +1,9 @@
 # Releases
 
+## 1.1.3
+
+- `FileTypeIcon` icon fixed. This control should now also work in SPFx extensions.
+
 ## 1.1.2
 
 - Fix for WebPartTitle control to inherit color
