@@ -15,5 +15,7 @@ The following controls are currently available:
 - [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
+- [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
+- [Field Controls](./controls/fields/main) (controls to emulate out of the box experience for Field Customizers)
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki)

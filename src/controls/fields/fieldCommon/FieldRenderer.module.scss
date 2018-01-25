@@ -1,0 +1,17 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+
+.ellipsis {
+    @extend .relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.relative {
+    position: relative;
+}
+
+.fabricIcon {
+    @include ms-Icon;
+}
