@@ -9,7 +9,7 @@ This control renders title either as a simple text or as a link to the Dislpay F
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
 ```TypeScript

@@ -3,6 +3,7 @@ export * from './ListView';
 export * from './Placeholder';
 export * from './SiteBreadcrumb';
 export * from './WebPartTitle';
+export * from './IFrameDialog';
 
 export * from './Common';
 export * from './Utilities';
