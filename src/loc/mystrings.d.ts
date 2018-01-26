@@ -3,6 +3,11 @@ declare interface IControlStrings {
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
   WebPartTitleLabel: string;
+  DateTime:{[key: string]: string};
+  SendEmailTo: string;
+  StartChatWith: string;
+  Contact: string;
+  UpdateProfile: string;
 }
 
 declare module 'ControlStrings' {

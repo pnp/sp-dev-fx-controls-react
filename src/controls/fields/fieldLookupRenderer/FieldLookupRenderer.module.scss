@@ -1,0 +1,14 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.lookup {
+    display: block !important;
+    max-width: 100%;
+}
+
+.dialogContainer {
+    max-width: 640px !important;
+
+    [class*="ms-Dialog-button--close"] {
+        position: absolute !important;
+    }
+}

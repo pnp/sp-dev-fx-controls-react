@@ -1,13 +1,26 @@
 site_name: SharePoint Framework React Controls
 pages:
   - Home: 'index.md'
-  - 'Getting started': 'getting-started.md'
   - Controls:
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - ListView: 'controls/ListView.md'
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - IFrameDialog: 'controls/IFrameDialog.md'
+  - 'Field Controls':
+    - 'Getting started': 'controls/fields/main.md'
+    - FieldRendererHelper: 'controls/fields/FieldRendererHelper.md'
+    - FieldAttachmentsRenderer: 'controls/fields/FieldAttachmentsRenderer.md'
+    - FieldDateRenderer: 'controls/fields/FieldDateRenderer.md'
+    - FieldFileTypeRenderer: 'controls/fields/FieldFileTypeRenderer.md'
+    - FieldLookupRenderer: 'controls/fields/FieldLookupRenderer.md'
+    - FieldNameRenderer: 'controls/fields/FieldNameRenderer.md'
+    - FieldTaxonomyRenderer: 'controls/fields/FieldTaxonomyRenderer.md'
+    - FieldTextRenderer: 'controls/fields/FieldTextRenderer.md'
+    - FieldTitleRenderer: 'controls/fields/FieldTitleRenderer.md'
+    - FieldUrlRenderer: 'controls/fields/FieldUrlRenderer.md'
+    - FieldUserRenderer: 'controls/fields/FieldUserRenderer.md'
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'
