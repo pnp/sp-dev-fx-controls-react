@@ -2,8 +2,14 @@
 
 ## 1.2.0
 
+**New controls**
+
 - Field controls are added to the project
 - `IFrameDialog` was added to the project
+
+**Fixes**
+
+- Fixed theming in the `WebPartTitle` control
 
 ## 1.1.3
 
