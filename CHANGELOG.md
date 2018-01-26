@@ -1,5 +1,10 @@
 # Releases
 
+## 1.2.0
+
+- Field controls are added to the project
+- `IFrameDialog` was added to the project
+
 ## 1.1.3
 
 - `FileTypeIcon` icon fixed. This control should now also work in SPFx extensions.
