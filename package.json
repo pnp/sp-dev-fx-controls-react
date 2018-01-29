@@ -59,7 +59,7 @@
     "office365",
     "tools",
     "spfx",
-    "sharepoint framework"
+    "framework"
   ],
   "bugs": {
     "url": "https://github.com/SharePoint/sp-dev-fx-controls-react/issues"
