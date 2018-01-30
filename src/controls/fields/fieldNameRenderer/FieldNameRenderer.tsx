@@ -56,7 +56,7 @@ export interface IFieldNameClickEventArgs {
  * Used for:
  *   - Title
  */
-export default class FieldNameRenderer extends React.Component<IFieldNameRendererProps, IFieldNameRendererState> {
+export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, IFieldNameRendererState> {
     public constructor(props: IFieldNameRendererProps, state: IFieldNameRendererState) {
         super(props, state);
 

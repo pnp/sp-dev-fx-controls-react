@@ -23,7 +23,7 @@ export interface IFieldDateRendererState {
  * Used for:
  *   - Date Time
  */
-export default class FieldDateRenderer extends React.Component<IFieldDateRendererProps, IFieldDateRendererState> {
+export class FieldDateRenderer extends React.Component<IFieldDateRendererProps, IFieldDateRendererState> {
     public constructor(props: IFieldDateRendererProps, state: IFieldDateRendererState) {
         super(props, state);
 

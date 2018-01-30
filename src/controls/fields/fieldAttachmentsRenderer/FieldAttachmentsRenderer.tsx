@@ -27,7 +27,7 @@ export interface IFieldAttahcmentsRendererState {
  * Used for:
  *   - Attachments
  */
-export default class FieldAttachmentsRenderer extends React.Component<IFieldAttachmentsRendererProps, IFieldAttahcmentsRendererState> {
+export class FieldAttachmentsRenderer extends React.Component<IFieldAttachmentsRendererProps, IFieldAttahcmentsRendererState> {
     public constructor(props: IFieldAttachmentsRendererProps, state: IFieldAttahcmentsRendererState) {
         super(props, state);
 

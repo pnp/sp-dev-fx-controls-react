@@ -26,7 +26,7 @@ export interface IFieldTaxonomyRendererState {
  * Used for:
  *   - Taxonomy
  */
-export default class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendererProps, IFieldTaxonomyRendererState> {
+export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendererProps, IFieldTaxonomyRendererState> {
     public constructor(props: IFieldTaxonomyRendererProps, state: IFieldTaxonomyRendererState) {
         super(props, state);
 

@@ -52,7 +52,7 @@ export interface IFieldTitleClickEventArgs {
  * Used for:
  *   - Title
  */
-export default class FieldTitleRenderer extends React.Component<IFieldTitleRendererProps, IFieldTitleRendererState> {
+export class FieldTitleRenderer extends React.Component<IFieldTitleRendererProps, IFieldTitleRendererState> {
     public constructor(props: IFieldTitleRendererProps, state: IFieldTitleRendererState) {
         super(props, state);
 
@@ -62,7 +62,7 @@ export default class FieldTitleRenderer extends React.Component<IFieldTitleRende
     @override
     public render(): JSX.Element {
         const isLink: boolean = this.props.isLink;
-        
+
         if (isLink) {
             return (<Link onClick={this._onClick.bind(this)} className={css(this.props.className)} style={this.props.cssProps}>{this.props.text}</Link>);
         }

@@ -30,7 +30,7 @@ export interface IFieldFileTypeRendererState {
  * Used for:
  *   - File/Document Type
  */
-export default class FieldFileTypeRenderer extends React.Component<IFieldFileTypeRendererProps, IFieldFileTypeRendererState> {
+export class FieldFileTypeRenderer extends React.Component<IFieldFileTypeRendererProps, IFieldFileTypeRendererState> {
   public constructor(props: IFieldFileTypeRendererProps, state: IFieldFileTypeRendererState) {
     super(props, state);
 

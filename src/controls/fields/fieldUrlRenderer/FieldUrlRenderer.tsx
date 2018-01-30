@@ -33,7 +33,7 @@ export interface IFieldUrlRendererState {
  * Used for:
  *   - URL (Hyperlink, Image)
  */
-export default class FieldUrlRenderer extends React.Component<IFieldUrlRendererProps, IFieldUrlRendererState> {
+export class FieldUrlRenderer extends React.Component<IFieldUrlRendererProps, IFieldUrlRendererState> {
     public constructor(props: IFieldUrlRendererProps, state: IFieldUrlRendererState) {
         super(props, state);
 
@@ -43,7 +43,7 @@ export default class FieldUrlRenderer extends React.Component<IFieldUrlRendererP
     @override
     public render(): JSX.Element {
         const isImageUrl: boolean = this.props.isImageUrl;
-        
+
         if (isImageUrl) {
             return (<div className={css(this.props.className, styles.image)} style={this.props.cssProps} onClick={this._onImgClick.bind(this)}><img src={this.props.url} alt={this.props.text} /></div>);
         }

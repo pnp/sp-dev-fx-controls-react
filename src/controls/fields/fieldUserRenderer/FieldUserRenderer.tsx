@@ -85,7 +85,7 @@ export interface IFieldUserRendererState {
  * Used for:
  *   - People and Groups
  */
-export default class FieldUserRenderer extends React.Component<IFieldUserRendererProps, IFieldUserRendererState> {
+export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, IFieldUserRendererState> {
 
     // cached user profiles
     private _loadedUserProfiles: { [id: string]: IUserProfileProperties } = {};

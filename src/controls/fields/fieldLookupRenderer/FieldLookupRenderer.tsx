@@ -43,7 +43,7 @@ export interface IFieldLookupClickEventArgs {
  * Used for:
  *   - Lookup, LookupMulti
  */
-export default class FieldLookupRenderer extends React.Component<IFieldLookupRendererProps, IFieldLookupRendererState> {
+export class FieldLookupRenderer extends React.Component<IFieldLookupRendererProps, IFieldLookupRendererState> {
     public constructor(props: IFieldLookupRendererProps, state: IFieldLookupRendererState) {
         super(props, state);
 
@@ -59,7 +59,7 @@ export default class FieldLookupRenderer extends React.Component<IFieldLookupRen
         });
         return (
         <div style={this.props.cssProps} className={css(this.props.className)}>{lookupLinks}
-        {!this.state.hideDialog && <IFrameDialog 
+        {!this.state.hideDialog && <IFrameDialog
             url={this.state.lookupDispFormUrl}
             iframeOnLoad={this._onIframeLoaded.bind(this)}
             hidden={this.state.hideDialog}
@@ -85,7 +85,7 @@ export default class FieldLookupRenderer extends React.Component<IFieldLookupRen
             this.props.onClick(args);
             return;
         }
-        
+
         //
         // showing Display Form in the dialog
         //

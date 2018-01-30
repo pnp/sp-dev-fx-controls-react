@@ -26,7 +26,7 @@ export interface IFieldBaseTextRendererState {
 /**
  * Base renderer. Used to render text.
  */
-export default class FieldBaseTextRenderer extends React.Component<IFieldBaseTextRendererProps, IFieldBaseTextRendererState> {
+export class FieldBaseTextRenderer extends React.Component<IFieldBaseTextRendererProps, IFieldBaseTextRendererState> {
     public constructor (props: IFieldBaseTextRendererProps, state: IFieldBaseTextRendererState) {
         super(props, state);
 

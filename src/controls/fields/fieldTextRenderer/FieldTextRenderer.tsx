@@ -39,7 +39,7 @@ export interface IFieldTextRendererState {
  *   - Number
  *   - Currency
  */
-export default class FieldTextRenderer extends React.Component<IFieldTextRendererProps, IFieldTextRendererState> {
+export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, IFieldTextRendererState> {
     public constructor(props: IFieldTextRendererProps, state: IFieldTextRendererState) {
         super(props, state);
 
