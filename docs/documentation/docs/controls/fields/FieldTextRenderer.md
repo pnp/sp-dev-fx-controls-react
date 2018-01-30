@@ -19,7 +19,7 @@ This control renders simple text.
 - Import the following modules to your component:
 
 ```TypeScript
-import { FieldTextRenderer } from "@pnp/spfx-controls-react/lib/FieldDateRenderer";
+import { FieldTextRenderer } from "@pnp/spfx-controls-react/lib/FieldTextRenderer";
 ```
 
 - Use the `FieldTextRenderer` control in your code as follows:
