@@ -104,7 +104,7 @@ export class FieldRendererHelper {
                     break;
                 case 'Note':
                     SPHelper.getFieldProperty(field.id.toString(), "RichText", context, false).then(richText => {
-                        const isRichText: boolean = richText === 'TRUE';
+                        const isRichText: boolean = richText === true || richText === 'TRUE';
                         let html: string = '';
 
                         if (isRichText) {
