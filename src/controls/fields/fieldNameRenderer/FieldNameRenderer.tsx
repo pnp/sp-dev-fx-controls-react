@@ -4,7 +4,7 @@ import { css } from 'office-ui-fabric-react';
 
 import { Link, Icon } from 'office-ui-fabric-react';
 
-import BaseTextRenderer from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
+import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 
 import styles from './FieldNameRenderer.module.scss';
@@ -90,7 +90,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
             }
         }
         else {
-            value = <BaseTextRenderer cssProps={this.props.cssProps} text={this.props.text} />;
+            value = <FieldBaseTextRenderer cssProps={this.props.cssProps} text={this.props.text} />;
         }
 
         return <span className={css(styles.signalField, this.props.className)} style={this.props.cssProps}>

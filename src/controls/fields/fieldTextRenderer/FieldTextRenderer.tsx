@@ -4,7 +4,7 @@ import { css } from 'office-ui-fabric-react';
 
 import styles from './FieldTextRenderer.module.scss';
 
-import FieldBaseTextRenderer from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
+import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 
 export interface IFieldTextRendererProps extends IFieldRendererProps {

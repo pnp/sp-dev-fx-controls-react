@@ -2,7 +2,7 @@ import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import FieldBaseTextRenderer from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
+import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 
 export interface IFieldDateRendererProps extends IFieldRendererProps {
     /**
