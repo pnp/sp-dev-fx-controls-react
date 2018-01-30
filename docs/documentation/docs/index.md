@@ -20,6 +20,7 @@ Once the package is installed, you will have to configure the resource file of t
 
 ```json
 "ControlStrings": "./node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+```
 
 ## Available controls
 
