@@ -53,7 +53,7 @@ export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, 
         isTruncatedClassNameObj[styles.isTruncated] = this.props.isTruncated;
         let text: string = this.props.text;
         if (isSafeForInnerHTML && this.props.isTruncated) {
-            text += `<div class=${styles.truncate} style="background: linear-gradient(to bottom, transparent, ${this.props.cssProps.background || this.props.cssProps.backgroundColor || '#ffffff'} 100%)"></div>`;
+            text += `<div class=${styles.truncate} style="background: linear-gradient(to bottom, transparent, ${(this.props.cssProps && (this.props.cssProps.background || this.props.cssProps.backgroundColor)) || '#ffffff'} 100%)"></div>`;
         }
 
 
