@@ -101,6 +101,7 @@ String.prototype._parseNumberNegativePattern = function (numberFormat: ICultureN
         case 4:
             negativeSign = ' ' + negativeSign;
             positiveSign = ' ' + positiveSign;
+            break;
         case 3:
             if (this.endsWith(negativeSign)) {
                 return ['-', this.substr(0, this.length - negativeSign.length)];
@@ -112,6 +113,7 @@ String.prototype._parseNumberNegativePattern = function (numberFormat: ICultureN
         case 2:
             negativeSign += ' ';
             positiveSign += ' ';
+            break;
         case 1: if (this.startsWith(negativeSign)) {
             return ['-', this.substr(negativeSign.length)];
         }
