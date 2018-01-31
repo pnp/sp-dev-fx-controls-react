@@ -1,0 +1,22 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.fieldRendererText {
+    @extend .relative;
+    white-space: normal;
+    overflow: hidden;
+    max-height: 7em;
+
+    &.isTruncated {
+        height: 98px;
+        display: inline-block;
+        overflow: hidden;
+
+        .truncate {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 4em;
+        }
+    }
+}

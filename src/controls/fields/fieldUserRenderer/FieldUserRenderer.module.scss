@@ -1,0 +1,77 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.user {
+    @extend .ellipsis;
+
+    span:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+.main {
+    @extend .relative;
+    padding: 20px 24px;
+    background: #fff;
+
+    .actions {
+        margin: 16px -4px 0 -8px;
+
+        & a {
+            margin-left: 0px !important;
+        }
+
+        .chat {
+            i {
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+}
+
+.sections {
+    margin: 0;
+    padding: 0;
+    list-style-type: disc;
+
+    .section {
+        padding: 20px 0;
+        background: #fff;
+
+        .header {
+            display: inline-block;
+            position: relative;
+            margin: 0 24px 12px;
+            text-align: left;
+            padding: 0 20px 0 0;
+
+            .chevron {
+                line-height: 20px;
+                margin: 0;
+                padding: 0;
+                right: 0;
+                font-size: 12px;
+                position: absolute;
+                top: 0;
+                vertical-align: middle;
+            }
+        }
+
+        .contactItem {
+            padding: 0 24px;
+            display: flex;
+            height: 28px;
+            line-height: 28px;
+            font-size: 12px;
+
+            i {
+                padding-top: .1em;
+            }
+
+            .content {
+                margin: 0 12px;
+            }
+        }
+    }
+}

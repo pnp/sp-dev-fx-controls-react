@@ -1,0 +1,14 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.container {
+    position: absolute;
+    font-size: 16px;
+    top: 50%;
+
+    &.folder {
+        font-size: 20px;
+        left: 50%;
+        margin-left: -10px;
+        margin-top: 1px;
+    }
+}

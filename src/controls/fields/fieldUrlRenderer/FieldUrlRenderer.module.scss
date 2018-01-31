@@ -1,0 +1,14 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.image {
+    @extend .relative;
+    max-width: 64px;
+    max-height: 64px;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+}
+
+.link {
+    @extend .relative;
+}
