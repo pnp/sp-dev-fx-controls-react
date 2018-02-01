@@ -5,7 +5,6 @@ This control renders lookup values. Each lookup item is clickable. Click on the 
 **Note:** this control displays correctly starting with SharePoint Framework v1.4
 
 ![FieldLookupRenderer control output](../../assets/FieldLookupRenderer.png)
-![FieldLookupRenderer dialog](../../assets/FieldLookupRendererDialog.png)
 
 ## Covered Fields
 - Lookup (single, multi)
