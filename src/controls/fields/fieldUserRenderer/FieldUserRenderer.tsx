@@ -12,6 +12,7 @@ import { IContext } from '../../../common/Interfaces';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { SPHttpClient } from '@microsoft/sp-http';
 import FieldUserHoverCard, { IFieldUserHoverCardProps } from './FieldUserHoverCard';
+import * as appInsights from '../../../common/appInsights';
 
 import * as strings from 'ControlStrings';
 
@@ -95,6 +96,8 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
 
     public constructor(props: IFieldUserRendererProps, state: IFieldUserRendererState) {
         super(props, state);
+
+        appInsights.track('FieldUserRenderer', {});
 
         this._userImageUrl = `${GeneralHelper.trimSlash(props.context.pageContext.web.absoluteUrl)}/_layouts/15/userphoto.aspx?size=L&accountname={0}`;
 

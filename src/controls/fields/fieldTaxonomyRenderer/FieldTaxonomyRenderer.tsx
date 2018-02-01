@@ -4,6 +4,7 @@ import { css } from 'office-ui-fabric-react';
 
 import { ITerm } from '../../../common/SPEntities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
+import * as appInsights from '../../../common/appInsights';
 
 import styles from './FieldTaxonomyRenderer.module.scss';
 
@@ -29,6 +30,8 @@ export interface IFieldTaxonomyRendererState {
 export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendererProps, IFieldTaxonomyRendererState> {
     public constructor(props: IFieldTaxonomyRendererProps, state: IFieldTaxonomyRendererState) {
         super(props, state);
+
+        appInsights.track('FieldTaxonomyRenderer', {});
 
         this.state = {};
     }
