@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.1
+
+**Fixes**
+
+- `FieldTaxonomyRenderer` got fixed to support single and multiple values
+
 ## 1.2.0
 
 **New controls**

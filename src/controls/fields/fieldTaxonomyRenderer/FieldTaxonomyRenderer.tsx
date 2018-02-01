@@ -11,7 +11,7 @@ export interface IFieldTaxonomyRendererProps extends IFieldRendererProps {
     /**
      * terms to display
      */
-    terms: ITerm[];
+    terms: ITerm | ITerm[];
 }
 
 /**
@@ -35,9 +35,14 @@ export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendere
 
     @override
     public render(): JSX.Element {
-        const termEls: JSX.Element[] = this.props.terms.map((term) => {
-            return <div className={styles.term} style={this.props.cssProps}><span>{term.Label}</span></div>;
-        });
+        let termEls: JSX.Element | JSX.Element[] = null;
+        if (Array.isArray(this.props.terms)) {
+            termEls = this.props.terms.map((term) => {
+                return <div className={styles.term} style={this.props.cssProps}><span>{term.Label}</span></div>;
+            });
+        } else {
+            termEls = <div className={styles.term} style={this.props.cssProps}><span>{this.props.terms.Label}</span></div>;
+        }
         return (<div style={this.props.cssProps} className={css(this.props.className)}>{termEls}</div>);
     }
 }
