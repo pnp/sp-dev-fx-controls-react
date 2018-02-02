@@ -4,6 +4,7 @@ import { css } from 'office-ui-fabric-react';
 
 import styles from './FieldBaseTextRenderer.module.scss';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
+import * as appInsights from '../../../common/appInsights';
 
 export interface IFieldBaseTextRendererProps extends IFieldRendererProps {
     /**
@@ -29,6 +30,8 @@ export interface IFieldBaseTextRendererState {
 export class FieldBaseTextRenderer extends React.Component<IFieldBaseTextRendererProps, IFieldBaseTextRendererState> {
     public constructor (props: IFieldBaseTextRendererProps, state: IFieldBaseTextRendererState) {
         super(props, state);
+
+        appInsights.track('FieldBaseTextRenderer', {});
 
         this.state = {};
     }

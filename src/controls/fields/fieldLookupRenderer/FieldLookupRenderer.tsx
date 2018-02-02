@@ -4,6 +4,7 @@ import { css, DialogType, Link } from 'office-ui-fabric-react';
 
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
+import * as appInsights from '../../../common/appInsights';
 
 import styles from './FieldLookupRenderer.module.scss';
 import IFrameDialog from '../../iFrameDialog/IFrameDialog';
@@ -46,6 +47,8 @@ export interface IFieldLookupClickEventArgs {
 export class FieldLookupRenderer extends React.Component<IFieldLookupRendererProps, IFieldLookupRendererState> {
     public constructor(props: IFieldLookupRendererProps, state: IFieldLookupRendererState) {
         super(props, state);
+
+        appInsights.track('FieldLookupRenderer', {});
 
         this.state = {
             hideDialog: true

@@ -6,6 +6,7 @@ import styles from './FieldTextRenderer.module.scss';
 
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
+import * as appInsights from '../../../common/appInsights';
 
 export interface IFieldTextRendererProps extends IFieldRendererProps {
     /**
@@ -42,6 +43,8 @@ export interface IFieldTextRendererState {
 export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, IFieldTextRendererState> {
     public constructor(props: IFieldTextRendererProps, state: IFieldTextRendererState) {
         super(props, state);
+
+        appInsights.track('FieldTextRenderer', {});
 
         this.state = {};
     }
