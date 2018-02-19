@@ -1,5 +1,11 @@
 # Releases
 
+## 1.2.2
+
+**Fixes**
+
+- Fixes an issue sorting in the `ListView` control while items were selected. Indexes were not updated.
+
 ## 1.2.1
 
 **Fixes**
