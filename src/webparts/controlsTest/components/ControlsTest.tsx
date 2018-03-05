@@ -9,17 +9,20 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../.
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
-
+import { RichTextEditor } from '../../../controls/richTextEditor/RichTextEditor';
+import { TextFieldWithEdit } from '../../../controls/textFieldWithEdit/TextFieldWithEdit';
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
+  private richTextEditor: RichTextEditor;
   constructor(props: IControlsTestProps) {
     super(props);
 
     this.state = {
       imgSize: ImageSize.small,
-      items: []
+      items: [],
+      textFieldOriginalVal: "The quick brown <strike><b>DOG</b></strike><b>Fox</b> "
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -117,22 +120,51 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'Title'
       }
     ];
-
+    const ckeditorConfig = {}
     // Specify the fields on which you want to group your items
     // Grouping is takes the field order into account from the array
-    const groupByFields: IGrouping[] = [{name: "ListItemAllFields.City", order: GroupOrder.ascending }, {name: "ListItemAllFields.Country.Label", order: GroupOrder.descending}];
+    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
 
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-                      title={this.props.title}
-                      updateProperty={this.props.updateProperty} />
+          title={this.props.title}
+          updateProperty={this.props.updateProperty} />
 
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
+              <p className="ms-font-l">
+                Rich Text Editor (note toolbar appears only on classic pages)
+              </p>
+              <div className="ms-font-m">
+                <RichTextEditor
+                  ref={instance => { this.richTextEditor = instance; }}
+                  value="The quick brown <b>DOG</b> "
+                  ckEditorUrl="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"
+                  ckEditorConfig={ckeditorConfig} // see https://docs.ckeditor.com/ckeditor4/docs/?mobile=/guide/dev_toolbar
+                />
+                <button onClick={(e) => {
+                  debugger;
+                  alert(this.richTextEditor.getValue())
+                }} >Click here to read editor as you would when about to save</button>
+              </div>
+              <p className="ms-font-l">
+                Text Field with edit (if user soes not have edit permission,dont pass in an onValueChanged and he cant edit )
+              </p>
+              <div className="ms-font-m">
+                <TextFieldWithEdit
+                  value={this.state.textFieldOriginalVal}
+                  ckEditorUrl="//cdn.ckeditor.com/4.6.2/full/ckeditor.js"
+                  ckEditorConfig={ckeditorConfig}
+                  onValueChanged={(oldval, newval) => {
+                    this.setState((current) => ({ ...current, textFieldOriginalVal: newval }));
+                    return Promise.resolve();
 
+                  }}
+                />
+              </div>
               <p className="ms-font-l">
                 File type icon control
               </p>
