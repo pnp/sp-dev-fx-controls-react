@@ -41,16 +41,20 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
    * Default React component render method
    */
   public render(): React.ReactElement<IWebPartTitleProps> {
-    return (
-      <div className={`${styles.webPartTitle} ${this.props.className ? this.props.className : ''}` }>
-        {
-          this.props.displayMode === DisplayMode.Edit && <textarea placeholder={strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
-        }
+    if (this.props.title || this.props.displayMode === DisplayMode.Edit) {
+      return (
+        <div className={`${styles.webPartTitle} ${this.props.className ? this.props.className : ''}` }>
+          {
+            this.props.displayMode === DisplayMode.Edit && <textarea placeholder={strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
+          }
 
-        {
-          this.props.displayMode !== DisplayMode.Edit && this.props.title && <span>{this.props.title}</span>
-        }
-      </div>
-    );
+          {
+            this.props.displayMode !== DisplayMode.Edit && this.props.title && <span>{this.props.title}</span>
+          }
+        </div>
+      );
+    }
+
+    return null;
   }
 }

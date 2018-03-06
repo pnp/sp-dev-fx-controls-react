@@ -1,5 +1,12 @@
 # Releases
 
+## 1.2.3
+
+**Enhancements**
+
+- Optimized telemetry so that it only pushes control data
+- `WebPartTitle` hide control completely when empty
+
 ## 1.2.2
 
 **Fixes**
