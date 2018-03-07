@@ -132,16 +132,18 @@ export class FieldRendererHelper {
                     break;
                 case "Lookup":
                 case "LookupMulti":
-                    SPHelper.getLookupFieldListDispFormUrl(field.id.toString(), context).then(dispFormUrlValue => {
-                        const lookupValues = fieldValue as ISPFieldLookupValue[];
-                        const dispFormUrl: string = dispFormUrlValue.toString();
-                        resolve(React.createElement(FieldLookupRenderer, {
-                            lookups: lookupValues,
-                            dispFormUrl: dispFormUrl,
-                            ...props
-                        }));
-                    });
-
+                    //
+                    // we're providing fieldId and context. In that case Lookup values will be rendered right away
+                    // without additional lag of waiting of response to get dispUrl.
+                    // The request for DispUrl will be sent only if user click on the value
+                    //
+                    const lookupValues = fieldValue as ISPFieldLookupValue[];
+                    resolve(React.createElement(FieldLookupRenderer, {
+                        lookups: lookupValues,
+                        fieldId: field.id.toString(),
+                        context: context,
+                        ...props
+                    }));
                     break;
                 case 'URL':
                     SPHelper.getFieldProperty(field.id.toString(), 'Format', context, true).then(format => {
