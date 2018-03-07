@@ -1,0 +1,100 @@
+.placeholder {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    .placeholderContainer {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+        align-items: center;
+        color: "[theme:neutralSecondary, default: #666666]";
+        background-color: "[theme:neutralLighter, default: #f4f4f4]";
+        width: 100%;
+        padding: 80px 0;
+
+        .placeholderHead {
+            color: "[theme:neutralPrimary, default: #333333]";
+
+            .placeholderHeadContainer {
+                height: 100%;
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            .placeholderIcon {
+                display: inline-block;
+                vertical-align: middle;
+                white-space: normal;
+            }
+
+            .placeholderText {
+                display: inline-block;
+                vertical-align: middle;
+                white-space: normal
+            }
+        }
+
+        .placeholderDescription {
+            width: 65%;
+            vertical-align: middle;
+            margin: 0 auto;
+            text-align: center;
+
+            .placeholderDescriptionText {
+                color: "[theme:neutralSecondary, default: #666666]";
+                font-size: 17px;
+                display: inline-block;
+                margin: 24px 0;
+                font-weight: 100;
+            }
+
+            button {
+              font-size: 14px;
+              font-weight: 400;
+              box-sizing: border-box;
+              display: inline-block;
+              text-align: center;
+              cursor: pointer;
+              vertical-align: top;
+              min-width: 80px;
+              height: 32px;
+              background-color: "[theme:themePrimary, default: #0078d7]";
+              color: #fff;
+              user-select: none;
+              outline: transparent;
+              border-width: 1px;
+              border-style: solid;
+              border-color: transparent;
+              border-image: initial;
+              text-decoration: none;
+            }
+        }
+    }
+}
+
+[dir=ltr] .placeholder,
+[dir=rtl] .placeholder {
+
+    .placeholderContainer {
+
+        .placeholderHead {
+
+            .placeholderText {
+                padding-left: 20px;
+            }
+        }
+    }
+}
+
+.placeholderOverlay {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+
+    .placeholderSpinnerContainer {
+        position: relative;
+        width: 100%;
+        margin: 164px 0
+    }
+}
