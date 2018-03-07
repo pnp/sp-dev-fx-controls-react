@@ -1,2 +1,2 @@
 export * from './IPeoplePicker';
-export * from './SPPeoplePickerComponent';
+export * from './PeoplePickerComponent';

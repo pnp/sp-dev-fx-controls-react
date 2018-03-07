@@ -25,7 +25,7 @@ const suggestionProps: IBasePickerSuggestionsProps = {
 /**
 * PeoplePicker component
 */
-export class SPPeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
+export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
 
   public static defaultProps: IPeoplePickerProps = {
   context : null,
@@ -108,7 +108,7 @@ constructor(props: IPeoplePickerProps) {
           imageUrl: "",
           imageInitials: "",
           primaryText: "", //Name
-          secondaryText: "", //Role
+          secondaryText: "", //Email
           tertiaryText: "", //status
           optionalText: "" //anything
         }];
@@ -119,11 +119,10 @@ constructor(props: IPeoplePickerProps) {
           {
              userValuesArray = [{
                 id: items.value[i].Id,
-                //imageUrl: `/_layouts/15/userphoto.aspx?size=S&accountname=${items.value[i].Email}`,
-                imageUrl: this.generateUserPhotoLink(items.value[i].Email), // `https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${items.value[i].Email}&UA=0&size=HR96x96`,
+                imageUrl: this.generateUserPhotoLink(items.value[i].Email), 
                 imageInitials: "",
                 primaryText: items.value[i].Title, //Name
-                secondaryText: items.value[i].Email, //Role
+                secondaryText: items.value[i].Email, //Email
                 tertiaryText: "", //status
                 optionalText: "" //anything
              }]
@@ -132,10 +131,10 @@ constructor(props: IPeoplePickerProps) {
           {
             userValuesArray.push({
               id: items.value[i].Id,
-              imageUrl: this.generateUserPhotoLink(items.value[i].Email), //`https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${items.value[i].Email}&UA=0&size=HR96x96`,
+              imageUrl: this.generateUserPhotoLink(items.value[i].Email), 
               imageInitials: "",
               primaryText: items.value[i].Title, //Name
-              secondaryText: items.value[i].Email, //Role
+              secondaryText: items.value[i].Email, //Email
               tertiaryText: "", //status
               optionalText: "" //anything
            });

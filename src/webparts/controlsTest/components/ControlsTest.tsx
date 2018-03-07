@@ -17,6 +17,7 @@ import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
+import { PeoplePicker } from '../../../PeoplePicker';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -39,8 +40,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * React componentDidMount lifecycle hook
    */
   public componentDidMount() {
-    //const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
-    const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists(guid'40e24fbb-120a-4651-9dc2-34700a58297b')/items`;
+    const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
     this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
       .then(resp => { return resp.json(); })
       .then(items => {
@@ -133,53 +133,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       }
     ];
 
-    // // Specify the fields that need to be viewed in the listview
-    // const viewFields: IViewField[] = [
-    //   {
-    //     name: 'ListItemAllFields.Id',
-    //     displayName: 'ID',
-    //     maxWidth: 40,
-    //     sorting: true
-    //   },
-    //   {
-    //     name: 'ListItemAllFields.Underscore_Field',
-    //     displayName: "Underscore_Field",
-    //     sorting: true
-    //   },
-    //   {
-    //     name: 'Name',
-    //     linkPropertyName: 'ServerRelativeUrl',
-    //     sorting: true
-    //   },
-    //   {
-    //     name: 'ServerRelativeUrl',
-    //     displayName: 'Path',
-    //     render: (item: any) => {
-    //       return <a href={item['ServerRelativeUrl']}>Link</a>;
-    //     }
-    //   },
-    //   {
-    //     name: 'Title'
-    //   }
-    // ];
-
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
       {
-        name: 'Id',
+        name: 'ListItemAllFields.Id',
         displayName: 'ID',
         maxWidth: 40,
         sorting: true
       },
       {
-        name: 'Students_x0020_Strength',
-        displayName: "Students Strength",
+        name: 'ListItemAllFields.Underscore_Field',
+        displayName: "Underscore_Field",
         sorting: true
       },
       {
-        name: 'Training_x0020_site.Description',
-        linkPropertyName: 'Training_x0020_site.Url',
-        displayName: 'Training Site',
+        name: 'Name',
+        linkPropertyName: 'ServerRelativeUrl',
         sorting: true
       },
       {
@@ -310,9 +279,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selectionMode={SelectionMode.multiple}
           selection={this._getSelection} />
 
-          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p> 
           
-          <SPPeoplePicker
+          <PeoplePicker
           context={this.props.context}
           titleText="People Picker"
           getAllUsers={false}
