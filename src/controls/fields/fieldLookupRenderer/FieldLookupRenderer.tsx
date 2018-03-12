@@ -1,6 +1,6 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
-import { css, DialogType, Link } from 'office-ui-fabric-react';
+import { css, Dialog, DialogType, Link, Spinner, SpinnerSize } from 'office-ui-fabric-react';
 
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
@@ -8,7 +8,16 @@ import * as appInsights from '../../../common/appInsights';
 
 import styles from './FieldLookupRenderer.module.scss';
 import IFrameDialog from '../../iFrameDialog/IFrameDialog';
+import { SPHelper } from '../../../Utilities';
+import { IContext } from '../../../Common';
 
+/**
+ * Field Lookup Renderer Props
+ * There are 3 options to provide the props:
+ * - [recommended, used in FieldRendererHelper] Provide fieldId and context. In that case request for DispUrl will be sent only if a user clicks on the value
+ * - Provide dispFormUrl: if you know this URL a priori you can provide it into the renderer
+ * - Provide onClick handler to handle value's click event outside the renderer
+ */
 export interface IFieldLookupRendererProps extends IFieldRendererProps {
     /**
      * lookup values
@@ -22,14 +31,23 @@ export interface IFieldLookupRendererProps extends IFieldRendererProps {
      * custom event handler of lookup item click. If not set the dialog with Display Form will be shown
      */
     onClick?: (args: IFieldLookupClickEventArgs) => {};
+    /**
+     * Field's id.
+     */
+    fieldId?: string;
+    /**
+     * Customizer context. Must be providede if fieldId is set
+     */
+    context?: IContext;
 }
 
 /**
- * For future
+ * Field Lookup Renderer State
  */
 export interface IFieldLookupRendererState {
     hideDialog?: boolean;
     lookupDispFormUrl?: string;
+    dispFormUrl?: string;
 }
 
 /**
@@ -51,7 +69,8 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
         appInsights.track('FieldLookupRenderer', {});
 
         this.state = {
-            hideDialog: true
+            hideDialog: true,
+            dispFormUrl: props.dispFormUrl
         };
     }
 
@@ -61,23 +80,35 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
             return <Link onClick={this._onClick.bind(this, lookup)} className={styles.lookup} style={this.props.cssProps}>{lookup.lookupValue}</Link>;
         });
         return (
-        <div style={this.props.cssProps} className={css(this.props.className)}>{lookupLinks}
-        {!this.state.hideDialog && <IFrameDialog
-            url={this.state.lookupDispFormUrl}
-            iframeOnLoad={this._onIframeLoaded.bind(this)}
-            hidden={this.state.hideDialog}
-            onDismiss={this._onDialogDismiss.bind(this)}
-            modalProps={{
-                isBlocking: true,
-                containerClassName: styles.dialogContainer
-            }}
-            dialogContentProps={{
-                type: DialogType.close,
-                showCloseButton: true
-            }}
-            width={'570px'}
-            height={'315px'}/>}
-        </div>);
+            <div style={this.props.cssProps} className={css(this.props.className)}>{lookupLinks}
+                {!this.state.hideDialog && this.state.dispFormUrl && <IFrameDialog
+                    url={this.state.lookupDispFormUrl}
+                    iframeOnLoad={this._onIframeLoaded.bind(this)}
+                    hidden={this.state.hideDialog}
+                    onDismiss={this._onDialogDismiss.bind(this)}
+                    modalProps={{
+                        isBlocking: true,
+                        containerClassName: styles.dialogContainer
+                    }}
+                    dialogContentProps={{
+                        type: DialogType.close,
+                        showCloseButton: true
+                    }}
+                    width={'570px'}
+                    height={'315px'} />}
+                {!this.state.hideDialog && !this.state.dispFormUrl && <Dialog
+                    onDismiss={this._onDialogDismiss.bind(this)}
+                    modalProps={{
+                        isBlocking: true,
+                        containerClassName: styles.dialogContainer
+                    }}
+                    dialogContentProps={{
+                        type: DialogType.close,
+                        showCloseButton: true
+                    }}>
+                        <Spinner size={SpinnerSize.large} />
+                    </Dialog>}
+            </div>);
     }
 
     private _onClick(lookup: ISPFieldLookupValue): void {
@@ -92,10 +123,32 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
         //
         // showing Display Form in the dialog
         //
-        this.setState({
-            lookupDispFormUrl: `${this.props.dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
-            hideDialog: false
-        });
+        if (this.state.dispFormUrl) {
+            this.setState({
+                lookupDispFormUrl: `${this.state.dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
+                hideDialog: false
+            });
+        }
+        else if (this.props.fieldId) {
+
+            this.setState({
+                hideDialog: false
+            });
+
+            SPHelper.getLookupFieldListDispFormUrl(this.props.fieldId, this.props.context).then(dispFormUrlValue => {
+                const dispFormUrl: string = dispFormUrlValue.toString();
+                this.setState((prevState, props) => {
+                    if (prevState.hideDialog) {
+                        return;
+                    }
+
+                    return {
+                        dispFormUrl: dispFormUrl,
+                        lookupDispFormUrl: `${dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
+                    };
+                });
+            });
+        }
     }
 
     private _onIframeLoaded(iframe: any): void {
