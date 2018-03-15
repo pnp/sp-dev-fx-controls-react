@@ -102,10 +102,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         items: items
       });
     }
-  }
-  /* Method that retrieves the selected items from People  Picker
+  } 
+  /** Method that retrieves the selected items from People  Picker
    * @param items
-  */
+   */
   private _getPeoplePickerItems(items: any[]) {
     console.log('Items:', items);
   }

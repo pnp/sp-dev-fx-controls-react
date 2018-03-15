@@ -45,6 +45,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 */
 constructor(props: IPeoplePickerProps) {
   super(props);
+  this.refs
   this.state = {
     selectedPersons: [],
     mostRecentlyUsedPersons: [],
