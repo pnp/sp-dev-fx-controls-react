@@ -15,7 +15,7 @@ Here is an example of the control in action:
 import { IFrameDialog } from "@pnp/spfx-controls-react/lib/IFrameDialog";
 ```
 
-- Use the `IFrameDialog` control in your code as follows:
+- Use the `IFrameDialog` control in your code as follows (`this._onIframeLoaded` and `this._onDialogDismiss` are methods that should be implemented if you want to execute some actions when the iframe content is loaded and dialog should be closed respectively):
 
 ```TypeScript
 <IFrameDialog 

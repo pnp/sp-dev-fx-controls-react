@@ -13,4 +13,5 @@ export interface IControlsTestProps {
 export interface IControlsTestState {
   imgSize: ImageSize;
   items: any[];
+  iFrameDialogOpened?: boolean;
 }

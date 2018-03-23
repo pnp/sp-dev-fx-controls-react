@@ -9,7 +9,6 @@ import { SPField } from '@microsoft/sp-page-context';
 import { IContext } from '../Interfaces';
 import { GeneralHelper } from './GeneralHelper';
 import { FieldLookupRenderer, IFieldLookupClickEventArgs } from '../../controls/fields/fieldLookupRenderer/FieldLookupRenderer';
-import IFrameDialog from '../../controls/iFrameDialog/IFrameDialog';
 import { FieldUrlRenderer } from '../../controls/fields/fieldUrlRenderer/FieldUrlRenderer';
 import { FieldTaxonomyRenderer } from '../../controls/fields/fieldTaxonomyRenderer/FieldTaxonomyRenderer';
 import { IFieldRendererProps } from '../../controls/fields/fieldCommon/IFieldRendererProps';

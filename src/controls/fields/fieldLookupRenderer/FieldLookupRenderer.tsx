@@ -7,7 +7,7 @@ import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import * as appInsights from '../../../common/appInsights';
 
 import styles from './FieldLookupRenderer.module.scss';
-import IFrameDialog from '../../iFrameDialog/IFrameDialog';
+import { IFrameDialog } from '../../iFrameDialog/IFrameDialog';
 import { SPHelper } from '../../../Utilities';
 import { IContext } from '../../../Common';
 
