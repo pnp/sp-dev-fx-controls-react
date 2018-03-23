@@ -19,7 +19,7 @@ npm install @pnp/spfx-controls-react --save --save-exact
 Once the package is installed, you will have to configure the resource file of the property controls to be used in your project. You can do this by opening the `config/config.json` and adding the following line to the `localizedResources` property:
 
 ```json
-"ControlStrings": "./node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+"ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
 ```
 
 ## Available controls
