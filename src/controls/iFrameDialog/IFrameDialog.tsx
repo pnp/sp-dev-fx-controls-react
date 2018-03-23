@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Dialog, IDialogProps } from 'office-ui-fabric-react';
-import IFrameDialogContent from './IFrameDialogContent';
+import { IFrameDialogContent } from './IFrameDialogContent';
 import * as appInsights from '../../common/appInsights';
 
 export interface IFrameDialogProps extends IDialogProps {
@@ -12,7 +12,7 @@ export interface IFrameDialogProps extends IDialogProps {
   /**
    * iframe's onload event handler
    */
-  iframeOnLoad?: (iframe: any) => {};
+  iframeOnLoad?: (iframe: any) => void;
   /**
    * iframe width
    */
@@ -29,7 +29,7 @@ export interface IFrameDialogState {
 /**
  * Dialog component to display content in iframe
  */
-export default class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialogState> {
+export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialogState> {
 
   public constructor(props: IFrameDialogProps, state: IFrameDialogState) {
     super(props, state);

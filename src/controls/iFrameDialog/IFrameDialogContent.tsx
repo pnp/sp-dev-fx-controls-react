@@ -6,7 +6,7 @@ import styles from './IFrameDialogContent.module.scss';
 export interface IIFrameDialogContentProps {
     url: string;
     close: () => void;
-    iframeOnLoad?: (iframe: any) => {};
+    iframeOnLoad?: (iframe: any) => void;
     width: string;
     height: string;
 }
@@ -14,7 +14,7 @@ export interface IIFrameDialogContentProps {
 /**
  * IFrame Dialog content
  */
-export default class IFrameDialogContent extends React.Component<IIFrameDialogContentProps, {}> {
+export class IFrameDialogContent extends React.Component<IIFrameDialogContentProps, {}> {
     private _iframe: any;
 
     constructor(props: IIFrameDialogContentProps) {
