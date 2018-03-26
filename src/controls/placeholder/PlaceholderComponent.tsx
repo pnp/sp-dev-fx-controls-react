@@ -70,7 +70,6 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
     this.setState({
       width: this._crntElm.clientWidth
     });
-    console.log(this._crntElm.offsetWidth, this._crntElm.clientWidth);
   }
 
   /**
