@@ -2,6 +2,9 @@
 
 ## 1.2.4
 
+**Enhancements**
+- Hiding placeholder web part on small zones
+
 **Fixes**
 - iFrame dialog reference fix [#52 - Need some more implementation documentation on IFrameDialog](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/52)
 

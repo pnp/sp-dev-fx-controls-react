@@ -29,9 +29,13 @@
             }
 
             .placeholderText {
-                display: inline-block;
+                display: inline;
                 vertical-align: middle;
-                white-space: normal
+                white-space: normal;
+
+                &.hide {
+                  display: none;
+                }
             }
         }
 

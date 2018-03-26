@@ -32,3 +32,7 @@ export interface IPlaceholderProps {
    */
   contentClassName?: string;
 }
+
+export interface IPlaceholderState {
+  width: number;
+}
