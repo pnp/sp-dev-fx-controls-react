@@ -4,11 +4,15 @@ import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
+import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
+import { IFrameDialog } from '../../../IFrameDialog';
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -19,7 +23,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     this.state = {
       imgSize: ImageSize.small,
-      items: []
+      items: [],
+      iFrameDialogOpened: false
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -120,13 +125,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     // Specify the fields on which you want to group your items
     // Grouping is takes the field order into account from the array
-    const groupByFields: IGrouping[] = [{name: "ListItemAllFields.City", order: GroupOrder.ascending }, {name: "ListItemAllFields.Country.Label", order: GroupOrder.descending}];
+    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
+
+    let iframeUrl: string = '/temp/workbench.html';
+    if (Environment.type === EnvironmentType.SharePoint) {
+      iframeUrl = '/_layouts/15/sharepoint.aspx';
+    }
+    else if (Environment.type === EnvironmentType.ClassicSharePoint) {
+      iframeUrl = this.context.pageContext.web.serverRelativeUrl;
+    }
 
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-                      title={this.props.title}
-                      updateProperty={this.props.updateProperty} />
+          title={this.props.title}
+          updateProperty={this.props.updateProperty} />
 
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
@@ -156,6 +169,25 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+              <div className="ms-font-m">iframe dialog tester:
+                <PrimaryButton
+                  text="Open iframe Dialog"
+                  onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
+                <IFrameDialog
+                  url={iframeUrl}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  hidden={!this.state.iFrameDialogOpened}
+                  onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
+                  modalProps={{
+                    isBlocking: true
+                  }}
+                  dialogContentProps={{
+                    type: DialogType.close,
+                    showCloseButton: true
+                  }}
+                  width={'570px'}
+                  height={'315px'} />
               </div>
             </div>
           </div>

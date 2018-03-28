@@ -22,7 +22,7 @@ import { FieldLookupRenderer } from "@pnp/spfx-controls-react/lib/FieldLookupRen
 - Use the `FieldLookupRenderer` control in your code as follows:
 
 ```TypeScript
-<FieldLookupRenderer lookups={event.fieldValue} dispFormUrl={'https://contoso.sharepoint.com/_layouts/15/listform.aspx?PageType=4&ListId={list_id}'} className={'some-class'} cssProps={{ background: '#f00' }} />
+<FieldLookupRenderer lookups={event.fieldValue} fieldId={'<field-guid>'} context={this.context} className={'some-class'} cssProps={{ background: '#f00' }} />
 ```
 
 ## Implementation
@@ -36,6 +36,8 @@ The FieldLookupRenderer component can be configured with the following propertie
 | lookups | ISPFieldLookupValue[] | yes | Lookup field values. |
 | dispFormUrl | boolean | no | Url of Display form for the list that is referenced by the lookup. |
 | onClick | (args: ILookupClickEventArgs) => {} | no | Custom event handler of lookup item click. If not set the dialog with Display Form will be shown. |
+| fieldId | string | Field's id |
+| context | IContext | Customizer context. Must be providede if fieldId is set |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldLookupRenderer)
 
