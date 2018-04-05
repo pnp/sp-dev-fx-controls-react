@@ -1,6 +1,8 @@
-# Reusable React controls for your SharePoint Framework solutions
+# Reusable React controls for your SharePoint Framework solutions ![](https://img.shields.io/npm/v/@pnp/spfx-controls-react.svg)
 
 This repository provides developers with a set of reusable React controls that can be used in SharePoint Framework (SPFx) solutions. The project provides controls for building web parts and extensions.
+
+!!! attention The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for on-premises. As for on-premises solutions version `1.1.0` is currently used.
 
 ## Getting started
 

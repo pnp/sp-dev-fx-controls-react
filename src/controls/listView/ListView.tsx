@@ -59,6 +59,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     this._setSelectedItems();
 
     if (!isEqual(prevProps, this.props)) {
+      // Reset the selected items
+      this._selection.setItems(this.props.items, true);
+      // Process list view properties
       this._processProperties();
     }
   }

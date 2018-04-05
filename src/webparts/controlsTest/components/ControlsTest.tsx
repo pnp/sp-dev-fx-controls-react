@@ -71,6 +71,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   /**
+   * Deletes second item from the list
+   */
+  private deleteItem = () => {
+    const { items } = this.state;
+    if (items.length >= 2) {
+      items.splice(1, 1);
+      this.setState({
+        items: items
+      });
+    }
+  }
+
+  /**
    * Renders the component
    */
   public render(): React.ReactElement<IControlsTestProps> {
@@ -212,6 +225,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           compact={true}
           selectionMode={SelectionMode.multiple}
           selection={this._getSelection} />
+
+          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
       </div>
     );
   }
