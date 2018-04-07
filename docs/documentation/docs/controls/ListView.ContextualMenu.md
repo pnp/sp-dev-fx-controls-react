@@ -43,7 +43,8 @@ export class ECB extends React.Component<IECBProps, {}> {
   public render() {      
     return   <div className={styles.ecb}>
               <IconButton
-                id='ContextualMenuButton1'
+
+id='ContextualMenuButton1'
                 className={styles.ecbbutton}
                 text=''
                 width='30'
@@ -105,6 +106,8 @@ To place this a bit more centric, we have small CSS manipulation as well:
 ```
 ## The result
 The result will look like the following:
+
 ![ContextualMenu_shown](../assets/ListView.ContextualMenu.png)
 And in action it shows which function and item was clicked:
+
 ![ContextualMenu_clicked](../assets/ListView.ContextualMenu_clicked.png)
