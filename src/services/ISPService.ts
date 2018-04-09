@@ -1,4 +1,4 @@
-import { ISPLists } from "../common/spEntities";
+import { ISPLists } from "../common/SPEntities";
 
 export enum LibsOrderBy {
     Id = 1,

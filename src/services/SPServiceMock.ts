@@ -1,5 +1,5 @@
 import { ISPService, ILibsOptions } from "./ISPService";
-import { ISPLists } from "../common/spEntities";
+import { ISPLists } from "../common/SPEntities";
 
 export class SPServiceMock implements ISPService {
     private _includeDelay?: boolean;

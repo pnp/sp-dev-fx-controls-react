@@ -1,5 +1,5 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
-import { ISPLists } from "../common/spEntities";
+import { ISPLists } from "../common/SPEntities";
 import { IWebPartContext } from "@microsoft/sp-webpart-base";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 
