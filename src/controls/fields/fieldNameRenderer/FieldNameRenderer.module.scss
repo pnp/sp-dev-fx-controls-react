@@ -1,0 +1,55 @@
+@import '../fieldCommon/FieldRenderer.module.scss';
+
+.signalField {
+    @extend .relative;
+    display: inline-flex;
+    max-width: 100%;
+    flex-direction: row nowrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    vertical-align: top;
+
+    .signal {
+        display: inline-block;
+        margin: 0 4px;
+        transition: color 0.2s linear;
+
+        html[dir='ltr'] &:first-child {
+            margin-left: 0px;
+        }
+    }
+
+    .newItem {
+        width: 0;
+        height: 1em;
+        position: relative;
+        line-height: 1em;
+        color: #da3b01;
+
+        html[dir='ltr'] & {
+            margin-right: 0px;
+        }
+
+        .newIcon {
+            position: absolute;
+            bottom: 100%;
+            font-size: 0.66em;
+            margin-bottom: -0.75em;
+
+            html[dir='ltr'] & {
+                right: -1px;
+            }
+        }
+    }
+
+    .signalFieldValue {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-align: left;
+
+        .value {
+            font-size: 14px !important;
+        }
+    }
+}

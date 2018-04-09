@@ -7,6 +7,14 @@
         "entrypoint": "./lib/webparts/controlsTest/ControlsTestWebPart.js",
         "manifest": "./src/webparts/controlsTest/ControlsTestWebPart.manifest.json"
       }]
+    },
+    "ootb-fields-field-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/ootbFields/OotbFieldsFieldCustomizer.js",
+          "manifest": "./src/extensions/ootbFields/OotbFieldsFieldCustomizer.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},

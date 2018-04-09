@@ -59,6 +59,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     this._setSelectedItems();
 
     if (!isEqual(prevProps, this.props)) {
+      // Reset the selected items
+      this._selection.setItems(this.props.items, true);
+      // Process list view properties
       this._processProperties();
     }
   }
@@ -345,15 +348,30 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param descending
    */
   private _sortItems(items: any[], columnName: string, descending = false): any[] {
+    // Sort the items
     const ascItems = sortBy(items, [columnName]);
-    return descending ? ascItems.reverse() : ascItems;
+    const sortedItems = descending ? ascItems.reverse() : ascItems;
+
+    // Check if selection needs to be updated
+    const selection = this._selection.getSelection();
+    if (selection && selection.length > 0) {
+      // Clear selection
+      this._selection.setItems([], true);
+      setTimeout(() => {
+        // Find new index
+        let idxs: number[] = selection.map(item => findIndex(sortedItems, item));
+        idxs.forEach(idx => this._selection.setIndexSelected(idx, true, false));
+      }, 0);
+    }
+
+    // Return the sorted items list
+    return sortedItems;
   }
 
   /**
    * Default React component render method
    */
   public render(): React.ReactElement<IListViewProps> {
-
     return (
       <div>
         <DetailsList
