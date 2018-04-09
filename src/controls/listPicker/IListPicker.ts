@@ -1,7 +1,7 @@
 import IWebPartContext from "@microsoft/sp-webpart-base/lib/core/IWebPartContext";
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 
-import { LibsOrderBy } from "../../../lib/services/ISPService";
+import { LibsOrderBy } from "../../services/ISPService";
 
 export interface IListPickerProps {
     /**
