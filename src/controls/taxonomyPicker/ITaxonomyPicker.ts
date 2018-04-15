@@ -94,10 +94,11 @@ export interface ITermSetProps extends ITermChanges {
   termset: ITermSet;
   autoExpand: () => void;
   multiSelection: boolean;
+  anchorId? : string;
 }
 
 export interface ITermSetState {
- 
+  
   loaded?: boolean;
   expanded?: boolean;
 }

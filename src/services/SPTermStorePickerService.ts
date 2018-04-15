@@ -135,12 +135,15 @@ export default class SPTermStorePickerService {
               // Retrieve all terms
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
+              console.log(terms);
               terms = terms.map(term => {
                 term.Id = this._cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
-                term.TermSet = { Id : this._cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name}
-               
-                
+                term.TermSet = { Id : this._cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name};
+                if (term["Parent"])
+                {
+                term.ParentId = this._cleanGuid(term["Parent"].Id);
+                }
                 return term;
               });
               // Check if the term set was not empty
@@ -157,8 +160,6 @@ export default class SPTermStorePickerService {
       });
     }
   }
-
-
 
 
   /**

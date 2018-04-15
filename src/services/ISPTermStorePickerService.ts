@@ -71,4 +71,5 @@ export interface ITerm {
   PathOfTerm: string;
   TermSet: ITermSetMinimal;
   PathDepth?: number;
+  ParentId?: string;
 }
