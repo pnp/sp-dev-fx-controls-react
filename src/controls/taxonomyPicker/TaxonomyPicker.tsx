@@ -15,8 +15,8 @@ import { ITaxonomyPickerProps, ITaxonomyPickerState, ITermGroupProps, ITermGroup
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
-import { sortBy, uniqBy } from '@microsoft/sp-lodash-subset';
-import TermSet from './TermSet';
+import { sortBy, uniqBy, cloneDeep } from '@microsoft/sp-lodash-subset';
+import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 import * as appInsights from '../../common/appInsights';
 
@@ -71,10 +71,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private loadTermStores(): void {
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
     this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
-      console.log(response);
       // Check if a response was retrieved
       if (response !== null) {
-        console.log(response);
         this.setState({
           termSetAndTerms: response,
           loaded: true
@@ -97,7 +95,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
 
     // Store the current code value
-    this.previousValues = this.state.activeNodes;
+    this.previousValues = cloneDeep(this.state.activeNodes);
     this.cancel = true;
 
     this.loadTermStores();
@@ -264,18 +262,12 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
             /* Show spinner in the panel while retrieving terms */
             this.state.loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
           }
-
-
-
           {this.state.loaded === true &&
-
-
 
             <div key={this.state.termSetAndTerms.Id} >
              
                 <h3>{this.state.termSetAndTerms.Name}</h3> 
-                {/* <TermSet termset={this.state.termSetAndTerms} activeNodes={this.state.activeNodes} changedCallback={this.termsChanged} multiSelection={this.props.allowMultipleSelections} /> */}
-                <TermSet anchorId={this.props.ancoreId} autoExpand={null} termset={this.state.termSetAndTerms} activeNodes={this.state.activeNodes} changedCallback={this.termsChanged} multiSelection={this.props.allowMultipleSelections} />
+                <TermParent anchorId={this.props.ancoreId} autoExpand={null} termset={this.state.termSetAndTerms} activeNodes={this.state.activeNodes} changedCallback={this.termsChanged} multiSelection={this.props.allowMultipleSelections} />
             </div>
 
 

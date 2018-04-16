@@ -186,7 +186,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <TaxonomyPicker
                   allowMultipleSelections={true}
                   termsetNameOrID="635b5bca-8c5f-4831-8bf8-a0d9d5eb75e0"
-                  ancoreId="78d5cc84-7e29-4f9a-8636-686d819ea4b4"
+                  // ancoreId="78d5cc84-7e29-4f9a-8636-686d819ea4b4"
                   panelTitle="Select Term"
                   label="Taxonomy Picker"
                   context={this.props.context}

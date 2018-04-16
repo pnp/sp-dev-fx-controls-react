@@ -9,10 +9,10 @@ import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@micro
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
-import { ISPTermStores, ISPTermStore, ISPTermGroups, ISPTermGroup, IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
+import { IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ITermSets } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
-import TermSet from '../controls/taxonomyPicker/TermSet';
+
 
 /**
  * Service implementation to manage term stores in SharePoint
@@ -101,7 +101,7 @@ export default class SPTermStorePickerService {
   public async getAllTerms(termsetId: string): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
-      //  return this.getAllMockTerms();
+       return this.getAllMockTerms();
     } else {
       // Request body to retrieve all terms for the given term set
       const data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="6"><Query SelectAllProperties="true"><Properties /></Query></Query><Query Id="12" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Labels" SelectAll="true" /><Property Name="TermsCount" SelectAll="true" /><Property Name="CustomSortOrder" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="Parent" SelectAll="true" /><Property Name="LocalCustomProperties" SelectAll="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultKeywordsTermStore" /><Method Id="6" ParentId="3" Name="GetTermSet"><Parameters><Parameter Type="Guid">${termsetId}</Parameter></Parameters></Method><Method Id="9" ParentId="6" Name="GetAllTerms" /></ObjectPaths></Request>`;
@@ -282,9 +282,9 @@ export default class SPTermStorePickerService {
   /**
    * Returns 3 fake SharePoint lists for the Mock mode
    */
-  private getAllMockTerms(): Promise<ITerm[]> {
+  private getAllMockTerms(): Promise<ITermSet> {
     return SPTermStoreMockHttpClient.getAllTerms().then((data) => {
       return data;
-    }) as Promise<ITerm[]>;
+    }) as Promise<ITermSet>;
   }
 }

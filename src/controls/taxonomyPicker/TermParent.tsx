@@ -8,9 +8,9 @@ import Term from './Term';
 import styles from './TaxonomyPicker.module.scss';
 
 /**
- * Term set component
+ * Term Parent component, represents termset or term if anchorId
  */
-export default class TermSet extends React.Component<ITermSetProps, ITermSetState> {
+export default class TermParent extends React.Component<ITermSetProps, ITermSetState> {
 
   private _terms : ITerm[];
   private _anchorName : string;
@@ -22,24 +22,10 @@ export default class TermSet extends React.Component<ITermSetProps, ITermSetStat
       loaded: true,
       expanded: true
     };
-
-    // Check if the termset has to be automatically opened
-    const selectedTermsInSet = this.props.activeNodes.filter(node => node.termSet === this.props.termset.Id);
-    if (selectedTermsInSet.length > 0) {
-      this._autoLoadTerms();
-    }
-
     this._handleClick = this._handleClick.bind(this);
-    this._loadTerms = this._loadTerms.bind(this);
   }
 
-  /**
-   * Autoload the terms of the term set
-   */
-  private _autoLoadTerms() {
-  //  this.props.autoExpand();
-    this._loadTerms(true);
-  }
+  
 
   /**
    * Handle the click event: collapse or expand
@@ -48,45 +34,18 @@ export default class TermSet extends React.Component<ITermSetProps, ITermSetStat
     this.setState({
       expanded: !this.state.expanded
     });
-
-    if (!this.state.expanded) {
-      this._loadTerms();
-    }
   }
 
-
-  /**
-   * Load the terms for the current term set
+  
+ /**
+   * componentWillMount
    */
-  private async _loadTerms(autoExpand?: boolean) {
-    // Check if there are already terms loaded
-    if (!this.state.loaded) {
-      // Receive all the terms for the current term set
-      // const termSet: ITermSet = await this.props.termsService.getAllTerms(this.props.termset._ObjectIdentity_);
-      // if (termSet.Terms !== null) {
-      //   this.setState({
-      //     terms: termSet.Terms,
-      //     loaded: true,
-      //     expanded: typeof autoExpand !== 'undefined' ? autoExpand : this.state.expanded
-      //   });
-      // } else {
-      //   this.setState({
-      //     terms: [],
-      //     loaded: true
-      //   });
-      // }
-    }
-  }
-
   public componentWillMount()
   {
-
-
     // fix term depth if anchroid for rendering
     if (this.props.anchorId)
     {
       const anchorTerm = this._terms.filter(t => t.Id.toLowerCase() === this.props.anchorId.toLowerCase()).shift();
-      console.log(anchorTerm)
       if (anchorTerm)
       {
         const anchorDepth = anchorTerm.PathDepth;
@@ -94,16 +53,12 @@ export default class TermSet extends React.Component<ITermSetProps, ITermSetStat
         var anchorTerms : ITerm[] = this._terms.filter(t => t.PathOfTerm.substring(0, anchorTerm.PathOfTerm.length) === anchorTerm.PathOfTerm && t.Id !== anchorTerm.Id);
         
         anchorTerms = anchorTerms.map(term => {
-          console.log(term.PathDepth);
           term.PathDepth = term.PathDepth - anchorTerm.PathDepth;
-          console.log(term.PathDepth);
           
           return term;
         });
 
-        console.log(anchorTerms);
         this._terms = anchorTerms;
-        console.log(this._terms);
       }
     }
   }

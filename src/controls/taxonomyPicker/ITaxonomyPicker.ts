@@ -53,12 +53,10 @@ export interface ITaxonomyPickerProps  {
    *
    */
   onGetErrorMessage?: (value: IPickerTerms) => string | Promise<string>;
-  /**
-   * Custom Field will start to validate after users stop typing for `deferredValidationTime` milliseconds.
-   * Default value is 200.
-   */
-  deferredValidationTime?: number;
 
+  /**
+   * onChange Event
+   */
   onChange?: (newValue?: IPickerTerms) => void;
 }
 

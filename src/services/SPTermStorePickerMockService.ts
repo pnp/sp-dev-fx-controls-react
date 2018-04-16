@@ -1,4 +1,4 @@
-import { ITermStore, ITerm  } from './ISPTermStorePickerService';
+import { ITermStore, ITerm, ITermSet  } from './ISPTermStorePickerService';
 import {IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 /**
  * Defines a http client to request mock data to use the web part with the local workbench
@@ -38,7 +38,15 @@ export default class SPTermStoreMockHttpClient {
     }
   }];
 
-  private static _mockTerms: ITerm[] = [{
+  private static _mockTerms: ITermSet = 
+  {"_ObjectType_":"SP.Taxonomy.TermSet",
+  "_ObjectIdentity_":"a4f45d9e-7003-5000-7d35-b4064108885e|fec14c62-7c3b-481b-851b-c80d7802b224:se:15WaN9o+nUi6qkivmCMKhxA4k0b3ed9BqbnSqve6DjrKW1tjX4wxSIv4oNnV63Xg",
+  "Id":"/Guid(635b5bca-8c5f-4831-8bf8-a0d9d5eb75e0)/",
+  "Name":"Countries",
+  "Description":"",
+"Names":{"1033":"Countries"},
+"Terms":[
+  {
     "_ObjectType_": "SP.Taxonomy.Term",
     "_ObjectIdentity_": "5e06ddd0-d2dd-4fff-bcc0-42b40f4aa59e|4dbeb936-1813-4630-a4bd-9811df3fe7f1:te:generated-id-SPnCDng5nkmdP+UcRJTUTA==",
     "Name": "Belgium",
@@ -102,7 +110,7 @@ export default class SPTermStoreMockHttpClient {
       "Id": "\/Guid(5b1b6df0-09a2-42eb-a3f6-006556621931)\/",
       "Name" : "Country"
     }
-  }];
+  }]};
 
   /**
    * Mock method which returns mock terms stores
@@ -116,39 +124,41 @@ export default class SPTermStoreMockHttpClient {
   /**
    * Mock method wich returns mock terms
    */
-  public static getAllTerms(): Promise<ITerm[]> {
-    return new Promise<ITerm[]>((resolve) => {
+  public static getAllTerms(): Promise<ITermSet> {
+    return new Promise<ITermSet>((resolve) => {
       resolve(SPTermStoreMockHttpClient._mockTerms);
     });
   }
-
 
   public static searchTermsByName(searchText: string): Promise<IPickerTerm[]> {
     return new Promise<IPickerTerm[]>((resolve) => {
       resolve([
         {
-          key : "123", 
-          name : 'term1',
-          path : "path;path2",
-          termSet :"123",
-          termSetName : "tsName"
+          key : "23d42658-26b2-4cb3-ac4f-f06493835485", 
+          name : 'Brussels',
+          path : "Belgium;Brussels",
+          termSet :"635b5bca-8c5f-4831-8bf8-a0d9d5eb75e0",
+          termSetName : "Countries"
          },
          {
-          key : "124", 
-          name : 'term2',
-          path : "path",
-          termSet :"123",
-          termSetName : "tsName"
+          key : "2ae7add5-ee40-4365-af32-12e9f4fbca17", 
+          name : 'Antwerp',
+          path : "Belgium;Antwerp",
+          termSet :"635b5bca-8c5f-4831-8bf8-a0d9d5eb75e0",
+          termSetName : "Countries"
          },
          {
-          key : "125", 
-          name : 'term3',
-          path : "path;path2;path3",
-          termSet :"123",
-          termSetName : "tsName"
+          key : "0ec2f948-3978-499e-9d3f-e51c4494d44c", 
+          name : 'Belgium',
+          path : "Belgium",
+          termSet :"635b5bca-8c5f-4831-8bf8-a0d9d5eb75e0",
+          termSetName : "Countries"
          }
         ]);
     });
   } 
+  
+  
+  } 
 
-}
+
