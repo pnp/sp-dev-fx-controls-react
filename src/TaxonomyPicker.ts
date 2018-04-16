@@ -1,1 +1,1 @@
-export * from './controls/TaxonomyPicker/index';
+export * from './controls/taxonomyPicker/index';
