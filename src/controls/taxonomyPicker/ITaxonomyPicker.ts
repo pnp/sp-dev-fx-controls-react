@@ -77,25 +77,15 @@ export interface ITermChanges {
   activeNodes?: IPickerTerms;
 }
 
-export interface ITermGroupProps extends ITermChanges {
-  group: IGroup;
-  termstore: string;
-  termsService: SPTermStorePickerService;
-  multiSelection: boolean;
-}
 
-export interface ITermGroupState {
-  expanded: boolean;
-}
-
-export interface ITermSetProps extends ITermChanges {
+export interface ITermParentProps extends ITermChanges {
   termset: ITermSet;
   autoExpand: () => void;
   multiSelection: boolean;
   anchorId? : string;
 }
 
-export interface ITermSetState {
+export interface ITermParentState {
   
   loaded?: boolean;
   expanded?: boolean;

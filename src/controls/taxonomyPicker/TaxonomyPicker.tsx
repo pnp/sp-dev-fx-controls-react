@@ -11,7 +11,7 @@ import TermPicker from './TermPicker';
 import { BasePicker, IBasePickerProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
 
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
-import { ITaxonomyPickerProps, ITaxonomyPickerState, ITermGroupProps, ITermGroupState, ITermSetProps, ITermSetState, ITermProps, ITermState } from './ITaxonomyPicker';
+import { ITaxonomyPickerProps, ITaxonomyPickerState, ITermParentProps, ITermParentState, ITermProps, ITermState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
-import { ITermSetProps, ITermSetState } from './ITaxonomyPicker';
+import { ITermParentProps, ITermParentState } from './ITaxonomyPicker';
 import { ITerm, ITermSet } from '../../services/ISPTermStorePickerService';
 import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPicker';
 import Term from './Term';
@@ -10,12 +10,12 @@ import styles from './TaxonomyPicker.module.scss';
 /**
  * Term Parent component, represents termset or term if anchorId
  */
-export default class TermParent extends React.Component<ITermSetProps, ITermSetState> {
+export default class TermParent extends React.Component<ITermParentProps, ITermParentState> {
 
   private _terms : ITerm[];
   private _anchorName : string;
 
-  constructor(props: ITermSetProps) {
+  constructor(props: ITermParentProps) {
     super(props);
     this._terms = this.props.termset.Terms;
     this.state = {
