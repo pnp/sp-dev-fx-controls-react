@@ -11,6 +11,8 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../.
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
+import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
+
 import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 
@@ -68,6 +70,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _getSelection(items: any[]) {
     console.log('Items:', items);
+  }
+
+/**
+   * Method that retrieves the selected terms from the taxonomy picker
+   * @param terms
+   */
+  private _onTaxPickerChange(terms : IPickerTerms)
+  {
+      console.log("Terms", terms);
   }
 
   /**
@@ -182,6 +193,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+              <div className="ms-font-m">TaxonomyPicker tester:
+                <TaxonomyPicker
+                  allowMultipleSelections={false}
+                  termsetNameOrID="Countries"
+                  // ancoreId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
+                  panelTitle="Select Term"
+                  label="Taxonomy Picker"
+                  context={this.props.context}
+                  onChange={this._onTaxPickerChange}
+                />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
