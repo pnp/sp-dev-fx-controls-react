@@ -41,7 +41,7 @@ define([], () => {
     "UpdateProfile": "Update your profile",
 
     "TaxonomyPickerNoTerms": "Term set does not contain any terms",
-    "TaxonomyPickerExpandTitle": "Expand This Term Set",
+    "TaxonomyPickerExpandTitle": "Expand this Term Set",
     "TaxonomyPickerMenuTermSet": "Menu for Term Set",
     "TaxonomyPickerInLabel": "in",
     "TaxonomyPickerTermSetLabel": "Term Set"
