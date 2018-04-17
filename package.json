@@ -11,7 +11,8 @@
     "test": "gulp test",
     "prepublishOnly": "gulp",
     "versionUpdater": "gulp versionUpdater",
-    "karma": "karma start --circle true"
+    "karma": "karma start --circle true",
+    "changelog": "node scripts/sync-changelogs.js"
   },
   "dependencies": {
     "@pnp/common": "^1.0.1",
