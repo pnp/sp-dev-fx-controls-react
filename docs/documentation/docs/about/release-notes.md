@@ -1,12 +1,20 @@
 # Releases
 
+## 1.2.5
+
+**Fixes**
+
+- Undo `ListView` item selection after items array updates [#55](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/55)
+
 ## 1.2.4
 
 **Enhancements**
-- Hiding placeholder web part on small zones
+
+- Hiding placeholder title on small zones
 
 **Fixes**
-- iFrame dialog reference fix [#52 - Need some more implementation documentation on IFrameDialog](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/52)
+
+- iFrame dialog reference fix [#52](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/52)
 
 ## 1.2.3
 

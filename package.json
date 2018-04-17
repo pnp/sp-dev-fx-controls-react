@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -65,5 +65,12 @@
     "url": "https://github.com/SharePoint/sp-dev-fx-controls-react/issues"
   },
   "main": "lib/index.js",
-  "homepage": "https://github.com/SharePoint/sp-dev-fx-controls-react"
+  "homepage": "https://github.com/SharePoint/sp-dev-fx-controls-react",
+  "contributors": [
+    "Gove, Russell <russellgove@gmail.com>",
+    "Kent Chris <>",
+    "Rodrigues, Joel <>",
+    "Struyf, Elio <info@estruyf.be>",
+    "Terentiev, Alex <>"
+  ]
 }
