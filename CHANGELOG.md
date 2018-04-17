@@ -1,5 +1,11 @@
 # Releases
 
+## 1.3.0
+
+**New Controls**
+
+- `TaxonomyPicker` control got added [#22](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/22)
+
 ## 1.2.5
 
 **Fixes**
