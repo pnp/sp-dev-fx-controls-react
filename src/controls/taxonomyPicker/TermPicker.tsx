@@ -58,18 +58,22 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
    * Renders the item in the picker
    */
   protected onRenderItem(term: IPickerItemProps<IPickerTerm>) {
-    return (<div className={styles.pickedTermRoot}
-      key={term.index}
-      data-selection-index={term.index}
-      data-is-focusable={!term.disabled && true}>
-      <span className={styles.pickedTermText}>{term.item.name}</span>
-      {!term.disabled &&
-        <span className={styles.pickedTermCloseIcon}
-          onClick={term.onRemoveItem}>
-          <i className="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
-        </span>
-      }
-    </div>);
+    return (
+      <div className={styles.pickedTermRoot}
+           key={term.index}
+           data-selection-index={term.index}
+           data-is-focusable={!term.disabled && true}>
+        <span className={styles.pickedTermText}>{term.item.name}</span>
+        {
+          !term.disabled && (
+            <span className={styles.pickedTermCloseIcon}
+              onClick={term.onRemoveItem}>
+              <i className="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+            </span>
+          )
+        }
+      </div>
+    );
   }
 
   /**
@@ -84,23 +88,32 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       splitPath.pop();
       termTitle = `${term.name} [${term.termSetName}:${splitPath.join(':')}]`;
     }
-    return (<div className={styles.termSuggestion} title={termTitle}>
-      <div>{term.name}</div>
-      <div className={styles.termSuggestionSubTitle}> in {termParent}</div>
-    </div>);
+    return (
+      <div className={styles.termSuggestion} title={termTitle}>
+        <div>{term.name}</div>
+        <div className={styles.termSuggestionSubTitle}> in {termParent}</div>
+      </div>
+    );
   }
 
   /**
    * When Filter Changes a new search for suggestions
    */
-  private onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
-    
+  private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
       let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms = termsService.searchTermsByName(filterText);
-      return terms;
+      let terms = await termsService.searchTermsByName(filterText);
+      // Filter out the terms which are already set
+      const filteredTerms = [];
+      for (const term of terms) {
+        if (tagList.filter(tag => tag.key === term.key).length === 0) {
+          filteredTerms.push(term);
+        }
+      }
+      return filteredTerms;
+    } else {
+      return Promise.resolve([]);
     }
-    
   }
 
 
@@ -115,14 +128,6 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
    * Render method
    */
   public render(): JSX.Element {
-
-    // set to 1 if mutiple selections is false
-    let itemLimit;
-    if (!this.props.allowMultipleSelections)
-    {
-      itemLimit = 1;
-    }
-
     return (
       <div>
         <TermBasePicker
@@ -134,7 +139,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           defaultSelectedItems={this.props.value}
           selectedItems={this.state.terms}
           onChange={this.props.onChanged}
-          itemLimit={itemLimit}
+          itemLimit={!this.props.allowMultipleSelections ? 1 : undefined}
           className={styles.termBasePicker}
         />
       </div>

@@ -31,7 +31,7 @@ export interface ITaxonomyPickerProps  {
    * Limit the terms that can be picked by the Term Set name or ID
    */
   termsetNameOrID: string;
-    /**
+  /**
    * Id of a child term in the termset where to be able to selected and search the terms from
    */
   ancoreId?: string;
@@ -64,7 +64,7 @@ export interface ITaxonomyPickerProps  {
  * PropertyFieldTermPickerHost state interface
  */
 export interface ITaxonomyPickerState {
- 
+
   termSetAndTerms? : ITermSet;
   errorMessage?: string;
   openPanel?: boolean;
@@ -86,7 +86,7 @@ export interface ITermParentProps extends ITermChanges {
 }
 
 export interface ITermParentState {
-  
+
   loaded?: boolean;
   expanded?: boolean;
 }

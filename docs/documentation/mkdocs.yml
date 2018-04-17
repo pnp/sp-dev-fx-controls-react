@@ -21,6 +21,7 @@ pages:
     - FieldTitleRenderer: 'controls/fields/FieldTitleRenderer.md'
     - FieldUrlRenderer: 'controls/fields/FieldUrlRenderer.md'
     - FieldUserRenderer: 'controls/fields/FieldUserRenderer.md'
+  - 'Beta testing': 'beta.md'
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'

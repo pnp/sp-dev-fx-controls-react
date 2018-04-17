@@ -4,12 +4,10 @@ import { Async } from 'office-ui-fabric-react/lib/Utilities';
 import { PrimaryButton, DefaultButton, IconButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
-//import { IPropertyFieldTermPickerPropsInternal } from './ITermPicker';
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import TermPicker from './TermPicker';
 import { BasePicker, IBasePickerProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
-
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState, ITermParentProps, ITermParentState, ITermProps, ITermState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
@@ -47,7 +45,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     super(props);
 
     appInsights.track('ReactTaxonomyPicker');
-
 
     this.state = {
       activeNodes: typeof this.props.initialValues !== 'undefined' ? this.props.initialValues : [],
@@ -262,17 +259,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
             /* Show spinner in the panel while retrieving terms */
             this.state.loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
           }
-          {this.state.loaded === true &&
-
-            <div key={this.state.termSetAndTerms.Id} >
-             
-                <h3>{this.state.termSetAndTerms.Name}</h3> 
+          {
+            this.state.loaded === true && this.state.termSetAndTerms && (
+              <div key={this.state.termSetAndTerms.Id} >
+                <h3>{this.state.termSetAndTerms.Name}</h3>
                 <TermParent anchorId={this.props.ancoreId} autoExpand={null} termset={this.state.termSetAndTerms} activeNodes={this.state.activeNodes} changedCallback={this.termsChanged} multiSelection={this.props.allowMultipleSelections} />
-            </div>
-
-
+              </div>
+            )
           }
-
         </Panel>
       </div >
     );

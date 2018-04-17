@@ -39,7 +39,8 @@
       "use-named-parameter": true,
       "valid-typeof": true,
       "variable-name": false,
-      "whitespace": false
+      "whitespace": false,
+      "no-debugger": true
     }
   }
 }
