@@ -129,6 +129,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private onSave(): void {
     this.cancel = false;
     this.onClosePanel();
+    // Trigger the onChange event
+    this.props.onChange(this.state.activeNodes);
   }
 
   /**
@@ -263,7 +265,12 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
             this.state.loaded === true && this.state.termSetAndTerms && (
               <div key={this.state.termSetAndTerms.Id} >
                 <h3>{this.state.termSetAndTerms.Name}</h3>
-                <TermParent anchorId={this.props.ancoreId} autoExpand={null} termset={this.state.termSetAndTerms} activeNodes={this.state.activeNodes} changedCallback={this.termsChanged} multiSelection={this.props.allowMultipleSelections} />
+                <TermParent anchorId={this.props.ancoreId}
+                            autoExpand={null}
+                            termset={this.state.termSetAndTerms}
+                            activeNodes={this.state.activeNodes}
+                            changedCallback={this.termsChanged}
+                            multiSelection={this.props.allowMultipleSelections} />
               </div>
             )
           }
