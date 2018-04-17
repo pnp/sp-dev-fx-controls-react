@@ -5,6 +5,7 @@ import SPTermStorePickerService from './../../services/SPTermStorePickerService'
 import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import * as strings from 'ControlStrings';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -20,8 +21,9 @@ export interface ITermPickerProps {
   context: IWebPartContext;
   disabled: boolean;
   value: IPickerTerms;
-  onChanged: (items: IPickerTerm[]) => void;
   allowMultipleSelections : boolean;
+  isTermSetSelectable?: boolean;
+  onChanged: (items: IPickerTerm[]) => void;
 }
 
 export default class TermPicker extends React.Component<ITermPickerProps, ITermPickerState> {
@@ -91,7 +93,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     return (
       <div className={styles.termSuggestion} title={termTitle}>
         <div>{term.name}</div>
-        <div className={styles.termSuggestionSubTitle}> in {termParent}</div>
+        <div className={styles.termSuggestionSubTitle}> {strings.TaxonomyPickerInLabel} {termParent ? termParent : strings.TaxonomyPickerTermSetLabel}</div>
       </div>
     );
   }
@@ -102,7 +104,22 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
   private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
       let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms = await termsService.searchTermsByName(filterText);
+      let terms: IPickerTerm[] = await termsService.searchTermsByName(filterText);
+      // Check if the termset can be selected
+      if (this.props.isTermSetSelectable) {
+        // Retrieve the current termset
+        const termSet = await termsService.getTermSet();
+        // Check if termset was retrieved and if it contains the filter value
+        if (termSet && termSet.Name.toLowerCase().indexOf(filterText.toLowerCase()) === 0) {
+          // Add the termset to the suggestion list
+          terms.push({
+            key: termsService.cleanGuid(termSet.Id),
+            name: termSet.Name,
+            path: "",
+            termSet: termsService.cleanGuid(termSet.Id)
+          });
+        }
+      }
       // Filter out the terms which are already set
       const filteredTerms = [];
       for (const term of terms) {

@@ -68,7 +68,7 @@ export default class SPTermStorePickerService {
                 if (this.props.termsetNameOrID) {
                   const termsetNameOrId = this.props.termsetNameOrID;
                   termGroups = termGroups.map((group: IGroup) => {
-                    group.TermSets._Child_Items_ = group.TermSets._Child_Items_.filter((termSet: ITermSet) => termSet.Name === termsetNameOrId || this._cleanGuid(termSet.Id).toLowerCase() === this._cleanGuid(termsetNameOrId).toLowerCase());
+                    group.TermSets._Child_Items_ = group.TermSets._Child_Items_.filter((termSet: ITermSet) => termSet.Name === termsetNameOrId || this.cleanGuid(termSet.Id).toLowerCase() === this.cleanGuid(termsetNameOrId).toLowerCase());
                     return group;
                   });
                 }
@@ -95,6 +95,19 @@ export default class SPTermStorePickerService {
   }
 
   /**
+   * Gets the current term set
+   */
+  public async getTermSet(): Promise<ITermSet> {
+    if (Environment.type === EnvironmentType.Local) {
+      const termSetInfo = await SPTermStoreMockHttpClient.getAllTerms();
+      return termSetInfo;
+    } else {
+      const termStore = await this.getTermStores();
+      return this.getTermSetId(termStore, this.props.termsetNameOrID);
+    }
+  }
+
+  /**
    * Retrieve all terms for the given term set
    * @param termset
    */
@@ -109,9 +122,9 @@ export default class SPTermStorePickerService {
         // Fetch the term store information
         const termStore = await this.getTermStores();
         // Get the ID of the provided term set name
-        termsetId = this.getTermSetId(termStore, termset);
-        if (termsetId) {
-          termsetId = this._cleanGuid(termsetId);
+        const crntTermSet = this.getTermSetId(termStore, termset);
+        if (crntTermSet) {
+          termsetId = this.cleanGuid(crntTermSet.Id);
         } else {
           return null;
         }
@@ -144,12 +157,12 @@ export default class SPTermStorePickerService {
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
-                term.Id = this._cleanGuid(term.Id);
+                term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
-                term.TermSet = { Id : this._cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name};
+                term.TermSet = { Id : this.cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name};
                 if (term["Parent"])
                 {
-                term.ParentId = this._cleanGuid(term["Parent"].Id);
+                term.ParentId = this.cleanGuid(term["Parent"].Id);
                 }
                 return term;
               });
@@ -174,7 +187,7 @@ export default class SPTermStorePickerService {
    * @param termstore
    * @param termset
    */
-  private getTermSetId(termstore: ITermStore[], termsetName: string): string {
+  private getTermSetId(termstore: ITermStore[], termsetName: string): ITermSet {
     if (termstore && termstore.length > 0 && termsetName) {
       // Get the first term store
       const ts = termstore[0];
@@ -186,7 +199,7 @@ export default class SPTermStorePickerService {
             for (const termSet of group.TermSets._Child_Items_) {
               // Check if the term set is found
               if (termSet.Name === termsetName) {
-                return termSet.Id;
+                return termSet;
               }
             }
           }
@@ -226,9 +239,9 @@ export default class SPTermStorePickerService {
           let TermSetId = termSet;
           if (!this.isGuid(termSet)) {
             // Get the ID of the provided term set name
-            TermSetId = this.getTermSetId(termStore, termSet);
-            if (TermSetId) {
-              TermSetId = this._cleanGuid(TermSetId);
+            const crntTermSet = this.getTermSetId(termStore, termSet);
+            if (crntTermSet) {
+              TermSetId = this.cleanGuid(crntTermSet.Id);
             } else {
               resolve(null);
               return;
@@ -260,12 +273,11 @@ export default class SPTermStorePickerService {
                 terms.forEach(term => {
                   if (term.Name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
                     returnTerms.push({
-                      key:this._cleanGuid(term.Id),
+                      key:this.cleanGuid(term.Id),
                       name: term.Name,
                       path: term.PathOfTerm,
-                      termSet: this._cleanGuid(term.TermSet.Id),
+                      termSet: this.cleanGuid(term.TermSet.Id),
                       termSetName: term.TermSet.Name
-
                     });
                   }
                 });
@@ -274,11 +286,7 @@ export default class SPTermStorePickerService {
               return null;
             });
           });
-
-
         });
-
-
       });
     }
   }
@@ -306,7 +314,7 @@ export default class SPTermStorePickerService {
    * Clean the Guid from the Web Service response
    * @param guid
    */
-  private _cleanGuid(guid: string): string {
+  public cleanGuid(guid: string): string {
     if (guid !== undefined) {
       return guid.replace('/Guid(', '').replace('/', '').replace(')', '');
     } else {

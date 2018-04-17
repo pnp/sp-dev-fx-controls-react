@@ -8,6 +8,13 @@ declare interface IControlStrings {
   StartChatWith: string;
   Contact: string;
   UpdateProfile: string;
+
+  // Taxonomy picker
+  TaxonomyPickerNoTerms: string;
+  TaxonomyPickerExpandTitle: string;
+  TaxonomyPickerMenuTermSet: string;
+  TaxonomyPickerInLabel: string;
+  TaxonomyPickerTermSetLabel: string;
 }
 
 declare module 'ControlStrings' {

@@ -204,6 +204,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
+                  isTermSetSelectable={false}
                 />
               </div>
               <div className="ms-font-m">iframe dialog tester:

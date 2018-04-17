@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
-import { Async } from 'office-ui-fabric-react/lib/Utilities';
 import { PrimaryButton, DefaultButton, IconButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
@@ -32,7 +31,6 @@ export const TERM_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQC
  * Renders the controls for PropertyFieldTermPicker component
  */
 export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxonomyPickerState> {
-  private async: Async;
   private delayedValidate: (value: IPickerTerms) => void;
   private termsService: SPTermStorePickerService;
   private previousValues: IPickerTerms = [];
@@ -58,7 +56,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onClosePanel = this.onClosePanel.bind(this);
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
-    this.async = new Async(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
   }
 
@@ -202,12 +199,29 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   }
 
   /**
-   * Called when the component will unmount
+   * TermSet selection handler
+   * @param termSet
+   * @param isChecked
    */
-  public componentWillUnmount() {
-    if (typeof this.async !== 'undefined') {
-      this.async.dispose();
-    }
+  private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean) => {
+    const ts: ITermSet = {...termSet};
+    // Clean /Guid.../ from the ID
+    ts.Id = this.termsService.cleanGuid(ts.Id);
+    // Create a term for the termset
+    const term: ITerm = {
+      Name: ts.Name,
+      Id: ts.Id,
+      TermSet: ts,
+      PathOfTerm: "",
+      _ObjectType_: ts._ObjectType_,
+      _ObjectIdentity_: ts._ObjectIdentity_,
+      Description: ts.Description,
+      IsDeprecated: null,
+      IsRoot: null
+    };
+
+    // Trigger the normal change event
+    this.termsChanged(term, isChecked);
   }
 
   /**
@@ -227,6 +241,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                   termPickerHostProps={this.props}
                   disabled={this.props.disabled}
                   value={this.state.activeNodes}
+                  isTermSetSelectable={this.props.isTermSetSelectable}
                   onChanged={this.termsFromPickerChanged}
                   allowMultipleSelections={this.props.allowMultipleSelections}
                 />
@@ -268,6 +283,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                 <TermParent anchorId={this.props.ancoreId}
                             autoExpand={null}
                             termset={this.state.termSetAndTerms}
+                            isTermSetSelectable={this.props.isTermSetSelectable}
+                            termSetSelectedChange={this.termSetSelectedChange}
                             activeNodes={this.state.activeNodes}
                             changedCallback={this.termsChanged}
                             multiSelection={this.props.allowMultipleSelections} />

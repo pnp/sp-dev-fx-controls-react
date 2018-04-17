@@ -6,6 +6,8 @@ import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPi
 import Term from './Term';
 
 import styles from './TaxonomyPicker.module.scss';
+import { Checkbox } from 'office-ui-fabric-react';
+import * as strings from 'ControlStrings';
 
 /**
  * Term Parent component, represents termset or term if anchorId
@@ -17,6 +19,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
 
   constructor(props: ITermParentProps) {
     super(props);
+
     this._terms = this.props.termset.Terms;
     this.state = {
       loaded: true,
@@ -25,19 +28,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     this._handleClick = this._handleClick.bind(this);
   }
 
-  
-
   /**
-   * Handle the click event: collapse or expand
-   */
-  private _handleClick() {
-    this.setState({
-      expanded: !this.state.expanded
-    });
-  }
-
-  
- /**
    * componentWillMount
    */
   public componentWillMount()
@@ -51,16 +42,34 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
         const anchorDepth = anchorTerm.PathDepth;
         this._anchorName = anchorTerm.Name;
         var anchorTerms : ITerm[] = this._terms.filter(t => t.PathOfTerm.substring(0, anchorTerm.PathOfTerm.length) === anchorTerm.PathOfTerm && t.Id !== anchorTerm.Id);
-        
+
         anchorTerms = anchorTerms.map(term => {
           term.PathDepth = term.PathDepth - anchorTerm.PathDepth;
-          
+
           return term;
         });
 
         this._terms = anchorTerms;
       }
     }
+  }
+
+
+  /**
+   * Handle the click event: collapse or expand
+   */
+  private _handleClick() {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  }
+
+
+  /**
+   * The term set selection changed
+   */
+  private termSetSelectionChange = (ev: React.FormEvent<HTMLElement>, isChecked: boolean): void => {
+    this.props.termSetSelectedChange(this.props.termset, isChecked);
   }
 
 
@@ -72,7 +81,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
 
     let termElm: JSX.Element = <div />;
     // Check if the terms have been loaded
- 
+
       if (this.state.loaded) {
         if (this._terms.length > 0) {
           termElm = (
@@ -85,18 +94,30 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
             </div>
           );
         } else {
-          termElm = <div className={`${styles.listItem} ${styles.term}`}>Term set does not contain any terms</div>;
+          termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
         }
       } else {
         termElm = <Spinner type={SpinnerType.normal} />;
       }
-    
+
 
     return (
       <div>
-        <div className={`${styles.listItem} ${styles.termset}`} onClick={this._handleClick}>
-          <img src={this.state.expanded ? EXPANDED_IMG : COLLAPSED_IMG} alt='Expand This Term Set' title='Expand This Term Set' />
-          <img src={this.props.anchorId ? TERM_IMG : TERMSET_IMG} title='Menu for Term Set' alt='Menu for Term Set' /> {this.props.anchorId ? this._anchorName : this.props.termset.Name}
+        <div className={`${styles.listItem} ${styles.termset} ${(!this.props.anchorId && this.props.isTermSetSelectable) ? styles.termSetSelectable : ""}`} onClick={this._handleClick}>
+          <img src={this.state.expanded ? EXPANDED_IMG : COLLAPSED_IMG} alt={strings.TaxonomyPickerExpandTitle} title={strings.TaxonomyPickerExpandTitle} />
+          {
+            // Show the termset selection box
+            (!this.props.anchorId && this.props.isTermSetSelectable) &&
+            <Checkbox className={styles.termSetSelector}
+                      checked={this.props.activeNodes.filter(a => a.path === "" && a.key === a.termSet).length >= 1}
+                      onChange={this.termSetSelectionChange} />
+          }
+          <img src={this.props.anchorId ? TERM_IMG : TERMSET_IMG} alt={strings.TaxonomyPickerMenuTermSet} title={strings.TaxonomyPickerMenuTermSet} />
+          {
+            this.props.anchorId ?
+              this._anchorName :
+              this.props.termset.Name
+          }
         </div>
         <div style={styleProps}>
           {termElm}

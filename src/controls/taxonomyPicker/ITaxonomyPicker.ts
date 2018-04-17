@@ -36,6 +36,10 @@ export interface ITaxonomyPickerProps  {
    */
   ancoreId?: string;
   /**
+   * Specify if the term set itself is selectable in the tree view
+   */
+  isTermSetSelectable?: boolean;
+  /**
    * Whether the property pane field is enabled or not.
    */
   disabled?: boolean;
@@ -80,9 +84,12 @@ export interface ITermChanges {
 
 export interface ITermParentProps extends ITermChanges {
   termset: ITermSet;
-  autoExpand: () => void;
   multiSelection: boolean;
   anchorId? : string;
+  isTermSetSelectable?: boolean;
+
+  autoExpand: () => void;
+  termSetSelectedChange?: (termSet: ITermSet, isChecked: boolean) => void;
 }
 
 export interface ITermParentState {
