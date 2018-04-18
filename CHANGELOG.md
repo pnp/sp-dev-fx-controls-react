@@ -6,6 +6,10 @@
 
 - `TaxonomyPicker` control got added [#22](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/22) [#63](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/63) [#64](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/64)
 
+**Fixes**
+
+- Issue fixed when the optional `selection` property was not provided to the `ListView` [#65](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/65)
+
 ## 1.2.5
 
 **Fixes**

@@ -60,7 +60,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     if (!isEqual(prevProps, this.props)) {
       // Reset the selected items
-      this._selection.setItems(this.props.items, true);
+      if (this._selection) {
+        this._selection.setItems(this.props.items, true);
+      }
       // Process list view properties
       this._processProperties();
     }
@@ -353,15 +355,17 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     const sortedItems = descending ? ascItems.reverse() : ascItems;
 
     // Check if selection needs to be updated
-    const selection = this._selection.getSelection();
-    if (selection && selection.length > 0) {
-      // Clear selection
-      this._selection.setItems([], true);
-      setTimeout(() => {
-        // Find new index
-        let idxs: number[] = selection.map(item => findIndex(sortedItems, item));
-        idxs.forEach(idx => this._selection.setIndexSelected(idx, true, false));
-      }, 0);
+    if (this._selection) {
+      const selection = this._selection.getSelection();
+      if (selection && selection.length > 0) {
+        // Clear selection
+        this._selection.setItems([], true);
+        setTimeout(() => {
+          // Find new index
+          let idxs: number[] = selection.map(item => findIndex(sortedItems, item));
+          idxs.forEach(idx => this._selection.setIndexSelected(idx, true, false));
+        }, 0);
+      }
     }
 
     // Return the sorted items list
