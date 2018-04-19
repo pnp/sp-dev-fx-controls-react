@@ -34,7 +34,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * Id of a child term in the termset where to be able to selected and search the terms from
    */
-  ancoreId?: string;
+  anchorId?: string;
   /**
    * Specify if the term set itself is selectable in the tree view
    */
