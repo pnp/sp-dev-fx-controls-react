@@ -47,7 +47,7 @@ Field customizer controls:
 - [FieldNameRenderer](./controls/fields/FieldNameRenderer) (renders document's name as a link)
 - [FieldTaxonomyRenderer](./controls/fields/FieldTaxonomyRenderer) (renders terms from Managed Metadata field)
 - [FieldTextRenderer](./controls/fields/FieldTextRenderer) (renders simple text)
-- [FieldTitleRenderer](./controls/fields/FieldTitleRenderer) (renders title either as a simple text or as a link to the Dislpay Form)
+- [FieldTitleRenderer](./controls/fields/FieldTitleRenderer) (renders title either as a simple text or as a link to the Display Form)
 - [FieldUrlRenderer](./controls/fields/FieldUrlRenderer) (renders Hyperlink or Picture field value as a link or image)
 - [FieldUserRenderer](./controls/fields/FieldUserRenderer) (renders each referenced user/group as a link on a separate line)
 
