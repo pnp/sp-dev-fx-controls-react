@@ -52,7 +52,7 @@ The following Field Controls are currently available:
 - [FieldNameRenderer](./FieldNameRenderer) (renders document's name as a link)
 - [FieldTaxonomyRenderer](./FieldTaxonomyRenderer) (renders terms from Managed Metadata field)
 - [FieldTextRenderer](./FieldTextRenderer) (renders simple text)
-- [FieldTitleRenderer](./FieldTitleRenderer) (renders title either as a simple text or as a link to the Dislpay Form)
+- [FieldTitleRenderer](./FieldTitleRenderer) (renders title either as a simple text or as a link to the Display Form)
 - [FieldUrlRenderer](./FieldUrlRenderer) (renders Hyperlink or Picture field value as a link or image)
 - [FieldUserRenderer](./FieldUserRenderer) (renders each referenced user/group as a link on a separate line)
 
