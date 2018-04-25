@@ -33,12 +33,14 @@ The following controls are currently available:
 - [ListView](./controls/ListView) (List view control)
 - [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
+- [SiteBreadcrumb](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 
 Field customizer controls:
 
-> **Note**: If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
+!!! note
+    If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
 
 - [FieldAttachmentsRenderer](./controls/fields/FieldAttachmentsRenderer) (renders Clip icon based on the provided `count` property is defined and greater than 0)
 - [FieldDateRenderer](./controls/fields/FieldDateRenderer) (renders date string as a simple text)

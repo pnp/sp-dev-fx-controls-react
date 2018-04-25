@@ -8,6 +8,7 @@ pages:
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'
