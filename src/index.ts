@@ -4,6 +4,8 @@ export * from './Placeholder';
 export * from './SiteBreadcrumb';
 export * from './TaxonomyPicker';
 export * from './WebPartTitle';
+export * from './ListPicker';
+
 export * from './IFrameDialog';
 export * from './Common';
 export * from './Utilities';

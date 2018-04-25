@@ -12,7 +12,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
 import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
-
+import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 
@@ -72,13 +72,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
-/**
+  /**
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange(terms : IPickerTerms)
-  {
-      console.log("Terms", terms);
+  private _onTaxPickerChange(terms : IPickerTerms) {
+      console.log("Terms:", terms);
+  }
+
+  /**
+   * Selected lists change event
+   * @param lists
+   */
+  private onListPickerChange (lists: string | string[]) {
+    console.log("Lists:", lists);
   }
 
   /**
@@ -195,6 +202,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
               </div>
 
+              <div className="ms-font-m">List picker tester:
+                <ListPicker context={this.props.context}
+                            label="Select your list(s)"
+                            placeHolder="Select your list(s)"
+                            baseTemplate={100}
+                            includeHidden={false}
+                            multiSelect={true}
+                            onSelectionChanged={this.onListPickerChange} />
+              </div>
+
               <div className="ms-font-m">TaxonomyPicker tester:
                 <TaxonomyPicker
                   allowMultipleSelections={true}
@@ -204,8 +221,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false}
-                />
+                  isTermSetSelectable={false} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
