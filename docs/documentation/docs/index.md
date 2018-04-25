@@ -39,7 +39,8 @@ The following controls are currently available:
 
 Field customizer controls:
 
-> **Note**: If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
+!!! note
+    If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
 
 - [FieldAttachmentsRenderer](./controls/fields/FieldAttachmentsRenderer) (renders Clip icon based on the provided `count` property is defined and greater than 0)
 - [FieldDateRenderer](./controls/fields/FieldDateRenderer) (renders date string as a simple text)
