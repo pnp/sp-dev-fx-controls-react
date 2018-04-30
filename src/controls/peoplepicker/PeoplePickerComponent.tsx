@@ -45,7 +45,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 */
 constructor(props: IPeoplePickerProps) {
   super(props);
-  this.refs
   this.state = {
     selectedPersons: [],
     mostRecentlyUsedPersons: [],
@@ -240,13 +239,13 @@ private _convertResultsToPromise(results: IPersonaProps[]): Promise<IPersonaProp
  * Default React component render method
  */
 public render(): React.ReactElement<IPeoplePickerProps> {
-  const peoplepicker = <div id="people">{this.props.titleText}
+  const peoplepicker = <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}> {this.props.titleText}
                       <NormalPeoplePicker
                           pickerSuggestionsProps= {suggestionProps}
                           onResolveSuggestions={ this._onPersonFilterChanged }
                           onEmptyInputFocus={ this._returnMostRecentlyUsedPerson }
                           getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.primaryText} 
-                          className={ 'ms-PeoplePicker' }
+                          className={ `'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}` }
                           key={ 'normal' }
                           onValidateInput={ this._validateInputPeople }
                           removeButtonAriaLabel={ 'Remove' }
@@ -273,6 +272,7 @@ public render(): React.ReactElement<IPeoplePickerProps> {
     <MessageBar
     messageBarType={ MessageBarType.error }
     isMultiline={ false }
+    className = {`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}
     >
     {this.props.errorMessage}
     </MessageBar> : null

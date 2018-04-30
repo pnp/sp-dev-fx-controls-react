@@ -50,6 +50,18 @@ export interface IPeoplePickerProps {
    * Directional Hint of tool tip
    */
   tooltipDirectional? : DirectionalHint;
+   /**
+   * Class Name for the whole People picker control
+   */
+  peoplePickerWPclassName?:string;
+  /**
+   * Class Name for the People picker control
+   */
+  peoplePickerCntrlclassName?: string;
+  /**
+   * Class Name for the Error Section
+   */
+  errorMessageclassName?: string;
 }
 
 export interface IPeoplePickerState {
