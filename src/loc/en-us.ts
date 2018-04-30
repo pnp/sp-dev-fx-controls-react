@@ -38,6 +38,12 @@ define([], () => {
     "SendEmailTo": "Send an email to {0}",
     "StartChatWith": "Start a chat with {0}",
     "Contact": "Contact",
-    "UpdateProfile": "Update your profile"
+    "UpdateProfile": "Update your profile",
+
+    "TaxonomyPickerNoTerms": "Term set does not contain any terms",
+    "TaxonomyPickerExpandTitle": "Expand this Term Set",
+    "TaxonomyPickerMenuTermSet": "Menu for Term Set",
+    "TaxonomyPickerInLabel": "in",
+    "TaxonomyPickerTermSetLabel": "Term Set"
   };
 });

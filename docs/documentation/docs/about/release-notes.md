@@ -1,5 +1,16 @@
 # Releases
 
+## 1.3.0
+
+**New Controls**
+
+- `TaxonomyPicker` control got added [#22](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/22) [#63](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/63) [#64](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/64)
+- `ListPicker` control got added [#34](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/34)
+
+**Fixes**
+
+- Issue fixed when the optional `selection` property was not provided to the `ListView` [#65](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/65)
+
 ## 1.2.5
 
 **Fixes**
@@ -52,7 +63,7 @@
 
 ## 1.1.2
 
-- Fix for WebPartTitle control to inherit color
+- Fix for `WebPartTitle` control to inherit color
 - Improved telemetry with some object checks
 
 ## 1.1.1

@@ -54,6 +54,9 @@ const groupByFields: IGrouping[] = [
 ];
 ```
 
+!!! note "Extend ListView with a ContextualMenu"
+    To extend the `ListView` control with a [ContextualMenu](https://developer.microsoft.com/en-us/fabric#/components/contextualmenu) refer to [ListView.ContextualMenu](./ListView.ContextualMenu).
+
 ## Implementation
 
 The ListView control can be configured with the following properties:

@@ -4,9 +4,11 @@ pages:
   - Controls:
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - ListView: 'controls/ListView.md'
+    - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'
@@ -21,6 +23,7 @@ pages:
     - FieldTitleRenderer: 'controls/fields/FieldTitleRenderer.md'
     - FieldUrlRenderer: 'controls/fields/FieldUrlRenderer.md'
     - FieldUserRenderer: 'controls/fields/FieldUserRenderer.md'
+  - 'Beta testing': 'beta.md'
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'

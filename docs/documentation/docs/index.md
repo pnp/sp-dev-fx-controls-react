@@ -2,7 +2,8 @@
 
 This repository provides developers with a set of reusable React controls that can be used in SharePoint Framework (SPFx) solutions. The project provides controls for building web parts and extensions.
 
-!!! attention The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for on-premises. As for on-premises solutions version `1.1.0` is currently used.
+!!! attention
+    The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for on-premises. As for on-premises solutions version `1.1.0` is currently used.
 
 ## Getting started
 
@@ -32,12 +33,14 @@ The following controls are currently available:
 - [ListView](./controls/ListView) (List view control)
 - [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
+- [SiteBreadcrumb](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 
 Field customizer controls:
 
-> **Note**: If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
+!!! note
+    If you want to use these controls in your solution, first check out the start guide for these controls: [using the field controls](./controls/fields/main).
 
 - [FieldAttachmentsRenderer](./controls/fields/FieldAttachmentsRenderer) (renders Clip icon based on the provided `count` property is defined and greater than 0)
 - [FieldDateRenderer](./controls/fields/FieldDateRenderer) (renders date string as a simple text)
@@ -46,7 +49,7 @@ Field customizer controls:
 - [FieldNameRenderer](./controls/fields/FieldNameRenderer) (renders document's name as a link)
 - [FieldTaxonomyRenderer](./controls/fields/FieldTaxonomyRenderer) (renders terms from Managed Metadata field)
 - [FieldTextRenderer](./controls/fields/FieldTextRenderer) (renders simple text)
-- [FieldTitleRenderer](./controls/fields/FieldTitleRenderer) (renders title either as a simple text or as a link to the Dislpay Form)
+- [FieldTitleRenderer](./controls/fields/FieldTitleRenderer) (renders title either as a simple text or as a link to the Display Form)
 - [FieldUrlRenderer](./controls/fields/FieldUrlRenderer) (renders Hyperlink or Picture field value as a link or image)
 - [FieldUserRenderer](./controls/fields/FieldUserRenderer) (renders each referenced user/group as a link on a separate line)
 

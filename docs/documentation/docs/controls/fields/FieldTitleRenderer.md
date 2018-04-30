@@ -1,6 +1,6 @@
 # FieldTitleRenderer control
 
-This control renders title either as a simple text or as a link to the Dislpay Form. Additional actions like Share and Context Menu are not implemented.
+This control renders title either as a simple text or as a link to the Display Form. Additional actions like Share and Context Menu are not implemented.
 
 ![FieldTitleRenderer control output](../../assets/FieldTitleRenderer.png)
 
