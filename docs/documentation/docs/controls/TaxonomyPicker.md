@@ -11,7 +11,7 @@ This control allows you to select one or more Terms from a TermSet via its name 
 
 **Selecting terms**
 
-![Selecting terms](../assets/termpicker-selection.png)
+![Selecting terms](../assets/termPicker-tree-selection.png)
 
 **Selected terms in picker** 
 
@@ -19,7 +19,7 @@ This control allows you to select one or more Terms from a TermSet via its name 
 
 **Term picker: Auto Complete**
 
-![Selected terms in the input](../assets/termpicker-autocomplete.png)
+![Selected terms in the input](../assets/termpicker-input-autocomplete.png)
 
 
 ## How to use this control in your solutions
