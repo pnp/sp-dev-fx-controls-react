@@ -9,6 +9,7 @@ pages:
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
   - 'Field Controls':
