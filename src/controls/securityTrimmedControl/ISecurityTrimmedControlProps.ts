@@ -6,11 +6,11 @@ import { PermissionLevel } from '.';
 
 export interface ISecurityTrimmedControlProps {
   /**
-   * Context of the web part, application customizer, field customizer, or list view command set
+   * Context of the web part, application customizer, field customizer, or list view command set.
    */
   context: WebPartContext | ApplicationCustomizerContext | FieldCustomizerContext | ListViewCommandSetContext;
   /**
-   * The permissions to check for the user
+   * The permissions to check for the user.
    */
   permissions: SPPermission[];
   /**

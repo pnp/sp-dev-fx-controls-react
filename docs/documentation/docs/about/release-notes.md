@@ -1,5 +1,11 @@
 # Releases
 
+## 1.4.0
+
+**New Controls**
+
+- `SecurityTrimmedControl` control got added [#74](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/74)
+
 ## 1.3.0
 
 **New Controls**

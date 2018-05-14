@@ -15,6 +15,8 @@ import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
+import { SPPermission } from '@microsoft/sp-page-context';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -176,6 +178,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
+
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]}>
+                <p>You have permissions to view list items.</p>
+              </SecurityTrimmedControl>
 
               <p className="ms-font-l">
                 File type icon control
