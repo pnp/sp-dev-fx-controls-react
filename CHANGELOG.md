@@ -6,6 +6,10 @@
 
 - `SecurityTrimmedControl` control got added [#74](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/74)
 
+**Fixes**
+
+- Icon not showing up in the `Placeholder` control [#76](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/76)
+
 ## 1.3.0
 
 **New Controls**
