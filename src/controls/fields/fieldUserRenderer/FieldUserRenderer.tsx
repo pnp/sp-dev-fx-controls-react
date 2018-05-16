@@ -171,7 +171,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
         if (this._loadedUserProfiles[user.id]) {
             return <ul className={styles.sections}>
                 <li className={styles.section}>
-                    <div className={styles.header}>{strings.Contact} <i className={css('ms-Icon ms-Icon--ChevronRight', styles.chevron)} aria-hidden={'true'}></i></div>
+                    <div className={styles.header}>{strings.Contact} <Icon iconName="ChevronRight" className={styles.chevron} /></div>
                     <div className={styles.contactItem}>
                     <Icon iconName={'Mail'}/>
                         <Link className={styles.content} title={user.email} href={`mailto:${user.email}`} target={'_self'}>{user.email}</Link>

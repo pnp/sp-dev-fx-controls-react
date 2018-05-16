@@ -6,6 +6,7 @@ import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
+import { Icon } from 'office-ui-fabric-react';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -70,7 +71,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           !term.disabled && (
             <span className={styles.pickedTermCloseIcon}
               onClick={term.onRemoveItem}>
-              <i className="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+              <Icon iconName="Cancel" />
             </span>
           )
         }
