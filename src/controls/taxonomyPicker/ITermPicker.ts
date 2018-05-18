@@ -1,3 +1,4 @@
+import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 
 
@@ -42,7 +43,7 @@ export interface IPropertyFieldTermPickerProps {
   /**
    * WebPart's context
    */
-  context: IWebPartContext;
+  context: IWebPartContext | ApplicationCustomizerContext;
   /**
    * Limit the term sets that can be used by the group name or ID
    */
@@ -88,6 +89,6 @@ export interface IPropertyFieldTermPickerProps {
    * Default value is 200.
    */
   deferredValidationTime?: number;
-  
+
 }
 

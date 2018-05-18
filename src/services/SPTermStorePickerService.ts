@@ -12,6 +12,7 @@ import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker
 import { IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ITermSets } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
+import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 
 
 /**
@@ -25,7 +26,7 @@ export default class SPTermStorePickerService {
   /**
    * Service constructor
    */
-  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext) {
+  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext | ApplicationCustomizerContext) {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
