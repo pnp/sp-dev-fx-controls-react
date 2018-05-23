@@ -13,7 +13,7 @@
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
     "changelog": "node scripts/sync-changelogs.js",
-    "postinstall": "postinstall/install.js"
+    "postinstall": "node postinstall/install.js"
   },
   "dependencies": {
     "@pnp/common": "^1.0.1",
