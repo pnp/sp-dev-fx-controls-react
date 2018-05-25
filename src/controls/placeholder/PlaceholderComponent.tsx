@@ -4,6 +4,7 @@ import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import styles from './PlaceholderComponent.module.scss';
 import * as appInsights from '../../common/appInsights';
 import { IPlaceholderState } from '.';
+import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
 
 /**
  * Placeholder component
@@ -83,15 +84,13 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
    * Default React component render method
    */
   public render(): React.ReactElement<IPlaceholderProps> {
-    const iconName = typeof this.props.iconName !== 'undefined' && this.props.iconName !== null ? `ms-Icon--${this.props.iconName}` : '';
-
     return (
       <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>
         <div className={styles.placeholderContainer}>
           <div className={styles.placeholderHead}>
             <div className={styles.placeholderHeadContainer}>
               {
-                iconName ? <i className={`${styles.placeholderIcon} ms-fontSize-su ms-Icon ${iconName}`}></i> : ''
+                this.props.iconName && <Icon iconName={this.props.iconName} className={`${styles.placeholderIcon} ms-fontSize-su ms-Icon`} />
               }
               <span className={`${styles.placeholderText} ms-fontWeight-light ms-fontSize-xxl ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`}>{this.props.iconText}</span>
             </div>

@@ -1,3 +1,4 @@
+import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { IPickerTerms } from './ITermPicker';
 import { ITermStore, IGroup, ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
@@ -26,7 +27,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: IWebPartContext;
+  context: IWebPartContext | ApplicationCustomizerContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */

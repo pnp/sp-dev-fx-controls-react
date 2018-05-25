@@ -1,5 +1,20 @@
 # Releases
 
+## 1.4.0
+
+**New Controls**
+
+- `SecurityTrimmedControl` control got added [#74](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/74)
+
+**Enhancements**
+
+- Allow the `TaxonomyPicker` to also be used in Application Customizer [#77](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/77)
+- Add `npm postinstall` script to automatically add the locale config [#78](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/78)
+
+**Fixes**
+
+- Icon not showing up in the `Placeholder` control [#76](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/76)
+
 ## 1.3.0
 
 **New Controls**

@@ -3,11 +3,13 @@ pages:
   - Home: 'index.md'
   - Controls:
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
   - 'Field Controls':
