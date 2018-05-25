@@ -19,6 +19,9 @@ npm install @pnp/spfx-controls-react --save --save-exact
 
 ### Configuration
 
+!!! note
+    Since `v1.4.0` the localized resource path will automatically be configured during the dependency installing.
+
 Once the package is installed, you will have to configure the resource file of the property controls to be used in your project. You can do this by opening the `config/config.json` and adding the following line to the `localizedResources` property:
 
 ```json
