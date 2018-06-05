@@ -29,7 +29,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
   public static defaultProps: IPeoplePickerProps = {
   context : null,
-  getAllUsers: true,
   titleText: "People Picker",
   personSelectionLimit: 1,
   showtooltip : false,
@@ -73,7 +72,6 @@ constructor(props: IPeoplePickerProps) {
   appInsights.track('ReactPeoplePicker', {
     groupName: !!props.groupName,
     name: !!props.groupName,
-    getAllUsers: !!props.getAllUsers,
     titleText: !!props.titleText
   });
 
@@ -90,13 +88,13 @@ constructor(props: IPeoplePickerProps) {
 
   private _thisLoadUsers() : void {
     var stringVal = "";
-    if(this.props.getAllUsers)
-    {
-      stringVal = "/_api/web/siteusers";
-    }
-    else if(this.props.groupName != "")
+    if(this.props.groupName != "")
     {
       stringVal = `/_api/web/sitegroups/GetByName('${this.props.groupName}')/users`;
+    }
+    else
+    {
+      stringVal = "/_api/web/siteusers";
     }
 
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}${stringVal}`;
@@ -251,8 +249,8 @@ public render(): React.ReactElement<IPeoplePickerProps> {
                           removeButtonAriaLabel={ 'Remove' }
                           inputProps={ {
                             'aria-label': 'People Picker',
-                            onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur on People Picker called'),
-                            onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus on People Picker called'),
+                            //onBlur: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onBlur on People Picker called'),
+                            //onFocus: (ev: React.FocusEvent<HTMLInputElement>) => console.log('onFocus on People Picker called'),
                           } }
                           itemLimit={this.props.personSelectionLimit}
                           onChange = { this._onPersonItemsChange }

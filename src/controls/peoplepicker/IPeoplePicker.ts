@@ -13,11 +13,7 @@ export interface IPeoplePickerProps {
   /**
    * Name of SharePoint Group
    */
-  groupName?: string;
-  /**
-   * image Initials
-   */
-  getAllUsers?: boolean;
+  groupName: string;
   /** 
    * Text of the Control 
   */
