@@ -73,6 +73,9 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   }
 
 
+  /**
+   * Default React render method
+   */
   public render(): JSX.Element {
     // Specify the inline styling to show or hide the termsets
     const styleProps: React.CSSProperties = {
@@ -80,25 +83,25 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     };
 
     let termElm: JSX.Element = <div />;
-    // Check if the terms have been loaded
 
-      if (this.state.loaded) {
-        if (this._terms.length > 0) {
-          termElm = (
-            <div style={styleProps}>
-              {
-                this._terms.map(term => {
-                  return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} />;
-                })
-              }
-            </div>
-          );
-        } else {
-          termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
-        }
+    // Check if the terms have been loaded
+    if (this.state.loaded) {
+      if (this._terms.length > 0) {
+        termElm = (
+          <div style={styleProps}>
+            {
+              this._terms.map(term => {
+                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabledTermIds={this.props.disabledTermIds} />;
+              })
+            }
+          </div>
+        );
       } else {
-        termElm = <Spinner type={SpinnerType.normal} />;
+        termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
       }
+    } else {
+      termElm = <Spinner type={SpinnerType.normal} />;
+    }
 
 
     return (

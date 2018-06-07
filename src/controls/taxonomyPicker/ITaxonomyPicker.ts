@@ -41,6 +41,10 @@ export interface ITaxonomyPickerProps  {
    */
   isTermSetSelectable?: boolean;
   /**
+   * Specify which terms should be disabled in the term set so that they cannot be selected
+   */
+  disabledTermIds?: string[];
+  /**
    * Whether the property pane field is enabled or not.
    */
   disabled?: boolean;
@@ -80,6 +84,7 @@ export interface ITaxonomyPickerState {
 export interface ITermChanges {
   changedCallback: (term: ITerm, checked: boolean) => void;
   activeNodes?: IPickerTerms;
+  disabledTermIds?: string[];
 }
 
 

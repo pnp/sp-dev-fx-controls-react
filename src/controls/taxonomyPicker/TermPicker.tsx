@@ -25,6 +25,8 @@ export interface ITermPickerProps {
   value: IPickerTerms;
   allowMultipleSelections : boolean;
   isTermSetSelectable?: boolean;
+  disabledTermIds?: string[];
+
   onChanged: (items: IPickerTerm[]) => void;
 }
 
@@ -83,7 +85,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
   /**
    * Renders the suggestions in the picker
    */
-  protected onRenderSuggestionsItem(term: IPickerTerm, props) {
+  protected onRenderSuggestionsItem(term: IPickerTerm) {
     let termParent = term.termSetName;
     let termTitle = `${term.name} [${term.termSetName}]`;
     if (term.path.indexOf(";") !== -1) {
@@ -125,6 +127,11 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       // Filter out the terms which are already set
       const filteredTerms = [];
       for (const term of terms) {
+        // Check if term is not disabled
+        if (this.props.disabledTermIds && this.props.disabledTermIds.length > 0 && this.props.disabledTermIds.indexOf(term.key) !== -1) {
+          break;
+        }
+        // Only retrieve the terms which are not yet tagged
         if (tagList.filter(tag => tag.key === term.key).length === 0) {
           filteredTerms.push(term);
         }

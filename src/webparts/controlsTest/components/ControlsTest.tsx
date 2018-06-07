@@ -221,8 +221,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">TaxonomyPicker tester:
                 <TaxonomyPicker
                   allowMultipleSelections={true}
-                  termsetNameOrID="8ed8c9ea-7052-4c1d-a4d7-b9c10bffea6f"
+                  termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
+                  disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   panelTitle="Select Term"
                   label="Taxonomy Picker"
                   context={this.props.context}

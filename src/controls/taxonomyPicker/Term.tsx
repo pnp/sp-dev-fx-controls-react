@@ -48,7 +48,22 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     }
   }
 
+  /**
+   * Check if the current term needs to be disabled
+   */
+  private checkIfTermIsDisabled(): boolean {
+    // Check if disabled term IDs are provided
+    if (this.props.disabledTermIds && this.props.disabledTermIds.length > 0) {
+      // Check if the current term ID exists in the disabled term IDs array
+      return this.props.disabledTermIds.indexOf(this.props.term.Id) !== -1;
+    }
 
+    return false;
+  }
+
+  /**
+   * Default React render
+   */
   public render(): JSX.Element {
     const styleProps: React.CSSProperties = {
       marginLeft: `${(this.props.term.PathDepth * 30)}px`
@@ -58,7 +73,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       <div className={`${styles.listItem} ${styles.term}`} style={styleProps}>
         <Checkbox
           checked={this.state.selected}
-          disabled={this.props.term.IsDeprecated}
+          disabled={this.props.term.IsDeprecated || this.checkIfTermIsDisabled()}
           className={this.props.term.IsDeprecated ? styles.termDisabled : styles.termEnabled}
           label={this.props.term.Name}
           onChange={this._handleChange} />
