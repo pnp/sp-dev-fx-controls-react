@@ -240,7 +240,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                   isTermSetSelectable={this.props.isTermSetSelectable}
                   onChanged={this.termsFromPickerChanged}
                   allowMultipleSelections={this.props.allowMultipleSelections}
-                  disabledTermIds={this.props.disabledTermIds} />
+                  disabledTermIds={this.props.disabledTermIds}
+                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
               </td>
               <td className={styles.termFieldRow}>
                 <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
@@ -283,6 +284,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             termSetSelectedChange={this.termSetSelectedChange}
                             activeNodes={this.state.activeNodes}
                             disabledTermIds={this.props.disabledTermIds}
+                            disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
                             changedCallback={this.termsChanged}
                             multiSelection={this.props.allowMultipleSelections} />
               </div>

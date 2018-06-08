@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
 import { ITermParentProps, ITermParentState } from './ITaxonomyPicker';
-import { ITerm, ITermSet } from '../../services/ISPTermStorePickerService';
+import { ITerm } from '../../services/ISPTermStorePickerService';
 import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPicker';
 import Term from './Term';
 
@@ -87,11 +87,29 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     // Check if the terms have been loaded
     if (this.state.loaded) {
       if (this._terms.length > 0) {
+        let disabledPaths = [];
         termElm = (
           <div style={styleProps}>
             {
               this._terms.map(term => {
-                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabledTermIds={this.props.disabledTermIds} />;
+                // debugger;
+                let disabled = false;
+                if (this.props.disabledTermIds && this.props.disabledTermIds.length > 0) {
+                  // Check if the current term ID exists in the disabled term IDs array
+                  disabled = this.props.disabledTermIds.indexOf(term.Id) !== -1;
+                  if (disabled) {
+                    // Push paths to the disabled list
+                    disabledPaths.push(term.PathOfTerm);
+                  }
+                }
+
+                if (this.props.disableChildrenOfDisabledParents) {
+                  // Check if parent is disabled
+                  const parentPath = disabledPaths.filter(p => term.PathOfTerm.indexOf(p) !== -1);
+                  disabled = parentPath && parentPath.length > 0;
+                }
+
+                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabled={disabled} />;
               })
             }
           </div>

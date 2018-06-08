@@ -4,7 +4,7 @@
 
 **Enhancements**
 
-- Added a property to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
+- Added a properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
 
 ## 1.4.0
 
