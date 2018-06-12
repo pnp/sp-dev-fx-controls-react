@@ -92,7 +92,6 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
           <div style={styleProps}>
             {
               this._terms.map(term => {
-                // debugger;
                 let disabled = false;
                 if (this.props.disabledTermIds && this.props.disabledTermIds.length > 0) {
                   // Check if the current term ID exists in the disabled term IDs array
