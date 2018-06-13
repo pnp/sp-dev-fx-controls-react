@@ -41,7 +41,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     appInsights.track('ReactTaxonomyPicker');
 
     this.state = {
-      activeNodes: typeof this.props.initialValues !== 'undefined' ? this.props.initialValues : [],
+      activeNodes: this.props.initialValues || [],
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
@@ -53,6 +53,24 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+  }
+
+  /**
+   * componentWillMount lifecycle hook
+   */
+  public componentWillMount(): void {
+    this.setState({
+      activeNodes: this.props.initialValues || []
+    });
+  }
+
+  /**
+   * componentWillUpdate lifecycle hook
+   */
+  public componentWillUpdate(nextProps: ITaxonomyPickerProps): void {
+    this.setState({
+      activeNodes: nextProps.initialValues || []
+    });
   }
 
   /**
