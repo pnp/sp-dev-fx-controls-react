@@ -68,7 +68,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * componentWillUpdate lifecycle hook
    */
   public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
-    if (isEqual(this.props.initialValues, prevProps.initialValues)) {
+    // Check if the initial values objects are not equal, if that is the case, data can be refreshed
+    if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
       this.setState({
         activeNodes: this.props.initialValues || []
       });

@@ -4,7 +4,7 @@ import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
@@ -28,7 +28,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.state = {
       imgSize: ImageSize.small,
       items: [],
-      iFrameDialogOpened: false
+      iFrameDialogOpened: false,
+      initialValues: []
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -78,8 +79,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange(terms : IPickerTerms) {
-      console.log("Terms:", terms);
+  private _onTaxPickerChange = (terms : IPickerTerms) => {
+    this.setState({
+      initialValues: terms
+    });
+    console.log("Terms:", terms);
   }
 
   /**
@@ -220,6 +224,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">TaxonomyPicker tester:
                 <TaxonomyPicker
+                  initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
                   termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
@@ -232,6 +237,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
                   isTermSetSelectable={false} />
+
+                  <DefaultButton text="Add" onClick={() => {
+                    this.setState({
+                      initialValues: [{
+                        key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                        name: "HR",
+                        path: "HR",
+                        termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                      }]
+                    });
+                  }} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
