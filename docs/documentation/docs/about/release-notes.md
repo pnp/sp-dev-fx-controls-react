@@ -6,6 +6,10 @@
 
 - Added a properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
 
+**Fixes**
+
+- Bug in `TaxonomyPicker` where values are not updated by an async change [#83](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/83)
+
 ## 1.4.0
 
 **New control(s)**

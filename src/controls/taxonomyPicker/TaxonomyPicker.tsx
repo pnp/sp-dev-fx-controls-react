@@ -9,7 +9,7 @@ import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
-import { sortBy, uniqBy, cloneDeep } from '@microsoft/sp-lodash-subset';
+import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 import * as appInsights from '../../common/appInsights';
@@ -67,10 +67,12 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentWillUpdate(nextProps: ITaxonomyPickerProps): void {
-    this.setState({
-      activeNodes: nextProps.initialValues || []
-    });
+  public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
+    if (isEqual(this.props.initialValues, prevProps.initialValues)) {
+      this.setState({
+        activeNodes: this.props.initialValues || []
+      });
+    }
   }
 
   /**
