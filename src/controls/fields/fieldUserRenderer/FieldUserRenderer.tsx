@@ -15,6 +15,7 @@ import FieldUserHoverCard, { IFieldUserHoverCardProps } from './FieldUserHoverCa
 import * as appInsights from '../../../common/appInsights';
 
 import * as strings from 'ControlStrings';
+import { SPHelper } from '../../../common/utilities';
 
 export interface IFieldUserRendererProps extends IFieldRendererProps {
     /**
@@ -173,18 +174,18 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
                 <li className={styles.section}>
                     <div className={styles.header}>{strings.Contact} <Icon iconName="ChevronRight" className={styles.chevron} /></div>
                     <div className={styles.contactItem}>
-                    <Icon iconName={'Mail'}/>
+                        <Icon iconName={'Mail'} />
                         <Link className={styles.content} title={user.email} href={`mailto:${user.email}`} target={'_self'}>{user.email}</Link>
                     </div>
                     {user.workPhone &&
                         <div className={styles.contactItem}>
-                            <Icon iconName={'Phone'}/>
+                            <Icon iconName={'Phone'} />
                             <Link className={styles.content} title={user.workPhone} href={`tel:${user.workPhone}`} target={'_self'}>{user.workPhone}</Link>
                         </div>
                     }
                     {user.cellPhone &&
                         <div className={styles.contactItem}>
-                            <Icon iconName={'Phone'}/>
+                            <Icon iconName={'Phone'} />
                             <Link className={styles.content} title={user.cellPhone} href={`tel:${user.cellPhone}`} target={'_self'}>{user.cellPhone}</Link>
                         </div>
                     }
@@ -236,67 +237,61 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
     /**
      * Requests User Profile Properties
      */
-    private _requestUserProfile(user: IFieldUser, index: number): void {
+    private async _requestUserProfile(user: IFieldUser, index: number): Promise<void> {
         if (this._loadedUserProfiles[user.id]) {
             return; // we've already have the profile info
         }
 
         const context: IContext = this.props.context;
-        let url: string;
-        url = context.pageContext.web.absoluteUrl;
-        url = GeneralHelper.trimSlash(url);
 
-        url += `/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor('i%3A0%23.f%7Cmembership%7C${user.email.replace('@', '%40')}')`;
-        context.spHttpClient.get(url, SPHttpClient.configurations.v1)
-            .then((response): Promise<any> => {
-                return response.json();
-            })
-            .then((value) => {
-                const mthumbStr = 'MThumb.jpg';
-                const userProfileProps: IUserProfileProperties = {
-                    displayName: value.DisplayName,
-                    email: value.Email,
-                    jobTitle: value.Title,
-                    userUrl: value.UserUrl,
-                    pictureUrl: value.PictureUrl && value.PictureUrl.toString().indexOf(mthumbStr) === value.PictureUrl.toString().length - mthumbStr.length ? '' : value.PictureUrl //this._userImageUrl.replace('{0}', user.email)
-                };
+        const siteUser = await SPHelper.getUserById(parseInt(user.id), context);
 
-                const props: IODataKeyValuePair[] = value.UserProfileProperties as IODataKeyValuePair[];
-                let foundPropsCount: number = 0;
-                for (let i = 0, len = props.length; i < len; i++) {
-                    const prop: IODataKeyValuePair = props[i];
-                    switch (prop.Key) {
-                        case 'WorkPhone':
-                            userProfileProps.workPhone = prop.Value;
-                            foundPropsCount++;
-                            break;
-                        case 'Department':
-                            userProfileProps.department = prop.Value;
-                            foundPropsCount++;
-                            break;
-                        case 'SPS-SipAddress':
-                            userProfileProps.sip = prop.Value;
-                            foundPropsCount++;
-                            break;
-                        case 'CellPhone':
-                            userProfileProps.cellPhone = prop.Value;
-                            foundPropsCount++;
-                            break;
-                    }
+        const value = await SPHelper.getUserProperties(siteUser.LoginName, context);
 
-                    if (foundPropsCount === 4) {
-                        break;
-                    }
-                }
+        const mthumbStr = 'MThumb.jpg';
+        const userProfileProps: IUserProfileProperties = {
+            displayName: value.DisplayName,
+            email: value.Email,
+            jobTitle: value.Title,
+            userUrl: value.UserUrl,
+            pictureUrl: value.PictureUrl && value.PictureUrl.toString().indexOf(mthumbStr) === value.PictureUrl.toString().length - mthumbStr.length ? '' : value.PictureUrl //this._userImageUrl.replace('{0}', user.email)
+        };
 
-                this._loadedUserProfiles[user.id] = userProfileProps;
-                this.setState((prevState: IFieldUserRendererState, componentProps: IFieldUserRendererProps) => {
-                    const newUsers = _.clone<IFieldUser[]>(prevState.users);
-                    newUsers[index] = this._getUserFromPrincipalAndProps(this.props.users[index], userProfileProps);
+        const props: IODataKeyValuePair[] = value.UserProfileProperties as IODataKeyValuePair[];
+        let foundPropsCount: number = 0;
+        for (let i = 0, len = props.length; i < len; i++) {
+            const prop: IODataKeyValuePair = props[i];
+            switch (prop.Key) {
+                case 'WorkPhone':
+                    userProfileProps.workPhone = prop.Value;
+                    foundPropsCount++;
+                    break;
+                case 'Department':
+                    userProfileProps.department = prop.Value;
+                    foundPropsCount++;
+                    break;
+                case 'SPS-SipAddress':
+                    userProfileProps.sip = prop.Value;
+                    foundPropsCount++;
+                    break;
+                case 'CellPhone':
+                    userProfileProps.cellPhone = prop.Value;
+                    foundPropsCount++;
+                    break;
+            }
 
-                    return { users: newUsers };
+            if (foundPropsCount === 4) {
+                break;
+            }
+        }
 
-                });
-            });
+        this._loadedUserProfiles[user.id] = userProfileProps;
+        this.setState((prevState: IFieldUserRendererState, componentProps: IFieldUserRendererProps) => {
+            const newUsers = _.clone<IFieldUser[]>(prevState.users);
+            newUsers[index] = this._getUserFromPrincipalAndProps(this.props.users[index], userProfileProps);
+
+            return { users: newUsers };
+
+        });
     }
 }
