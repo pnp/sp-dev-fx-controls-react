@@ -1,6 +1,6 @@
 # People Picker
 
-This control renders a People picker field which can be used to select one or many users from a SharePoint group, or filter from all users in a SharePoint site. You could also set the control as mandatory and show a custom error message if field is empty.
+This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.
 
 **Empty People Picker control with error message and tooltip**
 
@@ -20,30 +20,29 @@ This control renders a People picker field which can be used to select one or ma
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
-```TypeScript
+```typescript
 import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 ```
 
 - Use the `PeoplePicker` control in your code as follows:
 
-```TypeScript
+```typescript
 <PeoplePicker
     context={this.props.context}
     titleText="People Picker"
     personSelectionLimit={3}
-    groupName = {"Team Site Owners"} //leave this blank in case you want to filter from all users
-    showtooltip = {true}
-    isRequired = {true}
-    selectedItems = {this._getPeoplePickerItems}
-/>
+    groupName={"Team Site Owners"} // Leave this blank in case you want to filter from all users
+    showtooltip={true}
+    isRequired={true}
+    selectedItems={this._getPeoplePickerItems} />
 ```
 
 - With the `selectedItems` property you can get the selected People in the Peoplepicker :
 
 ```typescript
 private _getPeoplePickerItems(items: any[]) {
-    console.log('Items:', items);
-  }
+  console.log('Items:', items);
+}
 ```
 
 ## Implementation
@@ -53,8 +52,8 @@ The People picker control can be configured with the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | context | WebPartContext | yes | Context of the current web part. |
-| groupName | string | yes | group from which users are fetched. Leave it blank if need to filter all users |
 | titleText | string | yes | Text to be displayed on the control |
+| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control|
 | isRequired | boolean | no | Set if the control is required or not |
 | errorMessage | string | no | Specify the error message to display |

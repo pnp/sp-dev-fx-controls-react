@@ -11,13 +11,13 @@ export interface IPeoplePickerProps {
    */
   context: WebPartContext;
   /**
-   * Name of SharePoint Group
-   */
-  groupName: string;
-  /** 
-   * Text of the Control 
+   * Text of the Control
   */
   titleText: string;
+  /**
+   * Name of SharePoint Group
+   */
+  groupName?: string;
   /**
    * Selection Limit of Control
    */
@@ -37,7 +37,7 @@ export interface IPeoplePickerProps {
   /**
    * Method to check value of People Picker text
    */
-  selectedItems?: (items: any[]) => void; 
+  selectedItems?: (items: any[]) => void;
   /**
    * Tooltip Message
    */

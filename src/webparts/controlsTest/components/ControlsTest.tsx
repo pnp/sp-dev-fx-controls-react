@@ -106,7 +106,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         items: items
       });
     }
-  } 
+  }
   /** Method that retrieves the selected items from People  Picker
    * @param items
    */
@@ -299,17 +299,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selectionMode={SelectionMode.multiple}
           selection={this._getSelection} />
 
-          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p> 
-          
+          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+
           <PeoplePicker
-          context={this.props.context}
-          titleText="People Picker"
-          personSelectionLimit={3}
-          groupName = {"Team Site Owners"}
-          showtooltip = {true}
-          isRequired = {true}
-          selectedItems = {this._getPeoplePickerItems}
-          />
+            context={this.props.context}
+            titleText="People Picker"
+            // personSelectionLimit={3}
+            // groupName={"Team Site Owners"}
+            showtooltip={true}
+            isRequired={true}
+            selectedItems={this._getPeoplePickerItems} />
       </div>
     );
   }

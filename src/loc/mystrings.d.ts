@@ -1,4 +1,7 @@
 declare interface IControlStrings {
+  peoplePickerComponentTooltipMessage: string;
+  peoplePickerComponentErrorMessage: string;
+  peoplePickerComponentTitleText: string;
   SiteBreadcrumbLabel: string;
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
