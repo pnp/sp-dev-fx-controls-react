@@ -5,6 +5,7 @@ import * as Constants from '../Constants';
 import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
 import { SPField } from '@microsoft/sp-page-context';
 import { sp } from '@pnp/sp';
+import { SPHttpClient } from '@microsoft/sp-http';
 
 declare var window: any;
 
@@ -326,6 +327,39 @@ export class SPHelper {
             viewIdQueryParam = `{${viewIdQueryParam}}`;
         }
         return viewIdQueryParam || context.pageContext.legacyPageContext.viewId;
+    }
+
+    /**
+     * Returns the user corresponding to the specified member identifier for the current site
+     * @param id user id
+     * @param context SPFx context
+     */
+    public static async getUserById(id: number, context: IContext): Promise<any> {
+        sp.setup({
+            spfxContext: context
+        });
+
+        return sp.web.getUserById(id).get();
+    }
+
+    /**
+     * Returns user profile properties
+     * @param loginName User's login name
+     * @param context SPFx context
+     */
+    public static async getUserProperties(loginName: string, context: IContext): Promise<any> {
+        let url: string;
+        url = context.pageContext.web.absoluteUrl;
+        url = GeneralHelper.trimSlash(url);
+
+        url += `/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor('${encodeURIComponent(loginName)}')`;
+         return context.spHttpClient.get(url, SPHttpClient.configurations.v1)
+            .then((response): Promise<any> => {
+                return response.json();
+            })
+            .then((value) => {
+                return value;
+            });
     }
 
 
