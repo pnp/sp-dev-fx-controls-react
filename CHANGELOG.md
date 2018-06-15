@@ -2,6 +2,10 @@
 
 ## 1.5.0
 
+**New control(s)**
+
+- New `PeoplePicker` control added [#19](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/19)
+
 **Enhancements**
 
 - Added a properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
