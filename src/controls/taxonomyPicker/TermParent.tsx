@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
 import { ITermParentProps, ITermParentState } from './ITaxonomyPicker';
-import { ITerm, ITermSet } from '../../services/ISPTermStorePickerService';
+import { ITerm } from '../../services/ISPTermStorePickerService';
 import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPicker';
 import Term from './Term';
 
@@ -73,6 +73,9 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   }
 
 
+  /**
+   * Default React render method
+   */
   public render(): JSX.Element {
     // Specify the inline styling to show or hide the termsets
     const styleProps: React.CSSProperties = {
@@ -80,25 +83,42 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     };
 
     let termElm: JSX.Element = <div />;
-    // Check if the terms have been loaded
 
-      if (this.state.loaded) {
-        if (this._terms.length > 0) {
-          termElm = (
-            <div style={styleProps}>
-              {
-                this._terms.map(term => {
-                  return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} />;
-                })
-              }
-            </div>
-          );
-        } else {
-          termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
-        }
+    // Check if the terms have been loaded
+    if (this.state.loaded) {
+      if (this._terms.length > 0) {
+        let disabledPaths = [];
+        termElm = (
+          <div style={styleProps}>
+            {
+              this._terms.map(term => {
+                let disabled = false;
+                if (this.props.disabledTermIds && this.props.disabledTermIds.length > 0) {
+                  // Check if the current term ID exists in the disabled term IDs array
+                  disabled = this.props.disabledTermIds.indexOf(term.Id) !== -1;
+                  if (disabled) {
+                    // Push paths to the disabled list
+                    disabledPaths.push(term.PathOfTerm);
+                  }
+                }
+
+                if (this.props.disableChildrenOfDisabledParents) {
+                  // Check if parent is disabled
+                  const parentPath = disabledPaths.filter(p => term.PathOfTerm.indexOf(p) !== -1);
+                  disabled = parentPath && parentPath.length > 0;
+                }
+
+                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabled={disabled} />;
+              })
+            }
+          </div>
+        );
       } else {
-        termElm = <Spinner type={SpinnerType.normal} />;
+        termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
       }
+    } else {
+      termElm = <Spinner type={SpinnerType.normal} />;
+    }
 
 
     return (

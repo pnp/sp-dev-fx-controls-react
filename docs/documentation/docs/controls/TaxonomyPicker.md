@@ -68,6 +68,8 @@ The TaxonomyPicker control can be configured with the following properties:
 | termsetNameOrID | string | yes | The name or Id of your TermSet that you would like the Taxonomy Picker to chose terms from. |
 | onChange | function | no |  captures the event of when the terms in the picker has changed. |
 | isTermSetSelectable | boolean | no | Specify if the TermSet itself is selectable in the tree view. |
+| disabledTermIds | string[] | no | Specify which terms should be disabled in the term set so that they cannot be selected. |
+| disableChildrenOfDisabledParents | boolean | no | Specify if you want to disable the child terms when their parent is disabled. |
 | anchorId | string | no | Set the anchorid to a child term in the TermSet to be able to select terms from that level and below. |
 
 Interface `IPickerTerm`

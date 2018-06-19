@@ -41,6 +41,14 @@ export interface ITaxonomyPickerProps  {
    */
   isTermSetSelectable?: boolean;
   /**
+   * Specify which terms should be disabled in the term set so that they cannot be selected
+   */
+  disabledTermIds?: string[];
+  /**
+   * Specify if you want to disable the child terms when their parent is disabled
+   */
+  disableChildrenOfDisabledParents?: boolean;
+  /**
    * Whether the property pane field is enabled or not.
    */
   disabled?: boolean;
@@ -80,6 +88,8 @@ export interface ITaxonomyPickerState {
 export interface ITermChanges {
   changedCallback: (term: ITerm, checked: boolean) => void;
   activeNodes?: IPickerTerms;
+  disabledTermIds?: string[];
+  disableChildrenOfDisabledParents?: boolean;
 }
 
 
@@ -103,6 +113,7 @@ export interface ITermProps extends ITermChanges {
   termset: string;
   term: ITerm;
   multiSelection: boolean;
+  disabled: boolean;
 }
 
 export interface ITermState {

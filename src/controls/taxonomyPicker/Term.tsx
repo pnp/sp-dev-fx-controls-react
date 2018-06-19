@@ -48,7 +48,9 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     }
   }
 
-
+  /**
+   * Default React render
+   */
   public render(): JSX.Element {
     const styleProps: React.CSSProperties = {
       marginLeft: `${(this.props.term.PathDepth * 30)}px`
@@ -58,7 +60,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       <div className={`${styles.listItem} ${styles.term}`} style={styleProps}>
         <Checkbox
           checked={this.state.selected}
-          disabled={this.props.term.IsDeprecated}
+          disabled={this.props.term.IsDeprecated || this.props.disabled}
           className={this.props.term.IsDeprecated ? styles.termDisabled : styles.termEnabled}
           label={this.props.term.Name}
           onChange={this._handleChange} />

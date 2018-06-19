@@ -44,6 +44,10 @@ define([], () => {
     "TaxonomyPickerExpandTitle": "Expand this Term Set",
     "TaxonomyPickerMenuTermSet": "Menu for Term Set",
     "TaxonomyPickerInLabel": "in",
-    "TaxonomyPickerTermSetLabel": "Term Set"
+    "TaxonomyPickerTermSetLabel": "Term Set",
+
+    peoplePickerComponentTooltipMessage: "People Picker",
+    peoplePickerComponentErrorMessage: "People picker is mandatory",
+    peoplePickerComponentTitleText: "Pick the user(s)",
   };
 });

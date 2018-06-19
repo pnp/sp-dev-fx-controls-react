@@ -4,7 +4,7 @@ import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
@@ -17,6 +17,7 @@ import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
+import { PeoplePicker } from '../../../PeoplePicker';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -28,7 +29,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.state = {
       imgSize: ImageSize.small,
       items: [],
-      iFrameDialogOpened: false
+      iFrameDialogOpened: false,
+      initialValues: []
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -78,8 +80,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange(terms : IPickerTerms) {
-      console.log("Terms:", terms);
+  private _onTaxPickerChange = (terms : IPickerTerms) => {
+    this.setState({
+      initialValues: terms
+    });
+    console.log("Terms:", terms);
   }
 
   /**
@@ -101,6 +106,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         items: items
       });
     }
+  }
+  /** Method that retrieves the selected items from People  Picker
+   * @param items
+   */
+  private _getPeoplePickerItems(items: any[]) {
+    console.log('Items:', items);
   }
 
   /**
@@ -220,14 +231,30 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">TaxonomyPicker tester:
                 <TaxonomyPicker
+                  initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
-                  termsetNameOrID="8ed8c9ea-7052-4c1d-a4d7-b9c10bffea6f"
+                  termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
+                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+                  disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+                  // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+                  // disableChildrenOfDisabledParents={true}
                   panelTitle="Select Term"
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
                   isTermSetSelectable={false} />
+
+                  <DefaultButton text="Add" onClick={() => {
+                    this.setState({
+                      initialValues: [{
+                        key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                        name: "HR",
+                        path: "HR",
+                        termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                      }]
+                    });
+                  }} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
@@ -269,10 +296,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconFieldName='ServerRelativeUrl'
           groupByFields={groupByFields}
           compact={true}
-          selectionMode={SelectionMode.multiple}
+          selectionMode={SelectionMode.single}
           selection={this._getSelection} />
 
           <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+
+          <PeoplePicker
+            context={this.props.context}
+            titleText="People Picker"
+            // personSelectionLimit={3}
+            // groupName={"Team Site Owners"}
+            showtooltip={true}
+            isRequired={true}
+            selectedItems={this._getPeoplePickerItems} />
       </div>
     );
   }

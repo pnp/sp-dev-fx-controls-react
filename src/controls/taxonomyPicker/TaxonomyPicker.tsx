@@ -1,18 +1,15 @@
 import * as React from 'react';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
-import { PrimaryButton, DefaultButton, IconButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton, DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import TermPicker from './TermPicker';
-import { BasePicker, IBasePickerProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
-import { ITaxonomyPickerProps, ITaxonomyPickerState, ITermParentProps, ITermParentState, ITermProps, ITermState } from './ITaxonomyPicker';
+import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
-import { sortBy, uniqBy, cloneDeep } from '@microsoft/sp-lodash-subset';
+import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 import * as appInsights from '../../common/appInsights';
@@ -31,7 +28,6 @@ export const TERM_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQC
  * Renders the controls for PropertyFieldTermPicker component
  */
 export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxonomyPickerState> {
-  private delayedValidate: (value: IPickerTerms) => void;
   private termsService: SPTermStorePickerService;
   private previousValues: IPickerTerms = [];
   private cancel: boolean = true;
@@ -45,7 +41,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     appInsights.track('ReactTaxonomyPicker');
 
     this.state = {
-      activeNodes: typeof this.props.initialValues !== 'undefined' ? this.props.initialValues : [],
+      activeNodes: this.props.initialValues || [],
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
@@ -57,6 +53,27 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+  }
+
+  /**
+   * componentWillMount lifecycle hook
+   */
+  public componentWillMount(): void {
+    this.setState({
+      activeNodes: this.props.initialValues || []
+    });
+  }
+
+  /**
+   * componentWillUpdate lifecycle hook
+   */
+  public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
+    // Check if the initial values objects are not equal, if that is the case, data can be refreshed
+    if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
+      this.setState({
+        activeNodes: this.props.initialValues || []
+      });
+    }
   }
 
   /**
@@ -244,7 +261,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                   isTermSetSelectable={this.props.isTermSetSelectable}
                   onChanged={this.termsFromPickerChanged}
                   allowMultipleSelections={this.props.allowMultipleSelections}
-                />
+                  disabledTermIds={this.props.disabledTermIds}
+                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
               </td>
               <td className={styles.termFieldRow}>
                 <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
@@ -286,6 +304,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             isTermSetSelectable={this.props.isTermSetSelectable}
                             termSetSelectedChange={this.termSetSelectedChange}
                             activeNodes={this.state.activeNodes}
+                            disabledTermIds={this.props.disabledTermIds}
+                            disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
                             changedCallback={this.termsChanged}
                             multiSelection={this.props.allowMultipleSelections} />
               </div>
