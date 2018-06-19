@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
@@ -376,6 +376,18 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Default React component render method
    */
   public render(): React.ReactElement<IListViewProps> {
+    let groupProps: IGroupRenderProps = {};
+    // Check if selection mode is single selection,
+    // if that is the case, disable the selection on grouping headers
+    if (this.props.selectionMode === SelectionMode.single) {
+      groupProps = {
+        headerProps: {
+          onToggleSelectGroup: () => null,
+          onGroupHeaderClick: () => null,
+        }
+      };
+    }
+
     return (
       <div>
         <DetailsList
@@ -386,7 +398,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           selection={this._selection}
           layoutMode={DetailsListLayoutMode.justified}
           compact={this.props.compact}
-          setKey="ListViewControl" />
+          setKey="ListViewControl"
+          groupProps={groupProps} />
       </div>
     );
   }

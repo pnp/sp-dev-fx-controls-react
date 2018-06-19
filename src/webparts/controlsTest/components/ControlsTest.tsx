@@ -296,7 +296,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconFieldName='ServerRelativeUrl'
           groupByFields={groupByFields}
           compact={true}
-          selectionMode={SelectionMode.multiple}
+          selectionMode={SelectionMode.single}
           selection={this._getSelection} />
 
           <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
