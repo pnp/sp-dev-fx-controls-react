@@ -1,5 +1,11 @@
 # Releases
 
+## 1.5.`
+
+**Fixes**
+
+- Fix issue where Application Insights is not defined [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
+
 ## 1.5.0
 
 **New control(s)**
@@ -8,7 +14,7 @@
 
 **Enhancements**
 
-- Added a properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
+- Added properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
 
 **Fixes**
 
