@@ -267,6 +267,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                               'aria-label': 'People Picker'
                             }}
                             itemLimit={this.props.personSelectionLimit || 1}
+                            disabled={this.props.disabled}
                             onChange={this._onPersonItemsChange} />
       </div>
     );
