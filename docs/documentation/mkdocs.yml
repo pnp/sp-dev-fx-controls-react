@@ -11,6 +11,7 @@ pages:
     - WebPartTitle: 'controls/WebPartTitle.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
+    - PeoplePicker: 'controls/PeoplePicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'

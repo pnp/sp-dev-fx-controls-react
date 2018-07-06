@@ -34,6 +34,7 @@ import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
     groupName={"Team Site Owners"} // Leave this blank in case you want to filter from all users
     showtooltip={true}
     isRequired={true}
+    disabled={true}
     selectedItems={this._getPeoplePickerItems} />
 ```
 
@@ -56,6 +57,7 @@ The People picker control can be configured with the following properties:
 | groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control|
 | isRequired | boolean | no | Set if the control is required or not |
+| disabled | boolean | no | Set if the control is disabled or not |
 | errorMessage | string | no | Specify the error message to display |
 | errorMessageclassName | string | no | applies custom styling to the error message section|
 | showtooltip | boolean | no | Defines if need a tooltip or not |
