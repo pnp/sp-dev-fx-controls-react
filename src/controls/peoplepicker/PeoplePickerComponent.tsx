@@ -154,10 +154,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * On persona item changed event
    */
   private _onPersonItemsChange = (items: any[]) => {
+    const { selectedItems } = this.props;
+
     this.setState({
       selectedPersons: items,
       showmessageerror: items.length > 0 ? false : true
     });
+
+    if (selectedItems) {
+      selectedItems(items);
+    }
+
   }
 
   /**
