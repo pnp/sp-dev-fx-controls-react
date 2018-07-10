@@ -304,7 +304,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <PeoplePicker
             context={this.props.context}
             titleText="People Picker"
-            // personSelectionLimit={3}
+            personSelectionLimit={5}
             // groupName={"Team Site Owners"}
             showtooltip={true}
             isRequired={true}
@@ -313,12 +313,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <PeoplePicker
             context={this.props.context}
             titleText="People Picker (disabled)"
-            // personSelectionLimit={3}
-            // groupName={"Team Site Owners"}
             disabled={true}
             showtooltip={true}
-            isRequired={true}
-            selectedItems={this._getPeoplePickerItems} />
+           />
       </div>
     );
   }
