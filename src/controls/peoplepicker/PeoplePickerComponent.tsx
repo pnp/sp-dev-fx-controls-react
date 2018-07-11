@@ -10,7 +10,7 @@ import { ValidationState } from 'office-ui-fabric-react/lib/Pickers';
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import { SPHttpClient } from '@microsoft/sp-http';
 import styles from './PeoplePickerComponent.module.scss';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 import {
   assign
 } from 'office-ui-fabric-react/lib/Utilities';
@@ -31,7 +31,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   constructor(props: IPeoplePickerProps) {
     super(props);
 
-    appInsights.track('ReactPeoplePicker', {
+    telemetry.track('ReactPeoplePicker', {
       groupName: !!props.groupName,
       name: !!props.groupName,
       titleText: !!props.titleText

@@ -4,7 +4,7 @@ import { Link, css } from 'office-ui-fabric-react';
 
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 export interface IFieldTitleRendererProps extends IFieldRendererProps {
     /**
@@ -57,7 +57,7 @@ export class FieldTitleRenderer extends React.Component<IFieldTitleRendererProps
     public constructor(props: IFieldTitleRendererProps, state: IFieldTitleRendererState) {
         super(props, state);
 
-        appInsights.track('FieldTitleRenderer', {});
+        telemetry.track('FieldTitleRenderer', {});
 
         this.state = {};
     }

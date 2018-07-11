@@ -1,10 +1,10 @@
 # Releases
 
-## 1.5.`
+## 1.6.0`
 
 **Fixes**
 
-- Fix issue where Application Insights is not defined [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
+- New telemetry approach which allows you to use Application Insights [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
 
 ## 1.5.0
 

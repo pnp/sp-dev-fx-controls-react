@@ -3,7 +3,7 @@ import * as React from 'react';
 import { css, ISerializableObject, Icon } from 'office-ui-fabric-react';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FileTypeIcon, IconType } from '../../fileTypeIcon';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldFileTypeRenderer.module.scss';
 import { findIndex } from '@microsoft/sp-lodash-subset';
@@ -35,7 +35,7 @@ export class FieldFileTypeRenderer extends React.Component<IFieldFileTypeRendere
   public constructor(props: IFieldFileTypeRendererProps, state: IFieldFileTypeRendererState) {
     super(props, state);
 
-    appInsights.track('FieldFileTypeRenderer', {});
+    telemetry.track('FieldFileTypeRenderer', {});
 
     this.state = {};
   }

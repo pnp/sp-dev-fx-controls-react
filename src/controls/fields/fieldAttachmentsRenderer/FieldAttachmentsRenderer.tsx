@@ -2,7 +2,7 @@ import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css, Icon } from 'office-ui-fabric-react';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldAttachmentsRenderer.module.scss';
 
@@ -32,7 +32,7 @@ export class FieldAttachmentsRenderer extends React.Component<IFieldAttachmentsR
     public constructor(props: IFieldAttachmentsRendererProps, state: IFieldAttahcmentsRendererState) {
         super(props, state);
 
-        appInsights.track('FieldAttachmentsRenderer', {});
+        telemetry.track('FieldAttachmentsRenderer', {});
 
         this.state = {};
     }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import styles from './WebPartTitle.module.scss';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 export interface IWebPartTitleProps {
   displayMode: DisplayMode;
@@ -21,7 +21,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
   constructor(props: IWebPartTitleProps) {
     super(props);
 
-    appInsights.track('ReactWebPartTitle', {
+    telemetry.track('ReactWebPartTitle', {
         title: !!props.title,
         updateProperty: !!props.updateProperty,
         className: !!props.className

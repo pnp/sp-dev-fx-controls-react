@@ -4,7 +4,7 @@ import { css, Dialog, DialogType, Link, Spinner, SpinnerSize } from 'office-ui-f
 
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldLookupRenderer.module.scss';
 import { IFrameDialog } from '../../iFrameDialog/IFrameDialog';
@@ -66,7 +66,7 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
     public constructor(props: IFieldLookupRendererProps, state: IFieldLookupRendererState) {
         super(props, state);
 
-        appInsights.track('FieldLookupRenderer', {});
+        telemetry.track('FieldLookupRenderer', {});
 
         this.state = {
             hideDialog: true,

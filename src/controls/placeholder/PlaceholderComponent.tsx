@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IPlaceholderProps } from './IPlaceholderComponent';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import styles from './PlaceholderComponent.module.scss';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 import { IPlaceholderState } from '.';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
 
@@ -22,7 +22,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
       width: null
     };
 
-    appInsights.track('ReactPlaceholder', {
+    telemetry.track('ReactPlaceholder', {
       description: !!props.description,
       iconName: !!props.iconName,
       iconText: !!props.iconText,

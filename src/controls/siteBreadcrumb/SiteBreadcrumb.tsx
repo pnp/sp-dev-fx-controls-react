@@ -5,7 +5,7 @@ import { SPHttpClient, HttpClientResponse } from '@microsoft/sp-http';
 import styles from './SiteBreadcrumb.module.scss';
 import * as strings from 'ControlStrings';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 /**
  * Site breadcrumb component
@@ -16,7 +16,7 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
   constructor(props: ISiteBreadcrumbProps) {
     super(props);
 
-    appInsights.track('ReactSiteBreadcrumb');
+    telemetry.track('ReactSiteBreadcrumb');
 
     // Initiate the private link items variable
     this._linkItems = [];

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { css } from 'office-ui-fabric-react';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 export interface IFieldDateRendererProps extends IFieldRendererProps {
     /**
@@ -28,7 +28,7 @@ export class FieldDateRenderer extends React.Component<IFieldDateRendererProps, 
     public constructor(props: IFieldDateRendererProps, state: IFieldDateRendererState) {
         super(props, state);
 
-        appInsights.track('FieldDateRenderer', {});
+        telemetry.track('FieldDateRenderer', {});
 
         this.state = {};
     }

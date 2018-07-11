@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Dialog, IDialogProps } from 'office-ui-fabric-react';
 import { IFrameDialogContent } from './IFrameDialogContent';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 export interface IFrameDialogProps extends IDialogProps {
   /**
@@ -34,7 +34,7 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
   public constructor(props: IFrameDialogProps, state: IFrameDialogState) {
     super(props, state);
 
-    appInsights.track('IFrameDialog', {});
+    telemetry.track('IFrameDialog', {});
   }
 
   public render(): JSX.Element {

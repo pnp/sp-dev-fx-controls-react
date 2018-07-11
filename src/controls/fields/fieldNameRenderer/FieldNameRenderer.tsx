@@ -6,7 +6,7 @@ import { Link, Icon } from 'office-ui-fabric-react';
 
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldNameRenderer.module.scss';
 import { GeneralHelper } from "../../../common/utilities/GeneralHelper";
@@ -61,7 +61,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
     public constructor(props: IFieldNameRendererProps, state: IFieldNameRendererState) {
         super(props, state);
 
-        appInsights.track('FieldNameRenderer', {});
+        telemetry.track('FieldNameRenderer', {});
 
         this.state = {};
     }
