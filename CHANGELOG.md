@@ -1,5 +1,16 @@
 # Releases
 
+## 1.6.0
+
+**Enhancements**
+
+- Disabled property for PeoplePicker [#88](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/88)
+
+**Fixes**
+
+- New telemetry approach which allows you to use Application Insights [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
+- PeoplePicker property selectedItems not implemented? [#90](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/90)
+
 ## 1.5.0
 
 **New control(s)**
@@ -8,7 +19,7 @@
 
 **Enhancements**
 
-- Added a properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
+- Added properties to the `TaxonomyPicker` to specify which terms are disabled/not-selectable [#82](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/82)
 
 **Fixes**
 

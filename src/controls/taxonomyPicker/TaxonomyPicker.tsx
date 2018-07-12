@@ -12,7 +12,7 @@ import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 
 /**
@@ -38,7 +38,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   constructor(props: ITaxonomyPickerProps) {
     super(props);
 
-    appInsights.track('ReactTaxonomyPicker');
+    telemetry.track('ReactTaxonomyPicker');
 
     this.state = {
       activeNodes: this.props.initialValues || [],

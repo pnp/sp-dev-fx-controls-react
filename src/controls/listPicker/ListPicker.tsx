@@ -4,7 +4,7 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/components/Spin
 import { IListPickerProps, IListPickerState } from './IListPicker';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 import styles from './ListPicker.module.scss';
 
@@ -26,7 +26,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   constructor(props: IListPickerProps) {
     super(props);
 
-    appInsights.track('ReactListPicker');
+    telemetry.track('ReactListPicker');
 
     this.state = {
       options: this._options,

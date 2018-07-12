@@ -13,7 +13,6 @@ import OotbFields, { IOotbFieldsProps } from './components/Customizer/OotbFields
 import { SPHelper } from '../../common/utilities/SPHelper';
 import { Promise } from 'es6-promise';
 import { GeneralHelper } from '../../common/utilities/GeneralHelper';
-import { track } from '../../common/appInsights/index';
 
 /**
  * If your field customizer uses the ClientSideComponentProperties JSON input,
@@ -35,7 +34,7 @@ export default class OotbFieldsFieldCustomizer
     // Add your custom initialization to this method.  The framework will wait
     // for the returned promise to resolve before firing any BaseFieldCustomizer events.
     Log.info(LOG_SOURCE, 'Activated OotbFieldsFieldCustomizer with properties:');
-    
+
     if (this.context.field.fieldType === 'Computed' && this.context.field.internalName === 'DocIcon') {
       this._shouldRenderUndefiend = true;
     }

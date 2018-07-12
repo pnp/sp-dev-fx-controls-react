@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from './IFileTypeIcon';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 import { Icon, IconType as IconUIType } from 'office-ui-fabric-react/lib/components/Icon';
 import * as styles from './FileTypeIcon.module.scss';
 
@@ -15,7 +15,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   constructor(props: IFileTypeIconProps) {
     super(props);
 
-    appInsights.track('ReactFileTypeIcon', {
+    telemetry.track('ReactFileTypeIcon', {
       type: IconType[props.type],
       applicationType: !!props.application,
       path: !!props.path,

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link, css } from 'office-ui-fabric-react';
 
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldUrlRenderer.module.scss';
 
@@ -38,7 +38,7 @@ export class FieldUrlRenderer extends React.Component<IFieldUrlRendererProps, IF
     public constructor(props: IFieldUrlRendererProps, state: IFieldUrlRendererState) {
         super(props, state);
 
-        appInsights.track('FieldUrlRenderer', {});
+        telemetry.track('FieldUrlRenderer', {});
 
         this.state = {};
     }

@@ -4,7 +4,7 @@ import { css } from 'office-ui-fabric-react';
 
 import { ITerm } from '../../../common/SPEntities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
-import * as appInsights from '../../../common/appInsights';
+import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldTaxonomyRenderer.module.scss';
 
@@ -31,7 +31,7 @@ export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendere
     public constructor(props: IFieldTaxonomyRendererProps, state: IFieldTaxonomyRendererState) {
         super(props, state);
 
-        appInsights.track('FieldTaxonomyRenderer', {});
+        telemetry.track('FieldTaxonomyRenderer', {});
 
         this.state = {};
     }

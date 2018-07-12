@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ISecurityTrimmedControlProps, ISecurityTrimmedControlState, PermissionLevel } from '.';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SPPermission } from '@microsoft/sp-page-context';
-import * as appInsights from '../../common/appInsights';
+import * as telemetry from '../../common/telemetry';
 
 export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedControlProps, ISecurityTrimmedControlState> {
   constructor(props: ISecurityTrimmedControlProps) {
@@ -12,7 +12,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       allowRender: false
     };
 
-    appInsights.track('ReactPlaceholder', {});
+    telemetry.track('ReactPlaceholder', {});
   }
 
   /**
