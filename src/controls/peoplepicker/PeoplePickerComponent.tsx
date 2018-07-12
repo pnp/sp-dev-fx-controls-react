@@ -164,7 +164,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (selectedItems) {
       selectedItems(items);
     }
-
   }
 
   /**
@@ -255,8 +254,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   /**
-  * Default React component render method
-  */
+   * Default React component render method
+   */
   public render(): React.ReactElement<IPeoplePickerProps> {
     const peoplepicker = (
       <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}>
