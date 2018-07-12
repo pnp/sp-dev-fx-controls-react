@@ -154,10 +154,16 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * On persona item changed event
    */
   private _onPersonItemsChange = (items: any[]) => {
+    const { selectedItems } = this.props;
+
     this.setState({
       selectedPersons: items,
       showmessageerror: items.length > 0 ? false : true
     });
+
+    if (selectedItems) {
+      selectedItems(items);
+    }
   }
 
   /**
@@ -248,8 +254,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   /**
-  * Default React component render method
-  */
+   * Default React component render method
+   */
   public render(): React.ReactElement<IPeoplePickerProps> {
     const peoplepicker = (
       <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}>
@@ -267,6 +273,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                               'aria-label': 'People Picker'
                             }}
                             itemLimit={this.props.personSelectionLimit || 1}
+                            disabled={this.props.disabled}
                             onChange={this._onPersonItemsChange} />
       </div>
     );

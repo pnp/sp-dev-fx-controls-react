@@ -36,7 +36,8 @@ The following controls are currently available:
 - [ListView](./controls/ListView) (List view control)
 - [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
-- [SiteBreadcrumb](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 
