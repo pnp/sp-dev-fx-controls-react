@@ -15,6 +15,10 @@ export interface IPeoplePickerProps {
   */
   titleText: string;
   /**
+   * Whether the control is enabled or not
+   */
+  disabled?: boolean;
+  /**
    * Name of SharePoint Group
    */
   groupName?: string;
