@@ -16,6 +16,7 @@ import {
 } from 'office-ui-fabric-react/lib/Utilities';
 import { IUsers } from './IUsers';
 import { Label } from 'office-ui-fabric-react/lib/Label';
+import { select } from '../../../node_modules/glamor';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
@@ -130,6 +131,19 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           }
         }
 
+        //Set Default selected persons
+        var defaultUsers : any = [];
+        var defaultPeopleList: IPersonaWithMenu[] = [];
+        if(this.props.defaultSelectedUsers != null)
+        {
+          defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
+          defaultUsers.forEach((persona: IPersonaProps) => {
+            let selectedPeople: IPersonaWithMenu = {};
+            assign(selectedPeople, persona);
+            defaultPeopleList.push(selectedPeople);
+          });
+        }
+
         let personaList: IPersonaWithMenu[] = [];
         for (const persona of userValuesArray) {
           let personaWithMenu: IPersonaWithMenu = {};
@@ -140,13 +154,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         // Update the current state
         this.setState({
           allPersons : userValuesArray,
+          selectedPersons : defaultPeopleList.length != 0 ? defaultPeopleList : [],
           peoplePersonaMenu : personaList,
-          mostRecentlyUsedPersons : personaList.slice(0,5),
+          mostRecentlyUsedPersons : personaList.slice(0,5)   
+        });
+
+        this.setState({
           showmessageerror: this.props.isRequired && this.state.selectedPersons.length === 0
         });
       }
     } catch (e) {
-      console.error("Error occured while fetching the users.", e);
+      console.error("Error occured while fetching the users and setting selected users.", e);
     }
   }
 
@@ -155,7 +173,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private _onPersonItemsChange = (items: any[]) => {
     const { selectedItems } = this.props;
-
+    
     this.setState({
       selectedPersons: items,
       showmessageerror: items.length > 0 ? false : true
@@ -191,7 +209,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     return this._removeDuplicates(mostRecentlyUsedPersons, currentPersonas);
   }
 
-
   /**
    * On filter changed event
    *
@@ -202,7 +219,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   private _onPersonFilterChanged = (filterText: string, currentPersonas: IPersonaProps[], limitResults?: number): IPersonaProps[] => {
     if (filterText) {
       let filteredPersonas: IPersonaProps[] = this._filterPersons(filterText);
-
       filteredPersonas = this._removeDuplicates(filteredPersonas, currentPersonas);
       filteredPersonas = limitResults ? filteredPersonas.splice(0, limitResults) : filteredPersonas;
       return filteredPersonas;
@@ -211,14 +227,19 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
-  /**
-   * Filter persons
+/**
+   * Filter persons based on Name and Email (starting with and contains)
    *
    * @param filterText
-   */
-  private _filterPersons = (filterText: string): IPersonaProps[] => {
-    return this.state.peoplePersonaMenu.filter(item => this._doesTextStartWith(item.primaryText as string, filterText));
-  }
+*/
+private _filterPersons(filterText: string): IPersonaProps[] {
+  return this.state.peoplePersonaMenu.filter(item => 
+  this._doesTextStartWith(item.primaryText as string, filterText) 
+  || this._doesTextContains(item.primaryText as string, filterText) 
+  || this._doesTextStartWith(item.secondaryText as string, filterText)
+  || this._doesTextContains(item.secondaryText as string, filterText));
+}
+
 
   /**
    * Removes duplicates
@@ -240,6 +261,16 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     return text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
   }
 
+    /**
+   * Checks if text contains
+   *
+   * @param text
+   * @param filterText
+   */
+  private _doesTextContains(text: string, filterText: string): boolean {
+    return text.toLowerCase().indexOf(filterText.toLowerCase()) > 0;
+  }
+
   /**
    * Checks if list contains the person
    *
@@ -251,6 +282,45 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       return false;
     }
     return personas.filter(item => item.primaryText === persona.primaryText).length > 0;
+  }
+
+  /**
+   * Gets the default users based on the provided email address. 
+   * Adds emails that are not found with a random generated User Id
+   *
+   * @param userValuesArray
+   * @param selectedUsers
+   */
+  private getDefaultUsers(userValuesArray : any[], selectedUsers : string[]) : any {
+    var defaultuserValuesArray: any[] = [];
+    for(let i=0; i < selectedUsers.length; i++)
+    {
+      var obj = {valToCompare : selectedUsers[i] }
+      var length = defaultuserValuesArray.length;
+      defaultuserValuesArray = defaultuserValuesArray.length != 0  ? defaultuserValuesArray.concat(userValuesArray.filter(this.filterUsers, obj)) : userValuesArray.filter(this.filterUsers, obj);
+      if(length === defaultuserValuesArray.length)
+      {
+        var defaultUnknownUser = [{
+          id: 1000 + i, //just a random number
+          imageUrl: "",
+          imageInitials: "",
+          primaryText: selectedUsers[i] , //Name
+          secondaryText: selectedUsers[i], //Role
+          tertiaryText: "", //status
+          optionalText: "" //stgring
+        }]
+        defaultuserValuesArray = defaultuserValuesArray.length != 0  ? defaultuserValuesArray.concat(defaultUnknownUser) : defaultUnknownUser;
+      }
+    }
+    return defaultuserValuesArray;
+  }
+
+  /**
+   * Filters Users based on email
+   */
+  private filterUsers = function(value : any, index : number, ar : any[]){
+    if(value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1)
+        return value;
   }
 
   /**
@@ -272,6 +342,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                             inputProps={{
                               'aria-label': 'People Picker'
                             }}
+                            selectedItems={this.state.selectedPersons}
                             itemLimit={this.props.personSelectionLimit || 1}
                             disabled={this.props.disabled}
                             onChange={this._onPersonItemsChange} />
