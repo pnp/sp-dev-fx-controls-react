@@ -308,6 +308,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             // groupName={"Team Site Owners"}
             showtooltip={true}
             isRequired={true}
+            defaultSelectedUsers = {["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
             selectedItems={this._getPeoplePickerItems} />
 
           <PeoplePicker
