@@ -73,3 +73,5 @@ export default class OotbFieldsFieldCustomizer
     super.onDisposeCell(event);
   }
 }
+
+// test querystring ?loadSPFX=true&debugManifestsFile=https://localhost:4321/temp/manifests.js&fieldCustomizers={"FieldName":{"id":"57ebd944-98ed-43f9-b722-e959d6dac6ad","properties":{}}}
