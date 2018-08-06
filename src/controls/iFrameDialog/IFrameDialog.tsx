@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Dialog, IDialogProps } from 'office-ui-fabric-react';
+import { Dialog, IDialogProps } from 'office-ui-fabric-react/lib/Dialog';
 import { IFrameDialogContent } from './IFrameDialogContent';
 import * as telemetry from '../../common/telemetry';
 

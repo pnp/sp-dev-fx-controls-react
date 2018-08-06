@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HoverCard, IExpandingCardProps } from 'office-ui-fabric-react';
+import { HoverCard, IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
 
 import styles from './FieldUserRenderer.module.scss';
 

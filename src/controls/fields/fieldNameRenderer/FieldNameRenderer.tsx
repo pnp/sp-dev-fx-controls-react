@@ -1,15 +1,14 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react';
-
-import { Link, Icon } from 'office-ui-fabric-react';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { Link } from 'office-ui-fabric-react/lib/Link';
 
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldNameRenderer.module.scss';
-import { GeneralHelper } from "../../../common/utilities/GeneralHelper";
 
 export interface IFieldNameRendererProps extends IFieldRendererProps {
     /**
