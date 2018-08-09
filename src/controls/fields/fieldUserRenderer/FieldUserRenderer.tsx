@@ -1,8 +1,14 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 import * as _ from '@microsoft/sp-lodash-subset';
-import { HoverCard, IExpandingCardProps, DirectionalHint, Persona, IconButton, Button, ButtonType, PersonaSize, Spinner, SpinnerSize, Link, Icon } from 'office-ui-fabric-react';
+import { IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
+import { DirectionalHint } from 'office-ui-fabric-react/lib/common/DirectionalHint';
+import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
+import { IconButton, Button, ButtonType } from 'office-ui-fabric-react/lib/Button';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Link } from 'office-ui-fabric-react/lib/Link';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
 import { IPrincipal, IUserProfileProperties, IODataKeyValuePair } from '../../../common/SPEntities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';

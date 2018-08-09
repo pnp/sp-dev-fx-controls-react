@@ -1,6 +1,7 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
-import { css, ISerializableObject, Icon } from 'office-ui-fabric-react';
+import { css, ISerializableObject } from 'office-ui-fabric-react/lib/Utilities';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FileTypeIcon, IconType } from '../../fileTypeIcon';
 import * as telemetry from '../../../common/telemetry';

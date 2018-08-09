@@ -6,7 +6,7 @@ import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPi
 import Term from './Term';
 
 import styles from './TaxonomyPicker.module.scss';
-import { Checkbox } from 'office-ui-fabric-react';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import * as strings from 'ControlStrings';
 
 /**
