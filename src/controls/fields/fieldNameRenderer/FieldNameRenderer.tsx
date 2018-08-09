@@ -72,7 +72,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         //
         // for now only signal for New documents is implemented
         //
-        let signal: JSX.Element = this.props.isNew ? <span className={css(styles.signal, styles.newItem)}><Icon iconName={'Glimmer'} className={css(styles.newIcon)}/></span> : null;
+        let signal: JSX.Element = this.props.isNew ? <span className={css(styles.signal, styles.newItem)}><Icon iconName={'Glimmer'} className={css(styles.newIcon)} /></span> : null;
         let value: JSX.Element;
 
         if (isLink) {
@@ -99,15 +99,15 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         return <span className={css(styles.signalField, this.props.className)} style={this.props.cssProps}>
             {signal}
             <span className={styles.signalFieldValue}>
-                <span data-selection-invoke={'true'}>
-                    {value}
-                </span>
+                {value}
             </span>
         </span>;
     }
 
-    private _onClick(): void {
+    private _onClick(e): void {
         if (this.props.onClick) {
+            e.stopPropagation();
+            e.preventDefault();
             const args: IFieldNameClickEventArgs = this.props as IFieldNameClickEventArgs;
             this.props.onClick(args);
             return;
