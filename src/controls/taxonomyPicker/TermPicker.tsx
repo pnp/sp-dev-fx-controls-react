@@ -6,7 +6,7 @@ import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
-import { Icon } from 'office-ui-fabric-react';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { ITermSet } from '../../services/ISPTermStorePickerService';
 
