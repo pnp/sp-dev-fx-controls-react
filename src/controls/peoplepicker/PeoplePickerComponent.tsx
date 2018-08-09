@@ -171,7 +171,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         // Set Default selected persons
         let defaultUsers : any = [];
         let defaultPeopleList: IPersonaWithMenu[] = [];
-        if (this.props.defaultSelectedUsers !== null) {
+        if (this.props.defaultSelectedUsers) {
           defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
           for (const persona of defaultUsers) {
             let selectedPeople: IPersonaWithMenu = {};
@@ -197,7 +197,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         });
       }
     } catch (e) {
-      console.error("Error occured while fetching the users and setting selected users.", e);
+      console.error("Error occured while fetching the users and setting selected users.");
     }
   }
 

@@ -5,6 +5,8 @@
 **Enhancements**
 
 - `PeoplePicker`: added functionality to initialize the control with person(s) or group(s) [#98](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/98)
+- `PeoplePicker`: support for searching on contains [#93](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/93)
+- `PeoplePicker`: find user based on email address [#95](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/95)
 - Bundle size: statically reference Office UI Fabric components in the FieldRenderer controls [#107](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/107)
 
 **Fixes**
