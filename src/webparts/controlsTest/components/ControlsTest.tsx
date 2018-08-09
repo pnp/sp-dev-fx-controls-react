@@ -308,14 +308,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             // groupName={"Team Site Owners"}
             showtooltip={true}
             isRequired={true}
+            defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
             selectedItems={this._getPeoplePickerItems} />
 
           <PeoplePicker
             context={this.props.context}
             titleText="People Picker (disabled)"
             disabled={true}
-            showtooltip={true}
-           />
+            showtooltip={true} />
       </div>
     );
   }

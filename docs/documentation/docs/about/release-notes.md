@@ -1,5 +1,11 @@
 # Releases
 
+## 1.7.0
+
+**Enhancements**
+
+- `PeoplePicker`: added functionality to initialize the control with person(s) or group(s) [#98](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/98)
+
 ## 1.6.0
 
 **Enhancements**
