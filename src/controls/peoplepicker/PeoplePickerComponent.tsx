@@ -1,6 +1,6 @@
 import * as strings from 'ControlStrings';
 import * as React from 'react';
-import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
+import { IPeoplePickerProps, IPeoplePickerState, IPeoplePickerUserItem } from './IPeoplePicker';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import { IBasePickerSuggestionsProps } from 'office-ui-fabric-react/lib/Pickers';
@@ -16,6 +16,7 @@ import {
 } from 'office-ui-fabric-react/lib/Utilities';
 import { IUsers } from './IUsers';
 import { Label } from 'office-ui-fabric-react/lib/Label';
+import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
@@ -41,15 +42,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       selectedPersons: [],
       mostRecentlyUsedPersons: [],
       currentSelectedPersons: [],
-      allPersons: [{
-        id: "",
-        imageUrl: "",
-        imageInitials: "",
-        primaryText: "", //Name
-        secondaryText: "", //Role
-        tertiaryText: "", //status
-        optionalText: "" //anything
-      }],
+      allPersons: [],
       currentPicker: 0,
       peoplePartTitle: "",
       peoplePartTooltip : "",
@@ -62,8 +55,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * componentWillMount lifecycle hook
    */
   public componentWillMount(): void {
-    // Load the users
-    this._thisLoadUsers();
+    if (Environment.type === EnvironmentType.Local) {
+      // local mode
+      this._loadLocalWorkbenchUsers();
+    } else {
+      // online mode
+      // Load the users
+      this._thisLoadUsers();
+      }
   }
 
   /**
@@ -73,6 +72,66 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private generateUserPhotoLink(value : string) : string {
     return `https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${value}&UA=0&size=HR96x96`;
+  }
+
+  /**
+   * Retrieve the users for local demo and testing purposes
+   */
+  private async _loadLocalWorkbenchUsers(): Promise<void> {
+    let _fakeUsers: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
+
+    _fakeUsers.push({
+      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c1",
+      imageUrl: "",
+      imageInitials: "RF",
+      primaryText: "Roger Federer",
+      secondaryText: "roger@tennis.onmicrosoft.com",
+      tertiaryText: "",
+      optionalText:""
+    });
+    _fakeUsers.push({
+      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c2",
+      imageUrl: "",
+      imageInitials: "RN",
+      primaryText: "Rafael Nadal",
+      secondaryText: "rafael@tennis.onmicrosoft.com",
+      tertiaryText: "",
+      optionalText:""
+    });
+    _fakeUsers.push({
+      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c3",
+      imageUrl: "",
+      imageInitials: "ND",
+      primaryText: "Novak Djokovic",
+      secondaryText: "novak@tennis.onmicrosoft.com",
+      tertiaryText: "",
+      optionalText:""
+    });
+    _fakeUsers.push({
+      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c4",
+      imageUrl: "",
+      imageInitials: "JP",
+      primaryText: "Juan Martin del Potro",
+      secondaryText: "juanmartin@tennis.onmicrosoft.com",
+      tertiaryText: "",
+      optionalText:""
+    });
+
+    let personaList: IPersonaWithMenu[] = [];
+    for (const persona of _fakeUsers) {
+      let personaWithMenu: IPersonaWithMenu = {};
+      assign(personaWithMenu, persona);
+      personaList.push(personaWithMenu);
+    }
+
+    // update the current state
+    this.setState({
+      allPersons: _fakeUsers,
+      peoplePersonaMenu: personaList,
+      mostRecentlyUsedPersons: personaList.slice(0, 5),
+      showmessageerror: this.props.isRequired && this.state.selectedPersons.length === 0
+    });
+
   }
 
   /**
@@ -95,39 +154,20 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
       // Check if items were retrieved
       if (items && items.value && items.value.length > 0) {
-        let userValuesArray: any = [{
-          id: 0,
-          imageUrl: "",
-          imageInitials: "",
-          primaryText: "", //Name
-          secondaryText: "", //Email
-          tertiaryText: "", //status
-          optionalText: "" //anything
-        }];
+
+        let userValuesArray: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
 
         // Loop over all the retrieved items
         for (let i = 0; i < items.value.length; i++) {
-          if (i === 0) {
-            userValuesArray = [{
-              id: items.value[i].Id,
-              imageUrl: this.generateUserPhotoLink(items.value[i].Email),
-              imageInitials: "",
-              primaryText: items.value[i].Title, //Name
-              secondaryText: items.value[i].Email, //Email
-              tertiaryText: "", //status
-              optionalText: "" //anything
-            }];
-          } else {
-            userValuesArray.push({
-              id: items.value[i].Id,
-              imageUrl: this.generateUserPhotoLink(items.value[i].Email),
-              imageInitials: "",
-              primaryText: items.value[i].Title, //Name
-              secondaryText: items.value[i].Email, //Email
-              tertiaryText: "", //status
-              optionalText: "" //anything
-            });
-          }
+          userValuesArray.push({
+            id: items.value[i].Id.toString(),
+            imageUrl: this.generateUserPhotoLink(items.value[i].Email),
+            imageInitials: "",
+            primaryText: items.value[i].Title, // name
+            secondaryText: items.value[i].Email, // email
+            tertiaryText: "", // status
+            optionalText: "" // anything
+          });
         }
 
         let personaList: IPersonaWithMenu[] = [];
