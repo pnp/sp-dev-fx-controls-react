@@ -63,9 +63,10 @@ The People picker control can be configured with the following properties:
 | showtooltip | boolean | no | Defines if need a tooltip or not |
 | tooltip | string | no | Specify the tooltip message to display |
 | tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown |
-| selectedItems | function | no | get the selected users in the control|
-| peoplePickerWPclassName | string | no | applies custom styling to the people picker element|
-| peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only|
+| selectedItems | function | no | get the selected users in the control |
+| peoplePickerWPclassName | string | no | applies custom styling to the people picker element |
+| peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only |
+| defaultSelectedUsers | string[] | no | Default selected user emails |
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)

@@ -1,6 +1,9 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
-import { css, Dialog, DialogType, Link, Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Dialog, DialogType } from 'office-ui-fabric-react/lib/Dialog';
+import { Link } from 'office-ui-fabric-react/lib/Link';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
@@ -106,8 +109,8 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
                         type: DialogType.close,
                         showCloseButton: true
                     }}>
-                        <Spinner size={SpinnerSize.large} />
-                    </Dialog>}
+                    <Spinner size={SpinnerSize.large} />
+                </Dialog>}
             </div>);
     }
 

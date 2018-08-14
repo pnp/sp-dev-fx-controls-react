@@ -62,21 +62,17 @@ export interface IPeoplePickerProps {
    * Class Name for the Error Section
    */
   errorMessageclassName?: string;
+  /**
+   * Default Selected User Emails
+   */
+  defaultSelectedUsers? : string[];
 }
 
 export interface IPeoplePickerState {
   selectedPersons?: IPersonaProps[];
   mostRecentlyUsedPersons: IPersonaProps[];
   currentSelectedPersons: IPersonaProps[];
-  allPersons: [{
-    id: string,
-    imageUrl: string,
-    imageInitials: string,
-    primaryText: string, //Name
-    secondaryText: string, //Role
-    tertiaryText: string, //status
-    optionalText: string //stgring
-  }];
+  allPersons: IPeoplePickerUserItem[];
   delayResults?: boolean;
   currentPicker?: number | string;
   peoplePersonaMenu?: IPersonaProps[];
@@ -85,4 +81,14 @@ export interface IPeoplePickerState {
   isLoading : boolean;
   peopleValidatorText? : string;
   showmessageerror: boolean;
+}
+
+export interface IPeoplePickerUserItem {
+  id: string;
+  imageUrl: string;
+  imageInitials: string;
+  primaryText: string; // name
+  secondaryText: string; // role
+  tertiaryText: string; // status
+  optionalText: string; // anything
 }
