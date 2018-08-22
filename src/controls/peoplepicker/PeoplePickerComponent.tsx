@@ -55,7 +55,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   public componentWillMount(): void {
     if (Environment.type === EnvironmentType.Local) {
       // local mode
-      this._thisLoadUsers();
+      this._loadLocalWorkbenchUsers();
     } else {
       // online mode
       // Load the users
