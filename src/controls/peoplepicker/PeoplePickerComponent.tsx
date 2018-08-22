@@ -55,7 +55,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   public componentWillMount(): void {
     if (Environment.type === EnvironmentType.Local) {
       // local mode
-      this._loadLocalWorkbenchUsers();
+      this._thisLoadUsers();
     } else {
       // online mode
       // Load the users
@@ -145,7 +145,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     const webAbsoluteUrl = this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
     // Create the rest API
-    const restApi = `${this.props.context.pageContext.web.absoluteUrl}${stringVal}`;
+    const restApi = `${webAbsoluteUrl}${stringVal}`;
 
     try {
       // Call the API endpoint
