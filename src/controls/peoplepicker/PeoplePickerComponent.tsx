@@ -143,8 +143,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       stringVal = "/_api/web/siteusers";
     }
 
+    const webAbsoluteUrl = this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
     // Create the rest API
-    const restApi = `${this.props.context.pageContext.web.absoluteUrl}${stringVal}`;
+    const restApi = `${webAbsoluteUrl}${stringVal}`;
 
     try {
       // Call the API endpoint

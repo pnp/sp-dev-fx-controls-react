@@ -67,6 +67,7 @@ The People picker control can be configured with the following properties:
 | peoplePickerWPclassName | string | no | applies custom styling to the people picker element |
 | peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only |
 | defaultSelectedUsers | string[] | no | Default selected user emails |
+| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. Default is the current site URL. |
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)

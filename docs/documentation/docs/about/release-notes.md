@@ -1,5 +1,11 @@
 # Releases
 
+## 1.8.0
+
+**Enhancements**
+
+- `PeoplePicker`: ability to specify the source site to load users from [#110](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/110)
+
 ## 1.7.0
 
 **Enhancements**
