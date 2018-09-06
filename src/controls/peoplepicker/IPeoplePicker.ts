@@ -15,6 +15,10 @@ export interface IPeoplePickerProps {
   */
   titleText: string;
   /**
+   * Web Absolute Url of source site
+   */
+  webAbsoluteUrl?: string;
+  /**
    * Whether the control is enabled or not
    */
   disabled?: boolean;
