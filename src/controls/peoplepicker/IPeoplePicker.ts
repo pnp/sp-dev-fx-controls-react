@@ -1,5 +1,6 @@
-import { IPersonaProps, DirectionalHint } from "office-ui-fabric-react";
 import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
+import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
@@ -91,7 +92,7 @@ export interface IPeoplePickerUserItem {
   id: string;
   imageUrl: string;
   imageInitials: string;
-  primaryText: string; // name
+  text: string; // name
   secondaryText: string; // role
   tertiaryText: string; // status
   optionalText: string; // anything

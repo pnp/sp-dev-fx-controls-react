@@ -1,20 +1,21 @@
 import * as strings from 'ControlStrings';
 import * as React from 'react';
 import { IPeoplePickerProps, IPeoplePickerState, IPeoplePickerUserItem } from './IPeoplePicker';
-import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
-import { IBasePickerSuggestionsProps } from 'office-ui-fabric-react/lib/Pickers';
 import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { IPersonaWithMenu } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.Props';
-import { ValidationState } from 'office-ui-fabric-react/lib/Pickers';
-import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
 import { SPHttpClient } from '@microsoft/sp-http';
 import styles from './PeoplePickerComponent.module.scss';
 import * as telemetry from '../../common/telemetry';
 import { assign } from 'office-ui-fabric-react/lib/Utilities';
 import { IUsers } from './IUsers';
-import { Label } from 'office-ui-fabric-react/lib/Label';
+import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
+import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
+import { IPersonaWithMenu } from "office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.types";
+import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
+import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar";
+import { ValidationState } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
 
 const suggestionProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: 'Suggested People',
@@ -82,7 +83,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c1",
       imageUrl: "",
       imageInitials: "RF",
-      primaryText: "Roger Federer",
+      text: "Roger Federer",
       secondaryText: "roger@tennis.onmicrosoft.com",
       tertiaryText: "",
       optionalText:""
@@ -91,7 +92,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c2",
       imageUrl: "",
       imageInitials: "RN",
-      primaryText: "Rafael Nadal",
+      text: "Rafael Nadal",
       secondaryText: "rafael@tennis.onmicrosoft.com",
       tertiaryText: "",
       optionalText:""
@@ -100,7 +101,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c3",
       imageUrl: "",
       imageInitials: "ND",
-      primaryText: "Novak Djokovic",
+      text: "Novak Djokovic",
       secondaryText: "novak@tennis.onmicrosoft.com",
       tertiaryText: "",
       optionalText:""
@@ -109,15 +110,15 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c4",
       imageUrl: "",
       imageInitials: "JP",
-      primaryText: "Juan Martin del Potro",
+      text: "Juan Martin del Potro",
       secondaryText: "juanmartin@tennis.onmicrosoft.com",
       tertiaryText: "",
       optionalText:""
     });
 
-    let personaList: IPersonaWithMenu[] = [];
+    let personaList: IPersonaProps[] = [];
     for (const persona of _fakeUsers) {
-      let personaWithMenu: IPersonaWithMenu = {};
+      let personaWithMenu: IPersonaProps = {};
       assign(personaWithMenu, persona);
       personaList.push(personaWithMenu);
     }
@@ -162,7 +163,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
             id: items.value[i].Id.toString(),
             imageUrl: this.generateUserPhotoLink(items.value[i].Email),
             imageInitials: "",
-            primaryText: items.value[i].Title, // name
+            text: items.value[i].Title, // name
             secondaryText: items.value[i].Email, // email
             tertiaryText: "", // status
             optionalText: "" // anything
@@ -171,19 +172,19 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
         // Set Default selected persons
         let defaultUsers : any = [];
-        let defaultPeopleList: IPersonaWithMenu[] = [];
+        let defaultPeopleList: IPersonaProps[] = [];
         if (this.props.defaultSelectedUsers) {
           defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
           for (const persona of defaultUsers) {
-            let selectedPeople: IPersonaWithMenu = {};
+            let selectedPeople: IPersonaProps = {};
             assign(selectedPeople, persona);
             defaultPeopleList.push(selectedPeople);
           }
         }
 
-        let personaList: IPersonaWithMenu[] = [];
+        let personaList: IPersonaProps[] = [];
         for (const persona of userValuesArray) {
-          let personaWithMenu: IPersonaWithMenu = {};
+          let personaWithMenu: IPersonaProps = {};
           assign(personaWithMenu, persona);
           personaList.push(personaWithMenu);
         }
@@ -292,7 +293,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * @param filterText
    */
   private _doesTextStartWith(text: string, filterText: string): boolean {
-    return text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
+    return text && text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
   }
 
     /**
@@ -302,7 +303,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * @param filterText
    */
   private _doesTextContains(text: string, filterText: string): boolean {
-    return text.toLowerCase().indexOf(filterText.toLowerCase()) > 0;
+    return text && text.toLowerCase().indexOf(filterText.toLowerCase()) > 0;
   }
 
   /**
