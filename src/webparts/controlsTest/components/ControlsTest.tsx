@@ -17,7 +17,7 @@ import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
-import { PeoplePicker } from '../../../PeoplePicker';
+import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -314,7 +314,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             showtooltip={true}
             isRequired={true}
             defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            selectedItems={this._getPeoplePickerItems} />
+            selectedItems={this._getPeoplePickerItems}
+            showHiddenInUI={false}
+            principleTypes={[PrincipalType.User]} />
 
           <PeoplePicker
             context={this.props.context}

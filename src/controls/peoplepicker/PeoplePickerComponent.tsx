@@ -159,15 +159,21 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
         // Loop over all the retrieved items
         for (let i = 0; i < items.value.length; i++) {
-          userValuesArray.push({
-            id: items.value[i].Id.toString(),
-            imageUrl: this.generateUserPhotoLink(items.value[i].Email),
-            imageInitials: "",
-            text: items.value[i].Title, // name
-            secondaryText: items.value[i].Email, // email
-            tertiaryText: "", // status
-            optionalText: "" // anything
-          });
+          const item = items.value[i];
+          if (!item.IsHiddenInUI || (this.props.showHiddenInUI && item.IsHiddenInUI))  {
+            // Check if the the type must be returned
+            if (!this.props.principleTypes || this.props.principleTypes.indexOf(item.PrincipalType) !== -1) {
+              userValuesArray.push({
+                id: item.Id.toString(),
+                imageUrl: this.generateUserPhotoLink(item.Email),
+                imageInitials: "",
+                text: item.Title, // name
+                secondaryText: item.Email, // email
+                tertiaryText: "", // status
+                optionalText: "" // anything
+              });
+            }
+          }
         }
 
         // Set Default selected persons

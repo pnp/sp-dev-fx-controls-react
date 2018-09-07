@@ -1,6 +1,7 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
+import { PrincipalType } from ".";
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
@@ -71,6 +72,14 @@ export interface IPeoplePickerProps {
    * Default Selected User Emails
    */
   defaultSelectedUsers? : string[];
+  /**
+   * Show users which are hidden from the UI
+   */
+  showHiddenInUI?: boolean;
+  /**
+   * Specify the user / group types to retrieve
+   */
+  principleTypes?: PrincipalType[];
 }
 
 export interface IPeoplePickerState {
