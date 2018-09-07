@@ -14,12 +14,19 @@
   }
 }
 
-.termFieldTable {
+.termField {
+  align-items: center;
   border-spacing: 0;
+  display: flex;
   width: 100%;
 
-  .termFieldRow {
-    vertical-align: initial;
+  .termFieldInput {
+    width: 90%;
+  }
+
+  .termFieldButton {
+    text-align: center;
+    width: 10%;
   }
 
   input[type="text"] {
