@@ -399,7 +399,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           layoutMode={DetailsListLayoutMode.justified}
           compact={this.props.compact}
           setKey="ListViewControl"
-          groupProps={groupProps} />
+          groupProps={groupProps}
+          {...this.props.detailsListProps} />
       </div>
     );
   }

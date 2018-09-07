@@ -1,5 +1,6 @@
 import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
 import { IColumn, IGroup } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IDetailsListProps } from "office-ui-fabric-react/lib/DetailsList";
 
 export { SelectionMode };
 
@@ -44,6 +45,10 @@ export interface IListViewProps {
    * The index of the items to be select by default
    */
   defaultSelection?: number[];
+  /**
+   * Specify direct properties for the DetailsList component
+   */
+  detailsListProps?: IDetailsListProps;
 }
 
 export interface IListViewState {
