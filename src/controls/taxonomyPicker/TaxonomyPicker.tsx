@@ -234,6 +234,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       _ObjectIdentity_: ts._ObjectIdentity_,
       Description: ts.Description,
       IsDeprecated: null,
+      IsAvailableForTagging: null,
       IsRoot: null
     };
 

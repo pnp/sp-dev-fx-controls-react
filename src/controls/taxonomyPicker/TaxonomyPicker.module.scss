@@ -56,7 +56,8 @@
   padding-left: 20px;
 
   .termEnabled,
-  .termDisabled {
+  .termDisabled,
+  .termNoTagging {
     background-repeat: no-repeat;
     background-position: 30px 3px;
   }
@@ -67,6 +68,10 @@
 
   .termDisabled {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFMSURBVDhPzZPNSsNAFIULQqEQEPoSQqAg7gqC0HdwXxAElyYgBBGSZ+gDdOUyIauULATdKrgIKCKuQjbiDySCkNV4TrkzpJW2cefAxwwzc86de2em0/k3zXGcHpgC9Qeu5glAsAMefN+/K8vyVbVoWZbdMxDFY9d136Ioum6hW9iiDVSe588rxDXmJ+AAdAWOOVcbAy1O01R5nqfYoxVglyk+Hu7Z4FiwOcc1GBRMwQSnOAxDHz0jDyCwwCVQS3DO0gU0BkmSzG8A/UQiz7DxC5yLGQ1PwDeYGYOiKF6WarCPDUOJeor+A4z0m8P4SNaG+hY+4zi+aZh0scEBNeB41DTBuCcGjj6FjaM/BUFwW1XVO6vdMNiSdIzJLwN5TJZ+iSLQKYwbR9cmZyaFdX+JhZIiMue+cLFQxA0G22uusd/6I8OEb4LXRwZN4Q+3Ys8Mb9+nRgAAAABJRU5ErkJggg=='); // /_layouts/15/Images/EMMTermDeprecated.png
+  }
+
+  .termNoTagging {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZBJREFUeNqkU0trwkAQnhURBBFPKghekuJN7KW9pOCj0Agl9/4uT/6BHgXpxQfxYKltKEYhV3tXFF/4RrOdXYgkxpz8YA47O983O9+whFIKt8DvddHv9wej0UjY7/dwPB55sGaJRKImSVLxXMiSl9Hr9fRWq0WvoVKpUFVVv6xaF1nX9R+LvFqteKAgrVarVNM0fi6Xy9Sq99mfjeTv2Wz2mMvlYL1en/OGYYCiKKTT6fAzG8flQbfb1ReLxX0+n4fJZOLwQxRFKJVKNJPJwHa7dZuI5I/lcsnJrHMwGHQUpdNpHp5bGI/Hr7IsA3Pc7/dcDEynU5jP5xAIBJwCpmmeN+IF9IaT0VA20p+V5yaGQqF2s9mE3W4Hh8PBFXZyLBbTstmsaAkQqyuu7nOz2UiCIEAkEoFwOMzz6A0n44YgHo8bhULBYQaxP7vRaLyjyFsqleIiDLbOAyTfXY5GLueu1+s1XNULE2Fg5Gg0qj4jrnlDrhmHIu3hcPh0Op0gmUz+IvfBy1xy62/0wY34F2AAKtctO7g/KgIAAAAASUVORK5CYII='); // /_layouts/15/Images/EMMTermDisabled.png
   }
 
   label>span {

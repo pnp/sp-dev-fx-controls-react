@@ -9,6 +9,7 @@
 - `WebPartTitle`: Added accessibility tags for web part title [#121](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/121)
 - `ListView`: Resizable columns - introduced a `isResizable` property [#119](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/119)
 - `TaxonomyPicker`: table markup changed to DIV [#113](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/113)
+- `TaxonomyPicker`: Disable the terms which are set as deprecated or unavailable for tagging [#109](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/109)
 
 **Fixes**
 

@@ -49,6 +49,21 @@ export default class Term extends React.Component<ITermProps, ITermState> {
   }
 
   /**
+   * Get the right class name for the term
+   */
+  private getClassName() {
+    if (this.props.term.IsDeprecated) {
+      return styles.termDisabled;
+    }
+
+    if (!this.props.term.IsAvailableForTagging) {
+      return styles.termNoTagging;
+    }
+
+    return styles.termEnabled;
+  }
+
+  /**
    * Default React render
    */
   public render(): JSX.Element {
@@ -60,8 +75,8 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       <div className={`${styles.listItem} ${styles.term}`} style={styleProps}>
         <Checkbox
           checked={this.state.selected}
-          disabled={this.props.term.IsDeprecated || this.props.disabled}
-          className={this.props.term.IsDeprecated ? styles.termDisabled : styles.termEnabled}
+          disabled={this.props.term.IsDeprecated || !this.props.term.IsAvailableForTagging || this.props.disabled}
+          className={this.getClassName()}
           label={this.props.term.Name}
           onChange={this._handleChange} />
       </div>
