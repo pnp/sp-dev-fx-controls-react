@@ -143,27 +143,32 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'ListItemAllFields.Id',
         displayName: 'ID',
         maxWidth: 40,
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'ListItemAllFields.Underscore_Field',
         displayName: "Underscore_Field",
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'Name',
         linkPropertyName: 'ServerRelativeUrl',
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'ServerRelativeUrl',
         displayName: 'Path',
         render: (item: any) => {
           return <a href={item['ServerRelativeUrl']}>Link</a>;
-        }
+        },
+        isResizable: true
       },
       {
-        name: 'Title'
+        name: 'Title',
+        isResizable: true
       }
     ];
 

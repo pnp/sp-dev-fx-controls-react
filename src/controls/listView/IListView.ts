@@ -1,6 +1,5 @@
 import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
 import { IColumn, IGroup } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { IDetailsListProps } from "office-ui-fabric-react/lib/DetailsList";
 
 export { SelectionMode };
 
@@ -45,10 +44,6 @@ export interface IListViewProps {
    * The index of the items to be select by default
    */
   defaultSelection?: number[];
-  /**
-   * Specify direct properties for the DetailsList component
-   */
-  detailsListProps?: IDetailsListProps;
 }
 
 export interface IListViewState {
@@ -102,6 +97,10 @@ export interface IViewField {
    * Specify the maximum width of the column
    */
   maxWidth?: number;
+  /**
+   * Determines if the column can be resized.
+   */
+  isResizable?: boolean;
   /**
    * Override the render method of the field
    */
