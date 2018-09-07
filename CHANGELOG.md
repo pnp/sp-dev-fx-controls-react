@@ -9,6 +9,10 @@
 - `WebPartTitle`: Added accessibility tags for web part title [#121](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/121)
 - `ListView`: Resizable columns - introduced a `isResizable` property [#119](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/119)
 
+**Fixes**
+
+- `IFrameDialog`: dialog width is not correct in IE11 [#118](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/118)
+
 ## 1.7.0
 
 **Enhancements**
