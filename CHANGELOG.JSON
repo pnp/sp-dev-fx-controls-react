@@ -19,7 +19,7 @@
           "`PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)"
         ]
       },
-      "contributions": ["Thomas Lamb", "Joel Rodrigues", "Mikael Svenson"]
+      "contributions": ["[Thomas Lamb](https://github.com/ThomasLamb)", "[Joel Rodrigues](https://github.com/joelfmrodrigues)", "[Mikael Svenson](https://github.com/wobba)"]
     },
     {
       "version": "1.7.0",
