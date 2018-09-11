@@ -1,5 +1,7 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { Link } from 'office-ui-fabric-react/lib/Link';
@@ -28,13 +30,20 @@ export interface IFieldNameRendererProps extends IFieldRendererProps {
      */
     isNew?: boolean;
     /**
-     * true if the document type has preview (true by default)
+     * true if the document type has preview (true by default).
+     * The flag impacts on the link's href: 
+     * if the flag is tru then the href is constructed like #id=${filePath}&parent=${filePath.substring(0, filePath.lastIndexOf('/'))},
+     * otherwise the href will contain filePath only.
      */
     hasPreview?: boolean;
     /**
      * custom handler for link click. If not set link click will lead to rendering document preview
      */
     onClick?: (args: IFieldNameClickEventArgs) => {};
+    /**
+     * custom handler for link double click. If not set link will use OOTB behavior.
+     */
+    onDoubleClick?: (args: IFieldNameClickEventArgs) => {};
 }
 
 /**
@@ -57,12 +66,37 @@ export interface IFieldNameClickEventArgs {
  *   - Title
  */
 export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, IFieldNameRendererState> {
+    private _button: HTMLButtonElement;
+
     public constructor(props: IFieldNameRendererProps, state: IFieldNameRendererState) {
         super(props, state);
 
         telemetry.track('FieldNameRenderer', {});
 
         this.state = {};
+
+        this._onDoubleClick = this._onDoubleClick.bind(this);
+    }
+
+    @override
+    public componentDidMount() {
+        //
+        // small hack for double click.
+        // unfortunately, we can't use React onDoubleClick because React doesn't guaranty the sequence of handlers.
+        // And stopPropagation could not make effect.
+        //
+        if (this.props.onDoubleClick && this.props.isLink) {
+            const domNode = ReactDOM.findDOMNode(this);
+            this._button = domNode.querySelector('button');
+            this._button.addEventListener('dblclick', this._onDoubleClick, false);
+        }
+    }
+
+    @override
+    public componentWillUnmount() {
+        if (this._button) {
+            this._button.removeEventListener('dblclick', this._onDoubleClick);
+        }
     }
 
     @override
@@ -76,7 +110,10 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
 
         if (isLink) {
             if (this.props.onClick) {
-                value = <Link onClick={this._onClick.bind(this)} style={this.props.cssProps} className={styles.value}>{this.props.text}</Link>;
+                value = <Link
+                    onClick={this._onClick.bind(this)}
+                    style={this.props.cssProps}
+                    className={styles.value}>{this.props.text}</Link>;
             }
             else {
                 let url: string;
@@ -103,13 +140,23 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         </span>;
     }
 
-    private _onClick(e): void {
+    private _onClick(e): boolean {
         if (this.props.onClick) {
             e.stopPropagation();
             e.preventDefault();
             const args: IFieldNameClickEventArgs = this.props as IFieldNameClickEventArgs;
             this.props.onClick(args);
-            return;
+            return false;
+        }
+    }
+
+    private _onDoubleClick(e): boolean {
+        if (this.props.onDoubleClick) {
+            e.stopPropagation();
+            e.preventDefault();
+            const args: IFieldNameClickEventArgs = this.props as IFieldNameClickEventArgs;
+            this.props.onDoubleClick(args);
+            return false;
         }
     }
 }
