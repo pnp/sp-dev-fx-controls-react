@@ -37,9 +37,9 @@ The FieldNameRenderer component can be configured with the following properties:
 | isLink | boolean | yes | True if the name should be rendered as a link. |
 | isNew | boolean | no | True if the document is new. |
 | filePath | string | no | Path to the document. |
-| hasPreview | boolean | no | True if the document has preview (true by default) |
-| onClick | (args: INameClickEventArgs) => {} | no | Custom handler for link click. If not set link click will lead to rendering document preview. |
-
+| hasPreview | boolean | no | True if the document has preview and link href should be constructed to display the preview (instead of direct document's link). The flag works only if `onClick` property is NOT defined.  |
+| onClick | (args: INameClickEventArgs) => {} | no | Custom handler for link click. If not set link click will lead to rendering document preview. Works if `isLink` is set to `true` |
+| onDoubleClick | (args: INameClickEventArgs) => {} | no | Custom handler for link double click. If not set link If not set link will use OOTB behavior. Works if `isLink` is set to `true`  |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldNameRenderer)
 
