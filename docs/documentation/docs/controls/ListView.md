@@ -55,7 +55,7 @@ const groupByFields: IGrouping[] = [
 ```
 
 !!! note "Extend ListView with a ContextualMenu"
-    To extend the `ListView` control with a [ContextualMenu](https://developer.microsoft.com/en-us/fabric#/components/contextualmenu) refer to [ListView.ContextualMenu](./ListView.ContextualMenu).
+    To extend the `ListView` control with a [ContextualMenu](https://developer.microsoft.com/en-us/fabric#/components/contextualmenu) refer to [ListView.ContextualMenu](./ListView.ContextualMenu.md).
 
 ## Implementation
 
@@ -82,6 +82,7 @@ The `IViewField` has the following implementation:
 | sorting | boolean | no | Specify if you want to enable sorting for the current field. |
 | maxWidth | number | no | Specify the minimum width of the column. |
 | maxWidth | number | no | Specify the maximum width of the column. |
+| isResizable | boolean | no | Determines if the column can be resized. |
 | render | function | no | Override how the field has to get rendered. |
 
 The `IGrouping` has the following implementation:

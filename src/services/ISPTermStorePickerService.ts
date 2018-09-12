@@ -67,6 +67,7 @@ export interface ITerm {
   Name: string;
   Description: string;
   IsDeprecated: boolean;
+  IsAvailableForTagging: boolean;
   IsRoot: boolean;
   PathOfTerm: string;
   TermSet: ITermSetMinimal;

@@ -1,6 +1,29 @@
 {
   "versions": [
     {
+      "version": "1.8.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`PeoplePicker`: Specify to hide or show the users/groups which are hidden in the UI [#122](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/122)",
+          "`WebPartTitle`: changing font-sizes on different resolutions [#114](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/114)",
+          "`WebPartTitle`: Added accessibility tags for web part title [#121](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/121)",
+          "`ListView`: Resizable columns - introduced a `isResizable` property [#119](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/119)",
+          "`FieldNameRenderer` double click support added [#116](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/116)",
+          "`TaxonomyPicker`: table markup changed to DIV [#113](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/113)",
+          "`PeoplePicker`: ability to specify the source site to load users from [#110](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/110)",
+          "`TaxonomyPicker`: Disable the terms which are set as deprecated or unavailable for tagging [#109](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/109)",
+          "`PeoplePicker`: Specify principle type to retrieve (users, groups, ...) [#94](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/94)"
+        ],
+        "fixes": [
+          "`FieldLookupRenderer`: Fixed URL querystring params [#126](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/126)",
+          "`IFrameDialog`: dialog width is not correct in IE11 [#118](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/118)",
+          "`PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)"
+        ]
+      },
+      "contributions": ["[Thomas Lamb](https://github.com/ThomasLamb)", "[Joel Rodrigues](https://github.com/joelfmrodrigues)", "[Mikael Svenson](https://github.com/wobba)", "[Alex Terentiev](https://github.com/AJIXuMuK)"]
+    },
+    {
       "version": "1.7.0",
       "changes": {
         "new": [],

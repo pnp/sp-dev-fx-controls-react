@@ -128,7 +128,7 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
         //
         if (this.state.dispFormUrl) {
             this.setState({
-                lookupDispFormUrl: `${this.state.dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
+                lookupDispFormUrl: `${this.state.dispFormUrl}?ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
                 hideDialog: false
             });
         }
@@ -147,7 +147,7 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
 
                     return {
                         dispFormUrl: dispFormUrl,
-                        lookupDispFormUrl: `${dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
+                        lookupDispFormUrl: `${dispFormUrl}?ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
                     };
                 });
             });

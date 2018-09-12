@@ -1,5 +1,5 @@
-site_name: SharePoint Framework React Controls
-pages:
+site_name: '@pnp/spfx-controls-react'
+nav:
   - Home: 'index.md'
   - Controls:
     - FileTypeIcon: 'controls/FileTypeIcon.md'
@@ -34,9 +34,11 @@ theme:
   name: 'material'
   palette:
     primary: 'blue'
-  logo: 'assets/sharepoint.png'
+  logo: 'assets/pnp-spfx-controls.svg'
   feature:
     tabs: true
+extra_css:
+  - 'css/extra.css'
 markdown_extensions:
   - admonition
   - codehilite:

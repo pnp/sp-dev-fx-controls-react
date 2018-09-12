@@ -21,7 +21,7 @@ This control renders a People picker field which can be used to select one or mo
 - Import the following modules to your component:
 
 ```typescript
-import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
+import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 ```
 
 - Use the `PeoplePicker` control in your code as follows:
@@ -35,7 +35,9 @@ import { PeoplePicker } from "@pnp/spfx-controls-react/lib/PeoplePicker";
     showtooltip={true}
     isRequired={true}
     disabled={true}
-    selectedItems={this._getPeoplePickerItems} />
+    selectedItems={this._getPeoplePickerItems}
+    showHiddenInUI={false}
+    principleTypes={[PrincipalType.User]} />
 ```
 
 - With the `selectedItems` property you can get the selected People in the Peoplepicker :
@@ -67,6 +69,19 @@ The People picker control can be configured with the following properties:
 | peoplePickerWPclassName | string | no | applies custom styling to the people picker element |
 | peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only |
 | defaultSelectedUsers | string[] | no | Default selected user emails |
+| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. Default is the current site URL. |
+| showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. |
+| principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. |
 
+Enum `PrincipalType`
+
+The `PrincipalType` enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.
+
+| Name |
+| ---- |
+| User |
+| DistributionList |
+| SecurityGroup |
+| SharePointGroup |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)

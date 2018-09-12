@@ -277,6 +277,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         fieldName: field.name,
         minWidth: field.minWidth || 50,
         maxWidth: field.maxWidth,
+        isResizable: field.isResizable,
         onRender: this._fieldRender(field),
         onColumnClick: this._columnClick
       });

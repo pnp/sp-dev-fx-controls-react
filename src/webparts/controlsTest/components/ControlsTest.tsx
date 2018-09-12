@@ -17,7 +17,7 @@ import { IFrameDialog } from '../../../IFrameDialog';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
-import { PeoplePicker } from '../../../PeoplePicker';
+import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -143,27 +143,32 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'ListItemAllFields.Id',
         displayName: 'ID',
         maxWidth: 40,
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'ListItemAllFields.Underscore_Field',
         displayName: "Underscore_Field",
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'Name',
         linkPropertyName: 'ServerRelativeUrl',
-        sorting: true
+        sorting: true,
+        isResizable: true
       },
       {
         name: 'ServerRelativeUrl',
         displayName: 'Path',
         render: (item: any) => {
           return <a href={item['ServerRelativeUrl']}>Link</a>;
-        }
+        },
+        isResizable: true
       },
       {
-        name: 'Title'
+        name: 'Title',
+        isResizable: true
       }
     ];
 
@@ -236,7 +241,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   // disableChildrenOfDisabledParents={true}
                   panelTitle="Select Term"
@@ -309,7 +314,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             showtooltip={true}
             isRequired={true}
             defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            selectedItems={this._getPeoplePickerItems} />
+            selectedItems={this._getPeoplePickerItems}
+            showHiddenInUI={false}
+            principleTypes={[PrincipalType.User]} />
 
           <PeoplePicker
             context={this.props.context}

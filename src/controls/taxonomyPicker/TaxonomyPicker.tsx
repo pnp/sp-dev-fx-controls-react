@@ -234,6 +234,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       _ObjectIdentity_: ts._ObjectIdentity_,
       Description: ts.Description,
       IsDeprecated: null,
+      IsAvailableForTagging: null,
       IsRoot: null
     };
 
@@ -249,27 +250,23 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     return (
       <div>
         {this.props.label && <Label>{this.props.label}</Label>}
-        <table className={styles.termFieldTable}>
-          <tbody>
-            <tr>
-              <td>
-                <TermPicker
-                  context={this.props.context}
-                  termPickerHostProps={this.props}
-                  disabled={this.props.disabled}
-                  value={this.state.activeNodes}
-                  isTermSetSelectable={this.props.isTermSetSelectable}
-                  onChanged={this.termsFromPickerChanged}
-                  allowMultipleSelections={this.props.allowMultipleSelections}
-                  disabledTermIds={this.props.disabledTermIds}
-                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
-              </td>
-              <td className={styles.termFieldRow}>
-                <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className={styles.termField}>
+          <div className={styles.termFieldInput}>
+            <TermPicker
+              context={this.props.context}
+              termPickerHostProps={this.props}
+              disabled={this.props.disabled}
+              value={this.state.activeNodes}
+              isTermSetSelectable={this.props.isTermSetSelectable}
+              onChanged={this.termsFromPickerChanged}
+              allowMultipleSelections={this.props.allowMultipleSelections}
+              disabledTermIds={this.props.disabledTermIds}
+              disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
+          </div>
+          <div className={styles.termFieldButton}>
+            <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
+          </div>
+        </div>
 
         <FieldErrorMessage errorMessage={this.state.errorMessage} />
 
