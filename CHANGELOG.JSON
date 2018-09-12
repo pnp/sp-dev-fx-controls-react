@@ -16,6 +16,7 @@
           "`PeoplePicker`: Specify principle type to retrieve (users, groups, ...) [#94](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/94)"
         ],
         "fixes": [
+          "`FieldLookupRenderer`: Fixed URL querystring params [#126](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/126)",
           "`IFrameDialog`: dialog width is not correct in IE11 [#118](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/118)",
           "`PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)"
         ]
