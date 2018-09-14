@@ -322,7 +322,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (!personas || !personas.length || personas.length === 0) {
       return false;
     }
-    return personas.filter(item => item.primaryText === persona.primaryText).length > 0;
+    return personas.filter(item => item.secondaryText === persona.secondaryText).length > 0;
   }
 
   /**
