@@ -13,7 +13,9 @@
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
     "changelog": "node scripts/create-changelog.js && node scripts/sync-changelogs.js && gulp versionUpdater",
-    "postinstall": "node postinstall/install.js"
+    "postinstall": "node postinstall/install.js",
+    "sonarcloud:config": "node ./scripts/sonarcloud.js",
+    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js"
   },
   "dependencies": {
     "@pnp/common": "^1.0.1",
@@ -49,7 +51,8 @@
     "karma-remap-coverage": "^0.1.4",
     "react": "15.4.2",
     "react-addons-test-utils": "15.6.0",
-    "react-dom": "15.4.2"
+    "react-dom": "15.4.2",
+    "sonarqube-scanner": "2.1.1"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,15 @@
 # Releases
 
+## 1.9.0
+
+**Enhancements**
+
+- Optimize bundle size for latest SPFx version due to Office UI Fabric specific versioning [#136](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/136)
+
+**Fixes**
+
+- `PeoplePicker`: Suggested People not loading after first selection [#134](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/134)
+
 ## 1.8.0
 
 **Enhancements**
