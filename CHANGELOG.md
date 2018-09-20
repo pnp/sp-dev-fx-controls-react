@@ -8,6 +8,8 @@
 
 **Fixes**
 
+- `FieldLookupRenderer`: Lookup dialog is empty [#131](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/131)
+- `IFrameDialog`: Unnecessary horizontal scroll in IFrame dialog [#132](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/132)
 - `PeoplePicker`: Suggested People not loading after first selection [#134](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/134)
 
 ## 1.8.0
