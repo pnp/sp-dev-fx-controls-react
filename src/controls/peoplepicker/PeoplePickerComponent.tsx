@@ -275,8 +275,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private _filterPersons(filterText: string): IPersonaProps[] {
     return this.state.peoplePersonaMenu.filter(item =>
-    this._doesTextStartWith(item.primaryText as string, filterText)
-    || this._doesTextContains(item.primaryText as string, filterText)
+    this._doesTextStartWith(item.text as string, filterText)
+    || this._doesTextContains(item.text as string, filterText)
     || this._doesTextStartWith(item.secondaryText as string, filterText)
     || this._doesTextContains(item.secondaryText as string, filterText));
   }
@@ -322,7 +322,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (!personas || !personas.length || personas.length === 0) {
       return false;
     }
-    return personas.filter(item => item.primaryText === persona.primaryText).length > 0;
+    return personas.filter(item => item.text === persona.text).length > 0;
   }
 
   /**
@@ -343,7 +343,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           id: 1000 + i, //just a random number
           imageUrl: "",
           imageInitials: "",
-          primaryText: selectedUsers[i] , //Name
+          text: selectedUsers[i] , //Name
           secondaryText: selectedUsers[i], //Role
           tertiaryText: "", //status
           optionalText: "" //stgring
@@ -374,7 +374,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
                             onResolveSuggestions={this._onPersonFilterChanged}
                             onEmptyInputFocus={ this._returnMostRecentlyUsedPerson}
-                            getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.primaryText}
+                            getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
                             className={`'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
                             key={'normal'}
                             onValidateInput={this._validateInputPeople}
