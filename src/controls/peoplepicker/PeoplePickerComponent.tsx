@@ -59,6 +59,36 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   /**
+   * componentDidUpdate lifecycle hook
+   */
+  public componentDidUpdate(prevProps : IPeoplePickerProps, prevState : IPeoplePickerState) : void 
+  {
+    // If defaultSelectedUsers has changed then bind again
+    if(this.props.defaultSelectedUsers !== prevProps.defaultSelectedUsers || this.state.allPersons !== prevState.allPersons)
+    {
+      // Check if we have results to get from, if not provide a empty array to filter on
+      let userValuesArray: Array<IPeoplePickerUserItem> = this.state.allPersons.length !==0 ? this.state.allPersons : new Array<IPeoplePickerUserItem>();
+
+      // Set Default selected persons
+      let defaultUsers : any = [];
+      let defaultPeopleList: IPersonaProps[] = [];
+      if (this.props.defaultSelectedUsers) {
+        defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
+        for (const persona of defaultUsers) {
+          let selectedPeople: IPersonaProps = {};
+          assign(selectedPeople, persona);
+          defaultPeopleList.push(selectedPeople);
+        }
+      }
+
+      this.setState({
+        selectedPersons : defaultPeopleList.length !== 0 ? defaultPeopleList : [],
+        showmessageerror: this.props.isRequired && defaultPeopleList.length === 0
+      });
+    }
+  }
+
+  /**
    * Generate the user photo link
    *
    * @param value
@@ -186,18 +216,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           }
         }
 
-        // Set Default selected persons
-        let defaultUsers: any = [];
-        let defaultPeopleList: IPersonaProps[] = [];
-        if (this.props.defaultSelectedUsers) {
-          defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
-          for (const persona of defaultUsers) {
-            let selectedPeople: IPersonaProps = {};
-            assign(selectedPeople, persona);
-            defaultPeopleList.push(selectedPeople);
-          }
-        }
-
         let personaList: IPersonaProps[] = [];
         for (const persona of userValuesArray) {
           let personaWithMenu: IPersonaProps = {};
@@ -207,11 +225,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
         // Update the current state
         this.setState({
-          allPersons: userValuesArray,
-          selectedPersons: defaultPeopleList.length != 0 ? defaultPeopleList : [],
-          peoplePersonaMenu: personaList,
-          mostRecentlyUsedPersons: personaList.slice(0, 5),
-          showmessageerror: this.props.isRequired && this.state.selectedPersons.length === 0
+          allPersons : userValuesArray,
+          peoplePersonaMenu : personaList,
+          mostRecentlyUsedPersons : personaList.slice(0,5)
         });
       }
     } catch (e) {
@@ -424,15 +440,18 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
             )
         }
 
-        {
-          (this.props.isRequired && this.state.showmessageerror) && (
-            <MessageBar messageBarType={MessageBarType.error}
-              isMultiline={false}
-              className={`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
-              {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
-            </MessageBar>
-          )
-        }
+      {
+        (this.props.isRequired && this.state.showmessageerror) && (
+          <div className={` ${styles.defaultRequiredClass} ${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
+            {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
+          </div>
+          // <MessageBar messageBarType={MessageBarType.error}
+          //             isMultiline={false}
+          //             className={`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
+          //   {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
+          // </MessageBar>
+        )
+      }
       </div>
     );
   }
