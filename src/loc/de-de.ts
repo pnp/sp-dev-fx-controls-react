@@ -6,7 +6,7 @@ define([], () => {
 
     'ListViewGroupEmptyLabel': 'Empty',
 
-    'WebPartTitlePlaceholder': 'Web part Titel',
+    'WebPartTitlePlaceholder': 'Webpart Titel',
     'WebPartTitleLabel': 'Titel hinzufügen',
 
     "DateTime": {
@@ -18,26 +18,26 @@ define([], () => {
       "L_RelativeDateTime_XMinutes": "Vor {0} Minute||Vor {0} Minuten",
       "L_RelativeDateTime_XMinutesFutureIntervals": "1||2-",
       "L_RelativeDateTime_XMinutesIntervals": "1||2-",
-      "L_RelativeDateTime_AboutAnHourFuture": "In about an hour",
-      "L_RelativeDateTime_AboutAnHour": "About an hour ago",
-      "L_RelativeDateTime_Tomorrow": "Tomorrow",
-      "L_RelativeDateTime_Yesterday": "Yesterday",
-      "L_RelativeDateTime_TomorrowAndTime": "Tomorrow at {0}",
-      "L_RelativeDateTime_YesterdayAndTime": "Yesterday at {0}",
-      "L_RelativeDateTime_XHoursFuture": "In {0} hour||In {0} hours",
-      "L_RelativeDateTime_XHours": "{0} hour ago||{0} hours ago",
+      "L_RelativeDateTime_AboutAnHourFuture": "In ungefähr einer Stunde",
+      "L_RelativeDateTime_AboutAnHour": "Vor ungefähr einer Stunde",
+      "L_RelativeDateTime_Tomorrow": "Morgen",
+      "L_RelativeDateTime_Yesterday": "Gestern",
+      "L_RelativeDateTime_TomorrowAndTime": "Morgen um {0}",
+      "L_RelativeDateTime_YesterdayAndTime": "Gestern um {0}",
+      "L_RelativeDateTime_XHoursFuture": "In {0} Stunde||In {0} Stunden",
+      "L_RelativeDateTime_XHours": "Vor {0} Stunde||Vor {0} Stunden",
       "L_RelativeDateTime_XHoursFutureIntervals": "1||2-",
       "L_RelativeDateTime_XHoursIntervals": "1||2-",
       "L_RelativeDateTime_DayAndTime": "{0} at {1}",
-      "L_RelativeDateTime_XDaysFuture": "{0} day from now||{0} days from now",
-      "L_RelativeDateTime_XDays": "{0} day ago||{0} days ago",
+      "L_RelativeDateTime_XDaysFuture": "{0} Tag ab jetzt||{0} Tage ab jetzt",
+      "L_RelativeDateTime_XDays": "Vor {0} Tag||Vor {0} Tagen",
       "L_RelativeDateTime_XDaysFutureIntervals": "1||2-",
       "L_RelativeDateTime_XDaysIntervals":  "1||2-",
-      "L_RelativeDateTime_Today": "Today"
+      "L_RelativeDateTime_Today": "Heute"
     },
-    "SendEmailTo": "Send an email to {0}",
-    "StartChatWith": "Start a chat with {0}",
-    "Contact": "Contact",
-    "UpdateProfile": "Update your profile"
+    "SendEmailTo": "Email senden an {0}",
+    "StartChatWith": "Chat starten mit {0}",
+    "Contact": "Kontakt",
+    "UpdateProfile": "Aktualisiere Dein Profil"
   };
 });
