@@ -29,6 +29,10 @@ export interface IPeoplePickerProps {
    */
   groupName?: string;
   /**
+   * Limit the number of suggestions show to user (default: 10)
+   */
+  suggestionLimit?: number;
+  /**
    * Selection Limit of Control
    */
   personSelectionLimit?: number;

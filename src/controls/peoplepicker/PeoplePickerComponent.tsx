@@ -274,11 +274,25 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * @param filterText
    */
   private _filterPersons(filterText: string): IPersonaProps[] {
-    return this.state.peoplePersonaMenu.filter(item =>
-    this._doesTextStartWith(item.text as string, filterText)
-    || this._doesTextContains(item.text as string, filterText)
-    || this._doesTextStartWith(item.secondaryText as string, filterText)
-    || this._doesTextContains(item.secondaryText as string, filterText));
+    let result: IPersonaProps[] = [];
+    let suggestionLimit = this.props.suggestionLimit ? this.props.suggestionLimit : 5;
+
+    for (let i: number = 0; i < this.state.peoplePersonaMenu.length; i++) {
+      let item = this.state.peoplePersonaMenu[i];
+
+      if (this._doesTextStartWith(item.text as string, filterText)
+      || this._doesTextContains(item.text as string, filterText)
+      || this._doesTextStartWith(item.secondaryText as string, filterText)
+      || this._doesTextContains(item.secondaryText as string, filterText))
+      {
+        result.push(item);
+        if (result.length === suggestionLimit) {
+          break;
+        }
+      }
+    }
+
+    return result;
   }
 
 
