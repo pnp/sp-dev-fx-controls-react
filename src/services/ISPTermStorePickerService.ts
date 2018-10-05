@@ -32,6 +32,7 @@ export interface ITermSet {
   _ObjectType_: string; // SP.Taxonomy.TermSet
   _ObjectIdentity_: string;
   Id: string;
+  CustomSortOrder?:string;
   Name: string;
   Description: string;
   Names: ITermSetNames;
@@ -71,6 +72,7 @@ export interface ITerm {
   IsRoot: boolean;
   PathOfTerm: string;
   TermSet: ITermSetMinimal;
+  CustomSortOrderIndex?: number;
   PathDepth?: number;
   ParentId?: string;
 }
