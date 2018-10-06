@@ -17,12 +17,6 @@ import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Per
 import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar";
 import { ValidationState } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
 
-const suggestionProps: IBasePickerSuggestionsProps = {
-  suggestionsHeaderText: 'Suggested People',
-  noResultsFoundText: 'No results found',
-  loadingText: 'Loading'
-};
-
 /**
 * PeoplePicker component
 */
@@ -367,6 +361,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Default React component render method
    */
   public render(): React.ReactElement<IPeoplePickerProps> {
+    const suggestionProps: IBasePickerSuggestionsProps = {
+      suggestionsHeaderText: 'Suggested People',
+      noResultsFoundText: 'No results found',
+      loadingText: 'Loading',
+      resultsMaximumNumber: this.props.resultsMaximumNumber ? this.props.resultsMaximumNumber : 5
+    };
+
+
     const peoplepicker = (
       <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}>
         <Label>{this.props.titleText || strings.peoplePickerComponentTitleText}</Label>
