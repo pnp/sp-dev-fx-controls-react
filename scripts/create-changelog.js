@@ -29,6 +29,14 @@ if (changelog.versions && changelog.versions.length > 0) {
         }
       }
     }
+
+    // Add the contributions to the MD file
+    if (entry.contributions && entry.contributions.length > 0) {
+      markdown.push(`### Contributors`);
+      markdown.push(``);
+      markdown.push(`Special thanks to our contributor${entry.contributions.length > 1 ? "s (in alphabetical order)" : "" }: ${entry.contributions.join(', ')}.`);
+      markdown.push(``);
+    }
   }
 
   if (markdown.length > 2) {

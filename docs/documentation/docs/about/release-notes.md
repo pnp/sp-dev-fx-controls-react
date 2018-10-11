@@ -12,6 +12,10 @@
 - `IFrameDialog`: Unnecessary horizontal scroll in IFrame dialog [#132](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/132)
 - `PeoplePicker`: Suggested People not loading after first selection [#134](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/134)
 
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.8.0
 
 **Enhancements**
@@ -32,6 +36,10 @@
 - `IFrameDialog`: dialog width is not correct in IE11 [#118](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/118)
 - `PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)
 
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Thomas Lamb](https://github.com/ThomasLamb), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mikael Svenson](https://github.com/wobba), [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.7.0
 
 **Enhancements**
@@ -45,6 +53,10 @@
 
 - `FieldNameRenderer` onClick does not suppress default link behavior [#103](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/103)
 
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): Octavie van Haaften, Asish Padhy, Mikael Svenson, Alex Terentiev.
+
 ## 1.6.0
 
 **Enhancements**
@@ -55,6 +67,10 @@
 
 - New telemetry approach which allows you to use Application Insights [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
 - PeoplePicker property selectedItems not implemented? [#90](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/90)
+
+### Contributors
+
+Special thanks to our contributor: Octavie van Haaften.
 
 ## 1.5.0
 
@@ -71,6 +87,10 @@
 - Bug in `TaxonomyPicker` where values are not updated by an async change [#83](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/83)
 - `FieldUserRenderer` uses email prop for `GetPropertiesFor` [#84](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/84)
 - Fixed issue in single selection mode when all group items were selected in the `ListView` when user clicked on the group header [#86](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/86)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): Asish Padhy, Alex Terentiev.
 
 ## 1.4.0
 
