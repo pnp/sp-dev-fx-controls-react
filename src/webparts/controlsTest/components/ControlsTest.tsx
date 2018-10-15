@@ -76,6 +76,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
+/**
+ *
+ *Method that retrieves the selected terms from the taxonomy picker and sets state
+ * @private
+ * @param {IPickerTerms} terms
+ * @memberof ControlsTest
+ */
+private onServicePickerChange(terms: IPickerTerms): void {
+    this.setState({
+      initialValues: terms
+    });
+    // console.log("serviceTerms", terms);
+  }
+
   /**
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
@@ -234,7 +248,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                             onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">TaxonomyPicker tester:
+              <div className="ms-font-m">Services tester:
+              <TaxonomyPicker
+                allowMultipleSelections={true}
+                termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                panelTitle="Select Sorted Term"
+                label="Service Picker"
+                context={this.props.context}
+                onChange={this.onServicePickerChange}
+                isTermSetSelectable={false}
+              />
+
+               <TaxonomyPicker
+                allowMultipleSelections={true}
+                termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+                panelTitle="Select Default Sorted Term"
+                label="Service Picker"
+                context={this.props.context}
+                onChange={this.onServicePickerChange}
+                isTermSetSelectable={false}
+              />
+
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
