@@ -316,7 +316,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
             selectedItems={this._getPeoplePickerItems}
             showHiddenInUI={false}
-            principleTypes={[PrincipalType.User]} />
+            principleTypes={[PrincipalType.User]}
+            resultsMaximumNumber={2} />
 
           <PeoplePicker
             context={this.props.context}
