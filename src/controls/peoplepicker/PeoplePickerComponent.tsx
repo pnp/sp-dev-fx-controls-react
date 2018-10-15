@@ -38,8 +38,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       allPersons: [],
       currentPicker: 0,
       peoplePartTitle: "",
-      peoplePartTooltip : "",
-      isLoading : false,
+      peoplePartTooltip: "",
+      isLoading: false,
       showmessageerror: false
     };
   }
@@ -55,7 +55,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       // online mode
       // Load the users
       this._thisLoadUsers();
-      }
+    }
   }
 
   /**
@@ -63,7 +63,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    *
    * @param value
    */
-  private generateUserPhotoLink(value : string) : string {
+  private generateUserPhotoLink(value: string): string {
     return `https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${value}&UA=0&size=HR96x96`;
   }
 
@@ -80,7 +80,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       text: "Roger Federer",
       secondaryText: "roger@tennis.onmicrosoft.com",
       tertiaryText: "",
-      optionalText:""
+      optionalText: ""
     });
     _fakeUsers.push({
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c2",
@@ -89,7 +89,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       text: "Rafael Nadal",
       secondaryText: "rafael@tennis.onmicrosoft.com",
       tertiaryText: "",
-      optionalText:""
+      optionalText: ""
     });
     _fakeUsers.push({
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c3",
@@ -98,7 +98,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       text: "Novak Djokovic",
       secondaryText: "novak@tennis.onmicrosoft.com",
       tertiaryText: "",
-      optionalText:""
+      optionalText: ""
     });
     _fakeUsers.push({
       id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c4",
@@ -107,7 +107,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       text: "Juan Martin del Potro",
       secondaryText: "juanmartin@tennis.onmicrosoft.com",
       tertiaryText: "",
-      optionalText:""
+      optionalText: ""
     });
 
     let personaList: IPersonaProps[] = [];
@@ -131,20 +131,36 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Retrieve the users
    */
   private async _thisLoadUsers(): Promise<void> {
-    var stringVal = "";
+    var stringVal: string = "";
+
     if (this.props.groupName) {
       stringVal = `/_api/web/sitegroups/GetByName('${this.props.groupName}')/users`;
     } else {
       stringVal = "/_api/web/siteusers";
     }
 
+    // filter for principal Type
+    var filterVal: string = "";
+    if (this.props.principleTypes) {
+      filterVal = `?$filter=${this.props.principleTypes.map(principalType => `(PrincipalType eq ${principalType})`).join(" or ")}`;
+    }
+
+    // filter for showHiddenInUI
+    if (this.props.showHiddenInUI) {
+      filterVal = filterVal ? `${filterVal} and (IsHiddenInUI eq ${this.props.showHiddenInUI})` : `?$filter=IsHiddenInUI eq ${this.props.showHiddenInUI}`;
+    }
+
     const webAbsoluteUrl = this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
     // Create the rest API
-    const restApi = `${webAbsoluteUrl}${stringVal}`;
+    const restApi = `${webAbsoluteUrl}${stringVal}${filterVal}`;
 
     try {
       // Call the API endpoint
-      const items: IUsers = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1).then(resp => resp.json());
+      const items: IUsers = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1, {
+        headers: {
+          'Accept': 'application/json;odata.metadata=none'
+        }
+      }).then(resp => resp.json());
 
       // Check if items were retrieved
       if (items && items.value && items.value.length > 0) {
@@ -154,7 +170,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         // Loop over all the retrieved items
         for (let i = 0; i < items.value.length; i++) {
           const item = items.value[i];
-          if (!item.IsHiddenInUI || (this.props.showHiddenInUI && item.IsHiddenInUI))  {
+          if (!item.IsHiddenInUI || (this.props.showHiddenInUI && item.IsHiddenInUI)) {
             // Check if the the type must be returned
             if (!this.props.principleTypes || this.props.principleTypes.indexOf(item.PrincipalType) !== -1) {
               userValuesArray.push({
@@ -171,7 +187,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         }
 
         // Set Default selected persons
-        let defaultUsers : any = [];
+        let defaultUsers: any = [];
         let defaultPeopleList: IPersonaProps[] = [];
         if (this.props.defaultSelectedUsers) {
           defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
@@ -191,10 +207,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
         // Update the current state
         this.setState({
-          allPersons : userValuesArray,
-          selectedPersons : defaultPeopleList.length != 0 ? defaultPeopleList : [],
-          peoplePersonaMenu : personaList,
-          mostRecentlyUsedPersons : personaList.slice(0,5),
+          allPersons: userValuesArray,
+          selectedPersons: defaultPeopleList.length != 0 ? defaultPeopleList : [],
+          peoplePersonaMenu: personaList,
+          mostRecentlyUsedPersons: personaList.slice(0, 5),
           showmessageerror: this.props.isRequired && this.state.selectedPersons.length === 0
         });
       }
@@ -269,10 +285,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private _filterPersons(filterText: string): IPersonaProps[] {
     return this.state.peoplePersonaMenu.filter(item =>
-    this._doesTextStartWith(item.text as string, filterText)
-    || this._doesTextContains(item.text as string, filterText)
-    || this._doesTextStartWith(item.secondaryText as string, filterText)
-    || this._doesTextContains(item.secondaryText as string, filterText));
+      this._doesTextStartWith(item.text as string, filterText)
+      || this._doesTextContains(item.text as string, filterText)
+      || this._doesTextStartWith(item.secondaryText as string, filterText)
+      || this._doesTextContains(item.secondaryText as string, filterText));
   }
 
 
@@ -296,12 +312,12 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     return text && text.toLowerCase().indexOf(filterText.toLowerCase()) === 0;
   }
 
-    /**
-   * Checks if text contains
-   *
-   * @param text
-   * @param filterText
-   */
+  /**
+ * Checks if text contains
+ *
+ * @param text
+ * @param filterText
+ */
   private _doesTextContains(text: string, filterText: string): boolean {
     return text && text.toLowerCase().indexOf(filterText.toLowerCase()) > 0;
   }
@@ -326,23 +342,23 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * @param userValuesArray
    * @param selectedUsers
    */
-  private getDefaultUsers(userValuesArray : any[], selectedUsers : string[]) : any {
+  private getDefaultUsers(userValuesArray: any[], selectedUsers: string[]): any {
     let defaultuserValuesArray: any[] = [];
     for (let i = 0; i < selectedUsers.length; i++) {
       const obj = { valToCompare: selectedUsers[i] };
       const length = defaultuserValuesArray.length;
-      defaultuserValuesArray = defaultuserValuesArray.length !== 0  ? defaultuserValuesArray.concat(userValuesArray.filter(this.filterUsers, obj)) : userValuesArray.filter(this.filterUsers, obj);
+      defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(userValuesArray.filter(this.filterUsers, obj)) : userValuesArray.filter(this.filterUsers, obj);
       if (length === defaultuserValuesArray.length) {
         const defaultUnknownUser = [{
           id: 1000 + i, //just a random number
           imageUrl: "",
           imageInitials: "",
-          text: selectedUsers[i] , //Name
+          text: selectedUsers[i], //Name
           secondaryText: selectedUsers[i], //Role
           tertiaryText: "", //status
           optionalText: "" //stgring
         }];
-        defaultuserValuesArray = defaultuserValuesArray.length !== 0  ? defaultuserValuesArray.concat(defaultUnknownUser) : defaultUnknownUser;
+        defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(defaultUnknownUser) : defaultUnknownUser;
       }
     }
     return defaultuserValuesArray;
@@ -374,49 +390,49 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         <Label>{this.props.titleText || strings.peoplePickerComponentTitleText}</Label>
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
-                            onResolveSuggestions={this._onPersonFilterChanged}
-                            onEmptyInputFocus={ this._returnMostRecentlyUsedPerson}
-                            getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
-                            className={`'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
-                            key={'normal'}
-                            onValidateInput={this._validateInputPeople}
-                            removeButtonAriaLabel={'Remove'}
-                            inputProps={{
-                              'aria-label': 'People Picker'
-                            }}
-                            selectedItems={this.state.selectedPersons}
-                            itemLimit={this.props.personSelectionLimit || 1}
-                            disabled={this.props.disabled}
-                            onChange={this._onPersonItemsChange} />
+          onResolveSuggestions={this._onPersonFilterChanged}
+          onEmptyInputFocus={this._returnMostRecentlyUsedPerson}
+          getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
+          className={`'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
+          key={'normal'}
+          onValidateInput={this._validateInputPeople}
+          removeButtonAriaLabel={'Remove'}
+          inputProps={{
+            'aria-label': 'People Picker'
+          }}
+          selectedItems={this.state.selectedPersons}
+          itemLimit={this.props.personSelectionLimit || 1}
+          disabled={this.props.disabled}
+          onChange={this._onPersonItemsChange} />
       </div>
     );
 
     return (
       <div>
-      {
-        this.props.showtooltip ? (
-          <TooltipHost content={this.props.tooltipMessage || strings.peoplePickerComponentTooltipMessage}
-                    id='pntp'
-                    calloutProps={ { gapSpace: 0 } }
-                    directionalHint={this.props.tooltipDirectional || DirectionalHint.leftTopEdge}>
-            {peoplepicker}
-          </TooltipHost>
-        ) : (
-          <div>
-            {peoplepicker}
-          </div>
-        )
-      }
+        {
+          this.props.showtooltip ? (
+            <TooltipHost content={this.props.tooltipMessage || strings.peoplePickerComponentTooltipMessage}
+              id='pntp'
+              calloutProps={{ gapSpace: 0 }}
+              directionalHint={this.props.tooltipDirectional || DirectionalHint.leftTopEdge}>
+              {peoplepicker}
+            </TooltipHost>
+          ) : (
+              <div>
+                {peoplepicker}
+              </div>
+            )
+        }
 
-      {
-        (this.props.isRequired && this.state.showmessageerror) && (
-          <MessageBar messageBarType={MessageBarType.error}
-                      isMultiline={false}
-                      className={`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
-            {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
-          </MessageBar>
-        )
-      }
+        {
+          (this.props.isRequired && this.state.showmessageerror) && (
+            <MessageBar messageBarType={MessageBarType.error}
+              isMultiline={false}
+              className={`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
+              {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
+            </MessageBar>
+          )
+        }
       </div>
     );
   }
