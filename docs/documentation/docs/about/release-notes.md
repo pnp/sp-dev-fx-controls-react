@@ -4,12 +4,13 @@
 
 **Enhancements**
 
+- `PeoplePicker`: REST API filter and nometadata header added to reduce payload [#139](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/139)
 - `PeoplePicker`: Allow to set the maximum number of suggestions `suggestionsLimit` [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)
 - `TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Ole Bergtun](https://github.com/trillian74), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Ole Bergtun](https://github.com/trillian74), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.9.0
 
