@@ -4,10 +4,13 @@
       "version": "1.10.0",
       "changes": {
         "new": [],
-        "enhancements": ["`TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)"],
+        "enhancements": [
+          "`PeoplePicker`: Allow to set resultsMaximumNumber [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)",
+          "`TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)"
+        ],
         "fixes": []
       },
-      "contributions": ["[Ole Bergtun](https://github.com/trillian74)"]
+      "contributions": ["[Ole Bergtun](https://github.com/trillian74)", "[Tse Kit Yam](https://github.com/tsekityam)"]
     },
     {
       "version": "1.9.0",
