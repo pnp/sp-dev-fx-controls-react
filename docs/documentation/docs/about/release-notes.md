@@ -1,5 +1,15 @@
 # Releases
 
+## 1.10.0
+
+**Enhancements**
+
+- `TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)
+
+### Contributors
+
+Special thanks to our contributor: [Ole Bergtun](https://github.com/trillian74).
+
 ## 1.9.0
 
 **Enhancements**
