@@ -133,8 +133,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   private async _thisLoadUsers(): Promise<void> {
     var stringVal: string = "";
 
-    let filtered: boolean = false;
-
     if (this.props.groupName) {
       stringVal = `/_api/web/sitegroups/GetByName('${this.props.groupName}')/users`;
     } else {
@@ -144,19 +142,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     // filter for principal Type
     var filterVal: string = "";
     if (this.props.principleTypes) {
-      filterVal = `${"?$filter="}${this.props.principleTypes.map(principalType => `(PrincipalType eq ${principalType})`).join(" or ")}`;
-      filtered = true;
+      filterVal = `?$filter=${this.props.principleTypes.map(principalType => `(PrincipalType eq ${principalType})`).join(" or ")}`;
     }
 
     // filter for showHiddenInUI
     if (this.props.showHiddenInUI) {
-      filterVal = filtered ? `${filterVal} and (IsHiddenInUI eq ${this.props.showHiddenInUI})` : `?$filter=IsHiddenInUI eq ${this.props.showHiddenInUI}`;
-      filtered = true;
+      filterVal = filterVal ? `${filterVal} and (IsHiddenInUI eq ${this.props.showHiddenInUI})` : `?$filter=IsHiddenInUI eq ${this.props.showHiddenInUI}`;
     }
 
     const webAbsoluteUrl = this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
     // Create the rest API
-    const restApi = filtered ? `${webAbsoluteUrl}${stringVal}${filterVal}` : `${webAbsoluteUrl}${stringVal}`;
+    const restApi = `${webAbsoluteUrl}${stringVal}${filterVal}`;
 
     try {
       // Call the API endpoint
