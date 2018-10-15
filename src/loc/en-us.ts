@@ -49,5 +49,8 @@ define([], () => {
     peoplePickerComponentTooltipMessage: "People Picker",
     peoplePickerComponentErrorMessage: "People picker is mandatory",
     peoplePickerComponentTitleText: "Pick the user(s)",
+    peoplePickerSuggestionsHeaderText: 'Suggested People',
+    peoplePickerNoResultsFoundText: 'No results found',
+    peoplePickerLoadingText: 'Loading'
   };
 });
