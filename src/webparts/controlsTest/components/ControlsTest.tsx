@@ -351,7 +351,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
             selectedItems={this._getPeoplePickerItems}
             showHiddenInUI={false}
             principleTypes={[PrincipalType.User]}
-            resultsMaximumNumber={2} />
+            suggestionsLimit={2} />
 
           <PeoplePicker
             context={this.props.context}

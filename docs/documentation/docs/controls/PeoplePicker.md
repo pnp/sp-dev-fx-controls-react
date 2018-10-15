@@ -72,7 +72,7 @@ The People picker control can be configured with the following properties:
 | webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. Default is the current site URL. |
 | showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. |
 | principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. |
-| resultsMaximumNumber | number | no | Maximum number of suggestions to show in the full suggestion list. Default is 5. |
+| suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. Default is 5. |
 
 Enum `PrincipalType`
 

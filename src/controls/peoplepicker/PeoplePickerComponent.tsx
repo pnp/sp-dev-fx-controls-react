@@ -365,7 +365,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       suggestionsHeaderText: strings.peoplePickerSuggestionsHeaderText,
       noResultsFoundText: strings.peoplePickerNoResultsFoundText,
       loadingText: strings.peoplePickerLoadingText,
-      resultsMaximumNumber: this.props.resultsMaximumNumber ? this.props.resultsMaximumNumber : 5
+      resultsMaximumNumber: this.props.suggestionsLimit ? this.props.suggestionsLimit : 5
     };
 
 

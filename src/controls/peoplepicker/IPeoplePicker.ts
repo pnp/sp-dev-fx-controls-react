@@ -31,7 +31,7 @@ export interface IPeoplePickerProps {
   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
-  resultsMaximumNumber?: number;
+  suggestionsLimit?: number;
   /**
    * Selection Limit of Control
    */

@@ -4,7 +4,7 @@
 
 **Enhancements**
 
-- `PeoplePicker`: Allow to set resultsMaximumNumber [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)
+- `PeoplePicker`: Allow to set the maximum number of suggestions `suggestionsLimit` [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)
 - `TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)
 
 ### Contributors
