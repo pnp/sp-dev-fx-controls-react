@@ -38,6 +38,19 @@ define([], () => {
     "SendEmailTo": "Email senden an {0}",
     "StartChatWith": "Chat starten mit {0}",
     "Contact": "Kontakt",
-    "UpdateProfile": "Aktualisiere Dein Profil"
+    "UpdateProfile": "Aktualisiere Dein Profil",
+    
+    "TaxonomyPickerNoTerms": "Ausdruckssatz enthält keine Ausdrücke",
+    "TaxonomyPickerExpandTitle": "Ausdruckssatz erweitern",
+    "TaxonomyPickerMenuTermSet": "Ausdruckssatz Menü",
+    "TaxonomyPickerInLabel": "in",
+    "TaxonomyPickerTermSetLabel": "Ausdruckssatz",
+
+    peoplePickerComponentTooltipMessage: "People Picker",
+    peoplePickerComponentErrorMessage: "Benutzerauswahl ist ein Pflichtfeld",
+    peoplePickerComponentTitleText: "Benutzer auswählen",
+    peoplePickerSuggestionsHeaderText: 'Vorgeschlagene Benutzer',
+    peoplePickerNoResultsFoundText: 'Kein Ergebnis gefunden',
+    peoplePickerLoadingText: 'Laden'
   };
 });
