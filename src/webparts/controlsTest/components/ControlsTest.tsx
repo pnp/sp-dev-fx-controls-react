@@ -44,7 +44,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   public componentDidMount() {
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
-    const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
     this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
       .then(resp => { return resp.json(); })
       .then(items => {
@@ -53,16 +52,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         });
       });
 
-      // Get Authors in the SharePoint Document library -- For People Picker Testing
-      this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
-      .then(resp => { return resp.json(); })
-      .then(items => {
-        let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
-        console.log(emails);
-        this.setState({
-          authorEmails: emails
-        });
-      });
+      // // Get Authors in the SharePoint Document library -- For People Picker Testing
+      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+      // .then(resp => { return resp.json(); })
+      // .then(items => {
+      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+      //   console.log(emails);
+      //   this.setState({
+      //     authorEmails: emails
+      //   });
+      // });
   }
 
   /**
@@ -362,7 +362,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
             showtooltip={true}
             isRequired={true}
             //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            defaultSelectedUsers={this.state.authorEmails}
+            //defaultSelectedUsers={this.state.authorEmails}
             selectedItems={this._getPeoplePickerItems}
             showHiddenInUI={false}
             principleTypes={[PrincipalType.User]}
