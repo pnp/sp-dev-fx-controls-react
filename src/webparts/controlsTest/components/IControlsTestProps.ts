@@ -15,4 +15,5 @@ export interface IControlsTestState {
   items: any[];
   initialValues: any[];
   iFrameDialogOpened?: boolean;
+  authorEmails: string[];
 }

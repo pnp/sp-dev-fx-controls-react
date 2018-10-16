@@ -18,6 +18,7 @@ import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
+import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -30,7 +31,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       imgSize: ImageSize.small,
       items: [],
       iFrameDialogOpened: false,
-      initialValues: []
+      initialValues: [],
+      authorEmails: []
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -49,6 +51,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items: items.value ? items.value : []
         });
       });
+
+      // // Get Authors in the SharePoint Document library -- For People Picker Testing
+      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+      // .then(resp => { return resp.json(); })
+      // .then(items => {
+      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+      //   console.log(emails);
+      //   this.setState({
+      //     authorEmails: emails
+      //   });
+      // });
   }
 
   /**
@@ -347,7 +361,8 @@ private onServicePickerChange(terms: IPickerTerms): void {
             // groupName={"Team Site Owners"}
             showtooltip={true}
             isRequired={true}
-            defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={this.state.authorEmails}
             selectedItems={this._getPeoplePickerItems}
             showHiddenInUI={false}
             principleTypes={[PrincipalType.User]}
