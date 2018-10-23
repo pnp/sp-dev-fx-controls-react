@@ -3,10 +3,16 @@ import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
+import { sp, Web } from "@pnp/sp";
 
 export default class SPService implements ISPService {
 
-  constructor(private _context: WebPartContext | ApplicationCustomizerContext) {}
+  constructor(private _context: WebPartContext | ApplicationCustomizerContext) {
+   sp.setup({
+      spfxContext: this._context
+    });
+  }
+  }
 
   /**
    * Get lists or libraries
