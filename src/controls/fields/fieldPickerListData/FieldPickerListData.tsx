@@ -59,7 +59,7 @@ export class FieldPickerListData extends React.Component<
           itemLimit={itemLimit}
           disabled={disabled}
         />
-        <Label color="red"> {this.state.errorMessage} </Label>
+        <Label style={{color:'#FF0000'}}> {this.state.errorMessage} </Label>
       </div>
     );
   }
