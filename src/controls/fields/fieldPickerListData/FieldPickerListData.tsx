@@ -3,7 +3,7 @@ import { IFieldPickerListDataProps } from "./IFieldPickerListDataProps";
 import { IFieldPickerListDataState } from "./IFieldPickerListDataState";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
-import SPservice from "../../../services/SPservice";
+import SPservice from "../../../services/SPService";
 import { Label } from "office-ui-fabric-react/lib/Label";
 
 
