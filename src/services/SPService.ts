@@ -1,7 +1,7 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
 import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
+import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { sp, Web } from "@pnp/sp";
 
