@@ -56,8 +56,8 @@ The People picker control can be configured with the following properties:
 | ---- | ---- | ---- | ---- | ---- |
 | context | WebPartContext | yes | Context of the current web part. |
 | titleText | string | yes | Text to be displayed on the control |
-| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_
-| personSelectionLimit | number | no | Defines the limit of people that can be selected in the control|
+| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users |
+| personSelectionLimit | number | no | Defines the limit of people that can be selected in the control| 1 |
 | isRequired | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
 | errorMessage | string | no | Specify the error message to display |
@@ -71,6 +71,7 @@ The People picker control can be configured with the following properties:
 | defaultSelectedUsers | string[] | no | Default selected user emails |
 | webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. |  Current site URL |
 | showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. | false |
+| suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list | 5 |
 | principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. |
 
 Enum `PrincipalType`
