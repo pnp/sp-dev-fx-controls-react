@@ -52,7 +52,7 @@
     "react": "15.4.2",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
-    "sonarqube-scanner": "2.1.1"
+    "sonarqube-scanner": "2.1.2"
   },
   "repository": {
     "type": "git",
