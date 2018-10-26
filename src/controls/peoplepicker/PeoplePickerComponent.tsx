@@ -16,6 +16,8 @@ import { IPersonaWithMenu } from "office-ui-fabric-react/lib/components/pickers/
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar";
 import { ValidationState } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
+import { Icon } from "office-ui-fabric-react/lib/components/Icon";
+import { isEqual } from "@microsoft/sp-lodash-subset";
 
 /**
 * PeoplePicker component
@@ -55,6 +57,34 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       // online mode
       // Load the users
       this._thisLoadUsers();
+    }
+  }
+
+  /**
+   * componentDidUpdate lifecycle hook
+   */
+  public componentDidUpdate(prevProps : IPeoplePickerProps, prevState : IPeoplePickerState) : void {
+    // If defaultSelectedUsers has changed then bind again
+    if (!isEqual(this.props.defaultSelectedUsers, prevProps.defaultSelectedUsers) || !isEqual(this.state.allPersons, prevState.allPersons)) {
+      // Check if we have results to get from, if not provide a empty array to filter on
+      let userValuesArray: Array<IPeoplePickerUserItem> = this.state.allPersons.length !==0 ? this.state.allPersons : new Array<IPeoplePickerUserItem>();
+
+      // Set Default selected persons
+      let defaultUsers : any = [];
+      let defaultPeopleList: IPersonaProps[] = [];
+      if (this.props.defaultSelectedUsers) {
+        defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
+        for (const persona of defaultUsers) {
+          let selectedPeople: IPersonaProps = {};
+          assign(selectedPeople, persona);
+          defaultPeopleList.push(selectedPeople);
+        }
+      }
+
+      this.setState({
+        selectedPersons : defaultPeopleList.length !== 0 ? defaultPeopleList : [],
+        showmessageerror: this.props.isRequired && defaultPeopleList.length === 0
+      });
     }
   }
 
@@ -156,63 +186,53 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     try {
       // Call the API endpoint
-      const items: IUsers = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1, {
+      const data = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1, {
         headers: {
           'Accept': 'application/json;odata.metadata=none'
         }
-      }).then(resp => resp.json());
+      });
 
-      // Check if items were retrieved
-      if (items && items.value && items.value.length > 0) {
+      if (data.ok) {
+        const items: IUsers = await data.json();
 
-        let userValuesArray: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
+        // Check if items were retrieved
+        if (items && items.value && items.value.length > 0) {
 
-        // Loop over all the retrieved items
-        for (let i = 0; i < items.value.length; i++) {
-          const item = items.value[i];
-          if (!item.IsHiddenInUI || (this.props.showHiddenInUI && item.IsHiddenInUI)) {
-            // Check if the the type must be returned
-            if (!this.props.principleTypes || this.props.principleTypes.indexOf(item.PrincipalType) !== -1) {
-              userValuesArray.push({
-                id: item.Id.toString(),
-                imageUrl: this.generateUserPhotoLink(item.Email),
-                imageInitials: "",
-                text: item.Title, // name
-                secondaryText: item.Email, // email
-                tertiaryText: "", // status
-                optionalText: "" // anything
-              });
+          let userValuesArray: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
+
+          // Loop over all the retrieved items
+          for (let i = 0; i < items.value.length; i++) {
+            const item = items.value[i];
+            if (!item.IsHiddenInUI || (this.props.showHiddenInUI && item.IsHiddenInUI)) {
+              // Check if the the type must be returned
+              if (!this.props.principleTypes || this.props.principleTypes.indexOf(item.PrincipalType) !== -1) {
+                userValuesArray.push({
+                  id: item.Id.toString(),
+                  imageUrl: this.generateUserPhotoLink(item.Email),
+                  imageInitials: "",
+                  text: item.Title, // name
+                  secondaryText: item.Email, // email
+                  tertiaryText: "", // status
+                  optionalText: "" // anything
+                });
+              }
             }
           }
-        }
 
-        // Set Default selected persons
-        let defaultUsers: any = [];
-        let defaultPeopleList: IPersonaProps[] = [];
-        if (this.props.defaultSelectedUsers) {
-          defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
-          for (const persona of defaultUsers) {
-            let selectedPeople: IPersonaProps = {};
-            assign(selectedPeople, persona);
-            defaultPeopleList.push(selectedPeople);
+          let personaList: IPersonaProps[] = [];
+          for (const persona of userValuesArray) {
+            let personaWithMenu: IPersonaProps = {};
+            assign(personaWithMenu, persona);
+            personaList.push(personaWithMenu);
           }
-        }
 
-        let personaList: IPersonaProps[] = [];
-        for (const persona of userValuesArray) {
-          let personaWithMenu: IPersonaProps = {};
-          assign(personaWithMenu, persona);
-          personaList.push(personaWithMenu);
+          // Update the current state
+          this.setState({
+            allPersons : userValuesArray,
+            peoplePersonaMenu : personaList,
+            mostRecentlyUsedPersons : personaList.slice(0,5)
+          });
         }
-
-        // Update the current state
-        this.setState({
-          allPersons: userValuesArray,
-          selectedPersons: defaultPeopleList.length != 0 ? defaultPeopleList : [],
-          peoplePersonaMenu: personaList,
-          mostRecentlyUsedPersons: personaList.slice(0, 5),
-          showmessageerror: this.props.isRequired && this.state.selectedPersons.length === 0
-        });
       }
     } catch (e) {
       console.error("Error occured while fetching the users and setting selected users.");
@@ -418,21 +438,20 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
               {peoplepicker}
             </TooltipHost>
           ) : (
-              <div>
-                {peoplepicker}
-              </div>
-            )
-        }
-
-        {
-          (this.props.isRequired && this.state.showmessageerror) && (
-            <MessageBar messageBarType={MessageBarType.error}
-              isMultiline={false}
-              className={`${this.props.errorMessageclassName ? this.props.errorMessageclassName : ''}`}>
-              {this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}
-            </MessageBar>
+            <div>
+              {peoplepicker}
+            </div>
           )
         }
+
+      {
+        (this.props.isRequired && this.state.showmessageerror) && (
+          <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
+            <Icon iconName='Error' className={styles.errorIcon} />
+            <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}</span>
+          </p>
+        )
+      }
       </div>
     );
   }

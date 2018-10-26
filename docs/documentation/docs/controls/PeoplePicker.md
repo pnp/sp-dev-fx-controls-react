@@ -61,7 +61,7 @@ The People picker control can be configured with the following properties:
 | isRequired | boolean | no | Set if the control is required or not |
 | disabled | boolean | no | Set if the control is disabled or not |
 | errorMessage | string | no | Specify the error message to display |
-| errorMessageclassName | string | no | applies custom styling to the error message section|
+| errorMessageClassName | string | no | applies custom styling to the error message section|
 | showtooltip | boolean | no | Defines if need a tooltip or not |
 | tooltip | string | no | Specify the tooltip message to display |
 | tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown |
