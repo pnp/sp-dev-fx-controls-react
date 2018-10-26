@@ -2,6 +2,10 @@
 
 ## 1.10.0
 
+**New control(s)**
+
+- `FieldPickerListData`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)
+
 **Enhancements**
 
 - Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)
@@ -17,7 +21,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Marc D Anderson](https://github.com/sympmarc), [Ole Bergtun](https://github.com/trillian74), [Markus Möller](https://github.com/mmsharepoint), [Asish Padhy](https://github.com/AsishP), [PooLP](https://github.com/PooLP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Marc D Anderson](https://github.com/sympmarc), [Ole Bergtun](https://github.com/trillian74), [joaojmendes](https://github.com/joaojmendes), [Markus Möller](https://github.com/mmsharepoint), [Asish Padhy](https://github.com/AsishP), [PooLP](https://github.com/PooLP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.9.0
 
