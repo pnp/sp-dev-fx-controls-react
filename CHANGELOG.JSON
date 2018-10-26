@@ -6,6 +6,7 @@
         "new": [],
         "enhancements": [
           "Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)",
+          "German localization added [#101](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/101)",
           "French localization added [#102](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/102)",
           "`PeoplePicker`: Move defaultSelectedUsers from ComponentWillMount to ComponentDidUpdate Lifecycle [#135](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/135)",
           "`PeoplePicker`: Initialize with users from a list item [#138](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/138)",
