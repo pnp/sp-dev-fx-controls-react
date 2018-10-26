@@ -4,6 +4,8 @@
 
 **Enhancements**
 
+- Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)
+- French localization added [#102](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/102)
 - `PeoplePicker`: Move defaultSelectedUsers from ComponentWillMount to ComponentDidUpdate Lifecycle [#135](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/135)
 - `PeoplePicker`: Initialize with users from a list item [#138](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/138)
 - `PeoplePicker`: Remove Messagebar error handling to match Office UI Fabric field error styling [#140](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/140)
@@ -13,7 +15,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Ole Bergtun](https://github.com/trillian74), [Asish Padhy](https://github.com/AsishP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Ole Bergtun](https://github.com/trillian74), [Asish Padhy](https://github.com/AsishP), [PooLP](https://github.com/PooLP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.9.0
 
