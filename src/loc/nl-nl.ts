@@ -50,7 +50,10 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Verplicht veld",
     peoplePickerComponentTitleText: "Kies personen",
     peoplePickerSuggestionsHeaderText: 'Voorgestelde personen',
-    peoplePickerNoResultsFoundText: 'Geen resultaten gevonden',
-    peoplePickerLoadingText: 'Laden'
+    peoplePickerLoadingText: 'Laden',
+
+    FieldPickerListDataSelectValue: 'Selecteer veld',
+
+    genericNoResultsFoundText: 'Geen resultaten gevonden'
   };
 });

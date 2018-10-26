@@ -3,7 +3,7 @@ declare interface IControlStrings {
   peoplePickerComponentErrorMessage: string;
   peoplePickerComponentTitleText: string;
   peoplePickerSuggestionsHeaderText: string;
-  peoplePickerNoResultsFoundText: string;
+  genericNoResultsFoundText: string;
   peoplePickerLoadingText: string;
 
 
@@ -23,6 +23,8 @@ declare interface IControlStrings {
   TaxonomyPickerMenuTermSet: string;
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
+
+  FieldPickerListDataSelectValue: string;
 }
 
 declare module 'ControlStrings' {

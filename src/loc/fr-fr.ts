@@ -50,7 +50,10 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Le sélecteur de personnes est obligatoire",
     peoplePickerComponentTitleText: "Choisissez l'utilisateur(s)",
     peoplePickerSuggestionsHeaderText: 'Personnes suggérées',
-    peoplePickerNoResultsFoundText: 'Aucun résultat trouvé',
-    peoplePickerLoadingText: 'Chargement'
+    peoplePickerLoadingText: 'Chargement',
+
+    FieldPickerListDataSelectValue: 'Sélectionnez une valeur',
+
+    genericNoResultsFoundText: 'Aucun résultat trouvé'
   };
 });

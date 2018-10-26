@@ -399,7 +399,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   public render(): React.ReactElement<IPeoplePickerProps> {
     const suggestionProps: IBasePickerSuggestionsProps = {
       suggestionsHeaderText: strings.peoplePickerSuggestionsHeaderText,
-      noResultsFoundText: strings.peoplePickerNoResultsFoundText,
+      noResultsFoundText: strings.genericNoResultsFoundText,
       loadingText: strings.peoplePickerLoadingText,
       resultsMaximumNumber: this.props.suggestionsLimit ? this.props.suggestionsLimit : 5
     };

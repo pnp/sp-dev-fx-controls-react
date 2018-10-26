@@ -50,7 +50,10 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Required Field",
     peoplePickerComponentTitleText: "Pick the user(s)",
     peoplePickerSuggestionsHeaderText: 'Suggested People',
-    peoplePickerNoResultsFoundText: 'No results found',
-    peoplePickerLoadingText: 'Loading'
+    peoplePickerLoadingText: 'Loading',
+
+    FieldPickerListDataSelectValue: 'Select value',
+
+    genericNoResultsFoundText: 'No results found'
   };
 });

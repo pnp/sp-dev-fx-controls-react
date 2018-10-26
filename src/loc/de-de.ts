@@ -50,7 +50,10 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Benutzerauswahl ist ein Pflichtfeld",
     peoplePickerComponentTitleText: "Benutzer auswählen",
     peoplePickerSuggestionsHeaderText: 'Vorgeschlagene Benutzer',
-    peoplePickerNoResultsFoundText: 'Kein Ergebnis gefunden',
-    peoplePickerLoadingText: 'Laden'
+    peoplePickerLoadingText: 'Laden',
+
+    FieldPickerListDataSelectValue: 'Wähle Wert',
+
+    genericNoResultsFoundText: 'Kein Ergebnis gefunden'
   };
 });
