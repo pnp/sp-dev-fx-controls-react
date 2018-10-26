@@ -71,7 +71,7 @@ export interface IPeoplePickerProps {
   /**
    * Class Name for the Error Section
    */
-  errorMessageclassName?: string;
+  errorMessageClassName?: string;
   /**
    * Default Selected User Emails
    */
