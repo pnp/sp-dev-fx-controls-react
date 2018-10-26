@@ -4,13 +4,16 @@
 
 **Enhancements**
 
+- `PeoplePicker`: Move defaultSelectedUsers from ComponentWillMount to ComponentDidUpdate Lifecycle [#135](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/135)
+- `PeoplePicker`: Initialize with users from a list item [#138](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/138)
+- `PeoplePicker`: Remove Messagebar error handling to match Office UI Fabric field error styling [#140](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/140)
 - `PeoplePicker`: REST API filter and nometadata header added to reduce payload [#139](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/139)
 - `PeoplePicker`: Allow to set the maximum number of suggestions `suggestionsLimit` [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)
 - `TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Ole Bergtun](https://github.com/trillian74), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Ole Bergtun](https://github.com/trillian74), [Asish Padhy](https://github.com/AsishP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.9.0
 
