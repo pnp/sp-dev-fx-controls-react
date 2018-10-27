@@ -4,8 +4,8 @@
     "name": "sp-dev-fx-controls-react-client-side-solution",
     "id": "92b1e52c-a5fa-490a-bcf4-76080f39442c",
     "version": "1.0.0.0",
-    "skipFeatureDeployment": true,
-    "includeClientSideAssets": true
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true
   },
   "paths": {
     "zippedPackage": "solution/sp-dev-fx-controls-react.sppkg"
