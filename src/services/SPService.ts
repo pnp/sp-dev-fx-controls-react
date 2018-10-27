@@ -13,12 +13,11 @@ export default class SPService implements ISPService {
     });
   }
 
-
   /**
    * Get lists or libraries
    * @param options
    */
-  public getLibs(options?: ILibsOptions): Promise<ISPLists> {
+  public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
     let filtered: boolean;
     let queryUrl: string = `${this._context.pageContext.web.absoluteUrl}/_api/web/lists?$select=Title,id,BaseTemplate`;
 
@@ -36,37 +35,30 @@ export default class SPService implements ISPService {
       filtered = true;
     }
 
-    return this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1)
-    .then(response => response.json()) as Promise<ISPLists>;
+    const data = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      return await data.json() as Promise<ISPLists>;
+    } else {
+      return null;
+    }
   }
 
   /**
    * Get List Items
-   *
    */
-  public async getListItems(
-    filterText: string,
-    listId: string,
-    internalColumnName: string,
-    webUrl?: string
-  ): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, webUrl?: string): Promise<any[]> {
     let filter = `startswith(${internalColumnName},'${filterText}')`;
+
     let returnItems: any[];
-    console.log(
-      `Page context url ${this._context.pageContext.web.absoluteUrl}`
-    );
     let spWeb: Web;
     if (typeof webUrl === undefined) {
       spWeb = new Web(webUrl);
     } else {
       spWeb = new Web(this._context.pageContext.web.absoluteUrl);
     }
+
     try {
-      returnItems = await spWeb.lists
-        .getById(listId)
-        .items.select("Id", internalColumnName)
-        .filter(filter)
-        .get();
+      returnItems = await spWeb.lists.getById(listId).items.select("Id", internalColumnName).filter(filter).get();
       return Promise.resolve(returnItems);
     } catch (error) {
       return Promise.reject(error);
