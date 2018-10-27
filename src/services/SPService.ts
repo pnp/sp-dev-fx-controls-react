@@ -3,15 +3,10 @@ import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
-import { sp, Web } from "@pnp/sp";
 
 export default class SPService implements ISPService {
 
-  constructor(private _context: WebPartContext | ApplicationCustomizerContext) {
-   sp.setup({
-      spfxContext: this._context
-    });
-  }
+  constructor(private _context: WebPartContext | ApplicationCustomizerContext) {}
 
   /**
    * Get lists or libraries
@@ -47,19 +42,19 @@ export default class SPService implements ISPService {
    * Get List Items
    */
   public async getListItems(filterText: string, listId: string, internalColumnName: string, webUrl?: string): Promise<any[]> {
-    let filter = `startswith(${internalColumnName},'${filterText}')`;
-
     let returnItems: any[];
-    let spWeb: Web;
-    if (typeof webUrl === undefined) {
-      spWeb = new Web(webUrl);
-    } else {
-      spWeb = new Web(this._context.pageContext.web.absoluteUrl);
-    }
 
     try {
-      returnItems = await spWeb.lists.getById(listId).items.select("Id", internalColumnName).filter(filter).get();
-      return Promise.resolve(returnItems);
+      const apiUrl = `${this._context.pageContext.web.absoluteUrl}/_api/web/lists('${listId}')/items?$select=Id,${internalColumnName}&$filter=startswith(${internalColumnName},'${filterText}')`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results && results.value && results.value.length > 0) {
+          return results.value;
+        }
+      }
+
+      return [];
     } catch (error) {
       return Promise.reject(error);
     }

@@ -1,1 +1,1 @@
-export * from './controls/fields/fieldPickerListData/index';
+export * from './controls/fieldPickerListData/index';

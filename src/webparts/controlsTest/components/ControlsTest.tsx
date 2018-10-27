@@ -19,6 +19,7 @@ import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimme
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
+import { FieldPickerListData } from "../../../../lib/FieldPickerListData";
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -32,7 +33,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       items: [],
       iFrameDialogOpened: false,
       initialValues: [],
-      authorEmails: []
+      authorEmails: [],
+      selectedList: null
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -119,8 +121,11 @@ private onServicePickerChange(terms: IPickerTerms): void {
    * Selected lists change event
    * @param lists
    */
-  private onListPickerChange (lists: string | string[]) {
+  private onListPickerChange = (lists: string | string[]) => {
     console.log("Lists:", lists);
+    this.setState({
+      selectedList: typeof lists === "string" ? lists : lists.pop()
+    });
   }
 
   /**
@@ -135,11 +140,20 @@ private onServicePickerChange(terms: IPickerTerms): void {
       });
     }
   }
-  /** Method that retrieves the selected items from People  Picker
+
+  /**
+   * Method that retrieves the selected items from People  Picker
    * @param items
    */
   private _getPeoplePickerItems(items: any[]) {
     console.log('Items:', items);
+  }
+
+  /**
+   * Selected item from the list data picker
+   */
+  private fieldPickerListDataSelected(item: any) {
+    console.log(item);
   }
 
   /**
@@ -260,6 +274,14 @@ private onServicePickerChange(terms: IPickerTerms): void {
                             includeHidden={false}
                             multiSelect={true}
                             onSelectionChanged={this.onListPickerChange} />
+              </div>
+
+              <div className="ms-font-m">Field picker list data tester:
+                <FieldPickerListData listId={this.state.selectedList}
+                                     columnInternalName="Title"
+                                     itemLimit={5}
+                                     context={this.props.context}
+                                     onSelectedItem={this.fieldPickerListDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:

@@ -1,18 +1,22 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
-import SPservice from "../../../services/SPService";
+import SPservice from "../../services/SPService";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { IFieldPickerListDataProps, IFieldPickerListDataState } from ".";
+import * as telemetry from '../../common/telemetry';
 
 
 export class FieldPickerListData extends React.Component<IFieldPickerListDataProps, IFieldPickerListDataState> {
-  private _value: Array<any>;
+  private _value: any[];
   private _spservice: SPservice;
+  private selectedItems: any[];
 
   constructor(props: IFieldPickerListDataProps) {
     super(props);
+
+    telemetry.track('FieldPickerListData', {});
 
     // States
     this.state = {
@@ -25,8 +29,15 @@ export class FieldPickerListData extends React.Component<IFieldPickerListDataPro
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
 
-    // Teste Parameters
+    // Test Parameters
     this._value = this.props.value !== undefined ? this.props.value : [];
+    this.selectedItems = [];
+  }
+
+  public componentDidUpdate(prevProps: IFieldPickerListDataProps, prevState: IFieldPickerListDataState): void {
+    if (this.props.listId !== prevProps.listId) {
+      this.selectedItems = [];
+    }
   }
 
   /**
@@ -66,8 +77,7 @@ export class FieldPickerListData extends React.Component<IFieldPickerListDataPro
    * On Selected Item
    */
   private onItemChanged = (selectedItems: { key: string; name: string }[]): void => {
-    let item: { key: string; name: string } = selectedItems[0];
-    console.log(`selected items nr: ${selectedItems.length}`);
+    this.selectedItems = selectedItems;
     this.props.onSelectedItem(selectedItems);
   }
 
@@ -75,7 +85,19 @@ export class FieldPickerListData extends React.Component<IFieldPickerListDataPro
    * Filter Change
    */
   private onFilterChanged = async (filterText: string, tagList: { key: string; name: string }[]) => {
-    const resolvedSugestions: { key: string; name: string }[] = await this.loadListItems(filterText);
+    let resolvedSugestions: { key: string; name: string }[] = await this.loadListItems(filterText);
+
+    // Filter out the already retrieved items, so that they cannot be selected again
+    if (this.selectedItems && this.selectedItems.length > 0) {
+      let filteredSuggestions = [];
+      for (const suggestion of resolvedSugestions) {
+        const exists = this.selectedItems.filter(sItem => sItem.key === suggestion.key);
+        if (!exists || exists.length === 0) {
+          filteredSuggestions.push(suggestion);
+        }
+      }
+      resolvedSugestions = filteredSuggestions;
+    }
 
     if (resolvedSugestions) {
       this.setState({
