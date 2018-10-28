@@ -19,7 +19,7 @@ import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimme
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
-import { FieldPickerListData } from "../../../../lib/FieldPickerListData";
+import { ListItemPicker } from "../../../ListItemPicker";
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -152,7 +152,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
   /**
    * Selected item from the list data picker
    */
-  private fieldPickerListDataSelected(item: any) {
+  private listItemPickerDataSelected(item: any) {
     console.log(item);
   }
 
@@ -277,11 +277,11 @@ private onServicePickerChange(terms: IPickerTerms): void {
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-                <FieldPickerListData listId={this.state.selectedList}
+                <ListItemPicker listId={this.state.selectedList}
                                      columnInternalName="Title"
                                      itemLimit={5}
                                      context={this.props.context}
-                                     onSelectedItem={this.fieldPickerListDataSelected} />
+                                     onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:

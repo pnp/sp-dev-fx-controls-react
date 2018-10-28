@@ -5,6 +5,7 @@ export * from './SiteBreadcrumb';
 export * from './TaxonomyPicker';
 export * from './WebPartTitle';
 export * from './ListPicker';
+export * from './ListItemPicker';
 
 export * from './IFrameDialog';
 export * from './Common';
@@ -22,4 +23,3 @@ export * from './FieldTextRenderer';
 export * from './FieldTitleRenderer';
 export * from './FieldUrlRenderer';
 export * from './FieldUserRenderer';
-export * from './FieldPickerListData';

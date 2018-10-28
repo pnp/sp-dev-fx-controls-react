@@ -24,7 +24,7 @@ declare interface IControlStrings {
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
 
-  FieldPickerListDataSelectValue: string;
+  ListItemPickerSelectValue: string;
 }
 
 declare module 'ControlStrings' {

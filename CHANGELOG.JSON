@@ -4,7 +4,7 @@
       "version": "1.10.0",
       "changes": {
         "new": [
-          "`FieldPickerListData`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)"
+          "`ListItemPicker`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)"
         ],
         "enhancements": [
           "Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)",

@@ -4,7 +4,7 @@
 
 **New control(s)**
 
-- `FieldPickerListData`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)
+- `ListItemPicker`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)
 
 **Enhancements**
 

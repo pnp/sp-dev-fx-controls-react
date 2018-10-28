@@ -52,7 +52,7 @@ define([], () => {
     peoplePickerSuggestionsHeaderText: 'Voorgestelde personen',
     peoplePickerLoadingText: 'Laden',
 
-    FieldPickerListDataSelectValue: 'Selecteer veld',
+    ListItemPickerSelectValue: 'Selecteer veld',
 
     genericNoResultsFoundText: 'Geen resultaten gevonden'
   };

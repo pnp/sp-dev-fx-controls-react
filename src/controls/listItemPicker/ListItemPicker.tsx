@@ -4,26 +4,26 @@ import SPservice from "../../services/SPService";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
-import { IFieldPickerListDataProps, IFieldPickerListDataState } from ".";
+import { IListItemPickerProps, IListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 
 
-export class FieldPickerListData extends React.Component<IFieldPickerListDataProps, IFieldPickerListDataState> {
+export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
   private _value: any[];
   private _spservice: SPservice;
   private selectedItems: any[];
 
-  constructor(props: IFieldPickerListDataProps) {
+  constructor(props: IListItemPickerProps) {
     super(props);
 
-    telemetry.track('FieldPickerListData', {});
+    telemetry.track('ListItemPicker', {});
 
     // States
     this.state = {
       noresultsFoundText: typeof this.props.noresultsFoundText === undefined ? strings.genericNoResultsFoundText : this.props.noresultsFoundText,
       showError: false,
       errorMessage: "",
-      suggestionsHeaderText: typeof this.props.sugestedHeaderText === undefined ? strings.FieldPickerListDataSelectValue : this.props.sugestedHeaderText
+      suggestionsHeaderText: typeof this.props.sugestedHeaderText === undefined ? strings.ListItemPickerSelectValue : this.props.sugestedHeaderText
     };
 
     // Get SPService Factory
@@ -34,7 +34,7 @@ export class FieldPickerListData extends React.Component<IFieldPickerListDataPro
     this.selectedItems = [];
   }
 
-  public componentDidUpdate(prevProps: IFieldPickerListDataProps, prevState: IFieldPickerListDataState): void {
+  public componentDidUpdate(prevProps: IListItemPickerProps, prevState: IListItemPickerState): void {
     if (this.props.listId !== prevProps.listId) {
       this.selectedItems = [];
     }
@@ -43,7 +43,7 @@ export class FieldPickerListData extends React.Component<IFieldPickerListDataPro
   /**
    * Render the field
    */
-  public render(): React.ReactElement<IFieldPickerListDataProps> {
+  public render(): React.ReactElement<IListItemPickerProps> {
     const { className, disabled, itemLimit } = this.props;
 
     return (
