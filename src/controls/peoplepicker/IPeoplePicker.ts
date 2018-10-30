@@ -1,4 +1,5 @@
-import { IPersonaProps, DirectionalHint } from "office-ui-fabric-react";
+import { DirectionalHint } from "office-ui-fabric-react/lib/Tooltip";
+import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 
 /**
