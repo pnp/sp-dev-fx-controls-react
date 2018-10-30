@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.7.0",
+  "version": "1.10.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -13,7 +13,9 @@
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
     "changelog": "node scripts/create-changelog.js && node scripts/sync-changelogs.js && gulp versionUpdater",
-    "postinstall": "node postinstall/install.js"
+    "postinstall": "node postinstall/install.js",
+    "sonarcloud:config": "node ./scripts/sonarcloud.js",
+    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js"
   },
   "dependencies": {
     "@pnp/common": "^1.0.1",
