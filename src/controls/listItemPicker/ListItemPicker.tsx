@@ -20,10 +20,10 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
 
     // States
     this.state = {
-      noresultsFoundText: typeof this.props.noresultsFoundText === undefined ? strings.genericNoResultsFoundText : this.props.noresultsFoundText,
+      noresultsFoundText: !this.props.noresultsFoundText ? strings.genericNoResultsFoundText : this.props.noresultsFoundText,
       showError: false,
       errorMessage: "",
-      suggestionsHeaderText: typeof this.props.sugestedHeaderText === undefined ? strings.ListItemPickerSelectValue : this.props.sugestedHeaderText
+      suggestionsHeaderText: !this.props.sugestedHeaderText ? strings.ListItemPickerSelectValue : this.props.sugestedHeaderText
     };
 
     // Get SPService Factory
