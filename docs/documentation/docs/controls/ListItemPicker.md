@@ -6,12 +6,9 @@ Here is an example of the control:
 
 ![ListItemPicker select list items](../assets/ListItemPicker-selectlist.png)
 
- 
-
 ![ListItemPicker selected Items](../assets/ListItemPicker-selectedItems.png)
 
  
-
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
@@ -25,7 +22,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/listItemPicker';
 - Use the `ListItemPicker` control in your code as follows:
 
 ```TypeScript
- <ListItemPicker
+          <ListItemPicker
             listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
             columnInternalName='Title'
             itemLimit={2}
