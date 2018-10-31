@@ -50,6 +50,7 @@
     "gulp": "~3.9.1",
     "karma-html-reporter": "0.2.7",
     "karma-remap-coverage": "^0.1.4",
+    "office-ui-fabric-react": "~5.120.0",
     "react": "15.6.2",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.6.2",
