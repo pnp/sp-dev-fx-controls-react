@@ -47,7 +47,13 @@ define([], () => {
     "TaxonomyPickerTermSetLabel": "Term Set",
 
     peoplePickerComponentTooltipMessage: "People Picker",
-    peoplePickerComponentErrorMessage: "People picker is mandatory",
+    peoplePickerComponentErrorMessage: "Required Field",
     peoplePickerComponentTitleText: "Pick the user(s)",
+    peoplePickerSuggestionsHeaderText: 'Suggested People',
+    peoplePickerLoadingText: 'Loading',
+
+    ListItemPickerSelectValue: 'Select value',
+
+    genericNoResultsFoundText: 'No results found'
   };
 });

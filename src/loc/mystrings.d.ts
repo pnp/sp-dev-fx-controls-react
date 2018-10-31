@@ -2,6 +2,11 @@ declare interface IControlStrings {
   peoplePickerComponentTooltipMessage: string;
   peoplePickerComponentErrorMessage: string;
   peoplePickerComponentTitleText: string;
+  peoplePickerSuggestionsHeaderText: string;
+  genericNoResultsFoundText: string;
+  peoplePickerLoadingText: string;
+
+
   SiteBreadcrumbLabel: string;
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
@@ -18,6 +23,8 @@ declare interface IControlStrings {
   TaxonomyPickerMenuTermSet: string;
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
+
+  ListItemPickerSelectValue: string;
 }
 
 declare module 'ControlStrings' {

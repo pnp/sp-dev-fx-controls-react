@@ -98,6 +98,10 @@ export interface IViewField {
    */
   maxWidth?: number;
   /**
+   * Determines if the column can be resized.
+   */
+  isResizable?: boolean;
+  /**
    * Override the render method of the field
    */
   render?: (item?: any, index?: number, column?: IColumn) => any;

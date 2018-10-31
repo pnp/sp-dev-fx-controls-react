@@ -98,7 +98,7 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
                         showCloseButton: true
                     }}
                     width={'570px'}
-                    height={'315px'} />}
+                    height={'250px'} />}
                 {!this.state.hideDialog && !this.state.dispFormUrl && <Dialog
                     onDismiss={this._onDialogDismiss.bind(this)}
                     modalProps={{
@@ -126,28 +126,28 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
         //
         // showing Display Form in the dialog
         //
-        if (this.state.dispFormUrl) {
+        const dispFormUrl = this.state.dispFormUrl;
+        if (dispFormUrl) {
             this.setState({
-                lookupDispFormUrl: `${this.state.dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
+                lookupDispFormUrl: `${dispFormUrl}${(dispFormUrl.indexOf('?') === -1 ? '?' : '&')}ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`,
                 hideDialog: false
             });
         }
         else if (this.props.fieldId) {
-
             this.setState({
                 hideDialog: false
             });
 
             SPHelper.getLookupFieldListDispFormUrl(this.props.fieldId, this.props.context).then(dispFormUrlValue => {
-                const dispFormUrl: string = dispFormUrlValue.toString();
+                const listDispFormUrl: string = dispFormUrlValue.toString();
                 this.setState((prevState, props) => {
                     if (prevState.hideDialog) {
                         return;
                     }
 
                     return {
-                        dispFormUrl: dispFormUrl,
-                        lookupDispFormUrl: `${dispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
+                        dispFormUrl: listDispFormUrl,
+                        lookupDispFormUrl: `${listDispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
                     };
                 });
             });

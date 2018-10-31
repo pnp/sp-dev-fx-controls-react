@@ -115,7 +115,7 @@ export default class SPTermStorePickerService {
   public async getAllTerms(termset: string): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
-       return this.getAllMockTerms();
+      return this.getAllMockTerms();
     } else {
       let termsetId: string = termset;
       // Check if the provided term set property is a GUID or string
@@ -132,7 +132,7 @@ export default class SPTermStorePickerService {
       }
 
       // Request body to retrieve all terms for the given term set
-      const data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="6"><Query SelectAllProperties="true"><Properties /></Query></Query><Query Id="12" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Labels" SelectAll="true" /><Property Name="TermsCount" SelectAll="true" /><Property Name="CustomSortOrder" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="Parent" SelectAll="true" /><Property Name="LocalCustomProperties" SelectAll="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultKeywordsTermStore" /><Method Id="6" ParentId="3" Name="GetTermSet"><Parameters><Parameter Type="Guid">${termsetId}</Parameter></Parameters></Method><Method Id="9" ParentId="6" Name="GetAllTerms" /></ObjectPaths></Request>`;
+      const data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="6"><Query SelectAllProperties="true"><Properties /></Query></Query><Query Id="12" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Labels" SelectAll="true" /><Property Name="TermsCount" SelectAll="true" /><Property Name="CustomSortOrder" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="Parent" SelectAll="true" /><Property Name="LocalCustomProperties" SelectAll="true" /><Property Name="IsDeprecated" ScalarProperty="true" /><Property Name="IsAvailableForTagging" ScalarProperty="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultKeywordsTermStore" /><Method Id="6" ParentId="3" Name="GetTermSet"><Parameters><Parameter Type="Guid">${termsetId}</Parameter></Parameters></Method><Method Id="9" ParentId="6" Name="GetAllTerms" /></ObjectPaths></Request>`;
 
 
       const reqHeaders = new Headers();
@@ -158,12 +158,12 @@ export default class SPTermStorePickerService {
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
+                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
                 term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
-                term.TermSet = { Id : this.cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name};
-                if (term["Parent"])
-                {
-                term.ParentId = this.cleanGuid(term["Parent"].Id);
+                term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
+                if (term["Parent"]) {
+                  term.ParentId = this.cleanGuid(term["Parent"].Id);
                 }
                 return term;
               });
@@ -274,7 +274,7 @@ export default class SPTermStorePickerService {
                 terms.forEach(term => {
                   if (term.Name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
                     returnTerms.push({
-                      key:this.cleanGuid(term.Id),
+                      key: this.cleanGuid(term.Id),
                       name: term.Name,
                       path: term.PathOfTerm,
                       termSet: this.cleanGuid(term.TermSet.Id),
@@ -302,13 +302,24 @@ export default class SPTermStorePickerService {
    * @param b term 2
    */
   private _sortTerms(a: ITerm, b: ITerm) {
-    if (a.PathOfTerm < b.PathOfTerm) {
-      return -1;
+    if(a.CustomSortOrderIndex === -1){
+      if (a.PathOfTerm < b.PathOfTerm) {
+        return -1;
+      }
+      if (a.PathOfTerm > b.PathOfTerm) {
+        return 1;
+      }
+      return 0;
+    }else{
+      if (a.CustomSortOrderIndex < b.CustomSortOrderIndex) {
+        return -1;
+      }
+      if (a.CustomSortOrderIndex > b.CustomSortOrderIndex) {
+        return 1;
+      }
+      return 0;
     }
-    if (a.PathOfTerm > b.PathOfTerm) {
-      return 1;
-    }
-    return 0;
+
   }
 
   /**
