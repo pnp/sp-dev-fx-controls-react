@@ -1,6 +1,6 @@
 # ListItemPicker control
 
-This control allows you to select one or more  item from list, based in a column value, the control sugest values based on charaters typed 
+This control allows you to select one or more  item from list, based in a column value, the control suggest values based on characters typed 
 
 Here is an example of the control:
 
@@ -10,7 +10,6 @@ Here is an example of the control:
 
 ![ListItemPicker selected Items](../assets/ListItemPicker-selectedItems.png)
 
- 
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
@@ -20,7 +19,6 @@ Here is an example of the control:
  
 import { ListItemPicker } from '@pnp/spfx-controls-react/listItemPicker';
 ```
-
 - Use the `ListItemPicker` control in your code as follows:
 
 ```TypeScript
@@ -42,7 +40,6 @@ private onSelectedItem(data: { key: string; name: string }[]) {
     }
   }
 ```
-
 ## Implementation
 
 The `ListItemPicker` control can be configured with the following properties:
