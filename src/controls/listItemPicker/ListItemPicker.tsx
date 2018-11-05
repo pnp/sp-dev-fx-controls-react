@@ -9,7 +9,6 @@ import * as telemetry from '../../common/telemetry';
 
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
-  private _value: any[];
   private _spservice: SPservice;
   private selectedItems: any[];
 
@@ -20,17 +19,15 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
 
     // States
     this.state = {
-      noresultsFoundText: typeof this.props.noresultsFoundText === undefined ? strings.genericNoResultsFoundText : this.props.noresultsFoundText,
+      noresultsFoundText: !this.props.noResultsFoundText ? strings.genericNoResultsFoundText : this.props.noResultsFoundText,
       showError: false,
       errorMessage: "",
-      suggestionsHeaderText: typeof this.props.sugestedHeaderText === undefined ? strings.ListItemPickerSelectValue : this.props.sugestedHeaderText
+      suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText
     };
 
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
 
-    // Test Parameters
-    this._value = this.props.value !== undefined ? this.props.value : [];
     this.selectedItems = [];
   }
 
@@ -55,7 +52,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
                      suggestionsHeaderText: this.state.suggestionsHeaderText,
                      noResultsFoundText: this.state.noresultsFoundText
                    }}
-                   defaultSelectedItems={this._value}
+                   defaultSelectedItems={this.props.defaultSelectedItems || []}
                    onChange={this.onItemChanged}
                    className={className}
                    itemLimit={itemLimit}
