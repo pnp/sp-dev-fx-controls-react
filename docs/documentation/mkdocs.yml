@@ -3,6 +3,7 @@ nav:
   - Home: 'index.md'
   - Controls:
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
