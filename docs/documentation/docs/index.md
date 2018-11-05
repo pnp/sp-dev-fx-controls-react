@@ -2,6 +2,8 @@
 
 This repository provides developers with a set of reusable React controls that can be used in SharePoint Framework (SPFx) solutions. The project provides controls for building web parts and extensions.
 
+![Placeholder example](./assets/placeholder-intro.png)
+
 !!! attention
     The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for on-premises. As for on-premises solutions version `1.1.0` is currently used.
 

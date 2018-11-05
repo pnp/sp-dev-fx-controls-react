@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -52,7 +52,7 @@
     "react": "15.4.2",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
-    "sonarqube-scanner": "2.1.1"
+    "sonarqube-scanner": "2.1.2"
   },
   "repository": {
     "type": "git",

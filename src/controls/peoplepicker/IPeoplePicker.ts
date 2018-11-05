@@ -29,6 +29,10 @@ export interface IPeoplePickerProps {
    */
   groupName?: string;
   /**
+   * Maximum number of suggestions to show in the full suggestion list. (default: 5)
+   */
+  suggestionsLimit?: number;
+  /**
    * Selection Limit of Control
    */
   personSelectionLimit?: number;
@@ -67,7 +71,7 @@ export interface IPeoplePickerProps {
   /**
    * Class Name for the Error Section
    */
-  errorMessageclassName?: string;
+  errorMessageClassName?: string;
   /**
    * Default Selected User Emails
    */
