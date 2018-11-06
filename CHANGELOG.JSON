@@ -1,6 +1,37 @@
 {
   "versions": [
     {
+      "version": "1.10.0",
+      "changes": {
+        "new": [
+          "`ListItemPicker`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)"
+        ],
+        "enhancements": [
+          "Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)",
+          "German localization added [#101](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/101)",
+          "French localization added [#102](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/102)",
+          "`PeoplePicker`: Move defaultSelectedUsers from ComponentWillMount to ComponentDidUpdate Lifecycle [#135](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/135)",
+          "`PeoplePicker`: Initialize with users from a list item [#138](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/138)",
+          "`PeoplePicker`: Remove Messagebar error handling to match Office UI Fabric field error styling [#140](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/140)",
+          "`PeoplePicker`: REST API filter and nometadata header added to reduce payload [#139](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/139)",
+          "`PeoplePicker`: Allow to set the maximum number of suggestions `suggestionsLimit` [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)",
+          "`TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)",
+          "`PeoplePicker`: Documentation format updated to make it easier to check the default values [#159](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/159)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Marc D Anderson](https://github.com/sympmarc)",
+        "[Ole Bergtun](https://github.com/trillian74)",
+        "[João Mendes](https://github.com/joaojmendes)",
+        "[Markus Möller](https://github.com/mmsharepoint)",
+        "[Asish Padhy](https://github.com/AsishP)",
+        "[PooLP](https://github.com/PooLP)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Tse Kit Yam](https://github.com/tsekityam)"
+      ]
+    },
+    {
       "version": "1.9.0",
       "changes": {
         "new": [],

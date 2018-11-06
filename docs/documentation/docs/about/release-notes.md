@@ -1,5 +1,28 @@
 # Releases
 
+## 1.10.0
+
+**New control(s)**
+
+- `ListItemPicker`: New field control [#165](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/165)
+
+**Enhancements**
+
+- Dutch localization added [#100](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/100)
+- German localization added [#101](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/101)
+- French localization added [#102](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/102)
+- `PeoplePicker`: Move defaultSelectedUsers from ComponentWillMount to ComponentDidUpdate Lifecycle [#135](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/135)
+- `PeoplePicker`: Initialize with users from a list item [#138](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/138)
+- `PeoplePicker`: Remove Messagebar error handling to match Office UI Fabric field error styling [#140](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/140)
+- `PeoplePicker`: REST API filter and nometadata header added to reduce payload [#139](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/139)
+- `PeoplePicker`: Allow to set the maximum number of suggestions `suggestionsLimit` [#143](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/143) [#148](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/148)
+- `TaxonomyPicker`: retreiving the terms in the correct custom sort order [#146](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/146)
+- `PeoplePicker`: Documentation format updated to make it easier to check the default values [#159](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/159)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Marc D Anderson](https://github.com/sympmarc), [Ole Bergtun](https://github.com/trillian74), [João Mendes](https://github.com/joaojmendes), [Markus Möller](https://github.com/mmsharepoint), [Asish Padhy](https://github.com/AsishP), [PooLP](https://github.com/PooLP), [Gautam Sheth](https://github.com/gautamdsheth), [Tse Kit Yam](https://github.com/tsekityam).
+
 ## 1.9.0
 
 **Enhancements**
@@ -11,6 +34,10 @@
 - `FieldLookupRenderer`: Lookup dialog is empty [#131](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/131)
 - `IFrameDialog`: Unnecessary horizontal scroll in IFrame dialog [#132](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/132)
 - `PeoplePicker`: Suggested People not loading after first selection [#134](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/134)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.8.0
 
@@ -32,6 +59,10 @@
 - `IFrameDialog`: dialog width is not correct in IE11 [#118](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/118)
 - `PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)
 
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Thomas Lamb](https://github.com/ThomasLamb), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mikael Svenson](https://github.com/wobba), [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.7.0
 
 **Enhancements**
@@ -45,6 +76,10 @@
 
 - `FieldNameRenderer` onClick does not suppress default link behavior [#103](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/103)
 
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): Octavie van Haaften, Asish Padhy, Mikael Svenson, Alex Terentiev.
+
 ## 1.6.0
 
 **Enhancements**
@@ -55,6 +90,10 @@
 
 - New telemetry approach which allows you to use Application Insights [#81](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/81)
 - PeoplePicker property selectedItems not implemented? [#90](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/90)
+
+### Contributors
+
+Special thanks to our contributor: Octavie van Haaften.
 
 ## 1.5.0
 
@@ -71,6 +110,10 @@
 - Bug in `TaxonomyPicker` where values are not updated by an async change [#83](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/83)
 - `FieldUserRenderer` uses email prop for `GetPropertiesFor` [#84](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/84)
 - Fixed issue in single selection mode when all group items were selected in the `ListView` when user clicked on the group header [#86](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/86)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): Asish Padhy, Alex Terentiev.
 
 ## 1.4.0
 

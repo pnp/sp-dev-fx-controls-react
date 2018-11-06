@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/sp-dev-fx-controls-react
   docker:
-    - image: circleci/node:6.11.5
+    - image: circleci/node:8.9.1
 
 version: 2
 jobs:

@@ -18,6 +18,8 @@ import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
+import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
+import { ListItemPicker } from "../../../ListItemPicker";
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -30,7 +32,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       imgSize: ImageSize.small,
       items: [],
       iFrameDialogOpened: false,
-      initialValues: []
+      initialValues: [],
+      authorEmails: [],
+      selectedList: null
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -49,6 +53,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items: items.value ? items.value : []
         });
       });
+
+      // // Get Authors in the SharePoint Document library -- For People Picker Testing
+      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+      // .then(resp => { return resp.json(); })
+      // .then(items => {
+      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+      //   console.log(emails);
+      //   this.setState({
+      //     authorEmails: emails
+      //   });
+      // });
   }
 
   /**
@@ -76,6 +92,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
+/**
+ *
+ *Method that retrieves the selected terms from the taxonomy picker and sets state
+ * @private
+ * @param {IPickerTerms} terms
+ * @memberof ControlsTest
+ */
+private onServicePickerChange(terms: IPickerTerms): void {
+    this.setState({
+      initialValues: terms
+    });
+    // console.log("serviceTerms", terms);
+  }
+
   /**
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
@@ -91,8 +121,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Selected lists change event
    * @param lists
    */
-  private onListPickerChange (lists: string | string[]) {
+  private onListPickerChange = (lists: string | string[]) => {
     console.log("Lists:", lists);
+    this.setState({
+      selectedList: typeof lists === "string" ? lists : lists.pop()
+    });
   }
 
   /**
@@ -107,11 +140,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       });
     }
   }
-  /** Method that retrieves the selected items from People  Picker
+
+  /**
+   * Method that retrieves the selected items from People  Picker
    * @param items
    */
   private _getPeoplePickerItems(items: any[]) {
     console.log('Items:', items);
+  }
+
+  /**
+   * Selected item from the list data picker
+   */
+  private listItemPickerDataSelected(item: any) {
+    console.log(item);
   }
 
   /**
@@ -234,7 +276,35 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                             onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">TaxonomyPicker tester:
+              <div className="ms-font-m">Field picker list data tester:
+                <ListItemPicker listId={this.state.selectedList}
+                                     columnInternalName="Title"
+                                     itemLimit={5}
+                                     context={this.props.context}
+                                     onSelectedItem={this.listItemPickerDataSelected} />
+              </div>
+
+              <div className="ms-font-m">Services tester:
+              <TaxonomyPicker
+                allowMultipleSelections={true}
+                termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                panelTitle="Select Sorted Term"
+                label="Service Picker"
+                context={this.props.context}
+                onChange={this.onServicePickerChange}
+                isTermSetSelectable={false}
+              />
+
+               <TaxonomyPicker
+                allowMultipleSelections={true}
+                termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+                panelTitle="Select Default Sorted Term"
+                label="Service Picker"
+                context={this.props.context}
+                onChange={this.onServicePickerChange}
+                isTermSetSelectable={false}
+              />
+
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
@@ -313,10 +383,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             // groupName={"Team Site Owners"}
             showtooltip={true}
             isRequired={true}
-            defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={this.state.authorEmails}
             selectedItems={this._getPeoplePickerItems}
             showHiddenInUI={false}
-            principleTypes={[PrincipalType.User]} />
+            principleTypes={[PrincipalType.User]}
+            suggestionsLimit={2} />
 
           <PeoplePicker
             context={this.props.context}

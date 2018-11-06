@@ -52,26 +52,27 @@ private _getPeoplePickerItems(items: any[]) {
 
 The People picker control can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| context | WebPartContext | yes | Context of the current web part. |
-| titleText | string | yes | Text to be displayed on the control |
-| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users |
-| personSelectionLimit | number | no | Defines the limit of people that can be selected in the control|
-| isRequired | boolean | no | Set if the control is required or not |
-| disabled | boolean | no | Set if the control is disabled or not |
-| errorMessage | string | no | Specify the error message to display |
-| errorMessageclassName | string | no | applies custom styling to the error message section|
-| showtooltip | boolean | no | Defines if need a tooltip or not |
-| tooltip | string | no | Specify the tooltip message to display |
-| tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown |
-| selectedItems | function | no | get the selected users in the control |
-| peoplePickerWPclassName | string | no | applies custom styling to the people picker element |
-| peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only |
-| defaultSelectedUsers | string[] | no | Default selected user emails |
-| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. Default is the current site URL. |
-| showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. |
-| principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. |
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| context | WebPartContext | yes | Context of the current web part. | |
+| titleText | string | yes | Text to be displayed on the control | |
+| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_ |
+| personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | |
+| isRequired | boolean | no | Set if the control is required or not | false |
+| disabled | boolean | no | Set if the control is disabled or not | false |
+| errorMessage | string | no | Specify the error message to display | |
+| errorMessageClassName | string | no | applies custom styling to the error message section | |
+| showtooltip | boolean | no | Defines if need a tooltip or not | false |
+| tooltip | string | no | Specify the tooltip message to display | |
+| tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown | |
+| selectedItems | function | no | get the selected users in the control | |
+| peoplePickerWPclassName | string | no | applies custom styling to the people picker element | |
+| peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only | |
+| defaultSelectedUsers | string[] | no | Default selected user emails | |
+| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. | Current site URL |
+| showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. | false |
+| principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
+| suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 
 Enum `PrincipalType`
 
