@@ -39,7 +39,9 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
     }
 
     private _iframeOnLoad(): void {
-        this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
+        if (this._iframe.contentWindow.frameElement) { // for cross origin requests we can have issues with accessing frameElement
+            this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
+        }
 
 
         if (this.props.iframeOnLoad) {
