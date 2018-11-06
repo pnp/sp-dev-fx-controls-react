@@ -22,8 +22,6 @@ import { IListItemAttachmentsState } from '.';
 import SPservice from "../../services/SPService";
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import utilities from './utilities';
-
-
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
   private previewImages: IDocumentCardPreviewImage[];
@@ -148,10 +146,10 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
             isBlocking={true}>
             <DialogFooter>
               {
-                this.state.deleteAttachment ? (<PrimaryButton onClick={this._onConfirmedDeleteAttachment}>{strings.dialogOKbuttonLabelOnDelete}</PrimaryButton>) : ""
+                this.state.deleteAttachment ? (<PrimaryButton onClick={this._onConfirmedDeleteAttachment}>{strings.ListItemAttachmentsdialogOKbuttonLabelOnDelete}</PrimaryButton>) : ""
               }
               {
-                this.state.deleteAttachment ? (<DefaultButton onClick={this._closeDialog}>{strings.dialogCancelButtonLabel}</DefaultButton>) : <PrimaryButton onClick={this._closeDialog}>{strings.dialogOKbuttonLabel}</PrimaryButton>
+                this.state.deleteAttachment ? (<DefaultButton onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogCancelButtonLabel}</DefaultButton>) : <PrimaryButton onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogOKbuttonLabel}</PrimaryButton>
               }
             </DialogFooter>
           </Dialog>
