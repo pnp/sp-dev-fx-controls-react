@@ -23,6 +23,39 @@ export interface IFrameDialogProps extends IDialogProps {
    * iframe height
    */
   height: string;
+  /**
+   * Specifies if iframe content can be displayed in a full screen.
+   * Usage: <IFrameDialog allowFullScreen />
+   */
+  allowFullScreen?: boolean;
+  /**
+   * Specifies if transparency is allowed in iframe
+   */
+  allowTransparency?: boolean;
+  /**
+   * Specifies the top and bottom margins of the content of an <iframe>
+   */
+  marginHeight?: number;
+  /**
+   * Specifies the left and right margins of the content of an <iframe>
+   */
+  marginWidth?: number;
+  /**
+   * Specifies the name of an <iframe>
+   */
+  name?: string;
+  /**
+   * Enables an extra set of restrictions for the content in an <iframe>
+   */
+  sandbox?: string;
+  /**
+   * Specifies whether or not to display scrollbars in an <iframe>
+   */
+  scrolling?: string;
+  /**
+   * When present, it specifies that the <iframe> should look like it is a part of the containing document (no borders or scrollbars)
+   */
+  seamless?: boolean;
 }
 
 export interface IFrameDialogState {
@@ -65,14 +98,34 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
   }
 
   public render(): JSX.Element {
+    const {
+      iframeOnLoad,
+      height,
+      allowFullScreen,
+      allowTransparency,
+      marginHeight,
+      marginWidth,
+      name,
+      sandbox,
+      scrolling,
+      seamless
+    } = this.props;
     return (
       <Dialog className={`${this.state.dialogId} ${this.props.className}`}
-              {...omit(this.props, "className")}>
-        <IFrameDialogContent url={this.props.url}
-                             iframeOnLoad={this.props.iframeOnLoad}
-                             close={this.props.onDismiss}
-                             width={this.props.width}
-                             height={this.props.height} />
+        {...omit(this.props, 'className')}>
+        <IFrameDialogContent src={this.props.url}
+          iframeOnLoad={iframeOnLoad}
+          close={this.props.onDismiss}
+          height={height}
+          allowFullScreen={allowFullScreen}
+          allowTransparency={allowTransparency}
+          marginHeight={marginHeight}
+          marginWidth={marginWidth}
+          name={name}
+          sandbox={sandbox}
+          scrolling={scrolling}
+          seamless={seamless}
+        />
       </Dialog>);
   }
 
