@@ -33,7 +33,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
     this.state = {
       file: null,
-      showDialog: false,
+      hideDialog: true,
       dialogMessage: '',
       attachments: [],
       deleteAttachment: false,
@@ -67,14 +67,14 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         });
       }
       this.setState({
-        showDialog: false,
+        hideDialog: true,
         dialogMessage: '',
         attachments: files
       });
     }
     catch (error) {
       this.setState({
-        showDialog: true,
+        hideDialog: true,
         dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
       });
     }
@@ -107,7 +107,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 directionalHint={DirectionalHint.rightCenter}>
 
                 <DocumentCard
-                  onClickHref={ `${_file.ServerRelativeUrl}?web=1`}
+                  onClickHref={`${_file.ServerRelativeUrl}?web=1`}
                   className={styles.documentCard}>
                   <DocumentCardPreview previewImages={[this.previewImages[i]]} />
                   <Label className={styles.fileLabel}>
@@ -141,12 +141,18 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         {
 
           <Dialog
-            isOpen={this.state.showDialog}
+            hidden={this.state.hideDialog}
             type={DialogType.normal}
             onDismiss={this._closeDialog}
-            title={strings.ListItemAttachmentsdialogTitle}
-            subText={this.state.dialogMessage}
-            isBlocking={true}>
+            dialogContentProps={{
+              type: DialogType.normal,
+              title: strings.ListItemAttachmentsdialogTitle,
+              subText: this.state.dialogMessage
+            }}
+            modalProps={{
+              isBlocking: true,
+              containerClassName: 'ms-dialogMainOverride'
+            }} >
             <DialogFooter>
               <div style={{ marginBottom: 7 }}>
                 {
@@ -172,7 +178,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     e.preventDefault();
 
     this.setState({
-      showDialog: false,
+      hideDialog: true,
       dialogMessage: '',
       file: null,
       deleteAttachment: false,
@@ -189,7 +195,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   // On _onDeleteAttachment
   private _onDeleteAttachment(_file: IListItemAttachmentFile) {
     this.setState({
-      showDialog: true,
+      hideDialog: false,
       deleteAttachment: true,
       file: _file,
       dialogMessage: strings.ListItemAttachmentsconfirmDelete.replace('{0}', _file.FileName),
@@ -210,7 +216,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       .then(() => {
 
         this.setState({
-          showDialog: true,
+          hideDialog: false,
           deleteAttachment: false,
           disableButton: false,
           file: null,
@@ -221,7 +227,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       .catch((reason) => {
 
         this.setState({
-          showDialog: true,
+          hideDialog: false,
           file: null,
           deleteAttachment: false,
           dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', _file.FileName).replace('{1}', reason)

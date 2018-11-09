@@ -8,7 +8,6 @@ import SPservice from "../../services/SPService";
 import * as strings from 'ControlStrings';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
-import * as $ from 'jquery';
 import { createRef } from '@uifabric/utilities/lib';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
@@ -18,7 +17,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     super(props);
     this.state = {
       file: null,
-      showDialog: false,
+      hideDialog: true,
       dialogMessage: '',
       isLoading: false
     };
@@ -66,7 +65,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
         })
         .catch((reason) => {
           this.setState({
-            showDialog: true,
+            hideDialog: false,
             isLoading: false,
             dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', reason)
           });
@@ -104,12 +103,18 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           }
         </div>
         <Dialog
-          isOpen={this.state.showDialog}
+          hidden={this.state.hideDialog}
           type={DialogType.normal}
           onDismiss={this._closeDialog}
-          title={strings.ListItemAttachmentsuploadAttachmentDialogTitle}
-          subText={this.state.dialogMessage}
-          isBlocking={true}>
+          dialogContentProps={{
+            type: DialogType.normal,
+            title:strings.ListItemAttachmentsuploadAttachmentDialogTitle,
+            subText: this.state.dialogMessage
+          }}
+          modalProps={{
+            isBlocking: true,
+            containerClassName: 'ms-dialogMainOverride'
+          }} >
           <DialogFooter>
             <PrimaryButton onClick={this._closeDialog}>OK</PrimaryButton>
           </DialogFooter>
@@ -121,7 +126,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
   private _closeDialog(e) {
     e.preventDefault();
     this.setState({
-      showDialog: false,
+      hideDialog: true,
       dialogMessage: '',
     });
   }

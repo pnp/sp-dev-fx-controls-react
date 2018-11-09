@@ -1,7 +1,7 @@
 import {IListItemAttachmentFile } from './IListItemAttachmentFile';
 export interface IListItemAttachmentsState {
       file: IListItemAttachmentFile;
-      showDialog: boolean;
+      hideDialog: boolean;
       dialogMessage: string;
       attachments: IListItemAttachmentFile[];
       deleteAttachment: boolean;
