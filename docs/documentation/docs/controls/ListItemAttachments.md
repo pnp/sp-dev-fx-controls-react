@@ -37,10 +37,9 @@ The `ListItemAttachments` control can be configured with the following propertie
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | context | WebPartContext \| ApplicationCustomizerContext | yes | SPFx web part or extention context |
-| listId | string | yes | Guid of the list. |
 | itemId | number | yes | List Item Id  |
+| listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemAttachments)
-
