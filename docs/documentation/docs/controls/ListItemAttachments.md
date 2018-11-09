@@ -5,11 +5,11 @@ This control allows you to manage list item attachments, you can add or delete a
 
 Here is an example of the control:
 
-![ListItemAttachments Tiles](./assets/ListItemAttachmentsTitles.png)
+![ListItemAttachments Tiles](../assets/ListItemAttachmentsTitles.png)
 
-![ListItemAttachments Confirm Delete](./assets/ListItemAttachmentDeleteConfirm.png)
+![ListItemAttachments Confirm Delete](../assets/ListItemAttachmentDeleteConfirm.png)
 
-![ListItemAttachments Attachment Deleted ](./assets/ListItemAttachementDeletedMsg.png)
+![ListItemAttachments Attachment Deleted ](../assets/ListItemAttachementDeletedMsg.png)
 
 ## How to use this control in your solutions
 
