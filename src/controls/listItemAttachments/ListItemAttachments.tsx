@@ -21,6 +21,7 @@ import { IListItemAttachmentsProps } from '.';
 import { IListItemAttachmentsState } from '.';
 import SPservice from "../../services/SPService";
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import utilities from './utilities';
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
@@ -34,8 +35,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       file: null,
       showDialog: false,
       dialogMessage: '',
-      Documents: [],
-      deleteAttachment: false
+      attachments: [],
+      deleteAttachment: false,
+      disableButton: false
     };
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
@@ -54,9 +56,10 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       const files: IListItemAttachmentFile[] = await this._spservice.getListItemAttachments(this.props.listId, this.props.itemId);
       for (const _file of files) {
 
+        const _previewImage = await this._utilities.GetFileImageUrl(_file);
         this.previewImages.push({
           name: _file.FileName,
-          previewImageSrc: await this._utilities.GetFileImageUrl(_file),
+          previewImageSrc: _previewImage,
           iconSrc: '',
           imageFit: ImageFit.center,
           width: 187,
@@ -66,7 +69,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       this.setState({
         showDialog: false,
         dialogMessage: '',
-        Documents: files
+        attachments: files
       });
     }
     catch (error) {
@@ -89,13 +92,12 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         <UploadAttachment
           listId={this.props.listId}
           itemId={this.props.itemId}
-          iconButton={true}
           disabled={this.props.disabled}
           context={this.props.context}
           onAttachmentUpload={this._onAttachmentpload}
         />
 
-        {this.state.Documents.map((_file, i: number) => {
+        {this.state.attachments.map((_file, i: number) => {
           return (
             <div className={styles.documentCardWrapper}>
               <TooltipHost
@@ -105,7 +107,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 directionalHint={DirectionalHint.rightCenter}>
 
                 <DocumentCard
-                  onClickHref={_file.ServerRelativeUrl}
+                  onClickHref={ `${_file.ServerRelativeUrl}?web=1`}
                   className={styles.documentCard}>
                   <DocumentCardPreview previewImages={[this.previewImages[i]]} />
                   <Label className={styles.fileLabel}>
@@ -137,6 +139,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           );
         })}
         {
+
           <Dialog
             isOpen={this.state.showDialog}
             type={DialogType.normal}
@@ -145,11 +148,17 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
             subText={this.state.dialogMessage}
             isBlocking={true}>
             <DialogFooter>
+              <div style={{ marginBottom: 7 }}>
+                {
+                  this.state.disableButton ? <Spinner size={SpinnerSize.medium} /> : ''
+                }
+              </div>
               {
-                this.state.deleteAttachment ? (<PrimaryButton onClick={this._onConfirmedDeleteAttachment}>{strings.ListItemAttachmentsdialogOKbuttonLabelOnDelete}</PrimaryButton>) : ""
+                this.state.deleteAttachment ? (<PrimaryButton disabled={this.state.disableButton} onClick={this._onConfirmedDeleteAttachment}>{strings.ListItemAttachmentsdialogOKbuttonLabelOnDelete}</PrimaryButton>) : ""
               }
               {
-                this.state.deleteAttachment ? (<DefaultButton onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogCancelButtonLabel}</DefaultButton>) : <PrimaryButton onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogOKbuttonLabel}</PrimaryButton>
+                this.state.deleteAttachment ? (<DefaultButton disabled={this.state.disableButton} onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogCancelButtonLabel}</DefaultButton>)
+                  : <PrimaryButton onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogOKbuttonLabel}</PrimaryButton>
               }
             </DialogFooter>
           </Dialog>
@@ -192,12 +201,18 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   private _onConfirmedDeleteAttachment() {
     // Delete Attachment
     const _file = this.state.file;
+
+    this.setState({
+      disableButton: true,
+    });
+
     this._spservice.deleteAttachment(_file.FileName, this.props.listId, this.props.itemId, this.props.webUrl)
       .then(() => {
 
         this.setState({
           showDialog: true,
           deleteAttachment: false,
+          disableButton: false,
           file: null,
           dialogMessage: strings.ListItemAttachmentsfileDeletedMsg.replace('{0}', _file.FileName),
         });

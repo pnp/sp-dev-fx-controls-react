@@ -8,10 +8,12 @@ import SPservice from "../../services/SPService";
 import * as strings from 'ControlStrings';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
+import * as $ from 'jquery';
+import { createRef } from '@uifabric/utilities/lib';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
-
+  private fileInput;
   constructor(props) {
     super(props);
     this.state = {
@@ -22,17 +24,26 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     };
     // Get SPService
     this._spservice = new SPservice(this.props.context);
+    this.fileInput =  createRef();
     // Handlers
     this._closeDialog = this._closeDialog.bind(this);
+    this._addAttachment = this._addAttachment.bind(this);
+    this._onAttachmentUpload = this._onAttachmentUpload.bind(this);
   }
   //  FileReader event
   private _onAttachmentUpload(e) {
     e.preventDefault();
     // fire click event
-     document.getElementById('file-picker').click();
+    this.fileInput.current.value='';
+    this.fileInput.current.click();
+  //$('#file-picker').val('');
+   // $('#file-picker').trigger('click');
+
+    // document.getElementById('file-picker').click();
   }
   // Add Attachment
   private _addAttachment(e) {
+
     e.preventDefault();
     this.setState({
       isLoading: true
@@ -40,7 +51,6 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
     const reader = new FileReader();
     const file = e.target.files[0];
-    reader.readAsDataURL(file);
 
     reader.onloadend = () => {
       this.setState({
@@ -62,6 +72,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           });
         });
     };
+    reader.readAsDataURL(file);
   }
   // Render
   public render() {
@@ -72,6 +83,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
                style={{ display: 'none' }}
                type="file"
                onChange={(e) => this._addAttachment(e)}
+               ref={this.fileInput}
                />
         <div style={{ textAlign: 'left', marginTop: 25, marginBottom: 25 }}>
           <CommandBar

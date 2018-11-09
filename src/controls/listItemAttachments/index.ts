@@ -6,4 +6,3 @@ export * from './IUploadAttachmentState';
 export * from './IListItemAttachmentFile';
 export * from './utilities';
 export * from './ListItemAttachments';
-export * from './UploadAttachment';

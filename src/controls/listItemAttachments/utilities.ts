@@ -30,9 +30,13 @@ export default class utilities {
    * GetFileImageUrl
    */
   public GetFileImageUrl(_file: IListItemAttachmentFile): Promise<string> {
-    let _fileImageUrl: string = '';
-    const _fileTypes = _file.ServerRelativeUrl.split('.');
+    let _fileImageUrl: string = DOCICONURL_GENERIC;
+    const _fileTypes = _file.FileName.split('.');
     const _fileExtension = _fileTypes[1];
+    
+   if ( !_fileExtension){
+     return Promise.resolve(_fileImageUrl);
+   }
     switch (_fileExtension.toLowerCase()) {
       case 'xlsx':
         _fileImageUrl = DOCICONURL_XLSX;

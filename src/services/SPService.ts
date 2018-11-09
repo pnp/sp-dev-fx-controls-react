@@ -62,9 +62,9 @@ export default class SPService implements ISPService {
     }
   }
 
-  // Get ListAttachments
-  public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
-    let returnFiles: any[];
+   // Get ListAttachments
+   public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
+
     let spWeb: Web;
     if (typeof webUrl !== "undefined") {
       spWeb = new Web(webUrl);
@@ -73,7 +73,7 @@ export default class SPService implements ISPService {
     }
 
     try {
-      let files = await spWeb.lists
+      const files = await spWeb.lists
         .getById(listId)
         .items.getById(itemId)
         .attachmentFiles.get();
@@ -97,13 +97,14 @@ export default class SPService implements ISPService {
       await spWeb.lists
         .getById(listId)
         .items.getById(itemId)
-        .attachmentFiles.getByName(fileName)
+        .attachmentFiles.getByName(encodeURIComponent(fileName))
         .delete();
       return;
     } catch (error) {
       return Promise.reject(error);
     }
   }
+
   // Add Attachment
   public async addAttachment(listId: string, itemId: number, fileName: string, file: ArrayBuffer, webUrl?: string): Promise<void> {
     let spWeb: Web;
@@ -114,11 +115,82 @@ export default class SPService implements ISPService {
     }
 
     try {
-      let files = await spWeb.lists
+      // remove special characteres in FileName
+      fileName = fileName.replace(/[^\.\w\s]/gi, '');
+      //  Check if Attachment Exists
+      const fileExists = await this.checkAttachmentExists(listId, itemId, fileName, webUrl);
+      // Delete Attachment if exists
+      if (fileExists) {
+        await this.deleteAttachment(fileName, listId, itemId, webUrl);
+      }
+      // Add Attachment
+      const files = await spWeb.lists
         .getById(listId)
         .items.getById(itemId)
-        .attachmentFiles.add(encodeURIComponent(fileName), file);
+        .attachmentFiles.add(fileName, file);
+
       return;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  // get Attachment
+  //
+  public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+    let spWeb: Web;
+    if (typeof webUrl !== "undefined") {
+      spWeb = new Web(webUrl);
+    } else {
+      spWeb = new Web(this._context.pageContext.web.absoluteUrl);
+    }
+    try {
+      const file = await spWeb.lists
+        .getById(listId)
+        .items.getById(itemId)
+        .attachmentFiles.getByName(encodeURIComponent(fileName)).get();
+      return Promise.resolve(file);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+  // Check if Attachment Exists
+  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+
+    try {
+      const listName = await this.getListName(listId, webUrl);
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/getfilebyserverrelativeurl('/lists/${listName}/Attachments/${itemId}/${fileName}')`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results && results.Exists) {
+          return results.Exists;
+        }
+      }
+
+      return false;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  // Get ListName
+  public async getListName(listId: string, webUrl?: string): Promise<string> {
+    let spWeb: Web;
+    if (typeof webUrl !== "undefined") {
+      spWeb = new Web(webUrl);
+    } else {
+      spWeb = new Web(this._context.pageContext.web.absoluteUrl);
+    }
+    try {
+      const list = await spWeb.lists
+        .getById(listId)
+        .select('RootFolder/Name')
+        .expand('RootFolder')
+        .get();
+
+      return Promise.resolve(list.RootFolder.Name);
     } catch (error) {
       return Promise.reject(error);
     }

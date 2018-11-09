@@ -9,5 +9,4 @@ export interface IUploadAttachmentProps {
   disabled?: boolean;
   context: WebPartContext |  ApplicationCustomizerContext;
   onAttachmentUpload: () => void;
-  iconButton: boolean;
 }
