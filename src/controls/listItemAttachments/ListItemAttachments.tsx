@@ -7,7 +7,7 @@ import { Label } from "office-ui-fabric-react/lib/Label";
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
-import { UploadAttachment } from './uploadAttachment';
+import { UploadAttachment} from './UploadAttachment'
 import { IListItemAttachmentFile } from './IListItemAttachmentFile';
 import {
   DocumentCard,
