@@ -5,6 +5,8 @@ This control allows you to manage list item attachments, you can add or delete a
 
 Here is an example of the control:
 
+![ListItemAttachments Upload](../assets/ListItemAttachmentsUpload.png)
+
 ![ListItemAttachments Tiles](../assets/ListItemAttachmentsTitles.png)
 
 ![ListItemAttachments Confirm Delete](../assets/ListItemAttachmentDeleteConfirm.png)
