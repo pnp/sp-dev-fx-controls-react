@@ -6,4 +6,6 @@ export interface IListItemAttachmentsState {
       attachments: IListItemAttachmentFile[];
       deleteAttachment: boolean;
       disableButton: boolean;
+      showPlaceHolder: boolean;
+      fireUpload: boolean;
 }

@@ -70,6 +70,9 @@ define([], () => {
     ListItemAttachmentsuploadAttachmentButtonLabel: 'Add Attachment',
     ListItemAttachmentsuploadAttachmentErrorMsg: 'The file {0} not attached, reason: {1}',
     ListItemAttachmentsCommandBarAddAttachmentLabel: 'Add Attachment',
-    ListItemAttachmentsloadingMessage: 'Uploading file ...'
+    ListItemAttachmentsloadingMessage: 'Uploading file ...',
+    ListItemAttachmentslPlaceHolderIconText: 'List Item Attachment',
+    ListItemAttachmentslPlaceHolderDescription: 'Please Upload Attachment',
+    ListItemAttachmentslPlaceHolderButtonLabel: 'Upload'
   };
 });

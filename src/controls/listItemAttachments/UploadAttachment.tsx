@@ -19,26 +19,33 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
       file: null,
       hideDialog: true,
       dialogMessage: '',
-      isLoading: false
+      isLoading: false,
     };
     // Get SPService
     this._spservice = new SPservice(this.props.context);
-    this.fileInput =  createRef();
+    this.fileInput = createRef();
     // Handlers
     this._closeDialog = this._closeDialog.bind(this);
     this._addAttachment = this._addAttachment.bind(this);
     this._onAttachmentUpload = this._onAttachmentUpload.bind(this);
   }
+
+  public componentDidUpdate(prevProps: IUploadAttachmentProps, prevState: IUploadAttachmentState): void {
+    if (this.props.fireUpload) {
+      this.fileInput.current.value = '';
+      this.fileInput.current.click();
+    }
+  }
+  // Upload Attachments
+  public componentDidMount() {
+
+  }
   //  FileReader event
   private _onAttachmentUpload(e) {
     e.preventDefault();
     // fire click event
-    this.fileInput.current.value='';
+    this.fileInput.current.value = '';
     this.fileInput.current.click();
-  //$('#file-picker').val('');
-   // $('#file-picker').trigger('click');
-
-    // document.getElementById('file-picker').click();
   }
   // Add Attachment
   private _addAttachment(e) {
@@ -79,11 +86,11 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     return (
       <div>
         <input id="file-picker"
-               style={{ display: 'none' }}
-               type="file"
-               onChange={(e) => this._addAttachment(e)}
-               ref={this.fileInput}
-               />
+          style={{ display: 'none' }}
+          type="file"
+          onChange={(e) => this._addAttachment(e)}
+          ref={this.fileInput}
+        />
         <div style={{ textAlign: 'left', marginTop: 25, marginBottom: 25 }}>
           <CommandBar
             items={[{
@@ -108,7 +115,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           onDismiss={this._closeDialog}
           dialogContentProps={{
             type: DialogType.normal,
-            title:strings.ListItemAttachmentsuploadAttachmentDialogTitle,
+            title: strings.ListItemAttachmentsuploadAttachmentDialogTitle,
             subText: this.state.dialogMessage
           }}
           modalProps={{

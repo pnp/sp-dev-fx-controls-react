@@ -8,5 +8,6 @@ export interface IUploadAttachmentProps {
   webUrl?:string;
   disabled?: boolean;
   context: WebPartContext |  ApplicationCustomizerContext;
+  fireUpload?:boolean;
   onAttachmentUpload: () => void;
 }

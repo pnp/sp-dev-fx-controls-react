@@ -7,7 +7,7 @@ import { Label } from "office-ui-fabric-react/lib/Label";
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
-import { UploadAttachment} from './UploadAttachment'
+import { UploadAttachment } from './UploadAttachment';
 import { IListItemAttachmentFile } from './IListItemAttachmentFile';
 import {
   DocumentCard,
@@ -23,6 +23,8 @@ import SPservice from "../../services/SPService";
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import utilities from './utilities';
+import { Placeholder } from "../placeholder";
+
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
   private previewImages: IDocumentCardPreviewImage[];
@@ -37,7 +39,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       dialogMessage: '',
       attachments: [],
       deleteAttachment: false,
-      disableButton: false
+      disableButton: false,
+      showPlaceHolder: false,
+      fireUpload: false
     };
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
@@ -69,7 +73,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       this.setState({
         hideDialog: true,
         dialogMessage: '',
-        attachments: files
+        attachments: files,
+        showPlaceHolder: files.length === 0 ? true : false
+
       });
     }
     catch (error) {
@@ -81,6 +87,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   }
   // LoadAttachments
   public componentDidMount() {
+
     this._loadAttachments();
   }
 
@@ -95,49 +102,60 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           disabled={this.props.disabled}
           context={this.props.context}
           onAttachmentUpload={this._onAttachmentpload}
+          fireUpload={this.state.fireUpload}
         />
 
-        {this.state.attachments.map((_file, i: number) => {
-          return (
-            <div className={styles.documentCardWrapper}>
-              <TooltipHost
-                content={_file.FileName}
-                calloutProps={{ gapSpace: 0, isBeakVisible: true }}
-                closeDelay={200}
-                directionalHint={DirectionalHint.rightCenter}>
+        {
+          this.state.showPlaceHolder ?
+            <Placeholder
+              iconName='Upload'
+              iconText={strings.ListItemAttachmentslPlaceHolderIconText}
+              description={strings.ListItemAttachmentslPlaceHolderDescription}
+              buttonLabel={strings.ListItemAttachmentslPlaceHolderButtonLabel}
+              onConfigure={() => this.setState({ fireUpload: true })} />
+            :
 
-                <DocumentCard
-                  onClickHref={`${_file.ServerRelativeUrl}?web=1`}
-                  className={styles.documentCard}>
-                  <DocumentCardPreview previewImages={[this.previewImages[i]]} />
-                  <Label className={styles.fileLabel}>
-                    {_file.FileName}
-                  </Label>
-                  <DocumentCardActions
-                    actions={
-                      [
-                        {
-                          iconProps: {
-                            iconName: 'Delete',
-                            title: strings.ListItemAttachmentsActionDeleteIconTitle,
-                          },
-                          title: strings.ListItemAttachmentsactionDeleteTitle,
-                          text: strings.ListItemAttachmentsactionDeleteTitle,
-                          disabled: this.props.disabled,
-                          onClick: (ev) => {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-                            this._onDeleteAttachment(_file);
-                          }
-                        },
-                      ]
-                    }
-                  />
-                </DocumentCard>
-              </TooltipHost>
-            </div>
-          );
-        })}
+            this.state.attachments.map((_file, i: number) => {
+              return (
+                <div className={styles.documentCardWrapper}>
+                  <TooltipHost
+                    content={_file.FileName}
+                    calloutProps={{ gapSpace: 0, isBeakVisible: true }}
+                    closeDelay={200}
+                    directionalHint={DirectionalHint.rightCenter}>
+
+                    <DocumentCard
+                      onClickHref={`${_file.ServerRelativeUrl}?web=1`}
+                      className={styles.documentCard}>
+                      <DocumentCardPreview previewImages={[this.previewImages[i]]} />
+                      <Label className={styles.fileLabel}>
+                        {_file.FileName}
+                      </Label>
+                      <DocumentCardActions
+                        actions={
+                          [
+                            {
+                              iconProps: {
+                                iconName: 'Delete',
+                                title: strings.ListItemAttachmentsActionDeleteIconTitle,
+                              },
+                              title: strings.ListItemAttachmentsactionDeleteTitle,
+                              text: strings.ListItemAttachmentsactionDeleteTitle,
+                              disabled: this.props.disabled,
+                              onClick: (ev) => {
+                                ev.preventDefault();
+                                ev.stopPropagation();
+                                this._onDeleteAttachment(_file);
+                              }
+                            },
+                          ]
+                        }
+                      />
+                    </DocumentCard>
+                  </TooltipHost>
+                </div>
+              );
+            })}
         {
 
           <Dialog
