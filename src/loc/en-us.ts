@@ -72,7 +72,7 @@ define([], () => {
     ListItemAttachmentsCommandBarAddAttachmentLabel: 'Add Attachment',
     ListItemAttachmentsloadingMessage: 'Uploading file ...',
     ListItemAttachmentslPlaceHolderIconText: 'List Item Attachment',
-    ListItemAttachmentslPlaceHolderDescription: 'Please Upload Attachment',
-    ListItemAttachmentslPlaceHolderButtonLabel: 'Upload'
+    ListItemAttachmentslPlaceHolderDescription: 'Please Add Attachment',
+    ListItemAttachmentslPlaceHolderButtonLabel: 'Add'
   };
 });
