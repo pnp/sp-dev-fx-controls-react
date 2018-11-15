@@ -1,4 +1,5 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
@@ -11,7 +12,7 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: WebPartContext;
+  context: WebPartContext | ExtensionContext;
   /**
    * Text of the Control
   */
@@ -39,15 +40,15 @@ export interface IPeoplePickerProps {
   /**
    * Show or Hide Tooltip
    */
-  showtooltip? : boolean;
+  showtooltip?: boolean;
   /**
    * People Field is mandatory
    */
-  isRequired? : boolean;
+  isRequired?: boolean;
   /**
    * Mandatory field error message
    */
-  errorMessage? : string;
+  errorMessage?: string;
   /**
    * Method to check value of People Picker text
    */
@@ -55,15 +56,15 @@ export interface IPeoplePickerProps {
   /**
    * Tooltip Message
    */
-  tooltipMessage? : string;
+  tooltipMessage?: string;
   /**
    * Directional Hint of tool tip
    */
-  tooltipDirectional? : DirectionalHint;
-   /**
-   * Class Name for the whole People picker control
-   */
-  peoplePickerWPclassName?:string;
+  tooltipDirectional?: DirectionalHint;
+  /**
+  * Class Name for the whole People picker control
+  */
+  peoplePickerWPclassName?: string;
   /**
    * Class Name for the People picker control
    */
@@ -75,7 +76,7 @@ export interface IPeoplePickerProps {
   /**
    * Default Selected User Emails
    */
-  defaultSelectedUsers? : string[];
+  defaultSelectedUsers?: string[];
   /**
    * Show users which are hidden from the UI
    */
@@ -95,9 +96,9 @@ export interface IPeoplePickerState {
   currentPicker?: number | string;
   peoplePersonaMenu?: IPersonaProps[];
   peoplePartTitle: string;
-  peoplePartTooltip : string;
-  isLoading : boolean;
-  peopleValidatorText? : string;
+  peoplePartTooltip: string;
+  isLoading: boolean;
+  peopleValidatorText?: string;
   showmessageerror: boolean;
 }
 
