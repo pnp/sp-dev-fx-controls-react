@@ -1,5 +1,5 @@
 {
-  "name": "@sparrow/spfx-controls-react",
+  "name": "sparrow-spfx-controls-react",
   "description": "Sparrow fork of Reusable React controls for SharePoint Framework solutions (https://sharepoint.github.io/sp-dev-fx-controls-react/)",
   "version": "1.0.0",
   "engines": {
