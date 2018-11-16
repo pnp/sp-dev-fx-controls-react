@@ -48,7 +48,6 @@ define([], () => {
 
     peoplePickerComponentTooltipMessage: "Sélecteur de personnes",
     peoplePickerComponentErrorMessage: "Le sélecteur de personnes est obligatoire",
-    peoplePickerComponentTitleText: "Choisissez l'utilisateur(s)",
     peoplePickerSuggestionsHeaderText: 'Personnes suggérées',
     peoplePickerLoadingText: 'Chargement',
 
