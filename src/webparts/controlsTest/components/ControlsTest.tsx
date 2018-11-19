@@ -20,6 +20,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
+import { Maps, ICoordinates, MapType } from '../../../Maps';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -54,17 +55,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         });
       });
 
-      // // Get Authors in the SharePoint Document library -- For People Picker Testing
-      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
-      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
-      // .then(resp => { return resp.json(); })
-      // .then(items => {
-      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
-      //   console.log(emails);
-      //   this.setState({
-      //     authorEmails: emails
-      //   });
-      // });
+    // // Get Authors in the SharePoint Document library -- For People Picker Testing
+    // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+    // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+    // .then(resp => { return resp.json(); })
+    // .then(items => {
+    //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+    //   console.log(emails);
+    //   this.setState({
+    //     authorEmails: emails
+    //   });
+    // });
   }
 
   /**
@@ -92,14 +93,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
-/**
- *
- *Method that retrieves the selected terms from the taxonomy picker and sets state
- * @private
- * @param {IPickerTerms} terms
- * @memberof ControlsTest
- */
-private onServicePickerChange(terms: IPickerTerms): void {
+  /**
+   *
+   *Method that retrieves the selected terms from the taxonomy picker and sets state
+   * @private
+   * @param {IPickerTerms} terms
+   * @memberof ControlsTest
+   */
+  private onServicePickerChange(terms: IPickerTerms): void {
     this.setState({
       initialValues: terms
     });
@@ -110,7 +111,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange = (terms : IPickerTerms) => {
+  private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
       initialValues: terms
     });
@@ -268,42 +269,42 @@ private onServicePickerChange(terms: IPickerTerms): void {
 
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
-                            label="Select your list(s)"
-                            placeHolder="Select your list(s)"
-                            baseTemplate={100}
-                            includeHidden={false}
-                            multiSelect={true}
-                            onSelectionChanged={this.onListPickerChange} />
+                  label="Select your list(s)"
+                  placeHolder="Select your list(s)"
+                  baseTemplate={100}
+                  includeHidden={false}
+                  multiSelect={true}
+                  onSelectionChanged={this.onListPickerChange} />
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
                 <ListItemPicker listId={this.state.selectedList}
-                                     columnInternalName="Title"
-                                     itemLimit={5}
-                                     context={this.props.context}
-                                     onSelectedItem={this.listItemPickerDataSelected} />
+                  columnInternalName="Title"
+                  itemLimit={5}
+                  context={this.props.context}
+                  onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
-                panelTitle="Select Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                  allowMultipleSelections={true}
+                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  panelTitle="Select Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
-               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
-                panelTitle="Select Default Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                <TaxonomyPicker
+                  allowMultipleSelections={true}
+                  termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+                  panelTitle="Select Default Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
@@ -320,16 +321,16 @@ private onServicePickerChange(terms: IPickerTerms): void {
                   onChange={this._onTaxPickerChange}
                   isTermSetSelectable={false} />
 
-                  <DefaultButton text="Add" onClick={() => {
-                    this.setState({
-                      initialValues: [{
-                        key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                        name: "HR",
-                        path: "HR",
-                        termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-                      }]
-                    });
-                  }} />
+                <DefaultButton text="Add" onClick={() => {
+                  this.setState({
+                    initialValues: [{
+                      key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                      name: "HR",
+                      path: "HR",
+                      termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                    }]
+                  });
+                }} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
@@ -374,27 +375,37 @@ private onServicePickerChange(terms: IPickerTerms): void {
           selectionMode={SelectionMode.single}
           selection={this._getSelection} />
 
-          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
 
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker"
-            personSelectionLimit={5}
-            // groupName={"Team Site Owners"}
-            showtooltip={true}
-            isRequired={true}
-            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            //defaultSelectedUsers={this.state.authorEmails}
-            selectedItems={this._getPeoplePickerItems}
-            showHiddenInUI={false}
-            principleTypes={[PrincipalType.User]}
-            suggestionsLimit={2} />
+        <PeoplePicker
+          context={this.props.context}
+          titleText="People Picker"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principleTypes={[PrincipalType.User]}
+          suggestionsLimit={2} />
 
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker (disabled)"
-            disabled={true}
-            showtooltip={true} />
+        <PeoplePicker
+          context={this.props.context}
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true} />
+
+        <Maps
+          titleText="Map of London"
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+        // zoom={15}
+        // mapType={MapType.cycle}
+        // width="50"
+        //height={150}
+        />
+
       </div>
     );
   }
