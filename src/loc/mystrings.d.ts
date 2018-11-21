@@ -28,6 +28,9 @@ declare interface IControlStrings {
 
   //Maps
   mapsErrorMessage: string;
+  mapsLoadingText: string;
+  mapsSearchButtonText: string;
+  mapsTitlePrefix: string;
 }
 
 declare module 'ControlStrings' {

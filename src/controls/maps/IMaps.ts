@@ -8,6 +8,10 @@ export interface IMapsProps {
   */
   coordinates: ICoordinates;
   /**
+   * Show search box - which means an API key is needed
+  */
+  searchRelated?: ISearchRelated;
+  /**
    * Zoom level for the maps on display (range 1-15)
    * Users can change zoom after load with scroll
   */
@@ -27,6 +31,10 @@ export interface IMapsProps {
   /**
    * Error message to show
   */
+  loadingMessage?: string;
+  /**
+   * Error message to show
+  */
   errorMessage?: string;
   /**
    * Classname for the maps control
@@ -36,6 +44,28 @@ export interface IMapsProps {
    * Class Name for the Error Section
   */
   errorMessageClassName?: string;
+}
+
+/** 
+ * Component's state
+ */
+export interface IMapsState {
+  coordinates: ICoordinates;
+  address: string;
+  showmessageerror: boolean;
+  status: JSX.Element;
+  loading: boolean;
+}
+
+export interface ISearchRelated {
+  /**
+  * show search text box 
+ */
+  enableSearch?: boolean;
+  /**
+  * API key from Bing maps
+ */
+  bingAPIKey?: string;
 }
 
 export interface ICoordinates {

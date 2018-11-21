@@ -55,6 +55,9 @@ define([], () => {
     ListItemPickerSelectValue: 'Wähle Wert',
 
     mapsErrorMessage: 'Beim Laden von Karten ist ein Fehler aufgetreten',
+    mapsLoadingText: 'Laden',
+    mapsSearchButtonText: 'Suche',
+    mapsTitlePrefix: 'Karte von',
 
     genericNoResultsFoundText: 'Kein Ergebnis gefunden'
   };

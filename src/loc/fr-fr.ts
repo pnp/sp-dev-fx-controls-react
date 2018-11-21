@@ -55,6 +55,9 @@ define([], () => {
     ListItemPickerSelectValue: 'Sélectionnez une valeur',
 
     mapsErrorMessage: "Une erreur s'est produite lors du chargement des cartes.",
+    mapsLoadingText: 'Chargement',
+    mapsSearchButtonText: 'Chercher',
+    mapsTitlePrefix: 'Carte de',
 
     genericNoResultsFoundText: 'Aucun résultat trouvé'
   };

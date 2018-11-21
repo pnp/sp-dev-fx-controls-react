@@ -400,10 +400,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <Maps
           titleText="Map of London"
           coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-        // zoom={15}
-        // mapType={MapType.cycle}
-        // width="50"
+        //searchRelated={{ enableSearch: true, bingAPIKey: "BING_API_KEY" }}
+        //zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
         //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
       </div>

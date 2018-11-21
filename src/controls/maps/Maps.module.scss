@@ -1,5 +1,19 @@
+ 
+  .searchContainer{
+    margin-bottom: 20px;
+  }
+  
+  .searchTextBox{
+    float: left;
+    width: 80%;
+  }
 
-.maps {
+  .submitButton{
+    float: left;
+    width: 20%;
+  }
+
+
   .errorMessage {
     font-size: 12px;
     font-weight: 400;
@@ -14,4 +28,3 @@
     font-size: 14px;
     margin-right: 5px;
   }
-}
