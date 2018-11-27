@@ -37,7 +37,8 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     disabled={true}
     selectedItems={this._getPeoplePickerItems}
     showHiddenInUI={false}
-    principleTypes={[PrincipalType.User]} />
+    principleTypes={[PrincipalType.User]}
+    resolveDelay={1000} />
 ```
 
 - With the `selectedItems` property you can get the selected People in the Peoplepicker :
@@ -73,6 +74,7 @@ The People picker control can be configured with the following properties:
 | showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. | false |
 | principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
+| resolveDelay | number | no | Add delay to resolve and search users | 1000 |
 
 Enum `PrincipalType`
 
@@ -84,5 +86,6 @@ The `PrincipalType` enum can be used to specify the types of information you wan
 | DistributionList |
 | SecurityGroup |
 | SharePointGroup |
+| All |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)
