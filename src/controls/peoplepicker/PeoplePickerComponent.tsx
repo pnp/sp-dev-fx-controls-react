@@ -1,6 +1,7 @@
 import * as strings from 'ControlStrings';
 import * as React from 'react';
 import { IPeoplePickerProps, IPeoplePickerState, IPeoplePickerUserItem } from './IPeoplePicker';
+import { MockUsers } from './PeoplePickerMockClient';
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePicker';
 import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
@@ -18,15 +19,20 @@ import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar
 import { ValidationState } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
 import { isEqual } from "@microsoft/sp-lodash-subset";
+import SPPeopleSearchService from './PeopleSearchService';
 
 /**
 * PeoplePicker component
 */
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
 
+  private peopleSearchService : SPPeopleSearchService;
+  private suggestionsLimit : number;
   constructor(props: IPeoplePickerProps) {
     super(props);
 
+    this.peopleSearchService = new SPPeopleSearchService(props.context);
+    this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
     telemetry.track('ReactPeoplePicker', {
       groupName: !!props.groupName,
       name: !!props.groupName,
@@ -42,7 +48,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       peoplePartTitle: "",
       peoplePartTooltip: "",
       isLoading: false,
-      showmessageerror: false
+      showmessageerror: false,
+      resolveDelay:  this.props.resolveDelay !== null && this.props.resolveDelay !== undefined ? this.props.resolveDelay : 1000
     };
   }
 
@@ -65,26 +72,26 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   public componentDidUpdate(prevProps : IPeoplePickerProps, prevState : IPeoplePickerState) : void {
     // If defaultSelectedUsers has changed then bind again
-    if (!isEqual(this.props.defaultSelectedUsers, prevProps.defaultSelectedUsers) || !isEqual(this.state.allPersons, prevState.allPersons)) {
+    if (!isEqual(this.props.defaultSelectedUsers, prevProps.defaultSelectedUsers)) {
       // Check if we have results to get from, if not provide a empty array to filter on
-      let userValuesArray: Array<IPeoplePickerUserItem> = this.state.allPersons.length !==0 ? this.state.allPersons : new Array<IPeoplePickerUserItem>();
+      let userValuesArray: Array < IPeoplePickerUserItem > = this.state.allPersons.length !== 0 ? this.state.allPersons : new Array < IPeoplePickerUserItem > ();
 
       // Set Default selected persons
-      let defaultUsers : any = [];
+      let defaultUsers: any = [];
       let defaultPeopleList: IPersonaProps[] = [];
       if (this.props.defaultSelectedUsers) {
-        defaultUsers = this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers);
-        for (const persona of defaultUsers) {
-          let selectedPeople: IPersonaProps = {};
-          assign(selectedPeople, persona);
-          defaultPeopleList.push(selectedPeople);
-        }
+        this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers).then((defaultUsers) => {
+          for (const persona of defaultUsers) {
+            let selectedPeople: IPersonaProps = {};
+            assign(selectedPeople, persona);
+            defaultPeopleList.push(selectedPeople);
+          }
+          this.setState({
+            selectedPersons: defaultPeopleList.length !== 0 ? defaultPeopleList : [],
+            showmessageerror: this.props.isRequired && defaultPeopleList.length === 0
+          });
+        });
       }
-
-      this.setState({
-        selectedPersons : defaultPeopleList.length !== 0 ? defaultPeopleList : [],
-        showmessageerror: this.props.isRequired && defaultPeopleList.length === 0
-      });
     }
   }
 
@@ -101,44 +108,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Retrieve the users for local demo and testing purposes
    */
   private async _loadLocalWorkbenchUsers(): Promise<void> {
-    let _fakeUsers: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
-
-    _fakeUsers.push({
-      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c1",
-      imageUrl: "",
-      imageInitials: "RF",
-      text: "Roger Federer",
-      secondaryText: "roger@tennis.onmicrosoft.com",
-      tertiaryText: "",
-      optionalText: ""
-    });
-    _fakeUsers.push({
-      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c2",
-      imageUrl: "",
-      imageInitials: "RN",
-      text: "Rafael Nadal",
-      secondaryText: "rafael@tennis.onmicrosoft.com",
-      tertiaryText: "",
-      optionalText: ""
-    });
-    _fakeUsers.push({
-      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c3",
-      imageUrl: "",
-      imageInitials: "ND",
-      text: "Novak Djokovic",
-      secondaryText: "novak@tennis.onmicrosoft.com",
-      tertiaryText: "",
-      optionalText: ""
-    });
-    _fakeUsers.push({
-      id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c4",
-      imageUrl: "",
-      imageInitials: "JP",
-      text: "Juan Martin del Potro",
-      secondaryText: "juanmartin@tennis.onmicrosoft.com",
-      tertiaryText: "",
-      optionalText: ""
-    });
+    let _fakeUsers: Array<IPeoplePickerUserItem> = MockUsers;
 
     let personaList: IPersonaProps[] = [];
     for (const persona of _fakeUsers) {
@@ -198,7 +168,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         // Check if items were retrieved
         if (items && items.value && items.value.length > 0) {
 
-          let userValuesArray: Array<IPeoplePickerUserItem> = new Array<IPeoplePickerUserItem>();
+          let userValuesArray: Array < IPeoplePickerUserItem > = new Array < IPeoplePickerUserItem > ();
 
           // Loop over all the retrieved items
           for (let i = 0; i < items.value.length; i++) {
@@ -226,11 +196,29 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
             personaList.push(personaWithMenu);
           }
 
+          // Set Default selected persons
+          let defaultUsers: any = [];
+          let defaultPeopleList: IPersonaProps[] = [];
+          if (this.props.defaultSelectedUsers) {
+            this.getDefaultUsers(userValuesArray, this.props.defaultSelectedUsers).then((defaultUsers) => {
+              for (const persona of defaultUsers) {
+                let selectedPeople: IPersonaProps = {};
+                assign(selectedPeople, persona);
+                defaultPeopleList.push(selectedPeople);
+              }
+              // Update the current state
+              this.setState({
+                selectedPersons: defaultPeopleList.length !== 0 ? defaultPeopleList : [],
+                showmessageerror: this.props.isRequired && defaultPeopleList.length === 0
+              });
+            });
+          }
+
           // Update the current state
           this.setState({
-            allPersons : userValuesArray,
-            peoplePersonaMenu : personaList,
-            mostRecentlyUsedPersons : personaList.slice(0,5)
+            allPersons: userValuesArray,
+            peoplePersonaMenu: personaList,
+            mostRecentlyUsedPersons: personaList.slice(0, 5)
           });
         }
       }
@@ -289,7 +277,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private _onPersonFilterChanged = (filterText: string, currentPersonas: IPersonaProps[], limitResults?: number): IPersonaProps[] => {
     if (filterText) {
-      let filteredPersonas: IPersonaProps[] = this._filterPersons(filterText);
+      let filteredPersonas: IPersonaProps[] =this._filterPersons(filterText);
       filteredPersonas = this._removeDuplicates(filteredPersonas, currentPersonas);
       filteredPersonas = limitResults ? filteredPersonas.splice(0, limitResults) : filteredPersonas;
       return filteredPersonas;
@@ -356,18 +344,115 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   /**
+   * Method called when an input change happens
+   */
+  private _onInputChange = (input: string): string => {
+    console.log(input);
+    if (!this.props.groupName) {
+      try {
+        let filterValue = {
+          valToCompare: input
+        };
+        let currentAllUsers = this.state.allPersons;
+        let results = currentAllUsers.filter(this.filterUsers, filterValue);
+        if (results.length == 0) {
+          this.searchUsersFromTenant(input).then((searchedPersons) => {
+            if (searchedPersons.length !== 0) {
+              let currentAllUsers = this.state.allPersons;
+              for (let person of searchedPersons) {
+                currentAllUsers = currentAllUsers.concat(person);
+              }
+              let personaList: IPersonaProps[] = [];
+              for (const persona of currentAllUsers) {
+                let personaWithMenu: IPersonaProps = {};
+                assign(personaWithMenu, persona);
+                personaList.push(personaWithMenu);
+              }
+              this.setState({
+                allPersons: currentAllUsers,
+                peoplePersonaMenu: personaList,
+                mostRecentlyUsedPersons: personaList.slice(0, 5)
+              });
+            }
+          }).catch(e => {
+            console.log(e);
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    return input;
+  }
+
+  /**
+   * Search through all users in the tenant
+   * @param searchText 
+   */
+  private async searchUsersFromTenant(searchText : string) : Promise<IPeoplePickerUserItem[]>
+  {
+    return new Promise < IPeoplePickerUserItem[] > ((resolve, reject) => {
+      this.peopleSearchService.searchAllUsers(searchText, this.suggestionsLimit).then((searchedPersons : IPeoplePickerUserItem[]) => {
+        let results: IPeoplePickerUserItem[] = [];
+        let currentAllUsers = this.state.allPersons;
+        for (let person of searchedPersons) {
+          let filterValue = {
+            valToCompare: searchText
+          };
+          let result = currentAllUsers.filter(this.filterUsers, filterValue);
+          if (result.length == 0) {
+            results = results.length !== 0 ? results.concat(person) : [person];
+          }
+        }
+        resolve(results);
+      }).catch((e) => {
+        console.log(e);
+      });
+    });
+  }
+
+  /**
    * Gets the default users based on the provided email address.
    * Adds emails that are not found with a random generated User Id
    *
    * @param userValuesArray
    * @param selectedUsers
    */
-  private getDefaultUsers(userValuesArray: any[], selectedUsers: string[]): any {
+  private async getDefaultUsers(userValuesArray: any[], selectedUsers: string[]): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
     let defaultuserValuesArray: any[] = [];
     for (let i = 0; i < selectedUsers.length; i++) {
       const obj = { valToCompare: selectedUsers[i] };
       const length = defaultuserValuesArray.length;
-      defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(userValuesArray.filter(this.filterUsers, obj)) : userValuesArray.filter(this.filterUsers, obj);
+      let result = userValuesArray.filter(this.filterUsers, obj);
+      if(result.length !== 0)
+      {
+        defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(result) : [result];
+      }
+      else
+      {
+         await this.searchUsersFromTenant(selectedUsers[i]).then((searchedPersons) => {
+            if(searchedPersons.length !== 0)
+            {
+              for(let searchedPerson of searchedPersons)
+              {
+                let defaultSearchedUser = {
+                  id: searchedPerson.id, //just a random number
+                  imageUrl: searchedPerson.imageUrl,
+                  imageInitials: searchedPerson.imageInitials,
+                  text: searchedPerson.text, //Name
+                  secondaryText: searchedPerson.secondaryText, //Role
+                  tertiaryText: searchedPerson.tertiaryText, //status
+                  optionalText: searchedPerson.optionalText //stgring
+                };
+                defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(defaultSearchedUser) : [defaultSearchedUser];
+              }
+            }
+         }).catch((e) => {
+           console.log(e);
+         });
+      }
+
       if (length === defaultuserValuesArray.length) {
         const defaultUnknownUser = [{
           id: 1000 + i, //just a random number
@@ -378,17 +463,18 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           tertiaryText: "", //status
           optionalText: "" //stgring
         }];
-        defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(defaultUnknownUser) : defaultUnknownUser;
+        defaultuserValuesArray = defaultuserValuesArray.length !== 0 ? defaultuserValuesArray.concat(defaultUnknownUser) : [defaultUnknownUser];
       }
     }
-    return defaultuserValuesArray;
+    resolve(defaultuserValuesArray);
+    });
   }
 
   /**
    * Filters Users based on email
    */
   private filterUsers = function (value: any, index: number, ar: any[]) {
-    if (value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1) {
+    if (value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1 || value.text.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1) {
       return value;
     }
   };
@@ -401,7 +487,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       suggestionsHeaderText: strings.peoplePickerSuggestionsHeaderText,
       noResultsFoundText: strings.genericNoResultsFoundText,
       loadingText: strings.peoplePickerLoadingText,
-      resultsMaximumNumber: this.props.suggestionsLimit ? this.props.suggestionsLimit : 5
+      resultsMaximumNumber: this.props.suggestionsLimit ? this.props.suggestionsLimit : 5,
+      searchingText : "Fetching users"
     };
 
 
@@ -420,10 +507,12 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           inputProps={{
             'aria-label': 'People Picker'
           }}
+          onInputChange = {this._onInputChange}
           selectedItems={this.state.selectedPersons}
           itemLimit={this.props.personSelectionLimit || 1}
           disabled={this.props.disabled}
-          onChange={this._onPersonItemsChange} />
+          onChange={this._onPersonItemsChange}
+          resolveDelay={this.state.resolveDelay} />
       </div>
     );
 

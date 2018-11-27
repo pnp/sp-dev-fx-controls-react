@@ -34,6 +34,10 @@ export interface IPeoplePickerProps {
    */
   suggestionsLimit?: number;
   /**
+   * Specify the user / group types to retrieve
+   */
+  resolveDelay?: number;
+  /**
    * Selection Limit of Control
    */
   personSelectionLimit?: number;
@@ -100,6 +104,7 @@ export interface IPeoplePickerState {
   isLoading: boolean;
   peopleValidatorText?: string;
   showmessageerror: boolean;
+  resolveDelay : number;
 }
 
 export interface IPeoplePickerUserItem {

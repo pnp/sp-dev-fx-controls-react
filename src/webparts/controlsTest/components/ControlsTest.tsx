@@ -439,7 +439,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selectedItems={this._getPeoplePickerItems}
           showHiddenInUI={false}
           principleTypes={[PrincipalType.User]}
-          suggestionsLimit={2} />
+          suggestionsLimit={2} 
+          resolveDelay = {1000}/>
 
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (disabled)"
