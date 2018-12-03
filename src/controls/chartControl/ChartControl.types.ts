@@ -238,7 +238,7 @@ export interface IChartAccessibility {
  * Use this interface if you'd like to create a plugin
  */
 export interface IChartPlugin {
-  beforeInit?(chartInstance: Chart, options?: {}): void;
+   beforeInit?(chartInstance: Chart, options?: {}): void;
   afterInit?(chartInstance: Chart, options?: {}): void;
 
   beforeUpdate?(chartInstance: Chart, options?: {}): void;
@@ -250,32 +250,34 @@ export interface IChartPlugin {
   beforeDatasetsUpdate?(chartInstance: Chart, options?: {}): void;
   afterDatasetsUpdate?(chartInstance: Chart, options?: {}): void;
 
-  beforeDatasetUpdate?(chartInstance: Chart, options?: {}): void;
-  afterDatasetUpdate?(chartInstance: Chart, options?: {}): void;
-
+  // This is called at the start of a render.
+  // It is only called once, even if the animation will run
+  // for a number of frames. Use beforeDraw or afterDraw
+  // to do something on each animation frame
   beforeRender?(chartInstance: Chart, options?: {}): void;
   afterRender?(chartInstance: Chart, options?: {}): void;
 
+  // Easing is for animation
   beforeDraw?(chartInstance: Chart, easing: string, options?: {}): void;
   afterDraw?(chartInstance: Chart, easing: string, options?: {}): void;
 
+  // Before the datasets are drawn but after scales are drawn
   beforeDatasetsDraw?(chartInstance: Chart, easing: string, options?: {}): void;
   afterDatasetsDraw?(chartInstance: Chart, easing: string, options?: {}): void;
 
-  beforeDatasetDraw?(chartInstance: Chart, easing: string, options?: {}): void;
-  afterDatasetDraw?(chartInstance: Chart, easing: string, options?: {}): void;
-
+  // Called before drawing the `tooltip`. If any plugin returns `false`,
+  // the tooltip drawing is cancelled until another `render` is triggered.
   beforeTooltipDraw?(chartInstance: Chart, tooltipData?: {}, options?: {}): void;
+  // Called after drawing the `tooltip`. Note that this hook will not,
+  // be called if the tooltip drawing has been previously cancelled.
   afterTooltipDraw?(chartInstance: Chart, tooltipData?: {}, options?: {}): void;
 
+  // Called when an event occurs on the chart
   beforeEvent?(chartInstance: Chart, event: Event, options?: {}): void;
   afterEvent?(chartInstance: Chart, event: Event, options?: {}): void;
 
-  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}): void;
+  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: any): void;
   destroy?(chartInstance: Chart): void;
-
-  /** @deprecated Use `afterLayout` instead. */
-  afterScaleUpdate?(chartInstance: Chart, options?: {}): void;
 }
 
 /**
