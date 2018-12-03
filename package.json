@@ -23,6 +23,8 @@
     "@pnp/odata": "^1.0.1",
     "@pnp/sp": "^1.0.1",
     "@pnp/telemetry-js": "1.0.0",
+    "@types/chart.js": "^2.7.40",
+    "chart.js": "^2.7.3",
     "lodash": "^4.17.4",
     "office-ui-fabric-react": "~5.120.0"
   },
