@@ -205,7 +205,7 @@ For example:
 ## Implementation
 
 ### ChartControl Properties
-The ChartControl can be configured with the following properties:
+The ChartControl control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
@@ -220,6 +220,21 @@ The ChartControl can be configured with the following properties:
 | onClick | (event?: MouseEvent, activeElements?: Array<{}>) => void | no | Optional callback method that get called when a user clicks on the chart |
 | onHover | (chart: Chart, event: MouseEvent, activeElements: Array<{}>) => void | no | Optional callback method that get called when a user hovers the chart |
 | onResize | (chart: Chart, newSize: ChartSize) => void | no | Optional callback method that get called when the window containing the ChartXontrol resizes |
+
+You can call the following methods to interact with the chart after it has been initialized:
+
+| Method | Type | Description |
+| ---- | ---- | ---- |
+| clear |  void | Will clear the chart canvas. Used extensively internally between animation frames, but you might find it useful. |
+| getCanvas | () => HTMLCanvasElement | Return the canvass element that contains the chart |
+| getChart | () => Chart | Returns the Chart.js instance |
+| getDatasetAtEvent | (e: MouseEvent) => Array<{}> | Looks for the element under the event point, then returns all elements from that dataset.   This is used internally for 'dataset' mode highlighting |
+| getElementAtEvent | (e: MouseEvent) => {} | Calling getElementAtEvent(event) passing an argument of an event will return the single element at the event position. For example, you can use with `onClick` event handlers. |
+| getElementsAtEvent | (e: MouseEvent) => Array<{}> | Looks for the element under the event point, then returns all elements at the same data index. This is used internally for 'label' mode highlighting. Calling `getElementsAtEvent(event)` passing an argument of an event will return the point elements that are at that the same position of that event. |
+| renderChart | (config: {}) => void | Triggers a redraw of all chart elements.  Note, this does not update elements for new data. Use .update() in that case. |
+| stop | void | Use this to stop any current animation loop.   This will pause the chart during any current animation frame. |
+| toBase64Image | () => string | Returns a base 64 encoded string of the chart in it's current state. |
+| update | (config?: number \| boolean \| string) => void | Triggers an update of the chart. This can be safely called after updating the data object. This will update all scales, legends, and then re-render the chart. |
 
 ### IChartAccessibility
 
@@ -271,7 +286,34 @@ Defines the type of chart that will be rendered. For more information what data 
 | Radar | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
 | Scatter | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
+### IChartPlugin
 
+The easiest way to customize a chart is to use the plugin functionality provided by Chart.js. In order to use a plugin, simply pass an array of objects that implement the `IChartPlugin` interface to the `plugins` property of the ChartControl.
+
+If a hook is listed as cancellable, you can return `false` to cancel the event.
+
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| afterDatasetsDraw    | (chartInstance: Chart, easing: string, options?: {}) => void | no | Called after the datasets are drawn but after scales are drawn.  |
+| afterDatasetUpdate   | (chartInstance: Chart, options?: {}) => void | no | Called after a dataset was updated.   |
+| afterDraw            | (chartInstance: Chart, easing: string, options?: {}) => void | no | Called after an animation frame was drawn.   |
+| afterEvent           | (chartInstance: Chart, event: Event, options?: {}) => void | no | Called after an event occurs on the chart.   |
+| afterInit | (chartInstance: Chart, options?: {}) => void | no | Called after a chart initializes |
+| afterLayout          | (chartInstance: Chart, options?: {}) => void | no | Called after the chart layout was rendered.   |
+| afterRender          | (chartInstance: Chart, options?: {}) => void | no | Called after a rander.    |
+| afterTooltipDraw     | (chartInstance: Chart, tooltipData?: {}, options?: {}) => void | no | Called after drawing the `tooltip`. Note that this hook will not be called if the tooltip drawing has been previously cancelled.   |
+| afterUpdate | (chartInstance: Chart, options?: {}) => void | no | Called after a chart updates |
+| beforeDatasetsDraw | (chartInstance: Chart, easing: string, options?: {}) => void | no | Called before the datasets are drawn but after scales are drawn. Cancellable.    |
+| beforeDatasetUpdate| (chartInstance: Chart, options?: {}) => void | no | Called before a dataset is updated. Cancellable.   |
+| beforeDraw         | (chartInstance: Chart, easing: string, options?: {}) => void | no | Called before an animation frame is drawn.  |
+| beforeEvent        | (chartInstance: Chart, event: Event, options?: {}) => void | no | Called when an event occurs on the chart. Cancellable.   |
+| beforeInit | (chartInstance: Chart, options?: {}) => void | no | Called before a chart initializes |
+| beforeLayout         | (chartInstance: Chart, options?: {}) => void | no | Called before rendering the chart's layout. Cancellable.   |
+| beforeRender       | (chartInstance: Chart, options?: {}) => void | no | Called at the start of a render. It is only called once, even if the animation will run for a number of frames. Use beforeDraw or afterDraw to do something on each animation frame. Cancellable.    |
+| beforeTooltipDraw  | (chartInstance: Chart, tooltipData?: {}, options?: {}) => void | no | Called before drawing the `tooltip`. Cancellable. If it returns `false`,  tooltip drawing is cancelled until another `render` is triggered.   |
+| beforeUpdate | (chartInstance: Chart, options?: {}) => void | no | Called before updating the chart. Cancellable. |
+| destroy              | (chartInstance: Chart) => void | no | Called when a chart is destroyed.  |
+| resize             | (chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}) => void | no | Called when a chart resizes. Cancellable. |
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ChartControl)
