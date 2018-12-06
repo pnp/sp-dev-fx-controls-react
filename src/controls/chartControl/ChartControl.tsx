@@ -62,7 +62,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     this._destroyChart();
   }
 
-  /**
+   /**
    * shouldComponentUpdate lifecycle hook
    * @param nextProps
    * @param nextState
@@ -72,14 +72,18 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       options,
       plugins,
       className,
-      accessibility } = this.props;
+      accessibility,
+    useTheme,
+  palette } = this.props;
     return data !== nextProps.data ||
       options !== nextProps.options ||
       plugins !== nextProps.plugins ||
       className !== nextProps.className ||
+      useTheme !== nextProps.useTheme ||
+      palette !== nextProps.palette ||
       accessibility !== nextProps.accessibility;
   }
-
+  
   public render(): React.ReactElement<IChartControlProps> {
     const {
       data,
