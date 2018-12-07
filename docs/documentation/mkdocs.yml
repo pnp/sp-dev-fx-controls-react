@@ -2,6 +2,7 @@ site_name: '@pnp/spfx-controls-react'
 nav:
   - Home: 'index.md'
   - Controls:
+    - ChartControl: 'controls/ChartControl.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'

@@ -19,7 +19,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   constructor(props: IMapProps) {
     super(props);
 
-    telemetry.track('Map', {});
+    telemetry.track('ReactMap', {});
 
     this.state = {
       coordinates: {
