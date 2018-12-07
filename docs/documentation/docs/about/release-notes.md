@@ -1,5 +1,15 @@
 # Releases
 
+## 1.11.0
+
+**Fixes**
+
+- `IFrameDialog`: fix for spinner which keeps appearing on the iframe
+
+### Contributors
+
+Special thanks to our contributor: [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.10.0
 
 **New control(s)**

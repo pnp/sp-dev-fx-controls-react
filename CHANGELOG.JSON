@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "`IFrameDialog`: fix for spinner which keeps appearing on the iframe"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Alex Terentiev](https://github.com/AJIXuMuK)"
+      ]
     },
     {
       "version": "1.10.0",
