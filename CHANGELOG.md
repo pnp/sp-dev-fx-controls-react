@@ -16,7 +16,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 
