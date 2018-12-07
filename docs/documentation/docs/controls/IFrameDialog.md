@@ -49,5 +49,13 @@ The IFrameDialog component can be configured with the following properties:
 | iframeOnload | iframeOnLoad?: (iframe: any) => {} | no | iframe's onload event handler |
 | width | string | yes | iframe's width |
 | heigth | string | yes | iframe's height |
+| allowFullScreen | boolean | no | Specifies if iframe content can be displayed in a full screen |
+| allowTransparency | boolean | no | Specifies if transparency is allowed in iframe |
+| marginHeight | number | no | Specifies the top and bottom margins of the content of an iframe |
+| marginWidth | number | no | Specifies the left and right margins of the content of an iframe |
+| name | string | no | Specifies the name of an iframe |
+| sandbox | string | no | Enables an extra set of restrictions for the content in an iframe |
+| scrolling | string | no | Specifies whether or not to display scrollbars in an iframe |
+| seamless | string | no | When present, it specifies that the iframe should look like it is a part of the containing document (no borders or scrollbars) |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FileTypeIcon)
