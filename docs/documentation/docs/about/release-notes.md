@@ -12,7 +12,7 @@
 
 ### Contributors
 
-Special thanks to our contributor: [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 
