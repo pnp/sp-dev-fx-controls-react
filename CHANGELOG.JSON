@@ -3,7 +3,9 @@
     {
       "version": "1.11.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`Map`: Newly introduced map control is available [#14](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/14)"
+        ],
         "enhancements": [
           "`PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)"
         ],

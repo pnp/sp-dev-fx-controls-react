@@ -2,6 +2,10 @@
 
 ## 1.11.0
 
+**New control(s)**
+
+- `Map`: Newly introduced map control is available [#14](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/14)
+
 **Enhancements**
 
 - `PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)
