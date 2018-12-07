@@ -235,7 +235,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           updateProperty={this.props.updateProperty} />
 
 
-        <ChartControl type={ChartType.HorizontalBar}
+        <ChartControl type={ChartType.Bar}
                       data={{
                             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
                             datasets: [{

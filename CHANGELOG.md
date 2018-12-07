@@ -5,6 +5,7 @@
 **New control(s)**
 
 - `Map`: Newly introduced map control is available [#14](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/14)
+- `ChartControl`: Newly introduced control to render charts [#15](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/15)
 
 **Enhancements**
 
@@ -16,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 
