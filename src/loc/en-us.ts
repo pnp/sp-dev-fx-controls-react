@@ -32,7 +32,7 @@ define([], () => {
       "L_RelativeDateTime_XDaysFuture": "{0} day from now||{0} days from now",
       "L_RelativeDateTime_XDays": "{0} day ago||{0} days ago",
       "L_RelativeDateTime_XDaysFutureIntervals": "1||2-",
-      "L_RelativeDateTime_XDaysIntervals":  "1||2-",
+      "L_RelativeDateTime_XDaysIntervals": "1||2-",
       "L_RelativeDateTime_Today": "Today"
     },
     "SendEmailTo": "Send an email to {0}",
@@ -52,6 +52,11 @@ define([], () => {
     peoplePickerLoadingText: 'Loading',
 
     ListItemPickerSelectValue: 'Select value',
+
+    mapsErrorMessage: 'There was an error while loading the map',
+    mapsLoadingText: 'Loading',
+    mapsSearchButtonText: 'Search',
+    mapsTitlePrefix: 'Map of',
 
     genericNoResultsFoundText: 'No results found'
   };
