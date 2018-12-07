@@ -2,9 +2,13 @@
 
 ## 1.11.0
 
+**Enhancements**
+
+- `PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)
+
 **Fixes**
 
-- `IFrameDialog`: fix for spinner which keeps appearing on the iframe
+- `IFrameDialog`: fix for spinner which keeps appearing on the iframe [#154](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/154)
 
 ### Contributors
 
