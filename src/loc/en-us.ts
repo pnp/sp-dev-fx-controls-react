@@ -48,7 +48,6 @@ define([], () => {
 
     peoplePickerComponentTooltipMessage: "People Picker",
     peoplePickerComponentErrorMessage: "Required Field",
-    peoplePickerComponentTitleText: "Pick the user(s)",
     peoplePickerSuggestionsHeaderText: 'Suggested People',
     peoplePickerLoadingText: 'Loading',
 

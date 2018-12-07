@@ -15,7 +15,7 @@ export interface IPeoplePickerProps {
   /**
    * Text of the Control
   */
-  titleText: string;
+  titleText?: string;
   /**
    * Web Absolute Url of source site
    */
