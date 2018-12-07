@@ -233,11 +233,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
 
-        <Map titleText="Map of London"
+        <Map titleText="New map control"
              coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
              enableSearch={true}
-             mapType={MapType.cycle}
-             zoom={15}
+             mapType={MapType.normal}
+            //  zoom={15}
             //mapType={MapType.cycle}
             //width="50"
             //height={150}

@@ -6,8 +6,8 @@ export interface IMapProps {
   */
   titleText?: string;
   /**
-   * Corodinates required of the Control
-  */
+   * Coordinates required for rendering the control
+   */
   coordinates: ICoordinates;
   /**
    * Show search box - which means an API key is needed

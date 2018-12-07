@@ -7,6 +7,7 @@ nav:
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
+    - Map: 'controls/Map.md'
     - Placeholder: 'controls/Placeholder.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
