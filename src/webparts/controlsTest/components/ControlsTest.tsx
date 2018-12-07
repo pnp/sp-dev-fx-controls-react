@@ -274,6 +274,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
              coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
              enableSearch={true}
              mapType={MapType.normal}
+             onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
             //  zoom={15}
             //mapType={MapType.cycle}
             //width="50"

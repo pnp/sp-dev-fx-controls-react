@@ -40,6 +40,7 @@ The `Map` control can be configured with the following properties:
 | errorMessage | string | no | Custom error message. | |
 | mapsClassName | string | no | Custom CSS class name. | |
 | errorMessageClassName | string | no | Custom CSS error class name. | |
+| onUpdateCoordinates | (coordinates: ICoordinates) => void | no | Callback to let your solution knows the new coordinates when a search was performed. | |
 
 `ICoordinates` interface:
 

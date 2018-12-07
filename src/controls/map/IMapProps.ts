@@ -46,4 +46,8 @@ export interface IMapProps {
    * Class Name for the Error Section
   */
   errorMessageClassName?: string;
+  /**
+   * Get an update when the coordinates are updated
+   */
+  onUpdateCoordinates?: (coordinates: ICoordinates) => void;
 }

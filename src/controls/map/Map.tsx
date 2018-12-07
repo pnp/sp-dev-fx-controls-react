@@ -126,13 +126,20 @@ export class Map extends React.Component<IMapProps, IMapState> {
       if (mapData && mapData.length > 0) {
         const location = mapData[0];
 
+        const coordinates = {
+          latitude: parseFloat(location.lat),
+          longitude: parseFloat(location.lon)
+        };
+
         this.setState({
-          coordinates: {
-            latitude: parseFloat(location.lat),
-            longitude: parseFloat(location.lon)
-          },
+          coordinates,
           showmessageerror: false
         });
+
+        // Check if the control needs to send an update
+        if (this.props.onUpdateCoordinates) {
+          this.props.onUpdateCoordinates(coordinates);
+        }
       }
     } catch (error) {
       console.error(error);
