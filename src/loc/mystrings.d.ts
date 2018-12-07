@@ -10,7 +10,7 @@ declare interface IControlStrings {
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
   WebPartTitleLabel: string;
-  DateTime:{[key: string]: string};
+  DateTime: { [key: string]: string };
   SendEmailTo: string;
   StartChatWith: string;
   Contact: string;
@@ -24,6 +24,12 @@ declare interface IControlStrings {
   TaxonomyPickerTermSetLabel: string;
 
   ListItemPickerSelectValue: string;
+
+  //Maps
+  mapsErrorMessage: string;
+  mapsLoadingText: string;
+  mapsSearchButtonText: string;
+  mapsTitlePrefix: string;
 }
 
 declare module 'ControlStrings' {
