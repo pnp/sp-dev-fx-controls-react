@@ -18,10 +18,10 @@
     "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js"
   },
   "dependencies": {
-    "@pnp/common": "^1.0.1",
-    "@pnp/logging": "^1.0.1",
-    "@pnp/odata": "^1.0.1",
-    "@pnp/sp": "^1.0.1",
+    "@pnp/common": "1.0.1",
+    "@pnp/logging": "1.0.1",
+    "@pnp/odata": "1.0.1",
+    "@pnp/sp": "1.0.1",
     "@pnp/telemetry-js": "1.0.0",
     "@types/chart.js": "2.7.40",
     "chart.js": "2.7.3",
