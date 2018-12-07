@@ -1,0 +1,48 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+//@import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss";
+// exporting all these variables allows us to pick-up
+// these values from within the code
+// (we're trying to avoid hard-coding styles in the code)
+:export {
+  defaultFontColor: $ms-color-neutralSecondary;
+  defaultFontFamily: $ms-font-family-fallbacks;
+  defaultFontSize: $ms-font-size-m;
+  lineColor: $ms-color-neutralLighter;
+  titleColor: $ms-color-neutralSecondary;
+  titleFont: $ms-font-family-fallbacks;
+  titleFontSize: $ms-font-size-m;
+  legendColor: $ms-color-neutralTertiary;
+  legendFont: $ms-font-family-fallbacks;
+  legendFontSize: $ms-font-size-s;
+  tooltipFontSize: $ms-font-size-s;
+  tooltipFont: $ms-font-family-fallbacks;
+  tooltipBodyColor:$ms-color-white;
+  tooltipTitleFont: $ms-font-family-fallbacks;
+  tooltipTitleColor: $ms-color-white;
+  tooltipTitleFontSize: $ms-font-size-s;
+  tooltipFooterColor: $ms-color-white;
+  tooltipFooterFont: $ms-font-family-fallbacks;
+  tooltipFooterFontSize: $ms-font-size-s;
+  tooltipBackgroundColor: $ms-color-neutralPrimary;
+  tooltipBorderColor: $ms-color-neutralPrimary;
+  scaleFontColor: $ms-color-neutralSecondary;
+  scaleFont: $ms-font-family-fallbacks;
+  scaleFontSize: $ms-font-size-s;
+}
+
+.chartComponent {
+  &.themed {
+    background-color: "[theme: bodyBackground, default: #ffffff]";
+  }
+}
+
+// Renders an invisible table to everyone but people who use a screen reader
+.accessibleTable {
+  position: 'absolute';
+  left: -10000;
+  top: 'auto';
+  width: 1;
+  height: 1;
+  overflow: 'hidden';
+  display: none;
+}
