@@ -242,13 +242,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     if (this.props.onClick !== undefined) {
       if (options.onClick === undefined) {
         options.onClick = this.props.onClick;
-      } else {
-        // we really shouldn't have English text here
-        // but we're trying to warn people
-        // we could also just ignore the settings quietly
-        console.warn('You should pick either options.onClick'
-          + ' or the chart control\'s onClick property'
-          + ' -- not both. The value specified in options.onClick will be used.');
       }
     }
 
@@ -258,10 +251,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         options.onHover = (event: MouseEvent, activeElements: {}[]) => {
           this.props.onHover(this.getChart(), event, activeElements);
         };
-      } else {
-        console.warn('You should pick either options.onHover'
-          + ' or the chart control\'s onHover property'
-          + ' -- not both. The value specific in options.onHover will be used.');
       }
     }
 
@@ -273,10 +262,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         options.onResize = (newSize: ChartSize) => {
           this.props.onResize(this.getChart(), newSize);
         };
-      } else {
-        console.warn('You should pick either options.onResize'
-          + ' or the chart control\'s onResize property'
-          + ' not both. The value specific in options.onResize will be used.');
       }
     }
 
