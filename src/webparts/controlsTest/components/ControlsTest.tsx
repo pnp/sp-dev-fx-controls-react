@@ -237,14 +237,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (pre-set global users)"
                       principalTypes={[PrincipalType.User]}
-                      defaultSelectedUsers={["admin@estruyfdev2.onmicrosoft.com", "test@estruyfdev2.onmicrosoft.com"]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
                       selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (pre-set local users)"
                       webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
                       principalTypes={[PrincipalType.User]}
-                      defaultSelectedUsers={["admin@estruyfdev2.onmicrosoft.com", "test@estruyfdev2.onmicrosoft.com"]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
                       selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
