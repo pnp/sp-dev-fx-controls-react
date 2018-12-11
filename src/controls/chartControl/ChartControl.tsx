@@ -17,7 +17,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     // We want accessibility on by default
     // -- it's the law in some countries!!!
     accessibility: {
-      display: true
+      enable: true
     },
     useTheme: true,
     palette: ChartPalette.OfficeColorful1,
@@ -46,7 +46,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       type: !!props.type,
       className: !!props.className,
       palette: !!props.palette,
-      accessibility: !!props.accessibility.display
+      accessibility: !!props.accessibility.enable
     });
   }
 
@@ -102,28 +102,30 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    */
   public render(): React.ReactElement<IChartControlProps> {
     const {
-      data,
-      options,
       type,
       accessibility,
-      useTheme
+      useTheme,
+      options,
+      data
     } = this.props;
 
-    const alternateText: string = accessibility && accessibility.alternateText;
+    const alternateText: string = accessibility!.alternateText;
 
     return (
       <div className={css(styles.chartComponent, (useTheme ? styles.themed : null), this.props.className)} >
         <canvas ref={this._linkCanvas} role='img' aria-label={alternateText} />
         {
-          accessibility.display === undefined || accessibility.display ? (
-              <AccessibleChartTable chartType={type}
-                                    data={data}
-                                    chartOptions={options}
-                                    caption={accessibility.caption}
-                                    summary={accessibility.summary}
-                                    onRenderTable={accessibility.onRenderTable} />
-            ) : null
-          }
+          accessibility.enable === undefined || accessibility.enable ? (
+            <AccessibleChartTable
+              chartType={type}
+              data={data}
+              chartOptions={options}
+              className={accessibility.className}
+              caption={accessibility.caption}
+              summary={accessibility.summary}
+              onRenderTable={accessibility.onRenderTable} />
+          ) : null
+        }
       </div>
     );
   }

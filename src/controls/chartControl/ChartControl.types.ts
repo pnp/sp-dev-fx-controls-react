@@ -210,7 +210,13 @@ export interface IChartAccessibility {
    * screen readers
    * @default true
    */
-  display?: boolean;
+  enable?: boolean;
+
+  /**
+   * Allows you to overwrite the default classname
+   * of the accessible table
+   */
+  className?: string;
 
   /**
    * Provides a caption for the accessible table

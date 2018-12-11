@@ -18,6 +18,8 @@ import {
   OFFICE_MONOCHROMATIC12,
   OFFICE_MONOCHROMATIC13
 } from './ChartColorPalettes';
+import * as Color from 'color';
+
 
 /**
  * Generates color palettes matching those you get within Office charts
@@ -35,55 +37,55 @@ export class PaletteGenerator {
     let paletteColors: string[] = [];
     switch (palette) {
       case ChartPalette.OfficeColorful4:
-        paletteColors = this._generateRepeatingPattern(OFFICE_COLORFUL4, desiredLength);
+        paletteColors = this.generateRepeatingPattern(OFFICE_COLORFUL4, desiredLength);
         break;
       case ChartPalette.OfficeColorful3:
-        paletteColors = this._generateRepeatingPattern(OFFICE_COLORFUL3, desiredLength);
+        paletteColors = this.generateRepeatingPattern(OFFICE_COLORFUL3, desiredLength);
         break;
       case ChartPalette.OfficeColorful2:
-        paletteColors = this._generateRepeatingPattern(OFFICE_COLORFUL2, desiredLength);
+        paletteColors = this.generateRepeatingPattern(OFFICE_COLORFUL2, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic1:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC1, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC1, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic2:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC2, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC2, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic3:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC3, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC3, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic4:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC4, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC4, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic5:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC5, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC5, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic6:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC6, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC6, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic7:
-        paletteColors = this._generateRepeatingPattern(OFFICE_MONOCHROMATIC7, desiredLength);
+        paletteColors = this.generateRepeatingPattern(OFFICE_MONOCHROMATIC7, desiredLength);
         break;
         case ChartPalette.OfficeMonochromatic8:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC8, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC8, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic9:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC9, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC9, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic10:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC10, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC10, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic11:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC11, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC11, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic12:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC12, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC12, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic13:
-        paletteColors = this._generateNonRepeatingGradient(OFFICE_MONOCHROMATIC13, desiredLength);
+        paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC13, desiredLength);
         break;
       default:
-        paletteColors = this._generateRepeatingPattern(OFFICE_COLORFUL1, desiredLength);
+        paletteColors = this.generateRepeatingPattern(OFFICE_COLORFUL1, desiredLength);
         break;
     }
 
@@ -97,7 +99,7 @@ export class PaletteGenerator {
    * @param array the array to make bigger
    * @param desiredLength the desired length
    */
-  private static _generateRepeatingPattern(array: string[], desiredLength: number): string[] {
+  public static generateRepeatingPattern(array: string[], desiredLength: number): string[] {
     if (desiredLength === 0) {
       return [];
     }
@@ -120,7 +122,7 @@ export class PaletteGenerator {
    * @param colorRange the colors to start and end with
    * @param numSteps the number of gradient steps to generate
    */
-  private static _generateNonRepeatingGradient(colorRange: string[], numSteps: number): string[] {
+  public static generateNonRepeatingGradient(colorRange: string[], numSteps: number): string[] {
     const startHex: string = colorRange[0];
     const endHex: string = colorRange[colorRange.length - 1];
     const startRGB: number[] = this._hexToRGB(startHex);
@@ -138,6 +140,17 @@ export class PaletteGenerator {
     return colors;
   }
 
+/**
+* Converts an array of colors to a semi-opaque version
+* @param colors an array of colors to convert
+* @param alphaValue a value between 0 and 1 indicating the opacity (alpha)
+*/
+  public static alpha(colors: string[], alphaValue: number): string[] {
+    return colors.map((color: string) => {
+      return Color(color).alpha(alphaValue).toString();
+    });
+  }
+  
   /**
    * Interpolates between two colors
    * @param color1 start color

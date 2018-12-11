@@ -1,6 +1,6 @@
 # ChartControl control
 
-This control makes it easy to integrate Chart.js charts into your web parts. It offers most of the functionality available with Chart.js.
+This control makes it easy to integrate [Chart.js](https://www.chartjs.org) charts into your web parts. It offers most of the functionality available with Chart.js.
 
 The control automatically renders responsive charts, uses the environment's theme colors, and renders a hidden table for users with impaired vision.
 
@@ -249,7 +249,7 @@ The `IChartAccessibility` interface implements the following properties:
 | ---- | ---- | ---- | ---- |
 | alternateText | string | no | Optional property to provide an accessible alternate text for the chart. We recommend that you use this property with `summary` |
 | caption| string | no | Optional property to provide a caption for the accessible table. |
-| display | boolean | no | Optional property to turn on or off the rendering of the accessible table. |
+| enable | boolean | no | Optional property to turn on or off the rendering of the accessible table. |
 | summary | string | no | Optional property to specify the chart's summary. We recommend that you use this property with `alternateText` |
 | onRenderTable | () => JSX.Element | no | Options callback method that allows you to override the accessible table. |
 
@@ -283,11 +283,11 @@ Defines the type of chart that will be rendered. For more information what data 
 
 | Name | Chart.js Equivalent | Description |
 | ---- | ---- | ---- |
-| Bar | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| Bubble | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| Doughnut | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
-| HorizontalBar | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| Line | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
+| [Bar](../BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
+| [Bubble](../BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
+| [Doughnut](../DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| [HorizontalBar](../BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
+| [Line](../LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
 | Pie | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
 | PolarArea | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
 | Radar | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |

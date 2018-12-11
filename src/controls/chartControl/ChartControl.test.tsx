@@ -36,21 +36,39 @@ describe('<ChartControl />', () => {
     done();
   });
 
+  it('Check that the accessible table accepts a custom classname', (done) => {
+    chartControl = mount(<ChartControl type={"bar"} data={dummyData} accessibility={{ className: "customClass"}} />);
+    expect(chartControl.find(`div.customClass`)).to.have.length(1);
+    done();
+  });
+
   it('Check that the accessible table doesn\'t get rendered if disabled', (done) => {
-    chartControl = mount(<ChartControl type={"bar"} data={dummyData} accessibility={{display:false}}  />);
+    chartControl = mount(<ChartControl type={"bar"} data={dummyData} accessibility={{enable:false}}  />);
     expect(chartControl.find(`div.${styles.accessibleTable}`)).to.have.length(0);
     done();
   });
 
   it('Check that an accessible table gets created with the caption matching the title', (done) => {
-    chartControl = mount(<ChartControl type={"bar"} accessibility={{display:true}} options={{title:{ text:dummyTitle}}} data={dummyData}  />);
+    chartControl = mount(<ChartControl type={"bar"} accessibility={{enable:true}} options={{title:{ text:dummyTitle}}} data={dummyData}  />);
     expect(chartControl.find(`div.${styles.accessibleTable} table caption`).text()).to.be.equal(dummyTitle);
     done();
   });
 
   it('Check that an accessible table gets created with a caption', (done) => {
-    chartControl = mount(<ChartControl type={"bar"} accessibility={{display:true, caption: dummyTitle}} data={dummyData}  />);
+    chartControl = mount(<ChartControl type={"bar"} accessibility={{enable:true, caption: dummyTitle}} data={dummyData}  />);
     expect(chartControl.find(`div.${styles.accessibleTable} table caption`).text()).to.be.equal(dummyTitle);
+    done();
+  });
+
+  it('Check that the accessible table has a number of rows matching the number of data elements', (done) => {
+    chartControl = mount(<ChartControl type={"bar"} data={dummyData}  />);
+    expect(chartControl.find(`div.${styles.accessibleTable} table tbody tr`)).to.have.length(4);
+    done();
+  });
+
+  it('Check that the accessible table has only one header row', (done) => {
+    chartControl = mount(<ChartControl type={"bar"} data={dummyData}  />);
+    expect(chartControl.find(`div.${styles.accessibleTable} table thead tr`)).to.have.length(1);
     done();
   });
 
