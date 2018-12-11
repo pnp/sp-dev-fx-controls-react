@@ -234,6 +234,53 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
 
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (pre-set global users)"
+                      principalTypes={[PrincipalType.User]}
+                      defaultSelectedUsers={["admin@estruyfdev2.onmicrosoft.com", "test@estruyfdev2.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (pre-set local users)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      principalTypes={[PrincipalType.User]}
+                      defaultSelectedUsers={["admin@estruyfdev2.onmicrosoft.com", "test@estruyfdev2.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (tenant scoped)"
+                      personSelectionLimit={5}
+                      // groupName={"Team Site Owners"}
+                      showtooltip={true}
+                      isRequired={true}
+                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+                      //defaultSelectedUsers={this.state.authorEmails}
+                      selectedItems={this._getPeoplePickerItems}
+                      showHiddenInUI={false}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      suggestionsLimit={2}
+                      resolveDelay={200}/>
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (local scoped)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      personSelectionLimit={5}
+                      // groupName={"Team Site Owners"}
+                      showtooltip={true}
+                      isRequired={true}
+                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+                      //defaultSelectedUsers={this.state.authorEmails}
+                      selectedItems={this._getPeoplePickerItems}
+                      showHiddenInUI={false}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      suggestionsLimit={2}
+                      resolveDelay={200}/>
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (disabled)"
+                      disabled={true}
+                      showtooltip={true} />
+
 
         <ChartControl type={ChartType.Bar}
                       data={{
@@ -426,25 +473,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selection={this._getSelection} />
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
-
-        <PeoplePicker
-          context={this.props.context}
-          titleText="People Picker"
-          personSelectionLimit={5}
-          // groupName={"Team Site Owners"}
-          showtooltip={true}
-          isRequired={true}
-          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-          //defaultSelectedUsers={this.state.authorEmails}
-          selectedItems={this._getPeoplePickerItems}
-          showHiddenInUI={false}
-          principleTypes={[PrincipalType.User]}
-          suggestionsLimit={2} />
-
-        <PeoplePicker context={this.props.context}
-                      titleText="People Picker (disabled)"
-                      disabled={true}
-                      showtooltip={true} />
       </div>
     );
   }

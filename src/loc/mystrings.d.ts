@@ -1,4 +1,5 @@
 declare interface IControlStrings {
+  PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
   peoplePickerComponentErrorMessage: string;
   peoplePickerSuggestionsHeaderText: string;

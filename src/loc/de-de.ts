@@ -50,6 +50,7 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Benutzerauswahl ist ein Pflichtfeld",
     peoplePickerSuggestionsHeaderText: 'Vorgeschlagene Benutzer',
     peoplePickerLoadingText: 'Laden',
+    PeoplePickerSearchText: 'Fetching users',
 
     ListItemPickerSelectValue: 'Wähle Wert',
 

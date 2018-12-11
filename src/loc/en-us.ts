@@ -50,6 +50,7 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Required Field",
     peoplePickerSuggestionsHeaderText: 'Suggested People',
     peoplePickerLoadingText: 'Loading',
+    PeoplePickerSearchText: 'Fetching users',
 
     ListItemPickerSelectValue: 'Select value',
 
