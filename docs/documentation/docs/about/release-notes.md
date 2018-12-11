@@ -9,6 +9,7 @@
 
 **Enhancements**
 
+- `PeoplePicker`: Allow the people picker to search on site level and on tenant level [#97](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/97)
 - `PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)
 
 **Fixes**
@@ -17,7 +18,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Asish Padhy](https://github.com/AsishP), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 

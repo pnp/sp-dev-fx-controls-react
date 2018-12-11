@@ -8,6 +8,7 @@
           "`ChartControl`: Newly introduced control to render charts [#15](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/15)"
         ],
         "enhancements": [
+          "`PeoplePicker`: Allow the people picker to search on site level and on tenant level [#97](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/97)",
           "`PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)"
         ],
         "fixes": [
@@ -16,6 +17,7 @@
       },
       "contributions": [
         "[Hugo Bernier](https://github.com/hugoabernier)",
+        "[Asish Padhy](https://github.com/AsishP)",
         "[Anoop Tatti](https://github.com/anoopt)",
         "[Alex Terentiev](https://github.com/AJIXuMuK)",
         "[Tse Kit Yam](https://github.com/tsekityam)"
