@@ -50,6 +50,7 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Le sélecteur de personnes est obligatoire",
     peoplePickerSuggestionsHeaderText: 'Personnes suggérées',
     peoplePickerLoadingText: 'Chargement',
+    PeoplePickerSearchText: 'Fetching users',
 
     ListItemPickerSelectValue: 'Sélectionnez une valeur',
 

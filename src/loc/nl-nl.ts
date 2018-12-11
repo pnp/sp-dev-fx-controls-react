@@ -50,6 +50,7 @@ define([], () => {
     peoplePickerComponentErrorMessage: "Verplicht veld",
     peoplePickerSuggestionsHeaderText: 'Voorgestelde personen',
     peoplePickerLoadingText: 'Laden',
+    PeoplePickerSearchText: 'Personen worden opgehaald',
 
     ListItemPickerSelectValue: 'Selecteer veld',
 

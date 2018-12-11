@@ -56,7 +56,7 @@ export interface IPeoplePickerProps {
   /**
    * Method to check value of People Picker text
    */
-  selectedItems?: (items: any[]) => void;
+  selectedItems?: (items: IPersonaProps[]) => void;
   /**
    * Tooltip Message
    */
@@ -87,24 +87,19 @@ export interface IPeoplePickerProps {
   showHiddenInUI?: boolean;
   /**
    * Specify the user / group types to retrieve
+   *
    */
-  principleTypes?: PrincipalType[];
+  principalTypes?: PrincipalType[];
 }
 
 export interface IPeoplePickerState {
-  selectedPersons?: IPersonaProps[];
   mostRecentlyUsedPersons: IPersonaProps[];
-  currentSelectedPersons: IPersonaProps[];
-  allPersons: IPeoplePickerUserItem[];
-  delayResults?: boolean;
-  currentPicker?: number | string;
-  peoplePersonaMenu?: IPersonaProps[];
-  peoplePartTitle: string;
-  peoplePartTooltip: string;
-  isLoading: boolean;
-  peopleValidatorText?: string;
   showmessageerror: boolean;
   resolveDelay : number;
+
+  selectedPersons?: IPersonaProps[];
+  peoplePersonaMenu?: IPersonaProps[];
+  delayResults?: boolean;
 }
 
 export interface IPeoplePickerUserItem {

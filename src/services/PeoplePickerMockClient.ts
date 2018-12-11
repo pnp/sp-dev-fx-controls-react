@@ -1,6 +1,6 @@
-import { IPeoplePickerUserItem } from "./IPeoplePicker";
+import { IPeoplePickerUserItem } from "../PeoplePicker";
 
-export const MockUsers : Array<IPeoplePickerUserItem> = [{
+export const MockUsers : IPeoplePickerUserItem[] = [{
     id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c1",
     imageUrl: "",
     imageInitials: "RF",
@@ -35,18 +35,15 @@ export const MockUsers : Array<IPeoplePickerUserItem> = [{
     secondaryText: "juanmartin@tennis.onmicrosoft.com",
     tertiaryText: "",
     optionalText: ""
-  }]
-
-  export class PeoplePickerMockClient 
-  {
-    public filterPeople = function(value : any, index : number, ar : any[]){
-      if(value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1 || value.text.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1)
-      {
-         return true;
-      }
-      else
-      {
-        return false;
-      }
-    }
   }
+];
+
+export class PeoplePickerMockClient {
+  public filterPeople = function(value : any, index : number, ar : any[]) {
+    if (value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1 || value.text.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+}

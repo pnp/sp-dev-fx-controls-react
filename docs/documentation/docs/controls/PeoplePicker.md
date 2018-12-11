@@ -37,7 +37,7 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     disabled={true}
     selectedItems={this._getPeoplePickerItems}
     showHiddenInUI={false}
-    principleTypes={[PrincipalType.User]}
+    principalTypes={[PrincipalType.User]}
     resolveDelay={1000} />
 ```
 
@@ -64,28 +64,27 @@ The People picker control can be configured with the following properties:
 | errorMessage | string | no | Specify the error message to display | |
 | errorMessageClassName | string | no | applies custom styling to the error message section | |
 | showtooltip | boolean | no | Defines if need a tooltip or not | false |
-| tooltip | string | no | Specify the tooltip message to display | |
+| tooltipMessage | string | no | Specify the tooltip message to display | |
 | tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown | |
-| selectedItems | function | no | get the selected users in the control | |
+| selectedItems | (items: IPersonaProps[]) => void | no | Get the selected users in the control. | |
 | peoplePickerWPclassName | string | no | applies custom styling to the people picker element | |
 | peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only | |
-| defaultSelectedUsers | string[] | no | Default selected user emails | |
-| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. | Current site URL |
+| defaultSelectedUsers | string[] | no | Default selected user emails or login names | |
+| webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. If not provided, the people picker will perform a tenant wide people/group search. When provided it will search users/groups on the provided site. | |
 | showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. | false |
-| principleTypes | PrincipleType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
+| principalTypes | PrincipalType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
-| resolveDelay | number | no | Add delay to resolve and search users | 1000 |
+| resolveDelay | number | no | Add delay to resolve and search users | 200 |
 
 Enum `PrincipalType`
 
 The `PrincipalType` enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.
 
-| Name |
-| ---- |
-| User |
-| DistributionList |
-| SecurityGroup |
-| SharePointGroup |
-| All |
+| Name | Value |
+| ---- | -- -- |
+| User | 1 |
+| DistributionList | 2 |
+| SecurityGroup | 4 |
+| SharePointGroup | 8 |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)
