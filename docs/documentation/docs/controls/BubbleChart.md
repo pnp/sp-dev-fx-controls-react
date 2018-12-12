@@ -42,7 +42,7 @@ For example, to render the chart above, use the following code:
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
   datasets: [
     {
       label: "Bubble",
@@ -61,7 +61,7 @@ const data = {
 };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   legend: {
     display: false
   },
@@ -79,6 +79,27 @@ return (
   />);
 ```
 
+## Dataset Properties
+
+Bubble charts allow each dataset to have different configuration properties.
+
+Some properties can be provided as arrays. When arrays are provided, the settings in the array will be applied to each data element in the same order (e.g.: first value applies to first element, second value to second element, etc.)
+
+| Name                  | Type                                              | Description |
+| ----                  | ----                                              | ---- |
+| backgroundColor       | Color OR Color[]                                  | The bubble's fill color. Default is `'rgba(0,0,0,0.1)'`. |
+| borderColor           | Color OR Color[]                                  | The bubble's border color. Default is `'rgba(0,0,0,0.1)'`. |
+| borderWidth           | number OR number[]                                | The width of the bubble's border. Measured in pixels. Default is `3`.|
+| data                  | { x: number, y:number, r: number}[] | The data to render. Required. |
+| hoverBackgroundColor  | Color OR Color[]                                  | The bubble's background color when a mouse hovers over it. |
+| hoverBorderColor      | Color OR Color[]                                  | The bubble's border color when a mouse hovers over it.  |
+| hoverBorderWidth      | number OR number[]                                | The bubble's border width when a mouse hovers over it. Default is `1`. |
+| hoverRadius      | number OR number[]                                | The bubble's radius when a mouse hovers over it. Default is `4`. |
+| hitRadius      | number OR number[]                                | The bubble's radius when a mouse click event occurs. Default is `1`. |
+| label         | string  | The dataset's label |
+| pointStyle      | `'circle'` <br/>`'cross'`<br/>`'crossRot'`<br/>`'dash'`<br/>`'line'`<br/>`'rect'`<br/>`'rectRounded'`<br/>`'rectRot'`<br/>`'star'`<br/>`'triangle'`<br/>HTMLImageElement<br/>HTMLCanvasElement<br/>HTMLImageElement[]<br/>HTMLCanvasElement[]  | Style of bubble. Default is `'circle'` |
+| rotation      | number OR number[]                                | The bubble's rotation, in degrees. Default is `0`. |
+| radius      | number OR number[]                                | The bubble's radius. Default is `3`.  |
 
 ## Data Structure
 

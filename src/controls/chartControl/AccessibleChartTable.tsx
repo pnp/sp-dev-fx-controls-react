@@ -9,7 +9,6 @@ import { escape } from '@microsoft/sp-lodash-subset';
 export class AccessibleChartTable extends React.Component<IAccessibleChartTableProps, IAccessibleChartTableState> {
   public render(): React.ReactElement<IAccessibleChartTableProps> {
     const {
-      summary,
       onRenderTable,
       data
     } = this.props;
@@ -30,7 +29,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
     return (
       <div className={css(styles.accessibleTable, this.props.className)}>
         {tableBody && tableBody.length > 0 ?
-          <table summary={escape(summary)} >
+          <table >
             {this._renderCaption()}
             <thead>
               {this._renderTableHeader()}
@@ -48,8 +47,17 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
    * Adds a caption to the top of the accessible table
    */
   private _renderCaption(): JSX.Element {
+    const { summary } = this.props;
     const title: string = this._getAccessibleTitle();
-    return title ? <caption>{escape(title)}</caption> : undefined;
+    const summaryElement: JSX.Element = summary && <span>{escape(summary)}</span>;
+
+
+    return title || summary ?
+    <caption>
+    {escape(title)}
+    { title && summaryElement && <br/>}
+    { summaryElement }
+    </caption> : undefined;
   }
 
   /**

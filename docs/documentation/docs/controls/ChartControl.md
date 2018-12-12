@@ -32,11 +32,11 @@ import { ChartControl } from "@pnp/spfx-controls-react/lib/ChartControl";
 
 ### Specifying Data
 
-The `data` property should have at least the following:
+The `data` property typically consist of:
 
-- `labels`: An array of strings providing the data labels (e.g.: `['January', 'February', 'March', 'April', 'May', 'June', 'July']`)
+- `labels`: (Optional) An array of strings providing the data labels (e.g.: `['January', 'February', 'March', 'April', 'May', 'June', 'July']`)
 - `datasets`: At least one dataset, which contains:
-    - `label`: A label for the data (e.g.: `'My First Dataset'`)
+    - `label`: (Optional) A label for the data (e.g.: `'My First Dataset'`)
     - `data`: An array of numbers (e.g.: `[65, 59, 80, 81, 56, 55, 40]`)
 
 See [below](#charttype) for more information on what types of data are required for each type of chart.
@@ -47,7 +47,7 @@ The majority of Chart.js its options like `data`, `options`, `type`, and `plugin
 
 To find out what parameters you'll need to pass with each type of chart, visit the [Chart.Js documentation](https://www.chartjs.org/docs/latest/). 
 
-For example, to reproduce following Javascript code sample from Chart.js:
+For example, to reproduce following Javascript code sample from [Chart.js](https://www.chartjs.org):
 
 ```Html
 <canvas id="myChart" width="400" height="400"></canvas>
@@ -130,6 +130,7 @@ You would use the following Typescript code:
                     }
                 }} />
 ```
+
 The code above will produce the following chart:
 
 ![ChartControl using code from the Chart.js site](../assets/ChartControlSample1.png)
@@ -165,7 +166,7 @@ You can also simplify the majority of code samples by omitting the `color` prope
 ```
 ![ChartControl using the default color palette](../assets/ChartControlSample2.png)
 
-You can also set the `palette` property to choose one of the Office color palettes.
+You can also set the `palette` property to choose one of the Office color palettes. For example, Specifying `ChartPalette.OfficeMonochromatic1` will produce the following chart:
 
 ![ChartControl using the Office Monochromatic 1 color palette](../assets/ChartControlSample3.png)
 
@@ -248,6 +249,7 @@ The `IChartAccessibility` interface implements the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | alternateText | string | no | Optional property to provide an accessible alternate text for the chart. We recommend that you use this property with `summary` |
+| className| string | no | Optional property to specify a custom CSS class for the accessible table. |
 | caption| string | no | Optional property to provide a caption for the accessible table. |
 | enable | boolean | no | Optional property to turn on or off the rendering of the accessible table. |
 | summary | string | no | Optional property to specify the chart's summary. We recommend that you use this property with `alternateText` |
@@ -283,19 +285,19 @@ Defines the type of chart that will be rendered. For more information what data 
 
 | Name | Chart.js Equivalent | Description |
 | ---- | ---- | ---- |
-| [Bar](../BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| [Bubble](../BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| [Doughnut](../DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
-| [HorizontalBar](../BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| [Line](../LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
-| Pie | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
-| PolarArea | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
-| Radar | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
-| Scatter | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
+| [Bar](./BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
+| [Bubble](./BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
+| [Doughnut](./DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| [HorizontalBar](./BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
+| [Line](./LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
+| [Pie](./PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
+| [PolarArea](./PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
+| [Radar](./RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
+| [Scatter](./ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
 ### IChartPlugin
 
-The easiest way to customize a chart is to use the plugin functionality provided by Chart.js. In order to use a plugin, simply pass an array of objects that implement the `IChartPlugin` interface to the `plugins` property of the ChartControl.
+The easiest way to customize a chart is to use the [plugin functionality](https://www.chartjs.org/docs/latest/notes/extensions.html) provided by [Chart.js](https://www.chartjs.org/). In order to use a plugin, simply pass an array of objects that implement the `IChartPlugin` interface to the `plugins` property of the ChartControl.
 
 If a hook is listed as cancellable, you can return `false` to cancel the event.
 
@@ -321,6 +323,5 @@ If a hook is listed as cancellable, you can return `false` to cancel the event.
 | beforeUpdate | (chartInstance: Chart, options?: {}) => void | no | Called before updating the chart. Cancellable. |
 | destroy | (chartInstance: Chart) => void | no | Called when a chart is destroyed.  |
 | resize | (chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}) => void | no | Called when a chart resizes. Cancellable. |
-
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ChartControl)

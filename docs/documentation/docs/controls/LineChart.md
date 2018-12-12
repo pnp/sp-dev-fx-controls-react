@@ -42,7 +42,7 @@ For example, to render the chart above, use the following code:
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
   labels:
     [
       'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -61,7 +61,7 @@ const data = {
 };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   legend: {
     display: false,
   },
@@ -82,16 +82,16 @@ return (
 ## Variations
 
 ### Curved lines
+
 ![Curved Line Chart](../assets/LineChartCurved.png)
 
 You can render curved lines instead of straight lines by removing the `lineTension` setting from each dataset, or by setting it to a value other than `0`.
 
 For example, to render the above chart, use the following code:
 
-
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
   labels:
     [
       'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -113,7 +113,7 @@ const data = {
 };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   legend: {
     display: false,
   },
@@ -139,7 +139,7 @@ To render an area chart, change the `fill` setting of the dataset to `true`.
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
   labels:
     [
       'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -158,7 +158,7 @@ const data = {
 };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   legend: {
     display: false,
   },
@@ -188,7 +188,7 @@ For example, the code below will set the `fill` value to `start`:
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
   labels:
     [
       'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -207,7 +207,7 @@ const data = {
 };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   legend: {
     display: false,
   },
@@ -236,7 +236,7 @@ Which renders the following chart:
 If your bar chart has multiple datasets, you can render it as a stacked area chart by changing the settings on the Y axis to enable stacking, as follows:
 
 ```TypeScript
-const options = {
+const options: Chart.ChartOptions = {
   scales: {
       yAxes: [{
           stacked: true
@@ -250,7 +250,7 @@ In order to render each dataset with a different color, make sure to specify the
 For example, to render the above chart, use the following code:
 
 ```TypeScript
-const data = {
+const data: Chart.ChartData = {
   labels:
     [
       'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -284,7 +284,7 @@ const data = {
   ]
 };
 
-const options =  {
+const options: Chart.ChartOptions =  {
   legend: {
     display: false,
   },
@@ -321,7 +321,7 @@ In addition to the `fill` values listed above, you can specify how each dataset 
 For example, if you use declare your datasets with the following fill values:
 
 ```TypeScript
-const data = {
+const data: Chart.ChartData = {
       labels:
         [
           'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -360,10 +360,47 @@ Will cause the first dataset to fill from the bottom of the chart, while the sec
 
 ![Stacked Area Chart with fill values `start` and `'-1'`](../assets/StackedAreaChartFillStartMinus1.png)
 
+## Dataset Properties
+
+Line charts allow each dataset to have different configuration properties.
+
+Some properties can be provided as arrays. When arrays are provided, the settings in the array will be applied to each data element in the same order (e.g.: first value applies to first element, second value to second element, etc.)
+
+| Name                  | Type                                              | Description |
+| ----                  | ----                                              | ---- |
+| label                 | string                                            | Dataset label. Appears in the legend and tooltips. |
+| xAxisID               | string                                            | The axis ID for the X axis. If not specified, the dataset will be rendered on the first available X axis. If an ID is specified, the dataset will be rendered on that axis |
+| yAxisID               | string                                            | The axis ID for the Y axis. If not specified, the dataset will be rendered on the first available Y axis. If an ID is specified, the dataset will be rendered on that axis |
+| backgroundColor       | Color OR Color[]                                  | The fill color under the line.  |
+| borderColor           | Color OR Color[]                                  | The color of the line.  |
+| borderWidth           | number OR number[]                                | The width of the line. Measured in pixels. |
+| borderDash            | number[]                                          | The length and spacing of dashes. Consist of an array of numbers that specify distances to alternately draw a line and a gap. If array length is odd, elements of the array will be repeated. If an empty array is provided, lines will be solid. |
+| borderDashOffset      | number                                            | The distance to offset dashes. |
+| borderCapStyle        | `'butt'`<br/>`'round'`<br/>`'square'`             | Specifies the end of the lines. Default is `'butt`'. |
+| borderJoinStyle       | `'bevel'`<br/>`'round'`<br/>`'miter'`             | Determines the shape used to join two line segments where they meet. Default is `'miter'`. |
+| cubicInterpolationMode  | `'default'`<br/>`'monotone'`                    | Determins which algorithm is used to interpolate a smooth curve between data points. |
+| data | number[] <br/> Point[] | The chart's data. Required. |
+| fill      | `false`<br/>number<br/>string<br/>`'start'`<br/>`'end'`<br/>`'origin'` | Controls how the dataset's area is filled.  |
+| lineTension      | number                                | Ttension of the Bezier curve line. `0` renders straight lines. Ignored if `cubicInterpolationMode` is set to `monotone`.  |
+| pointBackgroundColor  | Color OR Color[]                                  | The point's fill color. |
+| pointBorderColor      | Color OR Color[]                                  | The point's border color.  |
+| pointBorderWidth      | number OR number[]                                | The point's border width.  |
+| pointRadius  | number OR number[]                                  | The point's fill color. |
+| pointStyle      | `'circle'` <br/>`'cross'`<br/>`'crossRot'`<br/>`'dash'`<br/>`'line'`<br/>`'rect'`<br/>`'rectRounded'`<br/>`'rectRot'`<br/>`'star'`<br/>`'triangle'`<br/>HTMLImageElement<br/>HTMLCanvasElement<br/>HTMLImageElement[]<br/>HTMLCanvasElement[]  | Style of point. |
+| pointRotation      | number OR number[]                                | The point's roation, in degrees.  |
+| pointHitRadius      | number OR number[]                                | The point's border width.  |
+| pointHoverBackgroundColor  | Color OR Color[]                                  | The point's background color when a mouse hovers over it. |
+| pointHoverBorderColor      | Color OR Color[]                                  | The point's border color when a mouse hovers over it.  |
+| pointHoverBorderWidth      | number OR number[]                                | The point's border width when a mouse hovers over it.  |
+| pointHoverRadius      | number OR number[]                                | The point's radius width when a mouse hovers over it.  |
+| showLine      | boolean                                | The point's radius width when a mouse hovers over it.  |
+| spanGaps      | boolean                                | The point's radius width when a mouse hovers over it.  |
+| steppedLine      | boolean<br/>`'before'`<br/>`'after'`| Determines whether the line is shown as a stepped line. Any value but `false` overrides the `lineTension` setting.  |
 
 ## Data Structure
 
 ### number[]
+
 The `data` property of each dataset item consists of an array of numbers. Each point in the array corresponds to the matching label on the x axis:
 
 ```TypeScript
@@ -384,7 +421,24 @@ data: [{
     x: 15,
     y: 10
 }]
+
 ```
+
+#### Point Configuration
+
+Point elements can be configured to change their appearance using the following configuration options:
+
+| Name              | Type    | Default             | Description |
+| ----              | ----    | ----                | ---- |
+| radius            | number  | 3                   | Point radius. |
+| pointStyle        | `'circle'` <br/>`'cross'`<br/>`'crossRot'`<br/>`'dash'`<br/>`'line'`<br/>`'rect'`<br/>`'rectRounded'`<br/>`'rectRot'`<br/>`'star'`<br/>`'triangle'`  | `'circle'`          | Style of point. |
+| rotation          | number  | 0                   | Rotation of the point, in degrees. |
+| backgroundColor   | Color   | `'rgba(0,0,0,0.1)`  | Fill color.  |
+| borderWidth       | number  | 1                   | Stroke width.  |
+| borderColor       | Color   | `'rgba(0,0,0,0.1)`  | Stroke color. |
+| hitRadius         | number  | 1                   | Extra radius added around the point to make it easier to detect mouse events. |
+| hoverRadius       | number  | 4                   | Point radius, when mouse hovers over point. |
+| hoverBorderWidth  | number  | 1                   | Stroke width, when mouse hovers over point.  |
 
 ## Configuration
 
@@ -394,7 +448,6 @@ The following configuration options are specific to line charts:
 | ----                      | ----              | ----    | ---- |
 | showLines             | boolean            | true     | Indicates whether a line will be drawn between each data point. A value of `false` will not render lines. |
 | spanGaps        | boolean            | false     | Indicates whether invalid number values (`NaN`) will cause a break in the line . A value of `false` will not span data gaps and cause a break in the line. |
-
 
 ## For More Information
 

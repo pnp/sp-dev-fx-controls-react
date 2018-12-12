@@ -42,7 +42,7 @@ For example, to render the chart above, use the following code:
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
     labels:
       [
         'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -79,7 +79,7 @@ const data = {
   };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   scales:
   {
     yAxes:
@@ -106,7 +106,7 @@ You can omit the `backgroundColor`, `borderColor`, and `borderWidth` values from
 
 ```TypeScript
 // set the data
-const data = {
+const data: Chart.ChartData = {
     labels:
       [
         'January', 'February', 'March', 'April', 'May', 'June', 'July'
@@ -122,7 +122,7 @@ const data = {
   };
 
 // set the options
-const options = {
+const options: Chart.ChartOptions = {
   scales:
   {
     yAxes:
@@ -163,7 +163,7 @@ As with all charts, the `backgroundColor` and `borderColor` values can be one of
 If your bar chart has multiple datasets, you can render it as a stacked bar chart by changing the settings on the X and Y axes to enable stacking, as follows:
 
 ```TypeScript
-const options = {
+const options: Chart.ChartOptions = {
   scales: {
       xAxes: [{
           stacked: true
@@ -178,7 +178,7 @@ const options = {
 In order to render each dataset with a different color, make sure to specify the `backgroundColor` and `borderColor` settings for each dataset:
 
 ```TypeScript
-const data = {
+const data: Chart.ChartData = {
       labels:
         [
           'January',
@@ -245,9 +245,68 @@ To render a horizontal bar, use the following code:
 
 Using the same options as above. Note that horizontal bar charts can also be stacked using the same approach as above.
 
+## Dataset Properties
+
+Bar charts allow each dataset to have different configuration properties.
+
+Some properties can be provided as arrays. When arrays are provided, the settings in the array will be applied to each data element in the same order (e.g.: first value applies to first element, second value to second element, etc.)
+
+For example, the following code will apply the value `'red:'` to every element in the dataset.
+
+```TypeScript
+const data: Chart.ChartData = {
+      datasets:
+        [
+          {
+            label: 'My First Dataset',
+            data:
+              [
+                10,
+                20,
+                30,
+              ],
+            backgroundColor: 'red'
+          }
+    };
+```
+
+Whereas the following code will set `10` to `backgroundColor` `'red'`, `20` to `'green'`, and `30` to `'blue'`.
+
+```TypeScript
+const data: Chart.ChartData = {
+      datasets:
+        [
+          {
+            label: 'My First Dataset',
+            data:
+              [
+                10,
+                20,
+                30,
+              ],
+            backgroundColor: ['red', 'green', 'blue']
+          }
+    };
+```
+
+| Name                  | Type                                              | Description |
+| ----                  | ----                                              | ---- |
+| label                 | string                                            | Dataset label. Appears in the legend and tooltips. |
+| xAxisID               | string                                            | The axis ID for the X axis. If not specified, the dataset will be rendered on the first available X axis. If an ID is specified, the dataset will be rendered on that axis |
+| yAxisID               | string                                            | The axis ID for the Y axis. If not specified, the dataset will be rendered on the first available Y axis. If an ID is specified, the dataset will be rendered on that axis |
+| backgroundColor       | Color OR Color[]                                  | The bar fill color.  |
+| borderColor           | Color OR Color[]                                  | The bar border color.  |
+| borderWidth           | number OR number[]                                | The bar's border width. Measured in pixels. |
+| borderSkipped         | `'bottom'`<br/>`'left'`<br/>`'top'`<br/>`'right'` | Specifies which border should be hidden when rendering bars. This option is useful when custom-rendering charts. |
+| data | number[] <br/>{ t: Date, y: number}| The chart's data. Required. |
+| hoverBackgroundColor  | Color OR Color[]                                  | The bar's fill color when a mouse hovers over it |
+| hoverBorderColor      | Color OR Color[]                                  | The bar's border color when a mouse hovers over it.  |
+| hoverBorderWidth      | number OR number[]                                | The bar's border width when a mouse hovers over it.  |
+
 ## Data Structure
 
 ### number[]
+
 The `data` property of each dataset item consists of an array of numbers. Each point in the array corresponds to the matching label on the x axis:
 
 ```TypeScript
@@ -284,14 +343,14 @@ data: [
 ```
 
 (add the following to your imports:)
+
 ```TypeScript
 import * as moment from 'moment';
 ```
 
 To render horizontal axis as a time series, use the following options:
 
-```TypeScript 
-
+```TypeScript
 options={{
     scales: {
       xAxes: [{
@@ -333,7 +392,6 @@ The following configuration options are specific to bar charts:
 | barThickness              | number OR `"flex"`  |         | Sets the thickness of each bar. If the default value is used, the bars will be equally sized to match the smallest interval.<br/>If `number` value is provided, the bar width will be set in pixels and `barPercentage` and `categoryPercentage` will be ignored.<br/> If `"flex"` is used, the widths are calculated automatically based on the previous and following samples so that they take the full available widths without overlap |
 | maxBarThickness           | number            |         | Sets the maximum width of every bar.  |
 | gridLines.offsetGridLines | boolean           | true    | `true`, bars will fall between the grid lines; grid lines will shift to the left by  half a tick interval.<br/>If `false`, grid line will align with the middle of the bars.  |
-
 
 ## For More Information
 

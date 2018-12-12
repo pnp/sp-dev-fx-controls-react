@@ -66,7 +66,7 @@ export class PaletteGenerator {
       case ChartPalette.OfficeMonochromatic7:
         paletteColors = this.generateRepeatingPattern(OFFICE_MONOCHROMATIC7, desiredLength);
         break;
-        case ChartPalette.OfficeMonochromatic8:
+      case ChartPalette.OfficeMonochromatic8:
         paletteColors = this.generateNonRepeatingGradient(OFFICE_MONOCHROMATIC8, desiredLength);
         break;
       case ChartPalette.OfficeMonochromatic9:
@@ -140,17 +140,21 @@ export class PaletteGenerator {
     return colors;
   }
 
-/**
-* Converts an array of colors to a semi-opaque version
-* @param colors an array of colors to convert
-* @param alphaValue a value between 0 and 1 indicating the opacity (alpha)
-*/
-  public static alpha(colors: string[], alphaValue: number): string[] {
-    return colors.map((color: string) => {
-      return Color(color).alpha(alphaValue).toString();
-    });
+  /**
+  * Converts a color or array of colors to a semi-opaque version
+  * @param colors a single color, or array of colors to convert
+  * @param alphaValue a value between 0 and 1 indicating the opacity (alpha)
+  */
+  public static alpha(colors: string | string[], alphaValue: number): string | string[] {
+    if (colors instanceof Array) {
+      return colors.map((color: string) => {
+        return Color(color).alpha(alphaValue).toString();
+      });
+    } else {
+      return Color(colors).alpha(alphaValue).toString();
+    }
   }
-  
+
   /**
    * Interpolates between two colors
    * @param color1 start color

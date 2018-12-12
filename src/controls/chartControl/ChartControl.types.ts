@@ -282,7 +282,7 @@ export interface IChartPlugin {
   beforeEvent?(chartInstance: Chart, event: Event, options?: {}): void;
   afterEvent?(chartInstance: Chart, event: Event, options?: {}): void;
 
-  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: any): void;
+  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}): void;
   destroy?(chartInstance: Chart): void;
 }
 
