@@ -11,6 +11,7 @@
 
 - `PeoplePicker`: Allow the people picker to search on site level and on tenant level [#97](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/97)
 - `PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)
+- Updated the `office-ui-fabric-react` to the same version as in SPFx 1.7.0
 
 **Fixes**
 

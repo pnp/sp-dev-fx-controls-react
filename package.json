@@ -26,7 +26,7 @@
     "@types/chart.js": "2.7.40",
     "chart.js": "2.7.3",
     "lodash": "4.17.4",
-    "office-ui-fabric-react": "~5.120.0"
+    "office-ui-fabric-react": "5.131.0"
   },
   "devDependencies": {
     "@microsoft/decorators": "~1.3.0",
