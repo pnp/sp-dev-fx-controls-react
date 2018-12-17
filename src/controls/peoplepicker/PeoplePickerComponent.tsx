@@ -3,23 +3,14 @@ import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
 import styles from './PeoplePickerComponent.module.scss';
 import SPPeopleSearchService from "../../services/PeopleSearchService";
-import { IPeoplePickerProps, IPeoplePickerState, IPeoplePickerUserItem } from './IPeoplePicker';
+import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
-import { SPHttpClient } from '@microsoft/sp-http';
-import { assign } from 'office-ui-fabric-react/lib/Utilities';
-import { IUsers } from './IUsers';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
-import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
-import { IPersonaWithMenu } from "office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePickerItems/PeoplePickerItem.types";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
-import { MessageBarType } from "office-ui-fabric-react/lib/components/MessageBar";
-import { ValidationState } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
-import { isEqual, cloneDeep, uniqBy } from "@microsoft/sp-lodash-subset";
-import { MockUsers } from "../../services/PeoplePickerMockClient";
+import { isEqual, uniqBy } from "@microsoft/sp-lodash-subset";
 
 /**
  * PeoplePicker component
@@ -75,7 +66,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (this.props.defaultSelectedUsers && this.props.defaultSelectedUsers.length) {
       let selectedPersons: IPersonaProps[] = [];
       for (const userValue of this.props.defaultSelectedUsers) {
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
         if (userResult) {
           selectedPersons.push(userResult);
         }
@@ -85,7 +76,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         selectedPersons
       });
     } else {
-      const results = await this.peopleSearchService.searchPeople("", this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName);
+      const results = await this.peopleSearchService.searchPeople("", this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
       this.setState({
         mostRecentlyUsedPersons: results.slice(0, this.suggestionsLimit)
       });
@@ -98,7 +89,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> =>  {
     if (searchText.length > 2) {
-      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName);
+      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;
       const filteredPersons = this.removeDuplicates(results, selectedPersons);

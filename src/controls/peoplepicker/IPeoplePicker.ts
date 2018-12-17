@@ -87,9 +87,12 @@ export interface IPeoplePickerProps {
   showHiddenInUI?: boolean;
   /**
    * Specify the user / group types to retrieve
-   *
    */
   principalTypes?: PrincipalType[];
+  /**
+   * When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search
+   */
+  ensureUser?: boolean;
 }
 
 export interface IPeoplePickerState {

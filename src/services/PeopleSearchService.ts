@@ -5,21 +5,22 @@ import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
 import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
-import { cloneDeep } from "@microsoft/sp-lodash-subset";
+import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
 
 /**
  * Service implementation to search people in SharePoint
  */
 export default class SPPeopleSearchService {
-  private context: WebPartContext | ExtensionContext;
   private cachedPersonas: { [property: string]: IUserInfo[] };
+  private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
 
   /**
    * Service constructor
    */
-  constructor(pageContext: WebPartContext | ExtensionContext) {
-    this.context = pageContext;
+  constructor(private context: WebPartContext | ExtensionContext) {
     this.cachedPersonas = {};
+    this.cachedLocalUsers = {};
+    this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
   }
 
   /**
@@ -34,7 +35,7 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       const mockUsers = await this.searchPeopleFromMock(email);
@@ -47,7 +48,7 @@ export default class SPPeopleSearchService {
         return (userResults && userResults.length > 0) ? userResults[0] : null;
       } else {
         /* Global tenant search will be performed */
-        const userResults = await this.searchTenant(email, 1, principalTypes);
+        const userResults = await this.searchTenant(email, 1, principalTypes, ensureUser);
         return (userResults && userResults.length > 0) ? userResults[0] : null;
       }
     }
@@ -56,7 +57,7 @@ export default class SPPeopleSearchService {
   /**
    * Search All Users from the SharePoint People database
    */
-  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null): Promise<IPeoplePickerUserItem[]> {
+  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.searchPeopleFromMock(query);
@@ -67,7 +68,7 @@ export default class SPPeopleSearchService {
         return await this.localSearch(siteUrl, query, principalTypes, showHiddenInUI, groupName);
       } else {
         /* Global tenant search will be performed */
-        return await this.searchTenant(query, maximumSuggestions, principalTypes);
+        return await this.searchTenant(query, maximumSuggestions, principalTypes, ensureUser);
       }
     }
   }
@@ -149,7 +150,7 @@ export default class SPPeopleSearchService {
   /**
    * Tenant search
    */
-  private async searchTenant(query: string, maximumSuggestions: number, principalTypes: PrincipalType[]): Promise<IPeoplePickerUserItem[]> {
+  private async searchTenant(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
       const userRequestUrl: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
@@ -187,9 +188,23 @@ export default class SPPeopleSearchService {
             values = JSON.parse(userDataResp.value);
           }
 
+          // Filter out "UNVALIDATED_EMAIL_ADDRESS"
+          values = values.filter(v => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS"));
+
+          // Check if local user IDs need to be retrieved
+          if (ensureUser) {
+            for (const value of values) {
+              const id = await this.ensureUser(value.Key || value.EntityData.SPGroupID);
+              value.Key = id;
+            }
+          }
+
+          // Filter out NULL keys
+          values = values.filter(v => v.Key !== null);
+
           const userResults = values.map(element => {
             switch (element.EntityType) {
-              case "User":
+              case 'User':
                 let email : string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
                 return {
                   id: element.Key,
@@ -216,7 +231,7 @@ export default class SPPeopleSearchService {
                 } as IPeoplePickerUserItem;
               default:
                 return {
-                  id: element.EntityData.SPGroupID,
+                  id: element.Key,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
                   secondaryText: element.EntityData.AccountName
@@ -234,6 +249,37 @@ export default class SPPeopleSearchService {
       console.error("PeopleSearchService::searchTenant: error occured while fetching the users.");
       return [];
     }
+  }
+
+  /**
+   * Retrieves the local user ID
+   *
+   * @param userId
+   */
+  private async ensureUser(userId: string): Promise<number> {
+    const siteUrl = this.context.pageContext.web.absoluteUrl;
+    if (this.cachedLocalUsers && this.cachedLocalUsers[siteUrl]) {
+      const users = this.cachedLocalUsers[siteUrl];
+      const userIdx = findIndex(users, u => u.LoginName === userId);
+      if (userIdx !== -1) {
+        return users[userIdx].Id;
+      }
+    }
+
+    const restApi = `${siteUrl}/_api/web/ensureuser`;
+    const data = await this.context.spHttpClient.post(restApi, SPHttpClient.configurations.v1, {
+      body: JSON.stringify({ 'logonName': userId })
+    });
+
+    if (data.ok) {
+      const user: IUserInfo = await data.json();
+      if (user && user.Id) {
+        this.cachedLocalUsers[siteUrl].push(user);
+        return user.Id;
+      }
+    }
+
+    return null;
   }
 
   /**

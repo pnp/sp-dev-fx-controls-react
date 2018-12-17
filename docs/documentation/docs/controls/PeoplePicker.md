@@ -73,6 +73,7 @@ The People picker control can be configured with the following properties:
 | webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. If not provided, the people picker will perform a tenant wide people/group search. When provided it will search users/groups on the provided site. | |
 | showHiddenInUI | boolean | no | Show users which are hidden from the UI. By default these users/groups hidden for the UI will not be shown. | false |
 | principalTypes | PrincipalType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
+| ensureUser | boolean | no | When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search. | false |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
 
@@ -81,7 +82,7 @@ Enum `PrincipalType`
 The `PrincipalType` enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.
 
 | Name | Value |
-| ---- | -- -- |
+| ---- | ---- |
 | User | 1 |
 | DistributionList | 2 |
 | SecurityGroup | 4 |
