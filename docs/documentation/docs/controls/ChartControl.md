@@ -14,13 +14,14 @@ Here is an example of the control in action:
 - Import the following module to your component:
 
 ```TypeScript
-import { ChartControl } from "@pnp/spfx-controls-react/lib/ChartControl";
+import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
 ```
 
 - Use the `ChartControl` control in your code as follows:
 
 ```TypeScript
-<ChartControl type='bar'
+<ChartControl 
+  type={ChartType.Bar}
   data={{
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [{
@@ -84,7 +85,8 @@ var myChart = new Chart(ctx, {
 You would use the following Typescript code:
 
 ```TypeScript
-<ChartControl type={ChartType.Bar}
+<ChartControl 
+  type={ChartType.Bar}
   data={{
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
