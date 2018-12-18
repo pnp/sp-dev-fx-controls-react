@@ -9,26 +9,10 @@ Pie charts are divided into segments, each of which shows the proportional value
 To create a pie chart, add the ChartControl import:
 
 ```TypeScript
-import { ChartControl } from "@pnp/spfx-controls-react/lib/ChartControl";
-```
-
-Then render the ChartControl:
-
-```TypeScript
-<ChartControl
-    type='pie'
-    data={data}
-    options={options}
-  />
-```
-
-Alternatively, you can use the following import:
-
-```TypeScript
 import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
 ```
 
-Followed by:
+Then render the ChartControl:
 
 ```TypeScript
  <ChartControl
