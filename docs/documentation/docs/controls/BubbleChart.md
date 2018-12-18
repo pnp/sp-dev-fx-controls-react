@@ -9,26 +9,10 @@ Bubble chart show elements across three dimensions. Each bubble in the chart is 
 To create a bubble chart, add the ChartControl import:
 
 ```TypeScript
-import { ChartControl } from "@pnp/spfx-controls-react/lib/ChartControl";
-```
-
-Then render the ChartControl:
-
-```TypeScript
-<ChartControl
-    type='bubble'
-    data={data}
-    options={options}
-  />
-```
-
-Alternatively, you can use the following import:
-
-```TypeScript
 import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
 ```
 
-Followed by:
+Then render the ChartControl:
 
 ```TypeScript
  <ChartControl
