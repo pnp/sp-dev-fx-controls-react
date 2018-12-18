@@ -1,6 +1,6 @@
 # ChartControl control
 
-This control makes it easy to integrate Chart.js charts into your web parts. It offers most of the functionality available with Chart.js.
+This control makes it easy to integrate [Chart.js](https://www.chartjs.org) charts into your web parts. It offers most of the functionality available with Chart.js.
 
 The control automatically renders responsive charts, uses the environment's theme colors, and renders a hidden table for users with impaired vision.
 
@@ -21,73 +21,62 @@ import { ChartControl } from "@pnp/spfx-controls-react/lib/ChartControl";
 
 ```TypeScript
 <ChartControl type='bar'
-              data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                  label: 'My First dataset',
-                  data: [65, 59, 80, 81, 56, 55, 40]
-                }]
-              }} />
+  data={{
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [{
+      label: 'My First dataset',
+      data: [65, 59, 80, 81, 56, 55, 40]
+    }]
+  }} />
 ```
-
-### Specifying Data
-
-The `data` property should have at least the following:
-
-- `labels`: An array of strings providing the data labels (e.g.: `['January', 'February', 'March', 'April', 'May', 'June', 'July']`)
-- `datasets`: At least one dataset, which contains:
-    - `label`: A label for the data (e.g.: `'My First Dataset'`)
-    - `data`: An array of numbers (e.g.: `[65, 59, 80, 81, 56, 55, 40]`)
-
-See [below](#charttype) for more information on what types of data are required for each type of chart.
 
 ### Compatibility with Chart.js
 
-The majority of Chart.js its options like `data`, `options`, `type`, and `plugins` will work the same way.
+The majority of Chart.js its options like `data`, `options`, `type`, and `plugins` will work the same way as is -- except that you use TypeScript syntax.
 
-To find out what parameters you'll need to pass with each type of chart, visit the [Chart.Js documentation](https://www.chartjs.org/docs/latest/). 
+To find sample code that you can use, visit the [Chart.Js documentation](https://www.chartjs.org/docs/latest/).
 
-For example, to reproduce following Javascript code sample from Chart.js:
+For example, to reproduce following Javascript code sample from [Chart.js](https://www.chartjs.org):
 
 ```Html
 <canvas id="myChart" width="400" height="400"></canvas>
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+  type: 'bar',
+  data: {
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [{
+      label: '# of Votes',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+            beginAtZero:true
         }
+      }]
     }
+  }
 });
 </script>
 ```
@@ -96,43 +85,136 @@ You would use the following Typescript code:
 
 ```TypeScript
 <ChartControl type={ChartType.Bar}
-              data={{
-                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                }}
-                options={{
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    }
-                }} />
+  data={{
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+    }]
+  }}
+  options={{
+    scales: {
+        yAxes: [{
+          ticks: {
+              beginAtZero:true
+          }
+      }]
+    }
+  }}
+/>
 ```
+
 The code above will produce the following chart:
 
 ![ChartControl using code from the Chart.js site](../assets/ChartControlSample1.png)
+
+### Specifying Data
+
+The `data` property typically consist of:
+
+- `labels`: (Optional) An array of strings providing the data labels (e.g.: `['January', 'February', 'March', 'April', 'May', 'June', 'July']`)
+- `datasets`: At least one dataset, which contains:
+    - `label`: (Optional) A label for the data (e.g.: `'My First Dataset'`)
+    - `data`: An array of numbers (e.g.: `[65, 59, 80, 81, 56, 55, 40]`)
+
+See [below](#charttype) for more information on what types of data are required for each type of chart.
+
+### Specifying Data Promises
+
+The ChartControl makes it easy to retrieve data asynchronously with the `datapromise` property.
+
+To use it `datapromise`, add a function to your web part that returns a `Promise<Chart.ChartData>` as follows:
+
+```TypeScript
+ private _loadAsyncData(): Promise<Chart.ChartData> {
+    return new Promise<Chart.ChartData>((resolve, reject) => {
+      // Call your own service -- this example returns an array of numbers
+      // but you could call
+      const dataProvider: IChartDataProvider = new MockChartDataProvider();
+      dataProvider.getNumberArray().then((numbers: number[]) => {
+        // format your response to ChartData
+        const data: Chart.ChartData =
+        {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+          datasets: [
+            {
+              label: 'My First dataset',
+              data: numbers
+            }
+          ]
+        };
+
+        // resolve the promise
+        resolve(data);
+      });
+    });
+  }
+```
+
+Then, instead of passing a `data` property, pass your function to the  `datapromise` property, as follows:
+
+```TypeScript
+<ChartControl
+  type='bar'
+  datapromise={this._loadAsyncData()}
+  />
+```
+
+If you want, you provide a template to display until the `datapromise` is resolved, as follows:
+
+```TypeScript
+<ChartControl
+  type='bar'
+  datapromise={this._loadAsyncData()}
+  loadingtemplate={() => <div>Please wait...</div>}
+/>
+```
+
+![Data Promise with Loading Template](../assets/ChartControlDataPromise.gif)
+
+You can provide full React controls within the `loadingtemplate`. For example, to use the Office Fabric UI `Spinner` control, you would use the following codE:
+
+```TypeScript
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+...
+<ChartControl
+  type='bar'
+  datapromise={this._loadAsyncData()}
+  loadingtemplate={() => <Spinner size={SpinnerSize.large} label="Loading..."  />}
+/>
+```
+
+![Chart Control Data Promise with Spinner](../assets/ChartControlDataPromiseSpinner.gif)
+
+You can also provide another template to display when the `datapromise` is rejected, as follows:
+
+```TypeScript
+<ChartControl
+  type='bar'
+  datapromise={this._loadAsyncData()}
+    loadingtemplate={() => <Spinner size={SpinnerSize.large} label="Loading..."  />}
+  rejectedtemplate={(error: string) => <div>Something went wrong: {error}</div>}
+/>
+```
+
+![Chart Control Promise with Reject Template](../assets/ChartControlDataPromiseError.gif)
 
 ### Theme Color Support
 
@@ -146,26 +228,28 @@ You can also simplify the majority of code samples by omitting the `color` prope
 
 ```TypeScript
 <ChartControl type={ChartType.Bar}
-              data={{
-                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3]
-                    }]
-                }}
-                options={{
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    }
-                }} />
+  data={{
+    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3]
+    }]
+  }}
+  options={{
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero:true
+        }
+      }]
+    }
+  }}
+/>
 ```
+
 ![ChartControl using the default color palette](../assets/ChartControlSample2.png)
 
-You can also set the `palette` property to choose one of the Office color palettes.
+You can also set the `palette` property to choose one of the Office color palettes. For example, Specifying `ChartPalette.OfficeMonochromatic1` will produce the following chart:
 
 ![ChartControl using the Office Monochromatic 1 color palette](../assets/ChartControlSample3.png)
 
@@ -216,10 +300,13 @@ The ChartControl control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | accessibility | [IChartAccessibility](#ichartaccessibility) | no | Optional property to specify the accessibility options. |
 | className | string | no | Optional property to specify a custom class that allows you to change the chart's styles. |
-| data | ChartData | yes | The data you wish to display. |
+| data | ChartData | no | The data you wish to display. |
+| datapromise | Promise<Chart.ChartData> | no | The promise to load data asynchronously. Use with `loadingtemplate` and `rejectedtemplate` |
+| loadingtemplate | JSX.Element <br/> () => JSX.Element | no | The HTML to display while waiting to resolve the `datapromise` |
 | options | ChartOptions | no | Optional property to set the chart's additional options. |
 | palette | [ChartPalette](#chartpalette) | no | Optional property to set the desired Office color paette |
 | plugins | object[] | no | Optional property to set an array of objects implementing the IChartPlugin interface |
+| rejectedtemplate | JSX.Element <br/> () => JSX.Element | no | The HTML to display if the `datapromise` promise returns an error.
 | useTheme | boolean | no | Optional property to set whether the ChartControl should attempt to use theme colors. Setting it to false will use the startard Chart.js colors and fonts. |
 | type | [ChartType](#charttype) or string | yes | The type of chart you wish to render. You can also use the string equivalent. |
 | onClick | (event?: MouseEvent, activeElements?: Array<{}>) => void | no | Optional callback method that get called when a user clicks on the chart |
@@ -248,8 +335,9 @@ The `IChartAccessibility` interface implements the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | alternateText | string | no | Optional property to provide an accessible alternate text for the chart. We recommend that you use this property with `summary` |
+| className| string | no | Optional property to specify a custom CSS class for the accessible table. |
 | caption| string | no | Optional property to provide a caption for the accessible table. |
-| display | boolean | no | Optional property to turn on or off the rendering of the accessible table. |
+| enable | boolean | no | Optional property to turn on or off the rendering of the accessible table. |
 | summary | string | no | Optional property to specify the chart's summary. We recommend that you use this property with `alternateText` |
 | onRenderTable | () => JSX.Element | no | Options callback method that allows you to override the accessible table. |
 
@@ -283,19 +371,19 @@ Defines the type of chart that will be rendered. For more information what data 
 
 | Name | Chart.js Equivalent | Description |
 | ---- | ---- | ---- |
-| Bar | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| Bubble | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| Doughnut | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
-| HorizontalBar | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| Line | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
-| Pie | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
-| PolarArea | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
-| Radar | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
-| Scatter | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
+| [Bar](./BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
+| [Bubble](./BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
+| [Doughnut](./DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| [HorizontalBar](./BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
+| [Line](./LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
+| [Pie](./PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
+| [PolarArea](./PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
+| [Radar](./RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
+| [Scatter](./ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
 ### IChartPlugin
 
-The easiest way to customize a chart is to use the plugin functionality provided by Chart.js. In order to use a plugin, simply pass an array of objects that implement the `IChartPlugin` interface to the `plugins` property of the ChartControl.
+The easiest way to customize a chart is to use the [plugin functionality](https://www.chartjs.org/docs/latest/notes/extensions.html) provided by [Chart.js](https://www.chartjs.org/). In order to use a plugin, simply pass an array of objects that implement the `IChartPlugin` interface to the `plugins` property of the ChartControl.
 
 If a hook is listed as cancellable, you can return `false` to cancel the event.
 
@@ -321,6 +409,5 @@ If a hook is listed as cancellable, you can return `false` to cancel the event.
 | beforeUpdate | (chartInstance: Chart, options?: {}) => void | no | Called before updating the chart. Cancellable. |
 | destroy | (chartInstance: Chart) => void | no | Called when a chart is destroyed.  |
 | resize | (chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}) => void | no | Called when a chart resizes. Cancellable. |
-
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ChartControl)

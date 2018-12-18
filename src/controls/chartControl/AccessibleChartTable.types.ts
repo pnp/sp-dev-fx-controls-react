@@ -12,6 +12,12 @@ export interface IAccessibleChartTableProps {
   caption?: string;
 
   /**
+   * Allows you to overwrite the default CSS class name
+   * of the accessible table
+   */
+  className?: string;
+
+  /**
    * Provides a summary of the data
    */
   summary?: string;
