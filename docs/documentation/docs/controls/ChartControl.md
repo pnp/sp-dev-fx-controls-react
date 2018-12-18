@@ -142,7 +142,7 @@ See [below](#charttype) for more information on what types of data are required 
 
 The ChartControl makes it easy to retrieve data asynchronously with the `datapromise` property.
 
-To use it `datapromise`, add a function to your web part that returns a `Promise<Chart.ChartData>` as follows:
+To use `datapromise`, add a function to your web part that returns a `Promise<Chart.ChartData>` as follows:
 
 ```TypeScript
  private _loadAsyncData(): Promise<Chart.ChartData> {
@@ -191,7 +191,7 @@ If you want, you provide a template to display until the `datapromise` is resolv
 
 ![Data Promise with Loading Template](../assets/ChartControlDataPromise.gif)
 
-You can provide full React controls within the `loadingtemplate`. For example, to use the Office Fabric UI `Spinner` control, you would use the following codE:
+You can provide full React controls within the `loadingtemplate`. For example, to use the Office UI Fabric `Spinner` control, you would use the following code:
 
 ```TypeScript
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
@@ -296,7 +296,7 @@ For example:
 
 ### ChartControl Properties
 
-The ChartControl control can be configured with the following properties:
+The ChartControl can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
@@ -329,6 +329,22 @@ You can call the following methods to interact with the chart after it has been 
 | stop | void | Use this to stop any current animation loop.   This will pause the chart during any current animation frame. |
 | toBase64Image | () => string | Returns a base 64 encoded string of the chart in it's current state. |
 | update | (config?: number \| boolean \| string) => void | Triggers an update of the chart. This can be safely called after updating the data object. This will update all scales, legends, and then re-render the chart. |
+
+### ChartType
+
+Defines the type of chart that will be rendered. For more information what data structure is required for each type of chart, review the Chart.js documentation ( links below ).
+
+| Name | Chart.js Equivalent | Description |
+| ---- | ---- | ---- |
+| [Bar](./BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
+| [Bubble](./BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
+| [Doughnut](./DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| [HorizontalBar](./BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
+| [Line](./LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
+| [Pie](./PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
+| [PolarArea](./PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
+| [Radar](./RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
+| [Scatter](./ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
 ### IChartAccessibility
 
@@ -366,22 +382,6 @@ Defines one of the possible Office color palette to use in a chart. The color pa
 | OfficeMonochromatic11 | Monochromatic Palette 11 | Gold gradient, light to dark | ![Office Monochromatic 11](../assets/OfficeMono11.png) |
 | OfficeMonochromatic12 | Monochromatic Palette 12 | Blue gradient, light to dark | ![Office Monochromatic 12](../assets/OfficeMono12.png) |
 | OfficeMonochromatic13 | Monochromatic Palette 13 | Green gradient, light to dark | ![Office Monochromatic 13](../assets/OfficeMono13.png) |
-
-### ChartType
-
-Defines the type of chart that will be rendered. For more information what data structure is required for each type of chart, review the Chart.js documentation ( links below ).
-
-| Name | Chart.js Equivalent | Description |
-| ---- | ---- | ---- |
-| [Bar](./BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| [Bubble](./BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| [Doughnut](./DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
-| [HorizontalBar](./BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| [Line](./LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
-| [Pie](./PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
-| [PolarArea](./PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
-| [Radar](./RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
-| [Scatter](./ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
 ### IChartPlugin
 
