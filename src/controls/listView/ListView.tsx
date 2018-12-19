@@ -15,6 +15,9 @@ import { filter } from 'lodash';
  */
 export class ListView extends React.Component<IListViewProps, IListViewState> {
   private _selection: Selection;
+  private originalItems: any[];
+  private originalGroups: IGroup[];
+  private originalColumns: IColumn[];
 
   constructor(props: IListViewProps) {
     super(props);
@@ -33,11 +36,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       filterValue: this.props.defaultFilter
     };
 
-    // Binding the functions
-    this._columnClick = this._columnClick.bind(this);
-    this._updateFilterValue = this._updateFilterValue.bind(this);
-
-    if (typeof this.props.selection !== 'undefined' && this.props.selection !== null) {
+    if (this.props.selection) {
       // Initialize the selection
       this._selection = new Selection({
         // Create the event handler when a selection changes
@@ -163,6 +162,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         }
       }
     }
+
     return {
       items: updatedItemsOrder,
       groups
@@ -173,31 +173,33 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Process all the component properties
    */
   private _processProperties() {
+    const { items, iconFieldName, viewFields, groupByFields, showFilter } = this.props;
+
     let tempState: IListViewState = cloneDeep(this.state);
     let columns: IColumn[] = null;
     // Check if a set of items was provided
-    if (typeof this.props.items !== 'undefined' && this.props.items !== null) {
-      tempState.items = this._flattenItems(this.props.items);
+    if (typeof items !== 'undefined' && items !== null) {
+      tempState.items = this._flattenItems(items);
     }
 
     // Check if an icon needs to be shown
-    if (typeof this.props.iconFieldName !== 'undefined' && this.props.iconFieldName !== null) {
+    if (iconFieldName) {
       if (columns === null) { columns = []; }
-      const iconColumn = this._createIconColumn(this.props.iconFieldName);
+      const iconColumn = this._createIconColumn(iconFieldName);
       columns.push(iconColumn);
     }
 
     // Check if view fields were provided
-    if (typeof this.props.viewFields !== 'undefined' && this.props.viewFields !== null) {
+    if (viewFields) {
       if (columns === null) { columns = []; }
-      columns = this._createColumns(this.props.viewFields, columns);
+      columns = this._createColumns(viewFields, columns);
     }
 
     // Add the columns to the temporary state
     tempState.columns = columns;
 
     // Add grouping to the list view
-    const grouping = this._getGroups(tempState.items, this.props.groupByFields);
+    const grouping = this._getGroups(tempState.items, groupByFields);
     if (grouping.groups.length > 0) {
       tempState.groups = grouping.groups;
       // Update the items
@@ -206,8 +208,22 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       tempState.groups = null;
     }
 
-    // Update the current component state with the new values
-    this.setState(tempState);
+    // Store the original items and groups objects
+    this.originalItems = tempState.items;
+    this.originalGroups = tempState.groups;
+    this.originalColumns = tempState.columns;
+
+    // Check if component needs to be filtered
+    const { filterValue } = this.state;
+    if (filterValue && showFilter) {
+      this.setState({
+        columns: tempState.columns
+      });
+      this._updateFilterValue(filterValue);
+    } else {
+      // Update the current component state with the new values
+      this.setState(tempState);
+    }
   }
 
   /**
@@ -312,7 +328,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param ev
    * @param column
    */
-  private _columnClick(ev: React.MouseEvent<HTMLElement>, column: IColumn): void {
+  private _columnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
     // Find the field in the viewFields list
     const columnIdx = findIndex(this.props.viewFields, field => field.name === column.key);
     // Check if the field has been found
@@ -352,10 +368,31 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Method updates the controlled value of the filter field
    * @param newValue
    */
-  private _updateFilterValue(newValue: string) {
+  private _updateFilterValue = (filterValue: string) => {
+    let items = cloneDeep(this.originalItems);
+    let groups = cloneDeep(this.originalGroups);
+    const columns = cloneDeep(this.originalColumns);
+
+    // Check if a value is provided, otherwise revert back to the original list of items
+    if (filterValue && items && items.length > 0) {
+      items = this._executeFiltering(filterValue, items, columns);
+      const grouping = this._getGroups(items, this.props.groupByFields);
+
+      // Update grouping
+      if (grouping.groups.length > 0) {
+        groups = grouping.groups;
+        // Update the items
+        items = grouping.items;
+      } else {
+        groups = null;
+      }
+    }
+
     this.setState({
-      filterValue: newValue
-    })
+      filterValue,
+      items,
+      groups
+    });
   }
 
   /**
@@ -387,45 +424,41 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     return sortedItems;
   }
 
-
   /**
    * Executes filtering. Method tries to indicate if filtering should be executed on a single or all columns.
    * @param filterValue
    * @param items
    * @param columns
    */
-  private _executeFilternig(filterValue: string, items: any[], columns: IColumn[]): any {
+  private _executeFiltering(filterValue: string, items: any[], columns: IColumn[]): any[]  {
     const filterSeparator = ":";
 
     let filterColumns = [...columns];
     if (filterValue && filterValue.indexOf(filterSeparator) >= 0) {
       const columnName = filterValue.split(filterSeparator)[0];
-      filterValue = filterValue.split(filterSeparator)[1]
+      filterValue = filterValue.split(filterSeparator)[1];
 
-      filterColumns = filter(columns, column => {
-        return column.fieldName === columnName || column.name === columnName;
-      });
+      filterColumns = filter(columns, column => column.fieldName === columnName || column.name === columnName);
     }
 
     return this._getFilteredItems(filterValue, items, filterColumns);
   }
+
   /**
    * Execute filtering on the provided data set and columns
    * @param filterValue
    * @param items
    * @param columns
    */
-  private _getFilteredItems(filterValue: string, items: any[], columns: IColumn[]): any {
+  private _getFilteredItems(filterValue: string, items: any[], columns: IColumn[]): any[] {
     if (!filterValue) {
       return items;
     }
 
     let result: any[] = [];
-    for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-      const item: any = items[itemIndex];
+    for (const item of items) {
       let addItemToResultSet: boolean = false;
-      for (let viewFieldIndex = 0; viewFieldIndex < columns.length; viewFieldIndex++) {
-        let viewField = columns[viewFieldIndex];
+      for (const viewField of columns) {
         if (this._doesPropertyContainsValue(item, viewField.fieldName, filterValue)) {
           addItemToResultSet = true;
           break;
@@ -439,7 +472,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       if (addItemToResultSet) {
         result.push(item);
       }
-    };
+    }
 
     return result;
   }
@@ -448,14 +481,14 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Check if the item contains property with proper value
    * @param item
    * @param property
-   * @param filter
+   * @param filterValue
    */
-  private _doesPropertyContainsValue(item: any, property: string, filter: string): boolean {
+  private _doesPropertyContainsValue(item: any, property: string, filterValue: string): boolean {
     const propertyValue = item[property];
     let result = false;
     if (propertyValue) {
       // Case insensitive
-      result = String(propertyValue).toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+      result = propertyValue.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0;
     }
 
     return result;
@@ -468,9 +501,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     let groupProps: IGroupRenderProps = {};
 
     let { showFilter, filterPlaceHolder } = this.props;
-    let { filterValue, items, columns } = this.state;
+    let { filterValue, items } = this.state;
 
-    filterPlaceHolder = filterPlaceHolder ? filterPlaceHolder : "Search";
     // Check if selection mode is single selection,
     // if that is the case, disable the selection on grouping headers
     if (this.props.selectionMode === SelectionMode.single) {
@@ -481,16 +513,14 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         }
       };
     }
-    if (showFilter && filterValue && columns) {
-      items = this._executeFilternig(filterValue, items, columns)
-    }
 
     return (
       <div>
         {
-          showFilter && <TextField placeholder={filterPlaceHolder} onChanged={this._updateFilterValue} value={filterValue}/>
+          showFilter && <TextField placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onChanged={this._updateFilterValue} value={filterValue}/>
         }
         <DetailsList
+          key="ListViewControl"
           items={items}
           columns={this.state.columns}
           groups={this.state.groups}

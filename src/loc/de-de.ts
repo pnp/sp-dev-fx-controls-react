@@ -59,6 +59,8 @@ define([], () => {
     mapsSearchButtonText: 'Suche',
     mapsTitlePrefix: 'Karte von',
 
-    genericNoResultsFoundText: 'Kein Ergebnis gefunden'
+    genericNoResultsFoundText: 'Kein Ergebnis gefunden',
+
+    ListViewFilterLabel: "Filter"
   };
 });

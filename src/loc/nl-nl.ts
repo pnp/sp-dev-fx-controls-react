@@ -59,6 +59,8 @@ define([], () => {
     mapsSearchButtonText: 'Zoeken',
     mapsTitlePrefix: 'Kaart van',
 
-    genericNoResultsFoundText: 'Geen resultaten gevonden'
+    genericNoResultsFoundText: 'Geen resultaten gevonden',
+
+    ListViewFilterLabel: "Filter de lijst"
   };
 });

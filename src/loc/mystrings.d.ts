@@ -1,4 +1,6 @@
 declare interface IControlStrings {
+  ListViewFilterLabel: string;
+
   PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
   peoplePickerComponentErrorMessage: string;
