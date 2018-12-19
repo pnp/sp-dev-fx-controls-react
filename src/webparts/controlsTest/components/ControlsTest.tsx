@@ -218,7 +218,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     // Specify the fields on which you want to group your items
     // Grouping is takes the field order into account from the array
-    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
+    // const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
+    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.Department.Label", order: GroupOrder.ascending }];
 
     let iframeUrl: string = '/temp/workbench.html';
     if (Environment.type === EnvironmentType.SharePoint) {
@@ -233,6 +234,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
+
+          <ListView items={this.state.items}
+                    viewFields={viewFields}
+                    iconFieldName='ServerRelativeUrl'
+                    groupByFields={groupByFields}
+                    compact={true}
+                    selectionMode={SelectionMode.single}
+                    selection={this._getSelection}
+                    showFilter={true}
+                    // defaultFilter="Team"
+                    />
 
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (pre-set global users)"
@@ -464,15 +476,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           description='Please configure the web part.'
           buttonLabel='Configure'
           onConfigure={this._onConfigure} />
-
-        <ListView
-          items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection} />
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
       </div>
