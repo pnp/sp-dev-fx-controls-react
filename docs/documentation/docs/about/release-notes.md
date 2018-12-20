@@ -12,6 +12,7 @@
 - `PeoplePicker`: Allow the people picker to search on site level and on tenant level [#97](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/97)
 - `ListView`: Added support for filtering [#99](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/99)
 - `PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)
+- `Placeholder`: Added the ability to specify if the button can be hidden [#206](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/206)
 - Updated the `office-ui-fabric-react` to the same version as in SPFx 1.7.0
 
 ### Fixes

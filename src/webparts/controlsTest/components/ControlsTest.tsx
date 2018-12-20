@@ -14,7 +14,7 @@ import { WebPartTitle } from '../../../WebPartTitle';
 import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
-import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
@@ -234,6 +234,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
+
+        <Placeholder iconName='Edit'
+                     iconText='Configure your web part'
+                     description='Please configure the web part.'
+                     buttonLabel='Configure'
+                     hideButton={this.props.displayMode === DisplayMode.Read}
+                     onConfigure={this._onConfigure} />
 
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (Group not found)"
@@ -486,13 +493,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div className={styles.siteBreadcrumb}>
           <SiteBreadcrumb context={this.props.context} />
         </div>
-
-        <Placeholder
-          iconName='Edit'
-          iconText='Configure your web part'
-          description='Please configure the web part.'
-          buttonLabel='Configure'
-          onConfigure={this._onConfigure} />
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
       </div>
