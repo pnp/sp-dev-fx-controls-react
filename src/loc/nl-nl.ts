@@ -51,6 +51,7 @@ define([], () => {
     peoplePickerSuggestionsHeaderText: 'Voorgestelde personen',
     peoplePickerLoadingText: 'Laden',
     PeoplePickerSearchText: 'Personen worden opgehaald',
+    PeoplePickerGroupNotFound: "Groep niet gevonden.",
 
     ListItemPickerSelectValue: 'Selecteer veld',
 

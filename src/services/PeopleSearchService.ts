@@ -33,43 +33,43 @@ export default class SPPeopleSearchService {
   }
 
   /**
+   * Retrieve the specified group
+   *
+   * @param groupName
+   * @param siteUrl
+   */
+  public async getGroupId(groupName: string, siteUrl: string = null): Promise<number | null> {
+    if (Environment.type === EnvironmentType.Local) {
+      return 1;
+    } else {
+      const groups = await this.searchTenant(siteUrl, groupName, 1, [PrincipalType.SharePointGroup], false, 0);
+      return (groups && groups.length > 0) ? parseInt(groups[0].id) : null;
+    }
+  }
+
+  /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       const mockUsers = await this.searchPeopleFromMock(email);
       return (mockUsers && mockUsers.length > 0) ? mockUsers[0] : null;
     } else {
-      // Check the action to perform
-      if (siteUrl) {
-        /* Local site search will be performed */
-        const userResults = await this.localSearch(siteUrl, email, principalTypes, showHiddenInUI, groupName, true);
-        return (userResults && userResults.length > 0) ? userResults[0] : null;
-      } else {
-        /* Global tenant search will be performed */
-        const userResults = await this.searchTenant(email, 1, principalTypes, ensureUser);
-        return (userResults && userResults.length > 0) ? userResults[0] : null;
-      }
+      const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, groupId);
+      return (userResults && userResults.length > 0) ? userResults[0] : null;
     }
   }
 
   /**
    * Search All Users from the SharePoint People database
    */
-  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, showHiddenInUI: boolean = false, groupName: string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
+  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.searchPeopleFromMock(query);
     } else {
-      // Check the action to perform
-      if (siteUrl) {
-        /* Local site search will be performed */
-        return await this.localSearch(siteUrl, query, principalTypes, showHiddenInUI, groupName);
-      } else {
-        /* Global tenant search will be performed */
-        return await this.searchTenant(query, maximumSuggestions, principalTypes, ensureUser);
-      }
+      return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, groupId);
     }
   }
 
@@ -150,24 +150,34 @@ export default class SPPeopleSearchService {
   /**
    * Tenant search
    */
-  private async searchTenant(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean): Promise<IPeoplePickerUserItem[]> {
+  private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, groupId: number): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
-      const userRequestUrl: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+      const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
       const searchBody = {
-        'queryParams': {
-          'AllowEmailAddresses': true,
-          'AllowMultipleEntities': false,
-          'AllUrlZones': false,
-          'MaximumEntitySuggestions': maximumSuggestions,
-          'PrincipalSource': 15,
+        queryParams: {
+          AllowEmailAddresses: true,
+          AllowMultipleEntities: false,
+          AllUrlZones: false,
+          MaximumEntitySuggestions: maximumSuggestions,
+          PrincipalSource: 15,
           // PrincipalType controls the type of entities that are returned in the results.
           // Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
           // These values can be combined (example: 13 is security + SP groups + users)
-          'PrincipalType': !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1,
-          'QueryString': query
+          PrincipalType: !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1,
+          QueryString: query
         }
       };
+
+      // Search on the local site when "0"
+      if (siteUrl) {
+        searchBody.queryParams["SharePointGroupID"] = 0;
+      }
+
+      // Check if users need to be searched in a specific group
+      if (groupId) {
+        searchBody.queryParams["SharePointGroupID"] = groupId;
+      }
 
       const httpPostOptions: ISPHttpClientOptions = {
         headers: {
@@ -194,8 +204,11 @@ export default class SPPeopleSearchService {
           // Check if local user IDs need to be retrieved
           if (ensureUser) {
             for (const value of values) {
-              const id = await this.ensureUser(value.Key || value.EntityData.SPGroupID);
-              value.Key = id;
+              // Only ensure the user if it is not a SharePoint group
+              if (!value.EntityData || (value.EntityData && typeof value.EntityData.SPGroupID === "undefined")) {
+                const id = await this.ensureUser(value.Key);
+                value.Key = id;
+              }
             }
           }
 
@@ -231,7 +244,7 @@ export default class SPPeopleSearchService {
                 } as IPeoplePickerUserItem;
               default:
                 return {
-                  id: element.Key,
+                  id: element.EntityData.SPGroupID,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
                   secondaryText: element.EntityData.AccountName

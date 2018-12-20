@@ -18,7 +18,7 @@ export interface IPeoplePickerProps {
   */
   titleText?: string;
   /**
-   * Web Absolute Url of source site
+   * Web Absolute Url of source site. When this is provided, a search request is done to the local site.
    */
   webAbsoluteUrl?: string;
   /**
@@ -82,6 +82,7 @@ export interface IPeoplePickerProps {
    */
   defaultSelectedUsers?: string[];
   /**
+   * @deprecated
    * Show users which are hidden from the UI
    */
   showHiddenInUI?: boolean;
@@ -97,7 +98,8 @@ export interface IPeoplePickerProps {
 
 export interface IPeoplePickerState {
   mostRecentlyUsedPersons: IPersonaProps[];
-  showmessageerror: boolean;
+  showRequiredError: boolean;
+  errorMessage: string;
   resolveDelay : number;
 
   selectedPersons?: IPersonaProps[];

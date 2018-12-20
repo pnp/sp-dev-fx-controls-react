@@ -18,6 +18,7 @@ import { isEqual, uniqBy } from "@microsoft/sp-lodash-subset";
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
+  private groupId: number;
 
   constructor(props: IPeoplePickerProps) {
     super(props);
@@ -34,8 +35,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.state = {
       selectedPersons: [],
       mostRecentlyUsedPersons: [],
-      showmessageerror: false,
-      resolveDelay: this.props.resolveDelay || 200
+      showRequiredError: false,
+      resolveDelay: this.props.resolveDelay || 200,
+      errorMessage: null
     };
   }
 
@@ -52,7 +54,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * componentWillUpdate lifecycle hook
    */
   public componentWillUpdate(nextProps: IPeoplePickerProps, nextState: IPeoplePickerState): void {
-    if (!isEqual(this.props.defaultSelectedUsers, nextProps.defaultSelectedUsers)) {
+    if (!isEqual(this.props.defaultSelectedUsers, nextProps.defaultSelectedUsers) ||
+        this.props.groupName !== nextProps.groupName ||
+        this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl) {
       this.getInitialPersons();
     }
   }
@@ -62,11 +66,25 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Get initial persons
    */
   private async getInitialPersons() {
+    const { groupName } = this.props;
+    // Check if a group property was provided, and get the group ID
+    if (groupName) {
+      this.groupId = await this.peopleSearchService.getGroupId(this.props.groupName, this.props.webAbsoluteUrl);
+      if (!this.groupId) {
+        this.setState({
+          errorMessage: "Group could not be found."
+        });
+        return;
+      }
+    } else {
+      this.groupId = null;
+    }
+
     // Check for default user values
     if (this.props.defaultSelectedUsers && this.props.defaultSelectedUsers.length) {
       let selectedPersons: IPersonaProps[] = [];
       for (const userValue of this.props.defaultSelectedUsers) {
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser);
         if (userResult) {
           selectedPersons.push(userResult);
         }
@@ -74,11 +92,6 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
       this.setState({
         selectedPersons
-      });
-    } else {
-      const results = await this.peopleSearchService.searchPeople("", this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
-      this.setState({
-        mostRecentlyUsedPersons: results.slice(0, this.suggestionsLimit)
       });
     }
   }
@@ -89,7 +102,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> =>  {
     if (searchText.length > 2) {
-      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.props.showHiddenInUI, this.props.groupName, this.props.ensureUser);
+      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;
       const filteredPersons = this.removeDuplicates(results, selectedPersons);
@@ -113,7 +126,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     this.setState({
       selectedPersons: items,
-      showmessageerror: items.length > 0 ? false : true
+      showRequiredError: items.length > 0 ? false : true
     });
 
     if (triggerUpdate) {
@@ -187,7 +200,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                             }}
                             selectedItems={this.state.selectedPersons}
                             itemLimit={this.props.personSelectionLimit || 1}
-                            disabled={this.props.disabled}
+                            disabled={this.props.disabled || !!this.state.errorMessage}
                             onChange={this.onChange}
                             resolveDelay={this.state.resolveDelay} />
       </div>
@@ -211,10 +224,16 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         }
 
         {
-          (this.props.isRequired && this.state.showmessageerror) && (
+          (this.props.isRequired && this.state.showRequiredError) || (this.state.errorMessage) && (
             <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
               <Icon iconName='Error' className={styles.errorIcon} />
-              <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}</span>
+              {
+                this.state.errorMessage && <span data-automation-id="error-message">{this.state.errorMessage}</span>
+              }
+
+              {
+                (this.props.isRequired && this.state.showRequiredError) && <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}</span>
+              }
             </p>
           )
         }

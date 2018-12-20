@@ -235,16 +235,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
 
-          <ListView items={this.state.items}
-                    viewFields={viewFields}
-                    iconFieldName='ServerRelativeUrl'
-                    groupByFields={groupByFields}
-                    compact={true}
-                    selectionMode={SelectionMode.single}
-                    selection={this._getSelection}
-                    showFilter={true}
-                    // defaultFilter="Team"
-                    />
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (Group not found)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      groupName="Team Site Visitors 123"
+                      ensureUser={true}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (search for group)"
+                      groupName="Team Site Visitors"
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
                       titleText="People Picker (pre-set global users)"
@@ -294,6 +299,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       titleText="People Picker (disabled)"
                       disabled={true}
                       showtooltip={true} />
+
+
+        <ListView items={this.state.items}
+                  viewFields={viewFields}
+                  iconFieldName='ServerRelativeUrl'
+                  groupByFields={groupByFields}
+                  compact={true}
+                  selectionMode={SelectionMode.single}
+                  selection={this._getSelection}
+                  showFilter={true}
+                  // defaultFilter="Team"
+                  />
 
 
         <ChartControl type={ChartType.Bar}

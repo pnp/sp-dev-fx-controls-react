@@ -1,4 +1,5 @@
 declare interface IControlStrings {
+  PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
 
   PeoplePickerSearchText: string;

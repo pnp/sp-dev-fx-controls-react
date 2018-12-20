@@ -51,6 +51,7 @@ define([], () => {
     peoplePickerSuggestionsHeaderText: 'Suggested People',
     peoplePickerLoadingText: 'Loading',
     PeoplePickerSearchText: 'Fetching users',
+    PeoplePickerGroupNotFound: "Group could not be found.",
 
     ListItemPickerSelectValue: 'Select value',
 
