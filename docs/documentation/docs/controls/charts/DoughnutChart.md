@@ -56,7 +56,7 @@ const options: Chart.ChartOptions = {
 
 return (
   <ChartControl
-    type={ChartType.Bubble}
+    type={ChartType.Doughnut}
     data={data}
     options={options}
   />);
