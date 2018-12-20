@@ -25,10 +25,30 @@ export interface IChartControlProps {
   data?: ChartData;
 
   /**
+  Promise to the data to be displayed in the chart.
+  ChartControl will automatically display data when
+  promise returns.
+  @type {Promise<ChartData>}
+  */
+  datapromise?: Promise<Chart.ChartData>;
+
+  /**
+  If using datapromises, sets the content to display while loading the data.
+  @type {JSX.Element | Function}
+   */
+  loadingtemplate?: JSX.Element | Function;
+
+  /**
+  If using datapromises, sets the content to display when a promise is rejected
+  @type {JSX.Element | Function}
+   */
+  rejectedtemplate?: JSX.Element | Function;
+
+  /**
   The options for the chart
   @type {ChartOptions}
    */
-  options?: ChartOptions & {};
+  options?: ChartOptions;
 
   /**
    The type of chart to render
@@ -95,7 +115,9 @@ export interface IChartControlProps {
  * The state of a chart
  */
 export interface IChartControlState {
-  //  nothing for now
+  isLoading: boolean;
+  data?: Chart.ChartData;
+  rejected?: {};
 }
 
 /**
@@ -210,7 +232,13 @@ export interface IChartAccessibility {
    * screen readers
    * @default true
    */
-  display?: boolean;
+  enable?: boolean;
+
+  /**
+   * Allows you to overwrite the default classname
+   * of the accessible table
+   */
+  className?: string;
 
   /**
    * Provides a caption for the accessible table
@@ -276,7 +304,7 @@ export interface IChartPlugin {
   beforeEvent?(chartInstance: Chart, event: Event, options?: {}): void;
   afterEvent?(chartInstance: Chart, event: Event, options?: {}): void;
 
-  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: any): void;
+  resize?(chartInstance: Chart, newChartSize: Chart.ChartSize, options?: {}): void;
   destroy?(chartInstance: Chart): void;
 }
 

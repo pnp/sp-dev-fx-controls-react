@@ -8,6 +8,12 @@ import { AccessibleChartTable } from './AccessibleChartTable';
 import * as telemetry from '../../common/telemetry';
 import { ChartPalette } from './ChartControl.types';
 
+interface Window {
+  __themeState__: any;
+}
+
+declare var window: Window;
+
 export class ChartControl extends React.Component<IChartControlProps, IChartControlState> {
 
   /**
@@ -17,7 +23,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     // We want accessibility on by default
     // -- it's the law in some countries!!!
     accessibility: {
-      display: true
+      enable: true
     },
     useTheme: true,
     palette: ChartPalette.OfficeColorful1,
@@ -46,25 +52,43 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       type: !!props.type,
       className: !!props.className,
       palette: !!props.palette,
-      accessibility: !!props.accessibility.display
+      accessibility: !!props.accessibility.enable
     });
+
+    this.state = {
+      isLoading: false,
+      rejected: undefined,
+      data: undefined
+    };
   }
 
   /**
    * componentDidMount lifecycle hook
    */
   public componentDidMount(): void {
-    this._initChart(this.props);
-  }
 
+    if (this.props.datapromise) {
+      this._doPromise(this.props.datapromise);
+    } else {
+      this._initChart(this.props, this.props.data);
+    }
+  }
   /**
    * componentWillReceiveProps lifecycle hook
    *
    * @param nextProps
    */
   public componentWillReceiveProps(nextProps: IChartControlProps): void {
-    this._destroyChart();
-    this._initChart(nextProps);
+    if (nextProps.datapromise !== this.props.datapromise) {
+      this.setState({
+        isLoading: false
+      });
+
+      this._doPromise(nextProps.datapromise);
+    } else {
+      this._destroyChart();
+      this._initChart(nextProps, this.props.data);
+    }
   }
 
   /**
@@ -74,20 +98,20 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     this._destroyChart();
   }
 
-   /**
-   * shouldComponentUpdate lifecycle hook
-   *
-   * @param nextProps
-   * @param nextState
-   */
+  /**
+  * shouldComponentUpdate lifecycle hook
+  *
+  * @param nextProps
+  * @param nextState
+  */
   public shouldComponentUpdate(nextProps: IChartControlProps, nextState: IChartControlState): boolean {
     const { data,
       options,
       plugins,
       className,
       accessibility,
-    useTheme,
-  palette } = this.props;
+      useTheme,
+      palette } = this.props;
     return data !== nextProps.data ||
       options !== nextProps.options ||
       plugins !== nextProps.plugins ||
@@ -102,28 +126,52 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    */
   public render(): React.ReactElement<IChartControlProps> {
     const {
-      data,
-      options,
       type,
       accessibility,
-      useTheme
+      useTheme,
+      options,
+      data
     } = this.props;
 
-    const alternateText: string = accessibility && accessibility.alternateText;
+    // If we're still loading, try to show the loading template
+    if (this.state.isLoading) {
+      if (this.props.loadingtemplate) {
+        if (typeof this.props.loadingtemplate === "function") {
+          return this.props.loadingtemplate();
+        } else {
+          return this.props.loadingtemplate;
+        }
+      }
+    }
+
+    // If promise was rejected, try to show the rejected template
+    if (this.state.rejected) {
+      if (this.props.rejectedtemplate) {
+        if (typeof this.props.rejectedtemplate === "function") {
+          return this.props.rejectedtemplate(this.state.rejected);
+        } else {
+          return this.props.rejectedtemplate;
+        }
+      }
+    }
+
+    const alternateText: string = accessibility!.alternateText;
 
     return (
       <div className={css(styles.chartComponent, (useTheme ? styles.themed : null), this.props.className)} >
         <canvas ref={this._linkCanvas} role='img' aria-label={alternateText} />
         {
-          accessibility.display === undefined || accessibility.display ? (
-              <AccessibleChartTable chartType={type}
-                                    data={data}
-                                    chartOptions={options}
-                                    caption={accessibility.caption}
-                                    summary={accessibility.summary}
-                                    onRenderTable={accessibility.onRenderTable} />
-            ) : null
-          }
+          accessibility.enable === undefined || accessibility.enable ? (
+            <AccessibleChartTable
+              chartType={type}
+              data={data || this.state.data}
+              chartOptions={options}
+              className={accessibility.className}
+              caption={accessibility.caption}
+              summary={accessibility.summary}
+              onRenderTable={accessibility.onRenderTable} />
+          ) : null
+        }
       </div>
     );
   }
@@ -229,9 +277,8 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    * Initializes the chart
    * @param props chart control properties
    */
-  private _initChart(props: IChartControlProps): void {
+  private _initChart(props: IChartControlProps, data: Chart.ChartData): void {
     const {
-      data,
       options,
       type,
       plugins,
@@ -242,13 +289,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     if (this.props.onClick !== undefined) {
       if (options.onClick === undefined) {
         options.onClick = this.props.onClick;
-      } else {
-        // we really shouldn't have English text here
-        // but we're trying to warn people
-        // we could also just ignore the settings quietly
-        console.warn('You should pick either options.onClick'
-          + ' or the chart control\'s onClick property'
-          + ' -- not both. The value specified in options.onClick will be used.');
       }
     }
 
@@ -258,10 +298,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         options.onHover = (event: MouseEvent, activeElements: {}[]) => {
           this.props.onHover(this.getChart(), event, activeElements);
         };
-      } else {
-        console.warn('You should pick either options.onHover'
-          + ' or the chart control\'s onHover property'
-          + ' -- not both. The value specific in options.onHover will be used.');
       }
     }
 
@@ -273,14 +309,10 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         options.onResize = (newSize: ChartSize) => {
           this.props.onResize(this.getChart(), newSize);
         };
-      } else {
-        console.warn('You should pick either options.onResize'
-          + ' or the chart control\'s onResize property'
-          + ' not both. The value specific in options.onResize will be used.');
       }
     }
 
-    this._applyDatasetPalette();
+    this._applyDatasetPalette(data);
 
     if (useTheme) {
       this._applyChartThemes();
@@ -294,21 +326,24 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     });
   }
 
-  private _applyDatasetPalette() {
-    const {
-      data
-    } = this.props;
-
+  private _applyDatasetPalette(data: Chart.ChartData) {
     try {
-      if (data !== undefined && data.datasets !== undefined) {
-        data.datasets.forEach(dataset => {
+
+      // Get the dataset
+      let datasets: Chart.ChartDataSets[] = data.datasets;
+
+      if (datasets !== undefined) {
+        datasets.forEach(dataset => {
           if (dataset.backgroundColor === undefined) {
-            dataset.backgroundColor = PaletteGenerator.GetPalette(this.props.palette, dataset.data.length);
+            const datasetLength: number = dataset!.data!.length;
+            if (datasetLength) {
+              dataset.backgroundColor = PaletteGenerator.GetPalette(this.props.palette, datasetLength);
+            }
           }
         });
       }
     } catch (error) {
-      console.log(error);
+
     }
   }
 
@@ -342,13 +377,17 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         Chart.defaults.scale.gridLines.color = this._getThemeColor(styles.lineColor);
       }
     } catch (error) {
-      console.log(error);
+
     }
   }
 
   private _destroyChart(): void {
-    if (this._chart !== undefined) {
-      this._chart.destroy();
+    try {
+      if (this._chart !== undefined) {
+        this._chart.destroy();
+      }
+    } catch (error) {
+
     }
   }
 
@@ -357,53 +396,57 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   }
 
   private _getThemeColor(value: string): string {
-    if (value.indexOf('theme:') > 0) {
-      // This value has a theme substitution
-      const themeParts: string[] = value.replace('[', '').replace(']', '').replace('"', '').split(',');
-      let defaultValue: string = undefined;
-      let themeValue: string = undefined;
+    try {
+      if (value.indexOf('theme:') > 0) {
+        // This value has a theme substitution
+        const themeParts: string[] = value.replace('[', '').replace(']', '').replace('"', '').split(',');
+        let defaultValue: string = undefined;
+        let themeValue: string = undefined;
 
-      // Break the theme string into it's components
-      themeParts.forEach(themePart => {
-        if (themePart.indexOf('theme:') >= 0) {
-          themeValue = themePart.replace('theme:', '');
-        } else if (themePart.indexOf('default:') >= 0) {
-          defaultValue = themePart.replace('default:', '').replace('"', '').trim();
-        }
-      });
-
-      // If there is a theme value, try to read from environment
-      if (themeValue !== undefined) {
-        try {
-          // This should definitely be easier to do in SPFx!
-
-          // tslint:disable-next-line
-          const themeStateVariable: any = window['__themeState__'];
-          if (themeStateVariable === undefined) {
-            return defaultValue;
+        // Break the theme string into it's components
+        themeParts.forEach(themePart => {
+          if (themePart.indexOf('theme:') >= 0) {
+            themeValue = themePart.replace('theme:', '');
+          } else if (themePart.indexOf('default:') >= 0) {
+            defaultValue = themePart.replace('default:', '').replace('"', '').trim();
           }
-          const themeState: {} = themeStateVariable.theme;
+        });
 
-          if (themeState === undefined) {
-            return defaultValue;
-          }
+        // If there is a theme value, try to read from environment
+        if (themeValue !== undefined) {
+          try {
+            // This should definitely be easier to do in SPFx!
 
-          for (const varName in themeState) {
-            if (!themeState.hasOwnProperty(varName)) {
-              continue;
+            // tslint:disable-next-line
+            const themeStateVariable: any = window.__themeState__;
+            if (themeStateVariable === undefined) {
+              return defaultValue;
+            }
+            const themeState: {} = themeStateVariable.theme;
+
+            if (themeState === undefined) {
+              return defaultValue;
             }
 
-            // Cheesy cleanup of variables to remove extra quotes
-            if (varName === themeValue) {
-              return themeState[varName].replace('"', '').trim();
-            }
-          }
-        } catch (error) {
-          // do nothing
-        }
+            for (const varName in themeState) {
+              if (!themeState.hasOwnProperty(varName)) {
+                continue;
+              }
 
-        return defaultValue;
+              // Cheesy cleanup of variables to remove extra quotes
+              if (varName === themeValue) {
+                return themeState[varName].replace('"', '').trim();
+              }
+            }
+          } catch (error) {
+            // do nothing
+          }
+
+          return defaultValue;
+        }
       }
+    } catch (error) {
+
     }
 
     return value;
@@ -412,6 +455,37 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   // Reads one of the Office Fabric defined font sizes
   // and converts to a number
   private _getFontSizeNumber(value: string): number {
-    return parseInt(value.replace('px', ''), 10);
+    try {
+      return parseInt(value.replace('px', ''), 10);
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  /**
+   * Gets the results of a promise and returns it to the chart
+   * @param promise
+   */
+  private _doPromise(promise: Promise<Chart.ChartData>) {
+    this.setState({
+      isLoading: true
+    }, () => {
+      promise.then(
+        results => {
+          this.setState({
+            isLoading: false,
+            data: results
+          }, () => {
+            this._initChart(this.props, results);
+          });
+        },
+        rejected => {
+          this.setState({
+            isLoading: false,
+            rejected: rejected
+          });
+        }
+      );
+    });
   }
 }

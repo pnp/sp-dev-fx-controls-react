@@ -3,11 +3,12 @@ import { IAccessibleChartTableState, IAccessibleChartTableProps } from './Access
 import styles from './ChartControl.module.scss';
 import { ChartDataSets } from 'chart.js';
 import { Guid } from '@microsoft/sp-core-library';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { escape } from '@microsoft/sp-lodash-subset';
 
 export class AccessibleChartTable extends React.Component<IAccessibleChartTableProps, IAccessibleChartTableState> {
   public render(): React.ReactElement<IAccessibleChartTableProps> {
     const {
-      summary,
       onRenderTable,
       data
     } = this.props;
@@ -26,9 +27,9 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
     const tableBody: JSX.Element[] = this._renderTableBody();
 
     return (
-      <div className={styles.accessibleTable}>
+      <div className={css(styles.accessibleTable, this.props.className)}>
         {tableBody && tableBody.length > 0 ?
-          <table summary={summary} >
+          <table >
             {this._renderCaption()}
             <thead>
               {this._renderTableHeader()}
@@ -46,8 +47,17 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
    * Adds a caption to the top of the accessible table
    */
   private _renderCaption(): JSX.Element {
+    const { summary } = this.props;
     const title: string = this._getAccessibleTitle();
-    return title ? <caption>{title}</caption> : undefined;
+    const summaryElement: JSX.Element = summary && <span>{escape(summary)}</span>;
+
+
+    return title || summary ?
+    <caption>
+    {escape(title)}
+    { title && summaryElement && <br/>}
+    { summaryElement }
+    </caption> : undefined;
   }
 
   /**
@@ -85,7 +95,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
     const yHeaderRow: JSX.Element = yAxisLabel
       && <tr key={`yHeader-${Guid.newGuid().toString()}`}>
         <th></th>
-        <th colSpan={datasets.length}>{yAxisLabel}</th>
+        <th colSpan={datasets.length}>{escape(yAxisLabel)}</th>
       </tr>;
 
     // Get the X axis label
@@ -97,13 +107,13 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
       && chartOptions.scales.xAxes[0].scaleLabel.labelString;
 
     // Generate the X asix table cells
-    const xHeaderCells: JSX.Element[] = datasets.map((dataSet: ChartDataSets, index: number) => {
-      return <th scope='col' key={`colHeading-${Guid.newGuid().toString()}`}>{dataSet.label}</th>;
+    const xHeaderCells: JSX.Element[] = datasets.map((dataSet: ChartDataSets) => {
+      return <th scope='col' key={`colHeading-${Guid.newGuid().toString()}`}>{escape(dataSet.label)}</th>;
     });
 
     // Generate the X axis header row
     const xHeaderRow: JSX.Element = <tr key={`xHeader-${Guid.newGuid().toString()}`}>
-      <th>{xAxisLabel}</th>
+      <th>{escape(xAxisLabel)}</th>
       {xHeaderCells}
     </tr>;
 
@@ -128,7 +138,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
         return <td key={`dataCell-${Guid.newGuid().toString()}`}>{dataSet.data[rowIndex]}</td>;
       });
       return <tr key={`dataRow-${Guid.newGuid().toString()}`}>
-        <th key={`dataCellHEader-${Guid.newGuid().toString()}`}>{labelValue}</th>
+        <th key={`dataCellHEader-${Guid.newGuid().toString()}`}>{escape(labelValue)}</th>
         {cells}
       </tr>;
     });
@@ -139,7 +149,8 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
    * If no caption, gets the title.
    */
   private _getAccessibleTitle(): string {
-    const { chartOptions,
+    const {
+      chartOptions,
       caption
     } = this.props;
 
