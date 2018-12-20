@@ -2,7 +2,7 @@
 
 Pie charts are divided into segments, each of which shows the proportional value of the data.
 
-![Default Pie Chart](../assets/PieChart.png)
+![Default Pie Chart](../../assets/PieChart.png)
 
 ## Example Usage
 
@@ -67,7 +67,7 @@ return (
 
 ### Half-Moon Pie charts
 
-![Half-Moon Pie Chart](../assets/PieChartHalfMoon.png)
+![Half-Moon Pie Chart](../../assets/PieChartHalfMoon.png)
 
 By default, pie charts (and doughnut charts) render a whole circle. You can change the chart's `circumference` option to render partial circles. 
 
@@ -89,7 +89,7 @@ The default `circumference` value is `2 * Math.PI`. To render a half-moon, speci
 
 Which renders the following half-moon:
 
-![Sideway Half-Moon Pie Chart](../assets/PieChartHalfMoonSideway.png)
+![Sideway Half-Moon Pie Chart](../../assets/PieChartHalfMoonSideway.png)
 
 To rotate the pie chart 90 degrees to the left, specify a `rotation` value in the chart's options. For example, to render the horizontal half-moon chart shown at the top of this section, use the following options:
 
@@ -112,7 +112,7 @@ To rotate the pie chart 90 degrees to the left, specify a `rotation` value in th
 
 Technically, doughnut charts and pie charts are derived from the same class in [Chart.js](https://github.com/), where a doughnut chart's `cutoutPercentage` is set to 50. 
 
-If you wish to render simple doughnut charts, use the [Doughnut Chart type](./doughnutchart.md).
+If you wish to render simple doughnut charts, use the [Doughnut Chart type](./DoughnutChart.md).
 
 However, if you wish to customize how the pie/doughtnut chart is rendered, you can set the cutout percentage to a different value.
 
@@ -136,7 +136,7 @@ For example, you can use the following code to render a custom "fuel-gauge" char
 
 Will produce the following chart:
 
-![Vroom vroom!](../assets/PieChartFuelGage.png)
+![Vroom vroom!](../../assets/PieChartFuelGage.png)
 
 ## Dataset Properties
 

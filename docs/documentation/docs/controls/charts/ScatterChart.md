@@ -4,7 +4,7 @@ Scatter charts are similar to line charts, except that the X axis (the horizonta
 
 Unlike other charts, scatter charts use `x` and `y` coordinates.
 
-![Default Scatter Chart](../assets/ScatterChart.png)
+![Default Scatter Chart](../../assets/ScatterChart.png)
 
 ## Example Usage
 
@@ -151,7 +151,7 @@ Point elements can be configured to change their appearance using the following 
 
 You can change the point configuration in the chart via the `options.elements.point` configuration.
 
-![Scatter with Point Styles](../assets/scatterpointstyle.png)
+![Scatter with Point Styles](../../assets/ScatterPointStyle.png)
 
 For example, to render the above chart, use the following code:
 
@@ -224,7 +224,7 @@ You can also control point configurations at the dataset level.
  ```
 
  Which renders the following chart:
- ![Dataset Styles](../assets/ScatterDatasetStyle.png)
+ ![Dataset Styles](../../assets/ScatterDatasetStyle.png)
 
 ## For More Information
 

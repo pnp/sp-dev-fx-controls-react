@@ -2,7 +2,16 @@ site_name: '@pnp/spfx-controls-react'
 nav:
   - Home: 'index.md'
   - Controls:
-    - ChartControl: 'controls/ChartControl.md'
+    - Charts:
+      - "ChartControl": 'controls/ChartControl.md'
+      - "Bar Chart": 'controls/charts/BarChart.md'
+      - "Bubble Chart": 'controls/charts/BubbleChart.md'
+      - "Doughnut Chart": 'controls/charts/DoughnutChart.md'
+      - "Line Chart": 'controls/charts/LineChart.md'
+      - "Pie Chart": 'controls/charts/PieChart.md'
+      - "Polar Area Chart": 'controls/charts/PolarAreaChart.md'
+      - "Radar Chart": 'controls/charts/RadarChart.md'
+      - "Scatter Chart": 'controls/charts/ScatterChart.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'

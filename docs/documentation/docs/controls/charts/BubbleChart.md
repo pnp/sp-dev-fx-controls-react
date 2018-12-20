@@ -2,7 +2,7 @@
 
 Bubble chart show elements across three dimensions. Each bubble in the chart is located according to the first two dimensions. The size of each bubble represents the thid dimension.
 
-![Default Bubble Chart](../assets/BubbleChart.png)
+![Default Bubble Chart](../../assets/BubbleChart.png)
 
 ## Example Usage
 

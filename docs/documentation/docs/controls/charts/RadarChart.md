@@ -2,7 +2,7 @@
 
 Radar charts are best used when comparing points of two or more datasets.
 
-![Default Radar Chart](../assets/RadarChart.png)
+![Default Radar Chart](../../assets/RadarChart.png)
 
 ## Example Usage
 

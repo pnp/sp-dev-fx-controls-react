@@ -2,7 +2,7 @@
 
 Line charts represent data values as plotted points on a line.
 
-![Default Line Chart](../assets/LineChart.png)
+![Default Line Chart](../../assets/LineChart.png)
 
 ## Example Usage
 
@@ -83,7 +83,7 @@ return (
 
 ### Curved lines
 
-![Curved Line Chart](../assets/LineChartCurved.png)
+![Curved Line Chart](../../assets/LineChartCurved.png)
 
 You can render curved lines instead of straight lines by removing the `lineTension` setting from each dataset, or by setting it to a value other than `0`.
 
@@ -133,7 +133,7 @@ return (
 
 ### Area Chart
 
-![Area Chart](../assets/AreaChartDefault.png)
+![Area Chart](../../assets/AreaChartDefault.png)
 
 To render an area chart, change the `fill` setting of the dataset to `true`.
 
@@ -180,9 +180,9 @@ If your chart has negative and positive values, you can control where the filled
 
 | `fill` Value | Description | Sample |
 | ----        | ----    | ---- |
-| `'start'`   | Fill from the bottom of the chart  | ![start fill](../assets/AreaChartFillStart.png) |
-| `'end'`     | Fill from the top of the chart  | ![end fill](../assets/AreaChartFillEnd.png) |
-| `'origin'`  | Fill from the 'zero' line Same as `true`  | ![origin fill](../assets/areachart.png)  |
+| `'start'`   | Fill from the bottom of the chart  | ![start fill](../../assets/AreaChartFillStart.png) |
+| `'end'`     | Fill from the top of the chart  | ![end fill](../../assets/AreaChartFillEnd.png) |
+| `'origin'`  | Fill from the 'zero' line Same as `true`  | ![origin fill](../../assets/AreaChart.png)  |
 
 For example, the code below will set the `fill` value to `start`:
 
@@ -227,11 +227,11 @@ return (
 
 Which renders the following chart:
 
-![Area Chart with Fill = 'start'](../assets/AreaChartFillStart.png)
+![Area Chart with Fill = 'start'](../../assets/AreaChartFillStart.png)
 
 ### Stacked Area Chart
 
-![Stacked Area Chart](../assets/StackedAreaChart.png)
+![Stacked Area Chart](../../assets/StackedAreaChart.png)
 
 If your bar chart has multiple datasets, you can render it as a stacked area chart by changing the settings on the Y axis to enable stacking, as follows:
 
@@ -309,7 +309,7 @@ return (
 
 As with lines, you can set the `lineTension` value to render curved lines instead of straight lines:
 
-![Curved Area Chart](../assets/AreaChartCurved.png)
+![Curved Area Chart](../../assets/AreaChartCurved.png)
 
 In addition to the `fill` values listed above, you can specify how each dataset fill:
 
@@ -358,7 +358,7 @@ const data: Chart.ChartData = {
 
 Will cause the first dataset to fill from the bottom of the chart, while the second dataset will fill to the previous dataset (by it's relative index of `-1`)
 
-![Stacked Area Chart with fill values `start` and `'-1'`](../assets/StackedAreaChartFillStartMinus1.png)
+![Stacked Area Chart with fill values `start` and `'-1'`](../../assets/StackedAreaChartFillStartMinus1.png)
 
 ## Dataset Properties
 

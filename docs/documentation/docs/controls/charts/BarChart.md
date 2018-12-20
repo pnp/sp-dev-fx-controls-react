@@ -2,7 +2,7 @@
 
 Bar charts represent data values as vertical bars.
 
-![Default Bar Chart](../assets/BarChart.png)
+![Default Bar Chart](../../assets/BarChart.png)
 
 ## Example Usage
 
@@ -131,7 +131,7 @@ return (
 
 Which will produce the following chart:
 
-![Default Chart Colors](../assets/BarChartDefaultColors.png)
+![Default Chart Colors](../../assets/BarChartDefaultColors.png)
 
 As with all charts, the `backgroundColor` and `borderColor` values can be one of the following:
 
@@ -142,7 +142,7 @@ As with all charts, the `backgroundColor` and `borderColor` values can be one of
 
 ### Stacked Bar Chart
 
-![Stacked Bar Chart](../assets/StackedBarChart.png)
+![Stacked Bar Chart](../../assets/StackedBarChart.png)
 
 If your bar chart has multiple datasets, you can render it as a stacked bar chart by changing the settings on the X and Y axes to enable stacking, as follows:
 
@@ -215,7 +215,7 @@ const data: Chart.ChartData = {
 
 ### Horizontal Bar Chart
 
-![Horizontal Bar Chart](../assets/HorizontalBarChart.png)
+![Horizontal Bar Chart](../../assets/HorizontalBarChart.png)
 
 To render a horizontal bar, use the following code:
 
@@ -361,7 +361,7 @@ options={{
 
 Which will produce the following chart:
 
-![Bar Chart Time Series](../assets/BarTimeScale.png)
+![Bar Chart Time Series](../../assets/BarTimeScale.png)
 
 > **NOTE:** As with regular data elements, you should pass the time scale array in the order that you want them to appear. Otherwise, you will get disappointing results.
 

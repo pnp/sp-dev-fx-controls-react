@@ -336,15 +336,15 @@ Defines the type of chart that will be rendered. For more information what data 
 
 | Name | Chart.js Equivalent | Description |
 | ---- | ---- | ---- |
-| [Bar](./BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| [Bubble](./BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| [Doughnut](./DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
-| [HorizontalBar](./BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| [Line](./LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
-| [Pie](./PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
-| [PolarArea](./PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
-| [Radar](./RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
-| [Scatter](./ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
+| [Bar](./charts/BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
+| [Bubble](./charts/BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
+| [Doughnut](./charts/DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| [HorizontalBar](./charts/BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
+| [Line](./charts/LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
+| [Pie](./charts/PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
+| [PolarArea](./charts/PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
+| [Radar](./charts/RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
+| [Scatter](./charts/ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
 
 ### IChartAccessibility
 
