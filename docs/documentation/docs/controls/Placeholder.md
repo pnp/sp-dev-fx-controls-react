@@ -16,12 +16,11 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 - Use the `Placeholder` control in your code as follows:
 
 ```TypeScript
-<Placeholder
-  iconName='Edit'
-  iconText='Configure your web part'
-  description='Please configure the web part.'
-  buttonLabel='Configure'
-  onConfigure={this._onConfigure} />
+<Placeholder iconName='Edit'
+             iconText='Configure your web part'
+             description='Please configure the web part.'
+             buttonLabel='Configure'
+             onConfigure={this._onConfigure} />
 ```
 
 - With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
@@ -31,6 +30,17 @@ private _onConfigure() {
   // Context of the web part
   this.props.context.propertyPane.open();
 }
+```
+
+Sample of using the `hideButton` functionality for hiding the button when page is in read mode:
+
+```TypeScript
+<Placeholder iconName='Edit'
+             iconText='Configure your web part'
+             description='Please configure the web part.'
+             buttonLabel='Configure'
+             hideButton={this.props.displayMode === DisplayMode.Read}
+             onConfigure={this._onConfigure} />
 ```
 
 ## Implementation
