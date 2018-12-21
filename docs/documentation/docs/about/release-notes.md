@@ -19,6 +19,7 @@
 
 - `IFrameDialog`: fix for spinner which keeps appearing on the iframe [#154](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/154)
 - `PeoplePicker`: fix SharePoint groups which could not be retrieved [#161](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/161)
+- `TaxonomyPicker`: fix sort order with lowercased terms [#205](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/205)
 
 ### Contributors
 
