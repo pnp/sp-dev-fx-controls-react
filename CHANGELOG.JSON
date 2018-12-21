@@ -1,6 +1,35 @@
 {
   "versions": [
     {
+      "version": "1.11.0",
+      "changes": {
+        "new": [
+          "`Map`: Newly introduced map control is available [#14](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/14)",
+          "`ChartControl`: Newly introduced control to render charts [#15](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/15)"
+        ],
+        "enhancements": [
+          "`PeoplePicker`: Allow the people picker to search on site level and on tenant level [#97](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/97)",
+          "`ListView`: Added support for filtering [#99](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/99)",
+          "`PeoplePicker`: Make the titleText property not required [#184](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/184)",
+          "`Placeholder`: Added the ability to specify if the button can be hidden [#206](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/206)",
+          "Updated the `office-ui-fabric-react` to the same version as in SPFx 1.7.0"
+        ],
+        "fixes": [
+          "`IFrameDialog`: fix for spinner which keeps appearing on the iframe [#154](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/154)",
+          "`PeoplePicker`: fix SharePoint groups which could not be retrieved [#161](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/161)",
+          "`TaxonomyPicker`: fix sort order with lowercased terms [#205](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/205)"
+        ]
+      },
+      "contributions": [
+        "[Hugo Bernier](https://github.com/hugoabernier)",
+        "[Asish Padhy](https://github.com/AsishP)",
+        "[Piotr Siatka](https://github.com/siata13)",
+        "[Anoop Tatti](https://github.com/anoopt)",
+        "[Alex Terentiev](https://github.com/AJIXuMuK)",
+        "[Tse Kit Yam](https://github.com/tsekityam)"
+      ]
+    },
+    {
       "version": "1.10.0",
       "changes": {
         "new": [

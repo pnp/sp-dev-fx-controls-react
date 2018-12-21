@@ -32,7 +32,7 @@ define([], () => {
       "L_RelativeDateTime_XDaysFuture": "{0} dag vanaf nu||{0} dagen vanaf nu",
       "L_RelativeDateTime_XDays": "{0} dag geleden||{0} dagen geleden",
       "L_RelativeDateTime_XDaysFutureIntervals": "1||2-",
-      "L_RelativeDateTime_XDaysIntervals":  "1||2-",
+      "L_RelativeDateTime_XDaysIntervals": "1||2-",
       "L_RelativeDateTime_Today": "Vandaag"
     },
     "SendEmailTo": "Stuur een mail naar {0}",
@@ -48,12 +48,20 @@ define([], () => {
 
     peoplePickerComponentTooltipMessage: "Personen kiezen",
     peoplePickerComponentErrorMessage: "Verplicht veld",
-    peoplePickerComponentTitleText: "Kies personen",
     peoplePickerSuggestionsHeaderText: 'Voorgestelde personen',
     peoplePickerLoadingText: 'Laden',
+    PeoplePickerSearchText: 'Personen worden opgehaald',
+    PeoplePickerGroupNotFound: "Groep niet gevonden.",
 
     ListItemPickerSelectValue: 'Selecteer veld',
 
-    genericNoResultsFoundText: 'Geen resultaten gevonden'
+    mapsErrorMessage: 'Er is een fout opgetreden bij het laden van de kaart',
+    mapsLoadingText: 'Laden',
+    mapsSearchButtonText: 'Zoeken',
+    mapsTitlePrefix: 'Kaart van',
+
+    genericNoResultsFoundText: 'Geen resultaten gevonden',
+
+    ListViewFilterLabel: "Filter de lijst"
   };
 });

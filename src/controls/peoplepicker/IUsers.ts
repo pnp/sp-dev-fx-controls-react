@@ -1,9 +1,9 @@
 export interface IUsers {
   '@odata.context': string;
-  value: Value[];
+  value: IUserInfo[];
 }
 
-export interface Value {
+export interface IUserInfo {
   '@odata.type': string;
   '@odata.id': string;
   '@odata.editLink': string;

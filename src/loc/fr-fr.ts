@@ -32,7 +32,7 @@ define([], () => {
       "L_RelativeDateTime_XDaysFuture": "{0} jours à partir de maintenant || {0} jours à partir de maintenant",
       "L_RelativeDateTime_XDays": "Il y a {0} jour||Il y a {0} jours",
       "L_RelativeDateTime_XDaysFutureIntervals": "1||2-",
-      "L_RelativeDateTime_XDaysIntervals":  "1||2-",
+      "L_RelativeDateTime_XDaysIntervals": "1||2-",
       "L_RelativeDateTime_Today": "Aujourd'hui"
     },
     "SendEmailTo": "Envoyer un email à {0}",
@@ -48,12 +48,20 @@ define([], () => {
 
     peoplePickerComponentTooltipMessage: "Sélecteur de personnes",
     peoplePickerComponentErrorMessage: "Le sélecteur de personnes est obligatoire",
-    peoplePickerComponentTitleText: "Choisissez l'utilisateur(s)",
     peoplePickerSuggestionsHeaderText: 'Personnes suggérées',
     peoplePickerLoadingText: 'Chargement',
+    PeoplePickerSearchText: 'Fetching users',
+    PeoplePickerGroupNotFound: "Group could not be found.",
 
     ListItemPickerSelectValue: 'Sélectionnez une valeur',
 
-    genericNoResultsFoundText: 'Aucun résultat trouvé'
+    mapsErrorMessage: "Une erreur s'est produite lors du chargement des cartes.",
+    mapsLoadingText: 'Chargement',
+    mapsSearchButtonText: 'Chercher',
+    mapsTitlePrefix: 'Carte de',
+
+    genericNoResultsFoundText: 'Aucun résultat trouvé',
+
+    ListViewFilterLabel: "Filtre"
   };
 });

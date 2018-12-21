@@ -18,7 +18,7 @@ if (changelog.versions && changelog.versions.length > 0) {
         const typeChanges = entry.changes[changeName];
         if (typeChanges.length > 0) {
           let name = changeName === "new" ? "new control(s)" : changeName;
-          markdown.push(`**${name.charAt(0).toUpperCase() + name.slice(1)}**`);
+          markdown.push(`### ${name.charAt(0).toUpperCase() + name.slice(1)}`);
           markdown.push(``);
 
           // Add each change text
