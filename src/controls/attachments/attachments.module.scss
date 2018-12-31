@@ -22,12 +22,7 @@
 
   .attachment {
 
-    @include ms-fontSize-m;
     line-height: 30px;
-
-    a {
-      @include ms-fontSize-m;
-    }
 
     .deleteButton {
       content: icon;
