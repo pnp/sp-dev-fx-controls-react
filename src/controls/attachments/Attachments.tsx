@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as lodash from 'lodash';
 
-import styles from "attachments.module.scss";
+import styles from "./attachments.module.scss";
 import {PrimaryButton, IconButton} from 'office-ui-fabric-react/lib/Button';
 import {autobind} from '@uifabric/utilities/lib';
-import {IAttachment} from "IAttachment";
+import {IAttachment} from "./IAttachment";
 import {AttachmentsDataService, IAttachmentsDataService} from "../../services/AttachmentsDataService";
 
 export interface IAttachmentsProps {
@@ -72,8 +72,8 @@ export default class Attachments extends React.Component<IAttachmentsProps, IAtt
     var _file: any = e.target.files[0];
     this.setState({
       file: _file
-    })
-  };
+    });
+  }
 
   @autobind
   private async _handleFileUpload(): Promise<void> {
@@ -101,7 +101,7 @@ export default class Attachments extends React.Component<IAttachmentsProps, IAtt
 
     }
 
-  };
+  }
 
   @autobind
   private async _deleteAttachment(e): Promise<void> {
@@ -170,7 +170,7 @@ export default class Attachments extends React.Component<IAttachmentsProps, IAtt
                   <span>{att.FileName}</span>
                 }
                 </li>
-            </ul>
+            </ul>;
           })
           }
         </div>
