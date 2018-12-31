@@ -18,7 +18,7 @@ if (changelog.versions && changelog.versions.length > 0) {
         const typeChanges = entry.changes[changeName];
         if (typeChanges.length > 0) {
           let name = changeName === "new" ? "new control(s)" : changeName;
-          markdown.push(`**${name.charAt(0).toUpperCase() + name.slice(1)}**`);
+          markdown.push(`### ${name.charAt(0).toUpperCase() + name.slice(1)}`);
           markdown.push(``);
 
           // Add each change text
@@ -28,6 +28,14 @@ if (changelog.versions && changelog.versions.length > 0) {
           markdown.push(``);
         }
       }
+    }
+
+    // Add the contributions to the MD file
+    if (entry.contributions && entry.contributions.length > 0) {
+      markdown.push(`### Contributors`);
+      markdown.push(``);
+      markdown.push(`Special thanks to our contributor${entry.contributions.length > 1 ? "s (in alphabetical order)" : "" }: ${entry.contributions.join(', ')}.`);
+      markdown.push(``);
     }
   }
 

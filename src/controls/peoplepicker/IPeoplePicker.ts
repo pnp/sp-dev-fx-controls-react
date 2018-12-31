@@ -1,4 +1,5 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
@@ -11,13 +12,13 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: WebPartContext;
+  context: WebPartContext | ExtensionContext;
   /**
    * Text of the Control
   */
-  titleText: string;
+  titleText?: string;
   /**
-   * Web Absolute Url of source site
+   * Web Absolute Url of source site. When this is provided, a search request is done to the local site.
    */
   webAbsoluteUrl?: string;
   /**
@@ -29,37 +30,45 @@ export interface IPeoplePickerProps {
    */
   groupName?: string;
   /**
+   * Maximum number of suggestions to show in the full suggestion list. (default: 5)
+   */
+  suggestionsLimit?: number;
+  /**
+   * Specify the user / group types to retrieve
+   */
+  resolveDelay?: number;
+  /**
    * Selection Limit of Control
    */
   personSelectionLimit?: number;
   /**
    * Show or Hide Tooltip
    */
-  showtooltip? : boolean;
+  showtooltip?: boolean;
   /**
    * People Field is mandatory
    */
-  isRequired? : boolean;
+  isRequired?: boolean;
   /**
    * Mandatory field error message
    */
-  errorMessage? : string;
+  errorMessage?: string;
   /**
    * Method to check value of People Picker text
    */
-  selectedItems?: (items: any[]) => void;
+  selectedItems?: (items: IPersonaProps[]) => void;
   /**
    * Tooltip Message
    */
-  tooltipMessage? : string;
+  tooltipMessage?: string;
   /**
    * Directional Hint of tool tip
    */
-  tooltipDirectional? : DirectionalHint;
-   /**
-   * Class Name for the whole People picker control
-   */
-  peoplePickerWPclassName?:string;
+  tooltipDirectional?: DirectionalHint;
+  /**
+  * Class Name for the whole People picker control
+  */
+  peoplePickerWPclassName?: string;
   /**
    * Class Name for the People picker control
    */
@@ -67,34 +76,35 @@ export interface IPeoplePickerProps {
   /**
    * Class Name for the Error Section
    */
-  errorMessageclassName?: string;
+  errorMessageClassName?: string;
   /**
    * Default Selected User Emails
    */
-  defaultSelectedUsers? : string[];
+  defaultSelectedUsers?: string[];
   /**
+   * @deprecated
    * Show users which are hidden from the UI
    */
   showHiddenInUI?: boolean;
   /**
    * Specify the user / group types to retrieve
    */
-  principleTypes?: PrincipalType[];
+  principalTypes?: PrincipalType[];
+  /**
+   * When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search
+   */
+  ensureUser?: boolean;
 }
 
 export interface IPeoplePickerState {
-  selectedPersons?: IPersonaProps[];
   mostRecentlyUsedPersons: IPersonaProps[];
-  currentSelectedPersons: IPersonaProps[];
-  allPersons: IPeoplePickerUserItem[];
-  delayResults?: boolean;
-  currentPicker?: number | string;
+  showRequiredError: boolean;
+  errorMessage: string;
+  resolveDelay : number;
+
+  selectedPersons?: IPersonaProps[];
   peoplePersonaMenu?: IPersonaProps[];
-  peoplePartTitle: string;
-  peoplePartTooltip : string;
-  isLoading : boolean;
-  peopleValidatorText? : string;
-  showmessageerror: boolean;
+  delayResults?: boolean;
 }
 
 export interface IPeoplePickerUserItem {

@@ -1,12 +1,20 @@
 declare interface IControlStrings {
+  PeoplePickerGroupNotFound: string;
+  ListViewFilterLabel: string;
+
+  PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
   peoplePickerComponentErrorMessage: string;
-  peoplePickerComponentTitleText: string;
+  peoplePickerSuggestionsHeaderText: string;
+  genericNoResultsFoundText: string;
+  peoplePickerLoadingText: string;
+
+
   SiteBreadcrumbLabel: string;
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
   WebPartTitleLabel: string;
-  DateTime:{[key: string]: string};
+  DateTime: { [key: string]: string };
   SendEmailTo: string;
   StartChatWith: string;
   Contact: string;
@@ -18,6 +26,14 @@ declare interface IControlStrings {
   TaxonomyPickerMenuTermSet: string;
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
+
+  ListItemPickerSelectValue: string;
+
+  //Maps
+  mapsErrorMessage: string;
+  mapsLoadingText: string;
+  mapsSearchButtonText: string;
+  mapsTitlePrefix: string;
 }
 
 declare module 'ControlStrings' {

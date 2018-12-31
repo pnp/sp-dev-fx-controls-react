@@ -57,7 +57,7 @@ export default class SPTermStorePickerService {
       return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
         return serviceResponse.json().then((serviceJSONResponse: any) => {
           // Construct results
-          let termStoreResult: ITermStore[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
+          let termStoreResult: ITermStore[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
           // Check if term store was retrieved
           if (termStoreResult.length > 0) {
             // Check if the termstore needs to be filtered or limited
@@ -115,7 +115,7 @@ export default class SPTermStorePickerService {
   public async getAllTerms(termset: string): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
-       return this.getAllMockTerms();
+      return this.getAllMockTerms();
     } else {
       let termsetId: string = termset;
       // Check if the provided term set property is a GUID or string
@@ -146,24 +146,24 @@ export default class SPTermStorePickerService {
 
       return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
         return serviceResponse.json().then((serviceJSONResponse: any) => {
-          const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
+          const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
 
           if (termStoreResultTermSets.length > 0) {
             var termStoreResultTermSet = termStoreResultTermSets[0];
             termStoreResultTermSet.Terms = [];
             // Retrieve the term collection results
-            const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+            const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
             if (termStoreResultTerms.length > 0) {
               // Retrieve all terms
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
+                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
                 term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
-                term.TermSet = { Id : this.cleanGuid(termStoreResultTermSet.Id), Name : termStoreResultTermSet.Name};
-                if (term["Parent"])
-                {
-                term.ParentId = this.cleanGuid(term["Parent"].Id);
+                term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
+                if (term["Parent"]) {
+                  term.ParentId = this.cleanGuid(term["Parent"].Id);
                 }
                 return term;
               });
@@ -264,7 +264,7 @@ export default class SPTermStorePickerService {
           return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
             return serviceResponse.json().then((serviceJSONResponse: any) => {
               // Retrieve the term collection results
-              const termStoreResult: ITerms[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
               if (termStoreResult.length > 0) {
                 // Retrieve all terms
 
@@ -274,7 +274,7 @@ export default class SPTermStorePickerService {
                 terms.forEach(term => {
                   if (term.Name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
                     returnTerms.push({
-                      key:this.cleanGuid(term.Id),
+                      key: this.cleanGuid(term.Id),
                       name: term.Name,
                       path: term.PathOfTerm,
                       termSet: this.cleanGuid(term.TermSet.Id),
@@ -302,13 +302,23 @@ export default class SPTermStorePickerService {
    * @param b term 2
    */
   private _sortTerms(a: ITerm, b: ITerm) {
-    if (a.PathOfTerm < b.PathOfTerm) {
-      return -1;
+    if (a.CustomSortOrderIndex === -1) {
+      if (a.PathOfTerm.toLowerCase() < b.PathOfTerm.toLowerCase()) {
+        return -1;
+      }
+      if (a.PathOfTerm.toLowerCase() > b.PathOfTerm.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    } else {
+      if (a.CustomSortOrderIndex < b.CustomSortOrderIndex) {
+        return -1;
+      }
+      if (a.CustomSortOrderIndex > b.CustomSortOrderIndex) {
+        return 1;
+      }
+      return 0;
     }
-    if (a.PathOfTerm > b.PathOfTerm) {
-      return 1;
-    }
-    return 0;
   }
 
   /**
