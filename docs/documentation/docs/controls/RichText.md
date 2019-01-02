@@ -63,6 +63,6 @@ The RichText control can be configured with the following properties:
 | onChange | (text: string) => string | no | onChange handler for the RichText control. The function must return a `string` containing the rich text to display in the RichText control. |
 
 > Note that setting `showAlign`, `showBold`, `showItalic`, `showLink`, `showList`, `showStyles`, or
-`showUnderline` to `false` does *not* remove the user's ability to apply the button's associated formatting -- it only hides the toolbar option. If `showMore` is `true`, the options will remain available in the formatting pane. To prevent users from applying specific formats, use the `onChange` handler to parse the rich text and remove the formatting as desired.
+`showUnderline` to `false` does *not* remove the user's ability to apply the button's associated formatting -- it only hides the toolbar option. Also, if `showMore` is `true`, all options remain available in the formatting pane -- regardless whether they were turned off using `show___`. To prevent users from applying specific formats, use the `onChange` handler to parse the rich text and remove the formatting as desired.
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/RichText)
