@@ -67,6 +67,6 @@ The RichText control can be configured with the following properties:
 | showUnderline | boolean | no | Indicates whether to show the **Underline** toolbar button or not. Note that this option is indenpendent from the other `show___` options. I.e.: Setting `showBold` to `false` will disable the **Bold** toolbar, but will not disable it from the formatting pane. Default value is `true` |
 
 > Note that setting `showAlign`, `showBold`, `showItalic`, `showLink`, `showList`, `showStyles`, or
-`showUnderline` to `false` does *not* remove the user's ability to apply the button's associated formatting -- it only hides the toolbar option. If `showMore` is `true`, the options will remain available in the formatting pane. To prevent users from applying specific formats, use the `onChange` handler to parse the rich text and remove the formatting as desired.
+`showUnderline` to `false` does *not* remove the user's ability to apply the button's associated formatting -- it only hides the toolbar option. Also, if `showMore` is `true`, all options remain available in the formatting pane -- regardless whether they were turned off using `show___`. To prevent users from applying specific formats, use the `onChange` handler to parse the rich text and remove the formatting as desired.
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/RichText)
