@@ -158,7 +158,11 @@ export default class SPTermStorePickerService {
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
-                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                if (term.IsRoot) {
+                  term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                } else {
+                  term.CustomSortOrderIndex = (term["Parent"].CustomSortOrder) ? term["Parent"].CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                }
                 term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
                 term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
@@ -169,8 +173,9 @@ export default class SPTermStorePickerService {
               });
               // Check if the term set was not empty
               if (terms.length > 0) {
-                // Sort the terms by PathOfTerm
-                terms = terms.sort(this._sortTerms);
+                // Sort the terms recursively by name
+                let rootTerms = terms.filter(t => t.IsRoot);
+                terms = this.sortTerms(rootTerms, terms);
                 termStoreResultTermSet.Terms = terms;
               }
             }
@@ -182,6 +187,24 @@ export default class SPTermStorePickerService {
     }
   }
 
+  /**
+   * Sorts the terms recursively
+   * @param termsToSort
+   * @param allTerms
+   */
+  private sortTerms(termsToSort: ITerm[], allTerms: ITerm[]): ITerm[] {
+    const sortedTerms: ITerm[] = [];
+    const sortedCurrentLevelTerms = termsToSort.sort(this.compareTerms);
+    for (const term of sortedCurrentLevelTerms) {
+      sortedTerms.push(term);
+      const childTerms = allTerms.filter(t => t.ParentId === term.Id);
+      if (childTerms.length > 0) {
+        const sortedChildTerms = this.sortTerms(childTerms, allTerms);
+        sortedTerms.push(...sortedChildTerms);
+      }
+    }
+    return sortedTerms;
+  }
 
   /**
    * Get the term set ID by its name
@@ -297,16 +320,16 @@ export default class SPTermStorePickerService {
   }
 
   /**
-   * Sort the terms by their path
+   * Compares the terms by their name or CustomSortOrderIndex if defined
    * @param a term 2
    * @param b term 2
    */
-  private _sortTerms(a: ITerm, b: ITerm) {
+  private compareTerms(a: ITerm, b: ITerm) {
     if (a.CustomSortOrderIndex === -1) {
-      if (a.PathOfTerm.toLowerCase() < b.PathOfTerm.toLowerCase()) {
+      if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
         return -1;
       }
-      if (a.PathOfTerm.toLowerCase() > b.PathOfTerm.toLowerCase()) {
+      if (a.Name.toLowerCase() > b.Name.toLowerCase()) {
         return 1;
       }
       return 0;
