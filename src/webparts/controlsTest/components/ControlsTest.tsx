@@ -491,7 +491,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   width={'570px'}
                   height={'315px'} />
               </div>
-              <div className="ms-font-m">iframe dialog tester:
+              <div className="ms-font-m">iframe Panel tester:
                 <PrimaryButton
                   text="Open iframe Panel"
                   onClick={() => { this.setState({ iFramePanelOpened: true }); }} />

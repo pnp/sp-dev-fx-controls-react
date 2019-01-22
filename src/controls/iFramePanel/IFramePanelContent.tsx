@@ -13,7 +13,7 @@ export interface IIFramePanelContentState {
 }
 
 /**
- * IFrame Dialog content
+ * IFrame Panel content
  */
 export class IFramePanelContent extends React.Component<IIFramePanelContentProps, IIFramePanelContentState> {
   private _iframe: any;
