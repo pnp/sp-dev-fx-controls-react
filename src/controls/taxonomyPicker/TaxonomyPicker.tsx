@@ -7,13 +7,15 @@ import TermPicker from './TermPicker';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
-import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
+import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
+import { TermLabelAction, ITermActions } from './termActions';
+
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
-import * as telemetry from '../../common/telemetry';
 
+import * as telemetry from '../../common/telemetry';
 
 /**
  * Image URLs / Base64
@@ -53,6 +55,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+    this.prepareTermActions = this.prepareTermActions.bind(this);
   }
 
   /**
@@ -76,24 +79,29 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
   }
 
+  private prepareTermActions = (): ITermActions => {
+    let termActions = this.props.termActions ? cloneDeep(this.props.termActions) : null;
+    // Add default available actions
+    if (termActions && termActions.addDefaultActions) {
+      termActions.concreateActions.unshift(new TermLabelAction(this.termsService));
+    }
+    return termActions;
+  }
+
   /**
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+    let termActions = this.prepareTermActions();
     this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
       // Check if a response was retrieved
-      if (response !== null) {
-        this.setState({
-          termSetAndTerms: response,
-          loaded: true
-        });
-      } else {
-        this.setState({
-          termSetAndTerms: null,
-          loaded: true
-        });
-      }
+      let termSetAndTerms = response ? response : null;
+      this.setState({
+        termSetAndTerms,
+        loaded: true,
+        termActions
+      });
     });
   }
 
@@ -304,7 +312,10 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             disabledTermIds={this.props.disabledTermIds}
                             disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
                             changedCallback={this.termsChanged}
-                            multiSelection={this.props.allowMultipleSelections} />
+                            multiSelection={this.props.allowMultipleSelections}
+
+                            termActions={this.state.termActions}
+                            />
               </div>
             )
           }
