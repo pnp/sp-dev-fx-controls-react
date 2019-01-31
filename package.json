@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.11.0",
+  "version": "1.12.0",
   "engines": {
     "node": ">=0.10.0"
   },

@@ -9,10 +9,11 @@ import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@micro
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
-import { IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
-import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ITermSets } from './ISPTermStorePickerService';
+import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
+import { ITermStore, ITerms, ITerm, IGroup, ITermSet } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
+import { findIndex } from '@microsoft/sp-lodash-subset';
 
 
 /**
@@ -169,8 +170,8 @@ export default class SPTermStorePickerService {
               });
               // Check if the term set was not empty
               if (terms.length > 0) {
-                // Sort the terms by PathOfTerm
-                terms = terms.sort(this._sortTerms);
+                // Sort the terms by PathOfTerm and their depth
+                terms = this.sortTerms(terms);
                 termStoreResultTermSet.Terms = terms;
               }
             }
@@ -297,11 +298,55 @@ export default class SPTermStorePickerService {
   }
 
   /**
+   * Sorting terms based on their path and depth
+   *
+   * @param terms
+   */
+  private sortTerms(terms: ITerm[]) {
+    // Start sorting by depth
+    let newTermsOrder: ITerm[] = [];
+    let itemsToSort = true;
+    let pathLevel = 1;
+    while (itemsToSort) {
+      // Get terms for the current level
+      let crntTerms = terms.filter(term => term.PathDepth === pathLevel);
+      if (crntTerms && crntTerms.length > 0) {
+        crntTerms = crntTerms.sort(this.sortTermByPath);
+
+        if (pathLevel !== 1) {
+          crntTerms = crntTerms.reverse();
+          for (const crntTerm of crntTerms) {
+            const pathElms = crntTerm.PathOfTerm.split(";");
+            // Last item is not needed for parent path
+            pathElms.pop();
+            // Find the parent item and add the new item
+            const idx = findIndex(newTermsOrder, term => term.PathOfTerm === pathElms.join(";"));
+            if (idx !== -1) {
+              newTermsOrder.splice(idx + 1, 0, crntTerm);
+            } else {
+              // Push the item at the end if the parent couldn't be found
+              newTermsOrder.push(crntTerm);
+            }
+          }
+        } else {
+          newTermsOrder = crntTerms;
+        }
+
+        ++pathLevel;
+      } else {
+        itemsToSort = false;
+      }
+    }
+    return newTermsOrder;
+  }
+
+  /**
    * Sort the terms by their path
+   *
    * @param a term 2
    * @param b term 2
    */
-  private _sortTerms(a: ITerm, b: ITerm) {
+  private sortTermByPath(a: ITerm, b: ITerm) {
     if (a.CustomSortOrderIndex === -1) {
       if (a.PathOfTerm.toLowerCase() < b.PathOfTerm.toLowerCase()) {
         return -1;
