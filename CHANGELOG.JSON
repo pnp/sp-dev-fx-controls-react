@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.12.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)"
+        ]
+      },
+      "contributions": []
+    },
+    {
       "version": "1.11.0",
       "changes": {
         "new": [

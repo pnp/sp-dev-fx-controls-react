@@ -1,5 +1,11 @@
 # Releases
 
+## 1.12.0
+
+### Fixes
+
+- `TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)
+
 ## 1.11.0
 
 ### New control(s)
