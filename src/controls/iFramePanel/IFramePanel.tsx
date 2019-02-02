@@ -3,7 +3,7 @@ import { Guid } from "@microsoft/sp-core-library";
 import styles from './IFramePanelContent.module.scss';
 import { Panel, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
 import omit = require('lodash/omit');
-import { IFramePanelContent } from './IframePanelContent';
+import { IFramePanelContent } from './IFramePanelContent';
 
 export interface IIFramePanelProps extends IPanelProps {
   /**
