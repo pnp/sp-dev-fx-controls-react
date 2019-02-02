@@ -62,6 +62,6 @@ define([], () => {
 
     genericNoResultsFoundText: 'No results found',
 
-    ListViewFilterLabel: "Filter the list"
+    ListViewFilterLabel: "Filter the list",
   };
 });

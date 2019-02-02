@@ -1,6 +1,6 @@
 # SecurityTrimmedControl
 
-This control is intended to be used when you want to show or hide components based on the user its permissions. The control can be used to check the user’s permissions on the current site / list were the solution is loaded, or on a remote site / list.
+This control is intended to be used when you want to show or hide components based on the user permissions. The control can be used to check the user’s permissions on the current site / list were the solution is loaded, or on a remote site / list.
 
 ## How to use this control in your solutions
 

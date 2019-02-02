@@ -22,6 +22,7 @@ import { getItemClassNames } from 'office-ui-fabric-react/lib/components/Context
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
 import { ChartControl, ChartType } from "../../../ChartControl";
+import { Progress, IProgressAction, IProgressProps } from '../../../Progress';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -36,11 +37,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iFrameDialogOpened: false,
       initialValues: [],
       authorEmails: [],
-      selectedList: null
+      selectedList: null,
+      progressActions: this._initProgressActions()
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
     this._onConfigure = this._onConfigure.bind(this);
+    this._startProgress = this._startProgress.bind(this);
   }
 
   /**
@@ -158,6 +161,51 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log(item);
   }
 
+  private _startProgress() {
+    let currentIndex = 0;
+    const intervalId = setInterval(() => {
+      const actions = this.state.progressActions;
+
+      if (currentIndex >= actions.length) {
+        clearInterval(intervalId);
+      }
+      else {
+        const action = actions[currentIndex];
+        if (currentIndex == 1) { // just a test for error
+          action.hasError = true;
+          action.errorMessage = 'some error message';
+        }
+      }
+
+      this.setState({
+        currentProgressActionIndex: currentIndex,
+        progressActions: actions
+      });
+      currentIndex++;
+    }, 5000);
+  }
+
+  private _initProgressActions(): IProgressAction[] {
+    return [{
+      title: 'First Step',
+      subActionsTitles: [
+        'Sub action 1',
+        'Sub action 2'
+      ]
+    }, {
+      title: 'Second step'
+    }, {
+      title: 'Third Step',
+      subActionsTitles: [
+        'Sub action 1',
+        'Sub action 2',
+        'Sub action 3'
+      ]
+    }, {
+      title: 'Fourth Step'
+    }];
+  }
+
   /**
    * Renders the component
    */
@@ -236,136 +284,136 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           updateProperty={this.props.updateProperty} />
 
         <Placeholder iconName='Edit'
-                     iconText='Configure your web part'
-                     description='Please configure the web part.'
-                     buttonLabel='Configure'
-                     hideButton={this.props.displayMode === DisplayMode.Read}
-                     onConfigure={this._onConfigure} />
+          iconText='Configure your web part'
+          description='Please configure the web part.'
+          buttonLabel='Configure'
+          hideButton={this.props.displayMode === DisplayMode.Read}
+          onConfigure={this._onConfigure} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (Group not found)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      groupName="Team Site Visitors 123"
-                      ensureUser={true}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (Group not found)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          groupName="Team Site Visitors 123"
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (search for group)"
-                      groupName="Team Site Visitors"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (search for group)"
+          groupName="Team Site Visitors"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set global users)"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems}
-                      personSelectionLimit={2}
-                      ensureUser={true} />
+          titleText="People Picker (pre-set global users)"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems}
+          personSelectionLimit={2}
+          ensureUser={true} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set local users)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (pre-set local users)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (tenant scoped)"
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (tenant scoped)"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (local scoped)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (local scoped)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (disabled)"
-                      disabled={true}
-                      showtooltip={true} />
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true} />
 
 
         <ListView items={this.state.items}
-                  viewFields={viewFields}
-                  iconFieldName='ServerRelativeUrl'
-                  groupByFields={groupByFields}
-                  compact={true}
-                  selectionMode={SelectionMode.single}
-                  selection={this._getSelection}
-                  showFilter={true}
-                  // defaultFilter="Team"
-                  />
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+        // defaultFilter="Team"
+        />
 
 
         <ChartControl type={ChartType.Bar}
-                      data={{
-                            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        }}
-                        options={{
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
-                            }
-                        }} />
+          data={{
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }} />
 
         <Map titleText="New map control"
-             coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-             enableSearch={true}
-             mapType={MapType.normal}
-             onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
-            //  zoom={15}
-            //mapType={MapType.cycle}
-            //width="50"
-            //height={150}
-            //loadingMessage="Loading maps"
-            //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+          enableSearch={true}
+          mapType={MapType.normal}
+          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+        //  zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
+        //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
         <div className={styles.container}>
@@ -495,6 +543,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+        <div>
+          <Progress
+            title={'Progress Test'}
+            showOverallProgress={true}
+            showIndeterminateOverallProgress={false}
+            hideNotStartedActions={false}
+            actions={this.state.progressActions}
+            currentActionIndex={this.state.currentProgressActionIndex}
+            longRunningText={'This operation takes longer than expected'}
+            longRunningTextDisplayDelay={7000}
+            height={'350px'} />
+          <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
+        </div>
       </div>
     );
   }
