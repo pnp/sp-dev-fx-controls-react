@@ -97,7 +97,7 @@ export class YourComponent extends React.Component<IYourComponentProps, IYourCom
 
 ## Implementation
 
-The IFrameDialog component can be configured with the following properties:
+The `Progress` component can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
