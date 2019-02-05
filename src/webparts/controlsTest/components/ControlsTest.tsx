@@ -553,7 +553,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             currentActionIndex={this.state.currentProgressActionIndex}
             longRunningText={'This operation takes longer than expected'}
             longRunningTextDisplayDelay={7000}
-            height={'350px'} />
+            height={'350px'}
+            inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
       </div>

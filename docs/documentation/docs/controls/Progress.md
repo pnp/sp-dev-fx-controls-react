@@ -114,3 +114,6 @@ The `Progress` component can be configured with the following properties:
 | headerClassName | string | no | Header class name. Header contains title, progress indicator, and delay text |
 | actionsContainerClassName | string | no | Actions container class name |
 | actionClassName | string | no | Single action class name |
+| successIconName | string | no | Success icon name. Default is CheckMark |
+| errorIconName | string | no | Error icon name. Default is Error |
+| inProgressIconName | string | no | InProgress icon name. Default is '', spinner is displayed. |

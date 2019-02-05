@@ -100,6 +100,19 @@ export interface IProgressProps {
      */
     actionClassName?: string;
 
+    /**
+     * Success icon name. Default is CheckMark
+     */
+    successIconName?: string;
+    /**
+     * Error icon name. Default is Error
+     */
+    errorIconName?: string;
+    /**
+     * InProgress icon name. Default is '', spinner is displayed.
+     */
+    inProgressIconName?: string;
+
 }
 
 /**
@@ -124,4 +137,17 @@ export interface IActionProps extends IProgressAction {
      * Action class name
      */
     className?: string;
+
+    /**
+     * Success icon name. Default is CheckMark
+     */
+    successIconName?: string;
+    /**
+     * Error icon name. Default is Error
+     */
+    errorIconName?: string;
+    /**
+     * InProgress icon name. Default is '', spinner is displayed.
+     */
+    inProgressIconName?: string;
 }

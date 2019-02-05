@@ -62,7 +62,10 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
             className,
             headerClassName,
             actionClassName,
-            actionsContainerClassName
+            actionsContainerClassName,
+            successIconName,
+            errorIconName,
+            inProgressIconName
         } = this.props;
 
         // correcting action index if props contain incorrect one
@@ -78,19 +81,24 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
 
         const actionEls: JSX.Element[] = actionsToRender.map((a, index) => {
             let state = ProgressActionState.notStarted; // by default the state is not started
-            if (actionIndex === index) { // current action is in progress
+            if (a.hasError && index <= actionIndex) { // current or prev action has errored
+                state = ProgressActionState.errored;
+            }
+            else if (actionIndex === index) { // current action is in progress
                 state = ProgressActionState.inProgress;
             }
-            else if (index < actionIndex) {
-                if (a.hasError) { // finished with error
-                    state = ProgressActionState.errored;
-                }
-                else { // finished with no errors
-                    state = ProgressActionState.finished;
-                }
+            else if (index < actionIndex) { // finished with no errors
+                state = ProgressActionState.finished;
             }
 
-            return <Action {...a} state={state} key={index} className={actionClassName} />;
+            return <Action 
+                {...a} 
+                state={state} 
+                key={index} 
+                className={actionClassName}
+                successIconName={successIconName}
+                errorIconName={errorIconName}
+                inProgressIconName={inProgressIconName} />;
 
         });
 

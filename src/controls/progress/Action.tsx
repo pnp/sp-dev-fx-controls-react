@@ -13,7 +13,10 @@ export class Action extends React.Component<IActionProps, {}> {
             subActionsTitles,
             errorMessage,
             title,
-            className
+            className,
+            successIconName,
+            errorIconName,
+            inProgressIconName
         } = this.props;
         const inactive: boolean = state === ProgressActionState.notStarted;
         const labelClassName = inactive ? css(styles.label, styles.inactive) : styles.label;
@@ -21,16 +24,19 @@ export class Action extends React.Component<IActionProps, {}> {
         let iconClassName = '';
         switch (state) {
             case ProgressActionState.finished:
-                iconName = 'CheckMark';
+                iconName = successIconName || 'CheckMark';
                 iconClassName = styles.successIcon;
                 break;
             case ProgressActionState.notStarted:
-                iconName = 'CheckMark';
+                iconName = successIconName || 'CheckMark';
                 iconClassName = styles.inactiveIcon;
                 break;
             case ProgressActionState.errored:
-                iconName = 'Cancel';
+                iconName = errorIconName || 'Error';
                 iconClassName = styles.errorIcon;
+                break;
+            case ProgressActionState.inProgress:
+                iconName = inProgressIconName;
                 break;
         }
         return (
