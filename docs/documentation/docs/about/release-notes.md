@@ -9,10 +9,11 @@
 ### Fixes
 
 - `TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)
+- `TaxonomyPicker`: Issue with custom sort order of items underneath root terms [#231](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/231)
 
 ### Contributors
 
-Special thanks to our contributor: [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.11.0
 
