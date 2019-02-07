@@ -4,12 +4,16 @@
       "version": "1.12.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)"
+        ],
         "fixes": [
           "`TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)"
         ]
       },
-      "contributions": []
+      "contributions": [
+        "[Alex Terentiev](https://github.com/AJIXuMuK)"
+      ]
     },
     {
       "version": "1.11.0",
