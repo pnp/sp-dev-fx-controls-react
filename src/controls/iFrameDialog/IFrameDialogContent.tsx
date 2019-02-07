@@ -1,13 +1,11 @@
 import * as React from "react";
 import styles from './IFrameDialogContent.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import omit = require('lodash/omit');
 
-export interface IIFrameDialogContentProps {
-    url: string;
+export interface IIFrameDialogContentProps extends React.IframeHTMLAttributes<HTMLIFrameElement> {
     close: () => void;
     iframeOnLoad?: (iframe: any) => void;
-    width: string;
-    height: string;
 }
 
 export interface IIFrameDialogContentState {
@@ -30,7 +28,7 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
 
     public render(): JSX.Element {
         return (<div className={styles.iFrameDialog}>
-            <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} src={this.props.url} onLoad={this._iframeOnLoad.bind(this)} style={{ width: '100%', height: this.props.height, visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} />
+            <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} onLoad={this._iframeOnLoad.bind(this)} style={{ width: '100%', height: this.props.height, visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} {...omit(this.props, 'height')} />
             {!this.state.isContentVisible &&
                 <div className={styles.spinnerContainer}>
                     <Spinner size={SpinnerSize.large} />
@@ -39,7 +37,14 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
     }
 
     private _iframeOnLoad(): void {
-        this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
+        try { // for cross origin requests we can have issues with accessing frameElement
+            this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
+        }
+        catch (err) {
+            if (err.name !== 'SecurityError') {
+                throw err;
+            }
+        }
 
 
         if (this.props.iframeOnLoad) {

@@ -14,12 +14,16 @@ import { WebPartTitle } from '../../../WebPartTitle';
 import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
-import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { IFramePanel } from '../../../IFramePanel';
+import { PanelType } from 'office-ui-fabric-react/lib/Panel';
+import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
+import { Map, ICoordinates, MapType } from '../../../Map';
+import { ChartControl, ChartType } from "../../../ChartControl";
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -32,6 +36,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       imgSize: ImageSize.small,
       items: [],
       iFrameDialogOpened: false,
+      iFramePanelOpened: false,
       initialValues: [],
       authorEmails: [],
       selectedList: null
@@ -54,17 +59,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         });
       });
 
-      // // Get Authors in the SharePoint Document library -- For People Picker Testing
-      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
-      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
-      // .then(resp => { return resp.json(); })
-      // .then(items => {
-      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
-      //   console.log(emails);
-      //   this.setState({
-      //     authorEmails: emails
-      //   });
-      // });
+    // // Get Authors in the SharePoint Document library -- For People Picker Testing
+    // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+    // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+    // .then(resp => { return resp.json(); })
+    // .then(items => {
+    //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+    //   console.log(emails);
+    //   this.setState({
+    //     authorEmails: emails
+    //   });
+    // });
   }
 
   /**
@@ -92,14 +97,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
-/**
- *
- *Method that retrieves the selected terms from the taxonomy picker and sets state
- * @private
- * @param {IPickerTerms} terms
- * @memberof ControlsTest
- */
-private onServicePickerChange(terms: IPickerTerms): void {
+  /**
+   *
+   *Method that retrieves the selected terms from the taxonomy picker and sets state
+   * @private
+   * @param {IPickerTerms} terms
+   * @memberof ControlsTest
+   */
+  private onServicePickerChange(terms: IPickerTerms): void {
     this.setState({
       initialValues: terms
     });
@@ -110,7 +115,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange = (terms : IPickerTerms) => {
+  private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
       initialValues: terms
     });
@@ -179,6 +184,8 @@ private onServicePickerChange(terms: IPickerTerms): void {
       }
     ];
 
+
+
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
       {
@@ -216,7 +223,8 @@ private onServicePickerChange(terms: IPickerTerms): void {
 
     // Specify the fields on which you want to group your items
     // Grouping is takes the field order into account from the array
-    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
+    // const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
+    const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.Department.Label", order: GroupOrder.ascending }];
 
     let iframeUrl: string = '/temp/workbench.html';
     if (Environment.type === EnvironmentType.SharePoint) {
@@ -231,6 +239,139 @@ private onServicePickerChange(terms: IPickerTerms): void {
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
+
+        <Placeholder iconName='Edit'
+                     iconText='Configure your web part'
+                     description='Please configure the web part.'
+                     buttonLabel='Configure'
+                     hideButton={this.props.displayMode === DisplayMode.Read}
+                     onConfigure={this._onConfigure} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (Group not found)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      groupName="Team Site Visitors 123"
+                      ensureUser={true}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (search for group)"
+                      groupName="Team Site Visitors"
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (pre-set global users)"
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems}
+                      personSelectionLimit={2}
+                      ensureUser={true} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (pre-set local users)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+                      selectedItems={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (tenant scoped)"
+                      personSelectionLimit={5}
+                      // groupName={"Team Site Owners"}
+                      showtooltip={true}
+                      isRequired={true}
+                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+                      //defaultSelectedUsers={this.state.authorEmails}
+                      selectedItems={this._getPeoplePickerItems}
+                      showHiddenInUI={false}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      suggestionsLimit={2}
+                      resolveDelay={200}/>
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (local scoped)"
+                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+                      personSelectionLimit={5}
+                      // groupName={"Team Site Owners"}
+                      showtooltip={true}
+                      isRequired={true}
+                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+                      //defaultSelectedUsers={this.state.authorEmails}
+                      selectedItems={this._getPeoplePickerItems}
+                      showHiddenInUI={false}
+                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+                      suggestionsLimit={2}
+                      resolveDelay={200}/>
+
+        <PeoplePicker context={this.props.context}
+                      titleText="People Picker (disabled)"
+                      disabled={true}
+                      showtooltip={true} />
+
+
+        <ListView items={this.state.items}
+                  viewFields={viewFields}
+                  iconFieldName='ServerRelativeUrl'
+                  groupByFields={groupByFields}
+                  compact={true}
+                  selectionMode={SelectionMode.single}
+                  selection={this._getSelection}
+                  showFilter={true}
+                  // defaultFilter="Team"
+                  />
+
+
+        <ChartControl type={ChartType.Bar}
+                      data={{
+                            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        }}
+                        options={{
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }} />
+
+        <Map titleText="New map control"
+             coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+             enableSearch={true}
+             mapType={MapType.normal}
+             onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+            //  zoom={15}
+            //mapType={MapType.cycle}
+            //width="50"
+            //height={150}
+            //loadingMessage="Loading maps"
+            //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+        />
 
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
@@ -268,42 +409,42 @@ private onServicePickerChange(terms: IPickerTerms): void {
 
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
-                            label="Select your list(s)"
-                            placeHolder="Select your list(s)"
-                            baseTemplate={100}
-                            includeHidden={false}
-                            multiSelect={true}
-                            onSelectionChanged={this.onListPickerChange} />
+                  label="Select your list(s)"
+                  placeHolder="Select your list(s)"
+                  baseTemplate={100}
+                  includeHidden={false}
+                  multiSelect={true}
+                  onSelectionChanged={this.onListPickerChange} />
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
                 <ListItemPicker listId={this.state.selectedList}
-                                     columnInternalName="Title"
-                                     itemLimit={5}
-                                     context={this.props.context}
-                                     onSelectedItem={this.listItemPickerDataSelected} />
+                  columnInternalName="Title"
+                  itemLimit={5}
+                  context={this.props.context}
+                  onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
-                panelTitle="Select Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                  allowMultipleSelections={true}
+                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  panelTitle="Select Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
-               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
-                panelTitle="Select Default Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                <TaxonomyPicker
+                  allowMultipleSelections={true}
+                  termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+                  panelTitle="Select Default Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
@@ -320,16 +461,16 @@ private onServicePickerChange(terms: IPickerTerms): void {
                   onChange={this._onTaxPickerChange}
                   isTermSetSelectable={false} />
 
-                  <DefaultButton text="Add" onClick={() => {
-                    this.setState({
-                      initialValues: [{
-                        key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                        name: "HR",
-                        path: "HR",
-                        termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-                      }]
-                    });
-                  }} />
+                <DefaultButton text="Add" onClick={() => {
+                  this.setState({
+                    initialValues: [{
+                      key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                      name: "HR",
+                      path: "HR",
+                      termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                    }]
+                  });
+                }} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
@@ -350,6 +491,21 @@ private onServicePickerChange(terms: IPickerTerms): void {
                   width={'570px'}
                   height={'315px'} />
               </div>
+              <div className="ms-font-m">iframe Panel tester:
+                <PrimaryButton
+                  text="Open iframe Panel"
+                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
+                <IFramePanel
+                 url={iframeUrl}
+                 type={PanelType.medium}
+                //  height="300px"
+                 headerText="iframe panel title"
+                 closeButtonAriaLabel="Close"
+                 isOpen={this.state.iFramePanelOpened}
+                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  />
+              </div>
             </div>
           </div>
         </div>
@@ -358,43 +514,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
           <SiteBreadcrumb context={this.props.context} />
         </div>
 
-        <Placeholder
-          iconName='Edit'
-          iconText='Configure your web part'
-          description='Please configure the web part.'
-          buttonLabel='Configure'
-          onConfigure={this._onConfigure} />
-
-        <ListView
-          items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection} />
-
-          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
-
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker"
-            personSelectionLimit={5}
-            // groupName={"Team Site Owners"}
-            showtooltip={true}
-            isRequired={true}
-            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            //defaultSelectedUsers={this.state.authorEmails}
-            selectedItems={this._getPeoplePickerItems}
-            showHiddenInUI={false}
-            principleTypes={[PrincipalType.User]}
-            suggestionsLimit={2} />
-
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker (disabled)"
-            disabled={true}
-            showtooltip={true} />
+        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
       </div>
     );
   }

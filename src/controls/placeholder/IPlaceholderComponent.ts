@@ -22,15 +22,19 @@ export interface IPlaceholderProps {
    */
   buttonLabel?: string;
   /**
-   * onConfigure handler for the button.
-   * Optional: As the button is optional.
-   */
-  onConfigure?: () => void;
-  /**
    * This className is applied to the root element of content. Use this to
    * apply custom styles to the placeholder.
    */
   contentClassName?: string;
+  /**
+   * Specify if you want to hide the config button
+   */
+  hideButton?: boolean;
+  /**
+   * onConfigure handler for the button.
+   * Optional: As the button is optional.
+   */
+  onConfigure?: () => void;
 }
 
 export interface IPlaceholderState {

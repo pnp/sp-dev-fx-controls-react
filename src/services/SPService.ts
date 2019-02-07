@@ -1,13 +1,17 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
 import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { sp, Web } from '@pnp/sp';
 
 export default class SPService implements ISPService {
 
+<<<<<<< HEAD
   constructor(private _context: WebPartContext | ApplicationCustomizerContext) { }
+=======
+  constructor(private _context: WebPartContext | ExtensionContext) { }
+>>>>>>> upstream/dev
 
   /**
    * Get lists or libraries

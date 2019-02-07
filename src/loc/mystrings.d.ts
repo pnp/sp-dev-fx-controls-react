@@ -1,7 +1,10 @@
 declare interface IControlStrings {
+  PeoplePickerGroupNotFound: string;
+  ListViewFilterLabel: string;
+
+  PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
   peoplePickerComponentErrorMessage: string;
-  peoplePickerComponentTitleText: string;
   peoplePickerSuggestionsHeaderText: string;
   genericNoResultsFoundText: string;
   peoplePickerLoadingText: string;
@@ -11,7 +14,7 @@ declare interface IControlStrings {
   ListViewGroupEmptyLabel: string;
   WebPartTitlePlaceholder: string;
   WebPartTitleLabel: string;
-  DateTime:{[key: string]: string};
+  DateTime: { [key: string]: string };
   SendEmailTo: string;
   StartChatWith: string;
   Contact: string;
@@ -26,6 +29,7 @@ declare interface IControlStrings {
 
   ListItemPickerSelectValue: string;
 
+<<<<<<< HEAD
   ListItemAttachmentsActionDeleteIconTitle: string;
   ListItemAttachmentsactionDeleteTitle: string;
   ListItemAttachmentsfileDeletedMsg: string;
@@ -44,6 +48,13 @@ declare interface IControlStrings {
   ListItemAttachmentslPlaceHolderIconText: string;
   ListItemAttachmentslPlaceHolderDescription: string;
   ListItemAttachmentslPlaceHolderButtonLabel: string;
+=======
+  //Maps
+  mapsErrorMessage: string;
+  mapsLoadingText: string;
+  mapsSearchButtonText: string;
+  mapsTitlePrefix: string;
+>>>>>>> upstream/dev
 }
 
 declare module 'ControlStrings' {

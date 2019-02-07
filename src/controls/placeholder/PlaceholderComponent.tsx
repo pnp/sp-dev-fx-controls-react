@@ -54,7 +54,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
    * @param nextState
    */
   public shouldComponentUpdate(nextProps: IPlaceholderProps, nextState: IPlaceholderState): boolean {
-    return this.state.width !== nextState.width;
+    return this.state.width !== nextState.width || this.props.hideButton !== nextProps.hideButton;
   }
 
   /**
@@ -101,7 +101,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
           {this.props.children}
           <div className={styles.placeholderDescription}>
             {
-              this.props.buttonLabel &&
+              (this.props.buttonLabel && !this.props.hideButton) &&
               <PrimaryButton
                 text={this.props.buttonLabel}
                 ariaLabel={this.props.buttonLabel}

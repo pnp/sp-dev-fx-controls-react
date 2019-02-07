@@ -9,10 +9,11 @@ import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@micro
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
-import { IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
-import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ITermSets } from './ISPTermStorePickerService';
+import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
+import { ITermStore, ITerms, ITerm, IGroup, ITermSet } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
+import { findIndex } from '@microsoft/sp-lodash-subset';
 
 
 /**
@@ -57,7 +58,7 @@ export default class SPTermStorePickerService {
       return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
         return serviceResponse.json().then((serviceJSONResponse: any) => {
           // Construct results
-          let termStoreResult: ITermStore[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
+          let termStoreResult: ITermStore[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
           // Check if term store was retrieved
           if (termStoreResult.length > 0) {
             // Check if the termstore needs to be filtered or limited
@@ -146,19 +147,23 @@ export default class SPTermStorePickerService {
 
       return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
         return serviceResponse.json().then((serviceJSONResponse: any) => {
-          const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
+          const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
 
           if (termStoreResultTermSets.length > 0) {
             var termStoreResultTermSet = termStoreResultTermSets[0];
             termStoreResultTermSet.Terms = [];
             // Retrieve the term collection results
-            const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+            const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
             if (termStoreResultTerms.length > 0) {
               // Retrieve all terms
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
-                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                if (term.IsRoot) {
+                  term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                } else {
+                  term.CustomSortOrderIndex = (term["Parent"].CustomSortOrder) ? term["Parent"].CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                }
                 term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
                 term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
@@ -169,8 +174,8 @@ export default class SPTermStorePickerService {
               });
               // Check if the term set was not empty
               if (terms.length > 0) {
-                // Sort the terms by PathOfTerm
-                terms = terms.sort(this._sortTerms);
+                // Sort the terms by PathOfTerm and their depth
+                terms = this.sortTerms(terms);
                 termStoreResultTermSet.Terms = terms;
               }
             }
@@ -264,7 +269,7 @@ export default class SPTermStorePickerService {
           return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
             return serviceResponse.json().then((serviceJSONResponse: any) => {
               // Retrieve the term collection results
-              const termStoreResult: ITerms[] = serviceJSONResponse.filter(r => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
               if (termStoreResult.length > 0) {
                 // Retrieve all terms
 
@@ -297,20 +302,64 @@ export default class SPTermStorePickerService {
   }
 
   /**
+   * Sorting terms based on their path and depth
+   *
+   * @param terms
+   */
+  private sortTerms(terms: ITerm[]) {
+    // Start sorting by depth
+    let newTermsOrder: ITerm[] = [];
+    let itemsToSort = true;
+    let pathLevel = 1;
+    while (itemsToSort) {
+      // Get terms for the current level
+      let crntTerms = terms.filter(term => term.PathDepth === pathLevel);
+      if (crntTerms && crntTerms.length > 0) {
+        crntTerms = crntTerms.sort(this.sortTermByPath);
+
+        if (pathLevel !== 1) {
+          crntTerms = crntTerms.reverse();
+          for (const crntTerm of crntTerms) {
+            const pathElms = crntTerm.PathOfTerm.split(";");
+            // Last item is not needed for parent path
+            pathElms.pop();
+            // Find the parent item and add the new item
+            const idx = findIndex(newTermsOrder, term => term.PathOfTerm === pathElms.join(";"));
+            if (idx !== -1) {
+              newTermsOrder.splice(idx + 1, 0, crntTerm);
+            } else {
+              // Push the item at the end if the parent couldn't be found
+              newTermsOrder.push(crntTerm);
+            }
+          }
+        } else {
+          newTermsOrder = crntTerms;
+        }
+
+        ++pathLevel;
+      } else {
+        itemsToSort = false;
+      }
+    }
+    return newTermsOrder;
+  }
+
+  /**
    * Sort the terms by their path
+   *
    * @param a term 2
    * @param b term 2
    */
-  private _sortTerms(a: ITerm, b: ITerm) {
-    if(a.CustomSortOrderIndex === -1){
-      if (a.PathOfTerm < b.PathOfTerm) {
+  private sortTermByPath(a: ITerm, b: ITerm) {
+    if (a.CustomSortOrderIndex === -1) {
+      if (a.PathOfTerm.toLowerCase() < b.PathOfTerm.toLowerCase()) {
         return -1;
       }
-      if (a.PathOfTerm > b.PathOfTerm) {
+      if (a.PathOfTerm.toLowerCase() > b.PathOfTerm.toLowerCase()) {
         return 1;
       }
       return 0;
-    }else{
+    } else {
       if (a.CustomSortOrderIndex < b.CustomSortOrderIndex) {
         return -1;
       }
@@ -319,7 +368,6 @@ export default class SPTermStorePickerService {
       }
       return 0;
     }
-
   }
 
   /**
