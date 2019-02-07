@@ -2,7 +2,7 @@ import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
 import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
+import { SPHttpClient, SPHttpClientResponse,ISPHttpClientOptions } from "@microsoft/sp-http";
 import { sp, Web } from '@pnp/sp';
 
 export default class SPService implements ISPService {
@@ -83,7 +83,7 @@ export default class SPService implements ISPService {
       console.dir(error);
       return Promise.reject(error);
     }
-    
+
   }
 
   // delete attachment
@@ -105,7 +105,7 @@ export default class SPService implements ISPService {
 
   // Add Attachment
   public async addAttachment(listId: string, itemId: number, fileName: string, file: ArrayBuffer, webUrl?: string): Promise<void> {
-    
+
     try {
       // remove special characteres in FileName
       fileName = fileName.replace(/[^\.\w\s]/gi, '');
