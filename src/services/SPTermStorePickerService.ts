@@ -159,7 +159,11 @@ export default class SPTermStorePickerService {
               let terms = termStoreResultTerms[0]._Child_Items_;
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
-                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                if (term.IsRoot) {
+                  term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                } else {
+                  term.CustomSortOrderIndex = (term["Parent"].CustomSortOrder) ? term["Parent"].CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+                }
                 term.Id = this.cleanGuid(term.Id);
                 term['PathDepth'] = term.PathOfTerm.split(';').length;
                 term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
