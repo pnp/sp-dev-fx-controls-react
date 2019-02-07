@@ -2,6 +2,10 @@
 
 ## 1.12.0
 
+### New control(s)
+
+- `IFramePanel`: New control added [#226](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/226)
+
 ### Enhancements
 
 - Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)
@@ -13,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.11.0
 
