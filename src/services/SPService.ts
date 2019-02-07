@@ -101,13 +101,7 @@ export default class SPService implements ISPService {
 
   // Add Attachment
   public async addAttachment(listId: string, itemId: number, fileName: string, file: ArrayBuffer, webUrl?: string): Promise<void> {
-    let spWeb: Web;
-    if (typeof webUrl !== "undefined") {
-      spWeb = new Web(webUrl);
-    } else {
-      spWeb = new Web(this._context.pageContext.web.absoluteUrl);
-    }
-
+    
     try {
       // remove special characteres in FileName
       fileName = fileName.replace(/[^\.\w\s]/gi, '');
