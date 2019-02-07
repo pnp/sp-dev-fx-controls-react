@@ -14,6 +14,8 @@ import { WebPartTitle } from '../../../WebPartTitle';
 import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
+import { IFramePanel } from '../../../IFramePanel';
+import { PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
@@ -34,6 +36,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       imgSize: ImageSize.small,
       items: [],
       iFrameDialogOpened: false,
+      iFramePanelOpened: false,
       initialValues: [],
       authorEmails: [],
       selectedList: null
@@ -180,6 +183,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         selected: ImageSize.large === this.state.imgSize
       }
     ];
+
+
 
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
@@ -485,6 +490,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   }}
                   width={'570px'}
                   height={'315px'} />
+              </div>
+              <div className="ms-font-m">iframe Panel tester:
+                <PrimaryButton
+                  text="Open iframe Panel"
+                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
+                <IFramePanel
+                 url={iframeUrl}
+                 type={PanelType.medium}
+                //  height="300px"
+                 headerText="iframe panel title"
+                 closeButtonAriaLabel="Close"
+                 isOpen={this.state.iFramePanelOpened}
+                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  />
               </div>
             </div>
           </div>

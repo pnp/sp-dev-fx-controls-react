@@ -9,6 +9,7 @@ export * from './ListItemPicker';
 export * from './ChartControl';
 
 export * from './IFrameDialog';
+export * from './IFramePanel';
 export * from './Common';
 export * from './Utilities';
 export * from './IFrameDialog';
