@@ -1,6 +1,6 @@
 # IFramePanel control
 
-This control renders a Panel with an iframe as a content.
+This control renders a Panel with an iframe as content.
  
 Here is an example of the control in action:
 
@@ -21,15 +21,13 @@ import { IFramePanel } from "@pnp/spfx-controls-react/lib/IFramePanel";
 
 
 ```TypeScript
-  <IFramePanel
-      url={this.state.iFrameUrl}
-      type={PanelType.medium}
-      headerText="Panel Title"
-      closeButtonAriaLabel="Close"
-      isOpen={this.state.iFramePanelOpened}
-      onDismiss={this._onDismiss.bind(this)}
-      iframeOnLoad={this._onIframeLoaded.bind(this)}
-      />
+<IFramePanel url={this.state.iFrameUrl}
+             type={PanelType.medium}
+             headerText="Panel Title"
+             closeButtonAriaLabel="Close"
+             isOpen={this.state.iFramePanelOpened}
+             onDismiss={this._onDismiss.bind(this)}
+             iframeOnLoad={this._onIframeLoaded.bind(this)} />
 ```
 
 ## Implementation

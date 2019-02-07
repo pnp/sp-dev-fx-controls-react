@@ -2,15 +2,7 @@ import * as React from "react";
 import styles from './IFramePanelContent.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import omit = require('lodash/omit');
-
-export interface IIFramePanelContentProps extends React.IframeHTMLAttributes<HTMLIFrameElement> {
-  close: () => void;
-  iframeOnLoad?: (iframe: any) => void;
-}
-
-export interface IIFramePanelContentState {
-  isContentVisible?: boolean;
-}
+import { IIFramePanelContentProps, IIFramePanelContentState } from ".";
 
 /**
  * IFrame Panel content
@@ -27,13 +19,16 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
     window.onresize = this.resizeIframe;
   }
 
+  /**
+   * Resize the iframe element
+   */
   private resizeIframe = () => {
     if (!this.props.height) {
       if (this._iframe) {
-        let mainDiv = this._iframe.parentElement.parentElement.parentElement.parentElement as HTMLDivElement;
-        let commandsDiv = mainDiv.getElementsByClassName("ms-Panel-commands")[0] as HTMLDivElement;
-        let headerDiv = mainDiv.getElementsByClassName("ms-Panel-header")[0] as HTMLDivElement;
-        let footerDiv = mainDiv.getElementsByClassName("ms-Panel-footer")[0] as HTMLDivElement;
+        const mainDiv = this.findParent(this._iframe, "ms-Panel-main");
+        const commandsDiv = mainDiv.querySelector(".ms-Panel-commands") as HTMLDivElement;
+        const headerDiv = mainDiv.querySelector("ms-Panel-header") as HTMLDivElement;
+        const footerDiv = mainDiv.querySelector("ms-Panel-footer") as HTMLDivElement;
 
         let height = this.getTrueHeight(mainDiv);
         height = height - this.getTrueHeight(commandsDiv);
@@ -41,15 +36,30 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
         height = height - this.getTrueHeight(footerDiv);
         height = height - 20;  // padding on content div
 
-
         this._iframe.height = height.toString() + 'px';
       }
     }
   }
 
-  private getTrueHeight(element): number {
-    if (element) {
-      let style = element.currentStyle || window.getComputedStyle(element);
+  /**
+   * Find the parent element
+   *
+   * @param elm
+   * @param className
+   */
+  private findParent(elm: HTMLElement, className: string) {
+    while ((elm = elm.parentElement) && !elm.classList.contains(className));
+    return elm;
+  }
+
+  /**
+   * Get the element its height
+   *
+   * @param elm
+   */
+  private getTrueHeight(elm: HTMLElement): number {
+    if (elm) {
+      const style = elm.style || window.getComputedStyle(elm);
       let marginTop = parseInt((style.marginTop as string).replace("px", ""));
       let marginBottom = parseInt((style.marginTop as string).replace("px", ""));
       if (isNaN(marginTop)) {
@@ -58,24 +68,16 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
       if (isNaN(marginBottom)) {
         marginBottom = 0;
       }
-      return element.offsetHeight + marginTop + marginBottom;
-    }
-    else {
+      return elm.offsetHeight + marginTop + marginBottom;
+    } else {
       return 0;
     }
   }
 
-  public render(): JSX.Element {
-    return (<div className={styles.iFrameDialog}>
-      <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} onLoad={this._iframeOnLoad} style={{ width: '100%', height: this.props.height, visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} {...omit(this.props, 'height')} />
-      {!this.state.isContentVisible &&
-        <div className={styles.spinnerContainer}>
-          <Spinner size={SpinnerSize.large} />
-        </div>}
-    </div>);
-  }
-
-  private _iframeOnLoad = () => {
+  /**
+   * On iframe load event
+   */
+  private iframeOnLoad = () => {
     try { // for cross origin requests we can have issues with accessing frameElement
       this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
     }
@@ -94,5 +96,24 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
     this.setState({
       isContentVisible: true
     });
+  }
+
+  /**
+   * Default React render
+   */
+  public render(): JSX.Element {
+    return (
+      <div className={styles.iFrameDialog}>
+        <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} onLoad={this.iframeOnLoad} style={{ width: '100%', height: this.props.height, visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} {...omit(this.props, 'height')} />
+
+        {
+          !this.state.isContentVisible && (
+            <div className={styles.spinnerContainer}>
+              <Spinner size={SpinnerSize.large} />
+            </div>
+          )
+        }
+      </div>
+    );
   }
 }

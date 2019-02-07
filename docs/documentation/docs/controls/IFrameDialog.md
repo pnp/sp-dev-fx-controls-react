@@ -1,6 +1,6 @@
 # IFrameDialog control
 
-This control renders a Dialog with an iframe as a content.
+This control renders a Dialog with an iframe as content.
 
 Here is an example of the control in action:
 
@@ -58,4 +58,4 @@ The IFrameDialog component can be configured with the following properties:
 | scrolling | string | no | Specifies whether or not to display scrollbars in an iframe |
 | seamless | string | no | When present, it specifies that the iframe should look like it is a part of the containing document (no borders or scrollbars) |
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FileTypeIcon)
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/IFrameDialog)
