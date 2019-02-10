@@ -76,7 +76,10 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       this.props.term.Name = updateAction.value;
       this.setState({
         termLabel: updateAction.value
-      })
+      });
+    }
+    else {
+      this.props.updateTaxonomyTree();
     }
   }
 
@@ -89,7 +92,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     };
     const checkBoxStyle: React.CSSProperties = {
       display: "inline-flex"
-    }
+    };
 
     return (
       <div>

@@ -38,16 +38,16 @@ export class DropdownTermAction extends React.Component<IConreteTermActionProps>
         useTargetWidth = false;
       }
       if (displayStyle && (displayStyle === TermActionsDisplayStyle.icon || displayStyle === TermActionsDisplayStyle.textAndIcon)) {
-        termActionMenuItem.iconProps = { iconName: termAction.iconName }
+        termActionMenuItem.iconProps = { iconName: termAction.iconName };
       }
 
       items.push(termActionMenuItem);
-    })
+    });
 
     const contextualMenuProps: IContextualMenuProps = {
       items,
       useTargetWidth
-    }
+    };
     return contextualMenuProps;
   }
 
@@ -60,7 +60,7 @@ export class DropdownTermAction extends React.Component<IConreteTermActionProps>
       width: "14px",
       display: "inline-flex",
       padding: "0px"
-    }
+    };
 
     return result;
   }

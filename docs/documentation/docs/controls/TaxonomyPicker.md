@@ -42,6 +42,7 @@ import { TaxonomyPicker, IPickerTerms } from "@pnp/spfx-controls-react/lib/Taxon
   context={this.props.context}
   onChange={this.onTaxPickerChange}
   isTermSetSelectable={false}
+  termActions={termActions}
 />
 ```
 
@@ -71,6 +72,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | disabledTermIds | string[] | no | Specify which terms should be disabled in the term set so that they cannot be selected. |
 | disableChildrenOfDisabledParents | boolean | no | Specify if you want to disable the child terms when their parent is disabled. |
 | anchorId | string | no | Set the anchorid to a child term in the TermSet to be able to select terms from that level and below. |
+| termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 
 Interface `IPickerTerm`
 
@@ -85,5 +87,19 @@ Interface `IPickerTerm`
 Interface `IPickerTerms`
 
 An Array of IPickerTerm
+
+Interface `ITermActions`
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| actions | ITermAction[] | yes | The array of supported actions |
+| termActionsDisplayStyle | TermActionsDisplayStyle | no | Defines how to display term action button, available options: text (default), icon, text and icon |
+| termActionsDisplayMode | TermActionsDisplayMode | no | Defines how to display term actions, as buttons (default) or dropdown |
+
+Interface `ITermAction`
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| id | string | yes | Unique id of the term action |
+| displayText | string | no | Name of the action |
+| iconName | string | no | Name of the icon to be used to display action |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)

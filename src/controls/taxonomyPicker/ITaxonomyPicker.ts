@@ -93,7 +93,6 @@ export interface ITaxonomyPickerState {
   openPanel?: boolean;
   loaded?: boolean;
   activeNodes?: IPickerTerms;
-  termActions?: ITermActions;
 }
 
 export interface ITermChanges {
@@ -112,6 +111,7 @@ export interface ITermParentProps extends ITermChanges {
 
   termActions?: ITermActions;
   autoExpand: () => void;
+  updateTaxonomyTree: () => void;
   termSetSelectedChange?: (termSet: ITermSet, isChecked: boolean) => void;
 }
 
@@ -127,6 +127,8 @@ export interface ITermProps extends ITermChanges {
   multiSelection: boolean;
   disabled: boolean;
   termActions?: ITermActions;
+
+  updateTaxonomyTree: () => void;
 }
 
 export interface ITermState {

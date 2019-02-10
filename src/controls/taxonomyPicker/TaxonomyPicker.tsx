@@ -55,7 +55,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
-    this.prepareTermActions = this.prepareTermActions.bind(this);
   }
 
   /**
@@ -79,29 +78,33 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
   }
 
-  private prepareTermActions = (): ITermActions => {
-    let termActions = this.props.termActions ? cloneDeep(this.props.termActions) : null;
-    // Add default available actions
-    if (termActions && termActions.addDefaultActions) {
-      termActions.concreateActions.unshift(new TermLabelAction(this.termsService));
-    }
-    return termActions;
-  }
-
   /**
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
-    let termActions = this.prepareTermActions();
+
+    if (this.props.termActions) {
+      this.props.termActions.actions.map(x => {
+        x.initialize(this.termsService);
+      });
+    }
     this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
       this.setState({
         termSetAndTerms,
-        loaded: true,
-        termActions
+        loaded: true
       });
+    });
+  }
+
+  /**
+   * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
+   */
+  private updateTaxonomyTree(): void {
+    this.setState({
+      termSetAndTerms: this.state.termSetAndTerms
     });
   }
 
@@ -314,7 +317,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             changedCallback={this.termsChanged}
                             multiSelection={this.props.allowMultipleSelections}
 
-                            termActions={this.state.termActions}
+                            updateTaxonomyTree={this.updateTaxonomyTree}
+                            termActions={this.props.termActions}
                             />
               </div>
             )

@@ -108,7 +108,10 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
                   disabled = parentPath && parentPath.length > 0;
                 }
 
-                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabled={disabled} termActions={this.props.termActions} />;
+                return <Term key={term.Id} term={term} termset={this.props.termset.Id}
+                                  activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback}
+                                  multiSelection={this.props.multiSelection} disabled={disabled}
+                                  termActions={this.props.termActions} updateTaxonomyTree={this.props.updateTaxonomyTree}/>;
               })
             }
           </div>

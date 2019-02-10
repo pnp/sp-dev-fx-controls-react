@@ -1,4 +1,5 @@
 import { ITerm } from '../../../services/ISPTermStorePickerService';
+import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
 
 export interface ITermActionsControlProps {
   /**
@@ -70,8 +71,7 @@ export interface UpdateAction {
 }
 
 export interface ITermActions {
-  addDefaultActions: boolean;
-  concreateActions: ITermAction[];
+  actions: ITermAction[];
   termActionsDisplayStyle?: TermActionsDisplayStyle;
   termActionsDisplayMode?: TermActionsDisplayMode;
 }
@@ -89,17 +89,18 @@ export interface ITermAction {
    */
   iconName?: string;
 
-  /**
-   * Specifies it the waiting dialog should be displayed when executing the action.
-   */
-  isBlocking?: boolean;
-  /**
-   * Method that verifies if the action can be applied to the term. If false, action won't be avaialable.
-   * @param currentTerm
-   */
-  applyToTerm(currentTerm: ITerm): boolean;
+   /**
+    * Method checks if the current term is supported.
+    * @param currentTerm
+    */
+  applyToTerm(currentTerm: ITerm): Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */
   actionCallback: (currentTerm: ITerm) => Promise<UpdateAction>;
+
+  /**
+   * Initializes the term action with the taxonomy servie.
+   */
+  initialize: (spTermService: SPTermStorePickerService) => Promise<void>;
 }

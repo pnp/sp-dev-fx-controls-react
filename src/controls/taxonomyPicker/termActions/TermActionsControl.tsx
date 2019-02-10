@@ -12,7 +12,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
     const displayMode = termActions.termActionsDisplayMode ? termActions.termActionsDisplayMode : TermActionsDisplayMode.buttons;
     const displayStyle = termActions.termActionsDisplayStyle ? termActions.termActionsDisplayStyle : TermActionsDisplayStyle.icon;
     // Prepate list of the available actions
-    const availableActions: ITermAction[] = termActions.concreateActions.filter(termAction => { return termAction.applyToTerm(term); });
+    const availableActions: ITermAction[] = termActions.actions.filter(termAction => { return termAction.applyToTerm(term); });
 
     this.state = {
       availableActions,

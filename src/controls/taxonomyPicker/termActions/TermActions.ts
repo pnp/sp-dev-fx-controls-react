@@ -9,16 +9,20 @@ import { findIndex } from "@microsoft/sp-lodash-subset";
  */
 export class TermLabelAction implements ITermAction {
   public iconName: string = "LocaleLanguage";
-  public displayText: string = "Get Labels"
+  public displayText: string = "Get Labels";
   public id: string = "TermLabelActionId";
 
   private _spTermsService: SPTermStorePickerService;
   private _labels: string[];
   private _processedTerms: ITerm[];
 
-  constructor(spTermService: SPTermStorePickerService) {
-    this._spTermsService = spTermService;
+  constructor() {
     this._processedTerms = [];
+  }
+
+  public initialize = (spTermService: SPTermStorePickerService): Promise<void> =>  {
+    this._spTermsService = spTermService;
+    return Promise.resolve();
   }
 
   public applyToTerm = (currentTerm: ITerm): boolean => {
@@ -32,7 +36,7 @@ export class TermLabelAction implements ITermAction {
   public actionCallback = async (currentTerm: ITerm): Promise<UpdateAction> => {
     try {
       // Set pointer to loading
-      let updateAction : UpdateAction = null;
+      let updateAction: UpdateAction = null;
       this._labels = await this._spTermsService.getTermLabels(currentTerm.Id);
 
       if (this._labels) {

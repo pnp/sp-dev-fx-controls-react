@@ -43,7 +43,7 @@ export default class SPTermStorePickerService {
 
     let result = null;
     try {
-      const data = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="8" ObjectPathId="7" /><ObjectIdentityQuery Id="9" ObjectPathId="7" /><ObjectPath Id="11" ObjectPathId="10" /><ObjectIdentityQuery Id="12" ObjectPathId="10" /><ObjectPath Id="14" ObjectPathId="13" /><ObjectIdentityQuery Id="15" ObjectPathId="13" /><Query Id="16" ObjectPathId="13"><Query SelectAllProperties="false"><Properties><Property Name="Labels" SelectAll="true"><Query SelectAllProperties="false"><Properties /></Query></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="7" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="10" ParentId="7" Name="GetDefaultKeywordsTermStore" /><Method Id="13" ParentId="10" Name="GetTerm"><Parameters><Parameter Type="Guid">${termId}</Parameter></Parameters></Method></ObjectPaths></Request>`
+      const data = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="8" ObjectPathId="7" /><ObjectIdentityQuery Id="9" ObjectPathId="7" /><ObjectPath Id="11" ObjectPathId="10" /><ObjectIdentityQuery Id="12" ObjectPathId="10" /><ObjectPath Id="14" ObjectPathId="13" /><ObjectIdentityQuery Id="15" ObjectPathId="13" /><Query Id="16" ObjectPathId="13"><Query SelectAllProperties="false"><Properties><Property Name="Labels" SelectAll="true"><Query SelectAllProperties="false"><Properties /></Query></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="7" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="10" ParentId="7" Name="GetDefaultKeywordsTermStore" /><Method Id="13" ParentId="10" Name="GetTerm"><Parameters><Parameter Type="Guid">${termId}</Parameter></Parameters></Method></ObjectPaths></Request>`;
 
       const reqHeaders = new Headers();
       reqHeaders.append("accept", "application/json");
@@ -62,7 +62,7 @@ export default class SPTermStorePickerService {
         result = [];
         node.Labels._Child_Items_.map(termLabel => {
           result.push(termLabel.Value);
-        })
+        });
       }
     } catch (error) {
       result = null;
@@ -218,7 +218,6 @@ export default class SPTermStorePickerService {
       });
     }
   }
-
 
   /**
    * Get the term set ID by its name

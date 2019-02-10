@@ -23,7 +23,7 @@ export default class ButtonTermAction extends React.Component<IConreteTermAction
                   style={this._getTermActionActionButtonStyle()}
                 />
               </div>
-            )
+            );
           })
         }
       </div>
@@ -50,7 +50,7 @@ export default class ButtonTermAction extends React.Component<IConreteTermAction
       backgroundColor: "transparent",
       width: "32px",
       height: "32px"
-    }
+    };
 
     return result;
   }
