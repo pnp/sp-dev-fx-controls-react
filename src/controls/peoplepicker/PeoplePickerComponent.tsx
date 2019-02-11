@@ -67,10 +67,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Get initial persons
    */
   private async getInitialPersons(props: IPeoplePickerProps) {
-    const { groupName } = props;
+    const { groupName, webAbsoluteUrl, defaultSelectedUsers, ensureUser, principalTypes } = props;
     // Check if a group property was provided, and get the group ID
     if (groupName) {
-      this.groupId = await this.peopleSearchService.getGroupId(props.groupName, props.webAbsoluteUrl);
+      this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
       if (!this.groupId) {
         this.setState({
           errorMessage: "Group could not be found."
@@ -82,10 +82,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
 
     // Check for default user values
-    if (props.defaultSelectedUsers) {
+    if (defaultSelectedUsers) {
       let selectedPersons: IPersonaProps[] = [];
       for (const userValue of props.defaultSelectedUsers) {
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, props.principalTypes, props.webAbsoluteUrl, this.groupId, props.ensureUser);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, principalTypes, webAbsoluteUrl, this.groupId, ensureUser);
         if (userResult) {
           selectedPersons.push(userResult);
         }
