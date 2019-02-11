@@ -35,6 +35,43 @@ export default class SPTermStorePickerService {
     }
   }
 
+  public async getTermLabels(termId: string): Promise<string[]> {
+    if (Environment.type === EnvironmentType.Local) {
+      // If the running environment is local, load the data from the mock
+      // TODO: Implement method
+      return null;
+    }
+
+    let result = null;
+    try {
+      const data = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="8" ObjectPathId="7" /><ObjectIdentityQuery Id="9" ObjectPathId="7" /><ObjectPath Id="11" ObjectPathId="10" /><ObjectIdentityQuery Id="12" ObjectPathId="10" /><ObjectPath Id="14" ObjectPathId="13" /><ObjectIdentityQuery Id="15" ObjectPathId="13" /><Query Id="16" ObjectPathId="13"><Query SelectAllProperties="false"><Properties><Property Name="Labels" SelectAll="true"><Query SelectAllProperties="false"><Properties /></Query></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="7" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="10" ParentId="7" Name="GetDefaultKeywordsTermStore" /><Method Id="13" ParentId="10" Name="GetTerm"><Parameters><Parameter Type="Guid">${termId}</Parameter></Parameters></Method></ObjectPaths></Request>`;
+
+      const reqHeaders = new Headers();
+      reqHeaders.append("accept", "application/json");
+      reqHeaders.append("content-type", "application/xml");
+
+      const httpPostOptions: ISPHttpClientOptions = {
+        headers: reqHeaders,
+        body: data
+      };
+
+      const callResult = await this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions);
+      const jsonResult = await callResult.json();
+
+      let node = jsonResult.find(x => x._ObjectType_ == "SP.Taxonomy.Term");
+      if (node != null && node.Labels != null) {
+        result = [];
+        node.Labels._Child_Items_.map(termLabel => {
+          result.push(termLabel.Value);
+        });
+      }
+    } catch (error) {
+      result = null;
+      console.log(error.message);
+    }
+    return result;
+  }
+
   /**
    * Gets the collection of term stores in the current SharePoint env
    */
@@ -186,7 +223,6 @@ export default class SPTermStorePickerService {
       });
     }
   }
-
 
   /**
    * Get the term set ID by its name
