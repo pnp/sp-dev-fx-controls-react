@@ -9,6 +9,7 @@
 ### Enhancements
 
 - Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)
+- `TaxonomyPicker`: Ability to specify term actions [#237](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/237)
 
 ### Fixes
 
@@ -18,7 +19,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.11.0
 

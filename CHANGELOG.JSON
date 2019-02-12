@@ -7,7 +7,8 @@
           "`IFramePanel`: New control added [#226](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/226)"
         ],
         "enhancements": [
-          "Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)"
+          "Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)",
+          "`TaxonomyPicker`: Ability to specify term actions [#237](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/237)"
         ],
         "fixes": [
           "`TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)",
@@ -18,6 +19,7 @@
       "contributions": [
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[David Opdendries](https://github.com/spdavid)",
+        "[Piotr Siatka](https://github.com/siata13)",
         "[Alex Terentiev](https://github.com/AJIXuMuK)",
         "[Tse Kit Yam](https://github.com/tsekityam)"
       ]
