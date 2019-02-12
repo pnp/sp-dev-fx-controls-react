@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
-import { ITermAction, TermActionsDisplayStyle, IConreteTermActionProps } from './ITermsActions';
+import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps } from './ITermsActions';
 
-export default class ButtonTermAction extends React.Component<IConreteTermActionProps> {
-  public render(): React.ReactElement<IConreteTermActionProps> {
+export default class ButtonTermAction extends React.Component<IConcreteTermActionProps> {
+  public render(): React.ReactElement<IConcreteTermActionProps> {
     const { term, termActions } = this.props;
 
     return (
@@ -11,16 +11,20 @@ export default class ButtonTermAction extends React.Component<IConreteTermAction
         {
           termActions &&
           termActions.map(termAction => {
-            const { name, text, iconName } = this._prepareCommandBarButton(termAction);
+            const { name, text, iconName, btnTitle } = this._prepareCommandBarButton(termAction);
             return (
               <div>
                 <CommandBarButton split={true}
-                  onClick={() => { this._onActionExecute(termAction); }}
-                  iconProps={{ iconName: iconName }}
-                  text={text}
-                  name={name}
-                  key={term.Id}
-                  style={this._getTermActionActionButtonStyle()}
+                                  onClick={() => { this._onActionExecute(termAction); }}
+                                  iconProps={{
+                                    iconName: iconName || null,
+                                    style: { display: iconName ? null : "none"}
+                                  }}
+                                  text={text}
+                                  title={btnTitle}
+                                  name={name}
+                                  key={term.Id}
+                                  style={this._getTermActionActionButtonStyle()}
                 />
               </div>
             );
@@ -31,24 +35,29 @@ export default class ButtonTermAction extends React.Component<IConreteTermAction
   }
 
 
-  private _prepareCommandBarButton = (termAction: ITermAction): { name: string, text: string, iconName: string } => {
-    let name, text, iconName = "";
+  private _prepareCommandBarButton = (termAction: ITermAction): { name: string, text: string, iconName: string, btnTitle: string } => {
+    let name: string = "";
+    let text: string = "";
+    let iconName: string = "";
+    let btnTitle: string = "";
 
-    if (this.props.displayStyle && (this.props.displayStyle === TermActionsDisplayStyle.text || this.props.displayStyle === TermActionsDisplayStyle.textAndIcon)) {
-      name = termAction.displayText;
-      text = termAction.displayText;
+    if ((this.props.displayStyle && (this.props.displayStyle === TermActionsDisplayStyle.text || this.props.displayStyle === TermActionsDisplayStyle.textAndIcon))) {
+      name = termAction.title;
+      text = termAction.title;
     }
     if (this.props.displayStyle && (this.props.displayStyle === TermActionsDisplayStyle.icon || this.props.displayStyle === TermActionsDisplayStyle.textAndIcon)) {
       iconName = termAction.iconName;
     }
 
-    return { name, text, iconName };
+    btnTitle = termAction.title;
+
+    return { name, text, iconName, btnTitle };
   }
 
   private _getTermActionActionButtonStyle = (): React.CSSProperties => {
     let result: React.CSSProperties = {
       backgroundColor: "transparent",
-      width: "32px",
+      width: this.props.displayStyle === TermActionsDisplayStyle.icon ? "32px" : null,
       height: "32px"
     };
 
@@ -56,7 +65,7 @@ export default class ButtonTermAction extends React.Component<IConreteTermAction
   }
 
   private _onActionExecute = async (termAction: ITermAction) => {
-    const updateAction = await termAction.actionCallback(this.props.term);
+    const updateAction = await termAction.actionCallback(this.props.spTermService, this.props.term);
     this.props.termActionCallback(updateAction);
   }
 }

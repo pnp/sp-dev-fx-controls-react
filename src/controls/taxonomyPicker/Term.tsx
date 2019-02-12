@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Checkbox, ICheckboxStyles } from 'office-ui-fabric-react/lib/Checkbox';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { ITermProps, ITermState } from './ITaxonomyPicker';
 
 import styles from './TaxonomyPicker.module.scss';
@@ -12,6 +12,7 @@ import { UpdateAction, UpdateType } from './termActions';
  * Renders a selectable term
  */
 export default class Term extends React.Component<ITermProps, ITermState> {
+
   constructor(props: ITermProps) {
     super(props);
 
@@ -108,7 +109,10 @@ export default class Term extends React.Component<ITermProps, ITermState> {
           </div>
           {
             this.props.termActions &&
-            <TermActionsControl term={this.props.term} termActions={this.props.termActions} termActionCallback={this.termActionCallback} />
+            <TermActionsControl term={this.props.term}
+                                termActions={this.props.termActions}
+                                termActionCallback={this.termActionCallback}
+                                spTermService={this.props.spTermService} />
           }
         </div>
       </div>

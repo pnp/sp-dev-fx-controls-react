@@ -8,21 +8,13 @@ import { findIndex } from "@microsoft/sp-lodash-subset";
  * TermAction is responsible to obtain different labels for the term.
  */
 export class TermLabelAction implements ITermAction {
-  public iconName: string = "LocaleLanguage";
-  public displayText: string = "Get Labels";
   public id: string = "TermLabelActionId";
 
-  private _spTermsService: SPTermStorePickerService;
   private _labels: string[];
   private _processedTerms: ITerm[];
 
-  constructor() {
+  constructor(public title: string, public iconName: string = "LocaleLanguage") {
     this._processedTerms = [];
-  }
-
-  public initialize = (spTermService: SPTermStorePickerService): Promise<void> =>  {
-    this._spTermsService = spTermService;
-    return Promise.resolve();
   }
 
   public applyToTerm = (currentTerm: ITerm): boolean => {
@@ -33,11 +25,11 @@ export class TermLabelAction implements ITermAction {
     return true;
   }
 
-  public actionCallback = async (currentTerm: ITerm): Promise<UpdateAction> => {
+  public actionCallback = async (spTermService: SPTermStorePickerService, currentTerm: ITerm): Promise<UpdateAction> => {
     try {
       // Set pointer to loading
       let updateAction: UpdateAction = null;
-      this._labels = await this._spTermsService.getTermLabels(currentTerm.Id);
+      this._labels = await spTermService.getTermLabels(currentTerm.Id);
 
       if (this._labels) {
         let termLabel: string = this._labels.join(" ; ");

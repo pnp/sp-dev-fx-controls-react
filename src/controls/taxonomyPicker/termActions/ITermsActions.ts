@@ -11,6 +11,10 @@ export interface ITermActionsControlProps {
    */
   termActions: ITermActions;
   /**
+   * Taxonomy Term Service
+   */
+  spTermService: SPTermStorePickerService;
+  /**
    * Callback after execution term action.
    */
   termActionCallback: (updateAction: UpdateAction) => void;
@@ -31,10 +35,11 @@ export interface ITermActionsControlState {
   displayStyle: TermActionsDisplayStyle;
 }
 
-export interface IConreteTermActionProps {
+export interface IConcreteTermActionProps {
   termActions: ITermAction[];
   term: ITerm;
   displayStyle: TermActionsDisplayStyle;
+  spTermService: SPTermStorePickerService;
   termActionCallback: (updateAction: UpdateAction) => void;
 }
 
@@ -74,33 +79,33 @@ export interface ITermActions {
   actions: ITermAction[];
   termActionsDisplayStyle?: TermActionsDisplayStyle;
   termActionsDisplayMode?: TermActionsDisplayMode;
+  /**
+   * Initializes the term action with the taxonomy service.
+   */
+  initialize?: (spTermService: SPTermStorePickerService) => Promise<void>;
 }
+
 /**
  * Interface represents the possible action that could be execute on term level.
  */
 export interface ITermAction {
   id: string;
   /**
-   * Display name of the action
+   * Action title
    */
-  displayText?: string;
+  title: string;
   /**
    * Icon class name to be displayed for the action.
    */
   iconName?: string;
 
-   /**
-    * Method checks if the current term is supported.
-    * @param currentTerm
-    */
-  applyToTerm(currentTerm: ITerm): Promise<boolean> | boolean;
+  /**
+  * Method checks if the current term is supported.
+  * @param currentTerm
+  */
+  applyToTerm: (currentTerm: ITerm) => Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */
-  actionCallback: (currentTerm: ITerm) => Promise<UpdateAction>;
-
-  /**
-   * Initializes the term action with the taxonomy servie.
-   */
-  initialize: (spTermService: SPTermStorePickerService) => Promise<void>;
+  actionCallback: (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise<UpdateAction>;
 }

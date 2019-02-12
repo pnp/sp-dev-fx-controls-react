@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { ITerm } from '../../../services/ISPTermStorePickerService';
-import { ITermAction, TermActionsDisplayStyle, UpdateAction, IConreteTermActionProps } from './ITermsActions';
+import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps } from './ITermsActions';
 import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
 
-export class DropdownTermAction extends React.Component<IConreteTermActionProps> {
-  public render(): React.ReactElement<IConreteTermActionProps> {
+export class DropdownTermAction extends React.Component<IConcreteTermActionProps> {
+  public render(): React.ReactElement<IConcreteTermActionProps> {
     const { term, termActions } = this.props;
 
     const termActionButtonStyle = this._getTermActionActionButtonStyle();
@@ -33,8 +33,8 @@ export class DropdownTermAction extends React.Component<IConreteTermActionProps>
       };
 
       if (displayStyle && (displayStyle === TermActionsDisplayStyle.text || displayStyle === TermActionsDisplayStyle.textAndIcon)) {
-        termActionMenuItem.text = termAction.displayText;
-        termActionMenuItem.name = termAction.displayText;
+        termActionMenuItem.text = termAction.title;
+        termActionMenuItem.name = termAction.title;
         useTargetWidth = false;
       }
       if (displayStyle && (displayStyle === TermActionsDisplayStyle.icon || displayStyle === TermActionsDisplayStyle.textAndIcon)) {
@@ -69,7 +69,7 @@ export class DropdownTermAction extends React.Component<IConreteTermActionProps>
    * Handler to execute selected action.
    */
   private _onActionExecute = async (termAction: ITermAction) => {
-    const updateAction = await termAction.actionCallback(this.props.term);
+    const updateAction = await termAction.actionCallback(this.props.spTermService, this.props.term);
     this.props.termActionCallback(updateAction);
   }
 }

@@ -4,13 +4,14 @@ import { DropdownTermAction } from './DropdownTermAction';
 import ButtonTermAction from './ButtonTermAction';
 
 export default class TermActionsControl extends React.Component<ITermActionsControlProps, ITermActionsControlState> {
+
   constructor(props: ITermActionsControlProps) {
     super(props);
 
     const { term, termActions } = this.props;
 
     const displayMode = termActions.termActionsDisplayMode ? termActions.termActionsDisplayMode : TermActionsDisplayMode.buttons;
-    const displayStyle = termActions.termActionsDisplayStyle ? termActions.termActionsDisplayStyle : TermActionsDisplayStyle.icon;
+    const displayStyle = termActions.termActionsDisplayStyle ? termActions.termActionsDisplayStyle : TermActionsDisplayStyle.text;
     // Prepate list of the available actions
     const availableActions: ITermAction[] = termActions.actions.filter(termAction => { return termAction.applyToTerm(term); });
 
@@ -33,9 +34,9 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
       <div>
         {
           displayMode == TermActionsDisplayMode.dropdown ?
-            <DropdownTermAction termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} />
+            <DropdownTermAction key={`DdAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} />
             :
-            <ButtonTermAction termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback}/>
+            <ButtonTermAction key={`BtnAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} />
         }
       </div>
     );

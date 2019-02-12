@@ -11,7 +11,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../.
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
-import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
+import { TaxonomyPicker, IPickerTerms, UpdateType } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { IFramePanel } from '../../../IFramePanel';
@@ -24,11 +24,17 @@ import { getItemClassNames } from 'office-ui-fabric-react/lib/components/Context
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
 import { ChartControl, ChartType } from "../../../ChartControl";
+import { ITerm } from '../../../services/ISPTermStorePickerService';
+import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
+import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
 
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
+  private taxService: SPTermStorePickerService = null;
+
   constructor(props: IControlsTestProps) {
     super(props);
 
@@ -428,12 +434,34 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
                   allowMultipleSelections={true}
-                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  termsetNameOrID="505d4df0-4045-41aa-b4f3-23458eafb413" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
-                  label="Service Picker"
+                  label="Service Picker with custom actions"
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  termActions={{
+                    actions: [{
+                      title: "Get term labels",
+                      iconName: "LocaleLanguage",
+                      id: "test",
+                      actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                        const labels = await taxService.getTermLabels(term.Id);
+                        if (labels) {
+                          let termLabel: string = labels.join(" ; ");
+                          const updateAction = {
+                            updateActionType: UpdateType.updateTermLabel,
+                            value: `${termLabel} (updated)`
+                          };
+                          return updateAction;
+                        }
+                      },
+                      applyToTerm: () => (true)
+                    },
+                    new TermLabelAction("Get Labels")],
+                    termActionsDisplayMode: TermActionsDisplayMode.buttons,
+                    termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+                  }}
                 />
 
                 <TaxonomyPicker

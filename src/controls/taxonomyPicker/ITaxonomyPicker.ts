@@ -3,6 +3,7 @@ import { IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
+import SPTermStorePickerService from '../../services/SPTermStorePickerService';
 
 /**
  * PropertyFieldTermPickerHost properties interface
@@ -108,8 +109,9 @@ export interface ITermParentProps extends ITermChanges {
   multiSelection: boolean;
   anchorId? : string;
   isTermSetSelectable?: boolean;
-
   termActions?: ITermActions;
+  spTermService: SPTermStorePickerService;
+
   autoExpand: () => void;
   updateTaxonomyTree: () => void;
   termSetSelectedChange?: (termSet: ITermSet, isChecked: boolean) => void;
@@ -127,6 +129,7 @@ export interface ITermProps extends ITermChanges {
   multiSelection: boolean;
   disabled: boolean;
   termActions?: ITermActions;
+  spTermService: SPTermStorePickerService;
 
   updateTaxonomyTree: () => void;
 }

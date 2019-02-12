@@ -38,7 +38,6 @@ export default class SPTermStorePickerService {
   public async getTermLabels(termId: string): Promise<string[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
-      // TODO: Implement method
       return null;
     }
 
@@ -59,11 +58,8 @@ export default class SPTermStorePickerService {
       const jsonResult = await callResult.json();
 
       let node = jsonResult.find(x => x._ObjectType_ == "SP.Taxonomy.Term");
-      if (node != null && node.Labels != null) {
-        result = [];
-        node.Labels._Child_Items_.map(termLabel => {
-          result.push(termLabel.Value);
-        });
+      if (node && node.Labels && node.Labels._Child_Items_) {
+        result = node.Labels._Child_Items_.map(termLabel => termLabel.Value);
       }
     } catch (error) {
       result = null;

@@ -8,7 +8,6 @@ import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
-import { TermLabelAction, ITermActions } from './termActions';
 
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
@@ -84,11 +83,13 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private loadTermStores(): void {
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
 
-    if (this.props.termActions) {
-      this.props.termActions.actions.map(x => {
-        x.initialize(this.termsService);
-      });
+    if (this.props.termActions && this.props.termActions.initialize) {
+      this.props.termActions.initialize(this.termsService);
+      // this.props.termActions.actions.forEach(x => {
+      //   x.initialize(this.termsService);
+      // });
     }
+
     this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
@@ -316,6 +317,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
                             changedCallback={this.termsChanged}
                             multiSelection={this.props.allowMultipleSelections}
+                            spTermService={this.termsService}
 
                             updateTaxonomyTree={this.updateTaxonomyTree}
                             termActions={this.props.termActions}
