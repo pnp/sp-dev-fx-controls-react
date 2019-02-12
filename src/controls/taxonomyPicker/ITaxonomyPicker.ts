@@ -1,8 +1,9 @@
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { IPickerTerms } from './ITermPicker';
-import { ITermStore, IGroup, ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
-import SPTermStorePickerService from '../../services/SPTermStorePickerService';
+import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { ITermActions } from './termActions/ITermsActions';
+import SPTermStorePickerService from '../../services/SPTermStorePickerService';
 
 /**
  * PropertyFieldTermPickerHost properties interface
@@ -52,6 +53,17 @@ export interface ITaxonomyPickerProps  {
    * Whether the property pane field is enabled or not.
    */
   disabled?: boolean;
+
+  /**
+   * Include standard term actions.
+   */
+  includeDefaultTermActions?: boolean;
+
+  /**
+   * Specifies the available term actions and their basic properties.
+   */
+  termActions?: ITermActions;
+
   /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
    *
@@ -77,7 +89,6 @@ export interface ITaxonomyPickerProps  {
  * PropertyFieldTermPickerHost state interface
  */
 export interface ITaxonomyPickerState {
-
   termSetAndTerms? : ITermSet;
   errorMessage?: string;
   openPanel?: boolean;
@@ -98,8 +109,11 @@ export interface ITermParentProps extends ITermChanges {
   multiSelection: boolean;
   anchorId? : string;
   isTermSetSelectable?: boolean;
+  termActions?: ITermActions;
+  spTermService: SPTermStorePickerService;
 
   autoExpand: () => void;
+  updateTaxonomyTree: () => void;
   termSetSelectedChange?: (termSet: ITermSet, isChecked: boolean) => void;
 }
 
@@ -114,8 +128,13 @@ export interface ITermProps extends ITermChanges {
   term: ITerm;
   multiSelection: boolean;
   disabled: boolean;
+  termActions?: ITermActions;
+  spTermService: SPTermStorePickerService;
+
+  updateTaxonomyTree: () => void;
 }
 
 export interface ITermState {
   selected?: boolean;
+  termLabel: string;
 }
