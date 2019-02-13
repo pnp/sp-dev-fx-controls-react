@@ -24,10 +24,26 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    * componentWillMount lifecycle hook
    */
   public componentWillMount(): void {
+    this.getAvailableActions();
+  }
+
+  /**
+   * Get the available term actions
+   */
+  private async getAvailableActions(): Promise<void> {
     const { term, termActions } = this.props;
 
     // Prepare list of the available actions
-    const availableActions: ITermAction[] = termActions.actions.filter(async (termAction) => { return await termAction.applyToTerm(term); });
+    const availableActions: ITermAction[] = [];
+
+    if (termActions.actions) {
+      for (const action of termActions.actions) {
+        const available = await action.applyToTerm(term);
+        if (available) {
+          availableActions.push(action);
+        }
+      }
+    }
 
     this.setState({
       availableActions

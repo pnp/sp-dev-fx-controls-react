@@ -463,7 +463,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                         };
                         return updateAction;
                       },
-                      applyToTerm: () => (true)
+                      applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
                     },
                     // new TermLabelAction("Get Labels")
                     ],
