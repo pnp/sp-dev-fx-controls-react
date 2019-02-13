@@ -72,6 +72,12 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
   public render(): React.ReactElement<IConcreteTermActionProps> {
     const { term, termActions } = this.props;
 
+    // Check if there are actions to show
+    const actionsToShow = termActions.filter(a => !a.hidden);
+    if (actionsToShow && actionsToShow.length === 0) {
+      return null;
+    }
+
     return (
       <div style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
         {

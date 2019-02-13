@@ -465,7 +465,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       },
                       applyToTerm: () => (true)
                     },
-                    new TermLabelAction("Get Labels")],
+                    // new TermLabelAction("Get Labels")
+                    ],
                     termActionsDisplayMode: TermActionsDisplayMode.buttons,
                     termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
                   }}

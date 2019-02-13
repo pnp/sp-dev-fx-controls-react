@@ -74,12 +74,10 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     }
 
     if (updateAction.updateActionType === UpdateType.updateTermLabel) {
-      this.props.term.Name = updateAction.value;
       this.setState({
         termLabel: updateAction.value
       });
-    }
-    else {
+    } else {
       this.props.updateTaxonomyTree();
     }
   }

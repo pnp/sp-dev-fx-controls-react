@@ -103,9 +103,11 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
    */
-  private updateTaxonomyTree(): void {
+  private async updateTaxonomyTree(): Promise<void> {
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID);
+
     this.setState({
-      termSetAndTerms: this.state.termSetAndTerms
+      termSetAndTerms
     });
   }
 
