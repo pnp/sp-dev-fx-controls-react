@@ -89,6 +89,9 @@ export interface ITermActions {
  * Interface represents the possible action that could be execute on term level.
  */
 export interface ITermAction {
+  /**
+   * Action ID
+   */
   id: string;
   /**
    * Action title
@@ -98,6 +101,14 @@ export interface ITermAction {
    * Icon class name to be displayed for the action.
    */
   iconName?: string;
+  /**
+   * Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering.
+   */
+  hidden?: boolean;
+  /**
+   * Specifies if you want to invoke the action on render
+   */
+  invokeActionOnRender?: boolean;
 
   /**
   * Method checks if the current term is supported.

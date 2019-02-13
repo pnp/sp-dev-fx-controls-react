@@ -3,39 +3,18 @@ import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
 import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps } from './ITermsActions';
 
 export default class ButtonTermAction extends React.Component<IConcreteTermActionProps> {
-  public render(): React.ReactElement<IConcreteTermActionProps> {
-    const { term, termActions } = this.props;
 
-    return (
-      <div style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
-        {
-          termActions &&
-          termActions.map(termAction => {
-            const { name, text, iconName, btnTitle } = this._prepareCommandBarButton(termAction);
-            return (
-              <div>
-                <CommandBarButton split={true}
-                                  onClick={() => { this._onActionExecute(termAction); }}
-                                  iconProps={{
-                                    iconName: iconName || null,
-                                    style: { display: iconName ? null : "none"}
-                                  }}
-                                  text={text}
-                                  title={btnTitle}
-                                  name={name}
-                                  key={term.Id}
-                                  style={this._getTermActionActionButtonStyle()}
-                />
-              </div>
-            );
-          })
-        }
-      </div>
-    );
+  /**
+   * componentWillMount lifecycle hook
+   */
+  public componentWillMount(): void {
+    this.checkForImmediateInvocations();
   }
 
-
-  private _prepareCommandBarButton = (termAction: ITermAction): { name: string, text: string, iconName: string, btnTitle: string } => {
+  /**
+   * Prepares the command bar button
+   */
+  private prepareCommandBarButton = (termAction: ITermAction): { name: string, text: string, iconName: string, btnTitle: string } => {
     let name: string = "";
     let text: string = "";
     let iconName: string = "";
@@ -54,7 +33,10 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
     return { name, text, iconName, btnTitle };
   }
 
-  private _getTermActionActionButtonStyle = (): React.CSSProperties => {
+  /**
+   * Gets the action button styling
+   */
+  private getTermActionActionButtonStyle = (): React.CSSProperties => {
     let result: React.CSSProperties = {
       backgroundColor: "transparent",
       width: this.props.displayStyle === TermActionsDisplayStyle.icon ? "32px" : null,
@@ -64,8 +46,60 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
     return result;
   }
 
-  private _onActionExecute = async (termAction: ITermAction) => {
+  /**
+   * Check if there are action to immediatly invoke
+   */
+  private checkForImmediateInvocations() {
+    const { termActions } = this.props;
+    for (const action of termActions) {
+      if (action.invokeActionOnRender) {
+        this.onActionExecute(action);
+      }
+    }
+  }
+
+  /**
+   * On action execution
+   */
+  private onActionExecute = async (termAction: ITermAction) => {
     const updateAction = await termAction.actionCallback(this.props.spTermService, this.props.term);
     this.props.termActionCallback(updateAction);
+  }
+
+  /**
+   * Default React render method
+   */
+  public render(): React.ReactElement<IConcreteTermActionProps> {
+    const { term, termActions } = this.props;
+
+    return (
+      <div style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
+        {
+          termActions &&
+          termActions.map(termAction => {
+            const { name, text, iconName, btnTitle } = this.prepareCommandBarButton(termAction);
+            return (
+              termAction.hidden ? (
+                null
+              ) : (
+                <div>
+                  <CommandBarButton split={true}
+                                    onClick={() => { this.onActionExecute(termAction); }}
+                                    iconProps={{
+                                      iconName: iconName || null,
+                                      style: { display: iconName ? null : "none"}
+                                    }}
+                                    text={text}
+                                    title={btnTitle}
+                                    name={name}
+                                    key={term.Id}
+                                    style={this.getTermActionActionButtonStyle()} />
+                </div>
+              )
+            );
+          })
+        }
+      </div>
+    );
   }
 }

@@ -146,9 +146,10 @@ Interface `ITermAction`
 | id | string | yes | Unique id of the term action |
 | title | string | yes | Action title |
 | iconName | string | no | Name of the icon to be used to display action |
+| hidden | boolean | no | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
+| invokeActionOnRender | boolean | no | Specifies if you want to invoke the action on render |
 | applyToTerm | (currentTerm: ITerm) => Promise\<boolean\> \| boolean | yes | Method checks if the current term is supported |
 | actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise\<UpdateAction\> | yes | Method to be executed when action is fired |
-| initialize | (spTermService: SPTermStorePickerService) => Promise\<void\> | no | Initializes the term action with the taxonomy service |
 
 
 Interface `UpdateAction`

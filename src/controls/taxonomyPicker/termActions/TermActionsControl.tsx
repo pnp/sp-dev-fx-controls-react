@@ -8,20 +8,35 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
   constructor(props: ITermActionsControlProps) {
     super(props);
 
-    const { term, termActions } = this.props;
+    const { termActions } = this.props;
 
     const displayMode = termActions.termActionsDisplayMode ? termActions.termActionsDisplayMode : TermActionsDisplayMode.buttons;
     const displayStyle = termActions.termActionsDisplayStyle ? termActions.termActionsDisplayStyle : TermActionsDisplayStyle.text;
-    // Prepate list of the available actions
-    const availableActions: ITermAction[] = termActions.actions.filter(termAction => { return termAction.applyToTerm(term); });
 
     this.state = {
-      availableActions,
+      availableActions: [],
       displayMode,
       displayStyle
     };
   }
 
+  /**
+   * componentWillMount lifecycle hook
+   */
+  public componentWillMount(): void {
+    const { term, termActions } = this.props;
+
+    // Prepare list of the available actions
+    const availableActions: ITermAction[] = termActions.actions.filter(async (termAction) => { return await termAction.applyToTerm(term); });
+
+    this.setState({
+      availableActions
+    });
+  }
+
+  /**
+   * Default React render method
+   */
   public render(): React.ReactElement<ITermActionsControlProps> {
     const { term } = this.props;
     const { displayStyle, displayMode, availableActions } = this.state;
@@ -41,6 +56,4 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
       </div>
     );
   }
-
-
 }

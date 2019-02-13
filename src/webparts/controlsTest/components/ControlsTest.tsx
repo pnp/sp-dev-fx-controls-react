@@ -434,7 +434,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
                   allowMultipleSelections={true}
-                  termsetNameOrID="505d4df0-4045-41aa-b4f3-23458eafb413" // id to termset that has a custom sort
+                  termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
                   label="Service Picker with custom actions"
                   context={this.props.context}
@@ -445,16 +445,23 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       title: "Get term labels",
                       iconName: "LocaleLanguage",
                       id: "test",
+                      invokeActionOnRender: true,
+                      hidden: true,
                       actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                        const labels = await taxService.getTermLabels(term.Id);
-                        if (labels) {
-                          let termLabel: string = labels.join(" ; ");
-                          const updateAction = {
-                            updateActionType: UpdateType.updateTermLabel,
-                            value: `${termLabel} (updated)`
-                          };
-                          return updateAction;
-                        }
+                        // const labels = await taxService.getTermLabels(term.Id);
+                        // if (labels) {
+                        //   let termLabel: string = labels.join(" ; ");
+                        //   const updateAction = {
+                        //     updateActionType: UpdateType.updateTermLabel,
+                        //     value: `${termLabel} (updated)`
+                        //   };
+                        //   return updateAction;
+                        // }
+                        const updateAction = {
+                          updateActionType: UpdateType.updateTermLabel,
+                          value: `${term.Name} (updated)`
+                        };
+                        return updateAction;
                       },
                       applyToTerm: () => (true)
                     },
