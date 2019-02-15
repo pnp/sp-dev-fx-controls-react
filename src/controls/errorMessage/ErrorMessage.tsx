@@ -1,15 +1,15 @@
 import * as React from 'react';
-import styles from './TaxonomyPicker.module.scss';
+import styles from './ErrorMessage.module.scss';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
-export interface IFieldErrorMessageProps {
+export interface IErrorMessageProps {
   errorMessage: string;
 }
 
 /**
  * Component that shows an error message when something went wront with the property control
  */
-export default class FieldErrorMessage extends React.Component<IFieldErrorMessageProps> {
+export default class ErrorMessage extends React.Component<IErrorMessageProps> {
   public render(): JSX.Element {
     if (this.props.errorMessage !== 'undefined' && this.props.errorMessage !== null && this.props.errorMessage !== '') {
       return (

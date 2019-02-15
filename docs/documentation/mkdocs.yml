@@ -12,6 +12,7 @@ nav:
       - "Polar Area Chart": 'controls/charts/PolarAreaChart.md'
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
+    - DateTimePicker: 'controls/DateTimePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'

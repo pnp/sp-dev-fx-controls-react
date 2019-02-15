@@ -12,7 +12,7 @@ import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
-import FieldErrorMessage from './ErrorMessage';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 import * as telemetry from '../../common/telemetry';
 
@@ -282,7 +282,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={this.state.errorMessage} />
+        <ErrorMessage errorMessage={this.state.errorMessage} />
 
         <Panel
           isOpen={this.state.openPanel}

@@ -34,6 +34,7 @@ Once the package is installed, you will have to configure the resource file of t
 
 The following controls are currently available:
 
+- [DateTimePicker](./controls/DateTimePicker) (Date Time Picker)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
 - [ListView](./controls/ListView) (List view control)
 - [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
