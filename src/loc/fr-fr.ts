@@ -104,6 +104,8 @@ define([], () => {
     DatePickerDayShortSaturday: "Sam",
     DatePickerGoToToday: "Aujourd\'hui",
     DateTimePickerDate: "Date",
-    DateTimePickerTime: "Temps"
+    DateTimePickerTime: "Temps",
+    AMDesignator: "",
+    PMDesignator: ""
   };
 });

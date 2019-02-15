@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IHoursComponentProps, TimeConvention } from './IDateTimePicker';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
+import * as strings from 'ControlStrings';
 
 /**
  * Hours component, this renders the hours dropdown
@@ -28,6 +29,15 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
   }
 
   private _initHoursOptions() {
+    let amDesignator = '';
+    let pmDesignator = '';
+    if (strings.AMDesignator) {
+      amDesignator = ` ${strings.AMDesignator}`;
+    }
+    if (strings.PMDesignator) {
+      pmDesignator = ` ${strings.PMDesignator}`;
+    }
+
     let hours: IDropdownOption[] = [];
     for (let i = 0; i < 24; i++) {
       let digit: string;
@@ -41,14 +51,14 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
       } else {
         // 12 hours time convention
         if (i === 0) {
-          digit = '12 am';
+          digit = `12${amDesignator}`;
         } else if (i < 12) {
-          digit = i + ' am';
+          digit = `${i}${amDesignator}`;
         } else {
           if (i === 12) {
-            digit = '12 pm';
+            digit = `12${pmDesignator}`;
           } else {
-            digit = (i % 12) + ' pm';
+            digit = `${(i % 12)}${pmDesignator}`;
           }
         }
       }

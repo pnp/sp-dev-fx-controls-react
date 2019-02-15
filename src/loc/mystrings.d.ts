@@ -78,6 +78,9 @@ declare interface IControlStrings {
   DatePickerGoToToday: string;
   DateTimePickerDate: string;
   DateTimePickerTime: string;
+
+  AMDesignator: string;
+  PMDesignator: string;
 }
 
 declare module 'ControlStrings' {
