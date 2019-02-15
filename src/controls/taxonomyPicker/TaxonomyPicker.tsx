@@ -7,13 +7,14 @@ import TermPicker from './TermPicker';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
-import { ITermSet, IGroup, ITerm } from './../../services/ISPTermStorePickerService';
+import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
+
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
-import * as telemetry from '../../common/telemetry';
 
+import * as telemetry from '../../common/telemetry';
 
 /**
  * Image URLs / Base64
@@ -81,19 +82,32 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    */
   private loadTermStores(): void {
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+
+    if (this.props.termActions && this.props.termActions.initialize) {
+      this.props.termActions.initialize(this.termsService);
+      // this.props.termActions.actions.forEach(x => {
+      //   x.initialize(this.termsService);
+      // });
+    }
+
     this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
       // Check if a response was retrieved
-      if (response !== null) {
-        this.setState({
-          termSetAndTerms: response,
-          loaded: true
-        });
-      } else {
-        this.setState({
-          termSetAndTerms: null,
-          loaded: true
-        });
-      }
+      let termSetAndTerms = response ? response : null;
+      this.setState({
+        termSetAndTerms,
+        loaded: true
+      });
+    });
+  }
+
+  /**
+   * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
+   */
+  private async updateTaxonomyTree(): Promise<void> {
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID);
+
+    this.setState({
+      termSetAndTerms
     });
   }
 
@@ -304,7 +318,12 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
                             disabledTermIds={this.props.disabledTermIds}
                             disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
                             changedCallback={this.termsChanged}
-                            multiSelection={this.props.allowMultipleSelections} />
+                            multiSelection={this.props.allowMultipleSelections}
+                            spTermService={this.termsService}
+
+                            updateTaxonomyTree={this.updateTaxonomyTree}
+                            termActions={this.props.termActions}
+                            />
               </div>
             )
           }

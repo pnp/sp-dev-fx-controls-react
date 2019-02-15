@@ -16,6 +16,7 @@ export interface IControlsTestState {
   items: any[];
   initialValues: any[];
   iFrameDialogOpened?: boolean;
+  iFramePanelOpened?: boolean;
   authorEmails: string[];
   selectedList: string;
   progressActions: IProgressAction[];

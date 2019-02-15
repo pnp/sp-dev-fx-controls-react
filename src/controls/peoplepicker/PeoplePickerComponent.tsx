@@ -46,7 +46,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * componentWillMount lifecycle hook
    */
   public componentWillMount(): void {
-    this.getInitialPersons();
+    this.getInitialPersons(this.props);
   }
 
 
@@ -56,8 +56,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   public componentWillUpdate(nextProps: IPeoplePickerProps, nextState: IPeoplePickerState): void {
     if (!isEqual(this.props.defaultSelectedUsers, nextProps.defaultSelectedUsers) ||
         this.props.groupName !== nextProps.groupName ||
-        this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl) {
-      this.getInitialPersons();
+        this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
+        this.peopleSearchService.getSumOfPrincipalTypes(this.props.principalTypes) !== this.peopleSearchService.getSumOfPrincipalTypes(nextProps.principalTypes)) {
+      this.getInitialPersons(nextProps);
     }
   }
 
@@ -65,11 +66,11 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   /**
    * Get initial persons
    */
-  private async getInitialPersons() {
-    const { groupName } = this.props;
+  private async getInitialPersons(props: IPeoplePickerProps) {
+    const { groupName, webAbsoluteUrl, defaultSelectedUsers, ensureUser, principalTypes } = props;
     // Check if a group property was provided, and get the group ID
     if (groupName) {
-      this.groupId = await this.peopleSearchService.getGroupId(this.props.groupName, this.props.webAbsoluteUrl);
+      this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
       if (!this.groupId) {
         this.setState({
           errorMessage: "Group could not be found."
@@ -81,10 +82,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
 
     // Check for default user values
-    if (this.props.defaultSelectedUsers && this.props.defaultSelectedUsers.length) {
+    if (defaultSelectedUsers) {
       let selectedPersons: IPersonaProps[] = [];
-      for (const userValue of this.props.defaultSelectedUsers) {
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser);
+      for (const userValue of props.defaultSelectedUsers) {
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, principalTypes, webAbsoluteUrl, this.groupId, ensureUser);
         if (userResult) {
           selectedPersons.push(userResult);
         }

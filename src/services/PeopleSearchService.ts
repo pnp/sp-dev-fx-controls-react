@@ -33,6 +33,19 @@ export default class SPPeopleSearchService {
   }
 
   /**
+   * Generate sum of principal types
+   * 
+   * PrincipalType controls the type of entities that are returned in the results.
+   * Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
+   * These values can be combined (example: 13 is security + SP groups + users)
+   * 
+   * @param principalTypes 
+   */
+  public getSumOfPrincipalTypes(principalTypes: PrincipalType[]) {
+    return  !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1;
+  }
+
+  /**
    * Retrieve the specified group
    *
    * @param groupName
@@ -161,10 +174,7 @@ export default class SPPeopleSearchService {
           AllUrlZones: false,
           MaximumEntitySuggestions: maximumSuggestions,
           PrincipalSource: 15,
-          // PrincipalType controls the type of entities that are returned in the results.
-          // Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
-          // These values can be combined (example: 13 is security + SP groups + users)
-          PrincipalType: !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1,
+          PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query
         }
       };

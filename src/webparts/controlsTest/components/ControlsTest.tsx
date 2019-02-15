@@ -11,9 +11,11 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../.
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
-import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
+import { TaxonomyPicker, IPickerTerms, UpdateType } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
+import { IFramePanel } from '../../../IFramePanel';
+import { PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
@@ -23,11 +25,17 @@ import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
 import { ChartControl, ChartType } from "../../../ChartControl";
 import { Progress, IProgressAction, IProgressProps } from '../../../Progress';
+import { ITerm } from '../../../services/ISPTermStorePickerService';
+import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
+import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
 
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
+  private taxService: SPTermStorePickerService = null;
+
   constructor(props: IControlsTestProps) {
     super(props);
 
@@ -35,6 +43,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       imgSize: ImageSize.small,
       items: [],
       iFrameDialogOpened: false,
+      iFramePanelOpened: false,
       initialValues: [],
       authorEmails: [],
       selectedList: null,
@@ -228,6 +237,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         selected: ImageSize.large === this.state.imgSize
       }
     ];
+
+
 
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
@@ -471,12 +482,42 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
                   allowMultipleSelections={true}
-                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
-                  label="Service Picker"
+                  label="Service Picker with custom actions"
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  termActions={{
+                    actions: [{
+                      title: "Get term labels",
+                      iconName: "LocaleLanguage",
+                      id: "test",
+                      invokeActionOnRender: true,
+                      hidden: true,
+                      actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                        // const labels = await taxService.getTermLabels(term.Id);
+                        // if (labels) {
+                        //   let termLabel: string = labels.join(" ; ");
+                        //   const updateAction = {
+                        //     updateActionType: UpdateType.updateTermLabel,
+                        //     value: `${termLabel} (updated)`
+                        //   };
+                        //   return updateAction;
+                        // }
+                        const updateAction = {
+                          updateActionType: UpdateType.updateTermLabel,
+                          value: `${term.Name} (updated)`
+                        };
+                        return updateAction;
+                      },
+                      applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
+                    },
+                    // new TermLabelAction("Get Labels")
+                    ],
+                    termActionsDisplayMode: TermActionsDisplayMode.buttons,
+                    termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+                  }}
                 />
 
                 <TaxonomyPicker
@@ -533,6 +574,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   }}
                   width={'570px'}
                   height={'315px'} />
+              </div>
+              <div className="ms-font-m">iframe Panel tester:
+                <PrimaryButton
+                  text="Open iframe Panel"
+                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
+                <IFramePanel
+                 url={iframeUrl}
+                 type={PanelType.medium}
+                //  height="300px"
+                 headerText="iframe panel title"
+                 closeButtonAriaLabel="Close"
+                 isOpen={this.state.iFramePanelOpened}
+                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  />
               </div>
             </div>
           </div>
