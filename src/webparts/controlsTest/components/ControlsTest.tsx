@@ -28,6 +28,7 @@ import { ITerm } from '../../../services/ISPTermStorePickerService';
 import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
 import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
+import { ListItemAttachments } from '../../../ListItemAttachments';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -246,6 +247,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
 
+        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+                             itemId={1}
+                             context={this.props.context}
+                             disabled={false} />
+
         <Placeholder iconName='Edit'
                      iconText='Configure your web part'
                      description='Please configure the web part.'
@@ -425,10 +431,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">Field picker list data tester:
                 <ListItemPicker listId={this.state.selectedList}
-                  columnInternalName="Title"
-                  itemLimit={5}
-                  context={this.props.context}
-                  onSelectedItem={this.listItemPickerDataSelected} />
+                                columnInternalName="Title"
+                                itemLimit={5}
+                                context={this.props.context}
+                                onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:

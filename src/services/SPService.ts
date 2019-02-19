@@ -7,14 +7,11 @@ import { sp, Web } from '@pnp/sp';
 
 export default class SPService implements ISPService {
 
-<<<<<<< HEAD
-  constructor(private _context: WebPartContext | ApplicationCustomizerContext) { }
-=======
   constructor(private _context: WebPartContext | ExtensionContext) { }
->>>>>>> upstream/dev
 
   /**
    * Get lists or libraries
+   *
    * @param options
    */
   public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
@@ -66,7 +63,13 @@ export default class SPService implements ISPService {
     }
   }
 
-   // Get ListAttachments
+   /**
+    * Get list item attachments
+    *
+    * @param listId
+    * @param itemId
+    * @param webUrl
+    */
    public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
@@ -83,10 +86,16 @@ export default class SPService implements ISPService {
       console.dir(error);
       return Promise.reject(error);
     }
-
   }
 
-  // delete attachment
+  /**
+   * Delete attachment
+   *
+   * @param fileName
+   * @param listId
+   * @param itemId
+   * @param webUrl
+   */
   public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<void> {
     try {
       const spOpts: ISPHttpClientOptions = {
@@ -95,17 +104,22 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/getByFileName('${encodeURIComponent(fileName)}')`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-
-
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);
     }
   }
 
-  // Add Attachment
-  public async addAttachment(listId: string, itemId: number, fileName: string, file: ArrayBuffer, webUrl?: string): Promise<void> {
-
+  /**
+   * Add attachment
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param file
+   * @param webUrl
+   */
+  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
     try {
       // remove special characteres in FileName
       fileName = fileName.replace(/[^\.\w\s]/gi, '');
@@ -122,16 +136,20 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/add(FileName='${encodeURIComponent(fileName)}')`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-
       return;
-
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  // get Attachment
-  //
+  /**
+   * Get attachement for list item
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param webUrl
+   */
   public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
     const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/GetByFileBame('${fileName}'))`;
@@ -142,12 +160,18 @@ export default class SPService implements ISPService {
         return file;
       }
     }
-
     return null;
   }
-  // Check if Attachment Exists
-  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
 
+  /**
+   * Check if the attachment exists
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param webUrl
+   */
+  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
     try {
       const listName = await this.getListName(listId, webUrl);
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
@@ -166,7 +190,12 @@ export default class SPService implements ISPService {
     }
   }
 
-  // Get ListName
+  /**
+   * Get the list name
+   *
+   * @param listId
+   * @param webUrl
+   */
   public async getListName(listId: string, webUrl?: string): Promise<string> {
     const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')?$select=RootFolder/Name&$expand=RootFolder)`;

@@ -29,7 +29,6 @@ declare interface IControlStrings {
 
   ListItemPickerSelectValue: string;
 
-<<<<<<< HEAD
   ListItemAttachmentsActionDeleteIconTitle: string;
   ListItemAttachmentsactionDeleteTitle: string;
   ListItemAttachmentsfileDeletedMsg: string;
@@ -48,13 +47,11 @@ declare interface IControlStrings {
   ListItemAttachmentslPlaceHolderIconText: string;
   ListItemAttachmentslPlaceHolderDescription: string;
   ListItemAttachmentslPlaceHolderButtonLabel: string;
-=======
   //Maps
   mapsErrorMessage: string;
   mapsLoadingText: string;
   mapsSearchButtonText: string;
   mapsTitlePrefix: string;
->>>>>>> upstream/dev
 }
 
 declare module 'ControlStrings' {

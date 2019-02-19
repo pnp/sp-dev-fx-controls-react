@@ -53,17 +53,15 @@ define([], () => {
     PeoplePickerSearchText: 'Fetching users',
     PeoplePickerGroupNotFound: "Group could not be found.",
 
-    ListItemPickerSelectValue: 'Select value',
-
-<<<<<<< HEAD
     genericNoResultsFoundText: 'No results found',
 
+    ListItemPickerSelectValue: 'Select value',
     ListItemAttachmentsActionDeleteIconTitle: 'Delete',
     ListItemAttachmentsactionDeleteTitle: 'Delete',
     ListItemAttachmentsfileDeletedMsg: 'File {0} deleted',
     ListItemAttachmentsfileDeleteError: 'Error on delete file: {0}, reason {1}',
     ListItemAttachmentserrorLoadAttachments: 'Error on load list item attachment, reason: {0}',
-    ListItemAttachmentsconfirmDelete: 'Are you sure you want send the attachment {0} to the site recycle bin ?',
+    ListItemAttachmentsconfirmDelete: 'Are you sure you want send the attachment {0} to the site recycle bin?',
     ListItemAttachmentsdialogTitle: 'List Item Attachment',
     ListItemAttachmentsdialogOKbuttonLabel: 'OK',
     ListItemAttachmentsdialogCancelButtonLabel: 'Cancel',
@@ -75,16 +73,13 @@ define([], () => {
     ListItemAttachmentsloadingMessage: 'Uploading file ...',
     ListItemAttachmentslPlaceHolderIconText: 'List Item Attachment',
     ListItemAttachmentslPlaceHolderDescription: 'Please Add Attachment',
-    ListItemAttachmentslPlaceHolderButtonLabel: 'Add'
-=======
+    ListItemAttachmentslPlaceHolderButtonLabel: 'Add',
+
     mapsErrorMessage: 'There was an error while loading the map',
     mapsLoadingText: 'Loading',
     mapsSearchButtonText: 'Search',
     mapsTitlePrefix: 'Map of',
 
-    genericNoResultsFoundText: 'No results found',
-
     ListViewFilterLabel: "Filter the list"
->>>>>>> upstream/dev
   };
 });

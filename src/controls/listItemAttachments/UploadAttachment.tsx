@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { PrimaryButton, } from 'office-ui-fabric-react/lib/Button';
-import { CommandButton } from 'office-ui-fabric-react/lib/Button';
 import { IUploadAttachmentProps } from './IUploadAttachmentProps';
 import { IUploadAttachmentState } from './IUploadAttachmentState';
 import SPservice from "../../services/SPService";
@@ -9,48 +8,53 @@ import * as strings from 'ControlStrings';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
 import { createRef } from '@uifabric/utilities/lib';
+import styles from './ListItemAttachments.module.scss';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
   private fileInput;
-  constructor(props) {
+
+  constructor(props: IUploadAttachmentProps) {
     super(props);
+
     this.state = {
       file: null,
       hideDialog: true,
       dialogMessage: '',
       isLoading: false,
     };
+
     // Get SPService
     this._spservice = new SPservice(this.props.context);
     this.fileInput = createRef();
-    // Handlers
-    this._closeDialog = this._closeDialog.bind(this);
-    this._addAttachment = this._addAttachment.bind(this);
-    this._onAttachmentUpload = this._onAttachmentUpload.bind(this);
   }
 
+  /**
+   * componentDidUpdate lifecycle hook
+   *
+   * @param prevProps
+   * @param prevState
+   */
   public componentDidUpdate(prevProps: IUploadAttachmentProps, prevState: IUploadAttachmentState): void {
     if (this.props.fireUpload) {
       this.fileInput.current.value = '';
       this.fileInput.current.click();
     }
   }
-  // Upload Attachments
-  public componentDidMount() {
 
-  }
-  //  FileReader event
-  private _onAttachmentUpload(e) {
-    e.preventDefault();
+  /**
+   * On attachment upload event
+   */
+  private onAttachmentUpload = () => {
     // fire click event
     this.fileInput.current.value = '';
     this.fileInput.current.click();
   }
-  // Add Attachment
-  private _addAttachment(e) {
 
-    e.preventDefault();
+  /**
+   * Add a new attachment
+   */
+  private addAttachment = (e: React.ChangeEvent<HTMLInputElement>) =>{
     this.setState({
       isLoading: true
     });
@@ -58,40 +62,51 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     const reader = new FileReader();
     const file = e.target.files[0];
 
-    reader.onloadend = () => {
+    reader.onloadend = async () => {
       this.setState({
-        file: file,
+        file: file
       });
-      // Add attachement
-      this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl)
-        .then(v => {
-          this.setState({
-            isLoading: false
-          });
-          this.props.onAttachmentUpload();
-        })
-        .catch((reason) => {
-          this.setState({
-            hideDialog: false,
-            isLoading: false,
-            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', reason)
-          });
+
+      try {
+        await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+
+        this.setState({
+          isLoading: false
         });
+        this.props.onAttachmentUpload();
+      } catch (error) {
+        this.setState({
+          hideDialog: false,
+          isLoading: false,
+          dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
+        });
+      }
     };
     reader.readAsDataURL(file);
   }
-  // Render
-  public render() {
 
+  /**
+   * Close dialog
+   */
+  private closeDialog = () => {
+    this.setState({
+      hideDialog: true,
+      dialogMessage: '',
+    });
+  }
+
+  /**
+   * Default React render method
+   */
+  public render() {
     return (
       <div>
         <input id="file-picker"
-          style={{ display: 'none' }}
-          type="file"
-          onChange={(e) => this._addAttachment(e)}
-          ref={this.fileInput}
-        />
-        <div style={{ textAlign: 'left', marginTop: 25, marginBottom: 25 }}>
+               style={{ display: 'none' }}
+               type="file"
+               onChange={(e) => this.addAttachment(e)}
+               ref={this.fileInput} />
+        <div className={styles.uploadBar}>
           <CommandBar
             items={[{
               key: 'Add',
@@ -99,7 +114,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
               iconProps: {
                 iconName: 'Upload'
               },
-              onClick: this._onAttachmentUpload,
+              onClick: this.onAttachmentUpload,
               disabled: this.props.disabled
             }]}
           />
@@ -112,7 +127,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
         <Dialog
           hidden={this.state.hideDialog}
           type={DialogType.normal}
-          onDismiss={this._closeDialog}
+          onDismiss={this.closeDialog}
           dialogContentProps={{
             type: DialogType.normal,
             title: strings.ListItemAttachmentsuploadAttachmentDialogTitle,
@@ -123,19 +138,10 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
             containerClassName: 'ms-dialogMainOverride'
           }} >
           <DialogFooter>
-            <PrimaryButton onClick={this._closeDialog}>OK</PrimaryButton>
+            <PrimaryButton onClick={this.closeDialog}>OK</PrimaryButton>
           </DialogFooter>
         </Dialog>
       </div>
     );
   }
-  // close dialog
-  private _closeDialog(e) {
-    e.preventDefault();
-    this.setState({
-      hideDialog: true,
-      dialogMessage: '',
-    });
-  }
 }
-export default UploadAttachment;

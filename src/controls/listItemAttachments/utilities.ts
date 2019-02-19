@@ -24,8 +24,9 @@ export const DOCICONURL_VIDEO = "https://static2.sharepointonline.com/files/fabr
 
 
 export default class utilities {
-  constructor() {
-  }
+
+  constructor() {}
+
   /**
    * GetFileImageUrl
    */
@@ -33,7 +34,7 @@ export default class utilities {
     let _fileImageUrl: string = DOCICONURL_GENERIC;
     const _fileTypes = _file.FileName.split('.');
     const _fileExtension = _fileTypes[1];
-    
+
    if ( !_fileExtension){
      return Promise.resolve(_fileImageUrl);
    }

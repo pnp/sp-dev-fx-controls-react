@@ -6,11 +6,8 @@ export * from './TaxonomyPicker';
 export * from './WebPartTitle';
 export * from './ListPicker';
 export * from './ListItemPicker';
-<<<<<<< HEAD
 export * from './ListItemAttachments';
-=======
 export * from './ChartControl';
->>>>>>> upstream/dev
 
 export * from './IFrameDialog';
 export * from './IFramePanel';
