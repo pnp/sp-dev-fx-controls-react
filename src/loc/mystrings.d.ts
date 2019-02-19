@@ -29,11 +29,32 @@ declare interface IControlStrings {
 
   ListItemPickerSelectValue: string;
 
+<<<<<<< HEAD
+  ListItemAttachmentsActionDeleteIconTitle: string;
+  ListItemAttachmentsactionDeleteTitle: string;
+  ListItemAttachmentsfileDeletedMsg: string;
+  ListItemAttachmentsfileDeleteError: string;
+  ListItemAttachmentserrorLoadAttachments: string;
+  ListItemAttachmentsconfirmDelete: string;
+  ListItemAttachmentsdialogTitle: string;
+  ListItemAttachmentsdialogOKbuttonLabel: string;
+  ListItemAttachmentsdialogCancelButtonLabel: string;
+  ListItemAttachmentsdialogOKbuttonLabelOnDelete: string;
+  ListItemAttachmentsuploadAttachmentDialogTitle:string;
+  ListItemAttachmentsuploadAttachmentButtonLabel:string;
+  ListItemAttachmentsuploadAttachmentErrorMsg: String;
+  ListItemAttachmentsCommandBarAddAttachmentLabel: string;
+  ListItemAttachmentsloadingMessage: string;
+  ListItemAttachmentslPlaceHolderIconText: string;
+  ListItemAttachmentslPlaceHolderDescription: string;
+  ListItemAttachmentslPlaceHolderButtonLabel: string;
+=======
   //Maps
   mapsErrorMessage: string;
   mapsLoadingText: string;
   mapsSearchButtonText: string;
   mapsTitlePrefix: string;
+>>>>>>> upstream/dev
 }
 
 declare module 'ControlStrings' {
