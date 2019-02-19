@@ -77,5 +77,5 @@ export interface ITerm {
   ParentId?: string;
   LocalCustomProperties?: {
     [property: string]: any
-  }
+  };
 }
