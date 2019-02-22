@@ -2,7 +2,8 @@ import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
 import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
+import { SPHttpClient, SPHttpClientResponse,ISPHttpClientOptions } from "@microsoft/sp-http";
+import { sp, Web } from '@pnp/sp';
 
 export default class SPService implements ISPService {
 
@@ -10,6 +11,7 @@ export default class SPService implements ISPService {
 
   /**
    * Get lists or libraries
+   *
    * @param options
    */
   public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
@@ -59,5 +61,151 @@ export default class SPService implements ISPService {
     } catch (error) {
       return Promise.reject(error);
     }
+  }
+
+   /**
+    * Get list item attachments
+    *
+    * @param listId
+    * @param itemId
+    * @param webUrl
+    */
+   public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results && results.value && results.value.length > 0) {
+          return results.value;
+        }
+      }
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Delete attachment
+   *
+   * @param fileName
+   * @param listId
+   * @param itemId
+   * @param webUrl
+   */
+  public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<void> {
+    try {
+      const spOpts: ISPHttpClientOptions = {
+        headers: { "X-HTTP-Method": 'DELETE', }
+      };
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/getByFileName('${encodeURIComponent(fileName)}')`;
+      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Add attachment
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param file
+   * @param webUrl
+   */
+  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
+    try {
+      // remove special characteres in FileName
+      fileName = fileName.replace(/[^\.\w\s]/gi, '');
+      //  Check if Attachment Exists
+      const fileExists = await this.checkAttachmentExists(listId, itemId, fileName, webUrl);
+      // Delete Attachment if exists
+      if (fileExists) {
+        await this.deleteAttachment(fileName, listId, itemId, webUrl);
+      }
+      // Add Attachment
+      const spOpts: ISPHttpClientOptions = {
+        body: file
+      };
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/add(FileName='${encodeURIComponent(fileName)}')`;
+      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+      return;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Get attachement for list item
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param webUrl
+   */
+  public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/AttachmentFiles/GetByFileBame('${fileName}'))`;
+    const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      const file = await data.json();
+      if (file) {
+        return file;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Check if the attachment exists
+   *
+   * @param listId
+   * @param itemId
+   * @param fileName
+   * @param webUrl
+   */
+  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+    try {
+      const listName = await this.getListName(listId, webUrl);
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/getfilebyserverrelativeurl('/lists/${listName}/Attachments/${itemId}/${fileName}')`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results && results.Exists) {
+          return results.Exists;
+        }
+      }
+
+      return false;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Get the list name
+   *
+   * @param listId
+   * @param webUrl
+   */
+  public async getListName(listId: string, webUrl?: string): Promise<string> {
+    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')?$select=RootFolder/Name&$expand=RootFolder)`;
+    const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      const results = await data.json();
+      if (results) {
+        return results.RootFolder.Name;
+      }
+    }
+    return;
   }
 }

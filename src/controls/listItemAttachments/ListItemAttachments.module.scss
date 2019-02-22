@@ -1,0 +1,43 @@
+
+.ListItemAttachments {
+  margin-bottom: 15px;
+
+  .documentCard {
+    -webkit-font-smoothing: antialiased;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    box-sizing: border-box;
+    max-width: 320px;
+    min-width: 187px;
+    user-select: none;
+    position: relative;
+  }
+
+  .documentCardWrapper {
+    margin-top: 15px;
+    min-Width: 187px;
+    width: 187px;
+    display: inline-block;
+    margin-left: 12px
+  }
+
+  .fileLabel {
+    margin-left: 12px;
+    margin-right: 12px;
+    overflow: 'hidden';
+    white-space: 'nowrap';
+    text-overflow: 'ellipsis';
+  }
+
+  .uploadfile {
+    background-color: transparent !important;
+    font-size: 15px;
+  }
+}
+
+.uploadBar {
+  margin-top: 15px;
+  text-align: left;
+}
+
+

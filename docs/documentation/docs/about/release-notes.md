@@ -1,5 +1,27 @@
 # Releases
 
+## 1.12.0
+
+### New control(s)
+
+- `ListItemAttachments`: New control added [#177](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/177)
+- `IFramePanel`: New control added [#226](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/226)
+
+### Enhancements
+
+- Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)
+- `TaxonomyPicker`: Ability to specify term actions [#237](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/237)
+
+### Fixes
+
+- `TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)
+- `TaxonomyPicker`: Issue with custom sort order of items underneath root terms [#231](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/231)
+- `PeoplePicker`: Fix for issue where values couldn't be cleared [#234](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/234)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+
 ## 1.11.0
 
 ### New control(s)
@@ -23,7 +45,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [joaojmendes](https://github.com/joaojmendes), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 

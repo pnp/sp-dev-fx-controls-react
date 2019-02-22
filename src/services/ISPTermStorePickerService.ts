@@ -75,4 +75,7 @@ export interface ITerm {
   CustomSortOrderIndex?: number;
   PathDepth?: number;
   ParentId?: string;
+  LocalCustomProperties?: {
+    [property: string]: any
+  };
 }
