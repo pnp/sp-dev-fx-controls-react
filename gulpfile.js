@@ -4,6 +4,8 @@ const gulp = require('gulp');
 const build = require('@microsoft/sp-build-web');
 const fs = require('fs');
 
+build.addSuppression(new RegExp("^(\\(Emitted value instead of an instance of Error\\))*"));
+
 // Update the version number in the version.ts file
 gulp.task('versionUpdater', (done) => {
   const pkgContents = require('./package.json');

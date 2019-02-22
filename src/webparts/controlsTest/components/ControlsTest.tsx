@@ -20,7 +20,7 @@ import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-li
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
-import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
+// import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
 import { ChartControl, ChartType } from "../../../ChartControl";
@@ -29,6 +29,7 @@ import SPTermStorePickerService from '../../../services/SPTermStorePickerService
 import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
 import { ListItemAttachments } from '../../../ListItemAttachments';
+import { RichTextEditor } from '../../../controls/richTextEditor';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -243,6 +244,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <RichTextEditor value={""} editorChanged={(contents) => console.log(contents)} />
+
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
