@@ -13,6 +13,8 @@ describe('<WebPartTitle />', () => {
   let webparttitle: ReactWrapper;
   const dummyTitle = "Dummy Title";
   const dummyClass = "DummyClass";
+  const dummyMoreLink = "See all";
+  const dummyPlaceholder = "News";
   const dummyUpdateFnc = sinon.spy((value) => { return value; });
 
   afterEach(() => {
@@ -53,6 +55,36 @@ describe('<WebPartTitle />', () => {
     // Check if the returned value is correct
     expect(dummyUpdateFnc.args[0]).contains("New web part title");
 
+    done();
+  });
+
+  it('Check more link is shown if function specified', (done) => {
+    webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Read} title={dummyTitle} updateProperty={() => {}}
+    moreLink={()=> <a href="#">{dummyMoreLink}</a>} />);
+    expect(webparttitle.find(`div.${styles.webPartTitle} span`).text()).to.be.equal(dummyTitle);
+    expect(webparttitle.find(`div.${styles.webPartTitle} textarea`)).to.have.length(0);
+    expect(webparttitle.find(`span.${styles.moreLink}`)).to.have.length(1);
+    expect(webparttitle.find(`span.${styles.moreLink} a`)).to.have.length(1);
+    expect(webparttitle.find(`span.${styles.moreLink} a`).text()).to.be.equal(dummyMoreLink);
+    done();
+  });
+
+  it('Check more link is shown if children specified', (done) => {
+    webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Read} title={dummyTitle} updateProperty={() => {}}
+    moreLink={<a href="#">{dummyMoreLink}</a>} />);
+    expect(webparttitle.find(`div.${styles.webPartTitle} span`).text()).to.be.equal(dummyTitle);
+    expect(webparttitle.find(`div.${styles.webPartTitle} textarea`)).to.have.length(0);
+    expect(webparttitle.find(`span.${styles.moreLink}`)).to.have.length(1);
+    expect(webparttitle.find(`span.${styles.moreLink} a`)).to.have.length(1);
+    expect(webparttitle.find(`span.${styles.moreLink} a`).text()).to.be.equal(dummyMoreLink);
+    done();
+  });
+
+  it('Check more link is not shown otherwise', (done) => {
+    webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Read} title={dummyTitle} updateProperty={() => {}} />);
+    expect(webparttitle.find(`div.${styles.webPartTitle} span`).text()).to.be.equal(dummyTitle);
+    expect(webparttitle.find(`div.${styles.webPartTitle} textarea`)).to.have.length(0);
+    expect(webparttitle.find(`span.${styles.moreLink}`)).to.have.length(0);
     done();
   });
 });
