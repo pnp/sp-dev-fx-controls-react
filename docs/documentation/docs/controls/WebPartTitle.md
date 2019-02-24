@@ -60,5 +60,7 @@ The WebPartTitle control can be configured with the following properties:
 | title | string | yes | The title value for the web part. |
 | updateProperty | Function | yes | Function that you can pass to update the title in the root web part. |
 | className | string | no | Optional property to specify a custom class that allows you to change the web part title style. |
+| placeholder | string | no | Optional property to specify a custom placeholder to display when the title is editable. |
+| moreLink    | Function  or JSX.Element | no | Optional property to render a _See all_ link in the web part title. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/WebPartTitle)
