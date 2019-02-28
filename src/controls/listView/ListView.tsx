@@ -277,9 +277,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       fieldName: 'fileType',
       minWidth: 16,
       maxWidth: 16,
-      onRender: (item: any) => {
-        return (
-          <FileTypeIcon type={IconType.image} path={item[iconFieldName]} />
+      onRender: (item: any) => {              
+          //Support for PDF files since they are not in the Office Fabric library (image)
+          if (item[iconFieldName].lastIndexOf(".pdf") > -1){
+            //return a simulated colored PDF version
+            return <span style={{color: "#D86344", fontSize: "calc(100% + 2px)"}}> <FileTypeIcon type={IconType.font} path={item[iconFieldName]}/></span>;
+           }
+          else{
+            return <FileTypeIcon type={IconType.image} path={item[iconFieldName]} />;
+          }
         );
       }
     };
