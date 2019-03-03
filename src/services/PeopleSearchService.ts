@@ -13,7 +13,6 @@ import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
 export default class SPPeopleSearchService {
   private cachedPersonas: { [property: string]: IUserInfo[] };
   private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
-  private absoluteWebUrl: string;
 
   /**
    * Service constructor
@@ -21,8 +20,7 @@ export default class SPPeopleSearchService {
   constructor(private context: WebPartContext | ExtensionContext) {
     this.cachedPersonas = {};
     this.cachedLocalUsers = {};
-    this.absoluteWebUrl = this.context.pageContext.web.absoluteUrl;
-    this.cachedLocalUsers[this.absoluteWebUrl] = [];
+    this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
   }
 
   /**
@@ -31,7 +29,7 @@ export default class SPPeopleSearchService {
    * @param value
    */
   public generateUserPhotoLink(value: string): string {
-    return `${this.absoluteWebUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
+    return `${this.context.pageContext.web.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
   }
 
   /**
