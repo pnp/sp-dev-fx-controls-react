@@ -20,6 +20,8 @@ import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-li
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
+import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DateTimePicker, DateConvention, TimeConvention } from '../../../DateTimePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
@@ -46,7 +48,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iFramePanelOpened: false,
       initialValues: [],
       authorEmails: [],
-      selectedList: null
+      selectedList: null,
+      dateTimeValue: new Date()
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -127,6 +130,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       initialValues: terms
     });
     console.log("Terms:", terms);
+  }
+
+  /**
+   * Method that retrieves the selected date/time from the DateTime picker
+   * @param dateTimeValue
+   */
+  private _onDateTimePickerChange = (dateTimeValue: Date) => {
+    this.setState({ dateTimeValue });
+    console.log("Selected Date/Time:", dateTimeValue.toLocaleString());
   }
 
   /**
@@ -248,141 +260,179 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           updateProperty={this.props.updateProperty} />
 
         <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
-                             itemId={1}
-                             context={this.props.context}
-                             disabled={false} />
+          itemId={1}
+          context={this.props.context}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
-                     iconText='Configure your web part'
-                     description='Please configure the web part.'
-                     buttonLabel='Configure'
-                     hideButton={this.props.displayMode === DisplayMode.Read}
-                     onConfigure={this._onConfigure} />
+          iconText='Configure your web part'
+          description='Please configure the web part.'
+          buttonLabel='Configure'
+          hideButton={this.props.displayMode === DisplayMode.Read}
+          onConfigure={this._onConfigure} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (Group not found)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      groupName="Team Site Visitors 123"
-                      ensureUser={true}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (Group not found)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          groupName="Team Site Visitors 123"
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (search for group)"
-                      groupName="Team Site Visitors"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (search for group)"
+          groupName="Team Site Visitors"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set global users)"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems}
-                      personSelectionLimit={2}
-                      ensureUser={true} />
+          titleText="People Picker (pre-set global users)"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems}
+          personSelectionLimit={2}
+          ensureUser={true} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set local users)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (pre-set local users)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (tenant scoped)"
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (tenant scoped)"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200}/>
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (local scoped)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (local scoped)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200}/>
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (disabled)"
-                      disabled={true}
-                      showtooltip={true} />
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true} />
 
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - default time = 12h)"
+          dateConvention={DateConvention.DateTime}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 12h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours12}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 24h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (Controlled)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          value={this.state.dateTimeValue}
+          onChange={this._onDateTimePickerChange}
+          isMonthPickerVisible={false}
+          showMonthPickerAsOverlay={true}
+          showWeekNumbers={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date only)"
+          dateConvention={DateConvention.Date}
+        />
+
+        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
 
         <ListView items={this.state.items}
-                  viewFields={viewFields}
-                  iconFieldName='ServerRelativeUrl'
-                  groupByFields={groupByFields}
-                  compact={true}
-                  selectionMode={SelectionMode.single}
-                  selection={this._getSelection}
-                  showFilter={true}
-                  // defaultFilter="Team"
-                  />
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+        // defaultFilter="Team"
+        />
 
 
         <ChartControl type={ChartType.Bar}
-                      data={{
-                            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        }}
-                        options={{
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
-                            }
-                        }} />
+          data={{
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero:true
+                }
+              }]
+            }
+          }} />
 
         <Map titleText="New map control"
-             coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-             enableSearch={true}
-             mapType={MapType.normal}
-             onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
-            //  zoom={15}
-            //mapType={MapType.cycle}
-            //width="50"
-            //height={150}
-            //loadingMessage="Loading maps"
-            //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+          enableSearch={true}
+          mapType={MapType.normal}
+          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+        //  zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
+        //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
         <div className={styles.container}>
@@ -430,15 +480,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-                <ListItemPicker listId={this.state.selectedList}
-                                columnInternalName="Title"
-                                itemLimit={5}
-                                context={this.props.context}
-                                onSelectedItem={this.listItemPickerDataSelected} />
+              <ListItemPicker listId={this.state.selectedList}
+                  columnInternalName="Title"
+                  itemLimit={5}
+                  context={this.props.context}
+                  onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:
-              <TaxonomyPicker
+                <TaxonomyPicker
                   allowMultipleSelections={true}
                   termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
@@ -471,7 +521,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       },
                       applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
                     },
-                    // new TermLabelAction("Get Labels")
+                      // new TermLabelAction("Get Labels")
                     ],
                     termActionsDisplayMode: TermActionsDisplayMode.buttons,
                     termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
@@ -538,15 +588,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   text="Open iframe Panel"
                   onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
                 <IFramePanel
-                 url={iframeUrl}
-                 type={PanelType.medium}
-                //  height="300px"
-                 headerText="iframe panel title"
-                 closeButtonAriaLabel="Close"
-                 isOpen={this.state.iFramePanelOpened}
-                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                  />
+                  url={iframeUrl}
+                  type={PanelType.medium}
+                  //  height="300px"
+                  headerText="iframe panel title"
+                  closeButtonAriaLabel="Close"
+                  isOpen={this.state.iFramePanelOpened}
+                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                />
               </div>
             </div>
           </div>

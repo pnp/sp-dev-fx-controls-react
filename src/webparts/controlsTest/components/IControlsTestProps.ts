@@ -18,4 +18,5 @@ export interface IControlsTestState {
   iFramePanelOpened?: boolean;
   authorEmails: string[];
   selectedList: string;
+  dateTimeValue: Date;
 }

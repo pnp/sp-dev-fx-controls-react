@@ -27,6 +27,7 @@ nav:
     - PeoplePicker: 'controls/PeoplePicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'
+    - DateTimePicker: 'controls/DateTimePicker.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'
     - FieldRendererHelper: 'controls/fields/FieldRendererHelper.md'

@@ -42,6 +42,7 @@ The following controls are currently available:
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
+- [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 
 Field customizer controls:
 

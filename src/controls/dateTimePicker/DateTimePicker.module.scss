@@ -1,0 +1,24 @@
+.dateTimePicker {
+  table {
+    margin-top: 10px;
+    width: 100%;
+
+    table {
+      margin-top: 0;
+    }
+  }
+
+  .labelCell {
+    vertical-align: top;
+  }
+
+  .seperator {
+    vertical-align: top;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .fieldLabel {
+    margin-right: 4px;
+  }
+}
