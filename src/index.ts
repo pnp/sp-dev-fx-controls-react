@@ -6,6 +6,7 @@ export * from './TaxonomyPicker';
 export * from './WebPartTitle';
 export * from './ListPicker';
 export * from './ListItemPicker';
+export * from './ListItemAttachments';
 export * from './ChartControl';
 export * from './DateTimePicker';
 

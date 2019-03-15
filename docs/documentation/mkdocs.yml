@@ -14,6 +14,7 @@ nav:
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - ListItemAttachments: 'controls/ListItemAttachments.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'

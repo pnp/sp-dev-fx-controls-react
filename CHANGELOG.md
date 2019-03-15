@@ -4,6 +4,7 @@
 
 ### New control(s)
 
+- `ListItemAttachments`: New control added [#177](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/177)
 - `IFramePanel`: New control added [#226](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/226)
 
 ### Enhancements
@@ -19,7 +20,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [João Mendes](https://github.com/joaojmendes), [David Opdendries](https://github.com/spdavid), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.11.0
 
@@ -44,7 +45,7 @@ Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](ht
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [joaojmendes](https://github.com/joaojmendes), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 
