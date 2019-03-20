@@ -1,12 +1,13 @@
 import * as React from "react";
 import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
-import { DatePicker, IDatePickerStrings } from "office-ui-fabric-react/lib/DatePicker";
+import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 import * as strings from "ControlStrings";
 import { IDateTimePickerProps } from "./IDateTimePickerProps";
 import { IDateTimePickerState } from "./IDateTimePickerState";
+import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import styles from "./DateTimePicker.module.scss";
 import HoursComponent from "./HoursComponent";
@@ -15,10 +16,17 @@ import SecondsComponent from "./SecondsComponent";
 import * as telemetry from "../../common/telemetry";
 import { Async } from 'office-ui-fabric-react/lib/Utilities';
 
+interface IDateComponents {
+  day: Date;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 /**
  * Defines the labels of the DatePicker control (as months, days, etc.)
  */
-class DatePickerStrings implements IDatePickerStrings {
+class DateTimePickerStrings implements IDateTimePickerStrings {
   /**
    * An array of strings for the full names of months.
    * The array is 0-based, so months[0] should be the full name of January.
@@ -84,15 +92,39 @@ class DatePickerStrings implements IDatePickerStrings {
   /**
    * String to render for button to direct the user to today's date.
    */
-  public goToToday: string = strings.DatepickerGoToToday;
+  public goToToday: string = strings.DatePickerGoToToday;
   /**
    * Error message to render for TextField if isRequired validation fails.
    */
-  public isRequiredErrorMessage: string = "";
+  public isRequiredErrorMessage: string = strings.DatePickerIsRequiredErrorMessage;
   /**
    * Error message to render for TextField if input date string parsing fails.
    */
-  public invalidInputErrorMessage: string = "";
+  public invalidInputErrorMessage: string = strings.DatePickerInvalidInputErrorMessage;
+  /**
+   * Error message to render for TextField if date boundary (minDate, maxDate) validation fails.
+   */
+  public isOutOfBoundsErrorMessage: string = strings.DatePickerIsOutOfBoundsErrorMessage;
+  /**
+   * Label for the date selector.
+   */
+  public dateLabel: string = strings.DateTimePickerDate;
+  /**
+   * Label for the time of day selector.
+   */
+  public timeLabel: string = strings.DateTimePickerTime;
+  /**
+   * Separator between time of day components (hours, minutes, seconds).
+   */
+  public timeSeparator: string = strings.DateTimePickerTimeSeparator;
+  /**
+   * Used as AM designator when 12-hour clock is used.
+   */
+  public amDesignator: string = strings.AMDesignator;
+  /**
+   * Used as PM designator when 12-hour clock is used.
+   */
+  public pmDesignator: string = strings.PMDesignator;
 }
 
 /**
@@ -245,15 +277,13 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showGoToToday,
       showMonthPickerAsOverlay = false,
       showWeekNumbers = false,
-      value = this.state.day
+      value = this.state.day,
+      strings: dateStrings = new DateTimePickerStrings() // Defines the DatePicker control labels
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;
     const minutes: number = value != null ? value.getMinutes() : this.state.minutes;
     const seconds: number = value != null ? value.getSeconds() : this.state.seconds;
-
-    // Defines the DatePicker control labels
-    const dateStrings: DatePickerStrings = new DatePickerStrings();
 
     // Check if the time element needs to be rendered
     let timeElm: JSX.Element = <tr />;
@@ -263,7 +293,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         <tr>
           <td className={styles.labelCell}>
             <Label className={styles.fieldLabel}>
-              {strings.DateTimePickerTime}
+              {dateStrings.timeLabel}
             </Label>
           </td>
           <td>
@@ -276,10 +306,12 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                       timeConvention={this.props.timeConvention}
                       value={hours}
                       onChange={this._dropdownHoursChanged}
+                      amDesignator={dateStrings.amDesignator}
+                      pmDesignator={dateStrings.pmDesignator}
                     />
                   </td>
                   <td className={styles.seperator}>
-                    <Label>:</Label>
+                    <Label>{dateStrings.timeSeparator}</Label>
                   </td>
                   <td>
                     <MinutesComponent
@@ -289,7 +321,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                     />
                   </td>
                   <td className={styles.seperator}>
-                    <Label>:</Label>
+                    <Label>{dateStrings.timeSeparator}</Label>
                   </td>
                   <td>
                     <SecondsComponent
@@ -315,7 +347,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
             <tr>
               <td className={styles.labelCell}>
                 <Label className={styles.fieldLabel}>
-                  {strings.DateTimePickerDate}
+                  {dateStrings.dateLabel}
                 </Label>
               </td>
               <td>

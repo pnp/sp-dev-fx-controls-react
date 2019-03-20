@@ -121,6 +121,14 @@ define([], () => {
     DatePickerDayShortFriday: "Пт",
     DatePickerDayLongSaturday: "Суббота",
     DatePickerDayShortSaturday: "Сб",
-    DatepickerGoToToday: "Сегодня"
+    DatePickerGoToToday: "Сегодня",
+    DatePickerIsRequiredErrorMessage: "",
+    DatePickerInvalidInputErrorMessage: "",
+    DatePickerIsOutOfBoundsErrorMessage: "",
+    DateTimePickerDate: "Date",
+    DateTimePickerTime: "Time",
+    DateTimePickerTimeSeparator: ":",
+    AMDesignator: "AM",
+    PMDesignator: "PM"
   };
 });

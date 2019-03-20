@@ -15,4 +15,6 @@ export interface ITimeComponentProps {
  */
 export interface IHoursComponentProps extends ITimeComponentProps {
   timeConvention: TimeConvention;
+  amDesignator: string;
+  pmDesignator: string;
 }

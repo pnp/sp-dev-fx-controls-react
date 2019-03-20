@@ -14,7 +14,7 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
 
   constructor(props: IHoursComponentProps) {
     super(props);
-    this._initHoursOptions('am', 'pm');
+    this._initHoursOptions(props.amDesignator, props.pmDesignator);
   }
 
   public render(): JSX.Element {

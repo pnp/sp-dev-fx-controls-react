@@ -121,8 +121,14 @@ define([], () => {
     DatePickerDayShortFriday: "Vri",
     DatePickerDayLongSaturday: "Zaterdag",
     DatePickerDayShortSaturday: "Zat",
-    DatepickerGoToToday: "Vandaag",
+    DatePickerGoToToday: "Vandaag",
+    DatePickerIsRequiredErrorMessage: "",
+    DatePickerInvalidInputErrorMessage: "",
+    DatePickerIsOutOfBoundsErrorMessage: "",
     DateTimePickerDate: "Dag",
-    DateTimePickerTime: "Tijd"
+    DateTimePickerTime: "Tijd",
+    DateTimePickerTimeSeparator: ":",
+    AMDesignator: "AM",
+    PMDesignator: "PM"
   };
 });

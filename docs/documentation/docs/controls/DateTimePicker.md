@@ -60,7 +60,32 @@ The `DateTimePicker` control can be configured with the following properties:
 | isMonthPickerVisible | boolean | no | Controls whether the month picker is shown beside the day picker or hidden. |
 | showMonthPickerAsOverlay | boolean | no | Show month picker on top of date picker when visible. |
 | showWeekNumbers | boolean | no | Controls whether the calendar should show the week number (weeks 1 to 53) before each week row |
+| strings | IDatePickerStrings | no | Localized strings to use in the DateTimePicker |
 | value | Date | no | Default value of the DatePicker, if any |
 | onChange | function | no | Callback issued when date or time is changed |
+
+Enum `DateConvention`
+
+| Name | Description |
+| ---- | ---- |
+| DateTime | Shows the date and time picker |
+| Date | Shows only the date picker |
+
+Enum `TimeConvention`
+
+| Name | Description |
+| ---- | ---- |
+| Hours12 | Specify the hours in 12-hours (AM / PM) time convention. |
+| Hours24 | Specify the hours in 24-hours time convention. |
+
+Interface `IDateTimePickerStrings` extends [IDatePickerStrings](https://developer.microsoft.com/en-us/fabric#/components/datepicker)
+
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| dateLabel | string | no | Label for the date selector. |
+| timeLabel | string | no | Label for the time of day selector. |
+| timeSeparator | string | no | Separator between time of day components (hours, minutes, seconds). |
+| amDesignator | string | no | Used as AM designator when 12-hour clock is used. |
+| pmDesignator | string | no | Used as PM designator when 12-hour clock is used. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/DateTimePicker)

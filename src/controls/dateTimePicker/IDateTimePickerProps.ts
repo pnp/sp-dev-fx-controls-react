@@ -1,5 +1,6 @@
 import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
 import { TimeConvention, DateConvention } from './DateTimeConventions';
+import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 
 /**
  * Public properties of the DateTimePicker custom field
@@ -82,4 +83,8 @@ export interface IDateTimePickerProps {
    * Callback issued when date/time is changed
    */
   onChange?: (date: Date | null | undefined) => void;
+  /*
+   * Localized strings to use in the DateTimePicker.
+   */
+  strings?: IDateTimePickerStrings;
 }

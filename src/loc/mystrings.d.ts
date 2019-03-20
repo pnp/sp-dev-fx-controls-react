@@ -92,9 +92,15 @@ declare interface IControlStrings {
   DatePickerDayShortFriday: string;
   DatePickerDayLongSaturday: string;
   DatePickerDayShortSaturday: string;
-  DatepickerGoToToday: string;
+  DatePickerGoToToday: string;
+  DatePickerIsRequiredErrorMessage: string;
+  DatePickerInvalidInputErrorMessage: string;
+  DatePickerIsOutOfBoundsErrorMessage: string;
   DateTimePickerDate: string;
   DateTimePickerTime: string;
+  DateTimePickerTimeSeparator: string;
+  AMDesignator: string;
+  PMDesignator: string;
 }
 
 declare module 'ControlStrings' {
