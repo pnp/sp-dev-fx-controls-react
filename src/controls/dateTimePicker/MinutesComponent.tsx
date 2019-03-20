@@ -1,23 +1,39 @@
-import * as React from "react";
-import { ITimeComponentProps } from "./ITimeComponentProps";
+import * as React from 'react';
+import { ITimeComponentProps } from './ITimeComponentProps';
 import {
   Dropdown,
   IDropdownOption
-} from "office-ui-fabric-react/lib/components/Dropdown";
+} from 'office-ui-fabric-react/lib/components/Dropdown';
 
 /**
  * Minutes component, renders the minutes dropdown
  */
-export default class MinutesComponent extends React.Component<
-  ITimeComponentProps,
-  {}
-  > {
+export default class MinutesComponent extends React.Component<ITimeComponentProps, {}> {
+  private _minutes: IDropdownOption[];
+
+  constructor(props: ITimeComponentProps) {
+    super(props);
+    this._initMinutesOptions();
+  }
+
   public render(): JSX.Element {
-    let minutes: IDropdownOption[] = [];
+    return (
+      <Dropdown
+        key={this.props.value}
+        disabled={this.props.disabled}
+        label=""
+        options={this._minutes}
+        onChanged={this.props.onChange}
+      />
+    );
+  }
+
+  private _initMinutesOptions() {
+    const minutes: IDropdownOption[] = [];
     for (let j = 0; j < 60; j++) {
       let digitMin: string;
       if (j < 10) {
-        digitMin = "0" + j;
+        digitMin = `0${j}`;
       } else {
         digitMin = j.toString();
       }
@@ -27,15 +43,6 @@ export default class MinutesComponent extends React.Component<
       }
       minutes.push({ key: j, text: digitMin, isSelected: selected });
     }
-
-    return (
-      <Dropdown
-        key={this.props.value}
-        disabled={this.props.disabled}
-        label=""
-        options={minutes}
-        onChanged={this.props.onChange}
-      />
-    );
+    this._minutes = minutes;
   }
 }
