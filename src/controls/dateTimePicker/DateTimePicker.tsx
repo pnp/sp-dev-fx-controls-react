@@ -7,7 +7,7 @@ import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 import * as strings from "ControlStrings";
 import { IDateTimePickerProps } from "./IDateTimePickerProps";
 import { IDateTimePickerState } from "./IDateTimePickerState";
-import FieldErrorMessage from "../errorMessage/FieldErrorMessage";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import styles from "./DateTimePicker.module.scss";
 import HoursComponent from "./HoursComponent";
 import MinutesComponent from "./MinutesComponent";
@@ -325,12 +325,10 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 />
               </td>
             </tr>
-
             {timeElm}
           </tbody>
         </table>
-
-        <FieldErrorMessage errorMessage={this.state.errorMessage} />
+        <ErrorMessage errorMessage={this.state.errorMessage} />
       </div>
     );
   }

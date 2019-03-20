@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './FieldErrorMessage.module.scss';
+import styles from './ErrorMessage.module.scss';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
 export interface IFieldErrorMessageProps {
