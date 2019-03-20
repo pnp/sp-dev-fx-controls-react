@@ -49,7 +49,7 @@ export interface IDateTimePickerProps {
    *   - The rejected, the value is thrown away.
    *
    */
-  onGetErrorMessage?: (value: string) => string | Promise<string>;
+  onGetErrorMessage?: (value: Date) => string | Promise<string>;
   /**
    * Custom Field will start to validate after users stop typing for `deferredValidationTime` milliseconds.
    * Default value is 200.

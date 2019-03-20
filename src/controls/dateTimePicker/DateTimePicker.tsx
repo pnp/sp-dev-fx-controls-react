@@ -13,6 +13,7 @@ import HoursComponent from "./HoursComponent";
 import MinutesComponent from "./MinutesComponent";
 import SecondsComponent from "./SecondsComponent";
 import * as telemetry from "../../common/telemetry";
+import { Async } from 'office-ui-fabric-react/lib/Utilities';
 
 /**
  * Defines the labels of the DatePicker control (as months, days, etc.)
@@ -98,6 +99,10 @@ class DatePickerStrings implements IDatePickerStrings {
  * Renders the controls for DateTimePicker component
  */
 export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateTimePickerState> {
+  private _latestValidateValue: number = NaN;
+  private async: Async;
+  private delayedValidate: (value: Date) => void;
+
   /**
    * Constructor
    */
@@ -135,6 +140,18 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       seconds,
       errorMessage: ""
     };
+
+    this.async = new Async(this);
+    this.validate = this.validate.bind(this);
+    this.notifyAfterValidate = this.notifyAfterValidate.bind(this);
+    this.delayedValidate = this.async.debounce(this.validate, props.deferredValidationTime);
+  }
+
+  /**
+   * Called when the component will unmount
+   */
+  public componentWillUnmount() {
+    this.async.dispose();
   }
 
   /**
@@ -150,7 +167,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     day.setHours(hours);
     day.setMinutes(minutes);
     day.setSeconds(seconds);
-    this.setState({ day });
+    this.setState({ day }, () => this.delayedValidate(this.state.day));
   }
 
   /**
@@ -179,7 +196,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         state.day = date;
       }
       return state;
-    });
+    }, () => this.delayedValidate(this.state.day));
   }
 
   /**
@@ -196,7 +213,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         state.day = date;
       }
       return state;
-    });
+    }, () => this.delayedValidate(this.state.day));
   }
 
   /**
@@ -213,16 +230,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         state.day = date;
       }
       return state;
-    });
-  }
-
-  /**
-   * Called when the component did updated, used for calling onChange handler if present
-   */
-  public componentDidUpdate(prevProps, prevState) {
-    if (typeof this.props.onChange === 'function' && !isEqual(this.state.day, prevState.day)) {
-      this.props.onChange(DateTimePicker.cloneDate(this.state.day));
-    }
+    }, () => this.delayedValidate(this.state.day));
   }
 
   /**
@@ -331,5 +339,58 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         <ErrorMessage errorMessage={this.state.errorMessage} />
       </div>
     );
+  }
+
+  /**
+   * Validates the new custom field value
+   */
+  private validate(dateVal: Date): void {
+    if (typeof this.props.onGetErrorMessage === 'undefined' || this.props.onGetErrorMessage === null) {
+      this.notifyAfterValidate(this.props.value, dateVal);
+      return;
+    }
+
+    const timestamp = dateVal.getTime();
+
+    if (this._latestValidateValue === timestamp) {
+      return;
+    }
+
+    this._latestValidateValue = timestamp;
+
+    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(dateVal);
+    if (typeof result !== 'undefined') {
+      if (typeof result === 'string') {
+        if (result === '') {
+          this.notifyAfterValidate(this.props.value, dateVal);
+        }
+
+        this.setState({
+          errorMessage: result
+        });
+      } else {
+        result.then((errorMessage: string) => {
+          if (typeof errorMessage === 'undefined' || errorMessage === '') {
+            this.notifyAfterValidate(this.props.value, dateVal);
+          }
+
+          this.setState({
+            errorMessage: errorMessage
+          });
+        });
+      }
+    }
+    else {
+      this.notifyAfterValidate(this.props.value, dateVal);
+    }
+  }
+
+  /**
+   * Notifies the parent Web Part of a property value change
+   */
+  private notifyAfterValidate(oldValue: Date, newValue: Date) {
+    if (typeof this.props.onChange !== 'undefined' && this.props.onChange !== null && newValue !== null) {
+      this.props.onChange(newValue);
+    }
   }
 }
