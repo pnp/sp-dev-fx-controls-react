@@ -11,7 +11,7 @@ import {
 export default class SecondsComponent extends React.Component<
   ITimeComponentProps,
   {}
-> {
+  > {
   public render(): JSX.Element {
     let seconds: IDropdownOption[] = [];
     for (let k = 0; k < 60; k++) {
@@ -30,6 +30,7 @@ export default class SecondsComponent extends React.Component<
 
     return (
       <Dropdown
+        key={this.props.value}
         disabled={this.props.disabled}
         label=""
         options={seconds}
