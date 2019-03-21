@@ -14,7 +14,7 @@ import HoursComponent from "./HoursComponent";
 import MinutesComponent from "./MinutesComponent";
 import SecondsComponent from "./SecondsComponent";
 import * as telemetry from "../../common/telemetry";
-import { Async } from 'office-ui-fabric-react/lib/Utilities';
+import { Async, css } from 'office-ui-fabric-react/lib/Utilities';
 
 interface IDateComponents {
   day: Date;
@@ -295,7 +295,11 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     // use date value from props if it exists, otherwise use internal state
     // if no dateConvention is set, default is DateConvention.DateTime
     const {
+      label,
+      disabled,
+      timeConvention,
       dateConvention = DateConvention.DateTime,
+      firstDayOfWeek,
       isMonthPickerVisible = true,
       showGoToToday,
       showMonthPickerAsOverlay = false,
@@ -304,93 +308,82 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       strings: dateStrings = new DateTimePickerStrings() // Defines the DatePicker control labels
     } = this.props;
 
+    const showSeconds = true;
     const hours: number = value != null ? value.getHours() : this.state.hours;
     const minutes: number = value != null ? value.getMinutes() : this.state.minutes;
     const seconds: number = value != null ? value.getSeconds() : this.state.seconds;
 
     // Check if the time element needs to be rendered
-    let timeElm: JSX.Element = <tr />;
+    let timeElm: JSX.Element = <div className="hidden" />;
 
     if (dateConvention === DateConvention.DateTime) {
       timeElm = (
-        <tr>
-          <td className={styles.labelCell}>
-            <Label className={styles.fieldLabel}>
-              {dateStrings.timeLabel}
-            </Label>
-          </td>
-          <td>
-            <table cellPadding="0" cellSpacing="0">
-              <tbody>
-                <tr>
-                  <td>
-                    <HoursComponent
-                      disabled={this.props.disabled}
-                      timeConvention={this.props.timeConvention}
-                      value={hours}
-                      onChange={this._dropdownHoursChanged}
-                      amDesignator={dateStrings.amDesignator}
-                      pmDesignator={dateStrings.pmDesignator}
-                    />
-                  </td>
-                  <td className={styles.seperator}>
-                    <Label>{dateStrings.timeSeparator}</Label>
-                  </td>
-                  <td>
-                    <MinutesComponent
-                      disabled={this.props.disabled}
-                      value={minutes}
-                      onChange={this._dropdownMinutesChanged}
-                    />
-                  </td>
-                  <td className={styles.seperator}>
-                    <Label>{dateStrings.timeSeparator}</Label>
-                  </td>
-                  <td>
-                    <SecondsComponent
-                      disabled={this.props.disabled}
-                      value={seconds}
-                      onChange={this._dropdownSecondsChanged}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      );
+        <div className={css(styles.row, styles.timeRow)}>
+          <div className={styles.labelCell}><Label className={styles.fieldLabel}>{strings.DateTimePickerTime}</Label></div>
+          <div className={styles.time}>
+            <div className={styles.picker}>
+              <HoursComponent
+                disabled={disabled}
+                timeConvention={timeConvention}
+                value={hours}
+                onChange={this._dropdownHoursChanged}
+                amDesignator={dateStrings.amDesignator}
+                pmDesignator={dateStrings.pmDesignator}
+              />
+            </div>
+            <div className={styles.separator}>
+              <Label>{dateStrings.timeSeparator}</Label>
+            </div>
+            <div className={styles.picker}>
+              <MinutesComponent
+                disabled={disabled}
+                value={minutes}
+                onChange={this._dropdownMinutesChanged} />
+            </div>
+            {showSeconds &&
+              <div className={styles.separator}>
+                <Label>{dateStrings.timeSeparator}</Label>
+              </div>
+            }
+            {showSeconds &&
+              <div className={styles.picker}>
+                <SecondsComponent
+                  disabled={disabled}
+                  value={seconds}
+                  onChange={this._dropdownSecondsChanged}
+                />
+              </div>
+            }
+          </div>
+        </div>);
     }
 
     // Renders content
     return (
       <div className={styles.dateTimePicker}>
-        {this.props.label && <Label>{this.props.label}</Label>}
-        <table cellPadding="0" cellSpacing="0">
-          <tbody>
-            <tr>
-              <td className={styles.labelCell}>
-                <Label className={styles.fieldLabel}>
-                  {dateStrings.dateLabel}
-                </Label>
-              </td>
-              <td>
-                <DatePicker
-                  disabled={this.props.disabled}
-                  value={value}
-                  strings={dateStrings}
-                  isMonthPickerVisible={isMonthPickerVisible}
-                  onSelectDate={this._onSelectDate}
-                  allowTextInput={false}
-                  firstDayOfWeek={this.props.firstDayOfWeek}
-                  showGoToToday={showGoToToday}
-                  showMonthPickerAsOverlay={showMonthPickerAsOverlay}
-                  showWeekNumbers={showWeekNumbers}
-                />
-              </td>
-            </tr>
-            {timeElm}
-          </tbody>
-        </table>
+        {label && <Label>{label}</Label>}
+        <div className={styles.container}>
+          <div className={styles.row}>
+            <div className={styles.labelCell}>
+              <Label className={styles.fieldLabel}>{strings.DateTimePickerDate}</Label>
+            </div>
+            <div className={styles.picker}>
+              <DatePicker
+                disabled={disabled}
+                value={value}
+                strings={dateStrings}
+                isMonthPickerVisible={true}
+                onSelectDate={this._onSelectDate}
+                allowTextInput={false}
+                firstDayOfWeek={firstDayOfWeek}
+                showGoToToday={showGoToToday}
+                showMonthPickerAsOverlay={showMonthPickerAsOverlay}
+                showWeekNumbers={showWeekNumbers}
+              />
+            </div>
+          </div>
+          {timeElm}
+        </div>
         <ErrorMessage errorMessage={this.state.errorMessage} />
       </div>
     );
