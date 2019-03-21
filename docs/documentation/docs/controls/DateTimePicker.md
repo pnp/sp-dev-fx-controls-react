@@ -63,6 +63,7 @@ The `DateTimePicker` control can be configured with the following properties:
 | strings | IDatePickerStrings | no | Localized strings to use in the DateTimePicker |
 | value | Date | no | Default value of the DatePicker, if any |
 | onChange | function | no | Callback issued when date or time is changed |
+| showSeconds | boolean | no | Specifies, if seconds dropdown should be shown, defaults to false. |
 
 Enum `DateConvention`
 

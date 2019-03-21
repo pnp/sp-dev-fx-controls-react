@@ -338,15 +338,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 
+        <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
+
         <DateTimePicker
           label="DateTime Picker (date and time - default time = 12h)"
           dateConvention={DateConvention.DateTime}
+          showSeconds={true}
         />
 
         <DateTimePicker
           label="DateTime Picker (date and time - 12h)"
           dateConvention={DateConvention.DateTime}
           timeConvention={TimeConvention.Hours12}
+          showSeconds={false}
         />
 
         <DateTimePicker
@@ -354,6 +358,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           dateConvention={DateConvention.DateTime}
           timeConvention={TimeConvention.Hours24}
           firstDayOfWeek={DayOfWeek.Monday}
+          showSeconds={true}
         />
 
         <DateTimePicker
@@ -366,6 +371,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           isMonthPickerVisible={false}
           showMonthPickerAsOverlay={true}
           showWeekNumbers={true}
+          showSeconds={true}
         />
 
         <DateTimePicker

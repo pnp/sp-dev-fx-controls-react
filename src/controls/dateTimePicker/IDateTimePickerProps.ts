@@ -87,4 +87,8 @@ export interface IDateTimePickerProps {
    * Localized strings to use in the DateTimePicker.
    */
   strings?: IDateTimePickerStrings;
+  /**
+   * Specifies, if seconds dropdown should be shown, defaults to false.
+   */
+  showSeconds?: boolean;
 }

@@ -304,11 +304,11 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showGoToToday,
       showMonthPickerAsOverlay = false,
       showWeekNumbers = false,
+      showSeconds = false,
       value = this.state.day,
       strings: dateStrings = new DateTimePickerStrings() // Defines the DatePicker control labels
     } = this.props;
 
-    const showSeconds = true;
     const hours: number = value != null ? value.getHours() : this.state.hours;
     const minutes: number = value != null ? value.getMinutes() : this.state.minutes;
     const seconds: number = value != null ? value.getSeconds() : this.state.seconds;
