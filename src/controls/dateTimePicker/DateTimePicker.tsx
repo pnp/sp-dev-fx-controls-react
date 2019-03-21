@@ -140,14 +140,12 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
    */
   constructor(props: IDateTimePickerProps) {
     super(props);
-    const dateConvention: DateConvention =
-      typeof this.props.dateConvention !== "undefined" ? this.props.dateConvention : DateConvention.DateTime;
-    telemetry.track("DateTimePicker", {
-      dateConvention: dateConvention ? DateConvention[dateConvention] : "",
+    telemetry.track('DateTimePicker', {
+      dateConvention: props.dateConvention ? DateConvention[props.dateConvention] : '',
       formatDate: !!props.formatDate,
       timeConvention: props.timeConvention
         ? TimeConvention[props.timeConvention]
-        : "",
+        : '',
       disabled: props.disabled
     });
 
@@ -157,12 +155,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     this._dropdownMinutesChanged = this._dropdownMinutesChanged.bind(this);
     this._dropdownSecondsChanged = this._dropdownSecondsChanged.bind(this);
 
-    // Set the current date/time values
+    // Get the current date/time values
     const { value = null } = this.props;
-    const day: Date | null = DateTimePicker.cloneDate(value);
-    const hours = dateConvention === DateConvention.DateTime && day !== null ? day.getHours() : 0;
-    const minutes = dateConvention === DateConvention.DateTime && day !== null ? day.getMinutes() : 0;
-    const seconds = dateConvention === DateConvention.DateTime && day !== null ? day.getSeconds() : 0;
+    const { day, hours, minutes, seconds } = DateTimePicker.getDateComponents(value, props.dateConvention);
 
     // Set the current state
     this.state = {
@@ -170,7 +165,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       hours,
       minutes,
       seconds,
-      errorMessage: ""
+      errorMessage: ''
     };
 
     this.async = new Async(this);
@@ -184,6 +179,24 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
    */
   public componentWillUnmount() {
     this.async.dispose();
+  }
+
+  /**
+   * Get the components of a Date object matching the DateConvention settings
+   * @param date Date to extract components from
+   * @param dateConvention DateConvention to follow when extracting date components
+   */
+  private static getDateComponents(date: Date, dateConvention: DateConvention): IDateComponents {
+    const day: Date | null = DateTimePicker.cloneDate(date);
+    const hours: number = dateConvention !== DateConvention.Date && day !== null ? day.getHours() : 0;
+    const minutes: number = dateConvention !== DateConvention.Date && day !== null ? day.getMinutes() : 0;
+    const seconds: number = dateConvention !== DateConvention.Date && day !== null ? day.getSeconds() : 0;
+    if (day !== null) {
+      day.setHours(hours);
+      day.setMinutes(minutes);
+      day.setSeconds(seconds);
+    }
+    return { day, hours, minutes, seconds };
   }
 
   /**
