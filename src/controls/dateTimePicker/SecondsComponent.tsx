@@ -19,10 +19,10 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
   public render(): JSX.Element {
     return (
       <Dropdown
-        key={this.props.value}
         disabled={this.props.disabled}
         label=""
         options={this._seconds}
+        selectedKey={this.props.value}
         onChanged={this.props.onChange}
       />
     );
@@ -31,17 +31,8 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
   private _initSecondsOptions() {
     const seconds: IDropdownOption[] = [];
     for (let k = 0; k < 60; k++) {
-      let digitSec: string;
-      if (k < 10) {
-        digitSec = `0${k}`;
-      } else {
-        digitSec = k.toString();
-      }
-      let selected: boolean = false;
-      if (k === this.props.value) {
-        selected = true;
-      }
-      seconds.push({ key: k, text: digitSec, isSelected: selected });
+      const digitSec: string = k < 10 ? `0${k}` : k.toString();
+      seconds.push({ key: k, text: digitSec });
     }
     this._seconds = seconds;
   }

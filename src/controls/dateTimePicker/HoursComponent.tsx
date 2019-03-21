@@ -20,10 +20,10 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
   public render(): JSX.Element {
     return (
       <Dropdown
-        key={this.props.value}
         disabled={this.props.disabled}
         label=""
         options={this._hours}
+        selectedKey={this.props.value}
         onChanged={this.props.onChange}
         dropdownWidth={110}
       />
@@ -55,13 +55,7 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
           }
         }
       }
-
-      let selected: boolean = false;
-      if (i === this.props.value) {
-        selected = true;
-      }
-
-      hours.push({ key: i, text: digit, isSelected: selected });
+      hours.push({ key: i, text: digit });
     }
     this._hours = hours;
   }
