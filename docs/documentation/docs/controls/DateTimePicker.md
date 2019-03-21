@@ -48,7 +48,7 @@ The `DateTimePicker` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| label | string | yes | Property field label displayed on top |
+| label | string | no | Property field label displayed on top. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | formatDate | function | no | Defines a formatDate function to display the date of the custom Field. By defaut date.toDateString() is used. |
 | dateConvention | DateConvention | no | Defines the date convention to use. The default is date and time.|

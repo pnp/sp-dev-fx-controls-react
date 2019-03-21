@@ -11,7 +11,7 @@ export interface IDateTimePickerProps {
   /**
    * Property field label displayed on top
    */
-  label: string;
+  label?: string;
   /**
    * Specify if the control needs to be disabled
    */
