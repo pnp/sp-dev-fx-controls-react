@@ -305,6 +305,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showMonthPickerAsOverlay = false,
       showWeekNumbers = false,
       showSeconds = false,
+      formatDate,
       value = this.state.day,
       strings: dateStrings = new DateTimePickerStrings() // Defines the DatePicker control labels
     } = this.props;
@@ -369,6 +370,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
             </div>
             <div className={styles.picker}>
               <DatePicker
+                formatDate={formatDate}
                 disabled={disabled}
                 value={value}
                 strings={dateStrings}

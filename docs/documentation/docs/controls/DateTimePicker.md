@@ -50,7 +50,7 @@ The `DateTimePicker` control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | label | string | no | Property field label displayed on top. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
-| formatDate | function | no | Defines a formatDate function to display the date of the custom Field. By defaut date.toDateString() is used. |
+| formatDate | function | no | Defines a formatDate function that can override the output value in Date picker. |
 | dateConvention | DateConvention | no | Defines the date convention to use. The default is date and time.|
 | timeConvention | TimeConvention | no | Defines the time convention to use. The default value is the 24-hour clock convention. |
 | firstDayOfWeek | DayOfWeek | no | Specify the first day of the week for your locale. |

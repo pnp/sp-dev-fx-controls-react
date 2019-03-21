@@ -363,6 +363,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <DateTimePicker
           label="DateTime Picker (Controlled)"
+          formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
           dateConvention={DateConvention.DateTime}
           timeConvention={TimeConvention.Hours24}
           firstDayOfWeek={DayOfWeek.Monday}
