@@ -1,5 +1,15 @@
 # Releases
 
+## 1.13.0
+
+### New control(s)
+
+- `RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)
+
+### Contributors
+
+Special thanks to our contributor: [Hugo Bernier](https://github.com/hugoabernier).
+
 ## 1.12.0
 
 ### New control(s)

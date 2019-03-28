@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.13.0",
+      "changes": {
+        "new": [
+          "`RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)"
+        ],
+        "enhancements": [],
+        "fixes": []
+      },
+      "contributions": [
+        "[Hugo Bernier](https://github.com/hugoabernier)"
+      ]
+    },
+    {
       "version": "1.12.0",
       "changes": {
         "new": [
