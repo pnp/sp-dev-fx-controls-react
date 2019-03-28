@@ -18,6 +18,24 @@ export interface IRichTextProps {
   placeholder? : string;
 
   /**
+   * The HTML text containing the rich text
+   */
+  value?: string;
+
+  /**
+   * Style options
+   */
+  styleOptions?: StyleOptions;
+
+  /**
+   * Callback issued when the rich text changes.
+   * Returns the text that will be inserted in the rich text control.
+   */
+  onChange?: (text: string) => string;
+}
+
+export interface StyleOptions {
+  /**
    * Indicates if we should show the Align button
    * @defaultvalue true
    */
@@ -67,17 +85,6 @@ export interface IRichTextProps {
    * @defaultvalue true
    */
   showUnderline?: boolean;
-
-  /**
-   * The HTML text containing the rich text
-   */
-  value?: string;
-
-  /**
-   * Callback issued when the rich text changes.
-   * Returns the text that will be inserted in the rich text control.
-   */
-  onChange?: (text: string) => string;
 }
 
 export interface IRichTextState {
