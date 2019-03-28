@@ -29,6 +29,7 @@ import SPTermStorePickerService from '../../../services/SPTermStorePickerService
 import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
 import { ListItemAttachments } from '../../../ListItemAttachments';
+import { RichText } from '../../../RichText';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -246,6 +247,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty} />
+
+        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} />
 
         <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
                              itemId={1}
