@@ -8,6 +8,7 @@
 
 ### Enhancements
 
+- `FileTypeIcon`: Added support for PDF icon file types [#260](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/260)
 - `WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)
 
 ### Contributors
