@@ -30,6 +30,7 @@ import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
+import { Link } from 'office-ui-fabric-react/lib/components/Link';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -245,8 +246,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-          title={this.props.title}
-          updateProperty={this.props.updateProperty} />
+                      title={this.props.title}
+                      updateProperty={this.props.updateProperty}
+                      moreLink={
+                        <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+                      } />
 
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} />
 

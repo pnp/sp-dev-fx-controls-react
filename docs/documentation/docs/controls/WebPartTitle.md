@@ -50,6 +50,38 @@ import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
               updateProperty={this.props.updateProperty} />
 ```
 
+## Adding a "see all" link
+
+Since version `1.13.0` the WebPartTitle control has the ability to show a "see all" link by using the `moreLink` property. The property gives you the flexibility to render the link or component you want to show next to the web part title.
+
+You can do this as like in the following example code:
+
+```TypeScript
+<WebPartTitle displayMode={this.props.displayMode}
+              title={this.props.title}
+              updateProperty={this.props.updateProperty}
+              moreLink={
+                <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+              } />
+```
+
+If you wish, you may pass a callback function instead, as per the following example code:
+
+```TypeScript
+<WebPartTitle displayMode={this.props.displayMode}
+              title={this.props.title}
+              updateProperty={this.props.updateProperty}
+              moreLink={
+                ()=> {
+                  return (<Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>);
+                }
+              } />
+```
+
+The resulting web part title will look like the following:
+
+![More Link](../assets/webparttitle-morelink.png)
+
 ## Implementation
 
 The WebPartTitle control can be configured with the following properties:
@@ -61,6 +93,6 @@ The WebPartTitle control can be configured with the following properties:
 | updateProperty | Function | yes | Function that you can pass to update the title in the root web part. |
 | className | string | no | Optional property to specify a custom class that allows you to change the web part title style. |
 | placeholder | string | no | Optional property to specify a custom placeholder to display when the title is editable. |
-| moreLink    | Function  or JSX.Element | no | Optional property to render a _See all_ link in the web part title. |
+| moreLink    | Function \| JSX.Element | no | Optional property to render a _See all_ link in the web part title. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/WebPartTitle)
