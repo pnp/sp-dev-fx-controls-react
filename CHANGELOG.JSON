@@ -6,7 +6,9 @@
         "new": [
           "`RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)"
         ],
-        "enhancements": [],
+        "enhancements": [
+          "`WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)"
+        ],
         "fixes": []
       },
       "contributions": [

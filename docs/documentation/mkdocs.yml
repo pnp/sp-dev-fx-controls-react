@@ -20,6 +20,7 @@ nav:
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Map: 'controls/Map.md'
     - Placeholder: 'controls/Placeholder.md'
+    - RichText: 'controls/RichText.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
