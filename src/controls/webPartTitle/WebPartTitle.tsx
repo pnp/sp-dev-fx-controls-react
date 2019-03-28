@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import styles from './WebPartTitle.module.scss';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
 
 export interface IWebPartTitleProps {
@@ -9,6 +10,8 @@ export interface IWebPartTitleProps {
   title: string;
   updateProperty: (value: string) => void;
   className?: string;
+  placeholder?: string;
+  moreLink?: JSX.Element | Function;
 }
 
 /**
@@ -22,9 +25,9 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
     super(props);
 
     telemetry.track('ReactWebPartTitle', {
-        title: !!props.title,
-        updateProperty: !!props.updateProperty,
-        className: !!props.className
+      title: !!props.title,
+      updateProperty: !!props.updateProperty,
+      className: !!props.className
     });
 
     this._onChange = this._onChange.bind(this);
@@ -41,16 +44,21 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
    * Default React component render method
    */
   public render(): React.ReactElement<IWebPartTitleProps> {
-    if (this.props.title || this.props.displayMode === DisplayMode.Edit) {
+    if (this.props.title || this.props.moreLink || this.props.displayMode === DisplayMode.Edit) {
       return (
-        <div className={`${styles.webPartTitle} ${this.props.className ? this.props.className : ''}` }>
-          {
-            this.props.displayMode === DisplayMode.Edit && <textarea placeholder={strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
-          }
+        <div className={css(styles.webPartHeader, this.props.className)}>
+          <div className={styles.webPartTitle}>
+            {
+              this.props.displayMode === DisplayMode.Edit && <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
+            }
 
-          {
-            this.props.displayMode !== DisplayMode.Edit && this.props.title && <span role="heading" aria-level="2">{this.props.title}</span>
-          }
+            {
+              this.props.displayMode !== DisplayMode.Edit && this.props.title && <span role="heading" aria-level="2">{this.props.title}</span>
+            }
+          </div>
+          {this.props.moreLink && <span className={styles.moreLink}>
+            {typeof this.props.moreLink === "function" ? this.props.moreLink() : this.props.moreLink}
+          </span>}
         </div>
       );
     }
