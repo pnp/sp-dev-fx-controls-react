@@ -419,10 +419,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
                 <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
               </div>
               <div className="ms-font-m">Icon size tester:
                 <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
               </div>
 
