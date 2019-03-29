@@ -16,11 +16,12 @@
 
 ### Fixes
 
+- `ListItemAttachments`: Updated import statement reference in the documentation [#254](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/254)
 - `ListView`: Updated documentation for the `iconFieldName` property [#245](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/245)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Özgür Ersoy](https://github.com/moersoy), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.12.0
 
