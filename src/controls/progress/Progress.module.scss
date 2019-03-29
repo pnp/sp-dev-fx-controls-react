@@ -1,0 +1,103 @@
+.progress {
+    display: flex;
+    flex-direction: column;
+
+    .header {
+        margin: 12px 0 20px;
+        .title {
+            font-weight: 600;
+        }
+
+        .progressIndicator {
+            margin-top: 10px;
+        }
+
+        .progressSubtext {
+            font-size: 12px;
+        }
+
+        .longRunningText {
+            font-size: 12px;
+            color: "[theme: bodySubtext, default: #666666]";
+            margin: 12px 0 0;
+        }
+    }
+
+    .actionsContainer {
+        overflow-y: auto;
+        margin-bottom: 20px;
+        .actionContainer {
+            margin-bottom: 20px;
+
+            .actionHeader {
+                display: flex;
+
+                .actionIcon {
+                    margin-right: 8px;
+                    line-height: 16px;
+                    font-size: 16px;
+                    flex-shrink: 0;
+                    font-weight: 700;
+
+                    &.successIcon {
+                        color: "[theme: accent, default: #038387]";    
+                    }
+
+                    &.errorIcon {
+                        color: "[theme: errorText, default: #a80000]";
+                    }
+
+                    &.inactiveIcon {
+                        color: "[theme: disableSubtext, default: #d0d0d0]"
+                    }
+                }
+            
+                .spinner {
+                    display: inline-block;
+                }
+                .label {
+                    font-size: 14px;
+                    flex-shrink: 1;
+                    flex-grow: 1;
+                    flex-basis: 0;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    line-height: 16px;
+                    color: "[theme: bodyText, default: #333333]";
+
+                    &.inactive {
+                        color: "[theme: disabledBodyText, default: #a6a6a6]";
+                    }
+
+                }
+            }
+
+            .errorContainer {
+                margin-top: 8px;
+
+                .errorMessage {
+                    margin-left: 24px;
+                    color: "[theme: errorText, default: #a80000]";
+                    line-height: 14px;
+                    font-size: 14px;
+                    font-weight: 700;
+                    padding: 0;
+                }
+            }
+
+            .subActionsContainer {
+                margin-top: 8px;
+
+                .label {
+                    color: "[theme: bodySubtext, default: #666666]";
+                    margin-left: 24px;
+                    font-size: 11px;
+
+                    &.inactive {
+                        color: "[theme: disabledBodySubtext, default: #666666]";
+                    }
+                }
+            }
+        }
+    }
+}
