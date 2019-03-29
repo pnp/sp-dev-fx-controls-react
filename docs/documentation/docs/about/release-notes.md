@@ -9,6 +9,7 @@
 
 ### Enhancements
 
+- Retrieve the user its profile picture from SharePoint instead of Office 365 / Outlook [#248](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/248)
 - Added `Lithuanian` localization [#247](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/247)
 - `FileTypeIcon`: Added support for PDF icon file types [#260](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/260)
 - `WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)
