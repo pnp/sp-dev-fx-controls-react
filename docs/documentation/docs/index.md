@@ -34,14 +34,20 @@ Once the package is installed, you will have to configure the resource file of t
 
 The following controls are currently available:
 
+- [Charts](./controls/ChartControls) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
-- [ListView](./controls/ListView) (List view control)
-- [Placeholder](./controls/Placeholder) (Control that can be used to show an initial placeholder if the web part has to be configured)
-- [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
-- [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
-- [PeoplePicker](./controls/PeoplePicker) (People Picker)
-- [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
+- [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
+- [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
+- [ListView](./controls/ListView) (List view control)
+- [Map](./controls/Map) (renders a map in a web part)
+- [PeoplePicker](./controls/PeoplePicker) (People Picker)
+- [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)
+- [Progress](./controls/Progress) (shows progress of multiple SEQUENTIALLY executed actions)
+- [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
+- [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
+- [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 
 Field customizer controls:
 
