@@ -73,7 +73,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
       if (!this.groupId) {
         this.setState({
-          errorMessage: "Group could not be found."
+          errorMessage: strings.PeoplePickerGroupNotFound
         });
         return;
       }
