@@ -182,6 +182,7 @@ declare interface IControlStrings {
   DateTimePickerDate: string;
   DateTimePickerTime: string;
   DateTimePickerTimeSeparator: string;
+  DateTimePickerHourValueInvalid: string;
 }
 
 declare interface IDateTimeStrings {

@@ -128,7 +128,6 @@ define([], () => {
     DateTimePickerDate: "Date",
     DateTimePickerTime: "Time",
     DateTimePickerTimeSeparator: ":",
-    AMDesignator: "AM",
-    PMDesignator: "PM"
+    DateTimePickerHourValueInvalid: "Incorrect hour value"
   };
 });

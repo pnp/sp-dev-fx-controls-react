@@ -208,6 +208,7 @@ define([], () => {
     DatePickerIsOutOfBoundsErrorMessage: "",
     DateTimePickerDate: "Date",
     DateTimePickerTime: "Time",
-    DateTimePickerTimeSeparator: ":"
+    DateTimePickerTimeSeparator: ":",
+    DateTimePickerHourValueInvalid: "Incorrect hour value"
   };
 });

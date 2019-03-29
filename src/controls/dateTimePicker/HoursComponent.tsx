@@ -1,3 +1,4 @@
+import * as strings from 'ControlStrings';
 import * as React from 'react';
 import { IHoursComponentProps } from './ITimeComponentProps';
 import { TimeConvention } from './DateTimeConventions';
@@ -26,13 +27,13 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
                          let message = "";
                          const hours: number = parseInt(value);
                          if (isNaN(hours)) {
-                           message = "Incorrect hour value";
+                           message = strings.DateTimePickerHourValueInvalid;
                          }
 
                          if (!message && this.props.timeConvention === TimeConvention.Hours24) {
-                           message = hours > 23 ? "Incorrect hour value" : "";
+                           message = hours > 23 ? strings.DateTimePickerHourValueInvalid : "";
                          } else {
-                           message = hours > 12 ? "Incorrect hour value" : "";
+                           message = hours > 12 ? strings.DateTimePickerHourValueInvalid : "";
                          }
 
                          if (!message) {
