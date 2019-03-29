@@ -9,6 +9,7 @@
 
 ### Enhancements
 
+- Added `Lithuanian` localization [#247](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/247)
 - `FileTypeIcon`: Added support for PDF icon file types [#260](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/260)
 - `WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)
 
@@ -18,7 +19,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.12.0
 
