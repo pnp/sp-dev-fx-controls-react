@@ -4,6 +4,7 @@
 
 ### New control(s)
 
+- `Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)
 - `RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)
 
 ### Enhancements
@@ -13,7 +14,7 @@
 
 ### Contributors
 
-Special thanks to our contributor: [Hugo Bernier](https://github.com/hugoabernier).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.12.0
 

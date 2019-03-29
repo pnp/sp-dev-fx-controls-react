@@ -4,6 +4,7 @@
       "version": "1.13.0",
       "changes": {
         "new": [
+          "`Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)",
           "`RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)"
         ],
         "enhancements": [
@@ -13,7 +14,8 @@
         "fixes": []
       },
       "contributions": [
-        "[Hugo Bernier](https://github.com/hugoabernier)"
+        "[Hugo Bernier](https://github.com/hugoabernier)",
+        "[Alex Terentiev](https://github.com/AJIXuMuK)"
       ]
     },
     {
