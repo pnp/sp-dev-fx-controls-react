@@ -20,6 +20,8 @@ import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-li
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
+import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DateTimePicker, DateConvention, TimeConvention } from '../../../DateTimePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
@@ -50,7 +52,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       initialValues: [],
       authorEmails: [],
       selectedList: null,
-      progressActions: this._initProgressActions()
+      progressActions: this._initProgressActions(),
+      dateTimeValue: new Date()
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -132,6 +135,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       initialValues: terms
     });
     console.log("Terms:", terms);
+  }
+
+  /**
+   * Method that retrieves the selected date/time from the DateTime picker
+   * @param dateTimeValue
+   */
+  private _onDateTimePickerChange = (dateTimeValue: Date) => {
+    this.setState({ dateTimeValue });
+    console.log("Selected Date/Time:", dateTimeValue.toLocaleString());
   }
 
   /**
@@ -299,12 +311,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                         <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
                       } />
 
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} />
 
         <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
-                             itemId={1}
-                             context={this.props.context}
-                             disabled={false} />
+          itemId={1}
+          context={this.props.context}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
@@ -371,13 +389,58 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200} />
+          resolveDelay={200}/>
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
           disabled={true}
           showtooltip={true} />
 
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - default time = 12h)"
+          dateConvention={DateConvention.DateTime}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 12h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours12}
+          showSeconds={false}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 24h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (Controlled)"
+          formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          value={this.state.dateTimeValue}
+          onChange={this._onDateTimePickerChange}
+          isMonthPickerVisible={false}
+          showMonthPickerAsOverlay={true}
+          showWeekNumbers={true}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date only)"
+          dateConvention={DateConvention.Date}
+        />
+
+        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
 
         <ListView items={this.state.items}
           viewFields={viewFields}
@@ -487,15 +550,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-                <ListItemPicker listId={this.state.selectedList}
-                                columnInternalName="Title"
-                                itemLimit={5}
-                                context={this.props.context}
-                                onSelectedItem={this.listItemPickerDataSelected} />
+              <ListItemPicker listId={this.state.selectedList}
+                  columnInternalName="Title"
+                  itemLimit={5}
+                  context={this.props.context}
+                  onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:
-              <TaxonomyPicker
+                <TaxonomyPicker
                   allowMultipleSelections={true}
                   termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
@@ -528,7 +591,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       },
                       applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
                     },
-                    // new TermLabelAction("Get Labels")
+                      // new TermLabelAction("Get Labels")
                     ],
                     termActionsDisplayMode: TermActionsDisplayMode.buttons,
                     termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
@@ -595,15 +658,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   text="Open iframe Panel"
                   onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
                 <IFramePanel
-                 url={iframeUrl}
-                 type={PanelType.medium}
-                //  height="300px"
-                 headerText="iframe panel title"
-                 closeButtonAriaLabel="Close"
-                 isOpen={this.state.iFramePanelOpened}
-                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                  />
+                  url={iframeUrl}
+                  type={PanelType.medium}
+                  //  height="300px"
+                  headerText="iframe panel title"
+                  closeButtonAriaLabel="Close"
+                  isOpen={this.state.iFramePanelOpened}
+                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                />
               </div>
             </div>
           </div>

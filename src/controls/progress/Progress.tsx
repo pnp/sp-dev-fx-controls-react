@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { IProgressProps, IProgressAction, IActionProps, ProgressActionState, IProgressState } from './IProgress';
+import { IProgressProps, IProgressAction, ProgressActionState, IProgressState } from './IProgress';
 import { Action } from './Action';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
 import styles from './Progress.module.scss';
+import * as telemetry from "../../common/telemetry";
 
 /**
 * Component to show progress of multiple SEQUENTIALLY executed actions
@@ -12,6 +12,8 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
 
   constructor(props: IProgressProps) {
     super(props);
+
+    telemetry.track('ReactProgress', {});
 
     this.state = {
       showLongRunningText: props.longRunningText && !props.longRunningTextDisplayDelay
@@ -125,10 +127,10 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
     //   progress indicator subtext is shown if showOverallProgress is set to true and there is a text to display (see if section above)
     //   long running text is shown if there is a text and we waited needed delay time
     return (
-      <div className={css(styles.progress, className)} style={{ height: height || 'auto' }}>
+      <div className={`${styles.progress} ${className || ""}`} style={{ height: height || 'auto' }}>
         {
           (title || showOverallProgress || this.state.showLongRunningText) && (
-            <div className={css(styles.header, headerClassName)}>
+            <div className={`${styles.header} ${headerClassName || ""}`}>
               <div className={styles.title}>{title}</div>
 
               {
@@ -150,7 +152,7 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
           )
         }
 
-        <div className={css(styles.actionsContainer, actionsContainerClassName)}>
+        <div className={`${styles.actionsContainer} ${actionsContainerClassName || ""}`}>
           {actionEls}
         </div>
       </div>
