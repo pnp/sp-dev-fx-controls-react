@@ -17,6 +17,8 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { elementContains } from 'office-ui-fabric-react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
 
+
+const TOOLBARPADDING: number = 28;
 /**
  * Creates a rich text editing control that mimics the out-of-the-box
  * SharePoint Rich Text control.
@@ -26,10 +28,10 @@ import * as telemetry from '../../common/telemetry';
  * - Tables aren't supported yet. I'll gladly add table formatting support if users request it.
  */
 export class RichText extends React.Component<IRichTextProps, IRichTextState> {
-  private quillElem: ReactQuill = undefined;
-  private wrapperRef = undefined;
-  private propertyPaneRef: RichTextPropertyPane = undefined;
-  private toolbarId = undefined;
+  private _quillElem: ReactQuill = undefined;
+  private _wrapperRef: HTMLDivElement = undefined;
+  private _propertyPaneRef: RichTextPropertyPane = undefined;
+  private _toolbarId = undefined;
 
   private ddStyleOpts = [{
     key: 0,
@@ -114,11 +116,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       insertUrl: undefined,
       insertUrlText: undefined,
       selectedText: undefined,
-      selectedUrl: undefined
+      selectedUrl: undefined,
+      wrapperTop: 0
     };
 
     // Get a unique toolbar id
-    this.toolbarId = "toolbar_" + Guid.newGuid().toString();
+    this._toolbarId = "toolbar_" + Guid.newGuid().toString();
   }
 
   /**
@@ -130,6 +133,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       document.addEventListener('click', this.handleClickOutside);
       document.addEventListener('focus', this.handleClickOutside);
     }
+
+    const clientRect: ClientRect = this._wrapperRef.getBoundingClientRect();
+    const parentClientRect: ClientRect = this._wrapperRef.parentElement.getBoundingClientRect();
+    const toolbarTop: number = clientRect.top - parentClientRect.top - TOOLBARPADDING;
+
+    this.setState({
+      wrapperTop: toolbarTop
+    });
   }
 
   /**
@@ -168,7 +179,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   public getEditor = (): Quill => {
     try {
-      return this.quillElem!.getEditor();
+      return this._quillElem!.getEditor();
     } catch (error) {
       return undefined;
     }
@@ -385,7 +396,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     // Get a unique id for the toolbar
     const modules = {
       toolbar: {
-        container: "#" + this.toolbarId,
+        container: "#" + this._toolbarId,
         handlers: [
           "link" // disable the link handler so we can add our own
         ]
@@ -428,8 +439,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     Quill.register(SizeClass, true);
 
     return (
-      <div ref={(ref) => this.wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : undefined} ${this.props.className}`}>
-        <div id={this.toolbarId}>
+      <div ref={(ref) => this._wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : undefined} ${this.props.className}`}>
+        <div id={this._toolbarId} style={{top:this.state.wrapperTop}}>
           {
             showStyles && (
               <Dropdown className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
@@ -706,8 +717,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           formats: formats
         });
 
-        if (this.propertyPaneRef && this.state.morePaneVisible) {
-          this.propertyPaneRef.onChangeSelection(range, oldRange, source);
+        if (this._propertyPaneRef && this.state.morePaneVisible) {
+          this._propertyPaneRef.onChangeSelection(range, oldRange, source);
         }
       }
     } catch (error) {
@@ -761,7 +772,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * Keeps track of whether we clicked outside the element
    */
   private handleClickOutside = (event) => {
-    let outside: boolean = !elementContains(this.wrapperRef, event.target);
+    let outside: boolean = !elementContains(this._wrapperRef, event.target);
 
     // Did we click outside?
     if (outside) {
@@ -785,13 +796,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * Links to the quill reference
    */
   private linkQuill = (e: any) => {
-    this.quillElem = e;
+    this._quillElem = e;
   }
 
   /**
    * Links to the property pane element
    */
   private linkPropertyPane = (e: any) => {
-    this.propertyPaneRef = e;
+    this._propertyPaneRef = e;
   }
 }

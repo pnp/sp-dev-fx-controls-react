@@ -135,4 +135,6 @@ export interface IRichTextState {
 
   /** The text */
   text: string;
+
+  wrapperTop: number;
 }
