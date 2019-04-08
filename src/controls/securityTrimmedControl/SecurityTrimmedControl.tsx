@@ -72,7 +72,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     const { context, remoteSiteUrl, permissions } = this.props;
     if (remoteSiteUrl && permissions) {
       for (const permission of permissions) {
-        const apiUrl = this.checkPermissionOnResource();
+        const apiUrl = `${remoteSiteUrl}/_api/web/DoesUserHavePermissions(@v)?@v=${JSON.stringify(permission.value)}`;
         const result = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1).then(data => data.json());
         // Check if a result was retrieved
         if (result) {
@@ -115,7 +115,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     const { context, remoteSiteUrl, relativeLibOrListUrl, permissions } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions) {
-      const apiUrl = `${remoteSiteUrl}/_api/web/GetList(@listUrl)/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
+      const apiUrl = this.checkPermissionOnResource();
       const result = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1).then(data => data.json());
       // Check if a result was retrieved
       if (result) {
