@@ -115,7 +115,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     const { context, remoteSiteUrl, relativeLibOrListUrl, permissions } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions) {
-      const apiUrl = this.checkPermissionOnResource();
+      const apiUrl = this.getUrlByResource();
       const result = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1).then(data => data.json());
       // Check if a result was retrieved
       if (result) {
@@ -150,7 +150,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     }
   }
 
-  private checkPermissionOnResource() {
+  private getUrlByResource() {
     const { remoteSiteUrl, relativeLibOrListUrl, folderPath, itemId } = this.props;
 
     // Check permission on a specific item.
