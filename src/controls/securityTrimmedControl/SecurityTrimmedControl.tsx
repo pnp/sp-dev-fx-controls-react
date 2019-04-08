@@ -28,9 +28,11 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
   public componentDidUpdate(prevProps: ISecurityTrimmedControlProps, prevState: ISecurityTrimmedControlState): void {
     // Check permissions only if necessary
     if (prevProps.level !== this.props.level ||
-        prevProps.permissions !== this.props.permissions ||
-        prevProps.relativeLibOrListUrl !== this.props.relativeLibOrListUrl ||
-        prevProps.remoteSiteUrl !== this.props.remoteSiteUrl) {
+      prevProps.permissions !== this.props.permissions ||
+      prevProps.relativeLibOrListUrl !== this.props.relativeLibOrListUrl ||
+      prevProps.remoteSiteUrl !== this.props.remoteSiteUrl ||
+      prevProps.folderPath !== this.props.folderPath ||
+      prevProps.itemId !== this.props.itemId) {
       this.checkPermissions();
     }
   }
@@ -70,7 +72,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     const { context, remoteSiteUrl, permissions } = this.props;
     if (remoteSiteUrl && permissions) {
       for (const permission of permissions) {
-        const apiUrl = `${remoteSiteUrl}/_api/web/DoesUserHavePermissions(@v)?@v=${JSON.stringify(permission.value)}`;
+        const apiUrl = this.checkPermissionOnResource();
         const result = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1).then(data => data.json());
         // Check if a result was retrieved
         if (result) {
@@ -145,6 +147,28 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
         console.error(`No result value was retrieved when checking the user's remote list or library permissions.`);
         return;
       }
+    }
+  }
+
+  private checkPermissionOnResource() {
+    const { remoteSiteUrl, relativeLibOrListUrl, folderPath, itemId } = this.props;
+
+    // Check permission on a specific item.
+    if (itemId) {
+      const splitUrl = relativeLibOrListUrl.split('/');
+      var lastSegment = splitUrl.pop() || splitUrl.pop();  // Trims trailing slash if it exists.
+
+      return `${remoteSiteUrl}/_api/web/Lists/GetByTitle(@listTitle)/items(@itemId)/EffectiveBasePermissions?@listTitle='${encodeURIComponent(lastSegment)}'&@itemId='${itemId}'`;
+    }
+    // Check permission on a specific folder.
+    else if (folderPath) {
+      const folderByServerRelativeUrl: string = `${encodeURIComponent(relativeLibOrListUrl)}/${encodeURIComponent(folderPath)}`;
+
+      return `${remoteSiteUrl}/_api/web/GetFolderByServerRelativeUrl(@folderByServerRelativeUrl)/ListItemAllFields/EffectiveBasePermissions?@folderByServerRelativeUrl='${folderByServerRelativeUrl}'`;
+    }
+    // Check permission on the list or library.
+    else {
+      return `${remoteSiteUrl}/_api/web/GetList(@listUrl)/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
     }
   }
 
