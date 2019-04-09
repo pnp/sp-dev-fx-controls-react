@@ -21,4 +21,5 @@ export interface IControlsTestState {
   selectedList: string;
   progressActions: IProgressAction[];
   currentProgressActionIndex?: number;
+  dateTimeValue: Date;
 }

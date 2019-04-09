@@ -35,6 +35,7 @@ Once the package is installed, you will have to configure the resource file of t
 The following controls are currently available:
 
 - [Charts](./controls/ChartControls) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
+- [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
