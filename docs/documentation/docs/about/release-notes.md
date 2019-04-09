@@ -5,6 +5,7 @@
 ### New control(s)
 
 - `Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)
+- `DateTimePicker`: New control added [#21](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/21)
 - `RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)
 
 ### Enhancements
@@ -21,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Özgür Ersoy](https://github.com/moersoy), [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Özgür Ersoy](https://github.com/moersoy), [Robert Lindström](https://github.com/robert-lindstrom), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.12.0
 
