@@ -62,6 +62,10 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
     } else if (level === PermissionLevel.remoteListOrLib) {
       // Check permissions on remote list/library
       this.checkRemoteListOrLibPermissions();
+    } else if (level === PermissionLevel.remoteListItem) {
+      this.checkRemoteListItem();
+    } else if (level === PermissionLevel.remoteFolder) {
+      this.checkRemoteFolder();
     }
   }
 
@@ -112,63 +116,76 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
    * Check the user its permissions on the remote list or library
    */
   private async checkRemoteListOrLibPermissions() {
-    const { context, remoteSiteUrl, relativeLibOrListUrl, permissions } = this.props;
+    const { remoteSiteUrl, relativeLibOrListUrl, permissions } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions) {
-      const apiUrl = this.getUrlByResource();
-      const result = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1).then(data => data.json());
-      // Check if a result was retrieved
-      if (result) {
-        // Check if an error was retrieved
-        if (result.error) {
-          // Do not allow rendering when there was an error
-          this.setState({
-            allowRender: false
-          });
-          console.error(`Error retrieved while checking user's remote list or library permissions.`);
-          return;
-        }
-
-        // Check the result high and low value are returned
-        if (typeof result.High !== "undefined" && typeof result.Low !== "undefined") {
-          // Create the permission mask
-          const permission = new SPPermission(result);
-          const hasPermissions = permission.hasAllPermissions(...permissions);
-
-          this.setState({
-            allowRender: hasPermissions
-          });
-          return;
-        }
-      } else {
-        this.setState({
-          allowRender: false
-        });
-        console.error(`No result value was retrieved when checking the user's remote list or library permissions.`);
-        return;
-      }
+      const apiUrl = `${remoteSiteUrl}/_api/web/GetList(@listUrl)/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
+      const hasPermissions = await this.checkRemotePermissions(apiUrl);
+      this.setState({
+        allowRender: hasPermissions
+      });
     }
   }
 
-  private getUrlByResource() {
-    const { remoteSiteUrl, relativeLibOrListUrl, folderPath, itemId } = this.props;
-
-    // Check permission on a specific item.
-    if (itemId) {
-      const splitUrl = relativeLibOrListUrl.split('/');
-      var lastSegment = splitUrl.pop() || splitUrl.pop();  // Trims trailing slash if it exists.
-
-      return `${remoteSiteUrl}/_api/web/Lists/GetByTitle(@listTitle)/items(@itemId)/EffectiveBasePermissions?@listTitle='${encodeURIComponent(lastSegment)}'&@itemId='${itemId}'`;
+  /**
+   * Check permissions on item level
+   */
+  private async checkRemoteListItem() {
+    const { remoteSiteUrl, relativeLibOrListUrl, permissions, itemId } = this.props;
+    // Check if all properties are provided
+    if (remoteSiteUrl && relativeLibOrListUrl && permissions && itemId) {
+      const apiUrl = `${remoteSiteUrl}/_api/web/GetList(@listUrl)/Items(${itemId})/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
+      const hasPermissions = await this.checkRemotePermissions(apiUrl);
+      this.setState({
+        allowRender: hasPermissions
+      });
     }
-    // Check permission on a specific folder.
-    else if (folderPath) {
+  }
+
+  /**
+   * Check permissions on folder
+   */
+  private async checkRemoteFolder() {
+    const { remoteSiteUrl, relativeLibOrListUrl, permissions, folderPath } = this.props;
+    // Check if all properties are provided
+    if (remoteSiteUrl && relativeLibOrListUrl && permissions && folderPath) {
       const folderByServerRelativeUrl: string = `${encodeURIComponent(relativeLibOrListUrl)}/${encodeURIComponent(folderPath)}`;
-
-      return `${remoteSiteUrl}/_api/web/GetFolderByServerRelativeUrl(@folderByServerRelativeUrl)/ListItemAllFields/EffectiveBasePermissions?@folderByServerRelativeUrl='${folderByServerRelativeUrl}'`;
+      const apiUrl = `${remoteSiteUrl}/_api/web/GetFolderByServerRelativeUrl(@folderByServerRelativeUrl)/ListItemAllFields/EffectiveBasePermissions?@folderByServerRelativeUrl='${folderByServerRelativeUrl}'`;
+      const hasPermissions = await this.checkRemotePermissions(apiUrl);
+      this.setState({
+        allowRender: hasPermissions
+      });
     }
-    // Check permission on the list or library.
-    else {
-      return `${remoteSiteUrl}/_api/web/GetList(@listUrl)/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
+  }
+
+  /**
+   * Check the permissions
+   *
+   * @param apiUrl
+   */
+  private async checkRemotePermissions(apiUrl: string) {
+    const { context, permissions } = this.props;
+    const data = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    // Check if a result was retrieved
+    if (data && data.ok) {
+      const result = await data.json();
+      // Check if an error was retrieved
+      if (result.error) {
+        // Do not allow rendering when there was an error
+        console.error(`Error retrieved while checking permissions`);
+        return false;
+      }
+
+      // Check the result high and low value are returned
+      if (typeof result.High !== "undefined" && typeof result.Low !== "undefined") {
+        // Create the permission mask
+        const permission = new SPPermission(result);
+        const hasPermissions = permission.hasAllPermissions(...permissions);
+        return hasPermissions;
+      }
+    } else {
+      console.error(`No result value was retrieved when checking the user's permissions.`);
+      return false;
     }
   }
 

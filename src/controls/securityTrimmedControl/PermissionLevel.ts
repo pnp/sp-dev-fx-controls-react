@@ -17,5 +17,13 @@ export enum PermissionLevel {
   /**
    * Checks permissions on the specified list/library URL in combination with the site URL
    */
-  remoteListOrLib
+  remoteListOrLib,
+  /**
+   * Check permissions on a specific item in a list/library
+   */
+  remoteListItem,
+  /**
+   * Check permissions on a specific folder
+   */
+  remoteFolder
 }
