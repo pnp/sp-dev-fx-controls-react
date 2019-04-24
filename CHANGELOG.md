@@ -17,6 +17,7 @@
 
 ### Fixes
 
+- `RichText`: Fix for toolbar that appears at top of the page [#265](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/265)
 - `ListItemAttachments`: Updated import statement reference in the documentation [#254](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/254)
 - `ListView`: Updated documentation for the `iconFieldName` property [#245](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/245)
 
