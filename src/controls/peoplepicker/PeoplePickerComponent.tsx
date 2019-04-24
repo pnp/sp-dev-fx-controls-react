@@ -193,7 +193,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                             onResolveSuggestions={this.onSearchFieldChanged}
                             onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
                             getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
-                            className={`'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
+                            className={`ms-PeoplePicker ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
                             key={'normal'}
                             removeButtonAriaLabel={'Remove'}
                             inputProps={{
