@@ -22,4 +22,5 @@ export interface IControlsTestState {
   progressActions: IProgressAction[];
   currentProgressActionIndex?: number;
   dateTimeValue: Date;
+  richTextValue: string;
 }

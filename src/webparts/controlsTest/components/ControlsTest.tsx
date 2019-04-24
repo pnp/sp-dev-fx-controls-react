@@ -40,6 +40,7 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
+  private richTextValue: string = null;
 
   constructor(props: IControlsTestProps) {
     super(props);
@@ -53,7 +54,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       authorEmails: [],
       selectedList: null,
       progressActions: this._initProgressActions(),
-      dateTimeValue: new Date()
+      dateTimeValue: new Date(),
+      richTextValue: null
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -317,7 +319,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
 
-        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} />
+        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} />
 
         <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}

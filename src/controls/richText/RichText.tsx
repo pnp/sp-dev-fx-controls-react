@@ -760,7 +760,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     // do we need to pass this to a handler?
     if (onChange) {
       // yes, get the changed text from the handler
-      let newText: string = this.props.onChange(value);
+      let newText: string = onChange(value);
       this.setState({ text: newText });
     } else {
       // no, write the text to the state
