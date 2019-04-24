@@ -73,7 +73,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
       if (!this.groupId) {
         this.setState({
-          errorMessage: "Group could not be found."
+          errorMessage: strings.PeoplePickerGroupNotFound
         });
         return;
       }
@@ -193,7 +193,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
                             onResolveSuggestions={this.onSearchFieldChanged}
                             onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
                             getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
-                            className={`'ms-PeoplePicker' ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
+                            className={`ms-PeoplePicker ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
                             key={'normal'}
                             removeButtonAriaLabel={'Remove'}
                             inputProps={{

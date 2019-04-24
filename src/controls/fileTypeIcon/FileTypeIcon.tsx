@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96 } from './IFileTypeIcon';
+import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96, ImageInformation } from './IFileTypeIcon';
 import * as telemetry from '../../common/telemetry';
 import { Icon, IconType as IconUIType } from 'office-ui-fabric-react/lib/components/Icon';
 import * as styles from './FileTypeIcon.module.scss';
 
 const ICON_GENERIC = 'Page';
 const ICON_DEFAULT_SIZE = 'icon16';
+const ICON_CDN_URL = `https://spoprod-a.akamaihd.net/files/fabric/assets/item-types`;
 
 /**
 * File type icon component
@@ -36,7 +37,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       // Check the known file extensions list
       const iconName = this._getIconByExtension(fileExtension.toLowerCase(), IconType.font);
       if (iconName !== null) {
-        className = iconName;
+        className = iconName.image;
       }
     }
     // Check if the application name has been provided
@@ -44,7 +45,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       const application: ApplicationType = this.props.application;
       const iconName = this._getIconByApplicationType(application, IconType.font);
       if (iconName !== null) {
-        className = iconName;
+        className = iconName.image;
       }
     }
 
@@ -57,7 +58,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   */
   private _getIconImageName(): IImageResult {
     let size = ICON_DEFAULT_SIZE;
-    let image: string | null = null;
+    let imageInfo: ImageInformation = null;
 
     // Get the right icon size to display
     if (typeof this.props.size !== 'undefined' && this.props.size !== null) {
@@ -70,17 +71,18 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       const path: string = this.props.path;
       const fileExtension: string = this._getFileExtension(path);
       // Get the image for the current file extension
-      image = this._getIconByExtension(fileExtension.toLowerCase(), IconType.image);
+      imageInfo = this._getIconByExtension(fileExtension.toLowerCase(), IconType.image);
     }
     // Check if the application name has been provided
     else if (typeof this.props.application !== 'undefined' && this.props.application !== null) {
       const application: ApplicationType = this.props.application;
-      image = this._getIconByApplicationType(application, IconType.image);
+      imageInfo = this._getIconByApplicationType(application, IconType.image);
     }
 
     return {
-      size: size,
-      image: image
+      size,
+      image: imageInfo && imageInfo.image ? imageInfo.image : null,
+      cdnFallback: imageInfo && imageInfo.cdnFallback ? imageInfo.cdnFallback : null
     };
   }
 
@@ -108,7 +110,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   *
   * @param extension File extension
   */
-  private _getIconByExtension(extension: string, iconType: IconType): string {
+  private _getIconByExtension(extension: string, iconType: IconType): ImageInformation {
     // Find the application index by the provided extension
     const appIdx = findIndex(ApplicationIconList, item => { return item.extensions.indexOf(extension.toLowerCase()) !== -1; });
 
@@ -116,16 +118,25 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     if (appIdx !== -1) {
       // Check the type of icon, the image needs to get checked for the name
       if (iconType === IconType.font) {
-        return ApplicationIconList[appIdx].iconName;
+        return {
+          image: ApplicationIconList[appIdx].iconName,
+          cdnFallback: null
+        };
       } else {
         const knownImgs = ApplicationIconList[appIdx].imageName;
         // Check if the file extension is known
         const imgIdx = knownImgs.indexOf(extension);
         if (imgIdx !== -1) {
-          return knownImgs[imgIdx];
+          return {
+            image: knownImgs[imgIdx],
+            cdnFallback: ApplicationIconList[appIdx].cdnImageName || null
+          };
         } else {
           // Return the first one if it was not known
-          return knownImgs[0];
+          return {
+            image: knownImgs[0],
+            cdnFallback: ApplicationIconList[appIdx].cdnImageName || null
+          };
         }
       }
     }
@@ -138,7 +149,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   *
   * @param application
   */
-  private _getIconByApplicationType(application: ApplicationType, iconType: IconType): string {
+  private _getIconByApplicationType(application: ApplicationType, iconType: IconType): ImageInformation {
     // Find the application index by the provided extension
     const appIdx = findIndex(ApplicationIconList, item => item.application === application);
 
@@ -146,11 +157,22 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     if (appIdx !== -1) {
       const knownApp = ApplicationIconList[appIdx];
       if (iconType === IconType.font) {
-        return knownApp.iconName;
+        return {
+          image: knownApp.iconName,
+          cdnFallback: null
+        };
       } else {
         // Check if the application has a known list of image types
         if (knownApp.imageName.length > 0) {
-          return knownApp.imageName[0];
+          return {
+            image: knownApp.imageName[0],
+            cdnFallback: null
+          };
+        } else {
+          return {
+            image: null,
+            cdnFallback: knownApp.cdnImageName || null
+          };
         }
       }
     }
@@ -187,8 +209,11 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       // Return an image icon element
       const iconImage = this._getIconImageName();
       // Check if the image was found, otherwise a generic image will be returned
-      if (typeof iconImage.image !== 'undefined' && iconImage.image !== null) {
+      if (iconImage.image) {
         iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
+      } else if (iconImage.cdnFallback) {
+        const iconUrl = `${ICON_CDN_URL}/${iconImage.size.replace("icon", "")}/${iconImage.cdnFallback}.png`;
+        iconElm = <Icon iconType={IconUIType.image} imageProps={{ src: iconUrl }} />;
       } else {
         // Return a generic image
         let imgElm = <img />;

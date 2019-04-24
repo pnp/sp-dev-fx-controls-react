@@ -1,5 +1,32 @@
 # Releases
 
+## 1.13.0
+
+### New control(s)
+
+- `Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)
+- `DateTimePicker`: New control added [#21](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/21)
+- `RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)
+
+### Enhancements
+
+- `SecurityTrimmedControl`: Support for item and folder permission checks added [#271](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/271)
+- Retrieve the user its profile picture from SharePoint instead of Office 365 / Outlook [#248](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/248)
+- Added `Lithuanian` localization [#247](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/247)
+- `FileTypeIcon`: Added support for PDF icon file types [#260](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/260)
+- `WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)
+
+### Fixes
+
+- `PeoplePicker`: Fix for single quotes around the ms-peoplepicker class [#275](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/275)
+- `RichText`: Fix for toolbar that appears at top of the page [#265](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/265)
+- `ListItemAttachments`: Updated import statement reference in the documentation [#254](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/254)
+- `ListView`: Updated documentation for the `iconFieldName` property [#245](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/245)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Fredrik Andreasson](https://github.com/Varuuna), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Özgür Ersoy](https://github.com/moersoy), [Robert Lindström](https://github.com/robert-lindstrom), [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.12.0
 
 ### New control(s)

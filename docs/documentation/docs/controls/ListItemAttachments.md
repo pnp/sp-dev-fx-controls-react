@@ -18,7 +18,7 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { ListItemAttachments } from '@pnp/spfx-controls-react/listItemAttachments';
+import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
 ```
 - Use the `ListItemAttachments` control in your code as follows:
 

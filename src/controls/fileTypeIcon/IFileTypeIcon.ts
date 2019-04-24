@@ -48,6 +48,7 @@ export interface IApplicationIcons {
   extensions: string[];
   iconName: string;
   imageName: string[];
+  cdnImageName?: string;
 }
 
 /**
@@ -118,7 +119,8 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.PDF,
     extensions: ['pdf'],
     iconName: 'PDF',
-    imageName: []
+    imageName: [],
+    cdnImageName: 'pdf'
   },
   {
     application: ApplicationType.PowerApps,
@@ -189,6 +191,13 @@ export interface IImageResult {
 
   size: string;
   image: string;
+  cdnFallback: string;
+}
+
+export interface ImageInformation {
+
+  image: string;
+  cdnFallback: string;
 }
 
 /**

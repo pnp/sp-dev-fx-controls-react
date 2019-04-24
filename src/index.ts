@@ -8,6 +8,8 @@ export * from './ListPicker';
 export * from './ListItemPicker';
 export * from './ListItemAttachments';
 export * from './ChartControl';
+export * from './Progress';
+export * from './DateTimePicker';
 
 export * from './IFrameDialog';
 export * from './IFramePanel';

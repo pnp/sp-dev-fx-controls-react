@@ -1,6 +1,6 @@
 # Map control
 
-This control renders can be used to render a map in your solution. The control has also the ability to search for new locations.
+This control renders a map in your solution. The control has also the ability to search for new locations.
 
 Here is an example of the control in action:
 
