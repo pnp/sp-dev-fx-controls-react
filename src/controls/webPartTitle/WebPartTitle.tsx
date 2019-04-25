@@ -45,7 +45,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
   public render(): React.ReactElement<IWebPartTitleProps> {
     if (this.props.title || this.props.moreLink || this.props.displayMode === DisplayMode.Edit) {
       return (
-        <div className={`${styles.webPartHeader} ${this.props.className}`}>
+        <div className={`${styles.webPartHeader} ${this.props.className ? this.props.className : ""}`}>
           <div className={styles.webPartTitle}>
             {
               this.props.displayMode === DisplayMode.Edit && (
