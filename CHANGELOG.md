@@ -2,6 +2,12 @@
 
 ## 1.13.0
 
+### Fixes
+
+- `WebPartTitle`: Fix for className property which is not defined [#281](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/281)
+
+## 1.13.0
+
 ### New control(s)
 
 - `Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)
