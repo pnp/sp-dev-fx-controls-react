@@ -16,6 +16,7 @@ import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { elementContains } from 'office-ui-fabric-react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
+import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 
 
 const TOOLBARPADDING: number = 28;
@@ -27,6 +28,9 @@ const TOOLBARPADDING: number = 28;
  * - Block quotes only work on single lines. This is a frequently-requested feature with Quill that isn't available yet.
  * - Tables aren't supported yet. I'll gladly add table formatting support if users request it.
  */
+
+initializeIcons();
+
 export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private _quillElem: ReactQuill = undefined;
   private _wrapperRef: HTMLDivElement = undefined;
@@ -36,7 +40,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private ddStyleOpts = [{
     key: 0,
     text: strings.HeaderNormalText,
-    data: {}
+    data: { }
   }, {
     key: 2,
     text: strings.HeaderH2,
@@ -439,11 +443,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     Quill.register(SizeClass, true);
 
     return (
-      <div ref={(ref) => this._wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : undefined} ${this.props.className}`}>
+      <div ref={(ref) => this._wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : ''} ${this.props.className}`}>
         <div id={this._toolbarId} style={{top:this.state.wrapperTop}}>
           {
             showStyles && (
-              <Dropdown className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
+              <Dropdown
+id="DropDownStyles"
+              className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
                         onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
                         selectedKey={this.state.formats.header || 0}
                         options={this.ddStyleOpts}
@@ -492,6 +498,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           {
             showAlign && (
               <Dropdown className={`${styles.toolbarDropDown}`}
+              id="DropDownAlign"
                         onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
                         selectedKey={this.state.formats.align || 'left'}
                         options={this.ddAlignOpts}
@@ -504,6 +511,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           {
             showList && (
               <Dropdown className={styles.toolbarDropDown}
+              id="DropDownLists"
                         onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
                         selectedKey={this.state.formats.list}
                         options={this.ddListOpts}
