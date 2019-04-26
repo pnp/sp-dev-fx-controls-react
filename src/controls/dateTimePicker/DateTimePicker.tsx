@@ -219,9 +219,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
           <div className={styles.time}>
             <div className={styles.picker}>
               <HoursComponent disabled={disabled}
-                              timeConvention={timeConvention}
-                              value={hours}
-                              onChange={this.dropdownHoursChanged} />
+                timeConvention={timeConvention}
+                value={hours}
+                onChange={this.dropdownHoursChanged} />
             </div>
 
             <div className={styles.separator}>
@@ -230,8 +230,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
 
             <div className={styles.picker}>
               <MinutesComponent disabled={disabled}
-                                value={minutes}
-                                onChange={this.dropdownMinutesChanged} />
+                value={minutes}
+                onChange={this.dropdownMinutesChanged} />
             </div>
 
             {
@@ -246,8 +246,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
               showSeconds && (
                 <div className={styles.picker}>
                   <SecondsComponent disabled={disabled}
-                                    value={seconds}
-                                    onChange={this.dropdownSecondsChanged} />
+                    value={seconds}
+                    onChange={this.dropdownSecondsChanged} />
                 </div>
               )
             }
@@ -274,7 +274,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 disabled={disabled}
                 value={value}
                 strings={dateStrings}
-                isMonthPickerVisible={true}
+                isMonthPickerVisible={isMonthPickerVisible}
                 onSelectDate={this.onSelectDate}
                 allowTextInput={false}
                 firstDayOfWeek={firstDayOfWeek}
