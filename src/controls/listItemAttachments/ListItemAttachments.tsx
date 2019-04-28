@@ -22,9 +22,13 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";
 
+interface IPreviewImageCollection {
+  [fileName: string]: IDocumentCardPreviewImage;
+}
+
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
-  private previewImages: IDocumentCardPreviewImage[];
+  private previewImages: IPreviewImageCollection;
   private _utilities: utilities;
 
   constructor(props: IListItemAttachmentsProps) {
@@ -53,38 +57,46 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     this.loadAttachments();
   }
 
+  private async loadAttachmentPreview(file: IListItemAttachmentFile): Promise<IDocumentCardPreviewImage> {
+    return this._utilities.GetFileImageUrl(file).then(previewImageUrl => {
+      return {
+        name: file.FileName,
+        previewImageSrc: previewImageUrl,
+        iconSrc: '',
+        imageFit: ImageFit.center,
+        width: 187,
+        height: 130,
+      };
+    });
+  }
+
   /**
    * Load Item Attachments
    */
   private async loadAttachments() {
-    this.previewImages = [];
-    try {
-      const files: IListItemAttachmentFile[] = await this._spservice.getListItemAttachments(this.props.listId, this.props.itemId);
-
-      for (const file of files) {
-        const _previewImage = await this._utilities.GetFileImageUrl(file);
-        this.previewImages.push({
-          name: file.FileName,
-          previewImageSrc: _previewImage,
-          iconSrc: '',
-          imageFit: ImageFit.center,
-          width: 187,
-          height: 130,
+    this._spservice.getListItemAttachments(this.props.listId, this.props.itemId).then((files: IListItemAttachmentFile[]) => {
+      const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
+      return Promise.all(filePreviewImages).then(filePreviews => {
+        this.previewImages = {};
+        filePreviews.forEach(preview => {
+          this.previewImages[preview.name] = preview;
         });
-      }
 
-      this.setState({
-        hideDialog: true,
-        dialogMessage: '',
-        attachments: files,
-        showPlaceHolder: files.length === 0 ? true : false
+        this.setState({
+          fireUpload: false,
+          hideDialog: true,
+          dialogMessage: '',
+          attachments: files,
+          showPlaceHolder: files.length === 0 ? true : false
+        });
       });
-    } catch (error) {
+    }).catch((error: Error) => {
       this.setState({
-        hideDialog: true,
+        fireUpload: false,
+        hideDialog: false,
         dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
       });
-    }
+    });
   }
 
   /**
@@ -92,6 +104,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    */
   private _closeDialog = () => {
     this.setState({
+      fireUpload: false,
       hideDialog: true,
       dialogMessage: '',
       file: null,
@@ -116,6 +129,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    */
   private onDeleteAttachment = (file: IListItemAttachmentFile) => {
     this.setState({
+      fireUpload: false,
       hideDialog: false,
       deleteAttachment: true,
       file: file,
@@ -131,6 +145,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     const { file } = this.state;
 
     this.setState({
+      fireUpload: false,
       disableButton: true,
     });
 
@@ -138,6 +153,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.props.itemId, this.props.webUrl);
 
       this.setState({
+        fireUpload: false,
         hideDialog: false,
         deleteAttachment: false,
         disableButton: false,
@@ -146,6 +162,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       });
     } catch (error) {
       this.setState({
+        fireUpload: false,
         hideDialog: false,
         file: null,
         deleteAttachment: false,
@@ -179,11 +196,13 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
               onConfigure={() => this.setState({ fireUpload: true })} />
             :
 
-            this.state.attachments.map((file, i: number) => {
+            this.state.attachments.map(file => {
+              const fileName = file.FileName;
+              const previewImage = this.previewImages[fileName];
               return (
-                <div className={styles.documentCardWrapper}>
+                <div key={fileName} className={styles.documentCardWrapper}>
                   <TooltipHost
-                    content={file.FileName}
+                    content={fileName}
                     calloutProps={{ gapSpace: 0, isBeakVisible: true }}
                     closeDelay={200}
                     directionalHint={DirectionalHint.rightCenter}>
@@ -191,10 +210,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                     <DocumentCard
                       onClickHref={`${file.ServerRelativeUrl}?web=1`}
                       className={styles.documentCard}>
-                      <DocumentCardPreview previewImages={[this.previewImages[i]]} />
-                      <Label className={styles.fileLabel}>
-                        {file.FileName}
-                      </Label>
+                      <DocumentCardPreview previewImages={[previewImage]} />
+                      <Label className={styles.fileLabel}>{fileName}</Label>
                       <DocumentCardActions
                         actions={
                           [

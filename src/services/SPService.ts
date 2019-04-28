@@ -77,7 +77,7 @@ export default class SPService implements ISPService {
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const results = await data.json();
-        if (results && results.value && results.value.length > 0) {
+        if (results && results.value) {
           return results.value;
         }
       }
