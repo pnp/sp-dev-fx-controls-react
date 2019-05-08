@@ -50,7 +50,7 @@ nav:
 theme:
   name: 'material'
   palette:
-    primary: 'blue'
+    primary: 'teal'
   logo: 'assets/pnp-spfx-controls.svg'
   feature:
     tabs: true

@@ -1,5 +1,16 @@
 # Releases
 
+## 1.13.1
+
+### Fixes
+
+- `WebPartTitle`: Fix for className property which is not defined [#281](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/281)
+- `RichText`: Fix issue where control turns drop-downs black [#279](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/279)
+
+### Contributors
+
+Special thanks to our contributor: [Hugo Bernier](https://github.com/hugoabernier).
+
 ## 1.13.0
 
 ### New control(s)
