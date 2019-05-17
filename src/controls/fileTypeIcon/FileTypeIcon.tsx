@@ -132,7 +132,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
         if (imgExists) {
           fallbackImg = extension;
         } else if (ApplicationIconList[appIdx].cdnImageName && ApplicationIconList[appIdx].cdnImageName.length > 0) {
-          fallbackImg = ApplicationIconList[appIdx].cdnImageName[0]
+          fallbackImg = ApplicationIconList[appIdx].cdnImageName[0];
         }
 
         if (imgIdx !== -1) {
@@ -168,7 +168,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
 
       let fallbackImg = null;
       if (knownApp.cdnImageName && knownApp.cdnImageName.length > 0) {
-        fallbackImg = knownApp.cdnImageName[0]
+        fallbackImg = knownApp.cdnImageName[0];
       }
 
       if (iconType === IconType.font) {
