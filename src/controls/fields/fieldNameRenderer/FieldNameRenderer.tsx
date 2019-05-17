@@ -118,8 +118,9 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
             else {
                 let url: string;
                 const filePath = this.props.filePath;
+                const parentPath = filePath.substring(0, filePath.lastIndexOf('/'));
                 if (this.props.hasPreview !== false) {
-                    url = `#id=${filePath}&parent=${filePath.substring(0, filePath.lastIndexOf('/'))}`;
+                    url = `#id=${encodeURIComponent(filePath)}&parent=${encodeURIComponent(parentPath)}`;
                 }
                 else {
                     url = filePath;
