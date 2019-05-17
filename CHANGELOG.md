@@ -10,13 +10,15 @@
 
 - `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
 - `FileTypeIcon`: Only displays PDF's in SPFx `1.8.2` [#300](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/300)
+- `TaxonomyPicker`: Cannot find name `TermLabelAction [#293](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/293)
+- `ListItemAttachments`: Move deleted attachments to the recycle bin [#291](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/291)
 - `DateTimePicker`: Does not respect `isMonthPickerVisible` prop [#283](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/283)
 - `ListItemAttachments`: Render issue fixed + improvements to the attachment API calls [#282](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/282)
 - `RichText`: Fixes an issue when hitting enter in the control [#277](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/277)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Tautvydas Duda](https://github.com/ltdu), [Robert Lindström](https://github.com/robert-lindstrom).
+Special thanks to our contributors (in alphabetical order): [Tautvydas Duda](https://github.com/ltdu), [Thomas Granheim](https://github.com/ThomasGranheim), [Robert Lindström](https://github.com/robert-lindstrom).
 
 ## 1.13.1
 
