@@ -9,7 +9,7 @@
 
 ### Contributors
 
-Special thanks to our contributor: [Robert Lindström](https://github.com/robert-lindstrom).
+Special thanks to our contributors (in alphabetical order): [Tautvydas Duda](https://github.com/ltdu), [Robert Lindström](https://github.com/robert-lindstrom).
 
 ## 1.13.1
 
