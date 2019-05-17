@@ -59,7 +59,8 @@ export interface IFrameDialogProps extends IDialogProps {
 }
 
 export interface IFrameDialogState {
-  dialogId: string;
+  dialogId: string | null;
+  isStylingSet?: boolean;
 }
 
 /**
@@ -108,11 +109,21 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
       name,
       sandbox,
       scrolling,
-      seamless
+      seamless,
+      modalProps,
+      className
     } = this.props;
+
+    let dlgModalProps = {
+      ...modalProps,
+      onLayerDidMount: () => { this.setDialogStyling(); }
+    };
+
     return (
-      <Dialog className={`${this.state.dialogId} ${this.props.className}`}
-        {...omit(this.props, 'className')}>
+      <Dialog
+        className={`${this.state.dialogId} ${className || ''}`}
+        modalProps={dlgModalProps}
+        {...omit(this.props, 'className', 'modalProps')}>
         <IFrameDialogContent src={this.props.url}
           iframeOnLoad={iframeOnLoad}
           close={this.props.onDismiss}
@@ -133,12 +144,19 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
    * Set the dialog style
    */
   private setDialogStyling(): void {
-    if (!this.props.hidden && this.state.dialogId) {
+    if (!this.state.isStylingSet && !this.props.hidden && this.state.dialogId) {
       const element = document.querySelector(`.${this.state.dialogId} .ms-Dialog-main`) as HTMLElement;
-      if (element && this.props.width) {
-        element.style.width = this.props.width;
-        element.style.minWidth = this.props.width;
-        element.style.maxWidth = this.props.width;
+      const {
+        width
+      } = this.props;
+      if (element && width) {
+        element.style.width = width;
+        element.style.minWidth = width;
+        element.style.maxWidth = width;
+
+        this.setState({
+          isStylingSet: true
+        });
       }
     }
   }
