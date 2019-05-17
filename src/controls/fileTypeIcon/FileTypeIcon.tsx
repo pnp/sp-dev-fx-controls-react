@@ -126,16 +126,25 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
         const knownImgs = ApplicationIconList[appIdx].imageName;
         // Check if the file extension is known
         const imgIdx = knownImgs.indexOf(extension);
+
+        const imgExists = ApplicationIconList[appIdx].cdnImageName && ApplicationIconList[appIdx].cdnImageName.indexOf(extension) !== -1;
+        let fallbackImg = null;
+        if (imgExists) {
+          fallbackImg = extension;
+        } else if (ApplicationIconList[appIdx].cdnImageName && ApplicationIconList[appIdx].cdnImageName.length > 0) {
+          fallbackImg = ApplicationIconList[appIdx].cdnImageName[0]
+        }
+
         if (imgIdx !== -1) {
           return {
             image: knownImgs[imgIdx],
-            cdnFallback: ApplicationIconList[appIdx].cdnImageName || null
+            cdnFallback: fallbackImg
           };
         } else {
           // Return the first one if it was not known
           return {
             image: knownImgs[0],
-            cdnFallback: ApplicationIconList[appIdx].cdnImageName || null
+            cdnFallback: fallbackImg
           };
         }
       }
@@ -156,22 +165,28 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     // Check if an application has found
     if (appIdx !== -1) {
       const knownApp = ApplicationIconList[appIdx];
+
+      let fallbackImg = null;
+      if (knownApp.cdnImageName && knownApp.cdnImageName.length > 0) {
+        fallbackImg = knownApp.cdnImageName[0]
+      }
+
       if (iconType === IconType.font) {
         return {
           image: knownApp.iconName,
-          cdnFallback: null
+          cdnFallback: fallbackImg
         };
       } else {
         // Check if the application has a known list of image types
         if (knownApp.imageName.length > 0) {
           return {
             image: knownApp.imageName[0],
-            cdnFallback: null
+            cdnFallback: fallbackImg
           };
         } else {
           return {
             image: null,
-            cdnFallback: knownApp.cdnImageName || null
+            cdnFallback: fallbackImg
           };
         }
       }
@@ -209,11 +224,11 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       // Return an image icon element
       const iconImage = this._getIconImageName();
       // Check if the image was found, otherwise a generic image will be returned
-      if (iconImage.image) {
-        iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
-      } else if (iconImage.cdnFallback) {
+      if (iconImage.cdnFallback) {
         const iconUrl = `${ICON_CDN_URL}/${iconImage.size.replace("icon", "")}/${iconImage.cdnFallback}.png`;
         iconElm = <Icon iconType={IconUIType.image} imageProps={{ src: iconUrl }} />;
+      } else if (iconImage.cdnFallback) {
+        iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
       } else {
         // Return a generic image
         let imgElm = <img />;
