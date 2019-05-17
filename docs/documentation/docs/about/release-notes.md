@@ -2,6 +2,10 @@
 
 ## 1.13.2
 
+### Enhancements
+
+- Improvements to the `Lithuanian` localization [#285](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/285)
+
 ### Fixes
 
 - `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
