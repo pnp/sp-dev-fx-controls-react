@@ -9,6 +9,7 @@
 ### Fixes
 
 - `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
+- `DateTimePicker`: Does not respect `isMonthPickerVisible` prop [#283](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/283)
 - `ListItemAttachments`: Render issue fixed + improvements to the attachment API calls [#282](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/282)
 
 ### Contributors
