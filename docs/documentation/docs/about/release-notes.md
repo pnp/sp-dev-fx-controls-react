@@ -1,5 +1,15 @@
 # Releases
 
+## 1.13.2
+
+### Fixes
+
+- `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
+
+### Contributors
+
+Special thanks to our contributor: [Robert Lindström](https://github.com/robert-lindstrom).
+
 ## 1.13.1
 
 ### Fixes

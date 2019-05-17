@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.13.2",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)"
+        ]
+      },
+      "contributions": [
+        "[Robert Lindström](https://github.com/robert-lindstrom)"
+      ]
+    },
+    {
       "version": "1.13.1",
       "changes": {
         "new": [],
