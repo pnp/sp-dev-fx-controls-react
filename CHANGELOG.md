@@ -12,6 +12,7 @@
 - `FileTypeIcon`: Only displays PDF's in SPFx `1.8.2` [#300](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/300)
 - `DateTimePicker`: Does not respect `isMonthPickerVisible` prop [#283](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/283)
 - `ListItemAttachments`: Render issue fixed + improvements to the attachment API calls [#282](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/282)
+- `RichText`: Fixes an issue when hitting enter in the control [#277](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/277)
 
 ### Contributors
 
