@@ -17,6 +17,7 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { elementContains } from 'office-ui-fabric-react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import isEqual = require('lodash/isEqual');
 
 
 const TOOLBARPADDING: number = 28;
@@ -176,6 +177,21 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       document.removeEventListener('click', this.handleClickOutside);
       document.removeEventListener('focus', this.handleClickOutside);
     }
+  }
+
+  /**
+   * shouldComponentUpdate lifecycle hook
+   *
+   * @param nextProps
+   * @param nextState
+   */
+  public shouldComponentUpdate(nextProps: IRichTextProps, nextState: IRichTextState): boolean {
+    // Checks if the value coming in is the same
+    if (isEqual(nextState, this.state)) {
+      return false;
+    }
+
+    return true;
   }
 
   /**
