@@ -8,6 +8,7 @@
 
 ### Fixes
 
+- `IFrameDialog`: dimensions issue [#303](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/303)
 - `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
 - `FileTypeIcon`: Only displays PDF's in SPFx `1.8.2` [#300](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/300)
 - `FieldNameRenderer`: Fails to encode URI when `hasPreview` [#296](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/296)
