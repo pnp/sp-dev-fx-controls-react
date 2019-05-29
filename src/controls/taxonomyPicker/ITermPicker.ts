@@ -1,4 +1,5 @@
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 
 /**
@@ -41,7 +42,7 @@ export interface IPropertyFieldTermPickerProps {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ApplicationCustomizerContext;
+  context: IWebPartContext | ApplicationCustomizerContext | ExtensionContext;
   /**
    * Limit the term sets that can be used by the group name or ID
    */

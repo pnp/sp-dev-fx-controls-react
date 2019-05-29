@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BasePicker, IBasePickerProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
@@ -21,7 +22,7 @@ export interface ITermPickerState {
 
 export interface ITermPickerProps {
   termPickerHostProps: ITaxonomyPickerProps;
-  context: IWebPartContext | ApplicationCustomizerContext;
+  context: IWebPartContext | ApplicationCustomizerContext | ExtensionContext;
   disabled: boolean;
   value: IPickerTerms;
   allowMultipleSelections : boolean;

@@ -14,6 +14,7 @@ import { ITermStore, ITerms, ITerm, IGroup, ITermSet } from './ISPTermStorePicke
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { findIndex } from '@microsoft/sp-lodash-subset';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 
 /**
@@ -27,7 +28,7 @@ export default class SPTermStorePickerService {
   /**
    * Service constructor
    */
-  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext | ApplicationCustomizerContext) {
+  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext | ApplicationCustomizerContext | ExtensionContext) {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';

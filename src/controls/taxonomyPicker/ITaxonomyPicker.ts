@@ -1,9 +1,11 @@
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
+
 
 /**
  * PropertyFieldTermPickerHost properties interface
@@ -28,7 +30,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ApplicationCustomizerContext;
+  context: IWebPartContext | ApplicationCustomizerContext | ExtensionContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */
