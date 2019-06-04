@@ -31,7 +31,7 @@ export interface IFieldNameRendererProps extends IFieldRendererProps {
     isNew?: boolean;
     /**
      * true if the document type has preview (true by default).
-     * The flag impacts on the link's href: 
+     * The flag impacts on the link's href:
      * if the flag is tru then the href is constructed like #id=${filePath}&parent=${filePath.substring(0, filePath.lastIndexOf('/'))},
      * otherwise the href will contain filePath only.
      */
@@ -39,11 +39,11 @@ export interface IFieldNameRendererProps extends IFieldRendererProps {
     /**
      * custom handler for link click. If not set link click will lead to rendering document preview
      */
-    onClick?: (args: IFieldNameClickEventArgs) => {};
+    onClick?: (args: IFieldNameClickEventArgs) => void;
     /**
      * custom handler for link double click. If not set link will use OOTB behavior.
      */
-    onDoubleClick?: (args: IFieldNameClickEventArgs) => {};
+    onDoubleClick?: (args: IFieldNameClickEventArgs) => void;
 }
 
 /**

@@ -31,7 +31,7 @@ export interface IFieldTitleRendererProps extends IFieldRendererProps {
     /**
      * custom title click event handler. If not set Display form for the item will be displaed
      */
-    onClick?: (args: IFieldTitleClickEventArgs) => {};
+    onClick?: (args: IFieldTitleClickEventArgs) => void;
 }
 
 /**
