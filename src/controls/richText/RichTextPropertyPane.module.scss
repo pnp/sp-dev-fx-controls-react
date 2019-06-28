@@ -1,0 +1,108 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+:export {
+  NeutralPrimary: $ms-color-neutralPrimary;
+}
+
+.richTextPropertyPane {
+  .formattingPaneTitle {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: $ms-color-neutralPrimaryAlt;
+    background-image: none;
+    background-origin: padding-box;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: repeat;
+    background-size: auto;
+    display: flex;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    color: $ms-color-white;
+    font-family: "Segoe UI Web (West European)", Segoe UI, -apple-system,
+      BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    font-size: 21px;
+    font-weight: 100;
+    line-height: 25.2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .propertyPaneGroupContent {
+    padding: 0 20px 16px;
+  }
+
+  .controlsInOneRow {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  .propertyPaneClose {
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    min-width: 0px;
+  }
+
+  :global {
+    .ms-Panel-content {
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 16px;
+      padding-left: 0px;
+    }
+
+    .ms-Panel-contentInner {
+      top: 67px;
+    }
+  }
+}
+
+.propertyPaneButton {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  &:hover {
+    background-color: $ms-color-neutralLight;
+    color: $ms-color-themePrimary;
+  }
+
+  &:global(.is-checked) {
+    color: $ms-color-themePrimary;
+  }
+
+  &:global(.is-disabled) {
+    background-color: #fff;
+  }
+}
+
+.propertyPaneGroupField {
+  padding-top: 4px;
+  color: #333333;
+  word-wrap: break-word;
+}
+
+.propertyPaneGroupHeaderNoAccordion {
+  font-size: 14px;
+  font-weight: 400;
+  font-weight: 600;
+  color: #333333;
+  padding-right: 0;
+  // padding-left: 20px;
+  text-align: left;
+  height: 40px;
+  line-height: 40px;
+  padding-top: 4px;
+  width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

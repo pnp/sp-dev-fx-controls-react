@@ -1,0 +1,150 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+:export {
+  ThemeColorDarker: $ms-color-themeDarker;
+  ThemeColorDark: $ms-color-themeDark;
+  ThemeColorDarkAlt: $ms-color-themeDarkAlt;
+  ThemeColorPrimary: $ms-color-themePrimary;
+  ThemeColorSecondary: $ms-color-themeSecondary;
+  ThemeColorTertiary: $ms-color-themeTertiary;
+  ThemeColorNeutralSecondary:$ms-color-neutralSecondary;
+  ThemeColorNeutralPrimaryAlt: $ms-color-neutralPrimaryAlt;
+  ThemeColorNeutralPrimary: $ms-color-neutralPrimary;
+  ThemeColorNeutralDark:$ms-color-neutralDark
+}
+
+.colorPickerButton {
+  background: 0 0;
+  padding-left: 4px;
+  padding-right: 12px;
+  background-color: #ffffff;
+}
+
+.previewSvg {
+  width: 20px;
+  height: 20px;
+
+  &.border {
+    border: 1px solid #000;
+  }
+}
+
+.previewRectangle {
+  width: 100%;
+  height: 100%;
+}
+
+.buttonLabel {
+  padding-left: 10px;
+}
+
+.previewIcon {
+  padding-left: 7px;
+  font-size: 7px;
+  padding-top: 8px;
+}
+
+.pickerCallout {
+  width: 166px;
+  &:global(.ms-Callout-main) {
+    background-color: rgb(255, 255, 255);
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+  }
+}
+
+.defaultSvg {
+  padding: 2px;
+  &.fillThemeColor {
+    fill: #333;
+    border: none;
+  }
+
+  &.border {
+    border: 1px solid #000;
+  }
+
+  &.fillDefaultColor {
+    fill: #fff;
+  }
+}
+
+.pickerLabel {
+  display: block;
+  margin-left: 6px;
+}
+
+.focusedContainer {
+  clear: both;
+  display: block;
+  min-width: 180px;
+}
+
+.tableRoot {
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  outline: none;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: grey;
+}
+
+.tableCell {
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+.colorCell {
+  position: relative;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI",
+    -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  font-weight: 400;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  height: 40px;
+  color: rgb(51, 51, 51);
+  user-select: none;
+  outline: transparent;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  text-decoration: none;
+  border-radius: 0px;
+  overflow: visible;
+  background: transparent;
+
+  & .svg {
+    width: 20px;
+    height: 20px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    box-sizing: content-box;
+    &:hover, &.selected {
+      box-shadow: rgb(150, 150, 150) 0px 0px 0px 1px;
+      width: 12px;
+      height: 12px;
+      border-width: 4px;
+      border-style: solid;
+      border-image: initial;
+      border-color: rgb(200, 200, 200);
+    }
+  }
+}

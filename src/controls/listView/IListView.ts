@@ -9,7 +9,6 @@ export enum GroupOrder {
 }
 
 export interface IListViewProps {
-
   /**
    * Specify the name of the file URL path which will be used to show the file icon.
    */
@@ -44,10 +43,25 @@ export interface IListViewProps {
    * The index of the items to be select by default
    */
   defaultSelection?: number[];
+  /**
+   * Specify the placeholder for the filter text box. Default 'Search'
+   */
+  filterPlaceHolder?: string;
+  /**
+   * Specify if the filter text box should be rendered.
+   */
+  showFilter?: boolean;
+  /**
+   * Specify the initial filter to be applied to the list.
+   */
+  defaultFilter?: string;
 }
 
 export interface IListViewState {
-
+  /**
+   * Current value of the filter input
+   */
+  filterValue?: string;
   /**
    * The items to render.
    */

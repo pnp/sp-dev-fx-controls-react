@@ -27,8 +27,12 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   compact={true}
   selectionMode={SelectionMode.multiple}
   selection={this._getSelection}
+  showFilter={true}
+  defaultFilter="John"
+  filterPlaceHolder="Search..."
   groupByFields={groupByFields} />
 ```
+- The control provides full text filtering through all the columns. If you want to exectue filtering on the specified columns, you can use syntax : `<ColumndName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
 
 - With the `selection` property you can define a method that which gets called when the user selects one or more items in the list view:
 
@@ -63,7 +67,7 @@ The ListView control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| iconFieldName | string | no | Specify the name of the file URL path which will be used to show the file icon. |
+| iconFieldName | string | no | Specify the items' property name that defines the file URL path which will be used to show the file icon. This automatically creates a column and renders the file icon. |
 | items | any[]| yes | Items to render in the list view. |
 | viewFields | IViewField[] | no | The fields you want to render in the list view. Check the `IViewField` implementation to see which properties you can define. |
 | compact | boolean | no | Boolean value to indicate if the control should render in compact mode. By default this is set to `false`. |
@@ -71,6 +75,9 @@ The ListView control can be configured with the following properties:
 | selection | function | no | Selection event that passes the selected item(s) from the list view. |
 | groupByFields | IGrouping[] | no | Defines the field on which you want to group the items in the list view. |
 | defaultSelection | number[] | no | The index of the items to be select by default |
+| filterPlaceHolder | string | no | Specify the placeholder for the filter text box. Default 'Search' |
+| showFilter | boolean | no | Specify if the filter text box should be rendered. |
+| defaultFilter | string | no | Specify the initial filter to be applied to the list. |
 
 The `IViewField` has the following implementation:
 

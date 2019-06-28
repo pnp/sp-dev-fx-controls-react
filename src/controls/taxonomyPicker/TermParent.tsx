@@ -31,14 +31,12 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   /**
    * componentWillMount
    */
-  public componentWillMount()
-  {
+  public componentWillMount() {
     // fix term depth if anchroid for rendering
     if (this.props.anchorId)
     {
       const anchorTerm = this._terms.filter(t => t.Id.toLowerCase() === this.props.anchorId.toLowerCase()).shift();
-      if (anchorTerm)
-      {
+      if (anchorTerm) {
         const anchorDepth = anchorTerm.PathDepth;
         this._anchorName = anchorTerm.Name;
         var anchorTerms : ITerm[] = this._terms.filter(t => t.PathOfTerm.substring(0, anchorTerm.PathOfTerm.length) === anchorTerm.PathOfTerm && t.Id !== anchorTerm.Id);
@@ -108,7 +106,16 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
                   disabled = parentPath && parentPath.length > 0;
                 }
 
-                return <Term key={term.Id} term={term} termset={this.props.termset.Id} activeNodes={this.props.activeNodes} changedCallback={this.props.changedCallback} multiSelection={this.props.multiSelection} disabled={disabled} />;
+                return <Term key={term.Id}
+                             term={term}
+                             termset={this.props.termset.Id}
+                             activeNodes={this.props.activeNodes}
+                             changedCallback={this.props.changedCallback}
+                             multiSelection={this.props.multiSelection}
+                             disabled={disabled}
+                             termActions={this.props.termActions}
+                             updateTaxonomyTree={this.props.updateTaxonomyTree}
+                             spTermService={this.props.spTermService} />;
               })
             }
           </div>

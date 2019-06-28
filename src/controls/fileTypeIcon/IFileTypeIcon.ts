@@ -48,6 +48,7 @@ export interface IApplicationIcons {
   extensions: string[];
   iconName: string;
   imageName: string[];
+  cdnImageName?: string[];
 }
 
 /**
@@ -58,7 +59,8 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.Access,
     extensions: ['accdb', 'accde', 'accdt', 'accdr', 'mdb'],
     iconName: 'AccessLogo',
-    imageName: ['accdb']
+    imageName: ['accdb'],
+    cdnImageName: ["accdb"]
   },
   {
     application: ApplicationType.ASPX,
@@ -82,13 +84,15 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.CSV,
     extensions: ['csv'],
     iconName: 'ExcelDocument',
-    imageName: ['csv']
+    imageName: ['csv'],
+    cdnImageName: ['csv']
   },
   {
     application: ApplicationType.Excel,
     extensions: ['xls', 'xlt', 'xlm', 'xlsx', 'xlsm', 'xltx', 'xltm', 'ods'],
     iconName: 'ExcelDocument',
-    imageName: ['xlsx', 'xls', 'xltx', 'ods']
+    imageName: ['xlsx', 'xls', 'xltx', 'ods'],
+    cdnImageName: ['xlsx', 'xltx', 'ods']
   },
   {
     application: ApplicationType.HTML,
@@ -112,13 +116,15 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.OneNote,
     extensions: ['one', 'onepkg', 'onetoc'],
     iconName: 'OneNoteLogo',
-    imageName: ['one', 'onepkg', 'onetoc']
+    imageName: ['one', 'onepkg', 'onetoc'],
+    cdnImageName: ['one', 'onetoc']
   },
   {
     application: ApplicationType.PDF,
     extensions: ['pdf'],
     iconName: 'PDF',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['pdf']
   },
   {
     application: ApplicationType.PowerApps,
@@ -130,19 +136,22 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.PowerPoint,
     extensions: ['ppt', 'pot', 'pps', 'pptx', 'pptm', 'potx', 'potm', 'ppam', 'ppsx', 'ppsm', 'sldx', 'sldx'],
     iconName: 'PowerPointDocument',
-    imageName: ['odp', 'potx', 'ppsx', 'pptx']
+    imageName: ['odp', 'potx', 'ppsx', 'pptx'],
+    cdnImageName: ['pptx', 'odp', 'potx', 'ppsx']
   },
   {
     application: ApplicationType.Project,
     extensions: ['mpp', 'mpt', 'mpx', 'mpd'],
     iconName: 'ProjectLogoInverse',
-    imageName: ['mpp', 'mpt']
+    imageName: ['mpp', 'mpt'],
+    cdnImageName: ['mpp', 'mpt']
   },
   {
     application: ApplicationType.Publisher,
     extensions: ['pub'],
     iconName: 'PublisherLogo',
-    imageName: ['pub']
+    imageName: ['pub'],
+    cdnImageName: ['pub']
   },
   {
     application: ApplicationType.SASS,
@@ -154,13 +163,15 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.Visio,
     extensions: ['vsd', 'vss', 'vst', 'vdx', 'vsx', 'vtx', 'vsdx'],
     iconName: 'VisioDocument',
-    imageName: ['vsdx', 'vssx', 'vstx']
+    imageName: ['vsdx', 'vssx', 'vstx'],
+    cdnImageName: ['vsdx', 'vssx', 'vstx']
   },
   {
     application: ApplicationType.Word,
     extensions: ['doc', 'dot', 'docx', 'docm', 'dotx', 'dotm', 'docb', 'odt'],
     iconName: 'WordDocument',
-    imageName: ['docx', 'dotx', 'odt']
+    imageName: ['docx', 'dotx', 'odt'],
+    cdnImageName: ['docx', 'dotx', 'odt']
   }
 ];
 
@@ -189,6 +200,13 @@ export interface IImageResult {
 
   size: string;
   image: string;
+  cdnFallback: string;
+}
+
+export interface ImageInformation {
+
+  image: string;
+  cdnFallback: string;
 }
 
 /**

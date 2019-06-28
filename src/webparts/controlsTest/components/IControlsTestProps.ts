@@ -1,6 +1,7 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ImageSize } from '../../../FileTypeIcon';
 import { DisplayMode } from '@microsoft/sp-core-library';
+import { IProgressAction } from '../../../Progress';
 
 export interface IControlsTestProps {
   context: WebPartContext;
@@ -15,6 +16,11 @@ export interface IControlsTestState {
   items: any[];
   initialValues: any[];
   iFrameDialogOpened?: boolean;
+  iFramePanelOpened?: boolean;
   authorEmails: string[];
   selectedList: string;
+  progressActions: IProgressAction[];
+  currentProgressActionIndex?: number;
+  dateTimeValue: Date;
+  richTextValue: string;
 }
