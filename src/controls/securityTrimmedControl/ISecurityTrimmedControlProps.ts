@@ -25,4 +25,12 @@ export interface ISecurityTrimmedControlProps {
    * The relative URL of the list or library. Required when you want to check permissions on remote list.
    */
   relativeLibOrListUrl?: string;
+  /**
+   * Optional. Specify the name of a folder to check the user permissions against. Will be overridden if itemId is present.
+   */
+  folderPath?: string;
+  /**
+   * Optional. Specify the ID of the item to check the user permissions against. Takes precedence over folder.
+   */
+  itemId?: number;
 }

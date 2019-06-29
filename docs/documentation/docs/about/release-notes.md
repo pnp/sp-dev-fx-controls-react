@@ -1,23 +1,86 @@
 # Releases
 
+## 1.13.2
+
+### Enhancements
+
+- Improvements to the `Lithuanian` localization [#285](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/285)
+
+### Fixes
+
+- `IFrameDialog`: dimensions issue [#303](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/303)
+- `DateTimePicker`: IE11 layout issue [#301](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/301)
+- `FileTypeIcon`: Only displays PDF's in SPFx `1.8.2` [#300](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/300)
+- `FieldNameRenderer`: Fails to encode URI when `hasPreview` [#296](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/296)
+- `TaxonomyPicker`: Cannot find name `TermLabelAction [#293](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/293)
+- `ListItemAttachments`: Move deleted attachments to the recycle bin [#291](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/291)
+- `DateTimePicker`: Does not respect `isMonthPickerVisible` prop [#283](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/283)
+- `ListItemAttachments`: Render issue fixed + improvements to the attachment API calls [#282](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/282)
+- `RichText`: Fixes an issue when hitting enter in the control [#277](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/277)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Tautvydas Duda](https://github.com/ltdu), [Thomas Granheim](https://github.com/ThomasGranheim), [Robert Lindström](https://github.com/robert-lindstrom), [Alex Terentiev](https://github.com/AJIXuMuK).
+
+## 1.13.1
+
+### Fixes
+
+- `WebPartTitle`: Fix for className property which is not defined [#281](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/281)
+- `RichText`: Fix issue where control turns drop-downs black [#279](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/279)
+
+### Contributors
+
+Special thanks to our contributor: [Hugo Bernier](https://github.com/hugoabernier).
+
+## 1.13.0
+
+### New control(s)
+
+- `Progress`: New control added [#230](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/230)
+- `DateTimePicker`: New control added [#21](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/21)
+- `RichText`: New control added [#20](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/20)
+
+### Enhancements
+
+- `SecurityTrimmedControl`: Support for item and folder permission checks added [#271](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/271)
+- Retrieve the user its profile picture from SharePoint instead of Office 365 / Outlook [#248](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/248)
+- Added `Lithuanian` localization [#247](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/247)
+- `FileTypeIcon`: Added support for PDF icon file types [#260](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/260)
+- `WebPartTitle`: Added the ability to render a `see all` link or custom component [#228](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/228)
+
+### Fixes
+
+- `PeoplePicker`: Fix for single quotes around the ms-peoplepicker class [#275](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/275)
+- `RichText`: Fix for toolbar that appears at top of the page [#265](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/265)
+- `ListItemAttachments`: Updated import statement reference in the documentation [#254](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/254)
+- `ListView`: Updated documentation for the `iconFieldName` property [#245](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/245)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Francis](https://github.com/PzKfWg), [Fredrik Andreasson](https://github.com/Varuuna), [Hugo Bernier](https://github.com/hugoabernier), [Tautvydas Duda](https://github.com/ltdu), [Özgür Ersoy](https://github.com/moersoy), [Robert Lindström](https://github.com/robert-lindstrom), [Alex Terentiev](https://github.com/AJIXuMuK).
+
 ## 1.12.0
 
 ### New control(s)
 
+- `ListItemAttachments`: New control added [#177](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/177)
 - `IFramePanel`: New control added [#226](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/226)
 
 ### Enhancements
 
 - Added `Russian` localization [#214](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/214)
+- `TaxonomyPicker`: Ability to specify term actions [#237](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/237)
 
 ### Fixes
 
 - `TaxonomyPicker`: Terms are sorted incorrectly under the wrong parent [#199](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/229)
-- `TaxonomyPicker`: Issue with custom sort order of items underneath root terms [#231](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/199) [#229](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/231)
+- `TaxonomyPicker`: Issue with custom sort order of items underneath root terms [#231](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/231)
+- `PeoplePicker`: Fix for issue where values couldn't be cleared [#234](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/234)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [David Opdendries](https://github.com/spdavid), [Alex Terentiev](https://github.com/AJIXuMuK).
+Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](https://github.com/patrikhellgren), [João Mendes](https://github.com/joaojmendes), [David Opdendries](https://github.com/spdavid), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.11.0
 
@@ -42,7 +105,7 @@ Special thanks to our contributors (in alphabetical order): [Patrik Hellgren](ht
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [joaojmendes](https://github.com/joaojmendes), [Asish Padhy](https://github.com/AsishP), [Piotr Siatka](https://github.com/siata13), [Anoop Tatti](https://github.com/anoopt), [Alex Terentiev](https://github.com/AJIXuMuK), [Tse Kit Yam](https://github.com/tsekityam).
 
 ## 1.10.0
 

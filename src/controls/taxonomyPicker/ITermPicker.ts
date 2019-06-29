@@ -1,8 +1,6 @@
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 
-
-
 /**
  * Selected terms
  */

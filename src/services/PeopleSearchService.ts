@@ -24,12 +24,25 @@ export default class SPPeopleSearchService {
   }
 
   /**
-   * Generate the user photo link
+   * Generate the user photo link using SharePoint user photo endpoint.
    *
    * @param value
    */
   public generateUserPhotoLink(value: string): string {
-    return `https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=${value}&UA=0&size=HR96x96`;
+    return `${this.context.pageContext.web.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
+  }
+
+  /**
+   * Generate sum of principal types
+   * 
+   * PrincipalType controls the type of entities that are returned in the results.
+   * Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
+   * These values can be combined (example: 13 is security + SP groups + users)
+   * 
+   * @param principalTypes 
+   */
+  public getSumOfPrincipalTypes(principalTypes: PrincipalType[]) {
+    return !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1;
   }
 
   /**
@@ -161,10 +174,7 @@ export default class SPPeopleSearchService {
           AllUrlZones: false,
           MaximumEntitySuggestions: maximumSuggestions,
           PrincipalSource: 15,
-          // PrincipalType controls the type of entities that are returned in the results.
-          // Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
-          // These values can be combined (example: 13 is security + SP groups + users)
-          PrincipalType: !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1,
+          PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query
         }
       };
@@ -218,7 +228,7 @@ export default class SPPeopleSearchService {
           const userResults = values.map(element => {
             switch (element.EntityType) {
               case 'User':
-                let email : string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
+                let email: string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
                 return {
                   id: element.Key,
                   imageUrl: this.generateUserPhotoLink(email),
@@ -326,7 +336,7 @@ export default class SPPeopleSearchService {
    */
   private searchPeopleFromMock(query: string): Promise<Array<IPeoplePickerUserItem>> {
     let mockClient: PeoplePickerMockClient = new PeoplePickerMockClient();
-    let filterValue = { valToCompare: query  };
+    let filterValue = { valToCompare: query };
     return new Promise<Array<IPeoplePickerUserItem>>((resolve) => resolve(MockUsers.filter(mockClient.filterPeople, filterValue)));
   }
 }

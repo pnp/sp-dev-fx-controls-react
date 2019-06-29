@@ -12,20 +12,24 @@ nav:
       - "Polar Area Chart": 'controls/charts/PolarAreaChart.md'
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
+    - DateTimePicker: 'controls/DateTimePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - IFrameDialog: 'controls/IFrameDialog.md'
+    - IFramePanel: 'controls/IFramePanel.md'
+    - ListItemAttachments: 'controls/ListItemAttachments.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Map: 'controls/Map.md'
+    - PeoplePicker: 'controls/PeoplePicker.md'
     - Placeholder: 'controls/Placeholder.md'
+    - Progress: 'controls/Progress.md'
+    - RichText: 'controls/RichText.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
-    - WebPartTitle: 'controls/WebPartTitle.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
-    - PeoplePicker: 'controls/PeoplePicker.md'
-    - IFrameDialog: 'controls/IFrameDialog.md'
-    - IFramePanel: 'controls/IFramePanel.md'
+    - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'
     - FieldRendererHelper: 'controls/fields/FieldRendererHelper.md'
@@ -46,7 +50,7 @@ nav:
 theme:
   name: 'material'
   palette:
-    primary: 'blue'
+    primary: 'teal'
   logo: 'assets/pnp-spfx-controls.svg'
   feature:
     tabs: true

@@ -7,6 +7,7 @@ import { PaletteGenerator } from './PaletteGenerator';
 import { AccessibleChartTable } from './AccessibleChartTable';
 import * as telemetry from '../../common/telemetry';
 import { ChartPalette } from './ChartControl.types';
+import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 
 interface Window {
   __themeState__: any;
@@ -349,32 +350,32 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
 
   private _applyChartThemes(): void {
     try {
-      Chart.defaults.global.defaultFontColor = this._getThemeColor(styles.defaultFontColor);
+      Chart.defaults.global.defaultFontColor = ThemeColorHelper.GetThemeColor(styles.defaultFontColor);
       Chart.defaults.global.defaultFontFamily = styles.defaultFontFamily;
       Chart.defaults.global.defaultFontSize = this._getFontSizeNumber(styles.defaultFontSize);
-      Chart.defaults.global.title.fontColor = this._getThemeColor(styles.titleColor);
+      Chart.defaults.global.title.fontColor =  ThemeColorHelper.GetThemeColor(styles.titleColor);
       Chart.defaults.global.title.fontFamily = styles.titleFont;
       Chart.defaults.global.title.fontSize = this._getFontSizeNumber(styles.titleFontSize);
-      Chart.defaults.global.legend.labels.fontColor = this._getThemeColor(styles.legendColor);
+      Chart.defaults.global.legend.labels.fontColor =  ThemeColorHelper.GetThemeColor(styles.legendColor);
       Chart.defaults.global.legend.labels.fontFamily = styles.legendFont;
       Chart.defaults.global.legend.labels.fontSize = this._getFontSizeNumber(styles.legendFontSize);
-      Chart.defaults.global.tooltips.backgroundColor = this._getThemeColor(styles.tooltipBackgroundColor);
-      Chart.defaults.global.tooltips.bodyFontColor = this._getThemeColor(styles.tooltipBodyColor);
+      Chart.defaults.global.tooltips.backgroundColor =  ThemeColorHelper.GetThemeColor(styles.tooltipBackgroundColor);
+      Chart.defaults.global.tooltips.bodyFontColor =  ThemeColorHelper.GetThemeColor(styles.tooltipBodyColor);
       Chart.defaults.global.tooltips.bodyFontFamily = styles.tooltipFont;
       Chart.defaults.global.tooltips.bodyFontSize = this._getFontSizeNumber(styles.tooltipFontSize);
-      Chart.defaults.global.tooltips.titleFontColor = this._getThemeColor(styles.tooltipTitleColor);
+      Chart.defaults.global.tooltips.titleFontColor =  ThemeColorHelper.GetThemeColor(styles.tooltipTitleColor);
       Chart.defaults.global.tooltips.titleFontFamily = styles.tooltipTitleFont;
       Chart.defaults.global.tooltips.titleFontSize = this._getFontSizeNumber(styles.tooltipTitleFontSize);
-      Chart.defaults.global.tooltips.footerFontColor = this._getThemeColor(styles.tooltipFooterColor);
+      Chart.defaults.global.tooltips.footerFontColor =  ThemeColorHelper.GetThemeColor(styles.tooltipFooterColor);
       Chart.defaults.global.tooltips.footerFontFamily = styles.tooltipFooterFont;
       Chart.defaults.global.tooltips.footerFontSize = this._getFontSizeNumber(styles.tooltipFooterFontSize);
-      Chart.defaults.global.tooltips.borderColor = this._getThemeColor(styles.tooltipBorderColor);
+      Chart.defaults.global.tooltips.borderColor =  ThemeColorHelper.GetThemeColor(styles.tooltipBorderColor);
 
       if (Chart.defaults
         && Chart.defaults.scale
         && Chart.defaults.scale.gridLines
         && Chart.defaults.scale.gridLines.color) {
-        Chart.defaults.scale.gridLines.color = this._getThemeColor(styles.lineColor);
+        Chart.defaults.scale.gridLines.color =  ThemeColorHelper.GetThemeColor(styles.lineColor);
       }
     } catch (error) {
 
@@ -395,62 +396,62 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     this._canvasElem = e;
   }
 
-  private _getThemeColor(value: string): string {
-    try {
-      if (value.indexOf('theme:') > 0) {
-        // This value has a theme substitution
-        const themeParts: string[] = value.replace('[', '').replace(']', '').replace('"', '').split(',');
-        let defaultValue: string = undefined;
-        let themeValue: string = undefined;
+  // private _getThemeColor(value: string): string {
+  //   try {
+  //     if (value.indexOf('theme:') > 0) {
+  //       // This value has a theme substitution
+  //       const themeParts: string[] = value.replace('[', '').replace(']', '').replace('"', '').split(',');
+  //       let defaultValue: string = undefined;
+  //       let themeValue: string = undefined;
 
-        // Break the theme string into it's components
-        themeParts.forEach(themePart => {
-          if (themePart.indexOf('theme:') >= 0) {
-            themeValue = themePart.replace('theme:', '');
-          } else if (themePart.indexOf('default:') >= 0) {
-            defaultValue = themePart.replace('default:', '').replace('"', '').trim();
-          }
-        });
+  //       // Break the theme string into it's components
+  //       themeParts.forEach(themePart => {
+  //         if (themePart.indexOf('theme:') >= 0) {
+  //           themeValue = themePart.replace('theme:', '');
+  //         } else if (themePart.indexOf('default:') >= 0) {
+  //           defaultValue = themePart.replace('default:', '').replace('"', '').trim();
+  //         }
+  //       });
 
-        // If there is a theme value, try to read from environment
-        if (themeValue !== undefined) {
-          try {
-            // This should definitely be easier to do in SPFx!
+  //       // If there is a theme value, try to read from environment
+  //       if (themeValue !== undefined) {
+  //         try {
+  //           // This should definitely be easier to do in SPFx!
 
-            // tslint:disable-next-line
-            const themeStateVariable: any = window.__themeState__;
-            if (themeStateVariable === undefined) {
-              return defaultValue;
-            }
-            const themeState: {} = themeStateVariable.theme;
+  //           // tslint:disable-next-line
+  //           const themeStateVariable: any = window.__themeState__;
+  //           if (themeStateVariable === undefined) {
+  //             return defaultValue;
+  //           }
+  //           const themeState: {} = themeStateVariable.theme;
 
-            if (themeState === undefined) {
-              return defaultValue;
-            }
+  //           if (themeState === undefined) {
+  //             return defaultValue;
+  //           }
 
-            for (const varName in themeState) {
-              if (!themeState.hasOwnProperty(varName)) {
-                continue;
-              }
+  //           for (const varName in themeState) {
+  //             if (!themeState.hasOwnProperty(varName)) {
+  //               continue;
+  //             }
 
-              // Cheesy cleanup of variables to remove extra quotes
-              if (varName === themeValue) {
-                return themeState[varName].replace('"', '').trim();
-              }
-            }
-          } catch (error) {
-            // do nothing
-          }
+  //             // Cheesy cleanup of variables to remove extra quotes
+  //             if (varName === themeValue) {
+  //               return themeState[varName].replace('"', '').trim();
+  //             }
+  //           }
+  //         } catch (error) {
+  //           // do nothing
+  //         }
 
-          return defaultValue;
-        }
-      }
-    } catch (error) {
+  //         return defaultValue;
+  //       }
+  //     }
+  //   } catch (error) {
 
-    }
+  //   }
 
-    return value;
-  }
+  //   return value;
+  // }
 
   // Reads one of the Office Fabric defined font sizes
   // and converts to a number

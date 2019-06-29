@@ -1,6 +1,6 @@
 # SecurityTrimmedControl
 
-This control is intended to be used when you want to show or hide components based on the user its permissions. The control can be used to check the user’s permissions on the current site / list were the solution is loaded, or on a remote site / list.
+This control is intended to be used when you want to show or hide components based on the user permissions. The control can be used to check the user’s permissions on the current site / list were the solution is loaded, or on a remote site / list.
 
 ## How to use this control in your solutions
 
@@ -68,5 +68,15 @@ The `SecurityTrimmedControl` can be configured with the following properties:
 | remoteSiteUrl | string | no | The URL of the remote site. Required when you want to check permissions on remote site or list. |
 | relativeLibOrListUrl | string | no | The relative URL of the list or library. Required when you want to check permissions on remote list. |
 
+The `PermissionLevel` enum has the following values:
+
+| Value | Description | Required properties |
+| ---- | ---- | ---- |
+| currentWeb | Checks permissions on the current web | `context`, `permissions` |
+| currentList | Checks permissions in the current loaded list | `context`, `permissions` |
+| remoteWeb | Checks permissions on the specified site URL | `context`, `permissions`, `remoteSiteUrl` |
+| remoteListOrLib | Checks permissions on the specified list/library URL in combination with the site URL | `context`, `permissions`, `remoteSiteUrl`, `relativeLibOrListUrl` |
+| remoteListItem | Check permissions on a specific item in a list/library | `context`, `permissions`, `remoteSiteUrl`, `relativeLibOrListUrl`, `itemId` |
+| remoteFolder | Check permissions on a specific folder | `context`, `permissions`, `remoteSiteUrl`, `relativeLibOrListUrl`, `folderPath` |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/SecurityTrimmedControl)

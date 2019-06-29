@@ -2,9 +2,7 @@
 import * as React from 'react';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Icon, IconType } from 'office-ui-fabric-react/lib/Icon';
 import { Label } from "office-ui-fabric-react/lib/Label";
-import { Link } from 'office-ui-fabric-react/lib/Link';
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
 import { UploadAttachment } from './UploadAttachment';
@@ -13,7 +11,6 @@ import {
   DocumentCard,
   DocumentCardActions,
   DocumentCardPreview,
-  DocumentCardTitle,
   IDocumentCardPreviewImage
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
@@ -25,9 +22,13 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";
 
+interface IPreviewImageCollection {
+  [fileName: string]: IDocumentCardPreviewImage;
+}
+
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
-  private previewImages: IDocumentCardPreviewImage[];
+  private previewImages: IPreviewImageCollection;
   private _utilities: utilities;
 
   constructor(props: IListItemAttachmentsProps) {
@@ -43,65 +44,145 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       showPlaceHolder: false,
       fireUpload: false
     };
+
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
     this._utilities = new utilities();
-
-    // registo de event handlers
-    this._onDeleteAttachment = this._onDeleteAttachment.bind(this);
-    this._closeDialog = this._closeDialog.bind(this);
-    this._onAttachmentpload = this._onAttachmentpload.bind(this);
-    this._onConfirmedDeleteAttachment = this._onConfirmedDeleteAttachment.bind(this);
   }
-  // Load Item Attachments
-  private async _loadAttachments() {
-    this.previewImages = [];
-    try {
-      const files: IListItemAttachmentFile[] = await this._spservice.getListItemAttachments(this.props.listId, this.props.itemId);
-      for (const _file of files) {
 
-        const _previewImage = await this._utilities.GetFileImageUrl(_file);
-        this.previewImages.push({
-          name: _file.FileName,
-          previewImageSrc: _previewImage,
-          iconSrc: '',
-          imageFit: ImageFit.center,
-          width: 187,
-          height: 130,
+  /**
+   * componentDidMount lifecycle hook
+   */
+  public componentDidMount() {
+    this.loadAttachments();
+  }
+
+  private async loadAttachmentPreview(file: IListItemAttachmentFile): Promise<IDocumentCardPreviewImage> {
+    return this._utilities.GetFileImageUrl(file).then(previewImageUrl => {
+      return {
+        name: file.FileName,
+        previewImageSrc: previewImageUrl,
+        iconSrc: '',
+        imageFit: ImageFit.center,
+        width: 187,
+        height: 130,
+      };
+    });
+  }
+
+  /**
+   * Load Item Attachments
+   */
+  private async loadAttachments() {
+    this._spservice.getListItemAttachments(this.props.listId, this.props.itemId).then((files: IListItemAttachmentFile[]) => {
+      const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
+      return Promise.all(filePreviewImages).then(filePreviews => {
+        this.previewImages = {};
+        filePreviews.forEach(preview => {
+          this.previewImages[preview.name] = preview;
         });
-      }
-      this.setState({
-        hideDialog: true,
-        dialogMessage: '',
-        attachments: files,
-        showPlaceHolder: files.length === 0 ? true : false
 
+        this.setState({
+          fireUpload: false,
+          hideDialog: true,
+          dialogMessage: '',
+          attachments: files,
+          showPlaceHolder: files.length === 0 ? true : false
+        });
       });
-    }
-    catch (error) {
+    }).catch((error: Error) => {
       this.setState({
-        hideDialog: true,
+        fireUpload: false,
+        hideDialog: false,
         dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
       });
+    });
+  }
+
+  /**
+   * Close the dialog
+   */
+  private _closeDialog = () => {
+    this.setState({
+      fireUpload: false,
+      hideDialog: true,
+      dialogMessage: '',
+      file: null,
+      deleteAttachment: false,
+    });
+
+    this.loadAttachments();
+  }
+
+  /**
+   * Attachment uploaded event handler
+   */
+  private _onAttachmentUpload = () => {
+    // load Attachments
+    this.loadAttachments();
+  }
+
+  /**
+   * On delete attachment event handler
+   *
+   * @param file
+   */
+  private onDeleteAttachment = (file: IListItemAttachmentFile) => {
+    this.setState({
+      fireUpload: false,
+      hideDialog: false,
+      deleteAttachment: true,
+      file: file,
+      dialogMessage: strings.ListItemAttachmentsconfirmDelete.replace('{0}', file.FileName),
+    });
+  }
+
+  /**
+   * Delete the attachment once it was confirmed
+   */
+  private onConfirmedDeleteAttachment = async () => {
+    // Delete Attachment
+    const { file } = this.state;
+
+    this.setState({
+      fireUpload: false,
+      disableButton: true,
+    });
+
+    try {
+      await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.props.itemId, this.props.webUrl);
+
+      this.setState({
+        fireUpload: false,
+        hideDialog: false,
+        deleteAttachment: false,
+        disableButton: false,
+        file: null,
+        dialogMessage: strings.ListItemAttachmentsfileDeletedMsg.replace('{0}', file.FileName),
+      });
+    } catch (error) {
+      this.setState({
+        fireUpload: false,
+        hideDialog: false,
+        file: null,
+        deleteAttachment: false,
+        dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', file.FileName).replace('{1}', error.message)
+      });
     }
   }
-  // LoadAttachments
-  public componentDidMount() {
 
-    this._loadAttachments();
-  }
-
-  // Render Attachments
+  /**
+   * Default React render method
+   */
   public render() {
     return (
-
       <div className={styles.ListItemAttachments}>
         <UploadAttachment
           listId={this.props.listId}
           itemId={this.props.itemId}
           disabled={this.props.disabled}
           context={this.props.context}
-          onAttachmentUpload={this._onAttachmentpload}
+          onAttachmentUpload={this._onAttachmentUpload}
           fireUpload={this.state.fireUpload}
         />
 
@@ -115,22 +196,22 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
               onConfigure={() => this.setState({ fireUpload: true })} />
             :
 
-            this.state.attachments.map((_file, i: number) => {
+            this.state.attachments.map(file => {
+              const fileName = file.FileName;
+              const previewImage = this.previewImages[fileName];
               return (
-                <div className={styles.documentCardWrapper}>
+                <div key={fileName} className={styles.documentCardWrapper}>
                   <TooltipHost
-                    content={_file.FileName}
+                    content={fileName}
                     calloutProps={{ gapSpace: 0, isBeakVisible: true }}
                     closeDelay={200}
                     directionalHint={DirectionalHint.rightCenter}>
 
                     <DocumentCard
-                      onClickHref={`${_file.ServerRelativeUrl}?web=1`}
+                      onClickHref={`${file.ServerRelativeUrl}?web=1`}
                       className={styles.documentCard}>
-                      <DocumentCardPreview previewImages={[this.previewImages[i]]} />
-                      <Label className={styles.fileLabel}>
-                        {_file.FileName}
-                      </Label>
+                      <DocumentCardPreview previewImages={[previewImage]} />
+                      <Label className={styles.fileLabel}>{fileName}</Label>
                       <DocumentCardActions
                         actions={
                           [
@@ -145,7 +226,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                               onClick: (ev) => {
                                 ev.preventDefault();
                                 ev.stopPropagation();
-                                this._onDeleteAttachment(_file);
+                                this.onDeleteAttachment(file);
                               }
                             },
                           ]
@@ -174,11 +255,11 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
             <DialogFooter>
               <div style={{ marginBottom: 7 }}>
                 {
-                  this.state.disableButton ? <Spinner size={SpinnerSize.medium} /> : ''
+                  this.state.disableButton ? <Spinner size={SpinnerSize.medium} /> : null
                 }
               </div>
               {
-                this.state.deleteAttachment ? (<PrimaryButton disabled={this.state.disableButton} onClick={this._onConfirmedDeleteAttachment}>{strings.ListItemAttachmentsdialogOKbuttonLabelOnDelete}</PrimaryButton>) : ""
+                this.state.deleteAttachment ? (<PrimaryButton disabled={this.state.disableButton} onClick={this.onConfirmedDeleteAttachment}>{strings.ListItemAttachmentsdialogOKbuttonLabelOnDelete}</PrimaryButton>) : null
               }
               {
                 this.state.deleteAttachment ? (<DefaultButton disabled={this.state.disableButton} onClick={this._closeDialog}>{strings.ListItemAttachmentsdialogCancelButtonLabel}</DefaultButton>)
@@ -190,68 +271,4 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       </div>
     );
   }
-
-  // close dialog
-  private _closeDialog(e) {
-    e.preventDefault();
-
-    this.setState({
-      hideDialog: true,
-      dialogMessage: '',
-      file: null,
-      deleteAttachment: false,
-    });
-    this._loadAttachments();
-  }
-
-  // On onAttachmentpload
-  private _onAttachmentpload() {
-    // load Attachments
-    this._loadAttachments();
-  }
-
-  // On _onDeleteAttachment
-  private _onDeleteAttachment(_file: IListItemAttachmentFile) {
-    this.setState({
-      hideDialog: false,
-      deleteAttachment: true,
-      file: _file,
-      dialogMessage: strings.ListItemAttachmentsconfirmDelete.replace('{0}', _file.FileName),
-    });
-  }
-  /*
-  * Confirmed Delete
-  */
-  private _onConfirmedDeleteAttachment() {
-    // Delete Attachment
-    const _file = this.state.file;
-
-    this.setState({
-      disableButton: true,
-    });
-
-    this._spservice.deleteAttachment(_file.FileName, this.props.listId, this.props.itemId, this.props.webUrl)
-      .then(() => {
-
-        this.setState({
-          hideDialog: false,
-          deleteAttachment: false,
-          disableButton: false,
-          file: null,
-          dialogMessage: strings.ListItemAttachmentsfileDeletedMsg.replace('{0}', _file.FileName),
-        });
-
-      })
-      .catch((reason) => {
-
-        this.setState({
-          hideDialog: false,
-          file: null,
-          deleteAttachment: false,
-          dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', _file.FileName).replace('{1}', reason)
-        });
-
-      });
-  }
 }
-export default ListItemAttachments;

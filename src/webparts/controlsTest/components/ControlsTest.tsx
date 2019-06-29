@@ -11,7 +11,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../.
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import { WebPartTitle } from '../../../WebPartTitle';
-import { TaxonomyPicker, IPickerTerms } from '../../../TaxonomyPicker';
+import { TaxonomyPicker, IPickerTerms, UpdateType } from '../../../TaxonomyPicker';
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { IFramePanel } from '../../../IFramePanel';
@@ -20,15 +20,28 @@ import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-li
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
+import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DateTimePicker, DateConvention, TimeConvention } from '../../../DateTimePicker';
 import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
 import { Map, ICoordinates, MapType } from '../../../Map';
 import { ChartControl, ChartType } from "../../../ChartControl";
-
+import { Progress, IProgressAction, IProgressProps } from '../../../Progress';
+import { ITerm } from '../../../services/ISPTermStorePickerService';
+import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
+import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
+import { ListItemAttachments } from '../../../ListItemAttachments';
+import { RichText } from '../../../RichText';
+import { Link } from 'office-ui-fabric-react/lib/components/Link';
+import { DataTrend } from '../../../DataTrend';
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
+  private taxService: SPTermStorePickerService = null;
+  private richTextValue: string = null;
+
   constructor(props: IControlsTestProps) {
     super(props);
 
@@ -39,11 +52,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iFramePanelOpened: false,
       initialValues: [],
       authorEmails: [],
-      selectedList: null
+      selectedList: null,
+      progressActions: this._initProgressActions(),
+      dateTimeValue: new Date(),
+      richTextValue: null
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
     this._onConfigure = this._onConfigure.bind(this);
+    this._startProgress = this._startProgress.bind(this);
   }
 
   /**
@@ -123,6 +140,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   /**
+   * Method that retrieves the selected date/time from the DateTime picker
+   * @param dateTimeValue
+   */
+  private _onDateTimePickerChange = (dateTimeValue: Date) => {
+    this.setState({ dateTimeValue });
+    console.log("Selected Date/Time:", dateTimeValue.toLocaleString());
+  }
+
+  /**
    * Selected lists change event
    * @param lists
    */
@@ -159,6 +185,50 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private listItemPickerDataSelected(item: any) {
     console.log(item);
+  }
+
+  private _startProgress() {
+    let currentIndex = 0;
+    const intervalId = setInterval(() => {
+      const actions = this.state.progressActions;
+
+      if (currentIndex >= actions.length) {
+        clearInterval(intervalId);
+      } else {
+        const action = actions[currentIndex];
+        if (currentIndex == 1) { // just a test for error
+          action.hasError = true;
+          action.errorMessage = 'some error message';
+        }
+      }
+
+      this.setState({
+        currentProgressActionIndex: currentIndex,
+        progressActions: actions
+      });
+      currentIndex++;
+    }, 5000);
+  }
+
+  private _initProgressActions(): IProgressAction[] {
+    return [{
+      title: 'First Step',
+      subActionsTitles: [
+        'Sub action 1',
+        'Sub action 2'
+      ]
+    }, {
+      title: 'Second step'
+    }, {
+      title: 'Third Step',
+      subActionsTitles: [
+        'Sub action 1',
+        'Sub action 2',
+        'Sub action 3'
+      ]
+    }, {
+      title: 'Fourth Step'
+    }];
   }
 
   /**
@@ -237,140 +307,202 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-          title={this.props.title}
-          updateProperty={this.props.updateProperty} />
+                      title={this.props.title}
+                      updateProperty={this.props.updateProperty}
+                      moreLink={
+                        <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+                      } />
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+
+        {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
+        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({richTextValue: value}); return value; }} />
+
+        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+          itemId={1}
+          context={this.props.context}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
-                     iconText='Configure your web part'
-                     description='Please configure the web part.'
-                     buttonLabel='Configure'
-                     hideButton={this.props.displayMode === DisplayMode.Read}
-                     onConfigure={this._onConfigure} />
+          iconText='Configure your web part'
+          description='Please configure the web part.'
+          buttonLabel='Configure'
+          hideButton={this.props.displayMode === DisplayMode.Read}
+          onConfigure={this._onConfigure} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (Group not found)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      groupName="Team Site Visitors 123"
-                      ensureUser={true}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (Group not found)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          groupName="Team Site Visitors 123"
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (search for group)"
-                      groupName="Team Site Visitors"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (search for group)"
+          groupName="Team Site Visitors"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set global users)"
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems}
-                      personSelectionLimit={2}
-                      ensureUser={true} />
+          titleText="People Picker (pre-set global users)"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems}
+          personSelectionLimit={2}
+          ensureUser={true} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (pre-set local users)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                      selectedItems={this._getPeoplePickerItems} />
+          titleText="People Picker (pre-set local users)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          selectedItems={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (tenant scoped)"
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (tenant scoped)"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200} />
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (local scoped)"
-                      webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-                      personSelectionLimit={5}
-                      // groupName={"Team Site Owners"}
-                      showtooltip={true}
-                      isRequired={true}
-                      //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-                      //defaultSelectedUsers={this.state.authorEmails}
-                      selectedItems={this._getPeoplePickerItems}
-                      showHiddenInUI={false}
-                      principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-                      suggestionsLimit={2}
-                      resolveDelay={200}/>
+          titleText="People Picker (local scoped)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200}/>
 
         <PeoplePicker context={this.props.context}
-                      titleText="People Picker (disabled)"
-                      disabled={true}
-                      showtooltip={true} />
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true} />
 
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - default time = 12h)"
+          dateConvention={DateConvention.DateTime}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 12h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours12}
+          showSeconds={false}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 24h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (Controlled)"
+          formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          value={this.state.dateTimeValue}
+          onChange={this._onDateTimePickerChange}
+          isMonthPickerVisible={false}
+          showMonthPickerAsOverlay={true}
+          showWeekNumbers={true}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date only)"
+          dateConvention={DateConvention.Date}
+        />
+
+        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
 
         <ListView items={this.state.items}
-                  viewFields={viewFields}
-                  iconFieldName='ServerRelativeUrl'
-                  groupByFields={groupByFields}
-                  compact={true}
-                  selectionMode={SelectionMode.single}
-                  selection={this._getSelection}
-                  showFilter={true}
-                  // defaultFilter="Team"
-                  />
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+        // defaultFilter="Team"
+        />
 
 
         <ChartControl type={ChartType.Bar}
-                      data={{
-                            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                            datasets: [{
-                                label: '# of Votes',
-                                data: [12, 19, 3, 5, 2, 3],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)',
-                                    'rgba(255, 206, 86, 0.2)',
-                                    'rgba(75, 192, 192, 0.2)',
-                                    'rgba(153, 102, 255, 0.2)',
-                                    'rgba(255, 159, 64, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255,99,132,1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgba(255, 159, 64, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        }}
-                        options={{
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero:true
-                                    }
-                                }]
-                            }
-                        }} />
+          data={{
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }} />
 
         <Map titleText="New map control"
-             coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-             enableSearch={true}
-             mapType={MapType.normal}
-             onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
-            //  zoom={15}
-            //mapType={MapType.cycle}
-            //width="50"
-            //height={150}
-            //loadingMessage="Loading maps"
-            //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+          enableSearch={true}
+          mapType={MapType.normal}
+          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+        //  zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
+        //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
         <div className={styles.container}>
@@ -400,10 +532,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
                 <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
                 <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
               </div>
               <div className="ms-font-m">Icon size tester:
                 <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
               </div>
 
@@ -418,7 +553,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-                <ListItemPicker listId={this.state.selectedList}
+              <ListItemPicker listId={this.state.selectedList}
                   columnInternalName="Title"
                   itemLimit={5}
                   context={this.props.context}
@@ -426,14 +561,44 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Services tester:
-              <TaxonomyPicker
+                <TaxonomyPicker
                   allowMultipleSelections={true}
-                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
                   panelTitle="Select Sorted Term"
-                  label="Service Picker"
+                  label="Service Picker with custom actions"
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  termActions={{
+                    actions: [{
+                      title: "Get term labels",
+                      iconName: "LocaleLanguage",
+                      id: "test",
+                      invokeActionOnRender: true,
+                      hidden: true,
+                      actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                        // const labels = await taxService.getTermLabels(term.Id);
+                        // if (labels) {
+                        //   let termLabel: string = labels.join(" ; ");
+                        //   const updateAction = {
+                        //     updateActionType: UpdateType.updateTermLabel,
+                        //     value: `${termLabel} (updated)`
+                        //   };
+                        //   return updateAction;
+                        // }
+                        const updateAction = {
+                          updateActionType: UpdateType.updateTermLabel,
+                          value: `${term.Name} (updated)`
+                        };
+                        return updateAction;
+                      },
+                      applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
+                    },
+                      // new TermLabelAction("Get Labels")
+                    ],
+                    termActionsDisplayMode: TermActionsDisplayMode.buttons,
+                    termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+                  }}
                 />
 
                 <TaxonomyPicker
@@ -496,15 +661,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   text="Open iframe Panel"
                   onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
                 <IFramePanel
-                 url={iframeUrl}
-                 type={PanelType.medium}
-                //  height="300px"
-                 headerText="iframe panel title"
-                 closeButtonAriaLabel="Close"
-                 isOpen={this.state.iFramePanelOpened}
-                 onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                 iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                  />
+                  url={iframeUrl}
+                  type={PanelType.medium}
+                  //  height="300px"
+                  headerText="iframe panel title"
+                  closeButtonAriaLabel="Close"
+                  isOpen={this.state.iFramePanelOpened}
+                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                />
               </div>
             </div>
           </div>
@@ -515,6 +680,76 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+        <div>
+          <Progress title={'Progress Test'}
+                    showOverallProgress={true}
+                    showIndeterminateOverallProgress={false}
+                    hideNotStartedActions={false}
+                    actions={this.state.progressActions}
+                    currentActionIndex={this.state.currentProgressActionIndex}
+                    longRunningText={'This operation takes longer than expected'}
+                    longRunningTextDisplayDelay={7000}
+                    height={'350px'}
+                    inProgressIconName={'ChromeBackMirrored'} />
+          <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
+        </div>
+
+
+        <div style={{paddingTop:'70px'}}>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]}
+              gradient={['#00c6ff', '#F0F', '#FF0']}
+              radius={10}
+              strokeWidth={2}
+              strokeLinecap={'butt'}
+            />
+          </div>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={2500}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 9, 2, 1, 10, 30, 53, 0, 2, 10, 8, 2, 9, 0]}
+              gradient={['#00c6ff', '#F0F', '#FF0']}
+              radius={1}
+              strokeWidth={4}
+              strokeLinecap={'round'}
+            />
+          </div>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]}
+              gradient={['red', 'orange', 'yellow']}
+              radius={25}
+              strokeWidth={1.7}
+              strokeLinecap={'round'}
+            />
+          </div>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[9, 2, 5, 2, 5, 10, 3, 2, 9, 0, 1, 8, 5, 2, 0]}
+              gradient={['#222']}
+              radius={0}
+              strokeWidth={1.7}
+              strokeLinecap={'square'}
+            />
+          </div>
+        </div>
+
       </div>
     );
   }
