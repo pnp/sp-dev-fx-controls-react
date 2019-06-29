@@ -34,7 +34,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-
+import { DataTrend } from '../../../DataTrend';
 /**
  * Component that can be used to test out the React controls from this project
  */
@@ -322,10 +322,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({richTextValue: value}); return value; }} />
 
-        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
-          itemId={1}
-          context={this.props.context}
-          disabled={false} />
+
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
@@ -693,6 +690,70 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
+
+
+        <div style={{paddingTop:'70px'}}>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]}
+              gradient={['#00c6ff', '#F0F', '#FF0']}
+              radius={10}
+              strokeWidth={2}
+              strokeLinecap={'butt'}
+            />
+          </div>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={2500}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 9, 2, 1, 10, 30, 53, 0, 2, 10, 8, 2, 9, 0]}
+              gradient={['#00c6ff', '#F0F', '#FF0']}
+              radius={1}
+              strokeWidth={4}
+              strokeLinecap={'round'}
+            />
+
+
+          </div>
+
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0]}
+              gradient={['red', 'orange', 'yellow']}
+              radius={25}
+              strokeWidth={1.7}
+              strokeLinecap={'round'}
+            />
+          </div>
+          <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
+
+            <DataTrend
+              smooth
+              autoDraw
+              autoDrawDuration={3000}
+              autoDrawEasing="ease-out"
+              data={[9, 2, 5, 2, 5, 10, 3, 2, 9, 0, 1, 8, 5, 2, 0]}
+              gradient={['#222']}
+              radius={0}
+              strokeWidth={1.7}
+              strokeLinecap={'square'}
+            />
+
+
+          </div>
+        </div>
+
       </div>
     );
   }
