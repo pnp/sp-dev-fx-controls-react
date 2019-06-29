@@ -322,7 +322,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({richTextValue: value}); return value; }} />
 
-
+        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+          itemId={1}
+          context={this.props.context}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
@@ -707,7 +710,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
           <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
-
             <DataTrend
               smooth
               autoDraw
@@ -719,10 +721,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               strokeWidth={4}
               strokeLinecap={'round'}
             />
-
-
           </div>
-
           <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
             <DataTrend
               smooth
@@ -737,7 +736,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
           <div style={{ height: '150px', width: '300px', marginTop: '20px', display: 'inline-block', verticalAlign: 'top', margin: '20px' }}>
-
             <DataTrend
               smooth
               autoDraw
@@ -749,8 +747,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               strokeWidth={1.7}
               strokeLinecap={'square'}
             />
-
-
           </div>
         </div>
 
