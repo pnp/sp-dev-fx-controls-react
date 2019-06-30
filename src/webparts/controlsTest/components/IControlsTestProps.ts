@@ -1,6 +1,8 @@
-import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { ImageSize } from '../../../FileTypeIcon';
 import { DisplayMode } from '@microsoft/sp-core-library';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
+
+import { ImageSize } from '../../../FileTypeIcon';
+import { Item } from '../../../MultiSelectLookup';
 import { IProgressAction } from '../../../Progress';
 
 export interface IControlsTestProps {
@@ -26,4 +28,6 @@ export interface IControlsTestState {
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
+  multiSelectAvailableData: Item[];
+  multiSelectSelectedData: Item[];
 }

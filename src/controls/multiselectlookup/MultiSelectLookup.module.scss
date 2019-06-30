@@ -1,0 +1,51 @@
+.multiSelectLookup {
+  display: block;
+
+  &_wrapper {
+    width: 100%;
+    display: flex;
+    max-height: 250px;
+
+    &_label {
+      font-weight: bold;
+    }
+  }
+
+  &_listBox {
+    flex: 1;
+    border: 1px solid #333;
+    margin-right: -1px;
+    overflow-y: auto;
+
+    &_select {
+      margin-bottom: 5px;
+      padding: 5px 0;
+    }
+  }
+
+  &_contentDataList {
+    padding-left: 5px;
+
+    &_available {
+      display: flex;
+      align-items: center;
+      height: 32px;
+
+      &_text {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  &_sortableElement {
+    display: flex;
+    align-items: center;
+
+    &_locked {
+      display: inline-block;
+      &_lockedIcon {
+        margin-left: 5px;
+      }
+    }
+  }
+}
