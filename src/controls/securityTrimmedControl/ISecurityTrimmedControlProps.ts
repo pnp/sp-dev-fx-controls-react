@@ -33,4 +33,8 @@ export interface ISecurityTrimmedControlProps {
    * Optional. Specify the ID of the item to check the user permissions against. Takes precedence over folder.
    */
   itemId?: number;
+  /**
+   * Optional. Specify the className to be used on the parent element.
+   */
+  className?: string;
 }

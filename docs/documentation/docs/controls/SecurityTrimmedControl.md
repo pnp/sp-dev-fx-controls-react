@@ -67,6 +67,9 @@ The `SecurityTrimmedControl` can be configured with the following properties:
 | level | PermissionLevel | yes | Specify where to check the user permissions: current site or list / remote site or list. |
 | remoteSiteUrl | string | no | The URL of the remote site. Required when you want to check permissions on remote site or list. |
 | relativeLibOrListUrl | string | no | The relative URL of the list or library. Required when you want to check permissions on remote list. |
+| folderPath | string | no | Specify the name of a folder to check the user permissions against. Will be overridden if itemId is present. |
+| itemId | number | no | Specify the ID of the item to check the user permissions against. Takes precedence over folder. |
+| className | string | no | Specify the className to be used on the parent element. |
 
 The `PermissionLevel` enum has the following values:
 

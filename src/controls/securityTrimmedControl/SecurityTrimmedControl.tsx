@@ -193,9 +193,10 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
    * Default React render method
    */
   public render(): React.ReactElement<ISecurityTrimmedControlProps> {
+    const { className } = this.props;
     return (
       this.state.allowRender ? (
-        <div>{this.props.children}</div>
+        <div className={className ? className : ""}>{this.props.children}</div>
       ) : null
     );
   }
