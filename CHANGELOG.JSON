@@ -8,11 +8,13 @@
           "`IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)"
         ],
         "fixes": [
-          "Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)"
+          "Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)",
+          "`RichText`: Issue on rendering the control in view mode [#287](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/287)"
         ]
       },
       "contributions": [
         "[Amr Fouad](https://github.com/ministainer)",
+        "[Joel Jeffery](https://github.com/joeljeffery)",
         "[Zhephyr](https://github.com/Zhephyr54)"
       ]
     },

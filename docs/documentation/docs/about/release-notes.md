@@ -9,10 +9,11 @@
 ### Fixes
 
 - Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)
+- `RichText`: Issue on rendering the control in view mode [#287](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/287)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Zhephyr](https://github.com/Zhephyr54).
+Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 1.13.2
 
