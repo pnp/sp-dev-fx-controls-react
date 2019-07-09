@@ -1,5 +1,15 @@
 # Releases
 
+## 1.14.0
+
+### Fixes
+
+- Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)
+
+### Contributors
+
+Special thanks to our contributor: [Zhephyr](https://github.com/Zhephyr54).
+
 ## 1.13.2
 
 ### Enhancements

@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Zhephyr](https://github.com/Zhephyr54)"
+      ]
     },
     {
       "version": "1.13.2",
