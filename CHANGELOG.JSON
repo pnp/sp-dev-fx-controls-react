@@ -12,6 +12,7 @@
         ],
         "fixes": [
           "Fix in return type of onClick and onDoubleClick events [#321](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/321)",
+          "`ListPicker`: Fix for available dropdown selection after selection was done [#315](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/315)",
           "Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)",
           "`RichText`: Issue on rendering the control in view mode [#287](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/287)"
         ]
