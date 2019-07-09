@@ -137,15 +137,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (this.props.isEditMode) {
       document.addEventListener('click', this.handleClickOutside);
       document.addEventListener('focus', this.handleClickOutside);
+
+      const clientRect: ClientRect = this._wrapperRef.getBoundingClientRect();
+      const parentClientRect: ClientRect = this._wrapperRef.parentElement.getBoundingClientRect();
+      const toolbarTop: number = clientRect.top - parentClientRect.top - TOOLBARPADDING;
+
+      this.setState({
+        wrapperTop: toolbarTop
+      });
     }
-
-    const clientRect: ClientRect = this._wrapperRef.getBoundingClientRect();
-    const parentClientRect: ClientRect = this._wrapperRef.parentElement.getBoundingClientRect();
-    const toolbarTop: number = clientRect.top - parentClientRect.top - TOOLBARPADDING;
-
-    this.setState({
-      wrapperTop: toolbarTop
-    });
   }
 
   /**
