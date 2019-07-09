@@ -14,6 +14,7 @@ describe('<WebPartTitle />', () => {
   const dummyTitle = "Dummy Title";
   const dummyClass = "DummyClass";
   const dummyMoreLink = "See all";
+  const dummyColor = "#ffffff";
   const dummyPlaceholder = "News";
   const dummyUpdateFnc = sinon.spy((value) => { return value; });
 
@@ -87,4 +88,11 @@ describe('<WebPartTitle />', () => {
     expect(webparttitle.find(`span.${styles.moreLink}`)).to.have.length(0);
     done();
   });
+
+  it('Check theme\'s color is used if specified', (done) => {
+    webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Edit} title={dummyTitle} updateProperty={dummyUpdateFnc} themeVariant={{ semanticColors: { bodyText: dummyColor }}} />);
+    expect(webparttitle.find(`div.${styles.webPartTitle}`).prop('style')).property("color").to.equal(dummyColor);
+    done();
+  });
+
 });

@@ -11,6 +11,7 @@ export interface IWebPartTitleProps {
   className?: string;
   placeholder?: string;
   moreLink?: JSX.Element | Function;
+  themeVariant?: any; // TODO: type should be IReadonlyTheme from @microsoft/sp-component-base
 }
 
 /**
@@ -43,10 +44,13 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
    * Default React component render method
    */
   public render(): React.ReactElement<IWebPartTitleProps> {
+
+    const color: string = (!!this.props.themeVariant && this.props.themeVariant.semanticColors.bodyText) || null;
+
     if (this.props.title || this.props.moreLink || this.props.displayMode === DisplayMode.Edit) {
       return (
         <div className={`${styles.webPartHeader} ${this.props.className ? this.props.className : ""}`}>
-          <div className={styles.webPartTitle}>
+          <div className={styles.webPartTitle} style={{color: color}}>
             {
               this.props.displayMode === DisplayMode.Edit && (
                 <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
