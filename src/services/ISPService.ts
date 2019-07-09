@@ -12,6 +12,7 @@ export interface ILibsOptions {
     orderBy?: LibsOrderBy;
     baseTemplate?: number;
     includeHidden?: boolean;
+    filter?: string;
 }
 
 export interface ISPService {

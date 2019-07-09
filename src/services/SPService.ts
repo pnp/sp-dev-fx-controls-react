@@ -22,14 +22,18 @@ export default class SPService implements ISPService {
       queryUrl += `&$orderby=${options.orderBy === LibsOrderBy.Id ? 'Id' : 'Title'}`;
     }
 
-    if (options.baseTemplate) {
-      queryUrl += `&$filter=BaseTemplate eq ${options.baseTemplate}`;
-      filtered = true;
-    }
+    if (options.filter) {
+      queryUrl += `&$filter=${encodeURIComponent(options.filter)}`;
+    } else {
+      if (options.baseTemplate) {
+        queryUrl += `&$filter=BaseTemplate eq ${options.baseTemplate}`;
+        filtered = true;
+      }
 
-    if (options.includeHidden === false) {
-      queryUrl += filtered ? ' and Hidden eq false' : '&$filter=Hidden eq false';
-      filtered = true;
+      if (options.includeHidden === false) {
+        queryUrl += filtered ? ' and Hidden eq false' : '&$filter=Hidden eq false';
+        filtered = true;
+      }
     }
 
     const data = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);

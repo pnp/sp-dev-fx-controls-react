@@ -27,6 +27,10 @@ export interface IListPickerProps {
   */
   includeHidden?: boolean;
   /**
+   * Filter list from OData query (takes precendents over Hidden and BaseTemplate Filters)
+   */
+  filter?: string;
+  /**
   * How to order the lists retrieved from SharePoint
   */
   orderBy?: LibsOrderBy;

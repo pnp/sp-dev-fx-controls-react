@@ -63,7 +63,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   * Loads the list from SharePoint current web site
   */
   private loadLists() {
-    const { context, baseTemplate, includeHidden, orderBy, multiSelect, selectedList } = this.props;
+    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter, selectedList } = this.props;
 
     // Show the loading indicator and disable the dropdown
     this.setState({ loading: true });
@@ -72,7 +72,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     service.getLibs({
       baseTemplate: baseTemplate,
       includeHidden: includeHidden,
-      orderBy: orderBy
+      orderBy: orderBy,
+      filter: filter
     }).then((results) => {
       // Start mapping the lists to the dropdown option
       results.value.map(list => {
