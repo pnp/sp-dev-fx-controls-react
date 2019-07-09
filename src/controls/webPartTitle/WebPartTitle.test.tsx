@@ -89,12 +89,6 @@ describe('<WebPartTitle />', () => {
     done();
   });
 
-  it('Check color is used if specified', (done) => {
-    webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Edit} title={dummyTitle} updateProperty={dummyUpdateFnc} color={dummyColor} />);
-    expect(webparttitle.find(`div.${styles.webPartTitle}`).prop('style')).property("color").to.equal(dummyColor);
-    done();
-  });
-
   it('Check theme\'s color is used if specified', (done) => {
     webparttitle = mount(<WebPartTitle displayMode={DisplayMode.Edit} title={dummyTitle} updateProperty={dummyUpdateFnc} themeVariant={{ semanticColors: { bodyText: dummyColor }}} />);
     expect(webparttitle.find(`div.${styles.webPartTitle}`).prop('style')).property("color").to.equal(dummyColor);
