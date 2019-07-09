@@ -4,12 +4,15 @@
       "version": "1.14.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)"
+        ],
         "fixes": [
           "Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)"
         ]
       },
       "contributions": [
+        "[Amr Fouad](https://github.com/ministainer)",
         "[Zhephyr](https://github.com/Zhephyr54)"
       ]
     },

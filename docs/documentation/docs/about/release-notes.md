@@ -2,13 +2,17 @@
 
 ## 1.14.0
 
+### Enhancements
+
+- `IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)
+
 ### Fixes
 
 - Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)
 
 ### Contributors
 
-Special thanks to our contributor: [Zhephyr](https://github.com/Zhephyr54).
+Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 1.13.2
 
