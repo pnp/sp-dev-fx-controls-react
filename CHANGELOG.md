@@ -9,12 +9,13 @@
 
 ### Fixes
 
+- Fix in return type of onClick and onDoubleClick events [#321](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/321)
 - Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)
 - `RichText`: Issue on rendering the control in view mode [#287](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/287)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Mark Powney](https://github.com/mpowney), [Zhephyr](https://github.com/Zhephyr54).
+Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Mark Powney](https://github.com/mpowney), [Alex Terentiev](https://github.com/AJIXuMuK), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 1.13.2
 
