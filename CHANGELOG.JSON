@@ -5,6 +5,7 @@
       "changes": {
         "new": [],
         "enhancements": [
+          "`SecurityTrimmedControl`: Added a wrapper `className` property for the parent element [#325](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/325)",
           "`IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)",
           "`WebPartTitle` add support for section background color [#258](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/258)"
         ],
