@@ -33,7 +33,7 @@ export interface IFieldLookupRendererProps extends IFieldRendererProps {
     /**
      * custom event handler of lookup item click. If not set the dialog with Display Form will be shown
      */
-    onClick?: (args: IFieldLookupClickEventArgs) => {};
+    onClick?: (args: IFieldLookupClickEventArgs) => void;
     /**
      * Field's id.
      */
