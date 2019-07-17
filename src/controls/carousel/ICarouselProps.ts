@@ -47,11 +47,11 @@ export interface ICarouselProps {
   canMovePrev?: boolean;
 
   /**
-   * Specify the location of the buttons inside the container.
+   * Specifies the location of the buttons inside the container.
    */
   buttonsLocation: CarouselButtonsLocation;
   /**
-   * Specify the buttons container display mode.
+   * Specifies the buttons container display mode.
    */
   buttonsDisplay: CarouselButtonsDisplay;
 
@@ -96,7 +96,7 @@ export interface ICarouselProps {
    * Fixed array of elemenets to be displayed in carousel - if triggerPageEvent is not used.
    * In case triggerPageEvent is in use, JSX.Element has to be provided. Elements are distinguished based on the 'key' property.
    */
-  element: JSX.Element| JSX.Element[];
+  element: JSX.Element | JSX.Element[];
   /**
    * Allows to inject custom component when the carousel is in processing state. If not provided, Spinner is displayed.
    */
