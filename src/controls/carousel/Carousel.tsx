@@ -60,7 +60,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     return (
       <div className={this.getMergedStyles(styles.container, containerStyles)}>
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
+        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
             iconProps={{ iconName: prevButtonIconName }}
@@ -87,7 +87,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           }
         </div>
 
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
+        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
             iconProps={{ iconName: nextButtonIconName }}
