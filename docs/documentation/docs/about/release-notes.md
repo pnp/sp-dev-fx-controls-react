@@ -4,6 +4,7 @@
 
 ### Enhancements
 
+- German translations added for attachment and RichText controls [#333](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/333)
 - `SecurityTrimmedControl`: Added a wrapper `className` property for the parent element [#325](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/325)
 - `ListPicker`: Add ability to filter the control via OData [#319](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/319)
 - `IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)
@@ -18,7 +19,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Mark Powney](https://github.com/mpowney), [Alex Terentiev](https://github.com/AJIXuMuK), [Zhephyr](https://github.com/Zhephyr54).
+Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Mark Powney](https://github.com/mpowney), [Dominik Schmieder](https://github.com/DominikSchmieder), [Alex Terentiev](https://github.com/AJIXuMuK), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 1.13.2
 
