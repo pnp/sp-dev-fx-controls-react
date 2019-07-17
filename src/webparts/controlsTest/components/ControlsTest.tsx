@@ -287,6 +287,10 @@ export default class ControlsTest extends React.Component<
         availableData={this.state.multiSelectAvailableData}
         selectedData={this.state.multiSelectSelectedData}
         onChanged={this.handleChangeMultiSelect}
+        renderAvailableItem={() => {}}
+        renderSelectedItem={() => {}}
+        renderRemoveItemButtom={() => {}}
+        listsStyles={{}}
       />
     );
   }
