@@ -17,4 +17,8 @@ export interface IControlsTestState {
   iFrameDialogOpened?: boolean;
   authorEmails: string[];
   selectedList: string;
+
+  currentCarouselElement: JSX.Element;
+  canMovePrev: boolean;
+  canMoveNext: boolean;
 }

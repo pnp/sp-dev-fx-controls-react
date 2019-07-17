@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -18,13 +17,25 @@ import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
-import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
 import { ListItemPicker } from "../../../ListItemPicker";
+import { Carousel } from '../../../../lib/controls/carousel';
+import { CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
+  /**
+   * Static array for carousel control example.
+   */
+  private carouselElements = [
+    <div id="1" key="1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a mattis libero, nec consectetur neque. Suspendisse potenti. Fusce ultrices faucibus consequat. Suspendisse ex diam, ullamcorper sit amet justo ac, accumsan congue neque. Vestibulum aliquam mauris non justo convallis, id molestie purus sodales. Maecenas scelerisque aliquet turpis, ac efficitur ex iaculis et. Vivamus finibus mi eget urna tempor, sed porta justo tempus. Vestibulum et lectus magna. Integer ante felis, ullamcorper venenatis lectus ac, vulputate pharetra magna. Morbi eget nisl tempus, viverra diam ac, mollis tortor. Nam odio ex, viverra bibendum mauris vehicula, consequat suscipit ligula. Nunc sed ultrices augue, eu tincidunt diam.</div>,
+    <div id="2" key="2">Quisque metus lectus, facilisis id consectetur ac, hendrerit eget quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut faucibus posuere felis vel efficitur. Maecenas et massa in sem tincidunt finibus. Duis sit amet bibendum nisi. Vestibulum pretium pretium libero, vel tincidunt sem vestibulum sed. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quam lorem, venenatis id bibendum id, tempus eu nibh. Sed tristique semper ligula, vitae gravida diam gravida vitae. Donec eget posuere mauris, pharetra semper lectus.</div>,
+    <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
+    <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
+    <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
+
   constructor(props: IControlsTestProps) {
     super(props);
 
@@ -34,7 +45,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iFrameDialogOpened: false,
       initialValues: [],
       authorEmails: [],
-      selectedList: null
+      selectedList: null,
+      canMovePrev: false,
+      canMoveNext: true,
+      currentCarouselElement: this.carouselElements[0]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -54,17 +68,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         });
       });
 
-      // // Get Authors in the SharePoint Document library -- For People Picker Testing
-      // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
-      // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
-      // .then(resp => { return resp.json(); })
-      // .then(items => {
-      //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
-      //   console.log(emails);
-      //   this.setState({
-      //     authorEmails: emails
-      //   });
-      // });
+    // // Get Authors in the SharePoint Document library -- For People Picker Testing
+    // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
+    // this.props.context.spHttpClient.get(restAuthorApi, SPHttpClient.configurations.v1)
+    // .then(resp => { return resp.json(); })
+    // .then(items => {
+    //   let emails : string[] = items.value ? items.value.map((item, key)=> { return item.Author.EMail}) : [];
+    //   console.log(emails);
+    //   this.setState({
+    //     authorEmails: emails
+    //   });
+    // });
   }
 
   /**
@@ -92,14 +106,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('Items:', items);
   }
 
-/**
- *
- *Method that retrieves the selected terms from the taxonomy picker and sets state
- * @private
- * @param {IPickerTerms} terms
- * @memberof ControlsTest
- */
-private onServicePickerChange(terms: IPickerTerms): void {
+  /**
+   *
+   *Method that retrieves the selected terms from the taxonomy picker and sets state
+   * @private
+   * @param {IPickerTerms} terms
+   * @memberof ControlsTest
+   */
+  private onServicePickerChange(terms: IPickerTerms): void {
     this.setState({
       initialValues: terms
     });
@@ -110,7 +124,7 @@ private onServicePickerChange(terms: IPickerTerms): void {
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange = (terms : IPickerTerms) => {
+  private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
       initialValues: terms
     });
@@ -154,6 +168,23 @@ private onServicePickerChange(terms: IPickerTerms): void {
    */
   private listItemPickerDataSelected(item: any) {
     console.log(item);
+  }
+
+  /**
+   * Triggers element change for the carousel example.
+   */
+  private triggerNextElement = (index: number): void => {
+    const canMovePrev = index > 0;
+    const canMoveNext = index < this.carouselElements.length - 1;
+    const nextElement = this.carouselElements[index];
+
+    setTimeout(() => {
+      this.setState({
+        canMovePrev,
+        canMoveNext,
+        currentCarouselElement: nextElement
+      });
+    }, 500);
   }
 
   /**
@@ -268,42 +299,42 @@ private onServicePickerChange(terms: IPickerTerms): void {
 
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
-                            label="Select your list(s)"
-                            placeHolder="Select your list(s)"
-                            baseTemplate={100}
-                            includeHidden={false}
-                            multiSelect={true}
-                            onSelectionChanged={this.onListPickerChange} />
+                  label="Select your list(s)"
+                  placeHolder="Select your list(s)"
+                  baseTemplate={100}
+                  includeHidden={false}
+                  multiSelect={true}
+                  onSelectionChanged={this.onListPickerChange} />
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
                 <ListItemPicker listId={this.state.selectedList}
-                                     columnInternalName="Title"
-                                     itemLimit={5}
-                                     context={this.props.context}
-                                     onSelectedItem={this.listItemPickerDataSelected} />
+                  columnInternalName="Title"
+                  itemLimit={5}
+                  context={this.props.context}
+                  onSelectedItem={this.listItemPickerDataSelected} />
               </div>
 
               <div className="ms-font-m">Services tester:
               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
-                panelTitle="Select Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                  allowMultipleSelections={true}
+                  termsetNameOrID="ef1d77ab-51f6-492f-bf28-223a8ebc4b65" // id to termset that has a custom sort
+                  panelTitle="Select Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
-               <TaxonomyPicker
-                allowMultipleSelections={true}
-                termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
-                panelTitle="Select Default Sorted Term"
-                label="Service Picker"
-                context={this.props.context}
-                onChange={this.onServicePickerChange}
-                isTermSetSelectable={false}
-              />
+                <TaxonomyPicker
+                  allowMultipleSelections={true}
+                  termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+                  panelTitle="Select Default Sorted Term"
+                  label="Service Picker"
+                  context={this.props.context}
+                  onChange={this.onServicePickerChange}
+                  isTermSetSelectable={false}
+                />
 
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
@@ -320,16 +351,16 @@ private onServicePickerChange(terms: IPickerTerms): void {
                   onChange={this._onTaxPickerChange}
                   isTermSetSelectable={false} />
 
-                  <DefaultButton text="Add" onClick={() => {
-                    this.setState({
-                      initialValues: [{
-                        key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                        name: "HR",
-                        path: "HR",
-                        termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-                      }]
-                    });
-                  }} />
+                <DefaultButton text="Add" onClick={() => {
+                  this.setState({
+                    initialValues: [{
+                      key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                      name: "HR",
+                      path: "HR",
+                      termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                    }]
+                  });
+                }} />
               </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
@@ -374,27 +405,59 @@ private onServicePickerChange(terms: IPickerTerms): void {
           selectionMode={SelectionMode.single}
           selection={this._getSelection} />
 
-          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
 
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker"
-            personSelectionLimit={5}
-            // groupName={"Team Site Owners"}
-            showtooltip={true}
-            isRequired={true}
-            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-            //defaultSelectedUsers={this.state.authorEmails}
-            selectedItems={this._getPeoplePickerItems}
-            showHiddenInUI={false}
-            principleTypes={[PrincipalType.User]}
-            suggestionsLimit={2} />
+        <PeoplePicker
+          context={this.props.context}
+          titleText="People Picker"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          isRequired={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          selectedItems={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principleTypes={[PrincipalType.User]}
+          suggestionsLimit={2} />
 
-          <PeoplePicker
-            context={this.props.context}
-            titleText="People Picker (disabled)"
-            disabled={true}
-            showtooltip={true} />
+        <PeoplePicker
+          context={this.props.context}
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true} />
+
+        <div>
+          <h3>Carousel with fixed elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.top}
+            buttonsDisplay={CarouselButtonsDisplay.block}
+
+            contentContainerStyles={styles.carouselContent}
+            containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+
+            element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with triggerPageElement:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.bottom}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselContent}
+
+            canMoveNext={this.state.canMoveNext}
+            canMovePrev={this.state.canMovePrev}
+            triggerPageEvent={this.triggerNextElement}
+            element={this.state.currentCarouselElement}
+          />
+        </div>
       </div>
     );
   }
