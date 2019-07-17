@@ -510,7 +510,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
 
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]}>
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"}>
                 <p>You have permissions to view list items.</p>
               </SecurityTrimmedControl>
 
@@ -549,6 +549,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
+                  // filter="Title eq 'Test List'"
                   onSelectionChanged={this.onListPickerChange} />
               </div>
 

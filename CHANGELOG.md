@@ -1,5 +1,26 @@
 # Releases
 
+## 1.14.0
+
+### Enhancements
+
+- German translations added for attachment and RichText controls [#333](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/333)
+- `SecurityTrimmedControl`: Added a wrapper `className` property for the parent element [#325](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/325)
+- `ListPicker`: Add ability to filter the control via OData [#319](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/319)
+- `IFrameDialog`: closing dialog on commit [#313](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/313)
+- `WebPartTitle` add support for section background color [#258](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/258)
+
+### Fixes
+
+- Fix in return type of onClick and onDoubleClick events [#321](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/321)
+- `ListPicker`: Fix for available dropdown selection after selection was done [#315](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/315)
+- Fixes to French translations [#312](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/312)
+- `RichText`: Issue on rendering the control in view mode [#287](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/287)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Amr Fouad](https://github.com/ministainer), [Joel Jeffery](https://github.com/joeljeffery), [Mark Powney](https://github.com/mpowney), [Dominik Schmieder](https://github.com/DominikSchmieder), [Alex Terentiev](https://github.com/AJIXuMuK), [Zhephyr](https://github.com/Zhephyr54).
+
 ## 1.13.2
 
 ### Enhancements

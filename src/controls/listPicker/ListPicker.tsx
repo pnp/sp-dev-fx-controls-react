@@ -7,6 +7,7 @@ import { SPServiceFactory } from '../../services/SPServiceFactory';
 import * as telemetry from '../../common/telemetry';
 
 import styles from './ListPicker.module.scss';
+import { cloneDeep } from '@microsoft/sp-lodash-subset';
 
 /**
 * Empty list value, to be checked for single list selection
@@ -17,8 +18,7 @@ const EMPTY_LIST_KEY = 'NO_LIST_SELECTED';
 * Renders the controls for the ListPicker component
 */
 export class ListPicker extends React.Component<IListPickerProps, IListPickerState> {
-  private _options: IDropdownOption[] = [];
-  private _selectedList: string | string[];
+  private _selectedList: string | string[] = null;
 
   /**
   * Constructor method
@@ -29,11 +29,9 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     telemetry.track('ReactListPicker');
 
     this.state = {
-      options: this._options,
+      options: [],
       loading: false
     };
-
-    this.onChanged = this.onChanged.bind(this);
   }
 
   /**
@@ -52,10 +50,13 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     if (
       prevProps.baseTemplate !== this.props.baseTemplate ||
       prevProps.includeHidden !== this.props.includeHidden ||
-      prevProps.orderBy !== this.props.orderBy ||
-      prevProps.selectedList !== this.props.selectedList
+      prevProps.orderBy !== this.props.orderBy
     ) {
       this.loadLists();
+    }
+
+    if (prevProps.selectedList !== this.props.selectedList) {
+      this.setSelectedLists();
     }
   }
 
@@ -63,7 +64,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   * Loads the list from SharePoint current web site
   */
   private loadLists() {
-    const { context, baseTemplate, includeHidden, orderBy, multiSelect, selectedList } = this.props;
+    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter } = this.props;
 
     // Show the loading indicator and disable the dropdown
     this.setState({ loading: true });
@@ -72,32 +73,42 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     service.getLibs({
       baseTemplate: baseTemplate,
       includeHidden: includeHidden,
-      orderBy: orderBy
+      orderBy: orderBy,
+      filter: filter
     }).then((results) => {
+      let options: IDropdownOption[] = [];
+
       // Start mapping the lists to the dropdown option
-      results.value.map(list => {
-        this._options.push({
-          key: list.Id,
-          text: list.Title
-        });
-      });
+      options = results.value.map(list => ({
+        key: list.Id,
+        text: list.Title
+      }));
 
       if (multiSelect !== true) {
         // Add option to unselct list
-        this._options.unshift({
+        options.unshift({
           key: EMPTY_LIST_KEY,
           text: ''
         });
       }
 
-      this._selectedList = this.props.selectedList;
+      this.setSelectedLists();
 
       // Hide the loading indicator and set the dropdown options and enable the dropdown
       this.setState({
         loading: false,
-        options: this._options,
-        selectedList: this._selectedList
+        options: options
       });
+    });
+  }
+
+  /**
+   * Set the currently selected list
+   */
+  private setSelectedLists() {
+    this._selectedList = cloneDeep(this.props.selectedList);
+    this.setState({
+      selectedList: this._selectedList
     });
   }
 
@@ -106,28 +117,25 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   * @param option the new selection
   * @param index the index of the selection
   */
-  private onChanged(option: IDropdownOption, index?: number): void {
+  private onChanged = (option: IDropdownOption, index?: number): void => {
     const { multiSelect, onSelectionChanged } = this.props;
 
     if (multiSelect === true) {
-      if (!this._selectedList) {
-        this._selectedList = [] as string[];
-      }
-
-      const selectedLists: string[] = this._selectedList as string[];
       // Check if option was selected
+      let selectedLists = this._selectedList ? cloneDeep(this._selectedList) as string[] : ["test"];
       if (option.selected) {
         selectedLists.push(option.key as string);
       } else {
         // Filter out the unselected list
-        this._selectedList = selectedLists.filter(list => list !== option.key);
+        selectedLists = selectedLists.filter(list => list !== option.key);
       }
+      this._selectedList = selectedLists;
     } else {
       this._selectedList = option.key as string;
     }
 
     if (onSelectionChanged) {
-      onSelectionChanged(this._selectedList);
+      onSelectionChanged(cloneDeep(this._selectedList));
     }
   }
 
