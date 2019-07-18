@@ -4,11 +4,9 @@ import { initializeIcons } from '@uifabric/icons';
 initializeIcons();
 
 import * as React from "react";
-// import { ICarouselProps, ICarouselState } from ".";
 import styles from "./Carousel.module.scss";
-import { ICarouselProps, ICarouselState, CarouselButtonsDisplay } from ".";
+import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation } from ".";
 import { css, ICssInput } from "@uifabric/utilities/lib";
-import { CarouselButtonsLocation } from "../../../lib/controls/carousel";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
