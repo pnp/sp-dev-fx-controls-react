@@ -10,12 +10,15 @@ import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
+import * as telemetry from '../../common/telemetry';
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   constructor(props: ICarouselProps) {
     super(props);
 
     const currentIndex = props.startIndex ? props.startIndex : 0;
+
+    telemetry.track('ReactCarousel', {});
 
     this.state = {
       currentIndex,
@@ -58,7 +61,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     return (
       <div className={this.getMergedStyles(styles.container, containerStyles)}>
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
+        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
+             onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
             iconProps={{ iconName: prevButtonIconName }}
@@ -85,7 +89,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           }
         </div>
 
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)} onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
+        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
+             onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
             iconProps={{ iconName: nextButtonIconName }}
@@ -99,7 +104,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   /**
    * Return merged styles for Button containers.
    */
-  private getButtonContainerStyles = (): string => {
+  private getButtonContainerStyles(): string {
     const buttonsDisplayMode = this.props.buttonsDisplay ? this.props.buttonsDisplay : CarouselButtonsDisplay.block;
     let buttonDisplayModeCss = "";
     switch (buttonsDisplayMode) {
