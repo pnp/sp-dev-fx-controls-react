@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.15.0",
+      "changes": {
+        "new": [
+          "`Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)"
+        ],
+        "enhancements": [],
+        "fixes": []
+      },
+      "contributions": [
+        "[Piotr Siatka](https://github.com/siata13)"
+      ]
+    },
+    {
       "version": "1.14.0",
       "changes": {
         "new": [],
