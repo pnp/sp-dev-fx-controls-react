@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -34,6 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -41,6 +41,17 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
+
+  /**
+   * Static array for carousel control example.
+   */
+  private carouselElements = [
+    <div id="1" key="1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a mattis libero, nec consectetur neque. Suspendisse potenti. Fusce ultrices faucibus consequat. Suspendisse ex diam, ullamcorper sit amet justo ac, accumsan congue neque. Vestibulum aliquam mauris non justo convallis, id molestie purus sodales. Maecenas scelerisque aliquet turpis, ac efficitur ex iaculis et. Vivamus finibus mi eget urna tempor, sed porta justo tempus. Vestibulum et lectus magna. Integer ante felis, ullamcorper venenatis lectus ac, vulputate pharetra magna. Morbi eget nisl tempus, viverra diam ac, mollis tortor. Nam odio ex, viverra bibendum mauris vehicula, consequat suscipit ligula. Nunc sed ultrices augue, eu tincidunt diam.</div>,
+    <div id="2" key="2">Quisque metus lectus, facilisis id consectetur ac, hendrerit eget quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut faucibus posuere felis vel efficitur. Maecenas et massa in sem tincidunt finibus. Duis sit amet bibendum nisi. Vestibulum pretium pretium libero, vel tincidunt sem vestibulum sed. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quam lorem, venenatis id bibendum id, tempus eu nibh. Sed tristique semper ligula, vitae gravida diam gravida vitae. Donec eget posuere mauris, pharetra semper lectus.</div>,
+    <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
+    <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
+    <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
 
   constructor(props: IControlsTestProps) {
     super(props);
@@ -55,7 +66,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedList: null,
       progressActions: this._initProgressActions(),
       dateTimeValue: new Date(),
-      richTextValue: null
+      richTextValue: null,
+      canMovePrev: false,
+      canMoveNext: true,
+      currentCarouselElement: this.carouselElements[0]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -229,6 +243,23 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, {
       title: 'Fourth Step'
     }];
+  }
+
+  /**
+   * Triggers element change for the carousel example.
+   */
+  private triggerNextElement = (index: number): void => {
+    const canMovePrev = index > 0;
+    const canMoveNext = index < this.carouselElements.length - 1;
+    const nextElement = this.carouselElements[index];
+
+    setTimeout(() => {
+      this.setState({
+        canMovePrev,
+        canMoveNext,
+        currentCarouselElement: nextElement
+      });
+    }, 500);
   }
 
   /**
@@ -554,7 +585,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-              <ListItemPicker listId={this.state.selectedList}
+                <ListItemPicker listId={this.state.selectedList}
                   columnInternalName="Title"
                   itemLimit={5}
                   context={this.props.context}
@@ -674,6 +705,38 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
             </div>
           </div>
+        </div>
+
+        <div>
+          <h3>Carousel with fixed elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.top}
+            buttonsDisplay={CarouselButtonsDisplay.block}
+
+             contentContainerStyles={styles.carouselContent}
+            containerButtonsStyles={styles.carouselButtonsContainer}
+
+             isInfinite={true}
+
+             element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+         <div>
+          <h3>Carousel with triggerPageElement:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.bottom}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+             contentContainerStyles={styles.carouselContent}
+
+             canMoveNext={this.state.canMoveNext}
+            canMovePrev={this.state.canMovePrev}
+            triggerPageEvent={this.triggerNextElement}
+            element={this.state.currentCarouselElement}
+          />
         </div>
 
         <div className={styles.siteBreadcrumb}>
