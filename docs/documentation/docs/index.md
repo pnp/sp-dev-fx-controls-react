@@ -49,6 +49,8 @@ The following controls are currently available:
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
+- [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
+- [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 
 Field customizer controls:
 
