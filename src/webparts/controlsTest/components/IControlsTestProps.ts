@@ -30,4 +30,6 @@ export interface IControlsTestState {
   canMoveNext: boolean;
   multiSelectAvailableData: Item[];
   multiSelectSelectedData: Item[];
+  multiSelectSelectedDataLocked: Item[];
+  multiSelectSelectedDataList: Item[];
 }

@@ -10,7 +10,7 @@ import { IMultiSelectLookupProps, IOnChangeState, Item } from './IMultiSelectLoo
 import { IMultiSelectLookupState } from './IMultiSelectLookupState';
 import styles from './MultiSelectLookup.module.scss';
 import { SelectedDataList } from './SelectedDataList';
-import { MultiSelectLookupUtils } from './Utlis';
+import { MultiSelectLookupUtils } from '../../common/utilities';
 
 /** TODO: add some sortable to selected datas in the feature */
 
@@ -29,7 +29,8 @@ export class MultiSelectLookup extends React.Component<
     checkboxLabel: strings.MultiSelectLookup.checkboxLabel,
     availableData: [],
     selectedData: [],
-    className: ""
+    className: "",
+    onChanged: (value: IOnChangeState) => { }
   };
 
   constructor(props: IMultiSelectLookupProps) {
@@ -76,6 +77,7 @@ export class MultiSelectLookup extends React.Component<
       nextState.selectedData,
       nextState.keyword
     );
+
     nextState.checked =
       filteredAvailable.length > 0 &&
       filteredAvailable.length === filteredSelected.length;
@@ -198,13 +200,14 @@ export class MultiSelectLookup extends React.Component<
         ...MultiSelectLookupUtils.filterData(
           this.state.availableData,
           this.state.keyword
-        )
+        ).filter(item => !item.isLocked)
       ];
     } else {
       const filtered = MultiSelectLookupUtils.filterData(
         this.state.selectedData,
         this.state.keyword
       );
+
 
       selectedData = this.state.selectedData.filter(data => {
         if (data.isLocked) {
@@ -219,7 +222,19 @@ export class MultiSelectLookup extends React.Component<
       });
     }
 
-    this.handleChange({ allSelected: !this.state.checked, selectedData });
+    const result = [];
+    const map = new Map();
+    for (const item of selectedData) {
+      if (!map.has(item.value)) {
+        map.set(item.value, true);
+        result.push({ ...item });
+      }
+    }
+
+    this.handleChange({
+      allSelected: !this.state.checked,
+      selectedData: result
+    });
     this.setState(({ checked }) => ({ checked: !checked }));
   }
 

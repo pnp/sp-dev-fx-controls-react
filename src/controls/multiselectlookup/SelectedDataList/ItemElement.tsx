@@ -1,4 +1,3 @@
-import { css } from 'office-ui-fabric-react';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import * as React from 'react';
@@ -17,29 +16,27 @@ export const ItemElement = ({
   handleItemRemove,
   showRemoveIcon
 }: IElement) => (
-  <div
-    key={item.value}
-    className={css(
-      styles.multiSelectLookup_element,
-      item.isLocked ? styles.multiSelectLookup_element_locked : null
-    )}
-  >
-    <span>{item.label}</span>
+    <div
+      key={item.value}
+      className={styles.multiSelectLookup_element}
+    >
+      <span>{item.label}</span>
 
-    {item.isLocked && (
-      <Icon
-        iconName={"LockSolid"}
-        className={styles.multiSelectLookup_element_locked_lockedIcon}
-      />
-    )}
+      {item.isLocked && (
+        <Icon
+          iconName={"LockSolid"}
+          className={styles.multiSelectLookup_element_locked_lockedIcon}
+        />
+      )}
 
-    {!item.isLocked && showRemoveIcon && (
-      <IconButton
-        iconProps={{ iconName: "Delete" }}
-        title="Delete"
-        ariaLabel="Delete"
-        onClick={handleItemRemove}
-      />
-    )}
-  </div>
-);
+      {!item.isLocked && showRemoveIcon && (
+        <IconButton
+          className={styles.multiSelectLookup_element_trash}
+          iconProps={{ iconName: "Delete" }}
+          title="Delete"
+          ariaLabel="Delete"
+          onClick={handleItemRemove}
+        />
+      )}
+    </div>
+  );

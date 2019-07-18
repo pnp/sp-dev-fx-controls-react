@@ -1,4 +1,4 @@
-import { Item } from './IMultiSelectLookup';
+import { Item } from '../../MultiSelectLookup';
 
 const escapeKeyword = (keyword: string) =>
   keyword.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");

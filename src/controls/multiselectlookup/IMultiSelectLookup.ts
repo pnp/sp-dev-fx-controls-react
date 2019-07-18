@@ -68,11 +68,11 @@ export interface IMultiSelectLookupProps {
   /**
    * start selected data (which includes in availableData)
    */
-  selectedData?: Item[];
+  selectedData: Item[];
 
   /**
    */
-  onChanged?: (value: IOnChangeState) => void;
+  onChanged: (value: IOnChangeState) => void;
 }
 
 export interface Item {

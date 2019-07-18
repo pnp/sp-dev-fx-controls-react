@@ -3,13 +3,13 @@ import * as React from 'react';
 
 import { Item } from '../IMultiSelectLookup';
 import styles from '../MultiSelectLookup.module.scss';
-import { MultiSelectLookupUtils } from '../Utlis';
+import { MultiSelectLookupUtils } from '../../../common/utilities';
 import { IAvailableDataListProps, IAvailableDataListState } from './IAvailableDataList';
 
 export class AvailableDataList extends React.Component<
   IAvailableDataListProps,
   IAvailableDataListState
-> {
+  > {
   constructor(props: IAvailableDataListProps) {
     super(props);
 
@@ -38,7 +38,7 @@ export class AvailableDataList extends React.Component<
         {this.state.visibleItems.map(item => (
           <div
             key={item.value}
-            className={styles.multiSelectLookup_contentDataList_available}
+            className={styles.multiSelectLookup_element}
           >
             <Checkbox
               checked={item.isSelected}
@@ -47,7 +47,7 @@ export class AvailableDataList extends React.Component<
             />
             <span
               className={
-                styles.multiSelectLookup_contentDataList_available_text
+                styles.multiSelectLookup_element_text
               }
             >
               {item.label}

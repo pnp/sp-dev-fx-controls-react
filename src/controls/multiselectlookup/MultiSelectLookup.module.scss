@@ -1,3 +1,5 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
 .multiSelectLookup {
   display: block;
 
@@ -5,6 +7,7 @@
     width: 100%;
     display: flex;
     max-height: 250px;
+    justify-content: space-between;
 
     &_label {
       font-weight: bold;
@@ -12,10 +15,9 @@
   }
 
   &_listBox {
-    flex: 1;
-    border: 1px solid #333;
     margin-right: -1px;
     overflow-y: auto;
+    width: calc(50% - 1px);
 
     &_select {
       margin-bottom: 5px;
@@ -24,28 +26,37 @@
   }
 
   &_contentDataList {
-    padding-left: 5px;
-
-    &_available {
-      display: flex;
-      align-items: center;
-      height: 32px;
-
-      &_text {
-        margin-left: 5px;
-      }
-    }
+    display: block;
   }
 
   &_element {
     display: flex;
     align-items: center;
+    height: 32px;
+    background-color: $ms-color-neutralLighter;
+    color: $ms-color-neutralPrimary;
+    margin-bottom: 2px;
+    padding: 2px;
+    padding-left: 10px;
 
-    &_locked {
-      display: inline-block;
-      &_lockedIcon {
-        margin-left: 5px;
-      }
+    &_text {
+      margin-left: 5px;
+    }
+
+    &_trash i:hover {
+      color: $ms-color-themePrimary;
+    }
+
+    &_locked_lockedIcon {
+      font-size: 16px;
+      padding-right: 8px;
+    }
+
+    &_locked_lockedIcon, &_trash{
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 5px;
     }
   }
 }
