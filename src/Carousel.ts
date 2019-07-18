@@ -1,1 +1,1 @@
-export * from "./controls/carousel";
+export * from "./controls/carousel/index";
