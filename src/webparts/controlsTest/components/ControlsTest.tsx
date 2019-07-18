@@ -18,8 +18,7 @@ import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimme
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
 import { ListItemPicker } from "../../../ListItemPicker";
-import { Carousel } from '../../../../lib/controls/carousel';
-import { CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 
 /**
  * Component that can be used to test out the React controls from this project
