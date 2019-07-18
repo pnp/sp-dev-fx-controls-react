@@ -20,8 +20,8 @@ export const ItemElement = ({
   <div
     key={item.value}
     className={css(
-      styles.multiSelectLookup_sortableElement,
-      item.isLocked ? styles.multiSelectLookup_sortableElement_locked : null
+      styles.multiSelectLookup_element,
+      item.isLocked ? styles.multiSelectLookup_element_locked : null
     )}
   >
     <span>{item.label}</span>
@@ -29,7 +29,7 @@ export const ItemElement = ({
     {item.isLocked && (
       <Icon
         iconName={"LockSolid"}
-        className={styles.multiSelectLookup_sortableElement_locked_lockedIcon}
+        className={styles.multiSelectLookup_element_locked_lockedIcon}
       />
     )}
 

@@ -1,3 +1,5 @@
+import { Web } from '@pnp/sp';
+
 /**
  * MultiSelectLookup component props.
  */
@@ -47,9 +49,21 @@ export interface IMultiSelectLookupProps {
   checkboxLabel?: string;
 
   /**
+   * ListName to download datas
+   * List should have columns: Title, Value
+   * Constrol gets datas from list when this props is provided
+   */
+  listName?: string;
+
+  /**
+   * web usin to download datas
+   */
+  web?: Web;
+
+  /**
    * All available data
    */
-  availableData: Item[];
+  availableData?: Item[];
 
   /**
    * start selected data (which includes in availableData)

@@ -183,6 +183,8 @@ declare interface IControlStrings {
   DateTimePickerTime: string;
   DateTimePickerTimeSeparator: string;
   DateTimePickerHourValueInvalid: string;
+
+  MultiSelectLookup: IMultiSelectLookupStrings;
 }
 
 declare interface IDateTimeStrings {
@@ -210,6 +212,11 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+}
+
+declare interface IMultiSelectLookupStrings {
+  searchplaceholder: string;
+  checkboxLabel: string;
 }
 
 declare module 'ControlStrings' {

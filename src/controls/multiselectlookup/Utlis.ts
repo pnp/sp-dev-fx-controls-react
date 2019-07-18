@@ -4,6 +4,13 @@ const escapeKeyword = (keyword: string) =>
   keyword.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
 
 export class MultiSelectLookupUtils {
+  public static mapFromListToItem(datas: any[]): Item[] {
+    return datas.map(listItem => ({
+      label: listItem.Title,
+      value: listItem.Value
+    }));
+  }
+
   public static getAvailableDataList(
     availableData: Item[],
     selectedData: Item[]

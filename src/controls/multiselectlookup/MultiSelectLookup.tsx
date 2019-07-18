@@ -1,8 +1,10 @@
+import * as strings from 'ControlStrings';
 import { debounce } from 'lodash';
-import { Checkbox, Label, SearchBox } from 'office-ui-fabric-react';
+import { Checkbox, css, Label, SearchBox } from 'office-ui-fabric-react';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
 import * as React from 'react';
 
+import SPService from '../../services/SPService';
 import { AvailableDataList } from './AvailableDataList';
 import { IMultiSelectLookupProps, IOnChangeState, Item } from './IMultiSelectLookup';
 import { IMultiSelectLookupState } from './IMultiSelectLookupState';
@@ -17,20 +19,24 @@ initializeIcons();
 export class MultiSelectLookup extends React.Component<
   IMultiSelectLookupProps,
   IMultiSelectLookupState
-> {
+  > {
   private _id: string = "";
   public static defaultProps: IMultiSelectLookupProps = {
     disabled: false,
     required: false,
     showSearchBox: true,
-    searchPlaceholder: "Enter text...",
-    checkboxLabel: "Selected all",
+    searchPlaceholder: strings.MultiSelectLookup.searchplaceholder,
+    checkboxLabel: strings.MultiSelectLookup.checkboxLabel,
     availableData: [],
-    selectedData: []
+    selectedData: [],
+    className: ""
   };
 
   constructor(props: IMultiSelectLookupProps) {
     super(props);
+
+    this._id = props.id || "MultiSelectLookup";
+    this.handleSearch = debounce(this.handleSearch, 30);
 
     this.onSelectItem = this.onSelectItem.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -38,35 +44,28 @@ export class MultiSelectLookup extends React.Component<
     this.handleUnselectItem = this.handleUnselectItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
 
-    const availableData = MultiSelectLookupUtils.getAvailableDataList(
-      props.availableData,
-      props.selectedData
-    );
-    const selectedData = MultiSelectLookupUtils.getSelectedDataList(
-      props.selectedData
-    );
+    const availableData = MultiSelectLookup.defaultProps.availableData;
+    const selectedData = MultiSelectLookup.defaultProps.selectedData;
+
     this.state = {
       keyword: "",
       checked: availableData.length === selectedData.length,
       availableData,
       selectedData
     };
-
-    this._id = props.id || "MultiSelectLookup";
-
-    this.handleSearch = debounce(this.handleSearch, 30);
   }
 
   public componentWillUpdate(
     nextProps: IMultiSelectLookupProps,
     nextState: IMultiSelectLookupState
   ) {
-    nextState.availableData = MultiSelectLookupUtils.getAvailableDataList(
-      nextProps.availableData,
-      nextProps.selectedData
-    );
     nextState.selectedData = MultiSelectLookupUtils.getSelectedDataList(
       nextProps.selectedData
+    );
+
+    nextState.availableData = MultiSelectLookupUtils.getAvailableDataList(
+      nextState.availableData,
+      nextState.selectedData
     );
 
     const filteredAvailable = MultiSelectLookupUtils.filterData(
@@ -82,16 +81,31 @@ export class MultiSelectLookup extends React.Component<
       filteredAvailable.length === filteredSelected.length;
   }
 
+  public componentDidMount() {
+    this.getDatas();
+  }
+
+  public handleChange(value: IOnChangeState) {
+    if (this.props.disabled) {
+      return;
+    }
+
+    if (this.props.onChanged) {
+      this.props.onChanged(value);
+    }
+  }
+
   public render(): JSX.Element {
     const {
       disabled,
       showSearchBox,
       searchPlaceholder,
-      checkboxLabel
+      checkboxLabel,
+      className
     } = this.props;
 
     return (
-      <div className={styles.multiSelectLookup}>
+      <div className={css(styles.multiSelectLookup, className)} id={this._id}>
         {this.createLabel()}
         {showSearchBox && (
           <SearchBox
@@ -124,7 +138,6 @@ export class MultiSelectLookup extends React.Component<
       return (
         <Label
           required={required}
-          htmlFor={this._id}
           className={styles.multiSelectLookup_wrapper_label}
         >
           {label}
@@ -217,13 +230,26 @@ export class MultiSelectLookup extends React.Component<
     });
   }
 
-  public handleChange(value: IOnChangeState) {
-    if (this.props.disabled) {
-      return;
+  private async getDatas() {
+    let availableData = this.props.availableData;
+    if (this.props.listName) {
+      const datas = await SPService.getListItemsByListName(this.props.listName, ["Title", "Value"], this.props.web);
+      availableData = MultiSelectLookupUtils.mapFromListToItem(datas);
     }
 
-    if (this.props.onChanged) {
-      this.props.onChanged(value);
-    }
+    const selectedData = MultiSelectLookupUtils.getSelectedDataList(
+      this.props.selectedData
+    );
+
+    availableData = MultiSelectLookupUtils.getAvailableDataList(
+      availableData,
+      selectedData
+    );
+
+    this.setState({
+      checked: availableData.length === selectedData.length,
+      availableData,
+      selectedData
+    });
   }
 }

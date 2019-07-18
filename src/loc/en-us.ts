@@ -153,16 +153,16 @@ define([], () => {
     HighlightColorDarkgrey: "Dark grey",
     HighlightColorGrey: "Grey",
     HighlightColorBlack: "Black",
-    StandardColorDarkred:"Dark red",
-    StandardColorRed:"Red",
-    StandardColorOrange:"Orange",
-    StandardColorYellow:"Yellow",
-    StandardColorLightgreen:"Light green",
-    StandardColorGreen:"Green",
-    StandardColorLightblue:"Light blue",
-    StandardColorBlue:"Blue",
-    StandardColorDarkblue:"Dark blue",
-    StandardColorPurple:"Purple",
+    StandardColorDarkred: "Dark red",
+    StandardColorRed: "Red",
+    StandardColorOrange: "Orange",
+    StandardColorYellow: "Yellow",
+    StandardColorLightgreen: "Light green",
+    StandardColorGreen: "Green",
+    StandardColorLightblue: "Light blue",
+    StandardColorBlue: "Blue",
+    StandardColorDarkblue: "Dark blue",
+    StandardColorPurple: "Purple",
 
     DatePickerMonthLongJanuary: "January",
     DatePickerMonthShortJanuary: "Jan",
@@ -209,6 +209,11 @@ define([], () => {
     DateTimePickerDate: "Date",
     DateTimePickerTime: "Time",
     DateTimePickerTimeSeparator: ":",
-    DateTimePickerHourValueInvalid: "Incorrect hour value"
+    DateTimePickerHourValueInvalid: "Incorrect hour value",
+
+    MultiSelectLookup: {
+      searchplaceholder: "Enter text...",
+      checkboxLabel: "Selected all"
+    }
   };
 });

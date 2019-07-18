@@ -1,9 +1,10 @@
-import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
-import { ISPLists } from "../common/SPEntities";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from "@microsoft/sp-http";
+import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { sp, Web } from '@pnp/sp';
+
+import { ISPLists } from '../common/SPEntities';
+import { ILibsOptions, ISPService, LibsOrderBy } from './ISPService';
 
 export default class SPService implements ISPService {
 
@@ -65,6 +66,20 @@ export default class SPService implements ISPService {
     } catch (error) {
       return Promise.reject(error);
     }
+  }
+
+  /**
+   * Get List Items by List Name
+   *
+   * @param listName
+   * @param internalColumnNames
+   */
+  public static async getListItemsByListName(listName: string, internalColumnNames: string[] = [], web?: Web): Promise<any[]> {
+    if (!web) {
+      web = sp.web;
+    }
+
+    return await web.lists.getByTitle(listName).items.select(...internalColumnNames).get();
   }
 
   /**
