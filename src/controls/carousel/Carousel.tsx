@@ -83,10 +83,6 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
             element
           }
 
-          {
-            !processing && !element && this.props.children && React.Children.count(this.props.children) > 0 &&
-            this.props.children[currentIndex]
-          }
         </div>
 
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
@@ -176,7 +172,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     if (nextButton) {
       result = this.props.canMoveNext != undefined ?
         !this.props.canMoveNext :
-        (currentIndex === React.Children.count(this.props.children) - 1) && !isInfinite;
+        (currentIndex === (this.props.element as JSX.Element[]).length - 1) && !isInfinite;
     } else {
       result = this.props.canMovePrev != undefined ?
         !this.props.canMovePrev :
