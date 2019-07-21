@@ -815,6 +815,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <MultiSelectLookup
             onChanged={this.handleChangeMultiSelectList}
             selectedData={this.state.multiSelectSelectedDataList}
+            listName="lookupvalues"
           />
         </div>
       </div>

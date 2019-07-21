@@ -51,28 +51,30 @@ export interface IMultiSelectLookupProps {
   /**
    * ListName to download datas
    * List should have columns: Title, Value
-   * Constrol gets datas from list when this props is provided
+   * Control gets datas from list when this props is provided
    */
   listName?: string;
 
   /**
-   * web usin to download datas
+   * SPWeb using to download datas
    */
   web?: Web;
 
   /**
    * All available data
+   * @defaultvalue []
    */
   availableData?: Item[];
 
   /**
-   * start selected data (which includes in availableData)
+   * Start selected data (which is included in availableData)
    */
   selectedData: Item[];
 
   /**
+   * Function to capture changes in control
    */
-  onChanged: (value: IOnChangeState) => void;
+  onChanged?: (value: IOnChangeState) => void;
 }
 
 export interface Item {
