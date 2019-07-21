@@ -1,10 +1,9 @@
-import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
-
 import * as React from 'react';
+import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
 import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
+import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
+import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
 import { Placeholder } from '../../../Placeholder';
@@ -34,6 +33,7 @@ import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { MultiSelectLookup, IOnChangeState } from '../../../MultiSelectLookup';
 import { Label } from 'office-ui-fabric-react/lib/Label';
+import { ListItemAttachments } from '../../../ListItemAttachments';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -418,10 +418,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           onChange={value => { this.setState({ richTextValue: value }); return value; }}
         />
 
-        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}
           context={this.props.context}
-          disabled={false} /> */}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
