@@ -253,12 +253,33 @@ export default class SPTermStorePickerService {
    * Retrieve all terms that starts with the searchText
    * @param searchText
    */
-  public searchTermsByName(searchText: string): Promise<IPickerTerm[]> {
+  public searchTermsByName(searchText: string, anchorId: string): Promise<IPickerTerm[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
-      return this.searchTermsByTermSet(searchText, this.props.termsetNameOrID);
+        return this.searchTermsByTermSet(searchText, this.props.termsetNameOrID).then((response) => {
+          var _terms = response;   
+          if (anchorId) {
+              var anchorTerm_1 = _terms.filter((t) => { return t.key.toLowerCase() === anchorId.toLowerCase(); }).shift();
+              if (anchorTerm_1) {
+                  //var anchorDepth = anchorTerm_1.PathDepth;
+                  var _anchorName = anchorTerm_1.name;
+                  var anchorTerms = _terms.filter((t) => { return t.path.substring(0, anchorTerm_1.path.length) === anchorTerm_1.path && t.key !== anchorTerm_1.key; });
+                  // anchorTerms = anchorTerms.map(function (term) {
+                  //     term.PathDepth = term.PathDepth - anchorTerm_1.PathDepth;
+                  //     return term;
+                  // });
+                  _terms = anchorTerms;
+
+                  return _terms;
+              }
+              else
+                  return _terms;
+          }
+          else
+              return _terms;
+      });
     }
   }
 
