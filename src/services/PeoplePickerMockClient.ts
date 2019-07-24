@@ -7,7 +7,8 @@ export const MockUsers : IPeoplePickerUserItem[] = [{
     text: "Roger Federer",
     secondaryText: "roger@tennis.onmicrosoft.com",
     tertiaryText: "",
-    optionalText: ""
+    optionalText: "",
+    loginName: "roger@tennis.onmicrosoft.com"
   },
   {
     id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c2",
@@ -16,7 +17,8 @@ export const MockUsers : IPeoplePickerUserItem[] = [{
     text: "Rafael Nadal",
     secondaryText: "rafael@tennis.onmicrosoft.com",
     tertiaryText: "",
-    optionalText: ""
+    optionalText: "",
+    loginName:"rafael@tennis.onmicrosoft.com"
   },
   {
     id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c3",
@@ -25,7 +27,8 @@ export const MockUsers : IPeoplePickerUserItem[] = [{
     text: "Novak Djokovic",
     secondaryText: "novak@tennis.onmicrosoft.com",
     tertiaryText: "",
-    optionalText: ""
+    optionalText: "",
+    loginName: "novak@tennis.onmicrosoft.com"
   },
   {
     id: "10dfa208-d7d4-4aef-a7ea-f9e4bb1b85c4",
@@ -34,7 +37,8 @@ export const MockUsers : IPeoplePickerUserItem[] = [{
     text: "Juan Martin del Potro",
     secondaryText: "juanmartin@tennis.onmicrosoft.com",
     tertiaryText: "",
-    optionalText: ""
+    optionalText: "",
+    loginName: "juanmartin@tennis.onmicrosoft.com"
   }
 ];
 
