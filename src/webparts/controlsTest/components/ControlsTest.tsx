@@ -379,10 +379,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
 
-        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}
           context={this.props.context}
-          disabled={false} /> */}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
