@@ -34,6 +34,56 @@ import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { FilmstripLayout } from '../../../controls/filmstripLayout';
+
+// Used to render document cards
+import {
+  DocumentCard,
+  DocumentCardActivity,
+  DocumentCardPreview,
+  DocumentCardTitle,
+  IDocumentCardPreviewProps,
+  DocumentCardLocation,
+  DocumentCardType
+} from 'office-ui-fabric-react/lib/DocumentCard';
+import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+
+const layoutItems: any[] = [{
+  thumbnail: "https://lorempixel.com/400/200/technics/1/",
+  title: "Adventures in SPFx",
+  name: "Perry Losselyong",
+  profileImageSrc: "https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "3/13/2019"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/2",
+  title: "The Wild, Untold Story of SharePoint!",
+  name: "Ebonee Gallyhaock",
+  profileImageSrc: "https://robohash.org/delectusetcorporis.bmp?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "6/29/2019"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/3",
+  title: "Low Code Solutions: PowerApps",
+  name: "Seward Keith",
+  profileImageSrc: "https://robohash.org/asperioresautquasi.jpg?size=50x50&set=set1",
+  location: "PowerApps",
+  activity: "12/31/2018"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/4",
+  title: "Not Your Grandpa's SharePoint",
+  name: "Sharona Selkirk",
+  profileImageSrc: "https://robohash.org/velnammolestiae.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "11/20/2018"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/5/",
+  title: "Get with the Flow",
+  name: "Boyce Batstone",
+  profileImageSrc: "https://robohash.org/nulladistinctiomollitia.jpg?size=50x50&set=set1",
+  location: "Flow",
+  activity: "5/26/2019"
+}];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -338,11 +388,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-                      title={this.props.title}
-                      updateProperty={this.props.updateProperty}
-                      moreLink={
-                        <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
-                      } />
+          title={this.props.title}
+          updateProperty={this.props.updateProperty}
+          moreLink={
+            <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+          } />
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -351,7 +401,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({richTextValue: value}); return value; }} />
+        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
 
         <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}
@@ -423,7 +473,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200}/>
+          resolveDelay={200} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
@@ -713,26 +763,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonsLocation={CarouselButtonsLocation.top}
             buttonsDisplay={CarouselButtonsDisplay.block}
 
-             contentContainerStyles={styles.carouselContent}
+            contentContainerStyles={styles.carouselContent}
             containerButtonsStyles={styles.carouselButtonsContainer}
 
-             isInfinite={true}
+            isInfinite={true}
 
-             element={this.carouselElements}
+            element={this.carouselElements}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
         </div>
 
-         <div>
+        <div>
           <h3>Carousel with triggerPageElement:</h3>
           <Carousel
             buttonsLocation={CarouselButtonsLocation.bottom}
             buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
 
-             contentContainerStyles={styles.carouselContent}
+            contentContainerStyles={styles.carouselContent}
 
-             canMoveNext={this.state.canMoveNext}
+            canMoveNext={this.state.canMoveNext}
             canMovePrev={this.state.canMovePrev}
             triggerPageEvent={this.triggerNextElement}
             element={this.state.currentCarouselElement}
@@ -746,17 +796,61 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
         <div>
           <Progress title={'Progress Test'}
-                    showOverallProgress={true}
-                    showIndeterminateOverallProgress={false}
-                    hideNotStartedActions={false}
-                    actions={this.state.progressActions}
-                    currentActionIndex={this.state.currentProgressActionIndex}
-                    longRunningText={'This operation takes longer than expected'}
-                    longRunningTextDisplayDelay={7000}
-                    height={'350px'}
-                    inProgressIconName={'ChromeBackMirrored'} />
+            showOverallProgress={true}
+            showIndeterminateOverallProgress={false}
+            hideNotStartedActions={false}
+            actions={this.state.progressActions}
+            currentActionIndex={this.state.currentProgressActionIndex}
+            longRunningText={'This operation takes longer than expected'}
+            longRunningTextDisplayDelay={7000}
+            height={'350px'}
+            inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
+
+        <div>
+          <h3>Filmstrip layout:</h3>
+          <FilmstripLayout
+            ariaLabel={"Sample filmstrip layout web part, showing sample items., Use right and left arrow keys to navigate between cards in the film strip."}
+          >
+            {layoutItems.map((item: any, _index: number) => {
+              const previewProps: IDocumentCardPreviewProps = {
+                previewImages: [
+                  {
+                    previewImageSrc: item.thumbnail,
+                    imageFit: ImageFit.cover,
+                    height: 130
+                  }
+                ]
+              };
+
+              return <div
+                data-is-focusable={true}
+                role="listitem"
+                aria-label={item.title}
+              >
+                <DocumentCard
+                  type={DocumentCardType.normal}
+                  onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on an item")}
+                >
+                  <DocumentCardPreview {...previewProps} />
+                  <DocumentCardLocation location={item.location} />
+                  <div>
+                    <DocumentCardTitle
+                      title={item.title}
+                      shouldTruncate={true}
+                    />
+                    <DocumentCardActivity
+                      activity={item.activity}
+                      people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+                    />
+                  </div>
+                </DocumentCard>
+              </div>;
+            })}
+          </FilmstripLayout>
+        </div>
+
       </div>
     );
   }
