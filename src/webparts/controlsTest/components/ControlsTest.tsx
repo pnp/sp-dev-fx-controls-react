@@ -34,6 +34,7 @@ import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { LivePersonaCard } from '../../../LivePersonaCard';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -756,6 +757,46 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     height={'350px'}
                     inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
+        </div>
+
+        <div>
+        <h3>LivePersonaCard with custom child element</h3>
+<LivePersonaCard
+  user={this.props.context.pageContext.user}
+  serviceScope={this.props.context.serviceScope}
+>
+  <div>{this.props.context.pageContext.user.displayName}</div>
+</LivePersonaCard>
+
+<h3>LivePersonaCard with no children -- renders default persona card</h3>
+<LivePersonaCard
+  user={this.props.context.pageContext.user}
+  serviceScope={this.props.context.serviceScope}
+/>
+
+<h3>LivePersonaCard with custom persona props</h3>
+<LivePersonaCard
+  user={this.props.context.pageContext.user}
+  serviceScope={this.props.context.serviceScope}
+  personaProps={{
+    text: 'User McUserface',
+    imageUrl: 'https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1',
+    imageInitials: '?'
+  }}
+ />
+
+<h3>LivePersonaCard with external user</h3>
+<LivePersonaCard
+  serviceScope={this.props.context.serviceScope}
+  user={{
+    displayName: 'Elio Struyf',
+    email: 'eliostruyf@fakeemail.com',
+  }}
+  personaProps={{
+    imageUrl: 'https://fast-eliostruyf.azureedge.net/wp-content/uploads/2019/07/eliostruyf-jyvaskyla-250x250.jpg',
+    secondaryText: 'Not his real email'
+  }}
+ />
         </div>
       </div>
     );
