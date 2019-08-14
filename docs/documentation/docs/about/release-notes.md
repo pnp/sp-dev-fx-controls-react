@@ -6,6 +6,10 @@
 
 - `Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)
 
+### Fixes
+
+- `TaxonomyPicker`: Tags icon styling issue on IE11 [#356](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/356)
+
 ### Contributors
 
 Special thanks to our contributor: [Piotr Siatka](https://github.com/siata13).
