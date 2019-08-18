@@ -34,7 +34,56 @@ import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { FilmstripLayout } from '../../../controls/filmstripLayout';
 
+// Used to render document cards
+import {
+  DocumentCard,
+  DocumentCardActivity,
+  DocumentCardPreview,
+  DocumentCardTitle,
+  IDocumentCardPreviewProps,
+  DocumentCardLocation,
+  DocumentCardType
+} from 'office-ui-fabric-react/lib/DocumentCard';
+import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+
+const layoutItems: any[] = [{
+  thumbnail: "https://lorempixel.com/400/200/technics/1/",
+  title: "Adventures in SPFx",
+  name: "Perry Losselyong",
+  profileImageSrc: "https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "3/13/2019"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/2",
+  title: "The Wild, Untold Story of SharePoint!",
+  name: "Ebonee Gallyhaock",
+  profileImageSrc: "https://robohash.org/delectusetcorporis.bmp?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "6/29/2019"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/3",
+  title: "Low Code Solutions: PowerApps",
+  name: "Seward Keith",
+  profileImageSrc: "https://robohash.org/asperioresautquasi.jpg?size=50x50&set=set1",
+  location: "PowerApps",
+  activity: "12/31/2018"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/4",
+  title: "Not Your Grandpa's SharePoint",
+  name: "Sharona Selkirk",
+  profileImageSrc: "https://robohash.org/velnammolestiae.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "11/20/2018"
+}, {
+  thumbnail: "https://lorempixel.com/400/200/technics/5/",
+  title: "Get with the Flow",
+  name: "Boyce Batstone",
+  profileImageSrc: "https://robohash.org/nulladistinctiomollitia.jpg?size=50x50&set=set1",
+  location: "Flow",
+  activity: "5/26/2019"
+}];
 /**
  * Component that can be used to test out the React controls from this project
  */
@@ -756,6 +805,50 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     height={'350px'}
                     inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
+        </div>
+
+
+        <div>
+          <h3>Filmstrip layout:</h3>
+          <FilmstripLayout
+            ariaLabel={"Sample filmstrip layout web part, showing sample items., Use right and left arrow keys to navigate between cards in the film strip."}
+          >
+            {layoutItems.map((item: any, _index: number) => {
+              const previewProps: IDocumentCardPreviewProps = {
+                previewImages: [
+                  {
+                    previewImageSrc: item.thumbnail,
+                    imageFit: ImageFit.cover,
+                    height: 130
+                  }
+                ]
+              };
+
+              return <div
+                data-is-focusable={true}
+                role="listitem"
+                aria-label={item.title}
+              >
+                <DocumentCard
+                  type={DocumentCardType.normal}
+                  onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on an item")}
+                >
+                  <DocumentCardPreview {...previewProps} />
+                  <DocumentCardLocation location={item.location} />
+                  <div>
+                    <DocumentCardTitle
+                      title={item.title}
+                      shouldTruncate={true}
+                    />
+                    <DocumentCardActivity
+                      activity={item.activity}
+                      people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+                    />
+                  </div>
+                </DocumentCard>
+              </div>;
+            })}
+          </FilmstripLayout>
         </div>
       </div>
     );
