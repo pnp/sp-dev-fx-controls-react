@@ -217,6 +217,30 @@ export class GeneralHelper {
         return xml;
     }
 
+    /**
+     * Returns absoulute domain URL.
+     * @param url
+     */
+    public static getAbsoluteDomainUrl(url: string): string  {
+      if (url !== undefined) {
+        const myURL = new URL(url.toLowerCase());
+        return myURL.protocol + "//" + myURL.host;
+      } else {
+        return undefined;
+      }
+    }
+
+    public static formatBytes(bytes, decimals) {
+      if (bytes == 0) {
+        return strings.EmptyFileSize;
+      }
+
+      const k: number = 1024;
+      const dm = decimals <= 0 ? 0 : decimals || 2;
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + strings.SizeUnit[i];
+    }
+
     private static _getEncodedChar(c): string {
         const o = {
             "<": "&lt;",
