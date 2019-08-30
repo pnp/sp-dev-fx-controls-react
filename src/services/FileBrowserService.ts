@@ -4,7 +4,7 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
 export class FileBrowserService {
-  private context: WebPartContext;
+  protected context: WebPartContext;
 
   constructor(context: WebPartContext) {
     this.context = context;
@@ -52,7 +52,7 @@ export class FileBrowserService {
     return fileItems;
   }
 
-  private getFileTypeFilter(accepts: string) {
+  protected getFileTypeFilter(accepts: string) {
     let fileFilter: string = "";
 
     if (accepts && accepts != "") {
@@ -69,7 +69,7 @@ export class FileBrowserService {
     return fileFilter;
   }
 
-  private getFilesCamlQueryViewXml = (accepts: string) => {
+  protected getFilesCamlQueryViewXml = (accepts: string) => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
     let queryCondition = fileFilter && fileFilter != "" ?
       `<Query>
@@ -118,7 +118,7 @@ export class FileBrowserService {
     return viewXml;
   }
 
-  private _parseFileItem = (fileItem: any): IFile => {
+  protected _parseFileItem = (fileItem: any): IFile => {
     const modifiedFriendly: string = fileItem["Modified.FriendlyDisplay"];
 
     // Get the modified date
@@ -147,7 +147,7 @@ export class FileBrowserService {
   /**
    * Creates an absolute URL
    */
-  private _buildAbsoluteUrl = (relativeUrl: string) => {
+  protected _buildAbsoluteUrl = (relativeUrl: string) => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.context.pageContext.web.absoluteUrl);
     return siteUrl + relativeUrl;
   }
