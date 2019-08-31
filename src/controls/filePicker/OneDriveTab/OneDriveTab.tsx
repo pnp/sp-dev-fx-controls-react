@@ -265,7 +265,7 @@ export default class OneDriveTab extends React.Component<IOneDriveTabProps, IOne
    */
   public componentDidMount(): void {
     // Initialize the OneDrive services
-    this._oneDriveService = new OneDriveService(this.props.context, this.props.accepts);
+    // this._oneDriveService = new OneDriveService(this.props.context, this.props.accepts);
 
     // Get the items at the root of the OneDrive folder
     this._getListItems();
@@ -284,85 +284,8 @@ export default class OneDriveTab extends React.Component<IOneDriveTabProps, IOne
   /**
    * Gets the list of items to display
    */
-  private _getListItems = (): Promise<void> => {
-    // We're loading!
-    this.setState({
-      isLoading: true
-    });
+  private _getListItems = () => {
 
-    return this._oneDriveService.getListDataAsStream(this.state.serverRelativeFolderUrl).then((listDataStream: IGetListDataAsStreamResult) => {
-
-      // Get the thumbnail URL template -- stored in the list schema
-      const thumbnailUrlTemplate: string = listDataStream.ListSchema[".thumbnailUrl"]
-        .replace("{.mediaBaseUrl}", listDataStream.ListSchema[".mediaBaseUrl"])
-        .replace("{.callerStack}", listDataStream.ListSchema[".callerStack"])
-        .replace("{.driveAccessToken}", "encodeFailures=1&ctag={.ctag}");
-
-      // Map every item to a OneDrive file
-      const files: IOneDriveFile[] = listDataStream.ListData.Row.map((item: IRow) => {
-        // Build the thumbnail URL from the template
-        // The template is stored in the schema (see above) and contains list-specific
-        // replacement tokens (which we already replaced above) and item-specific
-        // tokens, which we're replacing right. now.
-        const thumbnail: string = thumbnailUrlTemplate
-          .replace('{.spItemUrl}', item[".spItemUrl"])
-          .replace('{.ctag}', encodeURIComponent(item[".ctag"]))
-          .replace('{.fileType}', item[".fileType"]);
-
-        // Get the modified date
-        const modifiedParts: string[] = item["Modified.FriendlyDisplay"]!.split('|');
-        let modified: string = item.Modified;
-
-        // If there is a friendly modified date, use that
-        // The friendly dates seem to be a lot smarter than what I have here.
-        // For example, it seems to use a different structure for dates that are on the same
-        // day, within a few days, etc.
-        // For this example, we just handle the regular friendly-dates, but if we
-        // turn this into a PnP control, we'll want to handle all sorts of friendly dates
-        if (modifiedParts.length === 2) {
-          modified = modifiedParts[1];
-        }
-
-        // Parse media metadata to see if we can get known dimensions
-        // Dimensions are stored as HTML-encoded JSON from media services.
-        // If it is available, get the JSON structure and parse it.
-        const media: any = item.MediaServiceFastMetadata && JSON.parse(unescape(item.MediaServiceFastMetadata));
-        const dimensions: IDimensions = media && media.photo && {
-          width: media.photo.width,
-          height: media.photo.height
-        };
-
-        // Create a nice OneDriveFile interface so we're not saving all that extra metadata that
-        // gets returned from SharePoint in our state.
-        const file: IOneDriveFile = {
-          key: item.UniqueId,
-          name: item.FileLeafRef,
-          absoluteUrl: this._buildOneDriveAbsoluteUrl(listDataStream.HttpRoot, item.FileRef),
-          serverRelativeUrl: item.FileRef,
-          isFolder: item.FSObjType === "1",
-          modified: modified,
-          modifiedBy: item.Editor[0].title,
-          fileType: item.File_x0020_Type,
-          fileIcon: item["HTML_x0020_File_x0020_Type.File_x0020_Type.mapico"],
-          fileSizeDisplay: item.FileSizeDisplay,
-          totalFileCount: +item.SMTotalFileCount, // quickly converts string to number
-          thumbnail: thumbnail,
-          dimensions: dimensions,
-          isShared: parseInt(item.PrincipalCount) > 0
-        };
-        return file;
-      });
-
-      // Set the selection items so that we know what item we're selecting
-      this._selection.setItems(files);
-
-      // Store the files and stop the loading icon
-      this.setState({
-        files: files,
-        isLoading: false, // we're done loading
-        parentFolderInfo: listDataStream.ParentInfo.ParentFolderInfo // remember where we are
-      });
-    });
   }
 
   /**

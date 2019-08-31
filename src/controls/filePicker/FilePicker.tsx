@@ -21,11 +21,20 @@ import RecentFilesTab from './RecentFilesTab/RecentFilesTab';
 import OneDriveTab from './OneDriveTab/OneDriveTab';
 
 import styles from './FilePicker.module.scss';
+import { FileBrowserService } from '../../services/FileBrowserService';
+import { OneDriveFilesTab } from './OneDriveFilesTab';
+import { OneDriveService } from '../../services/OneDriveService';
 
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
+  private fileBrowserService: FileBrowserService;
+  private oneDriveService: OneDriveService;
   constructor(props: IFilePickerProps) {
     super(props);
+
+    // Initialize file browser services
+    this.fileBrowserService = new FileBrowserService(props.webPartContext);
+    this.oneDriveService = new OneDriveService(props.webPartContext);
 
     this.state = {
       panelOpen: false,
@@ -153,6 +162,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keySite" &&
               <SiteFilePickerTab
+                fileBrowserService={this.fileBrowserService}
                 context={this.props.webPartContext}
                 accepts={accepts}
                 onClose={() => this._handleClosePanel()}
@@ -170,7 +180,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             }
             {
               this.state.selectedTab === "keyOneDrive" &&
-              <OneDriveTab
+              <OneDriveFilesTab
+                oneDriveService={this.oneDriveService}
                 context={this.props.webPartContext}
                 accepts={accepts}
                 onClose={() => this._handleClosePanel()}

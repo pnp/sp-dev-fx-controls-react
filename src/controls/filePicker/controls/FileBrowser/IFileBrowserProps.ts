@@ -1,11 +1,12 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IFile } from ".";
+import { FileBrowserService } from "../../../../services/FileBrowserService";
+import { IFile } from "../../../../services/FileBrowserService.types";
 
 export interface IFileBrowserProps {
+  fileBrowserService: FileBrowserService;
   libraryName: string;
   folderPath: string;
   accepts: string;
-  context: WebPartContext;
   onChange: (imageUrl: string) => void;
   onOpenFolder: (folder: IFile) => void;
 }

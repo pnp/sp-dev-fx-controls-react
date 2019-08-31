@@ -3,6 +3,7 @@ import { IFile } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
+// TODO: corporate library
 export class FileBrowserService {
   protected context: WebPartContext;
 
@@ -10,7 +11,13 @@ export class FileBrowserService {
     this.context = context;
   }
 
-  public async getListItems(libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string) {
+  /**
+   * Gets files from current sites library
+   * @param libraryName
+   * @param folderPath
+   * @param acceptedFilesExtensionsList
+   */
+  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string) => {
     let fileItems: IFile[] = [];
     try {
       const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('${libraryName}')/RenderListDataAsStream`;
@@ -22,19 +29,29 @@ export class FileBrowserService {
     return fileItems;
   }
 
+  /**
+   * Executes query to load files with possible extension filtering
+   * @param restApi
+   * @param folderPath
+   * @param acceptedFilesExtensionsList
+   */
   protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensionsList?: string): Promise<IFile[]> => {
     let fileItems: IFile[] = [];
     try {
-      const data = await this.context.spHttpClient.post(restApi, SPHttpClient.configurations.v1, {
-        body: JSON.stringify({
-          parameters: {
-            AllowMultipleValueFilterForTaxonomyFields: true,
-            FolderServerRelativeUrl: folderPath,
-            // ContextInfo (1), ListData (2), ListSchema (4), ViewMetadata (1024), EnableMediaTAUrls (4096), ParentInfo (8192)
-            RenderOptions: 1 | 2 | 4 | 1024 | 4096 | 8192,
-            ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensionsList)
-          }
-        })
+      const body = {
+        parameters: {
+          AllowMultipleValueFilterForTaxonomyFields: true,
+          // ContextInfo (1), ListData (2), ListSchema (4), ViewMetadata (1024), EnableMediaTAUrls (4096), ParentInfo (8192)
+          RenderOptions: 1 | 2 | 4 | 1024 | 4096 | 8192,
+          ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensionsList)
+        }
+      };
+      if (folderPath) {
+          body.parameters["FolderServerRelativeUrl"] = folderPath;
+      }
+      const data = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {
+        method: "POST",
+        body: JSON.stringify(body)
       });
 
       if (!data || !data.ok) {
@@ -44,7 +61,7 @@ export class FileBrowserService {
       if (!filesResult || !filesResult.ListData || !filesResult.ListData.Row) {
         throw new Error(`[FileBrowser._getListItems]: No data is available. Status='${data.statusText}'`);
       }
-      fileItems = filesResult.ListData.Row.map(fileItem => this._parseFileItem(fileItem));
+      fileItems = filesResult.ListData.Row.map(fileItem => this.parseFileItem(fileItem));
     } catch (error) {
       fileItems = null;
       console.error(error.message);
@@ -52,6 +69,10 @@ export class FileBrowserService {
     return fileItems;
   }
 
+  /**
+   * Generates CamlQuery files filter.
+   * @param accepts
+   */
   protected getFileTypeFilter(accepts: string) {
     let fileFilter: string = "";
 
@@ -69,6 +90,9 @@ export class FileBrowserService {
     return fileFilter;
   }
 
+  /**
+   * Generates Files CamlQuery ViewXml
+   */
   protected getFilesCamlQueryViewXml = (accepts: string) => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
     let queryCondition = fileFilter && fileFilter != "" ?
@@ -118,7 +142,10 @@ export class FileBrowserService {
     return viewXml;
   }
 
-  protected _parseFileItem = (fileItem: any): IFile => {
+  /**
+   * Converts REST call results to IFile
+   */
+  protected parseFileItem = (fileItem: any): IFile => {
     const modifiedFriendly: string = fileItem["Modified.FriendlyDisplay"];
 
     // Get the modified date
@@ -139,7 +166,7 @@ export class FileBrowserService {
       fileType: fileItem.File_x0020_Type,
       modifiedBy: fileItem.Editor![0]!.title,
       isFolder: fileItem.FSObjType === "1",
-      absoluteRef: this._buildAbsoluteUrl(fileItem.FileRef)
+      absoluteRef: this.buildAbsoluteUrl(fileItem.FileRef)
     };
     return file;
   }
@@ -147,7 +174,7 @@ export class FileBrowserService {
   /**
    * Creates an absolute URL
    */
-  protected _buildAbsoluteUrl = (relativeUrl: string) => {
+  protected buildAbsoluteUrl = (relativeUrl: string) => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.context.pageContext.web.absoluteUrl);
     return siteUrl + relativeUrl;
   }

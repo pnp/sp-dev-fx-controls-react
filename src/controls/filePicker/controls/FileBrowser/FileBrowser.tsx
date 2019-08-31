@@ -39,12 +39,10 @@ import { FileBrowserService } from '../../../../services/FileBrowserService';
  */
 export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowserState> {
   private _selection: Selection;
-  private _fileBrowserService: FileBrowserService;
 
   constructor(props: IFileBrowserProps) {
     super(props);
 
-    this._fileBrowserService = new FileBrowserService(props.context);
     // If possible, load the user's favourite layout
     const lastLayout: ViewType = localStorage ?
       localStorage.getItem(LAYOUT_STORAGE_KEY) as ViewType
@@ -425,7 +423,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         isLoading: true
       });
       // Load files in the folder
-      fileItems = await this._fileBrowserService.getListItems(libraryName, folderPath, accepts);
+      debugger;
+      fileItems = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts);
     } catch (error) {
       fileItems = null;
       console.error(error.message);

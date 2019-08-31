@@ -5,175 +5,129 @@ import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { IGetListDataAsStreamResult, IRow } from './IOneDriveService';
 import { GeneralHelper } from "../Utilities";
+import { FileBrowserService } from "./FileBrowserService";
+import { IFile } from "./FileBrowserService.types";
 
-export class OneDriveService {
+export class OneDriveService extends FileBrowserService {
+  protected oneDrivePersonalUrl: string;
+  protected oneDriveRootFolderRelativeUrl: string;
+  protected oneDriveRootFolderAbsoluteUrl: string;
+  protected oneDrivePersonalLibraryTitle: string;
 
-  private _oneDriveUrl: string = undefined;
-  private _oneDriveFullUrl: string = undefined;
+  constructor(context: WebPartContext) {
+    super(context);
 
-  private _context: WebPartContext = undefined;
-  private _absoluteUrl: string = undefined;
-  private _serverRelativeFolderUrl: string = undefined;
-
-  private _accepts: string = undefined;
-  /**
-   *
-   */
-  constructor(context: WebPartContext, accepts: string) {
-    this._context = context;
-    this._accepts = accepts;
-
-    this._absoluteUrl = this._context.pageContext.web.absoluteUrl;
-
-    sp.setup({
-      sp: { baseUrl: this._absoluteUrl }
-    });
-
+    this.oneDrivePersonalUrl = null;
+    this.oneDriveRootFolderRelativeUrl = null;
+    this.oneDriveRootFolderAbsoluteUrl = null;
+    this.oneDrivePersonalLibraryTitle = null;
   }
 
   /**
-   * Builds a file filter
+   * Gets files from OneDrive personal library
    */
-  public static getFileTypeFilter(accepts: string) {
-    let fileFilter: string = "";
+  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string) => {
+    let fileItems: IFile[] = [];
+    try {
+      const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();
+      const encodedListUrl = encodeURIComponent(oneDriveRootFolder);
 
-    if (accepts && accepts != "") {
-      fileFilter = "<Values>";
-      accepts.split(",").forEach((fileType: string, index: number) => {
-        fileType = fileType.replace(".", "");
-        if (index >= 0) {
-          fileFilter = fileFilter + `<Value Type="Text">${fileType}</Value>`;
+      folderPath = folderPath ? folderPath : this.oneDriveRootFolderRelativeUrl;
+      const encodedFolderPath = encodeURIComponent(folderPath);
+
+      const restApi: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${encodedListUrl}'&RootFolder=${encodedFolderPath}`;
+
+      fileItems = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
+    } catch (error) {
+      fileItems = null;
+      console.error(error.message);
+    }
+    return fileItems;
+  }
+
+  /**
+     * Gets users one drive personal documents library path
+     */
+  public getOneDriveRootFolderFullUrl = async (): Promise<string> => {
+    try {
+      // Return result if already obtained
+      if (this.oneDriveRootFolderAbsoluteUrl) {
+        return this.oneDriveRootFolderAbsoluteUrl;
+      }
+
+      const oneDriveUrl = await this.getOneDrivePersonalUrl();
+      if (!oneDriveUrl) {
+        throw new Error(`Cannot obtain OneDrive personal URL.`);
+      }
+      const apiUrl: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.RemoteWeb(@a1)/Web/Lists?$filter=BaseTemplate eq 700 and BaseType eq 1&@a1='${encodeURIComponent(oneDriveUrl)}'`;
+      const oneDriveFolderResult = await this.context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1, {
+        headers: {
+          "accept": "application/json;odata=nometadata",
+          "content-type": "application/json;odata=nometadata",
+          "odata-version": ""
         }
       });
-      fileFilter = fileFilter + "</Values>";
-    }
-
-    return fileFilter;
-  }
-
-  public static getFilesCamlQueryViewXml = (accepts: string) => {
-    const fileFilter: string = OneDriveService.getFileTypeFilter(accepts);
-    let queryCondition = fileFilter && fileFilter != "" ?
-      `<Query>
-        <Where>
-          <Or>
-            <And>
-              <Eq>
-                <FieldRef Name="FSObjType" />
-                <Value Type="Text">1</Value>
-              </Eq>
-              <Eq>
-                <FieldRef Name="SortBehavior" />
-                <Value Type="Text">1</Value>
-              </Eq>
-            </And>
-            <In>
-              <FieldRef Name="File_x0020_Type" />
-              ${fileFilter}
-            </In>
-          </Or>
-        </Where>
-      </Query>` : "";
-
-    // Add files types condiiton
-    // TODO: Support more than 100 files
-    const viewXml = `<View>
-                      ${queryCondition}
-                      <ViewFields>
-                        <FieldRef Name="DocIcon"/>
-                        <FieldRef Name="LinkFilename"/>
-                        <FieldRef Name="Modified"/>
-                        <FieldRef Name="Editor"/>
-                        <FieldRef Name="FileSizeDisplay"/>
-                        <FieldRef Name="SharedWith"/>
-                        <FieldRef Name="MediaServiceFastMetadata"/>
-                        <FieldRef Name="MediaServiceOCR"/>
-                        <FieldRef Name="_ip_UnifiedCompliancePolicyUIAction"/>
-                        <FieldRef Name="ItemChildCount"/>
-                        <FieldRef Name="FolderChildCount"/>
-                        <FieldRef Name="SMTotalFileCount"/>
-                        <FieldRef Name="SMTotalSize"/>
-                      </ViewFields>
-                      <RowLimit Paged="TRUE">100</RowLimit>
-                    </View>`;
-
-    return viewXml;
-  }
-
-  public getListDataAsStream(rootFolder?: string) {
-    // If we don't know what the root OneDrive folder is
-    if (this._serverRelativeFolderUrl === undefined) {
-      // Get the user's OneDrive root folder
-      return this._getOneDriveRootFolder().then((oneDriveRootFolder: string) => {
-        // Call the OneDrive root folder or whatever we passed in as root folder
-        return this._getListDataAsStream(rootFolder ? rootFolder : oneDriveRootFolder);
-      });
-    } else {
-      return this._getListDataAsStream(rootFolder ? rootFolder : this._serverRelativeFolderUrl);
-    }
-  }
-
-  private _getOneDriveRootFolder = (): Promise<string> => {
-    return sp.profiles.userProfile.then((currentUser) => {
-      // Get the current user's personal site URL
-      this._oneDriveUrl = currentUser.FollowPersonalSiteUrl;
-
-      // Get the list of ... uh.. lists on the user's personal site
-      // BaseTemplate 700 and BaseType 1 means document library
-      const apiUrl: string = `${this._absoluteUrl}/_api/SP.RemoteWeb(@a1)/Web/Lists?$filter=BaseTemplate eq 700 and BaseType eq 1&@a1='${encodeURIComponent(this._oneDriveUrl)}'`;
-
-      return this._context.spHttpClient.get(apiUrl,
-        SPHttpClient.configurations.v1)
-        .then((response: SPHttpClientResponse) => {
-          return response.json().then((responseJSON: any) => {
-
-            // Get the first library
-            const myDocumentsLibrary = responseJSON.value[0];
-
-            // Get the parent url
-            const parentWebUrl: string = myDocumentsLibrary.ParentWebUrl;
-
-            // Get the first root folder. Assumed it is the same name as the library. Could be wrong.
-            const serverRelativeRootFolder: string = `${myDocumentsLibrary.ParentWebUrl}/${myDocumentsLibrary.Title}`;
-
-            // Build an absolute URL so that we can refer to it
-            this._oneDriveFullUrl = this._buildOneDriveAbsoluteUrl(serverRelativeRootFolder);
-
-            return serverRelativeRootFolder;
-          });
-        });
-    });
-  }
-
-  private _getListDataAsStream = (rootFolder: string): Promise<IGetListDataAsStreamResult> => {
-    const listFullUrl: string = this._oneDriveFullUrl;
-    const encodedFullUrl: string = encodeURIComponent(`'${listFullUrl}'`);
-    const encodedRootFolder: string = encodeURIComponent(rootFolder);
-    const listItemUrl: string = `${this._absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl=${encodedFullUrl}&View=&RootFolder=${encodedRootFolder}`;
-
-    const data: string = JSON.stringify({
-      parameters: {
-        RenderOptions: RenderListDataOptions.ContextInfo | RenderListDataOptions.ListData | RenderListDataOptions.ListSchema,
-        // | RenderListDataOptions.ViewMetadata | RenderListDataOptions.EnableMediaTAUrls | RenderListDataOptions.ParentInfo,//4231, //4103, //4231, //192, //64
-        AllowMultipleValueFilterForTaxonomyFields: true,
-        ViewXml: OneDriveService.getFilesCamlQueryViewXml(OneDriveService.getFileTypeFilter(this._accepts))
+      if (!oneDriveFolderResult || !oneDriveFolderResult.ok) {
+        throw new Error(`Something went wrong when executing oneDriveRootFolder retrieve request. Status='${oneDriveFolderResult.statusText}'`);
       }
-    });
 
-    const spOpts: ISPHttpClientOptions = {
-      method: "POST",
-      body: data
-    };
+      const oneDriveLibsData = await oneDriveFolderResult.json();
+      if (!oneDriveLibsData || !oneDriveLibsData.value || oneDriveLibsData.value.length == 0) {
+        throw new Error(`Cannot read one drive libs data.`);
+      }
 
-    return this._context.spHttpClient.fetch(listItemUrl, SPHttpClient.configurations.v1, spOpts)
-      .then((listResponse: SPHttpClientResponse) => listResponse.json().then((listResponseJSON: IGetListDataAsStreamResult) => listResponseJSON));
+      const myDocumentsLibrary = oneDriveLibsData.value[0];
+      this.oneDrivePersonalLibraryTitle = myDocumentsLibrary.Title;
+      this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${myDocumentsLibrary.Title}`;
+      this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${myDocumentsLibrary.Title}`;
+    } catch (error) {
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`)
+      this.oneDriveRootFolderAbsoluteUrl = null;
+    }
+    return this.oneDriveRootFolderAbsoluteUrl;
+  }
+
+  public getOneDriveRootFolderRelativeUrl = async (): Promise<string> => {
+    if (!this.oneDriveRootFolderRelativeUrl) {
+      await this.getOneDriveRootFolderFullUrl();
+    }
+    return this.oneDriveRootFolderRelativeUrl;
+  }
+
+  public getOneDrivePersonalLibraryTitle = async (): Promise<string> => {
+    if (!this.oneDrivePersonalLibraryTitle) {
+      await this.getOneDriveRootFolderFullUrl();
+    }
+    return this.oneDrivePersonalLibraryTitle;
   }
 
   /**
-   * Creates an absolute URL
+   * Gets personal site path.
    */
-  private _buildOneDriveAbsoluteUrl = (relativeUrl: string) => {
-    const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this._oneDriveUrl);
-    return siteUrl + relativeUrl;
+  protected getOneDrivePersonalUrl = async (): Promise<string> => {
+    try {
+      // Return result if already obtained
+      if (this.oneDrivePersonalUrl) {
+        return this.oneDrivePersonalUrl;
+      }
+
+      const userProfileApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.UserProfiles.ProfileLoader.GetProfileLoader/GetUserProfile`;
+      const userProfileResult = await this.context.spHttpClient.post(userProfileApi, SPHttpClient.configurations.v1, {});
+
+      if (!userProfileResult || !userProfileResult.ok) {
+        throw new Error(`Something went wrong when executing user profile request. Status='${userProfileResult.statusText}'`);
+      }
+
+      const profileData = await userProfileResult.json();
+      if (!profileData) {
+        throw new Error(`Cannot read user profile data.`);
+      }
+
+      this.oneDrivePersonalUrl = profileData.FollowPersonalSiteUrl;
+    } catch (error) {
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`)
+      this.oneDrivePersonalUrl = null;
+    }
+    return this.oneDrivePersonalUrl;
   }
 }

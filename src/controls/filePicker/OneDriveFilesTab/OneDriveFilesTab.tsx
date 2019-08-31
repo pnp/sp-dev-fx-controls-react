@@ -1,43 +1,63 @@
 import * as React from 'react';
+import { IOneDriveFilesTabProps, IOneDriveFilesTabState } from '.';
+import { IFile } from '../../../services/FileBrowserService.types';
+import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 
-// Custom styles
-import styles from './SiteFilePickerTab.module.scss';
 
-// Custom picker interface
-import { ISiteFilePickerTabProps, ISiteFilePickerTabState, SiteFilePickerBreadcrumbItem } from '.';
-import { DocumentLibraryBrowser, FileBrowser, ILibrary } from '../controls';
-
-// Office Fabric
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import { FileBrowser } from '../controls';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
-// Localized strings
+import styles from './OneDriveFilesTab.module.scss';
 import * as strings from 'ControlStrings';
-import { IFile } from '../../../services/FileBrowserService.types';
 
-export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
-  constructor(props: ISiteFilePickerTabProps) {
+export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IOneDriveFilesTabState> {
+  constructor(props: IOneDriveFilesTabProps) {
     super(props);
-
-    // Add current site to the breadcrumb
-    const breadcrumbSiteNode: SiteFilePickerBreadcrumbItem = {
-      isCurrentItem: true,
-      text: props.context.pageContext.web.title,
-      key: props.context.pageContext.web.id.toString()
-    }
-    breadcrumbSiteNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbSiteNode); }
 
     this.state = {
       libraryAbsolutePath: undefined,
       libraryTitle: strings.DocumentLibraries,
-      libraryPath: undefined,
+      folderPath: undefined,
       folderName: strings.DocumentLibraries,
-      breadcrumbItems: [breadcrumbSiteNode]
+      breadcrumbItems: []
     };
   }
 
-  public render(): React.ReactElement<ISiteFilePickerTabProps> {
+  public async componentDidMount() {
+    const folderPath = await this.props.oneDriveService.getOneDriveRootFolderRelativeUrl();
+    const libraryAbsolutePath = await this.props.oneDriveService.getOneDriveRootFolderFullUrl();
+    const libraryTitle = await this.props.oneDriveService.getOneDrivePersonalLibraryTitle();
+
+    const oneDriveFolderData: IFile = {
+      isFolder: true,
+      modified: null,
+      absoluteRef: libraryAbsolutePath,
+      fileLeafRef: libraryTitle,
+      docIcon: "",
+      fileRef: "",
+    }
+
+    const breadcrumbItems = this.state.breadcrumbItems;
+    // Add OneDrive folder as a first node
+    const breadcrumbNode: OneDriveFilesBreadcrumbItem = {
+      folderData: oneDriveFolderData,
+      isCurrentItem: true,
+      text: oneDriveFolderData.fileLeafRef,
+      key: oneDriveFolderData.absoluteRef
+    };
+    breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
+    breadcrumbItems.push(breadcrumbNode);
+
+    this.setState({
+      libraryAbsolutePath: libraryAbsolutePath,
+      folderName: folderPath,
+      libraryTitle
+    })
+  }
+
+  public render(): React.ReactElement<IOneDriveFilesTabProps> {
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
@@ -45,17 +65,14 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
           <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader}/>
         </div>
         <div className={styles.tab}>
-          {this.state.libraryAbsolutePath === undefined &&
-            <DocumentLibraryBrowser
-              context={this.props.context}
-              onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
+
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
               onChange={(fileUrl: string) => this._handleSelectionChange(fileUrl)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
-              fileBrowserService={this.props.fileBrowserService}
+              fileBrowserService={this.props.oneDriveService}
               libraryName={this.state.libraryTitle}
-              folderPath={this.state.libraryPath}
+              folderPath={this.state.folderPath}
               accepts={this.props.accepts} />}
         </div>
         <div className={styles.actionButtonsContainer}>
@@ -73,14 +90,14 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
   /**
    * Handles breadcrump item click
    */
-  private onBreadcrumpItemClick = (node: SiteFilePickerBreadcrumbItem) => {
+  private onBreadcrumpItemClick = (node: OneDriveFilesBreadcrumbItem) => {
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
-    if (node.libraryData == null && node.folderData == null) {
+    if (node.folderData == null) {
       this.setState({
         libraryAbsolutePath: undefined,
-        libraryPath: undefined,
+        folderPath: undefined,
         folderName: undefined
       });
     }
@@ -90,12 +107,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteRef === node.key);
     }
-    // Check if it is library node
-    else if (node.libraryData != null) {
-      this._handleOpenLibrary(node.libraryData, false);
-      // select which node has been clicked
-      breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.libraryData && item.libraryData.serverRelativeUrl === node.key);
-    }
+
     // Trim nodes array
     breadcrumbItems = breadcrumbItems.slice(0, breadcrumbClickedItemIndx + 1);
     // Set new current node
@@ -138,7 +150,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     if (addBreadcrumbNode) {
       breadcrumbItems.map(item => item.isCurrentItem = false);
-      const breadcrumbNode: SiteFilePickerBreadcrumbItem = {
+      const breadcrumbNode: OneDriveFilesBreadcrumbItem = {
         folderData: folder,
         isCurrentItem: true,
         text: folder.fileLeafRef,
@@ -149,33 +161,9 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
 
     this.setState({
-      libraryPath: folder.fileRef,
+      folderPath: folder.fileRef,
       folderName: folder.fileLeafRef,
       libraryAbsolutePath: folder.absoluteRef,
-      breadcrumbItems
-    });
-  }
-
-  /**
-   * Triggered when user opens a top-level document library
-   */
-  private _handleOpenLibrary = (library: ILibrary, addBreadcrumbNode: boolean) => {
-    const { breadcrumbItems } = this.state;
-    if (addBreadcrumbNode) {
-      breadcrumbItems.map(item => item.isCurrentItem = false);
-      const breadcrumbNode: SiteFilePickerBreadcrumbItem = {
-        libraryData: library,
-        isCurrentItem: true,
-        text: library.title,
-        key: library.serverRelativeUrl
-      };
-      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
-      breadcrumbItems.push(breadcrumbNode);
-    }
-    this.setState({
-      libraryAbsolutePath: library.absoluteUrl,
-      libraryTitle: library.title,
-      libraryPath: library.serverRelativeUrl,
       breadcrumbItems
     });
   }
