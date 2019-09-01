@@ -9,3 +9,8 @@ export interface IFile {
   isFolder: boolean;
   absoluteRef: string;
 }
+
+export interface FilesQueryResult {
+  nextHref: string;
+  items: IFile[];
+}

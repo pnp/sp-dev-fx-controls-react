@@ -18,13 +18,11 @@ import UploadFilePickerTab from './UploadFilePickerTab/UploadFilePickerTab';
 import SiteFilePickerTab from './SiteFilePickerTab/SiteFilePickerTab';
 import WebSearchTab from './WebSearchTab/WebSearchTab';
 import RecentFilesTab from './RecentFilesTab/RecentFilesTab';
-import OneDriveTab from './OneDriveTab/OneDriveTab';
 
 import styles from './FilePicker.module.scss';
 import { FileBrowserService } from '../../services/FileBrowserService';
 import { OneDriveFilesTab } from './OneDriveFilesTab';
 import { OneDriveService } from '../../services/OneDriveService';
-
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;

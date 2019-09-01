@@ -6,7 +6,7 @@ import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@micro
 import { IGetListDataAsStreamResult, IRow } from './IOneDriveService';
 import { GeneralHelper } from "../Utilities";
 import { FileBrowserService } from "./FileBrowserService";
-import { IFile } from "./FileBrowserService.types";
+import { IFile, FilesQueryResult } from "./FileBrowserService.types";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -26,8 +26,8 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets files from OneDrive personal library
    */
-  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string) => {
-    let fileItems: IFile[] = [];
+  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string): Promise<FilesQueryResult> => {
+    let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();
       const encodedListUrl = encodeURIComponent(oneDriveRootFolder);
@@ -37,12 +37,12 @@ export class OneDriveService extends FileBrowserService {
 
       const restApi: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${encodedListUrl}'&RootFolder=${encodedFolderPath}`;
 
-      fileItems = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
+      filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
     } catch (error) {
-      fileItems = null;
+      filesQueryResult.items = null;
       console.error(error.message);
     }
-    return fileItems;
+    return filesQueryResult;
   }
 
   /**

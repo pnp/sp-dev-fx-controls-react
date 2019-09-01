@@ -19,6 +19,7 @@ import {
 } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
+import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
 
 const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
 
@@ -26,11 +27,10 @@ const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
 import * as strings from 'ControlStrings';
 
 // OneDrive services
-import { IFile } from '../../../../services/FileBrowserService.types';
+import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
 import { OneDriveService } from '../../../../services/OneDriveService';
 import { GeneralHelper } from '../../../../Utilities';
-import { SPHttpClient } from '@microsoft/sp-http';
-import { FileBrowserService } from '../../../../services/FileBrowserService';
+import { LoadingState } from './IFileBrowserState';
 
 /**
  * Renders list of file in a list.
@@ -134,15 +134,14 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     ];
 
     this._selection = new Selection({
-      onSelectionChanged: () => {
-
-      }
+      onSelectionChanged: this._itemSelectionChanged
     });
 
     this.state = {
       columns: columns,
       items: [],
-      isLoading: true,
+      nextPageUrl: null,
+      loadingState: LoadingState.loading,
       selectedView: lastLayout
     };
   }
@@ -155,6 +154,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   public componentDidUpdate(prevProps: IFileBrowserProps, prevState: IFileBrowserState): void {
 
     if (this.props.folderPath !== prevProps.folderPath) {
+      this._selection.setAllSelected(false);
       this._getListItems();
     }
   }
@@ -167,41 +167,61 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   }
 
   public render(): React.ReactElement<IFileBrowserProps> {
-    if (this.state.isLoading) {
-      return (<Spinner label={strings.Loading} />);
-    }
-
     return (
       <div>
         {
-          (this.state.items && this.state.items.length > 0) ?
-            <div>
-              <div className={styles.itemPickerTopBar}>
-                <CommandBar
-                  items={this._getToolbarItems()}
-                  farItems={this.getFarItems()}
-                />
-              </div>
-              <DetailsList
-                items={this.state.items}
-                compact={this.state.selectedView === 'compact'}
-                columns={this.state.columns}
-                selectionMode={SelectionMode.single}
-                setKey="set"
-                layoutMode={DetailsListLayoutMode.justified}
-                isHeaderVisible={true}
-                selection={this._selection}
-                selectionPreservedOnEmptyClick={true}
-                onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._itemChangedHandler(item, index, ev)}
-                enterModalSelectionOnTouch={true}
-                onRenderRow={this._onRenderRow}
+          (this.state.items && this.state.items.length > 0 && this.state.loadingState != LoadingState.loading) &&
+          <div>
+            <div className={styles.itemPickerTopBar}>
+              <CommandBar
+                items={this._getToolbarItems()}
+                farItems={this.getFarItems()}
               />
             </div>
-            /* Render information about empty folder */
-            : this._renderEmptyFolder()
+            <div className={styles.scrollablePaneWrapper}>
+              <ScrollablePane>
+                <DetailsList
+                  items={this.state.items}
+                  compact={this.state.selectedView === 'compact'}
+                  columns={this.state.columns}
+                  selectionMode={SelectionMode.single}
+                  setKey="set"
+                  layoutMode={DetailsListLayoutMode.justified}
+                  isHeaderVisible={true}
+                  selection={this._selection}
+                  selectionPreservedOnEmptyClick={true}
+                  // onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._itemChangedHandler(item, index, ev)}
+                  enterModalSelectionOnTouch={true}
+                  onRenderRow={this._onRenderRow}
+                  onRenderMissingItem={this._onRenderMissingItem}
+                />
+              </ScrollablePane>
+            </div>
+          </div>
+        }
+
+        {
+          (this.state.loadingState === LoadingState.idle && (!this.state.items || this.state.items.length <= 0)) &&
+          /* Render information about empty folder */
+          this._renderEmptyFolder()
+        }
+
+        {
+          this.state.loadingState != LoadingState.idle &&
+          <Spinner label={strings.Loading} />
         }
       </div>
     );
+  }
+
+  /**
+   * Triggers paged data load
+   */
+  private _onRenderMissingItem = async () => {
+    if (this.state.loadingState == LoadingState.idle) {
+      // TODO: Fix batched data load concat
+      await this._getListItems(true);
+    }
   }
 
   /**
@@ -234,10 +254,11 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     );
   }
 
-
+  /**
+   * Renders row with file or folder style.
+   */
   private _onRenderRow = (props: IDetailsRowProps): JSX.Element => {
     const fileItem: IFile = props.item;
-
     return <DetailsRow {...props} className={fileItem.isFolder ? styles.folderRow : styles.fileRow} />;
   }
 
@@ -382,30 +403,26 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   }
 
   /**
- * When a folder is opened, calls parent tab to navigate down
- */
+   * When a folder is opened, calls parent tab to navigate down
+   */
   private _handleOpenFolder = (item: IFile) => {
     // De-select the list item that was clicked, the item in the same position
+    this._selection.setAllSelected(false);
     // item in the folder will appear selected
     this.setState({
-      fileUrl: undefined,
-    });
-    this.props.onOpenFolder(item);
+      loadingState: LoadingState.loading,
+      fileUrl: undefined
+    }, () => { this.props.onOpenFolder(item); });
   }
 
   /**
-   * When user selects an item, save selection
+   * Handles selected item change
    */
-  private _itemChangedHandler = (item: IFile, _index: number, _ev): void => {
-    if (item.isFolder) {
-      this.setState({
-        fileUrl: undefined
-      });
-      return;
-    }
+  private _itemSelectionChanged = () => {
+    const selectedItems = this._selection.getSelection();
+    const selectedItem: IFile = selectedItems && selectedItems.length > 0 ? selectedItems[0] as IFile : null;
 
-    // Notify parent tab
-    const absoluteFileUrl: string = item.absoluteRef;
+    let absoluteFileUrl = selectedItem && !selectedItem.isFolder ? selectedItem.absoluteRef : null;
     this.props.onChange(absoluteFileUrl);
     this.setState({
       fileUrl: absoluteFileUrl
@@ -415,28 +432,49 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Gets all files in a library with a matchihg path
    */
-  private async _getListItems() {
+  private async _getListItems(concatenateResults: boolean = false) {
     const { libraryName, folderPath, accepts } = this.props;
-    let fileItems: IFile[] = [];
+    const { items, nextPageUrl } = this.state;
+
+    let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
+    const loadingState = concatenateResults ? LoadingState.loadingNextPage : LoadingState.loading;
     try {
       this.setState({
-        isLoading: true
+        loadingState
       });
       // Load files in the folder
-      debugger;
-      fileItems = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts);
+      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts, nextPageUrl);
     } catch (error) {
-      fileItems = null;
+      filesQueryResult.items = null;
       console.error(error.message);
     } finally {
-      // de-select anything that was previously selected
-      this._selection.setAllSelected(false);
+
+
+      // Remove the null mark from the end of the items array
+      if (concatenateResults && items && items.length > 0 && items.length[items.length - 1] == null) {
+        // Remove the null mark
+        items.splice(items.length - 1, 1);
+      }
+      //concatenate results
+      const newItems = concatenateResults ? items.concat(filesQueryResult.items) : filesQueryResult.items;
+
+      // If there are more items to load -> add null mark at the end of the array
+      if (filesQueryResult.nextHref != null) {
+        newItems.push(null);
+      }
+
+      if (!concatenateResults) {
+        // de-select anything that was previously selected
+        this._selection.setAllSelected(false);
+      }
+
       this.setState({
-        items: fileItems,
-        isLoading: false
+        items: newItems,
+        nextPageUrl: filesQueryResult.nextHref,
+        // isLoading: false,
+        // isLoadingNextPage: false
+        loadingState: LoadingState.idle
       });
     }
   }
-
-
 }

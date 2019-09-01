@@ -1,5 +1,5 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IFile } from "./FileBrowserService.types";
+import { IFile, FilesQueryResult } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
@@ -17,16 +17,24 @@ export class FileBrowserService {
    * @param folderPath
    * @param acceptedFilesExtensionsList
    */
-  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string) => {
-    let fileItems: IFile[] = [];
+  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+    let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-      const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('${libraryName}')/RenderListDataAsStream`;
-      return this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensionsList);
+      let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('${libraryName}')/RenderListDataAsStream`;
+
+      // Do not pass FolderServerRelativeUrl as query parameter
+      // Attach passed nextPageQueryStringParams values to REST URL
+      if (nextPageQueryStringParams) {
+        restApi += `${nextPageQueryStringParams}`;
+        folderPath = null;
+      }
+
+      filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensionsList);
     } catch (error) {
-      fileItems = null;
+      filesQueryResult.items = null;
       console.error(error.message);
     }
-    return fileItems;
+    return filesQueryResult;
   }
 
   /**
@@ -35,8 +43,8 @@ export class FileBrowserService {
    * @param folderPath
    * @param acceptedFilesExtensionsList
    */
-  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensionsList?: string): Promise<IFile[]> => {
-    let fileItems: IFile[] = [];
+  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensionsList?: string): Promise<FilesQueryResult> => {
+    let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const body = {
         parameters: {
@@ -61,12 +69,17 @@ export class FileBrowserService {
       if (!filesResult || !filesResult.ListData || !filesResult.ListData.Row) {
         throw new Error(`[FileBrowser._getListItems]: No data is available. Status='${data.statusText}'`);
       }
-      fileItems = filesResult.ListData.Row.map(fileItem => this.parseFileItem(fileItem));
+
+      const items = filesResult.ListData.Row.map(fileItem => this.parseFileItem(fileItem));
+      filesQueryResult = {
+        items: items,
+        nextHref: filesResult.ListData.NextHref
+      }
     } catch (error) {
-      fileItems = null;
+      filesQueryResult.items = null;
       console.error(error.message);
     }
-    return fileItems;
+    return filesQueryResult;
   }
 
   /**

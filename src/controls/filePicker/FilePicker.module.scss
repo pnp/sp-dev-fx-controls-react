@@ -159,6 +159,16 @@
   -ms-flex-positive: 2;
   flex-grow: 2;
 }
+.tabFiles {
+  overflow-y: auto;
+  -webkit-box-flex: 2;
+  -ms-flex-positive: 2;
+  flex-grow: 2;
+}
+.scrollablePaneWrapper {
+  height: 75vh;
+  position: 'relative';
+}
 
 .actionButtonsContainer {
   display: -webkit-box;
@@ -172,6 +182,7 @@
   background-color: $ms-color-white;
   -ms-flex-negative: 0;
   flex-shrink: 0;
+  z-index: 100;
 }
 
 .actionButtons {

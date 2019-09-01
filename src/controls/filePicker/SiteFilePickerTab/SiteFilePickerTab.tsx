@@ -44,7 +44,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
           { /** TODO: Fix breadcrumb styles */}
           <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader}/>
         </div>
-        <div className={styles.tab}>
+        <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath === undefined &&
             <DocumentLibraryBrowser
               context={this.props.context}

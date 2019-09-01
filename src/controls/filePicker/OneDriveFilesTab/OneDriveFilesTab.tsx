@@ -11,6 +11,7 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button'
 
 import styles from './OneDriveFilesTab.module.scss';
 import * as strings from 'ControlStrings';
+import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
 export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IOneDriveFilesTabState> {
   constructor(props: IOneDriveFilesTabProps) {
@@ -58,14 +59,18 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
   }
 
   public render(): React.ReactElement<IOneDriveFilesTabProps> {
+    const listStyle = mergeStyles({
+      flex: "1 1 auto",
+      overflowX: "hidden",
+      overflowY: "auto"
+  });
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
           { /** TODO: Fix breadcrumb styles */}
           <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader}/>
         </div>
-        <div className={styles.tab}>
-
+        <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
               onChange={(fileUrl: string) => this._handleSelectionChange(fileUrl)}
