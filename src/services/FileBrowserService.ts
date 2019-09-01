@@ -74,7 +74,7 @@ export class FileBrowserService {
       filesQueryResult = {
         items: items,
         nextHref: filesResult.ListData.NextHref
-      }
+      };
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);

@@ -26,17 +26,27 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets files from OneDrive personal library
    */
-  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();
       const encodedListUrl = encodeURIComponent(oneDriveRootFolder);
 
+      let queryStringParams = "";
       folderPath = folderPath ? folderPath : this.oneDriveRootFolderRelativeUrl;
       const encodedFolderPath = encodeURIComponent(folderPath);
 
-      const restApi: string = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${encodedListUrl}'&RootFolder=${encodedFolderPath}`;
+      if (nextPageQueryStringParams) {
+        // Remove start ? from the query params
+        if (nextPageQueryStringParams.charAt(0) === "?") {
+          nextPageQueryStringParams = nextPageQueryStringParams.substring(1);
+        }
+        queryStringParams = nextPageQueryStringParams;
+      } else {
+        queryStringParams = `RootFolder=${encodedFolderPath}`;
+      }
 
+      const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${encodedListUrl}'&${queryStringParams}`;
       filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
     } catch (error) {
       filesQueryResult.items = null;
@@ -81,7 +91,7 @@ export class OneDriveService extends FileBrowserService {
       this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${myDocumentsLibrary.Title}`;
       this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${myDocumentsLibrary.Title}`;
     } catch (error) {
-      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`)
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`);
       this.oneDriveRootFolderAbsoluteUrl = null;
     }
     return this.oneDriveRootFolderAbsoluteUrl;
@@ -104,7 +114,7 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets personal site path.
    */
-  protected getOneDrivePersonalUrl = async (): Promise<string> => {
+  private getOneDrivePersonalUrl = async (): Promise<string> => {
     try {
       // Return result if already obtained
       if (this.oneDrivePersonalUrl) {
@@ -125,7 +135,7 @@ export class OneDriveService extends FileBrowserService {
 
       this.oneDrivePersonalUrl = profileData.FollowPersonalSiteUrl;
     } catch (error) {
-      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`)
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`);
       this.oneDrivePersonalUrl = null;
     }
     return this.oneDrivePersonalUrl;

@@ -25,8 +25,8 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       isCurrentItem: true,
       text: props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString()
-    }
-    breadcrumbSiteNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbSiteNode); }
+    };
+    breadcrumbSiteNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbSiteNode); };
 
     this.state = {
       libraryAbsolutePath: undefined,
@@ -144,7 +144,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
         text: folder.fileLeafRef,
         key: folder.absoluteRef
       };
-      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
+      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
       breadcrumbItems.push(breadcrumbNode);
     }
 
@@ -169,7 +169,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
         text: library.title,
         key: library.serverRelativeUrl
       };
-      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
+      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
       breadcrumbItems.push(breadcrumbNode);
     }
     this.setState({

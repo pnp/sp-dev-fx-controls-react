@@ -38,7 +38,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
       fileLeafRef: libraryTitle,
       docIcon: "",
       fileRef: "",
-    }
+    };
 
     const breadcrumbItems = this.state.breadcrumbItems;
     // Add OneDrive folder as a first node
@@ -48,14 +48,14 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
       text: oneDriveFolderData.fileLeafRef,
       key: oneDriveFolderData.absoluteRef
     };
-    breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
+    breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
     breadcrumbItems.push(breadcrumbNode);
 
     this.setState({
       libraryAbsolutePath: libraryAbsolutePath,
       folderName: folderPath,
       libraryTitle
-    })
+    });
   }
 
   public render(): React.ReactElement<IOneDriveFilesTabProps> {
@@ -161,7 +161,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
         text: folder.fileLeafRef,
         key: folder.absoluteRef
       };
-      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); }
+      breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
       breadcrumbItems.push(breadcrumbNode);
     }
 
