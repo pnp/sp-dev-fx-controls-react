@@ -1,7 +1,7 @@
-import { ILibrary } from ".";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { FileBrowserService } from "../../../../services/FileBrowserService";
+import { ILibrary } from "../../../../services/FileBrowserService.types";
 
 export interface IDocumentLibraryBrowserProps {
-  context: WebPartContext;
+  fileBrowserService: FileBrowserService;
   onOpenLibrary: (selectedLibrary: ILibrary) => void;
 }

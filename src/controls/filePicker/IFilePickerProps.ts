@@ -31,10 +31,14 @@ export interface IFilePickerProps {
    */
   disabled?: boolean;
 
-  disableLocalUpload?: boolean;
-  disableWebSearchTab?: boolean;
-  disableCentralAssetRepo?: boolean; // not supported yet
-  hasMySiteTab?: boolean;
+  hideRecentTab?: boolean;
+  hideWebSearchTab?: boolean;
+  hideOrganisationalAssetTab?: boolean;
+  hideOneDriveTab?: boolean;
+  hideSiteFilesTab?: boolean;
+  hideLocalUploadTab?: boolean;
+  hideLinkUploadTab?: boolean;
+
   required?: boolean;
   onChanged: (value: string) => void;
 }

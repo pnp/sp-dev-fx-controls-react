@@ -10,6 +10,13 @@ export interface IFile {
   absoluteRef: string;
 }
 
+export interface ILibrary {
+  title: string;
+  absoluteUrl: string;
+  serverRelativeUrl: string;
+  iconPath?: string
+}
+
 export interface FilesQueryResult {
   nextHref: string;
   items: IFile[];

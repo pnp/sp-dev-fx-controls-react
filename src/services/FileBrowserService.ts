@@ -1,5 +1,5 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IFile, FilesQueryResult } from "./FileBrowserService.types";
+import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
@@ -35,6 +35,31 @@ export class FileBrowserService {
       console.error(error.message);
     }
     return filesQueryResult;
+  }
+
+  /**
+   * Gets document and media libraries from the site
+   */
+  public getSiteMediaLibraries = async (includePageLibraries: boolean = false) => {
+    try {
+      const absoluteUrl = this.context.pageContext.web.absoluteUrl;
+      const restApi = `${absoluteUrl}/_api/SP.Web.GetDocumentAndMediaLibraries?webFullUrl='${encodeURIComponent(absoluteUrl)}'&includePageLibraries='${includePageLibraries}'`;
+      const mediaLibrariesResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+
+      if (!mediaLibrariesResult || !mediaLibrariesResult.ok) {
+        throw new Error(`Something went wrong when executing request. Status='${mediaLibrariesResult.statusText}'`);
+      }
+      const libResults = await mediaLibrariesResult.json();
+      if (!libResults || !libResults.value) {
+        throw new Error(`Cannot read data from the results.`);
+      }
+
+      const result: ILibrary[] = libResults.value.map((libItem) => { return this.parseLibItem(libItem); });
+      return result;
+    } catch (error) {
+      console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error.message}'`);
+      return null;
+    }
   }
 
   /**
@@ -182,6 +207,16 @@ export class FileBrowserService {
       absoluteRef: this.buildAbsoluteUrl(fileItem.FileRef)
     };
     return file;
+  }
+
+  protected parseLibItem = (libItem: any): ILibrary => {
+    const library: ILibrary = {
+      title: libItem.Title,
+      absoluteUrl: libItem.AbsoluteUrl,
+      serverRelativeUrl: libItem.ServerRelativeUrl
+    };
+
+    return library;
   }
 
   /**

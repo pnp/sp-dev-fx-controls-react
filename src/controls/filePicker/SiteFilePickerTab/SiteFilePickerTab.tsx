@@ -6,7 +6,7 @@ import styles from './SiteFilePickerTab.module.scss';
 
 // Custom picker interface
 import { ISiteFilePickerTabProps, ISiteFilePickerTabState, SiteFilePickerBreadcrumbItem } from '.';
-import { DocumentLibraryBrowser, FileBrowser, ILibrary } from '../controls';
+import { DocumentLibraryBrowser, FileBrowser } from '../controls';
 
 // Office Fabric
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -14,14 +14,14 @@ import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
 
 // Localized strings
 import * as strings from 'ControlStrings';
-import { IFile } from '../../../services/FileBrowserService.types';
+import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
     super(props);
 
-    // Add current site to the breadcrumb
-    const breadcrumbSiteNode: SiteFilePickerBreadcrumbItem = {
+    // Add current site to the breadcrumb or the provided node
+    const breadcrumbSiteNode: SiteFilePickerBreadcrumbItem = this.props.breadcrumbFirstNode ? this.props. breadcrumbFirstNode : {
       isCurrentItem: true,
       text: props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString()
@@ -42,12 +42,12 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
           { /** TODO: Fix breadcrumb styles */}
-          <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader}/>
+          <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader} />
         </div>
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath === undefined &&
             <DocumentLibraryBrowser
-              context={this.props.context}
+              fileBrowserService={this.props.fileBrowserService}
               onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser

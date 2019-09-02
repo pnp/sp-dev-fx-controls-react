@@ -5,9 +5,10 @@ import { List } from 'office-ui-fabric-react/lib/List';
 import { css } from "@uifabric/utilities/lib/css";
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 
-import { IDocumentLibraryBrowserProps, IDocumentLibraryBrowserState, ILibrary } from '.';
+import { IDocumentLibraryBrowserProps, IDocumentLibraryBrowserState } from '.';
 import * as strings from 'ControlStrings';
 import { SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { ILibrary } from '../../../../services/FileBrowserService.types';
 
 /**
  * This would have been better done as an Office Fabric TileList, but it isn't available yet for production use
@@ -22,29 +23,12 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
     };
   }
 
-  public componentDidMount(): void {
-
-    const { absoluteUrl } = this.props.context.pageContext.web;
-
-    const apiUrl: string = `${absoluteUrl}/_api/SP.Web.GetDocumentAndMediaLibraries?webFullUrl='${encodeURIComponent(absoluteUrl)}'&includePageLibraries='false'`;
-    this.props.context.spHttpClient.get(apiUrl,
-      SPHttpClient.configurations.v1)
-      .then((response: SPHttpClientResponse) => {
-        response.json().then((responseJSON: any) => {
-          const lists: ILibrary[] = responseJSON.value.map((item) => {
-            const list: ILibrary = {
-              title: item.Title,
-              absoluteUrl: item.AbsoluteUrl,
-              serverRelativeUrl: item.ServerRelativeUrl
-            };
-            return list;
-          });
-          this.setState({
-                lists: lists,
-                isLoading: false
-              });
-        });
-      });
+  public async componentDidMount() {
+    const lists = await this.props.fileBrowserService.getSiteMediaLibraries();
+    this.setState({
+      lists: lists,
+      isLoading: false
+    });
   }
 
   public render(): React.ReactElement<IDocumentLibraryBrowserProps> {
@@ -66,6 +50,9 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
    * Renders a file folder cover
    */
   private _onRenderCell = (item: ILibrary, index: number | undefined): JSX.Element => {
+    // const folderBlackPlateIcon = item.iconPath ? item.iconPath : strings.FolderBackPlate;
+    // const folderFrontPlateIcon = item.iconPath ? item.iconPath : strings.FolderFrontPlate;
+
     return (
       <div className={styles.listCell} data-is-focusable={true}>
         <div className={styles.cell}>

@@ -23,92 +23,42 @@ import styles from './FilePicker.module.scss';
 import { FileBrowserService } from '../../services/FileBrowserService';
 import { OneDriveFilesTab } from './OneDriveFilesTab';
 import { OneDriveService } from '../../services/OneDriveService';
+import { OrgAssetsService } from '../../services/OrgAssetsService';
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
   private oneDriveService: OneDriveService;
+  private orgAssetsService: OrgAssetsService;
+
   constructor(props: IFilePickerProps) {
     super(props);
 
     // Initialize file browser services
     this.fileBrowserService = new FileBrowserService(props.webPartContext);
     this.oneDriveService = new OneDriveService(props.webPartContext);
+    this.orgAssetsService = new OrgAssetsService(props.webPartContext);
 
     this.state = {
       panelOpen: false,
       selectedTab: 'keyRecent',
+      organisationAssetsEnabled: false,
       showFullNav: true
     };
+  }
+
+  public async componentDidMount() {
+    // Load information about Organisation Assets Library
+    const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
+    const organisationAssetsEnabled = orgAssetsLibraries ? true : false;
+
+    this.setState({
+      organisationAssetsEnabled
+    })
   }
 
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string = this.props.accepts;
-
-    // Get a list of groups to display
-    let groups: INavLinkGroup[] = [
-      {
-        links: [
-          {
-            name: strings.RecentLinkLabel,
-            url: '#recent',
-            icon: 'Recent',
-            key: 'keyRecent',
-          },
-          {
-            name: strings.WebSearchLinkLabel,
-            url: '#search',
-            key: 'keyWeb',
-            icon: 'Search',
-          },
-          {
-            name: "OneDrive",
-            url: '#onedrive',
-            key: 'keyOneDrive',
-            icon: 'OneDrive',
-          },
-          {
-            name: strings.SiteLinkLabel,
-            url: '#globe',
-            key: 'keySite',
-            icon: 'Globe',
-          },
-          {
-            name: strings.UploadLinkLabel,
-            url: '#upload',
-            key: 'keyUpload',
-            icon: 'System'
-          },
-          {
-            name: strings.FromLinkLinkLabel,
-            url: '#link',
-            key: 'keyLink',
-            icon: 'Link'
-          }
-        ]
-      }
-    ];
-
-    // Hide tabs we don't want. Start from bottom of the list
-    // so we're not changing the relative position of items
-    // as we remove them.
-
-    // I'm sure there is a better way to do this...
-
-    // If we don't want local uploads, remove it from the list
-    if (this.props.disableLocalUpload) {
-      groups[0].links.splice(4, 1);
-    }
-
-    // If we don't want OneDrive, remove it from the list
-    if (this.props.hasMySiteTab === false) {
-      groups[0].links.splice(2, 1);
-    }
-
-    // If we don't want web search, remove it from the list
-    if (this.props.disableWebSearchTab) {
-      groups[0].links.splice(1, 1);
-    }
 
     return (
       <div >
@@ -132,7 +82,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
           <div className={styles.nav}>
             <Nav
-              groups={groups}
+              groups={this._getNavPanelOptions()}
               selectedKey={this.state.selectedTab}
               onLinkClick={(ev?: React.MouseEvent<HTMLElement>, item?: INavLink) => this._handleLinkClick(ev, item)}
             />
@@ -161,6 +111,21 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               this.state.selectedTab === "keySite" &&
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
+                context={this.props.webPartContext}
+                accepts={accepts}
+                onClose={() => this._handleClosePanel()}
+                onSave={(value: string) => this._handleSave(value)}
+              />
+            }
+            {
+              this.state.selectedTab === "keyOrgAssets" &&
+              <SiteFilePickerTab
+                breadcrumbFirstNode={{
+                  isCurrentItem: true,
+                  text: "Images and files provided by your organization",
+                  key: "keyOrgAssets"
+                }}
+                fileBrowserService={this.orgAssetsService}
                 context={this.props.webPartContext}
                 accepts={accepts}
                 onClose={() => this._handleClosePanel()}
@@ -243,6 +208,70 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    */
   private _handleLinkClick = (ev?: React.MouseEvent<HTMLElement>, item?: INavLink) => {
     this.setState({ selectedTab: item.key });
+  }
+
+  private _getNavPanelOptions = () => {
+    let links = [];
+
+    if (!this.props.hideRecentTab) {
+      links.push({
+        name: strings.RecentLinkLabel,
+        url: '#recent',
+        icon: 'Recent',
+        key: 'keyRecent',
+      });
+    }
+    if (!this.props.hideWebSearchTab) {
+      links.push({
+        name: strings.WebSearchLinkLabel,
+        url: '#search',
+        key: 'keyWeb',
+        icon: 'Search',
+      });
+    }
+    if (!this.props.hideOrganisationalAssetTab && this.state.organisationAssetsEnabled) {
+      links.push({
+        name: 'Your organisation',
+        url: '#orgAssets',
+        icon: 'FabricFolderConfirm',
+        key: 'keyOrgAssets',
+      });
+    }
+    if (!this.props.hideOneDriveTab) {
+      links.push({
+        name: "OneDrive",
+        url: '#onedrive',
+        key: 'keyOneDrive',
+        icon: 'OneDrive',
+      });
+    }
+    if (!this.props.hideSiteFilesTab) {
+      links.push({
+        name: strings.SiteLinkLabel,
+        url: '#globe',
+        key: 'keySite',
+        icon: 'Globe',
+      });
+    }
+    if (!this.props.hideLocalUploadTab) {
+      links.push({
+        name: strings.UploadLinkLabel,
+        url: '#upload',
+        key: 'keyUpload',
+        icon: 'System'
+      });
+    }
+    if (!this.props.hideLinkUploadTab) {
+      links.push({
+        name: strings.FromLinkLinkLabel,
+        url: '#link',
+        key: 'keyLink',
+        icon: 'Link'
+      });
+    }
+
+    let groups: INavLinkGroup[] = [ { links} ];
+    return groups;
   }
 
 }
