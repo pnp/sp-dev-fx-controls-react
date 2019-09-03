@@ -108,7 +108,14 @@ export interface IPeoplePickerState {
 }
 
 export interface IPeoplePickerUserItem {
+  /**
+   * LoginName or Id of the principal in the site.
+   */
   id: string;
+  /**
+   * LoginName of the principal.
+   */
+  loginName: string;
   imageUrl: string;
   imageInitials: string;
   text: string; // name
