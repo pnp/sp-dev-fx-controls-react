@@ -8,6 +8,8 @@ import { IRectangle, ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 import { IGridLayoutProps, IGridLayoutState } from './GridLayout.types';
 
+import * as telemetry from '../../common/telemetry';
+
 // Get the constants from the SCSS so that we don't hard-code look and feel elements
 const ROWS_PER_PAGE: number = +styles.rowsPerPage;
 const MAX_ROW_HEIGHT: number = +styles.maxWidth;
@@ -19,6 +21,16 @@ const COMPACT_THRESHOLD: number = +styles.compactThreshold;
  * Grid layout component
  */
 export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutState> {
+
+   /**
+   * Constructor method
+   */
+  constructor(props: IGridLayoutProps) {
+    super(props);
+
+    telemetry.track('ReactGridLayout');
+  }
+
   // Number of columns in a row
   private _columnCount: number;
 
