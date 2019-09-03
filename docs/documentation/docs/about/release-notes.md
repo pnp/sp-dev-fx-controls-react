@@ -7,13 +7,18 @@
 - `GridLayout`: New control added to the library [#350](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/350)
 - `Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)
 
+### Enhancements
+
+- `TaxonomyPicker`: Localization keys added to the buttons [#361](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/361)
+
 ### Fixes
 
 - `TaxonomyPicker`: Tags icon styling issue on IE11 [#356](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/356)
+- `PeoplePicker`: Get loginName with ensureUser [#342](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/342)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Robert Lindström](https://github.com/robert-lindstrom), [Piotr Siatka](https://github.com/siata13).
 
 ## 1.14.0
 
