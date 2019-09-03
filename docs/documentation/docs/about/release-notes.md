@@ -4,6 +4,7 @@
 
 ### New control(s)
 
+- `GridLayout`: New control added to the library [#350](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/350)
 - `Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)
 
 ### Fixes
@@ -12,7 +13,7 @@
 
 ### Contributors
 
-Special thanks to our contributor: [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Piotr Siatka](https://github.com/siata13).
 
 ## 1.14.0
 

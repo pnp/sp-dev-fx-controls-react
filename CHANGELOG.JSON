@@ -4,6 +4,7 @@
       "version": "1.15.0",
       "changes": {
         "new": [
+          "`GridLayout`: New control added to the library [#350](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/350)",
           "`Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)"
         ],
         "enhancements": [],
@@ -12,6 +13,7 @@
         ]
       },
       "contributions": [
+        "[Hugo Bernier](https://github.com/hugoabernier)",
         "[Piotr Siatka](https://github.com/siata13)"
       ]
     },
