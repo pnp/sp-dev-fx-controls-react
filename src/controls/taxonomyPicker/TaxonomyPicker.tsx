@@ -8,7 +8,7 @@ import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
-
+import * as strings from 'ControlStrings';
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import TermParent from './TermParent';
@@ -294,9 +294,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           onRenderFooterContent={() => {
             return (
               <div className={styles.actions}>
-                <PrimaryButton iconProps={{ iconName: 'Save' }} text="Save" value="Save" onClick={this.onSave} />
-
-                <DefaultButton iconProps={{ iconName: 'Cancel' }} text="Cancel" value="Cancel" onClick={this.onClosePanel} />
+                <PrimaryButton iconProps={{ iconName: 'Save' }} text={strings.SaveButtonLabel} value="Save" onClick={this.onSave} />
+                <DefaultButton iconProps={{ iconName: 'Cancel' }} text={strings.CancelButtonLabel} value="Cancel" onClick={this.onClosePanel} />
               </div>
             );
           }}>
@@ -310,20 +309,20 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
               <div key={this.state.termSetAndTerms.Id} >
                 <h3>{this.state.termSetAndTerms.Name}</h3>
                 <TermParent anchorId={this.props.anchorId}
-                            autoExpand={null}
-                            termset={this.state.termSetAndTerms}
-                            isTermSetSelectable={this.props.isTermSetSelectable}
-                            termSetSelectedChange={this.termSetSelectedChange}
-                            activeNodes={this.state.activeNodes}
-                            disabledTermIds={this.props.disabledTermIds}
-                            disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
-                            changedCallback={this.termsChanged}
-                            multiSelection={this.props.allowMultipleSelections}
-                            spTermService={this.termsService}
+                  autoExpand={null}
+                  termset={this.state.termSetAndTerms}
+                  isTermSetSelectable={this.props.isTermSetSelectable}
+                  termSetSelectedChange={this.termSetSelectedChange}
+                  activeNodes={this.state.activeNodes}
+                  disabledTermIds={this.props.disabledTermIds}
+                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
+                  changedCallback={this.termsChanged}
+                  multiSelection={this.props.allowMultipleSelections}
+                  spTermService={this.termsService}
 
-                            updateTaxonomyTree={this.updateTaxonomyTree}
-                            termActions={this.props.termActions}
-                            />
+                  updateTaxonomyTree={this.updateTaxonomyTree}
+                  termActions={this.props.termActions}
+                />
               </div>
             )
           }
