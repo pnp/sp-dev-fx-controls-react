@@ -12,6 +12,7 @@
         ],
         "fixes": [
           "`TaxonomyPicker`: Tags icon styling issue on IE11 [#356](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/356)",
+          "`DateTimePicker`: Does not respect dateLabel and timeLabel [#346](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/346)",
           "`PeoplePicker`: Get loginName with ensureUser [#342](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/342)"
         ]
       },
