@@ -31,6 +31,8 @@ import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService
 import { OneDriveService } from '../../../../services/OneDriveService';
 import { GeneralHelper } from '../../../../Utilities';
 import { LoadingState } from './IFileBrowserState';
+import { FileTilesList } from '../FileTilesList';
+// import { TilesList, ITilesGridSegment, TilesGridMode, ITileSize, ITilesGridItem } from '../TilesList';
 
 /**
  * Renders list of file in a list.
@@ -178,25 +180,34 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                 farItems={this.getFarItems()}
               />
             </div>
-            <div className={styles.scrollablePaneWrapper}>
-              <ScrollablePane>
-                <DetailsList
-                  items={this.state.items}
-                  compact={this.state.selectedView === 'compact'}
-                  columns={this.state.columns}
-                  selectionMode={SelectionMode.single}
-                  setKey="set"
-                  layoutMode={DetailsListLayoutMode.justified}
-                  isHeaderVisible={true}
-                  selection={this._selection}
-                  selectionPreservedOnEmptyClick={true}
-                  // onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._itemChangedHandler(item, index, ev)}
-                  enterModalSelectionOnTouch={true}
-                  onRenderRow={this._onRenderRow}
-                  onRenderMissingItem={this._onRenderMissingItem}
-                />
-              </ScrollablePane>
-            </div>
+            {
+              this.state.selectedView !== 'tiles' &&
+              <div className={styles.scrollablePaneWrapper}>
+                <ScrollablePane>
+                  <DetailsList
+                    items={this.state.items}
+                    compact={this.state.selectedView === 'compact'}
+                    columns={this.state.columns}
+                    selectionMode={SelectionMode.single}
+                    setKey="set"
+                    layoutMode={DetailsListLayoutMode.justified}
+                    isHeaderVisible={true}
+                    selection={this._selection}
+                    selectionPreservedOnEmptyClick={true}
+                    // onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._itemChangedHandler(item, index, ev)}
+                    enterModalSelectionOnTouch={true}
+                    onRenderRow={this._onRenderRow}
+                    onRenderMissingItem={this._onRenderMissingItem}
+                  />
+                </ScrollablePane>
+              </div>
+            }
+
+            {
+              this.state.selectedView === 'tiles' &&
+              // TODO: Pass onChange + onSave
+              <FileTilesList items={this.state.items} />
+            }
           </div>
         }
 
