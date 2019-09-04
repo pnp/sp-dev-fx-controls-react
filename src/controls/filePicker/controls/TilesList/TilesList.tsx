@@ -8,14 +8,17 @@ import { IRenderFunction, IRectangle, css } from 'office-ui-fabric-react/lib/Uti
 import { FolderTile } from '../FolderTile';
 import { DocumentTile } from '../DocumentTile';
 import { FileBrowserService } from '../../../../services/FileBrowserService';
+import { DetailsList } from 'office-ui-fabric-react/lib/DetailsList';
 
 export interface ITilesListProps {
   fileBrowserService: FileBrowserService;
   selectedFileUrl: string;
-  selection: Selection
+  selection: Selection;
+  items: IFile[];
+
   onFolderOpen: (item: IFile) => void;
   onFileSelected: (item: IFile) => void;
-  items: IFile[];
+  onNextPageDataRequest: () => void;
 }
 
 /**
@@ -31,7 +34,7 @@ const MAX_ROW_HEIGHT: number = 250;
 /**
  * Maximum number of cells per page
  */
-const CELLS_PER_PAGE: number = 100;
+const CELLS_PER_PAGE: number = 50;
 
 /**
  * Standard tile margin
@@ -79,7 +82,6 @@ export class TilesList extends React.Component<ITilesListProps> {
 
             getItemCountForPage={this._getItemCountForPage}
             getPageHeight={this._getPageHeight}
-            renderedWindowsAhead={4}
             onRenderPage={(pageProps: IPageProps, defaultRender?: IRenderFunction<IPageProps>) => this._onRenderPage(pageProps, defaultRender)}
           />
         </FocusZone>
@@ -141,6 +143,7 @@ export class TilesList extends React.Component<ITilesListProps> {
     } = pageProps;
 
     const { items } = page;
+    // If there are not items to be rendered or the last one is a null mark -> request for next page data
     if (!items) {
       return null;
     }
@@ -172,6 +175,7 @@ export class TilesList extends React.Component<ITilesListProps> {
    */
   private _onRenderCell = (item: IFile, index: number | undefined): JSX.Element => {
     if (!item) {
+      this.props.onNextPageDataRequest();
       return null;
     }
     let isSelected: boolean = item.absoluteUrl == this.props.selectedFileUrl;

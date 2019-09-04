@@ -5,13 +5,15 @@ import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 
 
-import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
 import { FileBrowser } from '../controls';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 import styles from './OneDriveFilesTab.module.scss';
 import * as strings from 'ControlStrings';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Link } from 'office-ui-fabric-react/lib/Link';
 
 export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IOneDriveFilesTabState> {
   constructor(props: IOneDriveFilesTabProps) {
@@ -62,16 +64,10 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
   }
 
   public render(): React.ReactElement<IOneDriveFilesTabProps> {
-    const listStyle = mergeStyles({
-      flex: "1 1 auto",
-      overflowX: "hidden",
-      overflowY: "auto"
-  });
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          { /** TODO: Fix breadcrumb styles */}
-          <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader}/>
+          <Breadcrumb items={this.state.breadcrumbItems} onRenderItem={this.renderBreadcrumbItem} className={styles.breadcrumbNav}/>
         </div>
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath !== undefined &&
@@ -92,6 +88,12 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
           </div>
         </div>
       </div>
+    );
+  }
+
+  private renderBreadcrumbItem = (item: IBreadcrumbItem): JSX.Element => {
+    return (
+      <Link href={item.href} onClick={item.onClick} key={item.key} className={`ms-Link ms-Breadcrumb-itemLink ${styles.breadcrumbNavItem}`}>{item.text}</Link>
     );
   }
 

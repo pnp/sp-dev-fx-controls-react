@@ -152,6 +152,16 @@
   border-top: 40px solid;
 }
 
+.breadcrumbNav {
+  margin-top: 0px;
+}
+.breadcrumbNavItem {
+  color: $ms-color-neutralPrimary;
+  font-size: 28px;
+  font-weight: 100;
+  padding: 22px 10px 20px 32px;
+}
+
 .tab {
   padding: 0 32px;
   overflow-y: auto;
@@ -168,6 +178,7 @@
 .scrollablePaneWrapper {
   height: 75vh;
   position: 'relative';
+  overflow: hidden;
 }
 
 .actionButtonsContainer {

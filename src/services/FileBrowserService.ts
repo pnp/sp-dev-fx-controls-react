@@ -250,6 +250,6 @@ export class FileBrowserService {
     // Extract media base URL
     this.mediaBaseUrl = fileResponse.ListSchema[".mediaBaseUrl"];
     this.callerStack = fileResponse.ListSchema[".callerStack"];
-    this.driveAccessToken = fileResponse.ListSchema[".driveAccessToken"]
+    this.driveAccessToken = fileResponse.ListSchema[".driveAccessToken"];
   }
 }

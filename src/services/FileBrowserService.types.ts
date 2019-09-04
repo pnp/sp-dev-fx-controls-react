@@ -30,7 +30,7 @@ export interface ILibrary {
   title: string;
   absoluteUrl: string;
   serverRelativeUrl: string;
-  iconPath?: string
+  iconPath?: string;
 }
 
 export interface FilesQueryResult {

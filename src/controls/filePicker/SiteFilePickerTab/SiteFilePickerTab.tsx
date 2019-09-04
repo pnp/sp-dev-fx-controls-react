@@ -10,11 +10,12 @@ import { DocumentLibraryBrowser, FileBrowser } from '../controls';
 
 // Office Fabric
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
 
 // Localized strings
 import * as strings from 'ControlStrings';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
+import { Link } from 'office-ui-fabric-react/lib/Link';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
@@ -41,8 +42,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          { /** TODO: Fix breadcrumb styles */}
-          <Breadcrumb items={this.state.breadcrumbItems} className={styles.tabHeader} />
+          <Breadcrumb items={this.state.breadcrumbItems} onRenderItem={this.renderBreadcrumbItem} className={styles.breadcrumbNav}/>
         </div>
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath === undefined &&
@@ -67,6 +67,12 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
           </div>
         </div>
       </div>
+    );
+  }
+
+  private renderBreadcrumbItem = (item: IBreadcrumbItem): JSX.Element => {
+    return (
+      <Link href={item.href} onClick={item.onClick} key={item.key} className={`ms-Link ms-Breadcrumb-itemLink ${styles.breadcrumbNavItem}`}>{item.text}</Link>
     );
   }
 

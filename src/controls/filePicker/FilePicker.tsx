@@ -53,7 +53,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
     this.setState({
       organisationAssetsEnabled
-    })
+    });
   }
 
   public render(): JSX.Element {

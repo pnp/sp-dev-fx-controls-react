@@ -18,10 +18,10 @@ export class OrgAssetsService extends FileBrowserService {
         folderPath = `/${folderPath}`;
       }
       // Remove all the rest of the folder path
-      let libraryName = folderPath.replace(`${this._orgAssetsLibraryServerRelativeSiteUrl}/`, "");
-      libraryName = libraryName.split("/")[0];
+      let libName = folderPath.replace(`${this._orgAssetsLibraryServerRelativeSiteUrl}/`, "");
+      libName = libName.split("/")[0];
       // Buil absolute library URL
-      const libFullUrl = this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libraryName}`);
+      const libFullUrl = this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libName}`);
 
       let queryStringParams: string = "";
       // Do not pass FolderServerRelativeUrl as query parameter
@@ -73,7 +73,7 @@ export class OrgAssetsService extends FileBrowserService {
       title: libItem.DisplayName,
       serverRelativeUrl: libItem.LibraryUrl.DecodedUrl,
       iconPath: libItem.ThumbnailUrl.DecodedUrl ? this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libItem.ThumbnailUrl.DecodedUrl}`) : null
-    }
+    };
 
     return orgAssetsLibrary;
   }
