@@ -15,7 +15,8 @@ import {
   SelectionMode,
   IColumn,
   IDetailsRowProps,
-  DetailsRow
+  DetailsRow,
+  SelectionZone
 } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
@@ -26,12 +27,16 @@ const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
 // Localized strings
 import * as strings from 'ControlStrings';
 
-// OneDrive services
+import { GridLayout } from '../../../../GridLayout';
 import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
 import { OneDriveService } from '../../../../services/OneDriveService';
 import { GeneralHelper } from '../../../../Utilities';
 import { LoadingState } from './IFileBrowserState';
-import { FileTilesList } from '../FileTilesList';
+import { ISize } from 'office-ui-fabric-react/lib/Utilities';
+import { FileTile } from '../FileTile';
+import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
+import { List } from 'office-ui-fabric-react/lib/List';
+import { TilesList } from '../TilesList/TilesList';
 // import { TilesList, ITilesGridSegment, TilesGridMode, ITileSize, ITilesGridItem } from '../TilesList';
 
 /**
@@ -41,7 +46,6 @@ import { FileTilesList } from '../FileTilesList';
  */
 export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowserState> {
   private _selection: Selection;
-
   constructor(props: IFileBrowserProps) {
     super(props);
 
@@ -87,9 +91,9 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         isPadded: true,
         onRender: (item: IFile) => {
           if (item.isFolder) {
-            return <span className={styles.folderItem} onClick={(_event) => this._handleOpenFolder(item)}>{item.fileLeafRef}</span>;
+            return <span className={styles.folderItem} onClick={(_event) => this._handleOpenFolder(item)}>{item.name}</span>;
           } else {
-            return <span className={styles.fileItem}>{item.fileLeafRef}</span>;
+            return <span className={styles.fileItem}>{item.name}</span>;
           }
         },
       },
@@ -142,7 +146,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     this.state = {
       columns: columns,
       items: [],
-      nextPageUrl: null,
+      nextPageQueryString: null,
       loadingState: LoadingState.loading,
       selectedView: lastLayout
     };
@@ -205,8 +209,15 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
             {
               this.state.selectedView === 'tiles' &&
-              // TODO: Pass onChange + onSave
-              <FileTilesList items={this.state.items} />
+              <TilesList
+                fileBrowserService={this.props.fileBrowserService}
+                selectedFileUrl={this.state.fileUrl}
+                selection={this._selection}
+                items={this.state.items}
+
+                onFolderOpen={this._handleOpenFolder}
+                onFileSelected={this._itemSelectionChanged}
+              />
             }
           </div>
         }
@@ -225,12 +236,19 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     );
   }
 
+  private _renderDocumentTile = (item: IFile, finalSize: ISize, isCompact: boolean) :JSX.Element => {
+    return (
+      <FileTile
+        fileItem={item}
+      />
+    )
+  }
+
   /**
    * Triggers paged data load
    */
   private _onRenderMissingItem = async () => {
     if (this.state.loadingState == LoadingState.idle) {
-      // TODO: Fix batched data load concat
       await this._getListItems(true);
     }
   }
@@ -429,11 +447,20 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Handles selected item change
    */
-  private _itemSelectionChanged = () => {
-    const selectedItems = this._selection.getSelection();
-    const selectedItem: IFile = selectedItems && selectedItems.length > 0 ? selectedItems[0] as IFile : null;
+  private _itemSelectionChanged = (item?: IFile) => {
+    let selectedItem: IFile = null
+    // Deselect item
+    if (item && item.absoluteUrl == this.state.fileUrl) {
+      this._selection.setAllSelected(false);
+      selectedItem = null;
+    }
+    else if (item) {
+      const selectedItemIndex = this.state.items.indexOf(item);
+      this._selection.selectToIndex(selectedItemIndex);
+      selectedItem = item;
+    }
 
-    let absoluteFileUrl = selectedItem && !selectedItem.isFolder ? selectedItem.absoluteRef : null;
+    let absoluteFileUrl = selectedItem && !selectedItem.isFolder ? selectedItem.absoluteUrl : null;
     this.props.onChange(absoluteFileUrl);
     this.setState({
       fileUrl: absoluteFileUrl
@@ -445,16 +472,21 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    */
   private async _getListItems(concatenateResults: boolean = false) {
     const { libraryName, folderPath, accepts } = this.props;
-    const { items, nextPageUrl } = this.state;
+    let { items, nextPageQueryString } = this.state;
 
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     const loadingState = concatenateResults ? LoadingState.loadingNextPage : LoadingState.loading;
+    // If concatenate results is set to false -> it's needed to load new data without nextPageUrl
+    nextPageQueryString = concatenateResults ? nextPageQueryString : null;
+
     try {
       this.setState({
-        loadingState
+        loadingState,
+        items: null,
+        nextPageQueryString
       });
       // Load files in the folder
-      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts, nextPageUrl);
+      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts, nextPageQueryString);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);
@@ -481,7 +513,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
       this.setState({
         items: newItems,
-        nextPageUrl: filesQueryResult.nextHref,
+        nextPageQueryString: filesQueryResult.nextHref,
         // isLoading: false,
         // isLoadingNextPage: false
         loadingState: LoadingState.idle

@@ -34,10 +34,13 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     const oneDriveFolderData: IFile = {
       isFolder: true,
       modified: null,
-      absoluteRef: libraryAbsolutePath,
-      fileLeafRef: libraryTitle,
-      docIcon: "",
-      fileRef: "",
+      absoluteUrl: libraryAbsolutePath,
+      name: libraryTitle,
+      fileIcon: "",
+      serverRelativeUrl: folderPath,
+      spItemUrl: "",
+      supportsThumbnail: false,
+      fileType: ""
     };
 
     const breadcrumbItems = this.state.breadcrumbItems;
@@ -45,8 +48,8 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     const breadcrumbNode: OneDriveFilesBreadcrumbItem = {
       folderData: oneDriveFolderData,
       isCurrentItem: true,
-      text: oneDriveFolderData.fileLeafRef,
-      key: oneDriveFolderData.absoluteRef
+      text: oneDriveFolderData.name,
+      key: oneDriveFolderData.absoluteUrl
     };
     breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
     breadcrumbItems.push(breadcrumbNode);
@@ -110,7 +113,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     else if (node.folderData != null) {
       this._handleOpenFolder(node.folderData, false);
       // select which node has been clicked
-      breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteRef === node.key);
+      breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteUrl === node.key);
     }
 
     // Trim nodes array
@@ -158,17 +161,17 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
       const breadcrumbNode: OneDriveFilesBreadcrumbItem = {
         folderData: folder,
         isCurrentItem: true,
-        text: folder.fileLeafRef,
-        key: folder.absoluteRef
+        text: folder.name,
+        key: folder.absoluteUrl
       };
       breadcrumbNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbNode); };
       breadcrumbItems.push(breadcrumbNode);
     }
 
     this.setState({
-      folderPath: folder.fileRef,
-      folderName: folder.fileLeafRef,
-      libraryAbsolutePath: folder.absoluteRef,
+      folderPath: folder.serverRelativeUrl,
+      folderName: folder.name,
+      libraryAbsolutePath: folder.absoluteUrl,
       breadcrumbItems
     });
   }

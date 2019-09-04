@@ -3,12 +3,17 @@ import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
-// TODO: corporate library
 export class FileBrowserService {
   protected context: WebPartContext;
 
+  protected driveAccessToken: string;
+  protected mediaBaseUrl: string;
+  protected callerStack: string;
+
   constructor(context: WebPartContext) {
     this.context = context;
+
+    this.driveAccessToken = null;
   }
 
   /**
@@ -36,6 +41,13 @@ export class FileBrowserService {
     }
     return filesQueryResult;
   }
+
+
+  public getFileThumbnailUrl = (file: IFile, thumbnailWidth: number, thumbnailHeight: number): string => {
+    const thumbnailUrl = `${this.mediaBaseUrl}/transform/thumbnail?provider=spo&inputFormat=${file.fileType}&cs=${this.callerStack}&docid=${file.spItemUrl}&${this.driveAccessToken}&width=${thumbnailWidth}&height=${thumbnailHeight}`;
+    return thumbnailUrl;
+  }
+
 
   /**
    * Gets document and media libraries from the site
@@ -94,6 +106,9 @@ export class FileBrowserService {
       if (!filesResult || !filesResult.ListData || !filesResult.ListData.Row) {
         throw new Error(`[FileBrowser._getListItems]: No data is available. Status='${data.statusText}'`);
       }
+
+      // Set additional information from the ListResponse
+      this.processResponse(filesResult);
 
       const items = filesResult.ListData.Row.map(fileItem => this.parseFileItem(fileItem));
       filesQueryResult = {
@@ -196,15 +211,19 @@ export class FileBrowserService {
     }
 
     const file: IFile = {
-      fileLeafRef: fileItem.FileLeafRef,
-      docIcon: fileItem.DocIcon,
-      fileRef: fileItem.FileRef,
+      name: fileItem.FileLeafRef,
+      fileIcon: fileItem.DocIcon,
+      serverRelativeUrl: fileItem.FileRef,
       modified: modified,
       fileSize: fileItem.File_x0020_Size,
       fileType: fileItem.File_x0020_Type,
       modifiedBy: fileItem.Editor![0]!.title,
       isFolder: fileItem.FSObjType === "1",
-      absoluteRef: this.buildAbsoluteUrl(fileItem.FileRef)
+      absoluteUrl: this.buildAbsoluteUrl(fileItem.FileRef),
+
+      // Required for item thumbnail
+      supportsThumbnail: true,
+      spItemUrl: fileItem[".spItemUrl"]
     };
     return file;
   }
@@ -225,5 +244,12 @@ export class FileBrowserService {
   protected buildAbsoluteUrl = (relativeUrl: string) => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.context.pageContext.web.absoluteUrl);
     return siteUrl + relativeUrl;
+  }
+
+  protected processResponse = (fileResponse: any): void => {
+    // Extract media base URL
+    this.mediaBaseUrl = fileResponse.ListSchema[".mediaBaseUrl"];
+    this.callerStack = fileResponse.ListSchema[".callerStack"];
+    this.driveAccessToken = fileResponse.ListSchema[".driveAccessToken"]
   }
 }

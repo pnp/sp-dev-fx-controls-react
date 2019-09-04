@@ -1,13 +1,29 @@
+import { IDimensions } from "./IOneDriveService";
+
 export interface IFile {
-  docIcon: string;
-  fileRef: string;
-  fileLeafRef: string;
-  modifiedBy?: string;
-  modified: string;
-  fileType?: string;
-  fileSize?: number;
+  name: string; // FileName
+  absoluteUrl: string;
+  serverRelativeUrl: string;
   isFolder: boolean;
-  absoluteRef: string;
+  modified: string;
+  modifiedBy?: string;
+
+
+  fileIcon: string;
+  fileType: string;
+  fileSize?: number;
+
+
+  totalFileCount?: number;
+
+  isShared?: boolean;
+  dimensions?: IDimensions;
+  thumbnail?: string;
+  key?: string;
+
+  // URL required to generate thumbnail preview
+  spItemUrl: string;
+  supportsThumbnail: boolean;
 }
 
 export interface ILibrary {
