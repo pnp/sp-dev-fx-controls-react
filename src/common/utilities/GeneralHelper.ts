@@ -242,10 +242,12 @@ export class GeneralHelper {
     }
 
     public static getFileNameWithoutExtension(itemUrl : string) {
-      const tokens = itemUrl.split("/");
+      const urlTokens = itemUrl.split("?");
+      const url = urlTokens[0];
+      const tokens = url.split("/");
       const fileNameWithExtension = tokens[tokens.length - 1];
       const fileNameTokens = fileNameWithExtension.split(".");
-      const fileName = fileNameTokens[fileNameTokens.length - 1];
+      const fileName = fileNameTokens[0];
 
       return fileName;
     }

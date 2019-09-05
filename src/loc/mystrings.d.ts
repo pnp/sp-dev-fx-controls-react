@@ -241,6 +241,7 @@ declare interface IControlStrings {
   NameField: string;
   No: string;
   NoExternalLinksValidationMessage: string;
+  ProvidedValueIsInvalid: string,
   NoImageValidationMessage: string;
   NoRecentFiles: string;
   NoRecentFilesDescription: string;

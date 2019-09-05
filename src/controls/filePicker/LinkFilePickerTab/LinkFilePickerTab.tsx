@@ -10,10 +10,6 @@ import { ILinkFilePickerTabProps, ILinkFilePickerTabState } from '.';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
-// PnP
-//TODO: Remove pnp
-import { FetchClient } from "@pnp/common";
-
 // Localized strings
 import * as strings from 'ControlStrings';
 import { GeneralHelper } from '../../../Utilities';
@@ -50,9 +46,11 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             validateOnFocusOut={false}
             validateOnLoad={true}
             value={fileUrl}
-            onChanged={(_event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => this._handleChange(newValue)}
+            onChanged={(newValue: string) => this._handleChange(newValue)}
           />
+
         </div>
+
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
@@ -68,12 +66,12 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
   /**
    * Called as user types in a new value
    */
-  private _handleChange = (fileUrl?: string) => {
-    const filePickerResult: IFilePickerResult = {
+  private _handleChange = (fileUrl: string) => {
+    const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
       file: null,
       fileAbsoluteUrl: fileUrl,
       fileTitle: GeneralHelper.getFileNameWithoutExtension(fileUrl)
-    }
+    } : null;
     this.setState({
       filePickerResult
     });
@@ -83,55 +81,30 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Verifies the url that was typed in
    * @param value
    */
-  private _getErrorMessagePromise(value: string): Promise<string> {
-    return new Promise(resolve => {
+  private _getErrorMessagePromise = async (value: string): Promise<string> => {
+    // DOn't give an error for blank or placeholder value, but don't make it a valid entry either
+    if (value === undefined || value === 'https://') {
+      this.setState({ isValid: false });
+      return '';
+    }
 
-      // DOn't give an error for blank or placeholder value, but don't make it a valid entry either
-      if (value === undefined || value === 'https://') {
-        this.setState({ isValid: false });
-        resolve('');
-        return;
-      }
+    // Make sure that user is typing a valid URL format
+    if (!this._isUrl(value)) {
+      this.setState({ isValid: false });
+      return '';
+    }
 
-      // Make sure that user is typing a valid URL format
-      if (!this._isUrl(value)) {
-        this.setState({ isValid: false });
-        resolve('');
-        return;
-      }
+    // If we don't allow external links, verify that we're in the same domain
+    if (!this.props.allowExternalTenantLinks && !this._isSameDomain(value)) {
+      this.setState({ isValid: false });
+      return strings.NoExternalLinksValidationMessage;
+    }
 
-      // If we don't allow external links, verify that we're in the same domain
-      if (!this.props.allowExternalTenantLinks && !this._isSameDomain(value)) {
-        this.setState({ isValid: false });
-        resolve(strings.NoExternalLinksValidationMessage);
-        return;
-      }
+    const fileExists = await this.props.fileSearchService.fetchFile(value);
+    this.setState({ isValid: fileExists });
 
-      // Verify the file exists by actually getting the item
-      try {
-        const client = new FetchClient();
-        client.fetch(value, { method: "HEAD" }).then((response) => {
-          if (!response.ok) {
-            this.setState({ isValid: false });
-            resolve(strings.CantValidateValidationMessage);
-            return;
-          }
-          // the file exists
-          this.setState({ isValid: true });
-          resolve('');
-        }, () => {
-          this.setState({ isValid: false });
-          resolve(strings.CantValidateValidationMessage);
-        }).catch(() => {
-          this.setState({ isValid: false });
-          resolve(strings.CantValidateValidationMessage);
-        });
-      } catch (error) {
-        console.log("Error verifying file", error);
-        this.setState({ isValid: false });
-        resolve(strings.CantValidateValidationMessage);
-      }
-    });
+    const strResult = fileExists ? '' : strings.ProvidedValueIsInvalid;
+    return strResult;
   }
 
   /**

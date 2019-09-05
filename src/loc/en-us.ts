@@ -266,6 +266,7 @@ define([], () => {
     ModifiedField: "Date Modified",
     NameField: "Name",
     No: "No",
+    ProvidedValueIsInvalid: "Provided value is invalid",
     NoExternalLinksValidationMessage: "We only support linking to files in your own organization.",
     NoImageValidationMessage: "This isn't a link to a file type we support. You can only link to an image.",
     NoRecentFiles: "No recent files",

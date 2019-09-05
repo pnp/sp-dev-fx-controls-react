@@ -22,6 +22,25 @@ export class FilesSearchService {
     this.bingAPIKey = bingAPIKey;
   }
 
+  public fetchFile = async (fileUrl: string): Promise<boolean> => {
+    try {
+      const fetchFileResult = await this.context.httpClient.fetch(fileUrl, SPHttpClient.configurations.v1, {
+        headers: new Headers(),
+        method: 'HEAD',
+        mode: 'cors'
+      });
+
+      if (!fetchFileResult || !fetchFileResult.ok) {
+        throw new Error(`Something went wrong when executing search query. Status='${fetchFileResult.status}'`);
+      }
+
+      return true;
+    } catch (err) {
+      console.error(`[BingFilesService.fetchFile]: Err='${err.message}'`);
+      return false;
+    }
+  }
+
   public executeRecentSearch = async (accepts?: string) => {
     try {
       const webId = this.context.pageContext.web.id.toString();

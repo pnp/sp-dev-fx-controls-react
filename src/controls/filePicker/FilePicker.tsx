@@ -102,6 +102,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keyLink" &&
               <LinkFilePickerTab
+                fileSearchService={this.fileSearchService}
                 allowExternalTenantLinks={true}
                 {...linkTabProps}
               />
