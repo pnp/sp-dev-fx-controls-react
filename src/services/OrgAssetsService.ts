@@ -51,7 +51,7 @@ export class OrgAssetsService extends FileBrowserService {
       const orgAssetsResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
 
       if (!orgAssetsResult || !orgAssetsResult.ok) {
-        throw new Error(`Something went wrong when executing request. Status='${orgAssetsResult.statusText}'`);
+        throw new Error(`Something went wrong when executing request. Status='${orgAssetsResult.status}'`);
       }
       const orgAssetsData = await orgAssetsResult.json();
       if (!orgAssetsData || !orgAssetsData.OrgAssetsLibraries || !orgAssetsData.OrgAssetsLibraries.Items || orgAssetsData.OrgAssetsLibraries.Items.length <= 0) {

@@ -1,5 +1,6 @@
-import { ImageSize, ImageAspect, ImageLicense, ISearchResult } from ".";
+import { ImageSize, ImageAspect, ImageLicense } from ".";
 import { IFilePickerResult } from "../FilePicker.types";
+import { ISearchResult } from "../../../services/FilesSearchService.types";
 
 export interface IWebSearchTabState {
   isLoading: boolean;

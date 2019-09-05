@@ -78,7 +78,7 @@ export class OneDriveService extends FileBrowserService {
         }
       });
       if (!oneDriveFolderResult || !oneDriveFolderResult.ok) {
-        throw new Error(`Something went wrong when executing oneDriveRootFolder retrieve request. Status='${oneDriveFolderResult.statusText}'`);
+        throw new Error(`Something went wrong when executing oneDriveRootFolder retrieve request. Status='${oneDriveFolderResult.status}'`);
       }
 
       const oneDriveLibsData = await oneDriveFolderResult.json();
@@ -125,7 +125,7 @@ export class OneDriveService extends FileBrowserService {
       const userProfileResult = await this.context.spHttpClient.post(userProfileApi, SPHttpClient.configurations.v1, {});
 
       if (!userProfileResult || !userProfileResult.ok) {
-        throw new Error(`Something went wrong when executing user profile request. Status='${userProfileResult.statusText}'`);
+        throw new Error(`Something went wrong when executing user profile request. Status='${userProfileResult.status}'`);
       }
 
       const profileData = await userProfileResult.json();

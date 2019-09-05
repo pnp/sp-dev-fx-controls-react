@@ -15,15 +15,14 @@ import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { Check } from 'office-ui-fabric-react/lib/Check';
 
 // Custom props and states
-import { IRecentFilesTabProps, IRecentFilesTabState, IRecentFile } from '.';
+import { IRecentFilesTabProps, IRecentFilesTabState } from '.';
 
 // Localized resources
 import * as strings from 'ControlStrings';
 
 // PnP
-import { sp, SearchResults, SearchResult } from "@pnp/sp";
 import { Placeholder } from '../../../Placeholder';
-import { IFilePickerResult } from '../FilePicker.types';
+import { IRecentFile } from '../../../services/FilesSearchService.types';
 
 /**
  * Rows per page
@@ -87,81 +86,13 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   /**
    * Gets the most recently used files
    */
-  public componentDidMount(): void {
-    const { absoluteUrl } = this.props.context.pageContext.web;
+  public async componentDidMount() {
+    const recentFilesResult = await this.props.fileSearchService.executeRecentSearch(this.props.accepts);
+    this._selection.setItems(recentFilesResult, true);
 
-    // Build a filter criteria for each accepted file type, if applicable
-    const fileFilter: string = this._getFileFilter();
-
-    // // This is how you make two promises at once and wait for both results to return
-    // // TODO: research to see if there is a way to get this info in one call. Perhaps as context info?
-    sp.setup({
-      sp: { baseUrl: absoluteUrl }
-    });
-    const getContext: [Promise<any[]>, Promise<any[]>] = [sp.web.select("Id").get(), sp.site.select("Id").get()];
-
-
-    // TODO: Replace @pnpjs
-    Promise.all(getContext).then((results: any[]) => {
-      // retrieve site id and web id
-      const webId: string = results[0].Id;
-      const siteId: string = results[1].Id;
-
-      // build a query template
-      const queryTemplate: string = `((SiteID:${siteId} OR SiteID: {${siteId}}) AND (WebId: ${webId} OR WebId: {${webId}})) AND LastModifiedTime < {Today} AND -Title:OneNote_DeletedPages AND -Title:OneNote_RecycleBin${fileFilter}`;
-
-      // search for recent changes with accepted file types
-      sp.search({
-        QueryTemplate: queryTemplate,
-        RowLimit: 20,
-        SelectProperties: [
-          "Title",
-          "Path",
-          "Filename",
-          "FileExtension",
-          "FileType",
-          "Created",
-          "Author",
-          "LastModifiedTime",
-          "EditorOwsUser",
-          "ModifiedBy",
-          "LinkingUrl",
-          "SiteTitle",
-          "ParentLink",
-          "DocumentPreviewMetadata",
-          "ListID",
-          "ListItemID",
-          "SPSiteURL",
-          "SiteID",
-          "WebId",
-          "UniqueID",
-          "SPWebUrl",
-          "DefaultEncodingURL",
-          "PictureThumbnailURL",
-        ],
-        SortList: [
-          {
-            "Property": "LastModifiedTime",
-            "Direction": 1
-          }
-        ]
-      }).then((r: SearchResults) => {
-        const recentFilesResult: IRecentFile[] = r.PrimarySearchResults.map((result: SearchResult) => {
-          const recentFile: IRecentFile = {
-            key: result["UniqueID"],
-            name: result.Title,
-            fileUrl: result["DefaultEncodingURL"],
-            editedBy: result["ModifiedBy"]
-          };
-          return recentFile;
-        });
-        this._selection.setItems(recentFilesResult, true);
-
-        this.setState({
-          isLoading: false,
-          results: recentFilesResult
-        });
-      });
+    this.setState({
+      isLoading: false,
+      results: recentFilesResult
     });
   }
 
@@ -328,26 +259,6 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    */
   private _handleClose = () => {
     this.props.onClose();
-  }
-
-
-  /**
-   * Builds a file filter using the accepted file extensions
-   */
-  private _getFileFilter() {
-    let fileFilter: string = undefined;
-    if (this.props.accepts) {
-      fileFilter = " AND (";
-      this.props.accepts.split(",").forEach((fileType: string, index: number) => {
-        fileType = fileType.replace(".", "");
-        if (index > 0) {
-          fileFilter = fileFilter + " OR ";
-        }
-        fileFilter = fileFilter + `FileExtension:${fileType} OR SecondaryFileExtension:${fileType}`;
-      });
-      fileFilter = fileFilter + ")";
-    }
-    return fileFilter;
   }
 
   /**

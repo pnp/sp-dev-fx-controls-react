@@ -1,7 +1,8 @@
 import { IFilePickerTab } from "..";
 import { ISearchSuggestion } from ".";
+import { FilesSearchService } from "../../../services/FilesSearchService";
 
 export interface IWebSearchTabProps extends IFilePickerTab {
-  bingAPIKey: string;
+  bingSearchService: FilesSearchService;
   suggestions?: ISearchSuggestion[];
 }

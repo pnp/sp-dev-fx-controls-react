@@ -59,7 +59,7 @@ export class FileBrowserService {
       const mediaLibrariesResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
 
       if (!mediaLibrariesResult || !mediaLibrariesResult.ok) {
-        throw new Error(`Something went wrong when executing request. Status='${mediaLibrariesResult.statusText}'`);
+        throw new Error(`Something went wrong when executing request. Status='${mediaLibrariesResult.status}'`);
       }
       const libResults = await mediaLibrariesResult.json();
       if (!libResults || !libResults.value) {
@@ -94,17 +94,17 @@ export class FileBrowserService {
       if (folderPath) {
           body.parameters["FolderServerRelativeUrl"] = folderPath;
       }
-      const data = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {
+      const data: any = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {
         method: "POST",
         body: JSON.stringify(body)
       });
 
       if (!data || !data.ok) {
-        throw new Error(`[FileBrowser._getListItems]: Something went wrong when executing request. Status='${data.statusText}'`);
+        throw new Error(`[FileBrowser._getListItems]: Something went wrong when executing request. Status='${data.statusMessage}'`);
       }
       const filesResult = await data.json();
       if (!filesResult || !filesResult.ListData || !filesResult.ListData.Row) {
-        throw new Error(`[FileBrowser._getListItems]: No data is available. Status='${data.statusText}'`);
+        throw new Error(`[FileBrowser._getListItems]: No data is available. Status='${data.statusMessage}'`);
       }
 
       // Set additional information from the ListResponse

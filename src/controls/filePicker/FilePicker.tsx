@@ -25,11 +25,13 @@ import { OneDriveFilesTab } from './OneDriveFilesTab';
 import { OneDriveService } from '../../services/OneDriveService';
 import { OrgAssetsService } from '../../services/OrgAssetsService';
 import { IFilePickerResult } from './FilePicker.types';
+import { FilesSearchService } from '../../services/FilesSearchService';
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
   private oneDriveService: OneDriveService;
   private orgAssetsService: OrgAssetsService;
+  private fileSearchService: FilesSearchService;
 
   constructor(props: IFilePickerProps) {
     super(props);
@@ -38,6 +40,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     this.fileBrowserService = new FileBrowserService(props.webPartContext);
     this.oneDriveService = new OneDriveService(props.webPartContext);
     this.orgAssetsService = new OrgAssetsService(props.webPartContext);
+    this.fileSearchService = new FilesSearchService(props.webPartContext, this.props.bingAPIKey);
 
     this.state = {
       panelOpen: false,
@@ -65,8 +68,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
       accepts: accepts,
       context: this.props.webPartContext,
       onClose: () => this._handleClosePanel(),
-      onSave: (value: IFilePickerResult) => { this._handleSave(value) }
-    }
+      onSave: (value: IFilePickerResult) => { this._handleSave(value); }
+    };
 
     return (
       <div >
@@ -131,7 +134,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keyWeb" &&
               <WebSearchTab
-                bingAPIKey={this.props.bingAPIKey}
+                bingSearchService={this.fileSearchService}
                 {...linkTabProps}
               />
             }
@@ -145,6 +148,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keyRecent" &&
               <RecentFilesTab
+                fileSearchService={this.fileSearchService}
                 {...linkTabProps}
               />
             }

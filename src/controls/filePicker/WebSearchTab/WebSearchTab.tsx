@@ -7,7 +7,7 @@ import styles from './WebSearchTab.module.scss';
 import * as strings from 'ControlStrings';
 
 // Types
-import { IWebSearchTabProps, IWebSearchTabState, ISearchSuggestion, ISearchResult, ImageSize, ImageAspect, ImageLicense } from '.';
+import { IWebSearchTabProps, IWebSearchTabState, ISearchSuggestion, ImageSize, ImageAspect, ImageLicense, DEFAULT_SUGGESTIONS, MAX_ROW_HEIGHT, ROWS_PER_PAGE } from '.';
 
 // Offce Fabric stuff
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -30,66 +30,7 @@ import { SPHttpClient, IHttpClientOptions, SPHttpClientResponse } from '@microso
 import { css } from '@uifabric/utilities/lib/css';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities';
-
-/**
- * Rows per page
- */
-const ROWS_PER_PAGE = 3;
-
-/**
- * Maximum row height
- */
-const MAX_ROW_HEIGHT = 250;
-
-/**
- * Maximum file size when searching
- */
-const MAXFILESIZE = 52428800;
-
-/**
- * Maximum number of search results
- */
-const MAXRESULTS = 100;
-
-/**
- * This is the default search suggestions as of Jan 2019.
- * I have no idea where Bing gets them.
- * But you can provide your own when calling this component
- */
-const DEFAULT_SUGGESTIONS: ISearchSuggestion[] = [
-  {
-    topic: 'Backgrounds',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/background_b4f5f0fd0af42d6dc969f795cb65a13c.jpg'
-  },
-  {
-    topic: 'Classrooms',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/classroom_a0b3addf2246028cb7486ddfb0783c6c.jpg'
-  },
-  {
-    topic: 'Conferences',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/conference_b450359b0962cf464f691b68d7c6ecd1.jpg'
-  },
-  {
-    topic: 'Meetings',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/meeting_694397debfa52bc06a952310af01d59d.jpg'
-  },
-  {
-    topic: 'Patterns',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/pattern_6e7c8fd91c9b5fa47519aa3fd4a95a82.jpg'
-  },
-  {
-    topic: 'Teamwork',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/teamwork_5841da2ae9b9424173f601d86e3a252c.jpg'
-  },
-  {
-    topic: 'Technology',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/technology_9a8a4e09c090c65f4c0b3ea06bd48b83.jpg'
-  },
-  {
-    topic: 'Scenery',
-    backgroundUrl: 'https://spoprod-a.akamaihd.net/files/sp-client-prod_2019-01-11.008/scenery_abe5bfb8f3913bd52be279a793472ead.jpg'
-  }
-];
+import { ISearchResult, BingQuerySearchParams } from '../../../services/FilesSearchService.types';
 
 /**
  * Renders search suggestions and performs seach queries
@@ -104,40 +45,10 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
   constructor(props: IWebSearchTabProps) {
     super(props);
 
-    this._selection = new Selection(
-      {
-        selectionMode: SelectionMode.single,
-        onSelectionChanged: () => {
-          // Get the selected item
-          const selectedItems = this._selection.getSelection();
-          if (selectedItems && selectedItems.length > 0) {
-            //Get the selected key
-            const selectedKey: ISearchResult = selectedItems[0] as ISearchResult;
-
-            //Brute force approach to making sure all URLs are loading over HTTPS
-            // even if it breaks the page.
-            const selectedUrl: string = selectedKey.contentUrl.replace('http://', 'https://');
-            const filePickerResult: IFilePickerResult = {
-              file: null,
-              fileAbsoluteUrl: selectedUrl,
-              fileTitle: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
-            }
-            // Save the selected file
-            this.setState({
-              filePickerResult
-            });
-          } else {
-            // Remove any selected file
-            this.setState({
-              filePickerResult: undefined
-            });
-          }
-          if (this._listElem) {
-            // Force the list to update to show the selection check
-            this._listElem.forceUpdate();
-          }
-        }
-      });
+    this._selection = new Selection({
+      selectionMode: SelectionMode.single,
+      onSelectionChanged: this._onSelectionChanged
+    });
 
     this.state = {
       isLoading: false,
@@ -151,22 +62,26 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
    */
   public render(): React.ReactElement<IWebSearchTabProps> {
     const { query, results } = this.state;
-    const { bingAPIKey } = this.props;
+    const { bingSearchService } = this.props;
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          <h2 className={styles.tabHeader}>{strings.WebSearchLinkLabel}</h2>
-          {bingAPIKey && this._renderSearchBox()}
+          <Link onClick={this._clearSearch}>
+            <h2 className={styles.tabHeader}>{strings.WebSearchLinkLabel}</h2>
+          </Link>
+          {this.props.bingSearchService && this._renderSearchBox()}
         </div>
         <div className={styles.tab}>
-          {!bingAPIKey && strings.SorryWebSearch}  {/* If we verified we don't have a key, give a little Sorry message */}
-          {bingAPIKey && !query && this._renderSearchSuggestions()} {/* No search yet, show suggestions */}
+          {!bingSearchService && strings.SorryWebSearch}  {/* If we verified we don't have a key, give a little Sorry message */}
+          {bingSearchService && !query && this._renderSearchSuggestions()} {/* No search yet, show suggestions */}
           {query && results && this._renderSearchResults()} {/* Got results, show them */}
         </div>
         <div className={styles.actionButtonsContainer}>
-          {this.state.results && this.state.license === 'Any' && <MessageBar>
-            {strings.CreativeCommonsMessage}
-          </MessageBar>}
+          {
+            this.state.results && this.state.license === 'Any' &&
+            <MessageBar>
+              {strings.CreativeCommonsMessage}
+            </MessageBar>}
           <Label className={styles.copyrightLabel}>
             {strings.CopyrightWarning}&nbsp;&nbsp;
             <Link target='_blank' href={strings.CopyrightUrl}>{strings.LearnMoreLink}</Link>
@@ -174,7 +89,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
 
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={this.state.filePickerResult === undefined}
+              disabled={!this.state.filePickerResult}
               className={styles.actionButton}
               onClick={() => this._handleSave()}
             >{strings.OpenButtonLabel}</PrimaryButton>
@@ -183,6 +98,53 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
         </div>
       </div>
     );
+  }
+
+  private _onSelectionChanged = () => {
+    // Get the selected item
+    const selectedItems = this._selection.getSelection();
+    const filePickerResult = this.state.filePickerResult;
+
+    let selectedFileResult: IFilePickerResult = null;
+    if (selectedItems && selectedItems.length > 0) {
+      //Get the selected key
+      const selectedItem: ISearchResult = selectedItems[0] as ISearchResult;
+
+      //Brute force approach to making sure all URLs are loading over HTTPS
+      // even if it breaks the page.
+      const selectedUrl: string = selectedItem.contentUrl.replace('http://', 'https://');
+      selectedFileResult = {
+        file: null,
+        fileAbsoluteUrl: selectedUrl,
+        fileTitle: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
+      };
+    }
+
+    // If clicked on already selected file -> deselect it
+    if (filePickerResult && selectedFileResult && filePickerResult.fileAbsoluteUrl === selectedFileResult.fileAbsoluteUrl) {
+      this._selection.setAllSelected(false);
+      selectedFileResult = null;
+    }
+
+    // Save the selected file
+    this.setState({
+      filePickerResult: selectedFileResult
+    });
+    if (this._listElem) {
+      // Force the list to update to show the selection check
+      this._listElem.forceUpdate();
+    }
+  }
+
+  /**
+   * Resets state of the control to the default one
+   */
+  private _clearSearch = () => {
+    this.setState({
+      query: undefined,
+      results: undefined,
+      filePickerResult: undefined
+    });
   }
 
   /**
@@ -300,64 +262,34 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
   /**
    * Gets search results from Bing
    */
-  private _getSearchResults = () => {
-    const aspect: string = this.state.aspect ? this.state.aspect : 'All';
-    const size: string = this.state.size ? this.state.size : 'All';
-    const license: string = this.state.license ? this.state.license : 'Any';
-    const { query } = this.state;
-
-    if (query === undefined) {
-      // No query
+  private _getSearchResults = async () => {
+    // Do nothing
+    if (this.state.query === undefined || !this.props.bingSearchService) {
       return;
     }
 
-    // Show a loading indicator
-    this.setState({ isLoading: true });
+    // Show a loading indicator + remove selection
+    this.setState({
+      filePickerResult: null,
+      isLoading: true
+    });
 
-    // Use this client option to prevent CORS issues.
-    const httpClientOptions: IHttpClientOptions = {
-      headers: new Headers(),
-      method: 'GET',
-      mode: 'cors'
+    const searchParams: BingQuerySearchParams = {
+      aspect: this.state.aspect,
+      size: this.state.size,
+      license: this.state.license,
+      query: this.state.query
     };
+    const searchResults = await this.props.bingSearchService.executeBingSearch(searchParams);
 
-    // Submit the request
-    const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.props.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${MAXRESULTS}&aspect=${aspect}&maxFileSize=${MAXFILESIZE}&mkt=en-US&size=${size}&license=${license}`;
-    this.props.context.httpClient.get(apiUrl,
-      SPHttpClient.configurations.v1, httpClientOptions)
-      .then((response: SPHttpClientResponse) => {
-        response.json().then((responseJSON: any) => {
-          // Cast to Bing search results (for type safety)
-          const bingResults: IBingSearchResult[] = responseJSON.value;
+    // Set the items so that the selection zone can keep track of them
+    this._selection.setItems(searchResults, true);
 
-          //Convert results to search results
-          const searchResults: ISearchResult[] = bingResults.map((bingResult: IBingSearchResult) => {
-            // Get dimensions
-            const width: number = bingResult!.thumbnail!.width ? bingResult!.thumbnail!.width : bingResult!.width;
-            const height: number = bingResult!.thumbnail!.height ? bingResult!.thumbnail!.height : bingResult!.height;
-
-            // Create a search result
-            const searchResult: ISearchResult = {
-              thumbnailUrl: bingResult.thumbnailUrl,
-              contentUrl: bingResult.contentUrl,
-              displayUrl: this.getDisplayUrl(bingResult.hostPageDisplayUrl),
-              key: bingResult.imageId,
-              width: width,
-              height: height,
-            };
-            return searchResult;
-          });
-
-          // Set the items so that the selection zone can keep track of them
-          this._selection.setItems(searchResults, true);
-
-          // Save results and stop loading indicator
-          this.setState({
-            isLoading: false,
-            results: searchResults
-          });
-        });
-      });
+    // Save results and stop loading indicator
+    this.setState({
+      isLoading: false,
+      results: searchResults
+    });
   }
 
   /**
@@ -409,58 +341,60 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     const { query } = this.state;
     const hasQuery: boolean = query !== undefined;
     const license: string = this.state.license ? this.state.license : 'All';
-    return <div className={styles.searchBoxContainer}>
-      <div className={styles.searchBoxMedium}>
-        <div className={styles.searchBox}>
-          <SearchBox
-            placeholder={strings.SearchBoxPlaceholder}
-            value={query}
-            onSearch={newQuery => this._handleSearch(newQuery)}
-          />
+
+    return (
+      <div className={styles.searchBoxContainer}>
+        <div className={styles.searchBoxMedium}>
+          <div className={styles.searchBox}>
+            <SearchBox
+              placeholder={strings.SearchBoxPlaceholder}
+              value={query}
+              onSearch={newQuery => this._handleSearch(newQuery)}
+            />
+          </div>
         </div>
-      </div>
-      <Label>{strings.PoweredByBing}</Label>
-      {hasQuery && <div className={styles.dropdownContainer}>
-        <Dropdown
-          className={styles.filterDropdown}
-          // placeholder={strings.ImageSizePlaceholderText}
-          onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
-          selectedKey={this.state.size}
-          options={[
-            { key: 'All', text: strings.SizeOptionAll },
-            { key: 'Small', text: strings.SizeOptionSmall },
-            { key: 'Medium', text: strings.SizeOptionMedium },
-            { key: 'Large', text: strings.SizeOptionLarge },
-            { key: 'Wallpaper', text: strings.SizeOptionExtraLarge }
-          ]}
-          onChange={(event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => this._handleChangeSize(option)}
-        />
-        <Dropdown
-          className={styles.filterDropdown}
-          // placeholder={strings.ImageLayoutPlaceholderText}
-          onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
-          selectedKey={this.state.aspect}
-          options={[
-            { key: 'All', text: strings.LayoutOptionAll },
-            { key: 'Square', text: strings.LayoutOptionSquare },
-            { key: 'Wide', text: strings.LayoutOptionWide },
-            { key: 'Tall', text: strings.LayoutOptionTall },
-          ]}
-          onChange={(event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => this._handleChangeLayout(option)}
-        />
-        <Dropdown
-          className={styles.filterDropdown}
-          // placeholder={strings.LicensePlaceholderText}
-          onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
-          selectedKey={license}
-          options={[
-            { key: 'All', text: strings.LicenseOptionAll },
-            { key: 'Any', text: strings.LicenseOptionAny }
-          ]}
-          onChange={(event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number) => this._handleChangeLicense(option)}
-        />
-      </div>}
-    </div>;
+        <Label>{strings.PoweredByBing}</Label>
+        {
+          hasQuery &&
+          <div className={styles.dropdownContainer}>
+            <Dropdown
+              className={styles.filterDropdown}
+              onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
+              selectedKey={this.state.size}
+              options={[
+                { key: 'All', text: strings.SizeOptionAll },
+                { key: 'Small', text: strings.SizeOptionSmall },
+                { key: 'Medium', text: strings.SizeOptionMedium },
+                { key: 'Large', text: strings.SizeOptionLarge },
+                { key: 'Wallpaper', text: strings.SizeOptionExtraLarge }
+              ]}
+              onChanged={(option: IDropdownOption, index?: number) => this._handleChangeSize(option)}
+            />
+            <Dropdown
+              className={styles.filterDropdown}
+              onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
+              selectedKey={this.state.aspect}
+              options={[
+                { key: 'All', text: strings.LayoutOptionAll },
+                { key: 'Square', text: strings.LayoutOptionSquare },
+                { key: 'Wide', text: strings.LayoutOptionWide },
+                { key: 'Tall', text: strings.LayoutOptionTall },
+              ]}
+              onChanged={(option: IDropdownOption, index?: number) => this._handleChangeLayout(option)}
+            />
+            <Dropdown
+              className={styles.filterDropdown}
+              onRenderPlaceHolder={(props: IDropdownProps) => this._renderFilterPlaceholder(props)}
+              selectedKey={license}
+              options={[
+                { key: 'All', text: strings.LicenseOptionAll },
+                { key: 'Any', text: strings.LicenseOptionAny }
+              ]}
+              onChanged={(option: IDropdownOption, index?: number) => this._handleChangeLicense(option)}
+            />
+          </div>
+        }
+      </div>);
   }
 
   /**
@@ -498,7 +432,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
    */
   private _renderFilterPlaceholder = (props: IDropdownProps): JSX.Element => {
     // return <span>{props.placeholder}</span>;
-    return <span></span>;
+    return <span>Pick the value</span>;
   }
 
   /**
@@ -523,23 +457,6 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
    */
   private _handleSave = () => {
     this.props.onSave(this.state.filePickerResult);
-  }
-
-  /**
-   * Removes protocol and retrieves only the domain, just like Bing search results does
-   * in the SharePoint file picker
-   * @param url The display url as provided by Bing
-   */
-  private getDisplayUrl(url: string): string {
-    // remove any protocols
-    if (url.indexOf('://') > -1) {
-      const urlParts: string[] = url.split('://');
-      url = urlParts.pop();
-    }
-
-    // Split the URL on the first slash
-    const splitUrl = url.split('/');
-    return splitUrl[0];
   }
 
   /**

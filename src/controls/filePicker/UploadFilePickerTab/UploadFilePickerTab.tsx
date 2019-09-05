@@ -80,7 +80,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
       file,
       fileAbsoluteUrl: null,
       fileTitle: GeneralHelper.getFileNameWithoutExtension(file.name)
-    }
+    };
     // Convert to base64 image
     const reader = new FileReader();
 

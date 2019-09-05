@@ -11,6 +11,7 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/compone
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 // PnP
+//TODO: Remove pnp
 import { FetchClient } from "@pnp/common";
 
 // Localized strings

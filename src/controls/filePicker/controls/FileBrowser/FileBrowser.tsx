@@ -32,6 +32,7 @@ import { GeneralHelper } from '../../../../Utilities';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
+import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 
 /**
  * Renders list of file in a list.
@@ -134,7 +135,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     ];
 
     this._selection = new Selection({
-      onSelectionChanged: this._itemSelectionChanged
+      selectionMode: SelectionMode.single
     });
 
     this.state = {
@@ -181,33 +182,36 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
             </div>
             <div className={styles.scrollablePaneWrapper}>
               <ScrollablePane>
-                {
-                  this.state.selectedView !== 'tiles' ?
-                    (<DetailsList
-                      items={this.state.items}
-                      compact={this.state.selectedView === 'compact'}
-                      columns={this.state.columns}
-                      selectionMode={SelectionMode.single}
-                      setKey="set"
-                      layoutMode={DetailsListLayoutMode.justified}
-                      isHeaderVisible={true}
-                      selection={this._selection}
-                      selectionPreservedOnEmptyClick={true}
-                      enterModalSelectionOnTouch={true}
-                      onRenderRow={this._onRenderRow}
-                      onRenderMissingItem={this._loadNextDataRequest}
-                    />) :
-                    (<TilesList
-                      fileBrowserService={this.props.fileBrowserService}
-                      filePickerResult={this.state.filePickerResult}
-                      selection={this._selection}
-                      items={this.state.items}
 
-                      onFolderOpen={this._handleOpenFolder}
-                      onFileSelected={this._itemSelectionChanged}
-                      onNextPageDataRequest={this._loadNextDataRequest}
-                    />)
-                }
+                  {
+                    this.state.selectedView !== 'tiles' ?
+                      (
+                      <DetailsList
+                        items={this.state.items}
+                        compact={this.state.selectedView === 'compact'}
+                        columns={this.state.columns}
+                        selectionMode={SelectionMode.single}
+                        setKey="set"
+                        layoutMode={DetailsListLayoutMode.justified}
+                        isHeaderVisible={true}
+                        selection={this._selection}
+                        onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._handleItemInvoked(item)}
+                        selectionPreservedOnEmptyClick={true}
+                        enterModalSelectionOnTouch={true}
+                        onRenderRow={this._onRenderRow}
+                        onRenderMissingItem={this._loadNextDataRequest}
+                      />) :
+                      (<TilesList
+                        fileBrowserService={this.props.fileBrowserService}
+                        filePickerResult={this.state.filePickerResult}
+                        selection={this._selection}
+                        items={this.state.items}
+
+                        onFolderOpen={this._handleOpenFolder}
+                        onFileSelected={this._itemSelectionChanged}
+                        onNextPageDataRequest={this._loadNextDataRequest}
+                      />)
+                  }
               </ScrollablePane>
             </div>
           </div>
@@ -444,16 +448,29 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       selectedItem = item;
     }
 
-    let filePickerResult : IFilePickerResult = null;
+    let filePickerResult: IFilePickerResult = null;
     if (selectedItem && !selectedItem.isFolder) {
-      filePickerResult.fileAbsoluteUrl = selectedItem.absoluteUrl;
-      filePickerResult.fileTitle = selectedItem.name;
+      filePickerResult = {
+        fileAbsoluteUrl: selectedItem.absoluteUrl,
+        fileTitle: selectedItem.name,
+        file: null
+      };
     }
     this.props.onChange(filePickerResult);
     this.setState({
       filePickerResult
     });
   }
+
+  private _handleItemInvoked = (item: IFile) => {
+   // If a file is selected, open the library
+   if (item.isFolder) {
+     this._handleOpenFolder(item);
+   } else {
+     // Otherwise, remember it was selected
+     this._itemSelectionChanged(item);
+   }
+ }
 
   /**
    * Gets all files in a library with a matchihg path

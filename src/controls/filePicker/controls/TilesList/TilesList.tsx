@@ -61,7 +61,7 @@ export class TilesList extends React.Component<ITilesListProps> {
 
   public render(): React.ReactElement<ITilesListProps> {
     return (
-      <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => this._handleItemInvoked(item)}>
+      <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => {this._handleItemInvoked(item);}}>
         <FocusZone>
           <List
             ref={(e:any) => { this._listElem = e; }}
