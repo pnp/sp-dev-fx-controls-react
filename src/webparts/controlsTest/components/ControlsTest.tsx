@@ -34,7 +34,7 @@ import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
-import { FilePicker } from '../../../FilePicker';
+import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -339,11 +339,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <FilePicker
+          bingAPIKey="D41D8CD98F00B204E9800998ECF8427E06193A4E"
           buttonLabel="Choose file"
           label="File picker"
-          onSave={(value: string) => { console.log("Saved") }}
-          onChanged={(value: string) => { console.log("Changed") }}
-          value=""
+          onSave={(value: IFilePickerResult) => { console.log("Saved") }}
+          onChanged={(value: IFilePickerResult) => { console.log("Changed") }}
+          filePickerResult={null}
           webPartContext={this.props.context}
         />
       </div>

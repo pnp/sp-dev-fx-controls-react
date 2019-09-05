@@ -16,6 +16,7 @@ import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcru
 import * as strings from 'ControlStrings';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
 import { Link } from 'office-ui-fabric-react/lib/Link';
+import { IFilePickerResult } from '../FilePicker.types';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
@@ -30,6 +31,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     breadcrumbSiteNode.onClick = () => { this.onBreadcrumpItemClick(breadcrumbSiteNode); };
 
     this.state = {
+      filePickerResult: null,
       libraryAbsolutePath: undefined,
       libraryTitle: strings.DocumentLibraries,
       libraryPath: undefined,
@@ -51,7 +53,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
-              onChange={(fileUrl: string) => this._handleSelectionChange(fileUrl)}
+              onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.fileBrowserService}
               libraryName={this.state.libraryTitle}
@@ -61,7 +63,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.fileUrl}
+              disabled={!this.state.filePickerResult}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.OpenButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -109,16 +111,16 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     this.setState({
       breadcrumbItems,
-      fileUrl: undefined
+      filePickerResult: undefined
     });
   }
 
   /**
    * Is called when user selects a different file
    */
-  private _handleSelectionChange = (imageUrl: string) => {
+  private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
     this.setState({
-      fileUrl: imageUrl
+      filePickerResult
     });
   }
 
@@ -126,7 +128,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
    * Called when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**
@@ -155,7 +157,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
 
     this.setState({
-      fileUrl: null,
+      filePickerResult: null,
       libraryPath: folder.serverRelativeUrl,
       folderName: folder.name,
       libraryAbsolutePath: folder.absoluteUrl,

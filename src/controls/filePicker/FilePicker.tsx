@@ -24,6 +24,7 @@ import { FileBrowserService } from '../../services/FileBrowserService';
 import { OneDriveFilesTab } from './OneDriveFilesTab';
 import { OneDriveService } from '../../services/OneDriveService';
 import { OrgAssetsService } from '../../services/OrgAssetsService';
+import { IFilePickerResult } from './FilePicker.types';
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
@@ -60,6 +61,13 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string = this.props.accepts;
 
+    const linkTabProps = {
+      accepts: accepts,
+      context: this.props.webPartContext,
+      onClose: () => this._handleClosePanel(),
+      onSave: (value: IFilePickerResult) => { this._handleSave(value) }
+    }
+
     return (
       <div >
         <Label required={this.props.required}>{this.props.label}</Label>
@@ -92,29 +100,20 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               this.state.selectedTab === "keyLink" &&
               <LinkFilePickerTab
                 allowExternalTenantLinks={true}
-                accepts={accepts}
-                context={this.props.webPartContext}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
             {
               this.state.selectedTab === "keyUpload" &&
               <UploadFilePickerTab
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
             {
               this.state.selectedTab === "keySite" &&
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
             {
@@ -126,38 +125,27 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
                   key: "keyOrgAssets"
                 }}
                 fileBrowserService={this.orgAssetsService}
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
             {
               this.state.selectedTab === "keyWeb" &&
               <WebSearchTab
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                bingAPIKey={this.props.bingAPIKey}
+                {...linkTabProps}
               />
             }
             {
               this.state.selectedTab === "keyOneDrive" &&
               <OneDriveFilesTab
                 oneDriveService={this.oneDriveService}
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
             {
               this.state.selectedTab === "keyRecent" &&
               <RecentFilesTab
-                context={this.props.webPartContext}
-                accepts={accepts}
-                onClose={() => this._handleClosePanel()}
-                onSave={(value: string) => this._handleSave(value)}
+                {...linkTabProps}
               />
             }
 
@@ -196,8 +184,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   /**
    * On save action
    */
-  private _handleSave = (image: string) => {
-    this.props.onChanged(image);
+  private _handleSave = (filePickerResult: IFilePickerResult) => {
+    this.props.onChanged(filePickerResult);
     this.setState({
       panelOpen: false
     });
@@ -210,6 +198,9 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     this.setState({ selectedTab: item.key });
   }
 
+  /**
+   * Prepares navigation panel options
+   */
   private _getNavPanelOptions = () => {
     let links = [];
 
@@ -221,7 +212,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
         key: 'keyRecent',
       });
     }
-    if (!this.props.hideWebSearchTab) {
+    if (this.props.bingAPIKey && !this.props.hideWebSearchTab) {
       links.push({
         name: strings.WebSearchLinkLabel,
         url: '#search',

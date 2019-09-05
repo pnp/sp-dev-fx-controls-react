@@ -23,6 +23,7 @@ import * as strings from 'ControlStrings';
 // PnP
 import { sp, SearchResults, SearchResult } from "@pnp/sp";
 import { Placeholder } from '../../../Placeholder';
+import { IFilePickerResult } from '../FilePicker.types';
 
 /**
  * Rows per page
@@ -56,12 +57,16 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
 
             // Save the selected file
             this.setState({
-              fileUrl: selectedKey.fileUrl
+              filePickerResult:  {
+                file: null,
+                fileAbsoluteUrl: selectedKey.fileUrl,
+                fileTitle: selectedKey.name
+              }
             });
           } else {
             // Remove any selected file
             this.setState({
-              fileUrl: undefined
+              filePickerResult: undefined
             });
           }
           if (this._listElem) {
@@ -74,7 +79,8 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
 
     this.state = {
       isLoading: true,
-      results: []
+      results: [],
+      filePickerResult: null
     };
   }
 
@@ -95,6 +101,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     const getContext: [Promise<any[]>, Promise<any[]>] = [sp.web.select("Id").get(), sp.site.select("Id").get()];
 
 
+    // TODO: Replace @pnpjs
     Promise.all(getContext).then((results: any[]) => {
       // retrieve site id and web id
       const webId: string = results[0].Id;
@@ -178,7 +185,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
         <span className={styles.actionButtonsContainer}>
           <span className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.fileUrl}
+              disabled={!this.state.filePickerResult}
               onClick={() => this._handleSave()}
               className={styles.actionButton}
             >{strings.OpenButtonLabel}</PrimaryButton>
@@ -313,7 +320,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    * Gets called when it is time to save the currently selected item
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**

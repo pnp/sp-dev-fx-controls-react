@@ -11,18 +11,23 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/compone
 
 // Localization
 import * as strings from 'ControlStrings';
+import { IFilePickerResult } from '../FilePicker.types';
+import { GeneralHelper } from '../../../common/utilities';
 
 export default class UploadFilePickerTab extends React.Component<IUploadFilePickerTabProps, IUploadFilePickerTabState> {
   constructor(props: IUploadFilePickerTabProps) {
     super(props);
     this.state = {
-      fileUrl: undefined,
-      fileName: undefined
+      filePickerResult: undefined
     };
   }
 
   public render(): React.ReactElement<IUploadFilePickerTabProps> {
-    const { fileUrl, fileName } = this.state;
+    const { filePickerResult } = this.state;
+    const fileUrl: string = filePickerResult ? filePickerResult.fileAbsoluteUrl : null;
+    const fileName: string = filePickerResult ? filePickerResult.fileTitle : null;
+
+    // TODO: Display file content?
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
@@ -32,12 +37,17 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
           <input
             className={styles.localTabInput}
             type="file" id="fileInput"
-            accept={this.props.accepts} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)} />
-          {fileUrl && <div className={styles.localTabSinglePreview}>
-            <img className={styles.localTabSinglePreviewImage} src={fileUrl} alt={fileName} />
-          </div>}
+            accept={this.props.accepts} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)}
+          />
+          {
+            fileName &&
+            <div className={styles.localTabSinglePreview}>
+              {fileName}
+              {/* <img className={styles.localTabSinglePreviewImage} src={fileUrl} alt={fileName} /> */}
+            </div>
+          }
           <label className={styles.localTabLabel} htmlFor="fileInput">{
-            (fileUrl ? strings.ChangeFileLinkLabel : strings.ChooseFileLinkLabel)
+            (fileName ? strings.ChangeFileLinkLabel : strings.ChooseFileLinkLabel)
           }</label>
         </div>
         <div className={styles.actionButtonsContainer}>
@@ -64,15 +74,20 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
     let files = event.target.files;
 
     // Grab the first file -- there should always only be one
-    const file = files[0];
+    const file:File = files[0];
 
+    const filePickerResult: IFilePickerResult = {
+      file,
+      fileAbsoluteUrl: null,
+      fileTitle: GeneralHelper.getFileNameWithoutExtension(file.name)
+    }
     // Convert to base64 image
     const reader = new FileReader();
+
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.setState({
-        fileUrl: reader.result as string,
-        fileName: file.name
+        filePickerResult
       });
     };
   }
@@ -81,7 +96,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
    * Saves base64 encoded image back to property pane file picker
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**

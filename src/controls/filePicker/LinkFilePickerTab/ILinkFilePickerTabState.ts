@@ -1,4 +1,6 @@
+import { IFilePickerResult } from "../FilePicker.types";
+
 export interface ILinkFilePickerTabState {
-  fileUrl?: string;
+  filePickerResult?: IFilePickerResult;
   isValid: boolean;
 }

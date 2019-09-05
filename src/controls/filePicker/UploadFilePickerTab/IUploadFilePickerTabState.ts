@@ -1,4 +1,5 @@
+import { IFilePickerResult } from "../FilePicker.types";
+
 export interface IUploadFilePickerTabState {
-  fileUrl?: string;
-  fileName?: string;
+  filePickerResult: IFilePickerResult;
 }

@@ -1,6 +1,7 @@
 import { ViewType } from ".";
 import { IFile } from "../../../../services/FileBrowserService.types";
 import { Selection, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+import { IFilePickerResult } from "../../FilePicker.types";
 
 export enum LoadingState {
   idle = 1,
@@ -15,7 +16,7 @@ export interface IFileBrowserState {
   items: IFile[];
   nextPageQueryString: string;
   // currentPath: string;
-  fileUrl?: string;
+  filePickerResult: IFilePickerResult;
   columns: IColumn[];
   selectedView: ViewType;
 }

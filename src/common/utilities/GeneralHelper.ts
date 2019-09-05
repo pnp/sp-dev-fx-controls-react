@@ -241,6 +241,15 @@ export class GeneralHelper {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + strings.SizeUnit[i];
     }
 
+    public static getFileNameWithoutExtension(itemUrl : string) {
+      const tokens = itemUrl.split("/");
+      const fileNameWithExtension = tokens[tokens.length - 1];
+      const fileNameTokens = fileNameWithExtension.split(".");
+      const fileName = fileNameTokens[fileNameTokens.length - 1];
+
+      return fileName;
+    }
+
     private static _getEncodedChar(c): string {
         const o = {
             "<": "&lt;",

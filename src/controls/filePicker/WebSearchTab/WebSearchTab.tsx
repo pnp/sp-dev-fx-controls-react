@@ -28,6 +28,8 @@ import { SPHttpClient, IHttpClientOptions, SPHttpClientResponse } from '@microso
 
 // CSS utility to combine classes dynamically
 import { css } from '@uifabric/utilities/lib/css';
+import { IFilePickerResult } from '../FilePicker.types';
+import { GeneralHelper } from '../../../common/utilities';
 
 /**
  * Rows per page
@@ -90,11 +92,6 @@ const DEFAULT_SUGGESTIONS: ISearchSuggestion[] = [
 ];
 
 /**
- * The tenant storage key to use when storing the Bing API key.
- */
-const BINGAPI_TENANT_STORAGEKEY: string = 'BingApi';
-
-/**
  * Renders search suggestions and performs seach queries
  */
 export default class WebSearchTab extends React.Component<IWebSearchTabProps, IWebSearchTabState> {
@@ -120,15 +117,19 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
             //Brute force approach to making sure all URLs are loading over HTTPS
             // even if it breaks the page.
             const selectedUrl: string = selectedKey.contentUrl.replace('http://', 'https://');
-
+            const filePickerResult: IFilePickerResult = {
+              file: null,
+              fileAbsoluteUrl: selectedUrl,
+              fileTitle: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
+            }
             // Save the selected file
             this.setState({
-              fileUrl: selectedUrl
+              filePickerResult
             });
           } else {
             // Remove any selected file
             this.setState({
-              fileUrl: undefined
+              filePickerResult: undefined
             });
           }
           if (this._listElem) {
@@ -139,34 +140,27 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
       });
 
     this.state = {
-      isLoading: true,
-      hasKey: undefined,
+      isLoading: false,
       results: undefined,
+      filePickerResult: null
     };
-  }
-
-  /**
-   * Get the API key
-   */
-  public componentDidMount(): void {
-    // Find out if we should show anything
-    this._getAPIKey();
   }
 
   /**
    * Render the tab
    */
   public render(): React.ReactElement<IWebSearchTabProps> {
-    const { hasKey, query, results } = this.state;
+    const { query, results } = this.state;
+    const { bingAPIKey } = this.props;
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
           <h2 className={styles.tabHeader}>{strings.WebSearchLinkLabel}</h2>
-          {hasKey && this._renderSearchBox()}
+          {bingAPIKey && this._renderSearchBox()}
         </div>
         <div className={styles.tab}>
-          {hasKey === false && strings.SorryWebSearch}  {/* If we verified we don't have a key, give a little Sorry message */}
-          {hasKey && !query && this._renderSearchSuggestions()} {/* No search yet, show suggestions */}
+          {!bingAPIKey && strings.SorryWebSearch}  {/* If we verified we don't have a key, give a little Sorry message */}
+          {bingAPIKey && !query && this._renderSearchSuggestions()} {/* No search yet, show suggestions */}
           {query && results && this._renderSearchResults()} {/* Got results, show them */}
         </div>
         <div className={styles.actionButtonsContainer}>
@@ -180,7 +174,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
 
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={this.state.fileUrl === undefined}
+              disabled={this.state.filePickerResult === undefined}
               className={styles.actionButton}
               onClick={() => this._handleSave()}
             >{strings.OpenButtonLabel}</PrimaryButton>
@@ -328,7 +322,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     };
 
     // Submit the request
-    const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.state.apiKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${MAXRESULTS}&aspect=${aspect}&maxFileSize=${MAXFILESIZE}&mkt=en-US&size=${size}&license=${license}`;
+    const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.props.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${MAXRESULTS}&aspect=${aspect}&maxFileSize=${MAXFILESIZE}&mkt=en-US&size=${size}&license=${license}`;
     this.props.context.httpClient.get(apiUrl,
       SPHttpClient.configurations.v1, httpClientOptions)
       .then((response: SPHttpClientResponse) => {
@@ -528,7 +522,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
    * Calls property pane file picker's save function
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**
@@ -546,29 +540,6 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     // Split the URL on the first slash
     const splitUrl = url.split('/');
     return splitUrl[0];
-  }
-
-  /**
-   * Retrieves the API key from tenant storage
-   */
-  private _getAPIKey() {
-    const { absoluteUrl } = this.props.context.pageContext.web;
-    const apiUrl: string = `${absoluteUrl}/_api/web/GetStorageEntity('${BINGAPI_TENANT_STORAGEKEY}')`;
-    this.props.context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1)
-      .then((response: SPHttpClientResponse) => {
-        response.json().then((responseJSON: any) => {
-          this.setState({
-            isLoading: false,
-            apiKey: responseJSON.Value,
-            hasKey: responseJSON.Value !== undefined
-          });
-        });
-      }, () => {
-        this.setState({
-          isLoading: false,
-          hasKey: false
-        });
-      });
   }
 
   /**

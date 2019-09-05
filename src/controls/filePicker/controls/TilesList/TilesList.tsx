@@ -1,25 +1,13 @@
 import * as React from 'react';
 import styles from './TilesList.module.scss';
-import { SelectionZone, Selection, SelectionMode } from 'office-ui-fabric-react/lib/Selection';
+import { SelectionZone, ISelection, Selection, SelectionMode } from 'office-ui-fabric-react/lib/Selection';
 import { IFile } from '../../../../services/FileBrowserService.types';
 import { List, IPageProps } from 'office-ui-fabric-react/lib/List';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { IRenderFunction, IRectangle, css } from 'office-ui-fabric-react/lib/Utilities';
 import { FolderTile } from '../FolderTile';
 import { DocumentTile } from '../DocumentTile';
-import { FileBrowserService } from '../../../../services/FileBrowserService';
-import { DetailsList } from 'office-ui-fabric-react/lib/DetailsList';
-
-export interface ITilesListProps {
-  fileBrowserService: FileBrowserService;
-  selectedFileUrl: string;
-  selection: Selection;
-  items: IFile[];
-
-  onFolderOpen: (item: IFile) => void;
-  onFileSelected: (item: IFile) => void;
-  onNextPageDataRequest: () => void;
-}
+import { ITilesListProps } from './ITilesListProps';
 
 /**
  * Rows per page
@@ -34,7 +22,7 @@ const MAX_ROW_HEIGHT: number = 250;
 /**
  * Maximum number of cells per page
  */
-const CELLS_PER_PAGE: number = 50;
+const CELLS_PER_PAGE: number = 48;
 
 /**
  * Standard tile margin
@@ -66,7 +54,7 @@ export class TilesList extends React.Component<ITilesListProps> {
   }
 
   public componentDidUpdate(prevProps: ITilesListProps) {
-    if (this.props.selectedFileUrl != prevProps.selectedFileUrl) {
+    if (this.props.filePickerResult != prevProps.filePickerResult) {
       this._listElem.forceUpdate();
     }
   }
@@ -148,7 +136,7 @@ export class TilesList extends React.Component<ITilesListProps> {
       return null;
     }
 
-    return <div {...divProps} className={css(pageClassName, styles.listPage)}>
+    return (<div {...divProps} className={css(pageClassName, styles.listPage)} key={page.key}>
       <div className={styles.grid}
         style={{
           width: this._pageWidth,
@@ -162,7 +150,7 @@ export class TilesList extends React.Component<ITilesListProps> {
           return this._onRenderCell(item, index);
         })}
       </div>
-    </div>;
+    </div>);
   }
 
   /** Calculates the list "page" height (a.k.a. row) */
@@ -178,7 +166,7 @@ export class TilesList extends React.Component<ITilesListProps> {
       this.props.onNextPageDataRequest();
       return null;
     }
-    let isSelected: boolean = item.absoluteUrl == this.props.selectedFileUrl;
+    let isSelected: boolean = this.props.filePickerResult && item.absoluteUrl == this.props.filePickerResult.fileAbsoluteUrl;
 
     // I know this is a lot of divs and spans inside of each other, but my
     // goal was to mimic the HTML and style of the out-of-the-box file picker

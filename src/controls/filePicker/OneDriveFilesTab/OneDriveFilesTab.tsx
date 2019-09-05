@@ -14,12 +14,14 @@ import * as strings from 'ControlStrings';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Link } from 'office-ui-fabric-react/lib/Link';
+import { IFilePickerResult } from '../FilePicker.types';
 
 export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IOneDriveFilesTabState> {
   constructor(props: IOneDriveFilesTabProps) {
     super(props);
 
     this.state = {
+      filePickerResult: null,
       libraryAbsolutePath: undefined,
       libraryTitle: strings.DocumentLibraries,
       folderPath: undefined,
@@ -72,7 +74,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
-              onChange={(fileUrl: string) => this._handleSelectionChange(fileUrl)}
+              onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.oneDriveService}
               libraryName={this.state.libraryTitle}
@@ -82,7 +84,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.fileUrl}
+              disabled={!this.state.filePickerResult}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.OpenButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -125,16 +127,16 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
 
     this.setState({
       breadcrumbItems,
-      fileUrl: undefined
+      filePickerResult: undefined
     });
   }
 
   /**
    * Is called when user selects a different file
    */
-  private _handleSelectionChange = (imageUrl: string) => {
+  private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
     this.setState({
-      fileUrl: imageUrl
+      filePickerResult
     });
   }
 
@@ -142,7 +144,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
    * Called when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**

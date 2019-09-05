@@ -1,4 +1,5 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { IFilePickerResult } from "./FilePicker.types";
 
 export interface IFilePickerProps {
   /**
@@ -11,19 +12,24 @@ export interface IFilePickerProps {
   buttonLabel: string;
 
   /**
-   * Content of the file. TODO: change to bytes?
+   * Content of the file.
    */
-  value: string;
+  filePickerResult: IFilePickerResult;
 
   /**
    * Handler when the file has been selected
    */
-  onSave:(value:string)=>void;
+  onSave:(filePickerResult: IFilePickerResult)=>void;
 
   /**
-   * File extensions to be displayed. TODO: Change to string[] ?
+   * File extensions to be displayed.
    */
   accepts?: string;
+
+  /**
+   * Used to execute WebSearch.
+   */
+  bingAPIKey?: string;
 
   webPartContext: WebPartContext;
   /**
@@ -40,5 +46,5 @@ export interface IFilePickerProps {
   hideLinkUploadTab?: boolean;
 
   required?: boolean;
-  onChanged: (value: string) => void;
+  onChanged: (filePickerResult: IFilePickerResult) => void;
 }

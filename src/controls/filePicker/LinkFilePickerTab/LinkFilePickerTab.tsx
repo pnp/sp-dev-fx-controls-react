@@ -16,6 +16,7 @@ import { FetchClient } from "@pnp/common";
 // Localized strings
 import * as strings from 'ControlStrings';
 import { GeneralHelper } from '../../../Utilities';
+import { IFilePickerResult } from '../FilePicker.types';
 
 export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTabProps, ILinkFilePickerTabState> {
   constructor(props: ILinkFilePickerTabProps) {
@@ -24,7 +25,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
   }
 
   public render(): React.ReactElement<ILinkFilePickerTabProps> {
-
+    const fileUrl = this.state.filePickerResult ? this.state.filePickerResult.fileAbsoluteUrl : null;
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
@@ -47,7 +48,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             validateOnFocusIn={false}
             validateOnFocusOut={false}
             validateOnLoad={true}
-            value={this.state.fileUrl}
+            value={fileUrl}
             onChanged={(_event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => this._handleChange(newValue)}
           />
         </div>
@@ -66,9 +67,14 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
   /**
    * Called as user types in a new value
    */
-  private _handleChange = (newValue?: string) => {
+  private _handleChange = (fileUrl?: string) => {
+    const filePickerResult: IFilePickerResult = {
+      file: null,
+      fileAbsoluteUrl: fileUrl,
+      fileTitle: GeneralHelper.getFileNameWithoutExtension(fileUrl)
+    }
     this.setState({
-      fileUrl: newValue
+      filePickerResult
     });
   }
 
@@ -131,7 +137,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Handles when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(encodeURI(this.state.fileUrl));
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**

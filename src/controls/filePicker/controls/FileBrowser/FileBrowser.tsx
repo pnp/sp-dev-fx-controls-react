@@ -31,6 +31,7 @@ import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService
 import { GeneralHelper } from '../../../../Utilities';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
+import { IFilePickerResult } from '../../FilePicker.types';
 
 /**
  * Renders list of file in a list.
@@ -141,7 +142,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       items: [],
       nextPageQueryString: null,
       loadingState: LoadingState.loading,
-      selectedView: lastLayout
+      selectedView: lastLayout,
+      filePickerResult: null
     };
   }
 
@@ -197,7 +199,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                     />) :
                     (<TilesList
                       fileBrowserService={this.props.fileBrowserService}
-                      selectedFileUrl={this.state.fileUrl}
+                      filePickerResult={this.state.filePickerResult}
                       selection={this._selection}
                       items={this.state.items}
 
@@ -422,7 +424,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     // item in the folder will appear selected
     this.setState({
       loadingState: LoadingState.loading,
-      fileUrl: undefined
+      filePickerResult: undefined
     }, () => { this.props.onOpenFolder(item); });
   }
 
@@ -432,7 +434,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   private _itemSelectionChanged = (item?: IFile) => {
     let selectedItem: IFile = null;
     // Deselect item
-    if (item && item.absoluteUrl == this.state.fileUrl) {
+    if (item && this.state.filePickerResult && item.absoluteUrl == this.state.filePickerResult.fileAbsoluteUrl) {
       this._selection.setAllSelected(false);
       selectedItem = null;
     }
@@ -442,10 +444,14 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       selectedItem = item;
     }
 
-    let absoluteFileUrl = selectedItem && !selectedItem.isFolder ? selectedItem.absoluteUrl : null;
-    this.props.onChange(absoluteFileUrl);
+    let filePickerResult : IFilePickerResult = null;
+    if (selectedItem && !selectedItem.isFolder) {
+      filePickerResult.fileAbsoluteUrl = selectedItem.absoluteUrl;
+      filePickerResult.fileTitle = selectedItem.name;
+    }
+    this.props.onChange(filePickerResult);
     this.setState({
-      fileUrl: absoluteFileUrl
+      filePickerResult
     });
   }
 
