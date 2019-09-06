@@ -339,13 +339,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <FilePicker
-          bingAPIKey="D41D8CD98F00B204E9800998ECF8427E06193A4E"
-          // buttonLabel="Choose file"
-          // label="File picker"
+          bingAPIKey="<BING API KEY>"
+          accepts= ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg"
           buttonIcon="FileImage"
           onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
           onChanged={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
-          filePickerResult={null}
           webPartContext={this.props.context}
         />
         {

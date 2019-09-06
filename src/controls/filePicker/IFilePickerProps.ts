@@ -17,11 +17,6 @@ export interface IFilePickerProps {
   buttonIcon?: string;
 
   /**
-   * Content of the file.
-   */
-  filePickerResult: IFilePickerResult;
-
-  /**
    * Handler when the file has been selected
    */
   onSave:(filePickerResult: IFilePickerResult)=>void;

@@ -170,7 +170,8 @@
   flex-grow: 2;
 }
 .tabFiles {
-  overflow-y: auto;
+  overflow-y: hidden;
+  overflow-x: hidden;
   -webkit-box-flex: 2;
   -ms-flex-positive: 2;
   flex-grow: 2;

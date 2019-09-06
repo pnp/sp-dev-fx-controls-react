@@ -2,7 +2,6 @@ import * as React from 'react';
 import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
-// Office Fabric controls
 import { PrimaryButton, IconButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
@@ -12,7 +11,6 @@ import { css } from "@uifabric/utilities/lib/css";
 // Localization
 import * as strings from 'ControlStrings';
 
-// Custom property pane file picker tabs
 import LinkFilePickerTab from './LinkFilePickerTab/LinkFilePickerTab';
 import UploadFilePickerTab from './UploadFilePickerTab/UploadFilePickerTab';
 import SiteFilePickerTab from './SiteFilePickerTab/SiteFilePickerTab';
@@ -27,6 +25,8 @@ import { OrgAssetsService } from '../../services/OrgAssetsService';
 import { IFilePickerResult } from './FilePicker.types';
 import { FilesSearchService } from '../../services/FilesSearchService';
 
+import * as telemetry from '../../common/telemetry';
+
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
   private oneDriveService: OneDriveService;
@@ -35,6 +35,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
   constructor(props: IFilePickerProps) {
     super(props);
+
+    telemetry.track('FilePicker', {});
 
     // Initialize file browser services
     this.fileBrowserService = new FileBrowserService(props.webPartContext, this.props.itemsCountQueryLimit);
