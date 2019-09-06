@@ -3,7 +3,7 @@ import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
 // Office Fabric controls
-import { PrimaryButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, IconButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
@@ -70,13 +70,21 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
       onClose: () => this._handleClosePanel(),
       onSave: (value: IFilePickerResult) => { this._handleSave(value); }
     };
+    const buttonProps = {
+      disabled: this.props.disabled,
+      onClick: this._handleOpenPanel
+    }
 
     return (
       <div >
-        <Label required={this.props.required}>{this.props.label}</Label>
-        <PrimaryButton text={this.props.buttonLabel}
-          onClick={this._handleOpenPanel}
-          disabled={this.props.disabled} />
+        {
+          this.props.label && <Label required={this.props.required}>{this.props.label}</Label>
+        }
+        {
+          this.props.buttonIcon ?
+            <IconButton iconProps={{ iconName: this.props.buttonIcon }} {...buttonProps} /> :
+            <PrimaryButton text={this.props.buttonLabel} {...buttonProps}/>
+        }
 
         <Panel isOpen={this.state.panelOpen}
           isBlocking={true}

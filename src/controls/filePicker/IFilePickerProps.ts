@@ -9,7 +9,12 @@ export interface IFilePickerProps {
   /**
    * Specifies the label of the file picker button
    */
-  buttonLabel: string;
+  buttonLabel?: string;
+
+  /**
+   * Specifies the icon to be used to display Icon Button.
+   */
+  buttonIcon?: string;
 
   /**
    * Content of the file.
