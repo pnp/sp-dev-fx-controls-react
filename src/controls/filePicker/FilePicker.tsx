@@ -73,7 +73,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     const buttonProps = {
       disabled: this.props.disabled,
       onClick: this._handleOpenPanel
-    }
+    };
 
     return (
       <div >
