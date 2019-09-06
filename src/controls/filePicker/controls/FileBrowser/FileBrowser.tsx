@@ -33,6 +33,7 @@ import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
+import { getFileTypeIconProps } from '../Utilities';
 
 /**
  * Renders list of file in a list.
@@ -63,7 +64,10 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         onColumnClick: this._onColumnClick,
         onRender: (item: IFile) => {
           const folderIcon: string = strings.FolderIconUrl;
-          const iconUrl: string = strings.PhotoIconUrl;
+          // TODO: Improve file icon URL
+          const isPhoto = GeneralHelper.isImage(item.name);
+          const iconUrl = isPhoto ? strings.PhotoIconUrl : `https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/${item.fileType}.png`;
+
           const altText: string = item.isFolder ? strings.FolderAltText : strings.ImageAltText.replace('{0}', item.fileType);
           return <div className={styles.fileTypeIcon}>
             <img src={item.isFolder ? folderIcon : iconUrl} className={styles.fileTypeIconIcon} alt={altText} title={altText} />
