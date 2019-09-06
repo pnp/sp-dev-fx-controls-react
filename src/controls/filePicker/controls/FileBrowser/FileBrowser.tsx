@@ -33,7 +33,6 @@ import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
-import { getFileTypeIconProps } from '../Utilities';
 
 /**
  * Renders list of file in a list.
