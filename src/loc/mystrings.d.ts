@@ -258,6 +258,7 @@ declare interface IControlStrings {
   OneDriveRootFolderName: string;
   OpenButtonLabel: string;
   PhotoIconUrl: string;
+  OrgAssetsTabLabel: string;
   PoweredByBing: string;
   RecentDocumentsHeader: string;
   RecentImagesHeader: string;

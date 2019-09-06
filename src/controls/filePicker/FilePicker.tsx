@@ -133,7 +133,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               <SiteFilePickerTab
                 breadcrumbFirstNode={{
                   isCurrentItem: true,
-                  text: "Images and files provided by your organization",
+                  text: strings.OrgAssetsTabLabel,
                   key: "keyOrgAssets"
                 }}
                 fileBrowserService={this.orgAssetsService}

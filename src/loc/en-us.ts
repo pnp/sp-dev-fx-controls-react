@@ -284,6 +284,7 @@ define([], () => {
     OneDriveRootFolderName: "Files",
     OpenButtonLabel: "Open",
     PhotoIconUrl: "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+    OrgAssetsTabLabel: "Images and files provided by your organization",
     PoweredByBing: "Powered by Bing",
     RecentDocumentsHeader: "Recent documents",
     RecentImagesHeader: "Recent images",
