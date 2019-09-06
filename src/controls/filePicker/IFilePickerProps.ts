@@ -22,29 +22,72 @@ export interface IFilePickerProps {
   onSave:(filePickerResult: IFilePickerResult)=>void;
 
   /**
+   * Handler when file has been changed.
+   */
+  onChanged: (filePickerResult: IFilePickerResult) => void;
+
+  /**
+   * Current context.
+   */
+  webPartContext: WebPartContext;
+
+  /**
    * File extensions to be displayed.
    */
   accepts?: string;
 
   /**
-   * Used to execute WebSearch.
+   * Sets the label to inform that the value is required.
+   */
+  required?: boolean;
+
+  /**
+   * Used to execute WebSearch. If not provided SearchTab will not be available.
    */
   bingAPIKey?: string;
 
-  webPartContext: WebPartContext;
   /**
    * Specifies if the picker button is disabled
    */
   disabled?: boolean;
 
-  hideRecentTab?: boolean;
-  hideWebSearchTab?: boolean;
-  hideOrganisationalAssetTab?: boolean;
-  hideOneDriveTab?: boolean;
-  hideSiteFilesTab?: boolean;
-  hideLocalUploadTab?: boolean;
-  hideLinkUploadTab?: boolean;
+  /**
+   * Number of itmes to obtain when executing REST queries. Default 100.
+   */
+  itemsCountQueryLimit?: number;
 
-  required?: boolean;
-  onChanged: (filePickerResult: IFilePickerResult) => void;
+  /**
+   * Specifies if RecentTab should be hidden.
+   */
+  hideRecentTab?: boolean;
+
+  /**
+   * Specifies if WebSearchTab should be hidden.
+   */
+  hideWebSearchTab?: boolean;
+
+  /**
+   * Specifies if OrganisationalAssetTab should be hidden.
+   */
+  hideOrganisationalAssetTab?: boolean;
+
+  /**
+   * Specifies if OneDriveTab should be hidden.
+   */
+  hideOneDriveTab?: boolean;
+
+  /**
+   * Specifies if SiteFilesTab should be hidden.
+   */
+  hideSiteFilesTab?: boolean;
+
+  /**
+   * Specifies if LocalUploadTab should be hidden.
+   */
+  hideLocalUploadTab?: boolean;
+
+  /**
+   * Specifies if LinkUploadTab should be hidden.
+   */
+  hideLinkUploadTab?: boolean;
 }

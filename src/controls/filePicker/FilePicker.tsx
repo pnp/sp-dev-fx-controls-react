@@ -37,9 +37,9 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     super(props);
 
     // Initialize file browser services
-    this.fileBrowserService = new FileBrowserService(props.webPartContext);
-    this.oneDriveService = new OneDriveService(props.webPartContext);
-    this.orgAssetsService = new OrgAssetsService(props.webPartContext);
+    this.fileBrowserService = new FileBrowserService(props.webPartContext, this.props.itemsCountQueryLimit);
+    this.oneDriveService = new OneDriveService(props.webPartContext, this.props.itemsCountQueryLimit);
+    this.orgAssetsService = new OrgAssetsService(props.webPartContext, this.props.itemsCountQueryLimit);
     this.fileSearchService = new FilesSearchService(props.webPartContext, this.props.bingAPIKey);
 
     this.state = {
