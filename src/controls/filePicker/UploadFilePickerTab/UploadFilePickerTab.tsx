@@ -24,10 +24,8 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
 
   public render(): React.ReactElement<IUploadFilePickerTabProps> {
     const { filePickerResult } = this.state;
-    const fileUrl: string = filePickerResult ? filePickerResult.fileAbsoluteUrl : null;
-    const fileName: string = filePickerResult ? filePickerResult.fileTitle : null;
+    const fileName: string = filePickerResult ? filePickerResult.fileName : null;
 
-    // TODO: Display file content?
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
@@ -41,9 +39,12 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
           />
           {
             fileName &&
+            /** Display image preview */
             <div className={styles.localTabSinglePreview}>
-              {fileName}
-              {/* <img className={styles.localTabSinglePreviewImage} src={fileUrl} alt={fileName} /> */}
+              {
+                this.state.filePreview &&
+                <img className={styles.localTabSinglePreviewImage} src={this.state.filePreview} alt={this.state.filePickerResult.fileName} />
+              }
             </div>
           }
           <label className={styles.localTabLabel} htmlFor="fileInput">{
@@ -53,7 +54,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={fileUrl === undefined}
+              disabled={!this.state.filePickerResult}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.AddFileButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -74,22 +75,29 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
     let files = event.target.files;
 
     // Grab the first file -- there should always only be one
-    const file:File = files[0];
+    const file: File = files[0];
 
     const filePickerResult: IFilePickerResult = {
       file,
       fileAbsoluteUrl: null,
-      fileTitle: GeneralHelper.getFileNameWithoutExtension(file.name)
+      fileName: file.name,
+      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(file.name)
     };
-    // Convert to base64 image
-    const reader = new FileReader();
 
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.setState({
-        filePickerResult
-      });
-    };
+    if (GeneralHelper.isImage(file.name)) {
+      // Convert to base64 image
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.setState({
+          filePreview: reader.result as string
+        });
+      };
+    }
+    this.setState({
+      filePickerResult
+    });
   }
 
   /**

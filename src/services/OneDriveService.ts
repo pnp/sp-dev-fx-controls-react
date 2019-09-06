@@ -14,8 +14,8 @@ export class OneDriveService extends FileBrowserService {
   protected oneDriveRootFolderAbsoluteUrl: string;
   protected oneDrivePersonalLibraryTitle: string;
 
-  constructor(context: WebPartContext) {
-    super(context);
+  constructor(context: WebPartContext, itemsToDownloadCount?: number) {
+    super(context, itemsToDownloadCount);
 
     this.oneDrivePersonalUrl = null;
     this.oneDriveRootFolderRelativeUrl = null;

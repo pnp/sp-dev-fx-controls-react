@@ -48,7 +48,6 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             value={fileUrl}
             onChanged={(newValue: string) => this._handleChange(newValue)}
           />
-
         </div>
 
         <div className={styles.actionButtonsContainer}>
@@ -70,7 +69,8 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
       file: null,
       fileAbsoluteUrl: fileUrl,
-      fileTitle: GeneralHelper.getFileNameWithoutExtension(fileUrl)
+      fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
+      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl)
     } : null;
     this.setState({
       filePickerResult
@@ -132,39 +132,6 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     } catch (error) {
       return false;
     }
-  }
-
-  /**
-   * Verifies that file ends with an image extension.
-   * Should really check the content type instead.
-   */
-  private _isImage = (fileName: string): boolean => {
-    const acceptableExtensions: string[] = this.props.accepts.toLowerCase().split(",");
-    // ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg"
-
-    const thisExtension: string = this._getFileExtension(fileName);
-    return acceptableExtensions.indexOf(thisExtension) > -1;
-  }
-
-  /**
-   * Inspired from the code in PnP controls
-   */
-  private _getFileExtension = (fileName): string => {
-
-    // Split the URL on the dots
-    const splitFileName = fileName.toLowerCase().split('.');
-
-    // Take the last value
-    let extensionValue = splitFileName.pop();
-
-    // Check if there are query string params in place
-    if (extensionValue.indexOf('?') !== -1) {
-      // Split the string on the question mark and return the first part
-      const querySplit = extensionValue.split('?');
-      extensionValue = querySplit[0];
-    }
-
-    return `.${extensionValue}`;
   }
 
   private _isSameDomain = (fileUrl: string): boolean => {

@@ -1,6 +1,4 @@
-import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
-import { SiteFilePickerBreadcrumbItem } from ".";
-import { IFilePickerResult } from "../FilePicker.types";
+import { IFilePickerResult , FilePickerBreadcrumbItem} from "../FilePicker.types";
 
 export interface ISiteFilePickerTabState {
   filePickerResult: IFilePickerResult;
@@ -9,5 +7,5 @@ export interface ISiteFilePickerTabState {
   libraryPath: string;
   folderName: string;
 
-  breadcrumbItems: SiteFilePickerBreadcrumbItem[];
+  breadcrumbItems: FilePickerBreadcrumbItem[];
 }

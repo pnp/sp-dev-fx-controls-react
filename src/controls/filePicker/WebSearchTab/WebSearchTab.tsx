@@ -116,7 +116,8 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
       selectedFileResult = {
         file: null,
         fileAbsoluteUrl: selectedUrl,
-        fileTitle: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
+        fileName: GeneralHelper.getFileNameFromUrl(selectedUrl),
+        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
       };
     }
 

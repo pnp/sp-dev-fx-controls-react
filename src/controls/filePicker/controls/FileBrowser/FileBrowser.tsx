@@ -452,7 +452,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     if (selectedItem && !selectedItem.isFolder) {
       filePickerResult = {
         fileAbsoluteUrl: selectedItem.absoluteUrl,
-        fileTitle: selectedItem.name,
+        fileName: GeneralHelper.getFileNameFromUrl(selectedItem.name),
+        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedItem.name),
         file: null
       };
     }

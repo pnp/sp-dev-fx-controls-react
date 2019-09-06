@@ -23,6 +23,8 @@ import * as strings from 'ControlStrings';
 // PnP
 import { Placeholder } from '../../../Placeholder';
 import { IRecentFile } from '../../../services/FilesSearchService.types';
+import { IFilePickerResult } from '../FilePicker.types';
+import { GeneralHelper } from '../../../Utilities';
 
 /**
  * Rows per page
@@ -44,36 +46,10 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   constructor(props: IRecentFilesTabProps) {
     super(props);
 
-    this._selection = new Selection(
-      {
-        selectionMode: SelectionMode.single,
-        onSelectionChanged: () => {
-          // Get the selected item
-          const selectedItems = this._selection.getSelection();
-          if (selectedItems && selectedItems.length > 0) {
-            //Get the selected key
-            const selectedKey: IRecentFile = selectedItems[0] as IRecentFile;
-
-            // Save the selected file
-            this.setState({
-              filePickerResult:  {
-                file: null,
-                fileAbsoluteUrl: selectedKey.fileUrl,
-                fileTitle: selectedKey.name
-              }
-            });
-          } else {
-            // Remove any selected file
-            this.setState({
-              filePickerResult: undefined
-            });
-          }
-          if (this._listElem) {
-            // Force the list to update to show the selection check
-            this._listElem.forceUpdate();
-          }
-        }
-      });
+    this._selection = new Selection({
+      selectionMode: SelectionMode.single,
+      onSelectionChanged: this._onSelectionChanged
+    });
 
 
     this.state = {
@@ -125,6 +101,34 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
         </span>
       </span>
     );
+  }
+
+  private _onSelectionChanged = () => {
+    // Get the selected item
+    const selectedItems = this._selection.getSelection();
+    if (selectedItems && selectedItems.length > 0) {
+      //Get the selected key
+      const selectedKey: IRecentFile = selectedItems[0] as IRecentFile;
+      const filePickerResult: IFilePickerResult = {
+        file: null,
+        fileAbsoluteUrl: selectedKey.fileUrl,
+        fileName: GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl),
+        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedKey.fileUrl)
+      };
+      // Save the selected file
+      this.setState({
+        filePickerResult
+      });
+    } else {
+      // Remove any selected file
+      this.setState({
+        filePickerResult: undefined
+      });
+    }
+    if (this._listElem) {
+      // Force the list to update to show the selection check
+      this._listElem.forceUpdate();
+    }
   }
 
   /**
@@ -211,13 +215,13 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
             width: this._columnWidth,
             height: this._rowHeight
           }}
-          >
+        >
           <div className={styles.itemTileContent}>
             <div className={styles.itemTileFile}>
               <div className={styles.itemTileFileContainer}>
                 <div className={styles.itemTileThumbnail}>
                   {/* <div className={styles.image}> */}
-                    <Image src={item.fileUrl} width={this._columnWidth} height={this._rowHeight} imageFit={ImageFit.cover} />
+                  <Image src={item.fileUrl} width={this._columnWidth} height={this._rowHeight} imageFit={ImageFit.cover} />
                   {/* </div> */}
                 </div>
                 <div className={styles.itemTileCheckCircle}

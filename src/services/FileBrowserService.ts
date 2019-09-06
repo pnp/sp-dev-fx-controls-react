@@ -4,15 +4,17 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
 
 export class FileBrowserService {
+  protected itemsToDownloadCount: number;
   protected context: WebPartContext;
 
   protected driveAccessToken: string;
   protected mediaBaseUrl: string;
   protected callerStack: string;
 
-  constructor(context: WebPartContext) {
+  constructor(context: WebPartContext, itemsToDownloadCount: number = 100) {
     this.context = context;
 
+    this.itemsToDownloadCount = itemsToDownloadCount;
     this.driveAccessToken = null;
   }
 
@@ -171,7 +173,6 @@ export class FileBrowserService {
       </Query>` : "";
 
     // Add files types condiiton
-    // TODO: Support more than 100 files
     const viewXml = `<View>
                       ${queryCondition}
                       <ViewFields>
@@ -189,7 +190,7 @@ export class FileBrowserService {
                         <FieldRef Name="SMTotalFileCount"/>
                         <FieldRef Name="SMTotalSize"/>
                       </ViewFields>
-                      <RowLimit Paged="TRUE">100</RowLimit>
+                      <RowLimit Paged="TRUE">${this.itemsToDownloadCount}</RowLimit>
                     </View>`;
 
     return viewXml;

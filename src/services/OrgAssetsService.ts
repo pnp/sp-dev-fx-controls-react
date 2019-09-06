@@ -6,8 +6,8 @@ import { ILibrary, FilesQueryResult } from "./FileBrowserService.types";
 export class OrgAssetsService extends FileBrowserService {
   private _orgAssetsLibraryServerRelativeSiteUrl: string = null;
 
-  constructor(context: WebPartContext) {
-    super(context);
+  constructor(context: WebPartContext, itemsToDownloadCount?: number) {
+    super(context, itemsToDownloadCount);
   }
 
   public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {

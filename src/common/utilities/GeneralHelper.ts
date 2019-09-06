@@ -6,6 +6,8 @@ import * as _ from '@microsoft/sp-lodash-subset';
 
 import * as strings from 'ControlStrings';
 
+export const IMG_SUPPORTED_EXTENSIONS = ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg";
+
 /**
  * Helper with general methods to simplify some routines
  */
@@ -241,15 +243,56 @@ export class GeneralHelper {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + strings.SizeUnit[i];
     }
 
+    /**
+     * Returns file name without extension.
+     */
     public static getFileNameWithoutExtension(itemUrl : string) {
-      const urlTokens = itemUrl.split("?");
-      const url = urlTokens[0];
-      const tokens = url.split("/");
-      const fileNameWithExtension = tokens[tokens.length - 1];
+      const fileNameWithExtension = GeneralHelper.getFileNameFromUrl(itemUrl);
       const fileNameTokens = fileNameWithExtension.split(".");
       const fileName = fileNameTokens[0];
 
       return fileName;
+    }
+
+    /**
+     * Returns file name with the extension
+     */
+    public static getFileNameFromUrl(itemUrl : string) {
+      const urlTokens = itemUrl.split("?");
+      const url = urlTokens[0];
+      const tokens = url.split("/");
+      const fileNameWithExtension = tokens[tokens.length - 1];
+
+      return fileNameWithExtension;
+    }
+
+    public static isImage(fileName: string): boolean {
+      const acceptableExtensions: string[] = IMG_SUPPORTED_EXTENSIONS.split(",");
+      // const IMG_SUPPORTED_EXTENSIONS = ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg"
+
+      const thisExtension: string = GeneralHelper.getFileExtension(fileName);
+      return acceptableExtensions.indexOf(thisExtension) > -1;
+    }
+
+    /**
+     * Returns extension of the file
+     */
+    public static getFileExtension(fileName): string {
+
+      // Split the URL on the dots
+      const splitFileName = fileName.toLowerCase().split('.');
+
+      // Take the last value
+      let extensionValue = splitFileName.pop();
+
+      // Check if there are query string params in place
+      if (extensionValue.indexOf('?') !== -1) {
+        // Split the string on the question mark and return the first part
+        const querySplit = extensionValue.split('?');
+        extensionValue = querySplit[0];
+      }
+
+      return `.${extensionValue}`;
     }
 
     private static _getEncodedChar(c): string {

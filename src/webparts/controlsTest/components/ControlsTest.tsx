@@ -342,11 +342,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           bingAPIKey="D41D8CD98F00B204E9800998ECF8427E06193A4E"
           buttonLabel="Choose file"
           label="File picker"
-          onSave={(value: IFilePickerResult) => { console.log("Saved") }}
-          onChanged={(value: IFilePickerResult) => { console.log("Changed") }}
+          onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
+          onChanged={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
           filePickerResult={null}
           webPartContext={this.props.context}
         />
+        {
+          this.state.filePickerResult &&
+          <div>
+            FileName: {this.state.filePickerResult.fileName}
+          </div>
+        }
       </div>
 
     );

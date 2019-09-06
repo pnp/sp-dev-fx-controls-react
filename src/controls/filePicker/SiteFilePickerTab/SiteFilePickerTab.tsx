@@ -5,7 +5,7 @@ import { findIndex } from '@microsoft/sp-lodash-subset';
 import styles from './SiteFilePickerTab.module.scss';
 
 // Custom picker interface
-import { ISiteFilePickerTabProps, ISiteFilePickerTabState, SiteFilePickerBreadcrumbItem } from '.';
+import { ISiteFilePickerTabProps, ISiteFilePickerTabState } from '.';
 import { DocumentLibraryBrowser, FileBrowser } from '../controls';
 
 // Office Fabric
@@ -16,14 +16,14 @@ import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcru
 import * as strings from 'ControlStrings';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
 import { Link } from 'office-ui-fabric-react/lib/Link';
-import { IFilePickerResult } from '../FilePicker.types';
+import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
     super(props);
 
     // Add current site to the breadcrumb or the provided node
-    const breadcrumbSiteNode: SiteFilePickerBreadcrumbItem = this.props.breadcrumbFirstNode ? this.props. breadcrumbFirstNode : {
+    const breadcrumbSiteNode: FilePickerBreadcrumbItem = this.props.breadcrumbFirstNode ? this.props. breadcrumbFirstNode : {
       isCurrentItem: true,
       text: props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString()
@@ -81,7 +81,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
   /**
    * Handles breadcrump item click
    */
-  private onBreadcrumpItemClick = (node: SiteFilePickerBreadcrumbItem) => {
+  private onBreadcrumpItemClick = (node: FilePickerBreadcrumbItem) => {
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
@@ -146,7 +146,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     if (addBreadcrumbNode) {
       breadcrumbItems.map(item => item.isCurrentItem = false);
-      const breadcrumbNode: SiteFilePickerBreadcrumbItem = {
+      const breadcrumbNode: FilePickerBreadcrumbItem = {
         folderData: folder,
         isCurrentItem: true,
         text: folder.name,
@@ -172,7 +172,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     const { breadcrumbItems } = this.state;
     if (addBreadcrumbNode) {
       breadcrumbItems.map(item => item.isCurrentItem = false);
-      const breadcrumbNode: SiteFilePickerBreadcrumbItem = {
+      const breadcrumbNode: FilePickerBreadcrumbItem = {
         libraryData: library,
         isCurrentItem: true,
         text: library.title,
