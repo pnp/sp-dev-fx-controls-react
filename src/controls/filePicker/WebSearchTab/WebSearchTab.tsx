@@ -72,9 +72,8 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
           {this.props.bingSearchService && this._renderSearchBox()}
         </div>
         <div className={styles.tab}>
-          {!bingSearchService && strings.SorryWebSearch}  {/* If we verified we don't have a key, give a little Sorry message */}
-          {bingSearchService && !query && this._renderSearchSuggestions()} {/* No search yet, show suggestions */}
-          {query && results && this._renderSearchResults()} {/* Got results, show them */}
+          { !query && this._renderSearchSuggestions() }
+          { query && results && this._renderSearchResults() }
         </div>
         <div className={styles.actionButtonsContainer}>
           {
@@ -283,8 +282,11 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     };
     const searchResults = await this.props.bingSearchService.executeBingSearch(searchParams);
 
-    // Set the items so that the selection zone can keep track of them
-    this._selection.setItems(searchResults, true);
+    // If the results were obtained
+    if (searchResults) {
+      // Set the items so that the selection zone can keep track of them
+      this._selection.setItems(searchResults, true);
+    }
 
     // Save results and stop loading indicator
     this.setState({
