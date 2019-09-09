@@ -21,6 +21,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
   public render(): React.ReactElement<IUploadFilePickerTabProps> {
     const { filePickerResult } = this.state;
     const fileName: string = filePickerResult ? filePickerResult.fileName : null;
+    const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
 
     return (
       <div className={styles.tabContainer}>
@@ -31,7 +32,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
           <input
             className={styles.localTabInput}
             type="file" id="fileInput"
-            accept={this.props.accepts} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)}
+            accept={acceptedFilesExtensions} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)}
           />
           {
             fileName &&

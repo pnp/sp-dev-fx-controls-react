@@ -22,9 +22,9 @@ export class FileBrowserService {
    * Gets files from current sites library
    * @param libraryName
    * @param folderPath
-   * @param acceptedFilesExtensionsList
+   * @param acceptedFilesExtensions
    */
-  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('${libraryName}')/RenderListDataAsStream`;
@@ -36,7 +36,7 @@ export class FileBrowserService {
         folderPath = null;
       }
 
-      filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensionsList);
+      filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensions);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);
@@ -80,9 +80,9 @@ export class FileBrowserService {
    * Executes query to load files with possible extension filtering
    * @param restApi
    * @param folderPath
-   * @param acceptedFilesExtensionsList
+   * @param acceptedFilesExtensions
    */
-  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensionsList?: string): Promise<FilesQueryResult> => {
+  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensions?: string[]): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const body = {
@@ -90,7 +90,7 @@ export class FileBrowserService {
           AllowMultipleValueFilterForTaxonomyFields: true,
           // ContextInfo (1), ListData (2), ListSchema (4), ViewMetadata (1024), EnableMediaTAUrls (4096), ParentInfo (8192)
           RenderOptions: 1 | 2 | 4 | 1024 | 4096 | 8192,
-          ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensionsList)
+          ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensions)
         }
       };
       if (folderPath) {
@@ -128,12 +128,12 @@ export class FileBrowserService {
    * Generates CamlQuery files filter.
    * @param accepts
    */
-  protected getFileTypeFilter(accepts: string) {
+  protected getFileTypeFilter(accepts: string[]) {
     let fileFilter: string = "";
 
-    if (accepts && accepts != "") {
+    if (accepts && accepts.length > 0) {
       fileFilter = "<Values>";
-      accepts.split(",").forEach((fileType: string, index: number) => {
+      accepts.forEach((fileType: string, index: number) => {
         fileType = fileType.replace(".", "");
         if (index >= 0) {
           fileFilter = fileFilter + `<Value Type="Text">${fileType}</Value>`;
@@ -148,7 +148,7 @@ export class FileBrowserService {
   /**
    * Generates Files CamlQuery ViewXml
    */
-  protected getFilesCamlQueryViewXml = (accepts: string) => {
+  protected getFilesCamlQueryViewXml = (accepts: string[]) => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
     let queryCondition = fileFilter && fileFilter != "" ?
       `<Query>

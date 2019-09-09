@@ -7,7 +7,7 @@ export interface IFileBrowserProps {
   fileBrowserService: FileBrowserService;
   libraryName: string;
   folderPath: string;
-  accepts: string;
+  accepts: string[];
   onChange: (filePickerResult: IFilePickerResult) => void;
   onOpenFolder: (folder: IFile) => void;
 }

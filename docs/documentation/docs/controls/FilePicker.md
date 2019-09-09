@@ -13,9 +13,6 @@ Currently supported locations
 The control supports all types of file, however it also allows to specify list of extensions for the files that are going to be looked displayed. Currently, only single file selection is supported. 
 ![File Picker overview](../assets/FilePickerOverview.png)
 
-### Contribution 
-**File picker control has been developed based on the great SPFx project made by Hugo and presented in the [SP-Dev-Fx-WebParts Sample Repository](https://github.com/SharePoint/sp-dev-fx-webparts/tree/master/samples/react-comparer)**.
-
 
 ## Different display types
 File picker support 3 types of views : List, Compact list and Tiles. In case Tiles view is selected, the control shows the thumbnail of the file.
@@ -61,11 +58,11 @@ The FilePicker component can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | label | string | no | Specifies the text describing the file picker. |
 | buttonLabel | string | no | Specifies the label of the file picker button. |
-| buttonIcon | string | no | In case it is provided the file picker will be rendered as an Icon button. |
+| buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
 | onSave | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file has been selected and picker has been closed. |
 | onChange | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file selection has been changed. |
 | webPartContext | WebPartContext | yes | Current context. |
-| accepts | string | no | Comma separated list of file extensions that going to be displayed. E.g. ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg" |
+| accepts | string[] | no | Array of strings containing allowed files extensions. E.g. [".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"] |
 | required | boolean | no | Sets the label to inform that the value is required. |
 | bingAPIKey | string | no | Used to execute WebSearch. If not provided SearchTab will not be available. |
 | disabled | boolean | no | Specifies if the picker button is disabled |

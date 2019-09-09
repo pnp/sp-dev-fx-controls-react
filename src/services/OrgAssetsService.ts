@@ -10,7 +10,7 @@ export class OrgAssetsService extends FileBrowserService {
     super(context, itemsToDownloadCount);
   }
 
-  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       // Retrieve Lib path from folder path
@@ -37,7 +37,7 @@ export class OrgAssetsService extends FileBrowserService {
       }
       const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${libFullUrl}'&${queryStringParams}`;
 
-      filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
+      filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensions);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);

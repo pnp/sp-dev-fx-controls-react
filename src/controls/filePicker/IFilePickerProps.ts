@@ -34,7 +34,7 @@ export interface IFilePickerProps {
   /**
    * File extensions to be displayed.
    */
-  accepts?: string;
+  accepts?: string[];
 
   /**
    * Sets the label to inform that the value is required.

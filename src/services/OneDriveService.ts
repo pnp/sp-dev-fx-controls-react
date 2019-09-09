@@ -26,7 +26,7 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets files from OneDrive personal library
    */
-  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensionsList?: string, nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();
@@ -47,7 +47,7 @@ export class OneDriveService extends FileBrowserService {
       }
 
       const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.List.GetListDataAsStream?listFullUrl='${encodedListUrl}'&${queryStringParams}`;
-      filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensionsList);
+      filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensions);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
-import { PrimaryButton, IconButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, IconButton, ActionButton  } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
@@ -64,7 +64,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
-    const accepts: string = this.props.accepts;
+    const accepts: string[] = this.props.accepts;
 
     const linkTabProps = {
       accepts: accepts,
@@ -73,6 +73,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
       onSave: (value: IFilePickerResult) => { this._handleSave(value); }
     };
     const buttonProps = {
+      text: this.props.buttonLabel,
       disabled: this.props.disabled,
       onClick: this._handleOpenPanel
     };
@@ -84,8 +85,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
         }
         {
           this.props.buttonIcon ?
-            <IconButton iconProps={{ iconName: this.props.buttonIcon }} {...buttonProps} /> :
-            <PrimaryButton text={this.props.buttonLabel} {...buttonProps}/>
+            <ActionButton iconProps={{ iconName: this.props.buttonIcon }} {...buttonProps} /> :
+            <PrimaryButton {...buttonProps}/>
         }
 
         <Panel isOpen={this.state.panelOpen}

@@ -9,7 +9,7 @@ export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
 
 export interface IFilePickerTab {
   context: WebPartContext;
-  accepts: string;
+  accepts: string[];
   onSave: (value: IFilePickerResult) => void;
   onClose: () => void;
 }

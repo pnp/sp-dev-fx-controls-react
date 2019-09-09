@@ -41,7 +41,7 @@ export class FilesSearchService {
     }
   }
 
-  public executeRecentSearch = async (accepts?: string) => {
+  public executeRecentSearch = async (accepts?: string[]) => {
     try {
       const webId = this.context.pageContext.web.id.toString();
       const siteId = this.context.pageContext.site.id.toString();
@@ -193,11 +193,11 @@ export class FilesSearchService {
   /**
    * Builds a file filter using the accepted file extensions
    */
-  private _getFileFilter(accepts?: string) {
+  private _getFileFilter(accepts?: string[]) {
     let fileFilter: string = undefined;
     if (accepts) {
       fileFilter = " AND (";
-      accepts.split(",").forEach((fileType: string, index: number) => {
+      accepts.forEach((fileType: string, index: number) => {
         fileType = fileType.replace(".", "");
         if (index > 0) {
           fileFilter = fileFilter + " OR ";
