@@ -3,18 +3,14 @@ import { IOneDriveFilesTabProps, IOneDriveFilesTabState } from '.';
 import { IFile } from '../../../services/FileBrowserService.types';
 import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-
-
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
 import { FileBrowser } from '../controls';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { Link } from 'office-ui-fabric-react/lib/Link';
+import { IFilePickerResult } from '../FilePicker.types';
 
 import styles from './OneDriveFilesTab.module.scss';
 import * as strings from 'ControlStrings';
-import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { IFilePickerResult } from '../FilePicker.types';
 
 export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IOneDriveFilesTabState> {
   constructor(props: IOneDriveFilesTabProps) {

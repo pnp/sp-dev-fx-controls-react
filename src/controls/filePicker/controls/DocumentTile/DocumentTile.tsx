@@ -6,7 +6,6 @@ import * as strings from 'ControlStrings';
 import { Check } from 'office-ui-fabric-react/lib/Check';
 import { ScreenWidthMinLarge } from 'office-ui-fabric-react/lib/Styling';
 import { IDocumentTileProps } from './IDocumentTileProps';
-import { IFile } from '../../../../services/FileBrowserService.types';
 
 const MAX_ASPECT_RATIO = 3;
 

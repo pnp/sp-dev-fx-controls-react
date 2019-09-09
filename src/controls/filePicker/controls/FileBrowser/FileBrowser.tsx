@@ -1,44 +1,21 @@
 import * as React from 'react';
-
-// Custom styles
-import styles from './FileBrowser.module.scss';
-
-// Custom properties and state
-import { IFileBrowserProps, IFileBrowserState, ViewType } from '.';
-
-// Office Fabric
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import {
-  DetailsList,
-  DetailsListLayoutMode,
-  Selection,
-  SelectionMode,
-  IColumn,
-  IDetailsRowProps,
-  DetailsRow,
-  SelectionZone
-} from 'office-ui-fabric-react/lib/DetailsList';
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
-import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
-import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
-
-const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
-
-// Localized strings
-import * as strings from 'ControlStrings';
-
 import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
 import { GeneralHelper } from '../../../../Utilities';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
-import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
+import { IFileBrowserProps, IFileBrowserState, ViewType } from '.';
+import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow, SelectionZone } from 'office-ui-fabric-react/lib/DetailsList';
+import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
+import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
+import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
 
-/**
- * Renders list of file in a list.
- * I should have used the PnP ListView control, but I wanted specific behaviour that I didn't
- * get with the PnP control.
- */
+import styles from './FileBrowser.module.scss';
+import * as strings from 'ControlStrings';
+
+const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
+
 export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowserState> {
   private _selection: Selection;
   constructor(props: IFileBrowserProps) {

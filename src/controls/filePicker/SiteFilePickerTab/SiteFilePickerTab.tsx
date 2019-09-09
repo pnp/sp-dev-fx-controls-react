@@ -1,22 +1,15 @@
 import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-
-// Custom styles
-import styles from './SiteFilePickerTab.module.scss';
-
-// Custom picker interface
 import { ISiteFilePickerTabProps, ISiteFilePickerTabState } from '.';
 import { DocumentLibraryBrowser, FileBrowser } from '../controls';
-
-// Office Fabric
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-
-// Localized strings
-import * as strings from 'ControlStrings';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types';
+
+import styles from './SiteFilePickerTab.module.scss';
+import * as strings from 'ControlStrings';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {

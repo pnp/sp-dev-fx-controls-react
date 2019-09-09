@@ -1,15 +1,6 @@
 import * as React from 'react';
 
-// Good looks
-import styles from './WebSearchTab.module.scss';
-
-// Localization
-import * as strings from 'ControlStrings';
-
-// Types
 import { IWebSearchTabProps, IWebSearchTabState, ISearchSuggestion, ImageSize, ImageAspect, ImageLicense, DEFAULT_SUGGESTIONS, MAX_ROW_HEIGHT, ROWS_PER_PAGE } from '.';
-
-// Offce Fabric stuff
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
@@ -22,15 +13,13 @@ import { List } from 'office-ui-fabric-react/lib/List';
 import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
 import { Selection, SelectionMode, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
-
-// Used for HTTP requests
-import { SPHttpClient, IHttpClientOptions, SPHttpClientResponse } from '@microsoft/sp-http';
-
-// CSS utility to combine classes dynamically
 import { css } from '@uifabric/utilities/lib/css';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities';
 import { ISearchResult, BingQuerySearchParams } from '../../../services/FilesSearchService.types';
+
+import styles from './WebSearchTab.module.scss';
+import * as strings from 'ControlStrings';
 
 /**
  * Renders search suggestions and performs seach queries
@@ -62,7 +51,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
    */
   public render(): React.ReactElement<IWebSearchTabProps> {
     const { query, results } = this.state;
-    const { bingSearchService } = this.props;
+
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>

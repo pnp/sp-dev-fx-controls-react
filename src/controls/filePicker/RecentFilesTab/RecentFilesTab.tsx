@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-// Custom styles
-import styles from './RecentFilesTab.module.scss';
-
-// Office Fabric
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
@@ -13,18 +9,14 @@ import { css } from "@uifabric/utilities/lib/css";
 import { Selection, SelectionMode, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { Check } from 'office-ui-fabric-react/lib/Check';
-
-// Custom props and states
-import { IRecentFilesTabProps, IRecentFilesTabState } from '.';
-
-// Localized resources
-import * as strings from 'ControlStrings';
-
-// PnP
 import { Placeholder } from '../../../Placeholder';
 import { IRecentFile } from '../../../services/FilesSearchService.types';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../Utilities';
+import { IRecentFilesTabProps, IRecentFilesTabState } from '.';
+
+import * as strings from 'ControlStrings';
+import styles from './RecentFilesTab.module.scss';
 
 /**
  * Rows per page

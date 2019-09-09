@@ -1,18 +1,14 @@
 import * as React from 'react';
 
-// Makes thingy pretty
-import styles from './UploadFilePickerTab.module.scss';
-
-// Needed for our custom pane tab
 import { IUploadFilePickerTabProps, IUploadFilePickerTabState } from '.';
-
-// Office Fabric to the rescue!
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-
-// Localization
-import * as strings from 'ControlStrings';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
+
+import * as strings from 'ControlStrings';
+import styles from './UploadFilePickerTab.module.scss';
+
+
 
 export default class UploadFilePickerTab extends React.Component<IUploadFilePickerTabProps, IUploadFilePickerTabState> {
   constructor(props: IUploadFilePickerTabProps) {

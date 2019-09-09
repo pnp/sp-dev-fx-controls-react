@@ -1,19 +1,14 @@
 import * as React from 'react';
 
-// Custom styles
-import styles from './LinkFilePickerTab.module.scss';
-
-// Custom props and state
 import { ILinkFilePickerTabProps, ILinkFilePickerTabState } from '.';
-
-// Office Fabric
+import { GeneralHelper } from '../../../Utilities';
+import { IFilePickerResult } from '../FilePicker.types';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
-// Localized strings
 import * as strings from 'ControlStrings';
-import { GeneralHelper } from '../../../Utilities';
-import { IFilePickerResult } from '../FilePicker.types';
+import styles from './LinkFilePickerTab.module.scss';
+
 
 export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTabProps, ILinkFilePickerTabState> {
   constructor(props: ILinkFilePickerTabProps) {
