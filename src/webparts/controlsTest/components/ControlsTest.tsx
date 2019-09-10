@@ -402,6 +402,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
+
+
+        <div>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            webPartContext={this.props.context}
+          />
+          {
+            this.state.filePickerResult &&
+            <div>
+              FileName: {this.state.filePickerResult.fileName}
+            </div>
+          }
+        </div>
+
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -799,24 +819,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div className={styles.siteBreadcrumb}>
           <SiteBreadcrumb context={this.props.context} />
-        </div>
-
-        <div>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
-            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            webPartContext={this.props.context}
-          />
-          {
-            this.state.filePickerResult &&
-            <div>
-              FileName: {this.state.filePickerResult.fileName}
-            </div>
-          }
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
