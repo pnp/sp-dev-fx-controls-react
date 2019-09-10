@@ -11,6 +11,8 @@
 ### Enhancements
 
 - `TaxonomyPicker`: Localization keys added to the buttons [#361](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/361)
+- Improved German translations [#338](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/338)
+- `DateTimePicker`: added options to render time part as mask or dropdown [#330](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/330)
 
 ### Fixes
 
@@ -20,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Robert Lindström](https://github.com/robert-lindstrom), [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [Hugo Bernier](https://github.com/hugoabernier), [Robert Lindström](https://github.com/robert-lindstrom), [Piotr Siatka](https://github.com/siata13), [Alex Terentiev](https://github.com/AJIXuMuK).
 
 ## 1.14.0
 
