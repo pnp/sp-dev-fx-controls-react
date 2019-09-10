@@ -4,6 +4,7 @@
 
 ### New control(s)
 
+- `FilePicker`: New control added to the library [#366](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/366)
 - `GridLayout`: New control added to the library [#350](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/350)
 - `Carousel`: New control added to the library [#227](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/227)
 
