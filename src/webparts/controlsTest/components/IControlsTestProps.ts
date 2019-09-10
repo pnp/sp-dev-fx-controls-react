@@ -2,6 +2,7 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ImageSize } from '../../../FileTypeIcon';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import { IProgressAction } from '../../../Progress';
+import { IFilePickerResult } from '../../../FilePicker';
 
 export interface IControlsTestProps {
   context: WebPartContext;
@@ -26,4 +27,6 @@ export interface IControlsTestState {
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
+
+  filePickerResult?: IFilePickerResult;
 }

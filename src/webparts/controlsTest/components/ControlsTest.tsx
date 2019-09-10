@@ -50,6 +50,7 @@ import {
   DocumentCardType
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 
 
 /**
@@ -770,26 +771,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonsLocation={CarouselButtonsLocation.top}
             buttonsDisplay={CarouselButtonsDisplay.block}
 
-             contentContainerStyles={styles.carouselContent}
+            contentContainerStyles={styles.carouselContent}
             containerButtonsStyles={styles.carouselButtonsContainer}
 
-             isInfinite={true}
+            isInfinite={true}
 
-             element={this.carouselElements}
+            element={this.carouselElements}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
         </div>
 
-         <div>
+        <div>
           <h3>Carousel with triggerPageElement:</h3>
           <Carousel
             buttonsLocation={CarouselButtonsLocation.bottom}
             buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
 
-             contentContainerStyles={styles.carouselContent}
+            contentContainerStyles={styles.carouselContent}
 
-             canMoveNext={this.state.canMoveNext}
+            canMoveNext={this.state.canMoveNext}
             canMovePrev={this.state.canMovePrev}
             triggerPageEvent={this.triggerNextElement}
             element={this.state.currentCarouselElement}
@@ -798,6 +799,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div className={styles.siteBreadcrumb}>
           <SiteBreadcrumb context={this.props.context} />
+        </div>
+
+        <div>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            webPartContext={this.props.context}
+          />
+          {
+            this.state.filePickerResult &&
+            <div>
+              FileName: {this.state.filePickerResult.fileName}
+            </div>
+          }
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
@@ -816,11 +835,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <div className="ms-font-l">Grid Layout</div>
-          <GridLayout
-            ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
-            items={sampleGridData}
-            onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
-          />
+        <GridLayout
+          ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
+          items={sampleGridData}
+          onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
+        />
       </div>
     );
   }
