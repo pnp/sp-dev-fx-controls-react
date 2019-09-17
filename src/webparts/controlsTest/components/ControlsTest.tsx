@@ -809,7 +809,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonIcon="FileImage"
             onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            webPartContext={this.props.context}
+            context={this.props.context}
           />
           {
             this.state.filePickerResult &&

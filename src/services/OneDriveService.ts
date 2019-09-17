@@ -7,6 +7,7 @@ import { IGetListDataAsStreamResult, IRow } from './IOneDriveService';
 import { GeneralHelper } from "../Utilities";
 import { FileBrowserService } from "./FileBrowserService";
 import { IFile, FilesQueryResult } from "./FileBrowserService.types";
+import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -14,7 +15,7 @@ export class OneDriveService extends FileBrowserService {
   protected oneDriveRootFolderAbsoluteUrl: string;
   protected oneDrivePersonalLibraryTitle: string;
 
-  constructor(context: WebPartContext, itemsToDownloadCount?: number) {
+  constructor(context: ApplicationCustomizerContext | WebPartContext, itemsToDownloadCount?: number) {
     super(context, itemsToDownloadCount);
 
     this.oneDrivePersonalUrl = null;

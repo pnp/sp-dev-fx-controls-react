@@ -2,6 +2,7 @@ import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IHttpClientOptions, SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
+import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 
 /**
  * Maximum file size when searching
@@ -14,10 +15,10 @@ const MAXFILESIZE = 52428800;
 const MAXRESULTS = 100;
 
 export class FilesSearchService {
-  private context: WebPartContext;
+  private context: ApplicationCustomizerContext | WebPartContext;
   private bingAPIKey: string;
 
-  constructor(context: WebPartContext, bingAPIKey: string) {
+  constructor(context: ApplicationCustomizerContext | WebPartContext, bingAPIKey: string) {
     this.context = context;
     this.bingAPIKey = bingAPIKey;
   }
