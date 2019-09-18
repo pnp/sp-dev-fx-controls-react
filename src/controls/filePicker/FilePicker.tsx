@@ -201,7 +201,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    * On save action
    */
   private _handleSave = (filePickerResult: IFilePickerResult) => {
-    this.props.onChanged(filePickerResult);
+    this.props.onSave(filePickerResult);
     this.setState({
       panelOpen: false
     });
