@@ -14,6 +14,7 @@ import * as telemetry from "../../common/telemetry";
 import { Async, css } from 'office-ui-fabric-react/lib/Utilities';
 import { IDateTimePickerProps, IDateTimePickerState, DateTimePickerStrings } from ".";
 import { TimeHelper } from "./TimeHelper";
+import { TimeDisplayControlType } from "./TimeDisplayControlType";
 
 interface IDateComponents {
   day: Date;
@@ -201,7 +202,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showSeconds = false,
       formatDate,
       value = this.state.day,
-      strings: dateStrings = new DateTimePickerStrings() // Defines the DatePicker control labels
+      strings: dateStrings = new DateTimePickerStrings(), // Defines the DatePicker control labels
+      timeDisplayControlType,
+      showLabels
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;
@@ -214,14 +217,15 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     if (dateConvention === DateConvention.DateTime) {
       timeElm = (
         <div className={css(styles.row, styles.timeRow)}>
-          <div className={styles.labelCell}><Label className={styles.fieldLabel}>{strings.DateTimePickerTime}</Label></div>
+          {showLabels !== false && <div className={styles.labelCell}><Label className={styles.fieldLabel}>{dateStrings.timeLabel}</Label></div>}
 
           <div className={styles.time}>
             <div className={styles.picker}>
               <HoursComponent disabled={disabled}
                 timeConvention={timeConvention}
                 value={hours}
-                onChange={this.dropdownHoursChanged} />
+                onChange={this.dropdownHoursChanged}
+                timeDisplayControlType={timeDisplayControlType || TimeDisplayControlType.Text} />
             </div>
 
             <div className={styles.separator}>
@@ -231,7 +235,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
             <div className={styles.picker}>
               <MinutesComponent disabled={disabled}
                 value={minutes}
-                onChange={this.dropdownMinutesChanged} />
+                onChange={this.dropdownMinutesChanged}
+                timeDisplayControlType={timeDisplayControlType || TimeDisplayControlType.Text} />
             </div>
 
             {
@@ -247,7 +252,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 <div className={styles.picker}>
                   <SecondsComponent disabled={disabled}
                     value={seconds}
-                    onChange={this.dropdownSecondsChanged} />
+                    onChange={this.dropdownSecondsChanged}
+                    timeDisplayControlType={timeDisplayControlType || TimeDisplayControlType.Text} />
                 </div>
               )
             }
@@ -264,9 +270,13 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
 
         <div className={styles.container}>
           <div className={styles.row}>
-            <div className={styles.labelCell}>
-              <Label className={styles.fieldLabel}>{strings.DateTimePickerDate}</Label>
-            </div>
+            {
+              showLabels !== false && (
+                <div className={styles.labelCell}>
+                  <Label className={styles.fieldLabel}>{dateStrings.dateLabel}</Label>
+                </div>
+              )
+            }
 
             <div className={styles.picker}>
               <DatePicker

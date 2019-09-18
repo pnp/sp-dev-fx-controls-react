@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
-import { PrimaryButton, IconButton, ActionButton  } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, ActionButton  } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
@@ -36,7 +36,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   constructor(props: IFilePickerProps) {
     super(props);
 
-    telemetry.track('FilePicker', {});
+    telemetry.track('ReactFilePicker', {});
 
     // Initialize file browser services
     this.fileBrowserService = new FileBrowserService(props.context, this.props.itemsCountQueryLimit);
