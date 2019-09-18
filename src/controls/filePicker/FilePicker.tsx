@@ -39,10 +39,10 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     telemetry.track('ReactFilePicker', {});
 
     // Initialize file browser services
-    this.fileBrowserService = new FileBrowserService(props.webPartContext, this.props.itemsCountQueryLimit);
-    this.oneDriveService = new OneDriveService(props.webPartContext, this.props.itemsCountQueryLimit);
-    this.orgAssetsService = new OrgAssetsService(props.webPartContext, this.props.itemsCountQueryLimit);
-    this.fileSearchService = new FilesSearchService(props.webPartContext, this.props.bingAPIKey);
+    this.fileBrowserService = new FileBrowserService(props.context, this.props.itemsCountQueryLimit);
+    this.oneDriveService = new OneDriveService(props.context, this.props.itemsCountQueryLimit);
+    this.orgAssetsService = new OrgAssetsService(props.context, this.props.itemsCountQueryLimit);
+    this.fileSearchService = new FilesSearchService(props.context, this.props.bingAPIKey);
 
     this.state = {
       panelOpen: false,
@@ -68,7 +68,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
     const linkTabProps = {
       accepts: accepts,
-      context: this.props.webPartContext,
+      context: this.props.context,
       onClose: () => this._handleClosePanel(),
       onSave: (value: IFilePickerResult) => { this._handleSave(value); }
     };
@@ -201,7 +201,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    * On save action
    */
   private _handleSave = (filePickerResult: IFilePickerResult) => {
-    this.props.onChanged(filePickerResult);
+    this.props.onSave(filePickerResult);
     this.setState({
       panelOpen: false
     });

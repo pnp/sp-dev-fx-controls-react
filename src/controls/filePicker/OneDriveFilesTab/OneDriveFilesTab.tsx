@@ -131,6 +131,9 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
    * Is called when user selects a different file
    */
   private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
+    if (filePickerResult) {
+      filePickerResult.downloadFileContent = () => { return this.props.oneDriveService.downloadSPFileContent(filePickerResult.fileAbsoluteUrl, filePickerResult.fileName); };
+    }
     this.setState({
       filePickerResult
     });

@@ -112,6 +112,10 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
    * Is called when user selects a different file
    */
   private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
+    if (filePickerResult) {
+      filePickerResult.downloadFileContent = () => { return this.props.fileBrowserService.downloadSPFileContent(filePickerResult.fileAbsoluteUrl, filePickerResult.fileName); };
+    }
+    // this.props.fileBrowserService
     this.setState({
       filePickerResult
     });

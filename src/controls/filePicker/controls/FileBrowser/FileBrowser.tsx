@@ -434,7 +434,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         fileAbsoluteUrl: selectedItem.absoluteUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedItem.name),
         fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedItem.name),
-        file: null
+        downloadFileContent: null
       };
     }
     this.props.onChange(filePickerResult);
@@ -443,6 +443,9 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     });
   }
 
+  /**
+   * Handles item click.
+   */
   private _handleItemInvoked = (item: IFile) => {
    // If a file is selected, open the library
    if (item.isFolder) {

@@ -102,10 +102,10 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
       // even if it breaks the page.
       const selectedUrl: string = selectedItem.contentUrl.replace('http://', 'https://');
       selectedFileResult = {
-        file: null,
         fileAbsoluteUrl: selectedUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedUrl),
-        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedUrl)
+        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedUrl),
+        downloadFileContent: () => { return this.props.bingSearchService.downloadBingContent(selectedUrl, GeneralHelper.getFileNameFromUrl(selectedUrl)); }
       };
     }
 

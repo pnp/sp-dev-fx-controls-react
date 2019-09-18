@@ -75,10 +75,10 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
     const file: File = files[0];
 
     const filePickerResult: IFilePickerResult = {
-      file,
       fileAbsoluteUrl: null,
       fileName: file.name,
-      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(file.name)
+      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(file.name),
+      downloadFileContent: () => { return Promise.resolve(file); }
     };
 
     if (GeneralHelper.isImage(file.name)) {

@@ -321,6 +321,52 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
+    this.setState({ filePickerResult });
+    if (filePickerResult) {
+      const fileResultContent = await filePickerResult.downloadFileContent();
+      console.log(fileResultContent);
+    }
+  }
+
+  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
+    const previewProps: IDocumentCardPreviewProps = {
+      previewImages: [
+        {
+          previewImageSrc: item.thumbnail,
+          imageFit: ImageFit.cover,
+          height: 130
+        }
+      ]
+    };
+
+    return <div
+      //className={styles.documentTile}
+      data-is-focusable={true}
+      role="listitem"
+      aria-label={item.title}
+    >
+      <DocumentCard
+        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
+        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
+
+      >
+        <DocumentCardPreview {...previewProps} />
+        {!isCompact && <DocumentCardLocation location={item.location} />}
+        <div>
+          <DocumentCardTitle
+            title={item.title}
+            shouldTruncate={true}
+          />
+          <DocumentCardActivity
+            activity={item.activity}
+            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+          />
+        </div>
+      </DocumentCard>
+    </div>;
+  }
+
   /**
    * Renders the component
    */
@@ -403,25 +449,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-
-
-        <div>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
-            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            webPartContext={this.props.context}
-          />
-          {
-            this.state.filePickerResult &&
-            <div>
-              FileName: {this.state.filePickerResult.fileName}
-            </div>
-          }
-        </div>
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -824,6 +851,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <SiteBreadcrumb context={this.props.context} />
         </div>
 
+        <div>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={this._onFilePickerSave}
+            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            context={this.props.context}
+          />
+          {
+            this.state.filePickerResult &&
+            <div>
+              FileName: {this.state.filePickerResult.fileName}
+            </div>
+          }
+        </div>
+
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
         <div>
           <Progress title={'Progress Test'}
@@ -849,41 +894,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
-    const previewProps: IDocumentCardPreviewProps = {
-      previewImages: [
-        {
-          previewImageSrc: item.thumbnail,
-          imageFit: ImageFit.cover,
-          height: 130
-        }
-      ]
-    };
 
-    return <div
-      //className={styles.documentTile}
-      data-is-focusable={true}
-      role="listitem"
-      aria-label={item.title}
-    >
-      <DocumentCard
-        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
-        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
-
-      >
-        <DocumentCardPreview {...previewProps} />
-        {!isCompact && <DocumentCardLocation location={item.location} />}
-        <div>
-          <DocumentCardTitle
-            title={item.title}
-            shouldTruncate={true}
-          />
-          <DocumentCardActivity
-            activity={item.activity}
-            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
-          />
-        </div>
-      </DocumentCard>
-    </div>;
-  }
 }
