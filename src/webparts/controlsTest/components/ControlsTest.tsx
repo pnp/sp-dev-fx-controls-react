@@ -450,25 +450,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           } />
 
 
-
-        <div>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
-            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
-            webPartContext={this.props.context}
-          />
-          {
-            this.state.filePickerResult &&
-            <div>
-              FileName: {this.state.filePickerResult.fileName}
-            </div>
-          }
-        </div>
-
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
