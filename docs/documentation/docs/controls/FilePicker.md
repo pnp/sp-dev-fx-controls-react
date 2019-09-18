@@ -60,7 +60,7 @@ The FilePicker component can be configured with the following properties:
 | buttonLabel | string | no | Specifies the label of the file picker button. |
 | buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
 | onSave | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file has been selected and picker has been closed. |
-| onChange | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file selection has been changed. |
+| onChange | (filePickerResult: IFilePickerResult) => void | no | Handler when the file selection has been changed. |
 | context | ApplicationCustomizerContext | WebPartContext | yes | Current context. |
 | accepts | string[] | no | Array of strings containing allowed files extensions. E.g. [".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"] |
 | required | boolean | no | Sets the label to inform that the value is required. |
@@ -79,12 +79,12 @@ interface `IFilePickerResult`
 
 Provides options for carousel buttons location.
 
-| Value | Description |
+| Value | Type | Description |
 | ---- | ---- |
-| fileName | string | yes | File namr of the result with the extension. |
-| fileNameWithoutExtension | string | yes | File namr of the result without the extension. |
-| fileAbsoluteUrl | string | yes | Absolute URL of the file. Null in case of file upload. |
-| file | File | yes | JS Object representing File. Will be set in case of file upload. |
+| fileName | string | File namr of the result with the extension. |
+| fileNameWithoutExtension | string | File name of the result without the extension. |
+| fileAbsoluteUrl | string | Absolute URL of the file. Null in case of file upload. |
+| downloadFileContent | () => Promise<File> | Function allows to download file content. Returns File object. |
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/filePicker/FilePicker)

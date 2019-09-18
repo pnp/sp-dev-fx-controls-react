@@ -46,6 +46,9 @@ export class FileBrowserService {
   }
 
 
+  /**
+   * Provides the URL for file preview.
+   */
   public getFileThumbnailUrl = (file: IFile, thumbnailWidth: number, thumbnailHeight: number): string => {
     const thumbnailUrl = `${this.mediaBaseUrl}/transform/thumbnail?provider=spo&inputFormat=${file.fileType}&cs=${this.callerStack}&docid=${file.spItemUrl}&${this.driveAccessToken}&width=${thumbnailWidth}&height=${thumbnailHeight}`;
     return thumbnailUrl;
@@ -73,6 +76,26 @@ export class FileBrowserService {
       return result;
     } catch (error) {
       console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error.message}'`);
+      return null;
+    }
+  }
+
+  /**
+   * Downloads document content from SP location.
+   */
+  public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
+    try {
+      const fileDownloadResult = await this.context.spHttpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1);
+
+      if (!fileDownloadResult || !fileDownloadResult.ok) {
+        throw new Error(`Something went wrong when downloading the file. Status='${fileDownloadResult.status}'`);
+      }
+
+      // Return file created from blob
+      const blob : Blob = await fileDownloadResult.blob();
+      return  new File([blob], fileName);
+    } catch (err) {
+      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
       return null;
     }
   }

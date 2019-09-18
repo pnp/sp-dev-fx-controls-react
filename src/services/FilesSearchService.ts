@@ -23,7 +23,10 @@ export class FilesSearchService {
     this.bingAPIKey = bingAPIKey;
   }
 
-  public fetchFile = async (fileUrl: string): Promise<boolean> => {
+  /**
+   * Checks if file exists
+   */
+  public checkFileExists = async (fileUrl: string): Promise<boolean> => {
     try {
       const fetchFileResult = await this.context.httpClient.fetch(fileUrl, SPHttpClient.configurations.v1, {
         headers: new Headers(),
@@ -42,6 +45,9 @@ export class FilesSearchService {
     }
   }
 
+  /**
+   * Executes Recent files search.
+   */
   public executeRecentSearch = async (accepts?: string[]) => {
     try {
       const webId = this.context.pageContext.web.id.toString();
@@ -81,7 +87,7 @@ export class FilesSearchService {
           ]
         },
         SortList: {
-          results : [
+          results: [
             {
               "Property": "LastModifiedTime",
               "Direction": 1
@@ -118,6 +124,9 @@ export class FilesSearchService {
     }
   }
 
+  /**
+   * Executes bing search for a file.
+   */
   public executeBingSearch = async (queryParams: BingQuerySearchParams): Promise<ISearchResult[]> => {
     try {
       const aspect: string = queryParams.aspect ? queryParams.aspect : 'All';
@@ -159,11 +168,54 @@ export class FilesSearchService {
     }
   }
 
+  /**
+   * Downloads document content from SP location.
+   */
+  public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
+    try {
+      const fileDownloadResult = await this.context.spHttpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1);
+
+      if (!fileDownloadResult || !fileDownloadResult.ok) {
+        throw new Error(`Something went wrong when downloading the file. Status='${fileDownloadResult.status}'`);
+      }
+
+      // Return file created from blob
+      const blob: Blob = await fileDownloadResult.blob();
+      return new File([blob], fileName);
+    } catch (err) {
+      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
+      return null;
+    }
+  }
+
+  /**
+   * Downloads document content from Remote location.
+   */
+  public downloadBingContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
+    try {
+      const fileDownloadResult = await this.context.httpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1);
+
+      if (!fileDownloadResult || !fileDownloadResult.ok) {
+        throw new Error(`Something went wrong when downloading the file. Status='${fileDownloadResult.status}'`);
+      }
+
+      // Return file created from blob
+      const blob: Blob = await fileDownloadResult.blob();
+      return new File([blob], fileName);
+    } catch (err) {
+      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
+      return null;
+    }
+  }
+
+  /**
+   * Parses Recent Search results.
+   */
   private parseRecentSearchResult = (cells: Array<any>) => {
-    const titleCell = find(cells, x=> x.Key == "Title");
-    const keyCell = find(cells, x=> x.Key == "UniqueID");
-    const fileUrlCell = find(cells, x=> x.Key == "DefaultEncodingURL");
-    const editedByCell = find(cells, x=> x.Key == "ModifiedBy");
+    const titleCell = find(cells, x => x.Key == "Title");
+    const keyCell = find(cells, x => x.Key == "UniqueID");
+    const fileUrlCell = find(cells, x => x.Key == "DefaultEncodingURL");
+    const editedByCell = find(cells, x => x.Key == "ModifiedBy");
 
     const recentFile: IRecentFile = {
       key: keyCell ? keyCell.Value : null,
@@ -174,6 +226,9 @@ export class FilesSearchService {
     return recentFile;
   }
 
+  /**
+   * Parses Bing search results.
+   */
   private parseBingSearchResult = (bingResult: IBingSearchResult): ISearchResult => {
     // Get dimensions
     const width: number = bingResult!.thumbnail!.width ? bingResult!.thumbnail!.width : bingResult!.width;

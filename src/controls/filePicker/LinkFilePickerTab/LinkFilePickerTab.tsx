@@ -62,10 +62,10 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    */
   private _handleChange = (fileUrl: string) => {
     const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
-      file: null,
       fileAbsoluteUrl: fileUrl,
       fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
-      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl)
+      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl),
+      downloadFileContent: () => { return this.props.fileSearchService.downloadBingContent(fileUrl, GeneralHelper.getFileNameFromUrl(fileUrl)); }
     } : null;
     this.setState({
       filePickerResult
@@ -95,7 +95,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
       return strings.NoExternalLinksValidationMessage;
     }
 
-    const fileExists = await this.props.fileSearchService.fetchFile(value);
+    const fileExists = await this.props.fileSearchService.checkFileExists(value);
     this.setState({ isValid: fileExists });
 
     const strResult = fileExists ? '' : strings.ProvidedValueIsInvalid;

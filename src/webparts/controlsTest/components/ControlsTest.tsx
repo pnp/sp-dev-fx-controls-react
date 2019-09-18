@@ -320,6 +320,52 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
+    this.setState({ filePickerResult });
+    if (filePickerResult) {
+      const fileResultContent = await filePickerResult.downloadFileContent();
+      console.log(fileResultContent);
+    }
+  }
+
+  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
+    const previewProps: IDocumentCardPreviewProps = {
+      previewImages: [
+        {
+          previewImageSrc: item.thumbnail,
+          imageFit: ImageFit.cover,
+          height: 130
+        }
+      ]
+    };
+
+    return <div
+      //className={styles.documentTile}
+      data-is-focusable={true}
+      role="listitem"
+      aria-label={item.title}
+    >
+      <DocumentCard
+        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
+        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
+
+      >
+        <DocumentCardPreview {...previewProps} />
+        {!isCompact && <DocumentCardLocation location={item.location} />}
+        <div>
+          <DocumentCardTitle
+            title={item.title}
+            shouldTruncate={true}
+          />
+          <DocumentCardActivity
+            activity={item.activity}
+            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+          />
+        </div>
+      </DocumentCard>
+    </div>;
+  }
+
   /**
    * Renders the component
    */
@@ -807,7 +853,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Upload image"
             buttonIcon="FileImage"
-            onSave={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            onSave={this._onFilePickerSave}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             context={this.props.context}
           />
@@ -844,41 +890,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
-    const previewProps: IDocumentCardPreviewProps = {
-      previewImages: [
-        {
-          previewImageSrc: item.thumbnail,
-          imageFit: ImageFit.cover,
-          height: 130
-        }
-      ]
-    };
 
-    return <div
-      //className={styles.documentTile}
-      data-is-focusable={true}
-      role="listitem"
-      aria-label={item.title}
-    >
-      <DocumentCard
-        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
-        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
-
-      >
-        <DocumentCardPreview {...previewProps} />
-        {!isCompact && <DocumentCardLocation location={item.location} />}
-        <div>
-          <DocumentCardTitle
-            title={item.title}
-            shouldTruncate={true}
-          />
-          <DocumentCardActivity
-            activity={item.activity}
-            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
-          />
-        </div>
-      </DocumentCard>
-    </div>;
-  }
 }

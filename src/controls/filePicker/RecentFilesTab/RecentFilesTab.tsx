@@ -102,11 +102,12 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
       //Get the selected key
       const selectedKey: IRecentFile = selectedItems[0] as IRecentFile;
       const filePickerResult: IFilePickerResult = {
-        file: null,
         fileAbsoluteUrl: selectedKey.fileUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl),
-        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedKey.fileUrl)
+        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedKey.fileUrl),
+        downloadFileContent: () => { return this.props.fileSearchService.downloadSPFileContent(selectedKey.fileUrl, GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl)); }
       };
+
       // Save the selected file
       this.setState({
         filePickerResult

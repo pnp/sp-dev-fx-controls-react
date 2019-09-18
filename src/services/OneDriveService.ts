@@ -98,6 +98,9 @@ export class OneDriveService extends FileBrowserService {
     return this.oneDriveRootFolderAbsoluteUrl;
   }
 
+  /**
+   * Gets OneDrive RootFolder server relative URL.
+   */
   public getOneDriveRootFolderRelativeUrl = async (): Promise<string> => {
     if (!this.oneDriveRootFolderRelativeUrl) {
       await this.getOneDriveRootFolderFullUrl();
@@ -105,6 +108,9 @@ export class OneDriveService extends FileBrowserService {
     return this.oneDriveRootFolderRelativeUrl;
   }
 
+  /**
+   * Gets OneDrive personal library Title
+   */
   public getOneDrivePersonalLibraryTitle = async (): Promise<string> => {
     if (!this.oneDrivePersonalLibraryTitle) {
       await this.getOneDriveRootFolderFullUrl();

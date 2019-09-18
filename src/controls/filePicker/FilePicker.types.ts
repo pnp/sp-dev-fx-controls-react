@@ -15,9 +15,25 @@ export interface IFilePickerTab {
   onClose: () => void;
 }
 
+/**
+ * Represents the result of the FilePicker.
+ */
 export interface IFilePickerResult {
+  /**
+   * Selected file name with extension.
+   */
   fileName: string;
+  /**
+   * Selected file name without extension.
+   */
   fileNameWithoutExtension: string;
+  /**
+   * Absolute file URL. Undefined in case of file upload.
+   */
   fileAbsoluteUrl: string;
-  file: File;
+
+  /**
+   * Downloads file picker result content.
+   */
+  downloadFileContent: () => Promise<File>;
 }

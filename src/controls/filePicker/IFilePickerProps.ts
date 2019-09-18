@@ -25,7 +25,7 @@ export interface IFilePickerProps {
   /**
    * Handler when file has been changed.
    */
-  onChanged: (filePickerResult: IFilePickerResult) => void;
+  onChanged?: (filePickerResult: IFilePickerResult) => void;
 
   /**
    * Current context.
