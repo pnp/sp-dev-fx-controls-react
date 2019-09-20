@@ -183,7 +183,7 @@ export class FilesSearchService {
       const blob: Blob = await fileDownloadResult.blob();
       return new File([blob], fileName);
     } catch (err) {
-      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;
     }
   }
@@ -193,7 +193,10 @@ export class FilesSearchService {
    */
   public downloadBingContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
     try {
-      const fileDownloadResult = await this.context.httpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1);
+      const fileDownloadResult = await this.context.httpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1, {
+        method: "GET",
+        mode: "cors"
+      });
 
       if (!fileDownloadResult || !fileDownloadResult.ok) {
         throw new Error(`Something went wrong when downloading the file. Status='${fileDownloadResult.status}'`);
@@ -203,7 +206,7 @@ export class FilesSearchService {
       const blob: Blob = await fileDownloadResult.blob();
       return new File([blob], fileName);
     } catch (err) {
-      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;
     }
   }

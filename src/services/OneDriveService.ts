@@ -57,6 +57,29 @@ export class OneDriveService extends FileBrowserService {
   }
 
   /**
+   * Downloads document content from OneDrive location.
+   */
+  public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
+    try {
+      const fileDownloadResult = await this.context.spHttpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1, {
+        method: "GET",
+        mode: "cors"
+      });
+
+      if (!fileDownloadResult || !fileDownloadResult.ok) {
+        throw new Error(`Something went wrong when downloading the file. Status='${fileDownloadResult.status}'`);
+      }
+
+      // Return file created from blob
+      const blob : Blob = await fileDownloadResult.blob();
+      return  new File([blob], fileName);
+    } catch (err) {
+      console.error(`[OneDriveService.fetchFileContent] Err='${err.message}'`);
+      return null;
+    }
+  }
+
+  /**
      * Gets users one drive personal documents library path
      */
   public getOneDriveRootFolderFullUrl = async (): Promise<string> => {
@@ -146,5 +169,13 @@ export class OneDriveService extends FileBrowserService {
       this.oneDrivePersonalUrl = null;
     }
     return this.oneDrivePersonalUrl;
+  }
+
+  /**
+   * Creates an absolute URL
+   */
+  protected buildAbsoluteUrl = (relativeUrl: string) => {
+    const oneDriveHost = `https://${this.oneDrivePersonalUrl.split("//")[1].split("/")[0]}`;
+    return oneDriveHost + relativeUrl;
   }
 }
