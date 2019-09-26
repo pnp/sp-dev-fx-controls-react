@@ -187,7 +187,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     const peoplepicker = (
       <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}>
-        {this.props.titleText && <Label>{this.props.titleText}</Label>}
+        {this.props.titleText && <Label required={this.props.isRequired}>{this.props.titleText}</Label>}
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
                             onResolveSuggestions={this.onSearchFieldChanged}
