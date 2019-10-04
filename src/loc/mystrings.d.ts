@@ -100,6 +100,7 @@ declare interface IControlStrings {
   ThemeColorsGroupName: string;
   HighlightColorsGroupName: string;
   StandardColorsGroupName: string;
+  CustomColorsGroupName: string;
   ColorsGroupName: string;
   ThemeColorDarker: string;
   ThemeColorDark: string;

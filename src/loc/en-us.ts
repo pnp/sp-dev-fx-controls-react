@@ -128,6 +128,7 @@ define([], () => {
     ThemeColorsGroupName: "Theme colors",
     HighlightColorsGroupName: "Highlight colors",
     StandardColorsGroupName: "Standard colors",
+    CustomColorsGroupName: "Custom Colors",
     ThemeColorDarker: "Theme darker",
     ThemeColorDark: "Theme dark",
     ThemeColorDarkAlt: "Theme dark alternate",
