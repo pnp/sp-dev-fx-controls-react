@@ -107,7 +107,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
   constructor(props: IRichTextProps) {
     super(props);
-
     telemetry.track('ReactRichText', {
       className: !!props.className
     });
@@ -579,7 +578,8 @@ id="DropDownStyles"
                               editor={this.getEditor()}
                               isOpen={this.state.morePaneVisible}
                               onClose={this.handleClosePanel}
-                              onLink={this.showInsertLinkDialog} />
+                              onLink={this.showInsertLinkDialog} 
+                              customColors={this.props.customColors}/>
 
         {
           this.renderLinkDialog()

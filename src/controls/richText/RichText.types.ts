@@ -1,3 +1,4 @@
+import { ISwatchColor } from './SwatchColorPickerGroup.types';
 export interface IRichTextProps {
   /**
      * CSS class to apply to the rich text editor.
@@ -26,6 +27,11 @@ export interface IRichTextProps {
    * Style options
    */
   styleOptions?: StyleOptions;
+
+  /**
+   * Additional colors to include in swatch
+   */
+  customColors?: ISwatchColor[];
 
   /**
    * Callback issued when the rich text changes.
