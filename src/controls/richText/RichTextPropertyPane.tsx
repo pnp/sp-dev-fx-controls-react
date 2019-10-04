@@ -322,7 +322,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
      * Add custom colors if passed as a property
      */
     let fontColorGroups = ["themeColors","standardColors"];
-    this.props.customColors && fontColorGroups.push('customColors');
+    if(this.props.customColors) fontColorGroups.push('customColors');
 
     return (
       <div className={styles.propertyPaneGroupField}>
