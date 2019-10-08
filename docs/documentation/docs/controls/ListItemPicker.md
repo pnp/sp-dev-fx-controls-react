@@ -23,6 +23,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
 ```TypeScript
 <ListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
                 columnInternalName='Title'
+                valueColumnInternalName='Id'
                 itemLimit={2}
                 onSelectedItem={this.onSelectedItem}
                 context={this.props.context} />
@@ -33,7 +34,8 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
 ```TypeScript
 private onSelectedItem(data: { key: string; name: string }[]) {
   for (const item of data) {
-    console.log(`Item value: ${item.name}`);
+    console.log(`Item value: ${item.key}`);
+    console.log(`Item text: ${item.name}`);
   }
 }
 ```
@@ -45,6 +47,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | columnInternalName | string | yes | InternalName of column to search and get values. |
+| keyColumnInternalName | string | no | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
 | context | WebPartContext \| ApplicationCustomizerContext | yes | SPFx web part or extention context |
 | listId | string | yes | Guid of the list. |
 | itemLimit | number | yes | Number of items which can be selected |
