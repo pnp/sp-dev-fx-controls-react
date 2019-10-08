@@ -1,4 +1,5 @@
 export * from './DateTimeConventions';
+export * from './TimeDisplayControlType';
 export * from './IDateTimePickerProps';
 export * from './IDateTimePickerState';
 export * from './IDateTimePickerStrings';

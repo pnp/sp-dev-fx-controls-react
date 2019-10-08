@@ -64,4 +64,15 @@
       }
     }
   }
+
+  .carouselContent {
+    height: 200px;
+
+    color: darkblue;
+    font-style: italic;
+  }
+  .carouselButtonsContainer {
+    background-color: orange !important;
+    opacity: 0.3;
+  }
 }
