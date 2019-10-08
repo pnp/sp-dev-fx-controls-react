@@ -12,7 +12,8 @@
           "`TaxonomyPicker`: Localization keys added to the buttons [#361](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/361)",
           "Swedish localization support added [#359](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/359)",
           "Improved German translations [#338](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/338)",
-          "`DateTimePicker`: added options to render time part as mask or dropdown [#330](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/330)"
+          "`DateTimePicker`: added options to render time part as mask or dropdown [#330](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/330)",
+          "`ListItemPicker`: option to select a key column [#350](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/355), [#381](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/381)"
         ],
         "fixes": [
           "`TaxonomyPicker`: Tags icon styling issue on IE11 [#356](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/356)",
@@ -26,7 +27,8 @@
         "[Robert Lindström](https://github.com/robert-lindstrom)",
         "[pfc2k8](https://github.com/pfc2k8)",
         "[Piotr Siatka](https://github.com/siata13)",
-        "[Alex Terentiev](https://github.com/AJIXuMuK)"
+        "[Alex Terentiev](https://github.com/AJIXuMuK)",
+        "[Luis Robertto Mello](https://github.com/mellolr1)"
       ]
     },
     {
