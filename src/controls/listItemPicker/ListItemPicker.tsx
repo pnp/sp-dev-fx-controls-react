@@ -112,16 +112,16 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Function to load List Items
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
-    let { listId, columnInternalName, webUrl } = this.props;
+    let { listId, columnInternalName, keyColumnInternalName, webUrl } = this.props;
     let arrayItems: { key: string; name: string }[] = [];
-    let valueColumn: string = columnInternalName || 'Id';
+    let keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      let listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, webUrl);
+      let listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, keyColumn, webUrl);
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {
-          arrayItems.push({ key: item[valueColumn], name: item[columnInternalName] });
+          arrayItems.push({ key: item[keyColumn], name: item[columnInternalName] });
         }
       }
       return arrayItems;

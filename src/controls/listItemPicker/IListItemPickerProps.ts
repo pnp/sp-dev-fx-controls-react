@@ -3,7 +3,7 @@ import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
 
 export interface IListItemPickerProps {
   columnInternalName: string;
-  valueColumnInternalName?: string;
+  keyColumnInternalName?: string;
   context: WebPartContext |  ApplicationCustomizerContext;
   listId: string;
   itemLimit: number;
