@@ -1,3 +1,5 @@
+import { ISwatchColor } from './SwatchColorPickerGroup.types';
+
 export interface IRteColorPickerProps {
   id: string;
   buttonLabel: string;
@@ -8,6 +10,7 @@ export interface IRteColorPickerProps {
   previewColor: string;
   selectedColor: string;
   switchToDefaultColor: () => void;
+  customColors?: ISwatchColor[];
 }
 
 export interface IRteColorPickerState {

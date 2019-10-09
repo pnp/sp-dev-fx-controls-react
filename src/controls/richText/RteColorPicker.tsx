@@ -26,7 +26,6 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
    */
   public render(): React.ReactElement<IRteColorPickerProps> {
     const { buttonLabel, defaultButtonLabel, fillThemeColor, id, previewColor } = this.props;
-
     return (
       <div>
         <div ref={(ref) => this.wrapperRef = ref}>
@@ -36,7 +35,8 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
             <DefaultButton className={styles.colorPickerButton}
                            aria-describedby={id}
                            onClick={() => this.handleColorChanged(previewColor)}>
-              <svg className={`${styles.previewSvg} ${previewColor === "rgba(0, 0, 0, 0)" ? styles.border : ""}`}
+              {/* Added border to white */}
+              <svg className={`${styles.previewSvg} ${(previewColor === "rgba(0, 0, 0, 0)" || previewColor === "#ffffff") ? styles.border : ""}`}
                    fill={previewColor}
                    viewBox="0 0 20 20">
                 <rect className={styles.previewRectangle}
@@ -109,6 +109,12 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
         break;
       case "highlightColors":
         groupName = strings.HighlightColorsGroupName;
+        break;
+      case "standardColors":
+        groupName = strings.StandardColorsGroupName;
+        break;
+      case "customColors":
+        groupName = strings.CustomColorsGroupName;
         break;
       default:
         groupName = strings.HighlightColorsGroupName;
@@ -240,6 +246,9 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
             label: strings.HighlightColorBlack
           }
         ];
+        break;
+      case 'customColors':
+        groupColors = this.props.customColors;
         break;
       default:
         groupColors = [

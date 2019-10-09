@@ -9,7 +9,6 @@ import { chunk } from '@microsoft/sp-lodash-subset';
 export default class SwatchColorPickerGroup extends React.Component<ISwatchColorPickerGroupProps, ISwatchColorPickerGroupState> {
   public render(): React.ReactElement<ISwatchColorPickerGroupProps> {
     const colorRows = chunk(this.props.groupColors, 5);
-
     return (
       <div>
         <Label htmlFor={this.props.groupText}
