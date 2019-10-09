@@ -1,0 +1,91 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+//@import "../PropertyPaneFilePicker.module.scss";
+
+/** TILES **/
+.filePickerFolderCardGrid {
+  overflow: hidden;
+  font-size: 0;
+
+  :global {
+    .ms-List-page {
+      overflow: hidden;
+      font-size: 0;
+    }
+
+    .ms-List-surface {
+      position: relative;
+    }
+  }
+}
+
+.filePickerFolderCardTile {
+  text-align: center;
+  outline: none;
+  position: relative;
+  @include ms-float(left);
+}
+
+.filePickerFolderCardPadder {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+
+:global(.ms-Fabric--isFocusVisible) .filePickerFolderCardTile:focus:after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 2px;
+  bottom: 2px;
+  box-sizing: border-box;
+  border: 1px solid $ms-color-white;
+}
+
+.filePickerFolderCardSizer {
+  padding-bottom: 100%;
+}
+
+.filePickerFolderCardImage {
+  width: 100%;
+  left: 0;
+  top: 0;
+  color: $ms-color-white;
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+  width: 100%;
+}
+
+.filePickerFolderCardLabel {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  color: $ms-color-white;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 21px;
+  font-weight: 600;
+
+  &:hover {
+    color: $ms-color-neutralLight;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  &:active {
+    background-color: $ms-color-neutralTertiaryAlt;
+    color: $ms-color-neutralDark;
+  }
+}
+
+.documentLibraryBrowserContainer {
+  padding: 0 32px;
+}

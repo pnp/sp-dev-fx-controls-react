@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+
+  // Styles for elements container
+  .contentContainer {
+    flex-grow: 2;
+  }
+
+  .loadingComponent {
+    margin: auto;
+  }
+
+  // Bottons containers
+  .buttonLocations {
+    cursor: pointer;
+    flex-direction: column;
+  }
+
+  .centralButtonsContainer {
+    @extend .buttonLocations;
+    justify-content: center;
+  }
+  .topButtonsContainer {
+    @extend .buttonLocations;
+    justify-content: left;
+  }
+  .bottomButtonsContainer {
+    @extend .buttonLocations;
+    justify-content: left;
+    flex-direction: column-reverse;
+  }
+
+
+  // ButtonContainer display mode
+  .buttonsOnlyPrevButton {
+    position: absolute;
+  }
+  .buttonsOnlyPrevButton:hover {
+    cursor: pointer;
+  }
+
+  // Buttons styles
+  .buttonsOnlyNextButton {
+    position: absolute;
+    left: -32px;
+  }
+  .buttonsOnlyNextButton:hover {
+    cursor: pointer;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .buttonsOnlyContainer {
+    @extend .buttonsContainer;
+    position: relative;
+    width: 0px;
+  }
+
+  .blockButtonsContainer {
+    @extend .buttonsContainer;
+    min-height: 100%;
+    min-width: 32px;
+  }
+  .blockButtonsContainer:hover {
+    @extend .buttonsContainer;
+    background-color: #f4f4f4;
+    opacity: 0.5;
+  }
+
+  .hiddenButtonsContainer {
+    @extend .buttonsContainer;
+    min-height: 100%;
+    min-width: 32px;
+    opacity: 0;
+  }
+  .hiddenButtonsContainer:hover {
+    opacity: 0.5;
+    background-color: #f4f4f4;
+  }
+}

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -34,6 +33,66 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
+import { GridLayout } from '../../../GridLayout';
+
+import { ISize } from 'office-ui-fabric-react/lib/Utilities';
+
+// Used to render document cards
+import {
+  DocumentCard,
+  DocumentCardActivity,
+  DocumentCardPreview,
+  //DocumentCardDetails,
+  DocumentCardTitle,
+  IDocumentCardPreviewProps,
+  DocumentCardLocation,
+  DocumentCardType
+} from 'office-ui-fabric-react/lib/DocumentCard';
+import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { FilePicker, IFilePickerResult } from '../../../FilePicker';
+
+
+/**
+ * The sample data below was randomly generated (except for the title). It is used by the grid layout
+ */
+const sampleGridData: any[] = [{
+  thumbnail: "https://pixabay.com/get/57e9dd474952a414f1dc8460825668204022dfe05555754d742e7bd6/hot-air-balloons-1984308_640.jpg",
+  title: "Adventures in SPFx",
+  name: "Perry Losselyong",
+  profileImageSrc: "https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "3/13/2019"
+}, {
+  thumbnail: "https://pixabay.com/get/55e8d5474a52ad14f1dc8460825668204022dfe05555754d742d79d0/autumn-3804001_640.jpg",
+  title: "The Wild, Untold Story of SharePoint!",
+  name: "Ebonee Gallyhaock",
+  profileImageSrc: "https://robohash.org/delectusetcorporis.bmp?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "6/29/2019"
+}, {
+  thumbnail: "https://pixabay.com/get/57e8dd454c50ac14f1dc8460825668204022dfe05555754d742c72d7/log-cabin-1886620_640.jpg",
+  title: "Low Code Solutions: PowerApps",
+  name: "Seward Keith",
+  profileImageSrc: "https://robohash.org/asperioresautquasi.jpg?size=50x50&set=set1",
+  location: "PowerApps",
+  activity: "12/31/2018"
+}, {
+  thumbnail: "https://pixabay.com/get/55e3d445495aa514f1dc8460825668204022dfe05555754d742b7dd5/portrait-3316389_640.jpg",
+  title: "Not Your Grandpa's SharePoint",
+  name: "Sharona Selkirk",
+  profileImageSrc: "https://robohash.org/velnammolestiae.png?size=50x50&set=set1",
+  location: "SharePoint",
+  activity: "11/20/2018"
+}, {
+  thumbnail: "https://pixabay.com/get/57e6dd474352ae14f1dc8460825668204022dfe05555754d742a7ed1/faucet-1684902_640.jpg",
+  title: "Get with the Flow",
+  name: "Boyce Batstone",
+  profileImageSrc: "https://robohash.org/nulladistinctiomollitia.jpg?size=50x50&set=set1",
+  location: "Flow",
+  activity: "5/26/2019"
+}];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -41,6 +100,17 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
+
+  /**
+   * Static array for carousel control example.
+   */
+  private carouselElements = [
+    <div id="1" key="1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a mattis libero, nec consectetur neque. Suspendisse potenti. Fusce ultrices faucibus consequat. Suspendisse ex diam, ullamcorper sit amet justo ac, accumsan congue neque. Vestibulum aliquam mauris non justo convallis, id molestie purus sodales. Maecenas scelerisque aliquet turpis, ac efficitur ex iaculis et. Vivamus finibus mi eget urna tempor, sed porta justo tempus. Vestibulum et lectus magna. Integer ante felis, ullamcorper venenatis lectus ac, vulputate pharetra magna. Morbi eget nisl tempus, viverra diam ac, mollis tortor. Nam odio ex, viverra bibendum mauris vehicula, consequat suscipit ligula. Nunc sed ultrices augue, eu tincidunt diam.</div>,
+    <div id="2" key="2">Quisque metus lectus, facilisis id consectetur ac, hendrerit eget quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut faucibus posuere felis vel efficitur. Maecenas et massa in sem tincidunt finibus. Duis sit amet bibendum nisi. Vestibulum pretium pretium libero, vel tincidunt sem vestibulum sed. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quam lorem, venenatis id bibendum id, tempus eu nibh. Sed tristique semper ligula, vitae gravida diam gravida vitae. Donec eget posuere mauris, pharetra semper lectus.</div>,
+    <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
+    <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
+    <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
 
   constructor(props: IControlsTestProps) {
     super(props);
@@ -55,7 +125,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedList: null,
       progressActions: this._initProgressActions(),
       dateTimeValue: new Date(),
-      richTextValue: null
+      richTextValue: null,
+      canMovePrev: false,
+      canMoveNext: true,
+      currentCarouselElement: this.carouselElements[0]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -232,6 +305,69 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   /**
+   * Triggers element change for the carousel example.
+   */
+  private triggerNextElement = (index: number): void => {
+    const canMovePrev = index > 0;
+    const canMoveNext = index < this.carouselElements.length - 1;
+    const nextElement = this.carouselElements[index];
+
+    setTimeout(() => {
+      this.setState({
+        canMovePrev,
+        canMoveNext,
+        currentCarouselElement: nextElement
+      });
+    }, 500);
+  }
+
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
+    this.setState({ filePickerResult });
+    if (filePickerResult) {
+      const fileResultContent = await filePickerResult.downloadFileContent();
+      console.log(fileResultContent);
+    }
+  }
+
+  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
+    const previewProps: IDocumentCardPreviewProps = {
+      previewImages: [
+        {
+          previewImageSrc: item.thumbnail,
+          imageFit: ImageFit.cover,
+          height: 130
+        }
+      ]
+    };
+
+    return <div
+      //className={styles.documentTile}
+      data-is-focusable={true}
+      role="listitem"
+      aria-label={item.title}
+    >
+      <DocumentCard
+        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
+        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
+
+      >
+        <DocumentCardPreview {...previewProps} />
+        {!isCompact && <DocumentCardLocation location={item.location} />}
+        <div>
+          <DocumentCardTitle
+            title={item.title}
+            shouldTruncate={true}
+          />
+          <DocumentCardActivity
+            activity={item.activity}
+            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+          />
+        </div>
+      </DocumentCard>
+    </div>;
+  }
+
+  /**
    * Renders the component
    */
   public render(): React.ReactElement<IControlsTestProps> {
@@ -307,25 +443,28 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
-                      title={this.props.title}
-                      updateProperty={this.props.updateProperty}
-                      moreLink={
-                        <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
-                      } />
+          title={this.props.title}
+          updateProperty={this.props.updateProperty}
+          moreLink={
+            <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+          } />
+
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker date only" showLabels={false} dateConvention={DateConvention.Date} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({richTextValue: value}); return value; }} />
+        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
 
-        <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}
           context={this.props.context}
-          disabled={false} />
+          disabled={false} /> */}
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
@@ -392,7 +531,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200}/>
+          resolveDelay={200} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
@@ -554,7 +693,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-              <ListItemPicker listId={this.state.selectedList}
+                <ListItemPicker listId={this.state.selectedList}
                   columnInternalName="Title"
                   itemLimit={5}
                   context={this.props.context}
@@ -676,25 +815,84 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </div>
         </div>
 
+        <div>
+          <h3>Carousel with fixed elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.top}
+            buttonsDisplay={CarouselButtonsDisplay.block}
+
+            contentContainerStyles={styles.carouselContent}
+            containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+
+            element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with triggerPageElement:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.bottom}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselContent}
+
+            canMoveNext={this.state.canMoveNext}
+            canMovePrev={this.state.canMovePrev}
+            triggerPageEvent={this.triggerNextElement}
+            element={this.state.currentCarouselElement}
+          />
+        </div>
+
         <div className={styles.siteBreadcrumb}>
           <SiteBreadcrumb context={this.props.context} />
+        </div>
+
+        <div>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={this._onFilePickerSave}
+            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            context={this.props.context}
+          />
+          {
+            this.state.filePickerResult &&
+            <div>
+              FileName: {this.state.filePickerResult.fileName}
+            </div>
+          }
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
         <div>
           <Progress title={'Progress Test'}
-                    showOverallProgress={true}
-                    showIndeterminateOverallProgress={false}
-                    hideNotStartedActions={false}
-                    actions={this.state.progressActions}
-                    currentActionIndex={this.state.currentProgressActionIndex}
-                    longRunningText={'This operation takes longer than expected'}
-                    longRunningTextDisplayDelay={7000}
-                    height={'350px'}
-                    inProgressIconName={'ChromeBackMirrored'} />
+            showOverallProgress={true}
+            showIndeterminateOverallProgress={false}
+            hideNotStartedActions={false}
+            actions={this.state.progressActions}
+            currentActionIndex={this.state.currentProgressActionIndex}
+            longRunningText={'This operation takes longer than expected'}
+            longRunningTextDisplayDelay={7000}
+            height={'350px'}
+            inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
+
+        <div className="ms-font-l">Grid Layout</div>
+        <GridLayout
+          ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
+          items={sampleGridData}
+          onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
+        />
       </div>
     );
   }
+
+
 }
