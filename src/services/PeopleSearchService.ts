@@ -34,12 +34,12 @@ export default class SPPeopleSearchService {
 
   /**
    * Generate sum of principal types
-   * 
+   *
    * PrincipalType controls the type of entities that are returned in the results.
    * Choices are All - 15, Distribution List - 2 , Security Groups - 4, SharePoint Groups - 8, User - 1.
    * These values can be combined (example: 13 is security + SP groups + users)
-   * 
-   * @param principalTypes 
+   *
+   * @param principalTypes
    */
   public getSumOfPrincipalTypes(principalTypes: PrincipalType[]) {
     return !!principalTypes && principalTypes.length > 0 ? principalTypes.reduce((a, b) => a + b, 0) : 1;
@@ -217,6 +217,7 @@ export default class SPPeopleSearchService {
               // Only ensure the user if it is not a SharePoint group
               if (!value.EntityData || (value.EntityData && typeof value.EntityData.SPGroupID === "undefined")) {
                 const id = await this.ensureUser(value.Key);
+                value.LoginName = value.Key;
                 value.Key = id;
               }
             }
@@ -224,13 +225,13 @@ export default class SPPeopleSearchService {
 
           // Filter out NULL keys
           values = values.filter(v => v.Key !== null);
-
           const userResults = values.map(element => {
             switch (element.EntityType) {
               case 'User':
                 let email: string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
                 return {
                   id: element.Key,
+                  loginName: element.LoginName ? element.LoginName : element.Key,
                   imageUrl: this.generateUserPhotoLink(email),
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText, // name
@@ -241,6 +242,7 @@ export default class SPPeopleSearchService {
               case 'SecGroup':
                 return {
                   id: element.Key,
+                  loginName: element.LoginName ? element.LoginName : element.Key,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
                   secondaryText: element.ProviderName
@@ -248,6 +250,7 @@ export default class SPPeopleSearchService {
               case 'FormsRole':
                 return {
                   id: element.Key,
+                  loginName: element.LoginName ? element.LoginName : element.Key,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
                   secondaryText: element.ProviderName
@@ -255,6 +258,7 @@ export default class SPPeopleSearchService {
               default:
                 return {
                   id: element.EntityData.SPGroupID,
+                  loginName: element.EntityData.AccountName,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
                   secondaryText: element.EntityData.AccountName

@@ -317,14 +317,19 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   private renderColorStylesGroup = (): JSX.Element => {
     const color: string = this.state.formats.color || ThemeColorHelper.GetThemeColor(styles.NeutralPrimary);
     const backgroundColor: string = this.state.formats.background || "rgba(0, 0, 0, 0)";
+
+    /**
+     * Add custom colors if passed as a property
+     */
+    let fontColorGroups = ["themeColors","standardColors"];
+    if(this.props.customColors) fontColorGroups.push('customColors');
+
     return (
       <div className={styles.propertyPaneGroupField}>
         <div className="ms-CustomFieldHost">
           <div className={styles.controlsInOneRow}>
-            <RteColorPicker colorPickerGroups={[
-                              "themeColors",
-                              "standardColors"
-                            ]}
+            <RteColorPicker colorPickerGroups={fontColorGroups} // changed to variable
+                            customColors={this.props.customColors}
                             buttonLabel={strings.FontColorLabel}
                             id="fontColor-propertyPaneButton"
                             defaultButtonLabel={strings.AutomaticFontColor}
