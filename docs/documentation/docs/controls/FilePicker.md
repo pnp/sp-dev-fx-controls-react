@@ -30,7 +30,7 @@ File picker doesn't load all the files that exist in the folder. Instead, it all
 
 ## How to use this control
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following module to your component:
 
 ```TypeScript
