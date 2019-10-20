@@ -47,12 +47,12 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, filterList?: string ): Promise<any[]> {
     let returnItems: any[];
-    
+    const filter: string = filterList  ? `and ${filterList}` : '';
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=startswith(${internalColumnName},'${filterText}')`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=startswith(${internalColumnName},'${filterText}') ${filter}`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const results = await data.json();
