@@ -6,7 +6,7 @@ export interface IListItemPickerProps {
   context: WebPartContext |  ApplicationCustomizerContext;
   listId: string;
   itemLimit: number;
-
+  filterList?: string;
   className?: string;
   webUrl?: string;
   defaultSelectedItems?: any[];

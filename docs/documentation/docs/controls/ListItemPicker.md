@@ -1,6 +1,7 @@
 # ListItemPicker control
 
-This control allows you to select one or more items from a list. The item selection is based from a column value. The control will suggest items based on the inserted value.
+This control allows you to select one or more items from a list. The  list can be filter to allow selection from a items subset. The item selection is based from a column value. The control will suggest items based on the inserted value.
+
 
 Here is an example of the control:
 
@@ -24,6 +25,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
 <ListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
                 columnInternalName='Title'
                 itemLimit={2}
+                filterList={"Title eq 'SPFx - Controls'"}
                 onSelectedItem={this.onSelectedItem}
                 context={this.props.context} />
 ```
@@ -55,5 +57,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
+| filterList | string | no | Condition to filter the List same as ODATA $filter|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)

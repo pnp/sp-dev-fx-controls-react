@@ -20,5 +20,5 @@ export interface ISPService {
      * @param options Options used to order and filter during the API query
      */
     getLibs(options?: ILibsOptions): Promise<ISPLists>;
-    getListItems?(filterText: string, listId: string, internalColumnName: string, webUrl?: string) : Promise<any[]>;
+    getListItems?(filterText: string, listId: string, internalColumnName: string, webUrl?: string, filterList?:string) : Promise<any[]>;
 }
