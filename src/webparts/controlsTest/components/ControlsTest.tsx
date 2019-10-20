@@ -551,9 +551,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">Field picker list data tester:
               <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
-                  columnInternalName="DescricaoItem"
+                  columnInternalName="Title"
                   itemLimit={5}
-                  filterList={"TipodePedido eq  'Ambos'"}
+                  filterList={"Title eq  'SPFx'"}
                   context={this.props.context}
                   onSelectedItem={this.listItemPickerDataSelected} />
               </div>
