@@ -52,7 +52,7 @@ export default class SPService implements ISPService {
     const filter: string = filterList  ? `and ${filterList}` : '';
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=startswith(${internalColumnName},'${filterText}') ${filter}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'","''"))}') ${filter}`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const results = await data.json();
