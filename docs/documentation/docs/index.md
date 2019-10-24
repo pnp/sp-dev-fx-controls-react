@@ -34,6 +34,7 @@ Once the package is installed, you will have to configure the resource file of t
 
 The following controls are currently available:
 
+- [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControls) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
@@ -49,8 +50,9 @@ The following controls are currently available:
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
-- [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
-- [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
+- [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
+- [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
+
 
 Field customizer controls:
 
