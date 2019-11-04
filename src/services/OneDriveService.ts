@@ -67,7 +67,6 @@ export class OneDriveService extends FileBrowserService {
       const fileInfo = await fileInfoResult.json();
       const oneDrvieFileUrl = fileInfo["@content.downloadUrl"];
 
-      console.log(oneDrvieFileUrl);
       const fileDownloadResult = await this.context.httpClient.get(oneDrvieFileUrl, SPHttpClient.configurations.v1, {
         headers: new Headers(),
         method: 'GET',
