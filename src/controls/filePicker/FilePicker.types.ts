@@ -33,6 +33,11 @@ export interface IFilePickerResult {
   fileAbsoluteUrl: string;
 
   /**
+   * Absolute not modified file SharePoint URL.
+   */
+  spItemUrl?: string;
+
+  /**
    * Downloads file picker result content.
    */
   downloadFileContent: () => Promise<File>;
