@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.16.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`FilePicker`: Fixes for OneDrive CORS issues [#407](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/407)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Piotr Siatka](https://github.com/siata13)"
+      ]
+    },
+    {
       "version": "1.15.0",
       "changes": {
         "new": [
