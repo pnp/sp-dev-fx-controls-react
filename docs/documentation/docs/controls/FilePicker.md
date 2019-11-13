@@ -42,7 +42,7 @@ import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/File
 ```TypeScript
 <FilePicker
   bingAPIKey="<BING API KEY>"
-  accepts= ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg"
+  accepts= {[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
   buttonIcon="FileImage"
   onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
   onChanged={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
