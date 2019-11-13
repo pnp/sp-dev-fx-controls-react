@@ -7,10 +7,13 @@
         "enhancements": [
           "`FilePicker`: Fixes for OneDrive CORS issues [#407](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/407)"
         ],
-        "fixes": []
+        "fixes": [
+          "Documentation fix for `FilePicker`: updated `accepts` value in props [#404](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/404)"
+        ]
       },
       "contributions": [
-        "[Piotr Siatka](https://github.com/siata13)"
+        "[Piotr Siatka](https://github.com/siata13)",
+        "[Dani Domínguez](https://github.com/danidz96)"
       ]
     },
     {
