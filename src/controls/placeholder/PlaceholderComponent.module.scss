@@ -1,3 +1,5 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
 .placeholder {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -26,12 +28,17 @@
                 display: inline-block;
                 vertical-align: middle;
                 white-space: normal;
+
+                @include ms-fontSize-su;
             }
 
             .placeholderText {
                 display: inline;
                 vertical-align: middle;
                 white-space: normal;
+
+                @include ms-fontWeight-light;
+                @include ms-fontSize-xxl;
 
                 &.hide {
                   display: none;

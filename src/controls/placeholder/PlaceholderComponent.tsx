@@ -90,9 +90,9 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
           <div className={styles.placeholderHead}>
             <div className={styles.placeholderHeadContainer}>
               {
-                this.props.iconName && <Icon iconName={this.props.iconName} className={`${styles.placeholderIcon} ms-fontSize-su ms-Icon`} />
+                this.props.iconName && <Icon iconName={this.props.iconName} className={styles.placeholderIcon} />
               }
-              <span className={`${styles.placeholderText} ms-fontWeight-light ms-fontSize-xxl ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`}>{this.props.iconText}</span>
+              <span className={`${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`}>{this.props.iconText}</span>
             </div>
           </div>
           <div className={styles.placeholderDescription}>
