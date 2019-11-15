@@ -9,12 +9,14 @@
         ],
         "fixes": [
           "Documentation fix for `FilePicker`: updated `accepts` value in props [#404](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/404)",
-          "The `FilePicker` control doesn't work in many languages due to missing localization keys [#412](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/412)"
+          "The `FilePicker` control doesn't work in many languages due to missing localization keys [#412](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/412)",
+          "Documentation fix for broken links of Property Controls landing page [#388](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/388)"
         ]
       },
       "contributions": [
         "[Piotr Siatka](https://github.com/siata13)",
-        "[Dani Domínguez](https://github.com/danidz96)"
+        "[Dani Domínguez](https://github.com/danidz96)",
+        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
       ]
     },
     {
