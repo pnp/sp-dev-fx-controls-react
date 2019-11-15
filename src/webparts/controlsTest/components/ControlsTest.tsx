@@ -697,11 +697,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
                   keyColumnInternalName="Id"
-                  filterList={"Title eq 'SPFx'"}
+                  filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
                   onSelectedItem={this.listItemPickerDataSelected} />
-                  
+
               </div>
 
               <div className="ms-font-m">Services tester:
