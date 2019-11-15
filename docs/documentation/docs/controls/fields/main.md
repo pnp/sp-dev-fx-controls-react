@@ -40,20 +40,20 @@ public render(): React.ReactElement<{}> {
 Additionally, any of included components can be used by itself.
 
 ## FieldRendererHelper
-[FieldRendererHelper](./FieldRendererHelper) class is a **recommended** way to use Field Controls as it provides additional functionality to automatically render the content for any type of fields.
+[FieldRendererHelper](./FieldRendererHelper.md) class is a **recommended** way to use Field Controls as it provides additional functionality to automatically render the content for any type of fields.
 
 ## Available Controls
 The following Field Controls are currently available:
 
-- [FieldAttachmentsRenderer](./FieldAttachmentsRenderer) (renders Clip icon based on the provided `count` property is defined and greater than 0)
-- [FieldDateRenderer](./FieldDateRenderer) (renders date string as a simple text)
-- [FieldFileTypeRenderer](./FieldFileTypeRenderer) (renders document or folder icon based on file path)
-- [FieldLookupRenderer](./FieldLookupRenderer) (renders lookup values)
-- [FieldNameRenderer](./FieldNameRenderer) (renders document's name as a link)
-- [FieldTaxonomyRenderer](./FieldTaxonomyRenderer) (renders terms from Managed Metadata field)
-- [FieldTextRenderer](./FieldTextRenderer) (renders simple text)
-- [FieldTitleRenderer](./FieldTitleRenderer) (renders title either as a simple text or as a link to the Display Form)
-- [FieldUrlRenderer](./FieldUrlRenderer) (renders Hyperlink or Picture field value as a link or image)
-- [FieldUserRenderer](./FieldUserRenderer) (renders each referenced user/group as a link on a separate line)
+- [FieldAttachmentsRenderer](./FieldAttachmentsRenderer.md) (renders Clip icon based on the provided `count` property is defined and greater than 0)
+- [FieldDateRenderer](./FieldDateRenderer.md) (renders date string as a simple text)
+- [FieldFileTypeRenderer](./FieldFileTypeRenderer.md) (renders document or folder icon based on file path)
+- [FieldLookupRenderer](./FieldLookupRenderer.md) (renders lookup values)
+- [FieldNameRenderer](./FieldNameRenderer.md) (renders document's name as a link)
+- [FieldTaxonomyRenderer](./FieldTaxonomyRenderer.md) (renders terms from Managed Metadata field)
+- [FieldTextRenderer](./FieldTextRenderer.md) (renders simple text)
+- [FieldTitleRenderer](./FieldTitleRenderer.md) (renders title either as a simple text or as a link to the Display Form)
+- [FieldUrlRenderer](./FieldUrlRenderer.md) (renders Hyperlink or Picture field value as a link or image)
+- [FieldUserRenderer](./FieldUserRenderer.md) (renders each referenced user/group as a link on a separate line)
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields)
