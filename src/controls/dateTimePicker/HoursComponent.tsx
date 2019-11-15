@@ -36,7 +36,7 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
           label=''
           options={this._hours}
           onChanged={option => {
-            onChange(TimeHelper.hoursValue(option.key as number, this.props.timeConvention))
+            onChange(option.text)
           }}
           dropdownWidth={110} />);
     }
