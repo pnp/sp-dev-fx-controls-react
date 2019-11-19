@@ -14,7 +14,7 @@
           "Documentation fix for broken links of Property Controls landing page [#388](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/388)",
           "Documentation fix to include new components from v 1.15.0 [#394](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/394)",
           "`DateTimePicker`: dropdown for time not handling AM/PM correctly [#405](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/409)",
-          "Documentation fix for `index` page: updated link to Chart controls [#417](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/417)",
+          "Documentation fix for `index` page: updated link to Chart controls [#417](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/417)"
         ]
       },
       "contributions": [
