@@ -1,4 +1,3 @@
-import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { FileBrowserService } from "../../../../services/FileBrowserService";
 import { IFile } from "../../../../services/FileBrowserService.types";
 import { IFilePickerResult } from "../../FilePicker.types";

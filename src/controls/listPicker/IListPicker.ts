@@ -1,6 +1,4 @@
-import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
-import IWebPartContext from "@microsoft/sp-webpart-base/lib/core/IWebPartContext";
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { LibsOrderBy } from "../../services/ISPService";

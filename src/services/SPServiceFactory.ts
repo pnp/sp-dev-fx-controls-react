@@ -1,5 +1,5 @@
 import { ExtensionContext } from '@microsoft/sp-extension-base';
-import { IWebPartContext, WebPartContext } from "@microsoft/sp-webpart-base";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ISPService } from "./ISPService";
 import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
 import SPServiceMock from "./SPServiceMock";

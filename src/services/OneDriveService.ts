@@ -1,11 +1,10 @@
 // PnP
-import { sp, RenderListDataOptions } from "@pnp/sp";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 
 import { SPHttpClient } from '@microsoft/sp-http';
 import { FileBrowserService } from "./FileBrowserService";
 import { FilesQueryResult } from "./FileBrowserService.types";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -13,7 +12,7 @@ export class OneDriveService extends FileBrowserService {
   protected oneDriveRootFolderAbsoluteUrl: string;
   protected oneDrivePersonalLibraryTitle: string;
 
-  constructor(context: ApplicationCustomizerContext | WebPartContext, itemsToDownloadCount?: number) {
+  constructor(context: ExtensionContext | WebPartContext, itemsToDownloadCount?: number) {
     super(context, itemsToDownloadCount);
 
     this.oneDrivePersonalUrl = null;

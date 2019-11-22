@@ -61,7 +61,7 @@ The FilePicker component can be configured with the following properties:
 | buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
 | onSave | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file has been selected and picker has been closed. |
 | onChange | (filePickerResult: IFilePickerResult) => void | no | Handler when the file selection has been changed. |
-| context | ApplicationCustomizerContext | WebPartContext | yes | Current context. |
+| context | ExtensionContext \| WebPartContext | yes | Current context. |
 | accepts | string[] | no | Array of strings containing allowed files extensions. E.g. [".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"] |
 | required | boolean | no | Sets the label to inform that the value is required. |
 | bingAPIKey | string | no | Used to execute WebSearch. If not provided SearchTab will not be available. |
