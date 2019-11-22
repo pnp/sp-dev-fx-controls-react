@@ -5,7 +5,7 @@ This repository provides developers with a set of reusable React controls that c
 ![Placeholder example](./assets/placeholder-intro.png)
 
 !!! attention
-    The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for on-premises. As for on-premises solutions version `1.1.0` is currently used.
+    The controls project has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions your building for SharePoint 2016 with Feature Pack 2 on-premises. As for SharePoint 2016 with Feature Pack 2 version `1.1.0` of the SharePoint framework is the only version that can be used. SharePoint 2019 on-premises uses SharePoint framework `v1.4.0` and therefore should be fine to use with these controls.
 
 ## Getting started
 
