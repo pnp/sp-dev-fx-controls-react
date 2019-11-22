@@ -1,6 +1,6 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IFilePickerResult } from "./FilePicker.types";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export interface IFilePickerProps {
   /**
@@ -30,7 +30,7 @@ export interface IFilePickerProps {
   /**
    * Current context.
    */
-  context: ApplicationCustomizerContext |  WebPartContext;
+  context: ExtensionContext |  WebPartContext;
 
   /**
    * File extensions to be displayed.
