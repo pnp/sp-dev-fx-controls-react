@@ -62,7 +62,7 @@ The `SecurityTrimmedControl` can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext or ApplicationCustomizerContext or FieldCustomizerContext or ListViewCommandSetContext | yes | Context of the web part, application customizer, field customizer, or list view command set. |
+| context | WebPartContext \| ExtensionContext | yes | Context of the web part, application customizer, field customizer, or list view command set. |
 | permissions | SPPermission[] | yes | The permissions to check for the user. |
 | level | PermissionLevel | yes | Specify where to check the user permissions: current site or list / remote site or list. |
 | remoteSiteUrl | string | no | The URL of the remote site. Required when you want to check permissions on remote site or list. |

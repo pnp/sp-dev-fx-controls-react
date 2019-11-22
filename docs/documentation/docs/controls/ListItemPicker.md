@@ -49,7 +49,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | columnInternalName | string | yes | InternalName of column to search and get values. |
 | keyColumnInternalName | string | no | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
-| context | WebPartContext \| ApplicationCustomizerContext | yes | SPFx web part or extention context |
+| context | WebPartContext \| ExtensionContext | yes | SPFx web part or extention context |
 | listId | string | yes | Guid of the list. |
 | itemLimit | number | yes | Number of items which can be selected |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
