@@ -1,5 +1,5 @@
 {
-  "$schema": "https://dev.office.com/json-schemas/spfx/client-side-extension-manifest.schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-extension-manifest.schema.json",
 
   "id": "57ebd944-98ed-43f9-b722-e959d6dac6ad",
   "alias": "OotbFieldsFieldCustomizer",

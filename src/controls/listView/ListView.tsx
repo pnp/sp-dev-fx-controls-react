@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps, IObjectWithKey } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import { TextField } from 'office-ui-fabric-react/lib/components/TextField';
-import { filter } from 'lodash';
+import filter from 'lodash/filter';
 
 /**
  * File type icon component
@@ -414,7 +414,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         this._selection.setItems([], true);
         setTimeout(() => {
           // Find new index
-          let idxs: number[] = selection.map(item => findIndex(sortedItems, item));
+          let idxs: number[] = selection.map(item => findIndex<IObjectWithKey>(sortedItems, item));
           idxs.forEach(idx => this._selection.setIndexSelected(idx, true, false));
         }, 0);
       }

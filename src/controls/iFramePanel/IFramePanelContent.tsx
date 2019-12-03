@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from './IFramePanelContent.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import omit = require('lodash/omit');
+import omit from 'lodash/omit';
 import { IIFramePanelContentProps, IIFramePanelContentState } from ".";
 
 /**

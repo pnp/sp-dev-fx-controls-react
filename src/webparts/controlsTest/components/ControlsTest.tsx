@@ -134,6 +134,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
     this._onConfigure = this._onConfigure.bind(this);
     this._startProgress = this._startProgress.bind(this);
+    this.onServicePickerChange = this.onServicePickerChange.bind(this);
   }
 
   /**
