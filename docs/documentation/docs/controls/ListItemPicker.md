@@ -23,7 +23,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
 ```TypeScript
 <ListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
                 columnInternalName='Title'
-                valueColumnInternalName='Id'
+                keyColumnInternalName='Id'
                 filter="Title eq 'SPFx'"
                 itemLimit={2}
                 onSelectedItem={this.onSelectedItem}
