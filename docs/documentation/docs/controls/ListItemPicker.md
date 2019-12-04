@@ -1,6 +1,6 @@
 # ListItemPicker control
 
-This control allows you to select one or more items from a list. The item selection is based from a column value. The control will suggest items based on the inserted value.
+This control allows you to select one or more items from a list. The List can be filtered to allow select items from a subset of items The item selection is based from a column value. The control will suggest items based on the inserted value.
 
 Here is an example of the control:
 
@@ -12,7 +12,7 @@ Here is an example of the control:
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the control into your component:
 
 ```TypeScript
@@ -24,6 +24,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
 <ListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
                 columnInternalName='Title'
                 keyColumnInternalName='Id'
+                filter="Title eq 'SPFx'"
                 itemLimit={2}
                 onSelectedItem={this.onSelectedItem}
                 context={this.props.context} />
@@ -48,7 +49,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | columnInternalName | string | yes | InternalName of column to search and get values. |
 | keyColumnInternalName | string | no | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
-| context | WebPartContext \| ApplicationCustomizerContext | yes | SPFx web part or extention context |
+| context | WebPartContext \| ExtensionContext | yes | SPFx web part or extention context |
 | listId | string | yes | Guid of the list. |
 | itemLimit | number | yes | Number of items which can be selected |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
@@ -58,5 +59,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
+| filter | string | no | condition to filter list Item, same as $filter ODATA parameter|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)

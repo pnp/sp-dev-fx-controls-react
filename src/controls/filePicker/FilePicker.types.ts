@@ -1,7 +1,7 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
 import { IFile, ILibrary } from "../../services/FileBrowserService.types";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
   libraryData?: ILibrary;
@@ -9,7 +9,7 @@ export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
 }
 
 export interface IFilePickerTab {
-  context: ApplicationCustomizerContext | WebPartContext;
+  context: ExtensionContext | WebPartContext;
   accepts: string[];
   onSave: (value: IFilePickerResult) => void;
   onClose: () => void;
@@ -31,6 +31,11 @@ export interface IFilePickerResult {
    * Absolute file URL. Undefined in case of file upload.
    */
   fileAbsoluteUrl: string;
+
+  /**
+   * Absolute not modified file SharePoint URL.
+   */
+  spItemUrl?: string;
 
   /**
    * Downloads file picker result content.

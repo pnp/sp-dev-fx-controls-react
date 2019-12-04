@@ -16,7 +16,7 @@ Here is an example of the control:
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the control into your component:
 
 ```TypeScript
@@ -49,7 +49,7 @@ The `ListPicker` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext OR ApplicationCustomizerContext | yes | The context object of the SPFx loaded webpart or customizer. |
+| context | WebPartContext \| ExtensionContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | className | string | no | If provided, additional class name to provide on the dropdown element. |
 | disabled | boolean | no | Whether or not the control is disabled. |
 | baseTemplate | number | no | The SharePoint BaseTemplate ID to filter the list options by. |

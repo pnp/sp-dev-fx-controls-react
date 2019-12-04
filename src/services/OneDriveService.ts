@@ -1,13 +1,10 @@
 // PnP
-import { sp, RenderListDataOptions } from "@pnp/sp";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
-import { IGetListDataAsStreamResult, IRow } from './IOneDriveService';
-import { GeneralHelper } from "../Utilities";
+import { SPHttpClient } from '@microsoft/sp-http';
 import { FileBrowserService } from "./FileBrowserService";
-import { IFile, FilesQueryResult } from "./FileBrowserService.types";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { FilesQueryResult } from "./FileBrowserService.types";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -15,7 +12,7 @@ export class OneDriveService extends FileBrowserService {
   protected oneDriveRootFolderAbsoluteUrl: string;
   protected oneDrivePersonalLibraryTitle: string;
 
-  constructor(context: ApplicationCustomizerContext | WebPartContext, itemsToDownloadCount?: number) {
+  constructor(context: ExtensionContext | WebPartContext, itemsToDownloadCount?: number) {
     super(context, itemsToDownloadCount);
 
     this.oneDrivePersonalUrl = null;
@@ -61,9 +58,18 @@ export class OneDriveService extends FileBrowserService {
    */
   public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
     try {
-      const fileDownloadResult = await this.context.spHttpClient.get(absoluteFileUrl, SPHttpClient.configurations.v1, {
-        method: "GET",
-        mode: "cors"
+      // replace url OneDrive site URL with current web url
+      const urlTokens = absoluteFileUrl.split("/_api/");
+      let fileUrl = `${this.context.pageContext.web.absoluteUrl}/_api/${urlTokens[1]}?`;
+
+      const fileInfoResult = await this.context.spHttpClient.get(fileUrl, SPHttpClient.configurations.v1);
+      const fileInfo = await fileInfoResult.json();
+      const oneDrvieFileUrl = fileInfo["@content.downloadUrl"];
+
+      const fileDownloadResult = await this.context.httpClient.get(oneDrvieFileUrl, SPHttpClient.configurations.v1, {
+        headers: new Headers(),
+        method: 'GET',
+        mode: 'cors'
       });
 
       if (!fileDownloadResult || !fileDownloadResult.ok) {

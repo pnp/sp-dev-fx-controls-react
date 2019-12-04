@@ -1,5 +1,15 @@
 # Releases
 
+## 1.16.0
+
+### Enhancements
+
+- `FilePicker`: Fixes for OneDrive CORS issues [#407](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/407)
+
+### Contributors
+
+Special thanks to our contributor: [Piotr Siatka](https://github.com/siata13).
+
 ## 1.15.0
 
 ### New control(s)
