@@ -18,7 +18,8 @@
           "`DateTimePicker`: dropdown for time not handling AM/PM correctly [#405](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/409)",
           "Documentation fix for `index` page: updated link to Chart controls [#417](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/417)",
           "Documentation update for SPFx On Premises notice: [#418](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/418)",
-          "Documentation update for `ListItemPicker`: `valueColumnInternalName` should be `keyColumnInternalName`"
+          "Documentation update for `ListItemPicker`: `valueColumnInternalName` should be `keyColumnInternalName`",
+          "`RichText`: Fix \"Align Left\" button [#429](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/429)"
         ]
       },
       "contributions": [
@@ -29,7 +30,8 @@
         "[PrasadKasireddy](https://github.com/PrasadKasireddy)",
         "[Chad Eiserloh](https://github.com/c-eiser13)",
         "[Koen Zomers](https://github.com/KoenZomers)",
-        "[Dmitry Rogozhny](https://github.com/dmitryrogozhny)"
+        "[Dmitry Rogozhny](https://github.com/dmitryrogozhny)",
+        "[Alexander Kleshcheov](https://github.com/SharePickle)"
       ]
     },
     {
