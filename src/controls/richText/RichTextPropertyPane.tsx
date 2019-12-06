@@ -369,7 +369,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
                          id="left-propertyPaneButton"
                          calloutProps={{ gapSpace: 0 }}>
               <IconButton checked={this.state.formats!.align === undefined}
-                          onClick={() => this.applyFormat('align', 'left')}
+                          onClick={() => this.applyFormat('align', undefined)}
                           className={styles.propertyPaneButton}
                           aria-describedby="left-propertyPaneButton"
                           iconProps={{
