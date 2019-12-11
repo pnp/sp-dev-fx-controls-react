@@ -80,8 +80,8 @@ interface `IFilePickerResult`
 Provides options for carousel buttons location.
 
 | Value | Type | Description |
-| ---- | ---- |
-| fileName | string | File namr of the result with the extension. |
+| ---- | ---- | ---- |
+| fileName | string | File name of the result with the extension. |
 | fileNameWithoutExtension | string | File name of the result without the extension. |
 | fileAbsoluteUrl | string | Absolute URL of the file. Null in case of file upload. |
 | downloadFileContent | () => Promise<File> | Function allows to download file content. Returns File object. |
