@@ -22,7 +22,8 @@
           "`RichText`: Fix \"Align Left\" button [#429](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/429)",
           "Documentation update for `FilePicker`: misspelling [#432](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/432)",
           "`IFramePanel`: Fix doubled scroll issue when iframe content is higher than frame height [#431](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/431)",
-          "`PeoplePicker`: `errorMessage` not showing [#420](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/420)"
+          "`PeoplePicker`: `errorMessage` not showing [#420](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/420)",
+          "`IFrameDialog`: `commitPopUp` typo causes popups with classic forms to not close after hitting save [#433](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/433)"
         ]
       },
       "contributions": [
