@@ -40,6 +40,8 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
         try { // for cross origin requests we can have issues with accessing frameElement
             this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
             this._iframe.contentWindow.frameElement.commitPopUp = this.props.close;
+            // SP.UI.Dialog has misspelling of commitPopUp
+            this._iframe.contentWindow.frameElement.commitPopup = this.props.close;
         }
         catch (err) {
             if (err.name !== 'SecurityError') {
