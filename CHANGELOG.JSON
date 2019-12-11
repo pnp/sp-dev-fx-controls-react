@@ -19,7 +19,10 @@
           "Documentation fix for `index` page: updated link to Chart controls [#417](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/417)",
           "Documentation update for SPFx On Premises notice: [#418](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/418)",
           "Documentation update for `ListItemPicker`: `valueColumnInternalName` should be `keyColumnInternalName`",
-          "`RichText`: Fix \"Align Left\" button [#429](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/429)"
+          "`RichText`: Fix \"Align Left\" button [#429](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/429)",
+          "Documentation update for `FilePicker`: misspelling [#432](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/432)",
+          "`IFramePanel`: Fix doubled scroll issue when iframe content is higher than frame height [#431](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/431)",
+          "`PeoplePicker`: `errorMessage` not showing [#420](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/420)"
         ]
       },
       "contributions": [
@@ -31,7 +34,10 @@
         "[Chad Eiserloh](https://github.com/c-eiser13)",
         "[Koen Zomers](https://github.com/KoenZomers)",
         "[Dmitry Rogozhny](https://github.com/dmitryrogozhny)",
-        "[Alexander Kleshcheov](https://github.com/SharePickle)"
+        "[Alexander Kleshcheov](https://github.com/SharePickle)",
+        "[Hugo Bernier](https://github.com/hugoabernier)",
+        "[Beniamin](https://github.com/bbronisz)",
+        "[Giovani Martini](https://github.com/giovanibm)"
       ]
     },
     {
