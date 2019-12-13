@@ -146,7 +146,7 @@ export default class SPTermStorePickerService {
    * Retrieve all terms for the given term set
    * @param termset
    */
-  public async getAllTerms(termset: string): Promise<ITermSet> {
+  public async getAllTerms(termset: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.getAllMockTerms();
@@ -190,6 +190,17 @@ export default class SPTermStorePickerService {
             if (termStoreResultTerms.length > 0) {
               // Retrieve all terms
               let terms = termStoreResultTerms[0]._Child_Items_;
+
+              if(hideDeprecatedTags === true)
+              {
+                terms = terms.filter(d => d["IsDeprecated"] === false);
+              }
+
+              if(hideTagsNotAvailableForTagging === true)
+              {
+                terms = terms.filter(d => d["IsAvailableForTagging"] === true);
+              }
+
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
                 if (term.IsRoot) {

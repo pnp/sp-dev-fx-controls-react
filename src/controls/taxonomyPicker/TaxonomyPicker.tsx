@@ -90,7 +90,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       // });
     }
 
-    this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
+    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
       this.setState({
@@ -104,7 +104,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
    */
   private async updateTaxonomyTree(): Promise<void> {
-    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID);
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging);
 
     this.setState({
       termSetAndTerms
