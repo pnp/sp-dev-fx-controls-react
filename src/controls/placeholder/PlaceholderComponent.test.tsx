@@ -23,7 +23,7 @@ describe('<Placeholder />', () => {
     setIconOptions({
       disableWarnings: true
     });
-  })
+  });
 
   afterEach(() => {
     placeholder.unmount();

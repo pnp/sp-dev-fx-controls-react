@@ -36,7 +36,7 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
           label=''
           options={this._hours}
           onChanged={option => {
-            onChange(option.text)
+            onChange(option.text);
           }}
           dropdownWidth={110} />);
     }

@@ -2,17 +2,17 @@ import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "..";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class FileBrowserService {
   protected itemsToDownloadCount: number;
-  protected context: ApplicationCustomizerContext | WebPartContext;
+  protected context: ExtensionContext | WebPartContext;
 
   protected driveAccessToken: string;
   protected mediaBaseUrl: string;
   protected callerStack: string;
 
-  constructor(context: ApplicationCustomizerContext | WebPartContext, itemsToDownloadCount: number = 100) {
+  constructor(context: ExtensionContext | WebPartContext, itemsToDownloadCount: number = 100) {
     this.context = context;
 
     this.itemsToDownloadCount = itemsToDownloadCount;
