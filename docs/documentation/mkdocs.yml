@@ -2,6 +2,7 @@ site_name: '@pnp/spfx-controls-react'
 nav:
   - Home: 'index.md'
   - Controls:
+    - Carousel: 'controls/Carousel.md'
     - Charts:
       - "ChartControl": 'controls/ChartControl.md'
       - "Bar Chart": 'controls/charts/BarChart.md'
@@ -13,7 +14,9 @@ nav:
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
+    - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - GridLayout: 'controls/GridLayout.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'
     - ListItemAttachments: 'controls/ListItemAttachments.md'

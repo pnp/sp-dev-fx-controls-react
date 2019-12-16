@@ -104,14 +104,14 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
       } else {
         // 12 hours time convention
         if (i === 0) {
-          digit = `12${amDesignator}`;
+          digit = `12 ${amDesignator}`;
         } else if (i < 12) {
-          digit = `${i}${amDesignator}`;
+          digit = `${i} ${amDesignator}`;
         } else {
           if (i === 12) {
-            digit = `12${pmDesignator}`;
+            digit = `12 ${pmDesignator}`;
           } else {
-            digit = `${(i % 12)}${pmDesignator}`;
+            digit = `${(i % 12)} ${pmDesignator}`;
           }
         }
       }

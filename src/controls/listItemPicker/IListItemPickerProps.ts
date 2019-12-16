@@ -1,13 +1,13 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ApplicationCustomizerContext } from "@microsoft/sp-application-base";
+import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export interface IListItemPickerProps {
   columnInternalName: string;
   keyColumnInternalName?: string;
-  context: WebPartContext |  ApplicationCustomizerContext;
+  context: WebPartContext |  ExtensionContext;
   listId: string;
   itemLimit: number;
-
+  filter?: string;
   className?: string;
   webUrl?: string;
   defaultSelectedItems?: any[];

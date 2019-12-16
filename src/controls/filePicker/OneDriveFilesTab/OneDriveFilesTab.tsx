@@ -132,7 +132,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
    */
   private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
     if (filePickerResult) {
-      filePickerResult.downloadFileContent = () => { return this.props.oneDriveService.downloadSPFileContent(filePickerResult.fileAbsoluteUrl, filePickerResult.fileName); };
+      filePickerResult.downloadFileContent = () => { return this.props.oneDriveService.downloadSPFileContent(filePickerResult.spItemUrl, filePickerResult.fileName); };
     }
     this.setState({
       filePickerResult

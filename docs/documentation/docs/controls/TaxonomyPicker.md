@@ -24,7 +24,7 @@ This control allows you to select one or more Terms from a TermSet via its name 
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
 ```TypeScript
@@ -105,7 +105,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | panelTitle | string | yes | TermSet Picker Panel title. |
 | label | string | yes | Text displayed above the Taxonomy Picker. |
 | disabled | string | no | Specify if the control needs to be disabled. |
-| context | WebPartContext | yes | Context of the current web part. |
+| context | WebPartContext \| ExtensionContext | yes | Context of the current web part or extension. |
 | initialValues | IPickerTerms | no | Defines the selected by default term sets. |
 | allowMultipleSelections | boolean | no | Defines if the user can select only one or many term sets. Default value is false. |
 | termsetNameOrID | string | yes | The name or Id of your TermSet that you would like the Taxonomy Picker to chose terms from. |

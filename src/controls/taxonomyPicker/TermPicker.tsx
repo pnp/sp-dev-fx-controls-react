@@ -7,8 +7,8 @@ import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { ITermSet } from '../../services/ISPTermStorePickerService';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -21,7 +21,7 @@ export interface ITermPickerState {
 
 export interface ITermPickerProps {
   termPickerHostProps: ITaxonomyPickerProps;
-  context: IWebPartContext | ApplicationCustomizerContext;
+  context: IWebPartContext | ExtensionContext;
   disabled: boolean;
   value: IPickerTerms;
   allowMultipleSelections : boolean;

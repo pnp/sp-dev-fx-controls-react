@@ -434,6 +434,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         fileAbsoluteUrl: selectedItem.absoluteUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedItem.name),
         fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedItem.name),
+        spItemUrl: selectedItem.spItemUrl,
         downloadFileContent: null
       };
     }

@@ -1,10 +1,10 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
+import { setIconOptions } from 'office-ui-fabric-react/lib/Styling';
 import { Placeholder } from './PlaceholderComponent';
-import { IPlaceholderProps } from './IPlaceholderComponent';
 import styles from './PlaceholderComponent.module.scss';
 
 declare const sinon;
@@ -18,11 +18,18 @@ describe('<Placeholder />', () => {
   const dummyLabel = "Dummy label";
   const dummyOnConfigure = sinon.spy((evt) => { /* Nothing to do here */ });
 
+  before(() => {
+    // Suppress icon warnings.
+    setIconOptions({
+      disableWarnings: true
+    });
+  });
+
   afterEach(() => {
     placeholder.unmount();
   });
 
-  it('Test placeholder without button', (done) => {
+  it('Test that placeholder renders', (done) => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} />);
     done();
   });
@@ -30,7 +37,7 @@ describe('<Placeholder />', () => {
   it('Test placeholder without button', (done) => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} />);
 
-    expect(placeholder.find('i.ms-Icon--Add')).to.have.length(1);
+    expect(placeholder.find('i[data-icon-name="Add"]')).to.have.length(1);
 
     expect(placeholder.find(`.${styles.placeholderText}`)).to.have.length(1);
     expect(placeholder.find(`.${styles.placeholderText}`).text()).to.be.equal(dummyText);
@@ -45,17 +52,14 @@ describe('<Placeholder />', () => {
   it('Test placeholder with custom classname', (done) => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} contentClassName={dummyClass} />);
 
-    expect(placeholder.find(`div.${dummyClass}`)).to.have.length(1);
-    expect(placeholder.find(`div.${dummyClass} .ms-Icon`)).to.have.length(1);
-
-    expect(placeholder.find(`div.${dummyClass} button`)).to.have.length(0);
+    expect(placeholder.find(`div.${styles.placeholder}.${dummyClass}`)).to.have.length(1);
     done();
   });
 
   it('Test placeholder with null values', (done) => {
     placeholder = mount(<Placeholder description={null} iconName={null} iconText={null} />);
 
-    expect(placeholder.find(`div .ms-Icon`)).to.have.length(0);
+    expect(placeholder.find('i[data-icon-name="Add"]')).to.have.length(0);
 
     expect(placeholder.find(`div .${styles.placeholderText}`)).to.have.length(1);
     expect(placeholder.find(`div .${styles.placeholderText}`).text()).to.be.equal('');
@@ -63,6 +67,7 @@ describe('<Placeholder />', () => {
     expect(placeholder.find(`div .${styles.placeholderDescriptionText}`)).to.have.length(1);
     expect(placeholder.find(`div .${styles.placeholderDescriptionText}`).text()).to.be.equal('');
 
+    expect(placeholder.find('button')).to.have.length(0);
     done();
   });
 
