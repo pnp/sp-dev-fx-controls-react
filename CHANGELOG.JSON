@@ -9,11 +9,13 @@
           ],
         "fixes": [
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
-          "`ListView` documentation: Typo - the first occurrence of maxWidth should be minWidth [#400](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/400)"
+          "`ListView` documentation: Typo - the first occurrence of maxWidth should be minWidth [#400](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/400)",
+          "`RichText`: Text indent buttons were copy-paste of subscript and superscript buttons. Clicking on the text-indent buttons would call subscript or superscript instead. [#454](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/454)"
           ]
       },
       "contributions": [
-        "[JonasBjerke89](https://github.com/JonasBjerke89)"
+        "[JonasBjerke89](https://github.com/JonasBjerke89)",
+        "[Alexander Kleshcheov](https://github.com/SharePickle)"
         ]
     },
     {
