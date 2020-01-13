@@ -92,8 +92,8 @@ export class FileBrowserService {
       }
 
       // Return file created from blob
-      const blob : Blob = await fileDownloadResult.blob();
-      return  new File([blob], fileName);
+      const blob: Blob = await fileDownloadResult.blob();
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
       return null;

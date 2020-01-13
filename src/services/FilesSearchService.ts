@@ -3,6 +3,7 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { GeneralHelper } from "../common/utilities";
 
 /**
  * Maximum file size when searching
@@ -181,7 +182,8 @@ export class FilesSearchService {
 
       // Return file created from blob
       const blob: Blob = await fileDownloadResult.blob();
-      return new File([blob], fileName);
+      // Retrieve file from blob - method supports IE11
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;
@@ -204,7 +206,7 @@ export class FilesSearchService {
 
       // Return file created from blob
       const blob: Blob = await fileDownloadResult.blob();
-      return new File([blob], fileName);
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;
