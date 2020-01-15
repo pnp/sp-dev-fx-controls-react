@@ -11,12 +11,16 @@
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
           "`ListView` documentation: Typo - the first occurrence of maxWidth should be minWidth [#400](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/400)",
           "`RichText`: Text indent buttons were copy-paste of subscript and superscript buttons. Clicking on the text-indent buttons would call subscript or superscript instead. [#454](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/454)",
-          "`RichText`: Fix of removing text and inserting link instead [#455](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/455)"
+          "`RichText`: Fix of removing text and inserting link instead [#455](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/455)",
+          "`FilePicker`: Read file content in IE11 [#444](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/444)",
+          "`ListPicker`: listPicker always return "test" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)"
           ]
       },
       "contributions": [
         "[JonasBjerke89](https://github.com/JonasBjerke89)",
-        "[Alexander Kleshcheov](https://github.com/SharePickle)"
+        "[Alexander Kleshcheov](https://github.com/SharePickle)",
+        "[Piotr Siatka](https://github.com/siata13)",
+        "[mgwojciech](https://github.com/mgwojciech)"
         ]
     },
     {
