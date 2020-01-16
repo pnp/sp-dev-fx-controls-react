@@ -15,7 +15,8 @@
     "changelog": "node scripts/create-changelog.js && node scripts/sync-changelogs.js && gulp versionUpdater",
     "postinstall": "node postinstall/install.js",
     "sonarcloud:config": "node ./scripts/sonarcloud.js",
-    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js"
+    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
+    "localization": "node scripts/execute-translation.js"
   },
   "dependencies": {
     "@pnp/common": "1.0.1",
@@ -48,6 +49,7 @@
     "@types/react-dom": "0.14.18",
     "@types/sinon": "2.3.4",
     "@types/webpack-env": "^1.13.9",
+    "amd-loader": "0.0.8",
     "codecov": "3.0.0",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
@@ -56,6 +58,7 @@
     "react": "15.4.2",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
+    "request-promise": "4.2.5",
     "sonarqube-scanner": "2.1.2"
   },
   "repository": {
