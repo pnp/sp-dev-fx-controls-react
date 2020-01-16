@@ -7,8 +7,6 @@ version: 2
 jobs:
   build:
     <<: *defaults
-    environment:
-      SUBSCRIPTION_KEY: $SUBSCRIPTION_KEY
     steps:
       - checkout
       - attach_workspace:
@@ -72,7 +70,7 @@ jobs:
           name: Run codevoc
           command: './node_modules/.bin/codecov -t $CODECOV_TOKEN'
           environment:
-            - CODECOV_TOKEN: "83a5682f-4c9f-4ed7-9da8-ccc04416f364"
+            - CODECOV_TOKEN: "$CODECOV_TOKEN"
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
