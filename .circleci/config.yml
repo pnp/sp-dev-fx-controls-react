@@ -24,6 +24,9 @@ jobs:
           name: Update version number for telemetry
           command: npm run versionUpdater
       - run:
+          name: Create/update the missing localization keys
+          command: npm run localization
+      - run:
           name: build
           command: npm run build
       - run:
