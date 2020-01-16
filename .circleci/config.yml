@@ -7,6 +7,8 @@ version: 2
 jobs:
   build:
     <<: *defaults
+    environment:
+      SUBSCRIPTION_KEY: $SUBSCRIPTION_KEY
     steps:
       - checkout
       - attach_workspace:
