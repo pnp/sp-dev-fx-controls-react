@@ -16,7 +16,9 @@ const uuidv4 = require('uuid/v4');
 
 // Replace with process.env.subscriptionKey to get an access to Azure Cognitive services
 const subscriptionKey = process.env.SUBSCRIPTION_KEY;
-const endpoint = "https://api.cognitive.microsofttranslator.com";
+console.log(subscriptionKey);
+console.log(JSON.stringify(process.env));
+const endpoint = "https://westeurope.api.cognitive.microsoft.com";
 
 const locHelper = require('./export-localization');
 // Load configuration for supported languages
