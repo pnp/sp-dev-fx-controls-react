@@ -16,17 +16,54 @@ const uuidv4 = require('uuid/v4');
 
 // Replace with process.env.subscriptionKey to get an access to Azure Cognitive services
 const subscriptionKey = process.env.SUBSCRIPTION_KEY;
-const endpoint = "https://westeurope.api.cognitive.microsoft.com/";
+const endpoint = "https://api.cognitive.microsofttranslator.com";
 
 const locHelper = require('./export-localization');
 // Load configuration for supported languages
 const languagesConfiguration = require('../config/supported.localization.json');
 
 /**
+ * Obtain auth token for the global cognitive services  endpoint from region (WestEurope)
+ */
+let authToken = null;
+async function getAuthToken() {
+  try {
+    // Cache AuthToken
+    if (authToken) {
+      return authToken;
+    }
+
+    const options = {
+      method: 'POST',
+      url: 'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
+      headers: {
+        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Content-length': 0
+      }
+    }
+
+    const token = await request(options);
+    if (!token || token.length < 0) {
+      throw new Error("Somethig went wrong when obtaining Auth token!");
+    }
+
+    // Cache Auth token
+    authToken = token;
+  return token;
+  }
+  catch (err) {
+    console.error(`[Exception]: Cannot obtain Auth token. Err=${err}`)
+    return null;
+  }
+}
+
+/**
  * Function executes the translation using cognitive services.
  */
 async function executeTranslation(lang, inputObj) {
   try {
+    const authToken = await getAuthToken();
     let options = {
       method: 'POST',
       baseUrl: endpoint,
@@ -36,7 +73,7 @@ async function executeTranslation(lang, inputObj) {
         'to': [`${lang}`]
       },
       headers: {
-        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Authorization': `Bearer ${authToken}`,
         'Content-type': 'application/json',
         'X-ClientTraceId': uuidv4().toString()
       },
@@ -88,7 +125,7 @@ function injectTranslatedKeys(srcObj, dstObj, translatedValues) {
     if (typeof srcObj[locKey] !== "string") {
       dstObj[locKey] = injectTranslatedKeys(srcObj[locKey], dstObj[locKey], translatedValues);
     } else if (srcObj[locKey] === dstObj[locKey]) {
-      const translatedKey =  translatedValues[currentTranslationIndex++];
+      const translatedKey = translatedValues[currentTranslationIndex++];
       dstObj[locKey] = translatedKey ? translatedKey : dstObj[locKey];
     }
   });
