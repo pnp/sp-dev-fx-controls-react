@@ -5,6 +5,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { FileBrowserService } from "./FileBrowserService";
 import { FilesQueryResult } from "./FileBrowserService.types";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { GeneralHelper } from "../Utilities";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -77,8 +78,8 @@ export class OneDriveService extends FileBrowserService {
       }
 
       // Return file created from blob
-      const blob : Blob = await fileDownloadResult.blob();
-      return  new File([blob], fileName);
+      const blob: Blob = await fileDownloadResult.blob();
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[OneDriveService.fetchFileContent] Err='${err.message}'`);
       return null;
