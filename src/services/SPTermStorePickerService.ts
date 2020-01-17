@@ -312,7 +312,7 @@ export default class SPTermStorePickerService {
           return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
             return serviceResponse.json().then((serviceJSONResponse: any) => {
               // Retrieve the term collection results
-              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r && r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
               if (termStoreResult.length > 0) {
                 // Retrieve all terms
 

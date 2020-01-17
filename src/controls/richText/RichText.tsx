@@ -688,7 +688,7 @@ id="DropDownStyles"
       quill.deleteText(range.index, range.length);
     }
 
-    if (cursorPosition) {
+    if (cursorPosition > -1) {
       const textToInsert: string = this.state.insertUrlText !== undefined ? this.state.insertUrlText : this.state.insertUrl;
       const urlToInsert: string = this.state.insertUrl;
       quill.insertText(cursorPosition, textToInsert);
