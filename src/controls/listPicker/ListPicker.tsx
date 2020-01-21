@@ -122,7 +122,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
 
     if (multiSelect === true) {
       // Check if option was selected
-      let selectedLists = this._selectedList ? cloneDeep(this._selectedList) as string[] : ["test"];
+      let selectedLists = this._selectedList ? cloneDeep(this._selectedList) as string[] : [];
       if (option.selected) {
         selectedLists.push(option.key as string);
       } else {

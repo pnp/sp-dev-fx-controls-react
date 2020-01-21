@@ -232,6 +232,24 @@ export class GeneralHelper {
       }
     }
 
+    /**
+     * To support IE11 that has no support for File constructor
+     * @param blob
+     */
+    public static getFileFromBlob(blob :Blob, fileName: string) : File {
+      let result : any = null;
+      // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
+      try {
+        result = new File([blob], fileName);
+      }
+      catch (ieErr) {
+        result = blob;
+        result.fileName = fileName;
+      }
+
+      return result;
+    }
+
     public static formatBytes(bytes, decimals) {
       if (bytes == 0) {
         return strings.EmptyFileSize;
