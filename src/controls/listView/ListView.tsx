@@ -500,7 +500,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   public render(): React.ReactElement<IListViewProps> {
     let groupProps: IGroupRenderProps = {};
 
-    let { showFilter, filterPlaceHolder } = this.props;
+    let { showFilter, filterPlaceHolder, filterWidth } = this.props;
     let { filterValue, items } = this.state;
 
     // Check if selection mode is single selection,
@@ -517,7 +517,11 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     return (
       <div>
         {
-          showFilter && <TextField placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onChanged={this._updateFilterValue} value={filterValue}/>
+          showFilter && 
+          // Add div to control the width of the filter for the list view dynamically allowing users to enter a number 0-100 % to alter the field width
+          <div style={{width:`${filterWidth}%`}}>
+            <TextField placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onChanged={this._updateFilterValue} value={filterValue}/>
+          </div>
         }
         <DetailsList
           key="ListViewControl"
