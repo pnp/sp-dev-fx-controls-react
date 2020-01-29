@@ -20,6 +20,9 @@ module.exports = function (config) {
   };
   config.plugins.push(htmlReporter);
 
+  config.set({
+    framework: ['jasmine']
+  })
   // Add the remap-coverage - code coverage for the original files
   config.reporters.push('remap-coverage');
   config.coverageReporter = {
