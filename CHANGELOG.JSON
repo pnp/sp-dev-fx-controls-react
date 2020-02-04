@@ -7,6 +7,7 @@
           "`Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)"
         ],
         "enhancements": [
+          "`PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)",
           "`TaxonomyPicker`: Possibility to hide deprecated and \"Available for Tagging\"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)",
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)"
           ],
@@ -16,7 +17,8 @@
           "`RichText`: Text indent buttons were copy-paste of subscript and superscript buttons. Clicking on the text-indent buttons would call subscript or superscript instead. [#454](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/454)",
           "`RichText`: Fix of removing text and inserting link instead [#455](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/455)",
           "`FilePicker`: Read file content in IE11 [#444](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/444)",
-          "`ListPicker`: listPicker always return \"test\" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)"
+          "`ListPicker`: listPicker always return \"test\" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)",
+          "`FilePicker`: Button text overflow fix + global classnames and properties"
         ]
       },
       "contributions": [

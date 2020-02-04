@@ -8,7 +8,9 @@
 
 ### Enhancements
 
+- `PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)
 - `TaxonomyPicker`: Possibility to hide deprecated and "Available for Tagging"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)
+- `FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)
 
 ### Fixes
 
@@ -18,10 +20,11 @@
 - `RichText`: Fix of removing text and inserting link instead [#455](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/455)
 - `FilePicker`: Read file content in IE11 [#444](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/444)
 - `ListPicker`: listPicker always return "test" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)
+- `FilePicker`: Button text overflow fix + global classnames and properties
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [JonasBjerke89](https://github.com/JonasBjerke89), [Alexander Kleshcheov](https://github.com/SharePickle), [Piotr Siatka](https://github.com/siata13), [mgwojciech](https://github.com/mgwojciech).
+Special thanks to our contributors (in alphabetical order): [JonasBjerke89](https://github.com/JonasBjerke89), [Alexander Kleshcheov](https://github.com/SharePickle), [Piotr Siatka](https://github.com/siata13), [mgwojciech](https://github.com/mgwojciech), [Richard Gigan](https://github.com/PooLP).
 
 ## 1.16.0
 
