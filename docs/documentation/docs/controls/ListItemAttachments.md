@@ -14,7 +14,7 @@ Here is an example of the control:
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the control into your component:
 
 ```TypeScript
@@ -36,7 +36,7 @@ The `ListItemAttachments` control can be configured with the following propertie
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext \| ApplicationCustomizerContext | yes | SPFx web part or extention context |
+| context | WebPartContext \| ExtensionContext | yes | SPFx web part or extention context |
 | itemId | number | yes | List Item Id  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |

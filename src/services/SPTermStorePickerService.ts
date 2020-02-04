@@ -12,8 +12,8 @@ import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker
 import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
-import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { findIndex } from '@microsoft/sp-lodash-subset';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 
 /**
@@ -27,7 +27,7 @@ export default class SPTermStorePickerService {
   /**
    * Service constructor
    */
-  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext | ApplicationCustomizerContext) {
+  constructor(private props: ITaxonomyPickerProps, private context: IWebPartContext | ExtensionContext) {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
@@ -146,7 +146,7 @@ export default class SPTermStorePickerService {
    * Retrieve all terms for the given term set
    * @param termset
    */
-  public async getAllTerms(termset: string): Promise<ITermSet> {
+  public async getAllTerms(termset: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.getAllMockTerms();
@@ -190,6 +190,17 @@ export default class SPTermStorePickerService {
             if (termStoreResultTerms.length > 0) {
               // Retrieve all terms
               let terms = termStoreResultTerms[0]._Child_Items_;
+
+              if(hideDeprecatedTags === true)
+              {
+                terms = terms.filter(d => d["IsDeprecated"] === false);
+              }
+
+              if(hideTagsNotAvailableForTagging === true)
+              {
+                terms = terms.filter(d => d["IsAvailableForTagging"] === true);
+              }
+
               // Clean the term ID and specify the path depth
               terms = terms.map(term => {
                 if (term.IsRoot) {

@@ -4,7 +4,7 @@ This control is intended to be used when you want to show or hide components bas
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
 ```TypeScript
@@ -62,7 +62,7 @@ The `SecurityTrimmedControl` can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext or ApplicationCustomizerContext or FieldCustomizerContext or ListViewCommandSetContext | yes | Context of the web part, application customizer, field customizer, or list view command set. |
+| context | WebPartContext \| ExtensionContext | yes | Context of the web part, application customizer, field customizer, or list view command set. |
 | permissions | SPPermission[] | yes | The permissions to check for the user. |
 | level | PermissionLevel | yes | Specify where to check the user permissions: current site or list / remote site or list. |
 | remoteSiteUrl | string | no | The URL of the remote site. Required when you want to check permissions on remote site or list. |

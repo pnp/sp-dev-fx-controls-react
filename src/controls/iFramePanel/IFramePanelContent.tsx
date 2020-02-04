@@ -27,14 +27,14 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
       if (this._iframe) {
         const mainDiv = this.findParent(this._iframe, "ms-Panel-main");
         const commandsDiv = mainDiv.querySelector(".ms-Panel-commands") as HTMLDivElement;
-        const headerDiv = mainDiv.querySelector("ms-Panel-header") as HTMLDivElement;
-        const footerDiv = mainDiv.querySelector("ms-Panel-footer") as HTMLDivElement;
+        const headerDiv = mainDiv.querySelector(".ms-Panel-header") as HTMLDivElement;
+        const footerDiv = mainDiv.querySelector(".ms-Panel-footer") as HTMLDivElement;
 
         let height = this.getTrueHeight(mainDiv);
         height = height - this.getTrueHeight(commandsDiv);
         height = height - this.getTrueHeight(headerDiv);
         height = height - this.getTrueHeight(footerDiv);
-        height = height - 20;  // padding on content div
+        height = height - 25;  // padding on content div
 
         this._iframe.height = height.toString() + 'px';
       }
@@ -59,9 +59,9 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
    */
   private getTrueHeight(elm: HTMLElement): number {
     if (elm) {
-      const style = elm.style || window.getComputedStyle(elm);
+      const style = window.getComputedStyle && window.getComputedStyle(elm) || elm.style;
       let marginTop = parseInt((style.marginTop as string).replace("px", ""));
-      let marginBottom = parseInt((style.marginTop as string).replace("px", ""));
+      let marginBottom = parseInt((style.marginBottom as string).replace("px", ""));
       if (isNaN(marginTop)) {
         marginTop = 0;
       }
@@ -80,6 +80,9 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
   private iframeOnLoad = () => {
     try { // for cross origin requests we can have issues with accessing frameElement
       this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
+      this._iframe.contentWindow.frameElement.commitPopUp = this.props.close;
+      // SP.UI.Dialog has misspelling of commitPopUp
+      this._iframe.contentWindow.frameElement.commitPopup = this.props.close;
     }
     catch (err) {
       if (err.name !== 'SecurityError') {

@@ -1,12 +1,9 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
 .placeholder {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
 
     .placeholderContainer {
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -ms-grid-row-align: center;
         align-items: center;
         color: "[theme:neutralSecondary, default: #666666]";
         background-color: "[theme:neutralLighter, default: #f4f4f4]";
@@ -26,12 +23,17 @@
                 display: inline-block;
                 vertical-align: middle;
                 white-space: normal;
+
+                @include ms-fontSize-su;
             }
 
             .placeholderText {
                 display: inline;
                 vertical-align: middle;
                 white-space: normal;
+
+                @include ms-fontWeight-light;
+                @include ms-fontSize-xxl;
 
                 &.hide {
                   display: none;
@@ -88,17 +90,5 @@
                 padding-left: 20px;
             }
         }
-    }
-}
-
-.placeholderOverlay {
-    position: relative;
-    height: 100%;
-    z-index: 1;
-
-    .placeholderSpinnerContainer {
-        position: relative;
-        width: 100%;
-        margin: 164px 0
     }
 }

@@ -1,9 +1,9 @@
-import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
 import { IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
+import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 /**
  * PropertyFieldTermPickerHost properties interface
@@ -28,7 +28,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ApplicationCustomizerContext;
+  context: IWebPartContext | ExtensionContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */
@@ -63,6 +63,16 @@ export interface ITaxonomyPickerProps  {
    * Specifies the available term actions and their basic properties.
    */
   termActions?: ITermActions;
+
+  /**
+   * Specifies if the tags marked with 'Available for tagging' = false should be hidden
+   */
+  hideTagsNotAvailableForTagging?: boolean;
+
+  /**
+   * Specifies if deprecated tags  should be hidden
+   */
+  hideDeprecatedTags?: boolean;
 
   /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.

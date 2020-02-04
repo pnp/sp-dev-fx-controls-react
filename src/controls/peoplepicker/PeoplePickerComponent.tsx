@@ -225,7 +225,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         }
 
         {
-          (this.props.isRequired && this.state.showRequiredError) || (this.state.errorMessage) && (
+          ((this.props.isRequired && this.state.showRequiredError) || (this.state.errorMessage)) && (
             <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
               <Icon iconName='Error' className={styles.errorIcon} />
               {

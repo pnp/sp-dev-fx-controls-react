@@ -693,11 +693,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Field picker list data tester:
-                <ListItemPicker listId={this.state.selectedList}
+
+                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
+                  keyColumnInternalName="Id"
+                  filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
                   onSelectedItem={this.listItemPickerDataSelected} />
+
               </div>
 
               <div className="ms-font-m">Services tester:
@@ -754,7 +758,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
-                  termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
+                  termsetNameOrID="313362ca-6813-4433-bcce-7bf74a18b9cb"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
@@ -764,7 +768,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false} />
+                  isTermSetSelectable={false}
+                  hideDeprecatedTags={true}
+                  hideTagsNotAvailableForTagging={true} />
 
                 <DefaultButton text="Add" onClick={() => {
                   this.setState({

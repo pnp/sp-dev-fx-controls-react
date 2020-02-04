@@ -10,7 +10,7 @@ This control renders a list view for the given set of items.
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
 ```TypeScript
@@ -87,7 +87,7 @@ The `IViewField` has the following implementation:
 | displayName | string | no | Name that will be used as the column title. If not defined, the name property will be used. |
 | linkPropertyName | string | no | Specify the field name that needs to be used to render a link for the current field. |
 | sorting | boolean | no | Specify if you want to enable sorting for the current field. |
-| maxWidth | number | no | Specify the minimum width of the column. |
+| minWidth | number | no | Specify the minimum width of the column. |
 | maxWidth | number | no | Specify the maximum width of the column. |
 | isResizable | boolean | no | Determines if the column can be resized. |
 | render | function | no | Override how the field has to get rendered. |
