@@ -33,6 +33,16 @@ export interface IFilePickerProps {
   context: ExtensionContext |  WebPartContext;
 
   /**
+   * ClassName to be applied to the opener button element.
+   */
+  buttonClassName?: string;
+
+  /**
+   * ClassName to be applied to the Panel root element.
+   */
+  panelClassName?: string;
+
+  /**
    * File extensions to be displayed.
    */
   accepts?: string[];
