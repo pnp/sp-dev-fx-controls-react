@@ -11,7 +11,7 @@
           "`TaxonomyPicker`: Possibility to hide deprecated and \"Available for Tagging\"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)",
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)",
           "Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)"
-          ],
+        ],
         "fixes": [
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
           "`ListView` documentation: Typo - the first occurrence of maxWidth should be minWidth [#400](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/400)",
@@ -20,16 +20,18 @@
           "`FilePicker`: Read file content in IE11 [#444](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/444)",
           "`ListPicker`: listPicker always return \"test\" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)",
           "`FilePicker`: Button text overflow fix + global classnames and properties",
-          "`FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)"
+          "`FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)",
+          "`Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)"
         ]
       },
       "contributions": [
-        "[JonasBjerke89](https://github.com/JonasBjerke89)",
         "[Alexander Kleshcheov](https://github.com/SharePickle)",
-        "[Piotr Siatka](https://github.com/siata13)",
+        "[Jason S](https://github.com/jason-appliedis)",
+        "[JonasBjerke89](https://github.com/JonasBjerke89)",
+        "[Matej](https://github.com/Matej4386)",
         "[mgwojciech](https://github.com/mgwojciech)",
-        "[Richard Gigan](https://github.com/PooLP)",
-        "[Matej](https://github.com/Matej4386)"
+        "[Piotr Siatka](https://github.com/siata13)",
+        "[Richard Gigan](https://github.com/PooLP)"
       ]
     },
     {
@@ -307,7 +309,10 @@
           "`PeoplePicker`: Suggested People not loading after first selection [#134](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/134)"
         ]
       },
-      "contributions": ["[Gautam Sheth](https://github.com/gautamdsheth)", "[Alex Terentiev](https://github.com/AJIXuMuK)"]
+      "contributions": [
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Alex Terentiev](https://github.com/AJIXuMuK)"
+      ]
     },
     {
       "version": "1.8.0",
@@ -330,7 +335,12 @@
           "`PeoplePicker`: fix freezes when typing in search values [#117](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/117)"
         ]
       },
-      "contributions": ["[Thomas Lamb](https://github.com/ThomasLamb)", "[Joel Rodrigues](https://github.com/joelfmrodrigues)", "[Mikael Svenson](https://github.com/wobba)", "[Alex Terentiev](https://github.com/AJIXuMuK)"]
+      "contributions": [
+        "[Thomas Lamb](https://github.com/ThomasLamb)",
+        "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
+        "[Mikael Svenson](https://github.com/wobba)",
+        "[Alex Terentiev](https://github.com/AJIXuMuK)"
+      ]
     },
     {
       "version": "1.7.0",
@@ -346,7 +356,12 @@
           "`FieldNameRenderer` onClick does not suppress default link behavior [#103](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/103)"
         ]
       },
-      "contributions": ["Octavie van Haaften", "Asish Padhy", "Mikael Svenson", "Alex Terentiev"]
+      "contributions": [
+        "Octavie van Haaften",
+        "Asish Padhy",
+        "Mikael Svenson",
+        "Alex Terentiev"
+      ]
     },
     {
       "version": "1.6.0",
@@ -360,7 +375,9 @@
           "PeoplePicker property selectedItems not implemented? [#90](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/90)"
         ]
       },
-      "contributions": ["Octavie van Haaften"]
+      "contributions": [
+        "Octavie van Haaften"
+      ]
     },
     {
       "version": "1.5.0",
@@ -377,7 +394,10 @@
           "Fixed issue in single selection mode when all group items were selected in the `ListView` when user clicked on the group header [#86](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/86)"
         ]
       },
-      "contributions": ["Asish Padhy", "Alex Terentiev"]
+      "contributions": [
+        "Asish Padhy",
+        "Alex Terentiev"
+      ]
     },
     {
       "version": "1.4.0",
@@ -450,7 +470,9 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": ["Fixes an issue sorting in the `ListView` control while items were selected. Indexes were not updated."]
+        "fixes": [
+          "Fixes an issue sorting in the `ListView` control while items were selected. Indexes were not updated."
+        ]
       },
       "contributions": []
     },
@@ -459,7 +481,9 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": ["`FieldTaxonomyRenderer` got fixed to support single and multiple values"]
+        "fixes": [
+          "`FieldTaxonomyRenderer` got fixed to support single and multiple values"
+        ]
       },
       "contributions": []
     },
@@ -471,7 +495,9 @@
           "`IFrameDialog` was added to the project"
         ],
         "enhancements": [],
-        "fixes": ["Fixed theming in the `WebPartTitle` control"]
+        "fixes": [
+          "Fixed theming in the `WebPartTitle` control"
+        ]
       },
       "contributions": []
     },
@@ -480,7 +506,9 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": ["`FileTypeIcon` icon fixed where it did not render an icon. This control should now works in SPFx extensions."]
+        "fixes": [
+          "`FileTypeIcon` icon fixed where it did not render an icon. This control should now works in SPFx extensions."
+        ]
       },
       "contributions": []
     },
@@ -488,8 +516,12 @@
       "version": "1.1.2",
       "changes": {
         "new": [],
-        "enhancements": ["Improved telemetry with some object checks"],
-        "fixes": ["Fix for `WebPartTitle` control to inherit color"]
+        "enhancements": [
+          "Improved telemetry with some object checks"
+        ],
+        "fixes": [
+          "Fix for `WebPartTitle` control to inherit color"
+        ]
       },
       "contributions": []
     },
@@ -497,7 +529,9 @@
       "version": "1.1.1",
       "changes": {
         "new": [],
-        "enhancements": ["Removed operation name from telemetry"],
+        "enhancements": [
+          "Removed operation name from telemetry"
+        ],
         "fixes": []
       },
       "contributions": []
@@ -506,7 +540,9 @@
       "version": "1.1.0",
       "changes": {
         "new": [],
-        "enhancements": ["Telemetry added"],
+        "enhancements": [
+          "Telemetry added"
+        ],
         "fixes": []
       },
       "contributions": []
@@ -514,8 +550,12 @@
     {
       "version": "1.0.0",
       "changes": {
-        "new": ["`WebPartTitle` control got added"],
-        "enhancements": ["ListView control got extended with the ability to specify a set of preselected items."],
+        "new": [
+          "`WebPartTitle` control got added"
+        ],
+        "enhancements": [
+          "ListView control got extended with the ability to specify a set of preselected items."
+        ],
         "fixes": []
       },
       "contributions": []
@@ -525,14 +565,18 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": ["Fix for the `ListView` control when selection is used in combination with `setState`."]
+        "fixes": [
+          "Fix for the `ListView` control when selection is used in combination with `setState`."
+        ]
       },
       "contributions": []
     },
     {
       "version": "Beta 1.0.0-beta.7",
       "changes": {
-        "new": ["Grouping functionality added to the `ListView` control"],
+        "new": [
+          "Grouping functionality added to the `ListView` control"
+        ],
         "enhancements": [],
         "fixes": []
       },
@@ -541,7 +585,9 @@
     {
       "version": "Beta 1.0.0-beta.6",
       "changes": {
-        "new": ["Initial release"],
+        "new": [
+          "Initial release"
+        ],
         "enhancements": [],
         "fixes": []
       },
