@@ -48,6 +48,10 @@ export interface IListViewProps {
    */
   filterPlaceHolder?: string;
   /**
+   * Specify if the filter width in % 0 - 100.
+   */
+  filterWidth?: number;
+  /**
    * Specify if the filter text box should be rendered.
    */
   showFilter?: boolean;
