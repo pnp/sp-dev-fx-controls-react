@@ -75,6 +75,11 @@ export interface ITaxonomyPickerProps  {
   hideDeprecatedTags?: boolean;
 
   /**
+   * Placeholder to be displayed in an empty term picker
+   */
+  placeholder?: string;
+
+  /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
    *
    *   When it returns string:

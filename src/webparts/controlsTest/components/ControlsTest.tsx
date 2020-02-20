@@ -753,6 +753,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  placeholder="Select service"
                 />
 
                 <TaxonomyPicker

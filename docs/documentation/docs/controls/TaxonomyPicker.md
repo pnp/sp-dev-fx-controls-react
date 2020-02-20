@@ -117,6 +117,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 | hideTagsNotAvailableForTagging | boolean | no | Specifies if the tags marked with 'Available for tagging' = false should be hidden |
 | hideDeprecatedTags | boolean | no | Specifies if deprecated tags  should be hidden |
+| placeholder | string | no | Short text hint to display in empty picker |
 
 Interface `IPickerTerm`
 
