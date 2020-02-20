@@ -21,7 +21,8 @@
           "`ListPicker`: listPicker always return \"test\" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)",
           "`FilePicker`: Button text overflow fix + global classnames and properties",
           "`FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)",
-          "`Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)"
+          "`Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)",
+          "`ListView` documentation update: `minWidth` instead of `maxWidth` [#480](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/480)"
         ]
       },
       "contributions": [
@@ -31,6 +32,7 @@
         "[Matej](https://github.com/Matej4386)",
         "[mgwojciech](https://github.com/mgwojciech)",
         "[Piotr Siatka](https://github.com/siata13)",
+        "[Reginald Johnson](https://github.com/LastGunslinger)",
         "[Richard Gigan](https://github.com/PooLP)"
       ]
     },
