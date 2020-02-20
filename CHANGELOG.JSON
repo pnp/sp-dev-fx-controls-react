@@ -10,7 +10,8 @@
           "`PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)",
           "`TaxonomyPicker`: Possibility to hide deprecated and \"Available for Tagging\"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)",
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)",
-          "Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)"
+          "Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)",
+          "`TaxonomyPicker`: Placeholder for Taxonomy Picker [#464](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/464)"
         ],
         "fixes": [
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
@@ -32,6 +33,7 @@
         "[Matej](https://github.com/Matej4386)",
         "[mgwojciech](https://github.com/mgwojciech)",
         "[Piotr Siatka](https://github.com/siata13)",
+        "[rabiawilliams](https://github.com/rabwill)",
         "[Reginald Johnson](https://github.com/LastGunslinger)",
         "[Richard Gigan](https://github.com/PooLP)"
       ]
