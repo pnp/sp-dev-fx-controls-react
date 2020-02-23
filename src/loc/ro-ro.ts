@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Încărcați imaginea",
   "UploadLinkLabel": "Încărcaţi",
   "WebSearchLinkLabel": "Căutare pe web",
-  "Yes": "da"
+  "Yes": "da",
+  "SelectedLabel": "Selectat",
+  "SelectIcon": "Selectare pictogramă"
 };
 });

@@ -17,6 +17,7 @@ nav:
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - GridLayout: 'controls/GridLayout.md'
+    - IconPicker: 'controls/IconPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'
     - ListItemAttachments: 'controls/ListItemAttachments.md'

@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Įkelti vaizdą",
   "UploadLinkLabel": "Įkelti",
   "WebSearchLinkLabel": "Paieška žiniatinklyje",
-  "Yes": "taip"
+  "Yes": "taip",
+  "SelectedLabel": "Pasirinkta",
+  "SelectIcon": "Rinktis piktogramą"
 };
 });

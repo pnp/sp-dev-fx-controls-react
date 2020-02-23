@@ -40,6 +40,7 @@ The following controls are currently available:
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
+- [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)

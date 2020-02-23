@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Tải lên hình ảnh",
   "UploadLinkLabel": "Tải lên",
   "WebSearchLinkLabel": "Tìm kiếm trên web",
-  "Yes": "Có"
+  "Yes": "Có",
+  "SelectedLabel": "Đã chọn",
+  "SelectIcon": "Chọn biểu tượng"
 };
 });

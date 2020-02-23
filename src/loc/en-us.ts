@@ -322,6 +322,8 @@ define([], () => {
     UploadImageHeader: "Upload image",
     UploadLinkLabel: "Upload",
     WebSearchLinkLabel: "Web search",
-    Yes: "Yes"
+    Yes: "Yes",
+    SelectedLabel: "Selected",
+    SelectIcon: "Select icon"
   };
 });
