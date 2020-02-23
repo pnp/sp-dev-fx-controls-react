@@ -516,7 +516,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200} />
+          resolveDelay={200}
+          placeholder={'Select a SharePoint principal (User or Group)'} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -684,7 +685,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
                   label="Select your list(s)"
-                  placeHolder="Select your list(s)"
+                  placeholder="Select your list(s)"
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
@@ -700,6 +701,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
+                  placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
