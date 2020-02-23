@@ -11,7 +11,8 @@
           "`TaxonomyPicker`: Possibility to hide deprecated and \"Available for Tagging\"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)",
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)",
           "Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)",
-          "`TaxonomyPicker`: Placeholder for Taxonomy Picker [#464](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/464)"
+          "`TaxonomyPicker`: Placeholder for Taxonomy Picker [#464](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/464)",
+          "`ListItemPicker`, `PeoplePicker`: Placeholder for `ListItemPicker` and `PeoplePicker` [#486](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/486)"
         ],
         "fixes": [
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
