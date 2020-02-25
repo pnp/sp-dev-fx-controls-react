@@ -48,7 +48,7 @@
     "@types/react-dom": "0.14.18",
     "@types/sinon": "2.3.4",
     "@types/webpack-env": "^1.13.9",
-    "codecov": "3.0.0",
+    "codecov": "3.6.5",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
     "karma-html-reporter": "0.2.7",
