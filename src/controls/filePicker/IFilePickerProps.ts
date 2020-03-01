@@ -101,4 +101,11 @@ export interface IFilePickerProps {
    * Specifies if LinkUploadTab should be hidden.
    */
   hideLinkUploadTab?: boolean;
+
+  /**
+   * Specifies if last active tab will be stored after the Upload panel has been closed.
+   * Note: the value of selected tab is stored in the queryString hash.
+   * @default true
+   */
+  storeLastActiveTab?: boolean;
 }

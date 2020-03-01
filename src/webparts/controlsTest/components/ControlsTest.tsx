@@ -537,7 +537,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
           disabled={true}
-          showtooltip={true} />
+          showtooltip={true}
+          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 

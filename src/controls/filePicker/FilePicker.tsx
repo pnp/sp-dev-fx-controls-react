@@ -221,12 +221,13 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    * Prepares navigation panel options
    */
   private _getNavPanelOptions = () => {
+    const addUrl = this.props.storeLastActiveTab !== false;
     let links = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
         name: strings.RecentLinkLabel,
-        url: '#recent',
+        url: addUrl ? '#recent' : undefined,
         icon: 'Recent',
         key: 'keyRecent',
       });
@@ -234,7 +235,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (this.props.bingAPIKey && !this.props.hideWebSearchTab) {
       links.push({
         name: strings.WebSearchLinkLabel,
-        url: '#search',
+        url: addUrl ? '#search' : undefined,
         key: 'keyWeb',
         icon: 'Search',
       });
@@ -242,7 +243,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOrganisationalAssetTab && this.state.organisationAssetsEnabled) {
       links.push({
         name: 'Your organisation',
-        url: '#orgAssets',
+        url: addUrl ? '#orgAssets' : undefined,
         icon: 'FabricFolderConfirm',
         key: 'keyOrgAssets',
       });
@@ -250,7 +251,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOneDriveTab) {
       links.push({
         name: "OneDrive",
-        url: '#onedrive',
+        url: addUrl ? '#onedrive' : undefined,
         key: 'keyOneDrive',
         icon: 'OneDrive',
       });
@@ -258,7 +259,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideSiteFilesTab) {
       links.push({
         name: strings.SiteLinkLabel,
-        url: '#globe',
+        url: addUrl ? '#globe' : undefined,
         key: 'keySite',
         icon: 'Globe',
       });
@@ -266,7 +267,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLocalUploadTab) {
       links.push({
         name: strings.UploadLinkLabel,
-        url: '#upload',
+        url: addUrl ? '#upload' : undefined,
         key: 'keyUpload',
         icon: 'System'
       });
@@ -274,7 +275,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
-        url: '#link',
+        url: addUrl ? '#link' : undefined,
         key: 'keyLink',
         icon: 'Link'
       });

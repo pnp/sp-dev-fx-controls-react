@@ -12,7 +12,8 @@
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)",
           "Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)",
           "`TaxonomyPicker`: Placeholder for Taxonomy Picker [#464](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/464)",
-          "`ListItemPicker`, `PeoplePicker`: Placeholder for `ListItemPicker` and `PeoplePicker` [#486](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/486)"
+          "`ListItemPicker`, `PeoplePicker`: Placeholder for `ListItemPicker` and `PeoplePicker` [#486](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/486)",
+          "`FilePicker`: Do not store active tab in url's hash [#488](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/488)"
         ],
         "fixes": [
           "`RichText`: problem with edit mode [#445](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/445)",
