@@ -516,7 +516,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200} />
+          resolveDelay={200}
+          placeholder={'Select a SharePoint principal (User or Group)'} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -536,7 +537,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
           disabled={true}
-          showtooltip={true} />
+          showtooltip={true}
+          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 
@@ -684,7 +686,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
                   label="Select your list(s)"
-                  placeHolder="Select your list(s)"
+                  placeholder="Select your list(s)"
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
@@ -700,6 +702,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
+                  placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
@@ -753,12 +756,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  placeholder="Select service"
                 />
 
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
-                  termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
+                  termsetNameOrID="313362ca-6813-4433-bcce-7bf74a18b9cb"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
@@ -768,7 +772,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false} />
+                  isTermSetSelectable={false}
+                  hideDeprecatedTags={true}
+                  hideTagsNotAvailableForTagging={true} />
 
                 <DefaultButton text="Add" onClick={() => {
                   this.setState({

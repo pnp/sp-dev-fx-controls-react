@@ -59,6 +59,7 @@ The `ListPicker` control can be configured with the following properties:
 | selectedList | string OR string[] | no | Keys of the selected item(s). If you provide this, you must maintain selection state by observing onSelectionChanged events and passing a new value in when changed. |
 | multiSelect | boolean | no | Optional mode indicates if multi-choice selections is allowed. Default to `false`. |
 | label | string | no | Label to use for the control. |
+| placeHolder | string | no | Placeholder label to show in the dropdown. **Deprecated. Use `placeholder` instead.** |
 | placeholder | string | no | Placeholder label to show in the dropdown. |
 | onSelectionChanged | (newValue: string OR string[]): void | no | Callback function when the selected option changes. |
 

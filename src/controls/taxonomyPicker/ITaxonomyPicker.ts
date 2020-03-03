@@ -65,6 +65,21 @@ export interface ITaxonomyPickerProps  {
   termActions?: ITermActions;
 
   /**
+   * Specifies if the tags marked with 'Available for tagging' = false should be hidden
+   */
+  hideTagsNotAvailableForTagging?: boolean;
+
+  /**
+   * Specifies if deprecated tags  should be hidden
+   */
+  hideDeprecatedTags?: boolean;
+
+  /**
+   * Placeholder to be displayed in an empty term picker
+   */
+  placeholder?: string;
+
+  /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
    *
    *   When it returns string:

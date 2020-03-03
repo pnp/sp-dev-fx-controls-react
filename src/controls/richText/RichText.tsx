@@ -186,7 +186,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   public shouldComponentUpdate(nextProps: IRichTextProps, nextState: IRichTextState): boolean {
     // Checks if the value coming in is the same
-    if (isEqual(nextState, this.state)) {
+    if (isEqual(nextState, this.state) && isEqual(nextProps, this.props)) {
       return false;
     }
 
@@ -403,7 +403,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     // If we're not in edit mode, display read-only version of the html
     if (!isEditMode) {
       return (
-        <div className={`ql-editor ${styles.richtext} ${this.props.className}`}
+        <div className={`ql-editor ${styles.richtext} ${this.props.className || ''}`}
              dangerouslySetInnerHTML={{ __html: text }}>
         </div>
       );
@@ -578,7 +578,7 @@ id="DropDownStyles"
                               editor={this.getEditor()}
                               isOpen={this.state.morePaneVisible}
                               onClose={this.handleClosePanel}
-                              onLink={this.showInsertLinkDialog} 
+                              onLink={this.showInsertLinkDialog}
                               customColors={this.props.customColors}/>
 
         {
@@ -689,7 +689,7 @@ id="DropDownStyles"
       quill.deleteText(range.index, range.length);
     }
 
-    if (cursorPosition) {
+    if (cursorPosition > -1) {
       const textToInsert: string = this.state.insertUrlText !== undefined ? this.state.insertUrlText : this.state.insertUrl;
       const urlToInsert: string = this.state.insertUrl;
       quill.insertText(cursorPosition, textToInsert);

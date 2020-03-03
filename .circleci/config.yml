@@ -24,6 +24,9 @@ jobs:
           name: Update version number for telemetry
           command: npm run versionUpdater
       - run:
+          name: Create/update the missing localization keys
+          command: npm run localization
+      - run:
           name: build
           command: npm run build
       - run:
@@ -67,7 +70,7 @@ jobs:
           name: Run codevoc
           command: './node_modules/.bin/codecov -t $CODECOV_TOKEN'
           environment:
-            - CODECOV_TOKEN: "83a5682f-4c9f-4ed7-9da8-ccc04416f364"
+            - CODECOV_TOKEN: "$CODECOV_TOKEN"
       - store_artifacts:
           path: temp/coverage
           prefix: coverage
