@@ -26,7 +26,8 @@
           "`FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)",
           "`Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)",
           "`ListView` documentation update: `minWidth` instead of `maxWidth` [#480](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/480)",
-          "`DateTimePicker`: Minutes and Seconds validation [#495](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/495)"
+          "`DateTimePicker`: Minutes and Seconds validation [#495](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/495)",
+          "`FilePicker`: bingAPIKey not working [#489](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/489)"
         ]
       },
       "contributions": [
