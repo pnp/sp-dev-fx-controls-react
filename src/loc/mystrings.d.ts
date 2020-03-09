@@ -288,6 +288,12 @@ declare interface IControlStrings {
   UploadLinkLabel: string;
   WebSearchLinkLabel: string;
   Yes: string;
+
+  // folder explorer
+  NewFolderNamePlaceholder: string;
+  FolderFilterBoxPlaceholder: string;
+  FolderExplorerLoading: string;
+  FolderExplorerNoItems: string;
 }
 
 declare interface IDateTimeStrings {

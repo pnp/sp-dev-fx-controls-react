@@ -52,7 +52,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-
+import { FolderExplorer, IFolder } from '../../../FolderExplorer';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -900,9 +900,29 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={sampleGridData}
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
+
+        <div>
+            <FolderExplorer
+              context={this.props.context}
+              rootFolder={{
+                Name: 'Documents',
+                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              }}
+              defaultFolder={{
+                Name: 'Documents',
+                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              }}
+              onSelect={this._onFolderSelect}
+              canCreateFolders={true}
+            />
+          </div>
       </div>
     );
   }
 
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
+  }
 
 }
