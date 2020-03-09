@@ -25,13 +25,16 @@
           "`FilePicker`: Button text overflow fix + global classnames and properties",
           "`FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)",
           "`Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)",
-          "`ListView` documentation update: `minWidth` instead of `maxWidth` [#480](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/480)"
+          "`ListView` documentation update: `minWidth` instead of `maxWidth` [#480](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/480)",
+          "`DateTimePicker`: Minutes and Seconds validation [#495](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/495)",
+          "`FilePicker`: bingAPIKey not working [#489](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/489)"
         ]
       },
       "contributions": [
         "[Alexander Kleshcheov](https://github.com/SharePickle)",
         "[Jason S](https://github.com/jason-appliedis)",
         "[JonasBjerke89](https://github.com/JonasBjerke89)",
+        "[Léo Maradan](https://github.com/Leomaradan)",
         "[Matej](https://github.com/Matej4386)",
         "[mgwojciech](https://github.com/mgwojciech)",
         "[Piotr Siatka](https://github.com/siata13)",

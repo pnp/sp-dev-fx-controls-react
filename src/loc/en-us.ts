@@ -211,6 +211,8 @@ define([], () => {
     DateTimePickerTime: "Time",
     DateTimePickerTimeSeparator: ":",
     DateTimePickerHourValueInvalid: "Incorrect hour value",
+    DateTimePickerMinuteValueInvalid: "Incorrect minute value",
+    DateTimePickerSecondValueInvalid: "Incorrect second value",
 
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
