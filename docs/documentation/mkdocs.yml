@@ -16,6 +16,7 @@ nav:
     - DateTimePicker: 'controls/DateTimePicker.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - FolderExplorer: 'controls/FolderExplorer.md'
     - GridLayout: 'controls/GridLayout.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'

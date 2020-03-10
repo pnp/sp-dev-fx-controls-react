@@ -39,6 +39,7 @@ The following controls are currently available:
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
+- [FolderExplorer](./controls/FolderExplorer) (Control that allows to browse the folders and sub-folders from a root folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)

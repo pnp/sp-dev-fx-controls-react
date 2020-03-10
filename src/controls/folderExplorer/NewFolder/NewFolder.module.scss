@@ -1,0 +1,47 @@
+// @import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss";
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+.libraryItem {
+  padding: 5px 0 5px 10px;
+  cursor: pointer;
+  height: 30px;
+  line-height: 30px;
+  border-width: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.libraryItem:hover {
+  background-color: #f4f4f4;
+}
+
+.folderIcon {
+  margin-right: 10px;
+  color: $ms-color-themeSecondary;
+}
+
+.defaultText {
+  width: 100%;
+}
+
+.button {
+  background-color: $ms-color-themePrimary;
+  color: white;
+
+  &:hover {
+    background-color: $ms-color-themeSecondary;
+    color: white;
+  }
+
+  &:disabled {
+    background-color: #f4f4f4;
+  }
+
+  & i {
+    font-weight: bolder;
+  }
+}
+
+.spinner {
+  padding-right: 10px;
+}
