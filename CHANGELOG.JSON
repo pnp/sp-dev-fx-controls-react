@@ -4,7 +4,8 @@
       "version": "1.17.0",
       "changes": {
         "new": [
-          "`Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)"
+          "`Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)",
+          "`FolderExplorer` component [#499](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/499)"
         ],
         "enhancements": [
           "`PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)",
@@ -33,6 +34,7 @@
       "contributions": [
         "[Alexander Kleshcheov](https://github.com/SharePickle)",
         "[Jason S](https://github.com/jason-appliedis)",
+        "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
         "[JonasBjerke89](https://github.com/JonasBjerke89)",
         "[Léo Maradan](https://github.com/Leomaradan)",
         "[Matej](https://github.com/Matej4386)",
