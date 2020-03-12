@@ -204,6 +204,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       value = this.state.day,
       strings: dateStrings = new DateTimePickerStrings(), // Defines the DatePicker control labels
       timeDisplayControlType,
+      placeholder,
       showLabels
     } = this.props;
 
@@ -291,6 +292,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 showGoToToday={showGoToToday}
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
                 showWeekNumbers={showWeekNumbers}
+                placeholder={placeholder}
               />
             </div>
           </div>
