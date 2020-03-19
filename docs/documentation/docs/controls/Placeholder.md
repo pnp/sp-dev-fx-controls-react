@@ -20,7 +20,7 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
              iconText='Configure your web part'
              description='Please configure the web part.'
              buttonLabel='Configure'
-             onConfigure={this._onConfigure} />
+             onConfigure={()=>this._onConfigure()} />
 ```
 
 - With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
