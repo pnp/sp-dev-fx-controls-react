@@ -26,7 +26,7 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 - With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
 
 ```typescript
-private _onConfigure() {
+private _onConfigure = () => {
   // Context of the web part
   this.props.context.propertyPane.open();
 }
