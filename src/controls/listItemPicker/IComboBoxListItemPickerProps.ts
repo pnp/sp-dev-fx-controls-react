@@ -1,7 +1,7 @@
-import { IComboBox, IComboBoxOption, IComboBoxOptionStyles } from "office-ui-fabric-react/lib/components/ComboBox";
+import { IComboBoxOptionStyles } from "office-ui-fabric-react/lib/components/ComboBox";
 import { IAutofillProps } from "office-ui-fabric-react/lib/components/Autofill";
 import { IKeytipProps } from "office-ui-fabric-react/lib/components/Keytip";
-import { RequestClient } from "@pnp/common/src/netutil";
+import { SPHttpClient } from '@microsoft/sp-http';
 
 export interface IComboBoxListItemPickerProps {
     ///onItemClick?:(event: React.FormEvent<IComboBox>, option?: IComboBoxOption, index?: number) => void
@@ -17,9 +17,9 @@ export interface IComboBoxListItemPickerProps {
     columnInternalName: string;
     keyColumnInternalName?: string;
     webUrl: string;
-    spHttpClient: RequestClient;
+    spHttpClient: SPHttpClient;
     listId: string;
-    itemLimit: number;
+    // itemLimit: number;
     filter?: string;
     className?: string;
     defaultSelectedItems?: any[];

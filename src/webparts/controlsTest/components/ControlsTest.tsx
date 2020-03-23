@@ -36,6 +36,7 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
+import { ComboBoxListItemPicker } from '../../../';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -651,7 +652,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
 
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"}>
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
                 <p>You have permissions to view list items.</p>
               </SecurityTrimmedControl>
 
@@ -704,6 +705,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context}
                   placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
+
+              </div>
+
+              <div className="ms-font-m">ComboBoxListItemPicker:
+
+                <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
+                                        columnInternalName='Title'
+                                        keyColumnInternalName='Id'
+                                        multiSelect={true}
+                                        onSelectedItem={(data) => {
+                                          console.log(`Item(s):`, data);
+                                        }}
+                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
+                                        spHttpClient={this.props.context.spHttpClient}  />
 
               </div>
 

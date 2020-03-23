@@ -8,7 +8,7 @@ import { RequestClientMock } from '../../common/mocks/RequestClientMock';
 
 declare const sinon;
 
-let mockHttpClient: RequestClientMock = new RequestClientMock();
+let mockHttpClient: RequestClientMock = new RequestClientMock(null);
 mockHttpClient.Requests.push({
   url: "/sites/test-site/_api/web/lists('TestId')/items?$select=Id,Title&$filter=Id gt 0",
   method: "GET",
@@ -23,9 +23,8 @@ describe('<ComboBoxListItemPicker />', () => {
         webUrl="/sites/test-site"
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         onInitialized={() => {
-         
+
           expect(comboBox.state('availableOptions')).to.have.length(10);
           resolve();
         }}
@@ -40,20 +39,19 @@ describe('<ComboBoxListItemPicker />', () => {
         webUrl="/sites/test-site"
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         onInitialized={() => {
-         
+
           let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           //actual list is not part of the component
           let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[3];
           (checkBoxBtn as HTMLButtonElement).click();
-          
+
           //ddBtn.simulate('click');
         }}
         onSelectedItem={(item) => {
           expect(item.Id).to.equal(4);
-          
+
           resolve();
         }} />);
     });
@@ -67,11 +65,10 @@ describe('<ComboBoxListItemPicker />', () => {
         defaultSelectedItems={[1]}
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         onInitialized={() => {
           let ddInput = comboBox.find('.ms-ComboBox-Input').first();
           expect((ddInput.getNode() as any).value).to.be.equal("Test 1");
-          
+
           resolve();
         }}
         onSelectedItem={(item) => {
@@ -87,12 +84,11 @@ describe('<ComboBoxListItemPicker />', () => {
         defaultSelectedItems={[{Id:1, Title: "Test 1"}]}
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         onInitialized={() => {
-         
+
           let ddInput = comboBox.find('.ms-ComboBox-Input').first();
           expect((ddInput.getNode() as any).value).to.be.equal("Test 1");
-          
+
           resolve();
         }}
         onSelectedItem={(item) => {
@@ -107,10 +103,9 @@ describe('<ComboBoxListItemPicker />', () => {
         webUrl="/sites/test-site"
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         multiSelect={true}
         onInitialized={() => {
-         
+
           let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           //actual list is not part of the component
@@ -121,7 +116,7 @@ describe('<ComboBoxListItemPicker />', () => {
         onSelectedItem={(item) => {
           expect(item.Id).to.equal(4);
           expect(item.selected).to.be.equal(true);
-          
+
           let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           resolve();
@@ -138,9 +133,8 @@ describe('<ComboBoxListItemPicker />', () => {
         filter="Id gt 0"
         listId="TestId"
         multiSelect={true}
-        itemLimit={20}
         onInitialized={() => {
-         
+
           let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];
@@ -163,10 +157,9 @@ describe('<ComboBoxListItemPicker />', () => {
         defaultSelectedItems={[1,2]}
         filter="Id gt 0"
         listId="TestId"
-        itemLimit={20}
         multiSelect={true}
         onInitialized={() => {
-         
+
           let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];

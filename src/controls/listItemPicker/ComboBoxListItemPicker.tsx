@@ -9,7 +9,7 @@ import { ListItemRepository } from '../../common/dal/ListItemRepository';
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
-  public SelectedItems: any[];
+  public selectedItems: any[];
 
   constructor(props: IComboBoxListItemPickerProps) {
     super(props);
@@ -27,7 +27,10 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     // Get SPService Factory
     this._listItemRepo = new ListItemRepository(this.props.webUrl, this.props.spHttpClient);
 
-    this.SelectedItems = [];
+    this.selectedItems = [];
+  }
+
+  public componentDidMount(): void {
     this.loadOptions();
   }
 
@@ -40,7 +43,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       this.props.columnInternalName,
       this.props.keyColumnInternalName,
       this.props.webUrl,
-      this.props.itemLimit || 100);
+      /*this.props.itemLimit ||*/ 100);
 
     let options = listItems.map(option => {
       return {
@@ -51,10 +54,10 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     if (this.props.defaultSelectedItems) {
       //if passed only ids
       if (!isNaN(this.props.defaultSelectedItems[0])) {
-        this.SelectedItems = options.filter(opt => this.props.defaultSelectedItems.indexOf(opt.key) >= 0);
+        this.selectedItems = options.filter(opt => this.props.defaultSelectedItems.indexOf(opt.key) >= 0);
       }
       else {
-        this.SelectedItems = options.filter(opt => this.props.defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
+        this.selectedItems = options.filter(opt => this.props.defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
       }
     }
     this.setState({
@@ -67,33 +70,31 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
 
   public componentDidUpdate(prevProps: IComboBoxListItemPickerProps, prevState: IComboBoxListItemPickerState): void {
     if (this.props.listId !== prevProps.listId) {
-      this.SelectedItems = [];
+      this.selectedItems = [];
     }
-    //this.loadOptions();
   }
 
   /**
    * Render the field
    */
   public render(): React.ReactElement<IComboBoxListItemPickerProps> {
-    const { className, disabled, itemLimit } = this.props;
+    const { className, disabled } = this.props;
 
     return (this.state.availableOptions ? (
       <div>
-        <ComboBox
-          options={this.state.availableOptions}
-          autoComplete={this.props.autoComplete}
-          comboBoxOptionStyles={this.props.comboBoxOptionStyles}
-          allowFreeform={this.props.allowFreeform}
-          keytipProps={this.props.keytipProps}
-          onMenuDismissed={this.props.onMenuDismiss}
-          onMenuOpen={this.props.onMenuOpen}
-          text={this.props.text}
-          onChanged={this.onChanged.bind(this)}
-          multiSelect={this.props.multiSelect}
-          defaultSelectedKey={this.SelectedItems.map(item=>item.key) || []}
-          className={className}
-          disabled={disabled} />
+        <ComboBox options={this.state.availableOptions}
+                  autoComplete={this.props.autoComplete}
+                  comboBoxOptionStyles={this.props.comboBoxOptionStyles}
+                  allowFreeform={this.props.allowFreeform}
+                  keytipProps={this.props.keytipProps}
+                  onMenuDismissed={this.props.onMenuDismiss}
+                  onMenuOpen={this.props.onMenuOpen}
+                  text={this.props.text}
+                  onChanged={this.onChanged}
+                  multiSelect={this.props.multiSelect}
+                  defaultSelectedKey={this.selectedItems.map(item=>item.key) || []}
+                  className={className}
+                  disabled={disabled} />
 
         <Label style={{ color: '#FF0000' }}> {this.state.errorMessage} </Label>
       </div>) : <span>Loading...</span>
@@ -103,11 +104,19 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   /**
    * On Selected Item
    */
-  private onChanged(option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void {
-    this.props.onSelectedItem({
-      [this.props.keyColumnInternalName || "Id"]: option.key,
-      [this.props.columnInternalName]: option.text,
-      selected: option.selected
-    });
+  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
+    if (option && option.selected) {
+      this.selectedItems.push({
+        [this.props.keyColumnInternalName || "Id"]: option.key,
+        [this.props.columnInternalName]: option.text,
+        selected: option.selected
+      });
+    } else {
+      this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
+    }
+    this.props.onSelectedItem(this.selectedItems.map(item => ({
+      [this.props.keyColumnInternalName || "Id"]: item.key,
+      [this.props.columnInternalName]: item.text
+    })));
   }
 }

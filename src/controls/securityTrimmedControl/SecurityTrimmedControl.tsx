@@ -14,7 +14,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       loading: true
     };
 
-    telemetry.track('ReactPlaceholder', {});
+    telemetry.track('SecurityTrimmedControl', {});
   }
 
   /**

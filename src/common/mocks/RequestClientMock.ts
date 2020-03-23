@@ -1,9 +1,9 @@
-import { RequestClient, FetchOptions } from "@pnp/common/src/netutil";
+import { SPHttpClient, SPHttpClientConfiguration, ISPHttpClientOptions, SPHttpClientResponse } from '@microsoft/sp-http';
 
-export class RequestClientMock implements RequestClient {
-    public Requests: { url: string, method: string, options?: FetchOptions, resultString: string }[] = [];
-    public OnRequest: (url: string, method: string, options?: FetchOptions) => void;
-    public fetch(url: string, options?: FetchOptions): Promise<Response> {
+export class RequestClientMock extends SPHttpClient {
+    public Requests: { url: string, method: string, options?: ISPHttpClientOptions, resultString: string }[] = [];
+    public OnRequest: (url: string, method: string, options?: ISPHttpClientOptions) => void;
+    public fetch(url: string, configuration: SPHttpClientConfiguration, options: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
         let mockedResponse = this.Requests.filter(req => req.method === options.method && req.url == url)[0];
         let response: Response;
         if (mockedResponse) {
@@ -18,29 +18,29 @@ export class RequestClientMock implements RequestClient {
                 statusText: "Not fount",
             });
         }
-        return Promise.resolve(response);
+        return Promise.resolve(new SPHttpClientResponse(response));
     }
-    public fetchRaw(url: string, options?: FetchOptions): Promise<Response> {
-        return this.fetch(url,options);
+    public fetchRaw(url: string, configuration: SPHttpClientConfiguration, options?: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
+        return this.fetch(url, configuration, options);
     }
-    public get(url: string, options?: FetchOptions): Promise<Response> {
+    public get(url: string, configuration: SPHttpClientConfiguration, options?: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
         options = options || {};
         options.method = "GET";
-        return this.fetch(url,options);
+        return this.fetch(url, configuration, options);
     }
-    public post(url: string, options?: FetchOptions): Promise<Response> {
+    public post(url: string, configuration: SPHttpClientConfiguration, options?: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
         options = options || {};
         options.method = "POST";
-        return this.fetch(url,options);
+        return this.fetch(url, configuration, options);
     }
-    public patch(url: string, options?: FetchOptions): Promise<Response> {
+    public patch(url: string, configuration: SPHttpClientConfiguration, options?: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
         options = options || {};
         options.method = "PATCH";
-        return this.fetch(url,options);
+        return this.fetch(url, configuration, options);
     }
-    public delete(url: string, options?: FetchOptions): Promise<Response> {
+    public delete(url: string, configuration: SPHttpClientConfiguration, options?: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
         options = options || {};
         options.method = "DELETE";
-        return this.fetch(url,options);
+        return this.fetch(url, configuration, options);
     }
 }

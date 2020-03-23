@@ -41,7 +41,7 @@ export interface ISecurityTrimmedControlProps {
    */
   noPermissionsControl?: JSX.Element;
   /**
-   * Options. Specify should render loading animation
+   * Optional. Specify should render loading animation
    */
   showLoadingAnimation?: boolean;
 }

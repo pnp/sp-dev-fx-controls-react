@@ -24,38 +24,38 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ComboBoxLis
 
 ```TypeScript
 <ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
-                columnInternalName='Title'
-                keyColumnInternalName='Id'
-                filter="Title eq 'SPFx'"
-                itemLimit={10}
-                onSelectedItem={this.onSelectedItem}
-                webUrl: this.context.pageContext.web.absoluteUrl,
-                spHttpClient: new SPHttpClient() />
+                        columnInternalName='Title'
+                        keyColumnInternalName='Id'
+                        filter="Title eq 'SPFx'"
+                        onSelectedItem={this.onSelectedItem}
+                        webUrl={this.context.pageContext.web.absoluteUrl}
+                        spHttpClient={this.context.spHttpClient} />
 ```
 
 - Use the `ComboBoxListItemPicker` with objects passed in defaultSelectedItems
+
 ```TypeScript
 <ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
-                columnInternalName='Title'
-                keyColumnInternalName='Id'
-                filter="Title eq 'SPFx'"
-                itemLimit={10}
-                defaultSelectedItems: [{Id: 2, Title:"Test"}]
-                onSelectedItem={this.onSelectedItem}
-                webUrl: this.context.pageContext.web.absoluteUrl,
-                spHttpClient: new SPHttpClient() />
+                        columnInternalName='Title'
+                        keyColumnInternalName='Id'
+                        filter="Title eq 'SPFx'"
+                        defaultSelectedItems=[{Id: 2, Title:"Test"}]
+                        onSelectedItem={this.onSelectedItem}
+                        webUrl={this.context.pageContext.web.absoluteUrl}
+                        spHttpClient={this.context.spHttpClient} />
 ```
+
 - Or only ids
+
 ```TypeScript
 <ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
-                columnInternalName='Title'
-                keyColumnInternalName='Id'
-                filter="Title eq 'SPFx'"
-                itemLimit={10}
-                defaultSelectedItems: [2]
-                onSelectedItem={this.onSelectedItem}
-                webUrl: this.context.pageContext.web.absoluteUrl,
-                spHttpClient: new SPHttpClient() />
+                        columnInternalName='Title'
+                        keyColumnInternalName='Id'
+                        filter="Title eq 'SPFx'" 
+                        defaultSelectedItems: [2]
+                        onSelectedItem={this.onSelectedItem}
+                        webUrl={this.context.pageContext.web.absoluteUrl}
+                        spHttpClient={this.context.spHttpClient} />
 ```
 
 - The `onSelectedItem` change event returns the list items selected and can be implemented as follows:
@@ -80,7 +80,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | webUrl | string | yes | Url to web hosting list |
 | spHttpClient | RequestClient | yes | Any implementation of PnPJS RequestClient |
 | listId | string | yes | Guid of the list. |
-| itemLimit | number | yes | Number of items which can be selected |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
