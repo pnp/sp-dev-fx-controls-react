@@ -329,6 +329,8 @@ define([], () => {
     NewFolderNamePlaceholder: "Enter your folder name",
     FolderFilterBoxPlaceholder: "Filter folders by name",
     FolderExplorerLoading: "Loading folders...",
-    FolderExplorerNoItems: "This folder doesn't have any subfolders."
+    FolderExplorerNoItems: "This folder doesn't have any subfolders.",
+    SelectedLabel: "Selected",
+    SelectIcon: "Select icon"
   };
 });

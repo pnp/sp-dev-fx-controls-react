@@ -296,6 +296,10 @@ declare interface IControlStrings {
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
   FolderExplorerNoItems: string;
+
+  //Icon picker
+  SelectedLabel: string;
+  SelectIcon: string;
 }
 
 declare interface IDateTimeStrings {

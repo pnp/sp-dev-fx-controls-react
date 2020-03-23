@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "画像のアップロード",
   "UploadLinkLabel": "アップロード",
   "WebSearchLinkLabel": "ウェブ検索",
-  "Yes": "はい"
+  "Yes": "はい",
+  "SelectedLabel": "選択された",
+  "SelectIcon": "アイコンの選択"
 };
 });

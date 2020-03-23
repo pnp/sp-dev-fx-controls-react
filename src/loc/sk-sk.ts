@@ -310,6 +310,8 @@ define([], () => {
     "UploadImageHeader": "Nahrať obrázok",
     "UploadLinkLabel": "Nahrať",
     "WebSearchLinkLabel": "Vyhľadávanie na webe",
-    "Yes": "áno"
+    "Yes": "áno",
+    "SelectedLabel": "Zvolené",
+    "SelectIcon": "Vybrať ikonu"
   };
 });

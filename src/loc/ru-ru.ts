@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Загрузить изображение",
   "UploadLinkLabel": "Загрузить",
   "WebSearchLinkLabel": "Поиск по Веб",
-  "Yes": "Да"
+  "Yes": "Да",
+  "SelectedLabel": "Выбранный",
+  "SelectIcon": "Выбрать значок"
 };
 });

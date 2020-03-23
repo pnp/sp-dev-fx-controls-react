@@ -23,19 +23,17 @@ import { FolderExplorer, IFolder } from "@pnp/spfx-controls-react/lib/FolderExpl
 - Use the `FolderExplorer` control in your code as follows:
 
 ```TypeScript
-<FolderExplorer
-              context={this.props.context}
-              rootFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `/sites/TestSite/Shared Documents`
-              }}
-              defaultFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `/sites/TestSite/Shared Documents`
-              }}
-              onSelect={this._onFolderSelect}
-              canCreateFolders={true}
-            />
+<FolderExplorer context={this.props.context}
+                rootFolder={{
+                  Name: 'Documents',
+                  ServerRelativeUrl: `/sites/TestSite/Shared Documents`
+                }}
+                defaultFolder={{
+                  Name: 'Documents',
+                  ServerRelativeUrl: `/sites/TestSite/Shared Documents`
+                }}
+                onSelect={this._onFolderSelect}
+                canCreateFolders={true} />
 ```
 
 - The `onSelect` change event returns the selected folder and can be implemented as follows:
@@ -59,7 +57,5 @@ The `FolderExplorer` control can be configured with the following properties:
 | hiddenBreadcrumb | boolean | no | Hide the breadcrumb control. |
 | hiddenFilterBox | boolean | no | Hide the filter box |
 | onSelect | (folder: IFolder): void | no | Callback function called after a folder is selected. |
-
-
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FolderExplorer)

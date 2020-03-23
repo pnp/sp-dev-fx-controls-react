@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Αποστολή εικόνας",
   "UploadLinkLabel": "Φορτώσετε",
   "WebSearchLinkLabel": "Αναζήτηση στο Web",
-  "Yes": "Ναι"
+  "Yes": "Ναι",
+  "SelectedLabel": "Επιλεγμένα",
+  "SelectIcon": "Επιλογή εικονιδίου"
 };
 });
