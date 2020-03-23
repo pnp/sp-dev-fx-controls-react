@@ -33,6 +33,16 @@ export interface IFilePickerProps {
   context: ExtensionContext |  WebPartContext;
 
   /**
+   * ClassName to be applied to the opener button element.
+   */
+  buttonClassName?: string;
+
+  /**
+   * ClassName to be applied to the Panel root element.
+   */
+  panelClassName?: string;
+
+  /**
    * File extensions to be displayed.
    */
   accepts?: string[];
@@ -91,4 +101,11 @@ export interface IFilePickerProps {
    * Specifies if LinkUploadTab should be hidden.
    */
   hideLinkUploadTab?: boolean;
+
+  /**
+   * Specifies if last active tab will be stored after the Upload panel has been closed.
+   * Note: the value of selected tab is stored in the queryString hash.
+   * @default true
+   */
+  storeLastActiveTab?: boolean;
 }

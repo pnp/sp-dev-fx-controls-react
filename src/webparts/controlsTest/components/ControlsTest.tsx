@@ -36,6 +36,7 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
+import { ComboBoxListItemPicker } from '../../../';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -52,7 +53,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-
+import { FolderExplorer, IFolder } from '../../../FolderExplorer';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -450,7 +451,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           } />
 
 
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
         <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -516,7 +517,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200} />
+          resolveDelay={200}
+          placeholder={'Select a SharePoint principal (User or Group)'} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -536,7 +538,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
           disabled={true}
-          showtooltip={true} />
+          showtooltip={true}
+          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 
@@ -649,7 +652,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
 
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"}>
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
                 <p>You have permissions to view list items.</p>
               </SecurityTrimmedControl>
 
@@ -684,7 +687,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
                   label="Select your list(s)"
-                  placeHolder="Select your list(s)"
+                  placeholder="Select your list(s)"
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
@@ -700,7 +703,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
+                  placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
+
+              </div>
+
+              <div className="ms-font-m">ComboBoxListItemPicker:
+
+                <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
+                                        columnInternalName='Title'
+                                        keyColumnInternalName='Id'
+                                        multiSelect={true}
+                                        onSelectedItem={(data) => {
+                                          console.log(`Item(s):`, data);
+                                        }}
+                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
+                                        spHttpClient={this.props.context.spHttpClient}  />
 
               </div>
 
@@ -753,12 +771,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context}
                   onChange={this.onServicePickerChange}
                   isTermSetSelectable={false}
+                  placeholder="Select service"
                 />
 
                 <TaxonomyPicker
                   initialValues={this.state.initialValues}
                   allowMultipleSelections={true}
-                  termsetNameOrID="b3e9b754-2593-4ae6-abc2-35345402e186"
+                  termsetNameOrID="313362ca-6813-4433-bcce-7bf74a18b9cb"
                   // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
                   // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
@@ -768,7 +787,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label="Taxonomy Picker"
                   context={this.props.context}
                   onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false} />
+                  isTermSetSelectable={false}
+                  hideDeprecatedTags={true}
+                  hideTagsNotAvailableForTagging={true} />
 
                 <DefaultButton text="Add" onClick={() => {
                   this.setState({
@@ -894,9 +915,29 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={sampleGridData}
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
+
+        <div>
+            <FolderExplorer
+              context={this.props.context}
+              rootFolder={{
+                Name: 'Documents',
+                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              }}
+              defaultFolder={{
+                Name: 'Documents',
+                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              }}
+              onSelect={this._onFolderSelect}
+              canCreateFolders={true}
+            />
+          </div>
       </div>
     );
   }
 
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
+  }
 
 }

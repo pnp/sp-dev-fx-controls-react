@@ -90,7 +90,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       // });
     }
 
-    this.termsService.getAllTerms(this.props.termsetNameOrID).then((response: ITermSet) => {
+    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
       this.setState({
@@ -104,7 +104,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
    */
   private async updateTaxonomyTree(): Promise<void> {
-    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID);
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging);
 
     this.setState({
       termSetAndTerms
@@ -260,37 +260,58 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Renders the SPListpicker controls with Office UI  Fabric
    */
   public render(): JSX.Element {
+    const {
+      label,
+      context,
+      disabled,
+      isTermSetSelectable,
+      allowMultipleSelections,
+      disabledTermIds,disableChildrenOfDisabledParents,
+      placeholder,
+      panelTitle,
+      anchorId,
+      termActions
+    } = this.props;
+
+    const {
+      activeNodes,
+      errorMessage,
+      openPanel,
+      loaded,
+      termSetAndTerms
+    } = this.state;
 
     return (
       <div>
-        {this.props.label && <Label>{this.props.label}</Label>}
+        {label && <Label>{label}</Label>}
         <div className={styles.termField}>
           <div className={styles.termFieldInput}>
             <TermPicker
-              context={this.props.context}
+              context={context}
               termPickerHostProps={this.props}
-              disabled={this.props.disabled}
-              value={this.state.activeNodes}
-              isTermSetSelectable={this.props.isTermSetSelectable}
+              disabled={disabled}
+              value={activeNodes}
+              isTermSetSelectable={isTermSetSelectable}
               onChanged={this.termsFromPickerChanged}
-              allowMultipleSelections={this.props.allowMultipleSelections}
-              disabledTermIds={this.props.disabledTermIds}
-              disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
+              allowMultipleSelections={allowMultipleSelections}
+              disabledTermIds={disabledTermIds}
+              disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}
+              placeholder={placeholder} />
           </div>
           <div className={styles.termFieldButton}>
-            <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
+            <IconButton disabled={disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={this.state.errorMessage} />
+        <FieldErrorMessage errorMessage={errorMessage} />
 
         <Panel
-          isOpen={this.state.openPanel}
+          isOpen={openPanel}
           hasCloseButton={true}
           onDismiss={this.onClosePanel}
           isLightDismiss={true}
           type={PanelType.medium}
-          headerText={this.props.panelTitle}
+          headerText={panelTitle}
           onRenderFooterContent={() => {
             return (
               <div className={styles.actions}>
@@ -302,26 +323,26 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
           {
             /* Show spinner in the panel while retrieving terms */
-            this.state.loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
+            loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
           }
           {
-            this.state.loaded === true && this.state.termSetAndTerms && (
-              <div key={this.state.termSetAndTerms.Id} >
-                <h3>{this.state.termSetAndTerms.Name}</h3>
-                <TermParent anchorId={this.props.anchorId}
+            loaded === true && termSetAndTerms && (
+              <div key={termSetAndTerms.Id} >
+                <h3>{termSetAndTerms.Name}</h3>
+                <TermParent anchorId={anchorId}
                   autoExpand={null}
-                  termset={this.state.termSetAndTerms}
-                  isTermSetSelectable={this.props.isTermSetSelectable}
+                  termset={termSetAndTerms}
+                  isTermSetSelectable={isTermSetSelectable}
                   termSetSelectedChange={this.termSetSelectedChange}
-                  activeNodes={this.state.activeNodes}
-                  disabledTermIds={this.props.disabledTermIds}
-                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
+                  activeNodes={activeNodes}
+                  disabledTermIds={disabledTermIds}
+                  disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}
                   changedCallback={this.termsChanged}
-                  multiSelection={this.props.allowMultipleSelections}
+                  multiSelection={allowMultipleSelections}
                   spTermService={this.termsService}
 
                   updateTaxonomyTree={this.updateTaxonomyTree}
-                  termActions={this.props.termActions}
+                  termActions={termActions}
                 />
               </div>
             )

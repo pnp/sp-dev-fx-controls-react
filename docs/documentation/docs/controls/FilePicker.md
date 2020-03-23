@@ -74,6 +74,7 @@ The FilePicker component can be configured with the following properties:
 | hideSiteFilesTab | boolean | no | Specifies if SiteFilesTab should be hidden. |
 | hideLocalUploadTab | boolean | no | Specifies if LocalUploadTab should be hidden. |
 | hideLinkUploadTab | boolean | no | Specifies if LinkUploadTab should be hidden. |
+| storeLastActiveTab | boolean | no | Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default `true` |
 
 interface `IFilePickerResult`
 

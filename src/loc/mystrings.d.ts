@@ -185,6 +185,8 @@ declare interface IControlStrings {
   DateTimePickerTime: string;
   DateTimePickerTimeSeparator: string;
   DateTimePickerHourValueInvalid: string;
+  DateTimePickerMinuteValueInvalid: string;
+  DateTimePickerSecondValueInvalid: string;
 
   // File picker
   AddFileButtonLabel: string;
@@ -288,6 +290,16 @@ declare interface IControlStrings {
   UploadLinkLabel: string;
   WebSearchLinkLabel: string;
   Yes: string;
+
+  // folder explorer
+  NewFolderNamePlaceholder: string;
+  FolderFilterBoxPlaceholder: string;
+  FolderExplorerLoading: string;
+  FolderExplorerNoItems: string;
+
+  //Icon picker
+  SelectedLabel: string;
+  SelectIcon: string;
 }
 
 declare interface IDateTimeStrings {

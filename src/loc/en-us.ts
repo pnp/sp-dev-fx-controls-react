@@ -211,6 +211,8 @@ define([], () => {
     DateTimePickerTime: "Time",
     DateTimePickerTimeSeparator: ":",
     DateTimePickerHourValueInvalid: "Incorrect hour value",
+    DateTimePickerMinuteValueInvalid: "Incorrect minute value",
+    DateTimePickerSecondValueInvalid: "Incorrect second value",
 
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
@@ -322,6 +324,13 @@ define([], () => {
     UploadImageHeader: "Upload image",
     UploadLinkLabel: "Upload",
     WebSearchLinkLabel: "Web search",
-    Yes: "Yes"
+    Yes: "Yes",
+
+    NewFolderNamePlaceholder: "Enter your folder name",
+    FolderFilterBoxPlaceholder: "Filter folders by name",
+    FolderExplorerLoading: "Loading folders...",
+    FolderExplorerNoItems: "This folder doesn't have any subfolders.",
+    SelectedLabel: "Selected",
+    SelectIcon: "Select icon"
   };
 });

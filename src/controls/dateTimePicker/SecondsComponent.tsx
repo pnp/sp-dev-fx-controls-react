@@ -1,3 +1,4 @@
+import * as strings from 'ControlStrings';
 import * as React from 'react';
 import { ITimeComponentProps } from './ITimeComponentProps';
 import { MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
@@ -46,8 +47,17 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
           label=""
           value={value ? TimeHelper.suffixZero(value.toString()) : "00"}
           onGetErrorMessage={(val) => {
-            onChange(val);
-            return "";
+            let message = "";
+            const seconds: number = parseInt(val);
+            if (isNaN(seconds)) {
+              message = strings.DateTimePickerSecondValueInvalid;
+            }
+
+            if (!message) {
+              onChange(val);
+            }
+
+            return message;
           }}
           mask="59"
           maskFormat={{

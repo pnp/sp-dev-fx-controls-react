@@ -41,7 +41,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Render the field
    */
   public render(): React.ReactElement<IListItemPickerProps> {
-    const { className, disabled, itemLimit } = this.props;
+    const { className, disabled, itemLimit, placeholder } = this.props;
 
     return (
       <div>
@@ -56,7 +56,10 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
                    onChange={this.onItemChanged}
                    className={className}
                    itemLimit={itemLimit}
-                   disabled={disabled} />
+                   disabled={disabled}
+                   inputProps={{
+                    placeholder: placeholder
+                  }} />
 
         <Label style={{color:'#FF0000'}}> {this.state.errorMessage} </Label>
       </div>

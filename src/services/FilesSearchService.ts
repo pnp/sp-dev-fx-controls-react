@@ -3,6 +3,7 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { GeneralHelper } from "../common/utilities";
 
 /**
  * Maximum file size when searching
@@ -143,10 +144,12 @@ export class FilesSearchService {
       }
 
       // Submit the request
-      const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&mkt=en-US&size=${size}&license=${license}`;
-
+      const apiUrl: string = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&mkt=en-US&size=${size}&license=${license}`;
+      const headers = new Headers({
+        'Ocp-Apim-Subscription-Key': this.bingAPIKey
+      });
       const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {
-        headers: new Headers(),
+        headers: headers,
         method: 'GET',
         mode: 'cors'
       });
@@ -181,7 +184,8 @@ export class FilesSearchService {
 
       // Return file created from blob
       const blob: Blob = await fileDownloadResult.blob();
-      return new File([blob], fileName);
+      // Retrieve file from blob - method supports IE11
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;
@@ -204,7 +208,7 @@ export class FilesSearchService {
 
       // Return file created from blob
       const blob: Blob = await fileDownloadResult.blob();
-      return new File([blob], fileName);
+      return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
       console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
       return null;

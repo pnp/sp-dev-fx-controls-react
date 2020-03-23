@@ -14,6 +14,10 @@ export interface IListItemPickerProps {
   disabled?: boolean;
   suggestionsHeaderText?:string;
   noResultsFoundText?:string;
+  /**
+   * Placeholder to be displayed in an empty term picker
+   */
+  placeholder?: string;
 
   onSelectedItem: (item:any) => void;
 }

@@ -94,6 +94,10 @@ export interface IPeoplePickerProps {
    * When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search
    */
   ensureUser?: boolean;
+  /**
+   * Placeholder to be displayed in an empty term picker
+   */
+  placeholder?: string;
 }
 
 export interface IPeoplePickerState {

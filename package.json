@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -15,14 +15,15 @@
     "changelog": "node scripts/create-changelog.js && node scripts/sync-changelogs.js && gulp versionUpdater",
     "postinstall": "node postinstall/install.js",
     "sonarcloud:config": "node ./scripts/sonarcloud.js",
-    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js"
+    "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
+    "localization": "node scripts/execute-translation.js"
   },
   "dependencies": {
     "@pnp/common": "1.0.1",
     "@pnp/logging": "1.0.1",
     "@pnp/odata": "1.0.1",
     "@pnp/sp": "1.0.1",
-    "@pnp/telemetry-js": "1.0.0",
+    "@pnp/telemetry-js": "2.0.0",
     "@types/chart.js": "2.7.40",
     "chart.js": "2.7.3",
     "color": "^3.1.2",
@@ -48,7 +49,8 @@
     "@types/react-dom": "0.14.18",
     "@types/sinon": "2.3.4",
     "@types/webpack-env": "^1.13.9",
-    "codecov": "3.6.5",
+    "amd-loader": "0.0.8",
+    "codecov": "3.0.0",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
     "karma-html-reporter": "0.2.7",
@@ -56,6 +58,7 @@
     "react": "15.4.2",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
+    "request-promise": "4.2.5",
     "sonarqube-scanner": "2.1.2"
   },
   "repository": {

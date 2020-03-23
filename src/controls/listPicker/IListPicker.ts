@@ -50,6 +50,10 @@ export interface IListPickerProps {
   */
   placeHolder?: string;
   /**
+  * Input placeholder text. Displayed until option is selected.
+  */
+ placeholder?: string;
+  /**
   * Callback issues when the selected option changes
   */
   onSelectionChanged?: (newValue: string | string[]) => void;

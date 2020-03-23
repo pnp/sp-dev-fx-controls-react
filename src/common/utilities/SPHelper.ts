@@ -352,7 +352,7 @@ export class SPHelper {
         url = context.pageContext.web.absoluteUrl;
         url = GeneralHelper.trimSlash(url);
 
-        url += `/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor('${encodeURIComponent(loginName)}')`;
+        url += "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(loginName) + "'";
          return context.spHttpClient.get(url, SPHttpClient.configurations.v1)
             .then((response): Promise<any> => {
                 return response.json();

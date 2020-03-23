@@ -122,7 +122,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
 
     if (multiSelect === true) {
       // Check if option was selected
-      let selectedLists = this._selectedList ? cloneDeep(this._selectedList) as string[] : ["test"];
+      let selectedLists = this._selectedList ? cloneDeep(this._selectedList) as string[] : [];
       if (option.selected) {
         selectedLists.push(option.key as string);
       } else {
@@ -144,14 +144,14 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   */
   public render(): JSX.Element {
     const { loading, options, selectedList } = this.state;
-    const { className, disabled, multiSelect, label, placeHolder } = this.props;
+    const { className, disabled, multiSelect, label, placeHolder, placeholder } = this.props;
 
     const dropdownOptions: IDropdownProps = {
       className: className,
       options: options,
       disabled: ( loading || disabled ),
       label: label,
-      placeHolder: placeHolder,
+      placeHolder: placeholder || placeHolder,
       onChanged: this.onChanged
     };
 

@@ -65,6 +65,8 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string[] = this.props.accepts;
+    const buttonClassName :string = this.props.buttonClassName ? this.props.buttonClassName : '';
+    const panelClassName :string = this.props.panelClassName ? this.props.panelClassName : '';
 
     const linkTabProps = {
       accepts: accepts,
@@ -75,24 +77,25 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     const buttonProps = {
       text: this.props.buttonLabel,
       disabled: this.props.disabled,
-      onClick: this._handleOpenPanel
+      onClick: this._handleOpenPanel,
+      className: `pnp__file-picker__button ${buttonClassName}`
     };
 
     return (
-      <div >
+      <div className={`pnp__file-picker`}>
         {
           this.props.label && <Label required={this.props.required}>{this.props.label}</Label>
         }
         {
           this.props.buttonIcon ?
             <ActionButton iconProps={{ iconName: this.props.buttonIcon }} {...buttonProps} /> :
-            <PrimaryButton {...buttonProps}/>
+            <PrimaryButton {...buttonProps} />
         }
 
         <Panel isOpen={this.state.panelOpen}
           isBlocking={true}
           hasCloseButton={true}
-          className={styles.filePicker}
+          className={`pnp__file-picker__panel ${styles.filePicker} ${panelClassName}`}
           onDismiss={this._handleClosePanel}
           type={PanelType.extraLarge}
           isFooterAtBottom={true}
@@ -218,12 +221,13 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    * Prepares navigation panel options
    */
   private _getNavPanelOptions = () => {
+    const addUrl = this.props.storeLastActiveTab !== false;
     let links = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
         name: strings.RecentLinkLabel,
-        url: '#recent',
+        url: addUrl ? '#recent' : undefined,
         icon: 'Recent',
         key: 'keyRecent',
       });
@@ -231,7 +235,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (this.props.bingAPIKey && !this.props.hideWebSearchTab) {
       links.push({
         name: strings.WebSearchLinkLabel,
-        url: '#search',
+        url: addUrl ? '#search' : undefined,
         key: 'keyWeb',
         icon: 'Search',
       });
@@ -239,7 +243,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOrganisationalAssetTab && this.state.organisationAssetsEnabled) {
       links.push({
         name: 'Your organisation',
-        url: '#orgAssets',
+        url: addUrl ? '#orgAssets' : undefined,
         icon: 'FabricFolderConfirm',
         key: 'keyOrgAssets',
       });
@@ -247,7 +251,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOneDriveTab) {
       links.push({
         name: "OneDrive",
-        url: '#onedrive',
+        url: addUrl ? '#onedrive' : undefined,
         key: 'keyOneDrive',
         icon: 'OneDrive',
       });
@@ -255,7 +259,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideSiteFilesTab) {
       links.push({
         name: strings.SiteLinkLabel,
-        url: '#globe',
+        url: addUrl ? '#globe' : undefined,
         key: 'keySite',
         icon: 'Globe',
       });
@@ -263,7 +267,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLocalUploadTab) {
       links.push({
         name: strings.UploadLinkLabel,
-        url: '#upload',
+        url: addUrl ? '#upload' : undefined,
         key: 'keyUpload',
         icon: 'System'
       });
@@ -271,7 +275,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
-        url: '#link',
+        url: addUrl ? '#link' : undefined,
         key: 'keyLink',
         icon: 'Link'
       });

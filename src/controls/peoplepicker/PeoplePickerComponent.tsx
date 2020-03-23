@@ -55,9 +55,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   public componentWillUpdate(nextProps: IPeoplePickerProps, nextState: IPeoplePickerState): void {
     if (!isEqual(this.props.defaultSelectedUsers, nextProps.defaultSelectedUsers) ||
-        this.props.groupName !== nextProps.groupName ||
-        this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
-        this.peopleSearchService.getSumOfPrincipalTypes(this.props.principalTypes) !== this.peopleSearchService.getSumOfPrincipalTypes(nextProps.principalTypes)) {
+      this.props.groupName !== nextProps.groupName ||
+      this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
+      this.peopleSearchService.getSumOfPrincipalTypes(this.props.principalTypes) !== this.peopleSearchService.getSumOfPrincipalTypes(nextProps.principalTypes)) {
       this.getInitialPersons(nextProps);
     }
   }
@@ -101,7 +101,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   /**
    * A search field change occured
    */
-  private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> =>  {
+  private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> => {
     if (searchText.length > 2) {
       const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser);
       // Remove duplicates
@@ -176,64 +176,89 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Default React component render method
    */
   public render(): React.ReactElement<IPeoplePickerProps> {
+
+    const {
+      peoplePickerCntrlclassName,
+      peoplePickerWPclassName,
+      isRequired,
+      titleText,
+      suggestionsLimit,
+      placeholder,
+      personSelectionLimit,
+      disabled,
+      showtooltip,
+      tooltipMessage,
+      tooltipDirectional,
+      errorMessageClassName,
+      errorMessage
+    } = this.props;
+
+    const {
+      selectedPersons,
+      resolveDelay,
+      errorMessage: stateErrorMessage,
+      showRequiredError
+    } = this.state;
+
     const suggestionProps: IBasePickerSuggestionsProps = {
       suggestionsHeaderText: strings.peoplePickerSuggestionsHeaderText,
       noResultsFoundText: strings.genericNoResultsFoundText,
       loadingText: strings.peoplePickerLoadingText,
-      resultsMaximumNumber: this.props.suggestionsLimit ? this.props.suggestionsLimit : 5,
+      resultsMaximumNumber: suggestionsLimit ? suggestionsLimit : 5,
       searchingText: strings.PeoplePickerSearchText
     };
 
 
     const peoplepicker = (
-      <div id="people" className={`${styles.defaultClass} ${this.props.peoplePickerWPclassName ? this.props.peoplePickerWPclassName : ''}`}>
-        {this.props.titleText && <Label required={this.props.isRequired}>{this.props.titleText}</Label>}
+      <div id="people" className={`${styles.defaultClass} ${peoplePickerWPclassName ? peoplePickerWPclassName : ''}`}>
+        {titleText && <Label required={isRequired}>{titleText}</Label>}
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
-                            onResolveSuggestions={this.onSearchFieldChanged}
-                            onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
-                            getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
-                            className={`ms-PeoplePicker ${this.props.peoplePickerCntrlclassName ? this.props.peoplePickerCntrlclassName : ''}`}
-                            key={'normal'}
-                            removeButtonAriaLabel={'Remove'}
-                            inputProps={{
-                              'aria-label': 'People Picker'
-                            }}
-                            selectedItems={this.state.selectedPersons}
-                            itemLimit={this.props.personSelectionLimit || 1}
-                            disabled={this.props.disabled || !!this.state.errorMessage}
-                            onChange={this.onChange}
-                            resolveDelay={this.state.resolveDelay} />
+          onResolveSuggestions={this.onSearchFieldChanged}
+          onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
+          getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
+          className={`ms-PeoplePicker ${peoplePickerCntrlclassName ? peoplePickerCntrlclassName : ''}`}
+          key={'normal'}
+          removeButtonAriaLabel={'Remove'}
+          inputProps={{
+            'aria-label': 'People Picker',
+            placeholder: placeholder
+          }}
+          selectedItems={selectedPersons}
+          itemLimit={personSelectionLimit || 1}
+          disabled={disabled || !!stateErrorMessage}
+          onChange={this.onChange}
+          resolveDelay={resolveDelay} />
       </div>
     );
 
     return (
       <div>
         {
-          this.props.showtooltip ? (
-            <TooltipHost content={this.props.tooltipMessage || strings.peoplePickerComponentTooltipMessage}
-                         id='pntp'
-                         calloutProps={{ gapSpace: 0 }}
-                         directionalHint={this.props.tooltipDirectional || DirectionalHint.leftTopEdge}>
+          showtooltip ? (
+            <TooltipHost content={tooltipMessage || strings.peoplePickerComponentTooltipMessage}
+              id='pntp'
+              calloutProps={{ gapSpace: 0 }}
+              directionalHint={tooltipDirectional || DirectionalHint.leftTopEdge}>
               {peoplepicker}
             </TooltipHost>
           ) : (
-            <div>
-              {peoplepicker}
-            </div>
-          )
+              <div>
+                {peoplepicker}
+              </div>
+            )
         }
 
         {
-          ((this.props.isRequired && this.state.showRequiredError) || (this.state.errorMessage)) && (
-            <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
+          ((isRequired && showRequiredError) || (stateErrorMessage)) && (
+            <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${errorMessageClassName ? errorMessageClassName : ''}`}>
               <Icon iconName='Error' className={styles.errorIcon} />
               {
-                this.state.errorMessage && <span data-automation-id="error-message">{this.state.errorMessage}</span>
+                stateErrorMessage && <span data-automation-id="error-message">{stateErrorMessage}</span>
               }
 
               {
-                (this.props.isRequired && this.state.showRequiredError) && <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.peoplePickerComponentErrorMessage}</span>
+                (isRequired && showRequiredError) && <span data-automation-id="error-message">{errorMessage ? errorMessage : strings.peoplePickerComponentErrorMessage}</span>
               }
             </p>
           )

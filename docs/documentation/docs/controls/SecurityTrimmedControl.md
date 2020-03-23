@@ -56,6 +56,19 @@ import { SecurityTrimmedControl } from "@pnp/spfx-controls-react/lib/SecurityTri
 </SecurityTrimmedControl>
 ```
 
+**Show a control when the user doesn't have permissions**
+
+```jsx
+<SecurityTrimmedControl context={this.props.context}
+                        level={PermissionLevel.remoteListOrLib}
+                        remoteSiteUrl="https://<tenant>.sharepoint.com/sites/<siteName>"
+                        relativeLibOrListUrl="/sites/<siteName>/<list-or-library-URL>"
+                        permissions={[SPPermission.addListItems]}
+                        noPermissionsControl={<p>SOrry, you don't have permissions to this list.</p>}>
+  {/* Specify the components to load when user has the required permissions */}
+</SecurityTrimmedControl>
+```
+
 ## Implementation
 
 The `SecurityTrimmedControl` can be configured with the following properties:
@@ -70,6 +83,8 @@ The `SecurityTrimmedControl` can be configured with the following properties:
 | folderPath | string | no | Specify the name of a folder to check the user permissions against. Will be overridden if itemId is present. |
 | itemId | number | no | Specify the ID of the item to check the user permissions against. Takes precedence over folder. |
 | className | string | no | Specify the className to be used on the parent element. |
+| noPermissionsControl | JSX.Element | no | Optional. Specify the control you want to render if user doesn't have permissions. |
+| showLoadingAnimation | boolean | no | Optional. Specify should render loading animation. |
 
 The `PermissionLevel` enum has the following values:
 

@@ -3,16 +3,18 @@ import { ISecurityTrimmedControlProps, ISecurityTrimmedControlState, PermissionL
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SPPermission } from '@microsoft/sp-page-context';
 import * as telemetry from '../../common/telemetry';
+import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 
 export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedControlProps, ISecurityTrimmedControlState> {
   constructor(props: ISecurityTrimmedControlProps) {
     super(props);
 
     this.state = {
-      allowRender: false
+      allowRender: false,
+      loading: true
     };
 
-    telemetry.track('ReactPlaceholder', {});
+    telemetry.track('SecurityTrimmedControl', {});
   }
 
   /**
@@ -49,11 +51,13 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       // Check the user its permissions
       if (permissions.hasAllPermissions(...this.props.permissions)) {
         this.setState({
-          allowRender: true
+          allowRender: true,
+          loading: false
         });
       } else {
         this.setState({
-          allowRender: false
+          allowRender: false,
+          loading: false
         });
       }
     } else if (level === PermissionLevel.remoteWeb) {
@@ -84,7 +88,8 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
           if (result.error) {
             // Do not allow rendering when there was an error
             this.setState({
-              allowRender: false
+              allowRender: false,
+              loading: false
             });
             console.error(`Error retrieved while checking user's remote site permissions.`);
             return;
@@ -92,13 +97,15 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
           // Check the result value
           if (typeof result.value !== "undefined" && result.value === false) {
             this.setState({
-              allowRender: false
+              allowRender: false,
+              loading: false
             });
             return;
           }
         } else {
           this.setState({
-            allowRender: false
+            allowRender: false,
+            loading: false
           });
           console.error(`No result value was retrieved when checking the user's remote site permissions.`);
           return;
@@ -107,7 +114,8 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
 
       // Render the controls when the permissions were OK for the user
       this.setState({
-        allowRender: true
+        allowRender: true,
+        loading: false
       });
     }
   }
@@ -122,7 +130,8 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       const apiUrl = `${remoteSiteUrl}/_api/web/GetList(@listUrl)/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
       const hasPermissions = await this.checkRemotePermissions(apiUrl);
       this.setState({
-        allowRender: hasPermissions
+        allowRender: hasPermissions,
+        loading: false
       });
     }
   }
@@ -137,7 +146,8 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       const apiUrl = `${remoteSiteUrl}/_api/web/GetList(@listUrl)/Items(${itemId})/EffectiveBasePermissions?@listUrl='${encodeURIComponent(relativeLibOrListUrl)}'`;
       const hasPermissions = await this.checkRemotePermissions(apiUrl);
       this.setState({
-        allowRender: hasPermissions
+        allowRender: hasPermissions,
+        loading: false
       });
     }
   }
@@ -153,7 +163,8 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       const apiUrl = `${remoteSiteUrl}/_api/web/GetFolderByServerRelativeUrl(@folderByServerRelativeUrl)/ListItemAllFields/EffectiveBasePermissions?@folderByServerRelativeUrl='${folderByServerRelativeUrl}'`;
       const hasPermissions = await this.checkRemotePermissions(apiUrl);
       this.setState({
-        allowRender: hasPermissions
+        allowRender: hasPermissions,
+        loading: false
       });
     }
   }
@@ -194,10 +205,15 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
    */
   public render(): React.ReactElement<ISecurityTrimmedControlProps> {
     const { className } = this.props;
-    return (
-      this.state.allowRender ? (
-        <div className={className ? className : ""}>{this.props.children}</div>
-      ) : null
-    );
+    if(this.state.loading && this.props.showLoadingAnimation){
+      return <Spinner />;
+    }
+    if(this.state.allowRender){
+      return <div className={className ? className : ""}>{this.props.children}</div>;
+    }
+    else if(this.props.noPermissionsControl){
+      return this.props.noPermissionsControl;
+    }
+    return null;
   }
 }
