@@ -13,6 +13,7 @@ nav:
       - "Polar Area Chart": 'controls/charts/PolarAreaChart.md'
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
+    - ComboBoxListItemPicker: 'controls/ComboBoxListItemPicker.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'

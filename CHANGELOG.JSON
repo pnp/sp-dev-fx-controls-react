@@ -4,11 +4,13 @@
       "version": "1.17.0",
       "changes": {
         "new": [
+          "`ComboBoxListItemPicker` component [#292](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/292)",
           "`Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)",
           "`IconPicker`: component [#485](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/485)",
           "`FolderExplorer` component [#499](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/499)"
         ],
         "enhancements": [
+          "`SecurityTrimmedControl`: Added the option to show a control when the user doesn't have permissions [307](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/307)",
           "`PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)",
           "`TaxonomyPicker`: Possibility to hide deprecated and \"Available for Tagging\"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)",
           "`FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)",
