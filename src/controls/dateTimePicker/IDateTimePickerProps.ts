@@ -102,4 +102,9 @@ export interface IDateTimePickerProps {
    * Specify if labels in front of date and time parts should be rendered. True by default
    */
   showLabels?: boolean;
+  
+  /**
+   * Placeholder text for the DatePicker
+   */
+  placeholder?: string;
 }
