@@ -24,11 +24,9 @@ import { IconPicker } from '@pnp/spfx-controls-react/lib/IconPicker';
 - Use the `IconPicker` control in your code as follows:
 
 ```TypeScript
-<IconPicker
-    buttonLabel={'Icon'}
-    onChange={(iconName: string) => { this.setState({icon: iconName}); }}
-    onSave={(iconName: string) => { this.setState({icon: iconName}); }}       
-/>
+<IconPicker buttonLabel={'Icon'}
+            onChange={(iconName: string) => { this.setState({icon: iconName}); }}
+            onSave={(iconName: string) => { this.setState({icon: iconName}); }} />
 ```
 
 ## Implementation

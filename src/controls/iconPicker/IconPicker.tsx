@@ -10,12 +10,16 @@ import { IconNames } from './IconNames';
 import { Panel, PanelType, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
 import { debounce } from 'lodash';
 import { IIconPickerState } from './IIconPickerState';
+import * as telemetry from '../../common/telemetry';
 
 export class IconPicker extends React.Component<IIconPickerProps, IIconPickerState> {
     private radioIdBase: string = getId("radio");
 
     constructor(props: IIconPickerProps) {
         super(props);
+
+        telemetry.track('IconPicker');
+
         this.state = {
             items: IconNames.Icons,
             isPanelOpen: false,
