@@ -5,12 +5,18 @@
 ### New control(s)
 
 - `Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)
+- `FolderExplorer` component [#499](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/499)
 
 ### Enhancements
 
 - `PnP Telemetry` service opt-out support [#475](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/475)
 - `TaxonomyPicker`: Possibility to hide deprecated and "Available for Tagging"= false terms [#421](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/421)
 - `FilePicker` - French translation [#449](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/449)
+- Slovak localization [#457](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/457)
+- `TaxonomyPicker`: Placeholder for Taxonomy Picker [#464](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/464)
+- `ListItemPicker`, `PeoplePicker`: Placeholder for `ListItemPicker` and `PeoplePicker` [#486](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/486)
+- `FilePicker`: Do not store active tab in url's hash [#488](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/488)
+- `DateTimePicker`: Placeholder property option added [#503](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/503)
 
 ### Fixes
 
@@ -21,10 +27,15 @@
 - `FilePicker`: Read file content in IE11 [#444](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/444)
 - `ListPicker`: listPicker always return "test" when multiple allowed [#458](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/458)
 - `FilePicker`: Button text overflow fix + global classnames and properties
+- `FieldUserRenderer`: implementation of `api/SP.UserProfiles.PeopleManager/GetPropertiesFor` is not working on on-prem [#468](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/468)
+- `Placeholder`: Placeholder component is not rendering after a string change in it's properties [#469](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/469)
+- `ListView` documentation update: `minWidth` instead of `maxWidth` [#480](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/480)
+- `DateTimePicker`: Minutes and Seconds validation [#495](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/495)
+- `FilePicker`: bingAPIKey not working [#489](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/489)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [JonasBjerke89](https://github.com/JonasBjerke89), [Alexander Kleshcheov](https://github.com/SharePickle), [Piotr Siatka](https://github.com/siata13), [mgwojciech](https://github.com/mgwojciech), [Richard Gigan](https://github.com/PooLP).
+Special thanks to our contributors (in alphabetical order): [Richard Gigan](https://github.com/PooLP), [Reginald Johnson](https://github.com/LastGunslinger), [JonasBjerke89](https://github.com/JonasBjerke89), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [Alexander Kleshcheov](https://github.com/SharePickle), [Léo Maradan](https://github.com/Leomaradan), [Matej](https://github.com/Matej4386), [mgwojciech](https://github.com/mgwojciech), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Jason S](https://github.com/jason-appliedis), [Piotr Siatka](https://github.com/siata13), [Rabia Williams](https://github.com/rabwill).
 
 ## 1.16.0
 
