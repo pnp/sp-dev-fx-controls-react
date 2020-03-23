@@ -5,6 +5,7 @@
       "changes": {
         "new": [
           "`Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)",
+          "`IconPicker`: component [#485](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/485)",
           "`FolderExplorer` component [#499](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/499)"
         ],
         "enhancements": [
@@ -38,6 +39,7 @@
         "[JonasBjerke89](https://github.com/JonasBjerke89)",
         "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
         "[Alexander Kleshcheov](https://github.com/SharePickle)",
+        "[Konradox](https://github.com/Konradox)",
         "[Léo Maradan](https://github.com/Leomaradan)",
         "[Matej](https://github.com/Matej4386)",
         "[mgwojciech](https://github.com/mgwojciech)",

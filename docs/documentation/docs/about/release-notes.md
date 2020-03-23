@@ -5,6 +5,7 @@
 ### New control(s)
 
 - `Localization`: Project now supports localization of all SharePoint Online languages (auto translation via Cognitive Services) [#456](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/456)
+- `IconPicker`: component [#485](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/485)
 - `FolderExplorer` component [#499](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/499)
 
 ### Enhancements
@@ -35,7 +36,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Richard Gigan](https://github.com/PooLP), [Reginald Johnson](https://github.com/LastGunslinger), [JonasBjerke89](https://github.com/JonasBjerke89), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [Alexander Kleshcheov](https://github.com/SharePickle), [Léo Maradan](https://github.com/Leomaradan), [Matej](https://github.com/Matej4386), [mgwojciech](https://github.com/mgwojciech), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Jason S](https://github.com/jason-appliedis), [Piotr Siatka](https://github.com/siata13), [Rabia Williams](https://github.com/rabwill).
+Special thanks to our contributors (in alphabetical order): [Richard Gigan](https://github.com/PooLP), [Reginald Johnson](https://github.com/LastGunslinger), [JonasBjerke89](https://github.com/JonasBjerke89), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [Alexander Kleshcheov](https://github.com/SharePickle), [Konradox](https://github.com/Konradox), [Léo Maradan](https://github.com/Leomaradan), [Matej](https://github.com/Matej4386), [mgwojciech](https://github.com/mgwojciech), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Jason S](https://github.com/jason-appliedis), [Piotr Siatka](https://github.com/siata13), [Rabia Williams](https://github.com/rabwill).
 
 ## 1.16.0
 
