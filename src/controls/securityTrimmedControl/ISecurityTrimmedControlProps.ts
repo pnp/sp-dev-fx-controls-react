@@ -36,4 +36,12 @@ export interface ISecurityTrimmedControlProps {
    * Optional. Specify the className to be used on the parent element.
    */
   className?: string;
+  /**
+   * Optional. Specify the control you want to render if user doesn't have permissions
+   */
+  noPermissionsControl?: JSX.Element;
+  /**
+   * Optional. Specify should render loading animation
+   */
+  showLoadingAnimation?: boolean;
 }
