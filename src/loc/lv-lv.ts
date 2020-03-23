@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Augšupielādēt attēlu",
   "UploadLinkLabel": "Augšupielādēt",
   "WebSearchLinkLabel": "Web meklēšana",
-  "Yes": "jā"
+  "Yes": "jā",
+  "SelectedLabel": "Atlasīts",
+  "SelectIcon": "Atlasīt ikonu"
 };
 });

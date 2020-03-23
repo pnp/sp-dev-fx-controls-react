@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Afbeelding uploaden",
   "UploadLinkLabel": "Uploaden",
   "WebSearchLinkLabel": "Zoeken op het web",
-  "Yes": "Ja"
+  "Yes": "Ja",
+  "SelectedLabel": "Geselecteerd",
+  "SelectIcon": "Selecteer pictogram"
 };
 });

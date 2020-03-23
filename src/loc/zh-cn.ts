@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "上传图片",
   "UploadLinkLabel": "上传",
   "WebSearchLinkLabel": "网络搜索",
-  "Yes": "是的"
+  "Yes": "是的",
+  "SelectedLabel": "所选",
+  "SelectIcon": "选择图标"
 };
 });

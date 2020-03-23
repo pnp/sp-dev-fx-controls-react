@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Upload billede",
   "UploadLinkLabel": "Uploade",
   "WebSearchLinkLabel": "Websøgning",
-  "Yes": "Ja"
+  "Yes": "Ja",
+  "SelectedLabel": "Valgt",
+  "SelectIcon": "Vælg ikon"
 };
 });

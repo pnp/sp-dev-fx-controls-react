@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Качване на изображение",
   "UploadLinkLabel": "Качите",
   "WebSearchLinkLabel": "Търсене в уеб",
-  "Yes": "Да"
+  "Yes": "Да",
+  "SelectedLabel": "Избрани",
+  "SelectIcon": "Избор на икона"
 };
 });

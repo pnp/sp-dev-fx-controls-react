@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Resim yükle",
   "UploadLinkLabel": "Yüklemek",
   "WebSearchLinkLabel": "Web arama",
-  "Yes": "Evet"
+  "Yes": "Evet",
+  "SelectedLabel": "Seçili",
+  "SelectIcon": "Simge seç"
 };
 });
