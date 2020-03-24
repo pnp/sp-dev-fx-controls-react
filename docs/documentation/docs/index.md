@@ -30,6 +30,19 @@ Once the package is installed, you will have to configure the resource file of t
 "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
 ```
 
+## Telemetry
+
+All controls gather telemetry to verify the usage. Only the name of the control and related data gets captured. 
+
+> More information about the service that we are using for this can be found here: [PnP Telemetry Proxy](https://github.com/pnp/telemetry-proxy-node).
+
+Since version `1.17.0` it is possible to opt-out of the telemetry by adding the following code to your web part:
+
+```typescript
+const telemetry = PnPTelemetry.getInstance();
+telemetry.optOut();
+```
+
 ## Available controls
 
 The following controls are currently available:
