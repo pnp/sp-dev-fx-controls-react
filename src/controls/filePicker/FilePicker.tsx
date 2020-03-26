@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
-import { PrimaryButton, ActionButton  } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, ActionButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
@@ -54,19 +54,22 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
   public async componentDidMount() {
     // Load information about Organisation Assets Library
-    const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
-    const organisationAssetsEnabled = orgAssetsLibraries ? true : false;
+    let orgAssetsEnabled: boolean = false;
+    if (this.props.hideOrganisationalAssetTab != undefined && !this.props.hideOrganisationalAssetTab) {
+      const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
+      orgAssetsEnabled = orgAssetsLibraries ? true : false;
+    }
 
     this.setState({
-      organisationAssetsEnabled
+      organisationAssetsEnabled: orgAssetsEnabled
     });
   }
 
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string[] = this.props.accepts;
-    const buttonClassName :string = this.props.buttonClassName ? this.props.buttonClassName : '';
-    const panelClassName :string = this.props.panelClassName ? this.props.panelClassName : '';
+    const buttonClassName: string = this.props.buttonClassName ? this.props.buttonClassName : '';
+    const panelClassName: string = this.props.panelClassName ? this.props.panelClassName : '';
 
     const linkTabProps = {
       accepts: accepts,
@@ -281,7 +284,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
       });
     }
 
-    let groups: INavLinkGroup[] = [ { links} ];
+    let groups: INavLinkGroup[] = [{ links }];
     return groups;
   }
 
