@@ -6,10 +6,12 @@
         "new": [],
         "enhancements": [],
         "fixes": [
-          "`ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker[#510](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/510)"
+          "`ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker [#510](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/510)",
+          "Documentation fix: add the new control `ComboBoxListItemPicker` component to landing page [#511](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/511)"
         ]
       },
       "contributions": [
+        "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
         "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
       ]
     },
