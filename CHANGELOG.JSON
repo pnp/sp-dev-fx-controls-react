@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "1.18.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker[#510](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/510)"
+        ]
+      },
+      "contributions": []
+    },
+    {
       "version": "1.17.0",
       "changes": {
         "new": [
