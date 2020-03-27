@@ -9,7 +9,9 @@
           "`ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker[#510](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/510)"
         ]
       },
-      "contributions": []
+      "contributions": [
+        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
+      ]
     },
     {
       "version": "1.17.0",
