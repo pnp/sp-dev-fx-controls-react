@@ -54,7 +54,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
     private closePanel = (): void => {
         this.setState({
             currentIcon: null,
-            isPanelOpen: false
+            isPanelOpen: false,
+            items: IconNames.Icons
         });
     }
 
@@ -75,11 +76,11 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
         this.setState({ items: IconNames.Icons });
     }
 
-    private onChange = (_event?: React.ChangeEvent<HTMLInputElement>, newValue?: string): void => {
+    private onChange = (searchText?: string): void => {
         let items: string[];
-        if (newValue.length > 2) {
+        if (searchText.length > 2) {
             items = IconNames.Icons.filter(item => {
-                return item.toLocaleLowerCase().indexOf(newValue.toLocaleLowerCase()) !== -1;
+                return item.toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) !== -1;
             });
         } else {
             items = IconNames.Icons;
@@ -102,6 +103,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
             <SearchBox className={styles.searchBox}
                 onAbort={this.onAbort}
                 data-automation-id={`icon-picker-search`}
+                onSearch={debounce(this.onChange, 300)}
                 onChange={debounce(this.onChange, 300)} />
             <div className={styles.closeBtnContainer}>{defaultRender!(props)}</div>
         </div>;
