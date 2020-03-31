@@ -35,15 +35,17 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
             accept={acceptedFilesExtensions} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)}
           />
           {
-            fileName &&
+            fileName && this.state.filePreview &&
             /** Display image preview */
-            <div className={styles.localTabSinglePreview}>
-              {
-                this.state.filePreview &&
-                <img className={styles.localTabSinglePreviewImage} src={this.state.filePreview} alt={this.state.filePickerResult.fileName} />
-              }
+            <div className={styles.localTabSinglePreview}>                              
+                <img className={styles.localTabSinglePreviewImage} src={this.state.filePreview} alt={this.state.filePickerResult.fileName} />              
             </div>
           }
+          <div>
+            <label className={styles.localTabLabel}>{
+              (!this.state.filePreview ? fileName : "")
+            }</label>
+          </div>
           <label className={styles.localTabLabel} htmlFor="fileInput">{
             (fileName ? strings.ChangeFileLinkLabel : strings.ChooseFileLinkLabel)
           }</label>
