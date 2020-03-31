@@ -53,7 +53,8 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderExplorer, IFolder } from '../../../FolderExplorer';
+import { FolderExplorer, IFolder } from '../../../controls/folderExplorer';
+import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -328,6 +329,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       const fileResultContent = await filePickerResult.downloadFileContent();
       console.log(fileResultContent);
     }
+  }
+
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
   }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
@@ -711,14 +717,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">ComboBoxListItemPicker:
 
                 <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
-                                        columnInternalName='Title'
-                                        keyColumnInternalName='Id'
-                                        multiSelect={true}
-                                        onSelectedItem={(data) => {
-                                          console.log(`Item(s):`, data);
-                                        }}
-                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
-                                        spHttpClient={this.props.context.spHttpClient}  />
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
 
               </div>
 
@@ -836,6 +842,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
                 />
               </div>
+              <div>
+                <FolderPicker context={this.props.context}
+                  rootFolder={{
+                    Name: 'Documents',
+                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+                  }}
+                  onSelect={this._onFolderSelect}
+                  label='Pick a folder'
+                  required={true}
+                  canCreateFolders={true}
+                ></FolderPicker>
+              </div>
             </div>
           </div>
         </div>
@@ -917,27 +935,23 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <div>
-            <FolderExplorer
-              context={this.props.context}
-              rootFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              defaultFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              onSelect={this._onFolderSelect}
-              canCreateFolders={true}
-            />
-          </div>
+          <FolderExplorer
+            context={this.props.context}
+            rootFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+          />
+        </div>
+
       </div>
     );
-  }
-
-  private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
-
   }
 
 }
