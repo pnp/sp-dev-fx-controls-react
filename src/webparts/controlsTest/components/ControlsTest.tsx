@@ -849,7 +849,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
                   }}
                   onSelect={this._onFolderSelect}
-                  label='Pick a folder'
+                  label='Folder Picker'
                   required={true}
                   canCreateFolders={true}
                 ></FolderPicker>
