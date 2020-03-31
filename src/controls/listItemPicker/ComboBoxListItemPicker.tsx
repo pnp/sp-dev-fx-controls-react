@@ -104,19 +104,26 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   /**
    * On Selected Item
    */
-  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
-    if (option && option.selected) {
+  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => { 
+    if(this.props.multiSelect){
+      if (option && option.selected) {
+        this.selectedItems.push({
+          [this.props.keyColumnInternalName || "Id"]: option.key,
+          [this.props.columnInternalName]: option.text,
+          selected: option.selected
+        });
+      } else {
+        this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
+      }
+    }else{
       this.selectedItems.push({
         [this.props.keyColumnInternalName || "Id"]: option.key,
-        [this.props.columnInternalName]: option.text,
-        selected: option.selected
+        [this.props.columnInternalName]: option.text        
       });
-    } else {
-      this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
+      
+      this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] === option.key);
     }
-    this.props.onSelectedItem(this.selectedItems.map(item => ({
-      [this.props.keyColumnInternalName || "Id"]: item.key,
-      [this.props.columnInternalName]: item.text
-    })));
+    
+    this.props.onSelectedItem(this.selectedItems);
   }
 }
