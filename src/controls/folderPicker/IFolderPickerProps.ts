@@ -9,7 +9,7 @@ export interface IFolderPickerProps {
   context: WebPartContext | ExtensionContext;
 
   /**
-   * The field label
+   * The label for the control
    */
   label: string;
 
@@ -24,12 +24,12 @@ export interface IFolderPickerProps {
   defaultFolder?: IFolder;
 
   /**
-   * Is the field required
+   * Is selection required
    */
   required?: boolean;
 
   /**
-   * Is the field disabled
+   * Is the control disabled
    */
   disabled?: boolean;
 
