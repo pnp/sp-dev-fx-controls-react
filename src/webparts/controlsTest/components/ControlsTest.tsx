@@ -37,6 +37,7 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
+import { IconPicker } from '../../../IconPicker';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -915,6 +916,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={sampleGridData}
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
+
+        <IconPicker buttonLabel={'Icon'}
+            onChange={(iconName: string) => { console.log(iconName); }}
+            onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>
             <FolderExplorer
