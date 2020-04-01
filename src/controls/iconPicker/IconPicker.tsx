@@ -23,7 +23,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
         this.state = {
             items: IconNames.Icons,
             isPanelOpen: false,
-            currentIcon: this.props.currentIcon || null
+            currentIcon: this.props.currentIcon || null,
+            selectedIcon: this.props.currentIcon || null
         };
     }
 
@@ -53,7 +54,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
 
     private closePanel = (): void => {
         this.setState({
-            currentIcon: null,
+            currentIcon: this.state.selectedIcon ? this.state.selectedIcon : null,
             isPanelOpen: false
         });
     }
@@ -93,6 +94,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
         if (this.props.onSave) this.props.onSave(this.state.currentIcon);
         this.setState({
             isPanelOpen: false,
+            selectedIcon: this.state.currentIcon
         });
     }
 
