@@ -127,7 +127,7 @@ export default class SPService implements ISPService {
   public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
     try {
       // Remove special characters in FileName
-      fileName = fileName.replace(/[^\.\w\s]/gi, '');
+      fileName = fileName.replace(/[^\.\w\s\&\-]/gi, '');
       // Check if attachment exists
       const fileExists = await this.checkAttachmentExists(listId, itemId, fileName, webUrl);
       // Delete attachment if it exists
