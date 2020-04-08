@@ -12,6 +12,7 @@ import { debounce } from 'lodash';
 import { IIconPickerState } from './IIconPickerState';
 import * as telemetry from '../../common/telemetry';
 
+
 export class IconPicker extends React.Component<IIconPickerProps, IIconPickerState> {
     private radioIdBase: string = getId("radio");
 
@@ -75,9 +76,9 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
         this.setState({ items: IconNames.Icons });
     }
 
-    private onChange = (_event?: React.ChangeEvent<HTMLInputElement>, newValue?: string): void => {
+    private onChange = (newValue?: string): void => {
         let items: string[];
-        if (newValue.length > 2) {
+        if (newValue && newValue.trim().length > 2) {
             items = IconNames.Icons.filter(item => {
                 return item.toLocaleLowerCase().indexOf(newValue.toLocaleLowerCase()) !== -1;
             });
@@ -102,7 +103,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
             <SearchBox className={styles.searchBox}
                 onAbort={this.onAbort}
                 data-automation-id={`icon-picker-search`}
-                onChange={debounce(this.onChange, 300)} />
+
+                onChange={this.onChange} />
             <div className={styles.closeBtnContainer}>{defaultRender!(props)}</div>
         </div>;
     }
