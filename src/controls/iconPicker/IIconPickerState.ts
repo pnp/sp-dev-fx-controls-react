@@ -1,5 +1,5 @@
 export interface IIconPickerState {
-    items: any[];
+    items: string[];
     currentIcon?: string;
     isPanelOpen: boolean;
 }
