@@ -51,7 +51,7 @@ The `FolderExplorer` control can be configured with the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | context | WebPartContext \| ExtensionContext | yes | The context object of the SPFx loaded webpart or customizer. |
-| rootFolder | IFolder | yes | The lowest level folder that can be explored. This can be the root folder of a library. |
+| rootFolder | IFolder | yes | The lowest level folder that can be explored. This can be the root folder of a library. If site url is provided, it will allow the user to select a document library |
 | defaultFolder | IFolder | yes | The default folder to be explored. |
 | canCreateFolders | boolean | no | Allow current user to create folders on the target location. If enabled, you need to ensure that the user has the required permissions. |
 | hiddenBreadcrumb | boolean | no | Hide the breadcrumb control. |

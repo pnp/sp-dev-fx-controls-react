@@ -31,7 +31,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
   }
 
   public async componentDidMount() {
-    await this._getSubFolders(this.props.defaultFolder ? this.props.defaultFolder : this.props.rootFolder);
+    await this._getFolders(this.props.defaultFolder ? this.props.defaultFolder : this.props.rootFolder);
   }
 
   public render(): React.ReactElement<IFolderExplorerProps> {
@@ -55,7 +55,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
             <div>
               {this.state.folders.map((folder) => {
                 return (
-                  <div className={styles.libraryItem} onClick={() => { this._getSubFolders(folder); }}>
+                  <div className={styles.libraryItem} onClick={() => { this._getFolders(folder); }}>
                     <Icon iconName="FabricFolder" className={styles.folderIcon} />
                     {folder.Name}
                   </div>
@@ -64,7 +64,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
               }
             </div>
           }
-          {this.props.canCreateFolders &&
+          {this.props.canCreateFolders && (this.state.selectedFolder && this.state.selectedFolder.ServerRelativeUrl !== this.props.context.pageContext.web.serverRelativeUrl) &&
             <NewFolder context={this.props.context}
               selectedFolder={this.state.selectedFolder}
               addSubFolder={this._addSubFolder}></NewFolder>
@@ -95,7 +95,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
   private _getCurrentBreadcrumbItems = (): IBreadcrumbItem[] => {
     let items: IBreadcrumbItem[] = [];
 
-    let rootItem: IBreadcrumbItem = { text: this.props.rootFolder.Name, key: 'Root-Item', onClick: this._getSubFolders.bind(this, this.props.rootFolder) };
+    let rootItem: IBreadcrumbItem = { text: this.props.rootFolder.Name, key: 'Root-Item', onClick: this._getFolders.bind(this, this.props.rootFolder) };
     items.push(rootItem);
 
     if (this.state.selectedFolder && this.state.selectedFolder.ServerRelativeUrl !== this.props.rootFolder.ServerRelativeUrl) {
@@ -104,7 +104,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
       folderPathSplit.forEach((folderName, index) => {
         if (folderName !== '') {
           folderPath += '/' + folderName;
-          let folderItem: IBreadcrumbItem = { text: folderName, key: `Folder-${index.toString()}`, onClick: this._getSubFolders.bind(this, { Name: folderName, ServerRelativeUrl: folderPath }) };
+          let folderItem: IBreadcrumbItem = { text: folderName, key: `Folder-${index.toString()}`, onClick: this._getFolders.bind(this, { Name: folderName, ServerRelativeUrl: folderPath }) };
           items.push(folderItem);
         }
       });
@@ -128,11 +128,17 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
 * Load sub folders and files within a given folder
 * @param folder - Name of the folder
 */
-  private _getSubFolders = async (folder: IFolder): Promise<void> => {
+  private _getFolders = async (folder: IFolder): Promise<void> => {
 
     this.setState({ foldersLoading: true });
     try {
-      this._allFolders = await this._spService.GetFolders(this.props.context.pageContext.web.absoluteUrl, folder.ServerRelativeUrl);
+      if (this.props.context.pageContext.web.serverRelativeUrl === folder.ServerRelativeUrl) {
+        // site level, get libraries
+        this._allFolders = await this._spService.GetDocumentLibraries(this.props.context.pageContext.web.absoluteUrl);
+      } else {
+        // library/folder level, get folders
+        this._allFolders = await this._spService.GetFolders(this.props.context.pageContext.web.absoluteUrl, folder.ServerRelativeUrl);
+      }
       this.setState({ folders: this._allFolders, selectedFolder: folder, foldersLoading: false });
 
       // callback to parent component

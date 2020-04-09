@@ -12,6 +12,7 @@ export interface IFolderExplorerProps {
 
   /**
    * The lowest level folder that can be explored. This can be the root folder of a library.
+   * If site url is provided, it will allow the user to select a document library
    */
   rootFolder: IFolder;
 

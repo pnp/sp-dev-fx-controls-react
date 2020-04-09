@@ -711,14 +711,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">ComboBoxListItemPicker:
 
                 <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
-                                        columnInternalName='Title'
-                                        keyColumnInternalName='Id'
-                                        multiSelect={true}
-                                        onSelectedItem={(data) => {
-                                          console.log(`Item(s):`, data);
-                                        }}
-                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
-                                        spHttpClient={this.props.context.spHttpClient}  />
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
 
               </div>
 
@@ -917,20 +917,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <div>
-            <FolderExplorer
-              context={this.props.context}
-              rootFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              defaultFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              onSelect={this._onFolderSelect}
-              canCreateFolders={true}
-            />
-          </div>
+          <FolderExplorer
+            context={this.props.context}
+            rootFolder={{
+              Name: this.props.context.pageContext.web.title,
+              ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`,
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+          />
+        </div>
       </div>
     );
   }
