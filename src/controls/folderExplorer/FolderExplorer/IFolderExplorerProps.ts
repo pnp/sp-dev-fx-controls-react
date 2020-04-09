@@ -1,6 +1,6 @@
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
-
+import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
 import { IFolder } from '../../../services/IFolderExplorerService';
 
 
@@ -30,6 +30,11 @@ export interface IFolderExplorerProps {
    * Hide the breadcrumb control
    */
   hiddenBreadcrumb?: boolean;
+
+  /**
+   * Additional items to be added to the beginning of the breadcrumb
+   */
+  initialBreadcrumbItems?: IBreadcrumbItem[];
 
   /**
    * Hide the filter box

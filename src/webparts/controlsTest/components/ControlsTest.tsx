@@ -53,7 +53,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderExplorer, IFolder } from '../../../FolderExplorer';
+import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -440,6 +440,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     else if (Environment.type === EnvironmentType.ClassicSharePoint) {
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
+
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
+      text: 'Places', key: 'Places', onClick: () => {
+        console.log('additional breadcrumb item');
+      },
+    }];
 
     return (
       <div className={styles.controlsTest}>
@@ -929,6 +935,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }}
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
+            initialBreadcrumbItems={additionalBreadcrumbItems}
           />
         </div>
       </div>

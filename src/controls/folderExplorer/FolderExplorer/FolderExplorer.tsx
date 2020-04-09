@@ -95,6 +95,10 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
   private _getCurrentBreadcrumbItems = (): IBreadcrumbItem[] => {
     let items: IBreadcrumbItem[] = [];
 
+    if (this.props.initialBreadcrumbItems) {
+      items = [...this.props.initialBreadcrumbItems];
+    }
+
     let rootItem: IBreadcrumbItem = { text: this.props.rootFolder.Name, key: 'Root-Item', onClick: this._getFolders.bind(this, this.props.rootFolder) };
     items.push(rootItem);
 

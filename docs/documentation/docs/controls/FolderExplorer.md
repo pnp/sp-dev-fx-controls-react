@@ -55,6 +55,7 @@ The `FolderExplorer` control can be configured with the following properties:
 | defaultFolder | IFolder | yes | The default folder to be explored. |
 | canCreateFolders | boolean | no | Allow current user to create folders on the target location. If enabled, you need to ensure that the user has the required permissions. |
 | hiddenBreadcrumb | boolean | no | Hide the breadcrumb control. |
+| initialBreadcrumbItems | IBreadcrumbItem | no | Additional items to be added to the beginning of the breadcrumb. |
 | hiddenFilterBox | boolean | no | Hide the filter box |
 | onSelect | (folder: IFolder): void | no | Callback function called after a folder is selected. |
 
