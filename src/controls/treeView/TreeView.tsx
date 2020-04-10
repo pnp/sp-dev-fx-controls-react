@@ -5,6 +5,7 @@ import { ITreeViewProps, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
 import { ITreeItem } from './ITreeItem';
 import TreeItem from './TreeItem';
+import * as telemetry from '../../common/telemetry';
 
 /**
  * Renders the controls for TreeItem component
@@ -17,6 +18,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
    */
   constructor(props: ITreeViewProps) {
     super(props);
+    telemetry.track('TreeView');
 
     this.state = {
       loaded: true,
