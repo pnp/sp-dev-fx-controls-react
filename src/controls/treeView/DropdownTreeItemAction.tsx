@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
-import { IconButton, IIconProps } from 'office-ui-fabric-react';
-
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { ITreeItem } from './ITreeItem';
 import { ITreeItemAction, IConcreteTreeItemActionProps } from './ITreeItemActions';
 import styles from './TreeView.module.scss';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
 /**
  * Renders the controls for Dropdown TreeItem action component
@@ -93,7 +91,7 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
 
     return (
       <div>
-        <DefaultButton
+        <IconButton
           menuProps={contextualMenuProps}
           menuIconProps={{ iconName: 'MoreVertical' }}
           className={styles.actionMore}

@@ -37,11 +37,8 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
-import {TreeView,ITreeItem,TreeItemActionsDisplayMode,TreeViewSelectionMode} from '../../../controls/treeView';
-//import { ITreeItem } from '../../../controls/treeView/ITreeItem';
+import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-
-
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -937,19 +934,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <div>
-          Demo of Tree View
-              <TreeView items={this.treeitems} 
-              defaultExpanded={false} 
-              selectionMode={TreeViewSelectionMode.Multiple} 
-              showCheckboxes={false}
-              treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-              defaultSelectedKeys={['R2', '6']}
-              onExpandCollapse={this.onExpandCollapseTree}
-              onSelect={this.onItemSelected}
-              >
-
-              </TreeView>
-          </div>
+          <h3>TreeView:</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={false}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={['R2', '6']}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}>
+          </TreeView>
+        </div>
       </div>
     );
   }
@@ -962,10 +957,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log("items selected: " + items.length);
   }
 
-
-
   private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
-  private treeitems =  [
+  private treeitems = [
     {
       key: "R1",
       label: "Root",
@@ -995,7 +988,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               label: "Child 1",
               subLabel: "This is a sub label for node",
               actions: [{
-                title:"Share",
+                title: "Share",
                 iconProps: {
                   iconName: 'Share'
                 },
