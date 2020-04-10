@@ -941,7 +941,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <TreeView items={this.treeitems} 
               defaultExpanded={false} 
               selectionMode={TreeViewSelectionMode.Multiple} 
-              showCheckboxes={false}
+              showCheckboxes={true}
               treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
               defaultSelectedKeys={['R2', '6']}
               onExpandCollapse={this.onExpandCollapseTree}

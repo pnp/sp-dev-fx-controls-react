@@ -158,7 +158,16 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     else {
       return (
         // Default rendering of tree item
-        <span>
+        <div
+        className={styles.labels}
+        onClick={(e) => {
+          
+          if (this.props.selectionMode != TreeViewSelectionMode.None && item.selectable != false) {
+          e.stopPropagation();
+          if (!item.disabled) {
+            this._itemSelected(e, !this.state.selected);
+          }
+        }}}>
           {
            this.props.showCheckboxes && item.selectable == false && !item.children &&
             <span className={styles.blankspace}>&nbsp;</span>
@@ -166,22 +175,13 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
           {
             // Rendering when item has iconProps
             item.iconProps &&
-         <span>
+             <span>
               <Icon className={styles.icon} iconName={item.iconProps.iconName} style={item.iconProps.style} />
               &nbsp;
               </span>
           }
-          <div
-            className={styles.labels}
-            onClick={(e) => {
-              debugger;
-              if (this.props.selectionMode != TreeViewSelectionMode.None && item.selectable != false) {
-              e.stopPropagation();
-              if (!item.disabled) {
-                this._itemSelected(e, !this.state.selected);
-              }
-            }}}>
-            <span>{item.label}</span>
+         
+            {item.label}
             {
               // Render sublabel
               item.subLabel &&
@@ -190,7 +190,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
               </div>
             }
           </div>
-      </span>
+      
       );
     }
   }
