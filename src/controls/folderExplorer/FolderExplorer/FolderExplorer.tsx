@@ -14,6 +14,7 @@ import * as telemetry from '../../../common/telemetry';
 export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolderExplorerState> {
 
   private _spService: IFolderExplorerService;
+  private _allLibraries: IFolder[] = [];
   private _allFolders: IFolder[] = [];
 
   constructor(props: IFolderExplorerProps) {
@@ -31,10 +32,18 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
   }
 
   public async componentDidMount() {
-    await this._getFolders(this.props.defaultFolder ? this.props.defaultFolder : this.props.rootFolder);
+    const targetFolder = this.props.defaultFolder ? this.props.defaultFolder : this.props.rootFolder;
+    const siteAbsoluteUrl: string = this.props.siteAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
+    // get libraries if site absolute url does not end with folder relative url - if not retrieving document libraries by default
+    if (siteAbsoluteUrl.lastIndexOf(targetFolder.ServerRelativeUrl, siteAbsoluteUrl.length - targetFolder.ServerRelativeUrl.length) === -1) {
+      this._allLibraries = await this._spService.GetDocumentLibraries(siteAbsoluteUrl);
+    }
+    await this._getFolders(targetFolder);
+
   }
 
   public render(): React.ReactElement<IFolderExplorerProps> {
+    const siteAbsoluteUrl: string = this.props.siteAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
     return (
       <div>
         {!this.props.hiddenBreadcrumb &&
@@ -66,6 +75,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
           }
           {this.props.canCreateFolders && (this.state.selectedFolder && this.state.selectedFolder.ServerRelativeUrl !== this.props.context.pageContext.web.serverRelativeUrl) &&
             <NewFolder context={this.props.context}
+              siteAbsoluteUrl={siteAbsoluteUrl}
               selectedFolder={this.state.selectedFolder}
               addSubFolder={this._addSubFolder}></NewFolder>
           }
@@ -108,7 +118,14 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
       folderPathSplit.forEach((folderName, index) => {
         if (folderName !== '') {
           folderPath += '/' + folderName;
-          let folderItem: IBreadcrumbItem = { text: folderName, key: `Folder-${index.toString()}`, onClick: this._getFolders.bind(this, { Name: folderName, ServerRelativeUrl: folderPath }) };
+          let itemText = folderName;
+          // check if library and if so use the Title of the library that was retrieved in case it's not the same as the url part
+          const lib = this._allLibraries.filter(l => l.ServerRelativeUrl === folderPath);
+          if (lib.length === 1) {
+            itemText = lib[0].Name;
+          }
+
+          let folderItem: IBreadcrumbItem = { text: itemText, key: `Folder-${index.toString()}`, onClick: this._getFolders.bind(this, { Name: folderName, ServerRelativeUrl: folderPath }) };
           items.push(folderItem);
         }
       });
@@ -136,12 +153,20 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
 
     this.setState({ foldersLoading: true });
     try {
-      if (this.props.context.pageContext.web.serverRelativeUrl === folder.ServerRelativeUrl) {
+
+      const siteAbsoluteUrl: string = this.props.siteAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
+      // check if absolute url ends with relative url to know if we are at the site level
+      if (siteAbsoluteUrl.lastIndexOf(folder.ServerRelativeUrl, siteAbsoluteUrl.length - folder.ServerRelativeUrl.length) !== -1) {
         // site level, get libraries
-        this._allFolders = await this._spService.GetDocumentLibraries(this.props.context.pageContext.web.absoluteUrl);
+        if (this._allLibraries.length > 0) {
+          this._allFolders = [...this._allLibraries];
+        } else {
+          this._allLibraries = await this._spService.GetDocumentLibraries(siteAbsoluteUrl);
+          this._allFolders = [...this._allLibraries];
+        }
       } else {
         // library/folder level, get folders
-        this._allFolders = await this._spService.GetFolders(this.props.context.pageContext.web.absoluteUrl, folder.ServerRelativeUrl);
+        this._allFolders = await this._spService.GetFolders(siteAbsoluteUrl, folder.ServerRelativeUrl);
       }
       this.setState({ folders: this._allFolders, selectedFolder: folder, foldersLoading: false });
 

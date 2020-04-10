@@ -11,6 +11,11 @@ export interface IFolderExplorerProps {
   context: WebPartContext | ExtensionContext;
 
   /**
+   * The absolute url of the target site. Only required if not the current site
+   */
+  siteAbsoluteUrl?: string;
+
+  /**
    * The lowest level folder that can be explored. This can be the root folder of a library.
    * If site url is provided, it will allow the user to select a document library
    */

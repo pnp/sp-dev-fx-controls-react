@@ -925,6 +925,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FolderExplorer
             context={this.props.context}
+            siteAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             rootFolder={{
               Name: this.props.context.pageContext.web.title,
               ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
