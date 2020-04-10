@@ -37,6 +37,10 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
+import {TreeView,ITreeItem,TreeItemActionsDisplayMode,TreeViewSelectionMode} from '../../../controls/treeView';
+//import { ITreeItem } from '../../../controls/treeView/ITreeItem';
+import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -711,14 +715,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">ComboBoxListItemPicker:
 
                 <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
-                                        columnInternalName='Title'
-                                        keyColumnInternalName='Id'
-                                        multiSelect={true}
-                                        onSelectedItem={(data) => {
-                                          console.log(`Item(s):`, data);
-                                        }}
-                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
-                                        spHttpClient={this.props.context.spHttpClient}  />
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
 
               </div>
 
@@ -917,23 +921,140 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <div>
-            <FolderExplorer
-              context={this.props.context}
-              rootFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              defaultFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              onSelect={this._onFolderSelect}
-              canCreateFolders={true}
-            />
+          <FolderExplorer
+            context={this.props.context}
+            rootFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+          />
+        </div>
+
+        <div>
+          Demo of Tree View
+              <TreeView items={this.treeitems} 
+              defaultExpanded={false} 
+              selectionMode={TreeViewSelectionMode.Multiple} 
+              showCheckboxes={false}
+              treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+              defaultSelectedKeys={['R2', '6']}
+              onExpandCollapse={this.onExpandCollapseTree}
+              onSelect={this.onItemSelected}
+              >
+
+              </TreeView>
           </div>
       </div>
     );
   }
+
+  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
+    console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
+  }
+
+  private onItemSelected(items: ITreeItem[]) {
+    console.log("items selected: " + items.length);
+  }
+
+
+
+  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private treeitems =  [
+    {
+      key: "R1",
+      label: "Root",
+      subLabel: "This is a sub label for node",
+      iconProps: this.skypeCheckIcon,
+      actions: [{
+        title: "Get item",
+        iconProps: {
+          iconName: 'Warning',
+          style: {
+            color: 'salmon',
+          },
+        },
+        id: "GetItem",
+        actionCallback: async (treeItem: ITreeItem) => {
+          console.log(treeItem);
+        }
+      }],
+      children: [
+        {
+          key: "1",
+          label: "Parent 1",
+          selectable: false,
+          children: [
+            {
+              key: "3",
+              label: "Child 1",
+              subLabel: "This is a sub label for node",
+              actions: [{
+                title:"Share",
+                iconProps: {
+                  iconName: 'Share'
+                },
+                id: "GetItem",
+                actionCallback: async (treeItem: ITreeItem) => {
+                  console.log(treeItem);
+                }
+              }],
+              children: [
+                {
+                  key: "gc1",
+                  label: "Grand Child 1",
+                  actions: [{
+                    title: "Get Grand Child item",
+                    iconProps: {
+                      iconName: 'Mail'
+                    },
+                    id: "GetItem",
+                    actionCallback: async (treeItem: ITreeItem) => {
+                      console.log(treeItem);
+                    }
+                  }]
+                }
+              ]
+            },
+            {
+              key: "4",
+              label: "Child 2",
+              iconProps: this.skypeCheckIcon
+            }
+          ]
+        },
+        {
+          key: "2",
+          label: "Parent 2"
+        },
+        {
+          key: "5",
+          label: "Parent 3",
+          disabled: true
+        },
+        {
+          key: "6",
+          label: "Parent 4",
+          selectable: true
+        }
+      ]
+    },
+    {
+      key: "R2",
+      label: "Root 2",
+      children: [
+        {
+          key: "8",
+          label: "Parent 5"
+        }
+      ]
+    }
+  ];
 
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
