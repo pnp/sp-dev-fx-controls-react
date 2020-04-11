@@ -934,19 +934,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <div>
-          Demo of Tree View
-              <TreeView items={this.treeitems} 
-              defaultExpanded={false} 
-              selectionMode={TreeViewSelectionMode.Multiple} 
-              showCheckboxes={true}
-              treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-              defaultSelectedKeys={['R2', '6']}
-              onExpandCollapse={this.onExpandCollapseTree}
-              onSelect={this.onItemSelected}
-              >
-
-              </TreeView>
-          </div>
+          <h3>Tree View</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={true}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={['R2', '6']}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}
+            onRenderItem={this.renderCustomTreeItem} />
+        </div>
       </div>
     );
   }
@@ -957,6 +955,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private onItemSelected(items: ITreeItem[]) {
     console.log("items selected: " + items.length);
+  }
+
+  private renderCustomTreeItem(item: ITreeItem): JSX.Element {
+    return (
+      <span>
+        {
+          item.iconProps &&
+          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
+        }
+        {item.label}
+      </span>
+    );
   }
 
   private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
@@ -1053,7 +1063,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
-
   }
-
 }

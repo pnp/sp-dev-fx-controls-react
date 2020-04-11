@@ -104,14 +104,17 @@ For example, you can define your function in a tsx file like this:
 ```typescript
 import * as React from 'react';
 
-export const renderCustomTreeItem = (item: ITreeItem): JSX.Element => {
-    return (
-        <span>
-            <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{paddingRight:'4px'}}/>
-            {item.label}
-        </span>
-    );
-};
+private renderCustomTreeItem(item: ITreeItem): JSX.Element {
+  return (
+    <span>
+      {
+        item.iconProps &&
+        <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
+      }
+      {item.label}
+    </span>
+  );
+}
 ```
 
 ## Implementation
