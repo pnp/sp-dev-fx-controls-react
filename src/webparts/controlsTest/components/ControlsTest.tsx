@@ -53,7 +53,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderExplorer, IFolder } from '../../../FolderExplorer';
+import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 
 /**
@@ -442,6 +442,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
 
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
+      text: 'Places', key: 'Places', onClick: () => {
+        console.log('additional breadcrumb item');
+      },
+    }];
+
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
@@ -712,14 +718,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">ComboBoxListItemPicker:
 
                 <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
-                                        columnInternalName='Title'
-                                        keyColumnInternalName='Id'
-                                        multiSelect={true}
-                                        onSelectedItem={(data) => {
-                                          console.log(`Item(s):`, data);
-                                        }}
-                                        webUrl={this.props.context.pageContext.web.absoluteUrl}
-                                        spHttpClient={this.props.context.spHttpClient}  />
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
 
               </div>
 
@@ -918,20 +924,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <div>
-            <FolderExplorer
-              context={this.props.context}
-              rootFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              defaultFolder={{
-                Name: 'Documents',
-                ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-              }}
-              onSelect={this._onFolderSelect}
-              canCreateFolders={true}
-            />
-          </div>
+          <FolderExplorer
+            context={this.props.context}
+            siteAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+            rootFolder={{
+              Name: this.props.context.pageContext.web.title,
+              ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`,
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+            initialBreadcrumbItems={additionalBreadcrumbItems}
+          />
+        </div>
 
           <div>
             <Pagination
