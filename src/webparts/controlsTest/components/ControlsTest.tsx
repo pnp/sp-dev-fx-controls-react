@@ -54,6 +54,7 @@ import {
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
+import { Pagination } from '../../../controls/pagination';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -939,13 +940,28 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             initialBreadcrumbItems={additionalBreadcrumbItems}
           />
         </div>
+
+          <div>
+            <Pagination
+             currentPage={3}
+             onChange={(page) => (this._getPage(page))}
+             totalPages={13}
+             //limiter={3}
+             // hideFirstPageJump
+             //hideLastPageJump
+             //limiterIcon={"NumberedListText"}
+            />
+          </div>
       </div>
     );
   }
 
+  private _getPage(page: number){
+    console.log('Page:', page);
+  }
+
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
-
   }
 
 }

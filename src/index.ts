@@ -13,6 +13,7 @@ export * from './DateTimePicker';
 export * from './FilePicker';
 export * from './FolderExplorer';
 export * from './IconPicker';
+export * from './Pagination';
 
 export * from './IFrameDialog';
 export * from './IFramePanel';
