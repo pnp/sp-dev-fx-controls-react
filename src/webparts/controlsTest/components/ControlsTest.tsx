@@ -37,6 +37,7 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
+import { IconPicker} from '../../../controls/iconPicker';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -702,7 +703,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">Field picker list data tester:
+              <div className="ms-font-m">List Item picker list data tester:
 
                 <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
@@ -714,6 +715,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+            <div>Icon Picker</div>
+            <div><IconPicker onSave={(value)=>{console.log(value)}} buttonLabel="Icon Picker"></IconPicker></div>
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
