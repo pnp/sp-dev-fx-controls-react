@@ -28,23 +28,19 @@ export interface ITreeViewProps {
    * By default this is set to Single.
    */
   selectionMode?: TreeViewSelectionMode;
-
   /**
    * Specify if the childrens should be selected when parent is selected.
    * By default this is set to false.
    */
   selectChildrenIfParentSelected?: boolean;
-
   /**
   * Specify if the checkboxes should be displayed for selection.
   */
   showCheckboxes?: boolean;
-
   /**
    * Display mode of the tree item actions.
    */
   treeItemActionsDisplayMode?: TreeItemActionsDisplayMode;
-
   /**
    * Keys of items selected by default
    */
@@ -56,13 +52,11 @@ export interface ITreeViewProps {
    * @argument isExpanded The status of item (expanded / collapsed).
    */
   onExpandCollapse?: (item: ITreeItem, isExpanded: boolean) => void;
-
   /**
    * Callback function called after an item is selected.
    * @argument items The selected items.
    */
   onSelect?: (items: ITreeItem[]) => void;
-
   /**
    * Customize how items are rendered.
    * @argument item The tree item.
