@@ -4,14 +4,12 @@
   padding: 15px;
 
   .listItem {
-    // line-height: 36px;
     display: flex;
     margin-top: 6px;
     align-items: flex-start;
   }
 
   .treeSelector {
-    //display: inline-block;
     vertical-align: middle;
     margin: 4px 4px 0 0;
     cursor: pointer;
@@ -26,7 +24,6 @@
     cursor: pointer;
     display: flex;
     align-items: flex-start;
-    width: 100%;
     padding: 4px;
 
     &.disabled {
@@ -47,6 +44,8 @@
 
       &.checked {
         background-color: '[theme:listItemBackgroundChecked, default:#eaeaea]';
+        font-weight: bold;
+        border-radius: 2px;
       }
     }
 
@@ -61,8 +60,6 @@
 
     .labels {
       line-height: 18px;
-      //display: flex;
-      //flex-direction: column;
       .itemLabel {
         padding: 0;
       }
@@ -77,8 +74,6 @@
   .itemMenu {
     display: flex;
     margin-left: 8px;
-    //position: absolute;
-    // margin-top: 10px;
 
     .actionMore {
       width: 14px;
@@ -102,7 +97,6 @@
   }
 
   .tree {
-
     label > span {
       padding-left: 0px;
     }
