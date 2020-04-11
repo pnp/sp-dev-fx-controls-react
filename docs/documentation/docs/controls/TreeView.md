@@ -4,19 +4,19 @@ This graphical control allows to present a hierarchical view of information. Eac
 
 Here is an example of the control in action:
 
-![Tree View control](assets/TreeView-control.gif)
+![Tree View control](../assets/TreeView-control.gif)
 
 **With all possible options**
 
-![Tree View control](assets/TreeView-all-possible-options.png)
+![Tree View control](../assets/TreeView-all-possible-options.png)
 
 **Without check boxes or when selection mode is 'None'**
 
-![Tree View control](assets/TreeView-without-checkbox.png)
+![Tree View control](../assets/TreeView-without-checkbox.png)
 
 **Without check boxes, and selection mode is multiple**
 
-![Tree View control](assets/TreeView-without-checkbox-selection-mode.png)
+![Tree View control](../assets/TreeView-without-checkbox-selection-mode.png)
 
 ## How to use this control in your solutions
 
