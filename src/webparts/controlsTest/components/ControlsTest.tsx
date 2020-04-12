@@ -808,8 +808,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
-              <div>Icon Picker</div>
-              <div><IconPicker onSave={(value) => { console.log(value); }} buttonLabel="Icon Picker"></IconPicker></div>
+            <div>Icon Picker</div>
+            <div><IconPicker renderOption="dialog" onSave={(value)=>{console.log(value);}} buttonLabel="Icon Picker"></IconPicker></div>
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
