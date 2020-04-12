@@ -1,8 +1,8 @@
 ## TreeView control
 
-This graphical control allows to present a hierarchical view of information. Each tree item can have a number of subitems. This is often visualized by indentation in a list. An tree item can be expanded to reveal subitems (if exists), and collapsed to hide subitems.
+This graphical control allows to present a hierarchical view of information. Each tree item can have a number of subitems. This is often visualized by indentation in a list. A tree item can be expanded to reveal subitems (if exist), and collapsed to hide subitems.
 
-Here is an example of the control in action:
+Here are examples of the control in action:
 
 ![Tree View control](../assets/TreeView-control.gif)
 
@@ -60,9 +60,9 @@ private onTreeItemExpandCollapse(item: ITreeItem, isExpanded: boolean) {
 ```
 
 ## Custom Rendering
-You can fully customize how tree items are rendered by providing the onRenderItem callback function and returning whatever JSX.Element you want.
+You can fully customize how tree items are rendered by providing the `onRenderItem` callback function and returning whatever `JSX.Element` you want.
 
-For example, you can define your function in a tsx file like this:
+For example, you can define your function in a .tsx file like this:
 
 ```typescript
 import * as React from 'react';
@@ -82,7 +82,7 @@ private renderCustomTreeItem(item: ITreeItem): JSX.Element {
 
 ## Implementation
 
-The TreeView control can be configured with the following properties:
+The `TreeView` control can be configured with the following properties:
 
 | Property                       | Type                       | Required | Description                                                                                                                        |
 |--------------------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
@@ -237,7 +237,7 @@ items: [
           }
         ]
 ```
-IconpProps in above example can be declared as below
+`IconpProps` in above example can be declared as below
 
 ```typescript
 private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
