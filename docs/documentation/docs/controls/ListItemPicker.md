@@ -16,7 +16,7 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
+import { ListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
 ```
 - Use the `ListItemPicker` control in your code as follows:
 

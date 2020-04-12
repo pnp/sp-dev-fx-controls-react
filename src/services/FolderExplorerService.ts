@@ -2,7 +2,7 @@ import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { PageContext } from "@microsoft/sp-page-context";
 import { IFolderExplorerService } from "./IFolderExplorerService";
 import { IFolder } from "./IFolderExplorerService";
-import { sp, Web, FolderAddResult } from "@pnp/sp";
+import { sp, Web, List, FolderAddResult } from "@pnp/sp";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
@@ -22,25 +22,31 @@ export class FolderExplorerService implements IFolderExplorerService {
   }
 
   /**
-   * Get root folder from library
-   * @param listId - the ID of the library to query
+   * Get libraries within a given site
+   * @param webAbsoluteUrl - the url of the target site
    */
-  public GetRootFolder = async (listId: string): Promise<IFolder> => {
-    return this._getRootFolder(listId);
+  public GetDocumentLibraries = async (webAbsoluteUrl: string): Promise<IFolder[]> => {
+    return this._getDocumentLibraries(webAbsoluteUrl);
   }
 
   /**
-   * Get root folder from library
-   * @param listId - the ID of the library to query
+   * Get libraries within a given site
+   * @param webAbsoluteUrl - the url of the target site
    */
-  private _getRootFolder = async (listId: string): Promise<IFolder> => {
-    let rootFolder: IFolder = null;
+  private _getDocumentLibraries = async (webAbsoluteUrl: string): Promise<IFolder[]> => {
+    let results: IFolder[] = [];
     try {
-      rootFolder = await sp.web.lists.getById(listId).rootFolder.select('Name', 'ServerRelativeUrl').usingCaching().get();
+      const web = new Web(webAbsoluteUrl);
+      const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title').get();
+
+      results = libraries.map((library): IFolder => {
+        return { Name: library.Title, ServerRelativeUrl: library.RootFolder.ServerRelativeUrl };
+      });
     } catch (error) {
       console.error('Error loading folders', error);
     }
-    return rootFolder;
+    return results;
+
   }
 
   /**

@@ -18,7 +18,7 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ComboBoxListItemPicker';
+import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
 ```
 - Use the `ComboBoxListItemPicker` control in your code as follows:
 

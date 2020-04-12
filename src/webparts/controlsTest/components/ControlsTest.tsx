@@ -39,6 +39,7 @@ import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
 import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import { IconPicker} from '../../../controls/iconPicker';
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -54,7 +55,8 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderExplorer, IFolder } from '../../../FolderExplorer';
+import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
+import { Pagination } from '../../../controls/pagination';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -442,6 +444,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
 
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
+      text: 'Places', key: 'Places', onClick: () => {
+        console.log('additional breadcrumb item');
+      },
+    }];
+
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
@@ -696,7 +704,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">Field picker list data tester:
+              <div className="ms-font-m">List Item picker list data tester:
 
                 <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
@@ -708,6 +716,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+            <div>Icon Picker</div>
+            <div><IconPicker onSave={(value)=>{console.log(value)}} buttonLabel="Icon Picker"></IconPicker></div>
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
@@ -920,16 +930,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FolderExplorer
             context={this.props.context}
+            siteAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             rootFolder={{
-              Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              Name: this.props.context.pageContext.web.title,
+              ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
             }}
             defaultFolder={{
               Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`,
             }}
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
+            initialBreadcrumbItems={additionalBreadcrumbItems}
           />
         </div>
 
@@ -943,7 +955,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['R2', '6']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            // onRenderItem={this.renderCustomTreeItem} 
+            // onRenderItem={this.renderCustomTreeItem}
+            />
+            
+        </div>
+
+          <div>
+            <Pagination
+             currentPage={3}
+             onChange={(page) => (this._getPage(page))}
+             totalPages={13}
+             //limiter={3}
+             // hideFirstPageJump
+             //hideLastPageJump
+             //limiterIcon={"NumberedListText"}
             />
         </div>
       </div>
@@ -956,6 +981,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private onItemSelected(items: ITreeItem[]) {
     console.log("items selected: " + items.length);
+  }
+        
+  private _getPage(page: number){
+    console.log('Page:', page);
+  }
+
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
   }
 
   private renderCustomTreeItem(item: ITreeItem): JSX.Element {
