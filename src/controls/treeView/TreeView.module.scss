@@ -24,6 +24,7 @@
     cursor: pointer;
     display: flex;
     align-items: flex-start;
+    width: 100%;
     padding: 4px;
 
     &.disabled {
@@ -44,8 +45,6 @@
 
       &.checked {
         background-color: '[theme:listItemBackgroundChecked, default:#eaeaea]';
-        font-weight: bold;
-        border-radius: 2px;
       }
     }
 
@@ -97,6 +96,7 @@
   }
 
   .tree {
+
     label > span {
       padding-left: 0px;
     }

@@ -943,7 +943,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['R2', '6']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            onRenderItem={this.renderCustomTreeItem} />
+            // onRenderItem={this.renderCustomTreeItem} 
+            />
         </div>
       </div>
     );

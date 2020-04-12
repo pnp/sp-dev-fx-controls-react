@@ -59,43 +59,6 @@ private onTreeItemExpandCollapse(item: ITreeItem, isExpanded: boolean) {
 }
 ```
 
-- Each tree item in the `treeitems` property is defined as `ITreeItem` as follows:
-
-Interface `ITreeItem`
-
-| Property   | Type              | Required | Description                                                      |
-|------------|-------------------|----------|------------------------------------------------------------------|
-| key        | string            | yes      | The unique ID of the tree item.                                  |
-| label      | string            | yes      | Text displayed next to checkbox.                                 |
-| subLabel   | string            | no       | The sub label of the tree item.                                  |
-| iconProps  | IIconProps        | no       | Custom icon to be rendered before label.                         |
-| disabled   | boolean           | no       | Specify if the tree item needs to be disabled. Default is false. |
-| selectable | boolean           | no       | Specify if the tree item can be selected. Default is true.       |
-| data       | any               | no       | Specify an additional data of the tree item.                     |
-| actions    | ITreeItemAction[] | no       | Specify list of actions for the tree item.                       |
-| children   | ITreeItem[]       | no       | Specify list of child tree items.                                |
-
-
-Interface `ITreeItemAction`
-
-Specifies the list of actions for the tree item.
-| Property             | Type                                 | Required | Description                                                                                                                |
-|----------------------|--------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------|
-| id                   | string                               | yes      | Unique id of the action.                                                                                                   |
-| title                | string                               | yes      | Title of the action.                                                                                                       |
-| iconProps            | IIconProps                           | no       | Name of the icon to be used to display action.                                                                             |
-| hidden               | boolean                              | no       | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
-| invokeActionOnRender | boolean                              | no       | Specifies if you want to invoke the action on render.                                                                      |
-| actionCallback       | (currentTreeItem: ITreeItem) => void | yes      | Method to be executed when action is fired.                                                                                |
-
-Enum `TreeItemActionsDisplayMode`
-
-Specifies the display mode of the tree item action.
-| Value          |
-|----------------|
-| Buttons        |
-| ContextualMenu |
-
 ## Custom Rendering
 You can fully customize how tree items are rendered by providing the onRenderItem callback function and returning whatever JSX.Element you want.
 
@@ -142,6 +105,43 @@ Specifies the selection mode of tree item.
 | Single   |
 | Multiple |
 | None     |
+
+Interface `ITreeItem`
+
+Each tree item in the `treeitems` property is defined as `ITreeItem` as follows:
+
+| Property   | Type              | Required | Description                                                      |
+|------------|-------------------|----------|------------------------------------------------------------------|
+| key        | string            | yes      | The unique ID of the tree item.                                  |
+| label      | string            | yes      | Text displayed next to checkbox.                                 |
+| subLabel   | string            | no       | The sub label of the tree item.                                  |
+| iconProps  | IIconProps        | no       | Custom icon to be rendered before label.                         |
+| disabled   | boolean           | no       | Specify if the tree item needs to be disabled. Default is false. |
+| selectable | boolean           | no       | Specify if the tree item can be selected. Default is true.       |
+| data       | any               | no       | Specify an additional data of the tree item.                     |
+| actions    | ITreeItemAction[] | no       | Specify list of actions for the tree item.                       |
+| children   | ITreeItem[]       | no       | Specify list of child tree items.                                |
+
+
+Interface `ITreeItemAction`
+
+Specifies the list of actions for the tree item.
+| Property             | Type                                 | Required | Description                                                                                                                |
+|----------------------|--------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------|
+| id                   | string                               | yes      | Unique id of the action.                                                                                                   |
+| title                | string                               | yes      | Title of the action.                                                                                                       |
+| iconProps            | IIconProps                           | no       | Name of the icon to be used to display action.                                                                             |
+| hidden               | boolean                              | no       | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
+| invokeActionOnRender | boolean                              | no       | Specifies if you want to invoke the action on render.                                                                      |
+| actionCallback       | (currentTreeItem: ITreeItem) => void | yes      | Method to be executed when action is fired.                                                                                |
+
+Enum `TreeItemActionsDisplayMode`
+
+Specifies the display mode of the tree item action.
+| Value          |
+|----------------|
+| Buttons        |
+| ContextualMenu |
 
 ## Example of array of tree items used to render control as in 2nd screenshot
 
@@ -237,4 +237,10 @@ items: [
           }
         ]
 ```
+IconpProps in above example can be declared as below
+
+```typescript
+private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+```
+
 
