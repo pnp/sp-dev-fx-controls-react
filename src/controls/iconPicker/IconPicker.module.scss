@@ -1,5 +1,17 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
+.dialogSelectedIcons{
+  font-size: 30px;
+  min-width: 32px;
+  width: 100%;
+  color: "[theme: themePrimary, default: #0078d7]";
+  text-align: center;
+}
+.dialogIconsContainer{
+  padding:5px;
+   overflow: auto;
+   max-height: 600px;
+}
 .navArea {
 	display: flex;
 	width: 100%;
@@ -17,7 +29,7 @@
 .searchBox {
 	flex-grow: 5;
 	flex-shrink: 1;
-	margin: 5px 0;	
+	margin: 5px 0;
 }
 .closeBtnContainer {
 	flex: 0 0 54px;
@@ -85,7 +97,7 @@
 	color: "[theme: themePrimary, default: #0078d7]";
 }
 .iconRadio:focus + .iconLabel {
-	outline: 1px dashed;
+	outline: 1px;
 	outline-color: "[theme: themePrimary, default: #0078d7]";
 	outline-offset: -5px;
 }
