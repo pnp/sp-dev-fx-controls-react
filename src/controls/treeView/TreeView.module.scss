@@ -1,0 +1,107 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+.treeView {
+  padding: 15px;
+
+  .listItem {
+    display: flex;
+    margin-top: 6px;
+    align-items: flex-start;
+  }
+
+  .treeSelector {
+    vertical-align: middle;
+    margin: 4px 4px 0 0;
+    cursor: pointer;
+    &>button {
+      height: 20px;
+      width: 20px;
+      padding: 0;
+    }
+  }
+
+  .itemContent {
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    padding: 4px;
+
+    &.disabled {
+      cursor: default;
+      color: '[theme:disabledBodyText, default:#a6a6a6]';
+
+      .labels {
+        .itemSubLabel {
+          color: '[theme:disabledSubtext, default:#d0d0d0]';
+        }
+      }
+    }
+
+    &.noCheckBox:not(.disabled) {
+        &:hover {
+        background-color: '[theme:listItemBackgroundHover, default:#f4f4f4]';
+      }
+
+      &.checked {
+        background-color: '[theme:listItemBackgroundChecked, default:#eaeaea]';
+      }
+    }
+
+    .checkbox {
+      margin-right: 8px;
+    }
+
+    .icon {
+      height: 18px;
+      line-height: 18px;
+    }
+
+    .labels {
+      line-height: 18px;
+      .itemLabel {
+        padding: 0;
+      }
+
+      .itemSubLabel {
+        font-size: 12px;
+        color: '[theme:bodySubtext, default:#666666]';
+      }
+    }
+  }
+
+  .itemMenu {
+    display: flex;
+    margin-left: 8px;
+
+    .actionMore {
+      width: 14px;
+      height: 20px;
+      padding: 0;
+    }
+
+    .actionButton {
+      height: 20px;
+      padding: 0;
+      background-color: transparent;
+      &:hover {
+        background-color: '[theme:buttonBackgroundHovered, default:#f4f4f4]';
+        color: '[theme:buttonTextHovered, default:#212121]';
+      }
+      &:pressed {
+        background-color: '[theme:buttonBackgroundPressed, default:#eaeaea]';
+        color: '[theme:buttonTextPressed, default:#212121]';
+      }
+    }
+  }
+
+  .tree {
+
+    label > span {
+      padding-left: 0px;
+    }
+    .blankspace {
+      padding-left: 35px;
+    }
+  }
+}

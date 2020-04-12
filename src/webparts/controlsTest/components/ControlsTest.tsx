@@ -37,8 +37,9 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
+import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
+import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
 import { IconPicker} from '../../../controls/iconPicker';
-
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -944,6 +945,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
         </div>
 
+        <div>
+          <h3>Tree View</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={true}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={['R2', '6']}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}
+            // onRenderItem={this.renderCustomTreeItem}
+            />
+            
+        </div>
+
           <div>
             <Pagination
              currentPage={3}
@@ -954,11 +970,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
              //hideLastPageJump
              //limiterIcon={"NumberedListText"}
             />
-          </div>
+        </div>
       </div>
     );
   }
 
+  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
+    console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
+  }
+
+  private onItemSelected(items: ITreeItem[]) {
+    console.log("items selected: " + items.length);
+  }
+        
   private _getPage(page: number){
     console.log('Page:', page);
   }
@@ -967,4 +991,111 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('selected folder', folder);
   }
 
+  private renderCustomTreeItem(item: ITreeItem): JSX.Element {
+    return (
+      <span>
+        {
+          item.iconProps &&
+          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
+        }
+        {item.label}
+      </span>
+    );
+  }
+
+  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private treeitems = [
+    {
+      key: "R1",
+      label: "Root",
+      subLabel: "This is a sub label for node",
+      iconProps: this.skypeCheckIcon,
+      actions: [{
+        title: "Get item",
+        iconProps: {
+          iconName: 'Warning',
+          style: {
+            color: 'salmon',
+          },
+        },
+        id: "GetItem",
+        actionCallback: async (treeItem: ITreeItem) => {
+          console.log(treeItem);
+        }
+      }],
+      children: [
+        {
+          key: "1",
+          label: "Parent 1",
+          selectable: false,
+          children: [
+            {
+              key: "3",
+              label: "Child 1",
+              subLabel: "This is a sub label for node",
+              actions: [{
+                title: "Share",
+                iconProps: {
+                  iconName: 'Share'
+                },
+                id: "GetItem",
+                actionCallback: async (treeItem: ITreeItem) => {
+                  console.log(treeItem);
+                }
+              }],
+              children: [
+                {
+                  key: "gc1",
+                  label: "Grand Child 1",
+                  actions: [{
+                    title: "Get Grand Child item",
+                    iconProps: {
+                      iconName: 'Mail'
+                    },
+                    id: "GetItem",
+                    actionCallback: async (treeItem: ITreeItem) => {
+                      console.log(treeItem);
+                    }
+                  }]
+                }
+              ]
+            },
+            {
+              key: "4",
+              label: "Child 2",
+              iconProps: this.skypeCheckIcon
+            }
+          ]
+        },
+        {
+          key: "2",
+          label: "Parent 2"
+        },
+        {
+          key: "5",
+          label: "Parent 3",
+          disabled: true
+        },
+        {
+          key: "6",
+          label: "Parent 4",
+          selectable: true
+        }
+      ]
+    },
+    {
+      key: "R2",
+      label: "Root 2",
+      children: [
+        {
+          key: "8",
+          label: "Parent 5"
+        }
+      ]
+    }
+  ];
+
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+  }
 }

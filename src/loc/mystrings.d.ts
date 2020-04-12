@@ -300,6 +300,11 @@ declare interface IControlStrings {
   //Icon picker
   SelectedLabel: string;
   SelectIcon: string;
+
+  //Tree View
+  TreeViewExpandTitle: string;
+  TreeViewCollapseTitle: string;
+
 }
 
 declare interface IDateTimeStrings {
