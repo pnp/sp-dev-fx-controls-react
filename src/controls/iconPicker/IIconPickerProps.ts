@@ -28,7 +28,7 @@ export interface IIconPickerProps {
      */
     currentIcon?: string;
      /**
-     * irender option:  Panel, Dialog, dropDown
+     * irender option:  panel, dialog
      */
-    renderOption?: string;
+    renderOption?: 'panel' | 'dialog';
 }

@@ -8,7 +8,7 @@ import {
 } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'ControlsTestWebPartStrings';
-import ControlsTest from './components/ControlsTest_SingleComponent';
+import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
 import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
 

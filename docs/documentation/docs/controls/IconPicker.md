@@ -52,7 +52,7 @@ The IconPicker component can be configured with the following properties:
 | disabled | boolean | no | Specifies if the picker button is disabled |
 | buttonClassName | boolean | no | If provided, additional class name will be added to the picker button |
 | panelClassName | boolean | no | If provided, additional class name will be added to the picker panel |
-| currentIcon | boolean | no | Specifies default selected icon |
-| renderOption | string | no | Specifies how to render list of Icons, Values :  'Panel' or 'Dialog' defualt value 'Panel' |
+| currentIcon | string | no | Specifies default selected icon |
+| renderOption | `dialog`, `panel` | no | Specifies how to render list of Icons, Values :  'Panel' or 'Dialog' defualt value 'Panel' |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/IconPicker)

@@ -8,18 +8,22 @@
           "TreeView Control [#536](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/536)"
         ],
         "enhancements": [
-          "`FolderExplorer` updates: allow selection of libraries if site url is used as the root, allow passing items to be passed as a property and added to the breadcrumb, add support for loading folders from a different site, fix breadcrumb names for document libraries [#534](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/534)"
+          "`FolderExplorer` updates: allow selection of libraries if site url is used as the root, allow passing items to be passed as a property and added to the breadcrumb, add support for loading folders from a different site, fix breadcrumb names for document libraries [#534](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/534)",
+          "`IconPicker`: `renderOption` property to render icons list as a panel or dialog [#537](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/537)"
         ],
         "fixes": [
           "`ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker [#510](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/510)",
           "Documentation fix: add the new control `ComboBoxListItemPicker` component to landing page [#511](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/511)",
           "`FilePicker`: While using the control, if `hideOrganisationalAssetTab` is set to true, even then an additional HTTP request is made.",
-          "`IconPicker`: search fix and updated list of icons [#533](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/533)"
+          "`IconPicker`: search fix and updated list of icons [#533](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/533)",
+          "`ListItemAttachment`: when I upload a file that contains an hyphen, the \"-\" char is replaced by an empty string [#526](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/526)",
+          "`IconPicker` shows selected icon only during the first opening [#513](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/513)"
         ]
       },
       "contributions": [
         "[David Ramalho](https://github.com/DRamalho92)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Gregghis](https://github.com/Gregghis)",
         "[João Mendes](https://github.com/joaojmendes)",
         "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
         "[Nanddeep Nachan](https://github.com/nanddeepn)",

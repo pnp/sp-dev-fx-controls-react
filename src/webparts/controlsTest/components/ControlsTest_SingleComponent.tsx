@@ -458,7 +458,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
             <div>Icon Picker</div>
-            <div><IconPicker renderOption="dialog" onSave={(value)=>{console.log(value);}} buttonLabel="Icon Picker"></IconPicker></div>
+            <div><IconPicker renderOption="dialog" currentIcon={'Warning'} onSave={(value)=>{console.log(value);}} buttonLabel="Icon Picker"></IconPicker></div>
       </div>
     );
   }
