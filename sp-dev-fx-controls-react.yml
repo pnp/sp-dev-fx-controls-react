@@ -1,0 +1,12 @@
+page_type: sample
+products:
+  - office-sp
+languages:
+  - typescript
+extensions:
+  contentType: tools
+  technologies:
+    - SharePoint Framework
+  createdDate: '9/11/2017 4:15:26 AM'
+title: sp-dev-fx-controls-react
+description: Reusable React controls for SPFx solutions
