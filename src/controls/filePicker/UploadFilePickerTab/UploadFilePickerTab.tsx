@@ -19,7 +19,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
   }
 
   public render(): React.ReactElement<IUploadFilePickerTabProps> {
-    const { filePickerResult } = this.state;
+    const { filePickerResult, filePreview } = this.state;
     const fileName: string = filePickerResult ? filePickerResult.fileName : null;
     const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
 
@@ -35,15 +35,16 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
             accept={acceptedFilesExtensions} multiple={false} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUpload(event)}
           />
           {
-            fileName && this.state.filePreview &&
+            fileName && filePreview &&
             /** Display image preview */
-            <div className={styles.localTabSinglePreview}>                              
-                <img className={styles.localTabSinglePreviewImage} src={this.state.filePreview} alt={this.state.filePickerResult.fileName} />              
+            <div className={styles.localTabSinglePreview}>
+                <img className={styles.localTabSinglePreviewImage} src={filePreview} alt={filePickerResult.fileName} />
+                <span>{fileName}</span>
             </div>
           }
           <div>
-            <label className={styles.localTabLabel}>{
-              (!this.state.filePreview ? fileName : "")
+            <label className={styles.localTabFilename}>{
+              (!filePreview && fileName ? fileName : "")
             }</label>
           </div>
           <label className={styles.localTabLabel} htmlFor="fileInput">{
@@ -53,7 +54,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.filePickerResult}
+              disabled={!filePickerResult}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.AddFileButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -95,7 +96,8 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
       };
     }
     this.setState({
-      filePickerResult
+      filePickerResult,
+      filePreview: undefined
     });
   }
 
