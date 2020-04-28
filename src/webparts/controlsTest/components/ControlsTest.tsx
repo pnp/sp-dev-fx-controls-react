@@ -1007,7 +1007,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FilePicker
             bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
