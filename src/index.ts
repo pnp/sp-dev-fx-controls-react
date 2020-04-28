@@ -12,6 +12,7 @@ export * from './Progress';
 export * from './DateTimePicker';
 export * from './FilePicker';
 export * from './FolderExplorer';
+export * from './FolderPicker';
 export * from './IconPicker';
 export * from './Pagination';
 

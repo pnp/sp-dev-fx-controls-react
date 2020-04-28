@@ -55,6 +55,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
+import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 
@@ -423,6 +424,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       const fileResultContent = await filePickerResult.downloadFileContent();
       console.log(fileResultContent);
     }
+  }
+
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
   }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
@@ -946,6 +952,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
                 />
               </div>
+              <div>
+                <FolderPicker context={this.props.context}
+                  rootFolder={{
+                    Name: 'Documents',
+                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+                  }}
+                  onSelect={this._onFolderSelect}
+                  label='Folder Picker'
+                  required={true}
+                  canCreateFolders={true}
+                ></FolderPicker>
+              </div>
             </div>
           </div>
         </div>
@@ -1029,18 +1047,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FolderExplorer
             context={this.props.context}
-            siteAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             rootFolder={{
-              Name: this.props.context.pageContext.web.title,
-              ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
             }}
             defaultFolder={{
               Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`,
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
             }}
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
-            initialBreadcrumbItems={additionalBreadcrumbItems}
           />
         </div>
 
@@ -1096,9 +1112,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private _getPage(page: number) {
     console.log('Page:', page);
-  }
-
-  private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
   }
 }
