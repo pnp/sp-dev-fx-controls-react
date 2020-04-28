@@ -1059,7 +1059,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
           />
         </div>
-        
+
         <div>
           <h3>Tree View</h3>
           <TreeView items={this.treeitems}
@@ -1112,9 +1112,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private _getPage(page: number) {
     console.log('Page:', page);
-  }
-
-  private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
   }
 }
