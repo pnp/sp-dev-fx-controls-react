@@ -5,7 +5,8 @@
       "changes": {
         "new": [
           "Pagination Control [#535](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/535)",
-          "TreeView Control [#536](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/536)"
+          "TreeView Control [#536](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/536)",
+          "FolderPicker Control [#525](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/525)"
         ],
         "enhancements": [
           "`FolderExplorer` updates: allow selection of libraries if site url is used as the root, allow passing items to be passed as a property and added to the breadcrumb, add support for loading folders from a different site, fix breadcrumb names for document libraries [#534](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/534)",
