@@ -19,7 +19,8 @@
           "`IconPicker`: search fix and updated list of icons [#533](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/533)",
           "`ListItemAttachment`: when I upload a file that contains an hyphen, the \"-\" char is replaced by an empty string [#526](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/526)",
           "`IconPicker` shows selected icon only during the first opening [#513](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/513)",
-          "`ComboBoxListItemPicker`: `onSelectedItem` passing data to callback method but with attributes value as `undefined` [#519](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/519)"
+          "`ComboBoxListItemPicker`: `onSelectedItem` passing data to callback method but with attributes value as `undefined` [#519](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/519)",
+          "`FilePicker`: filename is not visible on Upload tab [#518](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/518)"
         ]
       },
       "contributions": [
