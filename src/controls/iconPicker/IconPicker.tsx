@@ -8,13 +8,11 @@ import styles from './IconPicker.module.scss';
 import * as strings from 'ControlStrings';
 import { IconNames } from './IconNames';
 import { Panel, PanelType, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
-import { debounce } from 'lodash';
+import debounce = require('lodash/debounce');
 import { IIconPickerState } from './IIconPickerState';
 import * as telemetry from '../../common/telemetry';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-
-initializeIcons();
 
 export class IconPicker extends React.Component<IIconPickerProps, IIconPickerState> {
   private radioIdBase: string = getId("radio");
@@ -22,6 +20,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
 
   constructor(props: IIconPickerProps) {
     super(props);
+
+    initializeIcons();
 
     telemetry.track('IconPicker');
 
@@ -83,8 +83,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
             <SearchBox className={styles.searchBox}
               onAbort={this.onAbort}
               data-automation-id={`icon-picker-search`}
-
-              onChange={this.onChange} />
+              onSearch={debounce(this.onChange, 300)}
+              onChange={debounce(this.onChange, 300)} />
             <div className={styles.dialogIconsContainer}>
               {this.renderPanelContent()}
             </div>
@@ -158,8 +158,8 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
       <SearchBox className={styles.searchBox}
         onAbort={this.onAbort}
         data-automation-id={`icon-picker-search`}
-
-        onChange={this.onChange} />
+        onSearch={debounce(this.onChange, 300)}
+        onChange={debounce(this.onChange, 300)} />
       <div className={styles.closeBtnContainer}>{defaultRender!(props)}</div>
     </div>;
   }

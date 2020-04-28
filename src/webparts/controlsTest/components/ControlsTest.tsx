@@ -36,7 +36,7 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
-import { ComboBoxListItemPicker } from '../../../';
+import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
 import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
 import { IconPicker } from '../../../controls/iconPicker';
@@ -1043,6 +1043,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={sampleGridData}
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
+
+        <IconPicker buttonLabel={'Icon'}
+            onChange={(iconName: string) => { console.log(iconName); }}
+            onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>
           <FolderExplorer
