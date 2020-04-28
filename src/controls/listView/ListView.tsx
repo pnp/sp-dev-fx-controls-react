@@ -8,7 +8,7 @@ import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import { TextField } from 'office-ui-fabric-react/lib/components/TextField';
-import { filter } from 'lodash';
+import filter = require('lodash/filter');
 
 /**
  * File type icon component
