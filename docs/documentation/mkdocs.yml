@@ -29,13 +29,15 @@ nav:
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Map: 'controls/Map.md'
+    - Pagination: 'controls/Pagination.md'
     - PeoplePicker: 'controls/PeoplePicker.md'
     - Placeholder: 'controls/Placeholder.md'
     - Progress: 'controls/Progress.md'
     - RichText: 'controls/RichText.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
-    - TaxonomyPicker: 'controls/TaxonomyPicker.md'
+    - TaxonomyPicker: 'controls/TaxonomyPicker.md',
+    - TreeView: 'controls/TreeView.md',
     - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'

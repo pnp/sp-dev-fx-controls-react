@@ -331,6 +331,9 @@ define([], () => {
     FolderExplorerLoading: "Loading folders...",
     FolderExplorerNoItems: "This folder doesn't have any subfolders.",
     SelectedLabel: "Selected",
-    SelectIcon: "Select icon"
+    SelectIcon: "Select icon",
+
+    TreeViewExpandTitle: "Expand this item",
+    TreeViewCollapseTitle: "Collapse this item"
   };
 });

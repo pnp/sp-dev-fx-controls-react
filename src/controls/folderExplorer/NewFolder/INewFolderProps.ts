@@ -9,6 +9,11 @@ export interface INewFolderProps {
   context: WebPartContext | ExtensionContext;
 
   /**
+   * The absolute url of the target site. Only required if not the current site
+   */
+  siteAbsoluteUrl?: string;
+
+  /**
    * Folder currently selected
    */
   selectedFolder: IFolder;

@@ -68,6 +68,7 @@ The following controls are currently available:
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [TreeView](./controls/TreeView) (Tree View)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 
 

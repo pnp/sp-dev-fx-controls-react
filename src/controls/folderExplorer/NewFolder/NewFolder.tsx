@@ -45,7 +45,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
             placeholder={strings.NewFolderNamePlaceholder}
             value={this.state.folderName}
             onChanged={this._onFolderNameChange}
-            // styles={{ fieldGroup: { width: 300 } }}
+          // styles={{ fieldGroup: { width: 300 } }}
           />
         }
         {this.state.folderName.length > 0 &&
@@ -79,8 +79,10 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
     this.setState({ loading: true });
 
     try {
+      const siteAbsoluteUrl = this.props.siteAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
+
       const folder = await this._spService.AddFolder(
-        this.props.context.pageContext.web.absoluteUrl,
+        siteAbsoluteUrl,
         this.props.selectedFolder.ServerRelativeUrl,
         this.state.folderName);
 

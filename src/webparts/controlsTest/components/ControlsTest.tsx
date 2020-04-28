@@ -37,7 +37,9 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../';
-
+import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
+import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import { IconPicker } from '../../../controls/iconPicker';
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -53,8 +55,9 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderExplorer, IFolder } from '../../../controls/folderExplorer';
 import FolderPicker from '../../../controls/folderPicker/FolderPicker';
+import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
+import { Pagination } from '../../../controls/pagination';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -112,6 +115,98 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
     <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
     <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
+
+  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private treeitems = [
+    {
+      key: "R1",
+      label: "Root",
+      subLabel: "This is a sub label for node",
+      iconProps: this.skypeCheckIcon,
+      actions: [{
+        title: "Get item",
+        iconProps: {
+          iconName: 'Warning',
+          style: {
+            color: 'salmon',
+          },
+        },
+        id: "GetItem",
+        actionCallback: async (treeItem: ITreeItem) => {
+          console.log(treeItem);
+        }
+      }],
+      children: [
+        {
+          key: "1",
+          label: "Parent 1",
+          selectable: false,
+          children: [
+            {
+              key: "3",
+              label: "Child 1",
+              subLabel: "This is a sub label for node",
+              actions: [{
+                title: "Share",
+                iconProps: {
+                  iconName: 'Share'
+                },
+                id: "GetItem",
+                actionCallback: async (treeItem: ITreeItem) => {
+                  console.log(treeItem);
+                }
+              }],
+              children: [
+                {
+                  key: "gc1",
+                  label: "Grand Child 1",
+                  actions: [{
+                    title: "Get Grand Child item",
+                    iconProps: {
+                      iconName: 'Mail'
+                    },
+                    id: "GetItem",
+                    actionCallback: async (treeItem: ITreeItem) => {
+                      console.log(treeItem);
+                    }
+                  }]
+                }
+              ]
+            },
+            {
+              key: "4",
+              label: "Child 2",
+              iconProps: this.skypeCheckIcon
+            }
+          ]
+        },
+        {
+          key: "2",
+          label: "Parent 2"
+        },
+        {
+          key: "5",
+          label: "Parent 3",
+          disabled: true
+        },
+        {
+          key: "6",
+          label: "Parent 4",
+          selectable: true
+        }
+      ]
+    },
+    {
+      key: "R2",
+      label: "Root 2",
+      children: [
+        {
+          key: "8",
+          label: "Parent 5"
+        }
+      ]
+    }
   ];
 
   constructor(props: IControlsTestProps) {
@@ -447,6 +542,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
 
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
+      text: 'Places', key: 'Places', onClick: () => {
+        console.log('additional breadcrumb item');
+      },
+    }];
+
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
@@ -701,7 +802,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">Field picker list data tester:
+              <div className="ms-font-m">List Item picker list data tester:
 
                 <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
@@ -712,6 +813,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
 
+              </div>
+              <div>Icon Picker</div>
+              <div>
+                <IconPicker
+                  renderOption="panel"
+                  onSave={(value) => { console.log(value); }}
+                  currentIcon={'Warning'}
+                  buttonLabel="Icon Picker">
+                </IconPicker>
               </div>
 
               <div className="ms-font-m">ComboBoxListItemPicker:
@@ -949,9 +1059,62 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
           />
         </div>
+        
+        <div>
+          <h3>Tree View</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={true}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={['R2', '6']}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}
+          // onRenderItem={this.renderCustomTreeItem}
+          />
 
+        </div>
+
+        <div>
+          <Pagination
+            currentPage={3}
+            onChange={(page) => (this._getPage(page))}
+            totalPages={13}
+          //limiter={3}
+          // hideFirstPageJump
+          //hideLastPageJump
+          //limiterIcon={"NumberedListText"}
+          />
+        </div>
       </div>
     );
   }
 
+  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
+    console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
+  }
+
+  private onItemSelected(items: ITreeItem[]) {
+    console.log("items selected: " + items.length);
+  }
+
+  private renderCustomTreeItem(item: ITreeItem): JSX.Element {
+    return (
+      <span>
+        {
+          item.iconProps &&
+          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
+        }
+        {item.label}
+      </span>
+    );
+  }
+
+  private _getPage(page: number) {
+    console.log('Page:', page);
+  }
+
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+  }
 }
