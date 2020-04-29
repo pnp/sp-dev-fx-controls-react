@@ -61,11 +61,8 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
 - The `onSelectedItem` change event returns the list items selected and can be implemented as follows:
 
 ```TypeScript
-private onSelectedItem(data: { key: string; name: string }[]) {
-  for (const item of data) {
-    console.log(`Item value: ${item.key}`);
-    console.log(`Item text: ${item.name}`);
-  }
+private onSelectedItem(items:[]) {
+    console.log("selected items:", items);
 }
 ```
 ## Implementation
