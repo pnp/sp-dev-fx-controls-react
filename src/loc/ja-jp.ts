@@ -52,7 +52,7 @@ define([], () => {
   "ListItemAttachmentsActionDeleteIconTitle": "削除",
   "ListItemAttachmentsactionDeleteTitle": "削除",
   "ListItemAttachmentsfileDeletedMsg": "ファイル '{0}' は削除されました",
-  "ListItemAttachmentsfileDeleteError": "ファイルの削除中にエラーが発生しました。原因: {0}",
+  "ListItemAttachmentsfileDeleteError": "ファイルの削除中にエラーが発生しました: {0}。原因: {1}",
   "ListItemAttachmentserrorLoadAttachments": "リスト アイテムの添付ファイルの読み込み中にエラーが発生しました。原因: {0}",
   "ListItemAttachmentsconfirmDelete": "添付ファイルをサイトのごみ箱に{0}に送信しますか?",
   "ListItemAttachmentsdialogTitle": "リスト アイテムの添付ファイル",
