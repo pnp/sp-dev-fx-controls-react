@@ -22,7 +22,8 @@
           "`ComboBoxListItemPicker`: `onSelectedItem` passing data to callback method but with attributes value as `undefined` [#519](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/519)",
           "`FilePicker`: filename is not visible on Upload tab [#518](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/518)",
           "`IconPicker`: Search doesn't work at all [#512](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/512)",
-          "`ComboBoxListItemPicker` documentation fix: correct `onSelectedItem` notation [#547](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/547)"
+          "`ComboBoxListItemPicker` documentation fix: correct `onSelectedItem` notation [#547](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/547)",
+          "Documentation: Fix mistranslation in Japanese [#545](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/545)"
         ]
       },
       "contributions": [
@@ -33,7 +34,8 @@
         "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
         "[Nanddeep Nachan](https://github.com/nanddeepn)",
         "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
-        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
+        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)",
+        "[Takashi Shinohara](https://github.com/karamem0)"
       ]
     },
     {
