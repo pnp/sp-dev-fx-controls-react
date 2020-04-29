@@ -61,10 +61,45 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
 - The `onSelectedItem` change event returns the list items selected and can be implemented as follows:
 
 ```TypeScript
-private onSelectedItem(items:[]) {
+private onSelectedItem(items: []) {
     console.log("selected items:", items);
 }
 ```
+
+If you can provide typing details to the implementation based on `columnInternalName` and `keyColumnInternalName`.
+For example above:
+
+```typescript
+columnInternalName='Title'
+keyColumnInternalName='Id'
+// ...
+private onSelectedItem(items: { Title: string, Id: string }[]) {
+    console.log("selected items:", items);
+}
+```
+
+If you use variables for `columnInternalName` and `keyColumnInternalName` the typing will look as follow:
+``` typescript
+const columnInternalName = 'Title';
+const keyColumnInternalName = 'Id';
+
+<ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
+                        columnInternalName={columnInternalName}
+                        keyColumnInternalName={keyColumnInternalName}
+                        filter="Title eq 'SPFx'" 
+                        defaultSelectedItems: [2]
+                        onSelectedItem={this.onSelectedItem}
+                        webUrl={this.context.pageContext.web.absoluteUrl}
+                        spHttpClient={this.context.spHttpClient} />
+
+private onSelectedItem(items: { 
+    [columnInternalName]: string, 
+    [keyColumnInternalName]: string 
+  }[]) {
+    console.log("selected items:", items);
+}
+```
+
 ## Implementation
 
 The `ComboBoxListItemPicker` control can be configured with the following properties:
