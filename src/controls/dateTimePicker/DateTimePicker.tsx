@@ -15,6 +15,7 @@ import { Async, css } from 'office-ui-fabric-react/lib/Utilities';
 import { IDateTimePickerProps, IDateTimePickerState, DateTimePickerStrings } from ".";
 import { TimeHelper } from "./TimeHelper";
 import { TimeDisplayControlType } from "./TimeDisplayControlType";
+import { addMonths, addYears } from 'office-ui-fabric-react/lib/utilities/dateMath/DateMath';
 
 interface IDateComponents {
   day: Date;
@@ -53,7 +54,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       hours,
       minutes,
       seconds,
-      errorMessage: ''
+      errorMessage: '',
+      today: new Date(Date.now())
     };
 
     this.async = new Async(this);
@@ -205,7 +207,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       strings: dateStrings = new DateTimePickerStrings(), // Defines the DatePicker control labels
       timeDisplayControlType,
       placeholder,
-      showLabels
+      showLabels,
+      minDate = addYears(this.state.today, 1),
+      maxDate = addYears(this.state.today, 1)
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;
@@ -293,6 +297,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
                 showWeekNumbers={showWeekNumbers}
                 placeholder={placeholder}
+                minDate={minDate}
+                maxDate={maxDate}
               />
             </div>
           </div>
