@@ -114,7 +114,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | listId | string | yes | Guid of the list. |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
-| webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | defaultSelectedItems | any[] | no | Initial items that have already been selected and should appear in the people picker. Support objects and Ids only |
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
