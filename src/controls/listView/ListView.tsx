@@ -7,8 +7,8 @@ import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
-import { TextField } from 'office-ui-fabric-react/lib/components/TextField';
 import filter = require('lodash/filter');
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 
 /**
  * File type icon component
@@ -517,7 +517,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     return (
       <div>
         {
-          showFilter && <TextField placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onChanged={this._updateFilterValue} value={filterValue}/>
+          showFilter && <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue}/>
         }
         <DetailsList
           key="ListViewControl"
