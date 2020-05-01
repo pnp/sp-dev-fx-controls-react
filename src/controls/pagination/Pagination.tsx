@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react';
+import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import styles from "./Pagination.module.scss";
 
 export interface IPaginationProps {
