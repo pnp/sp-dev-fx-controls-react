@@ -23,7 +23,8 @@
           "`FilePicker`: filename is not visible on Upload tab [#518](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/518)",
           "`IconPicker`: Search doesn't work at all [#512](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/512)",
           "`ComboBoxListItemPicker` documentation fix: correct `onSelectedItem` notation [#547](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/547)",
-          "Documentation: Fix mistranslation in Japanese [#545](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/545)"
+          "Documentation: Fix mistranslation in Japanese [#545](https://github.com/SharePoint/sp-dev-fx-controls-react/pull/545)",
+          "`FieldUserRenderer`: `displayName` in `FieldUserHoverCard` is not updated if `props` of the `FIeldUserRenderer` have been changed [#542](https://github.com/SharePoint/sp-dev-fx-controls-react/issues/542)"
         ]
       },
       "contributions": [
