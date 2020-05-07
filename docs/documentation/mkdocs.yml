@@ -79,5 +79,5 @@ extra:
       link: 'http://aka.ms/sppnp-videos'
     - type: 'link'
       link: 'https://aka.ms/sppnp'
-repo_url: https://github.com/SharePoint/sp-dev-fx-controls-react
+repo_url: https://github.com/pnp/sp-dev-fx-controls-react
 edit_uri: blob/master/docs/documentation/docs

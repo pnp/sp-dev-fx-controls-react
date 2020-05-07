@@ -8,7 +8,7 @@ npm install @pnp/spfx-controls-react@next --save
 
 ## Beta control documentation
 
-The control documentation is only live for public releases, not for beta versions. If you want to checkout the markdown files of all controls in the `dev` branch: [beta documentation](https://github.com/SharePoint/sp-dev-fx-controls-react/tree/dev/docs/documentation/docs/controls).
+The control documentation is only live for public releases, not for beta versions. If you want to checkout the markdown files of all controls in the `dev` branch: [beta documentation](https://github.com/pnp/sp-dev-fx-controls-react/tree/dev/docs/documentation/docs/controls).
 
 ## Next Steps
 
