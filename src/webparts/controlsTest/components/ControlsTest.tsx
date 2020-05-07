@@ -554,7 +554,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty}
           moreLink={
-            <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+            <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
 

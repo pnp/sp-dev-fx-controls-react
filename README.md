@@ -8,13 +8,13 @@ This is a open source library that shares a set of reusable React control that c
 
 ## Get Started
 
-More information to get started can be found documentation of this repository: [documentation](https://sharepoint.github.io/sp-dev-fx-controls-react/).
+More information to get started can be found documentation of this repository: [documentation](https://pnp.github.io/sp-dev-fx-controls-react/).
 
 # Have issues or questions?
 
 Please use following logic on submitting your questions or issues to right location to ensure that they are noticed and addressed as soon as possible.
 
-* You have general question or challenge with SPFx - use [sp-dev-docs repository issue list](https://github.com/pnp/sp-dev-docs/issues).
+* You have general question or challenge with SPFx - use [sp-dev-docs repository issue list](https://github.com/sharepoint/sp-dev-docs/issues).
 * You have issue on specific controls in this package - use [issue list in this repository](https://github.com/pnp/sp-dev-fx-controls-react/issues).
 
 

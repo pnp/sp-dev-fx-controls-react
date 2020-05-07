@@ -61,7 +61,7 @@ You can do this as like in the following example code:
               title={this.props.title}
               updateProperty={this.props.updateProperty}
               moreLink={
-                <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+                <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
               } />
 ```
 
@@ -73,7 +73,7 @@ If you wish, you may pass a callback function instead, as per the following exam
               updateProperty={this.props.updateProperty}
               moreLink={
                 ()=> {
-                  return (<Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>);
+                  return (<Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>);
                 }
               } />
 ```

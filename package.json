@@ -77,7 +77,7 @@
     "url": "https://github.com/pnp/sp-dev-fx-controls-react/issues"
   },
   "main": "lib/index.js",
-  "homepage": "https://sharepoint.github.io/sp-dev-fx-controls-react/",
+  "homepage": "https://pnp.github.io/sp-dev-fx-controls-react/",
   "contributors": [
     "Gove, Russell <russellgove@gmail.com>",
     "Kent Chris <>",
