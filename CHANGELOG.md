@@ -1,5 +1,37 @@
 # Releases
 
+## 1.18.0
+
+### New control(s)
+
+- Pagination Control [#535](https://github.com/pnp/sp-dev-fx-controls-react/pull/535)
+- TreeView Control [#536](https://github.com/pnp/sp-dev-fx-controls-react/pull/536)
+- FolderPicker Control [#525](https://github.com/pnp/sp-dev-fx-controls-react/pull/525)
+
+### Enhancements
+
+- `FolderExplorer` updates: allow selection of libraries if site url is used as the root, allow passing items to be passed as a property and added to the breadcrumb, add support for loading folders from a different site, fix breadcrumb names for document libraries [#534](https://github.com/pnp/sp-dev-fx-controls-react/pull/534)
+- `IconPicker`: `renderOption` property to render icons list as a panel or dialog [#537](https://github.com/pnp/sp-dev-fx-controls-react/pull/537)
+
+### Fixes
+
+- `ComboBoxListItemPicker` documentation fix: Updated import statement in docs for ComboBoxListItemPicker [#510](https://github.com/pnp/sp-dev-fx-controls-react/pull/510)
+- Documentation fix: add the new control `ComboBoxListItemPicker` component to landing page [#511](https://github.com/pnp/sp-dev-fx-controls-react/pull/511)
+- `FilePicker`: While using the control, if `hideOrganisationalAssetTab` is set to true, even then an additional HTTP request is made.
+- `IconPicker`: search fix and updated list of icons [#533](https://github.com/pnp/sp-dev-fx-controls-react/pull/533)
+- `ListItemAttachment`: when I upload a file that contains an hyphen, the "-" char is replaced by an empty string [#526](https://github.com/pnp/sp-dev-fx-controls-react/issues/526)
+- `IconPicker` shows selected icon only during the first opening [#513](https://github.com/pnp/sp-dev-fx-controls-react/issues/513)
+- `ComboBoxListItemPicker`: `onSelectedItem` passing data to callback method but with attributes value as `undefined` [#519](https://github.com/pnp/sp-dev-fx-controls-react/issues/519)
+- `FilePicker`: filename is not visible on Upload tab [#518](https://github.com/pnp/sp-dev-fx-controls-react/issues/518)
+- `IconPicker`: Search doesn't work at all [#512](https://github.com/pnp/sp-dev-fx-controls-react/issues/512)
+- `ComboBoxListItemPicker` documentation fix: correct `onSelectedItem` notation [#547](https://github.com/pnp/sp-dev-fx-controls-react/pull/547)
+- Documentation: Fix mistranslation in Japanese [#545](https://github.com/pnp/sp-dev-fx-controls-react/pull/545)
+- `FieldUserRenderer`: `displayName` in `FieldUserHoverCard` is not updated if `props` of the `FIeldUserRenderer` have been changed [#542](https://github.com/pnp/sp-dev-fx-controls-react/issues/542)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [David Ramalho](https://github.com/DRamalho92), [Gautam Sheth](https://github.com/gautamdsheth), [Gregghis](https://github.com/Gregghis), [João Mendes](https://github.com/joaojmendes), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Nanddeep Nachan](https://github.com/nanddeepn), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [Siddharth Vaghasia](https://github.com/siddharth-vaghasia), [Takashi Shinohara](https://github.com/karamem0).
+
 ## 1.17.0
 
 ### New control(s)
