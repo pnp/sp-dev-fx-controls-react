@@ -49,10 +49,12 @@ The following controls are currently available:
 
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
+- [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
 - [FolderExplorer](./controls/FolderExplorer) (Control that allows to browse the folders and sub-folders from a root folder)
+- [FolderPicker](./controls/FolderPicker) (Control that allows to browse and select a folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
 - [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
@@ -66,6 +68,7 @@ The following controls are currently available:
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [TreeView](./controls/TreeView) (Tree View)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 
 

@@ -2,7 +2,7 @@
 
 This control renders document's name as a link. The link provides either preview (if it is available) or direct download. Additionally, new documents are marked with "Glimmer" icon.
 
-**Note:** The Name column in document libraries is marked as noneditable. See [this issue](https://github.com/SharePoint/sp-dev-docs/issues/1207) for details.
+**Note:** The Name column in document libraries is marked as noneditable. See [this issue](https://github.com/sharepoint/sp-dev-docs/issues/1207) for details.
 **Note** Glimmer icon displays correctly starting with SharePoint Framework v1.4
 
 ![FieldNameRenderer control output](../../assets/FieldNameRenderer.png)

@@ -1,0 +1,46 @@
+// @import "~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss";
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+
+.folderPicker {
+  display: flex;
+  align-items: center;
+
+  .selection {
+    width: 90%;
+  }
+
+  .selectFolderLabel {
+    color: $ms-color-neutralSecondary;
+  }
+
+  .selectFolder {
+    align-items: center;
+    display: flex;
+    margin-right: 5px;
+    max-width: 90%;
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  & .selectButton {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.actions {
+  button {
+    margin-right: 15px;
+  }
+}
+
+label.required::after {
+  content: " *";
+  color: rgb(168, 0, 0);
+  padding-right: 12px;
+}

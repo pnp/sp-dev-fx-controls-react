@@ -12,6 +12,10 @@ Icon picker always opens a new panel where you can pick an icon. The panel displ
 ![Icon Picker panel](../assets/IconPickerPanel.gif)
 
 
+## Displayed in the dialog
+Icon picker always opens a new dialog where you can pick an icon. The dialog displays all the icons and maintains readability. Picker does not displays selected icon outside the dialog.
+![Icon Picker panel](../assets/IconPicker_dialog.gif)
+
 ## How to use this control
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
@@ -29,6 +33,13 @@ import { IconPicker } from '@pnp/spfx-controls-react/lib/IconPicker';
             onSave={(iconName: string) => { this.setState({icon: iconName}); }} />
 ```
 
+```TypeScript
+<IconPicker buttonLabel={'Icon'}
+            renderOption={'Dialog'}
+            onChange={(iconName: string) => { this.setState({icon: iconName}); }}
+            onSave={(iconName: string) => { this.setState({icon: iconName}); }} />
+```
+
 ## Implementation
 
 The IconPicker component can be configured with the following properties:
@@ -41,6 +52,7 @@ The IconPicker component can be configured with the following properties:
 | disabled | boolean | no | Specifies if the picker button is disabled |
 | buttonClassName | boolean | no | If provided, additional class name will be added to the picker button |
 | panelClassName | boolean | no | If provided, additional class name will be added to the picker panel |
-| currentIcon | boolean | no | Specifies default selected icon |
+| currentIcon | string | no | Specifies default selected icon |
+| renderOption | `dialog`, `panel` | no | Specifies how to render list of Icons, Values :  'Panel' or 'Dialog' defualt value 'Panel' |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/IconPicker)

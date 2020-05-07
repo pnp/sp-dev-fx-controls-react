@@ -18,7 +18,7 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ComboBoxListItemPicker';
+import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
 ```
 - Use the `ComboBoxListItemPicker` control in your code as follows:
 
@@ -61,13 +61,45 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ComboBoxLis
 - The `onSelectedItem` change event returns the list items selected and can be implemented as follows:
 
 ```TypeScript
-private onSelectedItem(data: { key: string; name: string }[]) {
-  for (const item of data) {
-    console.log(`Item value: ${item.key}`);
-    console.log(`Item text: ${item.name}`);
-  }
+private onSelectedItem(items: []) {
+    console.log("selected items:", items);
 }
 ```
+
+If you can provide typing details to the implementation based on `columnInternalName` and `keyColumnInternalName`.
+For example above:
+
+```typescript
+columnInternalName='Title'
+keyColumnInternalName='Id'
+// ...
+private onSelectedItem(items: { Title: string, Id: string }[]) {
+    console.log("selected items:", items);
+}
+```
+
+If you use variables for `columnInternalName` and `keyColumnInternalName` the typing will look as follow:
+``` typescript
+const columnInternalName = 'Title';
+const keyColumnInternalName = 'Id';
+
+<ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
+                        columnInternalName={columnInternalName}
+                        keyColumnInternalName={keyColumnInternalName}
+                        filter="Title eq 'SPFx'" 
+                        defaultSelectedItems: [2]
+                        onSelectedItem={this.onSelectedItem}
+                        webUrl={this.context.pageContext.web.absoluteUrl}
+                        spHttpClient={this.context.spHttpClient} />
+
+private onSelectedItem(items: { 
+    [columnInternalName]: string, 
+    [keyColumnInternalName]: string 
+  }[]) {
+    console.log("selected items:", items);
+}
+```
+
 ## Implementation
 
 The `ComboBoxListItemPicker` control can be configured with the following properties:
@@ -82,7 +114,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | listId | string | yes | Guid of the list. |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
-| webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | defaultSelectedItems | any[] | no | Initial items that have already been selected and should appear in the people picker. Support objects and Ids only |
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
