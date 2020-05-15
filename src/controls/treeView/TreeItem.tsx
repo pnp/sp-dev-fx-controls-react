@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './TreeView.module.scss';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { IconButton } from 'office-ui-fabric-react';
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import * as strings from 'ControlStrings';
 import { ITreeItem } from './ITreeItem';
 import { TreeViewSelectionMode } from './ITreeViewProps';
