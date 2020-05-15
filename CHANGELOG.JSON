@@ -6,21 +6,15 @@
         "new": [
         ],
         "enhancements": [
+          "`ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)",
+          "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)"
         ],
         "fixes": [
           "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)"
         ]
       },
       "contributions": [
-        "[David Ramalho](https://github.com/DRamalho92)",
-        "[Gautam Sheth](https://github.com/gautamdsheth)",
-        "[Gregghis](https://github.com/Gregghis)",
-        "[João Mendes](https://github.com/joaojmendes)",
-        "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
-        "[Nanddeep Nachan](https://github.com/nanddeepn)",
-        "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
-        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)",
-        "[Takashi Shinohara](https://github.com/karamem0)"
+        "[Gautam Sheth](https://github.com/gautamdsheth)"
       ]
     },
     {
