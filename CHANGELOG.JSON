@@ -10,11 +10,13 @@
           "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)"
         ],
         "fixes": [
-          "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)"
+          "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)",
+          "`ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)"
         ]
       },
       "contributions": [
-        "[Gautam Sheth](https://github.com/gautamdsheth)"
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Markus Langer](https://github.com/MarkusLanger)"
       ]
     },
     {
