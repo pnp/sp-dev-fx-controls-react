@@ -100,6 +100,7 @@ The `TreeView` control can be configured with the following properties:
 Enum `TreeViewSelectionMode`
 
 Specifies the selection mode of tree item.
+
 | Value    |
 |----------|
 | Single   |
@@ -126,7 +127,8 @@ Each tree item in the `treeitems` property is defined as `ITreeItem` as follows:
 Interface `ITreeItemAction`
 
 Specifies the list of actions for the tree item.
-| Property             | Type                                 | Required | Description                                                                                                                |
+
+| Property             | Type                                 | Required | Description |
 |----------------------|--------------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------|
 | id                   | string                               | yes      | Unique id of the action.                                                                                                   |
 | title                | string                               | yes      | Title of the action.                                                                                                       |
@@ -138,6 +140,7 @@ Specifies the list of actions for the tree item.
 Enum `TreeItemActionsDisplayMode`
 
 Specifies the display mode of the tree item action.
+
 | Value          |
 |----------------|
 | Buttons        |
