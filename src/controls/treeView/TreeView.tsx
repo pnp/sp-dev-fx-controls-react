@@ -173,6 +173,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
   public render(): JSX.Element {
     const {
       items,
+      defaultExpanded,
       selectionMode,
       onRenderItem,
       showCheckboxes,
@@ -187,7 +188,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               treeItem={treeNodeItem}
               leftOffset={20}
               isFirstRender={true}
-              defaultExpanded={true}
+              defaultExpanded={defaultExpanded}
               selectionMode={selectionMode}
               activeItems={this.state.activeItems}
               parentCallbackExpandCollapse={this.handleTreeExpandCollapse}
