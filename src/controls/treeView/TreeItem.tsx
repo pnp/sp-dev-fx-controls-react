@@ -171,7 +171,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             this.props.showCheckboxes && item.selectable == false && !item.children &&
             <span className={styles.blankspace}>&nbsp;</span>
           }
-          
+
           {
             // Rendering when item has iconProps
             item.iconProps &&
@@ -214,7 +214,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
         return (
           <TreeItem
             treeItem={item}
-            defaultExpanded={treeItem.key === item.key ? this.state.expanded : false}
+            defaultExpanded={this.state.expanded}
             leftOffset={paddingLeft}
             selectionMode={selectionMode}
             activeItems={activeItems}
