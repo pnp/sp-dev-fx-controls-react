@@ -36,10 +36,10 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
-import { ComboBoxListItemPicker } from '../../../';
+import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
 import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { IconPicker} from '../../../controls/iconPicker';
+import { IconPicker } from '../../../controls/iconPicker';
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -55,6 +55,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
+import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 
@@ -114,6 +115,98 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
     <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
     <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
+
+  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private treeitems = [
+    {
+      key: "R1",
+      label: "Root",
+      subLabel: "This is a sub label for node",
+      iconProps: this.skypeCheckIcon,
+      actions: [{
+        title: "Get item",
+        iconProps: {
+          iconName: 'Warning',
+          style: {
+            color: 'salmon',
+          },
+        },
+        id: "GetItem",
+        actionCallback: async (treeItem: ITreeItem) => {
+          console.log(treeItem);
+        }
+      }],
+      children: [
+        {
+          key: "1",
+          label: "Parent 1",
+          selectable: false,
+          children: [
+            {
+              key: "3",
+              label: "Child 1",
+              subLabel: "This is a sub label for node",
+              actions: [{
+                title: "Share",
+                iconProps: {
+                  iconName: 'Share'
+                },
+                id: "GetItem",
+                actionCallback: async (treeItem: ITreeItem) => {
+                  console.log(treeItem);
+                }
+              }],
+              children: [
+                {
+                  key: "gc1",
+                  label: "Grand Child 1",
+                  actions: [{
+                    title: "Get Grand Child item",
+                    iconProps: {
+                      iconName: 'Mail'
+                    },
+                    id: "GetItem",
+                    actionCallback: async (treeItem: ITreeItem) => {
+                      console.log(treeItem);
+                    }
+                  }]
+                }
+              ]
+            },
+            {
+              key: "4",
+              label: "Child 2",
+              iconProps: this.skypeCheckIcon
+            }
+          ]
+        },
+        {
+          key: "2",
+          label: "Parent 2"
+        },
+        {
+          key: "5",
+          label: "Parent 3",
+          disabled: true
+        },
+        {
+          key: "6",
+          label: "Parent 4",
+          selectable: true
+        }
+      ]
+    },
+    {
+      key: "R2",
+      label: "Root 2",
+      children: [
+        {
+          key: "8",
+          label: "Parent 5"
+        }
+      ]
+    }
   ];
 
   constructor(props: IControlsTestProps) {
@@ -333,6 +426,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
   }
 
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
+  }
+
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
@@ -456,7 +554,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           title={this.props.title}
           updateProperty={this.props.updateProperty}
           moreLink={
-            <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+            <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
 
@@ -716,8 +814,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
-            <div>Icon Picker</div>
-            <div><IconPicker onSave={(value)=>{console.log(value)}} buttonLabel="Icon Picker"></IconPicker></div>
+              <div>Icon Picker</div>
+              <div>
+                <IconPicker
+                  renderOption="panel"
+                  onSave={(value) => { console.log(value); }}
+                  currentIcon={'Warning'}
+                  buttonLabel="Icon Picker">
+                </IconPicker>
+              </div>
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
@@ -847,6 +952,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
                 />
               </div>
+              <div>
+                <FolderPicker context={this.props.context}
+                  rootFolder={{
+                    Name: 'Documents',
+                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+                  }}
+                  onSelect={this._onFolderSelect}
+                  label='Folder Picker'
+                  required={true}
+                  canCreateFolders={true}
+                ></FolderPicker>
+              </div>
             </div>
           </div>
         </div>
@@ -890,7 +1007,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FilePicker
             bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
@@ -927,21 +1044,23 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
 
+        <IconPicker buttonLabel={'Icon'}
+            onChange={(iconName: string) => { console.log(iconName); }}
+            onSave={(iconName: string) => { console.log(iconName); }} />
+
         <div>
           <FolderExplorer
             context={this.props.context}
-            siteAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             rootFolder={{
-              Name: this.props.context.pageContext.web.title,
-              ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
             }}
             defaultFolder={{
               Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`,
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
             }}
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
-            initialBreadcrumbItems={additionalBreadcrumbItems}
           />
         </div>
 
@@ -961,16 +1080,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             
         </div>
 
-          <div>
-            <Pagination
-             currentPage={3}
-             onChange={(page) => (this._getPage(page))}
-             totalPages={13}
-             //limiter={3}
-             // hideFirstPageJump
-             //hideLastPageJump
-             //limiterIcon={"NumberedListText"}
-            />
+        <div>
+          <Pagination
+            currentPage={3}
+            onChange={(page) => (this._getPage(page))}
+            totalPages={13}
+          //limiter={3}
+          // hideFirstPageJump
+          //hideLastPageJump
+          //limiterIcon={"NumberedListText"}
+          />
         </div>
       </div>
     );
@@ -982,14 +1101,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private onItemSelected(items: ITreeItem[]) {
     console.log("items selected: " + items.length);
-  }
-        
-  private _getPage(page: number){
-    console.log('Page:', page);
-  }
-
-  private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
   }
 
   private renderCustomTreeItem(item: ITreeItem): JSX.Element {

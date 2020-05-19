@@ -2,6 +2,8 @@
 
 .localTabSinglePreview {
   margin-bottom: 20px;
+  display: inline-block;
+  text-align: center;
 }
 
 .localTabSinglePreviewImage {
@@ -9,6 +11,10 @@
   max-width: 100%;
   max-height: 220px;
   image-orientation: from-image;
+}
+
+.localTabFilename {
+  color: $ms-color-neutralPrimary;
 }
 
 .localTabLabel {

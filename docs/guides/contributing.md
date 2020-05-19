@@ -6,17 +6,17 @@ Sharing is caring!
 
 ## You have an idea for a new command
 
-Awesome! Good ideas are invaluable for every product. Before you start hacking away, please check if there is no similar idea already listed in the [issue list](https://github.com/SharePoint/sp-dev-fx-controls-react/issues). If not, please create a new issue describing your idea. Once we agree on the feature scope and architecture, the feature will be ready for building. Don't hesitate to mention in the issue if you'd like to build the feature yourself.
+Awesome! Good ideas are invaluable for every product. Before you start hacking away, please check if there is no similar idea already listed in the [issue list](https://github.com/pnp/sp-dev-fx-controls-react/issues). If not, please create a new issue describing your idea. Once we agree on the feature scope and architecture, the feature will be ready for building. Don't hesitate to mention in the issue if you'd like to build the feature yourself.
 
 When building a new control, try to add your control to the default provided web part so that everyone can test it out. Please also provide the documentation for your controls in the [documentation section](../documentation).
 
 ## You have a suggestion for improving an existing command
 
-Nothing is perfect. If you have an idea how to improve an existing command or the CLI, let us know by submitting an issue in the [issue list](https://github.com/SharePoint/sp-dev-fx-controls-react/issues). Some things are done for a reason, but some are not. Let's discuss what you think and see how the project could be improved for everyone.
+Nothing is perfect. If you have an idea how to improve an existing command or the CLI, let us know by submitting an issue in the [issue list](https://github.com/pnp/sp-dev-fx-controls-react/issues). Some things are done for a reason, but some are not. Let's discuss what you think and see how the project could be improved for everyone.
 
 ## You've found a bug
 
-Bugs happen. When you find a bug, please have a look at the [issue list](https://github.com/SharePoint/sp-dev-fx-controls-react/issues) if a similar bug has already been logged. If not, let us know what doesn't work and how we can reproduce it. If we can't reproduce your bug, we will ask you for clarification, which will only make it longer to fix it.
+Bugs happen. When you find a bug, please have a look at the [issue list](https://github.com/pnp/sp-dev-fx-controls-react/issues) if a similar bug has already been logged. If not, let us know what doesn't work and how we can reproduce it. If we can't reproduce your bug, we will ask you for clarification, which will only make it longer to fix it.
 
 ## Fixing typos
 
