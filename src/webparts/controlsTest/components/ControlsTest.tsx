@@ -204,6 +204,47 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {
           key: "8",
           label: "Parent 5"
+        },
+        {
+          key: "9",
+          label: "Parent 6"
+          
+        },
+        {
+          key: "10",
+          label: "Parent 7"
+        },
+        {
+          key: "11",
+          label: "Parent 8"
+        }
+      ]
+    },
+    {
+      key: "R3",
+      label: "Root 3",
+      children: [
+        {
+          key: "12",
+          label: "Parent 9"
+        },
+        {
+          key: "13",
+          label: "Parent 10",
+          children: [
+            {
+              key: "gc3",
+              label: "Child of Parent 10"
+            },
+          ]
+        },
+        {
+          key: "14",
+          label: "Parent 11"
+        },
+        {
+          key: "15",
+          label: "Parent 12"
         }
       ]
     }
@@ -1115,142 +1156,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
-  private treeitems = [
-    {
-      key: "R1",
-      label: "Root",
-      subLabel: "This is a sub label for node",
-      iconProps: this.skypeCheckIcon,
-      actions: [{
-        title: "Get item",
-        iconProps: {
-          iconName: 'Warning',
-          style: {
-            color: 'salmon',
-          },
-        },
-        id: "GetItem",
-        actionCallback: async (treeItem: ITreeItem) => {
-          console.log(treeItem);
-        }
-      }],
-      children: [
-        {
-          key: "1",
-          label: "Parent 1",
-          selectable: false,
-          children: [
-            {
-              key: "3",
-              label: "Child 1",
-              subLabel: "This is a sub label for node",
-              actions: [{
-                title: "Share",
-                iconProps: {
-                  iconName: 'Share'
-                },
-                id: "GetItem",
-                actionCallback: async (treeItem: ITreeItem) => {
-                  console.log(treeItem);
-                }
-              }],
-              children: [
-                {
-                  key: "gc1",
-                  label: "Grand Child 1",
-                  actions: [{
-                    title: "Get Grand Child item",
-                    iconProps: {
-                      iconName: 'Mail'
-                    },
-                    id: "GetItem",
-                    actionCallback: async (treeItem: ITreeItem) => {
-                      console.log(treeItem);
-                    }
-                  }]
-                }
-              ]
-            },
-            {
-              key: "4",
-              label: "Child 2",
-              iconProps: this.skypeCheckIcon
-            }
-          ]
-        },
-        {
-          key: "2",
-          label: "Parent 2"
-        },
-        {
-          key: "5",
-          label: "Parent 3",
-          disabled: true
-        },
-        {
-          key: "6",
-          label: "Parent 4",
-          selectable: true
-        }
-      ]
-    },
-    {
-      key: "R2",
-      label: "Root 2",
-      children: [
-        {
-          key: "8",
-          label: "Parent 5"
-        },
-        {
-          key: "9",
-          label: "Parent 6",
-          children: [
-            {
-              key: "granchild",
-              label: "Child of Parent 6"
-            },
-          ]
-        },
-        {
-          key: "10",
-          label: "Parent 7"
-        },
-        {
-          key: "11",
-          label: "Parent 8"
-        }
-      ]
-    },
-    {
-      key: "R3",
-      label: "Root 3",
-      children: [
-        {
-          key: "12",
-          label: "Parent 9"
-        },
-        {
-          key: "13",
-          label: "Parent 10"
-        },
-        {
-          key: "14",
-          label: "Parent 11",
-          children: [
-            {
-              key: "gc3",
-              label: "Grand Child 2"
-            }]
-        },
-        {
-          key: "15",
-          label: "Parent 12"
-        }
-      ]
-    }
-  ];
+  private _getPage(page: number){
+    console.log('Page:', page);
+  }
 
   // private _onFolderSelect = (folder: IFolder): void => {
   //   console.log('selected folder', folder);
