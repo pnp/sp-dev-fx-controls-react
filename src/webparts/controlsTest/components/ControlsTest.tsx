@@ -952,9 +952,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             selectionMode={TreeViewSelectionMode.Multiple}
             showCheckboxes={true}
             treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-            defaultSelectedKeys={['R2', '6']}
+            defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
+            expandToSelected={true}
             // onRenderItem={this.renderCustomTreeItem}
             />
             
@@ -1090,12 +1091,57 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {
           key: "8",
           label: "Parent 5"
+        },
+        {
+          key: "9",
+          label: "Parent 6",
+          children: [
+            {
+              key: "granchild",
+              label: "Child of Parent 6"
+            },
+          ]
+        },
+        {
+          key: "10",
+          label: "Parent 7"
+        },
+        {
+          key: "11",
+          label: "Parent 8"
+        }
+      ]
+    },
+    {
+      key: "R3",
+      label: "Root 3",
+      children: [
+        {
+          key: "12",
+          label: "Parent 9"
+        },
+        {
+          key: "13",
+          label: "Parent 10"
+        },
+        {
+          key: "14",
+          label: "Parent 11",
+          children: [
+            {
+              key: "gc3",
+              label: "Grand Child 2"
+            }]
+        },
+        {
+          key: "15",
+          label: "Parent 12"
         }
       ]
     }
   ];
 
-  private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
-  }
+  // private _onFolderSelect = (folder: IFolder): void => {
+  //   console.log('selected folder', folder);
+  // }
 }
