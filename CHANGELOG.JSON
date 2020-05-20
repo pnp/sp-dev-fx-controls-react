@@ -7,16 +7,21 @@
         ],
         "enhancements": [
           "`ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)",
-          "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)"
+          "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)",
+          "`TreeView`: there should be possibility to collapse the first level nodes by default [#561](https://github.com/pnp/sp-dev-fx-controls-react/issues/561)",
+          "`TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)"
         ],
         "fixes": [
           "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)",
-          "`ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)"
+          "`ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)",
+          "`TreeView`: `defaultExpanded: true` doesn't work [#560](https://github.com/pnp/sp-dev-fx-controls-react/issues/560)"
         ]
       },
       "contributions": [
         "[Gautam Sheth](https://github.com/gautamdsheth)",
-        "[Markus Langer](https://github.com/MarkusLanger)"
+        "[Markus Langer](https://github.com/MarkusLanger)",
+        "[Nanddeep Nachan](https://github.com/nanddeepn)",
+        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
       ]
     },
     {
