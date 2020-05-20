@@ -12,6 +12,7 @@ import * as telemetry from '../../common/telemetry';
  */
 export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
 
+  private nodesToExpand: string[] = [];
   /**
    * Constructor method
    * @param props properties interface
@@ -22,13 +23,38 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
 
     this.state = {
       loaded: true,
-      defaultExpanded: this.props.defaultExpanded,
+      defaultExpanded: props.defaultExpanded,
       activeItems: []
     };
 
     // Bind control events
     this.handleTreeExpandCollapse = this.handleTreeExpandCollapse.bind(this);
     this.handleOnSelect = this.handleOnSelect.bind(this);
+
+    if (props.expandToSelected) {
+      props.defaultSelectedKeys.forEach(element => {
+        this.pathTo(props.items, element);
+      });
+    }
+  }
+
+
+  private pathTo = (array: ITreeItem[], target: string): string => {
+    let result: string;
+    array.some(({ key, children = [] }) => {
+      if (key === target) {
+        this.nodesToExpand.push(key);
+        result = key;
+        return true;
+      }
+      let temp = this.pathTo(children, target);
+      if (temp) {
+        this.nodesToExpand.push(key);
+        result = key + '.' + temp;
+        return true;
+      }
+    });
+    return result;
   }
 
   private getSelectedItems(treeItems: ITreeItem[], selectedKeys: string[], selectedChildren: boolean): ITreeItem[] {
@@ -84,7 +110,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
    * Unselects all child nodes of selected parent.
    */
   private unSelectChildren(item, unselectArray: string[]): void {
-    var tempItem: any = item;
+    const tempItem: any = item;
 
     if (tempItem.children) {
       tempItem.children.forEach(element => {
@@ -176,7 +202,8 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       selectionMode,
       onRenderItem,
       showCheckboxes,
-      treeItemActionsDisplayMode
+      treeItemActionsDisplayMode,
+      defaultExpanded
     } = this.props;
 
     return (
@@ -187,7 +214,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               treeItem={treeNodeItem}
               leftOffset={20}
               isFirstRender={true}
-              defaultExpanded={true}
+              defaultExpanded={defaultExpanded}
               selectionMode={selectionMode}
               activeItems={this.state.activeItems}
               parentCallbackExpandCollapse={this.handleTreeExpandCollapse}
@@ -195,6 +222,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               onRenderItem={onRenderItem}
               showCheckboxes={showCheckboxes}
               treeItemActionsDisplayMode={treeItemActionsDisplayMode}
+              nodesToExpand={this.nodesToExpand}
             />
           ))
         }

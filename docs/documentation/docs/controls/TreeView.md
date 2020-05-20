@@ -37,7 +37,8 @@ import { TreeView, ITreeItem } from "@pnp/spfx-controls-react/lib/TreeView";
     selectChildrenIfParentSelected={true}
     showCheckboxes={true}
     treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-    defaultSelectedKeys=['key1', 'key2'],
+    defaultSelectedKeys={['key1', 'key2']},
+    expandToSelected={true}
     onSelect={this.onTreeItemSelect}
     onExpandCollapse={this.onTreeItemExpandCollapse}
     onRenderItem={this.renderCustomTreeItem} />
@@ -88,11 +89,12 @@ The `TreeView` control can be configured with the following properties:
 |--------------------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
 | items                          | ITreeItem[]                | yes      | An array of tree items to display. refer [example](#example-of-array-of-tree-items-used-to-render-control-as-in-first-screenshot). |
 | defaultExpanded                | boolean                    | no       | Specify if the tree items are displayed as expanded by default (defaults to false).                                                |
-| selectionMode                  | enum                       | no       | Specify the selection mode of tree view (defaults to Single selection).                                                            |
-| selectChildrenIfParentSelected | boolean                    | no       | Specify if the childrens should be selected when parent item is selected (defaults to false).                                      |
+| selectionMode                  | enum                       | no       | Specifies the selection mode of tree view (defaults to Single selection).                                                            |
+| selectChildrenIfParentSelected | boolean                    | no       | Specifies if the childrens should be selected when parent item is selected (defaults to false).                                      |
 | showCheckboxes                 | boolean                    | yes      | Specify if the checkboxes should be displayed for selection.                                                                       |
-| treeItemActionsDisplayMode     | TreeItemActionsDisplayMode | no       | Specify the display mode of the tree item actions.                                                                                 |
-| defaultSelectedKeys            | string[]                   | no       | Specify keys of items to be selected by default.                                                                                   |
+| treeItemActionsDisplayMode     | TreeItemActionsDisplayMode | no       | Specifies the display mode of the tree item actions.                                                                                 |
+| defaultSelectedKeys            | string[]                   | no       | Specifies keys of items to be selected by default.                                                                                   |
+| expandToSelected               | boolean                    | no       | Specifies if the tree view is expanded to display selected nodes.                                                                                   |
 | onExpandCollapse               | function                   | no       | Defines a onExpandCollapse function to raise when the tree item has expanded or collapsed.                                         |
 | onSelect                       | function                   | no       | Captures the event of when the tree item selection has changed.                                                                    |
 | onRenderItem                   | function                   | no       | Optional callback to provide custom rendering of the item (default is simple text of item label and a checkbox for selection).     |
