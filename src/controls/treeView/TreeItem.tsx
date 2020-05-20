@@ -60,7 +60,7 @@ export interface ITreeItemProps {
    */
   onRenderItem?: (item: ITreeItem) => JSX.Element;
 
-  tobeExpandedParents:any[];
+  nodesToExpand: any[];
 }
 
 
@@ -99,18 +99,17 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     super(props);
 
     // Check if current item is selected
-    let active = this.props.activeItems.filter(item => item.key === this.props.treeItem.key);
+    let active = props.activeItems.filter(item => item.key === props.treeItem.key);
 
-    var expanded = this.props.defaultExpanded;
-    if(this.props.tobeExpandedParents.indexOf(this.props.treeItem.key) != -1)
-    {
-        expanded = true;
+    let expanded = props.defaultExpanded;
+    if (props.nodesToExpand.indexOf(props.treeItem.key) != -1) {
+      expanded = true;
     }
 
     this.state = {
       selected: active.length > 0,
       // expanded: this.props.defaultExpanded
-       expanded: expanded
+      expanded: expanded
     };
 
     // Bind control events
@@ -145,7 +144,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * @param nextProps
    * @param nextContext
    */
-  public componentWillReceiveProps?(nextProps: ITreeItemProps, nextContext: any): void {
+  public componentWillReceiveProps(nextProps: ITreeItemProps): void {
     // If selection is turned on, set the item as selected
     if (this.props.selectionMode != TreeViewSelectionMode.None) {
       let active = nextProps.activeItems.filter(item => item.key === this.props.treeItem.key);
@@ -182,7 +181,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             this.props.showCheckboxes && item.selectable == false && !item.children &&
             <span className={styles.blankspace}>&nbsp;</span>
           }
-          
+
           {
             // Rendering when item has iconProps
             item.iconProps &&
@@ -235,7 +234,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             onRenderItem={onRenderItem}
             showCheckboxes={showCheckboxes}
             treeItemActionsDisplayMode={treeItemActionsDisplayMode}
-            tobeExpandedParents = {this.props.tobeExpandedParents}
+            nodesToExpand={this.props.nodesToExpand}
           />
         );
       });

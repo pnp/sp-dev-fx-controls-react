@@ -208,7 +208,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {
           key: "9",
           label: "Parent 6"
-          
+
         },
         {
           key: "10",
@@ -1115,10 +1115,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            expandToSelected={true}
+            //expandToSelected={true}
             // onRenderItem={this.renderCustomTreeItem}
             />
-            
+
         </div>
 
         <div>
