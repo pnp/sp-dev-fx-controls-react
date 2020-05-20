@@ -46,6 +46,11 @@ export interface ITreeViewProps {
    */
   defaultSelectedKeys?: string[];
 
+   /**
+   * Specify if you want expand the parent nodes to see defaultSelectedKeys on render.
+   */
+  expandToSelected?:boolean;
+
   /**
    * Callback function called after a item is expanded / collapsed.
    * @argument item The expanded / collapsed item.

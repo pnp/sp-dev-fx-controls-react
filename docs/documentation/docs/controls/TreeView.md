@@ -37,7 +37,8 @@ import { TreeView, ITreeItem } from "@pnp/spfx-controls-react/lib/TreeView";
     selectChildrenIfParentSelected={true}
     showCheckboxes={true}
     treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-    defaultSelectedKeys=['key1', 'key2'],
+    defaultSelectedKeys={['key1', 'key2']},
+    expandToSelected={true}
     onSelect={this.onTreeItemSelect}
     onExpandCollapse={this.onTreeItemExpandCollapse}
     onRenderItem={this.renderCustomTreeItem} />
@@ -93,6 +94,7 @@ The `TreeView` control can be configured with the following properties:
 | showCheckboxes                 | boolean                    | yes      | Specify if the checkboxes should be displayed for selection.                                                                       |
 | treeItemActionsDisplayMode     | TreeItemActionsDisplayMode | no       | Specify the display mode of the tree item actions.                                                                                 |
 | defaultSelectedKeys            | string[]                   | no       | Specify keys of items to be selected by default.                                                                                   |
+| expandToSelected               | boolean                    | no       | Specify if you want expand the parent nodes to see defaultSelectedKeys on render.                                                                                   |
 | onExpandCollapse               | function                   | no       | Defines a onExpandCollapse function to raise when the tree item has expanded or collapsed.                                         |
 | onSelect                       | function                   | no       | Captures the event of when the tree item selection has changed.                                                                    |
 | onRenderItem                   | function                   | no       | Optional callback to provide custom rendering of the item (default is simple text of item label and a checkbox for selection).     |

@@ -59,7 +59,11 @@ export interface ITreeItemProps {
    * Customize how item is rendered.
    */
   onRenderItem?: (item: ITreeItem) => JSX.Element;
+
+  tobeExpandedParents:any[];
 }
+
+
 
 /**
  * TreeItem state interface
@@ -97,9 +101,16 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     // Check if current item is selected
     let active = this.props.activeItems.filter(item => item.key === this.props.treeItem.key);
 
+    var expanded = this.props.defaultExpanded;
+    if(this.props.tobeExpandedParents.indexOf(this.props.treeItem.key) != -1)
+    {
+        expanded = true;
+    }
+
     this.state = {
       selected: active.length > 0,
-      expanded: this.props.defaultExpanded
+      // expanded: this.props.defaultExpanded
+       expanded: expanded
     };
 
     // Bind control events
@@ -214,7 +225,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
         return (
           <TreeItem
             treeItem={item}
-            defaultExpanded={treeItem.key === item.key ? this.state.expanded : false}
+            defaultExpanded={this.state.expanded}
             leftOffset={paddingLeft}
             selectionMode={selectionMode}
             activeItems={activeItems}
@@ -224,6 +235,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             onRenderItem={onRenderItem}
             showCheckboxes={showCheckboxes}
             treeItemActionsDisplayMode={treeItemActionsDisplayMode}
+            tobeExpandedParents = {this.props.tobeExpandedParents}
           />
         );
       });
