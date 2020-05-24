@@ -605,7 +605,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker date only" showLabels={false} dateConvention={DateConvention.Date} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker
+        label="DateTime Picker date only"
+        showLabels={false}
+        dateConvention={DateConvention.Date}
+        value={new Date()}
+        onChange={(value) => console.log("DateTimePicker value:", value)}
+        minDate={new Date("05/01/2019")}
+        maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />

@@ -3,8 +3,6 @@ import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
 import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import * as strings from "ControlStrings";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import styles from "./DateTimePicker.module.scss";
 import HoursComponent from "./HoursComponent";
@@ -15,7 +13,6 @@ import { Async, css } from 'office-ui-fabric-react/lib/Utilities';
 import { IDateTimePickerProps, IDateTimePickerState, DateTimePickerStrings } from ".";
 import { TimeHelper } from "./TimeHelper";
 import { TimeDisplayControlType } from "./TimeDisplayControlType";
-import { addMonths, addYears } from 'office-ui-fabric-react/lib/utilities/dateMath/DateMath';
 
 interface IDateComponents {
   day: Date;
@@ -54,8 +51,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       hours,
       minutes,
       seconds,
-      errorMessage: '',
-      today: new Date(Date.now())
+      errorMessage: ''
     };
 
     this.async = new Async(this);
@@ -208,8 +204,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       timeDisplayControlType,
       placeholder,
       showLabels,
-      minDate = addYears(this.state.today, 1),
-      maxDate = addYears(this.state.today, 1)
+      minDate,
+      maxDate
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;

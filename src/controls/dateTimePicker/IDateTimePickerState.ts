@@ -7,5 +7,4 @@ export interface IDateTimePickerState {
   minutes?: number;
   seconds?: number;
   errorMessage?: string;
-  today: Date;
 }
