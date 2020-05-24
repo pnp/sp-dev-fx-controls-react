@@ -9,7 +9,8 @@
           "`ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)",
           "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)",
           "`TreeView`: there should be possibility to collapse the first level nodes by default [#561](https://github.com/pnp/sp-dev-fx-controls-react/issues/561)",
-          "`TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)"
+          "`TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)",
+          "`DateTimePicker`: When using the datetimePicker I would like to have an opportunity to set maximum/minimum date like in Office UI Fabric [497](https://github.com/pnp/sp-dev-fx-controls-react/issues/497)"
         ],
         "fixes": [
           "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)",
@@ -21,6 +22,7 @@
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Markus Langer](https://github.com/MarkusLanger)",
         "[Nanddeep Nachan](https://github.com/nanddeepn)",
+        "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
         "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
       ]
     },
