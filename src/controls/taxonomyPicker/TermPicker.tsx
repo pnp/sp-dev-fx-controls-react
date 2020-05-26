@@ -112,7 +112,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
   private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
       let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms: IPickerTerm[] = await termsService.searchTermsByName(filterText);
+      let terms: IPickerTerm[] = await termsService.searchTermsByTermId(filterText, this.props.termPickerHostProps.anchorId);
       // Check if the termset can be selected
       if (this.props.isTermSetSelectable) {
         // Retrieve the current termset
