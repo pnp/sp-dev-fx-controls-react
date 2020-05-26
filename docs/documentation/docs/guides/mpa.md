@@ -4,7 +4,7 @@ The shortest way to prepare your local copy of the project for development and t
 
 ## Install prerequisites
 
-Before you start contributing to this project, you will need Node.js. This project has been tested with the 6.x and 8.x versions of Node.js and the version of NPM that comes with it.
+Before you start contributing to this project, you will need Node.js. This project has been tested with the 6.x and 8.x versions of Node.js and the version of NPM that comes with it. You can use [Node Version Manager](https://github.com/nvm-sh/nvm) to switch between different versions of Node.js.
 
 ## Get the local version of the CLI
 
