@@ -54,7 +54,7 @@ export interface IListPickerProps {
   */
  placeholder?: string;
   /**
-  * Callback issues when the selected option changes
+  * Callback issued when the selected option changes
   */
   onSelectionChanged?: (newValue: string | string[]) => void;
 }
