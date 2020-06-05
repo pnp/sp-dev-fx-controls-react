@@ -598,6 +598,87 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
+        <div className="ms-font-m">Services tester:
+          <TaxonomyPicker
+            allowMultipleSelections={true}
+            termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            panelTitle="Select Sorted Term"
+            label="Service Picker with custom actions"
+            context={this.props.context}
+            onChange={this.onServicePickerChange}
+            isTermSetSelectable={false}
+            termActions={{
+              actions: [{
+                title: "Get term labels",
+                iconName: "LocaleLanguage",
+                id: "test",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  // const labels = await taxService.getTermLabels(term.Id);
+                  // if (labels) {
+                  //   let termLabel: string = labels.join(" ; ");
+                  //   const updateAction = {
+                  //     updateActionType: UpdateType.updateTermLabel,
+                  //     value: `${termLabel} (updated)`
+                  //   };
+                  //   return updateAction;
+                  // }
+                  const updateAction = {
+                    updateActionType: UpdateType.updateTermLabel,
+                    value: `${term.Name} (updated)`
+                  };
+                  return updateAction;
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
+              },
+                // new TermLabelAction("Get Labels")
+              ],
+              termActionsDisplayMode: TermActionsDisplayMode.buttons,
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }}
+          />
+
+          <TaxonomyPicker
+            allowMultipleSelections={true}
+            termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+            panelTitle="Select Default Sorted Term"
+            label="Service Picker"
+            context={this.props.context}
+            onChange={this.onServicePickerChange}
+            isTermSetSelectable={false}
+            placeholder="Select service"
+          />
+
+          <TaxonomyPicker
+            initialValues={this.state.initialValues}
+            allowMultipleSelections={true}
+            termsetNameOrID="41dec50a-3e09-4b3f-842a-7224cffc74c0"
+            anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
+            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disableChildrenOfDisabledParents={true}
+            panelTitle="Select Term"
+            label="Taxonomy Picker"
+            context={this.props.context}
+            onChange={this._onTaxPickerChange}
+            isTermSetSelectable={false}
+            hideDeprecatedTags={true}
+            hideTagsNotAvailableForTagging={true} />
+
+          <DefaultButton text="Add" onClick={() => {
+            this.setState({
+              initialValues: [{
+                key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                name: "HR",
+                path: "HR",
+                termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+              }]
+            });
+          }} />
+        </div>
+
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
         <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -886,86 +967,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               </div>
 
-              <div className="ms-font-m">Services tester:
-                <TaxonomyPicker
-                  allowMultipleSelections={true}
-                  termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
-                  panelTitle="Select Sorted Term"
-                  label="Service Picker with custom actions"
-                  context={this.props.context}
-                  onChange={this.onServicePickerChange}
-                  isTermSetSelectable={false}
-                  termActions={{
-                    actions: [{
-                      title: "Get term labels",
-                      iconName: "LocaleLanguage",
-                      id: "test",
-                      invokeActionOnRender: true,
-                      hidden: true,
-                      actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                        // const labels = await taxService.getTermLabels(term.Id);
-                        // if (labels) {
-                        //   let termLabel: string = labels.join(" ; ");
-                        //   const updateAction = {
-                        //     updateActionType: UpdateType.updateTermLabel,
-                        //     value: `${termLabel} (updated)`
-                        //   };
-                        //   return updateAction;
-                        // }
-                        const updateAction = {
-                          updateActionType: UpdateType.updateTermLabel,
-                          value: `${term.Name} (updated)`
-                        };
-                        return updateAction;
-                      },
-                      applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
-                    },
-                      // new TermLabelAction("Get Labels")
-                    ],
-                    termActionsDisplayMode: TermActionsDisplayMode.buttons,
-                    termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
-                  }}
-                />
-
-                <TaxonomyPicker
-                  allowMultipleSelections={true}
-                  termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
-                  panelTitle="Select Default Sorted Term"
-                  label="Service Picker"
-                  context={this.props.context}
-                  onChange={this.onServicePickerChange}
-                  isTermSetSelectable={false}
-                  placeholder="Select service"
-                />
-
-                <TaxonomyPicker
-                  initialValues={this.state.initialValues}
-                  allowMultipleSelections={true}
-                  termsetNameOrID="313362ca-6813-4433-bcce-7bf74a18b9cb"
-                  // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
-                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disableChildrenOfDisabledParents={true}
-                  panelTitle="Select Term"
-                  label="Taxonomy Picker"
-                  context={this.props.context}
-                  onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false}
-                  hideDeprecatedTags={true}
-                  hideTagsNotAvailableForTagging={true} />
-
-                <DefaultButton text="Add" onClick={() => {
-                  this.setState({
-                    initialValues: [{
-                      key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                      name: "HR",
-                      path: "HR",
-                      termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-                    }]
-                  });
-                }} />
-              </div>
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
                   text="Open iframe Dialog"
