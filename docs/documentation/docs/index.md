@@ -39,6 +39,8 @@ All controls gather telemetry to verify the usage. Only the name of the control 
 Since version `1.17.0` it is possible to opt-out of the telemetry by adding the following code to your web part:
 
 ```typescript
+import PnPTelemetry from "@pnp/telemetry-js";
+...
 const telemetry = PnPTelemetry.getInstance();
 telemetry.optOut();
 ```
