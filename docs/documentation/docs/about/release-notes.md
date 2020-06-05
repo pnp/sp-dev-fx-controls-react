@@ -1,5 +1,27 @@
 # Releases
 
+## 1.19.0
+
+### Enhancements
+
+- `ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)
+- `FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)
+- `TreeView`: there should be possibility to collapse the first level nodes by default [#561](https://github.com/pnp/sp-dev-fx-controls-react/issues/561)
+- `TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)
+- `DateTimePicker`: When using the datetimePicker I would like to have an opportunity to set maximum/minimum date like in Office UI Fabric [497](https://github.com/pnp/sp-dev-fx-controls-react/issues/497)
+
+### Fixes
+
+- `TaxonomyPicker`: Correct the AnchorID getting all TermSet search options [#150](https://github.com/pnp/sp-dev-fx-controls-react/issues/150)
+- Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)
+- `ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)
+- `TreeView`: `defaultExpanded: true` doesn't work [#560](https://github.com/pnp/sp-dev-fx-controls-react/issues/560)
+- `IListPicker`: typo fix [#574](https://github.com/pnp/sp-dev-fx-controls-react/pull/574) 
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Koen Zomers](https://github.com/KoenZomers), [Markus Langer](https://github.com/MarkusLanger), [Nanddeep Nachan](https://github.com/nanddeepn), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [David Ramalho](https://github.com/DRamalho92), [Siddharth Vaghasia](https://github.com/siddharth-vaghasia).
+
 ## 1.18.0
 
 ### New control(s)
