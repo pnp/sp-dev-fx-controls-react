@@ -125,7 +125,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       }
 
       if (this.props.timeConvention !== TimeConvention.Hours24) {
-        if (hoursSplit[1] && hoursSplit[1].toLowerCase().indexOf("pm") !== -1) {
+        if (hoursSplit[1] && hoursSplit[1].toLowerCase().indexOf("am") !== -1) {
           hours += 12;
           if (hours === 24) {
             hours = 0;
