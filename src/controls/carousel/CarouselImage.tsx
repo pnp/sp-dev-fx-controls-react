@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styles from './CarouselImage.module.scss';
 import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 
 export interface ICarouselImageProps {
   imageSrc: string;
@@ -10,14 +11,16 @@ export interface ICarouselImageProps {
   description?: string | JSX.Element;
   target?: '_blank' | '_self';
   showDetailsOnHover?: boolean;
-  detailsBackgroundColor?: string;
-  detailsColor?: string;
   className?: string;
   style?: React.CSSProperties;
   imgClassName?: string;
   imgStyle?: React.CSSProperties;
   detailsClassName?: string;
   detailsStyle?: React.CSSProperties;
+  titleClassName?: string;
+  titleStyle?: React.CSSProperties;
+  descriptionClassName?: string;
+  descriptionStyle?: React.CSSProperties;
 }
 
 export interface ICarouselImageState { }
@@ -32,14 +35,16 @@ export default class CarouselImage extends React.Component<ICarouselImageProps, 
       description,
       target = '_blank',
       showDetailsOnHover,
-      detailsBackgroundColor,
-      detailsColor,
       className,
       style,
       imgClassName,
       imgStyle,
       detailsClassName,
-      detailsStyle
+      detailsStyle,
+      titleClassName,
+      titleStyle,
+      descriptionClassName,
+      descriptionStyle
     } = this.props;
 
     let details: JSX.Element | null = null;
@@ -49,14 +54,14 @@ export default class CarouselImage extends React.Component<ICarouselImageProps, 
       let descriptionEl: JSX.Element | null;
       if (description) {
         if (typeof(description) === 'string') {
-          descriptionEl = <span>{description}</span>;
+          descriptionEl = <span className={descriptionClassName} style={descriptionStyle}>{description}</span>;
         }
         else {
           descriptionEl = description;
         }
       }
-      const detailsContent = <div className={styles.details}>
-        {!!title && <span>{title}</span>}
+      const detailsContent = <div className={css(styles.details, detailsClassName)} style={detailsStyle}>
+        {!!title && <span className={css(styles.title, titleClassName)} style={titleStyle}>{title}</span>}
         {descriptionEl}
       </div>;
 
@@ -69,8 +74,8 @@ export default class CarouselImage extends React.Component<ICarouselImageProps, 
     }
 
     return (
-      <div className={styles.carouselImage}>
-        <Image className={styles.image} imageFit={imageFit} src={imageSrc} />
+      <div className={css(styles.carouselImage, className, showDetailsOnHover ? styles.dynamicDetails : styles.staticDetails)} style={style}>
+        <Image className={css(styles.image, imgClassName)} style={imgStyle} imageFit={imageFit} src={imageSrc} />
         {details}
       </div>
     );

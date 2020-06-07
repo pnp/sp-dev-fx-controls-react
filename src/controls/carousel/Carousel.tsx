@@ -11,6 +11,7 @@ import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
+import CarouselImage from "./CarouselImage";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   constructor(props: ICarouselProps) {
@@ -62,7 +63,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     return (
       <div className={this.getMergedStyles(styles.container, containerStyles)}>
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-             onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
+          onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
             iconProps={{ iconName: prevButtonIconName }}
@@ -86,7 +87,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         </div>
 
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-             onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
+          onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
             iconProps={{ iconName: nextButtonIconName }}
@@ -261,15 +262,21 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   private getElementToDisplay = (): JSX.Element => {
     const { element } = this.props;
     const currentIndex = this.state.currentIndex;
-    let result : JSX.Element = null;
+    let result: JSX.Element = null;
+    let arrayLen: number;
 
     // If no element has been provided.
     if (!element) {
       result = null;
     }
-    // Retrieve proper element from the array
-    else if (isArray(element) && currentIndex >= 0 && (element as JSX.Element[]).length > currentIndex) {
-      result = element[currentIndex];
+    else if (isArray(element) && (arrayLen = (element as any[]).length) > 0) {
+      // Retrieve proper element from the array
+      if (currentIndex >= 0 && arrayLen > currentIndex) {
+        const arrayEl = element[currentIndex];
+
+        result = 'props' in arrayEl ? arrayEl as JSX.Element :
+          <CarouselImage {...arrayEl} />;
+      }
     }
     else {
       result = element as JSX.Element;
