@@ -1,0 +1,22 @@
+.carouselImage {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .image {
+    width: 100%;
+  }
+
+  .details {
+    background-color: rgba(0, 0, 0, 0.8);
+    box-sizing: border-box;
+    color: white;
+    height: 40%;
+    left: 0;
+    padding: 15px;
+    position: absolute;
+    right: 0;
+    top: 60%;
+  }
+}

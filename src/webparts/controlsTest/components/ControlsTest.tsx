@@ -58,6 +58,7 @@ import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
+import CarouselImage from '../../../controls/carousel/CarouselImage';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -1029,6 +1030,39 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isInfinite={true}
 
             element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with CarouselImage elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.top}
+            buttonsDisplay={CarouselButtonsDisplay.block}
+
+            contentContainerStyles={styles.carouselContent}
+            containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+
+            element={[
+              <CarouselImage
+                imageSrc={'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80'}
+                title={'Colosseum'}
+                description={'This is Colosseum'}
+                url={'https://en.wikipedia.org/wiki/Colosseum'} />,
+                <CarouselImage
+                imageSrc={'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80'}
+                title={'Colosseum'}
+                description={'This is Colosseum'}
+                url={'https://en.wikipedia.org/wiki/Colosseum'} />,
+                <CarouselImage
+                imageSrc={'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80'}
+                title={'Colosseum'}
+                description={'This is Colosseum'}
+                url={'https://en.wikipedia.org/wiki/Colosseum'} />
+            ]}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
