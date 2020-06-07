@@ -34,6 +34,8 @@
   // ButtonContainer display mode
   .buttonsOnlyPrevButton {
     position: absolute;
+    left: 0;
+    z-index: 1;
   }
   .buttonsOnlyPrevButton:hover {
     cursor: pointer;
@@ -43,6 +45,7 @@
   .buttonsOnlyNextButton {
     position: absolute;
     left: -32px;
+    z-index: 1;
   }
   .buttonsOnlyNextButton:hover {
     cursor: pointer;

@@ -1038,11 +1038,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <h3>Carousel with CarouselImage elements:</h3>
           <Carousel
-            buttonsLocation={CarouselButtonsLocation.top}
-            buttonsDisplay={CarouselButtonsDisplay.block}
+            buttonsLocation={CarouselButtonsLocation.center}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
 
-            contentContainerStyles={styles.carouselContent}
-            containerButtonsStyles={styles.carouselButtonsContainer}
+            contentContainerStyles={styles.carouselImageContent}
+            //containerButtonsStyles={styles.carouselButtonsContainer}
 
             isInfinite={true}
 
