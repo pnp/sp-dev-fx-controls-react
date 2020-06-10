@@ -152,4 +152,6 @@ export interface ITermProps extends ITermChanges {
 export interface ITermState {
   selected?: boolean;
   termLabel: string;
+  hidden?: boolean;
+  disabled?: boolean;
 }

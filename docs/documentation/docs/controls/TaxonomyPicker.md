@@ -47,7 +47,7 @@ import { TaxonomyPicker, IPickerTerms } from "@pnp/spfx-controls-react/lib/Taxon
 
 ```typescript
 private onTaxPickerChange(terms : IPickerTerms) {
-    console.log("Terms", terms);
+  console.log("Terms", terms);
 }
 ```
 
@@ -65,16 +65,64 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                 isTermSetSelectable={false}
                 termActions={{
                   actions: [{
-                    title: "Update term label",
+                    title: "Get term labels",
                     iconName: "LocaleLanguage",
-                    id: "UpdateTermLabel",
+                    id: "test",
+                    invokeActionOnRender: true,
+                    hidden: true,
                     actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      console.log(term.Name, term.TermsCount);
                       return {
                         updateActionType: UpdateType.updateTermLabel,
                         value: `${term.Name} (updated)`
                       };
                     },
-                    applyToTerm: (term: ITerm) => (true) // Applying the action to all terms
+                    applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
+                  },
+                  {
+                    title: "Hide term",
+                    id: "hideTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      return {
+                        updateActionType: UpdateType.hideTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+                  },
+                  {
+                    title: "Disable term",
+                    id: "disableTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      return {
+                        updateActionType: UpdateType.disableTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
+                  },
+                  {
+                    title: "Disable or hide term",
+                    id: "disableOrHideTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      if (term.TermsCount > 0) {
+                        return {
+                          updateActionType: UpdateType.disableTerm,
+                          value: true
+                        };
+                      }
+                      return {
+                        updateActionType: UpdateType.hideTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm) => true
                   }]
                 }} />
 ```
@@ -160,7 +208,7 @@ Interface `UpdateAction`
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | updateActionType | UpdateType | yes | Defines the type of update you want to perform |
-| value | string | no | New term label value to update. Only required when you want to update the term |
+| value | string \| boolean | no | When `updateTermLabel` is used, it should return a string. When `hideTerm` or `disableTerm` are used, you should return a boolean. |
 
 Enum `UpdateType`
 
@@ -168,5 +216,7 @@ Enum `UpdateType`
 | ---- |
 | updateTermLabel |
 | updateTermsTree |
+| hideTerm |
+| disableTerm |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)

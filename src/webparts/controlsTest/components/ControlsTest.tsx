@@ -665,7 +665,71 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onChange={this._onTaxPickerChange}
             isTermSetSelectable={false}
             hideDeprecatedTags={true}
-            hideTagsNotAvailableForTagging={true} />
+            hideTagsNotAvailableForTagging={true}
+            termActions={{
+              actions: [{
+                title: "Get term labels",
+                iconName: "LocaleLanguage",
+                id: "test",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  console.log(term.Name, term.TermsCount);
+                  return {
+                    updateActionType: UpdateType.updateTermLabel,
+                    value: `${term.Name} (updated)`
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
+              },
+              {
+                title: "Hide term",
+                id: "hideTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  return {
+                    updateActionType: UpdateType.hideTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+              },
+              {
+                title: "Disable term",
+                id: "disableTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  return {
+                    updateActionType: UpdateType.disableTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
+              },
+              {
+                title: "Disable or hide term",
+                id: "disableOrHideTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  if (term.TermsCount > 0) {
+                    return {
+                      updateActionType: UpdateType.disableTerm,
+                      value: true
+                    };
+                  }
+                  return {
+                    updateActionType: UpdateType.hideTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => true
+              }],
+              termActionsDisplayMode: TermActionsDisplayMode.buttons,
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }} />
 
           <DefaultButton text="Add" onClick={() => {
             this.setState({
