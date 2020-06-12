@@ -9,7 +9,7 @@
 - `TreeView`: there should be possibility to collapse the first level nodes by default [#561](https://github.com/pnp/sp-dev-fx-controls-react/issues/561)
 - `TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)
 - `DateTimePicker`: When using the datetimePicker I would like to have an opportunity to set maximum/minimum date like in Office UI Fabric [#497](https://github.com/pnp/sp-dev-fx-controls-react/issues/497)
-- `TaxonomyPicker`: Added the `hideTerm` and `disableTerm` actions [#578](https://github.com/pnp/sp-dev-fx-controls-react/issues/578)
+- `TaxonomyPicker`: Added the `selectTerm`, `hideTerm`, and `disableTerm` actions [#578](https://github.com/pnp/sp-dev-fx-controls-react/issues/578)
 
 ### Fixes
 
