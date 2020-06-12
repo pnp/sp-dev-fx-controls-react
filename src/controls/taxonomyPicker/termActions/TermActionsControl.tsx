@@ -2,7 +2,6 @@ import * as React from 'react';
 import { ITermAction, ITermActionsControlProps, ITermActionsControlState, TermActionsDisplayMode, TermActionsDisplayStyle } from './ITermsActions';
 import { DropdownTermAction } from './DropdownTermAction';
 import ButtonTermAction from './ButtonTermAction';
-import { find } from 'office-ui-fabric-react/lib/Utilities';
 
 export default class TermActionsControl extends React.Component<ITermActionsControlProps, ITermActionsControlState> {
 
@@ -57,8 +56,12 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    */
   private setActionVisibility = (actionId: string, isHidden: boolean) => {
     this.setState((prevState: ITermActionsControlState) => {
-      const action = find(prevState.availableActions, a => a.id === actionId);
-      action.hidden = isHidden;
+      prevState.availableActions.forEach(action => {
+        if (action.id === actionId) {
+          action.hidden = isHidden;
+        }
+      });
+
       return {
         availableActions: prevState.availableActions
       };
