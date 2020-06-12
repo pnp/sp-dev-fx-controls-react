@@ -70,8 +70,8 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     return styles.termEnabled;
   }
 
-  private termActionCallback = (updateAction: UpdateAction): void => {
-    if (updateAction == null) {
+  private termActionCallback = (updateAction: UpdateAction | null): void => {
+    if (!updateAction) {
       return;
     }
 
@@ -88,10 +88,13 @@ export default class Term extends React.Component<ITermProps, ITermState> {
         disabled: updateAction.value as boolean
       });
     } else if (updateAction.updateActionType === UpdateType.selectTerm) {
-      this.setState({
-        selected: updateAction.value as boolean
-      });
-      this.props.changedCallback(this.props.term, updateAction.value as boolean);
+      // Only select the term when not disabled or hidden
+      if (!this.state.disabled && !this.state.hidden) {
+        this.setState({
+          selected: updateAction.value as boolean
+        });
+        this.props.changedCallback(this.props.term, updateAction.value as boolean);
+      }
     } else {
       this.props.updateTaxonomyTree();
     }
