@@ -90,10 +90,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     } else if (updateAction.updateActionType === UpdateType.selectTerm) {
       // Only select the term when not disabled or hidden
       if (!this.state.disabled && !this.state.hidden) {
-        this.setState({
-          selected: updateAction.value as boolean
-        });
-        this.props.changedCallback(this.props.term, updateAction.value as boolean);
+        this._handleChange(null, updateAction.value as boolean);
       }
     } else {
       this.props.updateTaxonomyTree();

@@ -132,7 +132,7 @@ export interface ITermAction {
   * Method checks if the current term is supported.
   * @param currentTerm
   */
-  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void) => Promise<boolean> | boolean;
+  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setVisibility: (actionId: string, isHidden: boolean) => void) => Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */
