@@ -2,13 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-let version = "build";
-
-try {
-  version = require('../lib/common/telemetry/version');
-} catch {
-  // Nothing to do
-}
 
 console.log(`
 
@@ -31,10 +24,6 @@ console.log(`
 :             ::     ::    ::  :::::::    ::    :::::   ::    ::  ::      :::              :
 :             :::    :::  :::  ::  :::    ::    :: ::   :::  :::  ::        ::             :
 :               ::::   ::::    :    ::    ::    ::  ::    ::::    :::::  :::::             :
-:                                                                                          :
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:                                                                                          :
-:                                   Version: ${version}                                    :
 :                                                                                          :
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -92,3 +81,6 @@ if (nesting.length > 0) {
 } else {
   console.warn("WARNING: something is wrong with the installation path.");
 }
+
+console.warn("");
+console.warn("");
