@@ -2,7 +2,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const version = require('../lib/common/telemetry/version') || "";
+let version = "build";
+
+try {
+  version = require('../lib/common/telemetry/version');
+} catch {
+  // Nothing to do
+}
 
 console.log(`
 
