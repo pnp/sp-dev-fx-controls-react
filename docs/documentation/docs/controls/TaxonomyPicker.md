@@ -77,7 +77,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: `${term.Name} (updated)`
                       };
                     },
-                    applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && term.Name === "internal")
                   },
                   {
                     title: "Hide term",
@@ -90,7 +90,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
                   },
                   {
                     title: "Disable term",
@@ -103,7 +103,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && term.Name.toLowerCase() === "secured")
                   },
                   {
                     title: "Disable or hide term",
@@ -122,7 +122,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm) => true
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => true
                   }]
                 }} />
 ```
@@ -218,5 +218,6 @@ Enum `UpdateType`
 | updateTermsTree |
 | hideTerm |
 | disableTerm |
+| selectTerm |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)

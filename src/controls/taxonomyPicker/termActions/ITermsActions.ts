@@ -79,7 +79,11 @@ export enum UpdateType {
   /**
    * Allows you to disable the term
    */
-  disableTerm
+  disableTerm,
+  /**
+   * Allows you to select the term
+   */
+  selectTerm
 }
 /**
  * Specifies the result that will be returned to the Term after the execution of the callback.
@@ -128,7 +132,7 @@ export interface ITermAction {
   * Method checks if the current term is supported.
   * @param currentTerm
   */
-  applyToTerm: (currentTerm: ITerm) => Promise<boolean> | boolean;
+  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void) => Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */

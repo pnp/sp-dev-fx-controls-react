@@ -38,7 +38,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
 
     if (termActions.actions) {
       for (const action of termActions.actions) {
-        const available = await action.applyToTerm(term);
+        const available = await action.applyToTerm(term, this.props.termActionCallback);
         if (available) {
           availableActions.push(action);
         }

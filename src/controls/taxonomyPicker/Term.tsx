@@ -87,6 +87,11 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       this.setState({
         disabled: updateAction.value as boolean
       });
+    } else if (updateAction.updateActionType === UpdateType.selectTerm) {
+      this.setState({
+        selected: updateAction.value as boolean
+      });
+      this.props.changedCallback(this.props.term, updateAction.value as boolean);
     } else {
       this.props.updateTaxonomyTree();
     }
