@@ -55,7 +55,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    * Sets the visibility of a certain action
    * @param isHidden
    */
-  private setActionVisibility(actionId: string, isHidden: boolean) {
+  private setActionVisibility = (actionId: string, isHidden: boolean) => {
     this.setState((prevState: ITermActionsControlState) => {
       const action = find(prevState.availableActions, a => a.id === actionId);
       action.hidden = isHidden;
