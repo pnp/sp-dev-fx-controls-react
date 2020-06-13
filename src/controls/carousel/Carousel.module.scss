@@ -7,6 +7,51 @@
   .contentContainer {
     flex-grow: 2;
     position: relative;
+
+    .carouselImage {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      .image {
+        width: 100%;
+        height: 100%;
+      }
+
+      &.staticDetails {
+        .details {
+          top: 60%;
+        }
+      }
+
+      .details {
+        background-color: rgba(0, 0, 0, 0.8);
+        box-sizing: border-box;
+        color: white;
+        height: 40%;
+        left: 0;
+        padding: 15px;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        transition: all 0.5s ease;
+
+        .title {
+          display: block;
+          @include ms-fontSize-l;
+          padding-bottom: 5px;
+        }
+      }
+    }
+
+    &:hover {
+      .carouselImage.dynamicDetails {
+        .details {
+          top: 60%;
+        }
+      }
+    }
   }
 
   .indicators {
@@ -81,7 +126,6 @@
     justify-content: left;
     flex-direction: column-reverse;
   }
-
 
   // ButtonContainer display mode
   .buttonsOnlyPrevButton {

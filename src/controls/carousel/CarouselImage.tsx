@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './CarouselImage.module.scss';
+import styles from './Carousel.module.scss';
 import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 
