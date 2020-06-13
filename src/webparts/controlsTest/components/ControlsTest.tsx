@@ -33,7 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
@@ -1045,6 +1045,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             //containerButtonsStyles={styles.carouselButtonsContainer}
 
             isInfinite={true}
+            indicatorShape={CarouselIndicatorShape.circle}
 
             element={[
               {

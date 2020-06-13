@@ -1,9 +1,61 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
 .container {
   display: flex;
 
   // Styles for elements container
   .contentContainer {
     flex-grow: 2;
+    position: relative;
+  }
+
+  .indicators {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+
+    &.rectangle > li {
+      width: 25px;
+      height: 5px;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+
+    &.square > li {
+      width: 10px;
+      height: 10px;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+
+    &.circle > li {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+    }
+
+    & > li {
+      flex: 0 1 auto;
+      text-indent: -999px;
+      cursor: pointer;
+      background-color: "[theme:white, default: #fff]";
+      opacity: 0.5;
+      transition: opacity 0.5 ease;
+      margin: 0 3px;
+      box-sizing: content-box;
+      background-clip: padding-box;
+
+      &.active {
+        opacity: 1;
+      }
+    }
   }
 
   .loadingComponent {

@@ -1,3 +1,4 @@
+import * as  React from 'react';
 import { ICssInput } from "@uifabric/utilities/lib";
 import { ICarouselImageProps } from "./CarouselImage";
 
@@ -25,6 +26,24 @@ export enum CarouselButtonsDisplay {
    * Buttons are not displayed. They appear onhover event.
    */
   hidden
+}
+
+/**
+ * Provides options for carousel indicators' shape
+ */
+export enum CarouselIndicatorShape {
+  /**
+   * Indicators displayed as cirlces
+   */
+  circle,
+  /**
+   * Indicators displayed as squares
+   */
+  square,
+  /**
+   * Indicators displayed as rectangles
+   */
+  rectangle
 }
 
 export interface ICarouselProps {
@@ -92,10 +111,11 @@ export interface ICarouselProps {
   /**
    * Triggers parent control to provide new element to be displayed. After the method is executed, carousel control switches to processing mode and loadingComponent is displayed.
    */
-  triggerPageEvent? : (index: number) => void;
+  triggerPageEvent?: (index: number) => void;
   /**
    * Fixed array of elemenets to be displayed in carousel - if triggerPageEvent is not used.
    * In case triggerPageEvent is in use, JSX.Element has to be provided. Elements are distinguished based on the 'key' property.
+   * It's also possible to provide an array of ICarouselImageProps to use default implementation for the elements
    */
   element: JSX.Element | JSX.Element[] | ICarouselImageProps[];
   /**
@@ -111,5 +131,40 @@ export interface ICarouselProps {
    * Callback function called after the previous item button is clicked. Not used when triggerPageEvent is specified.
    */
   onMovePrevClicked?: (currentIndex: number) => void;
+
+  /**
+   * In case triggerPageEvent is in use, provides total number of slides in the carousel.
+   */
+  elementsCount?: number;
+
+  /**
+   * Callback function called when element has been selected in the carousel
+   */
+  onSelect?: (selectedIndex: number) => void;
+
+  /**
+   * Enables animation on the Carousel as it transitions between slides.
+   */
+  slide?: boolean;
+
+  /**
+   * The amount of time to delay between automatically cycling an item. If undefined, carousel will not automatically cycle.
+   */
+  interval?: number;
+
+  /**
+   * Specifies if set of slide position indicators is shown
+   */
+  indicators?: boolean;
+
+  /**
+   * Specifies indicators' shape. If onRenderIndicator is provided - this property is ignored
+   */
+  indicatorShape?: CarouselIndicatorShape;
+
+  /**
+   * Function to render indicator element
+   */
+  onRenderIndicator?: (index: number, onClick: (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, selectedIndex: number) => void) => JSX.Element;
 
 }

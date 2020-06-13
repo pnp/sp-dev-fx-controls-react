@@ -5,7 +5,7 @@ initializeIcons();
 
 import * as React from "react";
 import styles from "./Carousel.module.scss";
-import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation } from ".";
+import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation, CarouselIndicatorShape } from ".";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
@@ -48,16 +48,23 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
   public render(): React.ReactElement<ICarouselProps> {
     const { currentIndex, processingState } = this.state;
-    const { containerStyles, contentContainerStyles, containerButtonsStyles, prevButtonStyles, nextButtonStyles, loadingComponentContainerStyles } = this.props;
+    const {
+      containerStyles,
+      contentContainerStyles,
+      containerButtonsStyles,
+      prevButtonStyles,
+      nextButtonStyles,
+      loadingComponentContainerStyles,
+      prevButtonIconName = 'ChevronLeft',
+      nextButtonIconName = 'ChevronRight',
+      loadingComponent = <Spinner />
+    } = this.props;
 
-    const prevButtonIconName = this.props.prevButtonIconName ? this.props.prevButtonIconName : "ChevronLeft";
-    const nextButtonIconName = this.props.nextButtonIconName ? this.props.nextButtonIconName : "ChevronRight";
     const processing = processingState === ProcessingState.processing;
 
     const prevButtonDisabled = processing || this.isCarouselButtonDisabled(false);
     const nextButtonDisabled = processing || this.isCarouselButtonDisabled(true);
 
-    const loadingComponent = this.props.loadingComponent ? this.props.loadingComponent : <Spinner />;
     const element = this.getElementToDisplay();
 
     return (
@@ -80,10 +87,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           }
 
           {
-            !processing && element &&
-            element
+            !processing && element
           }
-
+          {this.getIndicatorsElement()}
         </div>
 
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
@@ -96,6 +102,64 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         </div>
       </div>
     );
+  }
+
+  private getIndicatorsElement = (): JSX.Element | null => {
+    const {
+      indicators,
+      indicatorShape = CarouselIndicatorShape.rectangle,
+      onRenderIndicator,
+      triggerPageEvent
+    } = this.props;
+
+    const {
+      currentIndex = 0
+    } = this.state;
+
+    if (indicators === false) {
+      return null;
+    }
+
+    const elementsCount = triggerPageEvent ? this.props.elementsCount : isArray(this.props.element) ? (this.props.element as any[]).length : 1;
+
+    const indicatorElements: JSX.Element[] = [];
+    for (let i = 0; i < elementsCount; i++) {
+      if (onRenderIndicator) {
+        indicatorElements.push(onRenderIndicator(i, this.onIndicatorClick));
+      }
+      else {
+        indicatorElements.push(<li
+          className={i === currentIndex ? styles.active : undefined}
+          onClick={e => this.onIndicatorClick(e, i)}
+        />);
+      }
+    }
+
+    if (onRenderIndicator) {
+      return <div className={styles.indicators}>
+        {indicatorElements}
+      </div>;
+    }
+    else {
+      return <ol className={css({
+        [styles.indicators]: true,
+        [styles.circle]: indicatorShape === CarouselIndicatorShape.circle,
+        [styles.rectangle]: indicatorShape === CarouselIndicatorShape.rectangle,
+        [styles.square]: indicatorShape === CarouselIndicatorShape.square
+      })}>
+        {indicatorElements}
+      </ol>;
+    }
+  }
+
+  private onIndicatorClick = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, index: number): void => {
+    if (this.props.onSelect) {
+      this.props.onSelect(index);
+    }
+
+    this.setState({
+      currentIndex: index
+    });
   }
 
   /**
