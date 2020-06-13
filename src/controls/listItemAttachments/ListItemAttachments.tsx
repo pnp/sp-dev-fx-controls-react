@@ -175,6 +175,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    * Default React render method
    */
   public render() {
+    const { openAttachmentsInNewWindow } = this.props;
     return (
       <div className={styles.ListItemAttachments}>
         <UploadAttachment
@@ -208,7 +209,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                     directionalHint={DirectionalHint.rightCenter}>
 
                     <DocumentCard
-                      onClickHref={`${file.ServerRelativeUrl}?web=1`}
+                      onClickHref={!openAttachmentsInNewWindow && `${file.ServerRelativeUrl}?web=1`}
+                      onClick={openAttachmentsInNewWindow && (() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
                       className={styles.documentCard}>
                       <DocumentCardPreview previewImages={[previewImage]} />
                       <Label className={styles.fileLabel}>{fileName}</Label>
