@@ -260,6 +260,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     if (this.props.triggerPageEvent) {
       // Index validation needs to be done by the parent control specyfing canMove Next|Prev
       nextIndex = nextButtonClicked ? (currentIndex + 1) : (currentIndex - 1);
+
       // Trigger parent to provide new data
       this.props.triggerPageEvent(nextIndex);
       processingState = ProcessingState.processing;
@@ -277,6 +278,10 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       }
 
       processingState = ProcessingState.idle;
+    }
+
+    if (this.props.onSelect) {
+      this.props.onSelect(nextIndex);
     }
 
     this.setState({
