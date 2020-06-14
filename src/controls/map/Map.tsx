@@ -57,8 +57,9 @@ export class Map extends React.Component<IMapProps, IMapState> {
   */
   private _getDif(): number {
     const { zoom } = this.props;
-    const newZoom: number = zoom >= 0 && zoom < 32 ? zoom % 16 : 10;
-    const multiplier = Math.floor(zoom / 16); // 20200614 - JJ - support zoom levels 16-31
+    // 20200614 - JJ - support zoom levels beyond 15
+    const newZoom: number = zoom >= 0 ? zoom % 16 : 10;
+    const multiplier = Math.floor(zoom / 16) + 1; 
     return (0.0025 + (0.005 * (15 - (newZoom))))/multiplier;
   }
 
