@@ -33,7 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
@@ -58,6 +58,7 @@ import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
+import CarouselImage from '../../../controls/carousel/CarouselImage';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -1093,6 +1094,50 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isInfinite={true}
 
             element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with CarouselImage elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.center}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselImageContent}
+            //containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+            indicatorShape={CarouselIndicatorShape.circle}
+            pauseOnHover={true}
+
+            element={[
+              {
+                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+                title: 'Colosseum',
+                description: 'This is Colosseum',
+                url: 'https://en.wikipedia.org/wiki/Colosseum',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
+                title: 'Stonehenge',
+                description: 'This is Stonehendle',
+                url: 'https://en.wikipedia.org/wiki/Stonehenge',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
+                title: 'Pyramids of Giza',
+                description: 'This are Pyramids of Giza (Egypt)',
+                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              }
+            ]}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
