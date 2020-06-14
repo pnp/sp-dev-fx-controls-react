@@ -149,9 +149,9 @@ export interface ICarouselProps {
   slide?: boolean;
 
   /**
-   * The amount of time to delay between automatically cycling an item. If undefined, carousel will not automatically cycle.
+   * The amount of time to delay between automatically cycling an item. If null, carousel will not automatically cycle.
    */
-  interval?: number;
+  interval?: number | null;
 
   /**
    * Specifies if set of slide position indicators is shown

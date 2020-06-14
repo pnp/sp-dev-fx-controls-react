@@ -14,6 +14,8 @@ import * as telemetry from '../../common/telemetry';
 import CarouselImage from "./CarouselImage";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
+  private _intervalId: number | undefined;
+
   constructor(props: ICarouselProps) {
     super(props);
 
@@ -42,7 +44,13 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       this.setState({
         processingState: ProcessingState.idle
       });
+      this.startCycle(); // restarting cycle when new slide is available
     }
+  }
+
+  public componentDidMount() {
+    // starting auto cycling
+    this.startCycle();
   }
 
 
@@ -192,6 +200,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   }
 
   private onIndicatorClick = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, index: number): void => {
+
+    this.startCycle();
+
     if (this.props.onSelect) {
       this.props.onSelect(index);
     }
@@ -296,6 +307,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
    * Handles carousel button click.
    */
   private onCarouselButtonClicked = (nextButtonClicked: boolean): void => {
+
+    this.startCycle();
+
     const currentIndex = this.state.currentIndex;
 
     let nextIndex = this.state.currentIndex;
@@ -405,5 +419,48 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     }
 
     return result;
+  }
+
+  private startCycle = (): void => {
+
+    const {
+      interval,
+      triggerPageEvent
+    } = this.props;
+
+    if (this._intervalId) {
+      if (triggerPageEvent) {
+        clearTimeout(this._intervalId);
+      }
+      else {
+        clearInterval(this._intervalId);
+      }
+    }
+
+    if (interval !== null) {
+      const intervalValue = interval || 5000;
+      if (!triggerPageEvent) {
+        this._intervalId = setInterval(this.moveNext, intervalValue);
+      }
+      else {
+        this._intervalId = setTimeout(this.moveNext, intervalValue);
+      }
+    }
+  }
+
+  private moveNext = (): void => {
+    if (!this.isCarouselButtonDisabled(true)) {
+      this.onCarouselButtonClicked(true);
+    }
+    else {
+      if (this._intervalId) {
+        if (this.props.triggerPageEvent) {
+          clearTimeout(this._intervalId);
+        }
+        else {
+          clearInterval(this._intervalId);
+        }
+      }
+    }
   }
 }
