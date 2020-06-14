@@ -154,6 +154,11 @@ export interface ICarouselProps {
   interval?: number | null;
 
   /**
+   * Specifies if slides cycling should pause when hovering over the content (touchStart on touch devices)
+   */
+  pauseOnHover?: boolean;
+
+  /**
    * Specifies if set of slide position indicators is shown
    */
   indicators?: boolean;

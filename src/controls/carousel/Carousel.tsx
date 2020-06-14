@@ -65,7 +65,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       loadingComponentContainerStyles,
       prevButtonIconName = 'ChevronLeft',
       nextButtonIconName = 'ChevronRight',
-      loadingComponent = <Spinner />
+      loadingComponent = <Spinner />,
+      pauseOnHover
     } = this.props;
 
     const processing = processingState === ProcessingState.processing;
@@ -86,7 +87,12 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
             onClick={() => { this.onCarouselButtonClicked(false); }} />
         </div>
 
-        <div className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}>
+        <div
+        className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
+        onMouseOver={pauseOnHover ? this.pauseCycle : undefined}
+        onTouchStart={pauseOnHover ? this.pauseCycle : undefined}
+        onMouseLeave={pauseOnHover ? this.startCycle : undefined}
+        onTouchEnd={pauseOnHover ? this.startCycle : undefined}>
           {
             processing &&
             <div className={this.getMergedStyles(styles.loadingComponent, loadingComponentContainerStyles)}>
@@ -460,6 +466,17 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         else {
           clearInterval(this._intervalId);
         }
+      }
+    }
+  }
+
+  private pauseCycle = (): void => {
+    if (this._intervalId) {
+      if (this.props.triggerPageEvent) {
+        clearTimeout(this._intervalId);
+      }
+      else {
+        clearInterval(this._intervalId);
       }
     }
   }

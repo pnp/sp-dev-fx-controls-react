@@ -1046,6 +1046,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
             isInfinite={true}
             indicatorShape={CarouselIndicatorShape.circle}
+            pauseOnHover={true}
 
             element={[
               {
