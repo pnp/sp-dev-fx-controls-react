@@ -1058,18 +1058,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 imageFit: ImageFit.cover
               },
               {
-                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
-                title: 'Colosseum',
-                description: 'This is Colosseum',
-                url: 'https://en.wikipedia.org/wiki/Colosseum',
+                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
+                title: 'Stonehenge',
+                description: 'This is Stonehendle',
+                url: 'https://en.wikipedia.org/wiki/Stonehenge',
                 showDetailsOnHover: true,
                 imageFit: ImageFit.cover
               },
               {
-                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
-                title: 'Colosseum',
-                description: 'This is Colosseum',
-                url: 'https://en.wikipedia.org/wiki/Colosseum',
+                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
+                title: 'Pyramids of Giza',
+                description: 'This are Pyramids of Giza (Egypt)',
+                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
                 showDetailsOnHover: true,
                 imageFit: ImageFit.cover
               }
