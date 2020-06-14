@@ -18,14 +18,12 @@ export class Map extends React.Component<IMapProps, IMapState> {
 
   constructor(props: IMapProps) {
     super(props);
+    const { coordinates } = this.props;
 
     telemetry.track('ReactMap', {});
 
     this.state = {
-      coordinates: {
-        latitude: null,
-        longitude: null
-      },
+      coordinates,
       address: "",
       showmessageerror: false,
       loading: false
@@ -35,29 +33,33 @@ export class Map extends React.Component<IMapProps, IMapState> {
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
-    this.setState({
-      coordinates: this.props.coordinates
-    });
-  }
+  // 20200614 - legacy react lifecycle event; use constructor instead
+  // public componentWillMount(): void { 
+  //   this.setState({
+  //     coordinates: this.props.coordinates
+  //   });
+  // }
 
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
-    if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
-      this.setState({
-        coordinates: this.props.coordinates
-      });
-    }
-  }
+  // 20200614 - legacy react lifecycle event; don't use
+  // public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
+  //   if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
+  //     this.setState({
+  //       coordinates: this.props.coordinates
+  //     });
+  //   }
+  // }
 
   /**
   * Get the dif value based on zoom supplied (dif is for calculating the 4 corners of the map)
   */
   private _getDif(): number {
-    let zoom: number = this.props.zoom >= 0 ? this.props.zoom : 10;
-    return 0.0025 + (0.005 * (15 - zoom));
+    const { zoom } = this.props;
+    const newZoom: number = zoom >= 0 && zoom < 32 ? zoom % 16 : 10;
+    const multiplier = Math.floor(zoom / 16); // 20200614 - JJ - support zoom levels 16-31
+    return (0.0025 + (0.005 * (15 - (newZoom))))/multiplier;
   }
 
   /**
@@ -115,8 +117,25 @@ export class Map extends React.Component<IMapProps, IMapState> {
   }
 
   /**
-   * Get coordinates using the Bing API
+   * Gets map url for a static Bing map
+   *
+   * @private
+   * @param {(string | number)} width
+   * @param {(string | number)} height
+   * @returns {string}
+   * @memberof Map
    */
+  private _getBingMapUrl(width: string | number, height: string | number): string {
+    const { mapSource, zoom } = this.props;
+    const { coordinates: {latitude, longitude}} = this.state;
+    const mapType = mapSource === "BingStatic" ? "s" : "d";// s for static or d for draggable
+    return `https://www.bing.com/maps/embed?h=${height}&w=${width}&cp=${latitude}~${longitude}&lvl=${zoom}&typ=${mapType}&sty=r`;
+  }
+
+  /**
+   * Get coordinates using the OpenStreetMap nominatim API
+   */
+  //20200614 - updated comment to reflect API used
   private _getCoordinates = async (): Promise<void> => {
     this._startLoading();
 
@@ -185,9 +204,10 @@ export class Map extends React.Component<IMapProps, IMapState> {
    * Default React render method
    */
   public render(): React.ReactElement<IMapProps> {
+    const { mapSource } = this.props; 
     let width: string = this._getWidth();
     let height: number = this._getHeight();
-    let mapUrl: string = this._getMapUrl();
+    let mapUrl: string = ["BingDraggable", "BingStatic"].indexOf(mapSource) !== -1 ? this._getBingMapUrl(width, height) : this._getMapUrl(); //20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)
 
     return (
       <div id="mapsContainer" className={`${styles.mapContainer} ${this.props.mapsClassName ? this.props.mapsClassName : ''}`}>
@@ -201,16 +221,16 @@ export class Map extends React.Component<IMapProps, IMapState> {
           (this.props.enableSearch) && (
             <div id="mapsSearch" className={styles.searchContainer}>
               <TextField value={this.state.address}
-                         onChanged={this._onChangedAddress}
-                         onKeyPress={(event) => event.key === "Enter" ? this._getCoordinates() : null}
-                         iconProps={{ iconName: 'World' }}
-                         className={styles.searchTextBox} />
+                onChanged={this._onChangedAddress}
+                onKeyPress={(event) => event.key === "Enter" ? this._getCoordinates() : null}
+                iconProps={{ iconName: 'World' }}
+                className={styles.searchTextBox} />
 
               <PrimaryButton text={strings.mapsSearchButtonText}
-                            title={strings.mapsSearchButtonText}
-                            className={styles.submitButton}
-                            iconProps={{ iconName: 'Search' }}
-                            onClick={this._getCoordinates} />
+                title={strings.mapsSearchButtonText}
+                className={styles.submitButton}
+                iconProps={{ iconName: 'Search' }}
+                onClick={this._getCoordinates} />
             </div>
           )
         }
@@ -219,17 +239,18 @@ export class Map extends React.Component<IMapProps, IMapState> {
           this.state.loading ? (
             <Spinner size={SpinnerSize.large} label={this.props.loadingMessage ? this.props.loadingMessage : strings.mapsLoadingText} />
           ) : (
-            (mapUrl.length > 0 && !this.state.showmessageerror) ? (
-              <div id="mapsIframe">
-                <iframe width={width} height={height} scrolling="no" src={mapUrl}></iframe>
-              </div>
-            ) : (
-              <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
-                <Icon iconName='Error' className={styles.errorIcon} />
-                <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.mapsErrorMessage}</span>
-              </p>
+              (mapUrl.length > 0 && !this.state.showmessageerror) ? (
+                <div id="mapsIframe">
+                  <iframe width={width} height={height} scrolling="no" src={mapUrl}></iframe>
+                  {mapSource === "BingStatic" && <Icon iconName="Location" style={{fontSize: "26px", position:"relative", top: (Math.floor(-height/2)), left: "50%", marginTop: "-14px"}} ></Icon>}{/* 20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)*/}
+                </div>
+              ) : (
+                  <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>
+                    <Icon iconName='Error' className={styles.errorIcon} />
+                    <span data-automation-id="error-message">{this.props.errorMessage ? this.props.errorMessage : strings.mapsErrorMessage}</span>
+                  </p>
+                )
             )
-          )
         }
       </div>
     );
