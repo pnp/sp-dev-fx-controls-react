@@ -121,14 +121,16 @@ export class Map extends React.Component<IMapProps, IMapState> {
     this._startLoading();
 
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${this.state.address}`);
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&q=${this.state.address}`); // 20200614 - JJ - added addressdetails parameter
       const mapData: LocationInfo[] = await response.json();
       if (mapData && mapData.length > 0) {
         const location = mapData[0];
 
         const coordinates = {
           latitude: parseFloat(location.lat),
-          longitude: parseFloat(location.lon)
+          longitude: parseFloat(location.lon),
+          displayName: location.display_name, // 20200614 - JJ - let's keep the display name
+          address: location.address, // 20200614 - JJ - and the address
         };
 
         this.setState({
