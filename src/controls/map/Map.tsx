@@ -126,7 +126,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
       if (mapData && mapData.length > 0) {
         const location = mapData[0];
 
-        const coordinates = {
+        const coordinates: ICoordinates = { // 20200614 - JJ - added typing
           latitude: parseFloat(location.lat),
           longitude: parseFloat(location.lon),
           displayName: location.display_name, // 20200614 - JJ - let's keep the display name
