@@ -66,7 +66,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       prevButtonIconName = 'ChevronLeft',
       nextButtonIconName = 'ChevronRight',
       loadingComponent = <Spinner />,
-      pauseOnHover
+      pauseOnHover,
+      interval
     } = this.props;
 
     const processing = processingState === ProcessingState.processing;
@@ -89,10 +90,10 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
         <div
         className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
-        onMouseOver={pauseOnHover ? this.pauseCycle : undefined}
-        onTouchStart={pauseOnHover ? this.pauseCycle : undefined}
-        onMouseLeave={pauseOnHover ? this.startCycle : undefined}
-        onTouchEnd={pauseOnHover ? this.startCycle : undefined}>
+        onMouseOver={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+        onTouchStart={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+        onMouseLeave={pauseOnHover && interval !== null ? this.startCycle : undefined}
+        onTouchEnd={pauseOnHover && interval !== null ? this.startCycle : undefined}>
           {
             processing &&
             <div className={this.getMergedStyles(styles.loadingComponent, loadingComponentContainerStyles)}>
