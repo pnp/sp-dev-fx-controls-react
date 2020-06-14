@@ -1,5 +1,49 @@
 @import "~office-ui-fabric-react/dist/sass/References.scss";
 
+@keyframes slideleft {
+  0% {
+    left: 0;
+    right: 0;
+  }
+  100% {
+    left: -100%;
+    right: 100%;
+  }
+}
+
+@keyframes slideright {
+  0% {
+    left: 0;
+    right: 0;
+  }
+  100% {
+    left: 100%;
+    right: -100%;
+  }
+}
+
+@keyframes slidefromright {
+  0% {
+    left: 100%;
+    right: -100%;
+  }
+  100% {
+    left: 0;
+    right: 0;
+  }
+}
+
+@keyframes slidefromleft {
+  0% {
+    left: -100%;
+    right: 100%;
+  }
+  100% {
+    left: 0;
+    right: 0;
+  }
+}
+
 .container {
   display: flex;
 
@@ -7,6 +51,38 @@
   .contentContainer {
     flex-grow: 2;
     position: relative;
+    overflow: hidden;
+
+    .slideWrapper {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+
+      &.left {
+        left: -100%;
+        right: 100%;
+      }
+
+      &.right {
+        left: 100%;
+        right: -100%;
+      }
+
+      &.slideLeft {
+        animation: slideleft linear 0.6s;
+      }
+      &.slideRight {
+        animation: slideright linear 0.6s;
+      }
+      &.slideFromRight {
+        animation: slidefromright linear 0.6s;
+      }
+      &.slideFromLeft {
+        animation: slidefromleft linear 0.6s;
+      }
+    }
 
     .carouselImage {
       overflow: hidden;

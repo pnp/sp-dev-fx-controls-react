@@ -144,6 +144,7 @@ export interface ICarouselProps {
 
   /**
    * Enables animation on the Carousel as it transitions between slides.
+   * This property is ignored if triggerPageEvent is in use.
    */
   slide?: boolean;
 
@@ -161,6 +162,16 @@ export interface ICarouselProps {
    * Specifies indicators' shape. If onRenderIndicator is provided - this property is ignored
    */
   indicatorShape?: CarouselIndicatorShape;
+
+  /**
+   * Specifies additional class applied to slide position indicators
+   */
+  indicatorClassName?: string;
+
+  /**
+   * Specifies additional styles applied to slide position indicators
+   */
+  indicatorStyle?: React.CSSProperties;
 
   /**
    * Function to render indicator element
