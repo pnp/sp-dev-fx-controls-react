@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
-import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps } from './ITermsActions';
+import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps, ActionChange } from './ITermsActions';
+import { getTermActionChange } from './getTermActionChange';
 
 export default class ButtonTermAction extends React.Component<IConcreteTermActionProps> {
 
@@ -66,46 +67,65 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
     this.props.termActionCallback(updateAction);
   }
 
+
+  /**
+   * Render all the term actions
+   */
+  private renderTermActions() {
+    const { term, termActions, termActionChanges } = this.props;
+    // Get term action changes
+    const tac: ActionChange[] = termActionChanges[term.Id];
+
+    return (
+      termActions && termActions.map(termAction => {
+        const { name, text, iconName, btnTitle } = this.prepareCommandBarButton(termAction);
+        const { actionDisabled, actionHidden } = getTermActionChange(tac, termAction);
+
+        if (actionHidden) {
+          return null;
+        }
+
+        if (termAction.hidden && actionHidden === null) {
+          return null;
+        }
+
+        return (
+            <div>
+              <CommandBarButton split={true}
+                                onClick={() => { this.onActionExecute(termAction); }}
+                                iconProps={{
+                                  iconName: iconName || null,
+                                  style: { display: iconName ? null : "none"}
+                                }}
+                                disabled={actionDisabled}
+                                text={text}
+                                title={btnTitle}
+                                name={name}
+                                key={term.Id}
+                                style={this.getTermActionActionButtonStyle()} />
+            </div>
+          );
+        }
+      )
+    );
+  }
+
+
   /**
    * Default React render method
    */
   public render(): React.ReactElement<IConcreteTermActionProps> {
-    const { term, termActions } = this.props;
+    // Get termActions
+    const allActions = this.renderTermActions().filter(action => action !== null);
 
-    // Check if there are actions to show
-    const actionsToShow = termActions.filter(a => !a.hidden);
-    if (actionsToShow && actionsToShow.length === 0) {
-      return null;
+    if (allActions && allActions.length > 0) {
+      return (
+        <div style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
+          {allActions}
+        </div>
+      );
     }
 
-    return (
-      <div style={{ display: 'flex', alignItems: 'stretch', height: '32px' }}>
-        {
-          termActions &&
-          termActions.map(termAction => {
-            const { name, text, iconName, btnTitle } = this.prepareCommandBarButton(termAction);
-            return (
-              termAction.hidden ? (
-                null
-              ) : (
-                <div>
-                  <CommandBarButton split={true}
-                                    onClick={() => { this.onActionExecute(termAction); }}
-                                    iconProps={{
-                                      iconName: iconName || null,
-                                      style: { display: iconName ? null : "none"}
-                                    }}
-                                    text={text}
-                                    title={btnTitle}
-                                    name={name}
-                                    key={term.Id}
-                                    style={this.getTermActionActionButtonStyle()} />
-                </div>
-              )
-            );
-          })
-        }
-      </div>
-    );
+    return null;
   }
 }

@@ -33,6 +33,20 @@ export interface ITermActionsControlState {
    * Specifies how the concreate term action is going to be displayed (icon/text/both).
    */
   displayStyle: TermActionsDisplayStyle;
+  /**
+   * TermAction state changes. Can be used to enable/disable/hide actions for specific terms.
+   */
+  termActionChanges?: TermActionChange;
+}
+
+export interface TermActionChange {
+  [termId: string]: ActionChange[];
+}
+
+export interface ActionChange {
+  actionId: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
 
 export interface IConcreteTermActionProps {
@@ -40,6 +54,8 @@ export interface IConcreteTermActionProps {
   term: ITerm;
   displayStyle: TermActionsDisplayStyle;
   spTermService: SPTermStorePickerService;
+  termActionChanges: TermActionChange;
+
   termActionCallback: (updateAction: UpdateAction | null) => void;
 }
 
@@ -132,7 +148,7 @@ export interface ITermAction {
   * Method checks if the current term is supported.
   * @param currentTerm
   */
-  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setVisibility: (actionId: string, isHidden: boolean) => void) => Promise<boolean> | boolean;
+  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */
