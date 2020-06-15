@@ -1,4 +1,6 @@
 
+import * as React from 'react';
+
 export enum ProcessingState {
   idle,
   processing
@@ -13,4 +15,8 @@ export interface ICarouselState {
    * Specifies internal state of the control.
    */
   processingState: ProcessingState;
+
+  slideRight?: boolean;
+
+  previousIndex?: number;
 }
