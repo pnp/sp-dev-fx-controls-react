@@ -77,7 +77,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: `${term.Name} (updated)`
                       };
                     },
-                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && term.Name === "internal")
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && term.Name === "internal")
                   },
                   {
                     title: "Hide term",
@@ -90,7 +90,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
                   },
                   {
                     title: "Disable term",
@@ -103,7 +103,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => (term && term.Name && term.Name.toLowerCase() === "secured")
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && term.Name.toLowerCase() === "secured")
                   },
                   {
                     title: "Disable or hide term",
@@ -122,7 +122,7 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                         value: true
                       };
                     },
-                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void) => true
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => true
                   }]
                 }} />
 ```
@@ -199,7 +199,7 @@ Interface `ITermAction`
 | iconName | string | no | Name of the icon to be used to display action |
 | hidden | boolean | no | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
 | invokeActionOnRender | boolean | no | Specifies if you want to invoke the action on render |
-| applyToTerm | (currentTerm: ITerm) => Promise\<boolean\> \| boolean | yes | Method checks if the current term is supported |
+| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => Promise\<boolean> \| boolean | yes | Method checks if the current term is supported for the action. The method provices a couple of additional callback functions to make it possibe to programatically change the terms and its actions. |
 | actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise\<UpdateAction\> | yes | Method to be executed when action is fired |
 
 

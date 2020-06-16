@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { ITermAction, ITermActionsControlProps, ITermActionsControlState, TermActionsDisplayMode, TermActionsDisplayStyle } from './ITermsActions';
+import { ITermAction, ITermActionsControlProps, ITermActionsControlState, TermActionsDisplayMode, TermActionsDisplayStyle, ActionChange } from './ITermsActions';
 import { DropdownTermAction } from './DropdownTermAction';
 import ButtonTermAction from './ButtonTermAction';
-import { find } from 'office-ui-fabric-react/lib/Utilities';
 
 export default class TermActionsControl extends React.Component<ITermActionsControlProps, ITermActionsControlState> {
 
@@ -17,7 +16,8 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
     this.state = {
       availableActions: [],
       displayMode,
-      displayStyle
+      displayStyle,
+      termActionChanges: {}
     };
   }
 
@@ -39,7 +39,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
 
     if (termActions.actions) {
       for (const action of termActions.actions) {
-        const available = await action.applyToTerm(term, this.props.termActionCallback, this.setActionVisibility);
+        const available = await action.applyToTerm(term, this.props.termActionCallback, this.setActionStateForTerm);
         if (available) {
           availableActions.push(action);
         }
@@ -55,12 +55,25 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    * Sets the visibility of a certain action
    * @param isHidden
    */
-  private setActionVisibility = (actionId: string, isHidden: boolean) => {
+  private setActionStateForTerm = (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => {
     this.setState((prevState: ITermActionsControlState) => {
-      const action = find(prevState.availableActions, a => a.id === actionId);
-      action.hidden = isHidden;
+      let termActionChanges = prevState.termActionChanges;
+      if (!termActionChanges[termId]) {
+        termActionChanges[termId] = [];
+      }
+
+      const actionChanges = termActionChanges[termId].filter((action: ActionChange) => action.actionId === actionId);
+      if (actionChanges.length === 0) {
+        termActionChanges[termId].push({
+          actionId,
+          [type]: value
+        });
+      } else {
+        actionChanges[0][type] = value;
+      }
+
       return {
-        availableActions: prevState.availableActions
+        termActionChanges
       };
     });
   }
@@ -70,7 +83,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    */
   public render(): React.ReactElement<ITermActionsControlProps> {
     const { term } = this.props;
-    const { displayStyle, displayMode, availableActions } = this.state;
+    const { displayStyle, displayMode, availableActions, termActionChanges } = this.state;
 
     if (!availableActions || availableActions.length <= 0 || !term) {
       return null;
@@ -80,9 +93,9 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
       <div>
         {
           displayMode == TermActionsDisplayMode.dropdown ?
-            <DropdownTermAction key={`DdAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} />
+            <DropdownTermAction key={`DdAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />
             :
-            <ButtonTermAction key={`BtnAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} />
+            <ButtonTermAction key={`BtnAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />
         }
       </div>
     );
