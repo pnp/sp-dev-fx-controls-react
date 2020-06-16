@@ -128,9 +128,15 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         if (hoursSplit[1] && hoursSplit[1].toLowerCase().indexOf("pm") !== -1) {
           hours += 12;
           if (hours === 24) {
-            hours = 0;
+            //this is noon - set to 12 not 0
+            //hours = 0;
+            hours = 12;
           }
         }
+        else if (hours === 12) {
+            //am - if hours == 12, set hours to 0 here
+            hours = 0;
+          }
       }
 
       if (hours > 23) {
