@@ -19,11 +19,12 @@
 - Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)
 - `ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)
 - `TreeView`: `defaultExpanded: true` doesn't work [#560](https://github.com/pnp/sp-dev-fx-controls-react/issues/560)
-- `IListPicker`: typo fix [#574](https://github.com/pnp/sp-dev-fx-controls-react/pull/574) 
+- `IListPicker`: typo fix [#574](https://github.com/pnp/sp-dev-fx-controls-react/pull/574)
+- `DateTimePicker`: DateTime Picker noon/midnight issue with 12 hour format [#576](https://github.com/pnp/sp-dev-fx-controls-react/issues/576)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Koen Zomers](https://github.com/KoenZomers), [Markus Langer](https://github.com/MarkusLanger), [Nanddeep Nachan](https://github.com/nanddeepn), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [David Ramalho](https://github.com/DRamalho92), [Siddharth Vaghasia](https://github.com/siddharth-vaghasia).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Gautam Sheth](https://github.com/gautamdsheth), [Koen Zomers](https://github.com/KoenZomers), [Markus Langer](https://github.com/MarkusLanger), [Nanddeep Nachan](https://github.com/nanddeepn), [Prasad Kasireddy](https://github.com/PrasadKasireddy), [David Ramalho](https://github.com/DRamalho92), [Siddharth Vaghasia](https://github.com/siddharth-vaghasia).
 
 ## 1.18.0
 
