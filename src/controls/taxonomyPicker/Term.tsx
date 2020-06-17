@@ -21,7 +21,9 @@ export default class Term extends React.Component<ITermProps, ITermState> {
 
     this.state = {
       selected: active.length > 0,
-      termLabel: this.props.term.Name
+      termLabel: this.props.term.Name,
+      hidden: false,
+      disabled: false
     };
 
     this._handleChange = this._handleChange.bind(this);
@@ -68,15 +70,28 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     return styles.termEnabled;
   }
 
-  private termActionCallback = (updateAction: UpdateAction): void => {
-    if (updateAction == null) {
+  private termActionCallback = (updateAction: UpdateAction | null): void => {
+    if (!updateAction) {
       return;
     }
 
     if (updateAction.updateActionType === UpdateType.updateTermLabel) {
       this.setState({
-        termLabel: updateAction.value
+        termLabel: updateAction.value as string
       });
+    } else if (updateAction.updateActionType === UpdateType.hideTerm) {
+      this.setState({
+        hidden: updateAction.value as boolean
+      });
+    } else if (updateAction.updateActionType === UpdateType.disableTerm) {
+      this.setState({
+        disabled: updateAction.value as boolean
+      });
+    } else if (updateAction.updateActionType === UpdateType.selectTerm) {
+      // Only select the term when not disabled or hidden
+      if (!this.state.disabled && !this.state.hidden) {
+        this._handleChange(null, updateAction.value as boolean);
+      }
     } else {
       this.props.updateTaxonomyTree();
     }
@@ -93,6 +108,10 @@ export default class Term extends React.Component<ITermProps, ITermState> {
       display: "inline-flex"
     };
 
+    if (this.state.hidden) {
+      return null;
+    }
+
     return (
       <div>
         <div className={`${styles.listItem} ${styles.term}`} style={styleProps}>
@@ -100,7 +119,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
             <Checkbox
               checked={this.state.selected}
               style={checkBoxStyle}
-              disabled={this.props.term.IsDeprecated || !this.props.term.IsAvailableForTagging || this.props.disabled}
+              disabled={this.props.term.IsDeprecated || !this.props.term.IsAvailableForTagging || this.props.disabled || this.state.disabled}
               className={this.getClassName()}
               label={this.state.termLabel}
               onChange={this._handleChange} />

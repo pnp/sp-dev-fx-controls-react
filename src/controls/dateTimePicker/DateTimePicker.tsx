@@ -3,8 +3,6 @@ import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
 import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import * as strings from "ControlStrings";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import styles from "./DateTimePicker.module.scss";
 import HoursComponent from "./HoursComponent";
@@ -130,9 +128,15 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
         if (hoursSplit[1] && hoursSplit[1].toLowerCase().indexOf("pm") !== -1) {
           hours += 12;
           if (hours === 24) {
-            hours = 0;
+            //this is noon - set to 12 not 0
+            //hours = 0;
+            hours = 12;
           }
         }
+        else if (hours === 12) {
+            //am - if hours == 12, set hours to 0 here
+            hours = 0;
+          }
       }
 
       if (hours > 23) {
@@ -205,7 +209,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       strings: dateStrings = new DateTimePickerStrings(), // Defines the DatePicker control labels
       timeDisplayControlType,
       placeholder,
-      showLabels
+      showLabels,
+      minDate,
+      maxDate
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;
@@ -293,6 +299,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
                 showWeekNumbers={showWeekNumbers}
                 placeholder={placeholder}
+                minDate={minDate}
+                maxDate={maxDate}
               />
             </div>
           </div>

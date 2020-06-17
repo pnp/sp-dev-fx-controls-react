@@ -1,6 +1,6 @@
 # Carousel control
 
-This control renders passed elements with 'previous/next element' option.
+A slideshow component for cycling through elements—images or slides of text—like a carousel.
 
 Here is an example of the control in action:
 
@@ -17,6 +17,8 @@ import { Carousel } from "@pnp/spfx-controls-react/lib/Carousel";
 
 - Use the `Carousel` control in your code as follows:
 
+Carousel component with provided `JSX.Element[]` slides
+
 ```TypeScript
 <Carousel
   buttonsLocation={CarouselButtonsLocation.top}
@@ -31,7 +33,11 @@ import { Carousel } from "@pnp/spfx-controls-react/lib/Carousel";
   onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
   onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
 />
+```
 
+Carousel component with provided `triggerPageEvent`
+
+```TypeScript
 <Carousel
   buttonsLocation={CarouselButtonsLocation.bottom}
   buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
@@ -43,6 +49,48 @@ import { Carousel } from "@pnp/spfx-controls-react/lib/Carousel";
   canMovePrev={this.state.canMovePrev}
   triggerPageEvent={this.triggerNextElement}
   element={this.state.currentCarouselElement}
+/>
+```
+
+Carousel component with provided `ICarouselImageProps[]` slides:
+
+```TypeSCript
+<Carousel
+  buttonsLocation={CarouselButtonsLocation.center}
+  buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+  contentContainerStyles={styles.carouselImageContent}
+  isInfinite={true}
+  indicatorShape={CarouselIndicatorShape.circle}
+  pauseOnHover={true}
+
+  element={[
+    {
+      imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+      title: 'Colosseum',
+      description: 'This is Colosseum',
+      url: 'https://en.wikipedia.org/wiki/Colosseum',
+      showDetailsOnHover: true,
+      imageFit: ImageFit.cover
+    },
+    {
+      imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+      title: 'Colosseum',
+      description: 'This is Colosseum',
+      url: 'https://en.wikipedia.org/wiki/Colosseum',
+      showDetailsOnHover: true,
+      imageFit: ImageFit.cover
+    },
+    {
+      imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+      title: 'Colosseum',
+      description: 'This is Colosseum',
+      url: 'https://en.wikipedia.org/wiki/Colosseum',
+      showDetailsOnHover: true,
+      imageFit: ImageFit.cover
+    }
+  ]}
+  onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+  onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
 />
 ```
 
@@ -71,6 +119,16 @@ The Carousel component can be configured with the following properties:
 | loadingComponent | JSX.Element | no | Allows to inject custom component when the carousel is in processing state. If not provided, Spinner is displayed. |
 | onMoveNextClicked | (currentIndex: number) => void | no | Callback function called after the next item button is clicked. Not used when triggerPageEvent is specified. |
 | onMovePrevClicked | (currentIndex: number) => void | no | Callback function called after the previous item button is clicked. Not used when triggerPageEvent is specified. |
+| elementsCount | number | no | In case triggerPageEvent is in use, provides total number of slides in the carousel. |
+| onSelect | (selectedIndex: number) => void | no | Callback function called when element has been selected in the carousel |
+| slide | boolean | no | Enables animation on the Carousel as it transitions between slides. This property is ignored if triggerPageEvent is in use. |
+| interval | number \| null | no | The amount of time to delay between automatically cycling an item. If null, carousel will not automatically cycle. |
+| pauseOnHover | boolean | no | Specifies if slides cycling should pause when hovering over the content (touchStart on touch devices). |
+| indicators | boolean | no | Specifies if set of slide position indicators is shown. |
+| indicatorShape | CarouselIndicatorShape | no | Specifies indicators' shape. If onRenderIndicator is provided - this property is ignored |
+| indicatorClassName | string | no | Specifies additional class applied to slide position indicators |
+| indicatorStyle | React.CSSProperties | no | Specifies additional styles applied to slide position indicators |
+| onRenderIndicator | (index: number, onClick: (e: React.MouseEvent&lt;HTMLElement&gt; | React.TouchEvent&lt;HTMLElement&gt;, selectedIndex: number) => void) => JSX.Element | no | Function to render indicator element |
 
 enum `CarouselButtonsLocation`
 
@@ -91,5 +149,38 @@ Provides options for carousel buttons display mode.
 | block | Reserves space for buttons on both sides of the control. |
 | buttonsOnly | Only icon buttons are displayed. |
 | hidden | Buttons are not displayed. They appear onhover event. |
+
+enum `CarouselIndicatorShape`
+
+Provides options for carousel indicators' shape.
+
+| Value | Description |
+| ---- | ---- |
+| circle | Indicators displayed as cirlces |
+| square | Indicators displayed as squares |
+| rectangle | Indicators displayed as rectangles |
+
+Interface `ICarouselImageProps`
+
+Allows to easily render a set of `CarouselImage` components in the carousel
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| imageSrc | string | yes | Image source |
+| imageFit | ImageFit | no | Specifies the method to be used to fit image. Default: `ImageFit.none`. See [Fluent UI Image](https://developer.microsoft.com/en-us/fluentui#/controls/web/image#implementation) |
+| url | string | no | URL to be opened when clicking on details |
+| title | string | no | Title to display in details |
+| description | string \| JSX.Element | no | Description to show in details. Can be either a string (text) or JSX.Element to show HTML. |
+| target | "_blank" \| "_self" | no | Target of the URL to open. Default `"_blank"` |
+| showDetailsOnHover | boolean | no | Specifies if the details are shown on hover or constantly |
+| className | string | no | Class to apply to the component |
+| style | React.CSSProperties | no | Styles to apply to the component |
+| imgClassName | string | no | Class to apply to the image control |
+| imgStyle | React.CSSProperties | no | Styles to apply to the image control |
+| detailsClassName | string | no | Class to apply to the details control |
+| detailsStyle | React.CSSProperties | no | Styles to apply to the details control |
+| titleClassName | string | no | Class to apply to the title control |
+| titleStyle | React.CSSProperties | no | Styles to apply to the title control |
+| descriptionClassName | string | no | Class to apply to the description control |
+| descriptionStyle | React.CSSProperties | no | Styles to apply to the description control |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Carousel)

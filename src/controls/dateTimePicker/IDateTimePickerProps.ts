@@ -107,4 +107,16 @@ export interface IDateTimePickerProps {
    * Placeholder text for the DatePicker
    */
   placeholder?: string;
+  
+  /**
+   * The minimum allowable date for the DatePicker
+   */
+
+  minDate?: Date;
+
+  /**
+   * The maximum allowable date for the DatePicker
+   */
+
+  maxDate?: Date;
 }

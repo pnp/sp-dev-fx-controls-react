@@ -1,6 +1,41 @@
 {
   "versions": [
     {
+      "version": "1.19.0",
+      "changes": {
+        "new": [
+        ],
+        "enhancements": [
+          "`ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)",
+          "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)",
+          "`TreeView`: there should be possibility to collapse the first level nodes by default [#561](https://github.com/pnp/sp-dev-fx-controls-react/issues/561)",
+          "`TreeView`: Expand to selected [#559](https://github.com/pnp/sp-dev-fx-controls-react/issues/559)",
+          "`DateTimePicker`: When using the datetimePicker I would like to have an opportunity to set maximum/minimum date like in Office UI Fabric [#497](https://github.com/pnp/sp-dev-fx-controls-react/issues/497)",
+          "`TaxonomyPicker`: Added the `selectTerm`, `hideTerm`, and `disableTerm` actions [#578](https://github.com/pnp/sp-dev-fx-controls-react/issues/578)",
+          "`TaxonomyPicker`: Added the functionality to enable/disable term actions on the fly [#578](https://github.com/pnp/sp-dev-fx-controls-react/issues/578)",
+          "`Carousel`: indicators, slide animation, auto cycling, easier basic usage [#587](https://github.com/pnp/sp-dev-fx-controls-react/pull/587)"
+        ],
+        "fixes": [
+          "`TaxonomyPicker`: Correct the AnchorID getting all TermSet search options [#150](https://github.com/pnp/sp-dev-fx-controls-react/issues/150)",
+          "Documentation fix for `TreeView`: Some tables in TreeView documentation are displayed as plain text. [#562](https://github.com/pnp/sp-dev-fx-controls-react/pull/562)",
+          "`ComboBoxListItemPicker`, `ListItemPicker`: Show error span if error is present [#557](https://github.com/pnp/sp-dev-fx-controls-react/pull/557)",
+          "`TreeView`: `defaultExpanded: true` doesn't work [#560](https://github.com/pnp/sp-dev-fx-controls-react/issues/560)",
+          "`IListPicker`: typo fix [#574](https://github.com/pnp/sp-dev-fx-controls-react/pull/574)",
+          "`DateTimePicker`: DateTime Picker noon/midnight issue with 12 hour format [#576](https://github.com/pnp/sp-dev-fx-controls-react/issues/576)"
+        ]
+      },
+      "contributions": [
+        "[Chad Eiserloh](https://github.com/c-eiser13)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Koen Zomers](https://github.com/KoenZomers)",
+        "[Markus Langer](https://github.com/MarkusLanger)",
+        "[Nanddeep Nachan](https://github.com/nanddeepn)",
+        "[Prasad Kasireddy](https://github.com/PrasadKasireddy)",
+        "[David Ramalho](https://github.com/DRamalho92)",
+        "[Siddharth Vaghasia](https://github.com/siddharth-vaghasia)"
+      ]
+    },
+    {
       "version": "1.18.0",
       "changes": {
         "new": [

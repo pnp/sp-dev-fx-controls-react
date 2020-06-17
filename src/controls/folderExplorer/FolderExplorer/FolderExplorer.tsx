@@ -9,6 +9,7 @@ import { IFolder, IFolderExplorerService } from '../../../services/IFolderExplor
 import { NewFolder } from "../NewFolder";
 import { Breadcrumb, IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
 import * as telemetry from '../../../common/telemetry';
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 
 
 export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolderExplorerState> {
@@ -52,7 +53,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
         <div style={{ opacity: this.state.foldersLoading ? 0.8 : 1, }}>
           {!this.props.hiddenFilterBox && this._allFolders.length > 0 &&
             <div>
-              <TextField className={styles.filterBox} placeholder={strings.FolderFilterBoxPlaceholder} onChanged={this._onChangeFilterText} />
+              <SearchBox className={styles.filterBox} placeholder={strings.FolderFilterBoxPlaceholder} onSearch={this._onChangeFilterText} onChange={this._onChangeFilterText} />
             </div>
           }
           {this.state.folders.length === 0 &&

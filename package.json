@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -50,7 +50,7 @@
     "@types/sinon": "2.3.4",
     "@types/webpack-env": "^1.13.9",
     "amd-loader": "0.0.8",
-    "codecov": "3.0.0",
+    "codecov": "3.6.5",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
     "karma-html-reporter": "0.2.7",
@@ -59,7 +59,8 @@
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
     "request-promise": "4.2.5",
-    "sonarqube-scanner": "2.1.2"
+    "sonarqube-scanner": "2.1.2",
+    "tslib": "2.0.0"
   },
   "repository": {
     "type": "git",

@@ -96,7 +96,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
                   className={className}
                   disabled={disabled} />
 
-        <Label style={{ color: '#FF0000' }}> {this.state.errorMessage} </Label>
+        {!!this.state.errorMessage &&
+          (<Label style={{ color: '#FF0000' }}> {this.state.errorMessage} </Label>)}
       </div>) : <span>Loading...</span>
     );
   }
