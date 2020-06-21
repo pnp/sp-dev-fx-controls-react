@@ -17,7 +17,7 @@ export class ListItemRepository {
         let returnItems: any[];
         try {
             const webAbsoluteUrl = !webUrl ? this.SiteUrl : webUrl;
-            const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}`;
+            const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}&$top=${top}`;
             const data = await this.SPClient.get(apiUrl, SPHttpClient.configurations.v1);
             if (data.ok) {
                 const results = await data.json();
