@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "1.20.0",
+      "changes": {
+        "new": [
+        ],
+        "enhancements": [
+        ],
+        "fixes": [
+          "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)"
+        ]
+      }
+    },
+    {
       "version": "1.19.0",
       "changes": {
         "new": [
