@@ -59,6 +59,7 @@ import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
+import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -752,13 +753,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker
-        label="DateTime Picker date only"
-        showLabels={false}
-        dateConvention={DateConvention.Date}
-        value={new Date()}
-        onChange={(value) => console.log("DateTimePicker value:", value)}
-        minDate={new Date("05/01/2019")}
-        maxDate={new Date("05/01/2020")} />
+          label="DateTime Picker date only"
+          showLabels={false}
+          dateConvention={DateConvention.Date}
+          value={new Date()}
+          onChange={(value) => console.log("DateTimePicker value:", value)}
+          minDate={new Date("05/01/2019")}
+          maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
@@ -1203,8 +1204,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <IconPicker buttonLabel={'Icon'}
-            onChange={(iconName: string) => { console.log(iconName); }}
-            onSave={(iconName: string) => { console.log(iconName); }} />
+          onChange={(iconName: string) => { console.log(iconName); }}
+          onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>
           <FolderExplorer
@@ -1232,9 +1233,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            //expandToSelected={true}
-            // onRenderItem={this.renderCustomTreeItem}
-            />
+          //expandToSelected={true}
+          // onRenderItem={this.renderCustomTreeItem}
+          />
 
         </div>
 
@@ -1247,6 +1248,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           // hideFirstPageJump
           //hideLastPageJump
           //limiterIcon={"NumberedListText"}
+          />
+        </div>
+        
+        <div>
+          <FieldCollectionData
+            key={"FieldCollectionData"}
+            label={"Fields Collection"}
+            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
+            panelHeader={"Manage values"}
+
+            fields={[
+              { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
+              { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
+              { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
+              { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+            ]}
+            value={[
+              {
+                "Field1": "String value", "Field2": "123", "Field3": "https://pnp.github.io/", "Field4": true
+              }
+            ]}
           />
         </div>
       </div>
@@ -1273,7 +1295,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private _getPage(page: number){
+  private _getPage(page: number) {
     console.log('Page:', page);
   }
 

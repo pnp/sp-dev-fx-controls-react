@@ -1,0 +1,179 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+.collectionData {
+  background-color: $ms-color-neutralLight;
+  padding: 10px;
+}
+
+.noCollectionData {
+  text-align: center;
+}
+
+.panelActions {
+  margin-top: 15px;
+  text-align: right;
+
+  button {
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.required {
+  color: $ms-color-alert;
+  font-size: 8px;
+  vertical-align: super;
+}
+
+.addBtn {
+  color: $ms-color-themePrimary;
+}
+
+.inputField {
+  color: inherit;
+}
+
+.numberField {
+  box-sizing: border-box;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid $ms-color-neutralTertiary;
+  background: #ffffff;
+  height: 32px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  position: relative;
+
+  &:hover {
+    border-color: $ms-color-neutralDark;
+  }
+
+  input {
+    box-sizing: border-box;
+    box-shadow: none;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 0;
+    border: none;
+    background: none;
+    color: $ms-color-neutralPrimary;
+    padding: 0 12px 0 12px;
+    width: 100%;
+    text-overflow: ellipsis;
+    outline: 0;
+  }
+
+  &.invalidField {
+    border-color: #a80000;
+  }
+}
+
+.iconField {
+  position: relative;
+
+  i {
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    vertical-align: top;
+  }
+}
+
+.collectionDataField {
+  > span {
+    display: none;
+  }
+
+  div[class^="invalid_"] {
+    border-color: #a80000 !important;
+  }
+}
+
+
+/* Table layout */
+.table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableRow {
+  display: table-row;
+  line-height: 30px;
+
+  &:hover {
+    background-color: $ms-color-neutralLighter;
+    cursor: pointer;
+    outline: 1px solid transparent;
+  }
+
+  &.tableFooter {
+    background-color: $ms-color-neutralLight;
+    border-top: 1px solid $ms-color-neutralTertiary;
+  }
+}
+
+.tableCell {
+  display: table-cell;
+  padding: 0 10px;
+  vertical-align: middle;
+
+  > div {
+    margin-bottom: 8px;
+    margin-top: 8px;
+  }
+
+  &:global {
+    > div.ms-TextField {
+      margin-bottom: 8px;
+      margin-top: 8px;
+    }
+  }
+}
+
+.errorCallout {
+  padding: 0 15px;
+  min-width: 200px;
+}
+
+.errorCalloutLink:not([disabled]) {
+  color: #a80000;
+}
+
+.errorMsgs {
+  @include ms-font-m;
+
+  p {
+    @include ms-font-l;
+  }
+
+  ul {
+    padding-left: 15px;
+  }
+
+  li {
+    color: #a80000;
+  }
+}
+
+.tableHead {
+  @include ms-fontWeight-semilight;
+  @include ms-fontSize-s;
+  color: $ms-color-neutralSecondary;
+}
+
+.tableHead {
+  .tableCell {
+    font-weight: normal;
+    text-align: left;
+    border-bottom: 1px solid $ms-color-neutralTertiary;
+  }
+}

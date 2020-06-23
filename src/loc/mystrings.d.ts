@@ -305,6 +305,16 @@ declare interface IControlStrings {
   TreeViewExpandTitle: string;
   TreeViewCollapseTitle: string;
 
+  // FieldCollectionData
+  CollectionDataEmptyFields: string;
+  CollectionDataEmptyValue: string;
+  CollectionAddRowButtonLabel: string;
+  CollectionDeleteRowButtonLabel: string;
+  CollectionSaveAndAddButtonLabel: string;
+  CollectionDataItemShowErrorsLabel: string;
+  CollectionDataItemFieldRequiredLabel: string;
+  CollectionDataItemMissingFields: string;
+  InvalidUrlError: string;
 }
 
 declare interface IDateTimeStrings {

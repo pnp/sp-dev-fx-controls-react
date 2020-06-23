@@ -334,6 +334,16 @@ define([], () => {
     SelectIcon: "Select icon",
 
     TreeViewExpandTitle: "Expand this item",
-    TreeViewCollapseTitle: "Collapse this item"
+    TreeViewCollapseTitle: "Collapse this item",
+
+    CollectionDataEmptyFields: "No fields were provided for the collection data.",
+    CollectionDataEmptyValue: "No data in your collection.",
+    CollectionAddRowButtonLabel: "Add data to the collection",
+    CollectionDeleteRowButtonLabel: "Delete the current row",
+    CollectionSaveAndAddButtonLabel: "Add and save",
+    CollectionDataItemShowErrorsLabel: "Show row errors",
+    CollectionDataItemFieldRequiredLabel: "Field is required.",
+    CollectionDataItemMissingFields: "Fields collection is empty!",
+    InvalidUrlError: "The provided URL is not valid"
   };
 });
