@@ -9,7 +9,8 @@
         "enhancements": [
         ],
         "fixes": [
-          "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)"
+          "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)",
+          "`TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On Premise [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)"
         ]
       },
       "contributions": [
