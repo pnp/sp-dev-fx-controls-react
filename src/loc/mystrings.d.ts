@@ -289,6 +289,8 @@ declare interface IControlStrings {
   UploadImageHeader: string;
   UploadLinkLabel: string;
   WebSearchLinkLabel: string;
+  StockImagesLinkLabel: string;
+  StockImagesHeader: string;
   Yes: string;
 
   // folder explorer

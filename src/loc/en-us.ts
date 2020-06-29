@@ -324,6 +324,8 @@ define([], () => {
     UploadImageHeader: "Upload image",
     UploadLinkLabel: "Upload",
     WebSearchLinkLabel: "Web search",
+    StockImagesLinkLabel: "Stock images",
+    StockImagesHeader: "Stock Images",
     Yes: "Yes",
 
     NewFolderNamePlaceholder: "Enter your folder name",
