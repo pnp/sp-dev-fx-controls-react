@@ -1,5 +1,24 @@
 # Releases
 
+## 1.20.0
+
+### New control(s)
+
+- `FieldCollectionData` control [#591](https://github.com/pnp/sp-dev-fx-controls-react/pull/591)
+
+### Enhancements
+
+- `FilePicker`: Stock images option added [#593](https://github.com/pnp/sp-dev-fx-controls-react/issues/593)
+
+### Fixes
+
+- `ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)
+- `TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On-Premises [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)
+
+### Contributors
+
+Special thanks to our contributor: [Piotr Siatka](https://github.com/siata13).
+
 ## 1.19.0
 
 ### Enhancements
