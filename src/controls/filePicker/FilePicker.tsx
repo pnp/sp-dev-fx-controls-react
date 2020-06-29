@@ -26,6 +26,7 @@ import { IFilePickerResult } from './FilePicker.types';
 import { FilesSearchService } from '../../services/FilesSearchService';
 
 import * as telemetry from '../../common/telemetry';
+import { StockImages } from './StockImagesTab/StockImages';
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
@@ -170,7 +171,14 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
                 {...linkTabProps}
               />
             }
-
+            {
+              this.state.selectedTab === "keyStockImages" &&
+              <StockImages
+                language={this.props.context.pageContext.cultureInfo.currentCultureName}
+                fileSearchService={this.fileSearchService}
+                {...linkTabProps}
+              />
+            }
           </div>
         </Panel>
       </div >
@@ -233,6 +241,14 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
         url: addUrl ? '#recent' : undefined,
         icon: 'Recent',
         key: 'keyRecent',
+      });
+    }
+    if (!this.props.hideStockImages) {
+      links.push({
+        name: strings.StockImagesLinkLabel,
+        url: addUrl ? '#stockImages' : undefined,
+        key: 'keyStockImages',
+        icon: 'ImageSearch',
       });
     }
     if (this.props.bingAPIKey && !this.props.hideWebSearchTab) {

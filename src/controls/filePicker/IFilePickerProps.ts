@@ -73,6 +73,11 @@ export interface IFilePickerProps {
   hideRecentTab?: boolean;
 
   /**
+   * Specifies if StockImagesTab should be hidden.
+   */
+  hideStockImages?: boolean;
+
+  /**
    * Specifies if WebSearchTab should be hidden.
    */
   hideWebSearchTab?: boolean;
