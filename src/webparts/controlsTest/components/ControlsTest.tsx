@@ -643,13 +643,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           <TaxonomyPicker
             allowMultipleSelections={true}
-            termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9" // id to termset that has a default sort
             panelTitle="Select Default Sorted Term"
             label="Service Picker"
             context={this.props.context}
             onChange={this.onServicePickerChange}
             isTermSetSelectable={false}
             placeholder="Select service"
+            required={true}
+            errorMessage='this field is required'
+            onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
           />
 
           <TaxonomyPicker
@@ -1250,7 +1253,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           //limiterIcon={"NumberedListText"}
           />
         </div>
-        
+
         <div>
           <FieldCollectionData
             key={"FieldCollectionData"}

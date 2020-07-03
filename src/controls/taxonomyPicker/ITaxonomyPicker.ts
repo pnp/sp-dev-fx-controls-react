@@ -81,6 +81,7 @@ export interface ITaxonomyPickerProps  {
 
   /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
+   * Mutually exclusive with the static string errorMessage (it will take precedence over this).
    *
    *   When it returns string:
    *   - If valid, it returns empty string.
@@ -95,9 +96,20 @@ export interface ITaxonomyPickerProps  {
   onGetErrorMessage?: (value: IPickerTerms) => string | Promise<string>;
 
   /**
+   * Static error message displayed below the text field. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
+   */
+  errorMessage?: string;
+
+  /**
    * onChange Event
    */
   onChange?: (newValue?: IPickerTerms) => void;
+
+  /**
+   * Specifies if to display an asterisk near the label.
+   * Note that error message should be specified in onGetErrorMessage
+   */
+  required?: boolean;
 }
 
 /**
