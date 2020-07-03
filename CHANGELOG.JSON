@@ -7,7 +7,9 @@
           "`FieldCollectionData` control [#591](https://github.com/pnp/sp-dev-fx-controls-react/pull/591)"
         ],
         "enhancements": [
-          "`FilePicker`: Stock images option added [#593](https://github.com/pnp/sp-dev-fx-controls-react/issues/593)"
+          "`FilePicker`: Stock images option added [#593](https://github.com/pnp/sp-dev-fx-controls-react/issues/593)",
+          "`TaxonomyPicker`: Add the 'required' property [#216](https://github.com/pnp/sp-dev-fx-controls-react/issues/216)",
+          "`TaxonomyPicker`: Add `errorMessage` and `onGetErrorMessage` props [#600](https://github.com/pnp/sp-dev-fx-controls-react/pull/600)"
         ],
         "fixes": [
           "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)",
