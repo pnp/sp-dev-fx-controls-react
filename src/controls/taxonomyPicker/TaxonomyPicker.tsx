@@ -47,7 +47,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
-      errorMessage: ''
+      errorMessage: props.errorMessage
     };
 
     this.onOpenPanel = this.onOpenPanel.bind(this);
@@ -69,12 +69,21 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
+  public async componentDidUpdate(prevProps: ITaxonomyPickerProps): Promise<void> {
+    let newState: ITaxonomyPickerState | undefined;
     // Check if the initial values objects are not equal, if that is the case, data can be refreshed
     if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
-      this.setState({
+      newState = {
         activeNodes: this.props.initialValues || []
-      });
+      };
+    }
+
+    if (this.props.errorMessage) {
+      if (!newState) {
+        newState = {};
+      }
+
+      newState.errorMessage = this.props.errorMessage;
     }
   }
 
@@ -158,8 +167,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private onSave(): void {
     this.cancel = false;
     this.onClosePanel();
-    // Trigger the onChange event
-    this.props.onChange(this.state.activeNodes);
+
+    this.validate(this.state.activeNodes);
   }
 
   /**
@@ -210,10 +219,11 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * @param node
  */
   private termsFromPickerChanged(terms: IPickerTerms) {
-    this.props.onChange(terms);
     this.setState({
       activeNodes: terms
     });
+
+    this.validate(terms);
   }
 
 
@@ -236,7 +246,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * @param isChecked
    */
   private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean) => {
-    const ts: ITermSet = {...termSet};
+    const ts: ITermSet = { ...termSet };
     // Clean /Guid.../ from the ID
     ts.Id = this.termsService.cleanGuid(ts.Id);
     // Create a term for the termset
@@ -257,6 +267,52 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.termsChanged(term, isChecked);
   }
 
+  private validate = async (value: IPickerTerms): Promise<void> => {
+    if (this.props.errorMessage || !this.props.onGetErrorMessage) { // ignoring all onGetErrorMessage logic
+      this.validated(value);
+      return;
+    }
+
+    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(value || []);
+
+    if (!result) {
+      this.validated(value);
+      return;
+    }
+
+    if (typeof result === 'string') {
+      if (!result) {
+        this.validated(value);
+      }
+      else {
+        this.setState({
+          errorMessage: result
+        });
+      }
+    }
+    else {
+      try {
+        const resolvedResult = await result;
+
+        if (!resolvedResult) {
+          this.validated(value);
+        }
+        else {
+          this.setState({
+            errorMessage: resolvedResult
+          });
+        }
+      }
+      catch (err) {
+        this.validated(value);
+      }
+    }
+  }
+
+  private validated = (value: IPickerTerms): void => {
+    this.props.onChange(value);
+  }
+
   /**
    * Renders the SPListpicker controls with Office UI  Fabric
    */
@@ -267,11 +323,12 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       disabled,
       isTermSetSelectable,
       allowMultipleSelections,
-      disabledTermIds,disableChildrenOfDisabledParents,
+      disabledTermIds, disableChildrenOfDisabledParents,
       placeholder,
       panelTitle,
       anchorId,
-      termActions
+      termActions,
+      required
     } = this.props;
 
     const {
@@ -284,7 +341,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
     return (
       <div>
-        {label && <Label>{label}</Label>}
+        {label && <Label required={required}>{label}</Label>}
         <div className={styles.termField}>
           <div className={styles.termFieldInput}>
             <TermPicker
