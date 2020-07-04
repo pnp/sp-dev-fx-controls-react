@@ -47,7 +47,6 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
     this.state = {
       panelOpen: false,
-      selectedTab: 'keyRecent',
       organisationAssetsEnabled: false,
       showFullNav: true
     };
@@ -56,13 +55,14 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   public async componentDidMount() {
     // Load information about Organisation Assets Library
     let orgAssetsEnabled: boolean = false;
-    if (this.props.hideOrganisationalAssetTab != undefined && !this.props.hideOrganisationalAssetTab) {
+    if (this.props.hideOrganisationalAssetTab !== undefined && !this.props.hideOrganisationalAssetTab) {
       const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
       orgAssetsEnabled = orgAssetsLibraries ? true : false;
     }
 
     this.setState({
-      organisationAssetsEnabled: orgAssetsEnabled
+      organisationAssetsEnabled: orgAssetsEnabled,
+      selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled)
     });
   }
 
@@ -198,7 +198,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   private _handleOpenPanel = () => {
     this.setState({
       panelOpen: true,
-      selectedTab: 'keyRecent'
+      selectedTab: this.getDefaultSelectedTabKey(this.props, this.state.organisationAssetsEnabled)
     });
   }
 
@@ -302,6 +302,33 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
     let groups: INavLinkGroup[] = [{ links }];
     return groups;
+  }
+
+  private getDefaultSelectedTabKey = (props: IFilePickerProps, orgAssetsEnabled: boolean): string => {
+    if (!props.hideRecentTab) {
+      return 'keyRecent';
+    }
+    if (!props.hideStockImages) {
+      return 'keyStockImages';
+    }
+    if (props.bingAPIKey && !props.hideWebSearchTab) {
+      return 'keyWeb';
+    }
+    if (!props.hideOrganisationalAssetTab && orgAssetsEnabled) {
+      return 'keyOrgAssets';
+    }
+    if (!props.hideOneDriveTab) {
+      return 'keyOneDrive';
+    }
+    if (!props.hideSiteFilesTab) {
+      return 'keySite';
+    }
+    if (!props.hideLocalUploadTab) {
+      return 'keyUpload';
+    }
+    if (!props.hideLinkUploadTab) {
+      return 'keyLink';
+    }
   }
 
 }
