@@ -54,6 +54,10 @@ export interface IPeoplePickerProps {
    */
   errorMessage?: string;
   /**
+   * Specifies if the component should show mandatory field error message because of some changes occured in parent
+   */
+  showRequiredError?: boolean;
+  /**
    * Method to check value of People Picker text
    */
   selectedItems?: (items: IPersonaProps[]) => void;

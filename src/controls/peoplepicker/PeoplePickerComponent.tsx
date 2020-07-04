@@ -63,6 +63,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
+  public componentWillReceiveProps(nextProps: IPeoplePickerProps) {
+    if (this.props.showRequiredError !== nextProps.showRequiredError && nextProps.showRequiredError) {
+      this.setState({
+        showRequiredError: !this.state.selectedPersons || !this.state.selectedPersons.length
+      });
+    }
+  }
+
 
   /**
    * Get initial persons
