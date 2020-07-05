@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Otpremi sliku",
   "UploadLinkLabel": "Otpremanje",
   "WebSearchLinkLabel": "Pretraživanje Weba",
-  "Yes": "Da"
+  "Yes": "Da",
+  "SelectedLabel": "Izabrano",
+  "SelectIcon": "Izaberite ikonu"
 };
 });

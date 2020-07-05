@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IFilePickerProps } from './IFilePickerProps';
 import { IFilePickerState } from './IFilePickerState';
 
-import { PrimaryButton, ActionButton  } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, ActionButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
@@ -26,6 +26,7 @@ import { IFilePickerResult } from './FilePicker.types';
 import { FilesSearchService } from '../../services/FilesSearchService';
 
 import * as telemetry from '../../common/telemetry';
+import { StockImages } from './StockImagesTab/StockImages';
 
 export class FilePicker extends React.Component<IFilePickerProps, IFilePickerState> {
   private fileBrowserService: FileBrowserService;
@@ -46,7 +47,6 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
     this.state = {
       panelOpen: false,
-      selectedTab: 'keyRecent',
       organisationAssetsEnabled: false,
       showFullNav: true
     };
@@ -54,17 +54,23 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
 
   public async componentDidMount() {
     // Load information about Organisation Assets Library
-    const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
-    const organisationAssetsEnabled = orgAssetsLibraries ? true : false;
+    let orgAssetsEnabled: boolean = false;
+    if (this.props.hideOrganisationalAssetTab !== undefined && !this.props.hideOrganisationalAssetTab) {
+      const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
+      orgAssetsEnabled = orgAssetsLibraries ? true : false;
+    }
 
     this.setState({
-      organisationAssetsEnabled
+      organisationAssetsEnabled: orgAssetsEnabled,
+      selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled)
     });
   }
 
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string[] = this.props.accepts;
+    const buttonClassName: string = this.props.buttonClassName ? this.props.buttonClassName : '';
+    const panelClassName: string = this.props.panelClassName ? this.props.panelClassName : '';
 
     const linkTabProps = {
       accepts: accepts,
@@ -75,24 +81,25 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     const buttonProps = {
       text: this.props.buttonLabel,
       disabled: this.props.disabled,
-      onClick: this._handleOpenPanel
+      onClick: this._handleOpenPanel,
+      className: `pnp__file-picker__button ${buttonClassName}`
     };
 
     return (
-      <div >
+      <div className={`pnp__file-picker`}>
         {
           this.props.label && <Label required={this.props.required}>{this.props.label}</Label>
         }
         {
           this.props.buttonIcon ?
             <ActionButton iconProps={{ iconName: this.props.buttonIcon }} {...buttonProps} /> :
-            <PrimaryButton {...buttonProps}/>
+            <PrimaryButton {...buttonProps} />
         }
 
         <Panel isOpen={this.state.panelOpen}
           isBlocking={true}
           hasCloseButton={true}
-          className={styles.filePicker}
+          className={`pnp__file-picker__panel ${styles.filePicker} ${panelClassName}`}
           onDismiss={this._handleClosePanel}
           type={PanelType.extraLarge}
           isFooterAtBottom={true}
@@ -164,7 +171,14 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
                 {...linkTabProps}
               />
             }
-
+            {
+              this.state.selectedTab === "keyStockImages" &&
+              <StockImages
+                language={this.props.context.pageContext.cultureInfo.currentCultureName}
+                fileSearchService={this.fileSearchService}
+                {...linkTabProps}
+              />
+            }
           </div>
         </Panel>
       </div >
@@ -184,7 +198,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   private _handleOpenPanel = () => {
     this.setState({
       panelOpen: true,
-      selectedTab: 'keyRecent'
+      selectedTab: this.getDefaultSelectedTabKey(this.props, this.state.organisationAssetsEnabled)
     });
   }
 
@@ -218,20 +232,29 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
    * Prepares navigation panel options
    */
   private _getNavPanelOptions = () => {
+    const addUrl = this.props.storeLastActiveTab !== false;
     let links = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
         name: strings.RecentLinkLabel,
-        url: '#recent',
+        url: addUrl ? '#recent' : undefined,
         icon: 'Recent',
         key: 'keyRecent',
+      });
+    }
+    if (!this.props.hideStockImages) {
+      links.push({
+        name: strings.StockImagesLinkLabel,
+        url: addUrl ? '#stockImages' : undefined,
+        key: 'keyStockImages',
+        icon: 'ImageSearch',
       });
     }
     if (this.props.bingAPIKey && !this.props.hideWebSearchTab) {
       links.push({
         name: strings.WebSearchLinkLabel,
-        url: '#search',
+        url: addUrl ? '#search' : undefined,
         key: 'keyWeb',
         icon: 'Search',
       });
@@ -239,7 +262,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOrganisationalAssetTab && this.state.organisationAssetsEnabled) {
       links.push({
         name: 'Your organisation',
-        url: '#orgAssets',
+        url: addUrl ? '#orgAssets' : undefined,
         icon: 'FabricFolderConfirm',
         key: 'keyOrgAssets',
       });
@@ -247,7 +270,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideOneDriveTab) {
       links.push({
         name: "OneDrive",
-        url: '#onedrive',
+        url: addUrl ? '#onedrive' : undefined,
         key: 'keyOneDrive',
         icon: 'OneDrive',
       });
@@ -255,7 +278,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideSiteFilesTab) {
       links.push({
         name: strings.SiteLinkLabel,
-        url: '#globe',
+        url: addUrl ? '#globe' : undefined,
         key: 'keySite',
         icon: 'Globe',
       });
@@ -263,7 +286,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLocalUploadTab) {
       links.push({
         name: strings.UploadLinkLabel,
-        url: '#upload',
+        url: addUrl ? '#upload' : undefined,
         key: 'keyUpload',
         icon: 'System'
       });
@@ -271,14 +294,41 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
-        url: '#link',
+        url: addUrl ? '#link' : undefined,
         key: 'keyLink',
         icon: 'Link'
       });
     }
 
-    let groups: INavLinkGroup[] = [ { links} ];
+    let groups: INavLinkGroup[] = [{ links }];
     return groups;
+  }
+
+  private getDefaultSelectedTabKey = (props: IFilePickerProps, orgAssetsEnabled: boolean): string => {
+    if (!props.hideRecentTab) {
+      return 'keyRecent';
+    }
+    if (!props.hideStockImages) {
+      return 'keyStockImages';
+    }
+    if (props.bingAPIKey && !props.hideWebSearchTab) {
+      return 'keyWeb';
+    }
+    if (!props.hideOrganisationalAssetTab && orgAssetsEnabled) {
+      return 'keyOrgAssets';
+    }
+    if (!props.hideOneDriveTab) {
+      return 'keyOneDrive';
+    }
+    if (!props.hideSiteFilesTab) {
+      return 'keySite';
+    }
+    if (!props.hideLocalUploadTab) {
+      return 'keyUpload';
+    }
+    if (!props.hideLinkUploadTab) {
+      return 'keyLink';
+    }
   }
 
 }

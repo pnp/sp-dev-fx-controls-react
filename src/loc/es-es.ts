@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Subir imagen",
   "UploadLinkLabel": "Subir",
   "WebSearchLinkLabel": "Búsqueda web",
-  "Yes": "Sí"
+  "Yes": "Sí",
+  "SelectedLabel": "Seleccionado",
+  "SelectIcon": "Seleccionar icono"
 };
 });

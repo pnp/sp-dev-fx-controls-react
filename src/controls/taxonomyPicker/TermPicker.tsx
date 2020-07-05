@@ -28,6 +28,7 @@ export interface ITermPickerProps {
   isTermSetSelectable?: boolean;
   disabledTermIds?: string[];
   disableChildrenOfDisabledParents?: boolean;
+  placeholder?: string;
 
   onChanged: (items: IPickerTerm[]) => void;
 }
@@ -111,7 +112,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
   private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
       let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms: IPickerTerm[] = await termsService.searchTermsByName(filterText);
+      let terms: IPickerTerm[] = await termsService.searchTermsByTermId(filterText, this.props.termPickerHostProps.anchorId);
       // Check if the termset can be selected
       if (this.props.isTermSetSelectable) {
         // Retrieve the current termset
@@ -188,19 +189,34 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
    * Render method
    */
   public render(): JSX.Element {
+    const {
+      disabled,
+      value,
+      onChanged,
+      allowMultipleSelections,
+      placeholder
+    } = this.props;
+
+    const {
+      terms
+    } = this.state;
+
     return (
       <div>
         <TermBasePicker
-          disabled={this.props.disabled}
+          disabled={disabled}
           onResolveSuggestions={this.onFilterChanged}
           onRenderSuggestionsItem={this.onRenderSuggestionsItem}
           getTextFromItem={this.onGetTextFromItem}
           onRenderItem={this.onRenderItem}
-          defaultSelectedItems={this.props.value}
-          selectedItems={this.state.terms}
-          onChange={this.props.onChanged}
-          itemLimit={!this.props.allowMultipleSelections ? 1 : undefined}
+          defaultSelectedItems={value}
+          selectedItems={terms}
+          onChange={onChanged}
+          itemLimit={!allowMultipleSelections ? 1 : undefined}
           className={styles.termBasePicker}
+          inputProps={{
+            placeholder: placeholder
+          }}
         />
       </div>
     );

@@ -1,7 +1,6 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
 import SPservice from "../../services/SPService";
-import { escape } from "@microsoft/sp-lodash-subset";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { IListItemPickerProps, IListItemPickerState } from ".";
@@ -41,7 +40,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Render the field
    */
   public render(): React.ReactElement<IListItemPickerProps> {
-    const { className, disabled, itemLimit } = this.props;
+    const { className, disabled, itemLimit, placeholder } = this.props;
 
     return (
       <div>
@@ -56,9 +55,13 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
                    onChange={this.onItemChanged}
                    className={className}
                    itemLimit={itemLimit}
-                   disabled={disabled} />
+                   disabled={disabled}
+                   inputProps={{
+                    placeholder: placeholder
+                  }} />
 
-        <Label style={{color:'#FF0000'}}> {this.state.errorMessage} </Label>
+        {!!this.state.errorMessage &&
+          (<Label style={{color:'#FF0000'}}> {this.state.errorMessage} </Label>)}
       </div>
     );
   }

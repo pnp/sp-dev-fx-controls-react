@@ -264,12 +264,82 @@ export default class SPTermStorePickerService {
    * Retrieve all terms that starts with the searchText
    * @param searchText
    */
-  public searchTermsByName(searchText: string): Promise<IPickerTerm[]> {
+  public searchTermsByName(searchText: string, termSet: string): Promise<IPickerTerm[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
       return this.searchTermsByTermSet(searchText, this.props.termsetNameOrID);
+    }
+  }
+
+  private getTermsById(termId) {
+    var terms = sessionStorage.getItem(termId);        
+    if(terms)
+        return JSON.parse(terms);
+    else
+        return null;
+  }
+
+  
+  private searchTermsBySearchText(terms, searchText) {
+    if(terms){
+      return terms.filter((t) => { return t.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1; });            
+    }
+    else
+      return [];
+  }
+
+
+  public searchTermsByTermId(searchText: string, termId: string): Promise<IPickerTerm[]> {
+    if (Environment.type === EnvironmentType.Local) {
+      // If the running environment is local, load the data from the mock
+      return SPTermStoreMockHttpClient.searchTermsByName(searchText);
+    } else {
+      return new Promise<IPickerTerm[]>(resolve => {
+        var childTerms = this.getTermsById(termId);
+        if(childTerms){
+          resolve(this.searchTermsBySearchText(childTerms ,searchText));
+        }
+        else{   
+          let data = '<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="TermSet" SelectAll="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultSiteCollectionTermStore" /><Method Id="6" ParentId="3" Name="GetTerm"><Parameters><Parameter Type="String">'+termId+'</Parameter></Parameters></Method><Property Id="9" ParentId="6" Name="Terms" /></ObjectPaths></Request>';
+
+          const reqHeaders = new Headers();
+          reqHeaders.append("accept", "application/json");
+          reqHeaders.append("content-type", "application/xml");
+
+          const httpPostOptions: ISPHttpClientOptions = {
+            headers: reqHeaders,
+            body: data
+          };
+
+          return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
+            return serviceResponse.json().then((serviceJSONResponse: any) => {
+              // Retrieve the term collection results
+              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+              if (termStoreResult.length > 0) {
+                // Retrieve all terms
+
+                let terms = termStoreResult[0]._Child_Items_;
+
+                let returnTerms: IPickerTerm[] = [];
+                terms.forEach(term => {
+                  returnTerms.push({
+                      key: this.cleanGuid(term.Id),
+                      name: term.Name,
+                      path: term.PathOfTerm,
+                      termSet: this.cleanGuid(term.TermSet.Id),
+                      termSetName: term.TermSet.Name
+                    });
+                });
+                sessionStorage.setItem(termId, JSON.stringify(returnTerms));
+                resolve(this.searchTermsBySearchText(returnTerms, searchText));                
+              }
+              return null;
+            });
+          });
+        }
+      });
     }
   }
 

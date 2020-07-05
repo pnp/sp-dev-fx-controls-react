@@ -16,7 +16,7 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { ListItemPicker } from '@pnp/spfx-controls-react/lib/listItemPicker';
+import { ListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
 ```
 - Use the `ListItemPicker` control in your code as follows:
 
@@ -60,5 +60,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | filter | string | no | condition to filter list Item, same as $filter ODATA parameter|
+| placeholder | string | no | Short text hint to display in empty picker |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)

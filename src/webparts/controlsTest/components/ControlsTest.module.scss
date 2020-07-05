@@ -67,6 +67,7 @@
 
   .carouselContent {
     height: 200px;
+    width: 80%;
 
     color: darkblue;
     font-style: italic;
@@ -74,5 +75,9 @@
   .carouselButtonsContainer {
     background-color: orange !important;
     opacity: 0.3;
+  }
+
+  .carouselImageContent {
+    height: 400px;
   }
 }

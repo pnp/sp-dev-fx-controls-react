@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { ITerm } from '../../../services/ISPTermStorePickerService';
-import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps } from './ITermsActions';
+import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps, ActionChange } from './ITermsActions';
 import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
+import { getTermActionChange } from './getTermActionChange';
 
 export class DropdownTermAction extends React.Component<IConcreteTermActionProps> {
 
@@ -21,11 +22,18 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
     const displayStyle = this.props.displayStyle;
     let useTargetWidth = true;
 
+    // Get term action changes
+    const { termActionChanges } = this.props;
+    const tac: ActionChange[] = termActionChanges[term.Id];
+
     for (const termAction of termActions) {
-      if (!termAction.hidden) {
+      const { actionDisabled, actionHidden } = getTermActionChange(tac, termAction);
+
+      if ((!termAction.hidden && !actionHidden) || !actionHidden) {
         let termActionMenuItem: IContextualMenuItem = {
           key: term.Id.toString(),
-          onClick: () => { this.onActionExecute(termAction); }
+          onClick: () => { this.onActionExecute(termAction); },
+          disabled: actionDisabled
         };
 
         if (displayStyle && (displayStyle === TermActionsDisplayStyle.text || displayStyle === TermActionsDisplayStyle.textAndIcon)) {

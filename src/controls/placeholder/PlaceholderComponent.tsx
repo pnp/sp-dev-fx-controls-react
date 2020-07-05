@@ -54,6 +54,17 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
    * @param nextState
    */
   public shouldComponentUpdate(nextProps: IPlaceholderProps, nextState: IPlaceholderState): boolean {
+    /*
+    * compare the props object for changes in primative values
+    * Return/re-render, bexeting the function, if the props change
+    */
+    for (const property in nextProps) {
+      if (property != '_onConfigure'){
+          if (nextProps[property] != this.props[property]) {
+              return true;
+          }
+      }
+    } 
     return this.state.width !== nextState.width || this.props.hideButton !== nextProps.hideButton;
   }
 

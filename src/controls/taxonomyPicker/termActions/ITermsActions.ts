@@ -17,7 +17,7 @@ export interface ITermActionsControlProps {
   /**
    * Callback after execution term action.
    */
-  termActionCallback: (updateAction: UpdateAction) => void;
+  termActionCallback: (updateAction: UpdateAction | null) => void;
 }
 
 export interface ITermActionsControlState {
@@ -33,6 +33,20 @@ export interface ITermActionsControlState {
    * Specifies how the concreate term action is going to be displayed (icon/text/both).
    */
   displayStyle: TermActionsDisplayStyle;
+  /**
+   * TermAction state changes. Can be used to enable/disable/hide actions for specific terms.
+   */
+  termActionChanges?: TermActionChange;
+}
+
+export interface TermActionChange {
+  [termId: string]: ActionChange[];
+}
+
+export interface ActionChange {
+  actionId: string;
+  disabled?: boolean;
+  hidden?: boolean;
 }
 
 export interface IConcreteTermActionProps {
@@ -40,7 +54,9 @@ export interface IConcreteTermActionProps {
   term: ITerm;
   displayStyle: TermActionsDisplayStyle;
   spTermService: SPTermStorePickerService;
-  termActionCallback: (updateAction: UpdateAction) => void;
+  termActionChanges: TermActionChange;
+
+  termActionCallback: (updateAction: UpdateAction | null) => void;
 }
 
 /**
@@ -64,15 +80,33 @@ export enum TermActionsDisplayStyle {
  * Specifies the action that should be applied after executing the action callback.
  */
 export enum UpdateType {
+  /**
+   * Allows you to update the label of the term
+   */
   updateTermLabel = 1,
-  updateTermsTree
+  /**
+   * Allows you to update part of the taxonomy tree
+   */
+  updateTermsTree,
+  /**
+   * Allows you to hide the term
+   */
+  hideTerm,
+  /**
+   * Allows you to disable the term
+   */
+  disableTerm,
+  /**
+   * Allows you to select the term
+   */
+  selectTerm
 }
 /**
  * Specifies the result that will be returned to the Term after the execution of the callback.
  */
 export interface UpdateAction {
   updateActionType: UpdateType;
-  value?: string;
+  value?: string | boolean;
 }
 
 export interface ITermActions {
@@ -114,7 +148,7 @@ export interface ITermAction {
   * Method checks if the current term is supported.
   * @param currentTerm
   */
-  applyToTerm: (currentTerm: ITerm) => Promise<boolean> | boolean;
+  applyToTerm: (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => Promise<boolean> | boolean;
   /**
    * Method to be executed when action is fired.
    */

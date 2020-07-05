@@ -10,7 +10,8 @@ import SPTermStorePickerService from './../../services/SPTermStorePickerService'
 import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
 import * as strings from 'ControlStrings';
 import styles from './TaxonomyPicker.module.scss';
-import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
+import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
+import uniqBy from 'lodash/uniqBy';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 
@@ -46,7 +47,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
-      errorMessage: ''
+      errorMessage: props.errorMessage
     };
 
     this.onOpenPanel = this.onOpenPanel.bind(this);
@@ -68,12 +69,21 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
+  public async componentDidUpdate(prevProps: ITaxonomyPickerProps): Promise<void> {
+    let newState: ITaxonomyPickerState | undefined;
     // Check if the initial values objects are not equal, if that is the case, data can be refreshed
     if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
-      this.setState({
+      newState = {
         activeNodes: this.props.initialValues || []
-      });
+      };
+    }
+
+    if (this.props.errorMessage) {
+      if (!newState) {
+        newState = {};
+      }
+
+      newState.errorMessage = this.props.errorMessage;
     }
   }
 
@@ -157,8 +167,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private onSave(): void {
     this.cancel = false;
     this.onClosePanel();
-    // Trigger the onChange event
-    this.props.onChange(this.state.activeNodes);
+
+    this.validate(this.state.activeNodes);
   }
 
   /**
@@ -209,10 +219,11 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * @param node
  */
   private termsFromPickerChanged(terms: IPickerTerms) {
-    this.props.onChange(terms);
     this.setState({
       activeNodes: terms
     });
+
+    this.validate(terms);
   }
 
 
@@ -235,7 +246,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * @param isChecked
    */
   private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean) => {
-    const ts: ITermSet = {...termSet};
+    const ts: ITermSet = { ...termSet };
     // Clean /Guid.../ from the ID
     ts.Id = this.termsService.cleanGuid(ts.Id);
     // Create a term for the termset
@@ -256,41 +267,109 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.termsChanged(term, isChecked);
   }
 
+  private validate = async (value: IPickerTerms): Promise<void> => {
+    if (this.props.errorMessage || !this.props.onGetErrorMessage) { // ignoring all onGetErrorMessage logic
+      this.validated(value);
+      return;
+    }
+
+    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(value || []);
+
+    if (!result) {
+      this.validated(value);
+      return;
+    }
+
+    if (typeof result === 'string') {
+      if (!result) {
+        this.validated(value);
+      }
+      else {
+        this.setState({
+          errorMessage: result
+        });
+      }
+    }
+    else {
+      try {
+        const resolvedResult = await result;
+
+        if (!resolvedResult) {
+          this.validated(value);
+        }
+        else {
+          this.setState({
+            errorMessage: resolvedResult
+          });
+        }
+      }
+      catch (err) {
+        this.validated(value);
+      }
+    }
+  }
+
+  private validated = (value: IPickerTerms): void => {
+    this.props.onChange(value);
+  }
+
   /**
    * Renders the SPListpicker controls with Office UI  Fabric
    */
   public render(): JSX.Element {
+    const {
+      label,
+      context,
+      disabled,
+      isTermSetSelectable,
+      allowMultipleSelections,
+      disabledTermIds, disableChildrenOfDisabledParents,
+      placeholder,
+      panelTitle,
+      anchorId,
+      termActions,
+      required
+    } = this.props;
+
+    const {
+      activeNodes,
+      errorMessage,
+      openPanel,
+      loaded,
+      termSetAndTerms
+    } = this.state;
 
     return (
       <div>
-        {this.props.label && <Label>{this.props.label}</Label>}
+        {label && <Label required={required}>{label}</Label>}
         <div className={styles.termField}>
           <div className={styles.termFieldInput}>
             <TermPicker
-              context={this.props.context}
+              context={context}
               termPickerHostProps={this.props}
-              disabled={this.props.disabled}
-              value={this.state.activeNodes}
-              isTermSetSelectable={this.props.isTermSetSelectable}
+              disabled={disabled}
+              value={activeNodes}
+              isTermSetSelectable={isTermSetSelectable}
               onChanged={this.termsFromPickerChanged}
-              allowMultipleSelections={this.props.allowMultipleSelections}
-              disabledTermIds={this.props.disabledTermIds}
-              disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents} />
+              allowMultipleSelections={allowMultipleSelections}
+              disabledTermIds={disabledTermIds}
+              disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}
+              placeholder={placeholder} />
           </div>
           <div className={styles.termFieldButton}>
-            <IconButton disabled={this.props.disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
+            <IconButton disabled={disabled} iconProps={{ iconName: 'Tag' }} onClick={this.onOpenPanel} />
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={this.state.errorMessage} />
+        <FieldErrorMessage errorMessage={errorMessage} />
 
         <Panel
-          isOpen={this.state.openPanel}
+          isOpen={openPanel}
           hasCloseButton={true}
           onDismiss={this.onClosePanel}
           isLightDismiss={true}
           type={PanelType.medium}
-          headerText={this.props.panelTitle}
+          headerText={panelTitle}
           onRenderFooterContent={() => {
             return (
               <div className={styles.actions}>
@@ -302,26 +381,26 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
           {
             /* Show spinner in the panel while retrieving terms */
-            this.state.loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
+            loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
           }
           {
-            this.state.loaded === true && this.state.termSetAndTerms && (
-              <div key={this.state.termSetAndTerms.Id} >
-                <h3>{this.state.termSetAndTerms.Name}</h3>
-                <TermParent anchorId={this.props.anchorId}
+            loaded === true && termSetAndTerms && (
+              <div key={termSetAndTerms.Id} >
+                <h3>{termSetAndTerms.Name}</h3>
+                <TermParent anchorId={anchorId}
                   autoExpand={null}
-                  termset={this.state.termSetAndTerms}
-                  isTermSetSelectable={this.props.isTermSetSelectable}
+                  termset={termSetAndTerms}
+                  isTermSetSelectable={isTermSetSelectable}
                   termSetSelectedChange={this.termSetSelectedChange}
-                  activeNodes={this.state.activeNodes}
-                  disabledTermIds={this.props.disabledTermIds}
-                  disableChildrenOfDisabledParents={this.props.disableChildrenOfDisabledParents}
+                  activeNodes={activeNodes}
+                  disabledTermIds={disabledTermIds}
+                  disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}
                   changedCallback={this.termsChanged}
-                  multiSelection={this.props.allowMultipleSelections}
+                  multiSelection={allowMultipleSelections}
                   spTermService={this.termsService}
 
                   updateTaxonomyTree={this.updateTaxonomyTree}
-                  termActions={this.props.termActions}
+                  termActions={termActions}
                 />
               </div>
             )

@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Lataa kuva",
   "UploadLinkLabel": "Ladata",
   "WebSearchLinkLabel": "Www-haku",
-  "Yes": "Kyllä"
+  "Yes": "Kyllä",
+  "SelectedLabel": "Valittu",
+  "SelectIcon": "Valitse kuvake"
 };
 });

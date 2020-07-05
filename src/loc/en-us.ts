@@ -211,6 +211,8 @@ define([], () => {
     DateTimePickerTime: "Time",
     DateTimePickerTimeSeparator: ":",
     DateTimePickerHourValueInvalid: "Incorrect hour value",
+    DateTimePickerMinuteValueInvalid: "Incorrect minute value",
+    DateTimePickerSecondValueInvalid: "Incorrect second value",
 
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
@@ -322,6 +324,28 @@ define([], () => {
     UploadImageHeader: "Upload image",
     UploadLinkLabel: "Upload",
     WebSearchLinkLabel: "Web search",
-    Yes: "Yes"
+    StockImagesLinkLabel: "Stock images",
+    StockImagesHeader: "Stock Images",
+    Yes: "Yes",
+
+    NewFolderNamePlaceholder: "Enter your folder name",
+    FolderFilterBoxPlaceholder: "Filter folders by name",
+    FolderExplorerLoading: "Loading folders...",
+    FolderExplorerNoItems: "This folder doesn't have any subfolders.",
+    SelectedLabel: "Selected",
+    SelectIcon: "Select icon",
+
+    TreeViewExpandTitle: "Expand this item",
+    TreeViewCollapseTitle: "Collapse this item",
+
+    CollectionDataEmptyFields: "No fields were provided for the collection data.",
+    CollectionDataEmptyValue: "No data in your collection.",
+    CollectionAddRowButtonLabel: "Add data to the collection",
+    CollectionDeleteRowButtonLabel: "Delete the current row",
+    CollectionSaveAndAddButtonLabel: "Add and save",
+    CollectionDataItemShowErrorsLabel: "Show row errors",
+    CollectionDataItemFieldRequiredLabel: "Field is required.",
+    CollectionDataItemMissingFields: "Fields collection is empty!",
+    InvalidUrlError: "The provided URL is not valid"
   };
 });

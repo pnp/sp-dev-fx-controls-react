@@ -5,14 +5,17 @@ initializeIcons();
 
 import * as React from "react";
 import styles from "./Carousel.module.scss";
-import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation } from ".";
+import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation, CarouselIndicatorShape } from ".";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
+import CarouselImage from "./CarouselImage";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
+  private _intervalId: number | undefined;
+
   constructor(props: ICarouselProps) {
     super(props);
 
@@ -41,28 +44,43 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       this.setState({
         processingState: ProcessingState.idle
       });
+      this.startCycle(); // restarting cycle when new slide is available
     }
+  }
+
+  public componentDidMount() {
+    // starting auto cycling
+    this.startCycle();
   }
 
 
   public render(): React.ReactElement<ICarouselProps> {
     const { currentIndex, processingState } = this.state;
-    const { containerStyles, contentContainerStyles, containerButtonsStyles, prevButtonStyles, nextButtonStyles, loadingComponentContainerStyles } = this.props;
+    const {
+      containerStyles,
+      contentContainerStyles,
+      containerButtonsStyles,
+      prevButtonStyles,
+      nextButtonStyles,
+      loadingComponentContainerStyles,
+      prevButtonIconName = 'ChevronLeft',
+      nextButtonIconName = 'ChevronRight',
+      loadingComponent = <Spinner />,
+      pauseOnHover,
+      interval
+    } = this.props;
 
-    const prevButtonIconName = this.props.prevButtonIconName ? this.props.prevButtonIconName : "ChevronLeft";
-    const nextButtonIconName = this.props.nextButtonIconName ? this.props.nextButtonIconName : "ChevronRight";
     const processing = processingState === ProcessingState.processing;
 
     const prevButtonDisabled = processing || this.isCarouselButtonDisabled(false);
     const nextButtonDisabled = processing || this.isCarouselButtonDisabled(true);
 
-    const loadingComponent = this.props.loadingComponent ? this.props.loadingComponent : <Spinner />;
-    const element = this.getElementToDisplay();
+    const element = this.getElementToDisplay(currentIndex);
 
     return (
       <div className={this.getMergedStyles(styles.container, containerStyles)}>
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-             onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
+          onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
             iconProps={{ iconName: prevButtonIconName }}
@@ -70,7 +88,12 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
             onClick={() => { this.onCarouselButtonClicked(false); }} />
         </div>
 
-        <div className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}>
+        <div
+        className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
+        onMouseOver={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+        onTouchStart={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+        onMouseLeave={pauseOnHover && interval !== null ? this.startCycle : undefined}
+        onTouchEnd={pauseOnHover && interval !== null ? this.startCycle : undefined}>
           {
             processing &&
             <div className={this.getMergedStyles(styles.loadingComponent, loadingComponentContainerStyles)}>
@@ -79,14 +102,13 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           }
 
           {
-            !processing && element &&
-            element
+            !processing && this.renderSlide(element)
           }
-
+          {this.getIndicatorsElement()}
         </div>
 
         <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-             onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
+          onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
           <IconButton
             className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
             iconProps={{ iconName: nextButtonIconName }}
@@ -95,6 +117,112 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         </div>
       </div>
     );
+  }
+
+  private renderSlide = (element: JSX.Element): JSX.Element[] => {
+    const isAnimated = this.props.slide !== false && !this.props.triggerPageEvent;
+
+    const {
+      currentIndex,
+      previousIndex,
+      slideRight
+    } = this.state;
+
+    if (!isAnimated || previousIndex === undefined) {
+      return [<div className={styles.slideWrapper}>
+        {element}
+      </div>];
+    }
+
+    const previousElement = this.getElementToDisplay(previousIndex);
+
+    const result: JSX.Element[] = [];
+
+    result.push(<div key={currentIndex} className={css(styles.slideWrapper, {
+      [styles.slideFromLeft]: slideRight,
+      [styles.slideFromRight]: !slideRight
+    })}>{element}</div>);
+
+    if (slideRight) {
+      result.push(<div key={previousIndex} className={css(styles.slideWrapper, styles.slideRight, styles.right)}>{previousElement}</div>);
+    }
+    else {
+      result.unshift(<div key={previousIndex} className={css(styles.slideWrapper, styles.slideLeft, styles.left)}>{previousElement}</div>);
+    }
+
+    return result;
+  }
+
+  private getIndicatorsElement = (): JSX.Element | null => {
+    const {
+      indicators,
+      indicatorShape = CarouselIndicatorShape.rectangle,
+      onRenderIndicator,
+      triggerPageEvent,
+      indicatorClassName,
+      indicatorStyle
+    } = this.props;
+
+    const {
+      currentIndex = 0
+    } = this.state;
+
+    if (indicators === false) {
+      return null;
+    }
+
+    const elementsCount = triggerPageEvent ? this.props.elementsCount : isArray(this.props.element) ? (this.props.element as any[]).length : 1;
+
+    const indicatorElements: JSX.Element[] = [];
+    for (let i = 0; i < elementsCount; i++) {
+      if (onRenderIndicator) {
+        indicatorElements.push(onRenderIndicator(i, this.onIndicatorClick));
+      }
+      else {
+        indicatorElements.push(<li
+          className={css(indicatorClassName, {
+            [styles.active]: i === currentIndex
+          })}
+          style={indicatorStyle}
+          onClick={e => this.onIndicatorClick(e, i)}
+        />);
+      }
+    }
+
+    if (onRenderIndicator) {
+      return <div className={styles.indicators}>
+        {indicatorElements}
+      </div>;
+    }
+    else {
+      return <ol className={css({
+        [styles.indicators]: true,
+        [styles.circle]: indicatorShape === CarouselIndicatorShape.circle,
+        [styles.rectangle]: indicatorShape === CarouselIndicatorShape.rectangle,
+        [styles.square]: indicatorShape === CarouselIndicatorShape.square
+      })}>
+        {indicatorElements}
+      </ol>;
+    }
+  }
+
+  private onIndicatorClick = (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, index: number): void => {
+
+    this.startCycle();
+
+    if (this.props.onSelect) {
+      this.props.onSelect(index);
+    }
+
+    const {
+      currentIndex
+    } = this.state;
+
+    this.setState({
+      currentIndex: index,
+      previousIndex: currentIndex,
+      slideRight: index < currentIndex
+    });
   }
 
   /**
@@ -186,6 +314,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
    * Handles carousel button click.
    */
   private onCarouselButtonClicked = (nextButtonClicked: boolean): void => {
+
+    this.startCycle();
+
     const currentIndex = this.state.currentIndex;
 
     let nextIndex = this.state.currentIndex;
@@ -193,31 +324,45 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
 
     // Trigger parent control to update provided element
     if (this.props.triggerPageEvent) {
-      // Index validation needs to be done by the parent control specyfing canMove Next|Prev
-      nextIndex = nextButtonClicked ? (currentIndex + 1) : (currentIndex - 1);
-      // Trigger parent to provide new data
-      this.props.triggerPageEvent(nextIndex);
-      processingState = ProcessingState.processing;
+
+      const canMove = nextButtonClicked ? this.props.canMoveNext !== false : this.props.canMovePrev !== false;
+
+      if (canMove) {
+        // Index validation needs to be done by the parent control specyfing canMove Next|Prev
+        nextIndex = nextButtonClicked ? (currentIndex + 1) : (currentIndex - 1);
+
+        // Trigger parent to provide new data
+        this.props.triggerPageEvent(nextIndex);
+        processingState = ProcessingState.processing;
+      }
 
     } else {
       nextIndex = this.getNextIndex(nextButtonClicked);
-      const canMoveNext = this.props.canMoveNext != undefined ? this.props.canMoveNext : true;
-      const canMovePrev = this.props.canMovePrev != undefined ? this.props.canMovePrev : true;
-
-      if (canMoveNext && nextButtonClicked && this.props.onMoveNextClicked) {
-        this.props.onMoveNextClicked(nextIndex);
-      }
-      else if (canMovePrev && !nextButtonClicked && this.props.onMovePrevClicked) {
-        this.props.onMovePrevClicked(nextIndex);
+      if (nextIndex !== currentIndex) {
+        if (nextButtonClicked) {
+          this.props.onMoveNextClicked(nextIndex);
+        }
+        else {
+          this.props.onMovePrevClicked(nextIndex);
+        }
       }
 
       processingState = ProcessingState.idle;
     }
 
-    this.setState({
-      currentIndex: nextIndex,
-      processingState
-    });
+
+    if (nextIndex !== currentIndex) {
+      if (this.props.onSelect) {
+        this.props.onSelect(nextIndex);
+      }
+
+      this.setState({
+        currentIndex: nextIndex,
+        previousIndex: currentIndex,
+        slideRight: !nextButtonClicked,
+        processingState
+      });
+    }
   }
 
   /**
@@ -258,23 +403,81 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   /**
    * Returns current element to be displayed.
    */
-  private getElementToDisplay = (): JSX.Element => {
+  private getElementToDisplay = (currentIndex: number): JSX.Element => {
     const { element } = this.props;
-    const currentIndex = this.state.currentIndex;
-    let result : JSX.Element = null;
+    let result: JSX.Element = null;
+    let arrayLen: number;
 
     // If no element has been provided.
     if (!element) {
       result = null;
     }
-    // Retrieve proper element from the array
-    else if (isArray(element) && currentIndex >= 0 && (element as JSX.Element[]).length > currentIndex) {
-      result = element[currentIndex];
+    else if (isArray(element) && (arrayLen = (element as any[]).length) > 0) {
+      // Retrieve proper element from the array
+      if (currentIndex >= 0 && arrayLen > currentIndex) {
+        const arrayEl = element[currentIndex];
+
+        result = 'props' in arrayEl ? arrayEl as JSX.Element :
+          <CarouselImage {...arrayEl} />;
+      }
     }
     else {
       result = element as JSX.Element;
     }
 
     return result;
+  }
+
+  private startCycle = (): void => {
+
+    const {
+      interval,
+      triggerPageEvent
+    } = this.props;
+
+    if (this._intervalId) {
+      if (triggerPageEvent) {
+        clearTimeout(this._intervalId);
+      }
+      else {
+        clearInterval(this._intervalId);
+      }
+    }
+
+    if (interval !== null) {
+      const intervalValue = interval || 5000;
+      if (!triggerPageEvent) {
+        this._intervalId = window.setInterval(this.moveNext, intervalValue);
+      } else {
+        this._intervalId = window.setTimeout(this.moveNext, intervalValue);
+      }
+    }
+  }
+
+  private moveNext = (): void => {
+    if (!this.isCarouselButtonDisabled(true)) {
+      this.onCarouselButtonClicked(true);
+    }
+    else {
+      if (this._intervalId) {
+        if (this.props.triggerPageEvent) {
+          clearTimeout(this._intervalId);
+        }
+        else {
+          clearInterval(this._intervalId);
+        }
+      }
+    }
+  }
+
+  private pauseCycle = (): void => {
+    if (this._intervalId) {
+      if (this.props.triggerPageEvent) {
+        clearTimeout(this._intervalId);
+      }
+      else {
+        clearInterval(this._intervalId);
+      }
+    }
   }
 }

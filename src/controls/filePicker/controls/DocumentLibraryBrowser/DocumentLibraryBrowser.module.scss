@@ -75,6 +75,11 @@
   font-size: 21px;
   font-weight: 600;
 
+  :global .ms-Button-textContainer {
+    max-width: 100%;
+    word-break: break-word;
+  }
+
   &:hover {
     color: $ms-color-neutralLight;
     background-color: rgba(0, 0, 0, 0.6);

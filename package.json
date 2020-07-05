@@ -16,7 +16,8 @@
     "postinstall": "node postinstall/install.js",
     "sonarcloud:config": "node ./scripts/sonarcloud.js",
     "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
-    "localization": "node scripts/execute-translation.js"
+    "localization": "node scripts/execute-translation.js",
+    "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser"
   },
   "dependencies": {
     "@microsoft/decorators": "1.9.1",
@@ -29,7 +30,7 @@
     "@pnp/logging": "1.0.1",
     "@pnp/odata": "1.0.1",
     "@pnp/sp": "1.0.1",
-    "@pnp/telemetry-js": "1.0.0",
+    "@pnp/telemetry-js": "2.0.0",
     "@types/chart.js": "2.7.40",
     "@types/es6-promise": "0.0.33",
     "@types/react": "16.8.8",
@@ -63,19 +64,21 @@
     "ajv": "~5.2.2",
     "@types/webpack-env": "^1.13.9",
     "amd-loader": "0.0.8",
-    "codecov": "3.0.0",
+    "codecov": "3.6.5",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
+    "husky": "4.2.5",
     "karma-html-reporter": "0.2.7",
     "karma-remap-coverage": "^0.1.4",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.4.2",
     "request-promise": "4.2.5",
-    "sonarqube-scanner": "2.1.2"
+    "sonarqube-scanner": "2.1.2",
+    "tslib": "2.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SharePoint/sp-dev-fx-controls-react"
+    "url": "https://github.com/pnp/sp-dev-fx-controls-react"
   },
   "license": "MIT",
   "keywords": [
@@ -86,15 +89,20 @@
     "framework"
   ],
   "bugs": {
-    "url": "https://github.com/SharePoint/sp-dev-fx-controls-react/issues"
+    "url": "https://github.com/pnp/sp-dev-fx-controls-react/issues"
   },
   "main": "lib/index.js",
-  "homepage": "https://sharepoint.github.io/sp-dev-fx-controls-react/",
+  "homepage": "https://pnp.github.io/sp-dev-fx-controls-react/",
   "contributors": [
     "Gove, Russell <russellgove@gmail.com>",
     "Kent Chris <>",
     "Rodrigues, Joel <>",
     "Struyf, Elio <info@estruyf.be>",
     "Terentiev, Alex <>"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run changelog"
+    }
+  }
 }

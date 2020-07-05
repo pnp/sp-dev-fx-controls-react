@@ -310,6 +310,8 @@ define([], () => {
   "UploadImageHeader": "Laadi pilt üles",
   "UploadLinkLabel": "Laadida",
   "WebSearchLinkLabel": "Veebi otsing",
-  "Yes": "Jah"
+  "Yes": "Jah",
+  "SelectedLabel": "Valitud",
+  "SelectIcon": "Vali ikoon"
 };
 });

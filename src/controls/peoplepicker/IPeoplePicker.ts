@@ -54,6 +54,10 @@ export interface IPeoplePickerProps {
    */
   errorMessage?: string;
   /**
+   * Specifies if the component should show mandatory field error message because of some changes occured in parent
+   */
+  showRequiredError?: boolean;
+  /**
    * Method to check value of People Picker text
    */
   selectedItems?: (items: IPersonaProps[]) => void;
@@ -94,6 +98,10 @@ export interface IPeoplePickerProps {
    * When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search
    */
   ensureUser?: boolean;
+  /**
+   * Placeholder to be displayed in an empty term picker
+   */
+  placeholder?: string;
 }
 
 export interface IPeoplePickerState {

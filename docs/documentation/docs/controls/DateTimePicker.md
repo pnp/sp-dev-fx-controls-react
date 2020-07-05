@@ -68,6 +68,9 @@ The `DateTimePicker` control can be configured with the following properties:
 | showSeconds | boolean | no | Specifies, if seconds dropdown should be shown, defaults to false. |
 | timeDisplayControlType | TimeDisplayControlType | no | Specifies what type of control to use when rendering time part. |
 | showLabels | boolean | no | Specifies if labels in front of date and time parts should be rendered. |
+| placeholder | string | no | Placeholder text for the DatePicker. |
+| maxDate | Date | no | The maximum allowable date. |
+| minDate | Date | no | The minimum allowable date. |
 
 Enum `TimeDisplayControlType`
 

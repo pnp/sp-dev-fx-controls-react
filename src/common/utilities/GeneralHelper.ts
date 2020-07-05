@@ -2,7 +2,7 @@ import { IContext } from '../Interfaces';
 import { SPHelper } from './SPHelper';
 import '../extensions/String.extensions';
 
-import * as _ from '@microsoft/sp-lodash-subset';
+//import * as _ from '@microsoft/sp-lodash-subset';
 
 import * as strings from 'ControlStrings';
 

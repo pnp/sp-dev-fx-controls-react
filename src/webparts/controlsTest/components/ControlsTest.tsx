@@ -33,10 +33,13 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
-
+import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
+import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
+import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import { IconPicker } from '../../../controls/iconPicker';
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
 // Used to render document cards
@@ -52,7 +55,11 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-
+import FolderPicker from '../../../controls/folderPicker/FolderPicker';
+import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
+import { Pagination } from '../../../controls/pagination';
+import CarouselImage from '../../../controls/carousel/CarouselImage';
+import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -110,6 +117,139 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
     <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
     <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+  ];
+
+  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private treeitems = [
+    {
+      key: "R1",
+      label: "Root",
+      subLabel: "This is a sub label for node",
+      iconProps: this.skypeCheckIcon,
+      actions: [{
+        title: "Get item",
+        iconProps: {
+          iconName: 'Warning',
+          style: {
+            color: 'salmon',
+          },
+        },
+        id: "GetItem",
+        actionCallback: async (treeItem: ITreeItem) => {
+          console.log(treeItem);
+        }
+      }],
+      children: [
+        {
+          key: "1",
+          label: "Parent 1",
+          selectable: false,
+          children: [
+            {
+              key: "3",
+              label: "Child 1",
+              subLabel: "This is a sub label for node",
+              actions: [{
+                title: "Share",
+                iconProps: {
+                  iconName: 'Share'
+                },
+                id: "GetItem",
+                actionCallback: async (treeItem: ITreeItem) => {
+                  console.log(treeItem);
+                }
+              }],
+              children: [
+                {
+                  key: "gc1",
+                  label: "Grand Child 1",
+                  actions: [{
+                    title: "Get Grand Child item",
+                    iconProps: {
+                      iconName: 'Mail'
+                    },
+                    id: "GetItem",
+                    actionCallback: async (treeItem: ITreeItem) => {
+                      console.log(treeItem);
+                    }
+                  }]
+                }
+              ]
+            },
+            {
+              key: "4",
+              label: "Child 2",
+              iconProps: this.skypeCheckIcon
+            }
+          ]
+        },
+        {
+          key: "2",
+          label: "Parent 2"
+        },
+        {
+          key: "5",
+          label: "Parent 3",
+          disabled: true
+        },
+        {
+          key: "6",
+          label: "Parent 4",
+          selectable: true
+        }
+      ]
+    },
+    {
+      key: "R2",
+      label: "Root 2",
+      children: [
+        {
+          key: "8",
+          label: "Parent 5"
+        },
+        {
+          key: "9",
+          label: "Parent 6"
+
+        },
+        {
+          key: "10",
+          label: "Parent 7"
+        },
+        {
+          key: "11",
+          label: "Parent 8"
+        }
+      ]
+    },
+    {
+      key: "R3",
+      label: "Root 3",
+      children: [
+        {
+          key: "12",
+          label: "Parent 9"
+        },
+        {
+          key: "13",
+          label: "Parent 10",
+          children: [
+            {
+              key: "gc3",
+              label: "Child of Parent 10"
+            },
+          ]
+        },
+        {
+          key: "14",
+          label: "Parent 11"
+        },
+        {
+          key: "15",
+          label: "Parent 12"
+        }
+      ]
+    }
   ];
 
   constructor(props: IControlsTestProps) {
@@ -330,6 +470,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
   }
 
+  private _onFolderSelect = (folder: IFolder): void => {
+    console.log('selected folder', folder);
+
+  }
+
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
@@ -441,23 +586,184 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
 
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
+      text: 'Places', key: 'Places', onClick: () => {
+        console.log('additional breadcrumb item');
+      },
+    }];
+
     return (
       <div className={styles.controlsTest}>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty}
           moreLink={
-            <Link href="https://sharepoint.github.io/sp-dev-fx-controls-react/">See all</Link>
+            <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
+        <div className="ms-font-m">Services tester:
+          <TaxonomyPicker
+            allowMultipleSelections={true}
+            termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            panelTitle="Select Sorted Term"
+            label="Service Picker with custom actions"
+            context={this.props.context}
+            onChange={this.onServicePickerChange}
+            isTermSetSelectable={false}
+            termActions={{
+              actions: [{
+                title: "Get term labels",
+                iconName: "LocaleLanguage",
+                id: "test",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  // const labels = await taxService.getTermLabels(term.Id);
+                  // if (labels) {
+                  //   let termLabel: string = labels.join(" ; ");
+                  //   const updateAction = {
+                  //     updateActionType: UpdateType.updateTermLabel,
+                  //     value: `${termLabel} (updated)`
+                  //   };
+                  //   return updateAction;
+                  // }
+                  const updateAction = {
+                    updateActionType: UpdateType.updateTermLabel,
+                    value: `${term.Name} (updated)`
+                  };
+                  return updateAction;
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
+              },
+                // new TermLabelAction("Get Labels")
+              ],
+              termActionsDisplayMode: TermActionsDisplayMode.buttons,
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }}
+          />
 
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} />
+          <TaxonomyPicker
+            allowMultipleSelections={true}
+            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9" // id to termset that has a default sort
+            panelTitle="Select Default Sorted Term"
+            label="Service Picker"
+            context={this.props.context}
+            onChange={this.onServicePickerChange}
+            isTermSetSelectable={false}
+            placeholder="Select service"
+            required={true}
+            errorMessage='this field is required'
+            onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
+          />
+
+          <TaxonomyPicker
+            initialValues={this.state.initialValues}
+            allowMultipleSelections={true}
+            termsetNameOrID="41dec50a-3e09-4b3f-842a-7224cffc74c0"
+            anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
+            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+            // disableChildrenOfDisabledParents={true}
+            panelTitle="Select Term"
+            label="Taxonomy Picker"
+            context={this.props.context}
+            onChange={this._onTaxPickerChange}
+            isTermSetSelectable={false}
+            hideDeprecatedTags={true}
+            hideTagsNotAvailableForTagging={true}
+            termActions={{
+              actions: [{
+                title: "Get term labels",
+                iconName: "LocaleLanguage",
+                id: "test",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  console.log(term.Name, term.TermsCount);
+                  return {
+                    updateActionType: UpdateType.updateTermLabel,
+                    value: `${term.Name} (updated)`
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
+              },
+              {
+                title: "Hide term",
+                id: "hideTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  return {
+                    updateActionType: UpdateType.hideTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+              },
+              {
+                title: "Disable term",
+                id: "disableTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  return {
+                    updateActionType: UpdateType.disableTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
+              },
+              {
+                title: "Disable or hide term",
+                id: "disableOrHideTerm",
+                invokeActionOnRender: true,
+                hidden: true,
+                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                  if (term.TermsCount > 0) {
+                    return {
+                      updateActionType: UpdateType.disableTerm,
+                      value: true
+                    };
+                  }
+                  return {
+                    updateActionType: UpdateType.hideTerm,
+                    value: true
+                  };
+                },
+                applyToTerm: (term: ITerm) => true
+              }],
+              termActionsDisplayMode: TermActionsDisplayMode.buttons,
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }} />
+
+          <DefaultButton text="Add" onClick={() => {
+            this.setState({
+              initialValues: [{
+                key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                name: "HR",
+                path: "HR",
+                termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+              }]
+            });
+          }} />
+        </div>
+
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
         <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker date only" showLabels={false} dateConvention={DateConvention.Date} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker
+          label="DateTime Picker date only"
+          showLabels={false}
+          dateConvention={DateConvention.Date}
+          value={new Date()}
+          onChange={(value) => console.log("DateTimePicker value:", value)}
+          minDate={new Date("05/01/2019")}
+          maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
@@ -517,7 +823,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
-          resolveDelay={200} />
+          resolveDelay={200}
+          placeholder={'Select a SharePoint principal (User or Group)'} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -537,7 +844,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PeoplePicker context={this.props.context}
           titleText="People Picker (disabled)"
           disabled={true}
-          showtooltip={true} />
+          showtooltip={true}
+          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 
@@ -650,7 +958,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
               <span className="ms-font-xl">Controls testing</span>
 
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"}>
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
                 <p>You have permissions to view list items.</p>
               </SecurityTrimmedControl>
 
@@ -685,7 +993,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <div className="ms-font-m">List picker tester:
                 <ListPicker context={this.props.context}
                   label="Select your list(s)"
-                  placeHolder="Select your list(s)"
+                  placeholder="Select your list(s)"
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
@@ -693,7 +1001,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectionChanged={this.onListPickerChange} />
               </div>
 
-              <div className="ms-font-m">Field picker list data tester:
+              <div className="ms-font-m">List Item picker list data tester:
 
                 <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
                   columnInternalName="Title"
@@ -701,89 +1009,34 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   filter={"Title eq 'SPFx'"}
                   itemLimit={5}
                   context={this.props.context}
+                  placeholder={'Select list items'}
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
-
-              <div className="ms-font-m">Services tester:
-                <TaxonomyPicker
-                  allowMultipleSelections={true}
-                  termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
-                  panelTitle="Select Sorted Term"
-                  label="Service Picker with custom actions"
-                  context={this.props.context}
-                  onChange={this.onServicePickerChange}
-                  isTermSetSelectable={false}
-                  termActions={{
-                    actions: [{
-                      title: "Get term labels",
-                      iconName: "LocaleLanguage",
-                      id: "test",
-                      invokeActionOnRender: true,
-                      hidden: true,
-                      actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                        // const labels = await taxService.getTermLabels(term.Id);
-                        // if (labels) {
-                        //   let termLabel: string = labels.join(" ; ");
-                        //   const updateAction = {
-                        //     updateActionType: UpdateType.updateTermLabel,
-                        //     value: `${termLabel} (updated)`
-                        //   };
-                        //   return updateAction;
-                        // }
-                        const updateAction = {
-                          updateActionType: UpdateType.updateTermLabel,
-                          value: `${term.Name} (updated)`
-                        };
-                        return updateAction;
-                      },
-                      applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
-                    },
-                      // new TermLabelAction("Get Labels")
-                    ],
-                    termActionsDisplayMode: TermActionsDisplayMode.buttons,
-                    termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
-                  }}
-                />
-
-                <TaxonomyPicker
-                  allowMultipleSelections={true}
-                  termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
-                  panelTitle="Select Default Sorted Term"
-                  label="Service Picker"
-                  context={this.props.context}
-                  onChange={this.onServicePickerChange}
-                  isTermSetSelectable={false}
-                />
-
-                <TaxonomyPicker
-                  initialValues={this.state.initialValues}
-                  allowMultipleSelections={true}
-                  termsetNameOrID="313362ca-6813-4433-bcce-7bf74a18b9cb"
-                  // anchorId="0ec2f948-3978-499e-9d3f-e51c4494d44c"
-                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-                  // disableChildrenOfDisabledParents={true}
-                  panelTitle="Select Term"
-                  label="Taxonomy Picker"
-                  context={this.props.context}
-                  onChange={this._onTaxPickerChange}
-                  isTermSetSelectable={false}
-                  hideDeprecatedTags={true}
-                  hideTagsNotAvailableForTagging={true} />
-
-                <DefaultButton text="Add" onClick={() => {
-                  this.setState({
-                    initialValues: [{
-                      key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                      name: "HR",
-                      path: "HR",
-                      termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-                    }]
-                  });
-                }} />
+              <div>Icon Picker</div>
+              <div>
+                <IconPicker
+                  renderOption="panel"
+                  onSave={(value) => { console.log(value); }}
+                  currentIcon={'Warning'}
+                  buttonLabel="Icon Picker">
+                </IconPicker>
               </div>
+
+              <div className="ms-font-m">ComboBoxListItemPicker:
+
+                <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
+
+              </div>
+
               <div className="ms-font-m">iframe dialog tester:
                 <PrimaryButton
                   text="Open iframe Dialog"
@@ -818,6 +1071,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
                 />
               </div>
+              <div>
+                <FolderPicker context={this.props.context}
+                  rootFolder={{
+                    Name: 'Documents',
+                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+                  }}
+                  onSelect={this._onFolderSelect}
+                  label='Folder Picker'
+                  required={true}
+                  canCreateFolders={true}
+                ></FolderPicker>
+              </div>
             </div>
           </div>
         </div>
@@ -834,6 +1099,50 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isInfinite={true}
 
             element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with CarouselImage elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.center}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselImageContent}
+            //containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+            indicatorShape={CarouselIndicatorShape.circle}
+            pauseOnHover={true}
+
+            element={[
+              {
+                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+                title: 'Colosseum',
+                description: 'This is Colosseum',
+                url: 'https://en.wikipedia.org/wiki/Colosseum',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
+                title: 'Stonehenge',
+                description: 'This is Stonehendle',
+                url: 'https://en.wikipedia.org/wiki/Stonehenge',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
+                title: 'Pyramids of Giza',
+                description: 'This are Pyramids of Giza (Egypt)',
+                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              }
+            ]}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
@@ -861,12 +1170,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <FilePicker
             bingAPIKey="<BING API KEY>"
-            accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             context={this.props.context}
+            hideRecentTab={true}
           />
           {
             this.state.filePickerResult &&
@@ -897,9 +1207,104 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           items={sampleGridData}
           onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
         />
+
+        <IconPicker buttonLabel={'Icon'}
+          onChange={(iconName: string) => { console.log(iconName); }}
+          onSave={(iconName: string) => { console.log(iconName); }} />
+
+        <div>
+          <FolderExplorer
+            context={this.props.context}
+            rootFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+          />
+        </div>
+
+        <div>
+          <h3>Tree View</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={true}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={['gc1', 'gc3']}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}
+          //expandToSelected={true}
+          // onRenderItem={this.renderCustomTreeItem}
+          />
+
+        </div>
+
+        <div>
+          <Pagination
+            currentPage={3}
+            onChange={(page) => (this._getPage(page))}
+            totalPages={13}
+          //limiter={3}
+          // hideFirstPageJump
+          //hideLastPageJump
+          //limiterIcon={"NumberedListText"}
+          />
+        </div>
+
+        <div>
+          <FieldCollectionData
+            key={"FieldCollectionData"}
+            label={"Fields Collection"}
+            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
+            panelHeader={"Manage values"}
+
+            fields={[
+              { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
+              { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
+              { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
+              { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+            ]}
+            value={[
+              {
+                "Field1": "String value", "Field2": "123", "Field3": "https://pnp.github.io/", "Field4": true
+              }
+            ]}
+          />
+        </div>
       </div>
     );
   }
 
+  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
+    console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
+  }
 
+  private onItemSelected(items: ITreeItem[]) {
+    console.log("items selected: " + items.length);
+  }
+
+  private renderCustomTreeItem(item: ITreeItem): JSX.Element {
+    return (
+      <span>
+        {
+          item.iconProps &&
+          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
+        }
+        {item.label}
+      </span>
+    );
+  }
+
+  private _getPage(page: number) {
+    console.log('Page:', page);
+  }
+
+  // private _onFolderSelect = (folder: IFolder): void => {
+  //   console.log('selected folder', folder);
+  // }
 }

@@ -47,7 +47,7 @@ import { TaxonomyPicker, IPickerTerms } from "@pnp/spfx-controls-react/lib/Taxon
 
 ```typescript
 private onTaxPickerChange(terms : IPickerTerms) {
-    console.log("Terms", terms);
+  console.log("Terms", terms);
 }
 ```
 
@@ -65,16 +65,64 @@ Since version `1.12.0`, you can apply term actions to all terms or specific ones
                 isTermSetSelectable={false}
                 termActions={{
                   actions: [{
-                    title: "Update term label",
+                    title: "Get term labels",
                     iconName: "LocaleLanguage",
-                    id: "UpdateTermLabel",
+                    id: "test",
+                    invokeActionOnRender: true,
+                    hidden: true,
                     actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      console.log(term.Name, term.TermsCount);
                       return {
                         updateActionType: UpdateType.updateTermLabel,
                         value: `${term.Name} (updated)`
                       };
                     },
-                    applyToTerm: (term: ITerm) => (true) // Applying the action to all terms
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && term.Name === "internal")
+                  },
+                  {
+                    title: "Hide term",
+                    id: "hideTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      return {
+                        updateActionType: UpdateType.hideTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
+                  },
+                  {
+                    title: "Disable term",
+                    id: "disableTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      return {
+                        updateActionType: UpdateType.disableTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => (term && term.Name && term.Name.toLowerCase() === "secured")
+                  },
+                  {
+                    title: "Disable or hide term",
+                    id: "disableOrHideTerm",
+                    invokeActionOnRender: true,
+                    hidden: true,
+                    actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                      if (term.TermsCount > 0) {
+                        return {
+                          updateActionType: UpdateType.disableTerm,
+                          value: true
+                        };
+                      }
+                      return {
+                        updateActionType: UpdateType.hideTerm,
+                        value: true
+                      };
+                    },
+                    applyToTerm: (term: ITerm, triggerActionCb: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => true
                   }]
                 }} />
 ```
@@ -117,6 +165,10 @@ The TaxonomyPicker control can be configured with the following properties:
 | termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 | hideTagsNotAvailableForTagging | boolean | no | Specifies if the tags marked with 'Available for tagging' = false should be hidden |
 | hideDeprecatedTags | boolean | no | Specifies if deprecated tags  should be hidden |
+| placeholder | string | no | Short text hint to display in empty picker |
+| errorMessage | string | no | Static error message displayed below the picker. Use `onGetErrorMessage` to dynamically change the error message displayed (if any) based on the current value. `errorMessage` and `onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence). |
+| onGetErrorMessage | (value: IPickerTerms) => string \| Promise&lt;string&gt; | no | The method is used to get the validation error message and determine whether the picker value is valid or not. Mutually exclusive with the static string `errorMessage` (it will take precedence over this).<br />When it returns string:<ul><li>If valid, it returns empty string.</li><li>If invalid, it returns the error message string to be shown below the picker.</li></ul><br />When it returns Promise&lt;string&gt;:<ul><li>The resolved value is display as error message.</li><li>The rejected, the value is thrown away.</li></ul> |
+| required | boolean | no | Specifies if to display an asterisk near the label. Note that error message should be specified in `onGetErrorMessage` or `errorMessage` |
 
 Interface `IPickerTerm`
 
@@ -150,7 +202,7 @@ Interface `ITermAction`
 | iconName | string | no | Name of the icon to be used to display action |
 | hidden | boolean | no | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
 | invokeActionOnRender | boolean | no | Specifies if you want to invoke the action on render |
-| applyToTerm | (currentTerm: ITerm) => Promise\<boolean\> \| boolean | yes | Method checks if the current term is supported |
+| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => Promise\<boolean> \| boolean | yes | Method checks if the current term is supported for the action. The method provices a couple of additional callback functions to make it possibe to programatically change the terms and its actions. |
 | actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise\<UpdateAction\> | yes | Method to be executed when action is fired |
 
 
@@ -159,7 +211,7 @@ Interface `UpdateAction`
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | updateActionType | UpdateType | yes | Defines the type of update you want to perform |
-| value | string | no | New term label value to update. Only required when you want to update the term |
+| value | string \| boolean | no | When `updateTermLabel` is used, it should return a string. When `hideTerm` or `disableTerm` are used, you should return a boolean. |
 
 Enum `UpdateType`
 
@@ -167,5 +219,8 @@ Enum `UpdateType`
 | ---- |
 | updateTermLabel |
 | updateTermsTree |
+| hideTerm |
+| disableTerm |
+| selectTerm |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)
