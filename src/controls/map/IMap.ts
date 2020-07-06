@@ -7,6 +7,14 @@ export interface ICoordinates {
    * Longitude of the map to display
   */
   longitude: number;
+  /**
+   * Display Name of the location
+   */
+  displayName?: string; // 20200614 - JJ - displayname
+  /**
+   * Address of the location
+   */
+  address?: any; // 20200614 - JJ - address
 }
 
 export enum MapType {
@@ -30,4 +38,5 @@ export interface LocationInfo {
   type: string;
   importance: number;
   icon: string;
+  address?: any; // 20200614 - JJ - the address data from nominatim
 }

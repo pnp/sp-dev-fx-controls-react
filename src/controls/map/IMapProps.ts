@@ -1,6 +1,7 @@
 import { ICoordinates, MapType } from ".";
 
 export interface IMapProps {
+  mapSource?: "OpenStreetMap" | "BingStatic" | "BingDraggable";
   /**
    * Text of the Control
   */
