@@ -33,8 +33,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   /**
    * componentWillMount lifecycle hook
    */
-  // 20200614 - legacy react lifecycle event; use constructor instead
-  // public componentWillMount(): void { 
+  // public componentWillMount(): void {
   //   this.setState({
   //     coordinates: this.props.coordinates
   //   });
@@ -43,14 +42,13 @@ export class Map extends React.Component<IMapProps, IMapState> {
   /**
    * componentWillUpdate lifecycle hook
    */
-  // 20200614 - legacy react lifecycle event; don't use
-  // public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
-  //   if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
-  //     this.setState({
-  //       coordinates: this.props.coordinates
-  //     });
-  //   }
-  // }
+  public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
+    if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
+      this.setState({
+        coordinates: this.props.coordinates
+      });
+    }
+  }
 
   /**
   * Get the dif value based on zoom supplied (dif is for calculating the 4 corners of the map)
@@ -59,7 +57,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
     const { zoom } = this.props;
     // 20200614 - JJ - support zoom levels beyond 15
     const newZoom: number = zoom >= 0 ? zoom % 16 : 10;
-    const multiplier = Math.floor(zoom / 16) + 1; 
+    const multiplier = Math.floor(zoom / 16) + 1;
     return (0.0025 + (0.005 * (15 - (newZoom))))/multiplier;
   }
 
@@ -205,7 +203,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
    * Default React render method
    */
   public render(): React.ReactElement<IMapProps> {
-    const { mapSource } = this.props; 
+    const { mapSource } = this.props;
     let width: string = this._getWidth();
     let height: number = this._getHeight();
     let mapUrl: string = ["BingDraggable", "BingStatic"].indexOf(mapSource) !== -1 ? this._getBingMapUrl(width, height) : this._getMapUrl(); //20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)
