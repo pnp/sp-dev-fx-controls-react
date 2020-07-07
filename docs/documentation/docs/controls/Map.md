@@ -48,6 +48,8 @@ The `Map` control can be configured with the following properties:
 | ---- | ---- | ---- | ---- | ---- |
 | latitude | number | yes | Latitude of the map to display. | |
 | longitude | number | yes | Longitude of the map to display. | |
+| displayName | string | no | Display Name of the location. | |
+| address | any | no | Address of the location. | |
 
 `MapType` enum:
 

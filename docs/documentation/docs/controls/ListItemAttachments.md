@@ -41,5 +41,6 @@ The `ListItemAttachments` control can be configured with the following propertie
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
+| openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be openend in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemAttachments)
