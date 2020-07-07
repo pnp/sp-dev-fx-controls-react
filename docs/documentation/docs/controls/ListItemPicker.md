@@ -61,5 +61,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | filter | string | no | condition to filter list Item, same as $filter ODATA parameter|
 | placeholder | string | no | Short text hint to display in empty picker |
+| substringSearch | boolean | no | Specifies if substring search should be used |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)
