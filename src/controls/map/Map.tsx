@@ -23,7 +23,10 @@ export class Map extends React.Component<IMapProps, IMapState> {
     telemetry.track('ReactMap', {});
 
     this.state = {
-      coordinates,
+      coordinates: coordinates || {
+        latitude: null,
+        longitude: null
+      },
       address: "",
       showmessageerror: false,
       loading: false
@@ -57,7 +60,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
     const { zoom } = this.props;
     // 20200614 - JJ - support zoom levels beyond 15
     const newZoom: number = zoom >= 0 ? zoom % 16 : 10;
-    const multiplier = Math.floor(zoom / 16) + 1;
+    const multiplier = Math.floor(newZoom / 16) + 1;
     return (0.0025 + (0.005 * (15 - (newZoom))))/multiplier;
   }
 
