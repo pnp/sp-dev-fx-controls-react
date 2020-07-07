@@ -54,6 +54,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+  }
+
+  /**
+   * componentDidMount lifecycle hook
+   */
+  public componentDidMount() {
+    this.validateTerms();
   }
 
   /**
@@ -77,11 +85,34 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
   }
 
+   /**
+   * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
+   */
+  private async validateTerms() {
+    let isValidateOnLoad = this.props.validateOnLoad && this.props.initialValues != null && this.props.initialValues.length >= 1;
+    if (isValidateOnLoad) {
+      this.props.initialValues.forEach(async pickerTerm => {
+        if (pickerTerm.termSet == null) {
+          return;
+        }
+
+        this.termsService.getAllTerms(pickerTerm.termSet, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
+          let selectedTerms = response ? response : null;
+          if (selectedTerms == null) {
+            this.setState({
+              errorMessage: `The selected term '${pickerTerm.name}' could not be found in term store.`
+            });
+          }
+        });
+      });
+    }
+  }
+
   /**
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
-    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+
 
     if (this.props.termActions && this.props.termActions.initialize) {
       this.props.termActions.initialize(this.termsService);

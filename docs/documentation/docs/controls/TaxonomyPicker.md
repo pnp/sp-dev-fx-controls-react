@@ -164,6 +164,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | anchorId | string | no | Set the anchorid to a child term in the TermSet to be able to select terms from that level and below. |
 | termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 | hideTagsNotAvailableForTagging | boolean | no | Specifies if the tags marked with 'Available for tagging' = false should be hidden |
+| validateOnLoad | boolean | no | Specifies if the initial values will be validated, when the component is loaded. Default value is false |
 | hideDeprecatedTags | boolean | no | Specifies if deprecated tags  should be hidden |
 | placeholder | string | no | Short text hint to display in empty picker |
 
