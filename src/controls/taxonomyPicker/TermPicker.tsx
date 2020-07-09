@@ -7,7 +7,6 @@ import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { ITermSet } from '../../services/ISPTermStorePickerService';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
@@ -34,8 +33,7 @@ export interface ITermPickerProps {
 }
 
 export default class TermPicker extends React.Component<ITermPickerProps, ITermPickerState> {
-  private allTerms: ITermSet = null;
-
+  termsService: SPTermStorePickerService;
   /**
    * Constructor method
    */
@@ -49,7 +47,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     this.state = {
       terms: this.props.value
     };
-
+    this.termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
   }
 
   /**
@@ -111,25 +109,10 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
    */
   private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
-      let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms: IPickerTerm[] = await termsService.searchTermsByTermId(filterText, this.props.termPickerHostProps.anchorId);
-      // Check if the termset can be selected
-      if (this.props.isTermSetSelectable) {
-        // Retrieve the current termset
-        const termSet = await termsService.getTermSet();
-        // Check if termset was retrieved and if it contains the filter value
-        if (termSet && termSet.Name.toLowerCase().indexOf(filterText.toLowerCase()) === 0) {
-          // Add the termset to the suggestion list
-          terms.push({
-            key: termsService.cleanGuid(termSet.Id),
-            name: termSet.Name,
-            path: "",
-            termSet: termsService.cleanGuid(termSet.Id)
-          });
-        }
-      }
+      let terms = await this.termsService.searchTerms(filterText, this.props.termPickerHostProps.termsetNameOrID, this.props.termPickerHostProps.anchorId, this.props.termPickerHostProps.hideDeprecatedTags, this.props.termPickerHostProps.hideTagsNotAvailableForTagging);
+
       // Filter out the terms which are already set
-      const filteredTerms = [];
+      const filteredTerms: IPickerTerm[] = [];
       const { disabledTermIds, disableChildrenOfDisabledParents } = this.props;
       for (const term of terms) {
         let canBePicked = true;
@@ -142,19 +125,14 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           } else {
             // Check if child terms need to be disabled
             if (disableChildrenOfDisabledParents) {
-              // Check if terms were already retrieved
-              if (!this.allTerms) {
-                this.allTerms = await termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID);
-              }
-
               // Check if there are terms retrieved
-              if (this.allTerms.Terms && this.allTerms.Terms.length > 0) {
+              if (terms && terms.length > 0) {
                 // Find the disabled parents
-                const disabledParents = this.allTerms.Terms.filter(t => disabledTermIds.indexOf(t.Id) !== -1);
+                const disabledParents = terms.filter(t => disabledTermIds.indexOf(t.key) !== -1);
                 // Check if disabled parents were found
                 if (disabledParents && disabledParents.length > 0) {
                   // Check if the current term lives underneath a disabled parent
-                  const findTerm = disabledParents.filter(pt => term.path.indexOf(pt.PathOfTerm) !== -1);
+                  const findTerm = disabledParents.filter(pt => term.path.indexOf(pt.path) !== -1);
                   if (findTerm && findTerm.length > 0) {
                     canBePicked = false;
                   }
