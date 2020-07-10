@@ -339,10 +339,10 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     } else {
       nextIndex = this.getNextIndex(nextButtonClicked);
       if (nextIndex !== currentIndex) {
-        if (nextButtonClicked) {
+        if (nextButtonClicked && this.props.onMoveNextClicked) {
           this.props.onMoveNextClicked(nextIndex);
         }
-        else {
+        else if(this.props.onMovePrevClicked) {
           this.props.onMovePrevClicked(nextIndex);
         }
       }
