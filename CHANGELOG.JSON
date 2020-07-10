@@ -19,7 +19,8 @@
           "`TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On-Premises [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)",
           "`FilePicker`: default tab when opened shows hidden RecentTab [#477](https://github.com/pnp/sp-dev-fx-controls-react/issues/477)",
           "`PeoplePicker`: The required error message not showing [#590](https://github.com/pnp/sp-dev-fx-controls-react/issues/590)",
-          "`ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)"
+          "`ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)",
+          "`Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)"
         ]
       },
       "contributions": [
