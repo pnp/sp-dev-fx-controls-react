@@ -26,6 +26,7 @@ declare interface IControlStrings {
   TaxonomyPickerMenuTermSet: string;
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
+  TaxonomyPickerTermsNotFound: string;
 
   ListItemPickerSelectValue: string;
 

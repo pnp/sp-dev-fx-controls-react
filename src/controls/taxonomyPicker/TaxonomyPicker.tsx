@@ -95,26 +95,39 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
   }
 
-   /**
-   * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
-   */
-  private async validateTerms() {
-    let isValidateOnLoad = this.props.validateOnLoad && this.props.initialValues != null && this.props.initialValues.length >= 1;
-    if (isValidateOnLoad) {
-      this.props.initialValues.forEach(async pickerTerm => {
-        if (pickerTerm.termSet == null) {
-          return;
-        }
+  /**
+  * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
+  */
+  private async validateTerms(): Promise<void> {
 
-        this.termsService.getAllTerms(pickerTerm.termSet, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
-          let selectedTerms = response ? response : null;
-          if (selectedTerms == null) {
-            this.setState({
-              errorMessage: `The selected term '${pickerTerm.name}' could not be found in term store.`
-            });
-          }
+    const {
+      hideDeprecatedTags,
+      hideTagsNotAvailableForTagging,
+      initialValues,
+      validateOnLoad,
+      termsetNameOrID
+    } = this.props;
+
+    let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
+    if (isValidateOnLoad) {
+
+      let notFoundTerms: string[] = [];
+      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+      const allTerms = termSet.Terms;
+
+      for (let i = 0, len = initialValues.length; i < len; i++) {
+        const pickerTerm = initialValues[i];
+
+        if (!allTerms.filter(t => t.Id === pickerTerm.key).length) {
+          notFoundTerms.push(pickerTerm.name);
+        }
+      }
+
+      if (notFoundTerms.length) {
+        this.setState({
+          internalErrorMessage: strings.TaxonomyPickerTermsNotFound.replace('{0}', notFoundTerms.join(', '))
         });
-      });
+      }
     }
   }
 
@@ -365,6 +378,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     const {
       activeNodes,
       errorMessage,
+      internalErrorMessage,
       openPanel,
       loaded,
       termSetAndTerms
@@ -392,7 +406,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={errorMessage} />
+        <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} />
 
         <Panel
           isOpen={openPanel}

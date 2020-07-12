@@ -123,6 +123,10 @@ export interface ITaxonomyPickerProps  {
 export interface ITaxonomyPickerState {
   termSetAndTerms? : ITermSet;
   errorMessage?: string;
+  /**
+   * Error message populated in the component. errorMessage takes precedence over this.
+   */
+  internalErrorMessage?: string;
   openPanel?: boolean;
   loaded?: boolean;
   activeNodes?: IPickerTerms;
