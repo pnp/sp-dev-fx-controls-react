@@ -55,6 +55,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+  }
+
+  /**
+   * componentDidMount lifecycle hook
+   */
+  public componentDidMount() {
+    this.validateTerms();
   }
 
   /**
@@ -88,10 +96,46 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   }
 
   /**
+  * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
+  */
+  private async validateTerms(): Promise<void> {
+
+    const {
+      hideDeprecatedTags,
+      hideTagsNotAvailableForTagging,
+      initialValues,
+      validateOnLoad,
+      termsetNameOrID
+    } = this.props;
+
+    let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
+    if (isValidateOnLoad) {
+
+      let notFoundTerms: string[] = [];
+      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+      const allTerms = termSet.Terms;
+
+      for (let i = 0, len = initialValues.length; i < len; i++) {
+        const pickerTerm = initialValues[i];
+
+        if (!allTerms.filter(t => t.Id === pickerTerm.key).length) {
+          notFoundTerms.push(pickerTerm.name);
+        }
+      }
+
+      if (notFoundTerms.length) {
+        this.setState({
+          internalErrorMessage: strings.TaxonomyPickerTermsNotFound.replace('{0}', notFoundTerms.join(', '))
+        });
+      }
+    }
+  }
+
+  /**
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
-    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+
 
     if (this.props.termActions && this.props.termActions.initialize) {
       this.props.termActions.initialize(this.termsService);
@@ -334,6 +378,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     const {
       activeNodes,
       errorMessage,
+      internalErrorMessage,
       openPanel,
       loaded,
       termSetAndTerms
@@ -361,7 +406,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={errorMessage} />
+        <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} />
 
         <Panel
           isOpen={openPanel}
