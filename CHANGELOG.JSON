@@ -21,10 +21,12 @@
           "`PeoplePicker`: The required error message not showing [#590](https://github.com/pnp/sp-dev-fx-controls-react/issues/590)",
           "`ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)",
           "`Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)",
-          "`TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set"
+          "`TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set",
+          "`TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)"
         ]
       },
       "contributions": [
+        "[geltapatio](https://github.com/geltapatio)",
         "[Joel Jeffery](https://github.com/joeljeffery)",
         "[Piotr Siatka](https://github.com/siata13)"
       ]
