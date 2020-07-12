@@ -12,7 +12,8 @@
           "`TaxonomyPicker`: Add `errorMessage` and `onGetErrorMessage` props [#600](https://github.com/pnp/sp-dev-fx-controls-react/pull/600)",
           "`ListItemPicker`: ability to use substring search instead of startswith [#583](https://github.com/pnp/sp-dev-fx-controls-react/issues/583)",
           "`Map`: return display name and address details for the location [#585](https://github.com/pnp/sp-dev-fx-controls-react/issues/585)",
-          "`Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)"
+          "`Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)",
+          "`TaxonomyPicker`: onLoad validation [#602](https://github.com/pnp/sp-dev-fx-controls-react/issues/602)"
         ],
         "fixes": [
           "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)",
