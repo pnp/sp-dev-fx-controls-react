@@ -334,7 +334,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * @param {IPickerTerms} terms
    * @memberof ControlsTest
    */
-  private onServicePickerChange(terms: IPickerTerms): void {
+  private onServicePickerChange = (terms: IPickerTerms): void => {
     this.setState({
       initialValues: terms
     });
