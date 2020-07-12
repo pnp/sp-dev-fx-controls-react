@@ -9,9 +9,9 @@ import { ExtensionContext } from '@microsoft/sp-extension-base';
  * PropertyFieldTermPickerHost properties interface
 //  */
 export interface ITaxonomyPickerProps  {
-   /**
-   * Property field label displayed on top
-   */
+  /**
+  * Property field label displayed on top
+  */
   label: string;
   /**
    * TermSet Picker Panel title
@@ -78,6 +78,11 @@ export interface ITaxonomyPickerProps  {
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
+
+  /**
+   * Specifies if the initial values will be validated, when the component is loaded
+   */
+  validateOnLoad?: boolean;
 
   /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
