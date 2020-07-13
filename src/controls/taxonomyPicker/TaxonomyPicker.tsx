@@ -240,7 +240,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * @param node
  */
   private termsFromPickerChanged(terms: IPickerTerms) {
-    this.props.onChange(terms);
     this.setState({
       activeNodes: terms
     });
