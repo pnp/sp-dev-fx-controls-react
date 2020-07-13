@@ -46,7 +46,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
-      errorMessage: ''
+      errorMessage: '',
+      invalidTerms: []
     };
 
     this.onOpenPanel = this.onOpenPanel.bind(this);
@@ -61,7 +62,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * componentDidMount lifecycle hook
    */
   public componentDidMount() {
-    this.validateTerms();
+      this.validateTerms();
   }
 
   /**
@@ -99,8 +100,21 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
         this.termsService.getAllTerms(pickerTerm.termSet, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
           let selectedTerms = response ? response : null;
           if (selectedTerms == null) {
+            const propertyName ="name";
+            let stateInvalidTerms = this.state.invalidTerms;
+
+            stateInvalidTerms.push(pickerTerm);
+            let invalidTermNames = stateInvalidTerms.map(term => term[propertyName]);
+            let terms = invalidTermNames.join(', ');
+            let errorMessage: string = '';
+            if(terms.length > 0)
+            {
+              errorMessage = `The term(s) '${terms}' could not be found in term store.`
+            }
+
             this.setState({
-              errorMessage: `The selected term '${pickerTerm.name}' could not be found in term store.`
+              invalidTerms: stateInvalidTerms,
+              errorMessage: errorMessage
             });
           }
         });
@@ -193,6 +207,41 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   }
 
   /**
+   * Verify if the selected term is valid
+   * return true if the selected term is not valid
+   */
+  private hasInvalidTerm(selectedTermId: string)
+  {
+    if(!this.props.validateOnLoad
+      || this.state.errorMessage == null
+      || this.state.activeNodes.length <= 0)
+    {
+      return false;
+    }
+    let term = this.state.invalidTerms.filter(node => node.key == selectedTermId);
+    return term.length >= 1;
+  }
+
+   /**
+   * Verify if the selected terms are valid
+   * return all invalid term names
+   */
+  private getInvalidTermNames(terms: IPickerTerms)
+  {
+     let invalidTermNames: string[] = [];
+     for (let i = 0; i < terms.length; i++) {
+      let term = terms[i];
+      let hasInvalidTerm = this.hasInvalidTerm(term.key);
+      if(hasInvalidTerm)
+      {
+        invalidTermNames.push(term.name);
+      }
+    }
+
+    return invalidTermNames.length >= 1 ? invalidTermNames.join(', ') : '';;
+   }
+
+  /**
    * Clicks on a node
    * @param node
    */
@@ -227,12 +276,24 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       // Remove the term from the list of active nodes
       activeNodes = activeNodes.filter(item => item.key !== term.Id);
     }
+
+    let invalidTermNames = this.getInvalidTermNames(activeNodes);
+    let errorMessage: string = '';
+    if(invalidTermNames.length > 0)
+    {
+      errorMessage = `The term(s) '${invalidTermNames}' could not be found in term store.`
+    }
+
     // Sort all active nodes
     activeNodes = sortBy(activeNodes, 'path');
     // Update the current state
+
     this.setState({
-      activeNodes: activeNodes
+      activeNodes: activeNodes,
+      errorMessage: errorMessage
     });
+
+
   }
 
   /**
@@ -240,8 +301,16 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * @param node
  */
   private termsFromPickerChanged(terms: IPickerTerms) {
+    let invalidTermNames = this.getInvalidTermNames(terms);
+    let errorMessage: string = '';
+    if(invalidTermNames.length > 0)
+    {
+      errorMessage = `The term(s) '${invalidTermNames}' could not be found in term store.`
+    }
+
     this.setState({
-      activeNodes: terms
+      activeNodes: terms,
+      errorMessage: errorMessage
     });
   }
 
