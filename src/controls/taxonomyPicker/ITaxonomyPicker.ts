@@ -130,6 +130,7 @@ export interface ITaxonomyPickerState {
   openPanel?: boolean;
   loaded?: boolean;
   activeNodes?: IPickerTerms;
+  invalidNodeIds?: string[];
 }
 
 export interface ITermChanges {

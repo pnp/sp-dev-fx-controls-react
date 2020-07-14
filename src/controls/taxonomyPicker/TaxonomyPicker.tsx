@@ -111,7 +111,9 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
     if (isValidateOnLoad) {
 
-      let notFoundTerms: string[] = [];
+      const notFoundTerms: string[] = [];
+      const notFoundTermIds: string[] = [];
+
       const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
       const allTerms = termSet.Terms;
 
@@ -120,12 +122,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
         if (!allTerms.filter(t => t.Id === pickerTerm.key).length) {
           notFoundTerms.push(pickerTerm.name);
+          notFoundTermIds.push(pickerTerm.key);
         }
       }
 
       if (notFoundTerms.length) {
         this.setState({
-          internalErrorMessage: strings.TaxonomyPickerTermsNotFound.replace('{0}', notFoundTerms.join(', '))
+          internalErrorMessage: strings.TaxonomyPickerTermsNotFound.replace('{0}', notFoundTerms.join(', ')),
+          invalidNodeIds: notFoundTermIds
         });
       }
     }
@@ -312,6 +316,23 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   }
 
   private validate = async (value: IPickerTerms): Promise<void> => {
+
+    //
+    // checking if there are any invalid nodes left after initial validation
+    //
+    if (this.state.invalidNodeIds) {
+      const changedInvalidNodeIds = this.state.invalidNodeIds.filter(id => {
+        return !!value.filter(term => term.key === id).length;
+      });
+
+      let internalErrorMessage = changedInvalidNodeIds.length ? this.state.internalErrorMessage : '';
+
+      this.setState({
+        invalidNodeIds: changedInvalidNodeIds,
+        internalErrorMessage: internalErrorMessage
+      });
+    }
+
     if (this.props.errorMessage || !this.props.onGetErrorMessage) { // ignoring all onGetErrorMessage logic
       this.validated(value);
       return;
