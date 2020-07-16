@@ -7,7 +7,6 @@ import SPservice from "../../services/SPService";
 import * as strings from 'ControlStrings';
 import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
-import { createRef } from '@uifabric/utilities/lib';
 import styles from './ListItemAttachments.module.scss';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
@@ -26,7 +25,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
     // Get SPService
     this._spservice = new SPservice(this.props.context);
-    this.fileInput = createRef();
+    this.fileInput = React.createRef();
   }
 
   /**
