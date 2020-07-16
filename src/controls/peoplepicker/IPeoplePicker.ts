@@ -50,17 +50,17 @@ export interface IPeoplePickerProps {
    */
   required?: boolean;
   /**
-   * Static error message displayed below the text field. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
+   * Static error message displayed below the picker. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
    */
   errorMessage?: string;
   /**
-   * The method is used to get the validation error message and determine whether the input value is valid or not.
+   * The method is used to get the validation error message and determine whether the picker value is valid or not.
    * Mutually exclusive with the static string errorMessage (it will take precedence over this).
    *
    *   When it returns string:
    *   - If valid, it returns empty string.
-   *   - If invalid, it returns the error message string and the text field will
-   *     show a red border and show an error message below the text field.
+   *   - If invalid, it returns the error message string and the picker will
+   *     show an error message below the picker.
    *
    *   When it returns Promise<string>:
    *   - The resolved value is display as error message.
