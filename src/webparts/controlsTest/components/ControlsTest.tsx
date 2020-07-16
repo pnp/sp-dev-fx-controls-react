@@ -335,7 +335,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * @param {IPickerTerms} terms
    * @memberof ControlsTest
    */
-  private onServicePickerChange(terms: IPickerTerms): void {
+  private onServicePickerChange = (terms: IPickerTerms): void => {
     this.setState({
       initialValues: terms
     });
@@ -604,7 +604,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div className="ms-font-m">Services tester:
           <TaxonomyPicker
             allowMultipleSelections={true}
-            termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            //termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
+            initialValues={[{
+              key: "c05250ff-80e7-41e6-bfb3-db2db62d63d3",
+              name: "Business",
+              path: "Business",
+              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+              termSetName: "Trip Types"
+            }, {
+              key: "a05250ff-80e7-41e6-bfb3-db2db62d63d3",
+              name: "BBusiness",
+              path: "BBusiness",
+              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+              termSetName: "Trip Types"
+            }]}
+            validateOnLoad={true}
             panelTitle="Select Sorted Term"
             label="Service Picker with custom actions"
             context={this.props.context}

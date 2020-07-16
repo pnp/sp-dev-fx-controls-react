@@ -8,4 +8,5 @@ export interface IListItemAttachmentsProps {
   webUrl?:string;
   disabled?: boolean;
   context: WebPartContext |  ExtensionContext;
+  openAttachmentsInNewWindow?: boolean; // JJ - 20200613 - needed to support Microsoft Teams
 }
