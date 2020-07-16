@@ -7,21 +7,21 @@ The below guide is an overview of what it takes to migrate from v1 to v2.  If we
 v2 of Reusable Controls is based on SharePoint Framework 1.11 and, as a result, does not support SharePoint On-Premise. **Please, use v1 if you plan to deploy your solution on-prem.**
 
 ## React and Fluent UI versions
-v2 of Reusable Controls uses React.js v16.8.5 and Fluent UI (Office UI Fabric React) v6.189.2.
-Please, update the `package.json` accordingly:
+v2 of Reusable Controls uses React.js v16.8.5 and Fluent UI (Office UI Fabric React) v6.214.0.
+Although it is not necessary to use the same modules' versions in your project, we highly recommend to update your solution accordingly:
 ```json
 "dependencies": {
     // other dependencies
-    "@types/react": "16.8.8",
-    "@types/react-dom": "16.8.3",
-    "office-ui-fabric-react": "6.189.2",
+    "office-ui-fabric-react": "6.214.0",
     "react": "16.8.5",
     "react-dom": "16.8.5"
   },
-  "resolutions": {
-    "@types/react": "16.8.8"
+  "devDependencies": {
+    "@types/react": "16.8.8",
+    "@types/react-dom": "16.8.3",
   },
 ```
+The easiest way to upgrade SharePoint Framework solution is to use [Office365 CLI](https://pnp.github.io/office365-cli/cmd/spfx/project/project-upgrade/#spfx-project-upgrade) `spfx project upgrade` command.
 
 ## APIs Changes
 ### PeoplePicker
