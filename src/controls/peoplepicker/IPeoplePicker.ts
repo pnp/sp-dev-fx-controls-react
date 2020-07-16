@@ -48,19 +48,30 @@ export interface IPeoplePickerProps {
   /**
    * People Field is mandatory
    */
-  isRequired?: boolean;
+  required?: boolean;
   /**
-   * Mandatory field error message
+   * Static error message displayed below the text field. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
    */
   errorMessage?: string;
   /**
-   * Specifies if the component should show mandatory field error message because of some changes occured in parent
+   * The method is used to get the validation error message and determine whether the input value is valid or not.
+   * Mutually exclusive with the static string errorMessage (it will take precedence over this).
+   *
+   *   When it returns string:
+   *   - If valid, it returns empty string.
+   *   - If invalid, it returns the error message string and the text field will
+   *     show a red border and show an error message below the text field.
+   *
+   *   When it returns Promise<string>:
+   *   - The resolved value is display as error message.
+   *   - The rejected, the value is thrown away.
+   *
    */
-  showRequiredError?: boolean;
+  onGetErrorMessage?: (items: IPersonaProps[]) => string | Promise<string>;
   /**
    * Method to check value of People Picker text
    */
-  selectedItems?: (items: IPersonaProps[]) => void;
+  onChange?: (items: IPersonaProps[]) => void;
   /**
    * Tooltip Message
    */
