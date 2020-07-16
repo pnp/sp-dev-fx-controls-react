@@ -11,6 +11,10 @@
 - `FilePicker`: Stock images option added [#593](https://github.com/pnp/sp-dev-fx-controls-react/issues/593)
 - `TaxonomyPicker`: Add the 'required' property [#216](https://github.com/pnp/sp-dev-fx-controls-react/issues/216)
 - `TaxonomyPicker`: Add `errorMessage` and `onGetErrorMessage` props [#600](https://github.com/pnp/sp-dev-fx-controls-react/pull/600)
+- `ListItemPicker`: ability to use substring search instead of startswith [#583](https://github.com/pnp/sp-dev-fx-controls-react/issues/583)
+- `Map`: return display name and address details for the location [#585](https://github.com/pnp/sp-dev-fx-controls-react/issues/585)
+- `Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)
+- `TaxonomyPicker`: onLoad validation [#602](https://github.com/pnp/sp-dev-fx-controls-react/issues/602)
 
 ### Fixes
 
@@ -18,10 +22,14 @@
 - `TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On-Premises [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)
 - `FilePicker`: default tab when opened shows hidden RecentTab [#477](https://github.com/pnp/sp-dev-fx-controls-react/issues/477)
 - `PeoplePicker`: The required error message not showing [#590](https://github.com/pnp/sp-dev-fx-controls-react/issues/590)
+- `ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)
+- `Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)
+- `TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set
+- `TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)
 
 ### Contributors
 
-Special thanks to our contributor: [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13).
 
 ## 1.19.0
 
