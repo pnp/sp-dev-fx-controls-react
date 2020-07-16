@@ -13,7 +13,7 @@ import styles from './TaxonomyPicker.module.scss';
 import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import uniqBy from 'lodash/uniqBy';
 import TermParent from './TermParent';
-import FieldErrorMessage from './ErrorMessage';
+import FieldErrorMessage from '../errorMessage/ErrorMessage';
 
 import * as telemetry from '../../common/telemetry';
 

@@ -802,20 +802,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           ensureUser={true}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          selectedItems={this._getPeoplePickerItems} />
+          onChange={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (search for group)"
           groupName="Team Site Visitors"
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          selectedItems={this._getPeoplePickerItems} />
+          onChange={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (pre-set global users)"
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          selectedItems={this._getPeoplePickerItems}
+          onChange={this._getPeoplePickerItems}
           personSelectionLimit={2}
           ensureUser={true} />
 
@@ -824,17 +824,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          selectedItems={this._getPeoplePickerItems} />
+          onChange={this._getPeoplePickerItems} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (tenant scoped)"
           personSelectionLimit={5}
           // groupName={"Team Site Owners"}
           showtooltip={true}
-          isRequired={true}
+          required={true}
           //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
           //defaultSelectedUsers={this.state.authorEmails}
-          selectedItems={this._getPeoplePickerItems}
+          onChange={this._getPeoplePickerItems}
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
@@ -847,10 +847,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           personSelectionLimit={5}
           // groupName={"Team Site Owners"}
           showtooltip={true}
-          isRequired={true}
+          required={true}
           //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
           //defaultSelectedUsers={this.state.authorEmails}
-          selectedItems={this._getPeoplePickerItems}
+          onChange={this._getPeoplePickerItems}
           showHiddenInUI={false}
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}

@@ -116,10 +116,10 @@ export interface IPeoplePickerProps {
 }
 
 export interface IPeoplePickerState {
-  mostRecentlyUsedPersons: IPersonaProps[];
-  showRequiredError: boolean;
-  errorMessage: string;
-  resolveDelay : number;
+  mostRecentlyUsedPersons?: IPersonaProps[];
+  errorMessage?: string;
+  internalErrorMessage?: string;
+  resolveDelay?: number;
 
   selectedPersons?: IPersonaProps[];
   peoplePersonaMenu?: IPersonaProps[];
