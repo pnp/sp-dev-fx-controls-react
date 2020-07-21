@@ -1,6 +1,7 @@
 import * as React from "react";
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import styles from "./Pagination.module.scss";
+import { isEqual } from "lodash";
 
 export interface IPaginationProps {
     /**
@@ -42,40 +43,65 @@ export interface IPaginationState {
 export class Pagination extends React.Component<IPaginationProps, IPaginationState> {
     constructor(props: Readonly<IPaginationProps>) {
         super(props);
-        let paginationElementsArray = [];
-        for (let i = 0; i < props.totalPages; i++) {
-            paginationElementsArray.push(i + 1);
-        }
+
+        const paginationElements = this.preparePaginationElements(props.totalPages);
+
         this.state = {
             currentPage: props.currentPage,
-            paginationElements: paginationElementsArray,
+            paginationElements,
             limiter: props.limiter ? props.limiter : 3,
         };
     }
+
+    public componentDidUpdate(prevProps: IPaginationProps) {
+        let { currentPage, paginationElements } = this.state;
+
+        if (prevProps.totalPages !== this.props.totalPages) {
+            paginationElements = this.preparePaginationElements(this.props.totalPages);
+            currentPage = this.state.currentPage > this.props.totalPages ? this.props.totalPages : this.state.currentPage;
+        }
+        if (prevProps.totalPages !== this.props.totalPages && this.props.currentPage !== prevProps.currentPage) {
+            currentPage = this.props.currentPage;
+        }
+
+        if (!isEqual(this.state.currentPage, currentPage) || !isEqual(this.state.paginationElements, paginationElements)) {
+            this.setState({
+                paginationElements,
+                currentPage
+            });
+        }
+    }
+
     public render(): React.ReactElement<IPaginationProps> {
         return (
-            <div className={styles.pagination}>
+            <div className={`${styles.pagination} pagination-container`}>
                 {!this.props.hideFirstPageJump &&
                     <DefaultButton
-                        className={styles.buttonStyle}
+                        className={`${styles.buttonStyle} pagination-button pagination-button_first`}
                         onClick={() => this.onClick(1)}
                         iconProps={{ iconName: "DoubleChevronLeft" }}>
                     </DefaultButton>
                 }
-                {this.state.paginationElements.map((pageNumber) => this.renderPageNumber(pageNumber))
 
-
-                }
+                {this.state.paginationElements.map((pageNumber) => this.renderPageNumber(pageNumber))}
 
                 {!this.props.hideLastPageJump &&
                     <DefaultButton
-                        className={styles.buttonStyle}
+                        className={`${styles.buttonStyle} pagination-button pagination-button_last`}
                         onClick={() => this.onClick(this.props.totalPages)}
                         iconProps={{ iconName: "DoubleChevronRight" }}>
                     </DefaultButton>
                 }
             </div>
         );
+    }
+
+    private preparePaginationElements = (totalPages: number) => {
+        let paginationElementsArray = [];
+        for (let i = 0; i < totalPages; i++) {
+            paginationElementsArray.push(i + 1);
+        }
+        return paginationElementsArray;
     }
 
     private onClick = (page: number) => {
@@ -118,7 +144,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
                 }
             }
             else {
-                return ;
+                return;
             }
         }
     }

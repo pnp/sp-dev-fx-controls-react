@@ -1274,8 +1274,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <FieldCollectionData
             key={"FieldCollectionData"}
             label={"Fields Collection"}
+            itemsPerPage={3}
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
+            enableSorting={true}
 
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
@@ -1283,15 +1285,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
             ]}
-            value={[
-              {
-                "Field1": "String value", "Field2": "123", "Field3": "https://pnp.github.io/", "Field4": true
-              }
-            ]}
+            value={this.getRandomCollectionFieldData()}
           />
         </div>
       </div>
     );
+  }
+
+  private getRandomCollectionFieldData = () => {
+    let result = [];
+    for (let i = 1; i < 16; i++) {
+      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+    }
+    return result;
   }
 
   private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
