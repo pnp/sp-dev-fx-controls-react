@@ -26,7 +26,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     let emptyItem = this.generateEmptyItem();
 
     this.state = {
-      crntItem: clone(this.props.item) || {...emptyItem},
+      crntItem: clone(this.props.item) || { ...emptyItem },
       errorMsgs: [],
       showCallout: false
     };
@@ -38,6 +38,9 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
    * @param prevState
    */
   public componentDidUpdate(prevProps: ICollectionDataItemProps): void {
+    /**
+     * Compare if items are not equal
+     */
     if (this.props.item !== prevProps.item) {
       this.setState({
         crntItem: clone(this.props.item)
@@ -70,8 +73,8 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     // Check if current item is valid
     if (this.props.fAddInCreation) {
       if (this.checkAllRequiredFieldsValid(crntItem) &&
-          this.checkAnyFieldContainsValue(crntItem) &&
-          this.checkAllFieldsAreValid()) {
+        this.checkAnyFieldContainsValue(crntItem) &&
+        this.checkAllFieldsAreValid()) {
         this.props.fAddInCreation(crntItem);
       } else {
         this.props.fAddInCreation(null);
@@ -143,13 +146,13 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       const { crntItem } = this.state;
       // Check if all the fields are correctly provided
       if (this.checkAllRequiredFieldsValid(crntItem) &&
-          this.checkAnyFieldContainsValue(crntItem) &&
-          this.checkAllFieldsAreValid()) {
+        this.checkAnyFieldContainsValue(crntItem) &&
+        this.checkAllFieldsAreValid()) {
         this.props.fAddItem(crntItem);
         // Clear all field values
         let emptyItem = this.generateEmptyItem();
         this.setState({
-          crntItem: {...emptyItem}
+          crntItem: { ...emptyItem }
         });
       }
     }
@@ -340,21 +343,21 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
   private renderField(field: ICustomCollectionField, item: any) {
     const disableFieldOnEdit: boolean = field.disableEdit && !!this.props.fUpdateItem;
 
-    switch(field.type) {
+    switch (field.type) {
       case CustomCollectionFieldType.boolean:
         return <Checkbox checked={item[field.id] ? item[field.id] : false}
-                         onChange={(ev, value) => this.onValueChanged(field.id, value)}
-                         disabled={disableFieldOnEdit}
-                         className="PropertyFieldCollectionData__panel__boolean-field" />;
+          onChange={(ev, value) => this.onValueChanged(field.id, value)}
+          disabled={disableFieldOnEdit}
+          className="PropertyFieldCollectionData__panel__boolean-field" />;
       case CustomCollectionFieldType.dropdown:
         return <Dropdown placeHolder={field.placeholder || field.title}
-                         options={field.options}
-                         selectedKey={item[field.id] || null}
-                         required={field.required}
-                         disabled={disableFieldOnEdit}
-                         onChanged={(opt) => this.onValueChanged(field.id, opt.key)}
-                         onRenderOption={field.onRenderOption}
-                         className="PropertyFieldCollectionData__panel__dropdown-field" />;
+          options={field.options}
+          selectedKey={item[field.id] || null}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          onChanged={(opt) => this.onValueChanged(field.id, opt.key)}
+          onRenderOption={field.onRenderOption}
+          className="PropertyFieldCollectionData__panel__dropdown-field" />;
       case CustomCollectionFieldType.number:
         return (
           <CollectionNumberField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
@@ -365,30 +368,30 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         );
       case CustomCollectionFieldType.url:
         return <TextField placeholder={field.placeholder || field.title}
-                          value={item[field.id] ? item[field.id] : ""}
-                          required={field.required}
-                          disabled={disableFieldOnEdit}
-                          className={styles.collectionDataField}
-                          onChanged={(value) => this.onValueChanged(field.id, value)}
-                          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
-                          onGetErrorMessage={async (value: string) => this.urlFieldValidation(field, value, item)}
-                          inputClassName="PropertyFieldCollectionData__panel__url-field" />;
+          value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          className={styles.collectionDataField}
+          onChanged={(value) => this.onValueChanged(field.id, value)}
+          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
+          onGetErrorMessage={async (value: string) => this.urlFieldValidation(field, value, item)}
+          inputClassName="PropertyFieldCollectionData__panel__url-field" />;
       case CustomCollectionFieldType.custom:
-          if (field.onCustomRender) {
-            return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);
-          }
-          return null;
+        if (field.onCustomRender) {
+          return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);
+        }
+        return null;
       case CustomCollectionFieldType.string:
       default:
         return <TextField placeholder={field.placeholder || field.title}
-                          className={styles.collectionDataField}
-                          value={item[field.id] ? item[field.id] : ""}
-                          required={field.required}
-                          disabled={disableFieldOnEdit}
-                          onChanged={(value) => this.onValueChanged(field.id, value)}
-                          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
-                          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
-                          inputClassName="PropertyFieldCollectionData__panel__string-field" />;
+          className={styles.collectionDataField}
+          value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          onChanged={(value) => this.onValueChanged(field.id, value)}
+          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
+          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
+          inputClassName="PropertyFieldCollectionData__panel__string-field" />;
     }
   }
 
@@ -407,12 +410,12 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     return opts;
   }
 
-   /**
-   * Creates an empty item with a unique id
-   */
+  /**
+  * Creates an empty item with a unique id
+  */
   private generateEmptyItem(): any {
     // Create an empty item with all properties
-    let emptyItem:any = {};
+    let emptyItem: any = {};
     emptyItem.uniqueId = Guid.newGuid().toString();
 
     for (const field of this.props.fields) {
@@ -429,12 +432,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     const { crntItem } = this.state;
     const opts = this.getSortingOptions();
 
+    if (!crntItem) { 
+      return null; 
+    }
+
     return (
       <div className={`PropertyFieldCollectionData__panel__table-row ${styles.tableRow} ${this.props.index === null ? styles.tableFooter : ""}`}>
         {
           (this.props.sortingEnabled && this.props.totalItems) && (
             <span className={`PropertyFieldCollectionData__panel__sorting-field ${styles.tableCell}`}>
-              <Dropdown options={opts} selectedKey={this.props.index + 1} onChanged={(opt) => this.props.fOnSorting(this.props.index, opt.key as number) } />
+              <Dropdown options={opts} selectedKey={this.props.index + 1} onChanged={(opt) => this.props.fOnSorting(this.props.index, opt.key as number)} />
             </span>
           )
         }
@@ -452,9 +459,9 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         <span className={styles.tableCell}>
           <span ref={ref => this.calloutCellRef = ref}>
             <Link title={strings.CollectionDataItemShowErrorsLabel}
-                  className={styles.errorCalloutLink}
-                  disabled={!this.state.errorMsgs || this.state.errorMsgs.length === 0}
-                  onClick={this.toggleErrorCallout}>
+              className={styles.errorCalloutLink}
+              disabled={!this.state.errorMsgs || this.state.errorMsgs.length === 0}
+              onClick={this.toggleErrorCallout}>
               <Icon iconName="Error" />
             </Link>
           </span>
@@ -462,11 +469,11 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           {
             this.state.showCallout && (
               <Callout className={styles.errorCallout}
-                       target={this.calloutCellRef}
-                       isBeakVisible={true}
-                       directionalHint={DirectionalHint.bottomLeftEdge}
-                       directionalHintForRTL={DirectionalHint.rightBottomEdge}
-                       onDismiss={this.hideErrorCallout}>
+                target={this.calloutCellRef}
+                isBeakVisible={true}
+                directionalHint={DirectionalHint.bottomLeftEdge}
+                directionalHintForRTL={DirectionalHint.rightBottomEdge}
+                onDismiss={this.hideErrorCallout}>
                 {
                   (this.state.errorMsgs && this.state.errorMsgs.length > 0) && (
                     <div className={styles.errorMsgs}>
@@ -487,18 +494,18 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         </span>
 
         <span className={styles.tableCell}>
-        {
-          /* Check add or delete action */
-          this.props.index !== null ? (
-            <Link title={strings.CollectionDeleteRowButtonLabel} disabled={!this.props.fDeleteItem || this.props.disableItemDeletion} onClick={this.deleteRow}>
-              <Icon iconName="Clear" />
-            </Link>
-          ) : (
-            <Link title={strings.CollectionAddRowButtonLabel} className={`${this.disableAdd(crntItem) ? "" : styles.addBtn}`} disabled={this.disableAdd(crntItem)} onClick={this.addRow}>
-              <Icon iconName="Add" />
-            </Link>
-          )
-        }
+          {
+            /* Check add or delete action */
+            this.props.index !== null ? (
+              <Link title={strings.CollectionDeleteRowButtonLabel} disabled={!this.props.fDeleteItem || this.props.disableItemDeletion} onClick={this.deleteRow}>
+                <Icon iconName="Clear" />
+              </Link>
+            ) : (
+                <Link title={strings.CollectionAddRowButtonLabel} className={`${this.disableAdd(crntItem) ? "" : styles.addBtn}`} disabled={this.disableAdd(crntItem)} onClick={this.addRow}>
+                  <Icon iconName="Add" />
+                </Link>
+              )
+          }
         </span>
       </div>
     );

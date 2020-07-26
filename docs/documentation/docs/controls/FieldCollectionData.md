@@ -37,6 +37,10 @@ import { FieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-contro
   manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
   panelHeader={"Manage values"}
 
+  executeFiltering={(searchFilter: string, item: any) => {
+    return item["Field2"] === +searchFilter;
+  }}
+  itemsPerPage={3}
   fields={[
     {id: "Field1", title:"String field", type: CustomCollectionFieldType.string, required: true},
     {id: "Field2", title:"Number field", type: CustomCollectionFieldType.number},
@@ -99,6 +103,8 @@ The `FieldCollectionData` control can be configured with the following propertie
 | disableItemDeletion | boolean | no | Allows you to specify if users can delete already inserted items. | false |
 | panelClassName | string | no | Allows you to specify a custom CSS class name for the collection data panel. | |
 | tableClassName | string | no | Allows you to specify a custom CSS class name for the collection data table inside the panel. | |
+| itemsPerPage | number | no | Allows you to specify the amount of items displayed per page. Paging control is added automatically. | |
+| itemsPerPage | (searchFilter: string, item: any) => boolean | no | Allows you to show Search Box and specify own filtering logic. | |
 
 Interface `ICustomCollectionField`
 
