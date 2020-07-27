@@ -3,7 +3,7 @@
   "description": "Reusable React controls for SharePoint Framework solutions",
   "version": "2.0.0",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=10"
   },
   "scripts": {
     "build": "gulp build",
@@ -29,7 +29,7 @@
     "@pnp/sp": "2.0.6",
     "@pnp/telemetry-js": "2.0.0",
     "chart.js": "2.7.3",
-    "color": "^3.1.2",
+    "color": "3.1.2",
     "lodash": "4.17.13",
     "office-ui-fabric-react": "6.214.0",
     "react": "16.8.5",
