@@ -37,9 +37,9 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     {
       const anchorTerm = this._terms.filter(t => t.Id.toLowerCase() === this.props.anchorId.toLowerCase()).shift();
       if (anchorTerm) {
-        const anchorDepth = anchorTerm.PathDepth;
+        const anchorTermPath = anchorTerm.PathOfTerm + /* Append (;) separator, as a suffix to anchor term path. */ ';';
         this._anchorName = anchorTerm.Name;
-        var anchorTerms : ITerm[] = this._terms.filter(t => t.PathOfTerm.substring(0, anchorTerm.PathOfTerm.length) === anchorTerm.PathOfTerm && t.Id !== anchorTerm.Id);
+        let anchorTerms : ITerm[] = this._terms.filter(t => t.PathOfTerm.substring(0, anchorTermPath.length) === anchorTermPath && t.Id !== anchorTerm.Id);
 
         anchorTerms = anchorTerms.map(term => {
           term.PathDepth = term.PathDepth - anchorTerm.PathDepth;
