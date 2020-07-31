@@ -350,8 +350,9 @@ export default class SPTermStorePickerService {
       if (anchorId) {
         const anchorTerm = terms.filter(t => t.Id.toLowerCase() === anchorId.toLowerCase()).shift();
         if (anchorTerm) {
-          const anchorTermPath = anchorTerm.PathOfTerm + /* Append (;) separator, as a suffix to anchor term path. */ ';';
-          const anchorTerms : ITerm[] = terms.filter(t => t.PathOfTerm.substring(0, anchorTermPath.length) === anchorTermPath && t.Id !== anchorTerm.Id);
+          // Append ';' separator, as a suffix to anchor term path.
+          const anchorTermPath = `${anchorTerm.PathOfTerm};`;
+          const anchorTerms: ITerm[] = terms.filter(t => t.PathOfTerm.substring(0, anchorTermPath.length) === anchorTermPath && t.Id !== anchorTerm.Id);
 
           anchorTerms.forEach(term => {
             returnTerms.push(this.convertTermToPickerTerm(term));
