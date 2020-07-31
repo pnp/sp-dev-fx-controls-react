@@ -27,10 +27,11 @@
 - `Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)
 - `TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set
 - `TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)
+- `TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [Devang Bhavsar](https://github.com/devangbhavsar89), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13).
 
 ## 1.19.0
 
