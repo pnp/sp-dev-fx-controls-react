@@ -10,10 +10,11 @@ import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
 import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
-import { ITermStore, ITerms, ITerm, IGroup, ITermSet } from './ISPTermStorePickerService';
+import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ISuggestTerm } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { EmptyGuid } from '../common/Constants';
 
 
 /**
@@ -23,6 +24,7 @@ export default class SPTermStorePickerService {
   private taxonomySession: string;
   private formDigest: string;
   private clientServiceUrl: string;
+  private suggestionServiceUrl: string;
 
   /**
    * Service constructor
@@ -31,6 +33,7 @@ export default class SPTermStorePickerService {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
+        this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + 	"/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
       }
     }
   }
@@ -270,12 +273,12 @@ export default class SPTermStorePickerService {
    * Retrieve all terms that starts with the searchText
    * @param searchText
    */
-  public searchTermsByName(searchText: string, termSet: string): Promise<IPickerTerm[]> {
+  public searchTermsByName(searchText: string): Promise<IPickerTerm[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
-      return this.searchTermsByTermSet(searchText, this.props.termsetNameOrID);
+      return this.searchTermsByTermSet(searchText);
     }
   }
 
@@ -375,17 +378,17 @@ export default class SPTermStorePickerService {
      * @param searchText
      * @param termsetId
      */
-  private searchTermsByTermSet(searchText: string, termSet: string): Promise<IPickerTerm[]> {
+  private searchTermsByTermSet(searchText: string): Promise<IPickerTerm[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
       return new Promise<IPickerTerm[]>(resolve => {
         this.getTermStores().then(termStore => {
-          let TermSetId = termSet;
-          if (!this.isGuid(termSet)) {
+          let TermSetId = this.props.termsetNameOrID;
+          if (!this.isGuid(TermSetId)) {
             // Get the ID of the provided term set name
-            const crntTermSet = this.getTermSetId(termStore, termSet);
+            const crntTermSet = this.getTermSetId(termStore, TermSetId);
             if (crntTermSet) {
               TermSetId = this.cleanGuid(crntTermSet.Id);
             } else {
@@ -393,37 +396,54 @@ export default class SPTermStorePickerService {
               return;
             }
           }
+          if (termStore === undefined || termStore.length  === 0) {
+            resolve(null);
+            return;
+          }
 
-          let data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="456" ObjectPathId="455" /><ObjectIdentityQuery Id="457" ObjectPathId="455" /><ObjectPath Id="459" ObjectPathId="458" /><ObjectIdentityQuery Id="460" ObjectPathId="458" /><ObjectPath Id="462" ObjectPathId="461" /><ObjectIdentityQuery Id="463" ObjectPathId="461" /><ObjectPath Id="465" ObjectPathId="464" /><SetProperty Id="466" ObjectPathId="464" Name="TermLabel"><Parameter Type="String">${searchText}</Parameter></SetProperty><SetProperty Id="467" ObjectPathId="464" Name="DefaultLabelOnly"><Parameter Type="Boolean">true</Parameter></SetProperty><SetProperty Id="468" ObjectPathId="464" Name="StringMatchOption"><Parameter Type="Number">0</Parameter></SetProperty><SetProperty Id="469" ObjectPathId="464" Name="ResultCollectionSize"><Parameter Type="Number">10</Parameter></SetProperty><SetProperty Id="470" ObjectPathId="464" Name="TrimUnavailable"><Parameter Type="Boolean">true</Parameter></SetProperty><ObjectPath Id="472" ObjectPathId="471" /><Query Id="473" ObjectPathId="471"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="TermSet" SelectAll="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="455" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="458" ParentId="455" Name="GetDefaultKeywordsTermStore" /><Method Id="461" ParentId="458" Name="GetTermSet"><Parameters><Parameter Type="Guid">${TermSetId}</Parameter></Parameters></Method><Constructor Id="464" TypeId="{61a1d689-2744-4ea3-a88b-c95bee9803aa}" /><Method Id="471" ParentId="461" Name="GetTerms"><Parameters><Parameter ObjectPathId="464" /></Parameters></Method></ObjectPaths></Request>`;
+          let data = {
+            start: searchText,
+            lcid : this.context.pageContext.web.language, // TODO : get the user's navitation LCID. Here it's the default web language LCID
+            sspList: this.cleanGuid(termStore[0].Id),
+            termSetList: TermSetId,
+            anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
+            isSpanTermStores: false,
+            isSpanTermSets: false,
+            isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging === true,
+            isIncludeDeprecated: this.props.hideDeprecatedTags === true,
+            isAddTerms: false,
+            isIncludePathData: false, 
+            excludeKeyword: false,
+            excludedTermset: EmptyGuid
+          }
 
           const reqHeaders = new Headers();
           reqHeaders.append("accept", "application/json");
-          reqHeaders.append("content-type", "application/xml");
+          reqHeaders.append("content-type", "application/json");
 
           const httpPostOptions: ISPHttpClientOptions = {
             headers: reqHeaders,
-            body: data
+            body: JSON.stringify(data)
           };
 
 
-          return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
+          return this.context.spHttpClient.post(this.suggestionServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
             return serviceResponse.json().then((serviceJSONResponse: any) => {
-              // Retrieve the term collection results
-              const termStoreResult: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
-              if (termStoreResult.length > 0) {
-                // Retrieve all terms
-
-                let terms = termStoreResult[0]._Child_Items_;
-
-                let returnTerms: IPickerTerm[] = [];
-                terms.forEach(term => {
-                  if (term.Name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
-                    returnTerms.push(this.convertTermToPickerTerm(term));
-                  }
-                });
-                resolve(returnTerms);
+              const groups = serviceJSONResponse.d.Groups
+              if (groups && groups.length > 0) {
+                // Retrieve the term collection results
+                const terms: ISuggestTerm[] = groups[0].Suggestions;
+                if (terms.length > 0) {
+                  // Retrieve all terms
+  
+                  let returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term));
+                  resolve(returnTerms);
+                  return;
+                }
+                
               }
-              return null;
+              
+              resolve([]);
             });
           });
         });
@@ -550,6 +570,24 @@ export default class SPTermStorePickerService {
       path: term.PathOfTerm,
       termSet: this.cleanGuid(term.TermSet.Id),
       termSetName: term.TermSet.Name
+    };
+  }
+
+  private convertSuggestTermToPickerTerm(term: ISuggestTerm): IPickerTerm {
+    let path: string = "";
+    let termSetName: string = "";
+    if (term.Paths && term.Paths.length > 0) {
+      const fullPath = term.Paths[0].replace(/^\[/, "").replace(/\]$/, "");
+      const fullPathParts = fullPath.split(":");
+      path = fullPathParts.join(";") + ";" +  term.DefaultLabel;
+      termSetName = fullPathParts[0];
+    }
+    return {
+      key: this.cleanGuid(term.Id),
+      name: term.DefaultLabel,
+      path: path,
+      termSet: EmptyGuid, // TermSet Guid is not given with suggestion
+      termSetName: termSetName
     };
   }
 }
