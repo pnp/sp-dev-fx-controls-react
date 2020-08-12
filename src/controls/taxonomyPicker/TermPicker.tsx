@@ -9,6 +9,7 @@ import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
+import { EmptyGuid } from '../../Common';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -118,7 +119,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       } = this.props;
 
       let terms: IPickerTerm[] = [];
-      if (termPickerHostProps.anchorId) {
+      if (termPickerHostProps.anchorId && termPickerHostProps.anchorId !== EmptyGuid) {
         terms = await this.termsService.searchTermsByTermId(filterText, termPickerHostProps.anchorId,);
       }
       else {

@@ -109,3 +109,5 @@ export const InvariantCulture: ICultureInfo = {
         eras: [1, 'A.D.', null, 0]
     }
 };
+
+export const EmptyGuid: string = "00000000-0000-0000-0000-000000000000";
