@@ -412,10 +412,10 @@ export default class SPTermStorePickerService {
             isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging === true,
             isIncludeDeprecated: this.props.hideDeprecatedTags === true,
             isAddTerms: false,
-            isIncludePathData: false, 
+            isIncludePathData: false,
             excludeKeyword: false,
             excludedTermset: EmptyGuid
-          }
+          };
 
           const reqHeaders = new Headers();
           reqHeaders.append("accept", "application/json");
@@ -429,20 +429,20 @@ export default class SPTermStorePickerService {
 
           return this.context.spHttpClient.post(this.suggestionServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
             return serviceResponse.json().then((serviceJSONResponse: any) => {
-              const groups = serviceJSONResponse.d.Groups
+              const groups = serviceJSONResponse.d.Groups;
               if (groups && groups.length > 0) {
                 // Retrieve the term collection results
                 const terms: ISuggestTerm[] = groups[0].Suggestions;
                 if (terms.length > 0) {
                   // Retrieve all terms
-  
+
                   let returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term));
                   resolve(returnTerms);
                   return;
                 }
-                
+
               }
-              
+
               resolve([]);
             });
           });
