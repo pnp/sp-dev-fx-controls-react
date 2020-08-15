@@ -9,6 +9,7 @@ import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import filter = require('lodash/filter');
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { Guid } from '@microsoft/sp-core-library';
 
 /**
  * File type icon component
@@ -58,10 +59,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param prevState
    */
   public componentDidUpdate(prevProps: IListViewProps, prevState: IListViewState): void {
-    // select default items
-    this._setSelectedItems();
 
     if (!isEqual(prevProps, this.props)) {
+      // select default items
+      this._setSelectedItems();
       // Reset the selected items
       if (this._selection) {
         this._selection.setItems(this.props.items, true);
@@ -244,7 +245,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param item
    */
   private _flattenItem(item: any): any {
-    let flatItem = {};
+    let flatItem: any = {};
     for (let parentPropName in item) {
       // Check if property already exists
       if (!item.hasOwnProperty(parentPropName)) continue;
@@ -261,6 +262,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         flatItem[parentPropName] = item[parentPropName];
       }
     }
+
+    if (!flatItem.key) {
+      flatItem.key = flatItem.ID || flatItem.Id;
+
+      if (!flatItem.key) {
+        flatItem.key = Guid.newGuid().toString();
+      }
+    }
+
     return flatItem;
   }
 
@@ -406,20 +416,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     const ascItems = sortBy(items, [columnName]);
     const sortedItems = descending ? ascItems.reverse() : ascItems;
 
-    // Check if selection needs to be updated
-    if (this._selection) {
-      const selection = this._selection.getSelection();
-      if (selection && selection.length > 0) {
-        // Clear selection
-        this._selection.setItems([], true);
-        setTimeout(() => {
-          // Find new index
-          let idxs: number[] = selection.map(item => findIndex(sortedItems, item));
-          idxs.forEach(idx => this._selection.setIndexSelected(idx, true, false));
-        }, 0);
-      }
-    }
-
     // Return the sorted items list
     return sortedItems;
   }
@@ -430,7 +426,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param items
    * @param columns
    */
-  private _executeFiltering(filterValue: string, items: any[], columns: IColumn[]): any[]  {
+  private _executeFiltering(filterValue: string, items: any[], columns: IColumn[]): any[] {
     const filterSeparator = ":";
 
     let filterColumns = [...columns];
@@ -517,7 +513,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     return (
       <div>
         {
-          showFilter && <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue}/>
+          showFilter && <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
         }
         <DetailsList
           key="ListViewControl"
@@ -525,6 +521,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           columns={this.state.columns}
           groups={this.state.groups}
           selectionMode={this.props.selectionMode || SelectionMode.none}
+          selectionPreservedOnEmptyClick={true}
           selection={this._selection}
           layoutMode={DetailsListLayoutMode.justified}
           compact={this.props.compact}
