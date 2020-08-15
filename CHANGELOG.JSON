@@ -27,7 +27,8 @@
           "`TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set",
           "`TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)",
           "`TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)",
-          "`FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)"
+          "`FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)",
+          "`ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)"
         ]
       },
       "contributions": [
