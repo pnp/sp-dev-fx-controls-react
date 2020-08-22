@@ -15,7 +15,8 @@
           "`Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)",
           "`TaxonomyPicker`: onLoad validation [#602](https://github.com/pnp/sp-dev-fx-controls-react/issues/602)",
           "`FieldCollectionData`: Add pagining and filtering [#617](https://github.com/pnp/sp-dev-fx-controls-react/pull/617)",
-          "`TaxonomyPicker`: Finding terms with labels [#288](https://github.com/pnp/sp-dev-fx-controls-react/issues/288)"
+          "`TaxonomyPicker`: Finding terms with labels [#288](https://github.com/pnp/sp-dev-fx-controls-react/issues/288)",
+          "`FileTypeIcon`: Added support for additional file type in `Image` mode [#640](https://github.com/pnp/sp-dev-fx-controls-react/pull/640)"
         ],
         "fixes": [
           "`ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)",
