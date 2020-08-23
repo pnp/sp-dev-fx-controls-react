@@ -47,7 +47,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
     if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
       this.setState({
-        coordinates: this.props.coordinates
+        coordinates: nextProps.coordinates
       });
     }
   }
