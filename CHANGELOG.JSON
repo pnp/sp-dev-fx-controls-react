@@ -4,6 +4,7 @@
       "version": "1.20.0",
       "changes": {
         "new": [
+          "`Accordion` control [#638](https://github.com/pnp/sp-dev-fx-controls-react/pull/638)",
           "`FieldCollectionData` control [#591](https://github.com/pnp/sp-dev-fx-controls-react/pull/591)"
         ],
         "enhancements": [
@@ -34,11 +35,12 @@
       },
       "contributions": [
         "[Devang Bhavsar](https://github.com/devangbhavsar89)",
-        "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[geltapatio](https://github.com/geltapatio)",
         "[Joel Jeffery](https://github.com/joeljeffery)",
-        "[Piotr Siatka](https://github.com/siata13)",
-        "[Victor Pollet](https://github.com/TheThor59)"
+        "[Victor Pollet](https://github.com/TheThor59)",
+        "[Alexey Sadomov](https://github.com/sadomovalex)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Piotr Siatka](https://github.com/siata13)"
       ]
     },
     {
