@@ -49,6 +49,7 @@ telemetry.optOut();
 
 The following controls are currently available:
 
+- [Accordion](./controls/Accordion) (Control to render an accordion)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)

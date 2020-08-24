@@ -4,6 +4,7 @@ import { IAccordionProps, IAccordionState } from './index';
 import { css } from "@uifabric/utilities/lib/css";
 import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import * as telemetry from '../../common/telemetry';
 
 /**
  * Icon styles. Feel free to change them
@@ -17,8 +18,10 @@ export class Accordion extends React.Component<IAccordionProps, IAccordionState>
     super(props);
 
     this.state = {
-      expanded: props.defaultCollapsed == null ? false : !props.defaultCollapsed
+      expanded: props.defaultCollapsed === null ? false : !props.defaultCollapsed
     };
+
+    telemetry.track('ReactAccordion', {});
   }
 
   public render(): React.ReactElement<IAccordionProps> {
