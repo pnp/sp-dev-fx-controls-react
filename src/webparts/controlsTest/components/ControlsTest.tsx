@@ -60,6 +60,7 @@ import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplore
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
+import { Accordion } from '../../..';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -100,6 +101,39 @@ const sampleGridData: any[] = [{
   location: "Flow",
   activity: "5/26/2019"
 }];
+
+const sampleItems = [
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Charger des fichiers et dossiers',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Enregistrer un fichier',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Troisième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Quatrième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Cinquième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Sixième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  }
+];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -599,6 +633,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           moreLink={
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
+
+        {
+          sampleItems.map((item, index) => (
+            <Accordion title={item.Question} defaultCollapsed={true} className={"itemCell"} key={index}>
+              <div className={"itemContent"}>
+                <div className={"itemResponse"}>{item.Reponse}</div>
+                <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
+              </div>
+            </Accordion>
+          ))
+        }
 
         <div className="ms-font-m">Services tester:
           <TaxonomyPicker
