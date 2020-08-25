@@ -144,12 +144,9 @@ export class FilesSearchService {
       }
 
       // Submit the request
-      const apiUrl: string = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&mkt=en-US&size=${size}&license=${license}`;
-      const headers = new Headers({
-        'Ocp-Apim-Subscription-Key': this.bingAPIKey
-      });
-      const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {
-        headers: headers,
+      const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&size=${size}&mkt=en-US&license=${license}`;
+      
+      const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {        
         method: 'GET',
         mode: 'cors'
       });

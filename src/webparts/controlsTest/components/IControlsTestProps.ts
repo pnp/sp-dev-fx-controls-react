@@ -10,6 +10,7 @@ export interface IControlsTestProps {
   title: string;
   displayMode: DisplayMode;
   updateProperty: (value: string) => void;
+  totalPages?: number;
 }
 
 export interface IControlsTestState {

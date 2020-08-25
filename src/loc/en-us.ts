@@ -347,6 +347,7 @@ define([], () => {
     CollectionDataItemShowErrorsLabel: "Show row errors",
     CollectionDataItemFieldRequiredLabel: "Field is required.",
     CollectionDataItemMissingFields: "Fields collection is empty!",
-    InvalidUrlError: "The provided URL is not valid"
+    InvalidUrlError: "The provided URL is not valid",
+    CollectionDataSearch: "Search"
   };
 });

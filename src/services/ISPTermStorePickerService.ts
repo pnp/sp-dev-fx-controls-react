@@ -80,3 +80,13 @@ export interface ITerm {
     [property: string]: any
   };
 }
+
+export interface ISuggestTerm {
+  Id: string;
+  DefaultLabel: string;
+  Description: string;
+  IsKeyword: boolean;
+  IsSynonym: boolean;
+  Paths: Array<string>;
+  Synonyms: string;
+}

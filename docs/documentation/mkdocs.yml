@@ -2,6 +2,7 @@ site_name: '@pnp/spfx-controls-react'
 nav:
   - Home: 'index.md'
   - Controls:
+    - Accordion: 'controls/Accordion.md'
     - Carousel: 'controls/Carousel.md'
     - Charts:
       - "ChartControl": 'controls/ChartControl.md'

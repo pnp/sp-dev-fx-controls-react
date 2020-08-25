@@ -60,6 +60,7 @@ import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplore
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
+import { Accordion } from '../../..';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -100,6 +101,39 @@ const sampleGridData: any[] = [{
   location: "Flow",
   activity: "5/26/2019"
 }];
+
+const sampleItems = [
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Charger des fichiers et dossiers',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Enregistrer un fichier',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Troisième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Quatrième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Cinquième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Sixième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  }
+];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -600,6 +634,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           moreLink={
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
+
+        {
+          sampleItems.map((item, index) => (
+            <Accordion title={item.Question} defaultCollapsed={true} className={"itemCell"} key={index}>
+              <div className={"itemContent"}>
+                <div className={"itemResponse"}>{item.Reponse}</div>
+                <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
+              </div>
+            </Accordion>
+          ))
+        }
 
         <div className="ms-font-m">Services tester:
           <TaxonomyPicker
@@ -1263,7 +1308,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <Pagination
             currentPage={3}
             onChange={(page) => (this._getPage(page))}
-            totalPages={13}
+            totalPages={this.props.totalPages || 13}
           //limiter={3}
           // hideFirstPageJump
           //hideLastPageJump
@@ -1275,8 +1320,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <FieldCollectionData
             key={"FieldCollectionData"}
             label={"Fields Collection"}
+            itemsPerPage={3}
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
+            enableSorting={true}
 
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
@@ -1284,15 +1331,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
             ]}
-            value={[
-              {
-                "Field1": "String value", "Field2": "123", "Field3": "https://pnp.github.io/", "Field4": true
-              }
-            ]}
+            value={this.getRandomCollectionFieldData()}
           />
         </div>
       </div>
     );
+  }
+
+  private getRandomCollectionFieldData = () => {
+    let result = [];
+    for (let i = 1; i < 16; i++) {
+      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+    }
+    return result;
   }
 
   private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {

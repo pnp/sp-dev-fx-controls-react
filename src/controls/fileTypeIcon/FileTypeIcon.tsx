@@ -227,7 +227,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       if (iconImage.cdnFallback) {
         const iconUrl = `${ICON_CDN_URL}/${iconImage.size.replace("icon", "")}/${iconImage.cdnFallback}.png`;
         iconElm = <Icon iconType={IconUIType.image} imageProps={{ src: iconUrl }} />;
-      } else if (iconImage.cdnFallback) {
+      } else if (iconImage.image) {
         iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
       } else {
         // Return a generic image

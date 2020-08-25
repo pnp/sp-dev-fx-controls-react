@@ -4,6 +4,7 @@
 
 ### New control(s)
 
+- `Accordion` control [#638](https://github.com/pnp/sp-dev-fx-controls-react/pull/638)
 - `FieldCollectionData` control [#591](https://github.com/pnp/sp-dev-fx-controls-react/pull/591)
 
 ### Enhancements
@@ -15,6 +16,9 @@
 - `Map`: return display name and address details for the location [#585](https://github.com/pnp/sp-dev-fx-controls-react/issues/585)
 - `Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)
 - `TaxonomyPicker`: onLoad validation [#602](https://github.com/pnp/sp-dev-fx-controls-react/issues/602)
+- `FieldCollectionData`: Add pagining and filtering [#617](https://github.com/pnp/sp-dev-fx-controls-react/pull/617)
+- `TaxonomyPicker`: Finding terms with labels [#288](https://github.com/pnp/sp-dev-fx-controls-react/issues/288)
+- `FileTypeIcon`: Added support for additional file type in `Image` mode [#640](https://github.com/pnp/sp-dev-fx-controls-react/pull/640)
 
 ### Fixes
 
@@ -26,10 +30,20 @@
 - `Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)
 - `TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set
 - `TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)
+<<<<<<< HEAD
 
 ### Contributors
 
 Special thanks to our contributors (in alphabetical order): [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13).
+=======
+- `TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)
+- `FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)
+- `ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Devang Bhavsar](https://github.com/devangbhavsar89), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Victor Pollet](https://github.com/TheThor59), [Alexey Sadomov](https://github.com/sadomovalex), [Gautam Sheth](https://github.com/gautamdsheth), [Piotr Siatka](https://github.com/siata13).
+>>>>>>> dev
 
 ## 1.19.0
 
