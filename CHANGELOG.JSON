@@ -30,17 +30,19 @@
           "`TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)",
           "`TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)",
           "`FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)",
-          "`ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)"
+          "`ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)",
+          "`Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)"
         ]
       },
       "contributions": [
+        "[Alexey Sadomov](https://github.com/sadomovalex)",
+        "[Anoop Tatti](https://github.com/anoopt)",
         "[Devang Bhavsar](https://github.com/devangbhavsar89)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[geltapatio](https://github.com/geltapatio)",
         "[Joel Jeffery](https://github.com/joeljeffery)",
-        "[Victor Pollet](https://github.com/TheThor59)",
-        "[Alexey Sadomov](https://github.com/sadomovalex)",
-        "[Gautam Sheth](https://github.com/gautamdsheth)",
-        "[Piotr Siatka](https://github.com/siata13)"
+        "[Piotr Siatka](https://github.com/siata13)",
+        "[Victor Pollet](https://github.com/TheThor59)"
       ]
     },
     {
