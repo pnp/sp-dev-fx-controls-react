@@ -30,20 +30,16 @@
 - `Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)
 - `TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set
 - `TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)
-<<<<<<< HEAD
-
-### Contributors
-
-Special thanks to our contributors (in alphabetical order): [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13).
-=======
 - `TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)
 - `FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)
 - `ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)
+- `Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)
+- `IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)
+- `FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Devang Bhavsar](https://github.com/devangbhavsar89), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Victor Pollet](https://github.com/TheThor59), [Alexey Sadomov](https://github.com/sadomovalex), [Gautam Sheth](https://github.com/gautamdsheth), [Piotr Siatka](https://github.com/siata13).
->>>>>>> dev
+Special thanks to our contributors (in alphabetical order): [Alexey Sadomov](https://github.com/sadomovalex), [Anoop Tatti](https://github.com/anoopt), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Piotr Siatka](https://github.com/siata13), [Victor Pollet](https://github.com/TheThor59).
 
 ## 1.19.0
 

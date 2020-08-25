@@ -55,7 +55,7 @@ import {
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import FolderPicker from '../../../controls/folderPicker/FolderPicker';
+import { FolderPicker } from '../../../FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';

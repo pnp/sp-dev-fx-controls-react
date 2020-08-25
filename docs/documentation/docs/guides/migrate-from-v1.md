@@ -73,3 +73,14 @@ The easiest way to upgrade the SharePoint Framework solution is to use [Office36
   - Use `errorMessage` or `onGetErrorMessage` to provide the error message.
 - `selectedItems` is renamed to `onChange`
   - `onChange` better describes the purpose of the property.
+
+  ### FolderPicker
+  `FolderPicker` default picker has been removed.
+  If you used `FolderPicker` as:
+  ```typescript
+  import FolderPicker from '@pnp/spfx-controls-react/lib/controls/folderPicker/FolderPicker';
+  ```
+  You should update to 
+  ```typescript
+  import { FolderPicker } from '@pnp/spfx-controls-react/lib/FolderPicker';
+  ```
