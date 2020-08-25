@@ -32,7 +32,8 @@
           "`FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)",
           "`ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)",
           "`Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)",
-          "`IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)"
+          "`IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)",
+          "`FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)"
         ]
       },
       "contributions": [
