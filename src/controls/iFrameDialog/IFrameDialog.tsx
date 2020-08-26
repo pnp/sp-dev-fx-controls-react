@@ -94,6 +94,14 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
     this.setDialogStyling();
   }
 
+  public componentWillReceiveProps(nextProps: IFrameDialogProps) {
+    if (nextProps.hidden && nextProps.hidden !== this.props.hidden) {
+      this.setState({
+        isStylingSet: false
+      });
+    }
+  }
+
   public componentDidUpdate(prevProps: IFrameDialogProps, prevState: IFrameDialogState): void {
     this.setDialogStyling();
   }
