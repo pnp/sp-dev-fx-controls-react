@@ -636,7 +636,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         {
           sampleItems.map((item, index) => (
-            <Accordion title={item.Question} defaultCollapsed={true} className={"itemCell"} key={index}>
+            <Accordion title={item.Question} defaultCollapsed={false} className={"itemCell"} key={index}>
               <div className={"itemContent"}>
                 <div className={"itemResponse"}>{item.Reponse}</div>
                 <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
