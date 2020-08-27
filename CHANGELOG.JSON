@@ -33,7 +33,8 @@
           "`ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)",
           "`Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)",
           "`IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)",
-          "`FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)"
+          "`FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)",
+          "`FilePicker`: Yor Organization tab is not shown [#596](https://github.com/pnp/sp-dev-fx-controls-react/issues/596)"
         ]
       },
       "contributions": [
@@ -44,6 +45,7 @@
         "[geltapatio](https://github.com/geltapatio)",
         "[Joel Jeffery](https://github.com/joeljeffery)",
         "[Piotr Siatka](https://github.com/siata13)",
+        "[Rabia Williams](https://github.com/rabwill)",
         "[Victor Pollet](https://github.com/TheThor59)"
       ]
     },
