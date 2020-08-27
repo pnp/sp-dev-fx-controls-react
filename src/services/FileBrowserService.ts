@@ -268,7 +268,7 @@ export class FileBrowserService {
    */
   protected buildAbsoluteUrl = (relativeUrl: string) => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.context.pageContext.web.absoluteUrl);
-    return siteUrl + relativeUrl;
+    return `${siteUrl}${relativeUrl.indexOf('/') === 0 ? '' : '/'}${relativeUrl}`;
   }
 
   protected processResponse = (fileResponse: any): void => {
