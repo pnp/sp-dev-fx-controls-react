@@ -34,7 +34,8 @@
           "`Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)",
           "`IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)",
           "`FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)",
-          "`FilePicker`: Yor Organization tab is not shown [#596](https://github.com/pnp/sp-dev-fx-controls-react/issues/596)"
+          "`FilePicker`: Yor Organization tab is not shown [#596](https://github.com/pnp/sp-dev-fx-controls-react/issues/596)",
+          "`FolderPicker`, `FolderExplorer`: Controls don't let you explore sub folders if parent folder has apostrophe (') in its name.[#644](https://github.com/pnp/sp-dev-fx-controls-react/issues/644)"
         ]
       },
       "contributions": [
