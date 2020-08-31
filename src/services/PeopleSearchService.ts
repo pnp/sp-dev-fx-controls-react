@@ -314,12 +314,11 @@ export default class SPPeopleSearchService {
    * Gets account name for user, falls back to description
    */
   private getAccountName(element: any): string {
+    if (!element) { return ""; }
     const loginName: string = element.LoginName || element.Key;
     if (loginName) {
       const loginParts: string[] = loginName.split("|");
-      if (loginParts.length > 0) {
-        return loginParts[loginParts.length - 1];
-      }
+      return loginParts[loginParts.length - 1];
     }
     return element.Description || "";
   }
