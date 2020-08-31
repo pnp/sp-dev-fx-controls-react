@@ -228,9 +228,8 @@ export default class SPPeopleSearchService {
           const userResults = values.map(element => {
             switch (element.EntityType) {
               case 'User':
-                let email: string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
-                // Description contains the account name for a user
-                const accountName = element.Description || this.getAccountName(element);
+                const accountName: string =  element.Description || "";
+                const email: string  =  element.EntityData.Email || element.Description;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
@@ -309,20 +308,6 @@ export default class SPPeopleSearchService {
     }
 
     return null;
-  }
-
-  /**
-   * Gets account name for user
-   */
-  private getAccountName(element: any): string {
-    if (!element) { return ""; }
-    const loginName: string = element.LoginName || element.Key;
-    if (loginName) {
-      const loginParts: string[] = loginName.split("|");
-      return loginParts[loginParts.length - 1];
-    }
-
-    return "";
   }
 
   /**
