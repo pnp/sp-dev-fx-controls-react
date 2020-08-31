@@ -229,10 +229,11 @@ export default class SPPeopleSearchService {
             switch (element.EntityType) {
               case 'User':
                 let email: string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
+                const accountName = this.getAccountName(element);
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
-                  imageUrl: this.generateUserPhotoLink(email),
+                  imageUrl: this.generateUserPhotoLink(accountName),
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText, // name
                   secondaryText: email, // email
@@ -307,6 +308,20 @@ export default class SPPeopleSearchService {
     }
 
     return null;
+  }
+
+  /**
+   * Gets account name for user, falls back to description
+   */
+  private getAccountName(element: any): string {
+    const loginName: string = element.LoginName || element.Key;
+    if (loginName) {
+      const loginParts: string[] = loginName.split("|");
+      if (loginParts.length > 0) {
+        return loginParts[loginParts.length - 1];
+      }
+    }
+    return element.Description || "";
   }
 
   /**
