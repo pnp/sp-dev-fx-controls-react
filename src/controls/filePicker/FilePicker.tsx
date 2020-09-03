@@ -55,7 +55,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
   public async componentDidMount() {
     // Load information about Organisation Assets Library
     let orgAssetsEnabled: boolean = false;
-    if (this.props.hideOrganisationalAssetTab !== undefined && !this.props.hideOrganisationalAssetTab) {
+    if (!this.props.hideOrganisationalAssetTab) {
       const orgAssetsLibraries = await this.orgAssetsService.getSiteMediaLibraries();
       orgAssetsEnabled = orgAssetsLibraries ? true : false;
     }

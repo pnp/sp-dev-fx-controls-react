@@ -228,11 +228,12 @@ export default class SPPeopleSearchService {
           const userResults = values.map(element => {
             switch (element.EntityType) {
               case 'User':
-                let email: string = element.EntityData.Email !== null ? element.EntityData.Email : element.Description;
+                const accountName: string =  element.Description || "";
+                const email: string  =  element.EntityData.Email || element.Description;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
-                  imageUrl: this.generateUserPhotoLink(email),
+                  imageUrl: this.generateUserPhotoLink(accountName),
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText, // name
                   secondaryText: email, // email
