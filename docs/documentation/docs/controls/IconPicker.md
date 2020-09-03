@@ -35,7 +35,7 @@ import { IconPicker } from '@pnp/spfx-controls-react/lib/IconPicker';
 
 ```TypeScript
 <IconPicker buttonLabel={'Icon'}
-            renderOption={'Dialog'}
+            renderOption={'dialog'}
             onChange={(iconName: string) => { this.setState({icon: iconName}); }}
             onSave={(iconName: string) => { this.setState({icon: iconName}); }} />
 ```
