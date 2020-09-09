@@ -25,7 +25,8 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { FolderPicker, IFolder } from "@pnp/spfx-controls-react/lib/FolderPicker";
+import FolderPicker from "@pnp/spfx-controls-react/lib/controls/folderPicker/FolderPicker";
+import { IFolder } from "@pnp/spfx-controls-react/lib/FolderPicker";
 ```
 
 - Use the `FolderPicker` control in your code as follows:

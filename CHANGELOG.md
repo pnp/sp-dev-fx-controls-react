@@ -1,5 +1,50 @@
 # Releases
 
+## 1.20.0
+
+### New control(s)
+
+- `Accordion` control [#638](https://github.com/pnp/sp-dev-fx-controls-react/pull/638)
+- `FieldCollectionData` control [#591](https://github.com/pnp/sp-dev-fx-controls-react/pull/591)
+
+### Enhancements
+
+- `FilePicker`: Stock images option added [#593](https://github.com/pnp/sp-dev-fx-controls-react/issues/593)
+- `TaxonomyPicker`: Add the 'required' property [#216](https://github.com/pnp/sp-dev-fx-controls-react/issues/216)
+- `TaxonomyPicker`: Add `errorMessage` and `onGetErrorMessage` props [#600](https://github.com/pnp/sp-dev-fx-controls-react/pull/600)
+- `ListItemPicker`: ability to use substring search instead of startswith [#583](https://github.com/pnp/sp-dev-fx-controls-react/issues/583)
+- `Map`: return display name and address details for the location [#585](https://github.com/pnp/sp-dev-fx-controls-react/issues/585)
+- `Map`: support for draggable and static Bing maps [#586](https://github.com/pnp/sp-dev-fx-controls-react/issues/586)
+- `TaxonomyPicker`: onLoad validation [#602](https://github.com/pnp/sp-dev-fx-controls-react/issues/602)
+- `FieldCollectionData`: Add pagining and filtering [#617](https://github.com/pnp/sp-dev-fx-controls-react/pull/617)
+- `TaxonomyPicker`: Finding terms with labels [#288](https://github.com/pnp/sp-dev-fx-controls-react/issues/288)
+- `FileTypeIcon`: Added support for additional file type in `Image` mode [#640](https://github.com/pnp/sp-dev-fx-controls-react/pull/640)
+
+### Fixes
+
+- `ComboBoxListItemPicker`: fetching only 100 items [#569](https://github.com/pnp/sp-dev-fx-controls-react/issues/569)
+- `TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On-Premises [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)
+- `FilePicker`: default tab when opened shows hidden RecentTab [#477](https://github.com/pnp/sp-dev-fx-controls-react/issues/477)
+- `PeoplePicker`: The required error message not showing [#590](https://github.com/pnp/sp-dev-fx-controls-react/issues/590)
+- `ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)
+- `Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)
+- `TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set
+- `TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)
+- `TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)
+- `FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)
+- `ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)
+- `Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)
+- `IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)
+- `FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)
+- `FilePicker`: Yor Organization tab is not shown [#596](https://github.com/pnp/sp-dev-fx-controls-react/issues/596)
+- `FolderPicker`, `FolderExplorer`: Controls don't let you explore sub folders if parent folder has apostrophe (') in its name.[#644](https://github.com/pnp/sp-dev-fx-controls-react/issues/644)
+- `PeoplePicker`: image for a user picked in PeoplePicker didn't get resolved [#646](https://github.com/pnp/sp-dev-fx-controls-react/pull/646)
+- Documentation fix for `IconPicker`: `renderOption` `dialog` should be lowercased. [#649](https://github.com/pnp/sp-dev-fx-controls-react/pull/649)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alexey Sadomov](https://github.com/sadomovalex), [Anoop Tatti](https://github.com/anoopt), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [juhaalhojoki](https://github.com/juhaalhojoki), [Piotr Siatka](https://github.com/siata13), [Rabia Williams](https://github.com/rabwill), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Victor Pollet](https://github.com/TheThor59).
+
 ## 1.19.0
 
 ### Enhancements

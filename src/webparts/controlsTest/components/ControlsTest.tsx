@@ -59,6 +59,8 @@ import FolderPicker from '../../../controls/folderPicker/FolderPicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
+import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
+import { Accordion } from '../../..';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -99,6 +101,39 @@ const sampleGridData: any[] = [{
   location: "Flow",
   activity: "5/26/2019"
 }];
+
+const sampleItems = [
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Charger des fichiers et dossiers',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Enregistrer un fichier',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Troisième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Quatrième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Cinquième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  },
+  {
+    Langue: { Nom: 'Français' },
+    Question: 'Sixième exemple',
+    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  }
+];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -333,7 +368,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * @param {IPickerTerms} terms
    * @memberof ControlsTest
    */
-  private onServicePickerChange(terms: IPickerTerms): void {
+  private onServicePickerChange = (terms: IPickerTerms): void => {
     this.setState({
       initialValues: terms
     });
@@ -599,10 +634,36 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
+        {
+          sampleItems.map((item, index) => (
+            <Accordion title={item.Question} defaultCollapsed={false} className={"itemCell"} key={index}>
+              <div className={"itemContent"}>
+                <div className={"itemResponse"}>{item.Reponse}</div>
+                <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
+              </div>
+            </Accordion>
+          ))
+        }
+
         <div className="ms-font-m">Services tester:
           <TaxonomyPicker
             allowMultipleSelections={true}
-            termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            //termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
+            initialValues={[{
+              key: "c05250ff-80e7-41e6-bfb3-db2db62d63d3",
+              name: "Business",
+              path: "Business",
+              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+              termSetName: "Trip Types"
+            }, {
+              key: "a05250ff-80e7-41e6-bfb3-db2db62d63d3",
+              name: "BBusiness",
+              path: "BBusiness",
+              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+              termSetName: "Trip Types"
+            }]}
+            validateOnLoad={true}
             panelTitle="Select Sorted Term"
             label="Service Picker with custom actions"
             context={this.props.context}
@@ -642,13 +703,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           <TaxonomyPicker
             allowMultipleSelections={true}
-            termsetNameOrID="e813224c-bb1b-4086-b828-3d71434ddcd7" // id to termset that has a default sort
+            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9" // id to termset that has a default sort
             panelTitle="Select Default Sorted Term"
             label="Service Picker"
             context={this.props.context}
             onChange={this.onServicePickerChange}
             isTermSetSelectable={false}
             placeholder="Select service"
+            required={true}
+            errorMessage='this field is required'
+            onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
           />
 
           <TaxonomyPicker
@@ -752,13 +816,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker
-        label="DateTime Picker date only"
-        showLabels={false}
-        dateConvention={DateConvention.Date}
-        value={new Date()}
-        onChange={(value) => console.log("DateTimePicker value:", value)}
-        minDate={new Date("05/01/2019")}
-        maxDate={new Date("05/01/2020")} />
+          label="DateTime Picker date only"
+          showLabels={false}
+          dateConvention={DateConvention.Date}
+          value={new Date()}
+          onChange={(value) => console.log("DateTimePicker value:", value)}
+          minDate={new Date("05/01/2019")}
+          maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
@@ -1171,6 +1235,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onSave={this._onFilePickerSave}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             context={this.props.context}
+            hideRecentTab={true}
           />
           {
             this.state.filePickerResult &&
@@ -1203,8 +1268,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <IconPicker buttonLabel={'Icon'}
-            onChange={(iconName: string) => { console.log(iconName); }}
-            onSave={(iconName: string) => { console.log(iconName); }} />
+          onChange={(iconName: string) => { console.log(iconName); }}
+          onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>
           <FolderExplorer
@@ -1232,9 +1297,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            //expandToSelected={true}
-            // onRenderItem={this.renderCustomTreeItem}
-            />
+          //expandToSelected={true}
+          // onRenderItem={this.renderCustomTreeItem}
+          />
 
         </div>
 
@@ -1242,15 +1307,42 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <Pagination
             currentPage={3}
             onChange={(page) => (this._getPage(page))}
-            totalPages={13}
+            totalPages={this.props.totalPages || 13}
           //limiter={3}
           // hideFirstPageJump
           //hideLastPageJump
           //limiterIcon={"NumberedListText"}
           />
         </div>
+
+        <div>
+          <FieldCollectionData
+            key={"FieldCollectionData"}
+            label={"Fields Collection"}
+            itemsPerPage={3}
+            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
+            panelHeader={"Manage values"}
+            enableSorting={true}
+
+            fields={[
+              { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
+              { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
+              { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
+              { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+            ]}
+            value={this.getRandomCollectionFieldData()}
+          />
+        </div>
       </div>
     );
+  }
+
+  private getRandomCollectionFieldData = () => {
+    let result = [];
+    for (let i = 1; i < 16; i++) {
+      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+    }
+    return result;
   }
 
   private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
@@ -1273,7 +1365,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private _getPage(page: number){
+  private _getPage(page: number) {
     console.log('Page:', page);
   }
 

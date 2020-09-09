@@ -121,5 +121,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | filter | string | no | Condition to filter list Item, same as $filter ODATA parameter|
 | multiSelect | boolean | no | Allows multiple selection|
 | onInitialized | () => void | no | Calls when component is ready|
+| itemLimit | number | no | Maximum number of items to be displayed in the combobox. Default: 100 |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ComboBoxListItemPicker)

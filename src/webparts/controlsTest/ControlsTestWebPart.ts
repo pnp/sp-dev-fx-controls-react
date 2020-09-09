@@ -27,7 +27,8 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         displayMode: this.displayMode,
         updateProperty: (value: string) => {
           this.properties.title = value;
-        }
+        },
+        totalPages: this.properties.totalPages
       }
     );
 
@@ -51,6 +52,9 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyPaneTextField('totalPages', {
+                  label: 'Total pages in pagination'
                 })
               ]
             }

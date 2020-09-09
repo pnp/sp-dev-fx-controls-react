@@ -14,6 +14,7 @@ export interface IListItemPickerProps {
   disabled?: boolean;
   suggestionsHeaderText?:string;
   noResultsFoundText?:string;
+  substringSearch?: boolean; // JJ - 20200613 - find by substring as an option
   /**
    * Placeholder to be displayed in an empty term picker
    */

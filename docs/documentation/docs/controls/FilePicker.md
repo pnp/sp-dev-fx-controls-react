@@ -69,6 +69,7 @@ The FilePicker component can be configured with the following properties:
 | itemsCountQueryLimit | number | no | Number of items to obtain when executing REST queries. Default 100. |
 | hideRecentTab | boolean | no | Specifies if RecentTab should be hidden. |
 | hideWebSearchTab | boolean | no | Specifies if WebSearchTab should be hidden. |
+| hideStockImages | boolean | no | Specifies if StockImagesTab should be hidden. |
 | hideOrganisationalAssetTab | boolean | no | Specifies if OrganisationalAssetTab should be hidden. |
 | hideOneDriveTab | boolean | no | Specifies if OneDriveTab should be hidden. |
 | hideSiteFilesTab | boolean | no | Specifies if SiteFilesTab should be hidden. |

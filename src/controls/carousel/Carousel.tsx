@@ -339,10 +339,10 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     } else {
       nextIndex = this.getNextIndex(nextButtonClicked);
       if (nextIndex !== currentIndex) {
-        if (nextButtonClicked) {
+        if (nextButtonClicked && this.props.onMoveNextClicked) {
           this.props.onMoveNextClicked(nextIndex);
         }
-        else {
+        else if(this.props.onMovePrevClicked) {
           this.props.onMovePrevClicked(nextIndex);
         }
       }
@@ -447,10 +447,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     if (interval !== null) {
       const intervalValue = interval || 5000;
       if (!triggerPageEvent) {
-        this._intervalId = setInterval(this.moveNext, intervalValue);
-      }
-      else {
-        this._intervalId = setTimeout(this.moveNext, intervalValue);
+        this._intervalId = window.setInterval(this.moveNext, intervalValue);
+      } else {
+        this._intervalId = window.setTimeout(this.moveNext, intervalValue);
       }
     }
   }

@@ -1,7 +1,7 @@
 import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
-import * as _ from '@microsoft/sp-lodash-subset';
+import { clone } from '@microsoft/sp-lodash-subset';
 import { IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
 import { DirectionalHint } from 'office-ui-fabric-react/lib/common/DirectionalHint';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
@@ -308,7 +308,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
 
     this._loadedUserProfiles[user.id] = userProfileProps;
     this.setState((prevState: IFieldUserRendererState, componentProps: IFieldUserRendererProps) => {
-      const newUsers = _.clone<IFieldUser[]>(prevState.users);
+      const newUsers = clone<IFieldUser[]>(prevState.users);
       newUsers[index] = this._getUserFromPrincipalAndProps(this.props.users[index], userProfileProps);
 
       return { users: newUsers };

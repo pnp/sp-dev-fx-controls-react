@@ -9,9 +9,9 @@ import { ExtensionContext } from '@microsoft/sp-extension-base';
  * PropertyFieldTermPickerHost properties interface
 //  */
 export interface ITaxonomyPickerProps  {
-   /**
-   * Property field label displayed on top
-   */
+  /**
+  * Property field label displayed on top
+  */
   label: string;
   /**
    * TermSet Picker Panel title
@@ -80,7 +80,13 @@ export interface ITaxonomyPickerProps  {
   placeholder?: string;
 
   /**
+   * Specifies if the initial values will be validated, when the component is loaded
+   */
+  validateOnLoad?: boolean;
+
+  /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
+   * Mutually exclusive with the static string errorMessage (it will take precedence over this).
    *
    *   When it returns string:
    *   - If valid, it returns empty string.
@@ -95,9 +101,20 @@ export interface ITaxonomyPickerProps  {
   onGetErrorMessage?: (value: IPickerTerms) => string | Promise<string>;
 
   /**
+   * Static error message displayed below the text field. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
+   */
+  errorMessage?: string;
+
+  /**
    * onChange Event
    */
   onChange?: (newValue?: IPickerTerms) => void;
+
+  /**
+   * Specifies if to display an asterisk near the label.
+   * Note that error message should be specified in onGetErrorMessage
+   */
+  required?: boolean;
 }
 
 /**
@@ -106,9 +123,14 @@ export interface ITaxonomyPickerProps  {
 export interface ITaxonomyPickerState {
   termSetAndTerms? : ITermSet;
   errorMessage?: string;
+  /**
+   * Error message populated in the component. errorMessage takes precedence over this.
+   */
+  internalErrorMessage?: string;
   openPanel?: boolean;
   loaded?: boolean;
   activeNodes?: IPickerTerms;
+  invalidNodeIds?: string[];
 }
 
 export interface ITermChanges {

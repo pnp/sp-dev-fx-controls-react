@@ -11,7 +11,7 @@ export interface IFieldErrorMessageProps {
  */
 export default class FieldErrorMessage extends React.Component<IFieldErrorMessageProps> {
   public render(): JSX.Element {
-    if (this.props.errorMessage !== 'undefined' && this.props.errorMessage !== null && this.props.errorMessage !== '') {
+    if (this.props.errorMessage !== undefined && this.props.errorMessage !== null && this.props.errorMessage !== '') {
       return (
         <div aria-live="assertive">
           <p className={`ms-TextField-errorMessage ${styles.errorMessage}`}>

@@ -16,7 +16,8 @@
     "postinstall": "node postinstall/install.js",
     "sonarcloud:config": "node ./scripts/sonarcloud.js",
     "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
-    "localization": "node scripts/execute-translation.js"
+    "localization": "node scripts/execute-translation.js",
+    "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser"
   },
   "dependencies": {
     "@pnp/common": "1.0.1",
@@ -53,6 +54,7 @@
     "codecov": "3.6.5",
     "enzyme": "2.9.1",
     "gulp": "~3.9.1",
+    "husky": "4.2.5",
     "karma-html-reporter": "0.2.7",
     "karma-remap-coverage": "^0.1.4",
     "react": "15.4.2",

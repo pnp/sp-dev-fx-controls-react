@@ -26,6 +26,7 @@ declare interface IControlStrings {
   TaxonomyPickerMenuTermSet: string;
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
+  TaxonomyPickerTermsNotFound: string;
 
   ListItemPickerSelectValue: string;
 
@@ -289,6 +290,8 @@ declare interface IControlStrings {
   UploadImageHeader: string;
   UploadLinkLabel: string;
   WebSearchLinkLabel: string;
+  StockImagesLinkLabel: string;
+  StockImagesHeader: string;
   Yes: string;
 
   // folder explorer
@@ -305,6 +308,17 @@ declare interface IControlStrings {
   TreeViewExpandTitle: string;
   TreeViewCollapseTitle: string;
 
+  // FieldCollectionData
+  CollectionDataEmptyFields: string;
+  CollectionDataEmptyValue: string;
+  CollectionAddRowButtonLabel: string;
+  CollectionDeleteRowButtonLabel: string;
+  CollectionSaveAndAddButtonLabel: string;
+  CollectionDataItemShowErrorsLabel: string;
+  CollectionDataItemFieldRequiredLabel: string;
+  CollectionDataItemMissingFields: string;
+  InvalidUrlError: string;
+  CollectionDataSearch: string;
 }
 
 declare interface IDateTimeStrings {

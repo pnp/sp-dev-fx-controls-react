@@ -66,19 +66,22 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.ASPX,
     extensions: ['aspx', 'master'],
     iconName: 'FileASPX',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['spo']
   },
   {
     application: ApplicationType.Code,
     extensions: ['js', 'ts', 'cs'],
     iconName: 'FileCode',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['code']
   },
   {
     application: ApplicationType.CSS,
     extensions: ['css'],
     iconName: 'FileCSS',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['code']
   },
   {
     application: ApplicationType.CSV,
@@ -98,19 +101,22 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.HTML,
     extensions: ['html'],
     iconName: 'FileHTML',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['html']
   },
   {
     application: ApplicationType.Image,
     extensions: ['jpg', 'jpeg', 'gif', 'png'],
     iconName: 'FileImage',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['photo']
   },
   {
     application: ApplicationType.Mail,
     extensions: ['msg'],
     iconName: 'Mail',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['email']
   },
   {
     application: ApplicationType.OneNote,
@@ -157,7 +163,8 @@ export const ApplicationIconList: IApplicationIcons[] = [
     application: ApplicationType.SASS,
     extensions: ['scss', 'sass'],
     iconName: 'FileSass',
-    imageName: []
+    imageName: [],
+    cdnImageName: ['code']
   },
   {
     application: ApplicationType.Visio,

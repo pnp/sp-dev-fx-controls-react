@@ -45,6 +45,7 @@ define([], () => {
     "TaxonomyPickerMenuTermSet": "Menu for Term Set",
     "TaxonomyPickerInLabel": "in",
     "TaxonomyPickerTermSetLabel": "Term Set",
+    "TaxonomyPickerTermsNotFound": "The next selected term(s) could not be found in the term store: {0}",
 
     peoplePickerComponentTooltipMessage: "People Picker",
     peoplePickerComponentErrorMessage: "Required Field",
@@ -324,6 +325,8 @@ define([], () => {
     UploadImageHeader: "Upload image",
     UploadLinkLabel: "Upload",
     WebSearchLinkLabel: "Web search",
+    StockImagesLinkLabel: "Stock images",
+    StockImagesHeader: "Stock Images",
     Yes: "Yes",
 
     NewFolderNamePlaceholder: "Enter your folder name",
@@ -334,6 +337,17 @@ define([], () => {
     SelectIcon: "Select icon",
 
     TreeViewExpandTitle: "Expand this item",
-    TreeViewCollapseTitle: "Collapse this item"
+    TreeViewCollapseTitle: "Collapse this item",
+
+    CollectionDataEmptyFields: "No fields were provided for the collection data.",
+    CollectionDataEmptyValue: "No data in your collection.",
+    CollectionAddRowButtonLabel: "Add data to the collection",
+    CollectionDeleteRowButtonLabel: "Delete the current row",
+    CollectionSaveAndAddButtonLabel: "Add and save",
+    CollectionDataItemShowErrorsLabel: "Show row errors",
+    CollectionDataItemFieldRequiredLabel: "Field is required.",
+    CollectionDataItemMissingFields: "Fields collection is empty!",
+    InvalidUrlError: "The provided URL is not valid",
+    CollectionDataSearch: "Search"
   };
 });

@@ -33,3 +33,4 @@ export * from './FieldTextRenderer';
 export * from './FieldTitleRenderer';
 export * from './FieldUrlRenderer';
 export * from './FieldUserRenderer';
+export * from './Accordion';

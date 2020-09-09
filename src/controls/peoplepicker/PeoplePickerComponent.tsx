@@ -10,7 +10,8 @@ import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
-import { isEqual, uniqBy } from "@microsoft/sp-lodash-subset";
+import isEqual = require('lodash/isEqual');
+import uniqBy = require('lodash/uniqBy');
 
 /**
  * PeoplePicker component
@@ -59,6 +60,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
       this.peopleSearchService.getSumOfPrincipalTypes(this.props.principalTypes) !== this.peopleSearchService.getSumOfPrincipalTypes(nextProps.principalTypes)) {
       this.getInitialPersons(nextProps);
+    }
+  }
+
+  public componentWillReceiveProps(nextProps: IPeoplePickerProps) {
+    if (this.props.showRequiredError !== nextProps.showRequiredError && nextProps.showRequiredError) {
+      this.setState({
+        showRequiredError: !this.state.selectedPersons || !this.state.selectedPersons.length
+      });
     }
   }
 

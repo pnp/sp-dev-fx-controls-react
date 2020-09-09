@@ -19,7 +19,7 @@ export interface IComboBoxListItemPickerProps {
     webUrl: string;
     spHttpClient: SPHttpClient;
     listId: string;
-    // itemLimit: number;
+    itemLimit?: number;
     filter?: string;
     className?: string;
     defaultSelectedItems?: any[];

@@ -10,7 +10,8 @@ import SPTermStorePickerService from './../../services/SPTermStorePickerService'
 import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
 import * as strings from 'ControlStrings';
 import styles from './TaxonomyPicker.module.scss';
-import { sortBy, uniqBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
+import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
+import uniqBy = require('lodash/uniqBy');
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 
@@ -46,7 +47,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSetAndTerms: null,
       loaded: false,
       openPanel: false,
-      errorMessage: ''
+      errorMessage: props.errorMessage
     };
 
     this.onOpenPanel = this.onOpenPanel.bind(this);
@@ -54,6 +55,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+  }
+
+  /**
+   * componentDidMount lifecycle hook
+   */
+  public componentDidMount() {
+    this.validateTerms();
   }
 
   /**
@@ -68,12 +77,61 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentDidUpdate(prevProps: ITaxonomyPickerProps): void {
+  public async componentDidUpdate(prevProps: ITaxonomyPickerProps): Promise<void> {
+    let newState: ITaxonomyPickerState | undefined;
     // Check if the initial values objects are not equal, if that is the case, data can be refreshed
     if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
-      this.setState({
+      newState = {
         activeNodes: this.props.initialValues || []
-      });
+      };
+    }
+
+    if (this.props.errorMessage) {
+      if (!newState) {
+        newState = {};
+      }
+
+      newState.errorMessage = this.props.errorMessage;
+    }
+  }
+
+  /**
+  * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
+  */
+  private async validateTerms(): Promise<void> {
+
+    const {
+      hideDeprecatedTags,
+      hideTagsNotAvailableForTagging,
+      initialValues,
+      validateOnLoad,
+      termsetNameOrID
+    } = this.props;
+
+    let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
+    if (isValidateOnLoad) {
+
+      const notFoundTerms: string[] = [];
+      const notFoundTermIds: string[] = [];
+
+      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+      const allTerms = termSet.Terms;
+
+      for (let i = 0, len = initialValues.length; i < len; i++) {
+        const pickerTerm = initialValues[i];
+
+        if (!allTerms.filter(t => t.Id === pickerTerm.key).length) {
+          notFoundTerms.push(pickerTerm.name);
+          notFoundTermIds.push(pickerTerm.key);
+        }
+      }
+
+      if (notFoundTerms.length) {
+        this.setState({
+          internalErrorMessage: strings.TaxonomyPickerTermsNotFound.replace('{0}', notFoundTerms.join(', ')),
+          invalidNodeIds: notFoundTermIds
+        });
+      }
     }
   }
 
@@ -81,7 +139,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
-    this.termsService = new SPTermStorePickerService(this.props, this.props.context);
+
 
     if (this.props.termActions && this.props.termActions.initialize) {
       this.props.termActions.initialize(this.termsService);
@@ -157,8 +215,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   private onSave(): void {
     this.cancel = false;
     this.onClosePanel();
-    // Trigger the onChange event
-    this.props.onChange(this.state.activeNodes);
+
+    this.validate(this.state.activeNodes);
   }
 
   /**
@@ -209,10 +267,11 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * @param node
  */
   private termsFromPickerChanged(terms: IPickerTerms) {
-    this.props.onChange(terms);
     this.setState({
       activeNodes: terms
     });
+
+    this.validate(terms);
   }
 
 
@@ -235,7 +294,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * @param isChecked
    */
   private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean) => {
-    const ts: ITermSet = {...termSet};
+    const ts: ITermSet = { ...termSet };
     // Clean /Guid.../ from the ID
     ts.Id = this.termsService.cleanGuid(ts.Id);
     // Create a term for the termset
@@ -256,6 +315,69 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.termsChanged(term, isChecked);
   }
 
+  private validate = async (value: IPickerTerms): Promise<void> => {
+
+    //
+    // checking if there are any invalid nodes left after initial validation
+    //
+    if (this.state.invalidNodeIds) {
+      const changedInvalidNodeIds = this.state.invalidNodeIds.filter(id => {
+        return !!value.filter(term => term.key === id).length;
+      });
+
+      let internalErrorMessage = changedInvalidNodeIds.length ? this.state.internalErrorMessage : '';
+
+      this.setState({
+        invalidNodeIds: changedInvalidNodeIds,
+        internalErrorMessage: internalErrorMessage
+      });
+    }
+
+    if (this.props.errorMessage || !this.props.onGetErrorMessage) { // ignoring all onGetErrorMessage logic
+      this.validated(value);
+      return;
+    }
+
+    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(value || []);
+
+    if (!result) {
+      this.validated(value);
+      return;
+    }
+
+    if (typeof result === 'string') {
+      if (!result) {
+        this.validated(value);
+      }
+      else {
+        this.setState({
+          errorMessage: result
+        });
+      }
+    }
+    else {
+      try {
+        const resolvedResult = await result;
+
+        if (!resolvedResult) {
+          this.validated(value);
+        }
+        else {
+          this.setState({
+            errorMessage: resolvedResult
+          });
+        }
+      }
+      catch (err) {
+        this.validated(value);
+      }
+    }
+  }
+
+  private validated = (value: IPickerTerms): void => {
+    this.props.onChange(value);
+  }
+
   /**
    * Renders the SPListpicker controls with Office UI  Fabric
    */
@@ -266,16 +388,18 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       disabled,
       isTermSetSelectable,
       allowMultipleSelections,
-      disabledTermIds,disableChildrenOfDisabledParents,
+      disabledTermIds, disableChildrenOfDisabledParents,
       placeholder,
       panelTitle,
       anchorId,
-      termActions
+      termActions,
+      required
     } = this.props;
 
     const {
       activeNodes,
       errorMessage,
+      internalErrorMessage,
       openPanel,
       loaded,
       termSetAndTerms
@@ -283,7 +407,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
     return (
       <div>
-        {label && <Label>{label}</Label>}
+        {label && <Label required={required}>{label}</Label>}
         <div className={styles.termField}>
           <div className={styles.termFieldInput}>
             <TermPicker
@@ -303,7 +427,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           </div>
         </div>
 
-        <FieldErrorMessage errorMessage={errorMessage} />
+        <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} />
 
         <Panel
           isOpen={openPanel}

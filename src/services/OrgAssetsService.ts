@@ -73,7 +73,7 @@ export class OrgAssetsService extends FileBrowserService {
       absoluteUrl: this.buildAbsoluteUrl(libItem.LibraryUrl.DecodedUrl),
       title: libItem.DisplayName,
       serverRelativeUrl: libItem.LibraryUrl.DecodedUrl,
-      iconPath: libItem.ThumbnailUrl.DecodedUrl ? this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libItem.ThumbnailUrl.DecodedUrl}`) : null
+      iconPath: libItem.ThumbnailUrl && libItem.ThumbnailUrl.DecodedUrl ? this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libItem.ThumbnailUrl.DecodedUrl}`) : null
     };
 
     return orgAssetsLibrary;

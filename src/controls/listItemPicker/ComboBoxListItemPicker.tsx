@@ -35,36 +35,46 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   }
 
   protected async loadOptions(): Promise<void> {
-    let query = "";
-    query += this.props.filter || "Id gt 0";
-    let keyColumnName = this.props.keyColumnInternalName || "Id";
+    const {
+      filter,
+      keyColumnInternalName,
+      listId,
+      columnInternalName,
+      webUrl,
+      itemLimit,
+      defaultSelectedItems,
+      onInitialized
+    } = this.props;
+    let query = filter || "";
+    //query += filter;
+    let keyColumnName = keyColumnInternalName || "Id";
     let listItems = await this._listItemRepo.getListItemsByFilterClause(query,
-      this.props.listId,
-      this.props.columnInternalName,
-      this.props.keyColumnInternalName,
-      this.props.webUrl,
-      /*this.props.itemLimit ||*/ 100);
+      listId,
+      columnInternalName,
+      keyColumnInternalName,
+      webUrl,
+      itemLimit || 100);
 
     let options = listItems.map(option => {
       return {
         key: option[keyColumnName],
-        text: option[this.props.columnInternalName || "Id"]
+        text: option[columnInternalName || "Id"]
       };
     });
-    if (this.props.defaultSelectedItems) {
+    if (defaultSelectedItems) {
       //if passed only ids
-      if (!isNaN(this.props.defaultSelectedItems[0])) {
-        this.selectedItems = options.filter(opt => this.props.defaultSelectedItems.indexOf(opt.key) >= 0);
+      if (!isNaN(defaultSelectedItems[0])) {
+        this.selectedItems = options.filter(opt => defaultSelectedItems.indexOf(opt.key) >= 0);
       }
       else {
-        this.selectedItems = options.filter(opt => this.props.defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
+        this.selectedItems = options.filter(opt => defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
       }
     }
     this.setState({
       availableOptions: options
     });
-    if(this.props.onInitialized){
-      this.props.onInitialized();
+    if(onInitialized){
+      onInitialized();
     }
   }
 
@@ -105,7 +115,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   /**
    * On Selected Item
    */
-  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => { 
+  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
     if(this.props.multiSelect){
       if (option && option.selected) {
         this.selectedItems.push({
@@ -119,12 +129,12 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     }else{
       this.selectedItems.push({
         [this.props.keyColumnInternalName || "Id"]: option.key,
-        [this.props.columnInternalName]: option.text        
+        [this.props.columnInternalName]: option.text
       });
-      
+
       this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] === option.key);
     }
-    
+
     this.props.onSelectedItem(this.selectedItems);
   }
 }

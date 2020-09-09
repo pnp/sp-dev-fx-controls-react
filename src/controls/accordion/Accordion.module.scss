@@ -1,0 +1,49 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+.accordion {
+  background: #fafafa;
+
+  & > button {
+    min-height: 44px;
+    border: 2px solid transparent;
+    outline: 1px solid transparent;
+    outline-offset: -3px;
+    background: #f0f0f0; // Microsoft web site doesn't use Fabric colors!
+    color: rgba(0, 0, 0, 0.8); // Microsoft web site doesn't use Fabric colors!
+    text-align: left;
+    width: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2); // Microsoft web site doesn't use Fabric colors!
+
+    :global(.ms-Button-label) {
+      font-weight: 400;
+    }
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.16); // Microsoft web site doesn't use Fabric colors!
+      color: $ms-color-black;
+      background: #f0f0f0; // Microsoft web site doesn't use Fabric colors!
+    }
+
+    &:focus {
+      border-width: 2px;
+      border-style: solid;
+      border-color: $ms-color-black;
+      outline-color: rgba(255, 255, 255, 0.6); // Microsoft web site doesn't use Fabric colors!
+    }
+  }
+
+  .drawer {
+    padding: 24px 12px 24px 12px;
+    background: #fafafa; // Microsoft web site doesn't use Fabric colors!
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+.accordionChevron {
+  font-size: 16px;
+  margin-left: -6px;
+  color: rgba(0, 0, 0, 0.8);
+}

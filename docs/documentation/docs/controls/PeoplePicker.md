@@ -61,7 +61,8 @@ The People picker control can be configured with the following properties:
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
 | isRequired | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
-| errorMessage | string | no | Specify the error message to display | |
+| errorMessage | string | no | Specifies the error message to display if the the control is required and no items selected | |
+| showRequiredError | boolean | no | Specifies if the component should show mandatory field error message because of some changes occured in parent. Use this props (set to `true`), for example, when "Save" button on the form has been clicked | |
 | errorMessageClassName | string | no | applies custom styling to the error message section | |
 | showtooltip | boolean | no | Defines if need a tooltip or not | false |
 | tooltipMessage | string | no | Specify the tooltip message to display | |

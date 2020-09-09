@@ -7,8 +7,9 @@ import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { ITermSet } from '../../services/ISPTermStorePickerService';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { ITermSet } from "../../services/ISPTermStorePickerService";
+import { EmptyGuid } from '../../Common';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -35,7 +36,7 @@ export interface ITermPickerProps {
 
 export default class TermPicker extends React.Component<ITermPickerProps, ITermPickerState> {
   private allTerms: ITermSet = null;
-
+  private termsService: SPTermStorePickerService;
   /**
    * Constructor method
    */
@@ -49,7 +50,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     this.state = {
       terms: this.props.value
     };
-
+    this.termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
   }
 
   /**
@@ -111,25 +112,30 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
    */
   private async onFilterChanged(filterText: string, tagList: IPickerTerm[]): Promise<IPickerTerm[]> {
     if (filterText !== "") {
-      let termsService = new SPTermStorePickerService(this.props.termPickerHostProps, this.props.context);
-      let terms: IPickerTerm[] = await termsService.searchTermsByTermId(filterText, this.props.termPickerHostProps.anchorId);
+      const {
+        termPickerHostProps,
+        context,
+        isTermSetSelectable
+      } = this.props;
+
+      let terms: IPickerTerm[] = await this.termsService.searchTermsByName(filterText);
       // Check if the termset can be selected
-      if (this.props.isTermSetSelectable) {
+      if (isTermSetSelectable && !termPickerHostProps.anchorId) {
         // Retrieve the current termset
-        const termSet = await termsService.getTermSet();
+        const termSet = await this.termsService.getTermSet();
         // Check if termset was retrieved and if it contains the filter value
         if (termSet && termSet.Name.toLowerCase().indexOf(filterText.toLowerCase()) === 0) {
           // Add the termset to the suggestion list
           terms.push({
-            key: termsService.cleanGuid(termSet.Id),
+            key: this.termsService.cleanGuid(termSet.Id),
             name: termSet.Name,
             path: "",
-            termSet: termsService.cleanGuid(termSet.Id)
+            termSet: this.termsService.cleanGuid(termSet.Id)
           });
         }
       }
       // Filter out the terms which are already set
-      const filteredTerms = [];
+      const filteredTerms: IPickerTerm[] = [];
       const { disabledTermIds, disableChildrenOfDisabledParents } = this.props;
       for (const term of terms) {
         let canBePicked = true;
@@ -144,7 +150,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
             if (disableChildrenOfDisabledParents) {
               // Check if terms were already retrieved
               if (!this.allTerms) {
-                this.allTerms = await termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID);
+                this.allTerms = await this.termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID);
               }
 
               // Check if there are terms retrieved
