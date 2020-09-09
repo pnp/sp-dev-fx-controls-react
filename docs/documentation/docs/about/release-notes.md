@@ -33,10 +33,17 @@
 - `TaxonomyPicker`: Include check for separator while filtering path of terms when anchorId is configured [#625](https://github.com/pnp/sp-dev-fx-controls-react/issues/625)
 - `FilePicker`: Bing API search issue [#633](https://github.com/pnp/sp-dev-fx-controls-react/pull/633)
 - `ListView`: Sort fires selection [#621](https://github.com/pnp/sp-dev-fx-controls-react/issues/621)
+- `Map`: A minor issue in componentWillUpdate method to get the next props rather than the current props.[#641](https://github.com/pnp/sp-dev-fx-controls-react/pull/641)
+- `IFrameDialog`: dialog size is incorrect when opening the dialog second time [#615](https://github.com/pnp/sp-dev-fx-controls-react/issues/615)
+- `FolderPicker`: imports don't work [#614](https://github.com/pnp/sp-dev-fx-controls-react/issues/614)
+- `FilePicker`: Yor Organization tab is not shown [#596](https://github.com/pnp/sp-dev-fx-controls-react/issues/596)
+- `FolderPicker`, `FolderExplorer`: Controls don't let you explore sub folders if parent folder has apostrophe (') in its name.[#644](https://github.com/pnp/sp-dev-fx-controls-react/issues/644)
+- `PeoplePicker`: image for a user picked in PeoplePicker didn't get resolved [#646](https://github.com/pnp/sp-dev-fx-controls-react/pull/646)
+- Documentation fix for `IconPicker`: `renderOption` `dialog` should be lowercased. [#649](https://github.com/pnp/sp-dev-fx-controls-react/pull/649)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Devang Bhavsar](https://github.com/devangbhavsar89), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [Victor Pollet](https://github.com/TheThor59), [Alexey Sadomov](https://github.com/sadomovalex), [Gautam Sheth](https://github.com/gautamdsheth), [Piotr Siatka](https://github.com/siata13).
+Special thanks to our contributors (in alphabetical order): [Alexey Sadomov](https://github.com/sadomovalex), [Anoop Tatti](https://github.com/anoopt), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [geltapatio](https://github.com/geltapatio), [Joel Jeffery](https://github.com/joeljeffery), [juhaalhojoki](https://github.com/juhaalhojoki), [Piotr Siatka](https://github.com/siata13), [Rabia Williams](https://github.com/rabwill), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Victor Pollet](https://github.com/TheThor59).
 
 ## 1.19.0
 
