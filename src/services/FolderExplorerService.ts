@@ -2,7 +2,11 @@ import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { PageContext } from "@microsoft/sp-page-context";
 import { IFolderExplorerService } from "./IFolderExplorerService";
 import { IFolder } from "./IFolderExplorerService";
-import { sp, Web, List, FolderAddResult } from "@pnp/sp";
+import { sp } from "@pnp/sp";
+import "@pnp/sp/webs";
+import { Web } from "@pnp/sp/webs";
+import "@pnp/sp/folders";
+import { IFolderAddResult } from "@pnp/sp/folders";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
@@ -36,7 +40,7 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _getDocumentLibraries = async (webAbsoluteUrl: string): Promise<IFolder[]> => {
     let results: IFolder[] = [];
     try {
-      const web = new Web(webAbsoluteUrl);
+      const web = Web(webAbsoluteUrl);
       const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title').get();
 
       results = libraries.map((library): IFolder => {
@@ -66,7 +70,7 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _getFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string): Promise<IFolder[]> => {
     let results: IFolder[] = [];
     try {
-      const web = new Web(webAbsoluteUrl);
+      const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
       let foldersResult: IFolder[] = await web.getFolderByServerRelativeUrl(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
       results = foldersResult.filter(f => f.Name != "Forms");
@@ -95,8 +99,8 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _addFolder = async (webAbsoluteUrl: string, folderRelativeUrl: string, name: string): Promise<IFolder> => {
     let folder: IFolder = null;
     try {
-      const web = new Web(webAbsoluteUrl);
-      let folderAddResult: FolderAddResult = await web.getFolderByServerRelativeUrl(folderRelativeUrl).folders.add(name);
+      const web = Web(webAbsoluteUrl);
+      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativeUrl(folderRelativeUrl).folders.add(name);
       if (folderAddResult && folderAddResult.data) {
         folder = {
           Name: folderAddResult.data.Name,

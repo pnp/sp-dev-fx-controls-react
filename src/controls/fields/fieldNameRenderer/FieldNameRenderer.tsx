@@ -86,7 +86,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         // And stopPropagation could not make effect.
         //
         if (this.props.onDoubleClick && this.props.isLink) {
-            const domNode = ReactDOM.findDOMNode(this);
+            const domNode = ReactDOM.findDOMNode(this) as HTMLElement;
             this._button = domNode.querySelector('button');
             this._button.addEventListener('dblclick', this._onDoubleClick, false);
         }

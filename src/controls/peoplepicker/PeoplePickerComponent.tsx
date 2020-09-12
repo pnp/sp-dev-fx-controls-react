@@ -10,8 +10,9 @@ import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
-import isEqual = require('lodash/isEqual');
-import uniqBy = require('lodash/uniqBy');
+import FieldErrorMessage from '../errorMessage/ErrorMessage';
+import isEqual from 'lodash/isEqual';
+import uniqBy from 'lodash/uniqBy';
 
 /**
  * PeoplePicker component
@@ -36,9 +37,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.state = {
       selectedPersons: [],
       mostRecentlyUsedPersons: [],
-      showRequiredError: false,
       resolveDelay: this.props.resolveDelay || 200,
-      errorMessage: null
+      errorMessage: props.errorMessage
     };
   }
 
@@ -64,9 +64,9 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   public componentWillReceiveProps(nextProps: IPeoplePickerProps) {
-    if (this.props.showRequiredError !== nextProps.showRequiredError && nextProps.showRequiredError) {
+    if (nextProps.errorMessage) {
       this.setState({
-        showRequiredError: !this.state.selectedPersons || !this.state.selectedPersons.length
+        errorMessage: nextProps.errorMessage
       });
     }
   }
@@ -82,7 +82,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
       if (!this.groupId) {
         this.setState({
-          errorMessage: strings.PeoplePickerGroupNotFound
+          internalErrorMessage: strings.PeoplePickerGroupNotFound
         });
         return;
       }
@@ -101,7 +101,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       }
 
       this.setState({
-        selectedPersons
+        selectedPersons,
+        internalErrorMessage: undefined
       });
     }
   }
@@ -132,16 +133,12 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * On item selection change event
    */
   private onChange = (items: IPersonaProps[]): void => {
-    const { selectedItems: triggerUpdate } = this.props;
 
     this.setState({
-      selectedPersons: items,
-      showRequiredError: items.length > 0 ? false : true
+      selectedPersons: items
     });
 
-    if (triggerUpdate) {
-      triggerUpdate(items);
-    }
+    this.validate(items);
   }
 
 
@@ -164,6 +161,55 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private removeDuplicates = (personas: IPersonaProps[], possibleDupes: IPersonaProps[]): IPersonaProps[] => {
     return personas.filter(persona => !this.listContainsPersona(persona, possibleDupes));
+  }
+
+  private validate = async (items: IPersonaProps[]): Promise<void> => {
+
+    if (this.props.errorMessage || !this.props.onGetErrorMessage) { // ignoring all onGetErrorMessage logic
+      this.validated(items);
+      return;
+    }
+
+    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(items || []);
+
+    if (!result) {
+      this.validated(items);
+      return;
+    }
+
+    if (typeof result === 'string') {
+      if (!result) {
+        this.validated(items);
+      }
+      else {
+        this.setState({
+          errorMessage: result
+        });
+      }
+    }
+    else {
+      try {
+        const resolvedResult = await result;
+
+        if (!resolvedResult) {
+          this.validated(items);
+        }
+        else {
+          this.setState({
+            errorMessage: resolvedResult
+          });
+        }
+      }
+      catch (err) {
+        this.validated(items);
+      }
+    }
+  }
+
+  private validated = (value: IPersonaProps[]): void => {
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
   }
 
 
@@ -189,7 +235,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     const {
       peoplePickerCntrlclassName,
       peoplePickerWPclassName,
-      isRequired,
+      required,
       titleText,
       suggestionsLimit,
       placeholder,
@@ -198,15 +244,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       showtooltip,
       tooltipMessage,
       tooltipDirectional,
-      errorMessageClassName,
-      errorMessage
+      errorMessageClassName
     } = this.props;
 
     const {
       selectedPersons,
       resolveDelay,
-      errorMessage: stateErrorMessage,
-      showRequiredError
+      errorMessage,
+      internalErrorMessage
     } = this.state;
 
     const suggestionProps: IBasePickerSuggestionsProps = {
@@ -220,7 +265,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     const peoplepicker = (
       <div id="people" className={`${styles.defaultClass} ${peoplePickerWPclassName ? peoplePickerWPclassName : ''}`}>
-        {titleText && <Label required={isRequired}>{titleText}</Label>}
+        {titleText && <Label required={required}>{titleText}</Label>}
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
           onResolveSuggestions={this.onSearchFieldChanged}
@@ -235,7 +280,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           }}
           selectedItems={selectedPersons}
           itemLimit={personSelectionLimit || 1}
-          disabled={disabled || !!stateErrorMessage}
+          disabled={disabled || !!internalErrorMessage}
           onChange={this.onChange}
           resolveDelay={resolveDelay} />
       </div>
@@ -257,21 +302,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
               </div>
             )
         }
-
-        {
-          ((isRequired && showRequiredError) || (stateErrorMessage)) && (
-            <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${errorMessageClassName ? errorMessageClassName : ''}`}>
-              <Icon iconName='Error' className={styles.errorIcon} />
-              {
-                stateErrorMessage && <span data-automation-id="error-message">{stateErrorMessage}</span>
-              }
-
-              {
-                (isRequired && showRequiredError) && <span data-automation-id="error-message">{errorMessage ? errorMessage : strings.peoplePickerComponentErrorMessage}</span>
-              }
-            </p>
-          )
-        }
+        <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} className={errorMessageClassName} />
       </div>
     );
   }

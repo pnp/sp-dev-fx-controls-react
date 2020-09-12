@@ -3,7 +3,6 @@ import { ISPLists } from "../common/SPEntities";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from "@microsoft/sp-http";
-import { sp, Web } from '@pnp/sp';
 
 export default class SPService implements ISPService {
 
@@ -50,7 +49,7 @@ export default class SPService implements ISPService {
   public async getListItems(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false ): Promise<any[]> {
     let returnItems: any[];
     const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-                        `substringof('${encodeURIComponent(filterText.replace("'","''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}` 
+                        `substringof('${encodeURIComponent(filterText.replace("'","''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
                         : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'","''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;

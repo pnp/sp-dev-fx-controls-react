@@ -8,7 +8,7 @@ import styles from './IconPicker.module.scss';
 import * as strings from 'ControlStrings';
 import { IconNames } from './IconNames';
 import { Panel, PanelType, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
-import debounce = require('lodash/debounce');
+import debounce from 'lodash/debounce';
 import { IIconPickerState } from './IIconPickerState';
 import * as telemetry from '../../common/telemetry';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';

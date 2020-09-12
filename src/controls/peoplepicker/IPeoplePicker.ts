@@ -48,19 +48,30 @@ export interface IPeoplePickerProps {
   /**
    * People Field is mandatory
    */
-  isRequired?: boolean;
+  required?: boolean;
   /**
-   * Mandatory field error message
+   * Static error message displayed below the picker. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).
    */
   errorMessage?: string;
   /**
-   * Specifies if the component should show mandatory field error message because of some changes occured in parent
+   * The method is used to get the validation error message and determine whether the picker value is valid or not.
+   * Mutually exclusive with the static string errorMessage (it will take precedence over this).
+   *
+   *   When it returns string:
+   *   - If valid, it returns empty string.
+   *   - If invalid, it returns the error message string and the picker will
+   *     show an error message below the picker.
+   *
+   *   When it returns Promise<string>:
+   *   - The resolved value is display as error message.
+   *   - The rejected, the value is thrown away.
+   *
    */
-  showRequiredError?: boolean;
+  onGetErrorMessage?: (items: IPersonaProps[]) => string | Promise<string>;
   /**
    * Method to check value of People Picker text
    */
-  selectedItems?: (items: IPersonaProps[]) => void;
+  onChange?: (items: IPersonaProps[]) => void;
   /**
    * Tooltip Message
    */
@@ -105,10 +116,10 @@ export interface IPeoplePickerProps {
 }
 
 export interface IPeoplePickerState {
-  mostRecentlyUsedPersons: IPersonaProps[];
-  showRequiredError: boolean;
-  errorMessage: string;
-  resolveDelay : number;
+  mostRecentlyUsedPersons?: IPersonaProps[];
+  errorMessage?: string;
+  internalErrorMessage?: string;
+  resolveDelay?: number;
 
   selectedPersons?: IPersonaProps[];
   peoplePersonaMenu?: IPersonaProps[];

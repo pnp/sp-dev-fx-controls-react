@@ -10,7 +10,7 @@ import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { FolderExplorer } from '../folderExplorer/FolderExplorer';
 
 
-export default class FolderPicker extends React.Component<IFolderPickerProps, IFolderPickerState> {
+export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPickerState> {
 
   private _folderLinkId = getId('folderLink');
   private _selectedFolder: IFolder;

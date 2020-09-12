@@ -58,7 +58,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
             }
 
             {
-              this.props.displayMode !== DisplayMode.Edit && this.props.title && <span role="heading" aria-level="2">{this.props.title}</span>
+              this.props.displayMode !== DisplayMode.Edit && this.props.title && <span role="heading" aria-level={2}>{this.props.title}</span>
             }
           </div>
           {

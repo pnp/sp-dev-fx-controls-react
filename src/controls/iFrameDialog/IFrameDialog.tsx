@@ -4,7 +4,7 @@ import { Dialog, IDialogProps } from 'office-ui-fabric-react/lib/Dialog';
 import { IFrameDialogContent } from './IFrameDialogContent';
 import * as telemetry from '../../common/telemetry';
 import { Guid } from "@microsoft/sp-core-library";
-import omit = require('lodash/omit');
+import omit from 'lodash/omit';
 
 export interface IFrameDialogProps extends IDialogProps {
   /**
