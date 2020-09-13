@@ -7,7 +7,7 @@ FieldRendererHelper class is used to automatically apply needed Field Control ba
 - Import the following modules to your component:
 
 ```TypeScript
-import { FieldRendererHelper } from "@pnp/spfx-controls-react/lib/Utilities/FieldRendererHelper";
+import { FieldRendererHelper } from "@pnp/spfx-controls-react/lib/Utilities";
 ```
 
 - Use the `FieldRendererHelper.getFieldRenderer` method to asynchronously request proper React control (As the method returns `Promise` it should be called in one of React component lifecycle methods, for example, `componentWillMount` that will occur before `render`):
