@@ -46,7 +46,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     this.fileSearchService = new FilesSearchService(props.context, this.props.bingAPIKey);
 
     this.state = {
-      panelOpen: false,
+      panelOpen: this.props.isPanelOpen || false,
       organisationAssetsEnabled: false,
       showFullNav: true
     };
