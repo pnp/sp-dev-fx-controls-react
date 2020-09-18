@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `FilePicker`: added additional properties - `isPanelOpen` and `onCancel` [#668](https://github.com/pnp/sp-dev-fx-controls-react/pull/668)
+- `PeoplePicker`: Disabled doesn't work [#484](https://github.com/pnp/sp-dev-fx-controls-react/issues/484)
 
 ### Contributors
 
