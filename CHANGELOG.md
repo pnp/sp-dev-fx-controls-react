@@ -1,5 +1,15 @@
 # Releases
 
+## 2.0.0
+
+### Enhancements
+
+- `FilePicker`: added additional properties - `isPanelOpen` and `onCancel` [#668](https://github.com/pnp/sp-dev-fx-controls-react/pull/668)
+
+### Contributors
+
+Special thanks to our contributor: [Gautam Sheth](https://github.com/gautamdsheth).
+
 ## 1.20.0
 
 ### New control(s)
