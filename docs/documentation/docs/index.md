@@ -2,6 +2,9 @@
 
 This repository provides developers with a set of reusable React controls that can be used in SharePoint Framework (SPFx) solutions. The project provides controls for building web parts and extensions.
 
+!!! attention
+    In order to migrate to `v2` it is advicded to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
+
 ![Placeholder example](./assets/placeholder-intro.png)
 
 !!! attention
