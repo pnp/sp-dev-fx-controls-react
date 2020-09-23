@@ -59,15 +59,15 @@ The People picker control can be configured with the following properties:
 | titleText | string | no | Text to be displayed on the control | |
 | groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_ |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
-| isRequired | boolean | no | Set if the control is required or not | false |
+| required | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
-| errorMessage | string | no | Specifies the error message to display if the the control is required and no items selected | |
-| showRequiredError | boolean | no | Specifies if the component should show mandatory field error message because of some changes occured in parent. Use this props (set to `true`), for example, when "Save" button on the form has been clicked | |
+| errorMessage | string | no | Static error message displayed below the picker. Use `onGetErrorMessage` to dynamically change the error message displayed (if any) based on the current value. `errorMessage` and `onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence). | |
+| onGetErrorMessage | (items: IPersonaProps[]) => string \| Promise&lt;string&gt; | no | The method is used to get the validation error message and determine whether the picker value is valid or not. Mutually exclusive with the static string `errorMessage` (it will take precedence over this).<br />When it returns string:<ul><li>If valid, it returns empty string.</li><li>If invalid, it returns the error message string to be shown below the picker.</li></ul><br />When it returns Promise&lt;string&gt;:<ul><li>The resolved value is display as error message.</li><li>The rejected, the value is thrown away.</li></ul> | |
 | errorMessageClassName | string | no | applies custom styling to the error message section | |
 | showtooltip | boolean | no | Defines if need a tooltip or not | false |
 | tooltipMessage | string | no | Specify the tooltip message to display | |
 | tooltipDirectional | DirectionalHint | no | Direction where the tooltip would be shown | |
-| selectedItems | (items: IPersonaProps[]) => void | no | Get the selected users in the control. | |
+| onChange | (items: IPersonaProps[]) => void | no | Get the selected users in the control. | |
 | peoplePickerWPclassName | string | no | applies custom styling to the people picker element | |
 | peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only | |
 | defaultSelectedUsers | string[] | no | Default selected user emails or login names | |

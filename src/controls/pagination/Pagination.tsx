@@ -60,8 +60,8 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
             paginationElements = this.preparePaginationElements(this.props.totalPages);
             currentPage = this.state.currentPage > this.props.totalPages ? this.props.totalPages : this.state.currentPage;
         }
-        if (prevProps.totalPages !== this.props.totalPages && this.props.currentPage !== prevProps.currentPage) {
-            currentPage = this.props.currentPage;
+        if (this.props.currentPage !== prevProps.currentPage) {
+            currentPage = this.props.currentPage > this.props.totalPages ? this.props.totalPages : this.props.currentPage;
         }
 
         if (!isEqual(this.state.currentPage, currentPage) || !isEqual(this.state.paginationElements, paginationElements)) {

@@ -4,6 +4,7 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
 export interface IFieldErrorMessageProps {
   errorMessage: string;
+  className?: string;
 }
 
 /**
@@ -11,12 +12,16 @@ export interface IFieldErrorMessageProps {
  */
 export default class FieldErrorMessage extends React.Component<IFieldErrorMessageProps> {
   public render(): JSX.Element {
-    if (this.props.errorMessage !== 'undefined' && this.props.errorMessage !== null && this.props.errorMessage !== '') {
+    const {
+      errorMessage,
+      className
+    } = this.props;
+    if (errorMessage !== undefined && errorMessage !== null && errorMessage !== '') {
       return (
         <div aria-live="assertive">
-          <p className={`ms-TextField-errorMessage ${styles.errorMessage}`}>
+          <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${className || ''}`}>
             <Icon iconName='Error' className={styles.errorIcon} />
-            <span data-automation-id="error-message">{this.props.errorMessage}</span>
+            <span data-automation-id="error-message">{errorMessage}</span>
           </p>
         </div>
       );

@@ -81,8 +81,8 @@ export class CollectionNumberField extends React.Component<ICollectionNumberFiel
         <input type="number"
                role="spinbutton"
                placeholder={this.props.field.placeholder || this.props.field.title}
-               aria-valuemax="99999"
-               aria-valuemin="-999999"
+               aria-valuemax={99999}
+               aria-valuemin={-999999}
                aria-valuenow={this.props.item[this.props.field.id] || ''}
                aria-invalid={!!this.state.errorMessage}
                value={this.state.value || ''}

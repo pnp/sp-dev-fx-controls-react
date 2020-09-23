@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps, IObjectWithKey } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
-import filter = require('lodash/filter');
+
+import filter from 'lodash/filter';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 

@@ -5,9 +5,17 @@ import * as Constants from '../Constants';
 import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
 import { SPField } from '@microsoft/sp-page-context';
 import { sp } from '@pnp/sp';
+import '@pnp/sp/fields';
 import { SPHttpClient } from '@microsoft/sp-http';
+import { IFieldInfo } from '@pnp/sp/fields';
+import '@pnp/sp/site-users/web';
 
 declare var window: any;
+
+interface IFieldLookupInfo extends IFieldInfo {
+  LookupWebId: string;
+  LookupList: string;
+}
 
 /**
  * Helper class to work with SharePoint objects and entities
@@ -231,7 +239,7 @@ export class SPHelper {
             sp.setup({
                 spfxContext: context
             });
-            sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select('LookupWebId', 'LookupList').get().then(f => {
+            sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select('LookupWebId', 'LookupList').get().then((f: IFieldLookupInfo) => {
                 sp.site.openWebById(f.LookupWebId).then(openedWeb => {
                     openedWeb.web.select('Url').get().then(w => {
                         field.LookupDisplayUrl = `${w.Url}/_layouts/15/listform.aspx?PageType=4&ListId=${f.LookupList}`;

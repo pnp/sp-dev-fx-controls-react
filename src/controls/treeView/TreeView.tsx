@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './TreeView.module.scss';
-import uniqBy  = require('lodash/uniqBy');
+import uniqBy  from 'lodash/uniqBy';
 import { ITreeViewProps, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
 import { ITreeItem } from './ITreeItem';

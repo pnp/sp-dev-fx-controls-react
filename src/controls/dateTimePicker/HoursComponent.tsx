@@ -53,6 +53,11 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
             'A': /[AaPp]/,
             'M': /[Mm]/
           }}
+          onChange={(e, val) => {
+            if (onChange) {
+              onChange(val);
+            }
+          }}
           onGetErrorMessage={(val) => {
             let message = "";
             const hours: number = parseInt(val);
@@ -66,9 +71,9 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
               message = hours > 12 ? strings.DateTimePickerHourValueInvalid : "";
             }
 
-            if (!message) {
+            /*if (!message) {
               onChange(val);
-            }
+            }*/
 
             return message;
           }} />

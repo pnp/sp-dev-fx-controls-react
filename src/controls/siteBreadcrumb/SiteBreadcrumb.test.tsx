@@ -6,7 +6,6 @@ import { mount, ReactWrapper } from 'enzyme';
 import { SiteBreadcrumb } from './SiteBreadcrumb';
 import { ISiteBreadcrumbProps } from './ISiteBreadcrumb';
 import styles from './SiteBreadcrumb.module.scss';
-import { MockWebPartContext, MockWebPartContextParameters } from '@microsoft/sp-webpart-base/lib/test';
 
 declare const sinon;
 
