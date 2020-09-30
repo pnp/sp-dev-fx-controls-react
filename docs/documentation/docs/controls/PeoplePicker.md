@@ -35,13 +35,13 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     showtooltip={true}
     isRequired={true}
     disabled={true}
-    selectedItems={this._getPeoplePickerItems}
+    onChange={this._getPeoplePickerItems}
     showHiddenInUI={false}
     principalTypes={[PrincipalType.User]}
     resolveDelay={1000} />
 ```
 
-- With the `selectedItems` property you can get the selected People in the Peoplepicker :
+- With the `onChange` property you can get the selected People in the `PeoplePicker` :
 
 ```typescript
 private _getPeoplePickerItems(items: any[]) {
