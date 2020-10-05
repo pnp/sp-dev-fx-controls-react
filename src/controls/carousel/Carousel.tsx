@@ -12,6 +12,7 @@ import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
 import CarouselImage from "./CarouselImage";
+import { CarouselIndicatorsDisplay } from "./ICarouselProps";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   private _intervalId: number | undefined;
@@ -67,7 +68,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       nextButtonIconName = 'ChevronRight',
       loadingComponent = <Spinner />,
       pauseOnHover,
-      interval
+      interval,
+      indicatorsDisplay,
+      rootStyles
     } = this.props;
 
     const processing = processingState === ProcessingState.processing;
@@ -78,43 +81,48 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     const element = this.getElementToDisplay(currentIndex);
 
     return (
-      <div className={this.getMergedStyles(styles.container, containerStyles)}>
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-          onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
-          <IconButton
-            className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
-            iconProps={{ iconName: prevButtonIconName }}
-            disabled={prevButtonDisabled}
-            onClick={() => { this.onCarouselButtonClicked(false); }} />
-        </div>
+      <div className={this.getMergedStyles(styles.root, rootStyles)}>
+        <div className={this.getMergedStyles(styles.container, containerStyles)}>
+          <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
+            onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
+            <IconButton
+              className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
+              iconProps={{ iconName: prevButtonIconName }}
+              disabled={prevButtonDisabled}
+              onClick={() => { this.onCarouselButtonClicked(false); }} />
+          </div>
+          <div
+            className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
+            onMouseOver={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+            onTouchStart={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
+            onMouseLeave={pauseOnHover && interval !== null ? this.startCycle : undefined}
+            onTouchEnd={pauseOnHover && interval !== null ? this.startCycle : undefined}>
+            {
+              processing &&
+              <div className={this.getMergedStyles(styles.loadingComponent, loadingComponentContainerStyles)}>
+                {loadingComponent}
+              </div>
+            }
 
-        <div
-        className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
-        onMouseOver={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
-        onTouchStart={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
-        onMouseLeave={pauseOnHover && interval !== null ? this.startCycle : undefined}
-        onTouchEnd={pauseOnHover && interval !== null ? this.startCycle : undefined}>
-          {
-            processing &&
-            <div className={this.getMergedStyles(styles.loadingComponent, loadingComponentContainerStyles)}>
-              {loadingComponent}
-            </div>
-          }
+            {
+              !processing && this.renderSlide(element)
+            }
+            {indicatorsDisplay !== CarouselIndicatorsDisplay.block && this.getIndicatorsElement()}
+          </div>
 
-          {
-            !processing && this.renderSlide(element)
-          }
-          {this.getIndicatorsElement()}
+          <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
+            onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
+            <IconButton
+              className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
+              iconProps={{ iconName: nextButtonIconName }}
+              disabled={nextButtonDisabled}
+              onClick={() => { this.onCarouselButtonClicked(true); }} />
+          </div>
         </div>
-
-        <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
-          onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
-          <IconButton
-            className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
-            iconProps={{ iconName: nextButtonIconName }}
-            disabled={nextButtonDisabled}
-            onClick={() => { this.onCarouselButtonClicked(true); }} />
-        </div>
+        {indicatorsDisplay === CarouselIndicatorsDisplay.block &&
+          <div className={styles.indicatorsContainer}>
+            {this.getIndicatorsElement()}
+          </div>}
       </div>
     );
   }
@@ -342,7 +350,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         if (nextButtonClicked && this.props.onMoveNextClicked) {
           this.props.onMoveNextClicked(nextIndex);
         }
-        else if(this.props.onMovePrevClicked) {
+        else if (this.props.onMovePrevClicked) {
           this.props.onMovePrevClicked(nextIndex);
         }
       }

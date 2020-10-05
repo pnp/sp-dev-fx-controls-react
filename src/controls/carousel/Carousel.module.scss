@@ -1,259 +1,288 @@
 @import "~office-ui-fabric-react/dist/sass/References.scss";
 
 @keyframes slideleft {
-  0% {
-    left: 0;
-    right: 0;
-  }
-  100% {
-    left: -100%;
-    right: 100%;
-  }
+	0% {
+		left: 0;
+		right: 0;
+	}
+	100% {
+		left: -100%;
+		right: 100%;
+	}
 }
 
 @keyframes slideright {
-  0% {
-    left: 0;
-    right: 0;
-  }
-  100% {
-    left: 100%;
-    right: -100%;
-  }
+	0% {
+		left: 0;
+		right: 0;
+	}
+	100% {
+		left: 100%;
+		right: -100%;
+	}
 }
 
 @keyframes slidefromright {
-  0% {
-    left: 100%;
-    right: -100%;
-  }
-  100% {
-    left: 0;
-    right: 0;
-  }
+	0% {
+		left: 100%;
+		right: -100%;
+	}
+	100% {
+		left: 0;
+		right: 0;
+	}
 }
 
 @keyframes slidefromleft {
-  0% {
-    left: -100%;
-    right: 100%;
-  }
-  100% {
-    left: 0;
-    right: 0;
-  }
+	0% {
+		left: -100%;
+		right: 100%;
+	}
+	100% {
+		left: 0;
+		right: 0;
+	}
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+}
+
+.indicatorsContainer {
+	align-items: center;
+
+	.indicators {
+		@extend .indicators;
+
+		& > li {
+			background-color: "[theme: black, default: #000]";
+		}
+	}
+}
+
+.indicators {
+	z-index: 10;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+  padding-inline-start: 0;
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+
+	&.rectangle > li {
+		width: 25px;
+		height: 5px;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+	}
+
+	&.square > li {
+		width: 10px;
+		height: 10px;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+	}
+
+	&.circle > li {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border-top: 10px solid transparent;
+		border-bottom: 10px solid transparent;
+	}
+
+	& > li {
+		flex: 0 1 auto;
+		text-indent: -999px;
+		cursor: pointer;
+		opacity: 0.5;
+		transition: opacity 0.5 ease;
+		margin: 0 3px;
+		box-sizing: content-box;
+		background-clip: padding-box;
+
+		&.active {
+			opacity: 1;
+		}
+	}
 }
 
 .container {
-  display: flex;
+	display: flex;
 
-  // Styles for elements container
-  .contentContainer {
-    flex-grow: 2;
-    position: relative;
-    overflow: hidden;
+	// Styles for elements container
+	.contentContainer {
+		flex-grow: 2;
+		position: relative;
+		overflow: hidden;
 
-    .slideWrapper {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
+		.slideWrapper {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
 
-      &.left {
-        left: -100%;
-        right: 100%;
-      }
+			&.left {
+				left: -100%;
+				right: 100%;
+			}
 
-      &.right {
-        left: 100%;
-        right: -100%;
-      }
+			&.right {
+				left: 100%;
+				right: -100%;
+			}
 
-      &.slideLeft {
-        animation: slideleft linear 0.6s;
-      }
-      &.slideRight {
-        animation: slideright linear 0.6s;
-      }
-      &.slideFromRight {
-        animation: slidefromright linear 0.6s;
-      }
-      &.slideFromLeft {
-        animation: slidefromleft linear 0.6s;
-      }
-    }
+			&.slideLeft {
+				animation: slideleft linear 0.6s;
+			}
+			&.slideRight {
+				animation: slideright linear 0.6s;
+			}
+			&.slideFromRight {
+				animation: slidefromright linear 0.6s;
+			}
+			&.slideFromLeft {
+				animation: slidefromleft linear 0.6s;
+			}
+		}
 
-    .carouselImage {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-      position: relative;
+		.carouselImage {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			position: relative;
 
-      .image {
-        width: 100%;
-        height: 100%;
-      }
+			.image {
+				width: 100%;
+				height: 100%;
+			}
 
-      &.staticDetails {
-        .details {
-          top: 60%;
-        }
-      }
+			&.staticDetails {
+				.details {
+					top: 60%;
+				}
+			}
 
-      .details {
-        background-color: rgba(0, 0, 0, 0.8);
-        box-sizing: border-box;
-        color: white;
-        height: 40%;
-        left: 0;
-        padding: 15px;
-        position: absolute;
-        right: 0;
-        top: 100%;
-        transition: all 0.5s ease;
+			.details {
+				background-color: rgba(0, 0, 0, 0.8);
+				box-sizing: border-box;
+				color: white;
+				height: 40%;
+				left: 0;
+				padding: 15px;
+				position: absolute;
+				right: 0;
+				top: 100%;
+				transition: all 0.5s ease;
 
-        .title {
-          display: block;
-          @include ms-fontSize-l;
-          padding-bottom: 5px;
-        }
-      }
-    }
+				.title {
+					display: block;
+					@include ms-fontSize-l;
+					padding-bottom: 5px;
+				}
+			}
+		}
 
-    &:hover {
-      .carouselImage.dynamicDetails {
-        .details {
-          top: 60%;
-        }
-      }
-    }
-  }
+		.indicators {
+			@extend .indicators;
 
-  .indicators {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    list-style: none;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
 
-    &.rectangle > li {
-      width: 25px;
-      height: 5px;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-    }
+			& > li {
+				background-color: "[theme:white, default: #fff]";
+			}
+		}
 
-    &.square > li {
-      width: 10px;
-      height: 10px;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-    }
+		&:hover {
+			.carouselImage.dynamicDetails {
+				.details {
+					top: 60%;
+				}
+			}
+		}
+	}
 
-    &.circle > li {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-    }
+	.loadingComponent {
+		margin: auto;
+	}
 
-    & > li {
-      flex: 0 1 auto;
-      text-indent: -999px;
-      cursor: pointer;
-      background-color: "[theme:white, default: #fff]";
-      opacity: 0.5;
-      transition: opacity 0.5 ease;
-      margin: 0 3px;
-      box-sizing: content-box;
-      background-clip: padding-box;
+	// Bottons containers
+	.buttonLocations {
+		cursor: pointer;
+		flex-direction: column;
+	}
 
-      &.active {
-        opacity: 1;
-      }
-    }
-  }
+	.centralButtonsContainer {
+		@extend .buttonLocations;
+		justify-content: center;
+	}
+	.topButtonsContainer {
+		@extend .buttonLocations;
+		justify-content: left;
+	}
+	.bottomButtonsContainer {
+		@extend .buttonLocations;
+		justify-content: left;
+		flex-direction: column-reverse;
+	}
 
-  .loadingComponent {
-    margin: auto;
-  }
+	// ButtonContainer display mode
+	.buttonsOnlyPrevButton {
+		position: absolute;
+		left: 0;
+		z-index: 1;
+	}
+	.buttonsOnlyPrevButton:hover {
+		cursor: pointer;
+	}
 
-  // Bottons containers
-  .buttonLocations {
-    cursor: pointer;
-    flex-direction: column;
-  }
+	// Buttons styles
+	.buttonsOnlyNextButton {
+		position: absolute;
+		left: -32px;
+		z-index: 1;
+	}
+	.buttonsOnlyNextButton:hover {
+		cursor: pointer;
+	}
 
-  .centralButtonsContainer {
-    @extend .buttonLocations;
-    justify-content: center;
-  }
-  .topButtonsContainer {
-    @extend .buttonLocations;
-    justify-content: left;
-  }
-  .bottomButtonsContainer {
-    @extend .buttonLocations;
-    justify-content: left;
-    flex-direction: column-reverse;
-  }
+	.buttonsContainer {
+		display: flex;
+		align-items: center;
+		background-color: transparent;
+		cursor: pointer;
+	}
+	.buttonsOnlyContainer {
+		@extend .buttonsContainer;
+		position: relative;
+		width: 0px;
+	}
 
-  // ButtonContainer display mode
-  .buttonsOnlyPrevButton {
-    position: absolute;
-    left: 0;
-    z-index: 1;
-  }
-  .buttonsOnlyPrevButton:hover {
-    cursor: pointer;
-  }
+	.blockButtonsContainer {
+		@extend .buttonsContainer;
+		min-height: 100%;
+		min-width: 32px;
+	}
+	.blockButtonsContainer:hover {
+		@extend .buttonsContainer;
+		background-color: #f4f4f4;
+		opacity: 0.5;
+	}
 
-  // Buttons styles
-  .buttonsOnlyNextButton {
-    position: absolute;
-    left: -32px;
-    z-index: 1;
-  }
-  .buttonsOnlyNextButton:hover {
-    cursor: pointer;
-  }
-
-  .buttonsContainer {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  .buttonsOnlyContainer {
-    @extend .buttonsContainer;
-    position: relative;
-    width: 0px;
-  }
-
-  .blockButtonsContainer {
-    @extend .buttonsContainer;
-    min-height: 100%;
-    min-width: 32px;
-  }
-  .blockButtonsContainer:hover {
-    @extend .buttonsContainer;
-    background-color: #f4f4f4;
-    opacity: 0.5;
-  }
-
-  .hiddenButtonsContainer {
-    @extend .buttonsContainer;
-    min-height: 100%;
-    min-width: 32px;
-    opacity: 0;
-  }
-  .hiddenButtonsContainer:hover {
-    opacity: 0.5;
-    background-color: #f4f4f4;
-  }
+	.hiddenButtonsContainer {
+		@extend .buttonsContainer;
+		min-height: 100%;
+		min-width: 32px;
+		opacity: 0;
+	}
+	.hiddenButtonsContainer:hover {
+		opacity: 0.5;
+		background-color: #f4f4f4;
+	}
 }
