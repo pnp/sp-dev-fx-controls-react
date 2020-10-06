@@ -1,5 +1,11 @@
 # Releases
 
+## 2.1.0
+
+### Enhancements
+
+- `Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)
+
 ## 2.0.0
 
 ### Enhancements
