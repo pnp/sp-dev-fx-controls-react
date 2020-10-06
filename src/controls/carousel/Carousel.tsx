@@ -70,7 +70,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       pauseOnHover,
       interval,
       indicatorsDisplay,
-      rootStyles
+      rootStyles,
+      indicatorsContainerStyles
     } = this.props;
 
     const processing = processingState === ProcessingState.processing;
@@ -120,7 +121,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           </div>
         </div>
         {indicatorsDisplay === CarouselIndicatorsDisplay.block &&
-          <div className={styles.indicatorsContainer}>
+          <div className={this.getMergedStyles(styles.indicatorsContainer, indicatorsContainerStyles)}>
             {this.getIndicatorsElement()}
           </div>}
       </div>

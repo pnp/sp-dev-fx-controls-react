@@ -207,4 +207,9 @@ export interface ICarouselProps {
    */
   rootStyles?: ICssInput;
 
+  /**
+   * Allows to specify own styles for indicators container when indicatorsDisplay is set to "block".
+   */
+  indicatorsContainerStyles?: ICssInput;
+
 }

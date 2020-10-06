@@ -131,6 +131,7 @@ The Carousel component can be configured with the following properties:
 | onRenderIndicator | (index: number, onClick: (e: React.MouseEvent&lt;HTMLElement&gt; \| React.TouchEvent&lt;HTMLElement&gt;, selectedIndex: number) => void) => JSX.Element | no | Function to render indicator element |
 | indicatorsDisplay | CarouselIndicatorsDisplay | no | Specifies display mode of the indicators. Default value `overlap`. |
 | rootStyles | ICssInput | no | Allows to specify own styles for root element |
+| indicatorsContainerStyles | ICssInput | no | Allows to specify own styles for indicators container when indicatorsDisplay is set to "block" |
 
 enum `CarouselButtonsLocation`
 
