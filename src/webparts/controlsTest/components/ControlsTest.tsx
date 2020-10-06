@@ -33,7 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape, CarouselIndicatorsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
@@ -61,6 +61,7 @@ import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
 import { Accordion } from '../../..';
+import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -1175,6 +1176,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
             isInfinite={true}
             indicatorShape={CarouselIndicatorShape.circle}
+            indicatorsDisplay={CarouselIndicatorsDisplay.block}
             pauseOnHover={true}
 
             element={[
@@ -1205,6 +1207,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ]}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            rootStyles={mergeStyles({
+              backgroundColor: '#C3C3C3'
+            })}
           />
         </div>
 

@@ -128,7 +128,10 @@ The Carousel component can be configured with the following properties:
 | indicatorShape | CarouselIndicatorShape | no | Specifies indicators' shape. If onRenderIndicator is provided - this property is ignored |
 | indicatorClassName | string | no | Specifies additional class applied to slide position indicators |
 | indicatorStyle | React.CSSProperties | no | Specifies additional styles applied to slide position indicators |
-| onRenderIndicator | (index: number, onClick: (e: React.MouseEvent&lt;HTMLElement&gt; | React.TouchEvent&lt;HTMLElement&gt;, selectedIndex: number) => void) => JSX.Element | no | Function to render indicator element |
+| onRenderIndicator | (index: number, onClick: (e: React.MouseEvent&lt;HTMLElement&gt; \| React.TouchEvent&lt;HTMLElement&gt;, selectedIndex: number) => void) => JSX.Element | no | Function to render indicator element |
+| indicatorsDisplay | CarouselIndicatorsDisplay | no | Specifies display mode of the indicators. Default value `overlap`. |
+| rootStyles | ICssInput | no | Allows to specify own styles for root element |
+| indicatorsContainerStyles | ICssInput | no | Allows to specify own styles for indicators container when indicatorsDisplay is set to "block" |
 
 enum `CarouselButtonsLocation`
 
@@ -159,6 +162,13 @@ Provides options for carousel indicators' shape.
 | circle | Indicators displayed as cirlces |
 | square | Indicators displayed as squares |
 | rectangle | Indicators displayed as rectangles |
+
+enum `CarouselIndicatorsDisplay`
+
+Provides options for carousel indicators display mode.
+| Value | Description |
+| overlap | Indicators are displayed on top of the carousel content |
+| block | Reserves space for indicators |
 
 Interface `ICarouselImageProps`
 
