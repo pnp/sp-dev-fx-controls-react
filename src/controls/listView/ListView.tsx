@@ -9,7 +9,6 @@ import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-const MyIcon = () => <Icon iconName="Download" className="ms-IconExample" />;
 
 import filter from 'lodash/filter';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
@@ -595,7 +594,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           {(this.state.dragStatus && this.props.dragDropFiles) &&
             <div className={styles.DragDropAreaBorder}>
               <div className={styles.DragDropAreaZone}>
-                <MyIcon />
+                <Icon iconName="Download" className="ms-IconExample" />
                 <div>{strings.UploadFileHeader}</div>
               </div>
             </div>
