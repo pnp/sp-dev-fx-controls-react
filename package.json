@@ -9,6 +9,7 @@
     "build": "gulp build",
     "clean": "gulp clean",
     "test": "gulp test",
+    "serve": "gulp serve",
     "prepublishOnly": "gulp",
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
