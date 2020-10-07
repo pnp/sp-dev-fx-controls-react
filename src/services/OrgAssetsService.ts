@@ -48,19 +48,19 @@ export class OrgAssetsService extends FileBrowserService {
 
   public getSiteMediaLibraries = async (includePageLibraries: boolean = false): Promise<ILibrary[]> => {
     try {
-      const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/Microsoft.Online.SharePoint.TenantManagement.Office365Tenant/GetOrgAssets`;
+      const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.Publishing.SitePageService.FilePickerTabOptions`;
       const orgAssetsResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
 
       if (!orgAssetsResult || !orgAssetsResult.ok) {
         throw new Error(`Something went wrong when executing request. Status='${orgAssetsResult.status}'`);
       }
       const orgAssetsData = await orgAssetsResult.json();
-      if (!orgAssetsData || !orgAssetsData.OrgAssetsLibraries || !orgAssetsData.OrgAssetsLibraries.Items || orgAssetsData.OrgAssetsLibraries.Items.length <= 0) {
+      if (!orgAssetsData || !orgAssetsData.OrgAssets || !orgAssetsData.OrgAssets.OrgAssetsLibraries || !orgAssetsData.OrgAssets.OrgAssetsLibraries.Items || orgAssetsData.OrgAssets.OrgAssetsLibraries.Items.length <= 0) {
         return null;
       }
 
-      this._orgAssetsLibraryServerRelativeSiteUrl = orgAssetsData ? orgAssetsData.Url.DecodedUrl : null;
-      const libs: ILibrary[] = orgAssetsData ? orgAssetsData.OrgAssetsLibraries.Items.map((libItem) => { return this._parseOrgAssetsLibraryItem(libItem); }) : [];
+      this._orgAssetsLibraryServerRelativeSiteUrl = orgAssetsData ? orgAssetsData.OrgAssets.Url.DecodedUrl : null;
+      const libs: ILibrary[] = orgAssetsData && orgAssetsData.OrgAssets ? orgAssetsData.OrgAssets.OrgAssetsLibraries.Items.map((libItem) => { return this._parseOrgAssetsLibraryItem(libItem); }) : [];
       return libs;
     } catch (error) {
       console.error(`[OrgAssetsService.getOrganisationAssetsLibraries]: Err='${error.message}'`);
