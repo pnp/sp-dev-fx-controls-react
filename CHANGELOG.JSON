@@ -5,11 +5,14 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)"
+          "`Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)",
+          "`FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)"
         ],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Gautam Sheth](https://github.com/gautamdsheth)"
+      ]
     },
     {
       "version": "2.0.0",
