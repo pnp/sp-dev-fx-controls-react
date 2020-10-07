@@ -6,10 +6,11 @@
 
 - `Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)
 - `FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)
+- `ListView`: Drag and Drop option [#679](https://github.com/pnp/sp-dev-fx-controls-react/issues/679)
 
 ### Contributors
 
-Special thanks to our contributor: [Gautam Sheth](https://github.com/gautamdsheth).
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Gautam Sheth](https://github.com/gautamdsheth).
 
 ## 2.0.0
 
