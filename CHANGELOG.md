@@ -5,6 +5,11 @@
 ### Enhancements
 
 - `Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)
+- `FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)
+
+### Contributors
+
+Special thanks to our contributor: [Gautam Sheth](https://github.com/gautamdsheth).
 
 ## 2.0.0
 
