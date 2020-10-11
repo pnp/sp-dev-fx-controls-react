@@ -7,6 +7,7 @@
 - `Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)
 - `FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)
 - `ListView`: Drag and Drop option [#679](https://github.com/pnp/sp-dev-fx-controls-react/issues/679)
+- `FolderExplorerService`: support special characters if folder name [#691](https://github.com/pnp/sp-dev-fx-controls-react/pull/691)
 
 ### Contributors
 
