@@ -29,9 +29,9 @@ const classNames = mergeStyleSets({
 * Wrap the listview in a scrollable pane if sticky header = true
 */
 const ListViewWrapper = ({ stickyHeader, children }) => (stickyHeader ?
-  <div className ={classNames.wrapper} >
+  <div className={classNames.wrapper} >
     <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
-    {children}
+      {children}
     </ScrollablePane>
   </div>
   : children
@@ -60,7 +60,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
   constructor(props: IListViewProps) {
     super(props);
-    
+
     telemetry.track('ReactListView', {
       viewFields: !!props.viewFields,
       groupByFields: !!props.groupByFields,
@@ -620,8 +620,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   public render(): React.ReactElement<IListViewProps> {
     let groupProps: IGroupRenderProps = {};
 
-    let { showFilter, filterPlaceHolder } = this.props;
-    let { filterValue, items } = this.state;
+    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact } = this.props;
+    let { filterValue, items, dragStatus, columns, groups } = this.state;
 
     // Check if selection mode is single selection,
     // if that is the case, disable the selection on grouping headers
@@ -635,42 +635,41 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return (
-      <ListViewWrapper stickyHeader={!!this.props.stickyHeader}>
-      <div>
-        {
-          showFilter && 
-            <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
-              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} /> 
-            </SearchBoxWrapper>
-        }
-
-        <div className={styles.DragDropArea}
-          ref={this.dropRef}>
-          {(this.state.dragStatus && this.props.dragDropFiles) &&
-            <div className={styles.DragDropAreaBorder}>
-              <div className={styles.DragDropAreaZone}>
-                <Icon iconName="Download" className="ms-IconExample" />
-                <div>{strings.UploadFileHeader}</div>
-              </div>
+      <div className={styles.DragDropArea}
+        ref={this.dropRef}>
+        {(dragStatus && dragDropFiles) &&
+          <div className={styles.DragDropAreaBorder}>
+            <div className={styles.DragDropAreaZone}>
+              <Icon iconName="Download" className="ms-IconExample" />
+              <div>{strings.UploadFileHeader}</div>
             </div>
-          }
-          <DetailsList
-            key="ListViewControl"
-            items={items}
-            columns={this.state.columns}
-            groups={this.state.groups}
-            selectionMode={this.props.selectionMode || SelectionMode.none}
-            selectionPreservedOnEmptyClick={true}
-            selection={this._selection}
-            layoutMode={DetailsListLayoutMode.justified}
-            compact={this.props.compact}
-            setKey="ListViewControl"
-            groupProps={groupProps}
-            onRenderDetailsHeader={this._onRenderDetailsHeader}
-          />
-        </div>
+          </div>
+        }
+        <ListViewWrapper stickyHeader={!!stickyHeader}>
+          <div>
+            {
+              showFilter &&
+              <SearchBoxWrapper stickyHeader={!!stickyHeader}>
+                <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
+              </SearchBoxWrapper>
+            }
+            <DetailsList
+              key="ListViewControl"
+              items={items}
+              columns={columns}
+              groups={groups}
+              selectionMode={selectionMode || SelectionMode.none}
+              selectionPreservedOnEmptyClick={true}
+              selection={this._selection}
+              layoutMode={DetailsListLayoutMode.justified}
+              compact={compact}
+              setKey="ListViewControl"
+              groupProps={groupProps}
+              onRenderDetailsHeader={this._onRenderDetailsHeader}
+            />
+          </div>
+        </ListViewWrapper>
       </div>
-      </ListViewWrapper>
     );
   }
 }
