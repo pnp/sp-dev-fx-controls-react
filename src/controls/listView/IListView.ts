@@ -63,6 +63,11 @@ export interface IListViewProps {
    * Specify the initial filter to be applied to the list.
    */
   defaultFilter?: string;
+    /**
+   * Boolean value to create a fixed/sticky header.
+   * Set to false by default
+   */
+  stickyHeader?: boolean;
 }
 
 export interface IListViewState {
