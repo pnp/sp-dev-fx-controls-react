@@ -975,6 +975,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showFilter={true}
           dragDropFiles={true}
           onDrop={this._getDropFiles}
+          stickyHeader={true}
         // defaultFilter="Team"
         />
 
