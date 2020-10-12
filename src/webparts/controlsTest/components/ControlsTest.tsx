@@ -835,7 +835,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           value={new Date()}
           onChange={(value) => console.log("DateTimePicker value:", value)}
           minDate={new Date("05/01/2019")}
-        maxDate={new Date("05/01/2020")} />
+          maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
         <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
@@ -1352,7 +1352,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ]}
             value={this.getRandomCollectionFieldData()}
           />
-          </div>
+        </div>
       </div>
     );
   }

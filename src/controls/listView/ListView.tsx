@@ -60,6 +60,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
   constructor(props: IListViewProps) {
     super(props);
+    
     telemetry.track('ReactListView', {
       viewFields: !!props.viewFields,
       groupByFields: !!props.groupByFields,
