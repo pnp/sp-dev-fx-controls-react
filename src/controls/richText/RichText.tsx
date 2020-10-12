@@ -705,7 +705,7 @@ id="DropDownStyles"
 
   /**
    * Disable Save-button if hyperlink is undefined or empty
-   * This prevents the user of aading an empty hyperlink
+   * This prevents the user of adding an empty hyperlink
    */
   private checkLinkUrl = () => {
     if (this.state.insertUrl !== undefined && this.state.insertUrl != "") {
