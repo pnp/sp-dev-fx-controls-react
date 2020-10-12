@@ -8,10 +8,11 @@
 - `FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)
 - `ListView`: Drag and Drop option [#679](https://github.com/pnp/sp-dev-fx-controls-react/issues/679)
 - `FolderExplorerService`: support special characters if folder name [#691](https://github.com/pnp/sp-dev-fx-controls-react/pull/691)
+- `ListView`: Sticky Header [#634](https://github.com/pnp/sp-dev-fx-controls-react/issues/634)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Gautam Sheth](https://github.com/gautamdsheth).
+Special thanks to our contributors (in alphabetical order): [Abderahman88](https://github.com/Abderahman88), [André Lage](https://github.com/aaclage), [Gautam Sheth](https://github.com/gautamdsheth).
 
 ## 2.0.0
 
