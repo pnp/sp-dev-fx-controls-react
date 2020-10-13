@@ -10,6 +10,7 @@
 - `FolderExplorerService`: support special characters if folder name [#691](https://github.com/pnp/sp-dev-fx-controls-react/pull/691)
 - `ListView`: Sticky Header [#634](https://github.com/pnp/sp-dev-fx-controls-react/issues/634)
 - `IconPicker`: get icons from `@uifabric/icons/lib/data/AllIconNames.json`
+- `ListView`: Sticky header with `className` instead of additional components [#696](https://github.com/pnp/sp-dev-fx-controls-react/pull/696)
 
 ### Fixes
 
