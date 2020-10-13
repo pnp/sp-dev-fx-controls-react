@@ -3,49 +3,18 @@ import styles from './ListView.DragDrop.module.scss';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
 import { IColumn, IGroupRenderProps, IObjectWithKey } from 'office-ui-fabric-react/lib/components/DetailsList';
-import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
-import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
-import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import './ListView.stickyHeader.css';
 
 import filter from 'lodash/filter';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
-const classNames = mergeStyleSets({
-  wrapper: {
-    height: '50vh',
-    position: 'relative'
-  }
-});
-
-/**
-* Wrap the listview in a scrollable pane if sticky header = true
-*/
-const ListViewWrapper = ({ stickyHeader, children }) => (stickyHeader ?
-  <div className={classNames.wrapper} >
-    <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
-      {children}
-    </ScrollablePane>
-  </div>
-  : children
-);
-
-/**
-* Lock the searchbox when scrolling if sticky header = true
-*/
-const SearchBoxWrapper = ({ stickyHeader, children }) => (stickyHeader ?
-  <Sticky stickyPosition={StickyPositionType.Header}>
-    {children}
-  </Sticky>
-  : children
-);
 
 /**
  * File type icon component
@@ -596,22 +565,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
   }
 
-  /**
-   * Custom render of header
-   * @param props
-   * @param defaultRender
-   */
-  private _onRenderDetailsHeader: IRenderFunction<IDetailsHeaderProps> = (props, defaultRender) => {
-    if (!props) {
-      return null;
+/**
+* Return Classname with StickyHeader
+*/
+  private _getClassName() {
+    if (this.props.stickyHeader) {
+      return "StickyHeader";
+    } else {
+      return "";
     }
-    return (
-      <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
-        {defaultRender!({
-          ...props,
-        })}
-      </Sticky>
-    );
   }
 
   /**
@@ -645,13 +607,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             </div>
           </div>
         }
-        <ListViewWrapper stickyHeader={!!stickyHeader}>
-          <div>
             {
               showFilter &&
-              <SearchBoxWrapper stickyHeader={!!stickyHeader}>
                 <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
-              </SearchBoxWrapper>
             }
             <DetailsList
               key="ListViewControl"
@@ -665,10 +623,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
               compact={compact}
               setKey="ListViewControl"
               groupProps={groupProps}
-              onRenderDetailsHeader={this._onRenderDetailsHeader}
+              className={this._getClassName()}
             />
-          </div>
-        </ListViewWrapper>
       </div>
     );
   }
