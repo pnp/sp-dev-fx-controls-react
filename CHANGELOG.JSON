@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "1.21.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)"
+        ]
+      }
+    },
+    {
       "version": "1.20.0",
       "changes": {
         "new": [

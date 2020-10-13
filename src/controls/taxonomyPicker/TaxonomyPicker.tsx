@@ -74,24 +74,26 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     });
   }
 
-  /**
-   * componentWillUpdate lifecycle hook
-   */
-  public async componentDidUpdate(prevProps: ITaxonomyPickerProps): Promise<void> {
+
+  public componentWillReceiveProps(nextProps: ITaxonomyPickerProps) {
     let newState: ITaxonomyPickerState | undefined;
     // Check if the initial values objects are not equal, if that is the case, data can be refreshed
-    if (!isEqual(this.props.initialValues, prevProps.initialValues)) {
+    if (!isEqual(this.props.initialValues, nextProps.initialValues)) {
       newState = {
-        activeNodes: this.props.initialValues || []
+        activeNodes: nextProps.initialValues || []
       };
     }
 
-    if (this.props.errorMessage) {
+    if (nextProps.errorMessage) {
       if (!newState) {
         newState = {};
       }
 
-      newState.errorMessage = this.props.errorMessage;
+      newState.errorMessage = nextProps.errorMessage;
+    }
+
+    if (newState) {
+      this.setState(newState);
     }
   }
 
