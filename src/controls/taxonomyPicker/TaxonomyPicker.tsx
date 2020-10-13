@@ -88,7 +88,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
         newState = {};
       }
 
-      newState.errorMessage = this.props.errorMessage;
+      newState.errorMessage = nextProps.errorMessage;
     }
 
     if (newState) {
