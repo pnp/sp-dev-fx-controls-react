@@ -1,0 +1,5 @@
+.StickyHeader .ms-DetailsList-contentWrapper {
+  max-height: 40vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
