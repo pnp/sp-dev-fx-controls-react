@@ -16,6 +16,7 @@
 
 - `RichText`: Cannot add link in first line [#672](https://github.com/pnp/sp-dev-fx-controls-react/issues/672)
 - `TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)
+- Documentation fix for `TaxonomyPicker`: the `disabled` property is a `boolean` and not a `string` as currently specified [#695](https://github.com/pnp/sp-dev-fx-controls-react/pull/695)
 
 ### Contributors
 
