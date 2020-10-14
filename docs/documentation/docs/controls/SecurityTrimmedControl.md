@@ -8,7 +8,8 @@ This control is intended to be used when you want to show or hide components bas
 - Import the following modules to your component:
 
 ```TypeScript
-import { SecurityTrimmedControl } from "@pnp/spfx-controls-react/lib/SecurityTrimmedControl";
+import { SecurityTrimmedControl, PermissionLevel } from "@pnp/spfx-controls-react/lib/SecurityTrimmedControl";
+import { SPPermission } from '@microsoft/sp-page-context';
 ```
 
 - You can use the `SecurityTrimmedControl` as follows in your solutions:

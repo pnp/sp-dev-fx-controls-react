@@ -94,10 +94,5 @@
     "Rodrigues, Joel <>",
     "Struyf, Elio <info@estruyf.be>",
     "Terentiev, Alex <alex@aterentiev.com>"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run changelog"
-    }
-  }
+  ]
 }
