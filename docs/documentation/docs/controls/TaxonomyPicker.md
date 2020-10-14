@@ -152,7 +152,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | panelTitle | string | yes | TermSet Picker Panel title. |
 | label | string | yes | Text displayed above the Taxonomy Picker. |
-| disabled | string | no | Specify if the control needs to be disabled. |
+| disabled | boolean | no | Specify if the control needs to be disabled. |
 | context | WebPartContext \| ExtensionContext | yes | Context of the current web part or extension. |
 | initialValues | IPickerTerms | no | Defines the selected by default term sets. |
 | allowMultipleSelections | boolean | no | Defines if the user can select only one or many term sets. Default value is false. |
