@@ -207,7 +207,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       defaultExpandedChildren
     } = this.props;
 
-      return (
+    return (
       <div className={styles.treeView}>
         {
           items.map((treeNodeItem, index) => (

@@ -1311,7 +1311,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
           />
-          </div>
+        </div>
 
         <div>
           <h3>Tree View</h3>
@@ -1359,7 +1359,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ]}
             value={this.getRandomCollectionFieldData()}
           />
-          </div>
+        </div>
       </div>
     );
   }
