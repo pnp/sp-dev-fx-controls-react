@@ -203,10 +203,11 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       onRenderItem,
       showCheckboxes,
       treeItemActionsDisplayMode,
-      defaultExpanded
+      defaultExpanded,
+      defaultExpandedChildren
     } = this.props;
 
-    return (
+      return (
       <div className={styles.treeView}>
         {
           items.map((treeNodeItem, index) => (
@@ -215,6 +216,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               leftOffset={20}
               isFirstRender={true}
               defaultExpanded={defaultExpanded}
+              defaultExpandedChildren={defaultExpandedChildren !== undefined ? defaultExpandedChildren : true}
               selectionMode={selectionMode}
               activeItems={this.state.activeItems}
               parentCallbackExpandCollapse={this.handleTreeExpandCollapse}

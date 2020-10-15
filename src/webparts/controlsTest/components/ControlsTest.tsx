@@ -271,7 +271,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           children: [
             {
               key: "gc3",
-              label: "Child of Parent 10"
+              label: "Child of Parent 10",
+              children: [
+                {
+                  key: "ggc1",
+                  label: "Grandchild of Parent 10"
+                }
+              ]
             },
           ]
         },
@@ -1305,7 +1311,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
           />
-        </div>
+          </div>
 
         <div>
           <h3>Tree View</h3>
@@ -1317,7 +1323,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-          //expandToSelected={true}
+            defaultExpandedChildren={true}
+            //expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />
 
@@ -1352,7 +1359,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ]}
             value={this.getRandomCollectionFieldData()}
           />
-        </div>
+          </div>
       </div>
     );
   }
