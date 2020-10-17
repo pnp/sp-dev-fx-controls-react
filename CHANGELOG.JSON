@@ -12,7 +12,8 @@
           "`ListView`: Sticky Header [#634](https://github.com/pnp/sp-dev-fx-controls-react/issues/634)",
           "`IconPicker`: get icons from `@uifabric/icons/lib/data/AllIconNames.json`",
           "`ListView`: Sticky header with `className` instead of additional components [#696](https://github.com/pnp/sp-dev-fx-controls-react/pull/696)",
-          "`ListView`: `StickyHeader` code consistency [#697](https://github.com/pnp/sp-dev-fx-controls-react/pull/697)"
+          "`ListView`: `StickyHeader` code consistency [#697](https://github.com/pnp/sp-dev-fx-controls-react/pull/697)",
+          "`TreeView`: Added (optional) property 'defaultExpandedChildren' that controls the behavior of the expansion of child elements.[#698](https://github.com/pnp/sp-dev-fx-controls-react/pull/698)"
         ],
         "fixes": [
           "`RichText`: Cannot add link in first line [#672](https://github.com/pnp/sp-dev-fx-controls-react/issues/672)",
