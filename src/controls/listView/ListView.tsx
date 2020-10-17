@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './ListView.DragDrop.module.scss';
+import stickyHeaderstyles from './ListView.stickyHeader.module.scss';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
 import { IColumn, IGroupRenderProps, IObjectWithKey } from 'office-ui-fabric-react/lib/components/DetailsList';
@@ -9,7 +10,6 @@ import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import './ListView.stickyHeader.css';
 
 import filter from 'lodash/filter';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
@@ -564,18 +564,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       this.dragCounter = 0;
     }
   }
-
-/**
-* Return Classname with StickyHeader
-*/
-  private _getClassName() {
-    if (this.props.stickyHeader) {
-      return "StickyHeader";
-    } else {
-      return "";
-    }
-  }
-
   /**
    * Default React component render method
    */
@@ -623,7 +611,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
               compact={compact}
               setKey="ListViewControl"
               groupProps={groupProps}
-              className={this._getClassName()}
+              className={
+                stickyHeader &&
+                stickyHeaderstyles.StickyHeader
+              }
             />
       </div>
     );
