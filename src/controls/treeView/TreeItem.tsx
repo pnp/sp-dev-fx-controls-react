@@ -61,6 +61,10 @@ export interface ITreeItemProps {
   onRenderItem?: (item: ITreeItem) => JSX.Element;
 
   nodesToExpand: any[];
+   /**
+   * Specifies whether current tree item's children should be rendered as expanded.
+   */
+  defaultExpandedChildren?: boolean;
 }
 
 
@@ -217,14 +221,18 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
         parentCallbackOnSelect,
         onRenderItem,
         showCheckboxes,
-        treeItemActionsDisplayMode
+        treeItemActionsDisplayMode,
+        defaultExpandedChildren
       } = this.props;
+
+      const { expanded } = this.state;
 
       let childrenWithHandlers = list.map((item, index) => {
         return (
           <TreeItem
             treeItem={item}
-            defaultExpanded={this.state.expanded}
+            defaultExpanded={defaultExpandedChildren ? expanded : expanded && !item.hasOwnProperty('children')}
+            defaultExpandedChildren={defaultExpandedChildren}
             leftOffset={paddingLeft}
             selectionMode={selectionMode}
             activeItems={activeItems}
