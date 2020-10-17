@@ -1,0 +1,10 @@
+.StickyHeader {
+  :global(.ms-FocusZone) {
+    max-height: 40vh;
+    overflow-y: overlay;
+    overflow-x: hidden;
+  }
+  :global(.ms-DetailsHeader) {
+    overflow-y: hidden;
+  }
+}
