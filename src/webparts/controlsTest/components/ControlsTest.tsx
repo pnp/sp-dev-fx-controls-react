@@ -33,7 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape, CarouselIndicatorsDisplay  } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape, CarouselIndicatorsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
@@ -309,7 +309,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       richTextValue: null,
       canMovePrev: false,
       canMoveNext: true,
-      currentCarouselElement: this.carouselElements[0]
+      currentCarouselElement: this.carouselElements[0],
+      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -1106,7 +1107,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
-                <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
+                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
                   columnInternalName='Title'
                   keyColumnInternalName='Id'
                   multiSelect={true}
@@ -1115,6 +1116,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   }}
                   webUrl={this.props.context.pageContext.web.absoluteUrl}
                   spHttpClient={this.props.context.spHttpClient} />
+
+                <PrimaryButton text="Change List" onClick={() => { this.setState({
+                  comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                }); }} />
 
               </div>
 
@@ -1128,7 +1133,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   hidden={!this.state.iFrameDialogOpened}
                   onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
                   modalProps={{
-                    isBlocking: true
+                    isBlocking: true,
+                    styles: {
+                      root: {
+                        backgroundColor: '#00ff00'
+                      },
+                      main: {
+                        backgroundColor: '#ff0000'
+                      }
+                    }
                   }}
                   dialogContentProps={{
                     type: DialogType.close,
@@ -1324,7 +1337,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
             defaultExpandedChildren={true}
-            //expandToSelected={true}
+          //expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />
 
