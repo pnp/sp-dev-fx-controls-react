@@ -5,7 +5,7 @@ import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { List } from 'office-ui-fabric-react/lib/List';
 import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { css } from "@uifabric/utilities/lib/css";
+import { css } from '@uifabric/utilities/lib/css';
 import { Selection, SelectionMode, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { Check } from 'office-ui-fabric-react/lib/Check';
@@ -26,7 +26,7 @@ const ROWS_PER_PAGE = 3;
 /**
  * Maximum row height
  */
-const MAX_ROW_HEIGHT = 250;
+const MAX_ROW_HEIGHT = 175;
 
 export default class RecentFilesTab extends React.Component<IRecentFilesTabProps, IRecentFilesTabState> {
   private _columnCount: number;
@@ -71,27 +71,27 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     const { results,
       isLoading } = this.state;
     return (
-      <span className={styles.tabContainer}>
-        <span className={styles.tabHeaderContainer}>
+      <div className={styles.tabContainer}>
+        <div className={styles.tabHeaderContainer}>
           <h2 className={styles.tabHeader}>{strings.RecentDocumentsHeader}</h2>
-        </span>
-        <span className={styles.tab}>
+        </div>
+        <div className={css(styles.tab, styles.tabOffset)}>
           {isLoading ?
             this._renderSpinner() :
             results === undefined || results.length < 1 ? this._renderPlaceholder() : this._renderGridList()
           }
-        </span>
-        <span className={styles.actionButtonsContainer}>
-          <span className={styles.actionButtons}>
+        </div>
+        <div className={styles.actionButtonsContainer}>
+          <div className={styles.actionButtons}>
             <PrimaryButton
               disabled={!this.state.filePickerResult}
               onClick={() => this._handleSave()}
               className={styles.actionButton}
             >{strings.OpenButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
-          </span>
-        </span>
-      </span>
+          </div>
+        </div>
+      </div>
     );
   }
 

@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "engines": {
     "node": ">=10"
   },
@@ -9,6 +9,7 @@
     "build": "gulp build",
     "clean": "gulp clean",
     "test": "gulp test",
+    "serve": "gulp serve",
     "prepublishOnly": "gulp",
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
@@ -28,6 +29,7 @@
     "@microsoft/sp-webpart-base": "1.11.0",
     "@pnp/sp": "2.0.6",
     "@pnp/telemetry-js": "2.0.0",
+    "@uifabric/icons": "7.3.0",
     "chart.js": "2.7.3",
     "color": "3.1.2",
     "lodash": "4.17.13",
@@ -92,5 +94,10 @@
     "Rodrigues, Joel <>",
     "Struyf, Elio <info@estruyf.be>",
     "Terentiev, Alex <alex@aterentiev.com>"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run changelog"
+    }
+  }
 }

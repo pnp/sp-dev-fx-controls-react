@@ -37,7 +37,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          <Breadcrumb items={this.state.breadcrumbItems} onRenderItem={this.renderBreadcrumbItem} className={styles.breadcrumbNav}/>
+          <Breadcrumb items={this.state.breadcrumbItems} /*onRenderItem={this.renderBreadcrumbItem}*/ className={styles.breadcrumbNav}/>
         </div>
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath === undefined &&

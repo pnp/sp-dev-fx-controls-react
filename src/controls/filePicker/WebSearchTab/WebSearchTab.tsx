@@ -55,14 +55,12 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          <Link onClick={this._clearSearch}>
-            <h2 className={styles.tabHeader}>{strings.WebSearchLinkLabel}</h2>
-          </Link>
-          {this.props.bingSearchService && this._renderSearchBox()}
+          <h2 className={styles.tabHeader}>{strings.WebSearchLinkLabel}</h2>
         </div>
-        <div className={styles.tab}>
-          { !query && this._renderSearchSuggestions() }
-          { query && results && this._renderSearchResults() }
+        {this.props.bingSearchService && this._renderSearchBox()}
+        <div className={css(styles.tab, styles.tabOffset)}>
+          {!query && this._renderSearchSuggestions()}
+          {query && results && this._renderSearchResults()}
         </div>
         <div className={styles.actionButtonsContainer}>
           {

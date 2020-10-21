@@ -8,6 +8,10 @@ This control renders a list view for the given set of items.
 
 ![ListView control with grouping](../assets/ListView-grouping.png)
 
+**List view control with drag and drop applied**
+
+![ListView control with grouping](../assets/ListView-DragDrop.png)
+
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
@@ -30,7 +34,10 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   showFilter={true}
   defaultFilter="John"
   filterPlaceHolder="Search..."
-  groupByFields={groupByFields} />
+  groupByFields={groupByFields}
+  dragDropFiles={true}
+  onDrop={this._getDropFiles}
+  stickyHeader={true} />
 ```
 - The control provides full text filtering through all the columns. If you want to exectue filtering on the specified columns, you can use syntax : `<ColumndName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
 
@@ -41,7 +48,6 @@ private _getSelection(items: any[]) {
   console.log('Selected items:', items);
 }
 ```
-
 - With the `groupByFields` property you can define an array of field objects which will be used for grouping. 
 
 **Important**: the same order of the fields defines how grouping will be applied. In the snippet the `ListView` control will first group by the `Extension` and after that by the `Author` field.
@@ -61,6 +67,16 @@ const groupByFields: IGrouping[] = [
 !!! note "Extend ListView with a ContextualMenu"
     To extend the `ListView` control with a [ContextualMenu](https://developer.microsoft.com/en-us/fabric#/components/contextualmenu) refer to [ListView.ContextualMenu](./ListView.ContextualMenu.md).
 
+- With the `onDrop` handler you can define a method that returns files that where drag and drop by user in the list view:
+
+```typescript
+private _getDropFiles = (files) => {
+    for (var i = 0; i < files.length; i++) {
+      console.log(files[i].name);
+    }
+  }
+```
+
 ## Implementation
 
 The ListView control can be configured with the following properties:
@@ -78,6 +94,9 @@ The ListView control can be configured with the following properties:
 | filterPlaceHolder | string | no | Specify the placeholder for the filter text box. Default 'Search' |
 | showFilter | boolean | no | Specify if the filter text box should be rendered. |
 | defaultFilter | string | no | Specify the initial filter to be applied to the list. |
+| dragDropFiles | boolean | no | Specify the drag and drop files area option. Default false. |
+| onDrop | file | no | Event handler returns files from drag and drop. |
+| stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky |
 
 The `IViewField` has the following implementation:
 

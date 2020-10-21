@@ -368,7 +368,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                   }} />
 
         <TextField label={strings.TextToDisplayLabel}
-                   value={this.state.insertUrlText || this.state.insertUrl}
+                   value={this.state.insertUrlText}
                    onChanged={(newValue?: string) => {
                     if (newValue !== this.state.insertUrl) {
                       this.setState({
@@ -384,7 +384,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 <Link className={`${styles.action} ${styles.unlinkButton}`} onClick={this.handleRemoveLink}>{strings.RemoveLinkLabel}</Link>
               )
             }
-            <PrimaryButton className={styles.action} onClick={this.handleCreateLink} text={strings.SaveButtonLabel} />
+            <PrimaryButton className={styles.action} onClick={this.handleCreateLink} text={strings.SaveButtonLabel} disabled={this.checkLinkUrl()} />
             <DefaultButton className={styles.action} onClick={this.closeDialog} text={strings.CancelButtonLabel} />
           </div>
         </DialogFooter>
@@ -568,7 +568,7 @@ id="DropDownStyles"
         <ReactQuill ref={this.linkQuill}
                     placeholder={placeholder}
                     modules={modules}
-                    value={text || ''}
+                    defaultValue={text || ''} //property value causes issues, defaultValue does not
                     onChange={this.handleChange}
                     onChangeSelection={this.handleChangeSelection}
                     onFocus={this.handleOnFocus} />
@@ -689,7 +689,7 @@ id="DropDownStyles"
     }
 
     if (cursorPosition > -1) {
-      const textToInsert: string = this.state.insertUrlText !== undefined ? this.state.insertUrlText : this.state.insertUrl;
+      const textToInsert: string = (this.state.insertUrlText !== undefined && this.state.insertUrlText !== "") ? this.state.insertUrlText : this.state.insertUrl;
       const urlToInsert: string = this.state.insertUrl;
       quill.insertText(cursorPosition, textToInsert);
       quill.setSelection(cursorPosition, textToInsert.length);
@@ -701,6 +701,17 @@ id="DropDownStyles"
       insertUrl: undefined,
       insertUrlText: undefined
     });
+  }
+
+  /**
+   * Disable Save-button if hyperlink is undefined or empty
+   * This prevents the user of adding an empty hyperlink
+   */
+  private checkLinkUrl = () => {
+    if (this.state.insertUrl !== undefined && this.state.insertUrl != "") {
+      return false;
+    }
+    return true;
   }
 
   /**

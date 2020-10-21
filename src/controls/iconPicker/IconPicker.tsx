@@ -13,9 +13,12 @@ import { IIconPickerState } from './IIconPickerState';
 import * as telemetry from '../../common/telemetry';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import { FluentIconsService } from '../../services/FluentIconsService';
 
 export class IconPicker extends React.Component<IIconPickerProps, IIconPickerState> {
   private radioIdBase: string = getId("radio");
+
+  private readonly _fluentIconsService: FluentIconsService;
 
 
   constructor(props: IIconPickerProps) {
@@ -25,8 +28,10 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
 
     telemetry.track('IconPicker');
 
+    this._fluentIconsService = new FluentIconsService();
+
     this.state = {
-      items: IconNames.Icons,
+      items: this._fluentIconsService.getAll(),
       isPanelOpen: false,
       currentIcon: this.props.currentIcon || null
     };
@@ -112,7 +117,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
   private iconPickerOnClick = (): void => {
     this.setState({
       isPanelOpen: true,
-      items: IconNames.Icons
+      items: this._fluentIconsService.getAll() //IconNames.Icons
     });
   }
 
@@ -126,17 +131,19 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
   }
 
   private onAbort = (): void => {
-    this.setState({ items: IconNames.Icons });
+    this.setState({
+      items: this._fluentIconsService.getAll() //IconNames.Icons
+    });
   }
 
   private onChange = (newValue?: string): void => {
     let items: string[];
     if (newValue && newValue.trim().length > 2) {
-      items = IconNames.Icons.filter(item => {
+      items = this._fluentIconsService.search(newValue); /*IconNames.Icons.filter(item => {
         return item.toLocaleLowerCase().indexOf(newValue.toLocaleLowerCase()) !== -1;
-      });
+      });*/
     } else {
-      items = IconNames.Icons;
+      items =  this._fluentIconsService.getAll();//IconNames.Icons;
     }
     this.setState({
       items: items

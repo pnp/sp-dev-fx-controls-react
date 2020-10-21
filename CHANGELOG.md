@@ -1,5 +1,31 @@
 # Releases
 
+## 2.1.0
+
+### Enhancements
+
+- `Carousel`: Ability to display indicators in a dedicated block [#681](https://github.com/pnp/sp-dev-fx-controls-react/pull/681)
+- `FilePicker`: Org Assets are not displayed for non-admin users [#687](https://github.com/pnp/sp-dev-fx-controls-react/pull/687)
+- `ListView`: Drag and Drop option [#679](https://github.com/pnp/sp-dev-fx-controls-react/issues/679)
+- `FolderExplorerService`: support special characters if folder name [#691](https://github.com/pnp/sp-dev-fx-controls-react/pull/691)
+- `ListView`: Sticky Header [#634](https://github.com/pnp/sp-dev-fx-controls-react/issues/634)
+- `IconPicker`: get icons from `@uifabric/icons/lib/data/AllIconNames.json`
+- `ListView`: Sticky header with `className` instead of additional components [#696](https://github.com/pnp/sp-dev-fx-controls-react/pull/696)
+- `ListView`: `StickyHeader` code consistency [#697](https://github.com/pnp/sp-dev-fx-controls-react/pull/697)
+- `TreeView`: Added (optional) property 'defaultExpandedChildren' that controls the behavior of the expansion of child elements.[#698](https://github.com/pnp/sp-dev-fx-controls-react/pull/698)
+
+### Fixes
+
+- `RichText`: Cannot add link in first line [#672](https://github.com/pnp/sp-dev-fx-controls-react/issues/672)
+- `TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)
+- Documentation fix for `TaxonomyPicker`: the `disabled` property is a `boolean` and not a `string` as currently specified [#695](https://github.com/pnp/sp-dev-fx-controls-react/pull/695)
+- `ComboBoxListItemPicker`: update options when `listId` has been changed [#683](https://github.com/pnp/sp-dev-fx-controls-react/issues/683)
+- `FilePicker`: styles are updated to match OOB control [#700](https://github.com/pnp/sp-dev-fx-controls-react/issues/700)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Abderahman88](https://github.com/Abderahman88), [André Lage](https://github.com/aaclage), [Gautam Sheth](https://github.com/gautamdsheth).
+
 ## 2.0.0
 
 ### Enhancements

@@ -33,7 +33,7 @@ import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxon
 import { ListItemAttachments } from '../../../ListItemAttachments';
 import { RichText } from '../../../RichText';
 import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape } from '../../../controls/carousel';
+import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape, CarouselIndicatorsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
@@ -61,6 +61,7 @@ import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
 import { Accordion } from '../../..';
+import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -270,7 +271,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           children: [
             {
               key: "gc3",
-              label: "Child of Parent 10"
+              label: "Child of Parent 10",
+              children: [
+                {
+                  key: "ggc1",
+                  label: "Grandchild of Parent 10"
+                }
+              ]
             },
           ]
         },
@@ -302,7 +309,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       richTextValue: null,
       canMovePrev: false,
       canMoveNext: true,
-      currentCarouselElement: this.carouselElements[0]
+      currentCarouselElement: this.carouselElements[0],
+      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -360,6 +368,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _getSelection(items: any[]) {
     console.log('Items:', items);
+  }
+
+  /**
+  * Method that retrieves files from drag and drop
+  * @param files
+  */
+  private _getDropFiles = (files) => {
+    for (var i = 0; i < files.length; i++) {
+      console.log(files[i].name);
+    }
   }
 
   /**
@@ -519,6 +537,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         }
       ]
     };
+
 
     return <div
       //className={styles.documentTile}
@@ -961,6 +980,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selectionMode={SelectionMode.single}
           selection={this._getSelection}
           showFilter={true}
+          dragDropFiles={true}
+          onDrop={this._getDropFiles}
+          stickyHeader={true}
         // defaultFilter="Team"
         />
 
@@ -1085,7 +1107,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">ComboBoxListItemPicker:
 
-                <ComboBoxListItemPicker listId={'0ffa51d7-4ad1-4f04-8cfe-98209905d6da'}
+                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
                   columnInternalName='Title'
                   keyColumnInternalName='Id'
                   multiSelect={true}
@@ -1094,6 +1116,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   }}
                   webUrl={this.props.context.pageContext.web.absoluteUrl}
                   spHttpClient={this.props.context.spHttpClient} />
+
+                <PrimaryButton text="Change List" onClick={() => { this.setState({
+                  comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                }); }} />
 
               </div>
 
@@ -1107,7 +1133,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   hidden={!this.state.iFrameDialogOpened}
                   onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
                   modalProps={{
-                    isBlocking: true
+                    isBlocking: true,
+                    styles: {
+                      root: {
+                        backgroundColor: '#00ff00'
+                      },
+                      main: {
+                        backgroundColor: '#ff0000'
+                      }
+                    }
                   }}
                   dialogContentProps={{
                     type: DialogType.close,
@@ -1175,6 +1209,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
             isInfinite={true}
             indicatorShape={CarouselIndicatorShape.circle}
+            indicatorsDisplay={CarouselIndicatorsDisplay.block}
             pauseOnHover={true}
 
             element={[
@@ -1205,6 +1240,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ]}
             onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
             onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            rootStyles={mergeStyles({
+              backgroundColor: '#C3C3C3'
+            })}
           />
         </div>
 
@@ -1236,7 +1274,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onSave={this._onFilePickerSave}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             context={this.props.context}
-            hideRecentTab={true}
+            hideRecentTab={false}
           />
           {
             this.state.filePickerResult &&
@@ -1298,6 +1336,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
+            defaultExpandedChildren={true}
           //expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />

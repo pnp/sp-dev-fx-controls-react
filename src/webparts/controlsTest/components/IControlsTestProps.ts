@@ -28,6 +28,7 @@ export interface IControlsTestState {
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
+  comboBoxListItemPickerListId: string;
 
   filePickerResult?: IFilePickerResult;
 }

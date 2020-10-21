@@ -67,4 +67,9 @@ export interface ITreeViewProps {
    * @argument item The tree item.
    */
   onRenderItem?: (item: ITreeItem) => JSX.Element;
+   /**
+   * Default expand / collapse behavior for the child nodes.
+   * By default this is set to true.
+   */
+  defaultExpandedChildren?: boolean;
 }

@@ -15,6 +15,7 @@
     "strictNullChecks": false,
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@microsoft"

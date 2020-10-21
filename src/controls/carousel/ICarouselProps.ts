@@ -46,6 +46,20 @@ export enum CarouselIndicatorShape {
   rectangle
 }
 
+/**
+ * Provides options for carousel indicators display mode
+ */
+export enum CarouselIndicatorsDisplay {
+  /**
+   * Indicators are displayed on top of the carousel content
+   */
+  overlap = 1,
+  /**
+   * Reserves space for indicators
+   */
+  block
+}
+
 export interface ICarouselProps {
   /**
    * Specifies the initial index of the element to be displayed.
@@ -182,5 +196,20 @@ export interface ICarouselProps {
    * Function to render indicator element
    */
   onRenderIndicator?: (index: number, onClick: (e: React.MouseEvent<HTMLElement> | React.TouchEvent<HTMLElement>, selectedIndex: number) => void) => JSX.Element;
+
+  /**
+   * Specifies display mode of the indicators
+   */
+  indicatorsDisplay?: CarouselIndicatorsDisplay;
+
+  /**
+   * Allows to specify own styles for root element.
+   */
+  rootStyles?: ICssInput;
+
+  /**
+   * Allows to specify own styles for indicators container when indicatorsDisplay is set to "block".
+   */
+  indicatorsContainerStyles?: ICssInput;
 
 }

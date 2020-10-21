@@ -72,7 +72,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let foldersResult: IFolder[] = await web.getFolderByServerRelativeUrl(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
+      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(encodeURIComponent(folderRelativeUrl)).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
       results = foldersResult.filter(f => f.Name != "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
@@ -100,7 +100,8 @@ export class FolderExplorerService implements IFolderExplorerService {
     let folder: IFolder = null;
     try {
       const web = Web(webAbsoluteUrl);
-      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativeUrl(folderRelativeUrl).folders.add(name);
+      folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
+      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(encodeURIComponent(folderRelativeUrl)).folders.addUsingPath(encodeURIComponent(name));
       if (folderAddResult && folderAddResult.data) {
         folder = {
           Name: folderAddResult.data.Name,

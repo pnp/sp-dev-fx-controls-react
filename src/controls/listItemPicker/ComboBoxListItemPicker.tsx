@@ -31,10 +31,10 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   }
 
   public componentDidMount(): void {
-    this.loadOptions();
+    this.loadOptions(this.props);
   }
 
-  protected async loadOptions(): Promise<void> {
+  protected async loadOptions(props: IComboBoxListItemPickerProps, isInitialLoad?: boolean): Promise<void> {
     const {
       filter,
       keyColumnInternalName,
@@ -44,7 +44,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       itemLimit,
       defaultSelectedItems,
       onInitialized
-    } = this.props;
+    } = props;
     let query = filter || "";
     //query += filter;
     let keyColumnName = keyColumnInternalName || "Id";
@@ -73,16 +73,23 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     this.setState({
       availableOptions: options
     });
-    if(onInitialized){
+    if(onInitialized && isInitialLoad !== false){
       onInitialized();
     }
   }
 
-  public componentDidUpdate(prevProps: IComboBoxListItemPickerProps, prevState: IComboBoxListItemPickerState): void {
-    if (this.props.listId !== prevProps.listId) {
+  public async componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
+    if (nextProps.listId !== this.props.listId) {
+      await this.loadOptions(nextProps, false);
       this.selectedItems = [];
     }
   }
+
+  /*public componentDidUpdate(prevProps: IComboBoxListItemPickerProps, prevState: IComboBoxListItemPickerState): void {
+    if (this.props.listId !== prevProps.listId) {
+
+    }
+  }*/
 
   /**
    * Render the field

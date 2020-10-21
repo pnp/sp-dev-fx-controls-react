@@ -9,6 +9,14 @@ export enum GroupOrder {
 }
 
 export interface IListViewProps {
+  /**  
+  * Specify if drag and drop option is selected. 
+  **/
+  dragDropFiles?: boolean;
+  /**  
+  * Handler to return the files from drag and drop. 
+  **/
+  onDrop?: any;
   /**
    * Specify the name of the file URL path which will be used to show the file icon.
    */
@@ -55,6 +63,11 @@ export interface IListViewProps {
    * Specify the initial filter to be applied to the list.
    */
   defaultFilter?: string;
+    /**
+   * Boolean value to create a fixed/sticky header.
+   * Set to false by default
+   */
+  stickyHeader?: boolean;
 }
 
 export interface IListViewState {
@@ -73,6 +86,9 @@ export interface IListViewState {
   columns?: IColumn[];
 
   groups?: IGroup[];
+
+  dragStatus?: boolean;
+
 }
 
 export interface IGrouping {
