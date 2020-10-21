@@ -20,6 +20,7 @@
 - `TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)
 - Documentation fix for `TaxonomyPicker`: the `disabled` property is a `boolean` and not a `string` as currently specified [#695](https://github.com/pnp/sp-dev-fx-controls-react/pull/695)
 - `ComboBoxListItemPicker`: update options when `listId` has been changed [#683](https://github.com/pnp/sp-dev-fx-controls-react/issues/683)
+- `FilePicker`: styles are updated to match OOB control [#700](https://github.com/pnp/sp-dev-fx-controls-react/issues/700)
 
 ### Contributors
 
