@@ -81,6 +81,12 @@ export interface StyleOptions {
   showMore?: boolean;
 
   /**
+   * Indicates if we should show the Image button.
+   * @defaultvalue true
+   */
+  showImage?: boolean;
+
+  /**
    * Indicates if we should show the Styles button (Heading 1, Heading 2, ..., Pull quote)
    * @defaultvalue true
    */
@@ -109,6 +115,12 @@ export interface IRichTextState {
    */
   hideDialog: boolean;
 
+  
+  /**
+   * Whether to hide the insert image dialog
+   */
+  hideImageDialog: boolean;
+
   /**
    * The URL to insert
    */
@@ -118,6 +130,11 @@ export interface IRichTextState {
    * The text to display when inserting URL
    */
   insertUrlText: string;
+
+  /**
+   * The URL of image to insert
+   */
+  insertImageUrl: string;
 
   /**
    * Whether the "More" pane is visible
