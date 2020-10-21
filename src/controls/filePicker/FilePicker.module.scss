@@ -28,13 +28,6 @@
   margin: 0;
 }
 
-.filePicker
-  :global(.ms-Panel-main)
-  :global(.ms-Panel-contentInner)
-  :global(.ms-Panel-content) {
-  height: 100%;
-}
-
 .filePicker :global(.ms-Nav-link) {
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -59,7 +52,6 @@
   outline: transparent;
   border-width: initial;
   border-style: none;
-  border-color: initial;
   border-image: initial;
   text-decoration: none;
   border-radius: 0px;
@@ -124,6 +116,7 @@
 }
 
 .nav {
+  position: absolute;
   height: 100%;
   color: $ms-color-neutralLighter;
 }
@@ -153,12 +146,17 @@
 
 .breadcrumbNav {
   margin-top: 0px;
+  padding: 22px 32px;
 }
 .breadcrumbNavItem {
   color: $ms-color-neutralPrimary;
-  font-size: 28px;
-  font-weight: 100;
-  padding: 22px 10px 20px 32px;
+  font-size: 24px;
+  font-weight: 600;
+  padding: 22px 8px 20px 0;
+}
+
+.breadcrumbNav :global(.ms-Breadcrumb-listItem:last-child .ms-Breadcrumb-itemLink) {
+  font-weight: 600;
 }
 
 .tab {
@@ -243,14 +241,10 @@
 
 .tabContainer {
   height: 100%;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -290,6 +284,10 @@
   right: 0;
   height: 40px;
   background-color: red;
+}
+
+.itemPickerTopBar :global(.ms-CommandBarItem-link) {
+  border-color: transparent;
 }
 
 .commandBarNoChevron :global(.ms-CommandBarItem-chevronDown) {

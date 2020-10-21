@@ -26,7 +26,7 @@ const ROWS_PER_PAGE = 3;
 /**
  * Maximum row height
  */
-const MAX_ROW_HEIGHT = 250;
+const MAX_ROW_HEIGHT = 175;
 
 export default class RecentFilesTab extends React.Component<IRecentFilesTabProps, IRecentFilesTabState> {
   private _columnCount: number;

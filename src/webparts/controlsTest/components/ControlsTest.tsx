@@ -1274,7 +1274,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onSave={this._onFilePickerSave}
             onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
             context={this.props.context}
-            hideRecentTab={true}
+            hideRecentTab={false}
           />
           {
             this.state.filePickerResult &&
