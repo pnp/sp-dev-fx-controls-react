@@ -1279,7 +1279,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           {
             this.state.filePickerResult &&
             <div>
-              FileName: {this.state.filePickerResult.fileName}
+              <div>
+                FileName: {this.state.filePickerResult.fileName}
+              </div>
+              <div>
+                File size: {this.state.filePickerResult.fileSize}
+              </div>
             </div>
           }
         </div>

@@ -86,6 +86,7 @@ Provides options for carousel buttons location.
 | fileName | string | File name of the result with the extension. |
 | fileNameWithoutExtension | string | File name of the result without the extension. |
 | fileAbsoluteUrl | string | Absolute URL of the file. Null in case of file upload. |
+| fileSize | number | Size of the result (in bytes). Set only for file upload |
 | downloadFileContent | () => Promise<File> | Function allows to download file content. Returns File object. |
 
 
