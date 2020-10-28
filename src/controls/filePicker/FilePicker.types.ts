@@ -33,6 +33,11 @@ export interface IFilePickerResult {
   fileAbsoluteUrl: string;
 
   /**
+   * Size of a selected file (in bytes). Undefined in all cases but file upload 
+   */
+  fileSize?: number;
+
+  /**
    * Absolute not modified file SharePoint URL.
    */
   spItemUrl?: string;
