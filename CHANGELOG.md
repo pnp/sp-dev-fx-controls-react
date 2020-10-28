@@ -2,13 +2,17 @@
 
 ## 2.2.0
 
+### Enhancements
+
+- `RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)
+
 ### Fixes
 
 - Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)
 
 ### Contributors
 
-Special thanks to our contributor: [Vertamin](https://github.com/Vertamin).
+Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [Vertamin](https://github.com/Vertamin).
 
 ## 2.1.0
 
