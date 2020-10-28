@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "`RichText`: Fixing hyperlink issues [#708](https://github.com/pnp/sp-dev-fx-controls-react/pull/708)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Abderahman Moujahid](https://github.com/Abderahman88)"
+      ]
     },
     {
       "version": "1.21.0",
