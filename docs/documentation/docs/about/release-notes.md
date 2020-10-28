@@ -2,6 +2,14 @@
 
 ## 2.2.0
 
+### Fixes
+
+- Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)
+
+### Contributors
+
+Special thanks to our contributor: [Vertamin](https://github.com/Vertamin).
+
 ## 2.1.0
 
 ### Enhancements
