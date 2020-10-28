@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Vertamin](https://github.com/Vertamin)"
+      ]
     },
     {
       "version": "2.1.0",
