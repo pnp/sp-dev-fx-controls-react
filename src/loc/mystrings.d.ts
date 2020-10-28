@@ -73,10 +73,12 @@ declare interface IControlStrings {
   AlignTitle: string;
   ListTitle: string;
   LinkTitle: string;
+  ImageTitle: string;
   MoreTitle: string;
   FormattingPaneTitle: string;
   CloseButton: string;
   InsertLinkTitle: string;
+  InsertImageTitle: string;
   AddressFieldLabel: string;
   TextToDisplayLabel: string;
   SaveButtonLabel: string;
