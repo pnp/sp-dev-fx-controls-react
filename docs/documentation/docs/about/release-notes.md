@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)
+- `FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)
 
 ### Fixes
 
@@ -12,7 +13,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [Vertamin](https://github.com/Vertamin).
+Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [Konrad K.](https://github.com/wilecoyotegenius), [Vertamin](https://github.com/Vertamin).
 
 ## 2.1.0
 
