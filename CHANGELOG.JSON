@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)"
+          "`RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)",
+          "`FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)"
         ],
         "fixes": [
           "Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)"
@@ -13,6 +14,7 @@
       },
       "contributions": [
         "[Abderahman Moujahid](https://github.com/Abderahman88)",
+        "[Konrad K.](https://github.com/wilecoyotegenius)",
         "[Vertamin](https://github.com/Vertamin)"
       ]
     },
