@@ -147,6 +147,9 @@ class FolderPickerInternal extends React.Component<IFolderPickerProps, IFolderPi
   }
 }
 
+/**
+ * FolderPicker component with theme support
+ */
 export const FolderPicker = withTheme<IFolderPickerProps>(FolderPickerInternal, [{
   key: 'bodyText',
   default: '#333333'
