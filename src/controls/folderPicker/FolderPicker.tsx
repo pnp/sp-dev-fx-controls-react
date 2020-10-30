@@ -28,9 +28,14 @@ class FolderPickerInternal extends React.Component<IFolderPickerProps, IFolderPi
 
   public componentWillReceiveProps(nextProps: IFolderPickerProps) {
 
-    this.setState({
-      selectedFolder: nextProps.defaultFolder,
-    });
+    const prevDefaultFolder = this.props.defaultFolder && this.props.defaultFolder.ServerRelativeUrl;
+    const defaultFolder = nextProps.defaultFolder && nextProps.defaultFolder.ServerRelativeUrl;
+
+    if (prevDefaultFolder !== defaultFolder) {
+      this.setState({
+        selectedFolder: nextProps.defaultFolder,
+      });
+    }
 
   }
 
@@ -38,7 +43,7 @@ class FolderPickerInternal extends React.Component<IFolderPickerProps, IFolderPi
     return (
       <div>
         {this.props.label &&
-          <Label className={css(styles.label,  {
+          <Label className={css(styles.label, {
             [styles.required]: !!this.props.required
           })} htmlFor={this._folderLinkId}>{this.props.label}</Label>
         }
@@ -56,6 +61,7 @@ class FolderPickerInternal extends React.Component<IFolderPickerProps, IFolderPi
                   iconProps={{ iconName: 'Cancel' }}
                   title="Delete selection"
                   ariaLabel="Delete selection"
+                  className={styles.deleteSelection}
                   onClick={this._resetSelection}
                   disabled={this.props.disabled}
                 />
@@ -150,4 +156,10 @@ export const FolderPicker = withTheme<IFolderPickerProps>(FolderPickerInternal, 
 }, {
   key: 'redDark',
   default: '#a4262c'
+}, {
+  key: 'link',
+  default: '#004578'
+}, {
+  key: 'linkHovered',
+  default: '#004578'
 }]);

@@ -22,10 +22,20 @@
     display: flex;
     margin-right: 5px;
     max-width: 90%;
+    color: var(--link);
+    &:hover {
+      color: var(--linkHovered);
+    }
     span {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .deleteSelection {
+      i {
+        color: var(--bodyText);
+      }
     }
   }
 

@@ -1195,8 +1195,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isInfinite={true}
 
             element={this.carouselElements}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            //onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            //onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
           />
         </div>
 
@@ -1240,8 +1240,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 imageFit: ImageFit.cover
               }
             ]}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            //onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            //onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
             rootStyles={mergeStyles({
               backgroundColor: '#C3C3C3'
             })}
