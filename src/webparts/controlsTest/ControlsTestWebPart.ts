@@ -9,6 +9,11 @@ import {
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
 
+import {
+  ThemeProvider,
+  IReadonlyTheme
+} from '@microsoft/sp-component-base';
+
 import * as strings from 'ControlsTestWebPartStrings';
 import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
@@ -18,6 +23,20 @@ import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
  * Web part to test the React controls
  */
 export default class ControlsTestWebPart extends BaseClientSideWebPart<IControlsTestWebPartProps> {
+
+  private _themeProvider: ThemeProvider;
+
+  public onInit(): Promise<void> {
+
+    // Consume the new ThemeProvider service
+  this._themeProvider = this.context.serviceScope.consume(ThemeProvider.serviceKey);
+
+  const variant = this._themeProvider.tryGetTheme();
+
+  console.log(variant);
+
+    return super.onInit();
+  }
 
   public render(): void {
     const element: React.ReactElement<IControlsTestProps> = React.createElement(
@@ -30,7 +49,9 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         updateProperty: (value: string) => {
           this.properties.title = value;
         },
-        totalPages: this.properties.totalPages
+        totalPages: this.properties.totalPages,
+        themeProvider: this._themeProvider,
+        observer: this
       }
     );
 

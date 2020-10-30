@@ -1175,6 +1175,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label='Folder Picker'
                   required={true}
                   canCreateFolders={true}
+                  themeProvider={this.props.themeProvider}
+                  observer={this.props.observer}
                 ></FolderPicker>
               </div>
             </div>

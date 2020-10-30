@@ -6,7 +6,14 @@
     "version": "1.0.0.0",
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
-    "includeClientSideAssets": true
+    "includeClientSideAssets": true,
+    "developer": {
+      "name": "Julie Turner/Stefan Bauer",
+      "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+      "termsOfUseUrl": "https://pnp.github.io/sp-dev-fx-controls-react/about/license/",
+      "websiteUrl": "https://github.com/pnp/sp-dev-fx-controls-react",
+      "mpnId": "M365PnP"
+    }
   },
   "paths": {
     "zippedPackage": "solution/sp-dev-fx-controls-react.sppkg"

@@ -8,9 +8,11 @@ import { Link } from 'office-ui-fabric-react/lib/Link';
 import { getId } from 'office-ui-fabric-react/lib/Utilities';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { FolderExplorer } from '../folderExplorer/FolderExplorer';
+import { withTheme } from '../themableComponent/ThemableComponent';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 
 
-export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPickerState> {
+class FolderPickerInternal extends React.Component<IFolderPickerProps, IFolderPickerState> {
 
   private _folderLinkId = getId('folderLink');
   private _selectedFolder: IFolder;
@@ -36,7 +38,9 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
     return (
       <div>
         {this.props.label &&
-          <Label className={this.props.required ? styles.required : ''} htmlFor={this._folderLinkId}>{this.props.label}</Label>
+          <Label className={css(styles.label,  {
+            [styles.required]: !!this.props.required
+          })} htmlFor={this._folderLinkId}>{this.props.label}</Label>
         }
         <div className={styles.folderPicker}>
           <div className={styles.selection}>
@@ -135,7 +139,15 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
 
     this.props.onSelect(this._selectedFolder);
   }
-
-
-
 }
+
+export const FolderPicker = withTheme<IFolderPickerProps>(FolderPickerInternal, [{
+  key: 'bodyText',
+  default: '#333333'
+}, {
+  key: 'neutralSecondary',
+  default: '#605e5c'
+}, {
+  key: 'redDark',
+  default: '#a4262c'
+}]);
