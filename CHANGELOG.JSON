@@ -4,13 +4,16 @@
       "version": "1.21.1",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`ListView`: drag and drop [#711](https://github.com/pnp/sp-dev-fx-controls-react/pull/711)"
+        ],
         "fixes": [
           "`RichText`: Fixing hyperlink issues [#708](https://github.com/pnp/sp-dev-fx-controls-react/pull/708)"
         ]
       },
       "contributions": [
-        "[Abderahman Moujahid](https://github.com/Abderahman88)"
+        "[Abderahman Moujahid](https://github.com/Abderahman88)",
+        "[André Lage](https://github.com/aaclage)"
       ]
     },
     {
