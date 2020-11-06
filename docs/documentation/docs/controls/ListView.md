@@ -95,7 +95,6 @@ The ListView control can be configured with the following properties:
 | showFilter | boolean | no | Specify if the filter text box should be rendered. |
 | defaultFilter | string | no | Specify the initial filter to be applied to the list. |
 | onDrop | file | no | Event handler returns files from drag and drop. |
-| stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky |
 
 The `IViewField` has the following implementation:
 
