@@ -11,7 +11,7 @@ import { ITermSet, ITerm } from './../../services/ISPTermStorePickerService';
 import * as strings from 'ControlStrings';
 import styles from './TaxonomyPicker.module.scss';
 import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
-import uniqBy = require('lodash/uniqBy');
+import uniqBy from 'lodash/uniqBy';
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
 

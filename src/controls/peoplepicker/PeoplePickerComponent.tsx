@@ -10,8 +10,8 @@ import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
-import isEqual = require('lodash/isEqual');
-import uniqBy = require('lodash/uniqBy');
+import isEqual from 'lodash/isEqual';
+import uniqBy from 'lodash/uniqBy';
 
 /**
  * PeoplePicker component

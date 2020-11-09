@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Panel } from 'office-ui-fabric-react/lib/Panel';
-import omit = require('lodash/omit');
+import omit from 'lodash/omit';
 import { IFramePanelContent } from './IFramePanelContent';
 import { IIFramePanelProps, IIFramePanelState } from '.';
 

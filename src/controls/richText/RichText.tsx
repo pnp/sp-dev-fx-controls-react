@@ -17,7 +17,7 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { elementContains } from 'office-ui-fabric-react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import isEqual = require('lodash/isEqual');
+import isEqual from 'lodash/isEqual';
 
 
 const TOOLBARPADDING: number = 28;
