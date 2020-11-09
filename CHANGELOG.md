@@ -11,6 +11,7 @@
 ### Fixes
 
 - Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)
+- `ListItemPicker`: When use defaultSelectedItems, ListItemPicker allows you to select dublicate entries [#722](https://github.com/pnp/sp-dev-fx-controls-react/issues/722)
 
 ### Contributors
 
