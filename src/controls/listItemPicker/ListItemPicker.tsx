@@ -87,11 +87,13 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   private onFilterChanged = async (filterText: string, tagList: { key: string; name: string }[]) => {
     let resolvedSugestions: { key: string; name: string }[] = await this.loadListItems(filterText);
 
+    const selectedItems = [...this.selectedItems, ...(this.props.defaultSelectedItems || [])];
+
     // Filter out the already retrieved items, so that they cannot be selected again
-    if (this.selectedItems && this.selectedItems.length > 0) {
+    if (selectedItems && selectedItems.length > 0) {
       let filteredSuggestions = [];
       for (const suggestion of resolvedSugestions) {
-        const exists = this.selectedItems.filter(sItem => sItem.key === suggestion.key);
+        const exists = selectedItems.filter(sItem => sItem.key === suggestion.key);
         if (!exists || exists.length === 0) {
           filteredSuggestions.push(suggestion);
         }
