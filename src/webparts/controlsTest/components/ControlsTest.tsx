@@ -730,6 +730,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onChange={this.onServicePickerChange}
             isTermSetSelectable={false}
             placeholder="Select service"
+            // validateInput={true}   /* Uncomment this to enable validation of input text */
             required={true}
             errorMessage='this field is required'
             onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
