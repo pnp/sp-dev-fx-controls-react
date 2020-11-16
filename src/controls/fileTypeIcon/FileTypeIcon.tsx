@@ -2,7 +2,7 @@ import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96, ImageInformation } from './IFileTypeIcon';
 import * as telemetry from '../../common/telemetry';
-import { Icon, IconType as IconUIType } from 'office-ui-fabric-react/lib/components/Icon';
+import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
 import * as styles from './FileTypeIcon.module.scss';
 
 const ICON_GENERIC = 'Page';
@@ -226,25 +226,25 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       // Check if the image was found, otherwise a generic image will be returned
       if (iconImage.cdnFallback) {
         const iconUrl = `${ICON_CDN_URL}/${iconImage.size.replace("icon", "")}/${iconImage.cdnFallback}.png`;
-        iconElm = <Icon iconType={IconUIType.image} imageProps={{ src: iconUrl }} />;
+        iconElm = <Icon imageProps={{ src: iconUrl }} />;
       } else if (iconImage.image) {
-        iconElm = <Icon iconType={IconUIType.image} imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
+        iconElm = <Icon imageProps={{ className: `ms-BrandIcon--${iconImage.size} ms-BrandIcon--${iconImage.image}` }} />;
       } else {
         // Return a generic image
         let imgElm = <img />;
         // Check the size of the generic image which has to be returned
         switch (iconImage.size) {
           case 'icon16':
-          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_16 }} />;
+          imgElm = <Icon imageProps={{ src: ICON_GENERIC_16 }} />;
           break;
           case 'icon48':
-          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_48}} />;
+          imgElm = <Icon imageProps={{ src: ICON_GENERIC_48}} />;
           break;
           case 'icon96':
-          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_96}} />;
+          imgElm = <Icon imageProps={{ src: ICON_GENERIC_96}} />;
           break;
           default:
-          imgElm = <Icon iconType={IconUIType.image} imageProps={{ src: ICON_GENERIC_16}} />;
+          imgElm = <Icon imageProps={{ src: ICON_GENERIC_16}} />;
           break;
         }
 

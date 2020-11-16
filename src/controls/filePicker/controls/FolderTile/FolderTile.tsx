@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './FolderTile.module.scss';
-import { css, IRenderFunction, IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { Icon, IconType } from 'office-ui-fabric-react/lib/Icon';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import * as strings from 'ControlStrings';
 import { ScreenWidthMinLarge  } from 'office-ui-fabric-react/lib/Styling';
 import { IFolderTileProps } from './IFolderTileProps';
@@ -44,8 +44,7 @@ export class FolderTile extends React.Component<IFolderTileProps> {
                   <div
                     className={css(styles.folderCover, styles.isLarge)}>
                     <Icon
-                      className={styles.folderCoverBack}
-                      iconType={IconType.image}
+                      className={styles.folderCoverBack}                      
                       imageProps={{
                         src: strings.FolderBackPlate
                       }} />
@@ -58,8 +57,7 @@ export class FolderTile extends React.Component<IFolderTileProps> {
                       </span>
                     }
                     <Icon
-                      className={styles.folderCoverFront}
-                      iconType={IconType.image}
+                      className={styles.folderCoverFront}                      
                       imageProps={{
                         src: strings.FolderFrontPlate
                       }} />

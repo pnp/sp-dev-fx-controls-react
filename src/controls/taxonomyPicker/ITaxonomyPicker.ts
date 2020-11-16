@@ -1,6 +1,6 @@
 import { IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
@@ -28,7 +28,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ExtensionContext;
+  context: WebPartContext | ExtensionContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */

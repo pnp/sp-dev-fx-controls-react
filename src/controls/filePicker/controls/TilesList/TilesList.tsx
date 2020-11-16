@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './TilesList.module.scss';
-import { SelectionZone, ISelection, Selection, SelectionMode } from 'office-ui-fabric-react/lib/Selection';
+import { SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { IFile } from '../../../../services/FileBrowserService.types';
 import { List, IPageProps } from 'office-ui-fabric-react/lib/List';
 import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';

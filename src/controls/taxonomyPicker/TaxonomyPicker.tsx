@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PrimaryButton, DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import TermPicker from './TermPicker';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
@@ -448,7 +448,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
           {
             /* Show spinner in the panel while retrieving terms */
-            loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
+            loaded === false ? <Spinner size={SpinnerSize.medium} /> : ''
           }
           {
             loaded === true && termSetAndTerms && (

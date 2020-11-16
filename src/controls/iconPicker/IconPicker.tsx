@@ -6,7 +6,6 @@ import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { IRenderFunction, getId } from 'office-ui-fabric-react/lib/Utilities';
 import styles from './IconPicker.module.scss';
 import * as strings from 'ControlStrings';
-import { IconNames } from './IconNames';
 import { Panel, PanelType, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
 import debounce from 'lodash/debounce';
 import { IIconPickerState } from './IIconPickerState';
