@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './DocumentTile.module.scss';
-import { css, IRenderFunction, IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { Image, IImageProps, ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import * as strings from 'ControlStrings';
 import { Check } from 'office-ui-fabric-react/lib/Check';
 import { ScreenWidthMinLarge } from 'office-ui-fabric-react/lib/Styling';

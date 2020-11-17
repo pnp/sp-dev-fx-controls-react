@@ -4,12 +4,11 @@ import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
-import { EmptyGuid } from '../../Common';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -22,7 +21,7 @@ export interface ITermPickerState {
 
 export interface ITermPickerProps {
   termPickerHostProps: ITaxonomyPickerProps;
-  context: IWebPartContext | ExtensionContext;
+  context: WebPartContext | ExtensionContext;
   disabled: boolean;
   value: IPickerTerms;
   allowMultipleSelections : boolean;

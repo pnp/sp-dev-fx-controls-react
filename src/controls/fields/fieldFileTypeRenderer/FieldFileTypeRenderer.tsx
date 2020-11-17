@@ -7,7 +7,6 @@ import { FileTypeIcon, IconType } from '../../fileTypeIcon';
 import * as telemetry from '../../../common/telemetry';
 
 import styles from './FieldFileTypeRenderer.module.scss';
-import { findIndex } from '@microsoft/sp-lodash-subset';
 
 export interface IFieldFileTypeRendererProps extends IFieldRendererProps {
   /**

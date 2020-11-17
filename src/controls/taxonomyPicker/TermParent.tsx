@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { ITermParentProps, ITermParentState } from './ITaxonomyPicker';
 import { ITerm } from '../../services/ISPTermStorePickerService';
 import { EXPANDED_IMG, COLLAPSED_IMG, TERMSET_IMG, TERM_IMG } from './TaxonomyPicker';
@@ -125,7 +125,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
         termElm = <div className={`${styles.listItem} ${styles.term}`}>{strings.TaxonomyPickerNoTerms}</div>;
       }
     } else {
-      termElm = <Spinner type={SpinnerType.normal} />;
+      termElm = <Spinner size={SpinnerSize.medium} />;
     }
 
 

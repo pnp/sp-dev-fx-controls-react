@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styles from './ListView.DragDrop.module.scss';
 import stickyHeaderstyles from './ListView.stickyHeader.module.scss';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps, IObjectWithKey } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
