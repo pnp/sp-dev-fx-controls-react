@@ -7,6 +7,7 @@
 - `RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)
 - `FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)
 - `FieldCollectionData`: `SearchBox` instead of `TextBox` [#719](https://github.com/pnp/sp-dev-fx-controls-react/pull/719)
+- `TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)
 
 ### Fixes
 
@@ -16,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [Gautam Sheth](https://github.com/gautamdsheth), [Konrad K.](https://github.com/wilecoyotegenius), [Vertamin](https://github.com/Vertamin).
+Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [Konrad K.](https://github.com/wilecoyotegenius), [Vertamin](https://github.com/Vertamin).
 
 ## 2.1.0
 
