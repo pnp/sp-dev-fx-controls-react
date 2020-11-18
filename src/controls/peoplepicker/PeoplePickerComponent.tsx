@@ -63,7 +63,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   }
 
   public componentWillReceiveProps(nextProps: IPeoplePickerProps) {
-    if (nextProps.errorMessage) {
+    if (nextProps.errorMessage !== this.props.errorMessage) {
       this.setState({
         errorMessage: nextProps.errorMessage
       });
