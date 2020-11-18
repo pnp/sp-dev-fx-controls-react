@@ -8,6 +8,7 @@
 - `FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)
 - `FieldCollectionData`: `SearchBox` instead of `TextBox` [#719](https://github.com/pnp/sp-dev-fx-controls-react/pull/719)
 - `TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)
+- Canadian French localization [#671](https://github.com/pnp/sp-dev-fx-controls-react/issues/671)
 
 ### Fixes
 
