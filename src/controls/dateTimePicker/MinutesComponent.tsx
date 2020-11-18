@@ -33,9 +33,10 @@ export default class MinutesComponent extends React.Component<ITimeComponentProp
     if (renderDropdown) {
       return (
         <Dropdown
-          disabled={this.props.disabled}
+          disabled={disabled}
           label=''
           options={this._minutes}
+          selectedKey={value}
           onChanged={option => {
             onChange(option.text);
           }} />
@@ -77,11 +78,11 @@ export default class MinutesComponent extends React.Component<ITimeComponentProp
       } else {
         digitMin = j.toString();
       }
-      let selected: boolean = false;
+      /*let selected: boolean = false;
       if (j === this.props.value) {
         selected = true;
-      }
-      minutes.push({ key: j, text: digitMin, isSelected: selected });
+      }*/
+      minutes.push({ key: j, text: digitMin });
     }
 
     this._minutes = minutes;

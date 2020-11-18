@@ -964,7 +964,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showMonthPickerAsOverlay={true}
           showWeekNumbers={true}
           showSeconds={true}
+          timeDisplayControlType={TimeDisplayControlType.Dropdown}
         />
+        <PrimaryButton text={'Change Date'} onClick={() => {
+          const date = this.state.dateTimeValue || new Date();
+          date.setMinutes(50);
+          this.setState({
+            dateTimeValue: date
+          });
+        }} />
 
         <DateTimePicker
           label="DateTime Picker (date only)"
