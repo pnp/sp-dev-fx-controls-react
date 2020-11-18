@@ -85,6 +85,11 @@ export interface ITaxonomyPickerProps  {
   validateOnLoad?: boolean;
 
   /**
+   * Specifies if the input text will be validated, when the component focus is changed
+   */
+  validateInput?: boolean;
+
+  /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.
    * Mutually exclusive with the static string errorMessage (it will take precedence over this).
    *

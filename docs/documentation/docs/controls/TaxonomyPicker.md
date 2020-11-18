@@ -165,6 +165,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 | hideTagsNotAvailableForTagging | boolean | no | Specifies if the tags marked with 'Available for tagging' = false should be hidden |
 | validateOnLoad | boolean | no | Specifies if the initial values will be validated, when the component is loaded. Default value is false |
+| validateInput | boolean | no | Specifies if the input text will be validated, when the component focus is changed |
 | hideDeprecatedTags | boolean | no | Specifies if deprecated tags  should be hidden |
 | placeholder | string | no | Short text hint to display in empty picker |
 | errorMessage | string | no | Static error message displayed below the picker. Use `onGetErrorMessage` to dynamically change the error message displayed (if any) based on the current value. `errorMessage` and `onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence). |
