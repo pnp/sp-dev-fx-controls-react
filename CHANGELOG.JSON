@@ -8,7 +8,8 @@
           "`RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)",
           "`FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)",
           "`FieldCollectionData`: `SearchBox` instead of `TextBox` [#719](https://github.com/pnp/sp-dev-fx-controls-react/pull/719)",
-          "`TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)"
+          "`TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)",
+          "Canadian French localization [#671](https://github.com/pnp/sp-dev-fx-controls-react/issues/671)"
         ],
         "fixes": [
           "Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)",
