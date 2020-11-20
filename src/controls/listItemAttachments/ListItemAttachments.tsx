@@ -194,6 +194,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
               iconText={strings.ListItemAttachmentslPlaceHolderIconText}
               description={strings.ListItemAttachmentslPlaceHolderDescription}
               buttonLabel={strings.ListItemAttachmentslPlaceHolderButtonLabel}
+              hideButton={this.props.disabled}
               onConfigure={() => this.setState({ fireUpload: true })} />
             :
 
