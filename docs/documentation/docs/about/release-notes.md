@@ -17,6 +17,7 @@
 - Deprecated stuff is removed [#733](https://github.com/pnp/sp-dev-fx-controls-react/pull/733)
 - `DateTimePicker`: time portion not re-rendered when state changed programmatically - when time is displayed as dropdown only [#713](https://github.com/pnp/sp-dev-fx-controls-react/issues/713)
 - `PeoplePicker`: `errorMessage` not being removed [#730](https://github.com/pnp/sp-dev-fx-controls-react/issues/730)
+- `ListItemAttachment`: the control is not fully disabled [#736](https://github.com/pnp/sp-dev-fx-controls-react/issues/736)
 
 ### Contributors
 
