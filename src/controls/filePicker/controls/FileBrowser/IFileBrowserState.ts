@@ -1,4 +1,4 @@
-import { ViewType } from ".";
+import { ViewType } from "./FileBrowser.types";
 import { IFile } from "../../../../services/FileBrowserService.types";
 import { IColumn } from 'office-ui-fabric-react/lib/DetailsList';
 import { IFilePickerResult } from "../../FilePicker.types";

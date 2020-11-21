@@ -1,4 +1,4 @@
-import { ImageSize, ImageAspect, ImageLicense } from ".";
+import { ImageSize, ImageAspect, ImageLicense } from "./WebSearchTab.types";
 import { IFilePickerResult } from "../FilePicker.types";
 import { ISearchResult } from "../../../services/FilesSearchService.types";
 

@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
-import { GeneralHelper } from '../../../../Utilities';
+import { GeneralHelper } from '../../../../common/utilities/GeneralHelper';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
-import { IFileBrowserProps, IFileBrowserState, ViewType } from '.';
+import { IFileBrowserProps } from './IFileBrowserProps';
+import { IFileBrowserState } from './IFileBrowserState';
+import { ViewType } from './FileBrowser.types';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow, SelectionZone } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';

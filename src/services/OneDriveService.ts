@@ -5,7 +5,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { FileBrowserService } from "./FileBrowserService";
 import { FilesQueryResult } from "./FileBrowserService.types";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { GeneralHelper } from "../Utilities";
+import { GeneralHelper } from "../common/utilities/GeneralHelper";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;

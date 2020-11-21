@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IOneDriveFilesTabProps, IOneDriveFilesTabState } from '.';
+import { IOneDriveFilesTabProps } from './IOneDriveFilesTabProps';
+import { IOneDriveFilesTabState } from './IOneDriveFilesTabState';
 import { IFile } from '../../../services/FileBrowserService.types';
 import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';

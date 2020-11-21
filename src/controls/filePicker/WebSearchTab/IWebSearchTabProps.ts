@@ -1,5 +1,5 @@
-import { IFilePickerTab } from "..";
-import { ISearchSuggestion } from ".";
+import { IFilePickerTab } from "../FilePicker.types";
+import { ISearchSuggestion } from "./WebSearchTab.types";
 import { FilesSearchService } from "../../../services/FilesSearchService";
 
 export interface IWebSearchTabProps extends IFilePickerTab {

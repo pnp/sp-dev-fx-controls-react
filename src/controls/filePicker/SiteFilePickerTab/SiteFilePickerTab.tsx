@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { findIndex } from '@microsoft/sp-lodash-subset';
-import { ISiteFilePickerTabProps, ISiteFilePickerTabState } from '.';
-import { DocumentLibraryBrowser, FileBrowser } from '../controls';
+import findIndex from 'lodash/findIndex';
+import { ISiteFilePickerTabProps } from './ISiteFilePickerTabProps';
+import {ISiteFilePickerTabState } from './ISiteFilePickerTabState';
+import { DocumentLibraryBrowser } from '../controls/DocumentLibraryBrowser/DocumentLibraryBrowser';
+import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';

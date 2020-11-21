@@ -1,7 +1,7 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
-import { GeneralHelper } from "..";
+import { GeneralHelper } from "../common/utilities/GeneralHelper";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class FileBrowserService {

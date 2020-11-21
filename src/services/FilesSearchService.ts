@@ -3,7 +3,7 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { GeneralHelper } from "../common/utilities";
+import { GeneralHelper } from "../common/utilities/GeneralHelper";
 
 /**
  * Maximum file size when searching
@@ -145,8 +145,8 @@ export class FilesSearchService {
 
       // Submit the request
       const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&size=${size}&mkt=en-US&license=${license}`;
-      
-      const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {        
+
+      const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {
         method: 'GET',
         mode: 'cors'
       });

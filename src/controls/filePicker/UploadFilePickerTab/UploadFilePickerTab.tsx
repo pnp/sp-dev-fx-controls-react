@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { IUploadFilePickerTabProps, IUploadFilePickerTabState } from '.';
+import { IUploadFilePickerTabProps } from './IUploadFilePickerTabProps';
+import { IUploadFilePickerTabState } from './IUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
-import { GeneralHelper } from '../../../common/utilities';
+import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { css } from '@uifabric/utilities/lib/css';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 
 import * as strings from 'ControlStrings';
 import styles from './UploadFilePickerTab.module.scss';
