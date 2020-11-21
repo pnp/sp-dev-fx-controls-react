@@ -3,6 +3,7 @@
 const gulp = require('gulp');
 const build = require('@microsoft/sp-build-web');
 const fs = require('fs');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-Grid' is not camelCase and will not be type-safe.`);
 
@@ -16,6 +17,16 @@ gulp.task('versionUpdater', (done) => {
   fs.writeFileSync(filePath, newContents, { encoding: "utf8" });
   done();
 });
+
+if (process.argv.indexOf('--size') !== -1) {
+  build.configureWebpack.mergeConfig({
+    additionalConfiguration: generatedConfiguration => {
+      generatedConfiguration.plugins.push(new BundleAnalyzerPlugin());
+
+      return generatedConfiguration;
+    }
+  });
+}
 
 build.initialize(gulp);
 
