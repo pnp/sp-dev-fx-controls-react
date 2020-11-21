@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`ListView`: drag and drop [#711](https://github.com/pnp/sp-dev-fx-controls-react/pull/711)"
+          "`ListView`: drag and drop [#711](https://github.com/pnp/sp-dev-fx-controls-react/pull/711)",
+          "`TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)"
         ],
         "fixes": [
           "`RichText`: Fixing hyperlink issues [#708](https://github.com/pnp/sp-dev-fx-controls-react/pull/708)"
