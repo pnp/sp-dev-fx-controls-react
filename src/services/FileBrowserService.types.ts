@@ -30,6 +30,7 @@ export interface ILibrary {
   title: string;
   absoluteUrl: string;
   serverRelativeUrl: string;
+  webRelativeUrl?: string;
   iconPath?: string;
 }
 

@@ -19,7 +19,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     this.state = {
       filePickerResult: null,
       libraryAbsolutePath: undefined,
-      libraryTitle: strings.DocumentLibraries,
+      libraryUrl: '/Documents',
       folderPath: undefined,
       folderName: strings.DocumentLibraries,
       breadcrumbItems: []
@@ -56,8 +56,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
 
     this.setState({
       libraryAbsolutePath: libraryAbsolutePath,
-      folderName: folderPath,
-      libraryTitle
+      folderName: folderPath
     });
   }
 
@@ -73,7 +72,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
               onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.oneDriveService}
-              libraryName={this.state.libraryTitle}
+              libraryUrl={this.state.libraryUrl}
               folderPath={this.state.folderPath}
               accepts={this.props.accepts} />}
         </div>

@@ -461,7 +461,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    * Gets all files in a library with a matchihg path
    */
   private async _getListItems(concatenateResults: boolean = false) {
-    const { libraryName, folderPath, accepts } = this.props;
+    const { libraryUrl, folderPath, accepts } = this.props;
     let { items, nextPageQueryString } = this.state;
 
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
@@ -475,7 +475,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         nextPageQueryString
       });
       // Load files in the folder
-      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts, nextPageQueryString);
+      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);

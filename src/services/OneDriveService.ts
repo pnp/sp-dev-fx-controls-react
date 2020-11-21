@@ -25,7 +25,7 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets files from OneDrive personal library
    */
-  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (listUrl: string, folderPath?: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();

@@ -26,7 +26,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     this.state = {
       filePickerResult: null,
       libraryAbsolutePath: undefined,
-      libraryTitle: strings.DocumentLibraries,
+      libraryUrl: '/Shared%20Documents',
       libraryPath: undefined,
       folderName: strings.DocumentLibraries,
       breadcrumbItems: [breadcrumbSiteNode]
@@ -49,7 +49,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.fileBrowserService}
-              libraryName={this.state.libraryTitle}
+              libraryUrl={this.state.libraryUrl}
               folderPath={this.state.libraryPath}
               accepts={this.props.accepts} />}
         </div>
@@ -180,7 +180,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
     this.setState({
       libraryAbsolutePath: library.absoluteUrl,
-      libraryTitle: library.title,
+      libraryUrl: library.webRelativeUrl,
       libraryPath: library.serverRelativeUrl,
       breadcrumbItems
     });

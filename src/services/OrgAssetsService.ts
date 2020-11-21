@@ -11,7 +11,7 @@ export class OrgAssetsService extends FileBrowserService {
     super(context, itemsToDownloadCount);
   }
 
-  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       // Retrieve Lib path from folder path
