@@ -33,7 +33,7 @@ export default class SPTermStorePickerService {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
-        this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + 	"/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
+        this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + "/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
       }
     }
   }
@@ -192,7 +192,7 @@ export default class SPTermStorePickerService {
           const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
 
           if (termStoreResultTermSets.length > 0) {
-            var termStoreResultTermSet = termStoreResultTermSets[0];
+            let termStoreResultTermSet = termStoreResultTermSets[0];
             termStoreResultTermSet.Terms = [];
             // Retrieve the term collection results
             const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
@@ -230,8 +230,13 @@ export default class SPTermStorePickerService {
                 termStoreResultTermSet.Terms = terms;
               }
             }
-
-            sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
+            try {
+              if (window.sessionStorage) {
+                window.sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
+              }
+            } catch (error) {
+              // do nothing, sometimes storage quota exceed error if too many items
+            }
             return termStoreResultTermSet;
           }
           return null;
@@ -283,11 +288,18 @@ export default class SPTermStorePickerService {
   }
 
   private getTermsById(termId) {
-    var terms = sessionStorage.getItem(termId);
-    if (terms)
-      return JSON.parse(terms);
-    else
+    try {
+      if (window.sessionStorage) {
+        let terms = window.sessionStorage.getItem(termId);
+        if (terms) {
+          return JSON.parse(terms);
+        } else {
+          return null;
+        }
+      }
+    } catch (error) {
       return null;
+    }
   }
 
   private searchTermsBySearchText(terms, searchText) {
@@ -303,7 +315,7 @@ export default class SPTermStorePickerService {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
-      var childTerms = this.getTermsById(termId);
+      let childTerms = this.getTermsById(termId);
       if (childTerms) {
         return this.searchTermsBySearchText(childTerms, searchText);
       }
@@ -361,7 +373,14 @@ export default class SPTermStorePickerService {
             returnTerms.push(this.convertTermToPickerTerm(term));
           });
 
-          sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
+          try {
+            if (window.sessionStorage) {
+              window.sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
+            }
+          }
+          catch (error) {
+            // do nothing
+          }
         }
       } else {
         terms.forEach(term => {
@@ -396,14 +415,14 @@ export default class SPTermStorePickerService {
               return;
             }
           }
-          if (termStore === undefined || termStore.length  === 0) {
+          if (termStore === undefined || termStore.length === 0) {
             resolve(null);
             return;
           }
 
           let data = {
             start: searchText,
-            lcid : this.context.pageContext.web.language, // TODO : get the user's navitation LCID. Here it's the default web language LCID
+            lcid: this.context.pageContext.web.language, // TODO : get the user's navitation LCID. Here it's the default web language LCID
             sspList: this.cleanGuid(termStore[0].Id),
             termSetList: TermSetId,
             anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
@@ -579,7 +598,7 @@ export default class SPTermStorePickerService {
     if (term.Paths && term.Paths.length > 0) {
       const fullPath = term.Paths[0].replace(/^\[/, "").replace(/\]$/, "");
       const fullPathParts = fullPath.split(":");
-      path = fullPathParts.join(";") + ";" +  term.DefaultLabel;
+      path = fullPathParts.join(";") + ";" + term.DefaultLabel;
       termSetName = fullPathParts[0];
     }
     return {
