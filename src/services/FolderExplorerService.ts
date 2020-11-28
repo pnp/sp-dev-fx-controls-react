@@ -102,7 +102,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(encodeURIComponent(name));
+      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(name);
       if (folderAddResult && folderAddResult.data) {
         folder = {
           Name: folderAddResult.data.Name,

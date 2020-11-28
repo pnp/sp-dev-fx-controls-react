@@ -29,10 +29,22 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
 
 
   public render(): React.ReactElement<INewFolderProps> {
+
+    const {
+      folderName,
+      errorMessage
+    } = this.state;
+
+    const hasError = folderName && /["*:<>?/\\|]/gmi.test(folderName);
+
     return (
       <div className={styles.libraryItem}>
         {this.state.loading &&
-          <span className={styles.spinner}><Spinner size={SpinnerSize.xSmall} /></span>
+          <span className={styles.spinner}><Spinner size={SpinnerSize.xSmall} styles={{
+            root: {
+              height: '32px'
+            }
+          }} /></span>
         }
         {!this.state.loading &&
           <Icon iconName="FabricNewFolder" className={styles.folderIcon}></Icon>
@@ -42,9 +54,18 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
         }
         {this.state.showInput &&
           <TextField
+            styles={{
+              errorMessage: {
+                paddingTop: 0
+              },
+              root: {
+                width: '100%'
+              }
+            }}
             placeholder={strings.NewFolderNamePlaceholder}
-            value={this.state.folderName}
+            value={folderName}
             onChanged={this._onFolderNameChange}
+            errorMessage={hasError ? strings.NewFolderIncorrectSymbolsError : errorMessage}
           // styles={{ fieldGroup: { width: 300 } }}
           />
         }
@@ -54,7 +75,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
             title="Add"
             ariaLabel="Add"
             className={styles.button}
-            disabled={this.state.loading}
+            disabled={this.state.loading || hasError}
             onClick={this._addSubFolder} />
         }
       </div>
@@ -62,7 +83,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
   }
 
   private _onFolderNameChange = (newValue?: string) => {
-    this.setState({ folderName: newValue || '' });
+    this.setState({ folderName: newValue || '', errorMessage: '' });
   }
 
   private _onShowInputChange = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -94,6 +115,10 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
 
     } catch (error) {
       console.error('Error adding folder', error);
+      this.setState({
+        loading: false,
+        errorMessage: strings.SomethingWentWrong
+      });
     }
 
     // callback
