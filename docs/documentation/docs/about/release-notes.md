@@ -24,6 +24,7 @@
 - Documentation fix for 'attention' block on index page [#740](https://github.com/pnp/sp-dev-fx-controls-react/pull/740)
 - `TaxonomyPicker`: `sessionStorage` exceeds max-size when browsing large termsets [#739](https://github.com/pnp/sp-dev-fx-controls-react/issues/739)
 - `FolderExplorer` and `FolderPicker` do not seem to work for document libraries [#741](https://github.com/pnp/sp-dev-fx-controls-react/issues/741)
+- `FilePicker`: `onChange` event does not exist despite being documented [#747](https://github.com/pnp/sp-dev-fx-controls-react/issues/747)
 
 ### Contributors
 
