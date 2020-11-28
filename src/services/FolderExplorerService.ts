@@ -6,6 +6,7 @@ import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
+import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
 
 export class FolderExplorerService implements IFolderExplorerService {
@@ -72,7 +73,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(encodeURIComponent(folderRelativeUrl)).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
+      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
       results = foldersResult.filter(f => f.Name != "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
@@ -101,7 +102,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(encodeURIComponent(folderRelativeUrl)).folders.addUsingPath(encodeURIComponent(name));
+      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(encodeURIComponent(name));
       if (folderAddResult && folderAddResult.data) {
         folder = {
           Name: folderAddResult.data.Name,
