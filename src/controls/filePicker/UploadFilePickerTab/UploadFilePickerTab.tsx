@@ -102,6 +102,8 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
       filePickerResult,
       filePreview: undefined
     });
+
+    this.props.onChange(filePickerResult);
   }
 
   /**

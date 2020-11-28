@@ -129,6 +129,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               this.state.selectedTab === "keyUpload" &&
               <UploadFilePickerTab
                 {...linkTabProps}
+                onChange={this._handleOnChange}
               />
             }
             {
@@ -222,6 +223,12 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     this.setState({
       panelOpen: false
     });
+  }
+
+  private _handleOnChange = (filePickerResult: IFilePickerResult) => {
+    if (this.props.onChange) {
+      this.props.onChange(filePickerResult);
+    }
   }
 
   /**

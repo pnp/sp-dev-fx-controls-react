@@ -1281,7 +1281,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
-            onChanged={(filePickerResult: IFilePickerResult) => { this.setState({ filePickerResult }); }}
+            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
             context={this.props.context}
             hideRecentTab={false}
           />
