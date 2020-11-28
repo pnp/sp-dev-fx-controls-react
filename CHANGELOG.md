@@ -23,10 +23,11 @@
 - `FilePicker`: Site Tab does not load document if we access SharePoint site in different language than default language of the site [#724](https://github.com/pnp/sp-dev-fx-controls-react/issues/724)
 - Documentation fix for 'attention' block on index page [#740](https://github.com/pnp/sp-dev-fx-controls-react/pull/740)
 - `TaxonomyPicker`: `sessionStorage` exceeds max-size when browsing large termsets [#739](https://github.com/pnp/sp-dev-fx-controls-react/issues/739)
+- `FolderExplorer` and `FolderPicker` do not seem to work for document libraries [#741](https://github.com/pnp/sp-dev-fx-controls-react/issues/741)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [avadhootdindorkar](https://github.com/avadhootdindorkar), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [Konrad K.](https://github.com/wilecoyotegenius), [Vertamin](https://github.com/Vertamin).
+Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [avadhootdindorkar](https://github.com/avadhootdindorkar), [Devang Bhavsar](https://github.com/devangbhavsar89), [Gautam Sheth](https://github.com/gautamdsheth), [Konrad K.](https://github.com/wilecoyotegenius), [Nikolay Belykh](https://github.com/nbelyh), [Vertamin](https://github.com/Vertamin).
 
 ## 2.1.0
 
