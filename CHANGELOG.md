@@ -22,6 +22,7 @@
 - `TaxonomyPicker`: icons are not being rendered on Classic SharePoint pages [#735](https://github.com/pnp/sp-dev-fx-controls-react/issues/735)
 - `FilePicker`: Site Tab does not load document if we access SharePoint site in different language than default language of the site [#724](https://github.com/pnp/sp-dev-fx-controls-react/issues/724)
 - Documentation fix for 'attention' block on index page [#740](https://github.com/pnp/sp-dev-fx-controls-react/pull/740)
+- `TaxonomyPicker`: `sessionStorage` exceeds max-size when browsing large termsets [#739](https://github.com/pnp/sp-dev-fx-controls-react/issues/739)
 
 ### Contributors
 
