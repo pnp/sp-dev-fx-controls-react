@@ -302,6 +302,8 @@ declare interface IControlStrings {
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
   FolderExplorerNoItems: string;
+  NewFolderIncorrectSymbolsError: string;
+  SomethingWentWrong: string;
 
   //Icon picker
   SelectedLabel: string;

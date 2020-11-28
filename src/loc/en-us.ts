@@ -336,6 +336,8 @@ define([], () => {
     FolderFilterBoxPlaceholder: "Filter folders by name",
     FolderExplorerLoading: "Loading folders...",
     FolderExplorerNoItems: "This folder doesn't have any subfolders.",
+    NewFolderIncorrectSymbolsError: "Please enter a name that doesn't include any of these characters: \" * : < > ? / \ |.",
+    SomethingWentWrong: "Something went wrong",
     SelectedLabel: "Selected",
     SelectIcon: "Select icon",
 

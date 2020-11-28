@@ -4,11 +4,11 @@
 .libraryItem {
   padding: 5px 0 5px 10px;
   cursor: pointer;
-  height: 30px;
-  line-height: 30px;
+  min-height: 32px;
+  line-height: 32px;
   border-width: 1px;
   display: flex;
-  align-items: center;
+  align-items: start;
 }
 
 .libraryItem:hover {
