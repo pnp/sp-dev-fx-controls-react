@@ -56,7 +56,7 @@ import {
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import { FolderPicker } from '../../../FolderPicker';
-import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
+import { FolderExplorer, IBreadcrumbItem, IFolder } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
@@ -522,6 +522,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
   }
 
+  private rootFolder: IFolder = {
+    Name: "Site",
+    ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl
+  };
+  
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
 
@@ -1275,6 +1280,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
 
         <div>
+          <h3>File Picker</h3>
           <FilePicker
             bingAPIKey="<BING API KEY>"
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
@@ -1296,6 +1302,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
             </div>
           }
+        </div>
+
+        <div>
+          <h3>File Picker with target folder browser</h3>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={this._onFilePickerSave}
+            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
+            context={this.props.context}
+            hideRecentTab={false}
+            renderCustomUploadTabContent={() => (
+              <FolderExplorer context={this.props.context}
+                rootFolder={this.rootFolder}
+                defaultFolder={this.rootFolder}
+                onSelect={this._onFolderSelect}
+                canCreateFolders={true}
+            />)}
+          />
         </div>
 
         <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>

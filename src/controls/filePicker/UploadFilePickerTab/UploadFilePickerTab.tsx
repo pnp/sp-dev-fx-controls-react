@@ -52,6 +52,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
           <label className={styles.localTabLabel} htmlFor="fileInput">{
             (fileName ? strings.ChangeFileLinkLabel : strings.ChooseFileLinkLabel)
           }</label>
+          {this.props.renderCustomUploadTabContent && this.props.renderCustomUploadTabContent(this.state.filePickerResult)}
         </div>
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
