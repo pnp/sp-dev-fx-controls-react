@@ -121,4 +121,12 @@ export interface IFilePickerProps {
    * Handler when file picker has been cancelled.
    */
   onCancel?: () => void;
+  /**
+   * Optional additional renderer for Link tab
+   */
+  renderCustomLinkTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
+  /**
+   * Optional additional renderer for Upload tab
+   */
+  renderCustomUploadTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
 }

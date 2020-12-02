@@ -121,6 +121,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               this.state.selectedTab === "keyLink" &&
               <LinkFilePickerTab
                 fileSearchService={this.fileSearchService}
+                renderCustomLinkTabContent={this.props.renderCustomLinkTabContent}
                 allowExternalTenantLinks={true}
                 {...linkTabProps}
               />
@@ -128,6 +129,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keyUpload" &&
               <UploadFilePickerTab
+                renderCustomUploadTabContent={this.props.renderCustomUploadTabContent}
                 {...linkTabProps}
                 onChange={this._handleOnChange}
               />
