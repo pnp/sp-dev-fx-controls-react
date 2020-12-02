@@ -5,11 +5,11 @@ import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPick
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { IListItemPickerProps, IListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
+import isEqual from 'lodash/isEqual';
 
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
   private _spservice: SPservice;
-  private selectedItems: any[];
 
   constructor(props: IListItemPickerProps) {
     super(props);
@@ -21,19 +21,26 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       noresultsFoundText: !this.props.noResultsFoundText ? strings.genericNoResultsFoundText : this.props.noResultsFoundText,
       showError: false,
       errorMessage: "",
-      suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText
+      suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText,
+      selectedItems: props.defaultSelectedItems || []
     };
 
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
-
-    this.selectedItems = [];
   }
 
-  public componentDidUpdate(prevProps: IListItemPickerProps, prevState: IListItemPickerState): void {
-    if (this.props.listId !== prevProps.listId) {
-      this.selectedItems = [];
+  public componentWillReceiveProps(nextProps: IListItemPickerProps) {
+    let newSelectedItems: any[] | undefined;
+    if (this.props.listId !== nextProps.listId) {
+      newSelectedItems = [];
     }
+    if (!isEqual(this.props.defaultSelectedItems, nextProps.defaultSelectedItems)) {
+      newSelectedItems = nextProps.defaultSelectedItems;
+    }
+
+    this.setState({
+      selectedItems: newSelectedItems
+    });
   }
 
   /**
@@ -41,6 +48,12 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    */
   public render(): React.ReactElement<IListItemPickerProps> {
     const { className, disabled, itemLimit, placeholder } = this.props;
+    const {
+      suggestionsHeaderText,
+      noresultsFoundText,
+      errorMessage,
+      selectedItems
+    } = this.state;
 
     return (
       <div>
@@ -48,10 +61,10 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
                    //   getTextFromItem={(item: any) => { return item.name; }}
                    getTextFromItem={this.getTextFromItem}
                    pickerSuggestionsProps={{
-                     suggestionsHeaderText: this.state.suggestionsHeaderText,
-                     noResultsFoundText: this.state.noresultsFoundText
+                     suggestionsHeaderText: suggestionsHeaderText,
+                     noResultsFoundText: noresultsFoundText
                    }}
-                   defaultSelectedItems={this.props.defaultSelectedItems || []}
+                   selectedItems={selectedItems}
                    onChange={this.onItemChanged}
                    className={className}
                    itemLimit={itemLimit}
@@ -60,8 +73,8 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
                     placeholder: placeholder
                   }} />
 
-        {!!this.state.errorMessage &&
-          (<Label style={{color:'#FF0000'}}> {this.state.errorMessage} </Label>)}
+        {!!errorMessage &&
+          (<Label style={{color:'#FF0000'}}> {errorMessage} </Label>)}
       </div>
     );
   }
@@ -77,7 +90,9 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * On Selected Item
    */
   private onItemChanged = (selectedItems: { key: string; name: string }[]): void => {
-    this.selectedItems = selectedItems;
+    this.setState({
+      selectedItems: selectedItems
+    });
     this.props.onSelectedItem(selectedItems);
   }
 
@@ -87,7 +102,9 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   private onFilterChanged = async (filterText: string, tagList: { key: string; name: string }[]) => {
     let resolvedSugestions: { key: string; name: string }[] = await this.loadListItems(filterText);
 
-    const selectedItems = [...this.selectedItems, ...(this.props.defaultSelectedItems || [])];
+    const {
+      selectedItems
+    } = this.state;
 
     // Filter out the already retrieved items, so that they cannot be selected again
     if (selectedItems && selectedItems.length > 0) {
