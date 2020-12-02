@@ -10,6 +10,7 @@
 - `TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)
 - Canadian French localization [#671](https://github.com/pnp/sp-dev-fx-controls-react/issues/671)
 - `FilePicker`: reduce bundle size [#732](https://github.com/pnp/sp-dev-fx-controls-react/issues/732)
+- `FilePicker`: Custom render callbacks for the 'Upload' and 'Link' tabs [#746](https://github.com/pnp/sp-dev-fx-controls-react/issues/746)
 
 ### Fixes
 
