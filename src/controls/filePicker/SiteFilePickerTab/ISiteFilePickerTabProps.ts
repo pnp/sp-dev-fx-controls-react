@@ -1,4 +1,4 @@
-import { IFilePickerTab } from "..";
+import { IFilePickerTab } from "../FilePicker.types";
 import { FileBrowserService } from "../../../services/FileBrowserService";
 import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
 

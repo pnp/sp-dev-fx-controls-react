@@ -4,12 +4,12 @@ import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
-import { EmptyGuid } from '../../Common';
+import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -22,7 +22,7 @@ export interface ITermPickerState {
 
 export interface ITermPickerProps {
   termPickerHostProps: ITaxonomyPickerProps;
-  context: IWebPartContext | ExtensionContext;
+  context: WebPartContext | ExtensionContext;
   disabled: boolean;
   value: IPickerTerms;
   allowMultipleSelections : boolean;
@@ -32,6 +32,8 @@ export interface ITermPickerProps {
   placeholder?: string;
 
   onChanged: (items: IPickerTerm[]) => void;
+  onInputChange: (input: string) => string;
+  onBlur: (ev: React.FocusEvent<HTMLElement | Autofill>) => void;
 }
 
 export default class TermPicker extends React.Component<ITermPickerProps, ITermPickerState> {
@@ -183,7 +185,6 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     }
   }
 
-
   /**
    * gets the text from an item
    */
@@ -191,7 +192,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     return item.name;
   }
 
-    /**
+  /**
    * Render method
    */
   public render(): JSX.Element {
@@ -199,6 +200,8 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       disabled,
       value,
       onChanged,
+      onInputChange,
+      onBlur,
       allowMultipleSelections,
       placeholder
     } = this.props;
@@ -218,6 +221,8 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           defaultSelectedItems={value}
           selectedItems={terms}
           onChange={onChanged}
+          onInputChange={onInputChange}
+          onBlur={onBlur}
           itemLimit={!allowMultipleSelections ? 1 : undefined}
           className={styles.termBasePicker}
           inputProps={{

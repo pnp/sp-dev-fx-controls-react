@@ -1,4 +1,4 @@
-import { IFilePickerTab } from "..";
+import { IFilePickerTab } from "../FilePicker.types";
 import { FilesSearchService } from "../../../services/FilesSearchService";
 
 export interface IStockImagesProps extends IFilePickerTab {

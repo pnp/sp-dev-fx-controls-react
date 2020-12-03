@@ -1,4 +1,4 @@
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 /**
@@ -41,7 +41,7 @@ export interface IPropertyFieldTermPickerProps {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ExtensionContext;
+  context: WebPartContext | ExtensionContext;
   /**
    * Limit the term sets that can be used by the group name or ID
    */

@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
-import { GeneralHelper } from '../../../../Utilities';
+import { GeneralHelper } from '../../../../common/utilities/GeneralHelper';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
-import { IFileBrowserProps, IFileBrowserState, ViewType } from '.';
+import { IFileBrowserProps } from './IFileBrowserProps';
+import { IFileBrowserState } from './IFileBrowserState';
+import { ViewType } from './FileBrowser.types';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow, SelectionZone } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
@@ -461,7 +463,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    * Gets all files in a library with a matchihg path
    */
   private async _getListItems(concatenateResults: boolean = false) {
-    const { libraryName, folderPath, accepts } = this.props;
+    const { libraryUrl, folderPath, accepts } = this.props;
     let { items, nextPageQueryString } = this.state;
 
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
@@ -475,7 +477,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         nextPageQueryString
       });
       // Load files in the folder
-      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryName, folderPath, accepts, nextPageQueryString);
+      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);

@@ -1,6 +1,45 @@
 {
   "versions": [
     {
+      "version": "2.2.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`RichText`: Add image support [#705](https://github.com/pnp/sp-dev-fx-controls-react/pull/705)",
+          "`FilePicker`: Add file size to the Upload tab and `IFilePickerResult` [#706](https://github.com/pnp/sp-dev-fx-controls-react/pull/706)",
+          "`FieldCollectionData`: `SearchBox` instead of `TextBox` [#719](https://github.com/pnp/sp-dev-fx-controls-react/pull/719)",
+          "`TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)",
+          "Canadian French localization [#671](https://github.com/pnp/sp-dev-fx-controls-react/issues/671)",
+          "`FilePicker`: reduce bundle size [#732](https://github.com/pnp/sp-dev-fx-controls-react/issues/732)",
+          "`FilePicker`: Custom render callbacks for the 'Upload' and 'Link' tabs [#746](https://github.com/pnp/sp-dev-fx-controls-react/issues/746)"
+        ],
+        "fixes": [
+          "Localization: Fixing some wrong localizations for the DatePicker short day in Spanish.[#702](https://github.com/pnp/sp-dev-fx-controls-react/pull/702)",
+          "`ListItemPicker`: When use defaultSelectedItems, ListItemPicker allows you to select dublicate entries [#722](https://github.com/pnp/sp-dev-fx-controls-react/issues/722)",
+          "Deprecated stuff is removed [#733](https://github.com/pnp/sp-dev-fx-controls-react/pull/733)",
+          "`DateTimePicker`: time portion not re-rendered when state changed programmatically - when time is displayed as dropdown only [#713](https://github.com/pnp/sp-dev-fx-controls-react/issues/713)",
+          "`PeoplePicker`: `errorMessage` not being removed [#730](https://github.com/pnp/sp-dev-fx-controls-react/issues/730)",
+          "`ListItemAttachment`: the control is not fully disabled [#736](https://github.com/pnp/sp-dev-fx-controls-react/issues/736)",
+          "`TaxonomyPicker`: icons are not being rendered on Classic SharePoint pages [#735](https://github.com/pnp/sp-dev-fx-controls-react/issues/735)",
+          "`FilePicker`: Site Tab does not load document if we access SharePoint site in different language than default language of the site [#724](https://github.com/pnp/sp-dev-fx-controls-react/issues/724)",
+          "Documentation fix for 'attention' block on index page [#740](https://github.com/pnp/sp-dev-fx-controls-react/pull/740)",
+          "`TaxonomyPicker`: `sessionStorage` exceeds max-size when browsing large termsets [#739](https://github.com/pnp/sp-dev-fx-controls-react/issues/739)",
+          "`FolderExplorer` and `FolderPicker` do not seem to work for document libraries [#741](https://github.com/pnp/sp-dev-fx-controls-react/issues/741)",
+          "`FilePicker`: `onChange` event does not exist despite being documented [#747](https://github.com/pnp/sp-dev-fx-controls-react/issues/747)",
+          "`ListItemPicker`: Selected values are not getting cleared or reset [#659](https://github.com/pnp/sp-dev-fx-controls-react/issues/659)"
+        ]
+      },
+      "contributions": [
+        "[Abderahman Moujahid](https://github.com/Abderahman88)",
+        "[avadhootdindorkar](https://github.com/avadhootdindorkar)",
+        "[Devang Bhavsar](https://github.com/devangbhavsar89)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Konrad K.](https://github.com/wilecoyotegenius)",
+        "[Nikolay Belykh](https://github.com/nbelyh)",
+        "[Vertamin](https://github.com/Vertamin)"
+      ]
+    },
+    {
       "version": "2.1.0",
       "changes": {
         "new": [],

@@ -7,7 +7,7 @@ import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
 import * as strings from 'ControlStrings';
 import { cloneDeep, sortBy, isEmpty, findIndex } from '@microsoft/sp-lodash-subset';
 import { Pagination } from '../../pagination';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
 export class CollectionDataViewer extends React.Component<ICollectionDataViewerProps, ICollectionDataViewerState> {
@@ -329,7 +329,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
       <div>
         {
           this.props.executeFiltering &&
-          <TextField onChanged={(newValue) => { this.setState({ searchFilter: newValue, currentPage: 1 }); }} placeholder={strings.CollectionDataSearch} className="FieldCollectionData__panel__search-box"/>
+          <SearchBox onChanged={(newValue) => { this.setState({ searchFilter: newValue, currentPage: 1 }); }} placeholder={strings.CollectionDataSearch} className="FieldCollectionData__panel__search-box"/>
         }
         <div className={`FieldCollectionData__panel__table ${styles.table} ${this.props.tableClassName || ""}`}>
           <div className={`FieldCollectionData__panel__table-head ${styles.tableRow} ${styles.tableHead}`}>

@@ -5,7 +5,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { FileBrowserService } from "./FileBrowserService";
 import { FilesQueryResult } from "./FileBrowserService.types";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { GeneralHelper } from "../Utilities";
+import { GeneralHelper } from "../common/utilities/GeneralHelper";
 
 export class OneDriveService extends FileBrowserService {
   protected oneDrivePersonalUrl: string;
@@ -25,7 +25,7 @@ export class OneDriveService extends FileBrowserService {
   /**
    * Gets files from OneDrive personal library
    */
-  public getListItems = async (libraryName: string, folderPath?: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (listUrl: string, folderPath?: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const oneDriveRootFolder = await this.getOneDriveRootFolderFullUrl();

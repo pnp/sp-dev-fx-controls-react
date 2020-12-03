@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import { IWebSearchTabProps, IWebSearchTabState, ISearchSuggestion, ImageSize, ImageAspect, ImageLicense, DEFAULT_SUGGESTIONS, MAX_ROW_HEIGHT, ROWS_PER_PAGE } from '.';
+import { IWebSearchTabProps } from './IWebSearchTabProps';
+import { IWebSearchTabState } from './IWebSearchTabState';
+import { ISearchSuggestion, ImageSize, ImageAspect, ImageLicense, DEFAULT_SUGGESTIONS, MAX_ROW_HEIGHT, ROWS_PER_PAGE } from './WebSearchTab.types';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
@@ -13,9 +15,9 @@ import { List } from 'office-ui-fabric-react/lib/List';
 import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
 import { Selection, SelectionMode, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
 import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
-import { css } from '@uifabric/utilities/lib/css';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { IFilePickerResult } from '../FilePicker.types';
-import { GeneralHelper } from '../../../common/utilities';
+import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { ISearchResult, BingQuerySearchParams } from '../../../services/FilesSearchService.types';
 
 import styles from './WebSearchTab.module.scss';

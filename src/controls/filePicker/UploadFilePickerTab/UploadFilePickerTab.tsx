@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-import { IUploadFilePickerTabProps, IUploadFilePickerTabState } from '.';
+import { IUploadFilePickerTabProps } from './IUploadFilePickerTabProps';
+import { IUploadFilePickerTabState } from './IUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
-import { GeneralHelper } from '../../../common/utilities';
+import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { css } from '@uifabric/utilities/lib/css';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 
 import * as strings from 'ControlStrings';
 import styles from './UploadFilePickerTab.module.scss';
@@ -51,6 +52,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
           <label className={styles.localTabLabel} htmlFor="fileInput">{
             (fileName ? strings.ChangeFileLinkLabel : strings.ChooseFileLinkLabel)
           }</label>
+          {this.props.renderCustomUploadTabContent && this.props.renderCustomUploadTabContent(this.state.filePickerResult)}
         </div>
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
@@ -81,6 +83,7 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
     const filePickerResult: IFilePickerResult = {
       fileAbsoluteUrl: null,
       fileName: file.name,
+      fileSize: file.size,
       fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(file.name),
       downloadFileContent: () => { return Promise.resolve(file); }
     };
@@ -100,6 +103,8 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
       filePickerResult,
       filePreview: undefined
     });
+
+    this.props.onChange(filePickerResult);
   }
 
   /**

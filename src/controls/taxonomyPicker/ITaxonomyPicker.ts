@@ -1,6 +1,6 @@
 import { IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
-import { IWebPartContext } from '@microsoft/sp-webpart-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
@@ -28,7 +28,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: IWebPartContext | ExtensionContext;
+  context: WebPartContext | ExtensionContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */
@@ -83,6 +83,11 @@ export interface ITaxonomyPickerProps  {
    * Specifies if the initial values will be validated, when the component is loaded
    */
   validateOnLoad?: boolean;
+
+  /**
+   * Specifies if the input text will be validated, when the component focus is changed
+   */
+  validateInput?: boolean;
 
   /**
    * The method is used to get the validation error message and determine whether the input value is valid or not.

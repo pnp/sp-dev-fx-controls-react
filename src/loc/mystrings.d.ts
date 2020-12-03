@@ -27,6 +27,7 @@ declare interface IControlStrings {
   TaxonomyPickerInLabel: string;
   TaxonomyPickerTermSetLabel: string;
   TaxonomyPickerTermsNotFound: string;
+  TaxonomyPickerInvalidTerms: string;
 
   ListItemPickerSelectValue: string;
 
@@ -73,10 +74,12 @@ declare interface IControlStrings {
   AlignTitle: string;
   ListTitle: string;
   LinkTitle: string;
+  ImageTitle: string;
   MoreTitle: string;
   FormattingPaneTitle: string;
   CloseButton: string;
   InsertLinkTitle: string;
+  InsertImageTitle: string;
   AddressFieldLabel: string;
   TextToDisplayLabel: string;
   SaveButtonLabel: string;
@@ -299,6 +302,8 @@ declare interface IControlStrings {
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
   FolderExplorerNoItems: string;
+  NewFolderIncorrectSymbolsError: string;
+  SomethingWentWrong: string;
 
   //Icon picker
   SelectedLabel: string;

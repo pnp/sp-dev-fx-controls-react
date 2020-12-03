@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { ILinkFilePickerTabProps, ILinkFilePickerTabState } from '.';
-import { GeneralHelper } from '../../../Utilities';
+import { ILinkFilePickerTabProps } from './ILinkFilePickerTabProps';
+import { ILinkFilePickerTabState } from './ILinkFilePickerTabState';
+import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { IFilePickerResult } from '../FilePicker.types';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { css } from '@uifabric/utilities/lib/css';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
 
 import * as strings from 'ControlStrings';
 import styles from './LinkFilePickerTab.module.scss';
@@ -44,6 +45,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             value={fileUrl}
             onChanged={(newValue: string) => this._handleChange(newValue)}
           />
+          {this.props.renderCustomLinkTabContent && this.props.renderCustomLinkTabContent(this.state.filePickerResult)}
         </div>
 
         <div className={styles.actionButtonsContainer}>

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styles from './StockImages.module.scss';
-import { StockImagesEvent, SubmitValue, IStockImagesProps } from '.';
+import { IStockImagesProps } from './IStockImagesProps';
+import { StockImagesEvent, SubmitValue } from './StockImagesModel';
 import { GeneralHelper } from '../../../Utilities';
-import { IFilePickerResult } from '..';
+import { IFilePickerResult } from '../FilePicker.types';
 
 export class StockImages extends React.Component<IStockImagesProps> {
   public componentDidMount() {
@@ -42,7 +43,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
       this._handleSave(eventData);
     } else if (eventData.MessageId === "CancelDialog") {
       this._handleClose();
-    } 
+    }
   }
 
   /**
@@ -59,7 +60,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
         fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(cdnFileInfo.sourceUrl)
       };
     }
-    
+
     this.props.onSave(filePickerResult);
   }
 
@@ -77,8 +78,8 @@ export class StockImages extends React.Component<IStockImagesProps> {
 
     const primaryColor = window["__themeState__"].theme["themePrimary"];
     const textColor = window["__themeState__"].theme["primaryText"];
-    const primaryBackground = window["__themeState__"].theme["bodyBackground"]; 
-    const neutralLighter = window["__themeState__"].theme["neutralLighter"]; 
+    const primaryBackground = window["__themeState__"].theme["bodyBackground"];
+    const neutralLighter = window["__themeState__"].theme["neutralLighter"];
 
     const theme = `{"primaryColor":"${primaryColor}","textColor":"${textColor}","backgroundColor":"${primaryBackground}","neutralLighterColor":"${neutralLighter}"}`;
     return theme;

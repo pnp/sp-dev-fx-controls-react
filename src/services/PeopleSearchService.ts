@@ -1,4 +1,4 @@
-import { ISPHttpClientOptions, SPHttpClient, SPHttpClientResponse } from '@microsoft/sp-http';
+import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ExtensionContext } from '@microsoft/sp-extension-base';

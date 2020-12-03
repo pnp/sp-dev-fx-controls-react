@@ -385,16 +385,28 @@ export class SPHelper {
     }
 
     private static _updateSessionStorageLoadedViewFields(loadedViewFields: { [viewId: string]: IFields }): void {
-        const sessionStorage: any = window.sessionStorage;
-        sessionStorage.setItem(Constants.LoadedViewFieldsKey, JSON.stringify(loadedViewFields));
+        try {
+            if (window.sessionStorage) {
+                window.sessionStorage.setItem(Constants.LoadedViewFieldsKey, JSON.stringify(loadedViewFields));
+            }
+        } catch (error) {
+            // do nothing, no need to stop fn execution
+        }
     }
 
     private static _getLoadedViewFieldsFromStorage(): { [viewId: string]: IFields } {
-        const loadedViewFields = sessionStorage.getItem(Constants.LoadedViewFieldsKey);
-        if (loadedViewFields) {
-            return JSON.parse(loadedViewFields);
+        try {
+            if (window.sessionStorage) {
+                const loadedViewFields = sessionStorage.getItem(Constants.LoadedViewFieldsKey);
+                if (loadedViewFields) {
+                    return JSON.parse(loadedViewFields);
+                }
+            }
+            else {
+                return null;
+            }
+        } catch (error) {
+            return null;
         }
-
-        return null;
     }
 }

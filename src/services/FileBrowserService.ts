@@ -1,7 +1,7 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
-import { GeneralHelper } from "..";
+import { GeneralHelper } from "../common/utilities/GeneralHelper";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class FileBrowserService {
@@ -21,14 +21,14 @@ export class FileBrowserService {
 
   /**
    * Gets files from current sites library
-   * @param libraryName
+   * @param listUrl web-relative url of the list
    * @param folderPath
    * @param acceptedFilesExtensions
    */
-  public getListItems = async (libraryName: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-      let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('${libraryName}')/RenderListDataAsStream`;
+      let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/GetList('${listUrl}')/RenderListDataAsStream`;
 
       // Do not pass FolderServerRelativeUrl as query parameter
       // Attach passed nextPageQueryStringParams values to REST URL
@@ -72,7 +72,7 @@ export class FileBrowserService {
         throw new Error(`Cannot read data from the results.`);
       }
 
-      const result: ILibrary[] = libResults.value.map((libItem) => { return this.parseLibItem(libItem); });
+      const result: ILibrary[] = libResults.value.map((libItem) => { return this.parseLibItem(libItem, absoluteUrl); });
       return result;
     } catch (error) {
       console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error.message}'`);
@@ -253,11 +253,12 @@ export class FileBrowserService {
     return file;
   }
 
-  protected parseLibItem = (libItem: any): ILibrary => {
+  protected parseLibItem = (libItem: any, webUrl: string): ILibrary => {
     const library: ILibrary = {
       title: libItem.Title,
       absoluteUrl: libItem.AbsoluteUrl,
-      serverRelativeUrl: libItem.ServerRelativeUrl
+      serverRelativeUrl: libItem.ServerRelativeUrl,
+      webRelativeUrl: libItem.AbsoluteUrl.replace(webUrl, '')
     };
 
     return library;

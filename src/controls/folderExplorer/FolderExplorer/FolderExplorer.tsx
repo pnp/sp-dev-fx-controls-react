@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { TextField } from "office-ui-fabric-react/lib/TextField";
 import styles from './FolderExplorer.module.scss';
 import * as strings from 'ControlStrings';
 import { Icon } from "office-ui-fabric-react/lib/Icon";

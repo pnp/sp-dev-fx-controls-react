@@ -16,7 +16,6 @@ import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import styles from './FieldUserRenderer.module.scss';
 import { IContext } from '../../../common/Interfaces';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
-import { SPHttpClient } from '@microsoft/sp-http';
 import FieldUserHoverCard, { IFieldUserHoverCardProps } from './FieldUserHoverCard';
 import * as telemetry from '../../../common/telemetry';
 

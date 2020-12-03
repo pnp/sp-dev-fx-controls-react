@@ -3,7 +3,6 @@ import * as React from 'react';
 import { ITimeComponentProps } from './ITimeComponentProps';
 import { MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
 import { TimeHelper } from './TimeHelper';
-import { disableBodyScroll } from '@uifabric/utilities/lib';
 import { IDropdownOption, Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
 

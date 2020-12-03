@@ -6,7 +6,7 @@ import { PrimaryButton, ActionButton } from 'office-ui-fabric-react/lib/componen
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Nav, INavLink, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
-import { css } from "@uifabric/utilities/lib/css";
+import { css } from "office-ui-fabric-react/lib/Utilities";
 
 // Localization
 import * as strings from 'ControlStrings';
@@ -19,7 +19,7 @@ import RecentFilesTab from './RecentFilesTab/RecentFilesTab';
 
 import styles from './FilePicker.module.scss';
 import { FileBrowserService } from '../../services/FileBrowserService';
-import { OneDriveFilesTab } from './OneDriveFilesTab';
+import { OneDriveFilesTab } from './OneDriveFilesTab/OneDriveFilesTab';
 import { OneDriveService } from '../../services/OneDriveService';
 import { OrgAssetsService } from '../../services/OrgAssetsService';
 import { IFilePickerResult } from './FilePicker.types';
@@ -121,6 +121,7 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
               this.state.selectedTab === "keyLink" &&
               <LinkFilePickerTab
                 fileSearchService={this.fileSearchService}
+                renderCustomLinkTabContent={this.props.renderCustomLinkTabContent}
                 allowExternalTenantLinks={true}
                 {...linkTabProps}
               />
@@ -128,7 +129,9 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
             {
               this.state.selectedTab === "keyUpload" &&
               <UploadFilePickerTab
+                renderCustomUploadTabContent={this.props.renderCustomUploadTabContent}
                 {...linkTabProps}
+                onChange={this._handleOnChange}
               />
             }
             {
@@ -222,6 +225,12 @@ export class FilePicker extends React.Component<IFilePickerProps, IFilePickerSta
     this.setState({
       panelOpen: false
     });
+  }
+
+  private _handleOnChange = (filePickerResult: IFilePickerResult) => {
+    if (this.props.onChange) {
+      this.props.onChange(filePickerResult);
+    }
   }
 
   /**

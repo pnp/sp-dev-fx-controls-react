@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { findIndex } from '@microsoft/sp-lodash-subset';
-import { ISiteFilePickerTabProps, ISiteFilePickerTabState } from '.';
-import { DocumentLibraryBrowser, FileBrowser } from '../controls';
+import findIndex from 'lodash/findIndex';
+import { ISiteFilePickerTabProps } from './ISiteFilePickerTabProps';
+import {ISiteFilePickerTabState } from './ISiteFilePickerTabState';
+import { DocumentLibraryBrowser } from '../controls/DocumentLibraryBrowser/DocumentLibraryBrowser';
+import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
 import { IFile, ILibrary } from '../../../services/FileBrowserService.types';
@@ -10,6 +12,7 @@ import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types
 
 import styles from './SiteFilePickerTab.module.scss';
 import * as strings from 'ControlStrings';
+import { urlCombine } from '../../../common/utilities';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
@@ -26,7 +29,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     this.state = {
       filePickerResult: null,
       libraryAbsolutePath: undefined,
-      libraryTitle: strings.DocumentLibraries,
+      libraryUrl: urlCombine(props.context.pageContext.web.serverRelativeUrl, '/Shared%20Documents'),
       libraryPath: undefined,
       folderName: strings.DocumentLibraries,
       breadcrumbItems: [breadcrumbSiteNode]
@@ -49,7 +52,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.fileBrowserService}
-              libraryName={this.state.libraryTitle}
+              libraryUrl={this.state.libraryUrl}
               folderPath={this.state.libraryPath}
               accepts={this.props.accepts} />}
         </div>
@@ -180,7 +183,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
     this.setState({
       libraryAbsolutePath: library.absoluteUrl,
-      libraryTitle: library.title,
+      libraryUrl: library.serverRelativeUrl,
       libraryPath: library.serverRelativeUrl,
       breadcrumbItems
     });

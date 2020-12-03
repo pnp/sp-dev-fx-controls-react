@@ -3,7 +3,8 @@ import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
 import { List } from 'office-ui-fabric-react/lib/List';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
 import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { IDocumentLibraryBrowserProps, IDocumentLibraryBrowserState } from '.';
+import { IDocumentLibraryBrowserProps } from './IDocumentLibraryBrowserProps';
+import { IDocumentLibraryBrowserState } from './IDocumentLibraryBrowserState';
 import { ILibrary } from '../../../../services/FileBrowserService.types';
 
 import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IOneDriveFilesTabProps, IOneDriveFilesTabState } from '.';
+import { IOneDriveFilesTabProps } from './IOneDriveFilesTabProps';
+import { IOneDriveFilesTabState } from './IOneDriveFilesTabState';
 import { IFile } from '../../../services/FileBrowserService.types';
 import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
@@ -19,7 +20,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     this.state = {
       filePickerResult: null,
       libraryAbsolutePath: undefined,
-      libraryTitle: strings.DocumentLibraries,
+      libraryUrl: '/Documents',
       folderPath: undefined,
       folderName: strings.DocumentLibraries,
       breadcrumbItems: []
@@ -56,8 +57,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
 
     this.setState({
       libraryAbsolutePath: libraryAbsolutePath,
-      folderName: folderPath,
-      libraryTitle
+      folderName: folderPath
     });
   }
 
@@ -73,7 +73,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
               onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.oneDriveService}
-              libraryName={this.state.libraryTitle}
+              libraryUrl={this.state.libraryUrl}
               folderPath={this.state.folderPath}
               accepts={this.props.accepts} />}
         </div>

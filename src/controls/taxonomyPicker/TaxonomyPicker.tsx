@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { PrimaryButton, DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Spinner, SpinnerType } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import TermPicker from './TermPicker';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
@@ -14,7 +15,7 @@ import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import uniqBy from 'lodash/uniqBy';
 import TermParent from './TermParent';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
-
+import { initializeIcons } from '@uifabric/icons';
 import * as telemetry from '../../common/telemetry';
 
 /**
@@ -26,12 +27,15 @@ export const GROUP_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQ
 export const TERMSET_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACaSURBVDhPrZLRCcAgDERdpZMIjuQA7uWH4CqdxMY0EQtNjKWB0A/77sxF55SKMTalk8a61lqCFqsLiwKac84ZRUUBi7MoYHVmAfjfjzE6vJqZQfie0AcwBQVW8ATi7AR7zGGGNSE6Q2cyLSPIjRswjO7qKhcPDN2hK46w05wZMcEUIG+HrzzcrRsQBIJ5hS8C9fGAPmRwu/9RFxW6L8CM4Ry8AAAAAElFTkSuQmCC'; // /_layouts/15/Images/EMMTermSet.png
 export const TERM_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACzSURBVDhPY2AYNKCoqIgTiOcD8X8S8F6wB4Aa1IH4akNDw+mPHz++/E8EuHTp0jmQRSDNCcXFxa/XrVt3gAh9KEpgBvx/9OjRLVI1g9TDDYBp3rlz5//Kysr/IJoYgGEASPPatWsbQDQxAMOAbdu2gZ0FookBcAOePHlyhxgN6GqQY+Hdhg0bDpJqCNgAaDrQAnJuNDY2nvr06dMbYgw6e/bsabgBUEN4yEiJ2wdNViLfIQC3sTh2vtJcswAAAABJRU5ErkJggg==';
 
+initializeIcons();
+
 /**
  * Renders the controls for PropertyFieldTermPicker component
  */
 export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxonomyPickerState> {
   private termsService: SPTermStorePickerService;
   private previousValues: IPickerTerms = [];
+  private invalidTerm: string = null;
   private cancel: boolean = true;
 
   /**
@@ -55,6 +59,9 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.onSave = this.onSave.bind(this);
     this.termsChanged = this.termsChanged.bind(this);
     this.termsFromPickerChanged = this.termsFromPickerChanged.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+
     this.termsService = new SPTermStorePickerService(this.props, this.props.context);
   }
 
@@ -100,7 +107,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   * it checks, if all entries still exist in term store. if allowMultipleSelections is true. it have to validate all values
   */
   private async validateTerms(): Promise<void> {
-
     const {
       hideDeprecatedTags,
       hideTagsNotAvailableForTagging,
@@ -140,8 +146,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Loads the list from SharePoint current web site
    */
   private loadTermStores(): void {
-
-
     if (this.props.termActions && this.props.termActions.initialize) {
       this.props.termActions.initialize(this.termsService);
       // this.props.termActions.actions.forEach(x => {
@@ -275,6 +279,58 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.validate(terms);
   }
 
+  /**
+   * Shows an error message for any invalid input inside taxonomy picker control
+   */
+  private validateInputText(): void {
+    // Show error message, if any unresolved value exists inside taxonomy picker control
+    if (!!this.invalidTerm) {
+      // An unresolved value exists
+      this.setState({
+        errorMessage: strings.TaxonomyPickerInvalidTerms.replace('{0}', this.invalidTerm)
+      });
+    }
+    else {
+      // There are no unresolved values
+      this.setState({
+        errorMessage: null
+      });
+    }
+  }
+
+  /**
+   * Triggers when input of taxonomy picker control changes
+   */
+  private onInputChange(input: string): string {
+    if (!input) {
+      const { validateInput } = this.props;
+      if (!!validateInput) {
+        // Perform validation of input text, only if taxonomy picker is configured with validateInput={true} property.
+        this.invalidTerm = null;
+        this.validateInputText();
+      }
+    }
+    return input;
+  }
+
+  /**
+   * Triggers when taxonomy picker control loses focus
+   */
+  private onBlur(event: React.FocusEvent<HTMLElement | Autofill>): void {
+    const { validateInput } = this.props;
+    if (!!validateInput) {
+      // Perform validation of input text, only if taxonomy picker is configured with validateInput={true} property.
+      const target: HTMLInputElement = event.target as HTMLInputElement;
+      const targetValue = !!target ? target.value : null;
+      if (!!targetValue) {
+        this.invalidTerm = targetValue;
+      }
+      else {
+        this.invalidTerm = null;
+      }
+      this.validateInputText();
+    }
+  }
 
   /**
    * Gets the given node position in the active nodes collection
@@ -317,7 +373,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   }
 
   private validate = async (value: IPickerTerms): Promise<void> => {
-
     //
     // checking if there are any invalid nodes left after initial validation
     //
@@ -389,7 +444,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       disabled,
       isTermSetSelectable,
       allowMultipleSelections,
-      disabledTermIds, disableChildrenOfDisabledParents,
+      disabledTermIds,
+      disableChildrenOfDisabledParents,
       placeholder,
       panelTitle,
       anchorId,
@@ -418,6 +474,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
               value={activeNodes}
               isTermSetSelectable={isTermSetSelectable}
               onChanged={this.termsFromPickerChanged}
+              onInputChange={this.onInputChange}
+              onBlur={this.onBlur}
               allowMultipleSelections={allowMultipleSelections}
               disabledTermIds={disabledTermIds}
               disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}
@@ -448,7 +506,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
           {
             /* Show spinner in the panel while retrieving terms */
-            loaded === false ? <Spinner type={SpinnerType.normal} /> : ''
+            loaded === false ? <Spinner size={SpinnerSize.medium} /> : ''
           }
           {
             loaded === true && termSetAndTerms && (

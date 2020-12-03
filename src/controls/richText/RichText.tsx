@@ -100,6 +100,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       showAlign: true,
       showList: true,
       showLink: true,
+      showImage: true,
       showMore: true
     }
   };
@@ -115,9 +116,11 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       editing: false,
       morePaneVisible: false,
       hideDialog: true,
+      hideImageDialog: true,
       formats: {},
       insertUrl: undefined,
       insertUrlText: undefined,
+      insertImageUrl: undefined,
       selectedText: undefined,
       selectedUrl: undefined,
       wrapperTop: 0
@@ -393,6 +396,40 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   }
 
   /**
+  * Renders the "Insert Image" dialog
+   */
+  private renderImageDialog = (): JSX.Element => {
+    return (
+      <Dialog hidden={this.state.hideImageDialog}
+              onDismiss={this.closeImageDialog}
+              dialogContentProps={{
+                type: DialogType.normal,
+                title: strings.InsertImageTitle,
+              }}
+              modalProps={{
+                className: styles.insertLinkDialog,
+                isBlocking: true,
+                containerClassName: 'ms-dialogMainOverride'
+              }}>
+        <TextField label={strings.AddressFieldLabel}
+                   value={this.state.insertImageUrl !== undefined ? this.state.insertImageUrl : ""}
+                   onChanged={(newValue?: string) => {
+                    this.setState({
+                      insertImageUrl: newValue
+                    });
+                  }} />
+
+        <DialogFooter className={styles.actions}>
+          <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
+            <PrimaryButton className={styles.action} onClick={this.handleInsertImage} text={strings.SaveButtonLabel} disabled={this.checkImageLinkUrl()} />
+            <DefaultButton className={styles.action} onClick={this.closeImageDialog} text={strings.CancelButtonLabel} />
+          </div>
+        </DialogFooter>
+      </Dialog>
+    );
+  }
+
+  /**
    * Renders the Rich Text Editor
    */
   public render(): React.ReactElement<IRichTextProps> {
@@ -409,7 +446,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     }
 
     // Okay, we're in edit mode.
-    const { placeholder, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore } } = this.props;
+    const { placeholder, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage} } = this.props;
 
     // Get a unique id for the toolbar
     const modules = {
@@ -552,6 +589,20 @@ id="DropDownStyles"
               </TooltipHost>
             )
           }
+           {
+            showImage && (
+              <TooltipHost content={strings.ImageTitle}
+                           id="image-richtextbutton"
+                           calloutProps={{ gapSpace: 0 }}>
+                <IconButton checked={this.state.formats!.link !== undefined}
+                            onClick={this.showInsertImageDialog}
+                            aria-describedby="image-richtextbutton"
+                            iconProps={{
+                              iconName: 'PictureFill'
+                            }} />
+              </TooltipHost>
+            )
+          }
           {
             showMore && (
               <TooltipHost content={strings.MoreTitle}
@@ -583,6 +634,10 @@ id="DropDownStyles"
         {
           this.renderLinkDialog()
         }
+        {
+          this.renderImageDialog()
+        }
+        
       </div>
     );
   }
@@ -660,6 +715,29 @@ id="DropDownStyles"
   }
 
   /**
+   * Displays the insert link dialog
+   */
+  private showInsertImageDialog = () => {
+    const quill = this.getEditor();
+    const range = quill.getSelection();
+
+    this.setState({
+      hideImageDialog: false,
+      selectedRange: range
+    });
+  }
+
+  /**
+   * Hides the insert image dialog
+   */
+  private closeImageDialog = () => {
+    this.setState({ 
+      hideImageDialog: true,
+      insertImageUrl: undefined,
+     });
+  }
+
+  /**
    * When user enters the richtext editor, displays the border
    */
   private handleOnFocus = (range, source, editor) => {
@@ -704,11 +782,44 @@ id="DropDownStyles"
   }
 
   /**
+   * Called when user insert an image
+   */
+  private handleInsertImage = () => {
+    const { insertImageUrl, selectedRange } = this.state;
+    try {
+        const quill = this.getEditor();
+        const cursorPosition: number = selectedRange!.index;
+        quill.insertEmbed(cursorPosition, 'image', insertImageUrl, "user");
+        this.setState({
+          insertImageUrl: undefined,
+          hideImageDialog: true,
+        });
+    } catch {
+        //Close the image dialog if something went wrong
+        this.setState({
+          insertImageUrl: undefined,
+          hideImageDialog: true,
+        });
+    }
+  }
+
+  /**
    * Disable Save-button if hyperlink is undefined or empty
    * This prevents the user of adding an empty hyperlink
    */
   private checkLinkUrl = () => {
     if (this.state.insertUrl !== undefined && this.state.insertUrl != "") {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Disable Save-button if hyperlink for the imported image is undefined or empty
+   * This prevents the user of adding an empty image
+   */
+  private checkImageLinkUrl = () => {
+    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl != "") {
       return false;
     }
     return true;
