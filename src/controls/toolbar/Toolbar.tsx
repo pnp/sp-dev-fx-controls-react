@@ -116,6 +116,9 @@ export const Toolbar = (props: IToolbarProps) => {
                       setFiltersOpen(false);
                     }
                   }
+                  else{
+                    setOverflowOpen(false);
+                  }
                 }}
                 getOverflowItems={(startIndex) =>
                   overflowToolbarItems.slice(startIndex)
@@ -151,7 +154,7 @@ export const Toolbar = (props: IToolbarProps) => {
                     }
                     else {
                       setFiltersOpen(false);
-                      setOverflowOpen(!false);
+                      setOverflowOpen(false);
                     }
                   }}
                   onSelectedFiltersChange={props.onSelectedFiltersChange}
