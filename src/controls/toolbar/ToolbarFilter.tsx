@@ -27,7 +27,8 @@ import {
 
 import { ComponentSlotStyle, SiteVariablesPrepared } from "@fluentui/styles";
 
-import { TToolbarLayout } from "./Toolbar";
+import styles from "./Toolbar.module.scss";
+import { TToolbarLayout } from "./ToolbarActionsUtils";
 
 const treeItemIconStyles = {
   position: "relative",
@@ -135,7 +136,7 @@ export interface IExtendedToolbarFilterProps {
   open: boolean;
   onOpenChange: ComponentEventHandler<PopupProps>;
   toolbarMenuProps: any;
-  toolbarButtonStyles: any;
+  toolbarButtonStyles?: any;
   onSelectedFiltersChange?: (selectedFilters: string[]) => string[];
 }
 
@@ -149,7 +150,6 @@ export const ToolbarFilter = (props: IExtendedToolbarFilterProps) => {
     open,
     onOpenChange,
     toolbarMenuProps,
-    toolbarButtonStyles,
   } = props;
   const [selectedFilters, setSelectedFilters] = React.useState<string[]>([]);
   const propagateSetSelectedFilters = (eventSelectedFilters: string[]) =>
@@ -173,10 +173,9 @@ export const ToolbarFilter = (props: IExtendedToolbarFilterProps) => {
       text
       title="Filter"
       content={invokerTitle}
-      className="extended-toolbar__filters-invoker"
+      className={"extended-toolbar__filters-invoker " + styles.toolbarButtonStyles}
       icon={<AudienceIcon outline />}
       styles={{
-        ...toolbarButtonStyles,
         marginRight: ".5rem",
         flex: "0 0 auto",
       }}

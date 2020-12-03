@@ -8,11 +8,11 @@ import {
 } from "@fluentui/react-northstar";
 import { SearchIcon } from "@fluentui/react-icons-northstar";
 
-import { TToolbarLayout } from "./Toolbar";
+import styles from "./Toolbar.module.scss";
+import { TToolbarLayout } from "./ToolbarActionsUtils";
 
 export interface IToolbarFindProps {
   layout: TToolbarLayout;
-  toolbarButtonStyles: any;
   findActive: boolean;
   setFindActive: React.Dispatch<React.SetStateAction<boolean>>;
   onFindQueryChange?: (findQuery: string) => string;
@@ -63,11 +63,10 @@ export const ToolbarFind = (props: IToolbarFindProps) => {
             text
             title="Cancel"
             content="Cancel"
-            className="extended-toolbar__find-cancel"
+            className={"extended-toolbar__find-cancel " +  styles.toolbarButtonStyles}
             styles={{
               marginLeft: "1px",
-              marginRight: "1px",
-              ...props.toolbarButtonStyles,
+              marginRight: "1px"
             }}
             onClick={(_e) => {
               if (props.onFindQueryChange) {
@@ -84,10 +83,9 @@ export const ToolbarFind = (props: IToolbarFindProps) => {
                 text
                 title="Find"
                 content=""
-                className="extended-toolbar__find-invoker"
+                className={"extended-toolbar__find-invoker " + styles.toolbarButtonStyles}
                 icon={<SearchIcon outline />}
                 styles={{
-                  ...props.toolbarButtonStyles,
                   marginRight: ".5rem",
                   flex: "0 0 auto",
                 }}

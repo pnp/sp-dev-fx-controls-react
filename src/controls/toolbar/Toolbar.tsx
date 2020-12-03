@@ -4,43 +4,22 @@ import cloneDeep from "lodash/cloneDeep";
 
 import {
   Box,
-  ButtonContent,
-  ComponentEventHandler,
-  ObjectShorthandCollection,
-  Position,
   PropsOfElement,
   ProviderConsumer as FluentUIThemeConsumer,
-  ShorthandCollection,
   Toolbar as FluentUIToolbar,
-  ToolbarItemProps,
-  ToolbarItemShorthandKinds,
-  Tooltip,
-  TreeItemProps,
-  tooltipAsLabelBehavior,
   teamsTheme,
 } from "@fluentui/react-northstar";
 
 import { SiteVariablesPrepared } from "@fluentui/styles";
-
-import { TAction, TActions } from "../../common/model/TAction";
-
 import { ToolbarFilter } from "./ToolbarFilter";
 import { ToolbarFind } from "./ToolbarFind";
 import { ToolbarTheme } from "./ToolbarTheme";
 
 import "./toolbar.css";
 import { Icon } from "office-ui-fabric-react/lib/components/Icon/Icon";
-
-type TToolbarItems = ShorthandCollection<
-  ToolbarItemProps,
-  ToolbarItemShorthandKinds
->;
-
-export type TActionGroups = {
-  [slug: string]: TActions;
-};
-
-export type TFilters = ObjectShorthandCollection<TreeItemProps, never>;
+import { InFlowToolbarItem, toolbarMenuProps } from "./InFlowToolbarItem";
+import styles from "./Toolbar.module.scss";
+import { flattenedActions, getInFlowToolbarItems, getOverflowToolbarItems, TActionGroups, TFilters, TToolbarItems, TToolbarLayout } from "./ToolbarActionsUtils";
 
 export interface IToolbarProps extends PropsOfElement<"div"> {
   actionGroups: TActionGroups;
@@ -49,115 +28,7 @@ export interface IToolbarProps extends PropsOfElement<"div"> {
   filtersSingleSelect?: boolean;
   onSelectedFiltersChange?: (selectedFilters: string[]) => string[];
   onFindQueryChange?: (findQuery: string) => string;
-  __internal_callbacks__?: {
-    [callbackId: string]: ComponentEventHandler<ToolbarItemProps>;
-  };
 }
-
-export type TToolbarLayout = "compact" | "verbose";
-
-const slugSeparator = "__";
-
-const toolbarMenuProps = {
-  offset: [0, 4] as [number, number],
-  position: "below" as Position,
-};
-
-const toolbarActionTooltipProps = (() => {
-  const props = cloneDeep(toolbarMenuProps);
-  props.offset[1] += 10;
-  return props;
-})();
-
-const toolbarButtonStyles = {
-  padding: ".5rem",
-  borderWidth: "1px",
-  marginTop: 0,
-  marginBottom: 0,
-  height: "3rem",
-  minWidth: 0,
-  "&:focus:before": {
-    top: "calc(.5rem - 1px)",
-    bottom: "calc(.5rem - 1px)",
-  },
-  "&:focus:after": {
-    top: "calc(.5rem - 1px)",
-    bottom: "calc(.5rem - 1px)",
-  },
-};
-
-function flattenedActions(actionGroups: TActionGroups): TActions {
-  return Object.keys(actionGroups).reduce(
-    (acc_i: TActions, actionGroupSlug: string) => {
-      const actionGroup = actionGroups[actionGroupSlug];
-      return Object.keys(actionGroup).reduce((acc_j, actionSlug) => {
-        const action = actionGroup[actionSlug];
-        acc_j[`${actionGroupSlug}${slugSeparator}${actionSlug}`] = action;
-        return acc_j;
-      }, acc_i);
-    },
-    {}
-  );
-}
-
-function needsSeparator(
-  actionSlug: string,
-  index: number,
-  actionSlugs: string[]
-): boolean {
-  if (index === 0) {
-    return false;
-  }
-  else if (actionSlugs[index - 1]) {
-    return actionSlugs[index - 1].split(slugSeparator)[0] !==
-      actionSlug.split(slugSeparator)[0];
-  }
-}
-
-interface IInFlowToolbarItemProps {
-  action: TAction;
-  layout: TToolbarLayout;
-}
-
-const InFlowToolbarItem = ({ action, layout }: IInFlowToolbarItemProps) => {
-  const { iconName, title } = action;
-  const contentIcon = iconName && (
-    <Box
-      styles={{
-        width: "1rem",
-        display: "inline-flex",
-        justifyContent: "center",
-        alignItems: "center",
-        "@media (min-width: 640px)": {
-          marginRight: ".5rem",
-        },
-      }}
-      className="extended-toolbar__near-side__item__icon"
-    >
-      <Icon iconName={iconName} />
-    </Box>
-  );
-
-  switch (layout) {
-    case "verbose":
-      return (
-        <>
-          {contentIcon}
-          <ButtonContent content={title} />
-        </>
-      );
-    default:
-    case "compact":
-      return (
-        <Tooltip
-          {...toolbarActionTooltipProps}
-          trigger={contentIcon}
-          content={title}
-          accessibility={tooltipAsLabelBehavior}
-        />
-      );
-  }
-};
 
 export const Toolbar = (props: IToolbarProps) => {
   const { actionGroups, filters, filtersSingleSelect, find } = props;
@@ -189,57 +60,10 @@ export const Toolbar = (props: IToolbarProps) => {
     };
   });
 
-  const inFlowToolbarItems: TToolbarItems = Object.keys(allActions).reduce(
-    (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
-      const action = allActions[actionSlug];
-      acc.push({
-        ...action,
-        key: actionSlug,
-        children: <InFlowToolbarItem action={action} layout={layout} />,
-        title: action.title,
-        "aria-label": action.title,
-        className: "extended-toolbar__near-side__item",
-        styles: {
-          ...toolbarButtonStyles,
-          flex: "0 0 auto",
-          margin: "0 .0625rem",
-          display: "inline-flex",
-          justifyContent: "center",
-          alignItems: "center",
-        },
-      });
-      if (needsSeparator(actionSlug, index, actionSlugs))
-        acc.push({
-          key: `divider${slugSeparator}${index}`,
-          kind: "divider",
-        });
-      return acc;
-    },
-    []
-  );
+  const inFlowToolbarItems: TToolbarItems = getInFlowToolbarItems(allActions, (action) => <InFlowToolbarItem action={action} layout={layout} />);
 
-  const overflowToolbarItems: TToolbarItems = Object.keys(allActions).reduce(
-    (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
-      const action = allActions[actionSlug];
-      acc.push({
-        key: actionSlug,
-        content: action.title,
-        icon: <Icon iconName={action.iconName} />,
-        title: action.title,
-        "aria-label": action.title,
-        styles: { padding: ".375rem .5rem" },
-      });
-      if (needsSeparator(actionSlug, index, actionSlugs))
-        acc.push({
-          key: `divider${slugSeparator}${index}`,
-          kind: "divider",
-          styles: { margin: ".25rem 0", "&:first-child": { display: "none" } },
-        });
-      return acc;
-    },
-    []
-  );
-
+  const overflowToolbarItems: TToolbarItems = getOverflowToolbarItems(allActions, (action)=><Icon iconName={action.iconName} />);
+  
   const displayFindOnly = find && layout === "compact" && findActive;
 
   return (
@@ -277,14 +101,13 @@ export const Toolbar = (props: IToolbarProps) => {
             {!displayFindOnly && (
               <FluentUIToolbar
                 aria-label="Extended toolbar"
-                className="extended-toolbar__near-side"
+                className={"extended-toolbar__near-side " + styles.toolbarButtonStyles}
                 items={inFlowToolbarItems}
                 overflow
                 overflowOpen={overflowOpen}
                 overflowItem={{
                   title: "More",
                   menu: toolbarMenuProps,
-                  styles: toolbarButtonStyles,
                 }}
                 onOverflowOpenChange={(event, changeProps) => {
                   if (changeProps && changeProps.overflowOpen) {
@@ -324,14 +147,15 @@ export const Toolbar = (props: IToolbarProps) => {
                   onOpenChange={(_e, changeProps) => {
                     if (changeProps.open) {
                       setFiltersOpen(changeProps.open);
-                      if (changeProps.open) {
-                        setOverflowOpen(false);
-                      }
+                      setOverflowOpen(false);
+                    }
+                    else {
+                      setFiltersOpen(false);
+                      setOverflowOpen(!false);
                     }
                   }}
                   onSelectedFiltersChange={props.onSelectedFiltersChange}
                   toolbarMenuProps={toolbarMenuProps}
-                  toolbarButtonStyles={toolbarButtonStyles}
                 />
               )}
               {find && (
@@ -340,7 +164,6 @@ export const Toolbar = (props: IToolbarProps) => {
                     layout,
                     findActive,
                     setFindActive,
-                    toolbarButtonStyles,
                     onFindQueryChange: props.onFindQueryChange,
                   }}
                 />
