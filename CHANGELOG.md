@@ -1,5 +1,15 @@
 # Releases
 
+## 2.3.0
+
+### Fixes
+
+- `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
+
+### Contributors
+
+Special thanks to our contributor: [Nikolay Belykh](https://github.com/nbelyh).
+
 ## 2.2.0
 
 ### Enhancements
