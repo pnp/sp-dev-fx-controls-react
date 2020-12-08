@@ -2,13 +2,17 @@
 
 ## 2.3.0
 
+### Enhancements
+
+- `TaxonomyPicker`: Added `useSessionStorage` property [#759](https://github.com/pnp/sp-dev-fx-controls-react/pull/759)
+
 ### Fixes
 
 - `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
 
 ### Contributors
 
-Special thanks to our contributor: [Nikolay Belykh](https://github.com/nbelyh).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Nikolay Belykh](https://github.com/nbelyh).
 
 ## 2.2.0
 
