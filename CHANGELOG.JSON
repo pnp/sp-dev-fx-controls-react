@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "2.3.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)"
+        ]
+      },
+      "contributions": [
+        "[Nikolay Belykh](https://github.com/nbelyh)"
+      ]
+    },
+    {
       "version": "2.2.0",
       "changes": {
         "new": [],
