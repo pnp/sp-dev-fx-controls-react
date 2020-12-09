@@ -21,6 +21,7 @@
     "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser"
   },
   "dependencies": {
+    "@fluentui/react-northstar": "^0.51.3",
     "@microsoft/decorators": "1.11.0",
     "@microsoft/sp-core-library": "1.11.0",
     "@microsoft/sp-listview-extensibility": "1.11.0",

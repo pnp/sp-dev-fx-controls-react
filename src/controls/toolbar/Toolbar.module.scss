@@ -1,0 +1,29 @@
+.toolbarButtonStyles {
+  padding: .5rem;
+  border-width: 1px;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 3rem!important;
+  min-width: 0;
+
+  &:focus:before {
+    top: calc(.5rem - 1px);
+    bottom: calc(.5rem - 1px);
+  }
+
+  &:focus:after {
+    top: calc(.5rem - 1px);
+    bottom: calc(.5rem - 1px);
+  }
+}
+
+.inFlowToolbarItemBox {
+  width: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 640px) {
+    margin-right: .5rem,
+  }
+}

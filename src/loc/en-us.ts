@@ -353,6 +353,8 @@ define([], () => {
     CollectionDataItemFieldRequiredLabel: "Field is required.",
     CollectionDataItemMissingFields: "Fields collection is empty!",
     InvalidUrlError: "The provided URL is not valid",
-    CollectionDataSearch: "Search"
+    CollectionDataSearch: "Search",
+
+    ViewMore: "View more"
   };
 });
