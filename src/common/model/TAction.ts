@@ -1,8 +1,10 @@
+import { ComponentEventHandler, ToolbarItemProps } from "@fluentui/react-northstar";
+
 export type TAction = {
     title: string;
     iconName?: string;
     multi?: boolean;
-    __internal_callback__?: string;
+    onClick?: ComponentEventHandler<ToolbarItemProps>;
 };
 
 export type TActions = {

@@ -1,37 +1,100 @@
+/**
+ * Dashboard Widget Action
+ */
 export interface IWidgetActionKey {
-    id: string;
-    icon?: JSX.Element;
-    title: string;
-    onClick?: () => void;
+  /**
+   * Action id
+   */
+  id: string;
+  /**
+   * Action icon
+   */
+  icon?: JSX.Element;
+  /**
+   * Action title
+   */
+  title: string;
+  /**
+   * Action handler
+   */
+  onClick?: () => void;
 }
 
+/**
+ * Dashboard widget size
+ */
 export enum WidgetSize {
-    Single = "single",
-    Double = "double",
-    Triple = "triple",
-    Box = "box",
+  Single = "single",
+  Double = "double",
+  Triple = "triple",
+  Box = "box",
 }
 
+/**
+ * Widget options
+ */
 export interface IWidgetControlOptions {
-    isHidden?: boolean;
+  /**
+   * Specifies if current widget is hidden
+   */
+  isHidden?: boolean;
 }
 
+/**
+ * Dashboard widget
+ */
 export interface IWidget {
-    size: WidgetSize;
-    title: string;
-    desc?: string;
-    widgetActionGroup?: IWidgetActionKey[];
-    controlOptions?: IWidgetControlOptions;
-    body?: IWidgetBodyContent[];
-    link?: IWidgetLink;
+  /**
+   * Size
+   */
+  size: WidgetSize;
+  /**
+   * Title
+   */
+  title: string;
+  /**
+   * Description
+   */
+  desc?: string;
+  /**
+   * Actions
+   */
+  widgetActionGroup?: IWidgetActionKey[];
+  /**
+   * Options
+   */
+  controlOptions?: IWidgetControlOptions;
+  /**
+   * Widget's content (children)
+   */
+  body?: IWidgetBodyContent[];
+  /**
+   * Widget's link
+   */
+  link?: IWidgetLink;
 }
 
+/**
+ * Widget content
+ */
 export interface IWidgetBodyContent {
-    id: string;
-    title: string;
-    content: React.ReactNode;
+  /**
+   * Id
+   */
+  id: string;
+  /**
+   * title
+   */
+  title: string;
+  /**
+   * Content
+   */
+  content: React.ReactNode;
 }
 
+/**
+ * Widget link
+ */
 export interface IWidgetLink {
-    href: string;
+  href: string;
 }

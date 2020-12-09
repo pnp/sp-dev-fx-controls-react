@@ -1,6 +1,7 @@
 import { Card, Text, Flex } from "@fluentui/react-northstar";
 import * as React from "react";
 import { IWidget } from "./IWidget";
+import * as strings from 'ControlStrings';
 
 export const WidgetFooter = ({ widget }: { widget: IWidget }) => (
     <Card.Footer fitted>
@@ -9,7 +10,7 @@ export const WidgetFooter = ({ widget }: { widget: IWidget }) => (
                 as="a"
                 href={widget.link.href}
                 target="_blank"
-                content="View more"
+                content={strings.ViewMore}
                 size="small"
                 color="brand"
                 style={{ textDecoration: "none" }}

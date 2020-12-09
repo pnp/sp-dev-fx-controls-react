@@ -11,15 +11,30 @@ import {
   WidgetFooter,
 } from "./widget/DashboardWidget";
 import { DashboardTheme } from "./DashboardTheme";
-import Toolbar from "../toolbar";
+import { Toolbar } from "../toolbar";
 import { IWidget } from "./widget/IWidget";
 import { IToolbarProps } from "../toolbar/Toolbar";
 import styles from "./Dashboard.module.scss";
 
-interface IDashboard {
+/**
+ * Dashboard component props
+ */
+export interface IDashboardProps {
+  /**
+   * Widgtets collection
+   */
   widgets: IWidget[];
+  /**
+   * Specifies if widgets can be hidden from the dashboard
+   */
   allowHidingWidget?: boolean;
+  /**
+   * Handler of widget hiding event
+   */
   onWidgetHiding?: (widget: IWidget) => void;
+  /**
+   * Dashboard toolbar props
+   */
   toolbarProps?: IToolbarProps;
 }
 
@@ -27,7 +42,7 @@ export function Dashboard({
   widgets,
   allowHidingWidget,
   onWidgetHiding,
-  toolbarProps }: IDashboard) {
+  toolbarProps }: IDashboardProps) {
   const [stateWidgets, setWidgets] = React.useState(widgets);
 
   React.useEffect(() => {

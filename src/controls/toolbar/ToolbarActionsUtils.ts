@@ -86,6 +86,7 @@ export function getOverflowToolbarItems(allActions: TActions, childredFactory: (
                 title: action.title,
                 "aria-label": action.title,
                 styles: { padding: ".375rem .5rem" },
+                onClick: action.onClick
             });
             if (needsSeparator(actionSlug, index, actionSlugs))
                 acc.push({

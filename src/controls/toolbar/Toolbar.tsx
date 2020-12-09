@@ -21,12 +21,33 @@ import { InFlowToolbarItem, toolbarMenuProps } from "./InFlowToolbarItem";
 import styles from "./Toolbar.module.scss";
 import { flattenedActions, getInFlowToolbarItems, getOverflowToolbarItems, TActionGroups, TFilters, TToolbarItems, TToolbarLayout } from "./ToolbarActionsUtils";
 
+/**
+ * Toolbar props
+ */
 export interface IToolbarProps extends PropsOfElement<"div"> {
+  /**
+   * Toolbar action groups
+   */
   actionGroups: TActionGroups;
+  /**
+   * Toolbar filters
+   */
   filters?: TFilters;
+  /**
+   * Specifies if searchbox should be displayed
+   */
   find?: boolean;
+  /**
+   * Specifies if a user can select only one filter at a time
+   */
   filtersSingleSelect?: boolean;
+  /**
+   * Filter changed handler
+   */
   onSelectedFiltersChange?: (selectedFilters: string[]) => string[];
+  /**
+   * Search query changed handler
+   */
   onFindQueryChange?: (findQuery: string) => string;
 }
 
@@ -63,7 +84,7 @@ export const Toolbar = (props: IToolbarProps) => {
   const inFlowToolbarItems: TToolbarItems = getInFlowToolbarItems(allActions, (action) => <InFlowToolbarItem action={action} layout={layout} />);
 
   const overflowToolbarItems: TToolbarItems = getOverflowToolbarItems(allActions, (action)=><Icon iconName={action.iconName} />);
-  
+
   const displayFindOnly = find && layout === "compact" && findActive;
 
   return (
