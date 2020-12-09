@@ -3,7 +3,10 @@
     {
       "version": "2.3.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`Dashboard` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)",
+          "`Toobar` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)"
+        ],
         "enhancements": [
           "`TaxonomyPicker`: Added `useSessionStorage` property [#759](https://github.com/pnp/sp-dev-fx-controls-react/pull/759)"
         ],
@@ -13,6 +16,7 @@
       },
       "contributions": [
         "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Marcin Wojciechowski](https://github.com/mgwojciech)",
         "[Nikolay Belykh](https://github.com/nbelyh)"
       ]
     },
