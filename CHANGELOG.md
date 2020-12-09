@@ -2,6 +2,11 @@
 
 ## 2.3.0
 
+### New control(s)
+
+- `Dashboard` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+- `Toobar` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+
 ### Enhancements
 
 - `TaxonomyPicker`: Added `useSessionStorage` property [#759](https://github.com/pnp/sp-dev-fx-controls-react/pull/759)
@@ -12,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Nikolay Belykh](https://github.com/nbelyh).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Marcin Wojciechowski](https://github.com/mgwojciech), [Nikolay Belykh](https://github.com/nbelyh).
 
 ## 2.2.0
 
