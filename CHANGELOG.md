@@ -15,6 +15,7 @@
 
 - `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
 - `TaxonomyPicker`: Return `TermSetId` for suggestions [#762](https://github.com/pnp/sp-dev-fx-controls-react/pull/762)
+- `WebPartTitle`: Fluent UI Updates to SharePoint - WebPartTitle control too thin now [#605](https://github.com/pnp/sp-dev-fx-controls-react/issues/605)
 
 ### Contributors
 
