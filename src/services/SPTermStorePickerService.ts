@@ -460,7 +460,7 @@ export default class SPTermStorePickerService {
                 if (terms.length > 0) {
                   // Retrieve all terms
 
-                  let returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term));
+                  let returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term, TermSetId));
                   resolve(returnTerms);
                   return;
                 }
@@ -597,7 +597,7 @@ export default class SPTermStorePickerService {
     };
   }
 
-  private convertSuggestTermToPickerTerm(term: ISuggestTerm): IPickerTerm {
+  private convertSuggestTermToPickerTerm(term: ISuggestTerm, termSetId: string): IPickerTerm {
     let path: string = "";
     let termSetName: string = "";
     if (term.Paths && term.Paths.length > 0) {
@@ -610,7 +610,7 @@ export default class SPTermStorePickerService {
       key: this.cleanGuid(term.Id),
       name: term.DefaultLabel,
       path: path,
-      termSet: EmptyGuid, // TermSet Guid is not given with suggestion
+      termSet: termSetId ? termSetId : EmptyGuid, // termSetId not returned by API, but we can get it from the payload
       termSetName: termSetName
     };
   }
