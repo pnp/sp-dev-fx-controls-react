@@ -14,6 +14,7 @@
 ### Fixes
 
 - `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
+- `TaxonomyPicker`: Return `TermSetId` for suggestions [#762](https://github.com/pnp/sp-dev-fx-controls-react/pull/762)
 
 ### Contributors
 
