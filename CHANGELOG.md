@@ -17,6 +17,7 @@
 - `TaxonomyPicker`: Return `TermSetId` for suggestions [#762](https://github.com/pnp/sp-dev-fx-controls-react/pull/762)
 - `WebPartTitle`: Fluent UI Updates to SharePoint - WebPartTitle control too thin now [#605](https://github.com/pnp/sp-dev-fx-controls-react/issues/605)
 - `ListView`: Sticky Header scrolling issue [#734](https://github.com/pnp/sp-dev-fx-controls-react/issues/734)
+- `DateTimePicker`: hours dropdown not re-rendered when state changed programmatically [#757](https://github.com/pnp/sp-dev-fx-controls-react/issues/757)
 
 ### Contributors
 
