@@ -998,6 +998,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PrimaryButton text={'Change Date'} onClick={() => {
           const date = this.state.dateTimeValue || new Date();
           date.setMinutes(50);
+          date.setHours(11);
+          date.setSeconds(12);
           this.setState({
             dateTimeValue: date
           });
