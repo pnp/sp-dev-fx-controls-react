@@ -1,7 +1,10 @@
 import * as React from 'react';
 import styles from './ListView.DragDrop.module.scss';
-import stickyHeaderstyles from './ListView.stickyHeader.module.scss';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup } from 'office-ui-fabric-react/lib/DetailsList';
+import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
+import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
+import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
+import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
 import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
@@ -14,6 +17,35 @@ import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import filter from 'lodash/filter';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
+
+const classNames = mergeStyleSets({
+  wrapper: {
+    height: '50vh',
+    position: 'relative'
+  }
+});
+
+/**
+* Wrap the listview in a scrollable pane if sticky header = true
+*/
+const ListViewWrapper = ({ stickyHeader, children }) => (stickyHeader ?
+  <div className={classNames.wrapper} >
+    <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
+      {children}
+    </ScrollablePane>
+  </div>
+  : children
+);
+
+/**
+* Lock the searchbox when scrolling if sticky header = true
+*/
+const SearchBoxWrapper = ({ stickyHeader, children }) => (stickyHeader ?
+  <Sticky stickyPosition={StickyPositionType.Header}>
+    {children}
+  </Sticky>
+  : children
+);
 
 
 /**
@@ -565,6 +597,23 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
   }
   /**
+  * Custom render of header
+  * @param props
+  * @param defaultRender
+  */
+  private _onRenderDetailsHeader: IRenderFunction<IDetailsHeaderProps> = (props, defaultRender) => {
+    if (!props) {
+      return null;
+    }
+    return (
+      <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
+        {defaultRender!({
+          ...props,
+        })}
+      </Sticky>
+    );
+  }
+  /**
    * Default React component render method
    */
   public render(): React.ReactElement<IListViewProps> {
@@ -585,38 +634,39 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return (
-      <div className={styles.DragDropArea}
-        ref={this.dropRef}>
-        {(dragStatus && dragDropFiles) &&
-          <div className={styles.DragDropAreaBorder}>
-            <div className={styles.DragDropAreaZone}>
-              <Icon iconName="Download" className="ms-IconExample" />
-              <div>{strings.UploadFileHeader}</div>
+      <ListViewWrapper stickyHeader={!!this.props.stickyHeader}>
+        <div className={styles.DragDropArea}
+          ref={this.dropRef}>
+          {(dragStatus && dragDropFiles) &&
+            <div className={styles.DragDropAreaBorder}>
+              <div className={styles.DragDropAreaZone}>
+                <Icon iconName="Download" className="ms-IconExample" />
+                <div>{strings.UploadFileHeader}</div>
+              </div>
             </div>
-          </div>
-        }
-            {
-              showFilter &&
-                <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
-            }
-            <DetailsList
-              key="ListViewControl"
-              items={items}
-              columns={columns}
-              groups={groups}
-              selectionMode={selectionMode || SelectionMode.none}
-              selectionPreservedOnEmptyClick={true}
-              selection={this._selection}
-              layoutMode={DetailsListLayoutMode.justified}
-              compact={compact}
-              setKey="ListViewControl"
-              groupProps={groupProps}
-              className={
-                stickyHeader &&
-                stickyHeaderstyles.StickyHeader
-              }
-            />
-      </div>
+          }
+          {
+            showFilter &&
+            <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
+              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
+            </SearchBoxWrapper>
+          }
+          <DetailsList
+            key="ListViewControl"
+            items={items}
+            columns={columns}
+            groups={groups}
+            selectionMode={selectionMode || SelectionMode.none}
+            selectionPreservedOnEmptyClick={true}
+            selection={this._selection}
+            layoutMode={DetailsListLayoutMode.justified}
+            compact={compact}
+            setKey="ListViewControl"
+            groupProps={groupProps}
+            onRenderDetailsHeader={this._onRenderDetailsHeader}
+          />
+        </div>
+      </ListViewWrapper>
     );
   }
 }
