@@ -1,5 +1,26 @@
 # Releases
 
+## 1.21.1
+
+### Enhancements
+
+- `ListView`: drag and drop [#711](https://github.com/pnp/sp-dev-fx-controls-react/pull/711)
+- `TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)
+
+### Fixes
+
+- `RichText`: Fixing hyperlink issues [#708](https://github.com/pnp/sp-dev-fx-controls-react/pull/708)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Abderahman Moujahid](https://github.com/Abderahman88), [André Lage](https://github.com/aaclage).
+
+## 1.21.0
+
+### Fixes
+
+- `TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)
+
 ## 1.20.0
 
 ### New control(s)
