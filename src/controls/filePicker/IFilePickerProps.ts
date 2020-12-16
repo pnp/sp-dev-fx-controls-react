@@ -113,4 +113,12 @@ export interface IFilePickerProps {
    * @default true
    */
   storeLastActiveTab?: boolean;
+  /**
+   * Specifies if the file picker panel is open by default or not
+   */
+  isPanelOpen?: boolean;
+  /**
+   * Handler when file picker has been cancelled.
+   */
+  onCancel?: () => void;
 }

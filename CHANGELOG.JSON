@@ -1,6 +1,33 @@
 {
   "versions": [
     {
+      "version": "1.21.1",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`ListView`: drag and drop [#711](https://github.com/pnp/sp-dev-fx-controls-react/pull/711)",
+          "`TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)"
+        ],
+        "fixes": [
+          "`RichText`: Fixing hyperlink issues [#708](https://github.com/pnp/sp-dev-fx-controls-react/pull/708)"
+        ]
+      },
+      "contributions": [
+        "[Abderahman Moujahid](https://github.com/Abderahman88)",
+        "[André Lage](https://github.com/aaclage)"
+      ]
+    },
+    {
+      "version": "1.21.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`TaxonomyPicker`: Ability to reset the TaxonomyPicker (Remove all selected Terms) [#367](https://github.com/pnp/sp-dev-fx-controls-react/issues/367)"
+        ]
+      }
+    },
+    {
       "version": "1.20.0",
       "changes": {
         "new": [

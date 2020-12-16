@@ -362,6 +362,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   /**
+ * Method that retrieves files from drag and drop
+ * @param files
+ */
+  private _getDropFiles = (files) => {
+    for (var i = 0; i < files.length; i++) {
+      console.log(files[i].name);
+    }
+  }
+
+  /**
    *
    *Method that retrieves the selected terms from the taxonomy picker and sets state
    * @private
@@ -710,6 +720,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onChange={this.onServicePickerChange}
             isTermSetSelectable={false}
             placeholder="Select service"
+            // validateInput={true}   /* Uncomment this to enable validation of input text */
             required={true}
             errorMessage='this field is required'
             onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
@@ -960,6 +971,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           selectionMode={SelectionMode.single}
           selection={this._getSelection}
           showFilter={true}
+          dragDropFiles={true}
+          onDrop={this._getDropFiles}
         // defaultFilter="Team"
         />
 
