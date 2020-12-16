@@ -15,6 +15,7 @@ nav:
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
     - ComboBoxListItemPicker: 'controls/ComboBoxListItemPicker.md'
+    - Dashboard: 'controls/Dashboard.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
     - FieldCollectionData: 'controls/FieldCollectionData.md'
     - FilePicker: 'controls/FilePicker.md'
@@ -39,6 +40,7 @@ nav:
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
+    - Toolbar: 'controls/Toolbar.md'
     - TreeView: 'controls/TreeView.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':

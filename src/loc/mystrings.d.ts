@@ -324,6 +324,8 @@ declare interface IControlStrings {
   CollectionDataItemMissingFields: string;
   InvalidUrlError: string;
   CollectionDataSearch: string;
+
+  ViewMore: string;
 }
 
 declare interface IDateTimeStrings {

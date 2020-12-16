@@ -1,5 +1,29 @@
 # Releases
 
+## 2.3.0
+
+### New control(s)
+
+- `Dashboard` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+- `Toobar` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+
+### Enhancements
+
+- `TaxonomyPicker`: Added `useSessionStorage` property [#759](https://github.com/pnp/sp-dev-fx-controls-react/pull/759)
+
+### Fixes
+
+- `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
+- `TaxonomyPicker`: Return `TermSetId` for suggestions [#762](https://github.com/pnp/sp-dev-fx-controls-react/pull/762)
+- `WebPartTitle`: Fluent UI Updates to SharePoint - WebPartTitle control too thin now [#605](https://github.com/pnp/sp-dev-fx-controls-react/issues/605)
+- `ListView`: Sticky Header scrolling issue [#734](https://github.com/pnp/sp-dev-fx-controls-react/issues/734)
+- `DateTimePicker`: hours dropdown not re-rendered when state changed programmatically [#757](https://github.com/pnp/sp-dev-fx-controls-react/issues/757)
+- `RichText`: controlled mode doesn't work [#666](https://github.com/pnp/sp-dev-fx-controls-react/issues/666)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Marcin Wojciechowski](https://github.com/mgwojciech), [Nikolay Belykh](https://github.com/nbelyh), [André Lage](https://github.com/aaclage).
+
 ## 2.2.0
 
 ### Enhancements

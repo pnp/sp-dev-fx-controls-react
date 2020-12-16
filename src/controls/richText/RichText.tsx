@@ -195,6 +195,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     return true;
   }
 
+  public componentWillReceiveProps(nextProps: IRichTextProps) {
+    if (nextProps.value !== this.props.value && nextProps.value !== this.state.text) {
+      this.setState({
+        text: nextProps.value
+      });
+    }
+  }
+
   /**
    * Returns a handle to the Quill editor
    */
@@ -619,7 +627,7 @@ id="DropDownStyles"
         <ReactQuill ref={this.linkQuill}
                     placeholder={placeholder}
                     modules={modules}
-                    defaultValue={text || ''} //property value causes issues, defaultValue does not
+                    value={text || ''} //property value causes issues, defaultValue does not
                     onChange={this.handleChange}
                     onChangeSelection={this.handleChangeSelection}
                     onFocus={this.handleOnFocus} />
@@ -637,7 +645,7 @@ id="DropDownStyles"
         {
           this.renderImageDialog()
         }
-        
+
       </div>
     );
   }
@@ -731,7 +739,7 @@ id="DropDownStyles"
    * Hides the insert image dialog
    */
   private closeImageDialog = () => {
-    this.setState({ 
+    this.setState({
       hideImageDialog: true,
       insertImageUrl: undefined,
      });

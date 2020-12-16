@@ -62,6 +62,15 @@ import CarouselImage from '../../../controls/carousel/CarouselImage';
 import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
 import { Accordion } from '../../..';
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
+import { Dashboard, WidgetSize } from '../../../controls/dashboard';
+import {
+  Text as NorthstarText,
+  Flex,
+  ExclamationCircleIcon,
+  ShareGenericIcon,
+  ScreenshareIcon
+} from '@fluentui/react-northstar';
+import { Toolbar } from '../../../controls/toolbar';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -526,7 +535,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     Name: "Site",
     ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl
   };
-  
+
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
 
@@ -649,6 +658,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         console.log('additional breadcrumb item');
       },
     }];
+
+    const linkExample = { href: "#" };
+    const calloutItemsExample = [
+      {
+        id: "action_1",
+        title: "Info",
+        icon: <ExclamationCircleIcon />,
+      },
+      { id: "action_2", title: "Popup", icon: <ScreenshareIcon /> },
+      {
+        id: "action_3",
+        title: "Share",
+        icon: <ShareGenericIcon />,
+      },
+    ];
 
     return (
       <div className={styles.controlsTest}>
@@ -851,7 +875,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-        <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
+        <RichText value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
+        <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
 
         {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
           itemId={1}
@@ -974,6 +999,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <PrimaryButton text={'Change Date'} onClick={() => {
           const date = this.state.dateTimeValue || new Date();
           date.setMinutes(50);
+          date.setHours(11);
+          date.setSeconds(12);
           this.setState({
             dateTimeValue: date
           });
@@ -1131,9 +1158,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   webUrl={this.props.context.pageContext.web.absoluteUrl}
                   spHttpClient={this.props.context.spHttpClient} />
 
-                <PrimaryButton text="Change List" onClick={() => { this.setState({
-                  comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
-                }); }} />
+                <PrimaryButton text="Change List" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                  });
+                }} />
 
               </div>
 
@@ -1321,7 +1350,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 defaultFolder={this.rootFolder}
                 onSelect={this._onFolderSelect}
                 canCreateFolders={true}
-            />)}
+              />)}
           />
         </div>
 
@@ -1414,6 +1443,100 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             value={this.getRandomCollectionFieldData()}
           />
         </div>
+        <Dashboard
+          widgets={[{
+            title: "Card 1",
+            desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
+            widgetActionGroup: calloutItemsExample,
+            size: WidgetSize.Triple,
+            body: [
+              {
+                id: "t1",
+                title: "Tab 1",
+                content: (
+                  <Flex
+                    vAlign="center"
+                    hAlign="center"
+                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                  >
+                    <NorthstarText size="large" weight="semibold">
+                      Content #1
+                  </NorthstarText>
+                  </Flex>
+                ),
+              },
+              {
+                id: "t2",
+                title: "Tab 2",
+                content: (
+                  <Flex
+                    vAlign="center"
+                    hAlign="center"
+                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                  >
+                    <NorthstarText size="large" weight="semibold">
+                      Content #2
+                  </NorthstarText>
+                  </Flex>
+                ),
+              },
+              {
+                id: "t3",
+                title: "Tab 3",
+                content: (
+                  <Flex
+                    vAlign="center"
+                    hAlign="center"
+                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                  >
+                    <NorthstarText size="large" weight="semibold">
+                      Content #3
+                  </NorthstarText>
+                  </Flex>
+                ),
+              },
+            ],
+            link: linkExample,
+          },
+          {
+            title: "Card 2",
+            size: WidgetSize.Single,
+            link: linkExample,
+          },
+          {
+            title: "Card 3",
+            size: WidgetSize.Double,
+            link: linkExample,
+          },
+          {
+            title: "Card 4",
+            size: WidgetSize.Single,
+            link: linkExample,
+          },
+          {
+            title: "Card 5",
+            size: WidgetSize.Single,
+            link: linkExample,
+          },
+          {
+            title: "Card 6",
+            size: WidgetSize.Single,
+            link: linkExample,
+          },]} />
+        <Toolbar actionGroups={{
+          'group1': {
+            'action1': {
+              title: 'Edit',
+              iconName: 'Edit',
+              onClick: () => { console.log('Edit action click'); }
+            },
+            'action2': {
+              title: 'New',
+              iconName: 'Add',
+              onClick: () => { console.log('New action click'); }
+            }
+          }
+        }} />
       </div>
     );
   }
