@@ -1,6 +1,13 @@
 site_name: '@pnp/spfx-controls-react'
 nav:
   - Home: 'index.md'
+  - 'Beta testing': 'beta.md'
+  - Guides:
+    - Overview: 'guides/index.md'
+    - Contributing: 'guides/contributing.md'
+    - 'Minimal Path to Awesome': 'guides/mpa.md'
+    - 'Submitting a PR': 'guides/submitting-pr.md'
+    - 'Migrate v1 to v2': 'guides/migrate-from-v1.md'
   - Controls:
     - Accordion: 'controls/Accordion.md'
     - Carousel: 'controls/Carousel.md'
@@ -56,11 +63,9 @@ nav:
     - FieldTitleRenderer: 'controls/fields/FieldTitleRenderer.md'
     - FieldUrlRenderer: 'controls/fields/FieldUrlRenderer.md'
     - FieldUserRenderer: 'controls/fields/FieldUserRenderer.md'
-  - 'Beta testing': 'beta.md'
   - About:
     - 'Release notes': 'about/release-notes.md'
     - License: 'about/license.md'
-  - 'Project Guides': 'guides'
 
 theme:
   name: 'material'
