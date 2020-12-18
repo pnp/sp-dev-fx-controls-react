@@ -885,7 +885,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
-          description={defaultClassNames => <span className={defaultStyle}>Please configure the web part.</span>}
+          description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
           buttonLabel='Configure'
           hideButton={this.props.displayMode === DisplayMode.Read}
           onConfigure={this._onConfigure} />
