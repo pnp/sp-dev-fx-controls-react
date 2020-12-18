@@ -1,5 +1,11 @@
 # Releases
 
+## 2.4.0
+
+### Enhancements
+
+- `Placeholder`: support of custom rendering for `iconText` and `description`
+
 ## 2.3.0
 
 ### New control(s)
