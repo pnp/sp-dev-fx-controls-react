@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "2.4.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`Placeholder`: support of custom rendering for `iconText` and `description`"
+        ],
+        "fixes": []
+      },
+      "contributions": []
+    },
+    {
       "version": "2.3.0",
       "changes": {
         "new": [
@@ -167,8 +178,7 @@
     {
       "version": "1.19.0",
       "changes": {
-        "new": [
-        ],
+        "new": [],
         "enhancements": [
           "`ListView`: Add clear button to filter text box [#549](https://github.com/pnp/sp-dev-fx-controls-react/issues/549)",
           "`FolderExplorer`: Add clear button to filter text box [#553](https://github.com/pnp/sp-dev-fx-controls-react/pull/553)",
