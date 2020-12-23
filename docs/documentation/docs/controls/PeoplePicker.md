@@ -33,7 +33,7 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     personSelectionLimit={3}
     groupName={"Team Site Owners"} // Leave this blank in case you want to filter from all users
     showtooltip={true}
-    isRequired={true}
+    required={true}
     disabled={true}
     onChange={this._getPeoplePickerItems}
     showHiddenInUI={false}
