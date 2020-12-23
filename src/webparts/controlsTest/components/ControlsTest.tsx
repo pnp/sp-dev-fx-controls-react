@@ -1,76 +1,205 @@
-import * as React from 'react';
-import styles from './ControlsTest.module.scss';
-import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
-import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
-import { Placeholder } from '../../../Placeholder';
-import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
-import { SPHttpClient } from '@microsoft/sp-http';
-import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
-import { WebPartTitle } from '../../../WebPartTitle';
-import { TaxonomyPicker, IPickerTerms, UpdateType } from '../../../TaxonomyPicker';
-import { ListPicker } from '../../../ListPicker';
-import { IFrameDialog } from '../../../IFrameDialog';
-import { IFramePanel } from '../../../IFramePanel';
-import { PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
-import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
-import { SPPermission } from '@microsoft/sp-page-context';
-import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
-import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
-import { DateTimePicker, DateConvention, TimeConvention } from '../../../DateTimePicker';
-import { getItemClassNames } from 'office-ui-fabric-react/lib/components/ContextualMenu/ContextualMenu.classNames';
-import { ListItemPicker } from "../../../ListItemPicker";
-import { Map, ICoordinates, MapType } from '../../../Map';
-import { ChartControl, ChartType } from "../../../ChartControl";
-import { Progress, IProgressAction, IProgressProps } from '../../../Progress';
-import { ITerm } from '../../../services/ISPTermStorePickerService';
-import SPTermStorePickerService from '../../../services/SPTermStorePickerService';
-import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
-import { TermLabelAction, TermActionsDisplayMode } from '../../../controls/taxonomyPicker/termActions';
-import { ListItemAttachments } from '../../../ListItemAttachments';
-import { RichText } from '../../../RichText';
-import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay, CarouselIndicatorShape, CarouselIndicatorsDisplay } from '../../../controls/carousel';
-import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
-import { GridLayout } from '../../../GridLayout';
-import { ComboBoxListItemPicker } from '../../../controls/listItemPicker/ComboBoxListItemPicker';
-import { TreeView, ITreeItem, TreeItemActionsDisplayMode, TreeViewSelectionMode } from '../../../controls/treeView';
-import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { IconPicker } from '../../../controls/iconPicker';
-import { ISize } from 'office-ui-fabric-react/lib/Utilities';
+import * as React from "react";
 
-// Used to render document cards
+import {
+  DefaultButton,
+  PrimaryButton
+} from "office-ui-fabric-react/lib/components/Button";
+import { DialogType } from "office-ui-fabric-react/lib/components/Dialog";
+import {
+  Dropdown,
+  IDropdownOption
+} from "office-ui-fabric-react/lib/components/Dropdown";
+import { Link } from "office-ui-fabric-react/lib/components/Link";
 import {
   DocumentCard,
   DocumentCardActivity,
-  DocumentCardPreview,
-  //DocumentCardDetails,
-  DocumentCardTitle,
-  IDocumentCardPreviewProps,
   DocumentCardLocation,
-  DocumentCardType
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { FilePicker, IFilePickerResult } from '../../../FilePicker';
-import { FolderPicker } from '../../../FolderPicker';
-import { FolderExplorer, IBreadcrumbItem, IFolder } from '../../../FolderExplorer';
-import { Pagination } from '../../../controls/pagination';
-import CarouselImage from '../../../controls/carousel/CarouselImage';
-import { FieldCollectionData, CustomCollectionFieldType } from '../../../FieldCollectionData';
-import { Accordion } from '../../..';
-import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
-import { Dashboard, WidgetSize } from '../../../controls/dashboard';
+  DocumentCardPreview,
+  DocumentCardTitle,
+  DocumentCardType,
+  IDocumentCardPreviewProps
+} from "office-ui-fabric-react/lib/DocumentCard";
+import { IIconProps } from "office-ui-fabric-react/lib/Icon";
+import { ImageFit } from "office-ui-fabric-react/lib/Image";
+import { PanelType } from "office-ui-fabric-react/lib/Panel";
+import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
+import { ISize } from "office-ui-fabric-react/lib/Utilities";
 import {
-  Text as NorthstarText,
-  Flex,
+  DayOfWeek
+} from "office-ui-fabric-react/lib/utilities/dateValues/DateValues";
+
+import {
   ExclamationCircleIcon,
+  Flex,
+  ScreenshareIcon,
   ShareGenericIcon,
-  ScreenshareIcon
-} from '@fluentui/react-northstar';
-import { Toolbar } from '../../../controls/toolbar';
+  Text as NorthstarText
+} from "@fluentui/react-northstar";
+import {
+  DisplayMode,
+  Environment,
+  EnvironmentType
+} from "@microsoft/sp-core-library";
+import { SPHttpClient } from "@microsoft/sp-http";
+import { SPPermission } from "@microsoft/sp-page-context";
+
+import { Accordion } from "../../../";
+import {
+  ChartControl,
+  ChartType
+} from "../../../ChartControl";
+import {
+  Carousel,
+  CarouselButtonsDisplay,
+  CarouselButtonsLocation,
+  CarouselIndicatorsDisplay,
+  CarouselIndicatorShape
+} from "../../../controls/carousel";
+import {
+  Dashboard,
+  WidgetSize
+} from "../../../controls/dashboard";
+import {
+  TimeDisplayControlType
+} from "../../../controls/dateTimePicker/TimeDisplayControlType";
+import { IconPicker } from "../../../controls/iconPicker";
+import {
+  ComboBoxListItemPicker
+} from "../../../controls/listItemPicker/ComboBoxListItemPicker";
+import { Pagination } from "../../../controls/pagination";
+import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
+import {
+  TermActionsDisplayMode
+} from "../../../controls/taxonomyPicker/termActions";
+import { Toolbar } from "../../../controls/toolbar";
+import {
+  ITreeItem,
+  TreeItemActionsDisplayMode,
+  TreeView,
+  TreeViewSelectionMode
+} from "../../../controls/treeView";
+import {
+  DateConvention,
+  DateTimePicker,
+  TimeConvention
+} from "../../../DateTimePicker";
+import {
+  CustomCollectionFieldType,
+  FieldCollectionData
+} from "../../../FieldCollectionData";
+import {
+  FilePicker,
+  IFilePickerResult
+} from "../../../FilePicker";
+import {
+  ApplicationType,
+  FileTypeIcon,
+  IconType,
+  ImageSize
+} from "../../../FileTypeIcon";
+import {
+  FolderExplorer,
+  IBreadcrumbItem,
+  IFolder
+} from "../../../FolderExplorer";
+import { FolderPicker } from "../../../FolderPicker";
+import { GridLayout } from "../../../GridLayout";
+import { IFrameDialog } from "../../../IFrameDialog";
+import { IFramePanel } from "../../../IFramePanel";
+import { ListItemPicker } from "../../../ListItemPicker";
+import { ListPicker } from "../../../ListPicker";
+import {
+  GroupOrder,
+  IGrouping,
+  IViewField,
+  ListView,
+  SelectionMode
+} from "../../../ListView";
+import {
+  Map,
+  MapType
+} from "../../../Map";
+import {
+  PeoplePicker,
+  PrincipalType
+} from "../../../PeoplePicker";
+import { Placeholder } from "../../../Placeholder";
+import {
+  IProgressAction,
+  Progress
+} from "../../../Progress";
+import { RichText } from "../../../RichText";
+import {
+  PermissionLevel,
+  SecurityTrimmedControl
+} from "../../../SecurityTrimmedControl";
+import { ITerm } from "../../../services/ISPTermStorePickerService";
+import SPTermStorePickerService
+  from "../../../services/SPTermStorePickerService";
+import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
+import {
+  IPickerTerms,
+  TaxonomyPicker,
+  UpdateType
+} from "../../../TaxonomyPicker";
+import { WebPartTitle } from "../../../WebPartTitle";
+import styles from "./ControlsTest.module.scss";
+import {
+  IControlsTestProps,
+  IControlsTestState
+} from "./IControlsTestProps";
+
+// Used to render document cards
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -1313,8 +1442,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <FilePicker
             bingAPIKey="<BING API KEY>"
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
+            buttonLabel="Add File"
+
+            buttonIconProps={{iconName: 'Add', styles:{root:{fontSize: 42}}}}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
             context={this.props.context}
