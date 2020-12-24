@@ -1,6 +1,10 @@
 import * as React from "react";
 
 import {
+  Text,
+  TextField
+} from "office-ui-fabric-react";
+import {
   DefaultButton,
   PrimaryButton
 } from "office-ui-fabric-react/lib/components/Button";
@@ -48,6 +52,13 @@ import {
   ChartControl,
   ChartType
 } from "../../../ChartControl";
+import {
+  Accordion as AccessibleAccordion,
+  AccordionItem,
+  AccordionItemButton,
+  AccordionItemHeading,
+  AccordionItemPanel
+} from "../../../controls/accessibleAccordion";
 import {
   Carousel,
   CarouselButtonsDisplay,
@@ -149,58 +160,7 @@ import {
   IControlsTestState
 } from "./IControlsTestProps";
 
-// Used to render document cards
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
  */
@@ -811,6 +771,36 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           moreLink={
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
+
+
+        <AccessibleAccordion allowZeroExpanded>
+        <AccordionItem key={"Headding 1"}>
+          <AccordionItemHeading>
+            <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+           <div style={{margin: 20}}>
+           <h2>Content Heading 1</h2>
+            <Text variant={"mediumPlus"}>Text sample  </Text>
+
+            </div>
+          </AccordionItemPanel>
+        </AccordionItem>
+        <AccordionItem key={"Headding 2"}>
+          <AccordionItemHeading>
+            <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
+          </AccordionItemHeading>
+          <AccordionItemPanel>
+            <div style={{margin: 20}}>
+            <h2>Content Heading 2</h2>
+            <Text variant={"mediumPlus"}>Text </Text>
+            <TextField></TextField>
+            </div>
+          </AccordionItemPanel>
+        </AccordionItem>
+      </AccessibleAccordion>
+
+
 
         {
           sampleItems.map((item, index) => (
@@ -1667,6 +1657,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }
           }
         }} />
+
       </div>
     );
   }

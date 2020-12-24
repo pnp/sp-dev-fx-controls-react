@@ -1,6 +1,5 @@
 import * as React from "react";
 
-// Localization
 import * as strings from "ControlStrings";
 import { IIconProps } from "office-ui-fabric-react";
 import {
@@ -35,6 +34,32 @@ import SiteFilePickerTab from "./SiteFilePickerTab/SiteFilePickerTab";
 import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
+
+// Localization
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export class FilePicker extends React.Component<
   IFilePickerProps,
@@ -244,7 +269,7 @@ export class FilePicker extends React.Component<
         </p>
       </div>
     );
-  };
+  }
 
   /**
    * Open the panel
@@ -257,7 +282,7 @@ export class FilePicker extends React.Component<
         this.state.organisationAssetsEnabled
       ),
     });
-  };
+  }
 
   /**
    * Closes the panel
@@ -269,7 +294,7 @@ export class FilePicker extends React.Component<
     this.setState({
       panelOpen: false,
     });
-  };
+  }
 
   /**
    * On save action
@@ -279,13 +304,13 @@ export class FilePicker extends React.Component<
     this.setState({
       panelOpen: false,
     });
-  };
+  }
 
   private _handleOnChange = (filePickerResult: IFilePickerResult) => {
     if (this.props.onChange) {
       this.props.onChange(filePickerResult);
     }
-  };
+  }
 
   /**
    * Changes the selected tab when a link is selected
@@ -295,7 +320,7 @@ export class FilePicker extends React.Component<
     item?: INavLink
   ) => {
     this.setState({ selectedTab: item.key });
-  };
+  }
 
   /**
    * Prepares navigation panel options
@@ -374,7 +399,7 @@ export class FilePicker extends React.Component<
 
     let groups: INavLinkGroup[] = [{ links }];
     return groups;
-  };
+  }
 
   private getDefaultSelectedTabKey = (
     props: IFilePickerProps,
@@ -404,5 +429,5 @@ export class FilePicker extends React.Component<
     if (!props.hideLinkUploadTab) {
       return "keyLink";
     }
-  };
+  }
 }
