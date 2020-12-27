@@ -236,6 +236,15 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       return;
     }
 
+    const {
+      allowMultipleSelections,
+      selectChildrenIfParentSelected
+    } = this.props;
+
+    const {
+      termSetAndTerms
+    } = this.state;
+
     // Term item to add to the active nodes array
     const termItem = {
       name: term.Name,
@@ -244,27 +253,59 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSet: term.TermSet.Id
     };
 
+    //
+    // checking if we need to process child terms
+    //
+    let children: ITerm[] = [];
+    if (allowMultipleSelections && selectChildrenIfParentSelected) {
+      if (term.Id === term.TermSet.Id) { // term set selected
+        children = termSetAndTerms.Terms || [];
+      }
+      else {
+        children = termSetAndTerms.Terms ? termSetAndTerms.Terms.filter(t => {
+          return t.PathOfTerm.indexOf(`${term.PathOfTerm};`) !== -1;
+        }) : [];
+      }
+    }
+
     // Check if the term is checked or unchecked
     if (checked) {
       // Check if it is allowed to select multiple terms
-      if (this.props.allowMultipleSelections) {
+      if (allowMultipleSelections) {
         // Add the checked term
         activeNodes.push(termItem);
+
         // Filter out the duplicate terms
         activeNodes = uniqBy(activeNodes, 'key');
       } else {
         // Only store the current selected item
         activeNodes = [termItem];
       }
+
+      if (children.length) {
+        activeNodes.push(...children.map(c => {
+          return {
+            name: c.Name,
+            key: c.Id,
+            path: c.PathOfTerm,
+            termSet: c.TermSet.Id
+          };
+        }));
+      }
     } else {
       // Remove the term from the list of active nodes
       activeNodes = activeNodes.filter(item => item.key !== term.Id);
+
+      if (children.length) {
+        const childIds = children.map(c => c.Id);
+        activeNodes = activeNodes.filter(item => childIds.indexOf(item.key) === -1);
+      }
     }
     // Sort all active nodes
     activeNodes = sortBy(activeNodes, 'path');
 
     if (this.props.onPanelSelectionChange) {
-      this.props.onPanelSelectionChange(this.state.activeNodes.slice(), activeNodes)
+      this.props.onPanelSelectionChange(this.state.activeNodes.slice(), activeNodes);
     }
 
     // Update the current state

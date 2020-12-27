@@ -173,6 +173,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | required | boolean | no | Specifies if to display an asterisk near the label. Note that error message should be specified in `onGetErrorMessage` or `errorMessage` |
 | useSessionStorage | boolean | no | Specify if the control uses session storage. Default is set to true for better performance. |
 | onPanelSelectionChange | (prevValue: IPickerTerms, newValue: IPickerTerms) => void | no | Panel selection change handler. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. |
+| selectChildrenIfParentSelected | boolean | no | Specifies if the children should be selected when parent item is selected (defaults to false).|
 
 
 Interface `IPickerTerm`

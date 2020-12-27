@@ -717,7 +717,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             label="Service Picker with custom actions"
             context={this.props.context}
             onChange={this.onServicePickerChange}
-            isTermSetSelectable={false}
+            isTermSetSelectable={true}
             termActions={{
               actions: [{
                 title: "Get term labels",
