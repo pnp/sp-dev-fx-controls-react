@@ -8,10 +8,13 @@
           "`Placeholder`: support of custom rendering for `iconText` and `description`"
         ],
         "fixes": [
-          "`DateTimePicker`: documentation fix"
+          "`DateTimePicker`: documentation fix [#767](https://github.com/pnp/sp-dev-fx-controls-react/pull/767)",
+          "`PeoplePicker`: documentation fix - Changed isRequired property to new required [#769](https://github.com/pnp/sp-dev-fx-controls-react/pull/769)"
+
         ]
       },
       "contributions": [
+        "[Christian Metz](https://github.com/ChrisOMetz)",
         "[Leif Frederiksen](https://github.com/Leif-Frederiksen)"
       ]
     },
