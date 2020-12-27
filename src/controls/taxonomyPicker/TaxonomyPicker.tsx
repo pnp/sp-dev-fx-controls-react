@@ -283,14 +283,16 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       }
 
       if (children.length) {
-        activeNodes.push(...children.map(c => {
-          return {
-            name: c.Name,
-            key: c.Id,
-            path: c.PathOfTerm,
-            termSet: c.TermSet.Id
-          };
-        }));
+        [...children].map(c => {
+          if (activeNodes.find(item => item.key == c.Id) === undefined) {
+            activeNodes.push({
+              name: c.Name,
+              key: c.Id,
+              path: c.PathOfTerm,
+              termSet: c.TermSet.Id
+            });
+          }
+        });
       }
     } else {
       // Remove the term from the list of active nodes
