@@ -6,6 +6,14 @@
 
 - `Placeholder`: support of custom rendering for `iconText` and `description`
 
+### Fixes
+
+- `DateTimePicker`: documentation fix
+
+### Contributors
+
+Special thanks to our contributor: [Leif Frederiksen](https://github.com/Leif-Frederiksen).
+
 ## 2.3.0
 
 ### New control(s)
