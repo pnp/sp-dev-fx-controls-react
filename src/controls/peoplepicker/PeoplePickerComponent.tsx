@@ -93,7 +93,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (defaultSelectedUsers) {
       let selectedPersons: IPersonaProps[] = [];
       for (const userValue of props.defaultSelectedUsers) {
-        if (userValue.endsWith("|inactive")) {
+        if (userValue && userValue.endsWith("|inactive")) {
           const temp: string = userValue.slice(0, -9);
           if (temp) {
             const inactiveUser: IPersonaProps = { text: temp };
