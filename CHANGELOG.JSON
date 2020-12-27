@@ -7,9 +7,13 @@
         "enhancements": [
           "`Placeholder`: support of custom rendering for `iconText` and `description`"
         ],
-        "fixes": []
+        "fixes": [
+          "`DateTimePicker`: documentation fix"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Leif Frederiksen](https://github.com/Leif-Frederiksen)"
+      ]
     },
     {
       "version": "2.3.0",
