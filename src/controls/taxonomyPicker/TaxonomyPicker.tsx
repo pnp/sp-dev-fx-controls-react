@@ -231,7 +231,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    */
   private termsChanged(term: ITerm, checked: boolean): void {
 
-    let activeNodes = this.state.activeNodes;
+    let activeNodes = this.state.activeNodes.slice();
     if (typeof term === 'undefined' || term === null) {
       return;
     }
@@ -262,10 +262,16 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     }
     // Sort all active nodes
     activeNodes = sortBy(activeNodes, 'path');
+
+    if (this.props.onPanelSelectionChange) {
+      this.props.onPanelSelectionChange(this.state.activeNodes.slice(), activeNodes)
+    }
+
     // Update the current state
     this.setState({
       activeNodes: activeNodes
     });
+
   }
 
   /**

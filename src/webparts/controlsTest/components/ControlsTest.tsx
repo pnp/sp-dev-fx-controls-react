@@ -746,7 +746,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 // new TermLabelAction("Get Labels")
               ],
               termActionsDisplayMode: TermActionsDisplayMode.buttons,
-              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon,
+            }}
+            onPanelSelectionChange={(prev, next) => {
+              console.log(prev);
+              console.log(next);
             }}
           />
 
