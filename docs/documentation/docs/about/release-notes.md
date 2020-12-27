@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `Placeholder`: support of custom rendering for `iconText` and `description`
+- `PeoplePicker`: ability just to display inactive users name (ideally the value fetched from 'Author/Title') [#768](https://github.com/pnp/sp-dev-fx-controls-react/issues/768)
 
 ### Fixes
 
@@ -13,7 +14,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen).
+Special thanks to our contributors (in alphabetical order): [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23).
 
 ## 2.3.0
 
