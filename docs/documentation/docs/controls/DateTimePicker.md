@@ -25,7 +25,7 @@ Here are some examples of the control:
 - Import the control into your component. The DateConvention and TimeConvention controls if the time of day controls are shown and the time format used (12 hours/24 hours).
 
 ```TypeScript
-import { DateTimePicker, DateConvention, TimeConvention } from '@pnp/spfx-controls-react/lib/dateTimePicker';
+import { DateTimePicker, DateConvention, TimeConvention } from '@pnp/spfx-controls-react/lib/DateTimePicker';
 ```
 - Use the `DateTimePicker` control in your code as follows, either as an uncontrolled or a controlled component:
 
