@@ -8,11 +8,12 @@
 
 ### Fixes
 
-- `DateTimePicker`: documentation fix
+- `DateTimePicker`: documentation fix [#767](https://github.com/pnp/sp-dev-fx-controls-react/pull/767)
+- `PeoplePicker`: documentation fix - Changed isRequired property to new required [#769](https://github.com/pnp/sp-dev-fx-controls-react/pull/769)
 
 ### Contributors
 
-Special thanks to our contributor: [Leif Frederiksen](https://github.com/Leif-Frederiksen).
+Special thanks to our contributors (in alphabetical order): [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen).
 
 ## 2.3.0
 
