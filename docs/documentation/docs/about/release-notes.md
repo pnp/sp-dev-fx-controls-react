@@ -2,6 +2,10 @@
 
 ## 2.4.0
 
+### New control(s)
+
+- `AccessibleAccordion` control [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
+
 ### Enhancements
 
 - `Placeholder`: support of custom rendering for `iconText` and `description`
@@ -9,6 +13,7 @@
 - `TaxonomyPicker`: New `onPanelSelectionChange` property added. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. [#761](https://github.com/pnp/sp-dev-fx-controls-react/issues/761)
 - `TaxonomyPicker`: `selectChildrenIfParentSelected` property added. Specifies if the children should be selected when parent item is selected (defaults to false). [#765](https://github.com/pnp/sp-dev-fx-controls-react/issues/765)
 - `ListPicker`: ability to pick lists from specified site using `webAbsoluteUrl` property.
+- `FilePicker`: `buttonIconProps` to define properties of the button's icon [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
 
 ### Fixes
 
@@ -17,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23).
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23), [João Mendes](https://github.com/joaojmendes).
 
 ## 2.3.0
 
