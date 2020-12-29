@@ -6,10 +6,10 @@ import SPServiceMock from "./SPServiceMock";
 import SPService from "./SPService";
 
 export class SPServiceFactory {
-  public static createService(context: WebPartContext | ExtensionContext, includeDelay?: boolean, delayTimeout?: number): ISPService {
+  public static createService(context: WebPartContext | ExtensionContext, includeDelay?: boolean, delayTimeout?: number, webAbsoluteUrl?: string): ISPService {
     if (Environment.type === EnvironmentType.Local) {
       return new SPServiceMock(includeDelay, delayTimeout);
     }
-    return new SPService(context);
+    return new SPService(context, webAbsoluteUrl);
   }
 }
