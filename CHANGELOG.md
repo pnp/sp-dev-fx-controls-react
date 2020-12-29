@@ -8,6 +8,7 @@
 - `PeoplePicker`: ability just to display inactive users name (ideally the value fetched from 'Author/Title') [#768](https://github.com/pnp/sp-dev-fx-controls-react/issues/768)
 - `TaxonomyPicker`: New `onPanelSelectionChange` property added. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. [#761](https://github.com/pnp/sp-dev-fx-controls-react/issues/761)
 - `TaxonomyPicker`: `selectChildrenIfParentSelected` property added. Specifies if the children should be selected when parent item is selected (defaults to false). [#765](https://github.com/pnp/sp-dev-fx-controls-react/issues/765)
+- `ListPicker`: ability to pick lists from specified site using `webAbsoluteUrl` property.
 
 ### Fixes
 
