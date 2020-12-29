@@ -17,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23).
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23).
 
 ## 2.3.0
 
