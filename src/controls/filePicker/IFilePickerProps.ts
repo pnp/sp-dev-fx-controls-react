@@ -1,6 +1,9 @@
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IFilePickerResult } from "./FilePicker.types";
+import { IIconProps } from "office-ui-fabric-react";
+
 import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+
+import { IFilePickerResult } from "./FilePicker.types";
 
 export interface IFilePickerProps {
   /**
@@ -16,6 +19,11 @@ export interface IFilePickerProps {
    * Specifies the icon to be used to display Icon Button.
    */
   buttonIcon?: string;
+ /**
+   * Specifies props for icon to be used to display Icon Button.
+   */
+  buttonIconProps?: IIconProps;
+
 
   /**
    * Handler when the file has been selected
