@@ -67,7 +67,6 @@
     "karma-html-reporter": "0.2.7",
     "karma-remap-coverage": "^0.1.4",
     "react-addons-test-utils": "15.6.0",
-    "react-dom": "15.4.2",
     "request-promise": "4.2.5",
     "sonarqube-scanner": "2.1.2",
     "tslib": "2.0.0",
