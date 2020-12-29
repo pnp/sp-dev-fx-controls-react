@@ -51,17 +51,17 @@ const Provider = ({
     };
 
     const renderChildren = (
-        accordionContext: AccordionContext,
+        ctx: AccordionContext,
     ): JSX.Element => {
         const expanded =
-            dangerouslySetExpanded ? dangerouslySetExpanded : accordionContext.isItemExpanded(uuid);
-        const disabled = accordionContext.isItemDisabled(uuid);
-        const panelAttributes = accordionContext.getPanelAttributes(
+            dangerouslySetExpanded ? dangerouslySetExpanded : ctx.isItemExpanded(uuid);
+        const disabled = ctx.isItemDisabled(uuid);
+        const panelAttributes = ctx.getPanelAttributes(
             uuid,
             dangerouslySetExpanded,
         );
-        const headingAttributes = accordionContext.getHeadingAttributes(uuid);
-        const buttonAttributes = accordionContext.getButtonAttributes(
+        const headingAttributes = ctx.getHeadingAttributes(uuid);
+        const buttonAttributes = ctx.getButtonAttributes(
             uuid,
             dangerouslySetExpanded,
         );
