@@ -275,8 +275,6 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
         // Add the checked term
         activeNodes.push(termItem);
 
-        // Filter out the duplicate terms
-        activeNodes = uniqBy(activeNodes, 'key');
       } else {
         // Only store the current selected item
         activeNodes = [termItem];
@@ -292,6 +290,10 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
           };
         }));
       }
+
+      // Filter out the duplicate terms
+      activeNodes = uniqBy(activeNodes, 'key');
+
     } else {
       // Remove the term from the list of active nodes
       activeNodes = activeNodes.filter(item => item.key !== term.Id);
