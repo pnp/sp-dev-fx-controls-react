@@ -19,10 +19,11 @@
 
 - `DateTimePicker`: documentation fix [#767](https://github.com/pnp/sp-dev-fx-controls-react/pull/767)
 - `PeoplePicker`: documentation fix - Changed isRequired property to new required [#769](https://github.com/pnp/sp-dev-fx-controls-react/pull/769)
+- Documentation fix - missing `IFramePanel` link on home page [#775](https://github.com/pnp/sp-dev-fx-controls-react/pull/775)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23), [João Mendes](https://github.com/joaojmendes).
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Gaurav Goyal](https://github.com/Gaurav8Bizportals), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [San](https://github.com/sankarkumar23), [João Mendes](https://github.com/joaojmendes).
 
 ## 2.3.0
 
