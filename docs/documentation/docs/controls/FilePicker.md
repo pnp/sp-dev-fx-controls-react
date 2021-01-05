@@ -45,7 +45,7 @@ import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/File
   accepts= {[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
   buttonIcon="FileImage"
   onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
-  onChanged={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
+  onChange={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
   context={this.props.context}
 />
 ```
