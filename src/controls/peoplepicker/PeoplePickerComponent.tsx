@@ -93,18 +93,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (defaultSelectedUsers) {
       let selectedPersons: IPersonaProps[] = [];
       for (const userValue of props.defaultSelectedUsers) {
-        if (userValue.endsWith("|inactive")) {
-          const temp: string = userValue.slice(0, -9);
-          if (temp) {
-            const inactiveUser: IPersonaProps = { text: temp };
-            selectedPersons.push(inactiveUser);
-          }
+        let valueAndTitle: string[] = [];
+        valueAndTitle.push(userValue);
+        if (userValue && userValue.indexOf('/') > -1)
+          valueAndTitle = userValue.split('/');
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser);
+        if (userResult) {
+          selectedPersons.push(userResult);
         }
-        else {
-          const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(userValue, principalTypes, webAbsoluteUrl, this.groupId, ensureUser);
-          if (userResult) {
-            selectedPersons.push(userResult);
-          }
+        else if (valueAndTitle.length == 2 && valueAndTitle[1]) { //user not found.. bind the title if exists
+          const inactiveUser: IPersonaProps = { text: valueAndTitle[1] };
+          selectedPersons.push(inactiveUser);
         }
       }
 

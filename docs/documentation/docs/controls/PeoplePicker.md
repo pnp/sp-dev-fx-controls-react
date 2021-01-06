@@ -70,7 +70,8 @@ The People picker control can be configured with the following properties:
 | onChange | (items: IPersonaProps[]) => void | no | Get the selected users in the control. | |
 | peoplePickerWPclassName | string | no | applies custom styling to the people picker element | |
 | peoplePickerCntrlclassName | string | no | applies custom styling to the people picker control only | |
-| defaultSelectedUsers | string[] | no | Default selected user emails or login names or user title`|inactive`. User title is just to display the inactive users. Append the user title with string `|inactive` in lower case. | |
+| defaultSelectedUsers | string[] | no | Default selected user emails or login names, optionally append `/title` with forward slash.
+If user is not found then only optional title will be shown. If you do not have email or login name of inactive users just pass `/title` alone prefixed with slash.| |
 | webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. If not provided, the people picker will perform a tenant wide people/group search. When provided it will search users/groups on the provided site. | |
 | principalTypes | PrincipalType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
 | ensureUser | boolean | no | When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search. | false |
