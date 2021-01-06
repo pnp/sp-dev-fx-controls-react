@@ -250,4 +250,4 @@ items: [
 private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
 ```
 
-
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TreeView)

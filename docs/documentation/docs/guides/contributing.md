@@ -52,3 +52,5 @@ Before contributing:
 - **DO NOT** surprise us with big PR's. Instead file an issue & start a discussion so we can agree on a direction before you invest a large amount of time.
 - **DO NOT** commit code you didn't write.
 - **DO NOT** submit PR's that refactor existing code without a discussion first.
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/Contributing)

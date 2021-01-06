@@ -21,6 +21,7 @@ import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";
+import * as telemetry from '../../common/telemetry';
 
 interface IPreviewImageCollection {
   [fileName: string]: IDocumentCardPreviewImage;
@@ -33,6 +34,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
   constructor(props: IListItemAttachmentsProps) {
     super(props);
+
+    telemetry.track('ReactListItemAttachments', {});
 
     this.state = {
       file: null,

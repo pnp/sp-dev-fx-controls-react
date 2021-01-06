@@ -229,3 +229,5 @@ You can also control point configurations at the dataset level.
 ## For More Information
 
 For more information on what options are available with Scatter charts, refer to the [Scatter documentation](https://www.chartjs.org/docs/latest/charts/scatter.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/ScatterChart)

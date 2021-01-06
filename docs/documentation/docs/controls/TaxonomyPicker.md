@@ -229,4 +229,4 @@ Enum `UpdateType`
 | disableTerm |
 | selectTerm |
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)

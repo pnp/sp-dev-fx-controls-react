@@ -4,6 +4,8 @@ import "../css/AccordionStylesOverride.css";
 
 import * as React from "react";
 
+import * as telemetry from '../../../common/telemetry';
+
 import AccordionStore, {
   InjectedButtonAttributes,
   InjectedHeadingAttributes,
@@ -54,6 +56,12 @@ export class Provider extends React.PureComponent<
         allowMultipleExpanded: this.props.allowMultipleExpanded,
         allowZeroExpanded: this.props.allowZeroExpanded,
     });
+
+    constructor (props: ProviderProps) {
+      super(props);
+
+      telemetry.track('ReactAccessibleAccordion', {});
+    }
 
     private toggleExpanded = (key: UUID): void => {
         this.setState(

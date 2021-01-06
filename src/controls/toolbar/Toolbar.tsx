@@ -20,6 +20,7 @@ import { Icon } from "office-ui-fabric-react/lib/components/Icon/Icon";
 import { InFlowToolbarItem, toolbarMenuProps } from "./InFlowToolbarItem";
 import styles from "./Toolbar.module.scss";
 import { flattenedActions, getInFlowToolbarItems, getOverflowToolbarItems, TActionGroups, TFilters, TToolbarItems, TToolbarLayout } from "./ToolbarActionsUtils";
+import { useTelemetry } from "../../common/telemetry";
 
 /**
  * Toolbar props
@@ -69,6 +70,8 @@ export const Toolbar = (props: IToolbarProps) => {
       layoutQuery.current && layoutQuery.current.matches ? "verbose" : "compact"
     );
   };
+
+  useTelemetry('ReactToolbar');
 
   React.useLayoutEffect(() => {
     layoutQuery.current = window.matchMedia("(min-width: 640px)");

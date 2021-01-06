@@ -15,6 +15,7 @@ import { Toolbar } from "../toolbar";
 import { IWidget } from "./widget/IWidget";
 import { IToolbarProps } from "../toolbar/Toolbar";
 import styles from "./Dashboard.module.scss";
+import { useTelemetry } from "../../common/telemetry";
 
 /**
  * Dashboard component props
@@ -44,6 +45,8 @@ export function Dashboard({
   onWidgetHiding,
   toolbarProps }: IDashboardProps) {
   const [stateWidgets, setWidgets] = React.useState(widgets);
+
+  useTelemetry('ReactDashboard', {});
 
   React.useEffect(() => {
     setWidgets(widgets);

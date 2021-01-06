@@ -106,3 +106,5 @@ The result will look like the following:
 Once you click on an action, you will see the alert:
 
 ![ContextualMenu_clicked](../assets/ListView.ContextualMenu_clicked.png)
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListViewContextualMenu)

@@ -119,3 +119,5 @@ data: [20, 10, 33, 47]
 ## For More Information
 
 For more information on what options are available with Radar charts, refer to the [Radar documentation](https://www.chartjs.org/docs/latest/charts/radar.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/RadarChart)
