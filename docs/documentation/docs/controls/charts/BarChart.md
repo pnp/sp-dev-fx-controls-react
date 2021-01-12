@@ -380,3 +380,6 @@ The following configuration options are specific to bar charts:
 ## For More Information
 
 For more information on what options are available with Bar charts, refer to the [Bar Chart documentation](https://www.chartjs.org/docs/latest/charts/bar.html) on [Chart.js](https://www.chartjs.org).
+
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/BarChart)

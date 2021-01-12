@@ -46,13 +46,13 @@ export default class Term extends React.Component<ITermProps, ITermState> {
    */
   public componentWillReceiveProps?(nextProps: ITermProps, nextContext: any): void {
     // If multi-selection is turned off, only a single term can be selected
-    if (!this.props.multiSelection) {
+    //if (!this.props.multiSelection) {
       let active = nextProps.activeNodes.filter(item => item.key === this.props.term.Id);
-      this.state = {
+      this.setState ({
         selected: active.length > 0,
         termLabel: this.state.termLabel
-      };
-    }
+      });
+    //}
   }
 
   /**

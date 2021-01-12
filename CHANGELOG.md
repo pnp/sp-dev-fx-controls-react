@@ -1,5 +1,31 @@
 # Releases
 
+## 2.4.0
+
+### New control(s)
+
+- `AccessibleAccordion` control [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
+
+### Enhancements
+
+- `Placeholder`: support of custom rendering for `iconText` and `description`
+- `PeoplePicker`: ability just to display inactive users name (ideally the value fetched from 'Author/Title') [#768](https://github.com/pnp/sp-dev-fx-controls-react/issues/768)
+- `TaxonomyPicker`: New `onPanelSelectionChange` property added. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. [#761](https://github.com/pnp/sp-dev-fx-controls-react/issues/761)
+- `TaxonomyPicker`: `selectChildrenIfParentSelected` property added. Specifies if the children should be selected when parent item is selected (defaults to false). [#765](https://github.com/pnp/sp-dev-fx-controls-react/issues/765)
+- `ListPicker`: ability to pick lists from specified site using `webAbsoluteUrl` property.
+- `FilePicker`: `buttonIconProps` to define properties of the button's icon [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
+
+### Fixes
+
+- `DateTimePicker`: documentation fix [#767](https://github.com/pnp/sp-dev-fx-controls-react/pull/767)
+- `PeoplePicker`: documentation fix - Changed isRequired property to new required [#769](https://github.com/pnp/sp-dev-fx-controls-react/pull/769)
+- Documentation fix - missing `IFramePanel` link on home page [#775](https://github.com/pnp/sp-dev-fx-controls-react/pull/775)
+- Documentation fix for `FilePicker`: updated `onChaged` to `onChange` [#776](https://github.com/pnp/sp-dev-fx-controls-react/pull/776)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Gaurav Goyal](https://github.com/Gaurav8Bizportals), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23), [João Mendes](https://github.com/joaojmendes).
+
 ## 2.3.0
 
 ### New control(s)

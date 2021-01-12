@@ -5,9 +5,9 @@
 export interface IPlaceholderProps {
 
   /**
-   * Text description for the placeholder. Appears bellow the Icon and IconText.
+   * Text description or component for the placeholder. Appears bellow the Icon and IconText.
    */
-  description: string;
+  description: string | ((defaultClassNames: string) => React.ReactElement);
   /**
    * Icon name used for the className from the MDL2 set. Example: 'Add'.
    */
@@ -15,7 +15,7 @@ export interface IPlaceholderProps {
   /**
    * Heading displayed against the Icon.
    */
-  iconText: string;
+  iconText: string | ((defaultClassNames: string) => React.ReactElement);
   /**
    * Text label to be displayed on button below the description.
    * Optional: As the button is optional.

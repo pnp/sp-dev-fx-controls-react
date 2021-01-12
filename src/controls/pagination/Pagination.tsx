@@ -2,6 +2,7 @@ import * as React from "react";
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import styles from "./Pagination.module.scss";
 import { isEqual } from "lodash";
+import * as telemetry from '../../common/telemetry';
 
 export interface IPaginationProps {
     /**
@@ -43,6 +44,8 @@ export interface IPaginationState {
 export class Pagination extends React.Component<IPaginationProps, IPaginationState> {
     constructor(props: Readonly<IPaginationProps>) {
         super(props);
+
+        telemetry.track('ReactPagination');
 
         const paginationElements = this.preparePaginationElements(props.totalPages);
 

@@ -23,6 +23,16 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
              onConfigure={this._onConfigure} />
 ```
 
+- With custom element for `description`:
+
+```TypeScript
+<Placeholder iconName='Edit'
+             iconText='Configure your web part'
+             description={defaultClassNames => <span className={`${defaultClassNames} ${additionalStyles}`}>Please configure the web part.</span>}
+             buttonLabel='Configure'
+             onConfigure={this._onConfigure} />
+```
+
 - With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
 
 ```typescript
@@ -51,9 +61,9 @@ The placeholder control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | buttonLabel | string | no | Text label to be displayed on the button bellow the description. The button is optional. |
 | contentClassName | string | no | This is the className that is applied to the root element of the content zone. You can use this to apply custom styles to the placeholder. |
-| description | string | yes | Text description for the placeholder. This appears bellow the Icon and IconText. |
+| description | string \| ((defaultClassNames: string) =&gt; React.ReactElement) | yes | Text description or render function for the placeholder. This appears bellow the Icon and IconText. |
 | iconName | string | yes | The name of the icon that will be used in the placeholder. This is the same name as you can find on the Office UI Fabric icons page: [Office UI Fabric icons](https://dev.office.com/fabric#/styles/icons). For example: `Page` or `Add`. |
-| iconText | string | yes | Heading text which is displayed next to the icon. |
+| iconText | string \| ((defaultClassNames: string) =&gt; React.ReactElement) | yes | Heading text or render function which is displayed next to the icon. |
 | hideButton | boolean | no | Specify if you want to hide the button. Default is `false`. |
 | onConfigure | function | no | onConfigure handler for the button. The button is optional. |
 

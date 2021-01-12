@@ -50,7 +50,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     if (
       prevProps.baseTemplate !== this.props.baseTemplate ||
       prevProps.includeHidden !== this.props.includeHidden ||
-      prevProps.orderBy !== this.props.orderBy
+      prevProps.orderBy !== this.props.orderBy ||
+      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl
     ) {
       this.loadLists();
     }
@@ -64,12 +65,12 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   * Loads the list from SharePoint current web site
   */
   private loadLists() {
-    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter } = this.props;
+    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter, webAbsoluteUrl } = this.props;
 
     // Show the loading indicator and disable the dropdown
     this.setState({ loading: true });
 
-    const service: ISPService = SPServiceFactory.createService(context, true, 5000);
+    const service: ISPService = SPServiceFactory.createService(context, true, 5000, webAbsoluteUrl);
     service.getLibs({
       baseTemplate: baseTemplate,
       includeHidden: includeHidden,

@@ -172,6 +172,8 @@ The TaxonomyPicker control can be configured with the following properties:
 | onGetErrorMessage | (value: IPickerTerms) => string \| Promise&lt;string&gt; | no | The method is used to get the validation error message and determine whether the picker value is valid or not. Mutually exclusive with the static string `errorMessage` (it will take precedence over this).<br />When it returns string:<ul><li>If valid, it returns empty string.</li><li>If invalid, it returns the error message string to be shown below the picker.</li></ul><br />When it returns Promise&lt;string&gt;:<ul><li>The resolved value is display as error message.</li><li>The rejected, the value is thrown away.</li></ul> |
 | required | boolean | no | Specifies if to display an asterisk near the label. Note that error message should be specified in `onGetErrorMessage` or `errorMessage` |
 | useSessionStorage | boolean | no | Specify if the control uses session storage. Default is set to true for better performance. |
+| onPanelSelectionChange | (prevValue: IPickerTerms, newValue: IPickerTerms) => void | no | Panel selection change handler. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. |
+| selectChildrenIfParentSelected | boolean | no | Specifies if the children should be selected when parent item is selected (defaults to false). |
 
 
 Interface `IPickerTerm`
@@ -227,4 +229,4 @@ Enum `UpdateType`
 | disableTerm |
 | selectTerm |
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)

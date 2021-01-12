@@ -177,3 +177,5 @@ The following configuration options are specific to pie charts:
 ## For More Information
 
 For more information on what options are available with Pie charts, refer to the [Doughtnut and Pie documentation](https://www.chartjs.org/docs/latest/charts/doughnut.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/PieChart)

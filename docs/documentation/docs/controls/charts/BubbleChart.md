@@ -107,3 +107,5 @@ The `data` property of each dataset item consists of an `x`, `y`, and `r` coordi
 ## For More Information
 
 For more information on what options are available with Bubble charts, refer to the [Bubble Chart documentation](https://www.chartjs.org/docs/latest/charts/bubble.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/BubbleChart)

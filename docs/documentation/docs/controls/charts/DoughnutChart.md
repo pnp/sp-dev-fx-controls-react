@@ -101,3 +101,5 @@ The following configuration options are specific to doughnut charts:
 ## For More Information
 
 For more information on what options are available with Doughnut charts, refer to the [Doughnut and Pie documentation](https://www.chartjs.org/docs/latest/charts/doughnut.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/DoughnutChart)
