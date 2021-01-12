@@ -1,6 +1,6 @@
 # Accessible Accordion
 
-This control allows you to render an accordion control. Is a Implementation based on React Accessible Accordion Control, that was customize UI to be more Fluent.
+This control allows you to render an accordion control. It is an implementation based on React Accessible Accordion Control, that was customized to be more "Fluent".
 
 Here is an example of the control in action:
 
