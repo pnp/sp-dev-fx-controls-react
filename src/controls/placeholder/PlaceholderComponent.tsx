@@ -64,7 +64,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
               return true;
           }
       }
-    } 
+    }
     return this.state.width !== nextState.width || this.props.hideButton !== nextProps.hideButton;
   }
 
@@ -95,28 +95,42 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
    * Default React component render method
    */
   public render(): React.ReactElement<IPlaceholderProps> {
+
+    const {
+      iconName,
+      iconText,
+      description,
+      children,
+      buttonLabel,
+      hideButton
+    } = this.props;
+
+    const iconTextClassNames = `${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`;
+    const iconTextEl = typeof iconText === 'string' ? <span className={iconTextClassNames}>{this.props.iconText}</span> : iconText(iconTextClassNames);
+    const descriptionEl = typeof description === 'string' ? <span className={styles.placeholderDescriptionText}>{this.props.description}</span> : description(styles.placeholderDescriptionText);
+
     return (
       <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>
         <div className={styles.placeholderContainer}>
           <div className={styles.placeholderHead}>
             <div className={styles.placeholderHeadContainer}>
               {
-                this.props.iconName && <Icon iconName={this.props.iconName} className={styles.placeholderIcon} />
+                iconName && <Icon iconName={iconName} className={styles.placeholderIcon} />
               }
-              <span className={`${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`}>{this.props.iconText}</span>
+              {iconTextEl}
             </div>
           </div>
           <div className={styles.placeholderDescription}>
-            <span className={styles.placeholderDescriptionText}>{this.props.description}</span>
+            {descriptionEl}
           </div>
-          {this.props.children}
+          {children}
           <div className={styles.placeholderDescription}>
             {
-              (this.props.buttonLabel && !this.props.hideButton) &&
+              (buttonLabel && !hideButton) &&
               <PrimaryButton
-                text={this.props.buttonLabel}
-                ariaLabel={this.props.buttonLabel}
-                ariaDescription={this.props.description}
+                text={buttonLabel}
+                ariaLabel={buttonLabel}
+                ariaDescription={typeof description === 'string' ? description : ''}
                 onClick={this._handleBtnClick} />
             }
           </div>

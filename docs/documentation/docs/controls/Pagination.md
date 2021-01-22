@@ -51,3 +51,5 @@ The Pagination control can be configured with the following properties:
 | hideFirstPageJump | boolean | no | Hide the quick jump to the first page | false |
 | hideLastPageJump | boolean | no | Hide the quick jump to the last page | false |
 | limiterIcon | string | no | Limitir icon form Fluent IU | More |
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Pagination)

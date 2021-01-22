@@ -1,0 +1,15 @@
+.dashboardBox {
+    display: "grid";
+    gap: .5rem;
+    grid-template: repeat(auto-fill, 26rem) / repeat(auto-fill, minmax(18.75rem, 1fr));
+    grid-auto-flow: dense;
+    grid-auto-rows: 26rem;
+    padding: 1rem 1rem 1.25rem;
+    min-width: 20rem;
+}
+
+@media (max-width: 986px) {
+  .dashboardBox {
+    grid-template: repeat(auto-fill, 25rem) / repeat(auto-fill, minmax(15.75rem, 1fr))
+  }
+}

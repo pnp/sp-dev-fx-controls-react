@@ -45,6 +45,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             value={fileUrl}
             onChanged={(newValue: string) => this._handleChange(newValue)}
           />
+          {this.props.renderCustomLinkTabContent && this.props.renderCustomLinkTabContent(this.state.filePickerResult)}
         </div>
 
         <div className={styles.actionButtonsContainer}>

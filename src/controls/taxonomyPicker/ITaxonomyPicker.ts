@@ -120,6 +120,23 @@ export interface ITaxonomyPickerProps  {
    * Note that error message should be specified in onGetErrorMessage
    */
   required?: boolean;
+
+  /**
+   * Specifies if you want to use session storage
+   * Default will be true
+   */
+  useSessionStorage?: boolean;
+
+  /**
+   * Panel selection change handler. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked.
+   */
+  onPanelSelectionChange?: (prevValue: IPickerTerms, newValue: IPickerTerms) => void;
+
+  /**
+   * Specifies if the childrens should be selected when parent is selected.
+   * By default this is set to false.
+   */
+  selectChildrenIfParentSelected?: boolean;
 }
 
 /**

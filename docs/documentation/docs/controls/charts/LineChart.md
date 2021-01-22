@@ -452,3 +452,5 @@ The following configuration options are specific to line charts:
 ## For More Information
 
 For more information on what options are available with Line charts, refer to the [Line Chart documentation](https://www.chartjs.org/docs/latest/charts/line.html) on [Chart.js](https://www.chartjs.org).
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/LineChart)

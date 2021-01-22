@@ -84,3 +84,5 @@ The easiest way to upgrade the SharePoint Framework solution is to use [Office36
   ```typescript
   import { FolderPicker } from '@pnp/spfx-controls-react/lib/FolderPicker';
   ```
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/MigrateFromV1)

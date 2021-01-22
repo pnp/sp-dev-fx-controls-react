@@ -112,7 +112,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       hideTagsNotAvailableForTagging,
       initialValues,
       validateOnLoad,
-      termsetNameOrID
+      termsetNameOrID,
+      useSessionStorage
     } = this.props;
 
     let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
@@ -121,7 +122,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       const notFoundTerms: string[] = [];
       const notFoundTermIds: string[] = [];
 
-      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging, useSessionStorage);
       const allTerms = termSet.Terms;
 
       for (let i = 0, len = initialValues.length; i < len; i++) {
@@ -153,7 +154,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       // });
     }
 
-    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
+    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
       this.setState({
@@ -167,7 +168,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
    */
   private async updateTaxonomyTree(): Promise<void> {
-    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging);
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage);
 
     this.setState({
       termSetAndTerms
@@ -230,10 +231,19 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    */
   private termsChanged(term: ITerm, checked: boolean): void {
 
-    let activeNodes = this.state.activeNodes;
+    let activeNodes = this.state.activeNodes.slice();
     if (typeof term === 'undefined' || term === null) {
       return;
     }
+
+    const {
+      allowMultipleSelections,
+      selectChildrenIfParentSelected
+    } = this.props;
+
+    const {
+      termSetAndTerms
+    } = this.state;
 
     // Term item to add to the active nodes array
     const termItem = {
@@ -243,28 +253,68 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSet: term.TermSet.Id
     };
 
+    //
+    // checking if we need to process child terms
+    //
+    let children: ITerm[] = [];
+    if (allowMultipleSelections && selectChildrenIfParentSelected) {
+      if (term.Id === term.TermSet.Id) { // term set selected
+        children = termSetAndTerms.Terms || [];
+      }
+      else {
+        children = termSetAndTerms.Terms ? termSetAndTerms.Terms.filter(t => {
+          return t.PathOfTerm.indexOf(`${term.PathOfTerm};`) !== -1;
+        }) : [];
+      }
+    }
+
     // Check if the term is checked or unchecked
     if (checked) {
       // Check if it is allowed to select multiple terms
-      if (this.props.allowMultipleSelections) {
+      if (allowMultipleSelections) {
         // Add the checked term
         activeNodes.push(termItem);
-        // Filter out the duplicate terms
-        activeNodes = uniqBy(activeNodes, 'key');
+
       } else {
         // Only store the current selected item
         activeNodes = [termItem];
       }
+
+      if (children.length) {
+        activeNodes.push(...children.map(c => {
+          return {
+            name: c.Name,
+            key: c.Id,
+            path: c.PathOfTerm,
+            termSet: c.TermSet.Id
+          };
+        }));
+      }
+
+      // Filter out the duplicate terms
+      activeNodes = uniqBy(activeNodes, 'key');
+
     } else {
       // Remove the term from the list of active nodes
       activeNodes = activeNodes.filter(item => item.key !== term.Id);
+
+      if (children.length) {
+        const childIds = children.map(c => c.Id);
+        activeNodes = activeNodes.filter(item => childIds.indexOf(item.key) === -1);
+      }
     }
     // Sort all active nodes
     activeNodes = sortBy(activeNodes, 'path');
+
+    if (this.props.onPanelSelectionChange) {
+      this.props.onPanelSelectionChange(this.state.activeNodes.slice(), activeNodes);
+    }
+
     // Update the current state
     this.setState({
       activeNodes: activeNodes
     });
+
   }
 
   /**

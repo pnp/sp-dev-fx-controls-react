@@ -57,6 +57,10 @@ export interface IListPickerProps {
   * Callback issued when the selected option changes
   */
   onSelectionChanged?: (newValue: string | string[]) => void;
+  /**
+   * Absolute Web Url of target site (user requires permissions)
+   */
+  webAbsoluteUrl?: string;
 }
 
 export interface IListPickerState {

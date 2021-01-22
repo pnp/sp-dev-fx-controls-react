@@ -27,3 +27,5 @@ We appreciate your initiative and would love to integrate your work with the res
 - let us know what's in the PR: is it a new command, bug fix or a minor update in the docs? The clearer the information you provide, the quicker your PR can be verified and merged
 - ideally 1 PR = 1 commit - this makes it easier to keep the log clear for everyone and track what's changed. If you're new to working with git, we'll squash your commits for you when merging your changes into the main repo
 - don't worry about changing the version or adding yourself to the list of contributors in `package.json`. We'll do that for you when merging your changes.
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/SubmittingPR)

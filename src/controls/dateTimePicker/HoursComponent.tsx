@@ -32,9 +32,10 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
     if (renderDropdown) {
       return (
         <Dropdown
-          disabled={this.props.disabled}
+          disabled={disabled}
           label=''
           options={this._hours}
+          selectedKey={value}
           onChanged={option => {
             onChange(option.text);
           }}
@@ -121,12 +122,12 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
         }
       }
 
-      let selected: boolean = false;
+      /*let selected: boolean = false;
       if (i === value) {
         selected = true;
-      }
+      }*/
 
-      hours.push({ key: i, text: digit, isSelected: selected });
+      hours.push({ key: i, text: digit });
     }
 
     this._hours = hours;

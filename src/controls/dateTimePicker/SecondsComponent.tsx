@@ -32,9 +32,10 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
     if (renderDropdown) {
       return (
         <Dropdown
-          disabled={this.props.disabled}
+          disabled={disabled}
           label=''
           options={this._seconds}
+          selectedKey={value}
           onChanged={option => {
             onChange(option.text);
           }} />
@@ -76,11 +77,11 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
       } else {
         digitSec = k.toString();
       }
-      let selected: boolean = false;
+      /*let selected: boolean = false;
       if (k === this.props.value) {
         selected = true;
-      }
-      seconds.push({ key: k, text: digitSec, isSelected: selected });
+      }*/
+      seconds.push({ key: k, text: digitSec });
     }
 
     this._seconds = seconds;

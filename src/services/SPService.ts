@@ -6,7 +6,11 @@ import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
 
 export default class SPService implements ISPService {
 
-  constructor(private _context: WebPartContext | ExtensionContext) { }
+  private _webAbsoluteUrl: string;
+
+  constructor(private _context: WebPartContext | ExtensionContext, webAbsoluteUrl?: string) {
+    this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
+   }
 
   /**
    * Get lists or libraries
@@ -15,7 +19,7 @@ export default class SPService implements ISPService {
    */
   public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
     let filtered: boolean;
-    let queryUrl: string = `${this._context.pageContext.web.absoluteUrl}/_api/web/lists?$select=Title,id,BaseTemplate`;
+    let queryUrl: string = `${this._webAbsoluteUrl}/_api/web/lists?$select=Title,id,BaseTemplate`;
 
     if (options.orderBy) {
       queryUrl += `&$orderby=${options.orderBy === LibsOrderBy.Id ? 'Id' : 'Title'}`;
@@ -52,7 +56,7 @@ export default class SPService implements ISPService {
                         `substringof('${encodeURIComponent(filterText.replace("'","''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
                         : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'","''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
     try {
-      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -109,7 +113,7 @@ export default class SPService implements ISPService {
 
     try {
       const webAbsoluteUrl = !webUrl
-        ? this._context.pageContext.web.absoluteUrl
+        ? this._webAbsoluteUrl
         : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$orderby=${internalColumnName}&$select=${keyInternalColumnName ||
         "Id"},${internalColumnName}&${_filter}${costumfilter}${_top}`;
@@ -144,7 +148,7 @@ export default class SPService implements ISPService {
    */
   public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
     try {
-      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -174,7 +178,7 @@ export default class SPService implements ISPService {
       const spOpts: ISPHttpClientOptions = {
         headers: { "X-HTTP-Method": 'DELETE', }
       };
-      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/getByFileName(@fileName)/RecycleObject?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
     } catch (error) {
@@ -206,7 +210,7 @@ export default class SPService implements ISPService {
       const spOpts: ISPHttpClientOptions = {
         body: file
       };
-      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/add(FileName=@fileName)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
       return;
@@ -224,7 +228,7 @@ export default class SPService implements ISPService {
    * @param webUrl
    */
   public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
-    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/GetByFileBame(@fileName))?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
     const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
     if (data.ok) {
@@ -248,7 +252,7 @@ export default class SPService implements ISPService {
   public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
     try {
       const listServerRelativeUrl = await this.getListServerRelativeUrl(listId, webUrl);
-      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const fileServerRelativeUrl = `${listServerRelativeUrl}/Attachments/${itemId}/${fileName}`;
       const apiUrl = `${webAbsoluteUrl}/_api/web/getfilebyserverrelativeurl(@url)/Exists?@url='${encodeURIComponent(fileServerRelativeUrl.replace(/'/g, "''"))}'`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
@@ -272,7 +276,7 @@ export default class SPService implements ISPService {
    * @param webUrl
    */
   public async getListName(listId: string, webUrl?: string): Promise<string> {
-    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RootFolder/Name?@listId=guid'${encodeURIComponent(listId)}'`;
     const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
     if (data.ok) {
@@ -292,7 +296,7 @@ export default class SPService implements ISPService {
    * @param webUrl
    */
   public async getListServerRelativeUrl(listId: string, webUrl?: string): Promise<string> {
-    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RootFolder/ServerRelativeUrl?@listId=guid'${encodeURIComponent(listId)}'`;
     const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
     if (data.ok) {

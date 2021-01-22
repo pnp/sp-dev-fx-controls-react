@@ -45,7 +45,7 @@ import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/File
   accepts= {[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
   buttonIcon="FileImage"
   onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
-  onChanged={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
+  onChange={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
   context={this.props.context}
 />
 ```
@@ -59,6 +59,7 @@ The FilePicker component can be configured with the following properties:
 | label | string | no | Specifies the text describing the file picker. |
 | buttonLabel | string | no | Specifies the label of the file picker button. |
 | buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
+  buttonIconProps | IIconProps | no | In case it is provided the file picker will be rendered as an Icon the and all can define Properties for Icon  |
 | onSave | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file has been selected and picker has been closed. |
 | onChange | (filePickerResult: IFilePickerResult) => void | no | Handler when the file selection has been changed. |
 | context | ExtensionContext \| WebPartContext | yes | Current context. |
@@ -76,6 +77,8 @@ The FilePicker component can be configured with the following properties:
 | hideLocalUploadTab | boolean | no | Specifies if LocalUploadTab should be hidden. |
 | hideLinkUploadTab | boolean | no | Specifies if LinkUploadTab should be hidden. |
 | storeLastActiveTab | boolean | no | Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default `true` |
+| renderCustomUploadTabContent | (filePickerResult: IFilePickerResult) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Upload" tab |
+| renderCustomLinkTabContent | (filePickerResult: IFilePickerResult) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Link" tab |
 
 interface `IFilePickerResult`
 

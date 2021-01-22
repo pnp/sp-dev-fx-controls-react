@@ -52,10 +52,12 @@ telemetry.optOut();
 
 The following controls are currently available:
 
+- [AccessibleAccordion](./controls/AccessibleAccordion/Accordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
+- [Dashboard](./controls/Dashboard) (Control to render dashboard in Microsoft Teams)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
@@ -65,6 +67,7 @@ The following controls are currently available:
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
 - [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
+- [IFramePanel](./controls/IFramePanel) (renders a Panel with an iframe as a content)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
 - [ListView](./controls/ListView) (List view control)
@@ -75,6 +78,7 @@ The following controls are currently available:
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 

@@ -1,5 +1,55 @@
 # Releases
 
+## 2.4.0
+
+### New control(s)
+
+- `AccessibleAccordion` control [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
+
+### Enhancements
+
+- `Placeholder`: support of custom rendering for `iconText` and `description`
+- `PeoplePicker`: ability just to display inactive users name (ideally the value fetched from 'Author/Title') [#768](https://github.com/pnp/sp-dev-fx-controls-react/issues/768)
+- `TaxonomyPicker`: New `onPanelSelectionChange` property added. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. [#761](https://github.com/pnp/sp-dev-fx-controls-react/issues/761)
+- `TaxonomyPicker`: `selectChildrenIfParentSelected` property added. Specifies if the children should be selected when parent item is selected (defaults to false). [#765](https://github.com/pnp/sp-dev-fx-controls-react/issues/765)
+- `ListPicker`: ability to pick lists from specified site using `webAbsoluteUrl` property.
+- `FilePicker`: `buttonIconProps` to define properties of the button's icon [#770](https://github.com/pnp/sp-dev-fx-controls-react/pull/770)
+
+### Fixes
+
+- `DateTimePicker`: documentation fix [#767](https://github.com/pnp/sp-dev-fx-controls-react/pull/767)
+- `PeoplePicker`: documentation fix - Changed isRequired property to new required [#769](https://github.com/pnp/sp-dev-fx-controls-react/pull/769)
+- Documentation fix - missing `IFramePanel` link on home page [#775](https://github.com/pnp/sp-dev-fx-controls-react/pull/775)
+- Documentation fix for `FilePicker`: updated `onChaged` to `onChange` [#776](https://github.com/pnp/sp-dev-fx-controls-react/pull/776)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Christian Metz](https://github.com/ChrisOMetz), [Gaurav Goyal](https://github.com/Gaurav8Bizportals), [Leif Frederiksen](https://github.com/Leif-Frederiksen), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23), [João Mendes](https://github.com/joaojmendes).
+
+## 2.3.0
+
+### New control(s)
+
+- `Dashboard` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+- `Toobar` control for Microsoft Teams [#758](https://github.com/pnp/sp-dev-fx-controls-react/pull/758)
+
+### Enhancements
+
+- `TaxonomyPicker`: Added `useSessionStorage` property [#759](https://github.com/pnp/sp-dev-fx-controls-react/pull/759)
+
+### Fixes
+
+- `FilePicker`: documentation fix: '|' not escaped [#756](https://github.com/pnp/sp-dev-fx-controls-react/pull/756)
+- `TaxonomyPicker`: Return `TermSetId` for suggestions [#762](https://github.com/pnp/sp-dev-fx-controls-react/pull/762)
+- `WebPartTitle`: Fluent UI Updates to SharePoint - WebPartTitle control too thin now [#605](https://github.com/pnp/sp-dev-fx-controls-react/issues/605)
+- `ListView`: Sticky Header scrolling issue [#734](https://github.com/pnp/sp-dev-fx-controls-react/issues/734)
+- `DateTimePicker`: hours dropdown not re-rendered when state changed programmatically [#757](https://github.com/pnp/sp-dev-fx-controls-react/issues/757)
+- `RichText`: controlled mode doesn't work [#666](https://github.com/pnp/sp-dev-fx-controls-react/issues/666)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Marcin Wojciechowski](https://github.com/mgwojciech), [Nikolay Belykh](https://github.com/nbelyh), [André Lage](https://github.com/aaclage).
+
 ## 2.2.0
 
 ### Enhancements
@@ -10,6 +60,7 @@
 - `TaxonomyPicker`: control does not show an error message for an invalid/unresolved input [#728](https://github.com/pnp/sp-dev-fx-controls-react/issues/728)
 - Canadian French localization [#671](https://github.com/pnp/sp-dev-fx-controls-react/issues/671)
 - `FilePicker`: reduce bundle size [#732](https://github.com/pnp/sp-dev-fx-controls-react/issues/732)
+- `FilePicker`: Custom render callbacks for the 'Upload' and 'Link' tabs [#746](https://github.com/pnp/sp-dev-fx-controls-react/issues/746)
 
 ### Fixes
 
@@ -25,6 +76,7 @@
 - `TaxonomyPicker`: `sessionStorage` exceeds max-size when browsing large termsets [#739](https://github.com/pnp/sp-dev-fx-controls-react/issues/739)
 - `FolderExplorer` and `FolderPicker` do not seem to work for document libraries [#741](https://github.com/pnp/sp-dev-fx-controls-react/issues/741)
 - `FilePicker`: `onChange` event does not exist despite being documented [#747](https://github.com/pnp/sp-dev-fx-controls-react/issues/747)
+- `ListItemPicker`: Selected values are not getting cleared or reset [#659](https://github.com/pnp/sp-dev-fx-controls-react/issues/659)
 
 ### Contributors
 

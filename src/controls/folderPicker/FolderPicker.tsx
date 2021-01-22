@@ -8,6 +8,7 @@ import { Link } from 'office-ui-fabric-react/lib/Link';
 import { getId } from 'office-ui-fabric-react/lib/Utilities';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { FolderExplorer } from '../folderExplorer/FolderExplorer';
+import * as telemetry from '../../common/telemetry';
 
 
 export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPickerState> {
@@ -17,6 +18,8 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
 
   constructor(props: IFolderPickerProps) {
     super(props);
+
+    telemetry.track('ReactFolderPicker', {});
 
     this.state = {
       showPanel: false,

@@ -3,11 +3,14 @@ import { Panel } from 'office-ui-fabric-react/lib/Panel';
 import omit from 'lodash/omit';
 import { IFramePanelContent } from './IFramePanelContent';
 import { IIFramePanelProps, IIFramePanelState } from '.';
+import * as telemetry from '../../common/telemetry';
 
 export class IFramePanel extends React.Component<IIFramePanelProps, IIFramePanelState> {
 
   constructor(props: IIFramePanelProps) {
     super(props);
+
+    telemetry.track('ReactIFramePanel', {});
 
     this.state = {};
   }

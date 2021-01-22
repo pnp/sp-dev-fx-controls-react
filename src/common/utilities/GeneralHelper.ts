@@ -325,3 +325,29 @@ export class GeneralHelper {
         return o[c];
     }
 }
+
+export function urlCombine(urlStart: string, urlFinish: string, escapeFinish: boolean = true): string {
+  let url = urlStart;
+  if (url.lastIndexOf('/') === url.length - 1) {
+    url = url.slice(0, -1);
+  }
+  if (urlFinish) {
+    if (escapeFinish) {
+      const escapeFunc = (str: string) => {
+        return encodeURIComponent(unescape(str))
+          .replace(/[!'()*]/g, escape)
+          .replace(/\./g, '%2E');
+      };
+
+      urlFinish = urlFinish.split('/').map(escapeFunc).join('/');
+    }
+
+    if (urlFinish.indexOf('/') !== 0) {
+      urlFinish = `/${urlFinish}`;
+    }
+
+    url += urlFinish;
+  }
+
+  return url;
+}

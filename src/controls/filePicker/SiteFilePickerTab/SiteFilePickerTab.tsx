@@ -12,6 +12,7 @@ import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types
 
 import styles from './SiteFilePickerTab.module.scss';
 import * as strings from 'ControlStrings';
+import { urlCombine } from '../../../common/utilities';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   constructor(props: ISiteFilePickerTabProps) {
@@ -28,7 +29,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     this.state = {
       filePickerResult: null,
       libraryAbsolutePath: undefined,
-      libraryUrl: '/Shared%20Documents',
+      libraryUrl: urlCombine(props.context.pageContext.web.serverRelativeUrl, '/Shared%20Documents'),
       libraryPath: undefined,
       folderName: strings.DocumentLibraries,
       breadcrumbItems: [breadcrumbSiteNode]
@@ -182,7 +183,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
     this.setState({
       libraryAbsolutePath: library.absoluteUrl,
-      libraryUrl: library.webRelativeUrl,
+      libraryUrl: library.serverRelativeUrl,
       libraryPath: library.serverRelativeUrl,
       breadcrumbItems
     });

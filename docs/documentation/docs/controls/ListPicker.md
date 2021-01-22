@@ -62,6 +62,7 @@ The `ListPicker` control can be configured with the following properties:
 | placeHolder | string | no | Placeholder label to show in the dropdown. **Deprecated. Use `placeholder` instead.** |
 | placeholder | string | no | Placeholder label to show in the dropdown. |
 | onSelectionChanged | (newValue: string OR string[]): void | no | Callback function when the selected option changes. |
+| webAbsoulteUrl | string | no | Absolute Web Url of target site (user requires permissions) |
 
 Enum `LibsOrderBy`
 
