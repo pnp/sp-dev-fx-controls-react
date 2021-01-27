@@ -1,4 +1,4 @@
-const changelog = require('../CHANGELOG.json');
+const changelog = require('../CHANGELOG.JSON');
 const fs = require('fs');
 
 if (changelog.versions && changelog.versions.length > 0) {

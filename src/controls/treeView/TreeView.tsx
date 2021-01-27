@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './TreeView.module.scss';
-import uniqBy  from 'lodash/uniqBy';
+import uniqBy from 'lodash/uniqBy';
 import { ITreeViewProps, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
 import { ITreeItem } from './ITreeItem';
@@ -187,6 +187,20 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     } = this.props;
     if (defaultSelectedKeys) {
       const selectedItems = this.getSelectedItems(items, defaultSelectedKeys, selectChildrenIfParentSelected);
+      this.setState({
+        activeItems: selectedItems
+      });
+    }
+  }
+
+  public componentWillReceiveProps(nextProps: ITreeViewProps): void {
+    const {
+      items,
+      defaultSelectedKeys,
+      selectChildrenIfParentSelected,
+    } = nextProps;
+    if (defaultSelectedKeys) {
+      const selectedItems = !defaultSelectedKeys ? [] : this.getSelectedItems(items, defaultSelectedKeys, selectChildrenIfParentSelected);
       this.setState({
         activeItems: selectedItems
       });
