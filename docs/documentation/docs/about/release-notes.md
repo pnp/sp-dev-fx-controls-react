@@ -2,6 +2,14 @@
 
 ## 2.5.0
 
+### Enhancements
+
+- `TreeView`: Adding support to clear TreeView selected items by passing an empty array. [#787](https://github.com/pnp/sp-dev-fx-controls-react/pull/787)
+
+### Contributors
+
+Special thanks to our contributor: [Joel Rodrigues](https://github.com/joelfmrodrigues).
+
 ## 2.4.0
 
 ### New control(s)
