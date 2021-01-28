@@ -111,7 +111,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    */
   public componentDidUpdate(prevProps: IListViewProps, prevState: IListViewState): void {
 
-    if (!isEqual(prevProps, this.props)) {
+    if (!isEqual(this._filterFunctions(prevProps), this._filterFunctions(this.props))) {
       // select default items
       this._setSelectedItems();
       // Reset the selected items
@@ -548,6 +548,16 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return result;
+  }
+
+  private _filterRenderFunction(f: IViewField) {
+    const { render, ...fields } = f;
+    return fields;
+  }
+
+  private _filterFunctions(p: IListViewProps) {
+    const { selection: s, viewFields: v, ...otherProps } = p;
+    return { ...otherProps, viewFields: (v || []).map(this._filterRenderFunction) };
   }
 
   /**
