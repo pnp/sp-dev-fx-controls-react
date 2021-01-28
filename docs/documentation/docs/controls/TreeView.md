@@ -37,7 +37,7 @@ import { TreeView, ITreeItem, TreeViewSelectionMode } from "@pnp/spfx-controls-r
     selectChildrenIfParentSelected={true}
     showCheckboxes={true}
     treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-    defaultSelectedKeys={['key1', 'key2']},
+    defaultSelectedKeys={['key1', 'key2']}
     expandToSelected={true}
     defaultExpandedChildren={true}
     onSelect={this.onTreeItemSelect}
