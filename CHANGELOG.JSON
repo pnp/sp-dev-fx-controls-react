@@ -7,10 +7,13 @@
         "enhancements": [
           "`TreeView`: Adding support to clear TreeView selected items by passing an empty array. [#787](https://github.com/pnp/sp-dev-fx-controls-react/pull/787)"
         ],
-        "fixes": []
+        "fixes": [
+          "`ListView`: Selection is reset when putting a ListView inside a React Component that controls its items and selection props [#251](https://github.com/pnp/sp-dev-fx-controls-react/issues/251)"
+        ]
       },
       "contributions": [
-        "[Joel Rodrigues](https://github.com/joelfmrodrigues)"
+        "[Joel Rodrigues](https://github.com/joelfmrodrigues)",
+        "[Mike Myers](https://github.com/thespooler)"
       ]
     },
     {
