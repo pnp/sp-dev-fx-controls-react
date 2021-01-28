@@ -9,10 +9,13 @@
 ### Fixes
 
 - `ListView`: Selection is reset when putting a ListView inside a React Component that controls its items and selection props [#251](https://github.com/pnp/sp-dev-fx-controls-react/issues/251)
+- Documentation fix for `PeoplePicker`: Removed unwanted new line in help content. [#783](https://github.com/pnp/sp-dev-fx-controls-react/pull/783)
+- Documentation fix for `TreeView`: `TreeViewSelectionMode` added in the import [#780](https://github.com/pnp/sp-dev-fx-controls-react/pull/780)
+- Documentation fix for `TreeView`: removed unwanted comma [#779](https://github.com/pnp/sp-dev-fx-controls-react/pull/779)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mike Myers](https://github.com/thespooler).
+Special thanks to our contributors (in alphabetical order): [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mike Myers](https://github.com/thespooler), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23).
 
 ## 2.4.0
 
