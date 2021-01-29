@@ -137,4 +137,9 @@ export interface IFilePickerProps {
    * Optional additional renderer for Upload tab
    */
   renderCustomUploadTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
+
+  /**
+   * Specifies if Site Pages library to be visible on Sites tab
+   */
+  includePageLibraries?: boolean;
 }
