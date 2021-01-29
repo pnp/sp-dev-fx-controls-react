@@ -46,6 +46,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
           {this.state.libraryAbsolutePath === undefined &&
             <DocumentLibraryBrowser
               fileBrowserService={this.props.fileBrowserService}
+              includePageLibraries={this.props.includePageLibraries}
               onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser

@@ -211,6 +211,7 @@ export class FilePicker extends React.Component<
             {this.state.selectedTab === "keySite" && (
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
+                includePageLibraries={this.props.includePageLibraries}
                 {...linkTabProps}
               />
             )}

@@ -9,4 +9,6 @@ export interface ISiteFilePickerTabProps extends IFilePickerTab {
    * Represents the base node in the breadrumb navigation
    */
   breadcrumbFirstNode?: IBreadcrumbItem;
+
+  includePageLibraries?: boolean;
 }
