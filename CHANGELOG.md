@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `TreeView`: Adding support to clear TreeView selected items by passing an empty array. [#787](https://github.com/pnp/sp-dev-fx-controls-react/pull/787)
+- `FilePicker`: new property `includePageLibraries` to optionally display Site Pages library on Site tab [#601](https://github.com/pnp/sp-dev-fx-controls-react/issues/601)
 
 ### Fixes
 
