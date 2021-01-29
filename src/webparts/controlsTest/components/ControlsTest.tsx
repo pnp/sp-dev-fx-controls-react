@@ -1445,6 +1445,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
             context={this.props.context}
             hideRecentTab={false}
+            includePageLibraries={true}
           />
           {
             this.state.filePickerResult &&
