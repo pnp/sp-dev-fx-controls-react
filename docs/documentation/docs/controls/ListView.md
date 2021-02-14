@@ -84,7 +84,7 @@ The ListView control can be configured with the following properties:
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | iconFieldName | string | no | Specify the items' property name that defines the file URL path which will be used to show the file icon. This automatically creates a column and renders the file icon. |
-| items | any[]| yes | Items to render in the list view. |
+| items | any[] | no | Items to render in the list view. |
 | viewFields | IViewField[] | no | The fields you want to render in the list view. Check the `IViewField` implementation to see which properties you can define. |
 | compact | boolean | no | Boolean value to indicate if the control should render in compact mode. By default this is set to `false`. |
 | selectionMode | SelectionMode | no | Specify if the items in the list view can be selected and how. Options are: none, single, multi. |
