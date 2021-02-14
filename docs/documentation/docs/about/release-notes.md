@@ -13,6 +13,7 @@
 - Documentation fix for `PeoplePicker`: Removed unwanted new line in help content. [#783](https://github.com/pnp/sp-dev-fx-controls-react/pull/783)
 - Documentation fix for `TreeView`: `TreeViewSelectionMode` added in the import [#780](https://github.com/pnp/sp-dev-fx-controls-react/pull/780)
 - Documentation fix for `TreeView`: removed unwanted comma [#779](https://github.com/pnp/sp-dev-fx-controls-react/pull/779)
+- `ListView`: When the items reach the number of items more than can be shown on a page/component, it adds horizontal scroll instead of vertical [#648](https://github.com/pnp/sp-dev-fx-controls-react/issues/648)
 
 ### Contributors
 
