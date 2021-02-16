@@ -13,6 +13,7 @@
 - Documentation fix for `PeoplePicker`: Removed unwanted new line in help content. [#783](https://github.com/pnp/sp-dev-fx-controls-react/pull/783)
 - Documentation fix for `TreeView`: `TreeViewSelectionMode` added in the import [#780](https://github.com/pnp/sp-dev-fx-controls-react/pull/780)
 - Documentation fix for `TreeView`: removed unwanted comma [#779](https://github.com/pnp/sp-dev-fx-controls-react/pull/779)
+- `IFrameDialog`: height unable to resize relative to screen size, even if we provide in % it is taking default value. [#636](https://github.com/pnp/sp-dev-fx-controls-react/issues/636)
 
 ### Contributors
 
