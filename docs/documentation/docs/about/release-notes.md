@@ -14,6 +14,7 @@
 - Documentation fix for `TreeView`: `TreeViewSelectionMode` added in the import [#780](https://github.com/pnp/sp-dev-fx-controls-react/pull/780)
 - Documentation fix for `TreeView`: removed unwanted comma [#779](https://github.com/pnp/sp-dev-fx-controls-react/pull/779)
 - `IFrameDialog`: height unable to resize relative to screen size, even if we provide in % it is taking default value. [#636](https://github.com/pnp/sp-dev-fx-controls-react/issues/636)
+- `DateTimePicker`: Clear Date functionality [#799](https://github.com/pnp/sp-dev-fx-controls-react/issues/799)
 
 ### Contributors
 
