@@ -1121,13 +1121,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showSeconds={true}
           timeDisplayControlType={TimeDisplayControlType.Dropdown}
         />
-        <PrimaryButton text={'Change Date'} onClick={() => {
-          const date = this.state.dateTimeValue || new Date();
-          date.setMinutes(50);
-          date.setHours(11);
-          date.setSeconds(12);
+        <PrimaryButton text={'Clear Date'} onClick={() => {
+
           this.setState({
-            dateTimeValue: date
+            dateTimeValue: undefined
           });
         }} />
 

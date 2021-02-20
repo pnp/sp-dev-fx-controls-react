@@ -69,7 +69,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
    * Called before the component receives new props, used for matching state with new props.
    */
   public componentWillReceiveProps(nextProps: IDateTimePickerProps): void {
-    if (nextProps.value != null && !isEqual(nextProps.value, this.props.value)) {
+    if (!isEqual(nextProps.value, this.props.value)) {
       const { day, hours, minutes, seconds } = DateTimePicker.getDateComponents(nextProps.value, this.props.dateConvention);
       this.setState({ day, hours, minutes, seconds });
     }
@@ -134,9 +134,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
           }
         }
         else if (hours === 12) {
-            //am - if hours == 12, set hours to 0 here
-            hours = 0;
-          }
+          //am - if hours == 12, set hours to 0 here
+          hours = 0;
+        }
       }
 
       if (hours > 23) {
