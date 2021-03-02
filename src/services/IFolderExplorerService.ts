@@ -24,7 +24,7 @@ export interface IFolderExplorerService {
   * @param webAbsoluteUrl - the url of the target site
   * @param folderRelativeUrl - the relative url of the folder
   */
-  GetFolders(webAbsoluteUrl: string, folderRelativeUrl: string): Promise<IFolder[]>;
+  GetFolders(webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFolder[]>;
 
   /**
   * Create a new folder
