@@ -59,8 +59,8 @@ export class FolderExplorerService implements IFolderExplorerService {
  * @param webAbsoluteUrl - the url of the target site
  * @param folderRelativeUrl - the relative url of the folder
  */
-  public GetFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string): Promise<IFolder[]> => {
-    return this._getFolders(webAbsoluteUrl, folderRelativeUrl);
+  public GetFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFolder[]> => {
+    return this._getFolders(webAbsoluteUrl, folderRelativeUrl, orderby, orderAscending);
   }
 
   /**
@@ -68,12 +68,12 @@ export class FolderExplorerService implements IFolderExplorerService {
    * @param webAbsoluteUrl - the url of the target site
    * @param folderRelativeUrl - the relative url of the folder
    */
-  private _getFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string): Promise<IFolder[]> => {
+  private _getFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFolder[]> => {
     let results: IFolder[] = [];
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy('Name').get();
+      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
       results = foldersResult.filter(f => f.Name != "Forms");
     } catch (error) {
       console.error('Error loading folders', error);

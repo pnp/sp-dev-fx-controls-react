@@ -9,6 +9,7 @@ nav:
     - 'Submitting a PR': 'guides/submitting-pr.md'
     - 'Migrate v1 to v2': 'guides/migrate-from-v1.md'
   - Controls:
+    - AccessibleAccordion: 'controls/AccessibleAccordion/Accordion.md'
     - Accordion: 'controls/Accordion.md'
     - Carousel: 'controls/Carousel.md'
     - Charts:

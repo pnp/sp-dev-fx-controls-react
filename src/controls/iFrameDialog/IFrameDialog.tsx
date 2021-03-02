@@ -1,10 +1,12 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Dialog, IDialogProps } from 'office-ui-fabric-react/lib/Dialog';
+import { Dialog, IDialogContentProps, IDialogProps, IDialogStyleProps, IDialogStyles } from 'office-ui-fabric-react/lib/Dialog';
 import { IFrameDialogContent } from './IFrameDialogContent';
 import * as telemetry from '../../common/telemetry';
 import { Guid } from "@microsoft/sp-core-library";
 import omit from 'lodash/omit';
+import merge from 'lodash/merge';
+import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
 
 export interface IFrameDialogProps extends IDialogProps {
   /**
@@ -110,6 +112,7 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
     const {
       iframeOnLoad,
       height,
+      width,
       allowFullScreen,
       allowTransparency,
       marginHeight,
@@ -119,6 +122,7 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
       scrolling,
       seamless,
       modalProps,
+      dialogContentProps,
       className
     } = this.props;
 
@@ -127,11 +131,40 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
       onLayerDidMount: () => { this.setDialogStyling(); }
     };
 
+    const dlgContentProps = merge<IDialogContentProps, IDialogContentProps, IDialogContentProps>({}, dialogContentProps, {
+      styles: {
+        content: {
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%'
+        },
+        inner: {
+          flexGrow: 1
+        },
+        innerContent: {
+          height: '100%'
+        }
+      }
+    });
+
+
+    const dlgStyles: IStyleFunctionOrObject<IDialogStyleProps, IDialogStyles> = {
+      main: {
+        width: width,
+        maxWidth: width,
+        minWidth: width,
+        height: height
+      }
+    };
+
     return (
       <Dialog
         className={`${this.state.dialogId} ${className || ''}`}
+
+        styles={dlgStyles}
         modalProps={dlgModalProps}
-        {...omit(this.props, 'className', 'modalProps')}>
+        dialogContentProps={dlgContentProps}
+        {...omit(this.props, 'className', 'modalProps', 'dialogContentProps')}>
         <IFrameDialogContent src={this.props.url}
           iframeOnLoad={iframeOnLoad}
           close={this.props.onDismiss}

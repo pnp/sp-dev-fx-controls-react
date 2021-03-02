@@ -408,7 +408,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMovePrev: false,
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
-      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
+      treeViewSelectedKeys: ['gc1', 'gc3'],
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -774,31 +775,31 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
         <AccessibleAccordion allowZeroExpanded>
-        <AccordionItem key={"Headding 1"}>
-          <AccordionItemHeading>
-            <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-           <div style={{margin: 20}}>
-           <h2>Content Heading 1</h2>
-            <Text variant={"mediumPlus"}>Text sample  </Text>
+          <AccordionItem key={"Headding 1"}>
+            <AccordionItemHeading>
+              <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <div style={{ margin: 20 }}>
+                <h2>Content Heading 1</h2>
+                <Text variant={"mediumPlus"}>Text sample  </Text>
 
-            </div>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem key={"Headding 2"}>
-          <AccordionItemHeading>
-            <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <div style={{margin: 20}}>
-            <h2>Content Heading 2</h2>
-            <Text variant={"mediumPlus"}>Text </Text>
-            <TextField></TextField>
-            </div>
-          </AccordionItemPanel>
-        </AccordionItem>
-      </AccessibleAccordion>
+              </div>
+            </AccordionItemPanel>
+          </AccordionItem>
+          <AccordionItem key={"Headding 2"}>
+            <AccordionItemHeading>
+              <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <div style={{ margin: 20 }}>
+                <h2>Content Heading 2</h2>
+                <Text variant={"mediumPlus"}>Text </Text>
+                <TextField></TextField>
+              </div>
+            </AccordionItemPanel>
+          </AccordionItem>
+        </AccessibleAccordion>
 
 
 
@@ -1120,13 +1121,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           showSeconds={true}
           timeDisplayControlType={TimeDisplayControlType.Dropdown}
         />
-        <PrimaryButton text={'Change Date'} onClick={() => {
-          const date = this.state.dateTimeValue || new Date();
-          date.setMinutes(50);
-          date.setHours(11);
-          date.setSeconds(12);
+        <PrimaryButton text={'Clear Date'} onClick={() => {
+
           this.setState({
-            dateTimeValue: date
+            dateTimeValue: undefined
           });
         }} />
 
@@ -1439,11 +1437,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
 
-            buttonIconProps={{iconName: 'Add', styles:{root:{fontSize: 42}}}}
+            buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
             context={this.props.context}
             hideRecentTab={false}
+            includePageLibraries={true}
           />
           {
             this.state.filePickerResult &&
@@ -1518,6 +1517,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }}
             onSelect={this._onFolderSelect}
             canCreateFolders={true}
+            orderby='Name' //'ListItemAllFields/Created'
+            orderAscending={true}
           />
         </div>
 
@@ -1528,13 +1529,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             selectionMode={TreeViewSelectionMode.Multiple}
             showCheckboxes={true}
             treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-            defaultSelectedKeys={['gc1', 'gc3']}
+            defaultSelectedKeys={this.state.treeViewSelectedKeys}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
             defaultExpandedChildren={true}
           //expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />
+          <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
 
         </div>
 

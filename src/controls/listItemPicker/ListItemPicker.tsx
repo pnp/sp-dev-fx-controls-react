@@ -29,6 +29,10 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     this._spservice = new SPservice(this.props.context);
   }
 
+  public componentDidMount() {
+    this.loadField(this.props);
+  }
+
   public componentWillReceiveProps(nextProps: IListItemPickerProps) {
     let newSelectedItems: any[] | undefined;
     if (this.props.listId !== nextProps.listId) {
@@ -41,6 +45,12 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     this.setState({
       selectedItems: newSelectedItems
     });
+
+    if (this.props.listId !== nextProps.listId
+      || this.props.columnInternalName !== nextProps.columnInternalName
+      || this.props.webUrl !== nextProps.webUrl) {
+        this.loadField(nextProps);
+      }
   }
 
   /**
@@ -135,11 +145,14 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
     let { listId, columnInternalName, keyColumnInternalName, webUrl, filter, substringSearch } = this.props;
+    const {
+      field
+    } = this.state;
     let arrayItems: { key: string; name: string }[] = [];
     let keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      let listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, keyColumn, webUrl, filter, substringSearch); // JJ - 20200613 - find by substring as an option
+      let listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch); // JJ - 20200613 - find by substring as an option
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {
@@ -156,5 +169,17 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       });
       return null;
     }
+  }
+
+  private loadField = async (props: IListItemPickerProps): Promise<void> => {
+    this.setState({
+      field: undefined
+    });
+
+    const field = await this._spservice.getField(props.listId, props.columnInternalName, props.webUrl);
+
+    this.setState({
+      field
+    });
   }
 }

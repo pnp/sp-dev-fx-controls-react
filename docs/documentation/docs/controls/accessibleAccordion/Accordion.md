@@ -1,10 +1,10 @@
 # Accessible Accordion
 
-This control allows you to render an accordion control. Is a Implementation based on React Accessible Accordion Control, that was customize UI to be more Fluent.
+This control allows you to render an accordion control. It is an implementation based on React Accessible Accordion Control, that was customized to be more "Fluent".
 
 Here is an example of the control in action:
 
-![Accessible Accordion control](../assets/AccessibleAccordion.gif)
+![Accessible Accordion control](../../assets/AccessibleAccordion.gif)
 
 ## How to use this control in your solutions
 
@@ -66,90 +66,63 @@ The `Accordion` control can be configured with the following properties:
 
 ### Accordion
 
-#### allowMultipleExpanded : `boolean` [*optional*, default: `false`]
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| allowMultipleExpanded | boolean | no | Don't autocollapse items when expanding other items. | `false` |
+| allowZeroExpanded | boolean | no | Allow the only remaining expanded item to be collapsed. | `false` |
+| preExpanded | string[] | no | Accepts an array of strings and any `AccordionItem` whose `uuid` prop matches any one of these strings will be expanded on mount. | `[]` |
+| className | string | no | Class(es) to apply to element. | "accordion" |
+| onChange | (string[]) => void | no | Callback which is invoked when items are expanded or collapsed. Gets passed `uuid`s of the currently expanded `AccordionItem`s. | |
 
-Don't autocollapse items when expanding other items.
 
-#### allowZeroExpanded : `boolean` [*optional*, default: `false`]
-
-Allow the only remaining expanded item to be collapsed.
-
-#### preExpanded: `string[]` [_optional_, default: `[]`]
-
-Accepts an array of strings and any `AccordionItem` whose `uuid` prop matches
-any one of these strings will be expanded on mount.
-
-#### className : `string` [*optional*, default: `'accordion'`]
-
-Class(es) to apply to element.
-
-#### onChange : `(string[]) => void` [*optional*]
-
-Callback which is invoked when items are expanded or collapsed. Gets passed
-`uuid`s of the currently expanded `AccordionItem`s.
-
----
 
 ### AccordionItem
 
-#### className : `string` [*optional*, default: `accordion__item`]
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| className | string | no | Class(es) to apply to element. | "accordion__item" |
+| uuid | string \| number | no | Recommended for use with `onChange`. Will be auto-generated if not provided. | |
+| dangerouslySetExpanded | boolean | no | Enables external control of the expansion. **Warning: This may impact accessibility negatively, use at your own risk** | |
 
-Class(es) to apply to element.
-
-#### uuid : `string|number` [*optional*]
-
-Recommended for use with `onChange`. Will be auto-generated if not provided.
-
-#### dangerouslySetExpanded: `boolean` [*optional*]
-
-Enables external control of the expansion.
-
-> Warning: This may impact accessibility negatively, use at your own risk
-
----
 
 ### AccordionItemHeading
 
-#### className : `string` [*optional*, default: `'accordion__heading'`]
-
-Class(es) to apply to the 'heading' element.
-
-#### aria-level : `number` [*optional*, default: `3`]
-
-Semantics to apply to the 'heading' element. A value of `1` would make your
-heading element hierarchically equivalent to an `<h1>` tag, and likewise a value
-of `6` would make it equivalent to an `<h6>` tag.
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| className | string | no | Class(es) to apply to the 'heading' element. | "accordion__heading" |
+| aria-level | number | no | Semantics to apply to the 'heading' element. A value of `1` would make your heading element hierarchically equivalent to an `<h1>` tag, and likewise a value of `6` would make it equivalent to an `<h6>` tag. | `3` |
 
 ### AccordionItemButton
 
-#### className : `string` [*optional*, default: `'accordion__button'`]
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| className | string | no | Class(es) to apply to the 'button' element. | "accordion__button" |
 
-Class(es) to apply to the 'button' element.
-
----
 
 ### AccordionItemPanel
 
-#### className : `string` [*optional*, default: `'accordion__panel'`]
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| className | string | no | Class(es) to apply to element. | "accordion__panel" |
 
-Class(es) to apply to element.
-
----
 
 ### AccordionItemState
 
-#### children : `({ expanded: boolean, disabled: boolean }): JSX.Element` [**required**]
+| Property | Type | Required | Description | Default |
+| ---- | ---- | ---- | ---- | ---- |
+| children | ({ expanded: boolean, disabled: booleam }): JSX.Element | yes | item's children. | |
 
----
 
 ## Helpers
 
-### resetNextUuid : `(): void`
+### resetNextUuid
+
+```typescript
+resetNextUuid : () => void
+```
 
 Resets the internal counter for Accordion items' identifiers (including `id`
 attributes). For use in test suites and isomorphic frameworks.
-
----
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/AccessibleAccordion)

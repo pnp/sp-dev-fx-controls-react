@@ -1,5 +1,28 @@
 # Releases
 
+## 2.5.0
+
+### Enhancements
+
+- `TreeView`: Adding support to clear TreeView selected items by passing an empty array. [#787](https://github.com/pnp/sp-dev-fx-controls-react/pull/787)
+- `FilePicker`: new property `includePageLibraries` to optionally display Site Pages library on Site tab [#601](https://github.com/pnp/sp-dev-fx-controls-react/issues/601)
+- `ListItemPicker`: Support of `Calculated` columns [#805](https://github.com/pnp/sp-dev-fx-controls-react/issues/805)
+- `Progress`: Documentation update to have consistency in variables names [#811](https://github.com/pnp/sp-dev-fx-controls-react/pull/811)
+- `FolderExplorer`: Add support for sorting folder explorer items [#812](https://github.com/pnp/sp-dev-fx-controls-react/pull/812)
+
+### Fixes
+
+- `ListView`: Selection is reset when putting a ListView inside a React Component that controls its items and selection props [#251](https://github.com/pnp/sp-dev-fx-controls-react/issues/251)
+- Documentation fix for `PeoplePicker`: Removed unwanted new line in help content. [#783](https://github.com/pnp/sp-dev-fx-controls-react/pull/783)
+- Documentation fix for `TreeView`: `TreeViewSelectionMode` added in the import [#780](https://github.com/pnp/sp-dev-fx-controls-react/pull/780)
+- Documentation fix for `TreeView`: removed unwanted comma [#779](https://github.com/pnp/sp-dev-fx-controls-react/pull/779)
+- `IFrameDialog`: height unable to resize relative to screen size, even if we provide in % it is taking default value. [#636](https://github.com/pnp/sp-dev-fx-controls-react/issues/636)
+- `DateTimePicker`: Clear Date functionality [#799](https://github.com/pnp/sp-dev-fx-controls-react/issues/799)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https://github.com/AriGunawan), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mike Myers](https://github.com/thespooler), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23).
+
 ## 2.4.0
 
 ### New control(s)

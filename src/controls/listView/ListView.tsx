@@ -15,6 +15,8 @@ import * as telemetry from '../../common/telemetry';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 
 import filter from 'lodash/filter';
+import omit from 'lodash/omit';
+import functions from 'lodash/functions';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
@@ -90,7 +92,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Lifecycle hook when component is mounted
    */
   public componentDidMount(): void {
-    this._processProperties();
+    this._processProperties(this.props);
   }
 
   public componentWillUnmount(): void {
@@ -109,29 +111,37 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param prevProps
    * @param prevState
    */
-  public componentDidUpdate(prevProps: IListViewProps, prevState: IListViewState): void {
+  public componentWillReceiveProps(nextProps: IListViewProps): void {
 
-    if (!isEqual(prevProps, this.props)) {
-      // select default items
-      this._setSelectedItems();
+    const modifiedNextProps = this._filterFunctions(nextProps);
+    const modifiedProps = this._filterFunctions(this.props);
+
+    if (!isEqual(modifiedProps, modifiedNextProps)) {
       // Reset the selected items
       if (this._selection) {
-        this._selection.setItems(this.props.items, true);
+        if (!isEqual(modifiedNextProps.items, modifiedProps.items)) {
+          this._selection.setItems(nextProps.items, true);
+        }
+        if (!isEqual(modifiedNextProps.defaultSelection, modifiedProps.defaultSelection)) {
+          this._selection.setAllSelected(false);
+          // select default items
+          this._setSelectedItems(nextProps);
+        }
       }
       // Process list view properties
-      this._processProperties();
+      this._processProperties(nextProps);
     }
   }
 
   /**
    * Select all the items that should be selected by default
    */
-  private _setSelectedItems(): void {
-    if (this.props.items &&
-      this.props.items.length > 0 &&
-      this.props.defaultSelection &&
-      this.props.defaultSelection.length > 0) {
-      for (const index of this.props.defaultSelection) {
+  private _setSelectedItems(props: IListViewProps): void {
+    if (props.items &&
+      props.items.length > 0 &&
+      props.defaultSelection &&
+      props.defaultSelection.length > 0) {
+      for (const index of props.defaultSelection) {
         if (index > -1) {
           this._selection.setIndexSelected(index, true, false);
         }
@@ -224,8 +234,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   /**
    * Process all the component properties
    */
-  private _processProperties() {
-    const { dragDropFiles, items, iconFieldName, viewFields, groupByFields, showFilter } = this.props;
+  private _processProperties(props: IListViewProps) {
+    const { dragDropFiles, items, iconFieldName, viewFields, groupByFields, showFilter } = props;
 
     let tempState: IListViewState = cloneDeep(this.state);
     let columns: IColumn[] = null;
@@ -548,6 +558,17 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return result;
+  }
+
+  private _filterFunctions(p: IListViewProps) {
+    const modifiedProps = omit(p, functions(p));
+    if (modifiedProps.items) {
+      modifiedProps.items = modifiedProps.items.map(i => omit(i, functions(i)));
+    }
+    if (modifiedProps.viewFields) {
+      modifiedProps.viewFields = modifiedProps.viewFields.map(vf => omit(vf, functions(vf)) as IViewField);
+    }
+    return modifiedProps;
   }
 
   /**

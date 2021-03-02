@@ -24,7 +24,7 @@ Here are examples of the control in action:
 - Import the following modules to your component:
 
 ```TypeScript
-import { TreeView, ITreeItem } from "@pnp/spfx-controls-react/lib/TreeView";
+import { TreeView, ITreeItem, TreeViewSelectionMode } from "@pnp/spfx-controls-react/lib/TreeView";
 ```
 
 - Use the `TreeView` control in your code as follows:
@@ -37,7 +37,7 @@ import { TreeView, ITreeItem } from "@pnp/spfx-controls-react/lib/TreeView";
     selectChildrenIfParentSelected={true}
     showCheckboxes={true}
     treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-    defaultSelectedKeys={['key1', 'key2']},
+    defaultSelectedKeys={['key1', 'key2']}
     expandToSelected={true}
     defaultExpandedChildren={true}
     onSelect={this.onTreeItemSelect}

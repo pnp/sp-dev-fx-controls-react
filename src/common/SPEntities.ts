@@ -23,6 +23,8 @@ export interface ISPField {
     RichText?: boolean;
     SchemaXml?: string;
     LookupDisplayUrl?: string;
+    TypeAsString?: string;
+    ResultType?: string;
 }
 
 /**
