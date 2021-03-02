@@ -166,7 +166,9 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
         }
       } else {
         // library/folder level, get folders
-        this._allFolders = await this._spService.GetFolders(siteAbsoluteUrl, folder.ServerRelativeUrl);
+        const orderBy = this.props.orderby !== undefined ? this.props.orderby : 'Name';
+        const orderAscending = this.props.orderAscending !== undefined ? this.props.orderAscending : true;
+        this._allFolders = await this._spService.GetFolders(siteAbsoluteUrl, folder.ServerRelativeUrl, orderBy, orderAscending);
       }
       this.setState({ folders: this._allFolders, selectedFolder: folder, foldersLoading: false });
 
