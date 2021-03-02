@@ -7,6 +7,8 @@
 - `TreeView`: Adding support to clear TreeView selected items by passing an empty array. [#787](https://github.com/pnp/sp-dev-fx-controls-react/pull/787)
 - `FilePicker`: new property `includePageLibraries` to optionally display Site Pages library on Site tab [#601](https://github.com/pnp/sp-dev-fx-controls-react/issues/601)
 - `ListItemPicker`: Support of `Calculated` columns [#805](https://github.com/pnp/sp-dev-fx-controls-react/issues/805)
+- `Progress`: Documentation update to have consistency in variables names [#811](https://github.com/pnp/sp-dev-fx-controls-react/pull/811)
+- `FolderExplorer`: Add support for sorting folder explorer items [#812](https://github.com/pnp/sp-dev-fx-controls-react/pull/812)
 
 ### Fixes
 
@@ -19,7 +21,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mike Myers](https://github.com/thespooler), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23).
+Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https://github.com/AriGunawan), [Joel Rodrigues](https://github.com/joelfmrodrigues), [Mike Myers](https://github.com/thespooler), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [San](https://github.com/sankarkumar23).
 
 ## 2.4.0
 
