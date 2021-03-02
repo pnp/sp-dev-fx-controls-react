@@ -63,8 +63,8 @@ Now, in a component, where `Progress` is used you can have code as below:
 
 ```TypeScript
 export interface IYourComponentState {
-  actions: IProgressAction[];
-  currentActionIndex?: number;
+  progressActions: IProgressAction[];
+  currentProgressActionIndex?: number;
   // other state properties
 }
 
@@ -75,7 +75,7 @@ export class YourComponent extends React.Component<IYourComponentProps, IYourCom
 
   private _initActions() {
     this.setState({
-      actions: [
+      progressActions: [
         new FirstAction(),
         new SecondAction()
       ]
@@ -84,7 +84,7 @@ export class YourComponent extends React.Component<IYourComponentProps, IYourCom
 
   private async _execute() {
     for (let i = 0; i <= this.state.actions.length; i++) {
-      this.setState(currentActionIndex: i);
+      this.setState(currentProgressActionIndex: i);
 
       if (i < this.state.actions.length) {
         await this.state.actions[i].execute();
