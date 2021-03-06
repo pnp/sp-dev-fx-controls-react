@@ -1,5 +1,5 @@
 import { ISPService, ILibsOptions } from "./ISPService";
-import { ISPLists } from "../common/SPEntities";
+import { ISPField, ISPLists } from "../common/SPEntities";
 
 export default class SPServiceMock implements ISPService {
   private _includeDelay?: boolean;
@@ -8,6 +8,12 @@ export default class SPServiceMock implements ISPService {
   constructor(includeDelay?: boolean, delayTimeout?: number) {
     this._includeDelay = includeDelay;
     this._delayTimeout = delayTimeout || 500;
+  }
+  public getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField, keyInternalColumnName?: string, webUrl?: string): Promise<any[]> {
+    throw new Error("Method not implemented.");
+  }
+  public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
+    return;
   }
 
   /**

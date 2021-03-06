@@ -28,7 +28,7 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
 
     public render(): JSX.Element {
         return (<div className={styles.iFrameDialog}>
-            <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} onLoad={this._iframeOnLoad.bind(this)} style={{ width: '100%', height: this.props.height, visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} {...omit(this.props, 'height')} />
+            <iframe ref={(iframe) => { this._iframe = iframe; }} frameBorder={0} onLoad={this._iframeOnLoad.bind(this)} style={{ width: '100%', height: '100%', visibility: this.state.isContentVisible ? 'visible' : 'hidden' }} {...omit(this.props, 'height')} />
             {!this.state.isContentVisible &&
                 <div className={styles.spinnerContainer}>
                     <Spinner size={SpinnerSize.large} />

@@ -47,6 +47,16 @@ export interface IFolderExplorerProps {
   hiddenFilterBox?: boolean;
 
   /**
+   * The name of the field on which to sort. Default: Name. For list item properties, use ListItemAllFields/Title, ListItemAllFields/Created, etc
+   */
+  orderby?: string;
+
+  /**
+   * If set to true, results will be sorted in ascending order. Otherwise, descending will be used as default
+   */
+  orderAscending?: boolean;
+
+  /**
    * Callback function called after a folder is selected
    * @argument folder The selected folder
    */
