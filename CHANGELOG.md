@@ -2,6 +2,14 @@
 
 ## 2.6.0
 
+### Fixes
+
+- `IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)
+
+### Contributors
+
+Special thanks to our contributor: [Mark Bice](https://github.com/mbice).
+
 ## 2.5.0
 
 ### Enhancements
