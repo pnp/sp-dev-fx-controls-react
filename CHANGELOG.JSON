@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Mark Bice](https://github.com/mbice)"
+      ]
     },
     {
       "version": "2.5.0",
