@@ -31,6 +31,7 @@
     "@pnp/sp": "2.0.6",
     "@pnp/telemetry-js": "2.0.0",
     "@uifabric/icons": "7.3.0",
+    "animate.css": "^4.1.1",
     "chart.js": "2.7.3",
     "color": "3.1.2",
     "lodash": "4.17.13",
