@@ -54,6 +54,7 @@ The following controls are currently available:
 
 - [AccessibleAccordion](./controls/AccessibleAccordion/Accordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
+- [AnimatedDialog](./controls/AnimatedDialog) (Animated dialog control)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
