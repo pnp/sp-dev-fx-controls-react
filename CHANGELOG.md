@@ -2,13 +2,17 @@
 
 ## 2.6.0
 
+### New control(s)
+
+- `AnimatedDialog`: new Animated Dialog control [#815](https://github.com/pnp/sp-dev-fx-controls-react/issues/815)
+
 ### Fixes
 
 - `IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)
 
 ### Contributors
 
-Special thanks to our contributor: [Mark Bice](https://github.com/mbice).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Mark Bice](https://github.com/mbice).
 
 ## 2.5.0
 
