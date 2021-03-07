@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from 'react';
 import styles from './AnimatedDialog.module.scss';
-import { Dialog, IDialogProps } from 'office-ui-fabric-react/lib/Dialog';
+import { Dialog, IDialogProps, IDialogContentProps } from 'office-ui-fabric-react/lib/Dialog';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
@@ -22,9 +22,16 @@ export interface IAnimatedDialogProps extends IDialogProps {
     onError?: () => void;
 }
 
+const animationPrefix: string = `animate__`;
+const mainAnimationClass: string = `${animationPrefix}animated`;
+const defaultDialogAnimationClass: string = `${animationPrefix}bounceIn`;
+const defaultIconAnimationClass: string = `${animationPrefix}zoomIn`;
+
 export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogProps>) {
 
     const [dialogProps, setDialogProps] = useState<IDialogProps>(props);
+    const [animatedDialogContentProps, setAnimatedDialogContentProps] = useState<IDialogContentProps>(props.dialogContentProps);
+    const [animatedDialogFooter, setAnimatedDialogFooter] = useState<JSX.Element>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
     const { dialogAnimationInType, dialogAnimationOutType,
@@ -32,54 +39,11 @@ export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogPro
         modalProps, dialogContentProps,
         showAnimatedDialogFooter, okButtonText, cancelButtonText } = props;
 
-
-    const animationPrefix: string = `animate__`;
-    const mainAnimationClass: string = `${animationPrefix}animated`;
     const currentContainerClass: string = modalProps && modalProps.containerClassName;
     const containerAnimationClass: string = `${currentContainerClass} ${mainAnimationClass} ${animationPrefix}fast`;
-    const defaultDialogAnimationClass: string = `${animationPrefix}bounceIn`;
-    const defaultIconAnimationClass: string = `${animationPrefix}zoomIn`;
 
-    useEffect(() => {
-
-        let containerClassName: string = `${containerAnimationClass} ${defaultDialogAnimationClass}`;
-        let title: string | JSX.Element = dialogContentProps && dialogContentProps.title;
-
-        if (props.dialogAnimationInType) {
-            containerClassName = `${containerAnimationClass} ${animationPrefix}${dialogAnimationInType}`;
-        }
-
-        if (iconName) {
-            title =
-                <div className={styles.animatedDialogTitleContainer}>
-                    <Icon
-                        iconName={iconName}
-                        className={iconAnimationType ?
-                            `${mainAnimationClass} ${animationPrefix}${iconAnimationType}` :
-                            `${mainAnimationClass} ${defaultIconAnimationClass}`} />
-                    <br />
-                    <span>{dialogContentProps && dialogContentProps.title}</span>
-                </div>;
-        }
-
-        if (props.hidden) {
-            containerClassName = `${containerAnimationClass} `;
-            containerClassName += dialogAnimationOutType ?
-                `${animationPrefix}${dialogAnimationOutType}` :
-                `${animationPrefix}zoomOut`;
-        }
-
-        setDialogProps({
-            ...props,
-            modalProps: { ...modalProps, containerClassName },
-            dialogContentProps: { ...dialogContentProps, title }
-        });
-
-
-    }, [props.hidden]);
-
-    const animatedDialogFooter: JSX.Element =
-        showAnimatedDialogFooter ?
+    const getAnimatedDialogFooter = (): JSX.Element => {
+        return showAnimatedDialogFooter ?
             <div className={styles.animatedDialogFooter}>
                 <PrimaryButton
                     onClick={async () => {
@@ -103,15 +67,60 @@ export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogPro
                     text={cancelButtonText ? cancelButtonText : "Cancel"}
                     disabled={loading}
                     iconProps={{ iconName: 'Cancel' }} />
-            </div> :
-            null;
+            </div> : null;
+    };
+
+    useEffect(() => {
+        let title: string | JSX.Element = dialogContentProps && dialogContentProps.title;
+
+        if (iconName) {
+            title =
+                <div className={styles.animatedDialogTitleContainer}>
+                    <Icon
+                        iconName={iconName}
+                        className={iconAnimationType ?
+                            `${mainAnimationClass} ${animationPrefix}${iconAnimationType}` :
+                            `${mainAnimationClass} ${defaultIconAnimationClass}`} />
+                    <br />
+                    <span>{dialogContentProps && dialogContentProps.title}</span>
+                </div>;
+        }
+
+        setAnimatedDialogContentProps({ ...dialogContentProps, title });
+    }, []);
+
+    useEffect(() => {
+        setAnimatedDialogFooter(getAnimatedDialogFooter());
+    }, [loading]);
+
+    useEffect(() => {
+
+        let containerClassName: string = `${containerAnimationClass} ${defaultDialogAnimationClass}`;
+        
+        if (props.dialogAnimationInType) {
+            containerClassName = `${containerAnimationClass} ${animationPrefix}${dialogAnimationInType}`;
+        }
+
+        if (props.hidden) {
+            containerClassName = `${containerAnimationClass} `;
+            containerClassName += dialogAnimationOutType ?
+                `${animationPrefix}${dialogAnimationOutType}` :
+                `${animationPrefix}zoomOut`;
+        }
+
+        setDialogProps({
+            ...props,
+            dialogContentProps: animatedDialogContentProps,
+            modalProps: { ...modalProps, containerClassName }
+        });
+
+
+    }, [props.hidden]);
 
     return (
         <Dialog {...dialogProps}>
             {props.children}
-            {
-                showAnimatedDialogFooter && animatedDialogFooter
-            }
+            {animatedDialogFooter}
         </Dialog>
     );
 }
