@@ -52,7 +52,7 @@ telemetry.optOut();
 
 The following controls are currently available:
 
-- [AccessibleAccordion](./controls/AccessibleAccordion/Accordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
+- [AccessibleAccordion](./controls/accessibleAccordion/Accordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
