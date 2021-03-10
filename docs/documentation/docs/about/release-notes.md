@@ -6,6 +6,10 @@
 
 - `AnimatedDialog`: new Animated Dialog control [#815](https://github.com/pnp/sp-dev-fx-controls-react/issues/815)
 
+### Enhancements
+
+- `IconPicker`: search icons using `contains` comparison.
+
 ### Fixes
 
 - `IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)
@@ -23,7 +27,6 @@ Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https:
 - `ListItemPicker`: Support of `Calculated` columns [#805](https://github.com/pnp/sp-dev-fx-controls-react/issues/805)
 - `Progress`: Documentation update to have consistency in variables names [#811](https://github.com/pnp/sp-dev-fx-controls-react/pull/811)
 - `FolderExplorer`: Add support for sorting folder explorer items [#812](https://github.com/pnp/sp-dev-fx-controls-react/pull/812)
-- `IconPicker`: search icons using `contains` comparison.
 
 ### Fixes
 
