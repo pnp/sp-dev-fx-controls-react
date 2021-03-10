@@ -806,7 +806,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     };
 
     const timeout = (ms: number): Promise<void> => {
-      return new Promise((resolve, reject) => setTimeout(reject, ms));
+      return new Promise((resolve, reject) => setTimeout(resolve, ms));
     };
 
 

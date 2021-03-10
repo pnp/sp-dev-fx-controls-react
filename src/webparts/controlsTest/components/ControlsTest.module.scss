@@ -97,7 +97,8 @@ $themePrimary: '[theme:themePrimary, default:#0078d7]';
   }
 
   .dialogFooter {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-top: 1.25em;
 
     button {

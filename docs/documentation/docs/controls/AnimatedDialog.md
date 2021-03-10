@@ -98,7 +98,7 @@ The code below does the following:
 - adds an icon (question mark) above the title
 - adds `Yes` and `No` buttons in the footer as `showAnimatedDialogFooter` is set to `true`.
 - passes 3 functions
-    - onOkClick : The function that gets executed when the `No` button is clicked.
+    - onOkClick : The function that gets executed when the `Ok/Yes` button is clicked.
     - onSuccess : The function that gets executed on successful operation of the above function.
     - onError: The function that gets executed when the `onOkClick` function fails. 
 
@@ -293,12 +293,12 @@ In addition to the`Office UI Fabric dialog` [properties](https://developer.micro
 | dialogAnimationOutType | string | no | The name of the dialog exit animation. See [animate.css](https://animate.style/) for values | zoomOut |
 | iconName | string | no | The name of the Fabric UI icon that appears above title. | |
 | iconAnimationType | string | no | The name of the icon entrace animation. See [animate.css](https://animate.style/) for values. | zoomIn |
-| showAnimatedDialogFooter | boolean | no | Should the animated dialog show it's own footer. [See example 3 and 4](#3.-Adding-icons-and-functions) above for usage. | false |
-| okButtonText | string | no | The text of the the OK button if showAnimatedDialogFooter is `true`. [See example 3](#3.-Adding-icons-and-functions) above for usage. | Ok |
-| cancelButtonText | string | no | The text of the the Cancel button if showAnimatedDialogFooter is `true`. [See example 3](#3.-Adding-icons-and-functions) above for usage. | Cancel |
-| onOkClick | function | no | The function to be executed when Ok button is clicked. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3.-Adding-icons-and-functions) above for usage. | |
-| onSuccess | function | no | The function to be executed after successful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. See example 3 above for usage. | |
-| onError | function | no | The function to be executed after unsuccessful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. See example 3 above for usage. | |
+| showAnimatedDialogFooter | boolean | no | Should the animated dialog show it's own footer. [See example 3 and 4](#3-Adding-icons-and-functions) above for usage. | false |
+| okButtonText | string | no | The text of the the OK button if showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | Ok |
+| cancelButtonText | string | no | The text of the the Cancel button if showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | Cancel |
+| onOkClick | function | no | The function to be executed when Ok button is clicked. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
+| onSuccess | function | no | The function to be executed after successful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
+| onError | function | no | The function to be executed after unsuccessful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
 
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/AnimatedDialog)
