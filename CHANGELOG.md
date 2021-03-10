@@ -9,6 +9,7 @@
 ### Enhancements
 
 - `IconPicker`: search icons using `contains` comparison.
+- `FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)
 
 ### Fixes
 
@@ -19,7 +20,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi).
 
 ## 2.5.0
 
