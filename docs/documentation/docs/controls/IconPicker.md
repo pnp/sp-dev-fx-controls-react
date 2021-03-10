@@ -54,5 +54,6 @@ The IconPicker component can be configured with the following properties:
 | panelClassName | boolean | no | If provided, additional class name will be added to the picker panel |
 | currentIcon | string | no | Specifies default selected icon |
 | renderOption | `dialog`, `panel` | no | Specifies how to render list of Icons, Values :  'Panel' or 'Dialog' defualt value 'Panel' |
+| useStartsWithSearch | boolean | no | Specifies if we need to use `startsWith` when searching for the icons. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/IconPicker)
