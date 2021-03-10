@@ -10,11 +10,13 @@
           "`IconPicker`: search icons using `contains` comparison."
         ],
         "fixes": [
-          "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)"
+          "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)",
+          "`Carousel`: documentation fix - broken table style [#817](https://github.com/pnp/sp-dev-fx-controls-react/pull/817)"
         ]
       },
       "contributions": [
         "[Anoop Tatti](https://github.com/anoopt)",
+        "[Ari Gunawan](https://github.com/AriGunawan)",
         "[Mark Bice](https://github.com/mbice)"
       ]
     },
