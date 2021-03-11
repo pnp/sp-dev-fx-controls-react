@@ -52,7 +52,7 @@ telemetry.optOut();
 
 The following controls are currently available:
 
-- [AccessibleAccordion](./controls/accessibleAccordion/Accordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
+- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
 - [AnimatedDialog](./controls/AnimatedDialog) (Animated dialog control)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)

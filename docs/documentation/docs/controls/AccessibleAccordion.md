@@ -4,11 +4,11 @@ This control allows you to render an accordion control. It is an implementation 
 
 Here is an example of the control in action:
 
-![Accessible Accordion control](../../assets/AccessibleAccordion.gif)
+![Accessible Accordion control](../assets/AccessibleAccordion.gif)
 
 ## How to use this control in your solutions
 
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
+- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../#getting-started) page for more information about installing the dependency.
 - In your component file, import the `Accordion` control as follows:
 
 ```TypeScript
