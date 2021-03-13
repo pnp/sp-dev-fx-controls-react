@@ -10,7 +10,7 @@ export default class SPService implements ISPService {
 
   constructor(private _context: WebPartContext | ExtensionContext, webAbsoluteUrl?: string) {
     this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
-   }
+  }
 
   /**
    * Get lists or libraries
@@ -50,14 +50,14 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false ): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
     let returnItems: any[];
     const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-                        `substringof('${encodeURIComponent(filterText.replace("'","''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
-                        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'","''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
+      `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
+      : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
     try {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const results = await data.json();
@@ -74,16 +74,16 @@ export default class SPService implements ISPService {
 
 
 
-     /**
-   * Gets list items for list item picker
-   * @param filterText
-   * @param listId
-   * @param internalColumnName
-   * @param [keyInternalColumnName]
-   * @param [webUrl]
-   * @param [filterList]
-   * @returns list items for list item picker
-   */
+  /**
+* Gets list items for list item picker
+* @param filterText
+* @param listId
+* @param internalColumnName
+* @param [keyInternalColumnName]
+* @param [webUrl]
+* @param [filterList]
+* @returns list items for list item picker
+*/
   public async getListItemsForListItemPicker(
     filterText: string,
     listId: string,
