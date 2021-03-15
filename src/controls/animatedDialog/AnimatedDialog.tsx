@@ -7,7 +7,8 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
 // Animate.min.css
-require('../../../node_modules/animate.css/animate.min.css');
+//require('../../../node_modules/animate.css/animate.min.css');
+require('animate.css/animate.min.css');
 
 export interface IAnimatedDialogProps extends IDialogProps {
     dialogAnimationInType?: string;
@@ -96,7 +97,7 @@ export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogPro
     useEffect(() => {
 
         let containerClassName: string = `${containerAnimationClass} ${defaultDialogAnimationClass}`;
-        
+
         if (props.dialogAnimationInType) {
             containerClassName = `${containerAnimationClass} ${animationPrefix}${dialogAnimationInType}`;
         }
