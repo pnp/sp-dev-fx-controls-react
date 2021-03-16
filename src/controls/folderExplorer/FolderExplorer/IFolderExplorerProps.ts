@@ -47,7 +47,7 @@ export interface IFolderExplorerProps {
   hiddenFilterBox?: boolean;
 
   /**
-   * The name of the field on which to sort. Default: Name. For list item properties, use ListItemAllFields/Title, ListItemAllFields/Created, etc
+   * The name of the folder field on which to sort. Name will be used as default. Other examples: Name, TimeCreated, TimeLastModified
    */
   orderby?: string;
 
