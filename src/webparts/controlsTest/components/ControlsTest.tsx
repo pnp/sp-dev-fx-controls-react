@@ -1695,7 +1695,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             title: "Card 6",
             size: WidgetSize.Single,
             link: linkExample,
-          },]} />
+          }]} WidgetContentWrapper={(props) => { return <div style={{backgroundColor: 'red'}}>{props.children}</div>;}} />
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
