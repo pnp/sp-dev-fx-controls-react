@@ -25,6 +25,7 @@ import { ListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
                 columnInternalName='Title'
                 keyColumnInternalName='Id'
                 filter="Title eq 'SPFx'"
+                orderBy={"Id desc"}
                 itemLimit={2}
                 onSelectedItem={this.onSelectedItem}
                 context={this.props.context} />
@@ -60,6 +61,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | filter | string | no | condition to filter list Item, same as $filter ODATA parameter|
+| orderBy | string | no | condition to order by list Item, same as $orderby ODATA parameter|
 | placeholder | string | no | Short text hint to display in empty picker |
 | substringSearch | boolean | no | Specifies if substring search should be used |
 

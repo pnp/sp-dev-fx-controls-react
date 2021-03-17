@@ -75,14 +75,25 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
     let returnItems: any[];
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
 
     if (field && field.TypeAsString === 'Calculated') { // for calculated fields we need to use CAML query
-      const camlQuery = `<View><Query><Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where></Query></View>`;
+      let orderByStr = '';
+
+      if (orderBy) {
+        const orderByParts = orderBy.split(' ');
+        let ascStr = '';
+        if (orderByParts[1] && orderByParts[1].toLowerCase() === 'desc') {
+          ascStr = `Ascending="FALSE"`;
+        }
+        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} />`;
+      }
+
+      const camlQuery = `<View><Query><Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where>${orderByStr}</Query></View>`;
 
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
@@ -91,7 +102,7 @@ export default class SPService implements ISPService {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
         : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}`;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
     }
 
     try {

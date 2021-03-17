@@ -1298,6 +1298,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   columnInternalName="Title"
                   keyColumnInternalName="Id"
                   filter={"Title eq 'SPFx'"}
+                  orderBy={'Title desc'}
                   itemLimit={5}
                   context={this.props.context}
                   placeholder={'Select list items'}
