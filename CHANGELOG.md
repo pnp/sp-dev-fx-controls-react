@@ -10,6 +10,7 @@
 
 - `IconPicker`: search icons using `contains` comparison.
 - `FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)
+- `ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)
 
 ### Fixes
 
@@ -21,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 2.5.0
 
