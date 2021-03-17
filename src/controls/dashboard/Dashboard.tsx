@@ -39,7 +39,7 @@ export interface IDashboardProps {
    */
   toolbarProps?: IToolbarProps;
   /**
-   * Optional component which wraps every Widget component. Useful for a custom error handling.
+   * Optional component which wraps every Widget component. Useful for a custom error handling or styling.
    */
   WidgetContentWrapper?: React.ComponentType<React.PropsWithChildren<any>>;
 }

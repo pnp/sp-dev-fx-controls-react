@@ -90,7 +90,7 @@ The Dashboard component can be configured with the following properties:
 | allowHidingWidget | boolean | no | Specifies if widgets can be hidden from the dashboard. |
 | onWidgetHiding | (widget: IWidget) => void | no | Handler of widget hiding event. |
 | toolbarProps | IToolbarProps | no | Dashboard toolbar props. See [Toolbar](./Toolbar). |
-| WidgetContentWrapper | React.ComponentType\<React.PropsWithChildren\<any>> | no | Optional component which wraps every Widget component. Useful for a custom error handling. | 
+| WidgetContentWrapper | React.ComponentType\<React.PropsWithChildren\<any>> | no | Optional component which wraps every Widget component. Useful for a custom error handling or styling. | 
 
 Interface `IWidget`
 
