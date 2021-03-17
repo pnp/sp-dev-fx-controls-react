@@ -8,6 +8,7 @@ export interface IListItemPickerProps {
   listId: string;
   itemLimit: number;
   filter?: string;
+  orderBy?: string;
   className?: string;
   webUrl?: string;
   defaultSelectedItems?: any[];
