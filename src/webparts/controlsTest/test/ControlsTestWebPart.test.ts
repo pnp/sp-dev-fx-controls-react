@@ -1,4 +1,4 @@
-/// <reference types="mocha" />
+/// <reference types="jest" />
 
 import { assert } from 'chai';
 
