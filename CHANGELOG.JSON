@@ -11,7 +11,8 @@
           "`IconPicker`: search icons using `contains` comparison.",
           "`FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)",
           "`ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)",
-          "`Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)"
+          "`Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)",
+          "`FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)"
         ],
         "fixes": [
           "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)",
@@ -30,7 +31,8 @@
         "[Marcin Wojciechowski](https://github.com/mgwojciech)",
         "[Mark Bice](https://github.com/mbice)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
-        "[Yannick Reekmans](https://github.com/YannickRe)"
+        "[Yannick Reekmans](https://github.com/YannickRe)",
+        "[Joel Rodrigues](https://github.com/joelfmrodrigues)"
       ]
     },
     {
