@@ -59,7 +59,7 @@ The `FolderExplorer` control can be configured with the following properties:
 | initialBreadcrumbItems | IBreadcrumbItem | no | Additional items to be added to the beginning of the breadcrumb. |
 | hiddenFilterBox | boolean | no | Hide the filter box |
 | onSelect | (folder: IFolder): void | no | Callback function called after a folder is selected. |
-| orderby | string | no | The name of the field on which to sort. Default: Name. For list item properties, use ListItemAllFields/Title, ListItemAllFields/Created, etc |
+| orderby | string | no | The name of the folder field on which to sort. Name will be used as default. Other examples: Name, TimeCreated, TimeLastModified |
 | orderAscending | boolean | no | If set to true, results will be sorted in ascending order. Otherwise, descending will be used as default |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FolderExplorer)
