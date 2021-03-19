@@ -4,7 +4,8 @@
       "version": "2.6.0",
       "changes": {
         "new": [
-          "`AnimatedDialog`: new Animated Dialog control [#815](https://github.com/pnp/sp-dev-fx-controls-react/issues/815)"
+          "`AnimatedDialog`: new Animated Dialog control [#815](https://github.com/pnp/sp-dev-fx-controls-react/issues/815)",
+          "Jest unit tests [#834](https://github.com/pnp/sp-dev-fx-controls-react/pull/834)"
         ],
         "enhancements": [
           "`IconPicker`: search icons using `contains` comparison.",
@@ -24,6 +25,7 @@
         "[Ari Gunawan](https://github.com/AriGunawan)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Kunj Balkrishna Sangani](https://github.com/kunj-sangani)",
+        "[Marcin Wojciechowski](https://github.com/mgwojciech)",
         "[Mark Bice](https://github.com/mbice)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
         "[Yannick Reekmans](https://github.com/YannickRe)"
