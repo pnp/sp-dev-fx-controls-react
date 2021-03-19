@@ -1696,7 +1696,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             title: "Card 6",
             size: WidgetSize.Single,
             link: linkExample,
-          },]} />
+          }]} />
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
