@@ -30,6 +30,13 @@ import { AnimatedDialog } from "@pnp/spfx-controls-react/lib/AnimatedDialog";
 The code below adds a dialog with an entrance animation of `bounceIn` and exit animation of `zoomOut`. (These are the default animations)
 
 ```TypeScript
+// Initial state
+this.state = {
+      showAnimatedDialog: false
+}
+...
+...
+// Properties of the dialog
 const animatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
       title: 'Animated Dialog',
@@ -41,6 +48,9 @@ const animatedModalProps: IModalProps = {
 };
 ...
 ...
+// Add a control (like a button) that changes the state showAnimatedDialog to true
+
+//Render the animated dialog
 <AnimatedDialog
     hidden={!this.state.showAnimatedDialog}
     onDismiss={() => { this.setState({ showAnimatedDialog: false }); }}
@@ -62,6 +72,13 @@ const animatedModalProps: IModalProps = {
 The code below adds adds a dialog with an entrance animation of `fadeInDown` and exit animation of `fadeInDown`.
 
 ```TypeScript
+// Initial state
+this.state = {
+      showAnimatedDialog: false
+}
+...
+...
+// Properties of the dialog
 const animatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
       title: 'Animated Dialog',
@@ -73,6 +90,9 @@ const animatedModalProps: IModalProps = {
 };
 ...
 ...
+// Add a control (like a button) that changes the state showAnimatedDialog to true
+
+//Render the animated dialog
 <AnimatedDialog
     hidden={!this.state.showAnimatedDialog}
     onDismiss={() => { this.setState({ showAnimatedDialog: false }); }}
@@ -103,10 +123,23 @@ The code below does the following:
     - onError: The function that gets executed when the `onOkClick` function fails. 
 
 ```TypeScript
+// Initial state
+this.state = {
+      showCustomisedAnimatedDialog: false,
+      showSuccessDialog: false,
+      showErrorDialog: false
+}
+...
+...
 const animatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
       title: 'Animated Dialog with icon'
-    };
+};
+
+const successDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Good answer!'
+};
 
 const animatedModalProps: IModalProps = {
     isDarkOverlay: true,
@@ -119,6 +152,9 @@ const timeout = (ms: number): Promise<void> => {
 };
 ...
 ...
+// Add a control (like a button) that changes the state showAnimatedDialog to true
+
+//Render the animated dialog
 <AnimatedDialog
     hidden={!this.state.showCustomisedAnimatedDialog}
     onDismiss={() => { this.setState({ showCustomisedAnimatedDialog: false }); }}
@@ -142,13 +178,14 @@ const timeout = (ms: number): Promise<void> => {
         </div>
 </AnimatedDialog>
 
-// Success dialog
+// Render success animated dialog which will appear after the execution 
+// of onSuccess function in the above animated dialog 
 
 <AnimatedDialog
     hidden={!this.state.showSuccessDialog}
     onDismiss={() => { this.setState({ showSuccessDialog: false }); }}
     dialogContentProps={successDialogContentProps}
-    modalProps={customizedAnimatedModalProps}
+    modalProps={animatedModalProps}
     iconName='CompletedSolid'
     >
         <div className={styles.dialogContent}><span>Thank you.</span></div>
@@ -168,22 +205,34 @@ const timeout = (ms: number): Promise<void> => {
 If the dialog content and footer buttons need to be controlled by our code and not the animated dialog control then the code below can be used
 
 ```TypeScript
+// Initial state
+this.state = {
+      showCustomisedAnimatedDialog: false,
+      showSuccessDialog: false,
+      showErrorDialog: false,
+      showLoading: false
+}
+...
+...
 const animatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
       title: 'Custom content and footer'
-    };
+};
+
+const successDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Good answer!'
+};
 
 const animatedModalProps: IModalProps = {
     isDarkOverlay: true,
     containerClassName: `${styles.dialogContainer}`
 };
+...
+...
+// Add a control (like a button) that changes the state showAnimatedDialog to true
 
-// The operation that does something - e.g. update data
-const timeout = (ms: number): Promise<void> => {
-    return new Promise((resolve, reject) => setTimeout(reject, ms));
-};
-...
-...
+//Render the animated dialog
 <AnimatedDialog
     hidden={!this.state.showCustomisedAnimatedDialog}
     onDismiss={() => { this.setState({ showCustomisedAnimatedDialog: false }); }}
@@ -192,38 +241,38 @@ const timeout = (ms: number): Promise<void> => {
     iconName='UnknownSolid'>
 
     <div className={styles.dialogContent}>
-        <span>Do you like the animated dialog?</span>
+    <span>Do you like the animated dialog?</span>
     </div>
 
     <div className={styles.dialogFooter}>
-        <PrimaryButton
-            onClick={() => {
+    <PrimaryButton
+        onClick={() => {
+        this.setState({ showLoading: true });
+        setTimeout(() => {
             this.setState({ showLoading: true });
-            setTimeout(() => {
-                    this.setState({ showLoading: true });
-                    this.setState({ showCustomisedAnimatedDialog: false });
-                    this.setState({ showSuccessDialog: true });
-                }, 1500);
-            }}
-            disabled={this.state.showLoading} text={!this.state.showLoading && "Yeah!"}>
-            {this.state.showLoading && <Spinner size={SpinnerSize.medium} />}
-        </PrimaryButton>
+            this.setState({ showCustomisedAnimatedDialog: false });
+            this.setState({ showSuccessDialog: true });
+        }, 1500);
+        }}
+        disabled={this.state.showLoading} text={!this.state.showLoading && "Yeah!"}>
+        {this.state.showLoading && <Spinner size={SpinnerSize.medium} />}
+    </PrimaryButton>
 
-        <DefaultButton
-            onClick={this.setState({ showCustomisedAnimatedDialog: false });}
-            text="Nope"
-            disabled={this.state.showLoading} />
+    <DefaultButton
+        onClick={() => this.setState({ showCustomisedAnimatedDialog: false })}
+        text="Nope"
+        disabled={this.state.showLoading} />
     </div>
-
 </AnimatedDialog>
 
-// Success dialog
+// Render success animated dialog which will appear after the execution 
+// of the onClick function of the Button in the above animated dialog
 
 <AnimatedDialog
     hidden={!this.state.showSuccessDialog}
     onDismiss={() => { this.setState({ showSuccessDialog: false }); }}
     dialogContentProps={successDialogContentProps}
-    modalProps={customizedAnimatedModalProps}
+    modalProps={animatedModalProps}
     iconName='CompletedSolid'>
         <div className={styles.dialogContent}><span>Thank you.</span></div>
         <div className={styles.resultDialogFooter}>
