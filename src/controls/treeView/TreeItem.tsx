@@ -106,7 +106,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     let active = props.activeItems.filter(item => item.key === props.treeItem.key);
 
     let expanded = props.defaultExpanded;
-    if (props.nodesToExpand.indexOf(props.treeItem.key) != -1) {
+    if (props.nodesToExpand.indexOf(props.treeItem.key) != -1 && props.treeItem.children.some(child => this.props.nodesToExpand.indexOf(child.key) > -1)) {
       expanded = true;
     }
 
@@ -211,7 +211,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
   /**
    * Process the child nodes
    */
-  public createChildNodes = (list, paddingLeft) => {
+  public createChildNodes = (list: ITreeItem[], paddingLeft: number) => {
     if (list.length) {
       const {
         treeItem,

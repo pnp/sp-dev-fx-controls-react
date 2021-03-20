@@ -412,7 +412,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
-      treeViewSelectedKeys: ['gc1', 'gc3'],
+      treeViewSelectedKeys: ['3', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
       showSuccessDialog: false,
@@ -1579,8 +1579,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={this.state.treeViewSelectedKeys}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            defaultExpandedChildren={true}
-          //expandToSelected={true}
+            defaultExpandedChildren={false}
+            expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />
           <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
