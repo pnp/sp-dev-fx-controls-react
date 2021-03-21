@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "3.0.0",
+      "changes": {
+        "new": [
+          "SharePoint Framework v1.12 support",
+          "FLuent UI v7 support"
+        ],
+        "enhancements": [],
+        "fixes": []
+      },
+      "contributions": []
+    },
+    {
       "version": "2.6.0",
       "changes": {
         "new": [
