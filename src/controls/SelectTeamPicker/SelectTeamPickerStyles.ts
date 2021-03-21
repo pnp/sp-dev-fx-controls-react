@@ -20,7 +20,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
     height: 26,
     lineHeight: 26
   }
-}
+};
 
   const renderItemStylesMulti: Partial<IStackStyles> = {
     root: {
