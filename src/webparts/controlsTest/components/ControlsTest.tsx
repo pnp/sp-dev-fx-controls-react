@@ -1705,7 +1705,7 @@ export default class ControlsTest extends React.Component<
 
         <div>
           <h3>Carousel with fixed elements:</h3>
-         {/*  <Carousel
+           <Carousel
             buttonsLocation={CarouselButtonsLocation.top}
             buttonsDisplay={CarouselButtonsDisplay.block}
             contentContainerStyles={styles.carouselContent}
@@ -1718,12 +1718,12 @@ export default class ControlsTest extends React.Component<
             onMovePrevClicked={(index: number) => {
               console.log(`Prev button clicked: ${index}`);
             }}
-          /> */}
+          />
         </div>
 
         <div>
           <h3>Carousel with CarouselImage elements:</h3>
-       {/*    <Carousel
+         <Carousel
             buttonsLocation={CarouselButtonsLocation.center}
             buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
             contentContainerStyles={styles.carouselImageContent}
@@ -1771,12 +1771,12 @@ export default class ControlsTest extends React.Component<
             rootStyles={mergeStyles({
               backgroundColor: "#C3C3C3",
             })}
-          /> */}
+          />
         </div>
 
         <div>
           <h3>Carousel with triggerPageElement:</h3>
-       {/*    <Carousel
+         <Carousel
             buttonsLocation={CarouselButtonsLocation.bottom}
             buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
             contentContainerStyles={styles.carouselContent}
@@ -1784,7 +1784,7 @@ export default class ControlsTest extends React.Component<
             canMovePrev={this.state.canMovePrev}
             triggerPageEvent={this.triggerNextElement}
             element={this.state.currentCarouselElement}
-          /> */}
+          />
         </div>
 
         <div className={styles.siteBreadcrumb}>
