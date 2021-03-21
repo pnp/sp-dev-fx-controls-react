@@ -675,7 +675,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           {
             showFilter &&
             <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
-              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
+              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={(e, value) => this._updateFilterValue(value)} value={filterValue} />
             </SearchBoxWrapper>
           }
           {!!items && <DetailsList
