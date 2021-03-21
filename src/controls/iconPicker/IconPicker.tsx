@@ -135,7 +135,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
     });
   }
 
-  private onChange = (newValue?: string): void => {
+  private onChange = (ev,newValue?: string): void => {
     let items: string[];
     if (newValue && newValue.trim().length > 2) {
       items = this._fluentIconsService.search(newValue); /*IconNames.Icons.filter(item => {

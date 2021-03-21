@@ -372,7 +372,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
               }}>
         <TextField label={strings.AddressFieldLabel}
                    value={this.state.insertUrl !== undefined ? this.state.insertUrl : "https://"}
-                   onChanged={(newValue?: string) => {
+                   onChange={(ev:any,newValue?: string) => {
                     this.setState({
                       insertUrl: newValue
                     });
@@ -380,7 +380,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
         <TextField label={strings.TextToDisplayLabel}
                    value={this.state.insertUrlText}
-                   onChanged={(newValue?: string) => {
+                   onChange={(ev:any,newValue?: string) => {
                     if (newValue !== this.state.insertUrl) {
                       this.setState({
                         insertUrlText: newValue
@@ -421,7 +421,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
               }}>
         <TextField label={strings.AddressFieldLabel}
                    value={this.state.insertImageUrl !== undefined ? this.state.insertImageUrl : ""}
-                   onChanged={(newValue?: string) => {
+                   onChange={(ev:any,newValue?: string) => {
                     this.setState({
                       insertImageUrl: newValue
                     });

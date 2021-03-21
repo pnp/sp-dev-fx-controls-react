@@ -64,7 +64,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
             }}
             placeholder={strings.NewFolderNamePlaceholder}
             value={folderName}
-            onChanged={this._onFolderNameChange}
+            onChange={this._onFolderNameChange}
             errorMessage={hasError ? strings.NewFolderIncorrectSymbolsError : errorMessage}
           // styles={{ fieldGroup: { width: 300 } }}
           />
@@ -82,7 +82,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
     );
   }
 
-  private _onFolderNameChange = (newValue?: string) => {
+  private _onFolderNameChange = (ev,newValue?: string) => {
     this.setState({ folderName: newValue || '', errorMessage: '' });
   }
 

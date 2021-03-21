@@ -669,7 +669,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           {
             showFilter &&
             <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
-              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
+              <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={(ev:any, text:string) => { this._updateFilterValue(text);}} value={filterValue} />
             </SearchBoxWrapper>
           }
           <DetailsList

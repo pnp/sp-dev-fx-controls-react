@@ -52,7 +52,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
         <div style={{ opacity: this.state.foldersLoading ? 0.8 : 1, }}>
           {!this.props.hiddenFilterBox && this._allFolders.length > 0 &&
             <div>
-              <SearchBox className={styles.filterBox} placeholder={strings.FolderFilterBoxPlaceholder} onSearch={this._onChangeFilterText} onChange={this._onChangeFilterText} />
+              <SearchBox className={styles.filterBox} placeholder={strings.FolderFilterBoxPlaceholder} onSearch={this._onChangeFilterText} onChange={ (ev, text:string) => {this._onChangeFilterText(text);}} />
             </div>
           }
           {this.state.folders.length === 0 &&

@@ -178,7 +178,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   /**
   * Update address on submit (while searching is enabled)
   */
-  private _onChangedAddress = (newValue: string): void => {
+  private _onChangedAddress = (ev:any,newValue: string): void => {
     this.setState({
       address: newValue,
     });
@@ -223,7 +223,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
           (this.props.enableSearch) && (
             <div id="mapsSearch" className={styles.searchContainer}>
               <TextField value={this.state.address}
-                onChanged={this._onChangedAddress}
+                onChange={this._onChangedAddress}
                 onKeyPress={(event) => event.key === "Enter" ? this._getCoordinates() : null}
                 iconProps={{ iconName: 'World' }}
                 className={styles.searchTextBox} />
