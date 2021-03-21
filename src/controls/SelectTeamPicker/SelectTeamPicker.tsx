@@ -155,8 +155,8 @@ export const SelectTeamPicker : React.FunctionComponent<ISelectTeamPickerProps> 
 
   // Render  control
   return (
-    <div>
-      <Label>{props?.label ?? ''}</Label>
+    <div style={{width: '100%'}}>
+    { props.label &&  <Label>{props.label}</Label>}
       <TagPicker
         styles={ styles ??  (itemLimit && itemLimit> 1 ?  pickerStylesMulti : pickerStylesSingle) }
         selectedItems={state.savedSelectedTeams}

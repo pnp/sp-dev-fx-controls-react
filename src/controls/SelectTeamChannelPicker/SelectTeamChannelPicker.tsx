@@ -216,8 +216,8 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
 
   // Render  control
   return (
-    <div>
-      <Label>{props.label}</Label>
+    <div style={{width: '100%'}}>
+   { props.label &&  <Label>{props.label}</Label>}
       <TagPicker
         styles={
           styles ??
