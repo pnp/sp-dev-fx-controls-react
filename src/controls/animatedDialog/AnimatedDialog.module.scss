@@ -1,0 +1,32 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+$themePrimary: "[theme:themePrimary, default:#0078d7]";
+
+.animatedDialogTitleContainer {
+  text-align: center;
+  i {
+    font-size: 52px;
+    color: $themePrimary;
+  }
+
+  span {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 0.4em;
+  }
+}
+
+.animatedDialogFooter {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25em;
+
+  button {
+    min-width: 100px;
+    margin: 0px 10px;
+  }
+
+  .loader {
+    margin-top: 15px;
+  }
+}

@@ -11,6 +11,7 @@ nav:
   - Controls:
     - AccessibleAccordion: 'controls/AccessibleAccordion.md'
     - Accordion: 'controls/Accordion.md'
+    - AnimatedDialog: 'controls/AnimatedDialog.md'
     - Carousel: 'controls/Carousel.md'
     - Charts:
       - "ChartControl": 'controls/ChartControl.md'

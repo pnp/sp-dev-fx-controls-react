@@ -31,6 +31,7 @@
     "@pnp/sp": "2.0.6",
     "@pnp/telemetry-js": "2.0.0",
     "@uifabric/icons": "7.3.0",
+    "animate.css": "^4.1.1",
     "chart.js": "2.7.3",
     "color": "3.1.2",
     "lodash": "4.17.13",
@@ -46,12 +47,12 @@
     "@microsoft/sp-module-interfaces": "1.11.0",
     "@microsoft/sp-tslint-rules": "1.11.0",
     "@microsoft/sp-webpart-workbench": "1.11.0",
-    "@types/chai": "3.4.34",
+    "@types/chai": "^3.4.34",
     "@types/chart.js": "2.7.40",
     "@types/enzyme": "2.8.7",
     "@types/es6-promise": "0.0.33",
+    "@types/jest": "^25.2.3",
     "@types/lodash": "4.14.149",
-    "@types/mocha": "2.2.38",
     "@types/react": "16.8.8",
     "@types/react-addons-shallow-compare": "0.14.17",
     "@types/react-addons-test-utils": "0.14.15",
@@ -61,15 +62,21 @@
     "@types/webpack-env": "1.13.1",
     "ajv": "~5.2.2",
     "amd-loader": "0.0.8",
+    "chai": "^4.3.4",
     "codecov": "3.6.5",
-    "enzyme": "2.9.1",
+    "enzyme": "^2.9.1",
+    "enzyme-adapter-react-16": "^1.15.6",
     "gulp": "~3.9.1",
     "husky": "4.2.5",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.5.4",
+    "jest-cli": "^25.5.4",
     "karma-html-reporter": "0.2.7",
     "karma-remap-coverage": "^0.1.4",
     "react-addons-test-utils": "15.6.0",
     "request-promise": "4.2.5",
     "sonarqube-scanner": "2.1.2",
+    "ts-jest": "^25.5.1",
     "tslib": "2.0.0",
     "webpack-bundle-analyzer": "^4.1.0"
   },
@@ -100,6 +107,28 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run changelog"
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ],
+    "testRegex": "tests/.*\\.test.(ts?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "@ms/sp-telemetry": "identity-obj-proxy",
+      "@microsoft/sp-webpart-base": "identity-obj-proxy",
+      "@microsoft/sp-application-base": "identity-obj-proxy",
+      "^resx-strings/en-us.json": "<rootDir>/node_modules/@microsoft/sp-core-library/lib/resx-strings/en-us.json",
+      "\\.(css|scss)$": "identity-obj-proxy"
     }
   }
 }

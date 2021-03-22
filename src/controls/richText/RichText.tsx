@@ -40,7 +40,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private ddStyleOpts = [{
     key: 0,
     text: strings.HeaderNormalText,
-    data: { }
+    data: {}
   }, {
     key: 2,
     text: strings.HeaderH2,
@@ -219,13 +219,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param option
    */
-  private onRenderStyleOption (option: IDropdownOption): JSX.Element {
+  private onRenderStyleOption(option: IDropdownOption): JSX.Element {
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-toolbarButton`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-toolbarButton`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
-             aria-describedby={`${option.text}-toolbarButton`}>
+          aria-describedby={`${option.text}-toolbarButton`}>
           <span>{option.text}</span>
         </div>
       </TooltipHost>
@@ -237,15 +237,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param options
    */
-  private onRenderStyleTitle (options: IDropdownOption[]): JSX.Element {
+  private onRenderStyleTitle(options: IDropdownOption[]): JSX.Element {
     const option = options[0];
 
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-dropDownTitle`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-dropDownTitle`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={styles.toolbarSubmenuDisplayButton}
-             aria-describedby={`${option.text}-dropDownTitle`}>
+          aria-describedby={`${option.text}-dropDownTitle`}>
           <span>{option.text}</span>
         </div>
       </TooltipHost>
@@ -257,16 +257,16 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param option
    */
-  private onRenderAlignOption (option: IDropdownOption): JSX.Element {
+  private onRenderAlignOption(option: IDropdownOption): JSX.Element {
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-toolbarButton`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-toolbarButton`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
-             aria-describedby={`${option.text}-toolbarButton`}>
+          aria-describedby={`${option.text}-toolbarButton`}>
           <Icon className={styles.toolbarDropDownIcon}
-                iconName={option.data.icon}
-                aria-hidden="true" />
+            iconName={option.data.icon}
+            aria-hidden="true" />
         </div>
       </TooltipHost>
     );
@@ -277,18 +277,18 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param options
    */
-  private onRenderListTitle (options: IDropdownOption[]): JSX.Element {
+  private onRenderListTitle(options: IDropdownOption[]): JSX.Element {
     const option = options[0];
 
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-dropDownTitle`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-dropDownTitle`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={styles.toolbarSubmenuDisplayButton}
-             aria-describedby={`${option.text}-dropDownTitle`}>
+          aria-describedby={`${option.text}-dropDownTitle`}>
           <Icon className={styles.toolbarDropDownTitleIcon}
-                iconName={option.data.icon}
-                aria-hidden="true" />
+            iconName={option.data.icon}
+            aria-hidden="true" />
         </div>
       </TooltipHost>
     );
@@ -299,18 +299,18 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param options
    */
-  private onRenderAlignTitle (options: IDropdownOption[]): JSX.Element {
+  private onRenderAlignTitle(options: IDropdownOption[]): JSX.Element {
     const option = options[0];
 
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-dropDownTitle`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-dropDownTitle`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={styles.toolbarSubmenuDisplayButton}
-             aria-describedby={`${option.text}-dropDownTitle`}>
+          aria-describedby={`${option.text}-dropDownTitle`}>
           <Icon className={styles.toolbarDropDownTitleIcon}
-                iconName={option.data.icon}
-                aria-hidden="true" />
+            iconName={option.data.icon}
+            aria-hidden="true" />
         </div>
       </TooltipHost>
     );
@@ -321,16 +321,16 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    *
    * @param option
    */
-  private onRenderListOption (option: IDropdownOption): JSX.Element {
+  private onRenderListOption(option: IDropdownOption): JSX.Element {
     return (
       <TooltipHost content={option.text}
-                   id={`${option.text}-toolbarButton`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`${option.text}-toolbarButton`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
-             aria-describedby={`${option.text}-toolbarButton`}>
+          aria-describedby={`${option.text}-toolbarButton`}>
           <Icon className={styles.toolbarDropDownIcon}
-                iconName={option.data.icon}
-                aria-hidden="true" />
+            iconName={option.data.icon}
+            aria-hidden="true" />
         </div>
       </TooltipHost>
     );
@@ -339,16 +339,16 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Render the list dropdown placeholder
    */
-  private onRenderListPlaceholder (): JSX.Element {
+  private onRenderListPlaceholder(): JSX.Element {
     return (
       <TooltipHost content={"Placeholder"}
-                   id={`Placeholder-dropDownTitle`}
-                   calloutProps={{ gapSpace: 0 }}>
+        id={`Placeholder-dropDownTitle`}
+        calloutProps={{ gapSpace: 0 }}>
         <div className={styles.toolbarSubmenuDisplayButton}
-             aria-describedby={`Placeholder-dropDownTitle`}>
+          aria-describedby={`Placeholder-dropDownTitle`}>
           <Icon className={styles.toolbarDropDownTitleIcon}
-                iconName={'BulletedList'}
-                aria-hidden="true" />
+            iconName={'BulletedList'}
+            aria-hidden="true" />
         </div>
       </TooltipHost>
     );
@@ -360,33 +360,33 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private renderLinkDialog = (): JSX.Element => {
     return (
       <Dialog hidden={this.state.hideDialog}
-              onDismiss={this.closeDialog}
-              dialogContentProps={{
-                type: DialogType.normal,
-                title: strings.InsertLinkTitle,
-              }}
-              modalProps={{
-                className: styles.insertLinkDialog,
-                isBlocking: true,
-                containerClassName: 'ms-dialogMainOverride'
-              }}>
+        onDismiss={this.closeDialog}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: strings.InsertLinkTitle,
+        }}
+        modalProps={{
+          className: styles.insertLinkDialog,
+          isBlocking: true,
+          containerClassName: 'ms-dialogMainOverride'
+        }}>
         <TextField label={strings.AddressFieldLabel}
-                   value={this.state.insertUrl !== undefined ? this.state.insertUrl : "https://"}
-                   onChanged={(newValue?: string) => {
-                    this.setState({
-                      insertUrl: newValue
-                    });
-                  }} />
+          value={this.state.insertUrl !== undefined ? this.state.insertUrl : "https://"}
+          onChanged={(newValue?: string) => {
+            this.setState({
+              insertUrl: newValue
+            });
+          }} />
 
         <TextField label={strings.TextToDisplayLabel}
-                   value={this.state.insertUrlText}
-                   onChanged={(newValue?: string) => {
-                    if (newValue !== this.state.insertUrl) {
-                      this.setState({
-                        insertUrlText: newValue
-                      });
-                    }
-                   }} />
+          value={this.state.insertUrlText}
+          onChanged={(newValue?: string) => {
+            if (newValue !== this.state.insertUrl) {
+              this.setState({
+                insertUrlText: newValue
+              });
+            }
+          }} />
 
         <DialogFooter className={styles.actions}>
           <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
@@ -409,23 +409,23 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private renderImageDialog = (): JSX.Element => {
     return (
       <Dialog hidden={this.state.hideImageDialog}
-              onDismiss={this.closeImageDialog}
-              dialogContentProps={{
-                type: DialogType.normal,
-                title: strings.InsertImageTitle,
-              }}
-              modalProps={{
-                className: styles.insertLinkDialog,
-                isBlocking: true,
-                containerClassName: 'ms-dialogMainOverride'
-              }}>
+        onDismiss={this.closeImageDialog}
+        dialogContentProps={{
+          type: DialogType.normal,
+          title: strings.InsertImageTitle,
+        }}
+        modalProps={{
+          className: styles.insertLinkDialog,
+          isBlocking: true,
+          containerClassName: 'ms-dialogMainOverride'
+        }}>
         <TextField label={strings.AddressFieldLabel}
-                   value={this.state.insertImageUrl !== undefined ? this.state.insertImageUrl : ""}
-                   onChanged={(newValue?: string) => {
-                    this.setState({
-                      insertImageUrl: newValue
-                    });
-                  }} />
+          value={this.state.insertImageUrl !== undefined ? this.state.insertImageUrl : ""}
+          onChanged={(newValue?: string) => {
+            this.setState({
+              insertImageUrl: newValue
+            });
+          }} />
 
         <DialogFooter className={styles.actions}>
           <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
@@ -448,13 +448,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (!isEditMode) {
       return (
         <div className={`ql-editor ${styles.richtext} ${this.props.className || ''}`}
-             dangerouslySetInnerHTML={{ __html: text }}>
+          dangerouslySetInnerHTML={{ __html: text }}>
         </div>
       );
     }
 
     // Okay, we're in edit mode.
-    const { placeholder, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage} } = this.props;
+    const { placeholder, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage } } = this.props;
 
     // Get a unique id for the toolbar
     const modules = {
@@ -503,141 +503,141 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
     return (
       <div ref={(ref) => this._wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : ''} ${this.props.className}`}>
-        <div id={this._toolbarId} style={{top:this.state.wrapperTop}}>
+        <div id={this._toolbarId} style={{ top: this.state.wrapperTop }}>
           {
             showStyles && (
               <Dropdown
-id="DropDownStyles"
-              className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
-                        onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                        selectedKey={this.state.formats.header || 0}
-                        options={this.ddStyleOpts}
-                        onChanged={this.onChangeHeading}
-                        onRenderOption={this.onRenderStyleOption}
-                        onRenderTitle={this.onRenderStyleTitle}
-                      />
+                id="DropDownStyles"
+                className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
+                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
+                selectedKey={this.state.formats.header || 0}
+                options={this.ddStyleOpts}
+                onChanged={this.onChangeHeading}
+                onRenderOption={this.onRenderStyleOption}
+                onRenderTitle={this.onRenderStyleTitle}
+              />
             )
           }
           {
             showBold && (
               <TooltipHost content={strings.BoldTitle}
-                           id="bold-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="bold-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton iconProps={{ iconName: 'Bold' }}
-                            aria-describedby="bold-richtextbutton"
-                            checked={this.state.formats.bold}
-                            onClick={this.onChangeBold} />
+                  aria-describedby="bold-richtextbutton"
+                  checked={this.state.formats.bold}
+                  onClick={this.onChangeBold} />
               </TooltipHost>
             )
           }
           {
             showItalic && (
               <TooltipHost content={strings.ItalicTitle}
-                           id="italic-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="italic-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton iconProps={{ iconName: 'Italic' }}
-                            aria-describedby="italic-richtextbutton"
-                            checked={this.state.formats.italic}
-                            onClick={this.onChangeItalic} />
+                  aria-describedby="italic-richtextbutton"
+                  checked={this.state.formats.italic}
+                  onClick={this.onChangeItalic} />
               </TooltipHost>
             )
           }
           {
             showUnderline && (
               <TooltipHost content={strings.UnderlineTitle}
-                           id="underline-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="underline-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton iconProps={{ iconName: 'Underline' }}
-                            aria-describedby="underline-richtextbutton"
-                            checked={this.state.formats.underline}
-                            onClick={this.onChangeUnderline} />
-            </TooltipHost>
+                  aria-describedby="underline-richtextbutton"
+                  checked={this.state.formats.underline}
+                  onClick={this.onChangeUnderline} />
+              </TooltipHost>
             )
           }
           {
             showAlign && (
               <Dropdown className={`${styles.toolbarDropDown}`}
-              id="DropDownAlign"
-                        onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                        selectedKey={this.state.formats.align || 'left'}
-                        options={this.ddAlignOpts}
-                        onChanged={this.onChangeAlign}
-                        onRenderOption={this.onRenderAlignOption}
-                        onRenderTitle={this.onRenderAlignTitle}
+                id="DropDownAlign"
+                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
+                selectedKey={this.state.formats.align || 'left'}
+                options={this.ddAlignOpts}
+                onChanged={this.onChangeAlign}
+                onRenderOption={this.onRenderAlignOption}
+                onRenderTitle={this.onRenderAlignTitle}
               />
             )
           }
           {
             showList && (
               <Dropdown className={styles.toolbarDropDown}
-              id="DropDownLists"
-                        onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                        selectedKey={this.state.formats.list}
-                        options={this.ddListOpts}
-                        // this option is not available yet
-                        // notifyOnReselect={true} // allows re-selecting selected item to turn it off
-                        onChanged={this.onChangeList}
-                        onRenderOption={this.onRenderListOption}
-                        onRenderTitle={this.onRenderListTitle}
-                        onRenderPlaceHolder={this.onRenderListPlaceholder}
+                id="DropDownLists"
+                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
+                selectedKey={this.state.formats.list}
+                options={this.ddListOpts}
+                // this option is not available yet
+                notifyOnReselect={true} // allows re-selecting selected item to turn it off
+                onChanged={this.onChangeList}
+                onRenderOption={this.onRenderListOption}
+                onRenderTitle={this.onRenderListTitle}
+                onRenderPlaceHolder={this.onRenderListPlaceholder}
               />
             )
           }
           {
             showLink && (
               <TooltipHost content={strings.LinkTitle}
-                           id="link-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="link-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton checked={this.state.formats!.link !== undefined}
-                            onClick={this.showInsertLinkDialog}
-                            aria-describedby="link-richtextbutton"
-                            iconProps={{
-                              iconName: 'Link'
-                            }} />
+                  onClick={this.showInsertLinkDialog}
+                  aria-describedby="link-richtextbutton"
+                  iconProps={{
+                    iconName: 'Link'
+                  }} />
               </TooltipHost>
             )
           }
-           {
+          {
             showImage && (
               <TooltipHost content={strings.ImageTitle}
-                           id="image-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="image-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton checked={this.state.formats!.link !== undefined}
-                            onClick={this.showInsertImageDialog}
-                            aria-describedby="image-richtextbutton"
-                            iconProps={{
-                              iconName: 'PictureFill'
-                            }} />
+                  onClick={this.showInsertImageDialog}
+                  aria-describedby="image-richtextbutton"
+                  iconProps={{
+                    iconName: 'PictureFill'
+                  }} />
               </TooltipHost>
             )
           }
           {
             showMore && (
               <TooltipHost content={strings.MoreTitle}
-                           id="more-richtextbutton"
-                           calloutProps={{ gapSpace: 0 }}>
+                id="more-richtextbutton"
+                calloutProps={{ gapSpace: 0 }}>
                 <IconButton iconProps={{ iconName: 'More' }}
-                            aria-describedby="more-richtextbutton"
-                            onClick={this.handleShowMore} />
+                  aria-describedby="more-richtextbutton"
+                  onClick={this.handleShowMore} />
               </TooltipHost>
             )
           }
         </div>
 
         <ReactQuill ref={this.linkQuill}
-                    placeholder={placeholder}
-                    modules={modules}
-                    value={text || ''} //property value causes issues, defaultValue does not
-                    onChange={this.handleChange}
-                    onChangeSelection={this.handleChangeSelection}
-                    onFocus={this.handleOnFocus} />
+          placeholder={placeholder}
+          modules={modules}
+          value={text || ''} //property value causes issues, defaultValue does not
+          onChange={this.handleChange}
+          onChangeSelection={this.handleChangeSelection}
+          onFocus={this.handleOnFocus} />
 
         <RichTextPropertyPane ref={this.linkPropertyPane}
-                              editor={this.getEditor()}
-                              isOpen={this.state.morePaneVisible}
-                              onClose={this.handleClosePanel}
-                              onLink={this.showInsertLinkDialog}
-                              customColors={this.props.customColors}/>
+          editor={this.getEditor()}
+          isOpen={this.state.morePaneVisible}
+          onClose={this.handleClosePanel}
+          onLink={this.showInsertLinkDialog}
+          customColors={this.props.customColors} />
 
         {
           this.renderLinkDialog()
@@ -681,6 +681,7 @@ id="DropDownStyles"
     // if we're already in list mode, toggle off
     const key = item.key;
     const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'numbered' && this.state.formats.list === 'numbered') ? false : key;
+    console.log(newAlignValue);
     this.applyFormat("list", newAlignValue);
   }
 
@@ -742,7 +743,7 @@ id="DropDownStyles"
     this.setState({
       hideImageDialog: true,
       insertImageUrl: undefined,
-     });
+    });
   }
 
   /**
@@ -795,19 +796,19 @@ id="DropDownStyles"
   private handleInsertImage = () => {
     const { insertImageUrl, selectedRange } = this.state;
     try {
-        const quill = this.getEditor();
-        const cursorPosition: number = selectedRange!.index;
-        quill.insertEmbed(cursorPosition, 'image', insertImageUrl, "user");
-        this.setState({
-          insertImageUrl: undefined,
-          hideImageDialog: true,
-        });
+      const quill = this.getEditor();
+      const cursorPosition: number = selectedRange!.index;
+      quill.insertEmbed(cursorPosition, 'image', insertImageUrl, "user");
+      this.setState({
+        insertImageUrl: undefined,
+        hideImageDialog: true,
+      });
     } catch {
-        //Close the image dialog if something went wrong
-        this.setState({
-          insertImageUrl: undefined,
-          hideImageDialog: true,
-        });
+      //Close the image dialog if something went wrong
+      this.setState({
+        insertImageUrl: undefined,
+        hideImageDialog: true,
+      });
     }
   }
 
@@ -910,15 +911,33 @@ id="DropDownStyles"
   private handleChange = (value: string) => {
     const { onChange } = this.props;
 
+    const newState: any = {};
+
+    const quill = this.getEditor();
+    if (quill) {
+      const range = quill.getSelection();
+      const formats = quill.getFormat(range);
+
+      if (!isEqual(formats, this.state.formats)) {
+        console.log(`current format: ${formats.list}`);
+        newState.formats = formats;
+      }
+
+    }
+
     // do we need to pass this to a handler?
     if (onChange) {
       // yes, get the changed text from the handler
       let newText: string = onChange(value);
-      this.setState({ text: newText });
+      newState.text = newText;
     } else {
       // no, write the text to the state
-      this.setState({ text: value });
+      newState.text = value;
     }
+
+    this.setState({
+      ...newState
+    });
   }
 
   /**

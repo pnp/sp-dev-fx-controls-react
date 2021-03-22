@@ -31,7 +31,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     this.handleTreeExpandCollapse = this.handleTreeExpandCollapse.bind(this);
     this.handleOnSelect = this.handleOnSelect.bind(this);
 
-    if (props.expandToSelected) {
+    if (props.expandToSelected && props.defaultSelectedKeys) {
       props.defaultSelectedKeys.forEach(element => {
         this.pathTo(props.items, element);
       });
@@ -41,19 +41,21 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
 
   private pathTo = (array: ITreeItem[], target: string): string => {
     let result: string;
-    array.some(({ key, children = [] }) => {
-      if (key === target) {
-        this.nodesToExpand.push(key);
-        result = key;
-        return true;
-      }
-      let temp = this.pathTo(children, target);
-      if (temp) {
-        this.nodesToExpand.push(key);
-        result = key + '.' + temp;
-        return true;
-      }
-    });
+    if (array) {
+      array.some(({ key, children = [] }) => {
+        if (key === target) {
+          this.nodesToExpand.push(key);
+          result = key;
+          return true;
+        }
+        let temp = this.pathTo(children, target);
+        if (temp) {
+          this.nodesToExpand.push(key);
+          result = key + '.' + temp;
+          return true;
+        }
+      });
+    }
     return result;
   }
 

@@ -194,7 +194,8 @@ export class FileBrowserService {
             </In>
           </Or>
         </Where>
-      </Query>` : "";
+        <OrderBy><FieldRef Name="FileLeafRef" /></OrderBy>
+      </Query>` : `<Query><OrderBy><FieldRef Name="FileLeafRef" /></OrderBy></Query>`;
 
     // Add files types condiiton
     const viewXml = `<View>

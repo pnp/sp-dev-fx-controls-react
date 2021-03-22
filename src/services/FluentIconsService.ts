@@ -20,7 +20,7 @@ export class FluentIconsService {
 
   public search = (query: string, startsWith?: boolean): string[] => {
     const lowerCasedQuery = query.toLowerCase();
-    return this._iconNames.filter(name => startsWith === false ? name.toLowerCase().indexOf(lowerCasedQuery) !== -1 : name.toLowerCase().indexOf(query) === 0);
+    return this._iconNames.filter(name => !startsWith ? name.toLowerCase().indexOf(lowerCasedQuery) !== -1 : name.toLowerCase().indexOf(lowerCasedQuery) === 0);
   }
 }
 

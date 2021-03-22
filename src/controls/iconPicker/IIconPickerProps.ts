@@ -31,4 +31,9 @@ export interface IIconPickerProps {
      * irender option:  panel, dialog
      */
     renderOption?: 'panel' | 'dialog';
+    /**
+     * Specifies if we need to use `startsWith` when searching for the icons.
+     * Default: false
+     */
+    useStartsWithSearch?: boolean;
 }

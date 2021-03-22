@@ -20,7 +20,7 @@ import { WidgetSize, Dashboard } from '@pnp/spfx-controls-react/lib/Dashboard';
 
 - Use the `Dashboard` control in your code as follows:
 
-```TypeSCript
+```TypeScript
 const linkExample = { href: "#" };
 const calloutItemsExample = [
   {
@@ -86,10 +86,11 @@ The Dashboard component can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| widgets | IWidget[] | yes | Widgtets collection. |
+| widgets | IWidget[] | yes | Widgets collection. |
 | allowHidingWidget | boolean | no | Specifies if widgets can be hidden from the dashboard. |
 | onWidgetHiding | (widget: IWidget) => void | no | Handler of widget hiding event. |
 | toolbarProps | IToolbarProps | no | Dashboard toolbar props. See [Toolbar](./Toolbar). |
+| WidgetContentWrapper | React.ComponentType\<React.PropsWithChildren\<any>> | no | Optional component which wraps every Widget component. Useful for a custom error handling or styling. | 
 
 Interface `IWidget`
 
