@@ -1,10 +1,9 @@
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IListItemPickerProps {
   columnInternalName: string;
   keyColumnInternalName?: string;
-  context: WebPartContext |  ExtensionContext;
+  context: BaseComponentContext;
   listId: string;
   itemLimit: number;
   filter?: string;

@@ -1,5 +1,12 @@
 # Releases
 
+## 3.0.0
+
+### New control(s)
+
+- SharePoint Framework v1.12 support
+- FLuent UI v7 support
+
 ## 2.6.0
 
 ### New control(s)

@@ -7,13 +7,12 @@
 
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
 import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ISuggestTerm } from './ISPTermStorePickerService';
 import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { EmptyGuid } from '../common/Constants';
 
 
@@ -29,7 +28,7 @@ export default class SPTermStorePickerService {
   /**
    * Service constructor
    */
-  constructor(private props: ITaxonomyPickerProps, private context: WebPartContext | ExtensionContext) {
+  constructor(private props: ITaxonomyPickerProps, private context: BaseComponentContext) {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
@@ -327,7 +326,7 @@ export default class SPTermStorePickerService {
         const {
           termsetNameOrID,
           hideDeprecatedTags,
-          hideTagsNotAvailableForTagging,          
+          hideTagsNotAvailableForTagging,
         } = this.props;
 
         const terms = await this.getAllTermsByAnchorId(

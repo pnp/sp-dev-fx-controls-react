@@ -26,6 +26,6 @@ The SiteBreadcrumb control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext \| ExtensionContext | yes | Pass the context of your web part or application customizer extension. |
+| context | BaseComponentContext | yes | Pass the context of your web part or application customizer extension. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/SiteBreadcrumb)
