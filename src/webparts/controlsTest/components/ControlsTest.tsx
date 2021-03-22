@@ -8,7 +8,8 @@ import {
   DefaultButton,
   PrimaryButton
 } from "office-ui-fabric-react/lib/components/Button";
-import { DialogType } from "office-ui-fabric-react/lib/components/Dialog";
+import { DialogType, DialogFooter, IDialogContentProps } from "office-ui-fabric-react/lib/components/Dialog";
+import { IModalProps } from "office-ui-fabric-react/lib/Modal";
 import {
   Dropdown,
   IDropdownOption
@@ -24,6 +25,7 @@ import {
   IDocumentCardPreviewProps
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { IIconProps } from "office-ui-fabric-react/lib/Icon";
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { ImageFit } from "office-ui-fabric-react/lib/Image";
 import { PanelType } from "office-ui-fabric-react/lib/Panel";
 import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
@@ -154,6 +156,7 @@ import {
   UpdateType
 } from "../../../TaxonomyPicker";
 import { WebPartTitle } from "../../../WebPartTitle";
+import { AnimatedDialog } from "../../../AnimatedDialog";
 import styles from "./ControlsTest.module.scss";
 import {
   IControlsTestProps,
@@ -410,6 +413,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
       treeViewSelectedKeys: ['gc1', 'gc3'],
+      showAnimatedDialog: false,
+      showCustomisedAnimatedDialog: false,
+      showSuccessDialog: false,
+      showErrorDialog: false
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -763,6 +770,45 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         icon: <ShareGenericIcon />,
       },
     ];
+
+    /**
+   * Animated dialog related
+   */
+
+    const animatedDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Animated Dialog',
+      subText: 'Do you like the animated dialog?',
+    };
+
+    const animatedModalProps: IModalProps = {
+      isDarkOverlay: true
+    };
+
+    const customizedAnimatedModalProps: IModalProps = {
+      isDarkOverlay: true,
+      containerClassName: `${styles.dialogContainer}`
+    };
+
+    const customizedAnimatedDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Animated Dialog'
+    };
+
+    const successDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Good answer!'
+    };
+
+    const errorDialogContentProps: IDialogContentProps = {
+      type: DialogType.normal,
+      title: 'Uh oh!'
+    };
+
+    const timeout = (ms: number): Promise<void> => {
+      return new Promise((resolve, reject) => setTimeout(resolve, ms));
+    };
+
 
     return (
       <div className={styles.controlsTest}>
@@ -1252,6 +1298,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   columnInternalName="Title"
                   keyColumnInternalName="Id"
                   filter={"Title eq 'SPFx'"}
+                  orderBy={'Title desc'}
                   itemLimit={5}
                   context={this.props.context}
                   placeholder={'Select list items'}
@@ -1649,7 +1696,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             title: "Card 6",
             size: WidgetSize.Single,
             link: linkExample,
-          },]} />
+          }]} />
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
@@ -1664,6 +1711,86 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }
           }
         }} />
+
+        <div>
+          <h3>Animated Dialogs</h3>
+
+          {/* Multiple elements added only for demo - can be controlled with fewer elements */}
+
+          <PrimaryButton text='Show animated dialog' onClick={() => { this.setState({ showAnimatedDialog: true }); }} />
+          {/* Normal animated dialog */}
+          <AnimatedDialog
+            hidden={!this.state.showAnimatedDialog}
+            onDismiss={() => { this.setState({ showAnimatedDialog: false }); }}
+            dialogContentProps={animatedDialogContentProps}
+            modalProps={animatedModalProps}
+          >
+            <DialogFooter>
+              <PrimaryButton onClick={() => { this.setState({ showAnimatedDialog: false }); }} text="Yes" />
+              <DefaultButton onClick={() => { this.setState({ showAnimatedDialog: false }); }} text="No" />
+            </DialogFooter>
+          </AnimatedDialog>
+          <br />
+          <br />
+
+          <PrimaryButton text='Show animated dialog with icon' onClick={() => { this.setState({ showCustomisedAnimatedDialog: true }); }} />
+          {/* Animated dialog with icon */}
+          <AnimatedDialog
+            hidden={!this.state.showCustomisedAnimatedDialog}
+            onDismiss={() => { this.setState({ showCustomisedAnimatedDialog: false }); }}
+            dialogContentProps={customizedAnimatedDialogContentProps}
+            modalProps={customizedAnimatedModalProps}
+            dialogAnimationInType='fadeInDown'
+            dialogAnimationOutType='fadeOutDown'
+            iconName='UnknownSolid'
+            iconAnimationType='zoomInDown'
+            showAnimatedDialogFooter={true}
+            okButtonText="Yes"
+            cancelButtonText="No"
+            onOkClick={() => timeout(1500)}
+            onSuccess={() => {
+              this.setState({ showCustomisedAnimatedDialog: false });
+              this.setState({ showSuccessDialog: true });
+            }}
+            onError={() => {
+              this.setState({ showCustomisedAnimatedDialog: false });
+              this.setState({ showErrorDialog: true });
+            }}>
+            <div className={styles.dialogContent}>
+              <span>Do you like the animated dialog?</span>
+            </div>
+          </AnimatedDialog>
+
+          {/* Success animated dialog */}
+          <AnimatedDialog
+            hidden={!this.state.showSuccessDialog}
+            onDismiss={() => { this.setState({ showSuccessDialog: false }); }}
+            dialogContentProps={successDialogContentProps}
+            modalProps={customizedAnimatedModalProps}
+            iconName='CompletedSolid'
+          >
+            <div className={styles.dialogContent}><span>Thank you.</span></div>
+            <div className={styles.dialogFooter}>
+              <PrimaryButton onClick={() => { this.setState({ showSuccessDialog: false }); }} text="OK" >
+              </PrimaryButton>
+            </div>
+          </AnimatedDialog>
+
+          {/* Error animated dialog */}
+          <AnimatedDialog
+            hidden={!this.state.showErrorDialog}
+            onDismiss={() => { this.setState({ showErrorDialog: false }); }}
+            dialogContentProps={errorDialogContentProps}
+            modalProps={customizedAnimatedModalProps}
+            iconName='StatusErrorFull'
+          >
+            <div className={styles.dialogContent}><span>Ther was an error.</span></div>
+            <div className={styles.dialogFooter}>
+              <PrimaryButton onClick={() => { this.setState({ showErrorDialog: false }); }} text="OK" >
+              </PrimaryButton>
+            </div>
+          </AnimatedDialog>
+        </div>
 
       </div>
     );

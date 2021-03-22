@@ -1,5 +1,33 @@
 # Releases
 
+## 2.6.0
+
+### New control(s)
+
+- `AnimatedDialog`: new Animated Dialog control [#815](https://github.com/pnp/sp-dev-fx-controls-react/issues/815)
+- Jest unit tests [#834](https://github.com/pnp/sp-dev-fx-controls-react/pull/834)
+
+### Enhancements
+
+- `IconPicker`: search icons using `contains` comparison.
+- `FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)
+- `ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)
+- `Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)
+- `FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)
+
+### Fixes
+
+- `IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)
+- `Carousel`: documentation fix - broken table style [#817](https://github.com/pnp/sp-dev-fx-controls-react/pull/817)
+- `AccessibleAccordion`: documentation link is broken [#818](https://github.com/pnp/sp-dev-fx-controls-react/issues/818)
+- Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)
+- `TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)
+- `RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe).
+
 ## 2.5.0
 
 ### Enhancements

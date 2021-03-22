@@ -18,7 +18,7 @@ describe('<Placeholder />', () => {
   const dummyLabel = "Dummy label";
   const dummyOnConfigure = sinon.spy((evt) => { /* Nothing to do here */ });
 
-  before(() => {
+  beforeAll(() => {
     // Suppress icon warnings.
     setIconOptions({
       disableWarnings: true

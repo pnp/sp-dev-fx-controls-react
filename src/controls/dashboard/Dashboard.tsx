@@ -2,7 +2,8 @@ import * as React from "react";
 import {
   ProviderConsumer as FluentUIThemeConsumer,
   Box,
-  teamsTheme
+  teamsTheme,
+  ThemePrepared,
 } from "@fluentui/react-northstar";
 import {
   Widget,
@@ -22,7 +23,7 @@ import { useTelemetry } from "../../common/telemetry";
  */
 export interface IDashboardProps {
   /**
-   * Widgtets collection
+   * Widgets collection
    */
   widgets: IWidget[];
   /**
@@ -37,16 +38,25 @@ export interface IDashboardProps {
    * Dashboard toolbar props
    */
   toolbarProps?: IToolbarProps;
+  /**
+   * Optional component which wraps every Widget component. Useful for a custom error handling or styling.
+   */
+  WidgetContentWrapper?: React.ComponentType<React.PropsWithChildren<any>>;
 }
 
 export function Dashboard({
   widgets,
   allowHidingWidget,
   onWidgetHiding,
-  toolbarProps }: IDashboardProps) {
+  toolbarProps,
+  WidgetContentWrapper: WidgetWrapperComponent,
+}: IDashboardProps) {
   const [stateWidgets, setWidgets] = React.useState(widgets);
+  const widgetRenderer = WidgetWrapperComponent
+    ? renderWidgetWithWrappedContent
+    : renderWidget;
 
-  useTelemetry('ReactDashboard', {});
+  useTelemetry("ReactDashboard", {});
 
   React.useEffect(() => {
     setWidgets(widgets);
@@ -57,42 +67,53 @@ export function Dashboard({
         if (!globalTheme || globalTheme.fontFaces.length == 0) {
           globalTheme = teamsTheme;
         }
-        return <DashboardTheme globalTheme={globalTheme}>
-          {toolbarProps && <Toolbar {...toolbarProps} />}
-          <Box className={styles.dashboardBox} >
-            {stateWidgets &&
-              stateWidgets.map(
-                (
-                  widget: IWidget,
-                  key: number
-                ) => (
-                    <Widget key={key} widget={widget}>
-                      <WidgetTitle
-                        widget={widget}
-                        allowHidingWidget={allowHidingWidget}
-                        onWidgetHiding={(hidingWidget: IWidget) => {
-                          if (onWidgetHiding) {
-                            onWidgetHiding(hidingWidget);
-                          }
-                          if (!hidingWidget.controlOptions) {
-                            hidingWidget.controlOptions = {};
-                          }
-                          hidingWidget.controlOptions.isHidden = true;
-                          setWidgets([...widgets]);
-                        }}
-                        globalTheme={globalTheme}
-                      />
-                      <WidgetBody
-                        widget={widget}
-                        siteVariables={globalTheme.siteVariables}
-                      />
-                      {widget.link && <WidgetFooter widget={widget} />}
-                    </Widget>
-                  )
-              )}
-          </Box>
-        </DashboardTheme>;
+        return (
+          <DashboardTheme globalTheme={globalTheme}>
+            {toolbarProps && <Toolbar {...toolbarProps} />}
+            <Box className={styles.dashboardBox}>
+              {stateWidgets && stateWidgets.map(widgetRenderer(globalTheme))}
+            </Box>
+          </DashboardTheme>
+        );
       }}
     />
   );
+
+  function renderWidgetWithWrappedContent(
+    globalTheme: ThemePrepared<any>
+  ): (value?: IWidget, index?: number) => JSX.Element {
+    return (widget: IWidget, key: number) => {
+      return (
+        <WidgetWrapperComponent>
+          {renderWidget(globalTheme)(widget, key)}
+        </WidgetWrapperComponent>
+      );
+    };
+  }
+
+  function renderWidget(
+    globalTheme: ThemePrepared<any>
+  ): (value?: IWidget, index?: number) => JSX.Element {
+    return (widget: IWidget, key: number) => (
+      <Widget key={key} widget={widget}>
+        <WidgetTitle
+          widget={widget}
+          allowHidingWidget={allowHidingWidget}
+          onWidgetHiding={(hidingWidget: IWidget) => {
+            if (onWidgetHiding) {
+              onWidgetHiding(hidingWidget);
+            }
+            if (!hidingWidget.controlOptions) {
+              hidingWidget.controlOptions = {};
+            }
+            hidingWidget.controlOptions.isHidden = true;
+            setWidgets([...widgets]);
+          }}
+          globalTheme={globalTheme}
+        />
+        <WidgetBody widget={widget} siteVariables={globalTheme.siteVariables} />
+        {widget.link && <WidgetFooter widget={widget} />}
+      </Widget>
+    );
+  }
 }

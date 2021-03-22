@@ -31,4 +31,8 @@ export interface IControlsTestState {
   comboBoxListItemPickerListId: string;
   filePickerResult?: IFilePickerResult;
   treeViewSelectedKeys?: string[];
+  showAnimatedDialog?: boolean;
+  showCustomisedAnimatedDialog?: boolean;
+  showSuccessDialog?: boolean;
+  showErrorDialog?: boolean;
 }

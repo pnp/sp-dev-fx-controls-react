@@ -1,3 +1,5 @@
+$themePrimary: '[theme:themePrimary, default:#0078d7]';
+
 .controlsTest {
   .container {
     max-width: 700px;
@@ -79,5 +81,33 @@
 
   .carouselImageContent {
     height: 400px;
+  }
+}
+
+.dialogContainer {
+  border-top: 4px;
+  border-top-color: $themePrimary;
+  border-top-style: solid;
+  min-width: 400px;
+
+  .dialogContent {
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 1.125em;
+  }
+
+  .dialogFooter {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25em;
+
+    button {
+      min-width: 100px;
+      margin: 0px 10px;
+    }
+
+    .loader{
+      margin-top: 15px;
+    }
   }
 }

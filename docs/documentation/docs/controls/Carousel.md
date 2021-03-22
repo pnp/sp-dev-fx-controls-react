@@ -167,6 +167,7 @@ enum `CarouselIndicatorsDisplay`
 
 Provides options for carousel indicators display mode.
 | Value | Description |
+| ---- | ---- |
 | overlap | Indicators are displayed on top of the carousel content |
 | block | Reserves space for indicators |
 

@@ -6,7 +6,7 @@ import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { ConstrainMode, IColumn, IDetailsList, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
@@ -74,7 +74,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Initialize state
     this.state = {
-      items: [],
       filterValue: this.props.defaultFilter,
       dragStatus: false
     };
@@ -260,14 +259,16 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     // Add the columns to the temporary state
     tempState.columns = columns;
 
-    // Add grouping to the list view
-    const grouping = this._getGroups(tempState.items, groupByFields);
-    if (grouping.groups.length > 0) {
-      tempState.groups = grouping.groups;
-      // Update the items
-      tempState.items = grouping.items;
-    } else {
-      tempState.groups = null;
+    if (tempState.items) {
+      // Add grouping to the list view
+      const grouping = this._getGroups(tempState.items, groupByFields);
+      if (grouping.groups.length > 0) {
+        tempState.groups = grouping.groups;
+        // Update the items
+        tempState.items = grouping.items;
+      } else {
+        tempState.groups = null;
+      }
     }
 
     // Store the original items and groups objects
@@ -626,13 +627,18 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (!props) {
       return null;
     }
-    return (
-      <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
-        {defaultRender!({
-          ...props,
-        })}
-      </Sticky>
-    );
+
+    if (this.props.stickyHeader) {
+      return (
+        <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
+          {defaultRender!({
+            ...props,
+          })}
+        </Sticky>
+      );
+    }
+
+    return defaultRender!(props);
   }
   /**
    * Default React component render method
@@ -672,7 +678,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
               <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={this._updateFilterValue} value={filterValue} />
             </SearchBoxWrapper>
           }
-          <DetailsList
+          {!!items && <DetailsList
             key="ListViewControl"
             items={items}
             columns={columns}
@@ -682,10 +688,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             selection={this._selection}
             layoutMode={DetailsListLayoutMode.justified}
             compact={compact}
-            setKey="ListViewControl"
+            setKey='ListViewControl'
             groupProps={groupProps}
             onRenderDetailsHeader={this._onRenderDetailsHeader}
-          />
+            componentRef={ref => {
+              if (ref) {
+                ref.forceUpdate();
+              }
+            }}
+          />}
         </div>
       </ListViewWrapper>
     );
