@@ -2,7 +2,7 @@
   "id": "45165954-80f9-44c1-9967-cd38ae92a33b",
   "alias": "ControlsTestWebPart",
   "componentType": "WebPart",
-  "version": "2.6.0",
+  "version": "3.0.0",
   "manifestVersion": 2,
   "requiresCustomScript": false,
   "supportedHosts": [
@@ -34,7 +34,7 @@
     "scriptResources": {
       "controls-test-web-part": {
         "type": "path",
-        "path": "controls-test-web-part_1463a90e2958e0caa2ac.js"
+        "path": "controls-test-web-part_f0173481e02f1520b08e.js"
       },
       "tslib": {
         "type": "component",
