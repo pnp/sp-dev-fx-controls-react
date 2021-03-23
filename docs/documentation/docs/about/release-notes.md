@@ -2,10 +2,10 @@
 
 ## 3.0.0
 
-### New control(s)
+### Enhancements
 
-- SharePoint Framework v1.12 support
-- FLuent UI v7 support
+- SharePoint Framework v1.12 support (breaking change)
+- Fluent UI v7 support
 
 ## 2.6.0
 
