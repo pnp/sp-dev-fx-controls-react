@@ -24,8 +24,7 @@
           "`FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)",
           "`ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)",
           "`Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)",
-          "`FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)",
-          "`FolderPicker`: Correct FolderPicker link alignment"
+          "`FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)"
         ],
         "fixes": [
           "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)",
@@ -33,7 +32,8 @@
           "`AccessibleAccordion`: documentation link is broken [#818](https://github.com/pnp/sp-dev-fx-controls-react/issues/818)",
           "Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)",
           "`TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)",
-          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)"
+          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)",
+          "`FolderPicker`: Correct FolderPicker link alignment"
         ]
       },
       "contributions": [
