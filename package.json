@@ -76,6 +76,7 @@
     "request-promise": "4.2.5",
     "sonarqube-scanner": "2.1.2",
     "ts-jest": "^25.5.1",
+    "typescript": "3.7.7",
     "webpack-bundle-analyzer": "^4.1.0"
   },
   "repository": {
