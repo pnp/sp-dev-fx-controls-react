@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/sp-dev-fx-controls-react
   docker:
-    - image: circleci/node:10.22.0
+    - image: circleci/node:12.15.0
 
 version: 2
 jobs:
@@ -29,12 +29,6 @@ jobs:
       - run:
           name: build
           command: npm run build
-      - run:
-          name: sonarcloud:config
-          command: npm run sonarcloud:config $SONARCLOUD_TOKEN $CIRCLE_BRANCH
-      - run:
-          name: sonarcloud:start
-          command: npm run sonarcloud:start
       - persist_to_workspace:
           root: .
           paths: .

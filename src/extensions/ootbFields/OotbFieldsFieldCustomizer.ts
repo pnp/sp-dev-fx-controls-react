@@ -11,7 +11,6 @@ import {
 import * as strings from 'ControlStrings';
 import OotbFields, { IOotbFieldsProps } from './components/Customizer/OotbFields';
 import { SPHelper } from '../../common/utilities/SPHelper';
-import { Promise } from 'es6-promise';
 import { GeneralHelper } from '../../common/utilities/GeneralHelper';
 
 /**

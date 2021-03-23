@@ -1,18 +1,17 @@
-import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
-import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export class FileBrowserService {
   protected itemsToDownloadCount: number;
-  protected context: ExtensionContext | WebPartContext;
+  protected context: BaseComponentContext;
 
   protected driveAccessToken: string;
   protected mediaBaseUrl: string;
   protected callerStack: string;
 
-  constructor(context: ExtensionContext | WebPartContext, itemsToDownloadCount: number = 100) {
+  constructor(context: BaseComponentContext, itemsToDownloadCount: number = 100) {
     this.context = context;
 
     this.itemsToDownloadCount = itemsToDownloadCount;

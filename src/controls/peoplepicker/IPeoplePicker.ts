@@ -1,5 +1,4 @@
-import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
@@ -12,7 +11,7 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: WebPartContext | ExtensionContext;
+  context: BaseComponentContext;
   /**
    * Text of the Control
   */

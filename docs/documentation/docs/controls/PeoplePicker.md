@@ -55,7 +55,7 @@ The People picker control can be configured with the following properties:
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| context | WebPartContext | yes | Context of the current web part. | |
+| context | BaseComponentContext | yes | Context of the current web part. | |
 | titleText | string | no | Text to be displayed on the control | |
 | groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_ |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |

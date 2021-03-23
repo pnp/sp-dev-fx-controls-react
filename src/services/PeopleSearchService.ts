@@ -1,7 +1,6 @@
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
 import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
@@ -17,7 +16,7 @@ export default class SPPeopleSearchService {
   /**
    * Service constructor
    */
-  constructor(private context: WebPartContext | ExtensionContext) {
+  constructor(private context: BaseComponentContext) {
     this.cachedPersonas = {};
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
