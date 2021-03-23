@@ -1,10 +1,9 @@
 import { IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { ExtensionContext } from '@microsoft/sp-extension-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface ISiteBreadcrumbProps {
 
-  context: WebPartContext | ExtensionContext;
+  context: BaseComponentContext;
 }
 
 export interface ISiteBreadcrumbState {

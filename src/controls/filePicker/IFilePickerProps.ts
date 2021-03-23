@@ -1,7 +1,6 @@
 import { IIconProps } from "office-ui-fabric-react";
 
-import { ExtensionContext } from "@microsoft/sp-extension-base";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 import { IFilePickerResult } from "./FilePicker.types";
 
@@ -38,7 +37,7 @@ export interface IFilePickerProps {
   /**
    * Current context.
    */
-  context: ExtensionContext |  WebPartContext;
+  context: BaseComponentContext;
 
   /**
    * ClassName to be applied to the opener button element.
