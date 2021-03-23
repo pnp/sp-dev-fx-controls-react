@@ -24,7 +24,8 @@
           "`FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)",
           "`ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)",
           "`Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)",
-          "`FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)"
+          "`FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)",
+          "`FolderPicker`: Correct FolderPicker link alignment"
         ],
         "fixes": [
           "`IconPicker`: Fix case sensitive fluent icon search service [#814](https://github.com/pnp/sp-dev-fx-controls-react/pull/814)",
