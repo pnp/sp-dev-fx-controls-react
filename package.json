@@ -15,7 +15,8 @@
     "sonarcloud:config": "node ./scripts/sonarcloud.js",
     "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
     "localization": "node scripts/execute-translation.js",
-    "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser"
+    "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@fluentui/react-northstar": "0.51.3",
@@ -42,7 +43,6 @@
     "tslib": "1.10.0"
   },
   "devDependencies": {
-    "@microsoft/rush-stack-compiler-3.3": "0.3.5",
     "@microsoft/rush-stack-compiler-3.7": "0.2.3",
     "@microsoft/sp-build-web": "1.12.0",
     "@microsoft/sp-module-interfaces": "1.12.0",
@@ -66,7 +66,7 @@
     "enzyme": "^2.9.1",
     "enzyme-adapter-react-16": "^1.15.6",
     "gulp": "4.0.2",
-    "husky": "4.2.5",
+    "husky": "5.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
     "jest-cli": "^25.5.4",
