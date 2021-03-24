@@ -9,33 +9,30 @@ import {
   ISuggestionItemProps,
 } from "office-ui-fabric-react/lib/Pickers";
 import { useTeams } from "../../hooks";
-import { ITeam } from "./../../common/model/ITeam";
-import { ISelectTeamPickerProps } from "./ISelectTeamPickerProps";
-import {
-  IconButton,
-  Stack,
-  Text,
-  ImageIcon,
-  Label,
-} from "office-ui-fabric-react";
-import { find, pullAllBy } from "lodash";
-import { ISelectTeamPickerState } from "./ISelectTeamPickerState";
+import { ITeam } from "../../common/model/ITeam";
+import { ITeamPickerProps } from "./ITeamPickerProps";
+import { ITeamPickerState } from "./ITeamPickerState";
 import { TEAMS_SVG_LOGO } from "./constants";
-import { useSelectTeamPickerStyles } from './SelectTeamPickerStyles';
-
+import { useTeamPickerStyles } from './TeamPickerStyles';
+import { IconButton } from "office-ui-fabric-react/lib/Button";
+import { Text } from "office-ui-fabric-react/lib/Text";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Label } from "office-ui-fabric-react/lib/Label";
 const theme = window.__themeState__.theme;
-
+import pullAllBy from "lodash/pullAllBy";
+import find from "lodash/find";
+import { ImageIcon } from "office-ui-fabric-react/lib/Icon";
 const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: "Suggested Teams",
   noResultsFoundText: "No Teams found",
 };
-const initialState: ISelectTeamPickerState = {
+const initialState: ITeamPickerState = {
   savedSelectedTeams: [],
 };
 const getTextFromItem = (item: ITag) => item.name;
 // Reducer to update state
 const reducer = (
-  state: ISelectTeamPickerState,
+  state: ITeamPickerState,
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
@@ -47,15 +44,15 @@ const reducer = (
 };
 
 // select Team control
-export const SelectTeamPicker : React.FunctionComponent<ISelectTeamPickerProps> = (
-  props: ISelectTeamPickerProps
+export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
+  props: ITeamPickerProps
 ) => {
   // initialize reducer
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const picker = React.useRef<IBasePicker<ITag>>(null);
   const { serviceScope } = props.appcontext;
   const { getMyTeams } = useTeams(serviceScope);
-  const { pickerStylesMulti, pickerStylesSingle , renderItemStylesMulti, renderItemStylesSingle,renderIconButtonRemoveStyles} = useSelectTeamPickerStyles(theme);
+  const { pickerStylesMulti, pickerStylesSingle , renderItemStylesMulti, renderItemStylesSingle,renderIconButtonRemoveStyles} = useTeamPickerStyles(theme);
   const { onSelectedTeams, selectedTeams  , itemLimit, label, styles } = props;
 
   const useFilterSuggestedTeams = React.useCallback(

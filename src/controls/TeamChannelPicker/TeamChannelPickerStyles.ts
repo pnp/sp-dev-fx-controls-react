@@ -1,24 +1,23 @@
-import {
-  IBasePickerStyles,
-  IButtonStyles,
-  IStackStyles,
-  ITextStyles,
-  mergeStyles,
-  mergeStyleSets,
-} from "office-ui-fabric-react";
+import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
 
 import { Theme } from "spfx-uifabric-themes";
-
-export const useSelectTeamChannelPickerStyles = (theme: Theme | undefined) => {
+import { IButtonStyles } from "office-ui-fabric-react/lib/Button";
+import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
+import { ITextStyles } from "office-ui-fabric-react/lib/Text";
+import {
+  mergeStyles,
+  mergeStyleSets,
+} from "office-ui-fabric-react/lib/Styling";
+export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
   const textHeaderStyles: Partial<ITextStyles> = {
     root: { color: theme?.themePrimary },
   };
 
-  const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
-    root:{
+  const renderIconButtonRemoveStyles: Partial<IButtonStyles> = {
+    root: {
       height: 26,
-      lineHeight: 26
-    }
+      lineHeight: 26,
+    },
   };
 
   const renderItemStylesMulti: Partial<IStackStyles> = {
@@ -60,9 +59,7 @@ export const useSelectTeamChannelPickerStyles = (theme: Theme | undefined) => {
       width: "100%",
       backgroundColor: theme.white,
     },
-    itemsWrapper: {
-
-    },
+    itemsWrapper: {},
     text: {
       borderStyle: "solid",
       width: "100%",
@@ -191,16 +188,14 @@ export const useSelectTeamChannelPickerStyles = (theme: Theme | undefined) => {
       fontWeight: 500,
       color: theme?.themePrimary,
     },
-    sugestionItemStyles:{
-      ':after':{
+    sugestionItemStyles: {
+      ":after": {
         borderWidth: 1,
         borderColor: theme?.themePrimary,
-        backgroundColor:theme?.neutralQuaternaryAlt,
-      }
-    }
+        backgroundColor: theme?.neutralQuaternaryAlt,
+      },
+    },
   });
-
-
 
   return {
     renderIconButtonRemoveStyles,

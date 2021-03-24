@@ -164,8 +164,8 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
-import { SelectTeamPicker } from "../../../SelectTeamPicker";
-import { SelectTeamChannelPicker } from "../../../controls/SelectTeamChannelPicker";
+import { TeamPicker } from "../../../TeamPicker";
+import { TeamChannelPicker } from "../../../TeamChannelPicker";
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -829,7 +829,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           styles={{ root: { margin: "10px 10px 100px 10px" } }}
           tokens={{ childrenGap:10 }}
         >
-          <SelectTeamPicker
+          <TeamPicker
             label="Select Team"
             selectedTeams={this.state.selectedTeam}
             appcontext={this.props.context}
@@ -842,7 +842,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
           {this.state?.selectedTeam && this.state?.selectedTeam.length > 0 && (
             <>
-              <SelectTeamChannelPicker
+              <TeamChannelPicker
                 label="Select Team Channel"
                 selectedChannels={this.state.selectedTeamChannels}
                 teamId={this.state.selectedTeam[0].key}

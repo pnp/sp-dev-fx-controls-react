@@ -1,14 +1,14 @@
-# SelectTeamChannelPicker control
+# TeamChannelPicker control
 
 This control allows you to select one or multiple Team Channel user has permissions.
 
 Here is an example of the control:
 
-![SelectTeamChannelPicker](../assets/SelectTeamPicker.gif)
+![TeamChannelPicker](../assets/SelectTeamPicker.gif)
 
 `SelectTeamChannelPicker` single selection mode:
 
-![SelectTeamselection](../assets/SelectTeamChannelPicker.png)
+![Teamselection](../assets/SelectTeamChannelPicker.png)
 
 
 ## How to use this control in your solutions
@@ -17,13 +17,13 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { SelectTeamChannelPicker } from "@pnp/spfx-controls-react/lib/SelectTeamChannelPicker";
+import { TeamChannelPicker } from "@pnp/spfx-controls-react/lib/TeamChannelPicker";
 ```
 
-- Use the `SelectTeamChannelPicker` control in your code as follows:
+- Use the `TeamChannelPicker` control in your code as follows:
 
 ```TypeScript
-<SelectTeamChannelPicker    label="Select Team channel"
+<TeamChannelPicker    label="Select Team channel"
                             teamId={teamId}
                             selectedChannels={selectedTeamChannels}
                             appcontext={webpartContext}
@@ -42,7 +42,7 @@ const _onSelectedTeamChannels ((tagList: ITag[]) => {
 ## Implementation
 
 
-The `SelectTeamPicker` control can be configured with the following properties:
+The `SelectTeamChannelPicker` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
@@ -55,5 +55,9 @@ The `SelectTeamPicker` control can be configured with the following properties:
 | onSelectedChannels: | (tagsList:ITag[]) => void; | yes | callBack with channels Selected |
 
 
+## MSGraph Permissions required
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListPicker)
+This control required the flowing scopes :
+
+at least : Team.ReadBasic.All, Channel.ReadBasic.All,
+ 

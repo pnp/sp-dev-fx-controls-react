@@ -9,7 +9,7 @@ import {
 
 import { Theme } from "spfx-uifabric-themes";
 
-export const useSelectTeamPickerStyles = (theme: Theme | undefined) => {
+export const useTeamPickerStyles = (theme: Theme | undefined) => {
   const textHeaderStyles: Partial<ITextStyles> = {
     root: { color: theme?.themePrimary },
   };

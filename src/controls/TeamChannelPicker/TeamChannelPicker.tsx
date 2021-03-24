@@ -6,32 +6,29 @@ import {
   IBasePickerSuggestionsProps,
   IPickerItemProps,
   ISuggestionItemProps,
-  ISuggestionsItem,
 } from "office-ui-fabric-react/lib/Pickers";
 import { useTeams } from "../../hooks";
-import { ITeamChannel } from "./../../common/model/ITeamChannel";
-import { ISelectTeamChannelPickerProps } from "./ISelectTeamChannelPickerProps";
-import {
-  IconButton,
-  Stack,
-  Text,
-  FontIcon,
-  Label,
-} from "office-ui-fabric-react";
-import { find, pullAllBy } from "lodash";
-import { ISelectTeamChannelPickerState } from "./ISelectTeamChannelPickerState";
-import { useSelectTeamChannelPickerStyles } from "./SelectTeamChannelPickerStyles";
+import { ITeamChannel } from "../../common/model/ITeamChannel";
+import { ITeamChannelPickerProps } from "./ITeamChannelPickerProps";
+import { IconButton } from "office-ui-fabric-react/lib/Button";
+import { Text } from "office-ui-fabric-react/lib/Text";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { FontIcon } from "office-ui-fabric-react/lib/Icon";
+import { Label } from "office-ui-fabric-react/lib/Label";
+import { ITeamChannelPickerState } from "./ITeamChannelPickerState";
+import { useTeamChannelPickerStyles } from "./TeamChannelPickerStyles";
 import { EMembershipType } from "./EMembersipType";
-
+import pullAllBy from "lodash/pullAllBy";
+import find from "lodash/find";
 const theme = window.__themeState__.theme;
 
-const initialState: ISelectTeamChannelPickerState = {
+const initialState: ITeamChannelPickerState = {
   selectedTeamsChannels: [],
 };
 const getTextFromItem = (item: ITag) => item.name.split(",")[0];
 // Reducer to update state
 const reducer = (
-  state: ISelectTeamChannelPickerState,
+  state: ITeamChannelPickerState,
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
@@ -43,8 +40,8 @@ const reducer = (
 };
 
 // select Team control
-export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannelPickerProps> = (
-  props: ISelectTeamChannelPickerProps
+export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps> = (
+  props: ITeamChannelPickerProps
 ) => {
   // initialize reducer
   const [state, dispatch] = React.useReducer(reducer, initialState);
@@ -57,7 +54,7 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
     pickerStylesMulti,
     pickerStylesSingle,
     renderIconButtonRemoveStyles,
-  } = useSelectTeamChannelPickerStyles(theme);
+  } = useTeamChannelPickerStyles(theme);
   const {
     onSelectedChannels,
     selectedChannels,
@@ -82,7 +79,6 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
           props.teamId.toString(),
           filterText
         );
-
         if (teamsChannels?.length) {
           for (const teamChannel of teamsChannels) {
             const checkExists = find(teamsChannelList, { key: teamChannel.id });
@@ -100,7 +96,7 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
       }
       return tags;
     },
-    []
+    [props.teamId]
   );
 
   React.useEffect(() => {
@@ -109,7 +105,6 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
       payload: selectedChannels,
     });
   }, [props.teamId]);
-
 
   const _renderChannelInformation = React.useCallback(
     (propsTag: ITag): JSX.Element[] => {
@@ -162,9 +157,8 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
         </Stack>
       );
     },
-    []
+    [theme]
   );
-
 
   // Default RenderItem
   const _onRenderItem = React.useCallback(
@@ -213,25 +207,21 @@ export const SelectTeamChannelPicker: React.FunctionComponent<ISelectTeamChannel
         return null;
       }
     },
-    [state.selectedTeamsChannels]
+    [state.selectedTeamsChannels, props.onSelectedChannels]
   );
-
-
 
   // Render  control
   return (
-    <div style={{width: '100%'}}>
-   { props.label &&  <Label>{props.label}</Label>}
+    <div style={{ width: "100%" }}>
+      {props.label && <Label>{props.label}</Label>}
       <TagPicker
         styles={
           styles ??
           (itemLimit && itemLimit > 1 ? pickerStylesMulti : pickerStylesSingle)
         }
         selectedItems={state.selectedTeamsChannels}
-        onRenderItem={ _onRenderItem}
-        onRenderSuggestionsItem={
-       _onRenderSuggestionsItem
-        }
+        onRenderItem={_onRenderItem}
+        onRenderSuggestionsItem={_onRenderSuggestionsItem}
         ref={picker}
         onResolveSuggestions={useFilterSuggestedTeamsChannels}
         getTextFromItem={getTextFromItem}

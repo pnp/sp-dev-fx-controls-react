@@ -1,14 +1,14 @@
-# SelectTeamPicker control
+# TeamPicker control
 
 This control allows you to select one or multiple Team user has permissions.
 
 Here is an example of the control:
 
-![SelectTeamPicker](../assets/SelectTeamPicker.gif)
+![TeamPicker](../assets/SelectTeamPicker.gif)
 
 `SelectTeamPicker` single selection mode:
 
-![SelectTeamselection](../assets/SelectTeamPicker_select.png)
+![Teamselection](../assets/SelectTeamPicker_select.png)
 
 
 ## How to use this control in your solutions
@@ -17,13 +17,13 @@ Here is an example of the control:
 - Import the control into your component:
 
 ```TypeScript
-import { SelectTeamPicker } from "@pnp/spfx-controls-react/lib/SelectTeamPicker";
+import { SelectTeamPicker } from "@pnp/spfx-controls-react/lib/TeamPicker";
 ```
 
 - Use the `SelectTeamPicker` control in your code as follows:
 
 ```TypeScript
-<SelectTeamPicker   label="Select Team"
+<TeamPicker   label="Select Team"
                     selectedTeams={selectedTeams}
                     appcontext={webpartContext}
                     itemLimit={1}
@@ -41,7 +41,7 @@ const _onSelectedTeams ((tagList: ITag[]) => {
 ## Implementation
 
 
-The `SelectTeamPicker` control can be configured with the following properties:
+The `TeamPicker` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
@@ -53,5 +53,8 @@ The `SelectTeamPicker` control can be configured with the following properties:
 | onSelectedTeams: | (tagsList:ITag[]) => void; | yes | callBack with teams Selected |
 
 
+ ## MSGraph Permissions required
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListPicker)
+This control required the flowing scopes :
+
+at least : Team.ReadBasic.All, Channel.ReadBasic.All,

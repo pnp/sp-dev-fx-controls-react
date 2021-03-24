@@ -1,5 +1,5 @@
 import { ITag } from "office-ui-fabric-react";
 
-export interface ISelectTeamPickerState {
+export interface ITeamPickerState {
   savedSelectedTeams:ITag[];
 }
