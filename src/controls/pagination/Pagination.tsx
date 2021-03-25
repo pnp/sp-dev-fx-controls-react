@@ -3,7 +3,7 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import styles from "./Pagination.module.scss";
 import { isEqual } from "lodash";
 import * as telemetry from '../../common/telemetry';
-import { Stack } from "office-ui-fabric-react";
+import { Stack } from "office-ui-fabric-react/lib/stack";
 
 export interface IPaginationProps {
     /**

@@ -8,12 +8,14 @@ import {
   IPickerItemProps,
   ISuggestionItemProps,
 } from "office-ui-fabric-react/lib/Pickers";
+
+
 import { useTeams } from "../../hooks";
 import { ITeam } from "../../common/model/ITeam";
 import { ITeamPickerProps } from "./ITeamPickerProps";
 import { ITeamPickerState } from "./ITeamPickerState";
 import { TEAMS_SVG_LOGO } from "./constants";
-import { useTeamPickerStyles } from './TeamPickerStyles';
+import { useTeamPickerStyles } from "./TeamPickerStyles";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
 import { Text } from "office-ui-fabric-react/lib/Text";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
@@ -44,7 +46,7 @@ const reducer = (
 };
 
 // select Team control
-export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
+export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
   props: ITeamPickerProps
 ) => {
   // initialize reducer
@@ -52,23 +54,28 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
   const picker = React.useRef<IBasePicker<ITag>>(null);
   const { serviceScope } = props.appcontext;
   const { getMyTeams } = useTeams(serviceScope);
-  const { pickerStylesMulti, pickerStylesSingle , renderItemStylesMulti, renderItemStylesSingle,renderIconButtonRemoveStyles} = useTeamPickerStyles(theme);
-  const { onSelectedTeams, selectedTeams  , itemLimit, label, styles } = props;
+  const {
+    pickerStylesMulti,
+    pickerStylesSingle,
+    renderItemStylesMulti,
+    renderItemStylesSingle,
+    renderIconButtonRemoveStyles,
+  } = useTeamPickerStyles(theme);
+  const { onSelectedTeams, selectedTeams, itemLimit, label, styles } = props;
 
   const useFilterSuggestedTeams = React.useCallback(
     async (filterText: string, teamsList: ITag[]): Promise<ITag[]> => {
       let tags: ITag[] = [];
       try {
-      const teams: ITeam[] = await getMyTeams(filterText);
-
-      if (teams?.length) {
-        for (const team of teams) {
-          const checkExists = find(teamsList,{"key": team.id});
-          if (checkExists) continue;
-          tags.push({ key: team.id, name: team.displayName });
+        const teams: ITeam[] = await getMyTeams(filterText);
+        if (teams?.length) {
+          for (const team of teams) {
+            const checkExists = find(teamsList, { key: team.id });
+            if (checkExists) continue;
+            tags.push({ key: team.id, name: team.displayName });
+          }
         }
-      }
-      return tags;
+        return tags;
       } catch (error) {
         console.log(error);
         return tags;
@@ -77,15 +84,16 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
     []
   );
 
-    React.useEffect(()=>{
-      dispatch({
-        type: "UPDATE_SELECTEITEM",
-        payload:  selectedTeams
-      });
-    },[props]);
+  React.useEffect(() => {
+    dispatch({
+      type: "UPDATE_SELECTEITEM",
+      payload: selectedTeams,
+    });
+  }, [props]);
 
-    const _onRenderItem = React.useCallback((itemProps:IPickerItemProps<ITag>) => {
-      const { savedSelectedTeams  } = state;
+  const _onRenderItem = React.useCallback(
+    (itemProps: IPickerItemProps<ITag>) => {
+      const { savedSelectedTeams } = state;
       if (itemProps.item) {
         return (
           <Stack
@@ -93,12 +101,15 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
             horizontalAlign="start"
             verticalAlign="center"
             tokens={{ childrenGap: 7 }}
-            styles={ itemLimit && itemLimit > 1 ?   renderItemStylesMulti : renderItemStylesSingle}
+            styles={
+              itemLimit && itemLimit > 1
+                ? renderItemStylesMulti
+                : renderItemStylesSingle
+            }
           >
             <ImageIcon
               imageProps={{
-                src:
-                 TEAMS_SVG_LOGO,
+                src: TEAMS_SVG_LOGO,
                 width: 18,
                 height: 18,
               }}
@@ -107,7 +118,7 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
             <Text variant="medium">{itemProps.item.name}</Text>
             <IconButton
               styles={renderIconButtonRemoveStyles}
-              iconProps={{ iconName: "Cancel" , }}
+              iconProps={{ iconName: "Cancel" }}
               title="remove"
               onClick={(ev) => {
                 const _newSelectedTeams = pullAllBy(savedSelectedTeams, [
@@ -125,10 +136,13 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
       } else {
         return null;
       }
-    },[selectedTeams]);
+    },
+    [selectedTeams, state.savedSelectedTeams]
+  );
 
-    // reder sugestion Items
-    const _onRenderSuggestionsItem = React.useCallback((propsTag:ITag, itemProps:ISuggestionItemProps<ITag>) => {
+  // reder sugestion Items
+  const _onRenderSuggestionsItem = React.useCallback(
+    (propsTag: ITag, itemProps: ISuggestionItemProps<ITag>) => {
       return (
         <Stack
           horizontal
@@ -138,8 +152,7 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
         >
           <ImageIcon
             imageProps={{
-              src:
-              TEAMS_SVG_LOGO,
+              src: TEAMS_SVG_LOGO,
               width: 18,
               height: 18,
             }}
@@ -147,18 +160,22 @@ export const TeamPicker : React.FunctionComponent<ITeamPickerProps> = (
           <Text variant="smallPlus">{propsTag.name}</Text>
         </Stack>
       );
-    },[]);
-
+    },
+    []
+  );
 
   // Render  control
   return (
-    <div style={{width: '100%'}}>
-    { props.label &&  <Label>{props.label}</Label>}
+    <div style={{ width: "100%" }}>
+      {props.label && <Label>{props.label}</Label>}
       <TagPicker
-        styles={ styles ??  (itemLimit && itemLimit> 1 ?  pickerStylesMulti : pickerStylesSingle) }
+        styles={
+          styles ??
+          (itemLimit && itemLimit > 1 ? pickerStylesMulti : pickerStylesSingle)
+        }
         selectedItems={state.savedSelectedTeams}
         onRenderItem={_onRenderItem}
-        onRenderSuggestionsItem={ _onRenderSuggestionsItem}
+        onRenderSuggestionsItem={_onRenderSuggestionsItem}
         onResolveSuggestions={useFilterSuggestedTeams}
         getTextFromItem={getTextFromItem}
         pickerSuggestionsProps={pickerSuggestionsProps}

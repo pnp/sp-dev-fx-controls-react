@@ -1,13 +1,13 @@
+
+import { IButtonStyles } from "office-ui-fabric-react/lib/Button";
+import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
+import { ITextStyles } from "office-ui-fabric-react/lib/Text";
 import {
-  IButtonStyles,
-  IStackStyles,
-  ITextStyles,
   mergeStyles,
   mergeStyleSets,
-  IBasePickerStyles,
-} from "office-ui-fabric-react";
-
+} from "office-ui-fabric-react/lib/Styling";
 import { Theme } from "spfx-uifabric-themes";
+import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
 
 export const useTeamPickerStyles = (theme: Theme | undefined) => {
   const textHeaderStyles: Partial<ITextStyles> = {
