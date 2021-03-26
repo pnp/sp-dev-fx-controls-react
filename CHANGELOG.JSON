@@ -20,7 +20,8 @@
           "`AccessibleAccordion`: documentation link is broken [#818](https://github.com/pnp/sp-dev-fx-controls-react/issues/818)",
           "Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)",
           "`TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)",
-          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)"
+          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)",
+          "`TreeView`: Don't expand selected nodes when using expandToSelected [#850](https://github.com/pnp/sp-dev-fx-controls-react/pull/850)"
         ]
       },
       "contributions": [
@@ -31,7 +32,8 @@
         "[Marcin Wojciechowski](https://github.com/mgwojciech)",
         "[Mark Bice](https://github.com/mbice)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
-        "[Yannick Reekmans](https://github.com/YannickRe)"
+        "[Yannick Reekmans](https://github.com/YannickRe)",
+        "[mk0023](https://github.com/mk0023)"
       ]
     },
     {
