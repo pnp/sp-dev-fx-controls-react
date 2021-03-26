@@ -44,7 +44,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     if (array) {
       array.some(({ key, children = [] }) => {
         if (key === target) {
-          this.nodesToExpand.push(key);
+          // this.nodesToExpand.push(key);
           result = key;
           return true;
         }
