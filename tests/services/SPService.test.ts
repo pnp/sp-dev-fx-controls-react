@@ -205,4 +205,33 @@ describe("SPService", () => {
 
         assert.isNull(libs);
     });
+    test.each([[
+        "test filter",
+        "TestFieldName",
+        undefined,
+        undefined,
+        "https://test.sharepoint.com/sites/test-site/_api/web/lists('test-list-id')/items?$select=Id,TestFieldName&$filter=startswith(TestFieldName,'test%20filter')&$orderby=undefined"
+    ]
+    ])("getListItems %j", async (filterText, columnName, field, keyColumnName, expectedApi) => {
+        let calledApi;
+        let ctx = {
+            pageContext: {
+                web: {
+                    absoluteUrl: "https://test.sharepoint.com/sites/test-site"
+                }
+            },
+            spHttpClient: {
+                get: (apiUrl: string,) => {
+                    calledApi = apiUrl;
+                    return Promise.resolve({
+                        ok: true,
+                        json: () => Promise.resolve([])
+                    });
+                }
+            }
+        }
+        let spService = new SPService(ctx as any);
+        let items = await spService.getListItems(filterText, "test-list-id", columnName, field, keyColumnName);
+        assert.equal(calledApi, expectedApi);
+    });
 });
