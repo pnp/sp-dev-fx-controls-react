@@ -10,7 +10,8 @@
         "enhancements": [],
         "fixes": [
           "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
-          "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)"
+          "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)",
+          "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)"
         ]
       },
       "contributions": [
