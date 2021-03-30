@@ -3,7 +3,10 @@
     {
       "version": "3.1.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
+          "`TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)"
+        ],
         "enhancements": [],
         "fixes": [
           "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
@@ -12,7 +15,8 @@
       },
       "contributions": [
         "[Ari Gunawan](https://github.com/AriGunawan)",
-        "[aroraans1512](https://github.com/aroraans1512)"
+        "[aroraans1512](https://github.com/aroraans1512)",
+        "[joaojmendes](https://github.com/joaojmendes)"
       ]
     },
     {
