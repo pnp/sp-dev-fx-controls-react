@@ -39,7 +39,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   onDrop={this._getDropFiles}
   stickyHeader={true} />
 ```
-- The control provides full text filtering through all the columns. If you want to exectue filtering on the specified columns, you can use syntax : `<ColumndName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
+- The control provides full text filtering through all the columns. If you want to execute filtering on the specified columns, you can use syntax : `<ColumndName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
 
 - With the `selection` property you can define a method that which gets called when the user selects one or more items in the list view:
 
