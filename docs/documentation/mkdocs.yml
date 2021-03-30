@@ -49,6 +49,8 @@ nav:
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
+    - TeamChannelPicker: 'controls/TeamChannelPicker.md'
+    - TeamPicker: 'controls/TeamPicker.md'
     - Toolbar: 'controls/Toolbar.md'
     - TreeView: 'controls/TreeView.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
