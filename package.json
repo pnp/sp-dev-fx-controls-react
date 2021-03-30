@@ -40,6 +40,7 @@
     "react-accessible-accordion": "^3.3.3",
     "react-dom": "16.9.0",
     "react-quill": "1.3.5",
+    "spfx-uifabric-themes": "^0.8.5",
     "tslib": "1.10.0"
   },
   "devDependencies": {

@@ -3,6 +3,7 @@ import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button'
 import styles from "./Pagination.module.scss";
 import { isEqual } from "lodash";
 import * as telemetry from '../../common/telemetry';
+import { Stack } from "office-ui-fabric-react/lib/Stack";
 
 export interface IPaginationProps {
     /**
@@ -78,6 +79,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
     public render(): React.ReactElement<IPaginationProps> {
         return (
             <div className={`${styles.pagination} pagination-container`}>
+              <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{childrenGap:1}} wrap>
                 {!this.props.hideFirstPageJump &&
                     <DefaultButton
                         className={`${styles.buttonStyle} pagination-button pagination-button_first`}
@@ -95,6 +97,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
                         iconProps={{ iconName: "DoubleChevronRight" }}>
                     </DefaultButton>
                 }
+                  </Stack>
             </div>
         );
     }
