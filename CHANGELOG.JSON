@@ -6,10 +6,12 @@
         "new": [],
         "enhancements": [],
         "fixes": [
-          "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)"
+          "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
+          "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)"
         ]
       },
       "contributions": [
+        "[Ari Gunawan](https://github.com/AriGunawan)",
         "[aroraans1512](https://github.com/aroraans1512)"
       ]
     },
