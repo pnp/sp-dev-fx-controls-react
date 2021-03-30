@@ -1,6 +1,6 @@
 # TeamPicker control
 
-This control allows you to select one or multiple Team user has permissions.
+This control allows you to select one or multiple Teams based on user's permissions.
 
 Here is an example of the control:
 
