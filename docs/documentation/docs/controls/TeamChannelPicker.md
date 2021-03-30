@@ -2,6 +2,9 @@
 
 This control allows you to select one or multiple Team Channel user has permissions.
 
+!!! Note
+    You can also check out [Microsoft Teams Channel Picker](https://docs.microsoft.com/en-us/graph/toolkit/components/teams-channel-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
+
 Here is an example of the control:
 
 ![TeamChannelPicker](../assets/SelectTeamPicker.gif)
