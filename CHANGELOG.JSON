@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "3.1.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)"
+        ]
+      },
+      "contributions": [
+        "[aroraans1512](https://github.com/aroraans1512)"
+      ]
+    },
+    {
       "version": "3.0.0",
       "changes": {
         "new": [],
