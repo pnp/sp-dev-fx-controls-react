@@ -5,7 +5,7 @@ This repository provides developers with a set of reusable React controls that c
 ![Placeholder example](./assets/placeholder-intro.png)
 
 !!! attention
-    In order to migrate to `v2` it is advicded to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
+    In order to migrate to `v2` it is adviced to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
 
 ## Library Versions
 Currently there are 3 active versions of the controls. Please, reference the table below to see what version to use in your project.
