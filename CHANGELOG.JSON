@@ -1,6 +1,16 @@
 {
   "versions": [
     {
+      "version": "2.7.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)"
+        ]
+      }
+    },
+    {
       "version": "2.6.0",
       "changes": {
         "new": [
