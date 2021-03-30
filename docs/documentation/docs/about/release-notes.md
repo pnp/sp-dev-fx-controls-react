@@ -1,5 +1,11 @@
 # Releases
 
+## 2.7.0
+
+### Fixes
+
+- `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+
 ## 2.6.0
 
 ### New control(s)
@@ -23,10 +29,11 @@
 - Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)
 - `TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)
 - `RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)
+- `TreeView`: Don't expand selected nodes when using expandToSelected [#850](https://github.com/pnp/sp-dev-fx-controls-react/pull/850)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe), [mk0023](https://github.com/mk0023).
 
 ## 2.5.0
 
