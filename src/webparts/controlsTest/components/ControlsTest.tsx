@@ -1105,7 +1105,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
           resolveDelay={200}
-          placeholder={'Select a SharePoint principal (User or Group)'} />
+          placeholder={'Select a SharePoint principal (User or Group)'}
+          onGetErrorMessage={async (items: any[]) => {
+            if (!items || items.length < 2) {
+              return 'error';
+            }
+
+            return '';
+          }} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
