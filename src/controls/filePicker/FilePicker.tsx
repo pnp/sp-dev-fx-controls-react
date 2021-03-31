@@ -33,6 +33,7 @@ import RecentFilesTab from "./RecentFilesTab/RecentFilesTab";
 import SiteFilePickerTab from "./SiteFilePickerTab/SiteFilePickerTab";
 import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
+import MultipleUploadFilePicketTab from "./MultipleUploadFilePicketTab/MultipleUploadFilePicketTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
 
 // Localization
@@ -203,6 +204,15 @@ export class FilePicker extends React.Component<
               <UploadFilePickerTab
                 renderCustomUploadTabContent={
                   this.props.renderCustomUploadTabContent
+                }
+                {...linkTabProps}
+                onChange={this._handleOnChange}
+              />
+            )}
+            {this.state.selectedTab === "keyMultipleUpload" && (
+              <MultipleUploadFilePicketTab
+                renderCustomMultipleUploadTabContent={
+                  this.props.renderCustomMultipleUploadTabContent
                 }
                 {...linkTabProps}
                 onChange={this._handleOnChange}
@@ -389,6 +399,14 @@ export class FilePicker extends React.Component<
         icon: "System",
       });
     }
+    if (!this.props.hideLocalMultipleUploadTab) {
+      links.push({
+        name: strings.UploadLinkLabel+" "+strings.OneDriveRootFolderName,
+        url: addUrl ? "#Multipleupload" : undefined,
+        key: "keyMultipleUpload",
+        icon: "BulkUpload",
+      });
+    }
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
@@ -430,5 +448,9 @@ export class FilePicker extends React.Component<
     if (!props.hideLinkUploadTab) {
       return "keyLink";
     }
+    if (!props.hideLocalMultipleUploadTab) {
+      return "keyMultipleUpload";
+    }
+    
   }
 }

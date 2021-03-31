@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styles from './ListView.DragDrop.module.scss';
 import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
 import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
 import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
@@ -12,7 +11,7 @@ import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
 import { IGroupsItems } from './IListView';
 import * as telemetry from '../../common/telemetry';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { DragDropFiles } from "../dragDropFiles";
 
 import filter from 'lodash/filter';
 import omit from 'lodash/omit';
@@ -58,8 +57,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   private originalItems: any[];
   private originalGroups: IGroup[];
   private originalColumns: IColumn[];
-  private dragCounter = 0;
-  private dropRef = React.createRef<HTMLDivElement>();
 
   constructor(props: IListViewProps) {
     super(props);
@@ -74,8 +71,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Initialize state
     this.state = {
-      filterValue: this.props.defaultFilter,
-      dragStatus: false
+      filterValue: this.props.defaultFilter
     };
 
     if (this.props.selection) {
@@ -92,17 +88,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    */
   public componentDidMount(): void {
     this._processProperties(this.props);
-  }
-
-  public componentWillUnmount(): void {
-    const { dragDropFiles } = this.props;
-    if (dragDropFiles) {
-      let divDropArea = this.dropRef.current;
-      divDropArea.removeEventListener('dragenter', this.handleonDragEnter);
-      divDropArea.removeEventListener('dragleave', this.handleonDragLeave);
-      divDropArea.removeEventListener('dragover', this.handleonDragOver);
-      divDropArea.removeEventListener('drop', this.handleonDrop);
-    }
   }
 
   /**
@@ -286,15 +271,6 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     } else {
       // Update the current component state with the new values
       this.setState(tempState);
-    }
-
-    // Add EventListeners for drag zone area
-    if (dragDropFiles) {
-      let divDropArea = this.dropRef.current;
-      divDropArea.addEventListener('dragenter', this.handleonDragEnter);
-      divDropArea.addEventListener('dragleave', this.handleonDragLeave);
-      divDropArea.addEventListener('dragover', this.handleonDragOver);
-      divDropArea.addEventListener('drop', this.handleonDrop);
     }
   }
 
@@ -580,44 +556,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     e.preventDefault();
     e.stopPropagation();
   }
-  /**
-   * Stop listeners from onDragEnter event, enable drag and drop view.
-   * @param e
-   */
-  private handleonDragEnter = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.dragCounter++;
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      this.setState({ dragStatus: true });
-    }
-  }
-  /**
-   * Stop listeners from ondragenter event, disable drag and drop view.
-   * @param e
-   */
-  private handleonDragLeave = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.dragCounter--;
-    if (this.dragCounter === 0) {
-      this.setState({ dragStatus: false });
-    }
-  }
-  /**
-  * Stop listeners from onDrop event and load files to property onDrop.
-  * @param e
-  */
-  private handleonDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    this.setState({ dragStatus: false });
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      this.props.onDrop(e.dataTransfer.files);
-      e.dataTransfer.clearData();
-      this.dragCounter = 0;
-    }
-  }
+
   /**
   * Custom render of header
   * @param props
@@ -647,7 +586,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     let groupProps: IGroupRenderProps = {};
 
     let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact } = this.props;
-    let { filterValue, items, dragStatus, columns, groups } = this.state;
+    let { filterValue, items, columns, groups } = this.state;
 
     // Check if selection mode is single selection,
     // if that is the case, disable the selection on grouping headers
@@ -662,16 +601,15 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     return (
       <ListViewWrapper stickyHeader={!!this.props.stickyHeader}>
-        <div className={styles.DragDropArea}
-          ref={this.dropRef}>
-          {(dragStatus && dragDropFiles) &&
-            <div className={styles.DragDropAreaBorder}>
-              <div className={styles.DragDropAreaZone}>
-                <Icon iconName="Download" className="ms-IconExample" />
-                <div>{strings.UploadFileHeader}</div>
-              </div>
-            </div>
-          }
+        <DragDropFiles enable={dragDropFiles}
+          iconName="BulkUpload"
+          labelMessage={strings.UploadFileHeader}
+          onDrop={
+            dragDropFiles ?
+              (files) => {
+                this.props.onDrop(files);
+              } : []
+          } >
           {
             showFilter &&
             <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
@@ -697,7 +635,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
               }
             }}
           />}
-        </div>
+        </DragDropFiles>
       </ListViewWrapper>
     );
   }

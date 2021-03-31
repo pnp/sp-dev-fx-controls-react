@@ -59,6 +59,7 @@ The following controls are currently available:
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
 - [Dashboard](./controls/Dashboard) (Control to render dashboard in Microsoft Teams)
+- [DragDropFiles](./controls/DragDropFiles) (Allow drag and drop of files in selected areas)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)

@@ -162,6 +162,7 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
+import { DragDropFiles } from "../../../DragDropFiles";
 
 // Used to render document card
 /**
@@ -482,7 +483,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   */
   private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
-      console.log(files[i].name);
+      console.log("File name: " +files[i].name);
+      console.log("Folder Path: " + files[i].fullPath);
     }
   }
 
@@ -1187,6 +1189,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+        <br></br>
+        <b>Drag and Drop Files</b>
+        <DragDropFiles
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
+        >
+
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
+
+        </DragDropFiles>
+        <br></br>
 
         <ListView items={this.state.items}
           viewFields={viewFields}
