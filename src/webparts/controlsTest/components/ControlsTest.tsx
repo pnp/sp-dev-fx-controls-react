@@ -483,7 +483,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   */
   private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
-      console.log("File name: " +files[i].name);
+      console.log("File name: " + files[i].name);
+      console.log("Folder Path: " + files[i].fullPath);
     }
   }
 
@@ -1200,8 +1201,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         >
 
           <Placeholder iconName='BulkUpload'
-            iconText='Drag files here...'
-            description={defaultClassNames => <span className={defaultClassNames}>Drag files here...</span>}
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
             buttonLabel='Configure'
             hideButton={this.props.displayMode === DisplayMode.Read}
             onConfigure={this._onConfigure} />
