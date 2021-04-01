@@ -48,15 +48,13 @@ import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 
 ![FilePicker control with grouping](../assets/DragDropFilesSample2.png)
 
-- With the `onDrop` handler you can define a method that returns files and files inside folders that where drag and drop by user.
+- With the `onDrop` handler you can define a method that returns files that where drag and drop by user.
 
-**PS: New property "fullPath" was included in file object to allow identify dropped files based on Folders, this allow users to create associated folder path.**
 
 ```typescript
 private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
       console.log("Filename: " + files[i].name);
-      console.log("Path: " + files[i].fullPath);
     }
   }
 ```
