@@ -122,10 +122,26 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
         */
         if (item.getAsEntry) {
           entry = item.getAsEntry();
-          Directory.push(entry);
+          if (entry.isDirectory) {
+            Directory.push(entry);
+          } else {
+            const file = item.getAsFile();
+            if (file) {
+              file.fullPath = "";
+              files.push(file);
+            }
+          }
         } else if (item.webkitGetAsEntry) {
           entry = item.webkitGetAsEntry();
-          Directory.push(entry);
+          if (entry.isDirectory) {
+            Directory.push(entry);
+          } else {
+            const file = item.getAsFile();
+            if (file) {
+              file.fullPath = "";
+              files.push(file);
+            }
+          }
         } else if ("function" == typeof item.getAsFile) {
           const file = item.getAsFile();
           if (file) {
