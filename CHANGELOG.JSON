@@ -3,12 +3,20 @@
     {
       "version": "2.7.0",
       "changes": {
-        "new": [],
-        "enhancements": [],
+        "new": [
+          "`DragDropFiles`: new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)"
+        ],
+        "enhancements": [
+          "`ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)",
+          "`FilePicker`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)"
+        ],
         "fixes": [
           "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)"
         ]
-      }
+      },
+      "contributions": [
+        "[André Lage](https://github.com/aaclage)"
+      ]
     },
     {
       "version": "2.6.0",
