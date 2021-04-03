@@ -308,4 +308,118 @@ export default class SPService implements ISPService {
 
     return;
   }
+
+  /**
+   * Get List Item comments
+   */
+  public async getListItemComments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
+    let returnItems: any[];
+    try {
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/GetComments()`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results && results.value && results.value.length > 0) {
+          return results.value;
+        }
+      } else {
+        const resultserror = await data.json();
+        if (resultserror.error) {
+          return Promise.reject(resultserror.error.message);
+        }
+      }
+      return [];
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+  * Add List Item comments
+  */
+  public async addListItemComments(listId: string, itemId: number, bodyText: string, webUrl?: string): Promise<any[]> {
+    let returnItems: any[];
+    try {
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/Comments()`;
+      const spOpts: ISPHttpClientOptions = {
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify({ "text": bodyText })
+      };
+      const data = await this._context.spHttpClient.post(apiUrl,
+        SPHttpClient.configurations.v1, spOpts);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results;
+        }
+      } else {
+        const resultserror = await data.json();
+        if (resultserror.error) {
+          return Promise.reject(resultserror.error.message);
+        }
+      }
+      return [];
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+  * Like or unlike List Item comment
+  */
+  public async likeUnlikeListItemComments(listId: string, itemId: number, commentId: number,
+    actionType: string, webUrl?: string): Promise<any[]> {
+    let returnItems: any[];
+    try {
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/Comments(${commentId})/${actionType}`;
+      const spOpts: ISPHttpClientOptions = {
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify({})
+      };
+      const data = await this._context.spHttpClient.post(apiUrl,
+        SPHttpClient.configurations.v1, spOpts);
+      if (data.status == 204) {
+        return [];
+      } else {
+        return Promise.reject("Error while updating comment");
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+ * Deleta List Item comment
+ */
+  public async deleteListItemComments(listId: string, itemId: number, commentId: number, webUrl?: string): Promise<any[]> {
+    let returnItems: any[];
+    try {
+      const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items(${itemId})/Comments(${commentId})`;
+      const spOpts: ISPHttpClientOptions = {
+        headers: {
+          "content-type": "application/json;charset=UTF-8",
+          "X-HTTP-Method": "DELETE",
+          "IF-MATCH": "*"
+        }
+      };
+      const data = await this._context.spHttpClient.post(apiUrl,
+        SPHttpClient.configurations.v1, spOpts);
+      if (data.status == 204) {
+        return [];
+      } else {
+        return Promise.reject("Error while deleting comment");
+      }
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
 }

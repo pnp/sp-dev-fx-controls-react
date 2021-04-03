@@ -47,7 +47,7 @@ import {
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
-import { Accordion } from "../../../";
+import { Accordion, ListItemAttachments } from "../../../";
 import {
   ChartControl,
   ChartType
@@ -159,6 +159,7 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
+import { ListItemComments } from "../../../ListItemComments";
 
 // Used to render document card
 /**
@@ -765,6 +766,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <ListItemComments itemID={5} listId={'a81249a5-8b83-4b3b-8178-e43e05d6dda1'} context={this.props.context}></ListItemComments>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty}
@@ -774,31 +776,31 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
         <AccessibleAccordion allowZeroExpanded>
-        <AccordionItem key={"Headding 1"}>
-          <AccordionItemHeading>
-            <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-           <div style={{margin: 20}}>
-           <h2>Content Heading 1</h2>
-            <Text variant={"mediumPlus"}>Text sample  </Text>
+          <AccordionItem key={"Headding 1"}>
+            <AccordionItemHeading>
+              <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <div style={{ margin: 20 }}>
+                <h2>Content Heading 1</h2>
+                <Text variant={"mediumPlus"}>Text sample  </Text>
 
-            </div>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem key={"Headding 2"}>
-          <AccordionItemHeading>
-            <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <div style={{margin: 20}}>
-            <h2>Content Heading 2</h2>
-            <Text variant={"mediumPlus"}>Text </Text>
-            <TextField></TextField>
-            </div>
-          </AccordionItemPanel>
-        </AccordionItem>
-      </AccessibleAccordion>
+              </div>
+            </AccordionItemPanel>
+          </AccordionItem>
+          <AccordionItem key={"Headding 2"}>
+            <AccordionItemHeading>
+              <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <div style={{ margin: 20 }}>
+                <h2>Content Heading 2</h2>
+                <Text variant={"mediumPlus"}>Text </Text>
+                <TextField></TextField>
+              </div>
+            </AccordionItemPanel>
+          </AccordionItem>
+        </AccessibleAccordion>
 
 
 
@@ -1002,10 +1004,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <RichText value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
         <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
 
-        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+        <ListItemAttachments listId='505b0f2a-b7da-48c4-8c5f-c404c44e8833'
           itemId={1}
           context={this.props.context}
-          disabled={false} /> */}
+          disabled={false} />
 
         <Placeholder iconName='Edit'
           iconText='Configure your web part'
@@ -1250,10 +1252,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">List Item picker list data tester:
 
-                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
+                <ListItemPicker listId={'505b0f2a-b7da-48c4-8c5f-c404c44e8833'}
                   columnInternalName="Title"
                   keyColumnInternalName="Id"
                   filter={"Title eq 'SPFx'"}
+                  orderBy={"Id desc"}
+                  className={"TestingHeight"}
                   itemLimit={5}
                   context={this.props.context}
                   placeholder={'Select list items'}
@@ -1439,7 +1443,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
 
-            buttonIconProps={{iconName: 'Add', styles:{root:{fontSize: 42}}}}
+            buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
             context={this.props.context}
@@ -1525,15 +1529,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <h3>Tree View</h3>
           <TreeView items={this.treeitems}
             defaultExpanded={false}
-            selectionMode={TreeViewSelectionMode.Multiple}
-            showCheckboxes={true}
-            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            selectionMode={TreeViewSelectionMode.Single}
+            showCheckboxes={false}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.Buttons}
             defaultSelectedKeys={['gc1', 'gc3']}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
             defaultExpandedChildren={true}
-          //expandToSelected={true}
-          // onRenderItem={this.renderCustomTreeItem}
+            //expandToSelected={true}
+            onRenderItem={this.renderCustomTreeItem}
           />
 
         </div>
@@ -1685,7 +1689,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private renderCustomTreeItem(item: ITreeItem): JSX.Element {
     return (
-      <span>
+      <span onClick={() => console.log(item)}>
         {
           item.iconProps &&
           <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
