@@ -110,6 +110,11 @@ export interface IFilePickerProps {
   hideLocalUploadTab?: boolean;
 
   /**
+   * Specifies if LocalMultipleUploadTab should be hidden.
+   */
+  hideLocalMultipleUploadTab?: boolean;
+
+  /**
    * Specifies if LinkUploadTab should be hidden.
    */
   hideLinkUploadTab?: boolean;
@@ -136,6 +141,11 @@ export interface IFilePickerProps {
    * Optional additional renderer for Upload tab
    */
   renderCustomUploadTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
+
+  /**
+   * Optional additional renderer for Multiple Upload tab
+   */
+  renderCustomMultipleUploadTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
 
   /**
    * Specifies if Site Pages library to be visible on Sites tab
