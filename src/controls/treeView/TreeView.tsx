@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './TreeView.module.scss';
 import uniqBy from 'lodash/uniqBy';
-import { ITreeViewProps, TreeViewSelectionMode } from './ITreeViewProps';
+import { ITreeViewProps, SelectChildrenMode, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
 import { ITreeItem } from './ITreeItem';
 import TreeItem from './TreeItem';
@@ -67,6 +67,11 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
         selectedItems.push(item);
         if (selectedChildren) {
           this.selectAllChildren(item, selectedItems);
+        }
+        else {
+          if (item.children) {
+            selectedItems.push(...this.getSelectedItems(item.children, selectedKeys, selectedChildren));
+          }
         }
       }
       else {
@@ -138,7 +143,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
         // Add the checked term
         selectedItems.push(item);
 
-        if (this.props.selectChildrenIfParentSelected) {
+        if (this.checkIfChildrenShouldBeSelected(SelectChildrenMode.Select)) {
           this.selectAllChildren(item, selectedItems);
         }
 
@@ -163,7 +168,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       let unselectArray: string[] = [];
       unselectArray.push(item.key);
 
-      if (this.props.selectChildrenIfParentSelected) {
+      if (this.checkIfChildrenShouldBeSelected(SelectChildrenMode.Unselect)) {
         this.unSelectChildren(item, unselectArray);
       }
 
@@ -181,14 +186,30 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     }
   }
 
+  private checkIfChildrenShouldBeSelected(testMode: SelectChildrenMode) {
+    let selectChildrenMode = SelectChildrenMode.None;
+    if (this.props.selectChildrenMode) {
+      selectChildrenMode = this.props.selectChildrenMode;
+    }
+    else {
+      if (this.props.selectChildrenIfParentSelected) {
+        selectChildrenMode = SelectChildrenMode.All;
+      }
+    }
+
+    if ((selectChildrenMode & testMode) === testMode) {
+      return true;
+    }
+    return false;
+  }
+
   public componentDidMount() {
     const {
       items,
-      defaultSelectedKeys,
-      selectChildrenIfParentSelected
+      defaultSelectedKeys
     } = this.props;
     if (defaultSelectedKeys) {
-      const selectedItems = this.getSelectedItems(items, defaultSelectedKeys, selectChildrenIfParentSelected);
+      const selectedItems = this.getSelectedItems(items, defaultSelectedKeys, this.checkIfChildrenShouldBeSelected(SelectChildrenMode.Mount));
       this.setState({
         activeItems: selectedItems
       });
@@ -198,11 +219,10 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
   public componentWillReceiveProps(nextProps: ITreeViewProps): void {
     const {
       items,
-      defaultSelectedKeys,
-      selectChildrenIfParentSelected,
+      defaultSelectedKeys
     } = nextProps;
     if (defaultSelectedKeys) {
-      const selectedItems = !defaultSelectedKeys ? [] : this.getSelectedItems(items, defaultSelectedKeys, selectChildrenIfParentSelected);
+      const selectedItems = this.getSelectedItems(items, defaultSelectedKeys, this.checkIfChildrenShouldBeSelected(SelectChildrenMode.Update));
       this.setState({
         activeItems: selectedItems
       });
