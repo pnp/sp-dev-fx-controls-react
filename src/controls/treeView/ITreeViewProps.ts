@@ -38,7 +38,7 @@ export interface ITreeViewProps {
    */
   selectionMode?: TreeViewSelectionMode;
   /**
-   * @deprecated Use selectChildrenMode instead
+   * @deprecated Use selectChildrenMode instead.
    * Specifies if the childrens should be selected when parent is selected.
    * By default this is set to false.
    */
