@@ -4,13 +4,43 @@ import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { ISite, ISitePickerProps } from './ISitePicker';
 import { getAllSites, getHubSites } from '../../services/SPSitesService';
 import { IDropdownOption, Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
-import { SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
+import { ISelectableOption, SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
 import orderBy from 'lodash/orderBy';
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
+import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
     width: '100%',
     textAlign: 'center'
+  },
+  siteOption: {
+    display: 'flex',
+    whiteSpace: 'nowrap',
+    alignItems: 'center'
+  },
+  siteOptionCheckbox: {
+    display: 'inline-block',
+    marginRight: '4px'
+  },
+  siteOptionContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: '0',
+    padding: '4px 0'
+  },
+  siteOptionTitle: {
+    lineHeight: '18px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
+  siteOptionUrl: {
+    fontSize: '12px',
+    lineHeight: '14px',
+    fontWeight: '300',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 });
 
@@ -35,6 +65,23 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   const [allSites, setAllSites] = React.useState<ISite[]>();
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
+
+  const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
+    if (!props) {
+      return null;
+    }
+
+    if (option.itemType === SelectableOptionMenuItemType.Header) {
+      return <SearchBox />;
+    }
+    // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
+    return <div className={styles.siteOption}>
+      <div className={styles.siteOptionContent}>
+        <span className={styles.siteOptionTitle}>{option.text}</span>
+        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data!.url)}</span>
+      </div>
+    </div>;
+  };
 
   const getOptions = (): IDropdownOption[] => {
     const result: IDropdownOption[] = [];
@@ -132,6 +179,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         options={getOptions()}
         disabled={disabled}
         multiSelect={multiSelect !== false}
+        onRenderOption={onRenderOption}
       />
     </>
   );

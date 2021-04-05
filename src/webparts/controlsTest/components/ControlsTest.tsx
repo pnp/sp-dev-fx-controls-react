@@ -1317,6 +1317,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   label={'select sites'}
                   mode={'web'}
                   allowSearch={true}
+                  multiSelect={true}
                   onChange={() => {}} />
               </div>
 
