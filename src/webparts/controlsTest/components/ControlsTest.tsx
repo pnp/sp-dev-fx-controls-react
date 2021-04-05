@@ -163,6 +163,7 @@ import {
   IControlsTestState
 } from "./IControlsTestProps";
 import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 
 // Used to render document card
 /**
@@ -1308,6 +1309,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+              <div className="ms-font-m">Site picker tester:
+                <SitePicker
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'web'}
+                  allowSearch={true}
+                  onChange={() => {}} />
               </div>
 
               <div className="ms-font-m">List picker tester:
