@@ -166,6 +166,8 @@ import {
 } from "./IControlsTestProps";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -1325,6 +1327,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+              <div className="ms-font-m">Site picker tester:
+                <SitePicker
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:

@@ -3,7 +3,7 @@
   "alias": "OotbFieldsFieldCustomizer",
   "componentType": "Extension",
   "extensionType": "FieldCustomizer",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "manifestVersion": 2,
   "requiresCustomScript": false,
   "loaderConfig": {
@@ -14,7 +14,7 @@
     "scriptResources": {
       "ootb-fields-field-customizer": {
         "type": "path",
-        "path": "ootb-fields-field-customizer_b896484b103ab8e5d0a7.js"
+        "path": "ootb-fields-field-customizer_a9076e8a5beb0b253af9.js"
       },
       "tslib": {
         "type": "component",
