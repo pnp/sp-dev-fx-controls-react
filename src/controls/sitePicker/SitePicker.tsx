@@ -78,7 +78,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
 
-  const onSearchChange = React.useCallback((newSearchQuery: string) => {
+  const onSearchChange = React.useCallback((e, newSearchQuery: string) => {
     if (!allSites) {
       return;
     }
