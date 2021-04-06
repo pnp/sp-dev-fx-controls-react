@@ -10,6 +10,7 @@ import findIndex from 'lodash/findIndex';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
 import { Async } from '@uifabric/utilities/lib/Async';
+import * as telemetry from '../../common/telemetry';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -188,6 +189,11 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       </div>
     </div>;
   };
+
+  React.useEffect(() => {
+    telemetry.track('ReactSitePicker');
+  }, []);
+
 
   React.useEffect(() => {
     if (!initialSites) {
