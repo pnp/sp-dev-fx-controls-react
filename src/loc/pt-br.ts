@@ -67,7 +67,7 @@ define([], () => {
     ListItemAttachmentsdialogOKbuttonLabelOnDelete: 'Excluir',
     ListItemAttachmentsuploadAttachmentDialogTitle: 'Juntar anexo',
     ListItemAttachmentsuploadAttachmentButtonLabel: 'Juntar anexo',
-    ListItemAttachmentsuploadAttachmentErrorMsg: 'O arquivo {0} não anexado, motivo: {1}',
+    ListItemAttachmentsuploadAttachmentErrorMsg: 'O arquivo {0} não foi anexado, motivo: {1}',
     ListItemAttachmentsCommandBarAddAttachmentLabel: 'Juntar anexo',
     ListItemAttachmentsloadingMessage: 'Enviando arquivo ...',
     ListItemAttachmentslPlaceHolderIconText: 'Anexo de item de lista',
