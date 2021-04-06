@@ -1337,7 +1337,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   mode={'web'}
                   allowSearch={true}
                   multiSelect={true}
-                  onChange={() => {}} />
+                  onChange={(sites) => { console.log(sites); }} />
               </div>
 
               <div className="ms-font-m">List picker tester:
