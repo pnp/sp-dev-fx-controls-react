@@ -1,6 +1,8 @@
 import * as React from "react";
 
 import {
+  ITag,
+  Stack,
   Text,
   TextField
 } from "office-ui-fabric-react";
@@ -162,7 +164,8 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
-
+import { TeamPicker } from "../../../TeamPicker";
+import { TeamChannelPicker } from "../../../TeamChannelPicker";
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -416,7 +419,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
       showSuccessDialog: false,
-      showErrorDialog: false
+      showErrorDialog: false,
+      selectedTeam: [],
+      selectedTeamChannels: []
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -820,6 +825,40 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           } />
 
 
+        <Stack
+          styles={{ root: { margin: "10px 10px 100px 10px" } }}
+          tokens={{ childrenGap:10 }}
+        >
+          <TeamPicker
+            label="Select Team"
+            selectedTeams={this.state.selectedTeam}
+            appcontext={this.props.context}
+            itemLimit={1}
+            onSelectedTeams={(tagList: ITag[]) => {
+              this.setState({ selectedTeamChannels: []});
+              this.setState({ selectedTeam: tagList });
+              console.log(tagList);
+            }}
+          />
+          {this.state?.selectedTeam && this.state?.selectedTeam.length > 0 && (
+            <>
+              <TeamChannelPicker
+                label="Select Team Channel"
+                selectedChannels={this.state.selectedTeamChannels}
+                teamId={this.state.selectedTeam[0].key}
+                appcontext={this.props.context}
+                onSelectedChannels={(tagList: ITag[]) => {
+                  this.setState({ selectedTeamChannels: tagList });
+                  console.log(tagList);
+                }}
+              />
+            </>
+          )}
+        </Stack>
+
+
+
+
         <AccessibleAccordion allowZeroExpanded>
           <AccordionItem key={"Headding 1"}>
             <AccordionItemHeading>
@@ -1105,7 +1144,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
           resolveDelay={200}
-          placeholder={'Select a SharePoint principal (User or Group)'} />
+          placeholder={'Select a SharePoint principal (User or Group)'}
+          onGetErrorMessage={async (items: any[]) => {
+            if (!items || items.length < 2) {
+              return 'error';
+            }
+
+            return '';
+          }} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"

@@ -2,6 +2,9 @@
 
 This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.
 
+!!! Note
+    You can also check out [People Picker](https://docs.microsoft.com/en-us/graph/toolkit/components/people-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
+
 **Empty People Picker control with error message and tooltip**
 
 ![People Picker](../assets/Peoplepicker-witherrorandtooltip.png)
@@ -55,7 +58,7 @@ The People picker control can be configured with the following properties:
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| context | WebPartContext | yes | Context of the current web part. | |
+| context | BaseComponentContext | yes | Context of the current web part. | |
 | titleText | string | no | Text to be displayed on the control | |
 | groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_ |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |

@@ -1,13 +1,12 @@
-import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PermissionLevel } from '.';
-import { ExtensionContext } from '@microsoft/sp-extension-base';
 
 export interface ISecurityTrimmedControlProps {
   /**
    * Context of the web part, application customizer, field customizer, or list view command set.
    */
-  context: WebPartContext | ExtensionContext;
+  context: BaseComponentContext;
   /**
    * The permissions to check for the user.
    */

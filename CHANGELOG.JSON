@@ -1,6 +1,38 @@
 {
   "versions": [
     {
+      "version": "3.1.0",
+      "changes": {
+        "new": [
+          "`TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
+          "`TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)"
+        ],
+        "enhancements": [],
+        "fixes": [
+          "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
+          "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)",
+          "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)"
+        ]
+      },
+      "contributions": [
+        "[Ari Gunawan](https://github.com/AriGunawan)",
+        "[aroraans1512](https://github.com/aroraans1512)",
+        "[joaojmendes](https://github.com/joaojmendes)"
+      ]
+    },
+    {
+      "version": "3.0.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "SharePoint Framework v1.12 support (breaking change)",
+          "Fluent UI v7 support"
+        ],
+        "fixes": []
+      },
+      "contributions": []
+    },
+    {
       "version": "2.6.0",
       "changes": {
         "new": [
@@ -20,7 +52,8 @@
           "`AccessibleAccordion`: documentation link is broken [#818](https://github.com/pnp/sp-dev-fx-controls-react/issues/818)",
           "Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)",
           "`TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)",
-          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)"
+          "`RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)",
+          "`FolderPicker`: Correct FolderPicker link alignment"
         ]
       },
       "contributions": [

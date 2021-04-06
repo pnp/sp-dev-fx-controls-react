@@ -3,6 +3,7 @@ import { ImageSize } from '../../../FileTypeIcon';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import { IProgressAction } from '../../../Progress';
 import { IFilePickerResult } from '../../../FilePicker';
+import { ITag } from 'office-ui-fabric-react';
 
 export interface IControlsTestProps {
   context: WebPartContext;
@@ -35,4 +36,6 @@ export interface IControlsTestState {
   showCustomisedAnimatedDialog?: boolean;
   showSuccessDialog?: boolean;
   showErrorDialog?: boolean;
+  selectedTeam:ITag[];
+  selectedTeamChannels:ITag[];
 }

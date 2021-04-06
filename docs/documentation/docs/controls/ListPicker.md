@@ -49,7 +49,7 @@ The `ListPicker` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext \| ExtensionContext | yes | The context object of the SPFx loaded webpart or customizer. |
+| context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | className | string | no | If provided, additional class name to provide on the dropdown element. |
 | disabled | boolean | no | Whether or not the control is disabled. |
 | baseTemplate | number | no | The SharePoint BaseTemplate ID to filter the list options by. |

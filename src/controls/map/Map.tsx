@@ -223,7 +223,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
           (this.props.enableSearch) && (
             <div id="mapsSearch" className={styles.searchContainer}>
               <TextField value={this.state.address}
-                onChanged={this._onChangedAddress}
+                onChange={(e, value) => this._onChangedAddress(value)}
                 onKeyPress={(event) => event.key === "Enter" ? this._getCoordinates() : null}
                 iconProps={{ iconName: 'World' }}
                 className={styles.searchTextBox} />

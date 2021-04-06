@@ -189,6 +189,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     if (typeof result === 'string') {
       if (!result) {
         this.validated(items);
+
+        this.setState({
+          errorMessage: undefined
+        });
       }
       else {
         this.setState({
@@ -202,6 +206,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
         if (!resolvedResult) {
           this.validated(items);
+
+          this.setState({
+            errorMessage: undefined
+          });
         }
         else {
           this.setState({

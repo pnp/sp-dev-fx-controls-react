@@ -1,5 +1,4 @@
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { ExtensionContext } from "@microsoft/sp-extension-base";
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IUploadAttachmentProps {
   listId: string;
@@ -7,7 +6,7 @@ export interface IUploadAttachmentProps {
   className?: string;
   webUrl?:string;
   disabled?: boolean;
-  context: WebPartContext |  ExtensionContext;
+  context: BaseComponentContext;
   fireUpload?:boolean;
   onAttachmentUpload: () => void;
 }

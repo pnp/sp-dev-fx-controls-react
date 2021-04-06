@@ -24,6 +24,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .selectedLink {
+      margin-right: 5px;
+      margin-bottom: 0;
+    }
   }
 
   & .selectButton {

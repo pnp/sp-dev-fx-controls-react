@@ -5,10 +5,16 @@ This repository provides developers with a set of reusable React controls that c
 ![Placeholder example](./assets/placeholder-intro.png)
 
 !!! attention
-    In order to migrate to `v2` it is advicded to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
+    In order to migrate to `v2` it is adviced to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
 
-!!! attention
-    `v2` version of the controls project has a minimal dependency on SharePoint Framework version `1.11.0`. `v1` has a minimal dependency on SharePoint Framework version `1.3.0`. Be aware that the controls might not work in solutions you are building for SharePoint 2016 with Feature Pack 2 on-premises. As for SharePoint 2016 with Feature Pack 2 version `1.1.0` of the SharePoint framework is the only version that can be used. SharePoint 2019 on-premises uses SharePoint framework `v1.4.0` and therefore should be fine to use with these controls.
+## Library Versions
+Currently there are 3 active versions of the controls. Please, reference the table below to see what version to use in your project.
+
+| Version | SPFx minimal dependency | Fluent UI (Office UI Fabric React) version | SharePoint Version | Comments |
+| ------- | ----------------------- | ------------------------------------------ | ------------------ | -------- |
+| `v3` | `1.12.0` | `7.156.0` | Online | The most current, actively maintained version of the library. |
+| `v2` | `1.11.0` | `6.214.0` | Online | The version will be deprecated in **May/June timeframe**.<br>We strongly recommend to update to SPFx `1.12` and `v3` of Controls. |
+| `v1` | `1.3.0` | `5.131.0` | On-Prem | The version is maintained for SharePoint On-Prem 2016 and 2019 implementations. Be aware that the controls might not work in solutions you're building for on-premises. As for on-premises solutions version `1.1.0` will get used. |
 
 ## Getting started
 
@@ -79,6 +85,8 @@ The following controls are currently available:
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
+- [TeamChannelPicker](./controls/TeamChannelPicker) (Team Channel Picker)
+- [TeamPicker](./controls/TeamPicker) (Team Picker)
 - [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)

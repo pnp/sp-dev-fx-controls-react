@@ -1,5 +1,12 @@
 # Releases
 
+## 3.0.0
+
+### Enhancements
+
+- SharePoint Framework v1.12 support (breaking change)
+- Fluent UI v7 support
+
 ## 2.6.0
 
 ### New control(s)
@@ -13,6 +20,7 @@
 - `FilePicker`: default alphabet sorting [#824](https://github.com/pnp/sp-dev-fx-controls-react/pull/824)
 - `ListItemPicker`: ability to provide `orderBy` [#829](https://github.com/pnp/sp-dev-fx-controls-react/issues/829)
 - `Dashboard`: Dashboard widget wrapper for styling and error catching [#836](https://github.com/pnp/sp-dev-fx-controls-react/pull/836)
+- `FolderExplorer`: Update folder explorer documentation [#835](https://github.com/pnp/sp-dev-fx-controls-react/pull/835)
 
 ### Fixes
 
@@ -22,6 +30,7 @@
 - Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)
 - `TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)
 - `RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)
+- `FolderPicker`: Correct FolderPicker link alignment
 
 ### Contributors
 
