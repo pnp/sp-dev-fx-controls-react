@@ -351,3 +351,12 @@ export function urlCombine(urlStart: string, urlFinish: string, escapeFinish: bo
 
   return url;
 }
+
+export const toRelativeUrl = (absoluteUrl: string): string => {
+
+  if (!absoluteUrl) {
+    return '';
+  }
+
+  return absoluteUrl.replace(/^(?:\/\/|[^/]+)*\//, '/');
+};
