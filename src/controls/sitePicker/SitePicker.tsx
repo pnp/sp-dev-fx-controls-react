@@ -6,8 +6,8 @@ import { getAllSites, getHubSites } from '../../services/SPSitesService';
 import { IDropdownOption, Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
 import { ISelectableOption, SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
 import orderBy from 'lodash/orderBy';
+import findIndex from 'lodash/findIndex';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
 
 const styles = mergeStyleSets({
@@ -110,6 +110,30 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     return result;
   };
 
+  const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
+    const newSelectedSites = selectedSites ? [...selectedSites] : [];
+
+    if (multiSelect !== false) {
+      const existingIndex = findIndex(newSelectedSites, s => s.id === item.key);
+
+      if (existingIndex >= 0) {
+        newSelectedSites.splice(existingIndex, 1);
+      }
+      else {
+        newSelectedSites.push({
+          ...item.data!
+        });
+      }
+    }
+
+    if (onChange) {
+      onChange(newSelectedSites);
+    }
+
+    setSelectedSites(newSelectedSites);
+
+  }, [selectedSites, multiSelect, onChange]);
+
   React.useEffect(() => {
     if (!initialSites) {
       return;
@@ -180,6 +204,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
+        onChange={onSelectionChange}
       />
     </>
   );
