@@ -166,7 +166,6 @@ import {
 } from "./IControlsTestProps";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import { DragDropFiles } from "../../../DragDropFiles";
 import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 
 // Used to render document card
