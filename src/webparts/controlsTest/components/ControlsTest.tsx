@@ -1334,10 +1334,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <SitePicker
                   context={this.props.context}
                   label={'select sites'}
-                  mode={'web'}
+                  mode={'site'}
                   allowSearch={true}
                   multiSelect={false}
-                  onChange={(sites) => { console.log(sites); }} />
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:

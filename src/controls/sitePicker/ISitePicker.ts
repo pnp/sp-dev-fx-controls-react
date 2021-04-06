@@ -90,5 +90,10 @@ export interface ISitePickerProps {
    * The list will be filtered after users stop typing for `deferredSearchTime` milliseconds.
    * Default value is 200.
    */
-   deferredSearchTime?: number;
+  deferredSearchTime?: number;
+
+  /**
+   * If provided, additional class name to provide on the dropdown element.
+   */
+  className?: string;
 }

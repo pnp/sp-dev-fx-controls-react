@@ -14,7 +14,8 @@ import { Async } from '@uifabric/utilities/lib/Async';
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: '8px'
   },
   searchBox: {
     margin: '4px 0'
@@ -66,10 +67,11 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     onChange,
     placeholder,
     searchPlaceholder,
-    deferredSearchTime
+    deferredSearchTime,
+    className
   } = props;
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isLoading, setIsLoading] = React.useState<boolean>();
   const [selectedSites, setSelectedSites] = React.useState<ISite[]>();
   const [allSites, setAllSites] = React.useState<ISite[]>();
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
@@ -88,9 +90,10 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   }, [allSites]);
 
   const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
-    const newSelectedSites = selectedSites ? [...selectedSites] : [];
+    let newSelectedSites: ISite[] = [];
 
     if (multiSelect !== false) {
+      newSelectedSites = selectedSites ? [...selectedSites] : [];
       const existingIndex = findIndex(newSelectedSites, s => s.url === item.key);
 
       if (existingIndex >= 0) {
@@ -102,6 +105,11 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         });
       }
     }
+    else {
+      newSelectedSites = [{
+        ...item.data!
+      }];
+    }
 
     if (onChange) {
       onChange(newSelectedSites);
@@ -112,6 +120,15 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   }, [selectedSites, multiSelect, onChange]);
 
   const getOptions = React.useCallback((): IDropdownOption[] => {
+
+    if (!allSites) {
+      return [{
+        key: 'spinner',
+        text: '',
+        itemType: SelectableOptionMenuItemType.Header
+      }];
+    }
+
     const result: IDropdownOption[] = [];
 
     if (allowSearch) {
@@ -136,7 +153,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     }
 
     return result;
-  }, [allowSearch, selectedSites, filteredSites]);
+  }, [allowSearch, selectedSites, filteredSites, allSites]);
 
   const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
     if (!props) {
@@ -144,11 +161,24 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     }
 
     if (option.itemType === SelectableOptionMenuItemType.Header) {
-      return <SearchBox
-        placeholder={searchPlaceholder}
-        value={searchQuery}
-        onChange={async.debounce(onSearchChange, deferredSearchTime || 200)}
-        className={styles.searchBox} />;
+      if (option.key === 'search') {
+        return <SearchBox
+          placeholder={searchPlaceholder}
+          value={searchQuery}
+          onChange={async.debounce(onSearchChange, deferredSearchTime || 200)}
+          className={styles.searchBox} />;
+      }
+      else if (option.key === 'spinner') {
+        //
+        // This happens when the dropdown is opened for the first time.
+        // That's when we want to load the sites
+        //
+        setIsLoading(true);
+
+        return <div className={styles.loadingSpinnerContainer}>
+          <Spinner size={SpinnerSize.medium} />
+        </div>;
+      }
     }
     // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
     return <div className={styles.siteOption}>
@@ -174,11 +204,10 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   }, [initialSites]);
 
   React.useEffect(() => {
-    if (!context) {
+    if (!context || !isLoading) {
       return;
     }
 
-    setIsLoading(true);
     setSearchQuery('');
     setFilteredSites([]);
 
@@ -195,7 +224,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       setAllSites(copy);
       setIsLoading(false);
     });
-  }, [context, mode, limitToCurrentSiteCollection]);
+
+  }, [context, isLoading, mode, limitToCurrentSiteCollection]);
 
   React.useEffect(() => {
     setAllSites(sites => {
@@ -215,12 +245,6 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     setFilteredSites([...allSites]);
   }, [allSites]);
 
-  if (isLoading) {
-    return <div className={styles.loadingSpinnerContainer}>
-      <Spinner size={SpinnerSize.medium} />
-    </div>;
-  }
-
   return (
     <>
       <Dropdown
@@ -228,12 +252,13 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         placeholder={placeholder}
         options={getOptions()}
         selectedKey={multiSelect === false && !!selectedSites && !!selectedSites[0] ? selectedSites[0].url : undefined}
-        selectedKeys = { multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.url) : undefined }
+        selectedKeys={multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.url) : undefined}
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
         onChange={onSelectionChange}
         notifyOnReselect={true}
+        className={className}
       />
     </>
   );
