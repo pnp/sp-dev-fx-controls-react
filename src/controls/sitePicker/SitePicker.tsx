@@ -16,6 +16,9 @@ const styles = mergeStyleSets({
     width: '100%',
     textAlign: 'center'
   },
+  searchBox: {
+    margin: '4px 0'
+  },
   siteOption: {
     display: 'flex',
     whiteSpace: 'nowrap',
@@ -81,8 +84,6 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     const newFilteredSites = allSites.filter(s => s.title && s.title.toLowerCase().indexOf(loweredNewSearchQuery) !== -1);
 
     setSearchQuery(newSearchQuery);
-    // hack to make dropdown update
-    setFilteredSites([]);
     setFilteredSites(newFilteredSites);
   }, [allSites]);
 
@@ -90,7 +91,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     const newSelectedSites = selectedSites ? [...selectedSites] : [];
 
     if (multiSelect !== false) {
-      const existingIndex = findIndex(newSelectedSites, s => s.id === item.key);
+      const existingIndex = findIndex(newSelectedSites, s => s.url === item.key);
 
       if (existingIndex >= 0) {
         newSelectedSites.splice(existingIndex, 1);
@@ -121,20 +122,19 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       });
     }
 
-    const selectedSitesIds: string[] = selectedSites ? selectedSites.map(s => s.id!) : [];
+    const selectedSitesIds: string[] = selectedSites ? selectedSites.map(s => s.url!) : [];
 
     if (filteredSites) {
       filteredSites.forEach(s => {
         result.push({
-          key: s.id,
+          key: s.url,
           text: s.title,
           data: s,
-          selected: selectedSitesIds.indexOf(s.id) !== -1
+          selected: selectedSitesIds.indexOf(s.url) !== -1
         });
       });
     }
 
-    console.log(result);
     return result;
   }, [allowSearch, selectedSites, filteredSites]);
 
@@ -147,7 +147,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       return <SearchBox
         placeholder={searchPlaceholder}
         value={searchQuery}
-        onChange={async.debounce(onSearchChange, deferredSearchTime || 200)} />;
+        onChange={async.debounce(onSearchChange, deferredSearchTime || 200)}
+        className={styles.searchBox} />;
     }
     // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
     return <div className={styles.siteOption}>
@@ -226,8 +227,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         label={label}
         placeholder={placeholder}
         options={getOptions()}
-        selectedKey={multiSelect === false && !!selectedSites && !!selectedSites[0] ? selectedSites[0].id : undefined}
-        selectedKeys = { multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.id) : undefined }
+        selectedKey={multiSelect === false && !!selectedSites && !!selectedSites[0] ? selectedSites[0].url : undefined}
+        selectedKeys = { multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.url) : undefined }
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
