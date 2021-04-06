@@ -9,6 +9,7 @@ import orderBy from 'lodash/orderBy';
 import findIndex from 'lodash/findIndex';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
+import { Async } from '@uifabric/utilities/lib/Async';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -44,6 +45,8 @@ const styles = mergeStyleSets({
   }
 });
 
+const async = new Async();
+
 export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: React.PropsWithChildren<ISitePickerProps>) => {
 
   const {
@@ -57,7 +60,10 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     allowSearch,
     orderBy: propOrderBy,
     isDesc,
-    onChange
+    onChange,
+    placeholder,
+    searchPlaceholder,
+    deferredSearchTime
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -66,49 +72,19 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
 
-  const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
-    if (!props) {
-      return null;
+  const onSearchChange = React.useCallback((newSearchQuery: string) => {
+    if (!allSites) {
+      return;
     }
 
-    if (option.itemType === SelectableOptionMenuItemType.Header) {
-      return <SearchBox />;
-    }
-    // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
-    return <div className={styles.siteOption}>
-      <div className={styles.siteOptionContent}>
-        <span className={styles.siteOptionTitle}>{option.text}</span>
-        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data!.url)}</span>
-      </div>
-    </div>;
-  };
+    const loweredNewSearchQuery = newSearchQuery.toLowerCase();
+    const newFilteredSites = allSites.filter(s => s.title && s.title.toLowerCase().indexOf(loweredNewSearchQuery) !== -1);
 
-  const getOptions = (): IDropdownOption[] => {
-    const result: IDropdownOption[] = [];
-
-    if (allowSearch) {
-      result.push({
-        key: 'search',
-        text: '',
-        itemType: SelectableOptionMenuItemType.Header
-      });
-    }
-
-    const selectedSitesIds: string[] = selectedSites ? selectedSites.map(s => s.id!) : [];
-
-    if (filteredSites) {
-      filteredSites.forEach(s => {
-        result.push({
-          key: s.id,
-          text: s.title,
-          data: s,
-          selected: selectedSitesIds.indexOf(s.id) !== -1
-        });
-      });
-    }
-
-    return result;
-  };
+    setSearchQuery(newSearchQuery);
+    // hack to make dropdown update
+    setFilteredSites([]);
+    setFilteredSites(newFilteredSites);
+  }, [allSites]);
 
   const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
     const newSelectedSites = selectedSites ? [...selectedSites] : [];
@@ -133,6 +109,54 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     setSelectedSites(newSelectedSites);
 
   }, [selectedSites, multiSelect, onChange]);
+
+  const getOptions = React.useCallback((): IDropdownOption[] => {
+    const result: IDropdownOption[] = [];
+
+    if (allowSearch) {
+      result.push({
+        key: 'search',
+        text: '',
+        itemType: SelectableOptionMenuItemType.Header
+      });
+    }
+
+    const selectedSitesIds: string[] = selectedSites ? selectedSites.map(s => s.id!) : [];
+
+    if (filteredSites) {
+      filteredSites.forEach(s => {
+        result.push({
+          key: s.id,
+          text: s.title,
+          data: s,
+          selected: selectedSitesIds.indexOf(s.id) !== -1
+        });
+      });
+    }
+
+    console.log(result);
+    return result;
+  }, [allowSearch, selectedSites, filteredSites]);
+
+  const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
+    if (!props) {
+      return null;
+    }
+
+    if (option.itemType === SelectableOptionMenuItemType.Header) {
+      return <SearchBox
+        placeholder={searchPlaceholder}
+        value={searchQuery}
+        onChange={async.debounce(onSearchChange, deferredSearchTime || 200)} />;
+    }
+    // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
+    return <div className={styles.siteOption}>
+      <div className={styles.siteOptionContent}>
+        <span className={styles.siteOptionTitle}>{option.text}</span>
+        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data!.url)}</span>
+      </div>
+    </div>;
+  };
 
   React.useEffect(() => {
     if (!initialSites) {
@@ -200,11 +224,15 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     <>
       <Dropdown
         label={label}
+        placeholder={placeholder}
         options={getOptions()}
+        selectedKey={multiSelect === false && !!selectedSites && !!selectedSites[0] ? selectedSites[0].id : undefined}
+        selectedKeys = { multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.id) : undefined }
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
         onChange={onSelectionChange}
+        notifyOnReselect={true}
       />
     </>
   );

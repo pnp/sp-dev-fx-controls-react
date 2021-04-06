@@ -72,7 +72,23 @@ export interface ISitePickerProps {
   isDesc?: boolean;
 
   /**
-   * selection change handler
+   * Selection change handler
    */
   onChange: (selectedSites: ISite[]) => void;
+
+  /**
+   * Input placeholder text. Displayed until option is selected.
+   */
+  placeholder?: string;
+
+  /**
+   * Search input placeholder text. Displayed until search text is entered.
+   */
+  searchPlaceholder?: string;
+
+  /**
+   * The list will be filtered after users stop typing for `deferredSearchTime` milliseconds.
+   * Default value is 200.
+   */
+   deferredSearchTime?: number;
 }
