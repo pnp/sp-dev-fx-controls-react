@@ -26,7 +26,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
  private displayFileNames = (filesResult) =>{
   const result = [];
   for (var i = 0; i < filesResult.length; i++) {
-    result.push(<div className={styles.localTabFilename}>{filesResult[i].name}</div>);
+    result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].name}</div>);
   }
   return result;
 }
@@ -49,11 +49,11 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
               {strings.UploadLinkLabel+" "+strings.OneDriveRootFolderName}
             </div>
           </DragDropFiles>
-          
+
           <div>
             {(filesResult) ? this.displayFileNames(filesResult) : ""}
           </div>
-          
+
           {this.props.renderCustomMultipleUploadTabContent && this.props.renderCustomMultipleUploadTabContent(this.state.filePickerResult)}
         </div>
         <div className={styles.actionButtonsContainer}>
