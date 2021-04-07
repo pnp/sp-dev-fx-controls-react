@@ -33,7 +33,7 @@ import RecentFilesTab from "./RecentFilesTab/RecentFilesTab";
 import SiteFilePickerTab from "./SiteFilePickerTab/SiteFilePickerTab";
 import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
-import MultipleUploadFilePicketTab from "./MultipleUploadFilePicketTab/MultipleUploadFilePicketTab";
+import MultipleUploadFilePickerTab from "./MultipleUploadFilePickerTab/MultipleUploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
 
 // Localization
@@ -210,7 +210,7 @@ export class FilePicker extends React.Component<
               />
             )}
             {this.state.selectedTab === "keyMultipleUpload" && (
-              <MultipleUploadFilePicketTab
+              <MultipleUploadFilePickerTab
                 renderCustomMultipleUploadTabContent={
                   this.props.renderCustomMultipleUploadTabContent
                 }

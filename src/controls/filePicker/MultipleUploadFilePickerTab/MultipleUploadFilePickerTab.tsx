@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { IMultipleUploadFilePicketTabProps } from './IMultipleUploadFilePicketTabProps';
-import { IMultipleUploadFilePickerTabState } from './IMultipleUploadFilePicketTabState';
+import { IMultipleUploadFilePickerTabProps } from './IMultipleUploadFilePickerTabProps';
+import { IMultipleUploadFilePickerTabState } from './IMultipleUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -9,12 +9,12 @@ import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { DragDropFiles } from '../../dragDropFiles/DragDropFiles';
 
 import * as strings from 'ControlStrings';
-import styles from './MultipleUploadFilePicketTab.module.scss';
+import styles from './MultipleUploadFilePickerTab.module.scss';
 
 
 
-export default class MultipleUploadFilePicketTab extends React.Component<IMultipleUploadFilePicketTabProps, IMultipleUploadFilePickerTabState> {
-  constructor(props: IMultipleUploadFilePicketTabProps) {
+export default class MultipleUploadFilePickerTab extends React.Component<IMultipleUploadFilePickerTabProps, IMultipleUploadFilePickerTabState> {
+  constructor(props: IMultipleUploadFilePickerTabProps) {
     super(props);
     this.state = {
       filePickerResult: undefined
@@ -24,12 +24,12 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   private displayFileNames = (filesResult) => {
     const result = [];
     for (var i = 0; i < filesResult.length; i++) {
-      result.push(<div className={styles.localTabFilename}>{filesResult[i].name}</div>);
+      result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].name}</div>);
     }
     return result;
   }
 
-  public render(): React.ReactElement<IMultipleUploadFilePicketTabProps> {
+  public render(): React.ReactElement<IMultipleUploadFilePickerTabProps> {
     const { filesResult } = this.state;
     const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
 
