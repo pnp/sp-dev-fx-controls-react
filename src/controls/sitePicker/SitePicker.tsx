@@ -132,7 +132,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
 
     const result: IDropdownOption[] = [];
 
-    if (allowSearch) {
+    if (allowSearch !== false) {
       result.push({
         key: 'search',
         text: '',
@@ -222,7 +222,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       promise = getHubSites(context);
     }
     else {
-      promise = getAllSites(context, mode === 'web', limitToCurrentSiteCollection);
+      promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection);
     }
 
     promise.then(sites => {
