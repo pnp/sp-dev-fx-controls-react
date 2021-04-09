@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { IMultipleUploadFilePicketTabProps } from './IMultipleUploadFilePicketTabProps';
-import { IUploadFilePickerTabState } from './IMultipleUploadFilePicketTabState';
+import { IMultipleUploadFilePickerTabProps } from './IMultipleUploadFilePickerTabProps';
+import { IMultipleUploadFilePickerTabState } from './IMultipleUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
@@ -9,14 +9,14 @@ import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { DragDropFiles } from '../../dragDropFiles/DragDropFiles';
 
 import * as strings from 'ControlStrings';
-import styles from './MultipleUploadFilePicketTab.module.scss';
+import styles from './MultipleUploadFilePickerTab.module.scss';
 
 
 
-export default class MultipleUploadFilePicketTab extends React.Component<IMultipleUploadFilePicketTabProps, IUploadFilePickerTabState> {
+export default class MultipleUploadFilePicketTab extends React.Component<IMultipleUploadFilePickerTabProps, IMultipleUploadFilePickerTabState> {
   private _files: File[] = [];
 
-  constructor(props: IMultipleUploadFilePicketTabProps) {
+  constructor(props: IMultipleUploadFilePickerTabProps) {
     super(props);
     this.state = {
       filePickerResult: undefined
@@ -31,7 +31,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   return result;
 }
 
-  public render(): React.ReactElement<IMultipleUploadFilePicketTabProps> {
+  public render(): React.ReactElement<IMultipleUploadFilePickerTabProps> {
     const { filesResult } = this.state;
     const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
 
