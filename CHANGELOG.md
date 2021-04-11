@@ -16,10 +16,11 @@
 
 - `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
 - `TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)
+- `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Yannick Reekmans](https://github.com/YannickRe).
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [cwparsons](https://github.com/cwparsons), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 2.6.0
 
