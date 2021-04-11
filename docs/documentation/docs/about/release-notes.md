@@ -1,5 +1,23 @@
 # Releases
 
+## 3.1.0
+
+### New control(s)
+
+- `TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
+- `TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
+- `SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)
+
+### Fixes
+
+- Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)
+- Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)
+- `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https://github.com/AriGunawan), [aroraans1512](https://github.com/aroraans1512), [joaojmendes](https://github.com/joaojmendes).
+
 ## 3.0.0
 
 ### Enhancements
