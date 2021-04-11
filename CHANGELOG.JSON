@@ -6,7 +6,8 @@
         "new": [
           "`TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
           "`TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
-          "`SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)"
+          "`SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)",
+          "`DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) "
         ],
         "enhancements": [],
         "fixes": [
@@ -20,6 +21,7 @@
         "[Ari Gunawan](https://github.com/AriGunawan)",
         "[aroraans1512](https://github.com/aroraans1512)",
         "[joaojmendes](https://github.com/joaojmendes)",
+        "[Marcin Wojciechowski](https://github.com/mgwojciech)",
         "[Yannick Reekmans](https://github.com/YannickRe)"
       ]
     },
