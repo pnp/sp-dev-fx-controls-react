@@ -33,6 +33,7 @@ import RecentFilesTab from "./RecentFilesTab/RecentFilesTab";
 import SiteFilePickerTab from "./SiteFilePickerTab/SiteFilePickerTab";
 import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
+import MultipleUploadFilePickerTab from "./MultipleUploadFilePickerTab/MultipleUploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
 
 // Localization
@@ -64,7 +65,7 @@ import WebSearchTab from "./WebSearchTab/WebSearchTab";
 export class FilePicker extends React.Component<
   IFilePickerProps,
   IFilePickerState
-> {
+  > {
   private fileBrowserService: FileBrowserService;
   private oneDriveService: OneDriveService;
   private orgAssetsService: OrgAssetsService;
@@ -160,8 +161,8 @@ export class FilePicker extends React.Component<
         {this.props.buttonIcon || this.props.buttonIconProps ? (
           <ActionButton iconProps={buttonIconProps} {...buttonProps} />
         ) : (
-          <PrimaryButton {...buttonProps} />
-        )}
+            <PrimaryButton {...buttonProps} />
+          )}
 
         <Panel
           isOpen={this.state.panelOpen}
@@ -203,6 +204,15 @@ export class FilePicker extends React.Component<
               <UploadFilePickerTab
                 renderCustomUploadTabContent={
                   this.props.renderCustomUploadTabContent
+                }
+                {...linkTabProps}
+                onChange={this._handleOnChange}
+              />
+            )}
+            {this.state.selectedTab === "keyMultipleUpload" && (
+              <MultipleUploadFilePickerTab
+                renderCustomMultipleUploadTabContent={
+                  this.props.renderCustomMultipleUploadTabContent
                 }
                 {...linkTabProps}
                 onChange={this._handleOnChange}
@@ -389,6 +399,14 @@ export class FilePicker extends React.Component<
         icon: "System",
       });
     }
+    if (!this.props.hideLocalMultipleUploadTab) {
+      links.push({
+        name: strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName,
+        url: addUrl ? "#Multipleupload" : undefined,
+        key: "keyMultipleUpload",
+        icon: "BulkUpload",
+      });
+    }
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
@@ -430,5 +448,9 @@ export class FilePicker extends React.Component<
     if (!props.hideLinkUploadTab) {
       return "keyLink";
     }
+    if (!props.hideLocalMultipleUploadTab) {
+      return "keyMultipleUpload";
+    }
+
   }
 }

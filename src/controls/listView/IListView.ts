@@ -86,9 +86,7 @@ export interface IListViewState {
   columns?: IColumn[];
 
   groups?: IGroup[];
-
-  dragStatus?: boolean;
-
+  
 }
 
 export interface IGrouping {
