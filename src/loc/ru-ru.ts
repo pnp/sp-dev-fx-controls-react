@@ -2,6 +2,9 @@ declare var define: any;
 
 define([], () => {
   return {
+  MyTeamsMessageDontHaveTeams: "You don't have any teams",
+  MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
+  MyTeamsNoTeamsMessage: "You don't have any teams",
   "SiteBreadcrumbLabel": "Цепочка навигации сайта",
   "ListViewGroupEmptyLabel": "Не назначено",
   "WebPartTitlePlaceholder": "Заголовок веб-части",

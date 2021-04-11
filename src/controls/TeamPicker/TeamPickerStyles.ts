@@ -7,9 +7,11 @@ import {
   mergeStyleSets,
 } from "office-ui-fabric-react/lib/Styling";
 import { Theme } from "spfx-uifabric-themes";
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
+const theme = window.__themeState__.theme;
 
-export const useTeamPickerStyles = (theme: Theme | undefined) => {
+export const useTeamPickerStyles = (themeVariant:  IReadonlyTheme | undefined) => {
   const textHeaderStyles: Partial<ITextStyles> = {
     root: { color: theme?.themePrimary },
   };
@@ -30,7 +32,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
       marginLeft: 5,
       marginBottom: 5,
       cursor: "default",
-      backgroundColor: theme.themeLighterAlt,
+      backgroundColor: themeVariant?.palette?.themeLighterAlt ?? theme.themeLighterAlt,
       ":hover": {
         backgroundColor: theme.themeLighter,
       },
@@ -44,9 +46,9 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
       paddingLeft: 10,
       cursor: "default",
       margin: 2,
-      backgroundColor: theme.themeLighterAlt,
+      backgroundColor: themeVariant?.palette?.themeLighterAlt ?? theme.themeLighterAlt,
       ":hover": {
-        backgroundColor: theme.themeLighter,
+        backgroundColor: themeVariant?.palette?.themeLighter ?? theme.themeLighter,
       },
     },
   };
@@ -60,7 +62,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
 
     input: {
       width: "100%",
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
     },
     itemsWrapper: {
 
@@ -69,18 +71,18 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
-      borderColor: theme.neutralQuaternaryAlt,
+      borderColor: themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor: themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor: themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":after": {
         borderWidth: 0,
@@ -97,7 +99,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
 
     input: {
       width: "100%",
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
     },
     itemsWrapper: {
       padding: 3,
@@ -106,24 +108,24 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
-      borderColor: theme.neutralQuaternaryAlt,
+      borderColor:  themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor: themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor: themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":after": {
         borderStyle: "solid",
         borderWidth: 1,
         // borderColor: theme.neutralQuaternaryAlt,
-        borderColor: theme.themePrimary,
+        borderColor:themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
     },
   };
@@ -140,7 +142,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
       marginLeft: 20,
       marginRight: 20,
       borderBottomWidth: 1,
-      borderBottomColor: theme?.neutralQuaternaryAlt,
+      borderBottomColor:  themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       borderBottomStyle: "solid",
     }),
     filePickerButtonStyles: mergeStyles({
@@ -150,7 +152,7 @@ const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
     iconStyles: {
       paddingLeft: 2,
       fontWeight: 500,
-      color: theme?.themePrimary,
+      color:  themeVariant?.palette?.themePrimary ??  theme?.themePrimary,
     },
   });
 

@@ -87,16 +87,16 @@
           "isDirectDependency": false
         },
         {
-          "componentId": "974a7777-0990-4136-8fa6-95d80114c2e0",
-          "componentName": "@microsoft/sp-webpart-base",
+          "componentId": "467dc675-7cc5-4709-8aac-78e3b71bd2f6",
+          "componentName": "@microsoft/sp-component-base",
           "componentVersion": "1.12.0",
           "isDirectDependency": true
         },
         {
-          "componentId": "467dc675-7cc5-4709-8aac-78e3b71bd2f6",
-          "componentName": "@microsoft/sp-component-base",
+          "componentId": "974a7777-0990-4136-8fa6-95d80114c2e0",
+          "componentName": "@microsoft/sp-webpart-base",
           "componentVersion": "1.12.0",
-          "isDirectDependency": false
+          "isDirectDependency": true
         },
         {
           "componentId": "f97266fb-ccb7-430e-9384-4124d05295d3",

@@ -167,6 +167,7 @@ import {
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
 import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import { MyTeams} from '../../../controls/MyTeams';
 
 // Used to render document card
 /**
@@ -242,12 +243,21 @@ const sampleItems = [
   }
 ];
 
+
+
+
 /**
  * Component that can be used to test out the React controls from this project
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
+
+private   onSelectedChannel = (teamsId:string, channelId:string)=> {
+  alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
+  console.log("TeamsId",teamsId);
+  console.log('ChannelId', channelId);
+}
 
   /**
    * Static array for carousel control example.
@@ -827,12 +837,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           } />
 
 
+      <Stack>
+          <MyTeams title="My Teams" webPartContext={this.props.context}  onSelectedChannel={this.onSelectedChannel} themeVariant={this.props.themeVariant}/>
+      </Stack>
         <Stack
           styles={{ root: { margin: "10px 10px 100px 10px" } }}
           tokens={{ childrenGap:10 }}
         >
           <TeamPicker
             label="Select Team"
+            themeVariant={this.props.themeVariant}
             selectedTeams={this.state.selectedTeam}
             appcontext={this.props.context}
             itemLimit={1}
@@ -846,6 +860,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <>
               <TeamChannelPicker
                 label="Select Team Channel"
+                themeVariant={this.props.themeVariant}
                 selectedChannels={this.state.selectedTeamChannels}
                 teamId={this.state.selectedTeam[0].key}
                 appcontext={this.props.context}
@@ -857,9 +872,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </>
           )}
         </Stack>
-
-
-
 
         <AccessibleAccordion allowZeroExpanded>
           <AccordionItem key={"Headding 1"}>

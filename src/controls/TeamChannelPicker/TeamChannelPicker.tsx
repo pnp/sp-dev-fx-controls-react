@@ -20,6 +20,7 @@ import { useTeamChannelPickerStyles } from "./TeamChannelPickerStyles";
 import { EMembershipType } from "./EMembersipType";
 import pullAllBy from "lodash/pullAllBy";
 import find from "lodash/find";
+import { Customizer } from "office-ui-fabric-react/lib/Utilities";
 const theme = window.__themeState__.theme;
 
 const initialState: ITeamChannelPickerState = {
@@ -49,19 +50,22 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
   const { serviceScope } = props.appcontext;
   const { getTeamChannels } = useTeams(serviceScope);
   const {
-    renderItemStylesSingle,
-    renderItemStylesMulti,
-    pickerStylesMulti,
-    pickerStylesSingle,
-    renderIconButtonRemoveStyles,
-  } = useTeamChannelPickerStyles(theme);
-  const {
     onSelectedChannels,
     selectedChannels,
     itemLimit,
     label,
     styles,
+    themeVariant,
   } = props;
+
+  const {
+    renderItemStylesSingle,
+    renderItemStylesMulti,
+    pickerStylesMulti,
+    pickerStylesSingle,
+    renderIconButtonRemoveStyles,
+    componentClasses
+  } = useTeamChannelPickerStyles(themeVariant);
 
   const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
     suggestionsHeaderText: "Suggested Team Channels",
@@ -121,7 +125,8 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
           <FontIcon
             title="Private Channel"
             iconName="LockSolid"
-            style={{ fontSize: 12, color: theme.themePrimary }}
+            className={componentClasses.iconChannelInfoStyles}
+
           ></FontIcon>
         );
       }
@@ -130,7 +135,8 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
           <FontIcon
             title="Favorite"
             iconName="FavoriteStarFill"
-            style={{ fontSize: 12, color: theme.themePrimary }}
+            className={componentClasses.iconChannelInfoStyles}
+
           ></FontIcon>
         );
       }
@@ -151,13 +157,13 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
         >
           <FontIcon
             iconName="ChatInviteFriend"
-            style={{ fontSize: 14, color: theme.themePrimary }}
+            className={componentClasses.iconChannelItemStyles}
           ></FontIcon>
           {_renderChannelInformation(propsTag)}
         </Stack>
       );
     },
-    [theme]
+    [theme, themeVariant]
   );
 
   // Default RenderItem
@@ -180,7 +186,8 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
           >
             <FontIcon
               iconName="ChatInviteFriend"
-              style={{ fontSize: 14, color: theme.themePrimary }}
+              className={componentClasses.iconChannelItemStyles}
+
             ></FontIcon>
 
             {_renderChannelInformation(itemProps.item)}
@@ -207,35 +214,46 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
         return null;
       }
     },
-    [state.selectedTeamsChannels, props.onSelectedChannels]
+    [
+      state.selectedTeamsChannels,
+      props.onSelectedChannels,
+      themeVariant,
+      renderIconButtonRemoveStyles,
+      renderItemStylesMulti,
+      renderItemStylesSingle,
+    ]
   );
 
   // Render  control
   return (
-    <div style={{ width: "100%" }}>
-      {props.label && <Label>{props.label}</Label>}
-      <TagPicker
-        styles={
-          styles ??
-          (itemLimit && itemLimit > 1 ? pickerStylesMulti : pickerStylesSingle)
-        }
-        selectedItems={state.selectedTeamsChannels}
-        onRenderItem={_onRenderItem}
-        onRenderSuggestionsItem={_onRenderSuggestionsItem}
-        ref={picker}
-        onResolveSuggestions={useFilterSuggestedTeamsChannels}
-        getTextFromItem={getTextFromItem}
-        pickerSuggestionsProps={pickerSuggestionsProps}
-        onEmptyResolveSuggestions={(selectTeams) => {
-          return useFilterSuggestedTeamsChannels("", selectTeams);
-        }}
-        itemLimit={itemLimit ?? undefined}
-        onChange={(items) => {
-          dispatch({ type: "UPDATE_SELECTEITEM", payload: items });
-          onSelectedChannels(items);
-        }}
-        componentRef={picker}
-      />
-    </div>
+    <Customizer settings={{ theme: props.themeVariant }}>
+      <div style={{ width: "100%" }}>
+        {props.label && <Label>{props.label}</Label>}
+        <TagPicker
+          styles={
+            styles ??
+            (itemLimit && itemLimit > 1
+              ? pickerStylesMulti
+              : pickerStylesSingle)
+          }
+          selectedItems={state.selectedTeamsChannels}
+          onRenderItem={_onRenderItem}
+          onRenderSuggestionsItem={_onRenderSuggestionsItem}
+          ref={picker}
+          onResolveSuggestions={useFilterSuggestedTeamsChannels}
+          getTextFromItem={getTextFromItem}
+          pickerSuggestionsProps={pickerSuggestionsProps}
+          onEmptyResolveSuggestions={(selectTeams) => {
+            return useFilterSuggestedTeamsChannels("", selectTeams);
+          }}
+          itemLimit={itemLimit ?? undefined}
+          onChange={(items) => {
+            dispatch({ type: "UPDATE_SELECTEITEM", payload: items });
+            onSelectedChannels(items);
+          }}
+          componentRef={picker}
+        />
+      </div>
+    </Customizer>
   );
 };

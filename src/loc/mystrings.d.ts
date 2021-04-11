@@ -1,4 +1,6 @@
 declare interface IControlStrings {
+  MyTeamsMessageError:string;
+  MyTeamsNoTeamsMessage:string;
   PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
 
@@ -8,7 +10,6 @@ declare interface IControlStrings {
   peoplePickerSuggestionsHeaderText: string;
   genericNoResultsFoundText: string;
   peoplePickerLoadingText: string;
-
 
   SiteBreadcrumbLabel: string;
   ListViewGroupEmptyLabel: string;
@@ -355,7 +356,7 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_Today: string;
 }
 
-declare module 'ControlStrings' {
+declare module "ControlStrings" {
   const strings: IControlStrings;
   export = strings;
 }

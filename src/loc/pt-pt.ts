@@ -2,6 +2,9 @@ declare var define: any;
 
 define([], () => {
   return {
+MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
+
+  MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",
   "SiteBreadcrumbLabel": "Site pãora",
   "ListViewGroupEmptyLabel": "Vazio",
   "WebPartTitlePlaceholder": "Título da parte da Web",
@@ -312,6 +315,7 @@ define([], () => {
   "WebSearchLinkLabel": "Pesquisa na Web",
   "Yes": "Sim",
   "SelectedLabel": "Selecionado",
-  "SelectIcon": "Selecionar ícone"
+  "SelectIcon": "Selecionar ícone",
+
 };
 });
