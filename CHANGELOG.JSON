@@ -12,13 +12,15 @@
         "fixes": [
           "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
           "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)",
-          "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)"
+          "`PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)",
+          "`TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)"
         ]
       },
       "contributions": [
         "[Ari Gunawan](https://github.com/AriGunawan)",
         "[aroraans1512](https://github.com/aroraans1512)",
-        "[joaojmendes](https://github.com/joaojmendes)"
+        "[joaojmendes](https://github.com/joaojmendes)",
+        "[Yannick Reekmans](https://github.com/YannickRe)"
       ]
     },
     {
