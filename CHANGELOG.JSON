@@ -5,7 +5,8 @@
       "changes": {
         "new": [
           "`DragDropFiles`: new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)",
-          "`SitePicker` new Site Picker control [#867](https://github.com/pnp/sp-dev-fx-controls-react/pull/867)"
+          "`SitePicker` new Site Picker control [#867](https://github.com/pnp/sp-dev-fx-controls-react/pull/867)",
+          "`Controls` Add locale strings for pt-br [#865](https://github.com/pnp/sp-dev-fx-controls-react/pull/865)"
         ],
         "enhancements": [
           "`ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)",
