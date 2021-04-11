@@ -34,7 +34,7 @@ import { TreeView, ITreeItem, TreeViewSelectionMode } from "@pnp/spfx-controls-r
     items={treeitems}
     defaultExpanded={false}
     selectionMode={TreeViewSelectionMode.Multiple}
-    selectChildrenIfParentSelected={true}
+    selectChildrenMode={SelectChildrenMode.Select | SelectChildrenMode.Unselect}
     showCheckboxes={true}
     treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
     defaultSelectedKeys={['key1', 'key2']}
@@ -91,7 +91,8 @@ The `TreeView` control can be configured with the following properties:
 | items                          | ITreeItem[]                | yes      | An array of tree items to display. refer [example](#example-of-array-of-tree-items-used-to-render-control-as-in-first-screenshot). |
 | defaultExpanded                | boolean                    | no       | Specify if the tree items are displayed as expanded by default (defaults to false.                                                |
 | selectionMode                  | enum                       | no       | Specifies the selection mode of tree view (defaults to Single selection).                                                            |
-| selectChildrenIfParentSelected | boolean                    | no       | Specifies if the childrens should be selected when parent item is selected (defaults to false).                                      |
+| selectChildrenIfParentSelected | boolean                    | no       | Specifies if the children should be selected when parent item is selected (defaults to false). __Deprecated__: prefer usage of `selectChildrenMode` for more flexibility.                                      |
+| selectChildrenMode | SelectChildrenMode                    | no       | Specifies if the children should be selected when parent item is selected (defaults to None). Flagged enum, values can be combined eg. `SelectChildrenMode.Select \| SelectChildrenMode.Unselect`                                     |
 | showCheckboxes                 | boolean                    | yes      | Specify if the checkboxes should be displayed for selection.                                                                       |
 | treeItemActionsDisplayMode     | TreeItemActionsDisplayMode | no       | Specifies the display mode of the tree item actions.                                                                                 |
 | defaultSelectedKeys            | string[]                   | no       | Specifies keys of items to be selected by default.                                                                                   |
@@ -110,6 +111,19 @@ Specifies the selection mode of tree item.
 | Single   |
 | Multiple |
 | None     |
+
+Enum `SelectChildrenMode`
+
+Specifies when the children of a selected item need to be automatically selected.
+
+| Value    | Description                                                      |
+|----------|------------------------------------------------------------------|
+| None   | Children are never selected                                        |
+| Select | When selecting an item, its children are also selected             |
+| Unselect     | When unselecting an item, its children are also unselected   |
+| Mount     | When the component is mounted, all children of selected items are also selected |
+| Update     | When the component receives new props, all children of selected items are also selected |
+| All     | Shorthand for a combination of all of the above, same as `SelectChildrenMode.Select \| SelectChildrenMode.Unselect \| SelectChildrenMode.Mount \| SelectChildrenMode.Update` |                    |
 
 Interface `ITreeItem`
 

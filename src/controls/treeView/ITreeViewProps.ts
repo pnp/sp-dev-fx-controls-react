@@ -10,6 +10,15 @@ export enum TreeViewSelectionMode {
   None = 2
 }
 
+export enum SelectChildrenMode {
+  None = 0,
+  Select = 1 << 0, // 0001
+  Unselect = 1 << 1,     // 0010
+  Mount = 1 << 2,    // 0100
+  Update = 1 << 3,   // 1000
+  All = ~(~0 << 4)   // 1111
+}
+
 /**
  * TreeView properties interface
  */
@@ -29,10 +38,16 @@ export interface ITreeViewProps {
    */
   selectionMode?: TreeViewSelectionMode;
   /**
+   * @deprecated Use selectChildrenMode instead.
    * Specifies if the childrens should be selected when parent is selected.
    * By default this is set to false.
    */
   selectChildrenIfParentSelected?: boolean;
+    /**
+   * Specifies if the childrens should be selected when parent is selected. Flagged enum, so values can be combined eg. SelectChildrenMode.Select | SelectChildrenMode.Unselect
+   * By default this is set to None.
+   */
+  selectChildrenMode?: SelectChildrenMode;
   /**
   * Specifies if the checkboxes should be displayed for selection.
   */
