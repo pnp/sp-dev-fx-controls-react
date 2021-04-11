@@ -2,9 +2,24 @@
 
 ## 2.7.0
 
+### New control(s)
+
+- `DragDropFiles`: new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `SitePicker` new Site Picker control [#867](https://github.com/pnp/sp-dev-fx-controls-react/pull/867)
+
+### Enhancements
+
+- `ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `FilePicker`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+
 ### Fixes
 
 - `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+- `TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 2.6.0
 
