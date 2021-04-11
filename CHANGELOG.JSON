@@ -7,9 +7,13 @@
           "`TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
           "`TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
           "`SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)",
-          "`DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) "
+          "`DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) ",
+          "`DragDropFiles`: new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)"
         ],
-        "enhancements": [],
+        "enhancements": [
+          "`ListView`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)",
+          "`FilePicker`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)"
+        ],
         "fixes": [
           "Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)",
           "Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)",
@@ -26,7 +30,8 @@
         "[joaojmendes](https://github.com/joaojmendes)",
         "[Kunj Balkrishna Sangani](https://github.com/kunj-sangani)",
         "[Marcin Wojciechowski](https://github.com/mgwojciech)",
-        "[Yannick Reekmans](https://github.com/YannickRe)"
+        "[Yannick Reekmans](https://github.com/YannickRe)",
+        "[André Lage](https://github.com/aaclage)"
       ]
     },
     {
