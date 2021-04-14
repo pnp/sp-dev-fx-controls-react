@@ -838,7 +838,7 @@ private   onSelectedChannel = (teamsId:string, channelId:string)=> {
 
 
       <Stack>
-          <MyTeams title="My Teams" webPartContext={this.props.context}  onSelectedChannel={this.onSelectedChannel} themeVariant={this.props.themeVariant}/>
+          <MyTeams title="My Teams" webPartContext={this.props.context}  themeVariant={this.props.themeVariant} enablePersonCardInteraction={true}/>
       </Stack>
         <Stack
           styles={{ root: { margin: "10px 10px 100px 10px" } }}

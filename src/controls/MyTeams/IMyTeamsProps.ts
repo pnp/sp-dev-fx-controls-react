@@ -20,4 +20,8 @@ export interface IMyTeamsProps {
      *  onSelectedChannel callBack return teamId and ChannelId if this is not defined default handler open channel
      */
   onSelectedChannel?: (teamsId:string, channelId:string) => void;
+   /**
+     *  Enable Hover Card on Person
+     */
+  enablePersonCardInteraction?: boolean;
 }

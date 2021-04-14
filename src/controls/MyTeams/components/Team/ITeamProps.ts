@@ -6,4 +6,5 @@ export interface ITeamProps {
   serviceScope: ServiceScope;
   onSelectedChannel?: (teamId:string, channelId:string) => void;
   themeVariant: IReadonlyTheme;
+  enablePersonCardInteraction?: boolean;
 }

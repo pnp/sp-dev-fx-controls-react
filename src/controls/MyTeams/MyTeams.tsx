@@ -34,7 +34,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
     titleStyles,
   } = getMyTeamsStyles(props.themeVariant);
 
-  const { title, webPartContext, onSelectedChannel, themeVariant } = props;
+  const { title, webPartContext, onSelectedChannel, themeVariant, enablePersonCardInteraction } = props;
   const [state, dispatch] = React.useReducer(myTeamsReducer, initialState);
 
   Providers.globalProvider = React.useMemo(() => {
@@ -94,7 +94,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
 
   return (
     <>
-      <Customizer settings={{ theme: props.themeVariant }}>
+      <Customizer settings={{ theme:  themeVariant }}>
         <Stack styles={stackStyles} tokens={stackTokens}>
           <Text variant={"xLargePlus"} styles={titleStyles}>
             {title}
@@ -133,6 +133,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
                       serviceScope={webPartContext.serviceScope}
                       themeVariant={themeVariant}
                       onSelectedChannel={onSelectedChannel}
+                      enablePersonCardInteraction={enablePersonCardInteraction}
                     ></Team>
                   );
                 })
