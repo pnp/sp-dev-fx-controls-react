@@ -6,10 +6,8 @@ import {
 } from "office-ui-fabric-react/lib/Styling";
 import { ITextStyles } from "office-ui-fabric-react/lib/Text";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
-import {Theme} from 'spfx-uifabric-themes';
 const currentTheme = window.__themeState__.theme;
 export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
-
   const commentTextStyles: ITextStyles = {
     root: {
       marginBottom: 15,
@@ -45,7 +43,8 @@ export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
     separator: mergeStyles({
       borderBottomStyle: "solid",
       borderWidth: 1,
-      borderBottomColor: themeVariant?.palette?.themeLighter ?? currentTheme.themeLighter,
+      borderBottomColor:
+        themeVariant?.palette?.themeLighter ?? currentTheme.themeLighter,
     }),
 
     styleIcon: mergeStyles({
@@ -53,7 +52,8 @@ export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
       minWidth: 44,
       minHeight: 30,
       height: 30,
-      borderColor: themeVariant?.palette?.themePrimary ??  currentTheme.themePrimary,
+      borderColor:
+        themeVariant?.palette?.themePrimary ?? currentTheme.themePrimary,
       borderRightWidth: 0,
       borderRightStyle: "none",
       borderLeftWidth: 1,
@@ -94,10 +94,13 @@ export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
 
       borderStyle: "solid",
       borderWidth: 1,
-      borderColor: themeVariant?.palette?.neutralQuaternaryAlt ?? currentTheme.neutralQuaternaryAlt,
+      borderColor:
+        themeVariant?.palette?.neutralQuaternaryAlt ??
+        currentTheme.neutralQuaternaryAlt,
       borderLeftStyle: "solid",
       borderLeftWidth: 3,
-      borderLeftColor: themeVariant?.palette?.themePrimary ?? currentTheme.themePrimary,
+      borderLeftColor:
+        themeVariant?.palette?.themePrimary ?? currentTheme.themePrimary,
       margin: 3,
 
       backgroundColor: themeVariant?.palette?.white ?? currentTheme.white,
@@ -107,7 +110,8 @@ export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
         borderWidth: 1,
         borderLeftStyle: "solid",
         borderLeftWidth: 3,
-        borderColor: themeVariant?.palette?.themePrimary ??  currentTheme.themePrimary,
+        borderColor:
+          themeVariant?.palette?.themePrimary ?? currentTheme.themePrimary,
       },
     }),
   });

@@ -8,7 +8,7 @@ export const teamsReducer = (
     case ETeamTypes.SET_TEAM_MEMBERS:
       return { ...state, teamMembers: action.payload };
     case ETeamTypes.SET_TEAM_OWNERS:
-      return { ...state, teamOwners: action.payload };
+      return { ...state, teamsOwners: action.payload };
       case ETeamTypes.SET_TEAM_CHANNELS:
       return { ...state, channelsMenu: action.payload };
     case ETeamTypes.SET_HAS_ERROR:
