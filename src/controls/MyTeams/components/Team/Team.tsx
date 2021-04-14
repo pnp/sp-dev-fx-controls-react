@@ -9,7 +9,6 @@ import { Stack, StackItem } from "office-ui-fabric-react/lib/Stack";
 import {
   IContextualMenuItem,
   IContextualMenuItemProps,
-  IContextualMenuProps,
   ContextualMenuItemType,
 } from "office-ui-fabric-react/lib/ContextualMenu";
 
@@ -19,24 +18,36 @@ import { EMembershipType } from "../../../../common/model/EMembersipType";
 import { IShowMessageProps, ShowMessage } from "../ShowMessage";
 import { MessageBarType } from "office-ui-fabric-react";
 import strings from "ControlStrings";
+import { ITeamState } from "./ITeamState";
+import { teamsReducer } from "./TeamReducer";
+import { ETeamTypes } from "./ETeamTypes";
+
+const initialState: ITeamState = {
+  teamMembers: [],
+  teamsOwners: undefined,
+  channelsMenu: { items: [] },
+  hasError: false,
+  isLoading: true,
+  message: undefined,
+};
 
 export const Team: React.FunctionComponent<ITeamProps> = (
   props: React.PropsWithChildren<ITeamProps>
 ) => {
-  const { styleClasses } = getMyTeamsStyles(props.themeVariant);
+  const {
+    team,
+    serviceScope,
+    onSelectedChannel,
+    themeVariant,
+    enablePersonCardInteraction,
+  } = props;
+  const { styleClasses } = getMyTeamsStyles(themeVariant);
 
-  const { team, serviceScope, onSelectedChannel } = props;
   const { getTeamMembers, getTeamChannels, getTeamOwners } = useTeams(
     serviceScope
   );
-  const [teamMembers, setTeamMembers] = React.useState<string[]>([]);
-  const [teamsOwners, setTeamOwners] = React.useState<string>("");
-  const [channelsMenu, setChannelsMenu] = React.useState<IContextualMenuProps>({
-    items: [],
-  } as IContextualMenuProps);
 
-  const [message, setMessage] = React.useState<IShowMessageProps>(undefined);
-  const [hasError, setHasError] = React.useState<boolean>(false);
+  const [state, dispatch] = React.useReducer(teamsReducer, initialState);
 
   const onClickChannel = React.useCallback(
     (
@@ -78,15 +89,30 @@ export const Team: React.FunctionComponent<ITeamProps> = (
   React.useEffect(() => {
     (async () => {
       try {
-        setHasError(false);
-        setMessage(undefined);
+        dispatch({
+          type: ETeamTypes.SET_HAS_ERROR,
+          payload: false,
+        });
+        dispatch({
+          type: ETeamTypes.SET_IS_LOADING,
+          payload: true,
+        });
+        dispatch({
+          type: ETeamTypes.SET_MESSAGE,
+          payload: undefined,
+        });
+
         const _members: ITeamMenber[] = await getTeamMembers(team.id);
         const teamOwners: ITeamMenber[] = await getTeamOwners(team.id);
         let _renderOwners: string[] = [];
         for (const teamOwner of teamOwners) {
           _renderOwners.push(teamOwner.displayName);
         }
-        setTeamOwners(_renderOwners.join(","));
+        dispatch({
+          type: ETeamTypes.SET_TEAM_OWNERS,
+          payload: _renderOwners.join(","),
+        });
+
         let publicChannels: IContextualMenuItem[] = [];
         let privateChannels: IContextualMenuItem[] = [];
         let _renderMembers: string[] = [];
@@ -95,7 +121,11 @@ export const Team: React.FunctionComponent<ITeamProps> = (
         for (const teamMember of _members) {
           _renderMembers.push(teamMember.userId);
         }
-        setTeamMembers(_renderMembers);
+        dispatch({
+          type: ETeamTypes.SET_TEAM_MEMBERS,
+          payload: _renderMembers,
+        });
+
         // get Channels
         const channels = await getTeamChannels(team.id);
 
@@ -146,23 +176,50 @@ export const Team: React.FunctionComponent<ITeamProps> = (
         });
 
         allChannels = [...publicChannels, ...privateChannels];
-        setChannelsMenu({
+
+        dispatch({
+          type: ETeamTypes.SET_TEAM_CHANNELS,
+          payload: {
+            items: allChannels,
+            contextualMenuItemAs: _renderItem,
+          },
+        });
+        /*  setChannelsMenu({
           items: allChannels,
           contextualMenuItemAs: _renderItem,
-        });
+        }); */
       } catch (error) {
         const messageError: IShowMessageProps = {
           isShow: true,
-          message:
-          strings.MyTeamsMessageError,
+          message: strings.MyTeamsMessageError,
           messageBarType: MessageBarType.error,
         };
+
         console.log(error);
-        setHasError(true);
-        setMessage(messageError);
+        dispatch({
+          type: ETeamTypes.SET_IS_LOADING,
+          payload: false,
+        });
+        dispatch({
+          type: ETeamTypes.SET_MESSAGE,
+          payload: messageError,
+        });
+        dispatch({
+          type: ETeamTypes.SET_HAS_ERROR,
+          payload: true,
+        });
       }
     })();
   }, []);
+
+  const {
+    teamMembers,
+    teamsOwners,
+    hasError,
+    isLoading,
+    channelsMenu,
+    message,
+  } = state;
 
   return (
     <>
@@ -206,7 +263,11 @@ export const Team: React.FunctionComponent<ITeamProps> = (
                 userIds={teamMembers}
                 showPresence
                 showMax={6}
-                personCardInteraction={PersonCardInteraction.hover}
+                personCardInteraction={
+                  enablePersonCardInteraction
+                    ? PersonCardInteraction.hover
+                    : PersonCardInteraction.none
+                }
               ></People>
               <CommandButton
                 iconProps={{ iconName: "PageList" }}
