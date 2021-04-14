@@ -248,7 +248,7 @@ export default class ControlsTest extends React.Component<
     alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
     console.log("TeamsId", teamsId);
     console.log("ChannelId", channelId);
-  };
+  }
 
   /**
    * Static array for carousel control example.
@@ -549,7 +549,7 @@ export default class ControlsTest extends React.Component<
     for (var i = 0; i < files.length; i++) {
       console.log(files[i].name);
     }
-  };
+  }
 
   /**
    *
@@ -563,7 +563,7 @@ export default class ControlsTest extends React.Component<
       initialValues: terms,
     });
     // console.log("serviceTerms", terms);
-  };
+  }
 
   /**
    * Method that retrieves the selected terms from the taxonomy picker
@@ -574,7 +574,7 @@ export default class ControlsTest extends React.Component<
       initialValues: terms,
     });
     console.log("Terms:", terms);
-  };
+  }
 
   /**
    * Method that retrieves the selected date/time from the DateTime picker
@@ -583,7 +583,7 @@ export default class ControlsTest extends React.Component<
   private _onDateTimePickerChange = (dateTimeValue: Date) => {
     this.setState({ dateTimeValue });
     console.log("Selected Date/Time:", dateTimeValue.toLocaleString());
-  };
+  }
 
   /**
    * Selected lists change event
@@ -594,7 +594,7 @@ export default class ControlsTest extends React.Component<
     this.setState({
       selectedList: typeof lists === "string" ? lists : lists.pop(),
     });
-  };
+  }
 
   /**
    * Deletes second item from the list
@@ -607,7 +607,7 @@ export default class ControlsTest extends React.Component<
         items: items,
       });
     }
-  };
+  }
 
   /**
    * Method that retrieves the selected items from People  Picker
@@ -682,7 +682,7 @@ export default class ControlsTest extends React.Component<
         currentCarouselElement: nextElement,
       });
     }, 500);
-  };
+  }
 
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
     this.setState({ filePickerResult });
@@ -690,7 +690,7 @@ export default class ControlsTest extends React.Component<
       const fileResultContent = await filePickerResult.downloadFileContent();
       console.log(fileResultContent);
     }
-  };
+  }
 
   private rootFolder: IFolder = {
     Name: "Site",
@@ -699,7 +699,7 @@ export default class ControlsTest extends React.Component<
 
   private _onFolderSelect = (folder: IFolder): void => {
     console.log("selected folder", folder);
-  };
+  }
 
   private _onRenderGridItem = (
     item: any,
@@ -743,7 +743,7 @@ export default class ControlsTest extends React.Component<
         </DocumentCard>
       </div>
     );
-  };
+  }
 
   /**
    * Renders the component
@@ -2322,7 +2322,7 @@ export default class ControlsTest extends React.Component<
       });
     }
     return result;
-  };
+  }
 
   private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
     console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
