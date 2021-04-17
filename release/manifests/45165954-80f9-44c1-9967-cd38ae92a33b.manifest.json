@@ -34,7 +34,7 @@
     "scriptResources": {
       "controls-test-web-part": {
         "type": "path",
-        "path": "controls-test-web-part_a9076e8a5beb0b253af9.js"
+        "path": "controls-test-web-part_318355b50b709362f8de.js"
       },
       "tslib": {
         "type": "component",
@@ -73,6 +73,7 @@
           "nb-NO": "ControlStrings_nb-no_c647835725738f57f6d69de8a055cbf8.js",
           "nl-NL": "ControlStrings_nl-nl_e11c956bb65df215b4c1dfac359a3df1.js",
           "pl-PL": "ControlStrings_pl-pl_a6173d6c2a89a7f92af708adba8c7884.js",
+          "pt-BR": "ControlStrings_pt-br_e5d8eae1e159f7c9af5d63d0b69067f6.js",
           "pt-PT": "ControlStrings_pt-pt_f10a3e564cfcc497d7efce331264100f.js",
           "ro-RO": "ControlStrings_ro-ro_81d1bbbf1b0abcea09591e12fbc32706.js",
           "ru-RU": "ControlStrings_ru-ru_066c861c140882d669d40e3681994be9.js",
