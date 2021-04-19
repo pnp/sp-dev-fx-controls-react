@@ -26,6 +26,7 @@ nav:
     - ComboBoxListItemPicker: 'controls/ComboBoxListItemPicker.md'
     - Dashboard: 'controls/Dashboard.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
+    - DragDropFiles: 'controls/DragDropFiles.md'
     - FieldCollectionData: 'controls/FieldCollectionData.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'

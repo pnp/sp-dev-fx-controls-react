@@ -135,6 +135,7 @@ import styles from "./ControlsTest.module.scss";
 import { IControlsTestProps, IControlsTestState } from "./IControlsTestProps";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
+import { DragDropFiles } from "../../../DragDropFiles";
 import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 import { MyTeams } from "../../../controls/MyTeams";
 
@@ -547,7 +548,8 @@ export default class ControlsTest extends React.Component<
    */
   private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
-      console.log(files[i].name);
+      console.log("File name: " + files[i].name);
+      console.log("Folder Path: " + files[i].fullPath);
     }
   }
 
@@ -1455,8 +1457,27 @@ export default class ControlsTest extends React.Component<
 
         <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
 
-        <ListView
-          items={this.state.items}
+        <br></br>
+        <b>Drag and Drop Files</b>
+        <DragDropFiles
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
+        >
+
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
+
+        </DragDropFiles>
+        <br></br>
+
+        <ListView items={this.state.items}
           viewFields={viewFields}
           iconFieldName="ServerRelativeUrl"
           groupByFields={groupByFields}
