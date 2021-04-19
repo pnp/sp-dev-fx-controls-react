@@ -1,5 +1,5 @@
-import { IReadonlyTheme } from "@microsoft/sp-component-base";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { IReadonlyTheme , BaseComponentContext} from "@microsoft/sp-component-base";
+
 export interface IMyTeamsProps {
   /**
     /**
@@ -13,7 +13,7 @@ export interface IMyTeamsProps {
   /**
    *  webPart COntext
    */
-  webPartContext: WebPartContext;
+  webPartContext: BaseComponentContext;
   /**
     /**
      *  onSelectedChannel callBack return teamId and ChannelId if this is not defined default handler open channel

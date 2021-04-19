@@ -14,9 +14,9 @@ import {
 
 import { useTeams } from "../../../../hooks";
 import { ITeamMenber } from "../../../../common/model/ITeamMember";
-import { EMembershipType } from "../../../../common/model/EMembersipType";
+import { EMembershipType } from "../../../../common/model/EMembershipType";
 import { IShowMessageProps, ShowMessage } from "../ShowMessage";
-import { MessageBarType } from "office-ui-fabric-react";
+import { MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
 import strings from "ControlStrings";
 import { ITeamState } from "./ITeamState";
 import { teamsReducer } from "./TeamReducer";
