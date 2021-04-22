@@ -265,6 +265,7 @@ define([], () => {
     Loading: "Loading...",
     ModifiedByField: "Modified By",
     ModifiedField: "Date Modified",
+    MyTeamsLoadingMessage: "loading you teams",
     MyTeamsMessageDontHaveTeams: "You don't have any teams",
     MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
     MyTeamsNoTeamsMessage: "You don't have any teams",

@@ -1,6 +1,7 @@
 declare interface IControlStrings {
   MyTeamsMessageError:string;
   MyTeamsNoTeamsMessage:string;
+  MyTeamsLoadingMessage:string;
   PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
 
@@ -354,6 +355,7 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+MyTeamsLoadingMessage: string;
 }
 
 declare module "ControlStrings" {

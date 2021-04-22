@@ -354,6 +354,7 @@ define([], () => {
     CollectionDataItemMissingFields: "Fields collection is empty!",
     InvalidUrlError: "The provided URL is not valid",
     CollectionDataSearch: "Search",
+MyTeamsLoadingMessage: "loading you teams",
 MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
 
 MyTeamsNoTeamsMessage: "You don't have any teams",

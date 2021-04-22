@@ -2,6 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
+MyTeamsLoadingMessage: "loading you teams",
 MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
 
   MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",

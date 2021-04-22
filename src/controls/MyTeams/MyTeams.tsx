@@ -122,7 +122,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
               ) : isLoading ? (
                 <Spinner
                   size={SpinnerSize.medium}
-                  label="loading you teams"
+                  label={strings.MyTeamsLoadingMessage}
                   labelPosition={"bottom"}
                 />
               ) : (
