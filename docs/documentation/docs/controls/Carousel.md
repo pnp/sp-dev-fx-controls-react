@@ -166,6 +166,7 @@ Provides options for carousel indicators' shape.
 enum `CarouselIndicatorsDisplay`
 
 Provides options for carousel indicators display mode.
+
 | Value | Description |
 | ---- | ---- |
 | overlap | Indicators are displayed on top of the carousel content |
@@ -174,6 +175,7 @@ Provides options for carousel indicators display mode.
 Interface `ICarouselImageProps`
 
 Allows to easily render a set of `CarouselImage` components in the carousel
+
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | imageSrc | string | yes | Image source |
