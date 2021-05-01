@@ -2,10 +2,18 @@ declare var define: any;
 
 define([], () => {
   return {
-MyTeamsLoadingMessage: "loading you teams",
+MyTeamsLoadingMessage: "loading your teams",
 MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
-
-  MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",
+MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",
+MyTeamsMessageDontHaveTeams: "Neste momento não tens nenhum Team",
+MyTeamsTeamChannelPublicMessage: "Public Channels",
+MyTeamsTeamChannelTypeMessage: "Private Channels",
+TeamChannelPickerFontIconFavoriteText: "Favorite",
+TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
+TeamChannelPickerSugestionHeaderText: "Suggested Team Channels",
+TeamPickerButtonRemoveTitle: "remove",
+TeamsChannelPickerButtonRemoveTitle: "remove",
+TeamsChannelPickerNoresultsFoundText: "No channels found",
   "SiteBreadcrumbLabel": "Site pãora",
   "ListViewGroupEmptyLabel": "Vazio",
   "WebPartTitlePlaceholder": "Título da parte da Web",
@@ -316,7 +324,7 @@ MyTeamsMessageError: "Something went wrong while loading your teams, please try 
   "WebSearchLinkLabel": "Pesquisa na Web",
   "Yes": "Sim",
   "SelectedLabel": "Selecionado",
-  "SelectIcon": "Selecionar ícone",
+  "SelectIcon": "Selecionar ícone"
 
 };
 });

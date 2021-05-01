@@ -21,6 +21,7 @@ import { EMembershipType } from "./EMembersipType";
 import pullAllBy from "lodash/pullAllBy";
 import find from "lodash/find";
 import { Customizer } from "office-ui-fabric-react/lib/Utilities";
+import strings from "ControlStrings";
 const theme = window.__themeState__.theme;
 
 const initialState: ITeamChannelPickerState = {
@@ -33,7 +34,7 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "UPDATE_SELECTEITEM":
+    case "UPDATE_SELECTEDITEM":
       return { ...state, selectedTeamsChannels: action.payload };
     default:
       return state;
@@ -68,8 +69,8 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
   } = useTeamChannelPickerStyles(themeVariant);
 
   const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
-    suggestionsHeaderText: "Suggested Team Channels",
-    noResultsFoundText: "No channels found",
+    suggestionsHeaderText:strings.TeamChannelPickerSugestionHeaderText,
+    noResultsFoundText: strings.TeamsChannelPickerNoresultsFoundText,
   };
 
   /**
@@ -105,7 +106,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
 
   React.useEffect(() => {
     dispatch({
-      type: "UPDATE_SELECTEITEM",
+      type: "UPDATE_SELECTEDITEM",
       payload: selectedChannels,
     });
   }, [props.teamId]);
@@ -123,7 +124,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
       if (_membershipType === EMembershipType.Private) {
         _returnControls.push(
           <FontIcon
-            title="Private Channel"
+            title={strings.TeamChannelPickerFontIconPrivateChannelTitle}
             iconName="LockSolid"
             className={componentClasses.iconChannelInfoStyles}
 
@@ -133,7 +134,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
       if (_isFavoriteByDefault && _isFavoriteByDefault === "true") {
         _returnControls.push(
           <FontIcon
-            title="Favorite"
+            title={strings.TeamChannelPickerFontIconFavoriteText}
             iconName="FavoriteStarFill"
             className={componentClasses.iconChannelInfoStyles}
 
@@ -195,7 +196,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
             <IconButton
               styles={renderIconButtonRemoveStyles}
               iconProps={{ iconName: "Cancel" }}
-              title="remove"
+              title={strings.TeamsChannelPickerButtonRemoveTitle}
               onClick={(ev) => {
                 const _newSelectedTeamsChannels = pullAllBy(
                   selectedTeamsChannels,

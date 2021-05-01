@@ -132,7 +132,7 @@ export const Team: React.FunctionComponent<ITeamProps> = (
         publicChannels.push({
           itemType: ContextualMenuItemType.Header,
           key: "public",
-          text: "Public Channels",
+          text: strings.MyTeamsTeamChannelPublicMessage,
           iconProps: { iconName: "People" },
         });
         publicChannels.push({
@@ -171,7 +171,7 @@ export const Team: React.FunctionComponent<ITeamProps> = (
         publicChannels.push({
           itemType: ContextualMenuItemType.Header,
           key: "private",
-          text: "Private Channels",
+          text: strings.MyTeamsTeamChannelTypeMessage,
           iconProps: { iconName: "SecurityGroup" },
         });
 

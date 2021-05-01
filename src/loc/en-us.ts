@@ -354,10 +354,18 @@ define([], () => {
     CollectionDataItemMissingFields: "Fields collection is empty!",
     InvalidUrlError: "The provided URL is not valid",
     CollectionDataSearch: "Search",
-MyTeamsLoadingMessage: "loading you teams",
+MyTeamsLoadingMessage: "loading your teams",
 MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
 
 MyTeamsNoTeamsMessage: "You don't have any teams",
+MyTeamsTeamChannelPublicMessage: "Public Channels",
+MyTeamsTeamChannelTypeMessage: "Private Channels",
+TeamChannelPickerFontIconFavoriteText: "Favorite",
+TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
+TeamChannelPickerSugestionHeaderText: " \"Suggested Team Channels\"",
+TeamPickerButtonRemoveTitle: "remove",
+TeamsChannelPickerButtonRemoveTitle: "remove",
+TeamsChannelPickerNoresultsFoundText: "No channels found",
 
     ViewMore: "View more"
   };

@@ -23,6 +23,7 @@ import pullAllBy from "lodash/pullAllBy";
 import find from "lodash/find";
 import { ImageIcon } from "office-ui-fabric-react/lib/Icon";
 import { Customizer } from "office-ui-fabric-react/lib/Utilities";
+import strings from "ControlStrings";
 const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
   suggestionsHeaderText: "Suggested Teams",
   noResultsFoundText: "No Teams found",
@@ -37,7 +38,7 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "UPDATE_SELECTEITEM":
+    case "UPDATE_SELECTEDITEM":
       return { ...state, savedSelectedTeams: action.payload };
     default:
       return state;
@@ -92,7 +93,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
 
   React.useEffect(() => {
     dispatch({
-      type: "UPDATE_SELECTEITEM",
+      type: "UPDATE_SELECTEDITEM",
       payload: selectedTeams,
     });
   }, [props]);
@@ -125,13 +126,13 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
             <IconButton
               styles={renderIconButtonRemoveStyles}
               iconProps={{ iconName: "Cancel" }}
-              title="remove"
+              title={strings.TeamPickerButtonRemoveTitle}
               onClick={(ev) => {
                 const _newSelectedTeams = pullAllBy(savedSelectedTeams, [
                   itemProps.item,
                 ]);
                 dispatch({
-                  type: "UPDATE_SELECTEITEM",
+                  type: "UPDATE_SELECTEDITEM",
                   payload: _newSelectedTeams,
                 });
                 onSelectedTeams(_newSelectedTeams);
@@ -200,7 +201,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
           }}
           itemLimit={props.itemLimit ?? undefined}
           onChange={(items) => {
-            dispatch({ type: "UPDATE_SELECTEITEM", payload: items });
+            dispatch({ type: "UPDATE_SELECTEDITEM", payload: items });
             props.onSelectedTeams(items);
           }}
           componentRef={picker}
