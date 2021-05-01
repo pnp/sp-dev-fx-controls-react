@@ -68,6 +68,11 @@ export interface IListViewProps {
  * Set to false by default
  */
   stickyHeader?: boolean;
+  /**
+   * Custom sorting function.
+   * @returns sorted collection of items
+   */
+  sortItems?: (items: any[], columnName: string, descending: boolean) => any[];
 }
 
 export interface IListViewState {
