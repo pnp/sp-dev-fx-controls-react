@@ -460,6 +460,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param descending
    */
   private _sortItems(items: any[], columnName: string, descending = false): any[] {
+    if (this.props.sortItems) {
+      return this.props.sortItems(items, columnName, descending);
+    }
     // Sort the items
     const ascItems = sortBy(items, [columnName]);
     const sortedItems = descending ? ascItems.reverse() : ascItems;
