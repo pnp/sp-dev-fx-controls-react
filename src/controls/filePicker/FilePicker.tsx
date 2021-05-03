@@ -65,7 +65,7 @@ import WebSearchTab from "./WebSearchTab/WebSearchTab";
 export class FilePicker extends React.Component<
   IFilePickerProps,
   IFilePickerState
-  > {
+> {
   private fileBrowserService: FileBrowserService;
   private oneDriveService: OneDriveService;
   private orgAssetsService: OrgAssetsService;
@@ -115,6 +115,20 @@ export class FilePicker extends React.Component<
     });
   }
 
+  /**
+ * componentWillReceiveProps lifecycle hook
+ *
+ * @param nextProps
+ */
+  public componentWillReceiveProps(nextProps: IFilePickerProps): void {
+    if (nextProps.isPanelOpen || nextProps.isPanelOpen !== this.props.isPanelOpen) {
+      this.setState({
+        panelOpen: nextProps.isPanelOpen
+      });
+
+    }
+  }
+
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string[] = this.props.accepts;
@@ -161,8 +175,8 @@ export class FilePicker extends React.Component<
         {this.props.buttonIcon || this.props.buttonIconProps ? (
           <ActionButton iconProps={buttonIconProps} {...buttonProps} />
         ) : (
-            <PrimaryButton {...buttonProps} />
-          )}
+          <PrimaryButton {...buttonProps} />
+        )}
 
         <Panel
           isOpen={this.state.panelOpen}
