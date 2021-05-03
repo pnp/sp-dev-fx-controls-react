@@ -7,6 +7,8 @@ declare interface IControlStrings {
   MyTeamsTeamChannelTypeMessage: string;
 
   TeamPickerButtonRemoveTitle: string;
+  TeamPickerSugestionsHeaderText: string;
+  TeamPickernoResultsFoundText: string;
 
   TeamChannelPickerSugestionHeaderText: string;
   TeamsChannelPickerNoresultsFoundText: string;
@@ -367,9 +369,6 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
-
-
-
 
 
 }
