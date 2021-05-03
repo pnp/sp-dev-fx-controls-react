@@ -14,6 +14,7 @@
 
 - `ListView`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
 - `FilePicker`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
+- SharePoint Framework v1.12.1 support
 
 ### Fixes
 
