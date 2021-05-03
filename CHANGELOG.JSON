@@ -8,7 +8,10 @@
           "`TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)",
           "`SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)",
           "`DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) ",
-          "`DragDropFiles`: new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)"
+          "`DragDropFiles`: new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)",
+          "`MyTeams`: new MyTeams control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)",
+          "`TeamChannelPicker`: new TeamChannelPicker control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)",
+          "`TeamPicker`: new TeamPicker control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)"
         ],
         "enhancements": [
           "`ListView`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)",
