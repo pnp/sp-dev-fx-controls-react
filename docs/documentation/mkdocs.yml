@@ -42,6 +42,7 @@ nav:
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
     - Map: 'controls/Map.md'
+    - MyTeams: 'controls/MyTeams.md'
     - Pagination: 'controls/Pagination.md'
     - PeoplePicker: 'controls/PeoplePicker.md'
     - Placeholder: 'controls/Placeholder.md'

@@ -80,6 +80,7 @@ The following controls are currently available:
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
 - [ListView](./controls/ListView) (List view control)
 - [Map](./controls/Map) (renders a map in a web part)
+- [MyTeams](./controls/MyTeams) (My Teams)
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)
 - [Progress](./controls/Progress) (shows progress of multiple SEQUENTIALLY executed actions)
