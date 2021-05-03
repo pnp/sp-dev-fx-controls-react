@@ -71,6 +71,11 @@ export interface IFilePickerProps {
   disabled?: boolean;
 
   /**
+   * Specifies if the picker button is hidden (if hidden, panel visibility can still be controlled with isPanelOpen)
+   */
+  hidden?: boolean;
+
+  /**
    * Number of itmes to obtain when executing REST queries. Default 100.
    */
   itemsCountQueryLimit?: number;
