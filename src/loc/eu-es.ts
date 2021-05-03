@@ -334,6 +334,8 @@ define([], () => {
     TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
     TeamChannelPickerSugestionHeaderText: "Suggested Team Channels",
     TeamPickerButtonRemoveTitle: "remove",
+    TeamPickernoResultsFoundText: "No Teams found",
+    TeamPickerSugestionsHeaderText: "Suggested Teams",
     TeamsChannelPickerButtonRemoveTitle: "remove",
     TeamsChannelPickerNoresultsFoundText: "No channels found",
     SelectIcon: "Hautatu ikonoa"

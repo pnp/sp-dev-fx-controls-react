@@ -25,8 +25,8 @@ import { ImageIcon } from "office-ui-fabric-react/lib/Icon";
 import { Customizer } from "office-ui-fabric-react/lib/Utilities";
 import strings from "ControlStrings";
 const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
-  suggestionsHeaderText: "Suggested Teams",
-  noResultsFoundText: "No Teams found",
+  suggestionsHeaderText: strings.TeamPickerSugestionsHeaderText,
+  noResultsFoundText: strings.TeamPickernoResultsFoundText,
 };
 const initialState: ITeamPickerState = {
   savedSelectedTeams: [],
