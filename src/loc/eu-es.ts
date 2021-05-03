@@ -332,7 +332,7 @@ define([], () => {
     SelectedLabel: "Hautatuta",
     TeamChannelPickerFontIconFavoriteText: "Favorite",
     TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
-    TeamChannelPickerSugestionHeaderText: " \"Suggested Team Channels\"",
+    TeamChannelPickerSugestionHeaderText: "Suggested Team Channels",
     TeamPickerButtonRemoveTitle: "remove",
     TeamsChannelPickerButtonRemoveTitle: "remove",
     TeamsChannelPickerNoresultsFoundText: "No channels found",

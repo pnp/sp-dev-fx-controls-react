@@ -203,7 +203,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
                   [itemProps.item]
                 );
                 dispatch({
-                  type: "UPDATE_SELECTEITEM",
+                  type: "UPDATE_SELECTEDITEM",
                   payload: _newSelectedTeamsChannels,
                 });
                 props.onSelectedChannels(_newSelectedTeamsChannels);
@@ -249,7 +249,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
           }}
           itemLimit={itemLimit ?? undefined}
           onChange={(items) => {
-            dispatch({ type: "UPDATE_SELECTEITEM", payload: items });
+            dispatch({ type: "UPDATE_SELECTEDITEM", payload: items });
             onSelectedChannels(items);
           }}
           componentRef={picker}
