@@ -6,6 +6,7 @@
   "version": "*",
   "manifestVersion": 2,
   "requiresCustomScript": false,
+  "supportsThemeVariants": true,
   "supportedHosts": ["SharePointWebPart"],
   "preconfiguredEntries": [{
     "groupId": "45165954-80f9-44c1-9967-cd38ae92a33b",

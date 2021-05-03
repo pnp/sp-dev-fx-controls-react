@@ -4,7 +4,10 @@ import { DisplayMode } from '@microsoft/sp-core-library';
 import { IProgressAction } from '../../../Progress';
 import { IFilePickerResult } from '../../../FilePicker';
 import { ITag } from 'office-ui-fabric-react';
+import {
+  IReadonlyTheme,
 
+} from "@microsoft/sp-component-base";
 export interface IControlsTestProps {
   context: WebPartContext;
   description: string;
@@ -12,6 +15,7 @@ export interface IControlsTestProps {
   displayMode: DisplayMode;
   updateProperty: (value: string) => void;
   totalPages?: number;
+  themeVariant?:  IReadonlyTheme;
 }
 
 export interface IControlsTestState {
@@ -38,4 +42,5 @@ export interface IControlsTestState {
   showErrorDialog?: boolean;
   selectedTeam:ITag[];
   selectedTeamChannels:ITag[];
+
 }

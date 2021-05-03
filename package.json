@@ -19,6 +19,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@microsoft/mgt": "^2.1.0",
+    "@microsoft/mgt-react": "^2.1.0",
     "@fluentui/react-northstar": "0.51.3",
     "@microsoft/decorators": "1.12.1",
     "@microsoft/sp-core-library": "1.12.1",

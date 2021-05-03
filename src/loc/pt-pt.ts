@@ -2,6 +2,20 @@ declare var define: any;
 
 define([], () => {
   return {
+MyTeamsLoadingMessage: "loading your teams",
+MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
+MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",
+MyTeamsMessageDontHaveTeams: "Neste momento não tens nenhum Team",
+MyTeamsTeamChannelPublicMessage: "Public Channels",
+MyTeamsTeamChannelTypeMessage: "Private Channels",
+TeamChannelPickerFontIconFavoriteText: "Favorite",
+TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
+TeamChannelPickerSugestionHeaderText: "Suggested Team Channels",
+TeamPickerButtonRemoveTitle: "remove",
+TeamPickernoResultsFoundText: "No Teams found",
+TeamPickerSugestionsHeaderText: "Suggested Teams",
+TeamsChannelPickerButtonRemoveTitle: "remove",
+TeamsChannelPickerNoresultsFoundText: "No channels found",
   "SiteBreadcrumbLabel": "Site pãora",
   "ListViewGroupEmptyLabel": "Vazio",
   "WebPartTitlePlaceholder": "Título da parte da Web",
@@ -313,5 +327,6 @@ define([], () => {
   "Yes": "Sim",
   "SelectedLabel": "Selecionado",
   "SelectIcon": "Selecionar ícone"
+
 };
 });

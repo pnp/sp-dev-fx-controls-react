@@ -2,6 +2,20 @@ declare var define: any;
 
 define([], () => {
   return {
+  MyTeamsLoadingMessage: "loading your teams",
+  MyTeamsMessageDontHaveTeams: "You don't have any teams",
+  MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
+  MyTeamsNoTeamsMessage: "You don't have any teams",
+  MyTeamsTeamChannelPublicMessage: "Public Channels",
+  MyTeamsTeamChannelTypeMessage: "Private Channels",
+  TeamChannelPickerFontIconFavoriteText: "Favorite",
+  TeamChannelPickerFontIconPrivateChannelTitle: "Private Channel",
+  TeamChannelPickerSugestionHeaderText: "Suggested Team Channels",
+  TeamPickerButtonRemoveTitle: "remove",
+  TeamPickernoResultsFoundText: "No Teams found",
+  TeamPickerSugestionsHeaderText: "Suggested Teams",
+  TeamsChannelPickerButtonRemoveTitle: "remove",
+  TeamsChannelPickerNoresultsFoundText: "No channels found",
   "SiteBreadcrumbLabel": "ウェブサイトの階層リンク",
   "ListViewGroupEmptyLabel": "空",
   "WebPartTitlePlaceholder": "Web パーツのタイトル",

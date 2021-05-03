@@ -15,6 +15,7 @@
 - `ListView`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
 - `FilePicker`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
 - SharePoint Framework v1.12.1 support
+- `ListView`: Ability to provide custom sorting function [#880](https://github.com/pnp/sp-dev-fx-controls-react/issues/880)
 
 ### Fixes
 
@@ -25,6 +26,7 @@
 - `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
 - `ListItemAttachments`: updated filename replacement logic [#873](https://github.com/pnp/sp-dev-fx-controls-react/pull/873)
 - `RichText`: Adding a link does not work [#875](https://github.com/pnp/sp-dev-fx-controls-react/issues/875)
+- `FilePicker`: Stock images url is getting a 404 server error [#882](https://github.com/pnp/sp-dev-fx-controls-react/issues/882)
 
 ### Contributors
 

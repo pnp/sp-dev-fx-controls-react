@@ -1,11 +1,16 @@
 import * as React from "react";
-
 import {
   ITag,
+} from "office-ui-fabric-react/lib/Pickers";
+import {
   Stack,
+} from "office-ui-fabric-react/lib/Stack";
+import {
   Text,
+} from "office-ui-fabric-react/lib/Text";
+import {
   TextField
-} from "office-ui-fabric-react";
+} from "office-ui-fabric-react/lib/TextField";
 import {
   DefaultButton,
   PrimaryButton
@@ -164,10 +169,13 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
+import { MyTeams } from "../../../controls/MyTeams";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import { DragDropFiles } from "../../../DragDropFiles";
-import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import {​​ DragDropFiles }​​ from "../../../DragDropFiles";
+import {​​ SitePicker }​​ from "../../../controls/sitePicker/SitePicker";
+
+
 
 // Used to render document card
 /**
@@ -249,6 +257,13 @@ const sampleItems = [
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
+
+
+  private onSelectedChannel = (teamsId: string, channelId: string) => {
+    alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
+    console.log("TeamsId", teamsId);
+    console.log("ChannelId", channelId);
+  }
 
   /**
    * Static array for carousel control example.
@@ -424,7 +439,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showSuccessDialog: false,
       showErrorDialog: false,
       selectedTeam: [],
-      selectedTeamChannels: []
+      selectedTeamChannels: [],
+
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -828,18 +844,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-
+<Stack styles={{ root: { marginBottom: 200 } }}>
+          <MyTeams
+            title="My Teams"
+            webPartContext={this.props.context}
+            themeVariant={this.props.themeVariant}
+            enablePersonCardInteraction={true}
+            onSelectedChannel={this.onSelectedChannel}
+          />
+        </Stack>
         <Stack
           styles={{ root: { margin: "10px 10px 100px 10px" } }}
-          tokens={{ childrenGap:10 }}
+          tokens={{ childrenGap: 10 }}
         >
           <TeamPicker
             label="Select Team"
+            themeVariant={this.props.themeVariant}
             selectedTeams={this.state.selectedTeam}
             appcontext={this.props.context}
             itemLimit={1}
             onSelectedTeams={(tagList: ITag[]) => {
-              this.setState({ selectedTeamChannels: []});
+              this.setState({ selectedTeamChannels: [] });
               this.setState({ selectedTeam: tagList });
               console.log(tagList);
             }}
@@ -848,6 +873,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <>
               <TeamChannelPicker
                 label="Select Team Channel"
+                themeVariant={this.props.themeVariant}
                 selectedChannels={this.state.selectedTeamChannels}
                 teamId={this.state.selectedTeam[0].key}
                 appcontext={this.props.context}
@@ -859,8 +885,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </>
           )}
         </Stack>
-
-
 
 
         <AccessibleAccordion allowZeroExpanded>
@@ -1150,12 +1174,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           resolveDelay={200}
           placeholder={'Select a SharePoint principal (User or Group)'}
           onGetErrorMessage={async (items: any[]) => {
-            if (!items || items.length < 2) {
-              return 'error';
-            }
-
-            return '';
+          if (!items || items.length < 2) {
+          return 'error';
+          }
+          return '';
           }} />
+
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -1234,22 +1258,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <br></br>
         <b>Drag and Drop Files</b>
         <DragDropFiles
-          dropEffect="copy"
-          enable={true}
-          onDrop={this._getDropFiles}
-          iconName="Upload"
-          labelMessage="My custom upload File"
+        dropEffect="copy"
+        enable={true}
+        onDrop={this._getDropFiles}
+        iconName="Upload"
+        labelMessage="My custom upload File"
         >
-
-          <Placeholder iconName='BulkUpload'
-            iconText='Drag files or folder with files here...'
-            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-            buttonLabel='Configure'
-            hideButton={this.props.displayMode === DisplayMode.Read}
-            onConfigure={this._onConfigure} />
-
+        <Placeholder iconName='BulkUpload'
+        iconText='Drag files or folder with files here...'
+        description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+        buttonLabel='Configure'
+        hideButton={this.props.displayMode === DisplayMode.Read}
+        onConfigure={this._onConfigure} />
         </DragDropFiles>
         <br></br>
+
 
         <ListView items={this.state.items}
           viewFields={viewFields}
@@ -1351,16 +1374,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
               </div>
 
+
               <div className="ms-font-m">Site picker tester:
-                <SitePicker
-                  context={this.props.context}
-                  label={'select sites'}
-                  mode={'site'}
-                  allowSearch={true}
-                  multiSelect={false}
-                  onChange={(sites) => { console.log(sites); }}
-                  placeholder={'Select sites'}
-                  searchPlaceholder={'Filter sites'} />
+              <SitePicker
+              context={this.props.context}
+              label={'select sites'}
+              mode={'site'}
+              allowSearch={true}
+              multiSelect={false}
+              onChange={(sites) => { console.log(sites); }}
+              placeholder={'Select sites'}
+              searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:

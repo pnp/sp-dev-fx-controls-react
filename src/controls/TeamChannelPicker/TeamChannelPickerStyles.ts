@@ -8,9 +8,12 @@ import {
   mergeStyles,
   mergeStyleSets,
 } from "office-ui-fabric-react/lib/Styling";
-export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
+const theme = window.__themeState__.theme;
+
+export const useTeamChannelPickerStyles = (themeVariant:IReadonlyTheme | undefined) => {
   const textHeaderStyles: Partial<ITextStyles> = {
-    root: { color: theme?.themePrimary },
+    root: { color: themeVariant?.palette.themePrimary ?? theme?.themePrimary },
   };
 
   const renderIconButtonRemoveStyles: Partial<IButtonStyles> = {
@@ -28,9 +31,9 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
       marginLeft: 5,
       marginBottom: 5,
       cursor: "default",
-      backgroundColor: theme.themeLighterAlt,
+      backgroundColor:  themeVariant?.palette?.themeLighterAlt ?? theme.themeLighterAlt,
       ":hover": {
-        backgroundColor: theme.themeLighter,
+        backgroundColor:themeVariant?.palette?.themeLighter ?? theme.themeLighter,
       },
     },
   };
@@ -42,9 +45,9 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
       paddingLeft: 10,
       cursor: "default",
       margin: 2,
-      backgroundColor: theme.themeLighterAlt,
+      backgroundColor: themeVariant?.palette?.themeLighterAlt ?? theme.themeLighterAlt,
       ":hover": {
-        backgroundColor: theme.themeLighter,
+        backgroundColor: themeVariant?.palette?.themeLighter ?? theme.themeLighter,
       },
     },
   };
@@ -57,25 +60,25 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
 
     input: {
       width: "100%",
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
     },
     itemsWrapper: {},
     text: {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
-      borderColor: theme.neutralQuaternaryAlt,
+      borderColor: themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":after": {
         borderWidth: 0,
@@ -92,7 +95,7 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
 
     input: {
       width: "100%",
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
     },
     itemsWrapper: {
       padding: 3,
@@ -101,24 +104,24 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
-      borderColor: theme.neutralQuaternaryAlt,
+      borderColor: themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
       ":after": {
         borderStyle: "solid",
         borderWidth: 1,
         // borderColor: theme.neutralQuaternaryAlt,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ?? theme.themePrimary,
       },
     },
   };
@@ -132,7 +135,7 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
       borderTopStyle: "solid",
       width: "100%",
       borderTopWidth: 0,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
     },
     itemsWrapper: {
@@ -142,59 +145,48 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor: theme.white,
+      backgroundColor: themeVariant?.palette?.white ?? theme.white,
       borderRadius: 0,
-      borderColor: theme.neutralQuaternaryAlt,
+      borderColor: themeVariant?.palette?.neutralQuaternaryAlt ?? theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ??  theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ??  theme.themePrimary,
       },
       ":after": {
         borderStyle: "solid",
         borderWidth: 1,
         // borderColor: theme.neutralQuaternaryAlt,
-        borderColor: theme.themePrimary,
+        borderColor:  themeVariant?.palette?.themePrimary ??  theme.themePrimary,
       },
     },
   };
 
   const componentClasses = mergeStyleSets({
-    eventCircleColor: mergeStyles({
-      borderRadius: "50%",
-      borderWidth: 3,
-      borderStyle: "solid",
-      padding: 10,
-    }),
+
     separator: mergeStyles({
       marginTop: 25,
       marginLeft: 20,
       marginRight: 20,
       borderBottomWidth: 1,
-      borderBottomColor: theme?.neutralQuaternaryAlt,
+      borderBottomColor:  themeVariant?.palette?.neutralQuaternaryAlt ??    theme?.neutralQuaternaryAlt,
       borderBottomStyle: "solid",
     }),
-    filePickerButtonStyles: mergeStyles({
-      position: "relative",
-      top: -15,
-    }),
-    iconStyles: {
-      paddingLeft: 2,
-      fontWeight: 500,
-      color: theme?.themePrimary,
+
+    iconChannelItemStyles: {
+      fontSize: 14,
+      color: themeVariant?.palette?.themePrimary ?? theme.themePrimary
     },
-    sugestionItemStyles: {
-      ":after": {
-        borderWidth: 1,
-        borderColor: theme?.themePrimary,
-        backgroundColor: theme?.neutralQuaternaryAlt,
-      },
+    iconChannelInfoStyles: {
+      fontSize: 12,
+      color: themeVariant?.palette?.themePrimary ?? theme.themePrimary
     },
+
   });
 
   return {
@@ -204,5 +196,6 @@ export const useTeamChannelPickerStyles = (theme: Theme | undefined) => {
     renderItemStylesMulti,
     pickerStylesMulti,
     pickerStylesSingle,
+    componentClasses
   };
 };

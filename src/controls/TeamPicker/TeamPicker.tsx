@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import {
   TagPicker,
   IBasePicker,
@@ -8,7 +7,6 @@ import {
   IPickerItemProps,
   ISuggestionItemProps,
 } from "office-ui-fabric-react/lib/Pickers";
-
 
 import { useTeams } from "../../hooks";
 import { ITeam } from "../../common/model/ITeam";
@@ -20,13 +18,15 @@ import { IconButton } from "office-ui-fabric-react/lib/Button";
 import { Text } from "office-ui-fabric-react/lib/Text";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { Label } from "office-ui-fabric-react/lib/Label";
-const theme = window.__themeState__.theme;
+
 import pullAllBy from "lodash/pullAllBy";
 import find from "lodash/find";
 import { ImageIcon } from "office-ui-fabric-react/lib/Icon";
+import { Customizer } from "office-ui-fabric-react/lib/Utilities";
+import strings from "ControlStrings";
 const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
-  suggestionsHeaderText: "Suggested Teams",
-  noResultsFoundText: "No Teams found",
+  suggestionsHeaderText: strings.TeamPickerSugestionsHeaderText,
+  noResultsFoundText: strings.TeamPickernoResultsFoundText,
 };
 const initialState: ITeamPickerState = {
   savedSelectedTeams: [],
@@ -38,7 +38,7 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "UPDATE_SELECTEITEM":
+    case "UPDATE_SELECTEDITEM":
       return { ...state, savedSelectedTeams: action.payload };
     default:
       return state;
@@ -55,13 +55,20 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
   const { serviceScope } = props.appcontext;
   const { getMyTeams } = useTeams(serviceScope);
   const {
+    onSelectedTeams,
+    selectedTeams,
+    itemLimit,
+    label,
+    styles,
+    themeVariant,
+  } = props;
+  const {
     pickerStylesMulti,
     pickerStylesSingle,
     renderItemStylesMulti,
     renderItemStylesSingle,
     renderIconButtonRemoveStyles,
-  } = useTeamPickerStyles(theme);
-  const { onSelectedTeams, selectedTeams, itemLimit, label, styles } = props;
+  } = useTeamPickerStyles(themeVariant);
 
   const useFilterSuggestedTeams = React.useCallback(
     async (filterText: string, teamsList: ITag[]): Promise<ITag[]> => {
@@ -86,7 +93,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
 
   React.useEffect(() => {
     dispatch({
-      type: "UPDATE_SELECTEITEM",
+      type: "UPDATE_SELECTEDITEM",
       payload: selectedTeams,
     });
   }, [props]);
@@ -119,16 +126,16 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
             <IconButton
               styles={renderIconButtonRemoveStyles}
               iconProps={{ iconName: "Cancel" }}
-              title="remove"
+              title={strings.TeamPickerButtonRemoveTitle}
               onClick={(ev) => {
                 const _newSelectedTeams = pullAllBy(savedSelectedTeams, [
                   itemProps.item,
                 ]);
                 dispatch({
-                  type: "UPDATE_SELECTEITEM",
+                  type: "UPDATE_SELECTEDITEM",
                   payload: _newSelectedTeams,
                 });
-                props.onSelectedTeams(_newSelectedTeams);
+                onSelectedTeams(_newSelectedTeams);
               }}
             />
           </Stack>
@@ -137,7 +144,14 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
         return null;
       }
     },
-    [selectedTeams, state.savedSelectedTeams]
+    [
+      selectedTeams,
+      state.savedSelectedTeams,
+      props.themeVariant,
+      renderItemStylesSingle,
+      renderIconButtonRemoveStyles,
+      renderItemStylesMulti,
+    ]
   );
 
   // reder sugestion Items
@@ -161,34 +175,38 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
         </Stack>
       );
     },
-    []
+    [props.themeVariant]
   );
 
   // Render  control
   return (
-    <div style={{ width: "100%" }}>
-      {props.label && <Label>{props.label}</Label>}
-      <TagPicker
-        styles={
-          styles ??
-          (itemLimit && itemLimit > 1 ? pickerStylesMulti : pickerStylesSingle)
-        }
-        selectedItems={state.savedSelectedTeams}
-        onRenderItem={_onRenderItem}
-        onRenderSuggestionsItem={_onRenderSuggestionsItem}
-        onResolveSuggestions={useFilterSuggestedTeams}
-        getTextFromItem={getTextFromItem}
-        pickerSuggestionsProps={pickerSuggestionsProps}
-        onEmptyResolveSuggestions={(selectTeams) => {
-          return useFilterSuggestedTeams("", selectTeams);
-        }}
-        itemLimit={props.itemLimit ?? undefined}
-        onChange={(items) => {
-          dispatch({ type: "UPDATE_SELECTEITEM", payload: items });
-          props.onSelectedTeams(items);
-        }}
-        componentRef={picker}
-      />
-    </div>
+    <Customizer settings={{ theme: props.themeVariant }}>
+      <div style={{ width: "100%" }}>
+        {label && <Label>{label}</Label>}
+        <TagPicker
+          styles={
+            styles ??
+            (itemLimit && itemLimit > 1
+              ? pickerStylesMulti
+              : pickerStylesSingle)
+          }
+          selectedItems={state.savedSelectedTeams}
+          onRenderItem={_onRenderItem}
+          onRenderSuggestionsItem={_onRenderSuggestionsItem}
+          onResolveSuggestions={useFilterSuggestedTeams}
+          getTextFromItem={getTextFromItem}
+          pickerSuggestionsProps={pickerSuggestionsProps}
+          onEmptyResolveSuggestions={(selectTeams) => {
+            return useFilterSuggestedTeams("", selectTeams);
+          }}
+          itemLimit={props.itemLimit ?? undefined}
+          onChange={(items) => {
+            dispatch({ type: "UPDATE_SELECTEDITEM", payload: items });
+            props.onSelectedTeams(items);
+          }}
+          componentRef={picker}
+        />
+      </div>
+    </Customizer>
   );
 };
