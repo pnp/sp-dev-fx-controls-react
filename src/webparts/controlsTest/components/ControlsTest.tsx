@@ -1174,10 +1174,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           resolveDelay={200}
           placeholder={'Select a SharePoint principal (User or Group)'}
           onGetErrorMessage={async (items: any[]) => {
-          if (!items || items.length < 2) {
-          return 'error';
-          }
-          return '';
+            if (!items || items.length < 2) {
+              return 'error';
+            }
+            return '';
           }} />
 
 
@@ -1258,18 +1258,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <br></br>
         <b>Drag and Drop Files</b>
         <DragDropFiles
-        dropEffect="copy"
-        enable={true}
-        onDrop={this._getDropFiles}
-        iconName="Upload"
-        labelMessage="My custom upload File"
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
         >
         <Placeholder iconName='BulkUpload'
-        iconText='Drag files or folder with files here...'
-        description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-        buttonLabel='Configure'
-        hideButton={this.props.displayMode === DisplayMode.Read}
-        onConfigure={this._onConfigure} />
+          iconText='Drag files or folder with files here...'
+          description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+          buttonLabel='Configure'
+          hideButton={this.props.displayMode === DisplayMode.Read}
+          onConfigure={this._onConfigure} />
         </DragDropFiles>
         <br></br>
 
@@ -1377,14 +1377,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">Site picker tester:
               <SitePicker
-              context={this.props.context}
-              label={'select sites'}
-              mode={'site'}
-              allowSearch={true}
-              multiSelect={false}
-              onChange={(sites) => { console.log(sites); }}
-              placeholder={'Select sites'}
-              searchPlaceholder={'Filter sites'} />
+                context={this.props.context}
+                label={'select sites'}
+                mode={'site'}
+                allowSearch={true}
+                multiSelect={false}
+                onChange={(sites) => { console.log(sites); }}
+                placeholder={'Select sites'}
+                searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:
