@@ -120,7 +120,7 @@ export class FilePicker extends React.Component<
    *
    * @param nextProps
    */
-   public componentWillReceiveProps(nextProps: IFilePickerProps): void {
+  public componentWillReceiveProps(nextProps: IFilePickerProps): void {
     if (nextProps.isPanelOpen || nextProps.isPanelOpen !== this.props.isPanelOpen) {
       this.setState({
         panelOpen: nextProps.isPanelOpen
@@ -415,7 +415,7 @@ export class FilePicker extends React.Component<
     }
     if (!this.props.hideLocalMultipleUploadTab) {
       links.push({
-        name: strings.UploadLinkLabel+" "+strings.OneDriveRootFolderName,
+        name: strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName,
         url: addUrl ? "#Multipleupload" : undefined,
         key: "keyMultipleUpload",
         icon: "BulkUpload",
