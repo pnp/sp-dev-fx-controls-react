@@ -69,6 +69,6 @@ The `MyTeams` control can be configured with the following properties:
 
 This control required the flowing scopes :
 
-at least : Team.ReadBasic.All, Channel.ReadBasic.All,
+at least : Team.ReadBasic.All, Channel.ReadBasic.All, TeamMember.Read.All
 and all Scopes used by [mgt-people](https://docs.microsoft.com/en-us/graph/toolkit/components/people),
 and [Person-Card](https://docs.microsoft.com/en-us/graph/toolkit/components/person-card) components 
