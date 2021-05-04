@@ -23,13 +23,13 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
     };
   }
 
- private displayFileNames = (filesResult) =>{
-  const result = [];
-  for (var i = 0; i < filesResult.length; i++) {
-    result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].name}</div>);
+  private displayFileNames = (filesResult) => {
+    const result = [];
+    for (var i = 0; i < filesResult.length; i++) {
+      result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].name}</div>);
+    }
+    return result;
   }
-  return result;
-}
 
   public render(): React.ReactElement<IMultipleUploadFilePickerTabProps> {
     const { filesResult } = this.state;
@@ -38,15 +38,24 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
-          <h2 className={styles.tabHeader}>{strings.UploadLinkLabel+" "+strings.OneDriveRootFolderName}</h2>
+          <h2 className={styles.tabHeader}>{strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName}</h2>
         </div>
         <div className={css(styles.tab, styles.tabOffset)}>
+
           <DragDropFiles
             iconName="BulkUpload"
-            onDrop={this._handleFileUpload}
+            onDrop={this._handleFileUploadDragDrop}
           >
             <div className={styles.localTabDragDropFile}>
-              {strings.UploadLinkLabel+" "+strings.OneDriveRootFolderName}
+              <input
+                className={styles.localTabInput}
+                type="file" id="fileInput"
+                accept={acceptedFilesExtensions} multiple={true} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUploadExplorer(event)}
+              />
+              <label className={styles.localTabLabel} htmlFor="fileInput">
+                {strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName}
+              </label>
+
             </div>
           </DragDropFiles>
 
@@ -60,7 +69,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
           <div className={styles.actionButtons}>
             <PrimaryButton
               disabled={!filesResult}
-              onClick={() => this._handleSave()} className={styles.actionButton}>{strings.ListItemAttachmentslPlaceHolderButtonLabel+" "+strings.OneDriveRootFolderName}</PrimaryButton>
+              onClick={() => this._handleSave()} className={styles.actionButton}>{strings.ListItemAttachmentslPlaceHolderButtonLabel + " " + strings.OneDriveRootFolderName}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
         </div>
@@ -69,12 +78,13 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   }
 
   /**
-   * Gets called when files are uploaded
+   * Gets called when files are uploaded via drag and drop
    */
-  private _handleFileUpload = (files) => {
+  private _handleFileUploadDragDrop = (files) => {
+
     if (files.length < 1) {
       return;
-    }else{
+    } else {
       this.setState({
         filesResult: files
       });
@@ -82,11 +92,24 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   }
 
   /**
+   * Gets called when files are uploaded via file explorer
+   */
+  private _handleFileUploadExplorer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event || event.target.files.length < 1) {
+      return;
+    } else {
+      this.setState({
+        filesResult: event.target.files
+      });
+    }
+
+  }
+
+  /**
    * Saves base64 encoded image back to property pane file picker
    */
   private _handleSave = () => {
-    if(this.state.filesResult)
-    {
+    if (this.state.filesResult) {
       const files: File[] = this.state.filesResult;
       for (var i = 0; i < files.length; i++) {
         const filePickerResult: IFilePickerResult = {
