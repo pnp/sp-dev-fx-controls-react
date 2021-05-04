@@ -18,16 +18,16 @@ export interface IFilePickerProps {
    * Specifies the icon to be used to display Icon Button.
    */
   buttonIcon?: string;
- /**
-   * Specifies props for icon to be used to display Icon Button.
-   */
+  /**
+    * Specifies props for icon to be used to display Icon Button.
+    */
   buttonIconProps?: IIconProps;
 
 
   /**
    * Handler when the file has been selected
    */
-  onSave:(filePickerResult: IFilePickerResult)=>void;
+  onSave: (filePickerResult: IFilePickerResult) => void;
 
   /**
    * Handler when file has been changed.
@@ -68,6 +68,11 @@ export interface IFilePickerProps {
    * Specifies if the picker button is disabled
    */
   disabled?: boolean;
+
+  /**
+   * Specifies if the picker button is hidden (if hidden, panel visibility can still be controlled with isPanelOpen)
+   */
+  hidden?: boolean;
 
   /**
    * Number of itmes to obtain when executing REST queries. Default 100.

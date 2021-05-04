@@ -169,12 +169,13 @@ export class FilePicker extends React.Component<
 
     return (
       <div className={`pnp__file-picker`}>
-        {this.props.label && (
+        {!this.props.hidden && this.props.label && (
           <Label required={this.props.required}>{this.props.label}</Label>
         )}
-        {this.props.buttonIcon || this.props.buttonIconProps ? (
+        {!this.props.hidden && (this.props.buttonIcon || this.props.buttonIconProps) ? (
           <ActionButton iconProps={buttonIconProps} {...buttonProps} />
         ) : (
+          !this.props.hidden &&
           <PrimaryButton {...buttonProps} />
         )}
 
