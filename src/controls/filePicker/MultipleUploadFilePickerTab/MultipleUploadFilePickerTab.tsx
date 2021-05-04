@@ -41,10 +41,17 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
         <div className={css(styles.tab, styles.tabOffset)}>
           <DragDropFiles
             iconName="BulkUpload"
-            onDrop={this._handleFileUpload}
+            onDrop={this._handleFileUploadDragDrop}
           >
             <div className={styles.localTabDragDropFile}>
-              {strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName}
+              <input
+                className={styles.localTabInput}
+                type="file" id="fileInput"
+                accept={acceptedFilesExtensions} multiple={true} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUploadExplorer(event)}
+              />
+              <label className={styles.localTabLabel} htmlFor="fileInput">
+                {strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName}
+              </label>
             </div>
           </DragDropFiles>
 
@@ -67,14 +74,27 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
   }
 
   /**
-   * Gets called when files are uploaded
+   * Gets called when files are uploaded via drag and drop
    */
-  private _handleFileUpload = (files) => {
+  private _handleFileUploadDragDrop = (files) => {
     if (files.length < 1) {
       return;
     } else {
       this.setState({
         filesResult: files
+      });
+    }
+  }
+
+  /**
+   * Gets called when files are uploaded via file explorer
+   */
+  private _handleFileUploadExplorer = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event || event.target.files.length < 1) {
+      return;
+    } else {
+      this.setState({
+        filesResult: event.target.files
       });
     }
   }
