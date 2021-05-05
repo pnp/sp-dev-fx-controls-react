@@ -325,11 +325,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
-  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
-    this.setState({ filePickerResult });
-    if (filePickerResult) {
-      const fileResultContent = await filePickerResult.downloadFileContent();
-      console.log(fileResultContent);
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+    this.setState({ filePickerResult: filePickerResult });
+    if (filePickerResult && filePickerResult.length > 0) {
+      for (var i = 0; i < filePickerResult.length; i++) {
+        const item = filePickerResult[i];
+        const fileResultContent = await item.downloadFileContent();
+        console.log(fileResultContent);
+      }
     }
   }
 

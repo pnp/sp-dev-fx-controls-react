@@ -623,11 +623,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
-  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
-    this.setState({ filePickerResult });
-    if (filePickerResult) {
-      const fileResultContent = await filePickerResult.downloadFileContent();
-      console.log(fileResultContent);
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+    this.setState({ filePickerResult: filePickerResult });
+    if (filePickerResult && filePickerResult.length > 0) {
+      for (var i = 0; i < filePickerResult.length; i++) {
+        const item = filePickerResult[i];
+        const fileResultContent = await item.downloadFileContent();
+        console.log(fileResultContent);
+      }
     }
   }
 
@@ -1528,7 +1531,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
             context={this.props.context}
             hideRecentTab={false}
             includePageLibraries={true}
@@ -1537,10 +1540,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             this.state.filePickerResult &&
             <div>
               <div>
-                FileName: {this.state.filePickerResult.fileName}
+                FileName: {this.state.filePickerResult[0].fileName}
               </div>
               <div>
-                File size: {this.state.filePickerResult.fileSize}
+                File size: {this.state.filePickerResult[0].fileSize}
               </div>
             </div>
           }
@@ -1554,7 +1557,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
             context={this.props.context}
             hideRecentTab={false}
             renderCustomUploadTabContent={() => (
