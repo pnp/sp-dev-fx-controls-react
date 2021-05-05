@@ -1,0 +1,39 @@
+@import "../FilePicker.module.scss";
+
+.localTabSinglePreview {
+  margin-bottom: 20px;
+  display: inline-block;
+  text-align: center;
+}
+
+.localTabSinglePreviewImage {
+  display: block;
+  max-width: 100%;
+  max-height: 220px;
+  image-orientation: from-image;
+}
+
+.localTabFilename {
+  color: $ms-color-neutralPrimary;
+}
+
+.localTabLabel {
+  color: $ms-color-themePrimary;
+  cursor: pointer;
+}
+
+.localTabInput {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.localTabDragDropFile {
+  // width: 100%;
+  border: 1px black dashed;
+  text-align: center;
+  padding: 75px;
+}

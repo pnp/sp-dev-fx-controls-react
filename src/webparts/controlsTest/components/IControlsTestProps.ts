@@ -3,7 +3,11 @@ import { ImageSize } from '../../../FileTypeIcon';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import { IProgressAction } from '../../../Progress';
 import { IFilePickerResult } from '../../../FilePicker';
+import { ITag } from 'office-ui-fabric-react';
+import {
+  IReadonlyTheme,
 
+} from "@microsoft/sp-component-base";
 export interface IControlsTestProps {
   context: WebPartContext;
   description: string;
@@ -11,6 +15,7 @@ export interface IControlsTestProps {
   displayMode: DisplayMode;
   updateProperty: (value: string) => void;
   totalPages?: number;
+  themeVariant?:  IReadonlyTheme;
 }
 
 export interface IControlsTestState {
@@ -29,10 +34,13 @@ export interface IControlsTestState {
   canMovePrev: boolean;
   canMoveNext: boolean;
   comboBoxListItemPickerListId: string;
-  filePickerResult?: IFilePickerResult;
+  filePickerResult?: IFilePickerResult[];
   treeViewSelectedKeys?: string[];
   showAnimatedDialog?: boolean;
   showCustomisedAnimatedDialog?: boolean;
   showSuccessDialog?: boolean;
   showErrorDialog?: boolean;
+  selectedTeam:ITag[];
+  selectedTeamChannels:ITag[];
+
 }

@@ -1,0 +1,29 @@
+.DragDropFilesArea {
+  position: relative;
+  min-height: 150px;
+}
+
+.DragDropFilesAreaLeave {
+  position: relative;
+}
+
+.DragDropFilesAreaBorder {
+  border: dashed grey 1px;
+  background-color: rgba(255,255,255,.6);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.DragDropFilesAreaZone {
+  position: absolute;
+  top: 35%;
+  right: 0;
+  left: 0;
+  text-align: center;
+  color: grey;
+  font-size: 34px;
+}

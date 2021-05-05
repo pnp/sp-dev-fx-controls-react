@@ -18,7 +18,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
     const { language } = this.props;
 
     const themesColor = `&themecolors=${encodeURIComponent(this.getCurrentThemeConfiguration())}`;
-    const contentPickerUrl = `https://hubblecontent.osi.office.net/contentsvc/external/m365contentpicker/index.html?p=3&app=1001&aud=prod&channel=devmain&setlang=${language}&msel=0&env=prod&premium=1${themesColor}`;
+    const contentPickerUrl = `https://hubblecontent.osi.office.net/contentsvc/m365contentpicker/index.html?p=3&app=1001&aud=prod&channel=devmain&setlang=${language}&msel=0&env=prod&premium=1${themesColor}`;
 
     return (
       <div className={styles.tabContainer}>
@@ -61,7 +61,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
       };
     }
 
-    this.props.onSave(filePickerResult);
+    this.props.onSave([filePickerResult]);
   }
 
   /**

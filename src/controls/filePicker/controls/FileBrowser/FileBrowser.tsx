@@ -185,7 +185,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                         selectionPreservedOnEmptyClick={true}
                         enterModalSelectionOnTouch={true}
                         onRenderRow={this._onRenderRow}
-                        onRenderMissingItem={this._loadNextDataRequest}
+                        onRenderMissingItem={() => { this._loadNextDataRequest(); return null; }}
                       />) :
                       (<TilesList
                         fileBrowserService={this.props.fileBrowserService}

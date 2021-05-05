@@ -1,11 +1,79 @@
 # Releases
 
+## 3.1.0
+
+### New control(s)
+
+- `TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
+- `TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
+- `SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)
+- `DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) 
+- `DragDropFiles`: new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
+- `MyTeams`: new MyTeams control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)
+- `TeamChannelPicker`: new TeamChannelPicker control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)
+- `TeamPicker`: new TeamPicker control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)
+
+### Enhancements
+
+- `ListView`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
+- `FilePicker`: Use new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
+- SharePoint Framework v1.12.1 support
+- `ListView`: Ability to provide custom sorting function [#880](https://github.com/pnp/sp-dev-fx-controls-react/issues/880)
+- `FilePicker`: Allow panel on FilePicker to be invoked after first load [#886](https://github.com/pnp/sp-dev-fx-controls-react/issues/886)
+- `FilePicker`: Allow FilePicker button to be hidden [#887](https://github.com/pnp/sp-dev-fx-controls-react/issues/887)
+- `FilePicker`: Change same function to return an array of objects
+
+### Fixes
+
+- Documentation for `ListView`: typos fixes [#855](https://github.com/pnp/sp-dev-fx-controls-react/pull/855)
+- Documentation fix: type on index page [#852](https://github.com/pnp/sp-dev-fx-controls-react/pull/852)
+- `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+- `TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)
+- `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
+- `ListItemAttachments`: updated filename replacement logic [#873](https://github.com/pnp/sp-dev-fx-controls-react/pull/873)
+- `RichText`: Adding a link does not work [#875](https://github.com/pnp/sp-dev-fx-controls-react/issues/875)
+- `FilePicker`: Stock images url is getting a 404 server error [#882](https://github.com/pnp/sp-dev-fx-controls-react/issues/882)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https://github.com/AriGunawan), [aroraans1512](https://github.com/aroraans1512), [cwparsons](https://github.com/cwparsons), [joaojmendes](https://github.com/joaojmendes), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Yannick Reekmans](https://github.com/YannickRe), [André Lage](https://github.com/aaclage).
+
 ## 3.0.0
 
 ### Enhancements
 
 - SharePoint Framework v1.12 support (breaking change)
 - Fluent UI v7 support
+
+## 2.7.0
+
+### New control(s)
+
+- `DragDropFiles`: new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `SitePicker` new Site Picker control [#867](https://github.com/pnp/sp-dev-fx-controls-react/pull/867)
+- `Controls` Add locale strings for pt-br [#865](https://github.com/pnp/sp-dev-fx-controls-react/pull/865)
+
+### Enhancements
+
+- `ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `FilePicker`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `ListView`: Ability to provide custom sorting function [#880](https://github.com/pnp/sp-dev-fx-controls-react/issues/880)
+- `FilePicker`: Allow panel on FilePicker to be invoked after first load [#886](https://github.com/pnp/sp-dev-fx-controls-react/issues/886)
+- `FilePicker`: Allow FilePicker button to be hidden [#887](https://github.com/pnp/sp-dev-fx-controls-react/issues/887)
+- `FilePicker`: Changed save function to return an array of objects
+
+### Fixes
+
+- `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+- `TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)
+- `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
+- `ListItemAttachments`: updated filename replacement logic [#873](https://github.com/pnp/sp-dev-fx-controls-react/pull/873)
+- `RichText`: Adding a link does not work [#875](https://github.com/pnp/sp-dev-fx-controls-react/issues/875)
+- `FilePicker`: Stock images url is getting a 404 server error [#882](https://github.com/pnp/sp-dev-fx-controls-react/issues/882)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [cwparsons](https://github.com/cwparsons), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 2.6.0
 

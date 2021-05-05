@@ -916,11 +916,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const quill = this.getEditor();
     if (quill) {
       const range = quill.getSelection();
-      const formats = quill.getFormat(range);
+      if (range) {
+        const formats = quill.getFormat(range);
 
-      if (!isEqual(formats, this.state.formats)) {
-        console.log(`current format: ${formats.list}`);
-        newState.formats = formats;
+        if (!isEqual(formats, this.state.formats)) {
+          console.log(`current format: ${formats.list}`);
+          newState.formats = formats;
+        }
       }
 
     }
