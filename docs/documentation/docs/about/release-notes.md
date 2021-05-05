@@ -1,5 +1,35 @@
 # Releases
 
+## 2.7.0
+
+### New control(s)
+
+- `DragDropFiles`: new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `SitePicker` new Site Picker control [#867](https://github.com/pnp/sp-dev-fx-controls-react/pull/867)
+- `Controls` Add locale strings for pt-br [#865](https://github.com/pnp/sp-dev-fx-controls-react/pull/865)
+
+### Enhancements
+
+- `ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `FilePicker`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `ListView`: Ability to provide custom sorting function [#880](https://github.com/pnp/sp-dev-fx-controls-react/issues/880)
+- `FilePicker`: Allow panel on FilePicker to be invoked after first load [#886](https://github.com/pnp/sp-dev-fx-controls-react/issues/886)
+- `FilePicker`: Allow FilePicker button to be hidden [#887](https://github.com/pnp/sp-dev-fx-controls-react/issues/887)
+- `FilePicker`: Changed save function to return an array of objects
+
+### Fixes
+
+- `PeoplePicker`: error message isn't cleared after `onGetErrorMessage` returns an empty string [#841](https://github.com/pnp/sp-dev-fx-controls-react/issues/841)
+- `TreeView`: Not able to select/deselect checkbox in spfx-controls-react TreeView after assign the defaultSelectedKeys value [#870](https://github.com/pnp/sp-dev-fx-controls-react/issues/870)
+- `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
+- `ListItemAttachments`: updated filename replacement logic [#873](https://github.com/pnp/sp-dev-fx-controls-react/pull/873)
+- `RichText`: Adding a link does not work [#875](https://github.com/pnp/sp-dev-fx-controls-react/issues/875)
+- `FilePicker`: Stock images url is getting a 404 server error [#882](https://github.com/pnp/sp-dev-fx-controls-react/issues/882)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [André Lage](https://github.com/aaclage), [cwparsons](https://github.com/cwparsons), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Yannick Reekmans](https://github.com/YannickRe).
+
 ## 2.6.0
 
 ### New control(s)
@@ -23,10 +53,11 @@
 - Documentation: Controls link in the menu is broken [#821](https://github.com/pnp/sp-dev-fx-controls-react/pull/821)
 - `TreeView`: Fix two potential null reference issues [#832](https://github.com/pnp/sp-dev-fx-controls-react/pull/832)
 - `RichText`: Problem with bullets and number list [#795](https://github.com/pnp/sp-dev-fx-controls-react/issues/795)
+- `TreeView`: Don't expand selected nodes when using expandToSelected [#850](https://github.com/pnp/sp-dev-fx-controls-react/pull/850)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe).
+Special thanks to our contributors (in alphabetical order): [Anoop Tatti](https://github.com/anoopt), [Ari Gunawan](https://github.com/AriGunawan), [Gautam Sheth](https://github.com/gautamdsheth), [Kunj Balkrishna Sangani](https://github.com/kunj-sangani), [Marcin Wojciechowski](https://github.com/mgwojciech), [Mark Bice](https://github.com/mbice), [Nizar Grindi](https://github.com/NizarGrindi), [Yannick Reekmans](https://github.com/YannickRe), [mk0023](https://github.com/mk0023).
 
 ## 2.5.0
 

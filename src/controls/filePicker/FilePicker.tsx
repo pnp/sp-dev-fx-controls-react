@@ -33,32 +33,10 @@ import RecentFilesTab from "./RecentFilesTab/RecentFilesTab";
 import SiteFilePickerTab from "./SiteFilePickerTab/SiteFilePickerTab";
 import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
+import MultipleUploadFilePickerTab from "./MultipleUploadFilePickerTab/MultipleUploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
 
 // Localization
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export class FilePicker extends React.Component<
@@ -114,6 +92,20 @@ export class FilePicker extends React.Component<
     });
   }
 
+  /**
+   * componentWillReceiveProps lifecycle hook
+   *
+   * @param nextProps
+   */
+  public componentWillReceiveProps(nextProps: IFilePickerProps): void {
+    if (nextProps.isPanelOpen || nextProps.isPanelOpen !== this.props.isPanelOpen) {
+      this.setState({
+        panelOpen: nextProps.isPanelOpen
+      });
+
+    }
+  }
+
   public render(): JSX.Element {
     // If no acceptable file type was passed, and we're expecting images, set the default image filter
     const accepts: string[] = this.props.accepts;
@@ -128,7 +120,7 @@ export class FilePicker extends React.Component<
       accepts: accepts,
       context: this.props.context,
       onClose: () => this._handleClosePanel(),
-      onSave: (value: IFilePickerResult) => {
+      onSave: (value: IFilePickerResult[]) => {
         this._handleSave(value);
       },
     };
@@ -154,12 +146,13 @@ export class FilePicker extends React.Component<
 
     return (
       <div className={`pnp__file-picker`}>
-        {this.props.label && (
+        {!this.props.hidden && this.props.label && (
           <Label required={this.props.required}>{this.props.label}</Label>
         )}
-        {this.props.buttonIcon || this.props.buttonIconProps ? (
+        {!this.props.hidden && (this.props.buttonIcon || this.props.buttonIconProps) ? (
           <ActionButton iconProps={buttonIconProps} {...buttonProps} />
         ) : (
+          !this.props.hidden &&
           <PrimaryButton {...buttonProps} />
         )}
 
@@ -203,6 +196,15 @@ export class FilePicker extends React.Component<
               <UploadFilePickerTab
                 renderCustomUploadTabContent={
                   this.props.renderCustomUploadTabContent
+                }
+                {...linkTabProps}
+                onChange={this._handleOnChange}
+              />
+            )}
+            {this.state.selectedTab === "keyMultipleUpload" && (
+              <MultipleUploadFilePickerTab
+                renderCustomMultipleUploadTabContent={
+                  this.props.renderCustomMultipleUploadTabContent
                 }
                 {...linkTabProps}
                 onChange={this._handleOnChange}
@@ -300,14 +302,14 @@ export class FilePicker extends React.Component<
   /**
    * On save action
    */
-  private _handleSave = (filePickerResult: IFilePickerResult) => {
+  private _handleSave = (filePickerResult: IFilePickerResult[]) => {
     this.props.onSave(filePickerResult);
     this.setState({
       panelOpen: false,
     });
   }
 
-  private _handleOnChange = (filePickerResult: IFilePickerResult) => {
+  private _handleOnChange = (filePickerResult: IFilePickerResult[]) => {
     if (this.props.onChange) {
       this.props.onChange(filePickerResult);
     }
@@ -389,6 +391,14 @@ export class FilePicker extends React.Component<
         icon: "System",
       });
     }
+    if (!this.props.hideLocalMultipleUploadTab) {
+      links.push({
+        name: strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName,
+        url: addUrl ? "#Multipleupload" : undefined,
+        key: "keyMultipleUpload",
+        icon: "BulkUpload",
+      });
+    }
     if (!this.props.hideLinkUploadTab) {
       links.push({
         name: strings.FromLinkLinkLabel,
@@ -430,5 +440,9 @@ export class FilePicker extends React.Component<
     if (!props.hideLinkUploadTab) {
       return "keyLink";
     }
+    if (!props.hideLocalMultipleUploadTab) {
+      return "keyMultipleUpload";
+    }
+
   }
 }

@@ -63,11 +63,16 @@ export interface IListViewProps {
    * Specify the initial filter to be applied to the list.
    */
   defaultFilter?: string;
-    /**
-   * Boolean value to create a fixed/sticky header.
-   * Set to false by default
-   */
+  /**
+ * Boolean value to create a fixed/sticky header.
+ * Set to false by default
+ */
   stickyHeader?: boolean;
+  /**
+   * Custom sorting function.
+   * @returns sorted collection of items
+   */
+  sortItems?: (items: any[], columnName: string, descending: boolean) => any[];
 }
 
 export interface IListViewState {
@@ -86,8 +91,6 @@ export interface IListViewState {
   columns?: IColumn[];
 
   groups?: IGroup[];
-
-  dragStatus?: boolean;
 
 }
 

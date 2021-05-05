@@ -211,7 +211,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
   /**
    * Process the child nodes
    */
-  public createChildNodes = (list, paddingLeft) => {
+  public createChildNodes = (list: ITreeItem[], paddingLeft: number) => {
     if (list.length) {
       const {
         treeItem,

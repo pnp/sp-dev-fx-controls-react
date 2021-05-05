@@ -454,6 +454,10 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     if (typeof result === 'string') {
       if (!result) {
         this.validated(value);
+
+        this.setState({
+          errorMessage: undefined
+        });
       }
       else {
         this.setState({
@@ -467,6 +471,10 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
         if (!resolvedResult) {
           this.validated(value);
+
+          this.setState({
+            errorMessage: undefined
+          });
         }
         else {
           this.setState({

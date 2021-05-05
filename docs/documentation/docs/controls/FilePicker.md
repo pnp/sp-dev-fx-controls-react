@@ -7,6 +7,7 @@ Currently supported locations
 - OneDrive - tab allows to select a file from the user's One Drive.
 - Site document libraries - tab allows to select a file from the existing site document libraries.
 - Upload - tab allows to upload a file from local drive.
+- Multi-Upload - tab allows to upload multiple files from local drive.
 - From a link - tab allows to paste a link to the document.
 
 ## Overview
@@ -44,10 +45,25 @@ import { FilePicker, IFilePickerResult } from '@pnp/spfx-controls-react/lib/File
   bingAPIKey="<BING API KEY>"
   accepts= {[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
   buttonIcon="FileImage"
-  onSave={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
-  onChange={(filePickerResult: IFilePickerResult) => { this.setState({filePickerResult }) }}
+  onSave={(filePickerResult: IFilePickerResult[]) => { this.setState({filePickerResult }) }}
+  onChange={(filePickerResult: IFilePickerResult[]) => { this.setState({filePickerResult }) }}
   context={this.props.context}
 />
+```
+
+- Sample `onSave` handler:
+
+```TypeScript
+private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+  this.setState({ filePickerResult: filePickerResult });
+  if (filePickerResult && filePickerResult.length > 0) {
+    for (var i = 0; i < filePickerResult.length; i++) {
+      const item = filePickerResult[i];
+      const fileResultContent = await item.downloadFileContent();
+      console.log(fileResultContent);
+    }
+  }
+}
 ```
 
 ## Implementation
@@ -60,13 +76,15 @@ The FilePicker component can be configured with the following properties:
 | buttonLabel | string | no | Specifies the label of the file picker button. |
 | buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
   buttonIconProps | IIconProps | no | In case it is provided the file picker will be rendered as an Icon the and all can define Properties for Icon  |
-| onSave | (filePickerResult: IFilePickerResult) => void | yes | Handler when the file has been selected and picker has been closed. |
-| onChange | (filePickerResult: IFilePickerResult) => void | no | Handler when the file selection has been changed. |
+| onSave | (filePickerResult: IFilePickerResult[]) => void | yes | Handler when the file has been selected and picker has been closed. |
+| onChange | (filePickerResult: IFilePickerResult[]) => void | no | Handler when the file selection has been changed. |
+| onCancel | () => void | no | Handler when file picker has been cancelled. |
 | context | ExtensionContext \| WebPartContext | yes | Current context. |
 | accepts | string[] | no | Array of strings containing allowed files extensions. E.g. [".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"] |
 | required | boolean | no | Sets the label to inform that the value is required. |
 | bingAPIKey | string | no | Used to execute WebSearch. If not provided SearchTab will not be available. |
 | disabled | boolean | no | Specifies if the picker button is disabled |
+| hidden | boolean | no | Specifies if the picker button is hidden (if hidden, panel visibility can still be controlled with isPanelOpen) |
 | itemsCountQueryLimit | number | no | Number of items to obtain when executing REST queries. Default 100. |
 | hideRecentTab | boolean | no | Specifies if RecentTab should be hidden. |
 | hideWebSearchTab | boolean | no | Specifies if WebSearchTab should be hidden. |
@@ -77,7 +95,9 @@ The FilePicker component can be configured with the following properties:
 | hideLocalUploadTab | boolean | no | Specifies if LocalUploadTab should be hidden. |
 | hideLinkUploadTab | boolean | no | Specifies if LinkUploadTab should be hidden. |
 | storeLastActiveTab | boolean | no | Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default `true` |
+| isPanelOpen | boolean | no | Specifies if the file picker panel is open by default or not |
 | renderCustomUploadTabContent | (filePickerResult: IFilePickerResult) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Upload" tab |
+| renderCustomMultipleUploadTabContent | (filePickerResult: IFilePickerResult[]) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Multi-Upload" tab |
 | renderCustomLinkTabContent | (filePickerResult: IFilePickerResult) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Link" tab |
 | includePageLibraries | boolean | no | Specifies if Site Pages library to be visible on Sites tab |
 

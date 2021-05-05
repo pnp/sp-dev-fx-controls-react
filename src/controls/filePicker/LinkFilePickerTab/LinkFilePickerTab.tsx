@@ -109,7 +109,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Handles when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(this.state.filePickerResult);
+    this.props.onSave([this.state.filePickerResult]);
   }
 
   /**

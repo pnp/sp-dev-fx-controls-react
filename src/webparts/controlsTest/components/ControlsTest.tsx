@@ -162,6 +162,8 @@ import {
   IControlsTestProps,
   IControlsTestState
 } from "./IControlsTestProps";
+import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 
 // Used to render document card
 /**
@@ -412,7 +414,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
-      treeViewSelectedKeys: ['gc1', 'gc3'],
+      treeViewSelectedKeys: ['3', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
       showSuccessDialog: false,
@@ -482,7 +484,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   */
   private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
-      console.log(files[i].name);
+      console.log("File name: " + files[i].name);
+      console.log("Folder Path: " + files[i].fullPath);
     }
   }
 
@@ -620,11 +623,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
-  private _onFilePickerSave = async (filePickerResult: IFilePickerResult) => {
-    this.setState({ filePickerResult });
-    if (filePickerResult) {
-      const fileResultContent = await filePickerResult.downloadFileContent();
-      console.log(fileResultContent);
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+    this.setState({ filePickerResult: filePickerResult });
+    if (filePickerResult && filePickerResult.length > 0) {
+      for (var i = 0; i < filePickerResult.length; i++) {
+        const item = filePickerResult[i];
+        const fileResultContent = await item.downloadFileContent();
+        console.log(fileResultContent);
+      }
     }
   }
 
@@ -1105,7 +1111,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
           suggestionsLimit={2}
           resolveDelay={200}
-          placeholder={'Select a SharePoint principal (User or Group)'} />
+          placeholder={'Select a SharePoint principal (User or Group)'}
+          onGetErrorMessage={async (items: any[]) => {
+            if (!items || items.length < 2) {
+              return 'error';
+            }
+
+            return '';
+          }} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (local scoped)"
@@ -1180,6 +1193,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         />
 
         <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+        <br></br>
+        <b>Drag and Drop Files</b>
+        <DragDropFiles
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
+        >
+
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
+
+        </DragDropFiles>
+        <br></br>
 
         <ListView items={this.state.items}
           viewFields={viewFields}
@@ -1279,6 +1312,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
                 <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+              <div className="ms-font-m">Site picker tester:
+                <SitePicker
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:
@@ -1486,7 +1531,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
             context={this.props.context}
             hideRecentTab={false}
             includePageLibraries={true}
@@ -1495,10 +1540,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             this.state.filePickerResult &&
             <div>
               <div>
-                FileName: {this.state.filePickerResult.fileName}
+                FileName: {this.state.filePickerResult[0].fileName}
               </div>
               <div>
-                File size: {this.state.filePickerResult.fileSize}
+                File size: {this.state.filePickerResult[0].fileSize}
               </div>
             </div>
           }
@@ -1512,7 +1557,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             buttonLabel="Upload image"
             buttonIcon="FileImage"
             onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult) => { console.log(filePickerResult.fileName); }}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
             context={this.props.context}
             hideRecentTab={false}
             renderCustomUploadTabContent={() => (
@@ -1579,8 +1624,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedKeys={this.state.treeViewSelectedKeys}
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
-            defaultExpandedChildren={true}
-          //expandToSelected={true}
+            defaultExpandedChildren={false}
+            expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />
           <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
