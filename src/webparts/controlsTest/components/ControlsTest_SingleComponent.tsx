@@ -328,9 +328,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
     this.setState({ filePickerResult: filePickerResult });
     if (filePickerResult && filePickerResult.length > 0) {
-      for (const file of filePickerResult) {
-
-        const fileResultContent = await file.downloadFileContent();
+      for (var i = 0; i < filePickerResult.length; i++) {
+        const item = filePickerResult[i];
+        const fileResultContent = await item.downloadFileContent();
         console.log(fileResultContent);
       }
     }
