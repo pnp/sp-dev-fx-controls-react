@@ -23,16 +23,16 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
     };
   }
 
-  private displayFileNames = (filesResult) => {
+  private displayFileNames = (filesResult: IFilePickerResult[]) => {
     const result = [];
     for (var i = 0; i < filesResult.length; i++) {
-      result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].name}</div>);
+      result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].fileName}</div>);
     }
     return result;
   }
 
   public render(): React.ReactElement<IMultipleUploadFilePickerTabProps> {
-    const { filesResult } = this.state;
+    const { filePickerResult } = this.state;
     const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
 
     return (
@@ -60,7 +60,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
           </DragDropFiles>
 
           <div>
-            {(filesResult) ? this.displayFileNames(filesResult) : ""}
+            {(filePickerResult) ? this.displayFileNames(filePickerResult) : ""}
           </div>
 
           {this.props.renderCustomMultipleUploadTabContent && this.props.renderCustomMultipleUploadTabContent(this.state.filePickerResult)}
@@ -68,7 +68,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!filesResult}
+              disabled={!filePickerResult}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.ListItemAttachmentslPlaceHolderButtonLabel + " " + strings.OneDriveRootFolderName}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -80,14 +80,30 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   /**
    * Gets called when files are uploaded via drag and drop
    */
-  private _handleFileUploadDragDrop = (files) => {
+  private _handleFileUploadDragDrop = (uploadFiles) => {
 
-    if (files.length < 1) {
+    if (uploadFiles.length < 1) {
       return;
     } else {
+
+      const files: File[] = uploadFiles;
+      const filePickerResultsArray: IFilePickerResult[] = [];
+      for (var i = 0; i < files.length; i++) {
+        const filePickerResult: IFilePickerResult = {
+          fileAbsoluteUrl: null,
+          fileName: files[i].name,
+          fileSize: files[i].size,
+          fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(files[i].name),
+          downloadFileContent: () => { return Promise.resolve(files[i]); }
+        };
+        filePickerResultsArray.push(filePickerResult);
+      }
+
       this.setState({
-        filesResult: files
+        filePickerResult: filePickerResultsArray
       });
+
+      this.props.onChange(filePickerResultsArray);
     }
   }
 
@@ -98,9 +114,9 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
     if (!event || event.target.files.length < 1) {
       return;
     } else {
-      this.setState({
-        filesResult: event.target.files
-      });
+      // this.setState({
+      //   filesResult: event.target.files
+      // });
     }
 
   }
@@ -109,18 +125,21 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
    * Saves base64 encoded image back to property pane file picker
    */
   private _handleSave = () => {
-    if (this.state.filesResult) {
-      const files: File[] = this.state.filesResult;
-      for (var i = 0; i < files.length; i++) {
-        const filePickerResult: IFilePickerResult = {
-          fileAbsoluteUrl: null,
-          fileName: files[i].name,
-          fileSize: files[i].size,
-          fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(files[i].name),
-          downloadFileContent: () => { return Promise.resolve(files[i]); }
-        };
-        this.props.onSave(filePickerResult);
-      }
+    if (this.state.filePickerResult) {
+      // const files: File[] = this.state.filesResult;
+      // const filePickerResultsArray: IFilePickerResult[] = [];
+      // for (var i = 0; i < files.length; i++) {
+      //   const filePickerResult: IFilePickerResult = {
+      //     fileAbsoluteUrl: null,
+      //     fileName: files[i].name,
+      //     fileSize: files[i].size,
+      //     fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(files[i].name),
+      //     downloadFileContent: () => { return Promise.resolve(files[i]); }
+      //   };
+      //   filePickerResultsArray.push(filePickerResult);
+      //   // this.props.onSave(filePickerResult);
+      // }
+      this.props.onSave(this.state.filePickerResult);
     }
   }
 

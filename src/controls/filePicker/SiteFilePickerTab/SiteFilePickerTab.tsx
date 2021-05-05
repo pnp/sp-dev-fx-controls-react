@@ -129,7 +129,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
    * Called when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(this.state.filePickerResult);
+    this.props.onSave([this.state.filePickerResult]);
   }
 
   /**

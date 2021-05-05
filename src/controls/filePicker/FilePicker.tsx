@@ -39,29 +39,6 @@ import WebSearchTab from "./WebSearchTab/WebSearchTab";
 // Localization
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export class FilePicker extends React.Component<
   IFilePickerProps,
   IFilePickerState
@@ -143,7 +120,7 @@ export class FilePicker extends React.Component<
       accepts: accepts,
       context: this.props.context,
       onClose: () => this._handleClosePanel(),
-      onSave: (value: IFilePickerResult) => {
+      onSave: (value: IFilePickerResult[]) => {
         this._handleSave(value);
       },
     };
@@ -325,14 +302,14 @@ export class FilePicker extends React.Component<
   /**
    * On save action
    */
-  private _handleSave = (filePickerResult: IFilePickerResult) => {
+  private _handleSave = (filePickerResult: IFilePickerResult[]) => {
     this.props.onSave(filePickerResult);
     this.setState({
       panelOpen: false,
     });
   }
 
-  private _handleOnChange = (filePickerResult: IFilePickerResult) => {
+  private _handleOnChange = (filePickerResult: IFilePickerResult[]) => {
     if (this.props.onChange) {
       this.props.onChange(filePickerResult);
     }

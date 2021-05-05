@@ -11,7 +11,7 @@ export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
 export interface IFilePickerTab {
   context: ExtensionContext | WebPartContext;
   accepts: string[];
-  onSave: (value: IFilePickerResult) => void;
+  onSave: (value: IFilePickerResult[]) => void;
   onClose: () => void;
 }
 
@@ -33,7 +33,7 @@ export interface IFilePickerResult {
   fileAbsoluteUrl: string;
 
   /**
-   * Size of a selected file (in bytes). Undefined in all cases but file upload 
+   * Size of a selected file (in bytes). Undefined in all cases but file upload
    */
   fileSize?: number;
 

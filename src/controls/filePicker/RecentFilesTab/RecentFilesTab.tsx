@@ -249,7 +249,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    * Gets called when it is time to save the currently selected item
    */
   private _handleSave = () => {
-    this.props.onSave(this.state.filePickerResult);
+    this.props.onSave([this.state.filePickerResult]);
   }
 
   /**
