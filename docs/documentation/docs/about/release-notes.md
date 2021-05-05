@@ -12,6 +12,10 @@
 
 - `ListView`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
 - `FilePicker`: Use new DragDropFiles control [#856](https://github.com/pnp/sp-dev-fx-controls-react/issues/856)
+- `ListView`: Ability to provide custom sorting function [#880](https://github.com/pnp/sp-dev-fx-controls-react/issues/880)
+- `FilePicker`: Allow panel on FilePicker to be invoked after first load [#886](https://github.com/pnp/sp-dev-fx-controls-react/issues/886)
+- `FilePicker`: Allow FilePicker button to be hidden [#887](https://github.com/pnp/sp-dev-fx-controls-react/issues/887)
+- `FilePicker`: Changed save function to return an array of objects
 
 ### Fixes
 
@@ -20,6 +24,7 @@
 - `FilePicker`: React crash on large folders [#826](https://github.com/pnp/sp-dev-fx-controls-react/issues/826)
 - `ListItemAttachments`: updated filename replacement logic [#873](https://github.com/pnp/sp-dev-fx-controls-react/pull/873)
 - `RichText`: Adding a link does not work [#875](https://github.com/pnp/sp-dev-fx-controls-react/issues/875)
+- `FilePicker`: Stock images url is getting a 404 server error [#882](https://github.com/pnp/sp-dev-fx-controls-react/issues/882)
 
 ### Contributors
 
