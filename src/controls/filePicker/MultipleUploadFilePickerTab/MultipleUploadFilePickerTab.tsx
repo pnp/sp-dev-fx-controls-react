@@ -14,7 +14,6 @@ import styles from './MultipleUploadFilePickerTab.module.scss';
 
 
 export default class MultipleUploadFilePicketTab extends React.Component<IMultipleUploadFilePickerTabProps, IMultipleUploadFilePickerTabState> {
-  private _files: File[] = [];
 
   constructor(props: IMultipleUploadFilePickerTabProps) {
     super(props);
@@ -44,7 +43,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
 
           <DragDropFiles
             iconName="BulkUpload"
-            onDrop={this._handleFileUploadDragDrop}
+            onDrop={this._handleFileUpload}
           >
             <div className={styles.localTabDragDropFile}>
               <input
@@ -80,21 +79,21 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
   /**
    * Gets called when files are uploaded via drag and drop
    */
-  private _handleFileUploadDragDrop = (uploadFiles) => {
+  private _handleFileUpload = (files: File[]) => {
 
-    if (uploadFiles.length < 1) {
+    if (files.length < 1) {
       return;
     } else {
 
-      const files: File[] = uploadFiles;
       const filePickerResultsArray: IFilePickerResult[] = [];
       for (var i = 0; i < files.length; i++) {
+        const file: File = files[i];
         const filePickerResult: IFilePickerResult = {
           fileAbsoluteUrl: null,
-          fileName: files[i].name,
-          fileSize: files[i].size,
-          fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(files[i].name),
-          downloadFileContent: () => { return Promise.resolve(files[i]); }
+          fileName: file.name,
+          fileSize: file.size,
+          fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(file.name),
+          downloadFileContent: () => { return Promise.resolve(file); }
         };
         filePickerResultsArray.push(filePickerResult);
       }
@@ -114,9 +113,13 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
     if (!event || event.target.files.length < 1) {
       return;
     } else {
-      // this.setState({
-      //   filesResult: event.target.files
-      // });
+
+      const files: File[] = [];
+      for (var i = 0; i < event.target.files.length; i++) {
+        const file: File = event.target.files.item(i);
+        files.push(file);
+      }
+      this._handleFileUpload(files);
     }
 
   }
@@ -125,22 +128,7 @@ export default class MultipleUploadFilePicketTab extends React.Component<IMultip
    * Saves base64 encoded image back to property pane file picker
    */
   private _handleSave = () => {
-    if (this.state.filePickerResult) {
-      // const files: File[] = this.state.filesResult;
-      // const filePickerResultsArray: IFilePickerResult[] = [];
-      // for (var i = 0; i < files.length; i++) {
-      //   const filePickerResult: IFilePickerResult = {
-      //     fileAbsoluteUrl: null,
-      //     fileName: files[i].name,
-      //     fileSize: files[i].size,
-      //     fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(files[i].name),
-      //     downloadFileContent: () => { return Promise.resolve(files[i]); }
-      //   };
-      //   filePickerResultsArray.push(filePickerResult);
-      //   // this.props.onSave(filePickerResult);
-      // }
-      this.props.onSave(this.state.filePickerResult);
-    }
+    this.props.onSave(this.state.filePickerResult);
   }
 
   /**
