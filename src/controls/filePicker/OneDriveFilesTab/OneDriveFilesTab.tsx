@@ -143,7 +143,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
    * Called when user saves
    */
   private _handleSave = () => {
-    this.props.onSave(this.state.filePickerResult);
+    this.props.onSave([this.state.filePickerResult]);
   }
 
   /**

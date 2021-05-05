@@ -61,7 +61,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
       };
     }
 
-    this.props.onSave(filePickerResult);
+    this.props.onSave([filePickerResult]);
   }
 
   /**

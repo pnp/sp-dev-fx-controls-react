@@ -27,12 +27,12 @@ export interface IFilePickerProps {
   /**
    * Handler when the file has been selected
    */
-  onSave: (filePickerResult: IFilePickerResult) => void;
+  onSave: (filePickerResult: IFilePickerResult[]) => void;
 
   /**
    * Handler when file has been changed.
    */
-  onChange?: (filePickerResult: IFilePickerResult) => void;
+  onChange?: (filePickerResult: IFilePickerResult[]) => void;
 
   /**
    * Current context.
@@ -150,7 +150,7 @@ export interface IFilePickerProps {
   /**
    * Optional additional renderer for Multiple Upload tab
    */
-  renderCustomMultipleUploadTabContent?: (filePickerResult: IFilePickerResult) => JSX.Element | null;
+  renderCustomMultipleUploadTabContent?: (filePickerResult: IFilePickerResult[]) => JSX.Element | null;
 
   /**
    * Specifies if Site Pages library to be visible on Sites tab

@@ -34,7 +34,7 @@ export interface IControlsTestState {
   canMovePrev: boolean;
   canMoveNext: boolean;
   comboBoxListItemPickerListId: string;
-  filePickerResult?: IFilePickerResult;
+  filePickerResult?: IFilePickerResult[];
   treeViewSelectedKeys?: string[];
   showAnimatedDialog?: boolean;
   showCustomisedAnimatedDialog?: boolean;

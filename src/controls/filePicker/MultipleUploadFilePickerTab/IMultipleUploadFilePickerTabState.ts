@@ -1,7 +1,6 @@
 import { IFilePickerResult } from "../FilePicker.types";
 
 export interface IMultipleUploadFilePickerTabState {
-  filePickerResult: IFilePickerResult;
+  filePickerResult: IFilePickerResult[];
   filePreview?: string;
-  filesResult?: any;
 }

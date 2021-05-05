@@ -10,7 +10,7 @@ export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
 export interface IFilePickerTab {
   context: BaseComponentContext;
   accepts: string[];
-  onSave: (value: IFilePickerResult) => void;
+  onSave: (value: IFilePickerResult[]) => void;
   onClose: () => void;
 }
 
