@@ -36,7 +36,7 @@
     "animate.css": "^4.1.1",
     "chart.js": "2.7.3",
     "color": "3.1.2",
-    "lodash": "4.17.13",
+    "lodash": "4.17.21",
     "office-ui-fabric-react": "7.156.0",
     "react": "16.9.0",
     "react-accessible-accordion": "^3.3.3",
