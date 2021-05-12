@@ -34,7 +34,7 @@
     "@popperjs/core": "2.5.4",
     "@uifabric/icons": "7.3.0",
     "animate.css": "^4.1.1",
-    "chart.js": "2.7.3",
+    "chart.js": "2.9.4",
     "color": "3.1.2",
     "lodash": "4.17.13",
     "office-ui-fabric-react": "7.156.0",
