@@ -17,7 +17,7 @@ import { RichText } from "@pnp/spfx-controls-react/lib/RichText";
 
 ```TypeScript
 <RichText value={this.props.value}
-          onChange={(text)=>this.props.onChange(text)}
+          onChange={(text)=>this.onTextChange(text)}
 />
 ```
 
