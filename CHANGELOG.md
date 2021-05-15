@@ -5,6 +5,7 @@
 ### Fixes
 
 - Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)
+- `SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
 
 ### Contributors
 
