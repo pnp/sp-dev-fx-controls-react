@@ -1,5 +1,15 @@
 # Releases
 
+## 3.2.0
+
+### Fixes
+
+- Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)
+
+### Contributors
+
+Special thanks to our contributor: [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+
 ## 3.1.0
 
 ### New control(s)
