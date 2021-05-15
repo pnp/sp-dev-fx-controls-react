@@ -148,7 +148,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
           key: s.url,
           text: s.title,
           data: s,
-          //selected: selectedSitesIds.indexOf(s.url) !== -1
+          selected: selectedSitesIds.indexOf(s.url) !== -1
         });
       });
     }
