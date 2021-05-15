@@ -6,7 +6,7 @@
         "new": [],
         "enhancements": [],
         "fixes": [
-          "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
+          "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)"
         ]
       },
       "contributions": [
