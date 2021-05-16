@@ -63,7 +63,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       label,
       placeholder,
       required,
-      isRichText
+      isRichText,
+      bingAPIKey
     } = this.props;
 
     const {
@@ -319,7 +320,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             }
             <FilePicker
               buttonClassName={styles.feildDisplay}
-              bingAPIKey="<BING API KEY>"
+              bingAPIKey={bingAPIKey}
               accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
               buttonIcon="FileImage"
               onSave={this.saveIntoSharePoint}
@@ -345,7 +346,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             />
             <FilePicker
               buttonClassName={styles.feildDisplay}
-              bingAPIKey="<BING API KEY>"
+              bingAPIKey={bingAPIKey}
               accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
               buttonIcon="FileImage"
               onSave={this.saveIntoSharePoint}
@@ -368,7 +369,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={true}
               termsetNameOrID={fieldTermSetId}
-              panelTitle="Select Term"
+              panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
               isTermSetSelectable={false}
@@ -388,7 +389,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={false}
               termsetNameOrID={fieldTermSetId}
-              panelTitle="Select Term"
+              panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
               isTermSetSelectable={false} />

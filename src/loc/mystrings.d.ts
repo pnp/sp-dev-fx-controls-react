@@ -350,6 +350,7 @@ declare interface IControlStrings {
   DynamicFormLoading: string;
   DynamicFormPleaseWait: string;
   DynamicFormRequiredErrorMessage: string;
+  DynamicFormTermPanelTitle: string;
 }
 
 declare interface IDateTimeStrings {
