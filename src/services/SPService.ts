@@ -357,4 +357,176 @@ export default class SPService implements ISPService {
 
     return;
   }
+
+  public async getLookUpValue(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}&$filter= ID eq ${listItemID}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return [{ key: results.value[0][fieldName].ID, name: results.value[0][fieldName].Title }];
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getLookUpValues(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}&$filter= ID eq ${listItemID}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          let emails = [];
+          results.value[0][fieldName].forEach(element => {
+            emails.push({ key: element.ID, name: element.Title });
+          });
+          return emails;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getUserEmailsById(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/UserName&$expand=${fieldName}&$filter= ID eq ${listItemId}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          let emails = [];
+          results.value[0][fieldName].forEach(element => {
+            emails.push(element.UserName);
+          });
+          return emails;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getUserEmailById(userId: number, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results.UserPrincipalName;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
+      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1,{
+        body: JSON.stringify({
+          parameters: {
+            RenderOptions: 2,
+            ViewXml: `<View>
+                        <ViewFields>
+                          <FieldRef Name="${fieldName}"/>
+                        </ViewFields>
+                        <Query>
+                          <Where>
+                            <Eq>
+                              <FieldRef Name="ID"/>
+                              <Value Type="Number">${listItemId}</Value>
+                            </Eq>
+                          </Where>
+                        </Query>
+                        <RowLimit Paged="TRUE">1</RowLimit>
+                      </View>`
+          }
+        })
+      });
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results.Row[0][fieldName];
+        }
+      }
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+
+  public async getListInfo(listId: string, contentTypeId: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = '';
+      if (contentTypeId !== undefined && contentTypeId !== '') {
+        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+      }
+      else {
+        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+      }
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
 }
