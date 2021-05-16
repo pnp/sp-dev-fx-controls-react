@@ -2,6 +2,9 @@ declare var define: any;
 
 define([], () => {
   return {
+    "Save": "Save",
+    "Cancel": "Cancel",
+
     'SiteBreadcrumbLabel': 'Website breadcrumb',
 
     'ListViewGroupEmptyLabel': 'Empty',
@@ -355,6 +358,10 @@ define([], () => {
     InvalidUrlError: "The provided URL is not valid",
     CollectionDataSearch: "Search",
 
-    ViewMore: "View more"
+    ViewMore: "View more",
+
+    DynamicFormLoading: "Loading...",
+    DynamicFormPleaseWait: "Please wait...",
+    DynamicFormRequiredErrorMessage: "You can't leave this blank."
   };
 });

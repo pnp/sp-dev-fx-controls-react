@@ -9,7 +9,6 @@ export interface IDynamicFieldProps {
     listId: string;
     columnInternalName: string;
     label?: string;
-    placeHolder?: string;
     placeholder?: string;
     onChanged?: (columnInternalName: string, newValue: any) => void;
     value?: any;
