@@ -15,6 +15,9 @@ declare interface IControlStrings {
   TeamChannelPickerFontIconPrivateChannelTitle: string;
   TeamChannelPickerFontIconFavoriteText: string;
   TeamsChannelPickerButtonRemoveTitle: string;
+  // common
+  Save: string;
+  Cancel: string;
 
   PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
@@ -342,6 +345,11 @@ declare interface IControlStrings {
   CollectionDataSearch: string;
 
   ViewMore: string;
+
+  // Dynamic Form
+  DynamicFormLoading: string;
+  DynamicFormPleaseWait: string;
+  DynamicFormRequiredErrorMessage: string;
 }
 
 declare interface IDateTimeStrings {
