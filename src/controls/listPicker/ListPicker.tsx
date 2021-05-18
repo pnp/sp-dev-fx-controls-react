@@ -51,7 +51,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
       prevProps.baseTemplate !== this.props.baseTemplate ||
       prevProps.includeHidden !== this.props.includeHidden ||
       prevProps.orderBy !== this.props.orderBy ||
-      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl
+      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl||
+      prevProps.refreshToggle !== this.props.refreshToggle
     ) {
       this.loadLists();
     }

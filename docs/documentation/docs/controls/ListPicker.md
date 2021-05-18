@@ -65,6 +65,8 @@ The `ListPicker` control can be configured with the following properties:
 | onSelectionChanged | (newValue: string OR string[]): void | no | Callback function when the selected option changes. |
 | webAbsoulteUrl | string | no | Absolute Web Url of target site (user requires permissions) |
 | contentTypeId | string | no | The Id if a content type which must be present in a list in order for the list to appear in the picker.|
+| refreshToggle | boolean | no | If present can be used to force the control to refresh the list of lists by toggling its value|
+
 Enum `LibsOrderBy`
 
 | Value |

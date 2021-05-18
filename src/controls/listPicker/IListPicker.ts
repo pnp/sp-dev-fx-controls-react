@@ -64,6 +64,10 @@ export interface IListPickerProps {
   * Content type id which, if present, must be on the list
   */
   contentTypeId?: string;
+    /**
+  * if present can be used to force the control to refresh the list of lists by toggling its value
+  */
+     refreshToggle?: boolean;
 }
 
 export interface IListPickerState {
