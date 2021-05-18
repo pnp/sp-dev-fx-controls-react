@@ -207,7 +207,11 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
 
       return sites;
     });
-  }, [initialSites]);
+
+    if (!allSites) {
+      setIsLoading(true);
+    }
+  }, [initialSites, allSites]);
 
   React.useEffect(() => {
     if (!context || !isLoading) {
