@@ -26,7 +26,7 @@ describe("<DocumentLibraryBrowser />", ()=>{
 
             }}
             />);
-        assert.equal(documentLibraryBrowser.getDOMNode().tagName, "SPINNER");
+        assert.equal(documentLibraryBrowser.getDOMNode().tagName, "DIV");
 
         await documentLibraryBrowser.instance().componentDidMount();
         documentLibraryBrowser.update();
