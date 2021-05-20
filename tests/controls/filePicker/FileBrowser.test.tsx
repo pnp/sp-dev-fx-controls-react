@@ -32,7 +32,7 @@ describe("<FileBrowser />", ()=>{
         let mockFileBrowserService: MockFileBrowserService = new MockFileBrowserService();
         //FileBrowser uses getListItems method on fileBrowserService.
         //Our mock already provides that method, so let's assign our mock data
-        mockFileBrowserService.getListItemsResult ={
+        mockFileBrowserService.getListItemsResult = {
             nextHref: undefined,
             items: [{
                 name: "Test file",
@@ -93,6 +93,107 @@ describe("<FileBrowser />", ()=>{
         assert.equal(dataRows[0].textContent,"Test file");
         assert.equal(dataRows[1].textContent,"Another test file");
         //And finally let's make sure we asserted the call to getListItems
+        assert.isTrue(asserted);
+    });
+    test("should handle folder change", async ()=>{
+        //In this test we want to assert if changing the folder will trigger proper event
+        //Same as previously we will have to call lifecycle events and click handlers on our own
+        let mockFileBrowserService: MockFileBrowserService = new MockFileBrowserService();
+        //First let define first Mock Data
+        let mockData = {
+            nextHref: undefined,
+            items: [{
+                name: "Test Folder",
+                absoluteUrl: "https://test.sharepoint.com/sites/tea-point/Shared Documents/Test Folder",
+                serverRelativeUrl: "/sites/tea-point/Shared Documents/Test Folder",
+                isFolder: true,
+                modified: "",
+                fileIcon: "",
+                fileType: "folder",
+                // URL required to generate thumbnail preview
+                spItemUrl: "",
+                supportsThumbnail: false
+            }]
+          };
+        mockFileBrowserService.getListItemsResult = mockData;
+        
+        //Let's mount our component...
+        //The key to this test is to pass onOpenFolder method that will assert validity of the event
+        let asserted = false;
+        let component = mount(<FileBrowser 
+            fileBrowserService={mockFileBrowserService as any}
+            libraryUrl="Shared Documents"
+            folderPath="/"
+            accepts={["docx","xlsx"]}
+            onChange={(filePickerResult) => {}}
+            onOpenFolder={(folder: IFile) => {
+                assert.deepEqual(folder,mockData.items[0]);
+                asserted = true;
+            }}
+        />);
+        //...and await relevant event
+        await component.instance().componentDidMount();
+        component.update();
+
+        //Now we want to mock click event. There are two ways around it. One possibility is to send click event on some element.
+        //The other one is to call private method of our component with specific argument. In our case, that would be our folder.
+        //In this case I would lean toward the second option. The first one could fail if exception occur in DetailsList and we don't have to worry about it.
+        //However I do plan to include test sample with mocking external components (Will be more useful for functional components)
+        //@ts-ignore
+        component.instance()._handleItemInvoked(mockData.items[0]);
+
+        assert.isTrue(asserted);
+    });
+    test("should handle item change", async ()=>{
+        //In this test we want to assert if selecting a file will trigger proper event
+        //Same as previously we will have to call lifecycle events and click handlers on our own
+        let mockFileBrowserService: MockFileBrowserService = new MockFileBrowserService();
+        //First let define first Mock Data
+        let mockData = {
+            nextHref: undefined,
+            items: [{
+                name: "Test File",
+                absoluteUrl: "https://test.sharepoint.com/sites/tea-point/Shared Documents/Test File.docx",
+                serverRelativeUrl: "/sites/tea-point/Shared Documents/Test File.docx",
+                isFolder: false,
+                modified: "",
+                fileIcon: "",
+                fileType: "docx",
+                // URL required to generate thumbnail preview
+                spItemUrl: "",
+                supportsThumbnail: false
+            }]
+          };
+        mockFileBrowserService.getListItemsResult = mockData;
+        //Also let's define our expected file
+        const expectedFilePicked = {
+            fileName: "Test File",
+            fileNameWithoutExtension: "Test File",
+            fileAbsoluteUrl: "https://test.sharepoint.com/sites/tea-point/Shared Documents/Test File.docx",
+            spItemUrl: "",
+            downloadFileContent: null
+        }
+        //Let's mount our component...
+        //The key to this test is to pass onChange method that will assert validity of the event
+        let asserted = false;
+        let component = mount(<FileBrowser 
+            fileBrowserService={mockFileBrowserService as any}
+            libraryUrl="Shared Documents"
+            folderPath="/"
+            accepts={["docx","xlsx"]}
+            onChange={(filePickerResult) => {
+                assert.deepEqual(filePickerResult,expectedFilePicked);
+                asserted = true;}}
+            onOpenFolder={(folder: IFile) => {}}
+        />);
+        //...and await relevant event
+        await component.instance().componentDidMount();
+        component.update();
+
+        //We can use same approach as in previous test
+        //@ts-ignore
+        component.instance()._handleItemInvoked(mockData.items[0]);
+        
         assert.isTrue(asserted);
     });
 });
