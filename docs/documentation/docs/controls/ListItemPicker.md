@@ -64,5 +64,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | orderBy | string | no | condition to order by list Item, same as $orderby ODATA parameter|
 | placeholder | string | no | Short text hint to display in empty picker |
 | substringSearch | boolean | no | Specifies if substring search should be used |
+| label | string | no | Specifies the text describing the ListItemPicker. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)
