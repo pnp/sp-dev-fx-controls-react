@@ -102,6 +102,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     return (
       <div className={styles.comboBoxListItemPickerWrapper}>
         <ComboBox
+          label={this.props.label}
           options={this.state.availableOptions}
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}
