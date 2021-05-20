@@ -122,5 +122,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | multiSelect | boolean | no | Allows multiple selection|
 | onInitialized | () => void | no | Calls when component is ready|
 | itemLimit | number | no | Maximum number of items to be displayed in the combobox. Default: 100 |
+| label | string | no | Specifies the text describing the combobox ListItemPicker. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ComboBoxListItemPicker)
