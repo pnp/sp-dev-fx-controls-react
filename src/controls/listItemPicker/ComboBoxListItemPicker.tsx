@@ -5,7 +5,8 @@ import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
-import { Spinner } from 'office-ui-fabric-react';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import styles from './ComboBoxListItemPicker.module.scss';
 
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
@@ -99,8 +100,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     const { className, disabled } = this.props;
 
     return (
-      <div>
-        <ComboBox label={this.props.label}
+      <div className={styles.comboBoxListItemPickerWrapper}>
+        <ComboBox
           options={this.state.availableOptions}
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}
@@ -114,7 +115,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
           defaultSelectedKey={this.selectedItems.map(item => item.key) || []}
           className={className}
           disabled={disabled || !this.state.availableOptions} />
-        {!this.state.errorMessage && !this.state.availableOptions && (<Spinner label={strings.Loading} />)}
+        {!this.state.errorMessage && !this.state.availableOptions && (<Spinner className={styles.loading} size={SpinnerSize.small} />)}
         {!!this.state.errorMessage &&
           (<Label style={{ color: '#FF0000' }}> {this.state.errorMessage} </Label>)}
       </div>
