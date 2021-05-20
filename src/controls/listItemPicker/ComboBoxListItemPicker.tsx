@@ -109,7 +109,6 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
           onMenuDismissed={this.props.onMenuDismiss}
           onMenuOpen={this.props.onMenuOpen}
           text={this.props.text}
-
           onChanged={this.onChanged}
           multiSelect={this.props.multiSelect}
           defaultSelectedKey={this.selectedItems.map(item => item.key) || []}
