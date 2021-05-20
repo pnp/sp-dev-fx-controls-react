@@ -5,12 +5,13 @@ import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
+import { getId } from 'office-ui-fabric-react/lib/Utilities';
 
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
   public selectedItems: any[];
-
+  private _comboBoxId = getId('comboBox');
   constructor(props: IComboBoxListItemPickerProps) {
     super(props);
 
@@ -99,7 +100,11 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
 
     return (this.state.availableOptions ? (
       <div>
-        <ComboBox options={this.state.availableOptions}
+        {this.props.label &&
+          <Label htmlFor={this._comboBoxId}>{this.props.label}</Label>
+        }
+        <ComboBox id={this._comboBoxId}
+                  options={this.state.availableOptions}
                   autoComplete={this.props.autoComplete}
                   comboBoxOptionStyles={this.props.comboBoxOptionStyles}
                   allowFreeform={this.props.allowFreeform}
