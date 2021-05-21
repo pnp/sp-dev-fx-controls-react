@@ -336,6 +336,8 @@ declare interface IControlStrings {
   DynamicFormPleaseWait: string;
   DynamicFormRequiredErrorMessage: string;
   DynamicFormTermPanelTitle: string;
+  DynamicFormEnterURLPlaceholder: string;
+  DynamicFormEnterDescriptionPlaceholder: string;
 }
 
 declare interface IDateTimeStrings {

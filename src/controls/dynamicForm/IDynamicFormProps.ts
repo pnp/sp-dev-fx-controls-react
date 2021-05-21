@@ -15,9 +15,18 @@ export interface IDynamicFormProps {
    */
   listId: string;
   /**
+   * Before submit handler.
+   * Allows to modify the object to be submitted or cancel the submission.
+   */
+  onBeforeSubmit?: (listItemData: any) => Promise<boolean>;
+  /**
    * Handler for form submitted event
    */
-  onSubmitted?: (ListItem: any) => void;
+  onSubmitted?: (listItemData: any) => void;
+  /**
+   * Handler of submission error
+   */
+  onSubmitError?: (listItemData: any, error: Error) => void;
   /**
    * Handler for form cancelled event
    */
@@ -33,5 +42,5 @@ export interface IDynamicFormProps {
   /**
  * Used to execute WebSearch. If not provided SearchTab will not be available.
  */
-  bingAPIKey?: string;
+  //bingAPIKey?: string;
 }

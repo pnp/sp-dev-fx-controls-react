@@ -5,20 +5,22 @@ import { DefaultButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button'
 import { Stack, IStackTokens } from 'office-ui-fabric-react/lib/Stack';
 import { IDynamicFormProps } from './IDynamicFormProps';
 import { IDynamicFormState } from './IDynamicFormState';
-import { IDynamicFieldProps } from './dynamicField/IDynamicFieldProps';
+import { DateFormat, FieldChangeAdditionalData, IDynamicFieldProps } from './dynamicField/IDynamicFieldProps';
 import SPservice from '../../services/SPService';
 import { DynamicField } from './dynamicField';
-import { IItemAddResult, IItemUpdateResult } from '@pnp/sp/items';
 import { sp } from '@pnp/sp/presets/all';
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
 import * as strings from 'ControlStrings';
+import { IFilePickerResult } from '../filePicker';
+import { IUploadImageResult } from '../../common/SPEntities';
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
+
 /**
  * DynamicForm Class Control
  */
 export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicFormState> {
-  private _spservice: SPservice;
+  private _spService: SPservice;
   constructor(props: IDynamicFormProps) {
     super(props);
     // Initialize pnp sp
@@ -30,7 +32,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       fieldCollection: []
     };
     // Get SPService Factory
-    this._spservice = new SPservice(this.props.context);
+    this._spService = new SPservice(this.props.context);
   }
 
   /**
@@ -45,18 +47,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
    */
   public render(): JSX.Element {
     const {
-      fieldCollection
+      fieldCollection,
+      isSaving
     } = this.state;
     return (
-      <div className={'test'}>
+      <div>
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              return <DynamicField {...v} onChanged={this.onchange} />;
+              return <DynamicField {...v} disabled={v.disabled || isSaving} />;
             })}
             <Stack className={styles.buttons} horizontal tokens={stackTokens}>
-              <PrimaryButton text={strings.Save} onClick={() => this.onSubmitClick()} />
-              <DefaultButton text={strings.Cancel} onClick={this.props.onCancelled} />
+              <PrimaryButton disabled={isSaving} text={strings.Save} onClick={() => this.onSubmitClick()} />
+              <DefaultButton disabled={isSaving} text={strings.Cancel} onClick={this.props.onCancelled} />
             </Stack>
           </div>
         }
@@ -65,109 +68,163 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   }
 
   //trigger when the user submits the form.
-  private onSubmitClick = () => {
+  private onSubmitClick = async () => {
     const {
       listId,
       listItemId,
-      onSubmitted
+      onSubmitted,
+      onBeforeSubmit,
+      onSubmitError
     } = this.props;
 
     try {
-      let shouldbereturnback = false;
+      let shouldBeReturnBack = false;
       let fields = (this.state.fieldCollection || []).slice();
       fields.forEach((val) => {
         if (val.required) {
           if (val.newValue === null) {
             if (val.fieldDefaultValue === null || val.fieldDefaultValue === '' || val.fieldDefaultValue.length === 0) {
               val.fieldDefaultValue = '';
-              shouldbereturnback = true;
+              shouldBeReturnBack = true;
             }
           }
           else if (val.newValue === '') {
             val.fieldDefaultValue = '';
-            shouldbereturnback = true;
+            shouldBeReturnBack = true;
           }
         }
       });
-      if (shouldbereturnback) {
+      if (shouldBeReturnBack) {
         this.setState({ fieldCollection: fields });
         return;
       }
 
+      this.setState({
+        isSaving: true
+      });
+
       const objects = {};
-      this.state.fieldCollection.forEach(async (val) => {
+      for (let i = 0, len = fields.length; i < len; i++) {
+        const val = fields[i];
+        const {
+          fieldType,
+          additionalData,
+          columnInternalName,
+          hiddenFieldName
+        } = val;
         if (val.newValue !== null && val.newValue !== undefined) {
           let value = val.newValue;
-          if (val.fieldType === "Lookup") {
-            objects[`${val.columnInternalName}Id`] = value[0].key;
+          if (fieldType === "Lookup") {
+            objects[`${columnInternalName}Id`] = value[0].key;
           }
-          else if (val.fieldType === "LookupMulti") {
+          else if (fieldType === "LookupMulti") {
             value = [];
             val.newValue.forEach(element => {
               value.push(element.key);
             });
-            objects[`${val.columnInternalName}Id`] = { results: value };
+            objects[`${columnInternalName}Id`] = { results: value };
           }
-          else if (val.fieldType === "TaxonomyFieldType") {
-            objects[val.columnInternalName] = {
+          else if (fieldType === "TaxonomyFieldType") {
+            objects[columnInternalName] = {
               '__metadata': { 'type': 'SP.Taxonomy.TaxonomyFieldValue' },
               'Label': value[0].name,
               'TermGuid': value[0].key,
               'WssId': '-1'
             };
           }
-          else if (val.fieldType === "TaxonomyFieldTypeMulti") {
-            objects[val.hiddenFieldName] = val.newValue.map(term => `-1#;${term.name}|${term.key};`).join('#');
+          else if (fieldType === "TaxonomyFieldTypeMulti") {
+            objects[hiddenFieldName] = val.newValue.map(term => `-1#;${term.name}|${term.key};`).join('#');
           }
-          else if (val.fieldType === "User") {
-            objects[`${val.columnInternalName}Id`] = val.newValue;
+          else if (fieldType === "User") {
+            objects[`${columnInternalName}Id`] = val.newValue;
           }
-          else if (val.fieldType === "Choice") {
-            objects[val.columnInternalName] = val.newValue.key;
+          else if (fieldType === "Choice") {
+            objects[columnInternalName] = val.newValue.key;
           }
-          else if (val.fieldType === "MultiChoice") {
-            objects[val.columnInternalName] = { results: val.newValue };
+          else if (fieldType === "MultiChoice") {
+            objects[columnInternalName] = { results: val.newValue };
           }
-          else if (val.fieldType === "UserMulti") {
-            objects[`${val.columnInternalName}Id`] = { results: val.newValue };
+          else if (fieldType === "UserMulti") {
+            objects[`${columnInternalName}Id`] = { results: val.newValue };
+          }
+          else if (fieldType === 'Thumbnail') {
+            if (additionalData) {
+              const uploadedImage = await this.uplaodImage(additionalData);
+              objects[columnInternalName] = JSON.stringify({
+                type: 'thumbnail',
+                fileName: uploadedImage.Name,
+                serverRelativeUrl: uploadedImage.ServerRelativeUrl,
+                id: uploadedImage.UniqueId
+              });
+            }
+            else {
+              objects[columnInternalName] = null;
+            }
           }
           else {
-            objects[val.columnInternalName] = val.newValue;
+            objects[columnInternalName] = val.newValue;
           }
         }
-      });
+      }
 
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
-        sp.web.lists.getById(listId).items.getById(listItemId).update(objects).then((iur: IItemUpdateResult) => {
+      if (onBeforeSubmit) {
+        const isCancelled =  await onBeforeSubmit(objects);
+
+        if (isCancelled) {
+          this.setState({
+            isSaving: false
+          });
+          return;
+        }
+      }
+
+      if (listItemId) {
+        try {
+          const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
           if (onSubmitted) {
-            onSubmitted(iur.item);
+            onSubmitted(iur.data);
           }
-        }).catch((error: any) => {
+        }
+        catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
+          }
           console.log("Error", error);
-        });
+        }
 
       }
       else {
-        sp.web.lists.getById(listId).items.add(objects).then((iar: IItemAddResult) => {
+        try {
+          const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
-            onSubmitted(iar.item);
+            onSubmitted(iar.data);
           }
-        }).catch((error: any) => {
+        }
+        catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
+          }
           console.log("Error", error);
-        });
+        }
       }
+      this.setState({
+        isSaving: false
+      });
     } catch (error) {
-      console.log(`Error onchange`, error);
-      return null;
+      if (onSubmitError) {
+        onSubmitError(null, error);
+      }
+      console.log(`Error onSubmit`, error);
     }
   }
 
   // trigger when the user change any value in the form
-  private onchange = async (internalName: string, newValue: any) => {
+  private onChange = async (internalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => {
     try {
-      let fieldcol = (this.state.fieldCollection || []).slice();
-      let field = fieldcol.filter((element, i) => { return element.columnInternalName === internalName; })[0];
+      let fieldCol = (this.state.fieldCollection || []).slice();
+      let field = fieldCol.filter((element, i) => { return element.columnInternalName === internalName; })[0];
       field.newValue = newValue;
+      field.additionalData = additionalData;
       if (field.fieldType === "User" && newValue.length !== 0) {
         let result = await sp.web.ensureUser(newValue[0].secondaryText);
         field.newValue = result.data.Id;
@@ -180,9 +237,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         });
       }
       this.setState({
-        fieldCollection: fieldcol
+        fieldCollection: fieldCol
       });
     } catch (error) {
+
       console.log(`Error onchange`, error);
       return null;
     }
@@ -194,20 +252,23 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     let contentTypeId = this.props.contentTypeId;
     //let arrayItems: { key: string; name: string }[] = [];
     try {
-      const splist = await sp.web.lists.getById(listId);
+      const spList = await sp.web.lists.getById(listId);
       let item = null;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0)
-        item = await splist.items.getById(listItemId).get();
+        item = await spList.items.getById(listItemId).get();
 
       if (contentTypeId === undefined || contentTypeId === '') {
-        let defaultcontenttype = await splist.contentTypes.select("Id", "Name").get();
-        contentTypeId = defaultcontenttype[0]["Id"].StringValue;
+        let defaultContentType = await spList.contentTypes.select("Id", "Name").get();
+        contentTypeId = defaultContentType[0]["Id"].StringValue;
       }
-      const listFeilds = await this._spservice.getListInfo(listId, contentTypeId, context.pageContext.web.absoluteUrl);
+      const listFeilds = await this._spService.getListContentTypeFieldsInfo(listId, contentTypeId, context.pageContext.web.absoluteUrl);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
-      listFeilds["value"].forEach(async (field) => {
+      const responseValue = listFeilds['value'];
+      for (let i = 0, len = responseValue.length; i < len; i++) {
+        const field = responseValue[i];
         order++;
+        const fieldType = field['TypeAsString'];
         field.order = order;
         let hiddenName = "";
         let termSetId = "";
@@ -217,43 +278,44 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let defaultValue = null;
         let selectedTags: any = [];
         let richText = false;
+        let dateFormat: DateFormat | undefined;
         if (item !== null) {
           defaultValue = item[field.InternalName];
         }
         else {
           defaultValue = field.DefaultValue;
         }
-        if (field["TypeAsString"] === 'Choice' || field["TypeAsString"] === 'MultiChoice') {
+        if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
           field["Choices"].forEach(element => {
             choices.push({ key: element, text: element });
           });
         }
-        else if (field["TypeAsString"] === "Note") {
+        else if (fieldType === "Note") {
           richText = field["RichText"];
         }
-        else if (field["TypeAsString"] === "Lookup") {
+        else if (fieldType === "Lookup") {
           lookupListID = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spservice.getLookUpValue(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
           }
           else {
             defaultValue = [];
           }
 
         }
-        else if (field["TypeAsString"] === "LookupMulti") {
+        else if (fieldType === "LookupMulti") {
           lookupListID = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spservice.getLookUpValues(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
           }
           else {
             defaultValue = [];
           }
         }
-        else if (field["TypeAsString"] === "TaxonomyFieldTypeMulti") {
-          let response = await this._spservice.getInternalName(this.props.listId, field.InternalName, this.props.context.pageContext.web.absoluteUrl);
+        else if (fieldType === "TaxonomyFieldTypeMulti") {
+          let response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.props.context.pageContext.web.absoluteUrl);
           hiddenName = response["value"];
           termSetId = field["TermSetId"];
           if (item !== null) {
@@ -276,13 +338,15 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           if (defaultValue === "")
             defaultValue = null;
         }
-        else if (field["TypeAsString"] === "TaxonomyFieldType") {
+        else if (fieldType === "TaxonomyFieldType") {
 
           termSetId = field["TermSetId"];
           if (item !== null) {
-            let response = await this._spservice.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
-            selectedTags.push({ key: response["TermID"], name: response["Label"] });
-            defaultValue = selectedTags;
+            const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+            if (response) {
+              selectedTags.push({ key: response["TermID"], name: response["Label"] });
+              defaultValue = selectedTags;
+            }
           }
           else {
             if (defaultValue !== "") {
@@ -293,31 +357,35 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           if (defaultValue === "")
             defaultValue = null;
         }
-        else if (field["TypeAsString"] === "DateTime") {
-          if (item !== null)
+        else if (fieldType === "DateTime") {
+          if (item !== null && item[field.InternalName])
             defaultValue = new Date(item[field.InternalName]);
           else if (defaultValue === '[today]') {
             defaultValue = new Date();
           }
 
+          const schemaXml = field.SchemaXml;
+          const dateFormatRegEx = /\s+Format=\"([^\"]+)\"/gmi.exec(schemaXml);
+          dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
+
         }
-        else if (field["TypeAsString"] === "UserMulti") {
+        else if (fieldType === "UserMulti") {
           if (item !== null)
-            defaultValue = await this._spservice.getUserEmailsById(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
           else {
             defaultValue = [];
           }
         }
-        else if (field["TypeAsString"] === "Thumbnail") {
+        else if (fieldType === "Thumbnail") {
           if (defaultValue !== null) {
             defaultValue = context.pageContext.web.absoluteUrl.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
           }
         }
-        else if (field["TypeAsString"] === "User") {
+        else if (fieldType === "User") {
           if (item !== null) {
-            let useremails: string[] = [];
-            useremails.push(await this._spservice.getUserEmailById(parseInt(item[field.InternalName + "Id"])) + '');
-            defaultValue = useremails;
+            let userEmails: string[] = [];
+            userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
+            defaultValue = userEmails;
           }
           else {
             defaultValue = [];
@@ -329,7 +397,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           options: choices,
           lookupListID: lookupListID,
           lookupField: lookupField,
-          changedvalue: defaultValue,
+          changedValue: defaultValue,
           fieldType: field.TypeAsString,
           fieldTitle: field.Title,
           fieldDefaultValue: defaultValue,
@@ -338,14 +406,16 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           listId: this.props.listId,
           columnInternalName: field.InternalName,
           label: field.Title,
-          onChanged: this.onchange,
+          onChanged: this.onChange,
           required: field.Required,
           hiddenFieldName: hiddenName,
           Order: field.order,
-          isRichText: richText
+          isRichText: richText,
+          dateFormat: dateFormat,
+          listItemId: listItemId
         });
         tempFields.sort((a, b) => a.Order - b.Order);
-      });
+      }
 
       this.setState({ fieldCollection: tempFields });
       //return arrayItems;
@@ -353,5 +423,36 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       console.log(`Error get field informations`, error);
       return null;
     }
+  }
+
+  private uplaodImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
+    const {
+      listId,
+      listItemId
+    } = this.props;
+    if (file.fileAbsoluteUrl) {
+      return {
+        Name: file.fileName,
+        ServerRelativeUrl: file.fileAbsoluteUrl,
+        UniqueId: ''
+      };
+    }
+    else {
+      const fileInstance = await file.downloadFileContent();
+      const buffer = await this.getImageArrayBuffer(fileInstance);
+      return await this._spService.uploadImage(listId, listItemId, file.fileName, buffer, undefined);
+    }
+  }
+
+  private getImageArrayBuffer = (file: File): Promise<ArrayBuffer> => {
+    return new Promise<ArrayBuffer>(resolve => {
+
+      const reader = new FileReader();
+
+      reader.readAsArrayBuffer(file);
+      reader.onload = () => {
+        resolve(reader.result as ArrayBuffer);
+      };
+    });
   }
 }

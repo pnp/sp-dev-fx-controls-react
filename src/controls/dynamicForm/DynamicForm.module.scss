@@ -4,42 +4,49 @@
 	padding: 4px 3px;
 }
 
+.titleContainer {
+  display: flex;
+}
+
 .fieldLabel {
 	font-weight: 600;
-	font-size: 12px;
+	font-size: 14px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
 		"Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	font-size: 14px;
 	font-weight: 600;
 	color: "[theme:neutralPrimary, default:#323130]";
 	box-sizing: border-box;
 	box-shadow: none;
 	margin: 0px;
-	padding: 5px 0px;
 	overflow-wrap: break-word;
+  display: block;
 }
 
 .fieldIcon {
 	align-self: center;
-	font-size: 13px;
+	font-size: 16px;
 	color: "[theme:neutralSecondary, default: #605e5c]";
 	margin-right: 8px;
 }
 
-.feildDisplay {
-	display: inline-block;
+.feildDisplayNoPadding {
+  display: inline-block;
 	vertical-align: top;
 	width: 100%;
 	font-size: 14px;
 	font-weight: 400;
 	outline: 0;
+}
+
+.feildDisplay {
+	@extend .feildDisplayNoPadding;
 	padding: 6px 0 7px 0;
-	border: 2px solid;
-  border-color: "[theme:white, default:#ffffff]";
-	margin-left: -2px;
+	//border: 2px solid;
+  //border-color: "[theme:white, default:#ffffff]";
+	//margin-left: -2px;
 }
 
 .fieldRequired::after {
@@ -55,6 +62,10 @@
 .filePicker {
 	padding: 7px;
 	align-items: center;
+}
+
+.richText {
+  position: relative;
 }
 
 .errormessage {
@@ -83,4 +94,8 @@
 
 .pickersContainer {
   padding: 6px 0 7px;
+}
+
+.thumbnailFieldButtons {
+  display: flex;
 }
