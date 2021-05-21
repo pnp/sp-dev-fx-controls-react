@@ -2,6 +2,10 @@
 
 ## 3.2.0
 
+### New control(s)
+
+- `DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)
+
 ### Fixes
 
 - Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)
