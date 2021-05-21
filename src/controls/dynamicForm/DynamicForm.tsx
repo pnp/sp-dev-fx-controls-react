@@ -13,6 +13,7 @@ import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator'
 import * as strings from 'ControlStrings';
 import { IFilePickerResult } from '../filePicker';
 import { IUploadImageResult } from '../../common/SPEntities';
+import { SPHttpClient } from '@microsoft/sp-http';
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -261,7 +262,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let defaultContentType = await spList.contentTypes.select("Id", "Name").get();
         contentTypeId = defaultContentType[0]["Id"].StringValue;
       }
-      const listFeilds = await this._spService.getListContentTypeFieldsInfo(listId, contentTypeId, context.pageContext.web.absoluteUrl);
+      const listFeilds = await this.getFormFields(listId, contentTypeId, context.pageContext.web.absoluteUrl);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFeilds['value'];
@@ -272,7 +273,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         field.order = order;
         let hiddenName = "";
         let termSetId = "";
-        let lookupListID = "";
+        let lookupListId = "";
         let lookupField = "";
         let choices: IDropdownOption[] = [];
         let defaultValue = null;
@@ -294,7 +295,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           richText = field["RichText"];
         }
         else if (fieldType === "Lookup") {
-          lookupListID = field["LookupList"];
+          lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
             defaultValue = await this._spService.getLookupValue(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
@@ -305,7 +306,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
         }
         else if (fieldType === "LookupMulti") {
-          lookupListID = field["LookupList"];
+          lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
             defaultValue = await this._spService.getLookupValues(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
@@ -395,7 +396,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           newValue: null,
           fieldTermSetId: termSetId,
           options: choices,
-          lookupListID: lookupListID,
+          lookupListID: lookupListId,
           lookupField: lookupField,
           changedValue: defaultValue,
           fieldType: field.TypeAsString,
@@ -454,5 +455,33 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         resolve(reader.result as ArrayBuffer);
       };
     });
+  }
+
+  private getFormFields = async (listId: string, contentTypeId: string | undefined, webUrl?: string): Promise<any[]> => {
+    try {
+      const {
+        context
+      } = this.props;
+      const webAbsoluteUrl = !webUrl ? context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = '';
+      if (contentTypeId !== undefined && contentTypeId !== '') {
+        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+      }
+      else {
+        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+      }
+      const data = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
   }
 }

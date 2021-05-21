@@ -460,8 +460,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <DynamicForm
           context={this.props.context}
-          listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"}
-          listItemId={26}
+          listId={"2baf2f85-4f31-46c4-8f87-5fed93ecd20c"}
+          //listItemId={26}
           onCancelled={() => { console.log('Cancelled'); }}
           onSubmitted={async (listItem) => { console.log(listItem); }}>
 
