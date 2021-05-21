@@ -2,7 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IListItemAttachmentsProps {
   listId: string;
-  itemId: number;
+  itemId?: number;
   className?: string;
   webUrl?:string;
   disabled?: boolean;

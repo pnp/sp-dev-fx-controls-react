@@ -57,8 +57,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * componentDidMount lifecycle hook
    */
-  public componentDidMount() {
-    this.loadAttachments();
+  public async componentDidMount() {
+    await this.loadAttachments();
   }
 
   private async loadAttachmentPreview(file: IListItemAttachmentFile): Promise<IDocumentCardPreviewImage> {
@@ -83,10 +83,12 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         file,
         this.props.webUrl)));
     }
-    this.setState({
+    return new Promise<void>((resolve,error)=>{
+      this.setState({
       filesToUpload: [],
       itemId: itemId
-    },this.loadAttachments);
+    },()=>this.loadAttachments().then(resolve));
+    });
   }
   protected loadAttachmentsPreview(files: IListItemAttachmentFile[]){
     const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
@@ -109,15 +111,15 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    */
   private async loadAttachments() {
     if(this.state.itemId){
-    this._spservice.getListItemAttachments(this.props.listId, this.state.itemId).then(async (files: IListItemAttachmentFile[]) => {
-      await this.loadAttachmentsPreview(files);
-    }).catch((error: Error) => {
-      this.setState({
-        fireUpload: false,
-        hideDialog: false,
-        dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
+      await this._spservice.getListItemAttachments(this.props.listId, this.state.itemId).then(async (files: IListItemAttachmentFile[]) => {
+        await this.loadAttachmentsPreview(files);
+      }).catch((error: Error) => {
+        this.setState({
+          fireUpload: false,
+          hideDialog: false,
+          dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
+        });
       });
-    });
   }
   else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
     let files = this.state.filesToUpload.map(file=>({
@@ -154,7 +156,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * Attachment uploaded event handler
    */
-  private _onAttachmentUpload = (file: File) => {
+  private _onAttachmentUpload = async (file: File) => {
     // load Attachments
     if(!this.state.itemId){
       let files = this.state.filesToUpload || [];
@@ -163,7 +165,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         filesToUpload: [...files]
       });
     }
-    this.loadAttachments();
+    await this.loadAttachments();
   }
 
   /**

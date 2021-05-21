@@ -53,8 +53,8 @@ describe("<DocumentLibraryBrowser />", ()=>{
         let libraryTitle = documentLibraryBrowser.instance()._onRenderLibraryTile(browserService.getSiteMediaLibrariesResult[0],0);
         let iconControl = libraryTitle.props.children.props.children.props.children[0];
         let buttonControl = libraryTitle.props.children.props.children.props.children[1];
-        assert.equal(iconControl.type,"Image");
-        assert.equal(buttonControl.type,"DefaultButton");
+        assert.equal(iconControl.type.displayName,"StyledImageBase");
+        assert.equal(buttonControl.type.displayName,"CustomizedDefaultButton");
     });
     test("should call onOpenLibrary", async ()=>{
         let asserted = false;

@@ -19,3 +19,4 @@ jest.mock("@microsoft/decorators", () => {
     }
   }
 })
+DEBUG = true;
