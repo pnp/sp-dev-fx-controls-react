@@ -66,10 +66,26 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
     );
   }
 
+  private _loadPreiview = (file: File): Promise<string | undefined> => {
+    return new Promise<string | undefined>(resolve => {
+      if (!GeneralHelper.isImage(file.name)) {
+        resolve(undefined);
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(reader.result as string);
+      };
+    });
+  }
+
   /**
    * Gets called when a file is uploaded
    */
-  private _handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private _handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files || event.target.files.length < 1) {
       return;
     }
@@ -90,18 +106,11 @@ export default class UploadFilePickerTab extends React.Component<IUploadFilePick
 
     if (GeneralHelper.isImage(file.name)) {
       // Convert to base64 image
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.setState({
-          filePreview: reader.result as string
-        });
-      };
+      filePickerResult.previewDataUrl = await this._loadPreiview(file);
     }
     this.setState({
       filePickerResult,
-      filePreview: undefined
+      filePreview: filePickerResult.previewDataUrl
     });
 
     this.props.onChange([filePickerResult]);
