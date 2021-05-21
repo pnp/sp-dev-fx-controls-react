@@ -3,13 +3,17 @@
     {
       "version": "2.8.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)"
+        ],
         "enhancements": [],
         "fixes": [
           "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)"
         ]
       },
-      "contributions": []
+      "contributions": [
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
+      ]
     },
     {
       "version": "2.7.0",
