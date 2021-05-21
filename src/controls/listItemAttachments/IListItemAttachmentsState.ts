@@ -8,4 +8,6 @@ export interface IListItemAttachmentsState {
       disableButton: boolean;
       showPlaceHolder: boolean;
       fireUpload: boolean;
+      filesToUpload?: File[];
+      itemId?: number;
 }

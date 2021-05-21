@@ -67,12 +67,14 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
       });
 
       try {
-        await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+        if(this.props.itemId && this.props.itemId > 0){
+          await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+        }
 
         this.setState({
           isLoading: false
         });
-        this.props.onAttachmentUpload();
+        this.props.onAttachmentUpload(file);
       } catch (error) {
         this.setState({
           hideDialog: false,
