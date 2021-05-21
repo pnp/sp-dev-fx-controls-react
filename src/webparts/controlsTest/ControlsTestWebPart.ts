@@ -10,7 +10,7 @@ import {
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'ControlsTestWebPartStrings';
-import ControlsTest from './components/ControlsTest';
+import ControlsTest from './components/ControlsTest_SingleComponent';
 import { IControlsTestProps } from './components/IControlsTestProps';
 import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
 import {

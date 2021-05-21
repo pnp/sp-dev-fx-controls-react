@@ -29,7 +29,7 @@
     "@microsoft/sp-office-ui-fabric-core": "1.12.1",
     "@microsoft/sp-property-pane": "1.12.1",
     "@microsoft/sp-webpart-base": "1.12.1",
-    "@pnp/sp": "2.0.6",
+    "@pnp/sp": "2.5.0",
     "@pnp/telemetry-js": "2.0.0",
     "@popperjs/core": "2.5.4",
     "@uifabric/icons": "7.3.0",

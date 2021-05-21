@@ -377,6 +377,8 @@ define([], () => {
     DynamicFormLoading: "Loading...",
     DynamicFormPleaseWait: "Please wait...",
     DynamicFormRequiredErrorMessage: "You can't leave this blank.",
-    DynamicFormTermPanelTitle: "Select Term"
+    DynamicFormTermPanelTitle: "Select Term",
+    DynamicFormEnterURLPlaceholder: "Enter a URL",
+    DynamicFormEnterDescriptionPlaceholder: "Alternative text"
   };
 });

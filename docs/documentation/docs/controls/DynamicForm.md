@@ -19,7 +19,9 @@ import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
           listId={"3071c058-549f-461d-9d73-8b9a52049a80"}  
           listItemId={1}>
           onCancelled={() => { console.log('Cancelled') }}
-          onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}>
+          onBeforeSubmit={(async listItem) => { return true; }}
+          onSubmitError={(listItem, error) => { alert(error.message); }}
+          onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
 ```
 ![DynamicForm](../assets/DynamicForm.png)
@@ -35,5 +37,7 @@ The `DynamicForm` can be configured with the following properties:
 | listItemId | number | no | list item ID. |
 | contentTypeId | string | no | content type ID |
 | disabled | boolean | no | Option allow to be enable or disable. Default value is `false`|
-| onSubmitted | (ListItem: any) => void | no | Method that returns ListItem object.   |
+| onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. |
+| onSubmitted | (listItem: any) => void | no | Method that returns listItem data JSON object. |
+| onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |

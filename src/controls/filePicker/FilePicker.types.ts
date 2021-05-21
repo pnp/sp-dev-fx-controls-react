@@ -45,4 +45,9 @@ export interface IFilePickerResult {
    * Downloads file picker result content.
    */
   downloadFileContent: () => Promise<File>;
+
+  /**
+   * Preview
+   */
+  previewDataUrl?: string;
 }

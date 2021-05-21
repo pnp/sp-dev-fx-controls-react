@@ -36,7 +36,7 @@ import { Link } from 'office-ui-fabric-react/lib/components/Link';
 import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../../../controls/carousel';
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
-import { ComboBoxListItemPicker } from '../../..';
+import { ComboBoxListItemPicker, DynamicForm } from '../../..';
 import { IconPicker} from '../../../controls/iconPicker';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
@@ -458,14 +458,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
-        <WebPartTitle displayMode={this.props.displayMode}
-          title={this.props.title}
-          updateProperty={this.props.updateProperty}
-          moreLink={
-            <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
-          } />
-            <div>Icon Picker</div>
-            <div><IconPicker renderOption="dialog" currentIcon={'Warning'} onSave={(value)=>{console.log(value);}} buttonLabel="Icon Picker"></IconPicker></div>
+        <DynamicForm
+          context={this.props.context}
+          listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"}
+          listItemId={26}
+          onCancelled={() => { console.log('Cancelled'); }}
+          onSubmitted={async (listItem) => { console.log(listItem); }}>
+
+          </DynamicForm>
       </div>
     );
   }
