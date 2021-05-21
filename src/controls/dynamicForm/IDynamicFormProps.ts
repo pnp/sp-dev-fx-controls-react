@@ -1,11 +1,10 @@
-import { ExtensionContext } from '@microsoft/sp-extension-base';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IDynamicFormProps {
   /**
    * Current context
    */
-  context: WebPartContext | ExtensionContext;
+  context: BaseComponentContext;
   /**
    * Specifies if the form is disabled
    */

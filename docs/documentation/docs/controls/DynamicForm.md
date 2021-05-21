@@ -32,7 +32,7 @@ The `DynamicForm` can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext or ExtensionContext  | yes | The context object of the SPFx loaded webpart or customizer. |
+| context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | listId | string | yes | Guid of the list.|
 | listItemId | number | no | list item ID. |
 | contentTypeId | string | no | content type ID |
