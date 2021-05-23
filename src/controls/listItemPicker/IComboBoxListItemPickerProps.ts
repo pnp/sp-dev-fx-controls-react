@@ -27,6 +27,6 @@ export interface IComboBoxListItemPickerProps {
     suggestionsHeaderText?: string;
     noResultsFoundText?: string;
     onInitialized?: () => void;
-
     onSelectedItem: (item: any) => void;
+    label?: string;
 }

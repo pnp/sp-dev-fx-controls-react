@@ -5,13 +5,14 @@ import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
-import { getId } from 'office-ui-fabric-react/lib/Utilities';
+import styles from './ComboBoxListItemPicker.module.scss';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
   public selectedItems: any[];
-  private _comboBoxId = getId('comboBox');
+
   constructor(props: IComboBoxListItemPickerProps) {
     super(props);
 
@@ -74,7 +75,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     this.setState({
       availableOptions: options
     });
-    if(onInitialized && isInitialLoad !== false){
+    if (onInitialized && isInitialLoad !== false) {
       onInitialized();
     }
   }
@@ -98,29 +99,26 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   public render(): React.ReactElement<IComboBoxListItemPickerProps> {
     const { className, disabled } = this.props;
 
-    return (this.state.availableOptions ? (
-      <div>
-        {this.props.label &&
-          <Label htmlFor={this._comboBoxId}>{this.props.label}</Label>
-        }
-        <ComboBox id={this._comboBoxId}
-                  options={this.state.availableOptions}
-                  autoComplete={this.props.autoComplete}
-                  comboBoxOptionStyles={this.props.comboBoxOptionStyles}
-                  allowFreeform={this.props.allowFreeform}
-                  keytipProps={this.props.keytipProps}
-                  onMenuDismissed={this.props.onMenuDismiss}
-                  onMenuOpen={this.props.onMenuOpen}
-                  text={this.props.text}
-                  onChange={(e, value) => this.onChanged(value)}
-                  multiSelect={this.props.multiSelect}
-                  defaultSelectedKey={this.selectedItems.map(item=>item.key) || []}
-                  className={className}
-                  disabled={disabled} />
-
+    return (
+      <div className={styles.comboBoxListItemPickerWrapper}>
+        <ComboBox label={this.props.label}
+          options={this.state.availableOptions}
+          autoComplete={this.props.autoComplete}
+          comboBoxOptionStyles={this.props.comboBoxOptionStyles}
+          allowFreeform={this.props.allowFreeform}
+          keytipProps={this.props.keytipProps}
+          onMenuDismissed={this.props.onMenuDismiss}
+          onMenuOpen={this.props.onMenuOpen}
+          text={this.props.text}
+          onChange={(e, value) => this.onChanged(value)}
+          multiSelect={this.props.multiSelect}
+          defaultSelectedKey={this.selectedItems.map(item => item.key) || []}
+          className={className}
+          disabled={disabled} />
+        {!this.state.errorMessage && !this.state.availableOptions && (<Spinner className={styles.loading} size={SpinnerSize.small} />)}
         {!!this.state.errorMessage &&
           (<Label style={{ color: '#FF0000' }}> {this.state.errorMessage} </Label>)}
-      </div>) : <span>Loading...</span>
+      </div>
     );
   }
 
@@ -128,7 +126,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
    * On Selected Item
    */
   private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
-    if(this.props.multiSelect){
+    if (this.props.multiSelect) {
       if (option && option.selected) {
         this.selectedItems.push({
           [this.props.keyColumnInternalName || "Id"]: option.key,
@@ -138,7 +136,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       } else {
         this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
       }
-    }else{
+    } else {
       this.selectedItems.push({
         [this.props.keyColumnInternalName || "Id"]: option.key,
         [this.props.columnInternalName]: option.text
