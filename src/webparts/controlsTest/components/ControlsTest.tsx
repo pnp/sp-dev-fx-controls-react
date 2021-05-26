@@ -56,7 +56,7 @@ import {
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
-import { Accordion } from "../../../";
+import { Accordion } from "../../../controls/accordion";
 import {
   ChartControl,
   ChartType
