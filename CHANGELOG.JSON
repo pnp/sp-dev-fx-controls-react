@@ -11,12 +11,14 @@
         ],
         "fixes": [
           "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
-          "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)"
+          "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)",
+          "`DatePicker`: Fix Spanish loc strings [#923](https://github.com/pnp/sp-dev-fx-controls-react/issues/923)"
         ]
       },
       "contributions": [
         "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
-        "[Sergei Sergeev](https://github.com/s-KaiNet)"
+        "[Sergei Sergeev](https://github.com/s-KaiNet)",
+        "[Eduard Paul](https://github.com/eduardpaul)"
       ]
     },
     {
