@@ -6,14 +6,17 @@
         "new": [
           "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)"
         ],
-        "enhancements": [],
+        "enhancements": [
+          "`fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)"
+        ],
         "fixes": [
           "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
           "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)"
         ]
       },
       "contributions": [
-        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
+        "[Sergei Sergeev](https://github.com/s-KaiNet)"
       ]
     },
     {
