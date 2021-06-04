@@ -29,4 +29,8 @@ export interface IComboBoxListItemPickerProps {
     onInitialized?: () => void;
 
     onSelectedItem: (item: any) => void;
+      /**
+   * The label for the control
+   */
+   label?: string;
 }

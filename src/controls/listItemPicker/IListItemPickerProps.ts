@@ -22,4 +22,9 @@ export interface IListItemPickerProps {
   placeholder?: string;
 
   onSelectedItem: (item:any) => void;
+  /**
+   * The label for the control
+   */
+   label?: string;
+
 }
