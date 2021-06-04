@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.21.2",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#909](https://github.com/pnp/sp-dev-fx-controls-react/pull/909)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Peter Paul Kirschner](https://github.com/petkir)"
+      ]
+    },
+    {
       "version": "1.21.1",
       "changes": {
         "new": [],
