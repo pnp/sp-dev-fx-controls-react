@@ -6,13 +6,16 @@
         "new": [
           "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)"
         ],
-        "enhancements": [],
+        "enhancements": [
+          "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#910](https://github.com/pnp/sp-dev-fx-controls-react/pull/910)"
+        ],
         "fixes": [
           "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)"
         ]
       },
       "contributions": [
-        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
+        "[Peter Paul Kirschner](https://github.com/petkir)"
       ]
     },
     {
