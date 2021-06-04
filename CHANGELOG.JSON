@@ -7,7 +7,8 @@
           "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)"
         ],
         "enhancements": [
-          "`fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)"
+          "`fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)",
+          "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#914](https://github.com/pnp/sp-dev-fx-controls-react/pull/914)"
         ],
         "fixes": [
           "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
@@ -18,7 +19,8 @@
       "contributions": [
         "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
         "[Sergei Sergeev](https://github.com/s-KaiNet)",
-        "[Eduard Paul](https://github.com/eduardpaul)"
+        "[Eduard Paul](https://github.com/eduardpaul)",
+        "[Peter Paul Kirschner](https://github.com/petkir)"
       ]
     },
     {
