@@ -6,12 +6,9 @@ import { PrimaryButton, DefaultButton, IconButton, IButtonStyles } from 'office-
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { ITag, TagPicker } from 'office-ui-fabric-react/lib/Pickers';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack';
 import { sp } from '@pnp/sp';
-import { ITermInfo } from '@pnp/sp/taxonomy';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
-import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import { TaxonomyForm } from './taxonomyForm';
 import styles from './ModernTaxonomyPicker.module.scss';
 import * as strings from 'ControlStrings';
@@ -41,15 +38,6 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   React.useEffect(() => {
     sp.setup(props.context);
   }, []);
-
-  // React.useEffect(() => {
-  //   if(Object.prototype.toString.call(props.initialValues) === '[object Array]' ) {
-  //     setSelectedOptions(props.initialValues);
-  //   }
-  //   else {
-  //     setSelectedOptions([]);
-  //   }
-  // }, []);
 
   React.useEffect(() => {
     if (props.onChange) {
