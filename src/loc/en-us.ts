@@ -395,6 +395,7 @@ define([], () => {
     ModernTaxonomyPickerApplyButtonText: "Apply",
     ModernTaxonomyPickerCancelButtonText: "Cancel",
     ModernTaxonomyPickerLoadMoreText: "Load more",
-    ModernTaxonomyPickerRemoveButtonText: "Remove"
+    ModernTaxonomyPickerRemoveButtonText: "Remove",
+    ModernTaxonomyPickerPanelCloseButtonText: "Close"
   };
 });

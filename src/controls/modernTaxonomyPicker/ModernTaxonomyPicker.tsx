@@ -141,6 +141,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
       <Panel
         isOpen={panelIsOpen}
         hasCloseButton={true}
+        closeButtonAriaLabel={strings.ModernTaxonomyPickerPanelCloseButtonText}
         onDismiss={onClosePanel}
         isLightDismiss={true}
         type={PanelType.medium}
