@@ -5,14 +5,6 @@ import { SharePointQueryableCollection, sp } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { ITermInfo, ITermSetInfo } from '@pnp/sp/taxonomy';
 
-export interface ODataCollection<T> {
-  '@odata.context': string;
-  '@odata.nextLink'?:string;
-  value: T[];
-}
-
-const EmptyODataCollection = { '@odata.context': '', value: [] };
-
 export class SPTaxonomyService {
 
   /**
