@@ -368,6 +368,13 @@ define([], () => {
   "ListItemCommentsLabel": "Kommentarer",
   "ListItemCommentsNoCommentsLabel": "Det finns inga kommentarer",
   "OrgAssetsLinkLabel": "Din organisation",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Ange en term som du vill tagga",
+  "ModernTaxonomyPickerTreeTitle": "Välj en tagg",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Lägg till tagg",
+  "ModernTaxonomyPickerApplyButtonText": "Använd",
+  "ModernTaxonomyPickerCancelButtonText": "Avbryt",
+  "ModernTaxonomyPickerLoadMoreText": "Läs in mer",
+  "ModernTaxonomyPickerRemoveButtonText": "Ta bort"
 };
 });

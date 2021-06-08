@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
-import { PrimaryButton, DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton, DefaultButton, IconButton, IButtonStyles } from 'office-ui-fabric-react/lib/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { ITag, TagPicker } from 'office-ui-fabric-react/lib/Pickers';
@@ -15,19 +15,9 @@ import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import { TaxonomyForm } from './taxonomyForm';
 import styles from './ModernTaxonomyPicker.module.scss';
 import * as strings from 'ControlStrings';
-
-// TODO: remove/replace interface IPickerTerm
-export interface IPickerTerm {
-  name: string;
-  key: string;
-  path: string;
-  termSet: string;
-  termSetName?: string;
-}
-
-// TODO: remove/replace interface IPickerTerms
-export interface IPickerTerms extends Array<IPickerTerm> { }
-
+import { TooltipHost } from '@microsoft/office-ui-fabric-react-bundle';
+import { useId } from '@uifabric/react-hooks';
+import { ITooltipHostStyles } from 'office-ui-fabric-react';
 export interface IModernTaxonomyPickerProps {
   allowMultipleSelections: boolean;
   termSetId: string;
@@ -39,15 +29,15 @@ export interface IModernTaxonomyPickerProps {
   errorMessage?: string; // TODO: is this needed?
   disabled?: boolean;
   required?: boolean;
+  onChange?: (newValue?: ITag[]) => void;
+  placeHolder?: string;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const [termsService] = React.useState(() => new SPTaxonomyService(props.context));
-  const [terms, setTerms] = React.useState<ITermInfo[]>([]);
   const [errorMessage, setErrorMessage] = React.useState(props.errorMessage);
   const [internalErrorMessage, setInternalErrorMessage] = React.useState<string>();
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false); // was called loaded
   const [selectedOptions, setSelectedOptions] = React.useState<ITag[]>([]);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITag[]>([]);
 
@@ -58,31 +48,38 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   }, []);
 
   React.useEffect(() => {
-    setSelectedOptions(props.initialValues || []);
+    if(Object.prototype.toString.call(props.initialValues) === '[object Array]' ) {
+      setSelectedOptions(props.initialValues);
+    }
+    else {
+      setSelectedOptions([]);
+    }
   }, [props.initialValues]);
 
   React.useEffect(() => {
     setErrorMessage(props.errorMessage);
   }, [props.errorMessage]);
 
+  React.useEffect(() => {
+    if (props.onChange) {
+      props.onChange(selectedOptions);
+    }
+  }, [selectedOptions]);
+
   async function onOpenPanel(): Promise<void> {
     if (props.disabled === true) {
       return;
     }
-    setLoading(true);
-    const siteUrl = props.context.pageContext.site.absoluteUrl;
-    const newTerms = await termsService.getTerms(Guid.parse(props.termSetId), Guid.empty, '', true, 50);
-    setTerms(newTerms.value);
-    setLoading(false);
+    setSelectedPanelOptions(selectedOptions);
     setPanelIsOpen(true);
   }
 
   function onClosePanel(): void {
-    setLoading(false);
+    setSelectedPanelOptions([]);
     setPanelIsOpen(false);
   }
 
-  function onSave(): void {
+  function onApply(): void {
     setSelectedOptions([...selectedPanelOptions]);
     onClosePanel();
   }
@@ -111,30 +108,42 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     return filteredTags;
   }
 
-  const { label, disabled, allowMultipleSelections, panelTitle, required } = props;
+  const { label, disabled, allowMultipleSelections, panelTitle, required, placeHolder } = props;
+  const calloutProps = { gapSpace: 0 };
+  const tooltipId = useId('tooltip');
+  const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
+
   return (
     <div className={styles.modernTaxonomyPicker}>
       {label && <Label required={required}>{label}</Label>}
       <div className={styles.termField}>
         <div className={styles.termFieldInput}>
           <TagPicker
-            removeButtonAriaLabel="Remove"
+            removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
             onResolveSuggestions={onResolveSuggestions}
             itemLimit={allowMultipleSelections ? undefined : 1}
             selectedItems={selectedOptions}
+            disabled={disabled}
             onChange={(itms?: ITag[]) => {
               setSelectedOptions(itms || []);
               setSelectedPanelOptions(itms || []);
             }}
             getTextFromItem={(tag: ITag, currentValue?: string) => tag.name}
             inputProps={{
-              'aria-label': 'Tag Picker',
-              placeholder: 'Ange en term som du vill tagga'
+              'aria-label': placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
+              placeholder: placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
           />
         </div>
         <div className={styles.termFieldButton}>
-          <IconButton disabled={disabled} iconProps={{ iconName: 'Tag' } as IIconProps} onClick={onOpenPanel} />
+          <TooltipHost
+            content={strings.ModernTaxonomyPickerAddTagButtonTooltip}
+            id={tooltipId}
+            calloutProps={calloutProps}
+            styles={hostStyles}
+          >
+            <IconButton disabled={disabled} iconProps={{ iconName: 'Tag' } as IIconProps} onClick={onOpenPanel} aria-describedby={tooltipId} />
+          </TooltipHost>
         </div>
       </div>
 
@@ -153,22 +162,17 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           };
           return (
             <Stack horizontal disableShrink tokens={horizontalGapStackTokens}>
-              <PrimaryButton text={strings.SaveButtonLabel} value="Save" onClick={onSave} />
-              <DefaultButton text={strings.CancelButtonLabel} value="Cancel" onClick={onClosePanel} />
+              <PrimaryButton text={strings.ModernTaxonomyPickerApplyButtonText} value="Apply" onClick={onApply} />
+              <DefaultButton text={strings.ModernTaxonomyPickerCancelButtonText} value="Cancel" onClick={onClosePanel} />
             </Stack>
           );
         }}>
 
         {
-          /* Show spinner in the panel while retrieving terms */
-          loading === true ? <Spinner size={SpinnerSize.medium} /> : ''
-        }
-        {
-          loading === false && props.termSetId && (
+          props.termSetId && (
             <div key={props.termSetId} >
               <TaxonomyForm
                 allowMultipleSelections={allowMultipleSelections}
-                terms={terms}
                 onResolveSuggestions={onResolveSuggestions}
                 onLoadMoreData={termsService.getTerms}
                 getTermSetInfo={termsService.getTermSetInfo}
@@ -177,6 +181,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 pageSize={50}
                 selectedPanelOptions={selectedPanelOptions}
                 setSelectedPanelOptions={setSelectedPanelOptions}
+                placeHolder={placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder}
               />
             </div>
           )

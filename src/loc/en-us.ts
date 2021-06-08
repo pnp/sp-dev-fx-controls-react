@@ -387,6 +387,14 @@ define([], () => {
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
     ListItemCommentsNoCommentsLabel: "There is no Comments",
-    OrgAssetsLinkLabel: "Your organisation"
+    OrgAssetsLinkLabel: "Your organisation",
+
+    ModernTaxonomyPickerDefaultPlaceHolder: "Type term to tag",
+    ModernTaxonomyPickerTreeTitle: "Select one or more tags",
+    ModernTaxonomyPickerAddTagButtonTooltip: "Add Tag",
+    ModernTaxonomyPickerApplyButtonText: "Apply",
+    ModernTaxonomyPickerCancelButtonText: "Cancel",
+    ModernTaxonomyPickerLoadMoreText: "Load more",
+    ModernTaxonomyPickerRemoveButtonText: "Remove"
   };
 });

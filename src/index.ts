@@ -37,3 +37,4 @@ export * from './Accordion';
 export * from './AnimatedDialog';
 export * from './DynamicForm';
 export * from './Carousel';
+export * from './ModernTaxonomyPicker';

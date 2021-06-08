@@ -1,15 +1,15 @@
 import * as React from 'react';
 import styles from './TaxonomyForm.module.scss';
-import { Checkbox, ChoiceGroup, classNamesFunction, DetailsRow, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionProps, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IChoiceGroupStyleProps, IChoiceGroupStyles, IColumn, IGroup, IGroupedList, IGroupFooterProps, IGroupHeaderCheckboxProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Spinner, TagPicker } from 'office-ui-fabric-react';
+import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupedList, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Spinner, TagPicker } from 'office-ui-fabric-react';
 import { ITermInfo, ITermSetInfo } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
+import * as strings from 'ControlStrings';
 
 export interface ITaxonomyFormProps {
   context: BaseComponentContext;
   allowMultipleSelections: boolean;
-  terms: ITermInfo[];
   termSetId: Guid;
   pageSize: number;
   selectedPanelOptions: ITag[];
@@ -17,6 +17,7 @@ export interface ITaxonomyFormProps {
   onResolveSuggestions: (filter: string, selectedItems?: ITag[]) => ITag[] | PromiseLike<ITag[]>;
   onLoadMoreData: (termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize?: number) => Promise<{ value: ITermInfo[], skiptoken: string }>;
   getTermSetInfo: (termSetId: Guid) => Promise<ITermSetInfo | undefined>;
+  placeHolder: string;
 }
 
 export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
@@ -27,16 +28,16 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
 
 
   React.useEffect(() => {
-    setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, props.termSetId.toString()]);
-
     props.getTermSetInfo(props.termSetId)
       .then((termSetInfo) => {
         const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
 
         const termSetName = termSetInfo.localizedNames.filter((name) => name.languageTag === languageTag)[0].name;
-        const rootGroup: IGroup = { name: termSetName, key: termSetInfo.id, startIndex: -1, count: 50, level: 0, isCollapsed: false, data: { skiptoken: '' }, hasMoreData: false };
+        const rootGroup: IGroup = { name: termSetName, key: termSetInfo.id, startIndex: -1, count: 50, level: 0, isCollapsed: false, data: { skiptoken: '' }, hasMoreData: termSetInfo.childrenCount > 0 };
         setGroups([rootGroup]);
-        props.onLoadMoreData(props.termSetId, Guid.empty, '', true)
+        setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, termSetInfo.id]);
+        if (termSetInfo.childrenCount > 0) {
+          props.onLoadMoreData(props.termSetId, Guid.empty, '', true)
           .then((terms) => {
             const grps: IGroup[] = terms.value.map(term => {
               const g: IGroup = {
@@ -60,7 +61,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
             setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetId.toString()));
             setGroups([rootGroup]);
           });
-
+        }
       });
   }, []);
 
@@ -154,8 +155,9 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
 
   const onRenderTitle = (groupHeaderProps: IGroupHeaderProps) => {
     if (groupHeaderProps.group.level === 0) {
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: "normal"}};
       return (
-        <Label>{groupHeaderProps.group.name}</Label>
+        <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
       );
     }
     if (props.allowMultipleSelections) {
@@ -179,21 +181,18 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
     }
     else {
       const isSelected = props.selectedPanelOptions?.[0]?.key === groupHeaderProps.group.key;
-      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected ? { choiceFieldWrapper: { fontWeight: 'bold' } } : { choiceFieldWrapper: { fontWeight: 'normal' } };
-      const getClassNames = classNamesFunction<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles>();
-
-      const classNames = getClassNames(selectedStyle!, {
-        theme: undefined,
-        hasIcon: false,
-        hasImage: false,
-        checked: false,
-        disabled: false,
-        imageIsLarge: false,
-        imageSize: undefined,
-        focused: false,
-      });
+      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
       const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
-      const options: IChoiceGroupOption[] = [{ key: groupHeaderProps.group.key, text: groupHeaderProps.group.name, styles: selectedStyle, onRenderLabel: (p) => <Label htmlFor={p.id} className={classNames.field}><span id={p.labelId} className={css(styles.choiceOption, isSelected && styles.selectedChoiceOption)}>{p.text}</span></Label> }];
+      const options: IChoiceGroupOption[] = [{
+                                                key: groupHeaderProps.group.key,
+                                                text: groupHeaderProps.group.name,
+                                                styles: selectedStyle,
+                                                onRenderLabel: (p) =>
+                                                  <span id={p.labelId} className={css(styles.choiceOption, isSelected && styles.selectedChoiceOption)}>
+                                                    {p.text}
+                                                  </span>
+                                              }];
+
       return (
         <ChoiceGroup
           options={options}
@@ -206,16 +205,13 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
   };
 
   const onRenderHeader = (headerProps: IGroupHeaderProps): JSX.Element => {
-    const headerCountStyle = { display: 'none' };
-    const checkButtonStyle = { display: 'none' };
-    const expandStyle = { visibility: 'hidden' };
     const groupHeaderStyles: IStyleFunctionOrObject<IGroupHeaderStyleProps, IGroupHeaderStyles> = {
-      expand: !headerProps.group.children || headerProps.group.level === 0 ? expandStyle : null,
-      expandIsCollapsed: !headerProps.group.children || headerProps.group.level === 0 ? expandStyle : null,
-      check: checkButtonStyle,
-      headerCount: headerCountStyle,
+      expand: { height: 42, visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible" },
+      expandIsCollapsed: { visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible" },
+      check: { display: 'none' },
+      headerCount: { display: 'none' },
       groupHeaderContainer: { height: 36, paddingTop: 3, paddingBottom: 3, paddingLeft: 3, paddingRight: 3, alignItems: 'center', },
-      root: { height: 42 }
+      root: { height: 42 },
     };
 
     return (
@@ -243,6 +239,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
       return (
         <div style={{ height: '48px', lineHeight: '48px' }}>
           <Link onClick={() => {
+            setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, footerProps.group.key]);
             props.onLoadMoreData(props.termSetId, footerProps.group.key === props.termSetId.toString() ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, true)
               .then((terms) => {
                 const grps: IGroup[] = terms.value.map(term => {
@@ -268,7 +265,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
               });
           }}
             styles={linkStyles}>
-            Load more...
+            {strings.ModernTaxonomyPickerLoadMoreText}
           </Link>
         </div>
       );
@@ -295,14 +292,14 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
     props.setSelectedPanelOptions(itms || []);
   };
 
-  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { text: { borderStyle: 'none', borderWidth: '0px' } };
+  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4}, input: {height: 34}, text: { borderStyle: 'none', borderWidth: '0px' } };
 
   return (
     <div className={styles.taxonomyForm}>
       <div className={styles.taxonomyTreeSelector}>
         <div>
           <TagPicker
-            removeButtonAriaLabel="Remove"
+            removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
             onResolveSuggestions={props.onResolveSuggestions}
             itemLimit={props.allowMultipleSelections ? undefined : 1}
             selectedItems={props.selectedPanelOptions}
@@ -310,13 +307,13 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
             getTextFromItem={getTagText}
             styles={tagPickerStyles}
             inputProps={{
-              'aria-label': 'Tag Picker',
-              placeholder: 'Ange en term som du vill tagga'
+              'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
+              placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
           />
         </div>
       </div>
-      <Label className={styles.taxonomyTreeLabel}>Välj en tagg</Label>
+      <Label className={styles.taxonomyTreeLabel}>{strings.ModernTaxonomyPickerTreeTitle}</Label>
       <div>
         <GroupedList
           componentRef={groupedListRef}
