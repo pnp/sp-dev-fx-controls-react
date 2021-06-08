@@ -26,7 +26,6 @@ export interface IModernTaxonomyPickerProps {
   label: string;
   context: BaseComponentContext;
   initialValues?: ITag[];
-  errorMessage?: string; // TODO: is this needed?
   disabled?: boolean;
   required?: boolean;
   onChange?: (newValue?: ITag[]) => void;
@@ -35,30 +34,22 @@ export interface IModernTaxonomyPickerProps {
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const [termsService] = React.useState(() => new SPTaxonomyService(props.context));
-  const [errorMessage, setErrorMessage] = React.useState(props.errorMessage);
-  const [internalErrorMessage, setInternalErrorMessage] = React.useState<string>();
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
-  const [selectedOptions, setSelectedOptions] = React.useState<ITag[]>([]);
+  const [selectedOptions, setSelectedOptions] = React.useState<ITag[]>(Object.prototype.toString.call(props.initialValues) === '[object Array]' ? props.initialValues : []);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITag[]>([]);
-
-  const invalidTerm = React.useRef<string>(null);
 
   React.useEffect(() => {
     sp.setup(props.context);
   }, []);
 
-  React.useEffect(() => {
-    if(Object.prototype.toString.call(props.initialValues) === '[object Array]' ) {
-      setSelectedOptions(props.initialValues);
-    }
-    else {
-      setSelectedOptions([]);
-    }
-  }, [props.initialValues]);
-
-  React.useEffect(() => {
-    setErrorMessage(props.errorMessage);
-  }, [props.errorMessage]);
+  // React.useEffect(() => {
+  //   if(Object.prototype.toString.call(props.initialValues) === '[object Array]' ) {
+  //     setSelectedOptions(props.initialValues);
+  //   }
+  //   else {
+  //     setSelectedOptions([]);
+  //   }
+  // }, []);
 
   React.useEffect(() => {
     if (props.onChange) {
@@ -66,7 +57,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     }
   }, [selectedOptions]);
 
-  async function onOpenPanel(): Promise<void> {
+  function onOpenPanel(): void {
     if (props.disabled === true) {
       return;
     }
@@ -108,30 +99,30 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     return filteredTags;
   }
 
-  const { label, disabled, allowMultipleSelections, panelTitle, required, placeHolder } = props;
   const calloutProps = { gapSpace: 0 };
   const tooltipId = useId('tooltip');
   const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
+  const addTermButtonStyles: IButtonStyles = {rootHovered: {backgroundColor: "inherit"}, rootPressed: {backgroundColor: "inherit"}};
 
   return (
     <div className={styles.modernTaxonomyPicker}>
-      {label && <Label required={required}>{label}</Label>}
+      {props.label && <Label required={props.required}>{props.label}</Label>}
       <div className={styles.termField}>
         <div className={styles.termFieldInput}>
           <TagPicker
             removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
             onResolveSuggestions={onResolveSuggestions}
-            itemLimit={allowMultipleSelections ? undefined : 1}
+            itemLimit={props.allowMultipleSelections ? undefined : 1}
             selectedItems={selectedOptions}
-            disabled={disabled}
+            disabled={props.disabled}
             onChange={(itms?: ITag[]) => {
               setSelectedOptions(itms || []);
               setSelectedPanelOptions(itms || []);
             }}
-            getTextFromItem={(tag: ITag, currentValue?: string) => tag.name}
+            getTextFromItem={(tag: ITag) => tag.name}
             inputProps={{
-              'aria-label': placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
-              placeholder: placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
+              'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
+              placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
           />
         </div>
@@ -142,12 +133,10 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
             calloutProps={calloutProps}
             styles={hostStyles}
           >
-            <IconButton disabled={disabled} iconProps={{ iconName: 'Tag' } as IIconProps} onClick={onOpenPanel} aria-describedby={tooltipId} />
+            <IconButton disabled={props.disabled} styles={addTermButtonStyles} iconProps={{ iconName: 'Tag' } as IIconProps} onClick={onOpenPanel} aria-describedby={tooltipId} />
           </TooltipHost>
         </div>
       </div>
-
-      <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} />
 
       <Panel
         isOpen={panelIsOpen}
@@ -155,7 +144,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         onDismiss={onClosePanel}
         isLightDismiss={true}
         type={PanelType.medium}
-        headerText={panelTitle}
+        headerText={props.panelTitle}
         onRenderFooterContent={() => {
           const horizontalGapStackTokens: IStackTokens = {
             childrenGap: 10,
@@ -172,7 +161,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           props.termSetId && (
             <div key={props.termSetId} >
               <TaxonomyForm
-                allowMultipleSelections={allowMultipleSelections}
+                allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={onResolveSuggestions}
                 onLoadMoreData={termsService.getTerms}
                 getTermSetInfo={termsService.getTermSetInfo}
@@ -181,7 +170,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 pageSize={50}
                 selectedPanelOptions={selectedPanelOptions}
                 setSelectedPanelOptions={setSelectedPanelOptions}
-                placeHolder={placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder}
+                placeHolder={props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder}
               />
             </div>
           )

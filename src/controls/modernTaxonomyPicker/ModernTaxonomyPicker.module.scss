@@ -1,167 +1,25 @@
 .modernTaxonomyPicker {
 
-.contextualMenu {
-  display: inline-block
-}
-
-.listItem {
-  min-height: 36px;
-  line-height: 36px;
-  cursor: pointer;
-
-  >div {
-    display: inline-block;
-    margin-right: 10px;
-  }
-
-  img {
-    margin-right: 5px;
-    vertical-align: middle;
-  }
-}
-
-.termField {
-  align-items: center;
-  border-spacing: 0;
-  display: flex;
-  width: 100%;
-
-  .termFieldInput {
-    flex-grow: 1;
-  }
-
-  .termFieldButton {
-    text-align: center;
-    width: 42px;
-  }
-
-  input[type="text"] {
-    cursor: pointer;
-    opacity: 0.8;
-    width: 100%;
-  }
-}
-
-.termset {
-  cursor: pointer;
-  margin-left: 15px;
-}
-
-.termSetSelectable {
-  height: 50px;
-  line-height: 50px;
-}
-
-.termSetSelector {
-  display: inline-block;
-  margin: 0 8px 0 4px;
-  vertical-align: middle;
-}
-
-.term {
-  padding-left: 20px;
-
-  .termEnabled,
-  .termDisabled,
-  .termNoTagging {
-    background-repeat: no-repeat;
-    background-position: 30px center;
-  }
-
-  .termEnabled {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACzSURBVDhPY2AYNKCoqIgTiOcD8X8S8F6wB4Aa1IH4akNDw+mPHz++/E8EuHTp0jmQRSDNCcXFxa/XrVt3gAh9KEpgBvx/9OjRLVI1g9TDDYBp3rlz5//Kysr/IJoYgGEASPPatWsbQDQxAMOAbdu2gZ0FookBcAOePHlyhxgN6GqQY+Hdhg0bDpJqCNgAaDrQAnJuNDY2nvr06dMbYgw6e/bsabgBUEN4yEiJ2wdNViLfIQC3sTh2vtJcswAAAABJRU5ErkJggg=='); // /_layouts/15/Images/EMMTerm.png
-  }
-
-  .termDisabled {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFMSURBVDhPzZPNSsNAFIULQqEQEPoSQqAg7gqC0HdwXxAElyYgBBGSZ+gDdOUyIauULATdKrgIKCKuQjbiDySCkNV4TrkzpJW2cefAxwwzc86de2em0/k3zXGcHpgC9Qeu5glAsAMefN+/K8vyVbVoWZbdMxDFY9d136Ioum6hW9iiDVSe588rxDXmJ+AAdAWOOVcbAy1O01R5nqfYoxVglyk+Hu7Z4FiwOcc1GBRMwQSnOAxDHz0jDyCwwCVQS3DO0gU0BkmSzG8A/UQiz7DxC5yLGQ1PwDeYGYOiKF6WarCPDUOJeor+A4z0m8P4SNaG+hY+4zi+aZh0scEBNeB41DTBuCcGjj6FjaM/BUFwW1XVO6vdMNiSdIzJLwN5TJZ+iSLQKYwbR9cmZyaFdX+JhZIiMue+cLFQxA0G22uusd/6I8OEb4LXRwZN4Q+3Ys8Mb9+nRgAAAABJRU5ErkJggg=='); // /_layouts/15/Images/EMMTermDeprecated.png
-  }
-
-  .termNoTagging {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZBJREFUeNqkU0trwkAQnhURBBFPKghekuJN7KW9pOCj0Agl9/4uT/6BHgXpxQfxYKltKEYhV3tXFF/4RrOdXYgkxpz8YA47O983O9+whFIKt8DvddHv9wej0UjY7/dwPB55sGaJRKImSVLxXMiSl9Hr9fRWq0WvoVKpUFVVv6xaF1nX9R+LvFqteKAgrVarVNM0fi6Xy9Sq99mfjeTv2Wz2mMvlYL1en/OGYYCiKKTT6fAzG8flQbfb1ReLxX0+n4fJZOLwQxRFKJVKNJPJwHa7dZuI5I/lcsnJrHMwGHQUpdNpHp5bGI/Hr7IsA3Pc7/dcDEynU5jP5xAIBJwCpmmeN+IF9IaT0VA20p+V5yaGQqF2s9mE3W4Hh8PBFXZyLBbTstmsaAkQqyuu7nOz2UiCIEAkEoFwOMzz6A0n44YgHo8bhULBYQaxP7vRaLyjyFsqleIiDLbOAyTfXY5GLueu1+s1XNULE2Fg5Gg0qj4jrnlDrhmHIu3hcPh0Op0gmUz+IvfBy1xy62/0wY34F2AAKtctO7g/KgIAAAAASUVORK5CYII='); // /_layouts/15/Images/EMMTermDisabled.png
-  }
-
-  label>span {
-    padding-left: 25px;
-  }
-}
-
-.actions {
-  button:first-child {
-    margin-right: 15px;
-  }
-}
-
-.termBasePicker
-{
-  background-color: #fff;
-}
-  .termSuggestion
-  {
-    min-height: 40px;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-
-
-    .termSuggestionSubTitle
-    {
-      font-size: 12px;
-      color: #666666;
-    }
-
-  }
-
-  .pickedTermRoot
-  {
-    position: relative;
-    outline: transparent;
-    box-sizing: content-box;
-    flex-shrink: 1;
-    background: #f4f4f4;
-    margin: 2px;
-    height: 26px;
-    line-height: 26px;
-    cursor: default;
-    display: flex;
-    flex-wrap: nowrap;
-    max-width: 300px;
-
-    .pickedTermText
-    {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      min-width: 30px;
-      margin: 0 8px;
-    }
-    .pickedTermCloseIcon
-    {
-      cursor: pointer;
-    color: #666666;
-    font-size: 12px;
-    display: inline-block;
-    text-align: center;
-    vertical-align: top;
-    width: 30px;
-    height: 100%;
-    -ms-flex-negative: 0;
-    flex-shrink: 0;
-    }
-  }
-
-  .errorMessage {
-    font-size: 12px;
-    font-weight: 400;
-    color: #a80000;
-    margin: 0;
-    padding-top: 5px;
-    display: flex;
+  .termField {
     align-items: center;
-  }
+    border-spacing: 0;
+    display: flex;
+    width: 100%;
 
-  .errorIcon {
-    font-size: 14px;
-    margin-right: 5px;
+    .termFieldInput {
+      flex-grow: 1;
+    }
+
+    .termFieldButton {
+      text-align: center;
+      width: 42px;
+    }
+
+    input[type="text"] {
+      cursor: pointer;
+      opacity: 0.8;
+      width: 100%;
+    }
   }
 
 }

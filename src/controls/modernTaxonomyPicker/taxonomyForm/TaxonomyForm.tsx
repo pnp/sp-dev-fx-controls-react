@@ -41,7 +41,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
           .then((terms) => {
             const grps: IGroup[] = terms.value.map(term => {
               const g: IGroup = {
-                name: term.labels?.[0].name, // TODO: fix this by looking up correct language
+                name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
                 key: term.id,
                 startIndex: -1,
                 count: 50,
@@ -66,6 +66,8 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
   }, []);
 
   const onToggleCollapse = (group: IGroup): void => {
+    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
+
     if (group.isCollapsed === true) {
       setGroups((prevGroups) => {
         const recurseGroups = (currentGroup) => {
@@ -95,7 +97,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
           .then((terms) => {
             const grps: IGroup[] = terms.value.map(term => {
               const g: IGroup = {
-                name: term.labels?.[0].name, // TODO: fix this by looking up correct language
+                name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
                 key: term.id,
                 startIndex: -1,
                 count: 50,
@@ -227,6 +229,8 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
 
   const onRenderFooter = (footerProps: IGroupFooterProps): JSX.Element => {
     if ((footerProps.group.hasMoreData || footerProps.group.children && footerProps.group.children.length === 0) && !footerProps.group.isCollapsed) {
+      const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
+
       if (groupsLoading.some(value => value === footerProps.group.key)) {
         const spinnerStyles: IStyleFunctionOrObject<ISpinnerStyleProps, ISpinnerStyles> = { circle: { verticalAlign: 'middle' } };
         return (
@@ -244,7 +248,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
               .then((terms) => {
                 const grps: IGroup[] = terms.value.map(term => {
                   const g: IGroup = {
-                    name: term.labels?.[0].name, // TODO: fix this by looking up correct language
+                    name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
                     key: term.id,
                     startIndex: -1,
                     count: 50,
