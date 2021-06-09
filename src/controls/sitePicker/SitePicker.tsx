@@ -1,16 +1,17 @@
-import * as React from 'react';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { ISite, ISitePickerProps } from './ISitePicker';
-import { getAllSites, getHubSites } from '../../services/SPSitesService';
-import { IDropdownOption, Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
-import { ISelectableOption, SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
-import orderBy from 'lodash/orderBy';
-import findIndex from 'lodash/findIndex';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
 import { Async } from '@uifabric/utilities/lib/Async';
+import findIndex from 'lodash/findIndex';
+import orderBy from 'lodash/orderBy';
+import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+import { ISelectableOption, SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
+import * as React from 'react';
+
 import * as telemetry from '../../common/telemetry';
+import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
+import { getAllSites, getHubSites } from '../../services/SPSitesService';
+import { ISite, ISitePickerProps } from './ISitePicker';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -69,11 +70,12 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     placeholder,
     searchPlaceholder,
     deferredSearchTime,
-    className
+    className,
+    selectedSites
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
-  const [selectedSites, setSelectedSites] = React.useState<ISite[]>();
+  const [sites, setSites] = React.useState<ISite[]>();
   const [allSites, setAllSites] = React.useState<ISite[]>();
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
@@ -92,9 +94,9 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
 
   const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
     let newSelectedSites: ISite[] = [];
-
+    //debugger;
     if (multiSelect !== false) {
-      newSelectedSites = selectedSites ? [...selectedSites] : [];
+      newSelectedSites = sites ? [...sites] : [];
       const existingIndex = findIndex(newSelectedSites, s => s.url === item.key);
 
       if (existingIndex >= 0) {
@@ -116,9 +118,9 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       onChange(newSelectedSites);
     }
 
-    setSelectedSites(newSelectedSites);
-
-  }, [selectedSites, multiSelect, onChange]);
+    setSites(newSelectedSites);
+    //console.log(`onselction change set sites to ${newSelectedSites[0].title}`);
+  }, [sites, multiSelect, onChange]);
 
   const getOptions = React.useCallback((): IDropdownOption[] => {
 
@@ -140,7 +142,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       });
     }
 
-    const selectedSitesIds: string[] = selectedSites ? selectedSites.map(s => s.url!) : [];
+    const selectedSitesIds: string[] = sites ? sites.map(s => s.url!) : [];
 
     if (filteredSites) {
       filteredSites.forEach(s => {
@@ -154,7 +156,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     }
 
     return result;
-  }, [allowSearch, selectedSites, filteredSites, allSites]);
+  }, [allowSearch, sites, filteredSites, allSites]);
 
   const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
     if (!props) {
@@ -194,17 +196,26 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     telemetry.track('ReactSitePicker');
   }, []);
 
+  React.useEffect(() => {
+    //debugger;
+    setSites(selectedSites);
+   // console.log(`firt useeffect set sites to ${selectedSites[0].title}`);
+    if (!allSites) {
+      setIsLoading(true);
+    }
+  }, [selectedSites]);
 
   React.useEffect(() => {
     if (!initialSites) {
       return;
     }
 
-    setSelectedSites(sites => {
-      if (!sites) { // we want to set the state one time only
+    setSites(osites => {
+      if (!osites) { // we want to set the state one time only
+      //  console.log(`second  useeffect part a  set sites to ${initialSites[0].title}`);
         return initialSites;
       }
-
+    //  console.log(`second  useeffect part b  set sites to ${sites[0].title}`);
       return sites;
     });
 
@@ -261,8 +272,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         label={label}
         placeholder={placeholder}
         options={getOptions()}
-        selectedKey={multiSelect === false && !!selectedSites && !!selectedSites[0] ? selectedSites[0].url : undefined}
-        selectedKeys={multiSelect !== false && !!selectedSites ? selectedSites.map(s => s.url) : undefined}
+        selectedKey={multiSelect === false && !!sites && !!sites[0] ? sites[0].url : undefined}
+        selectedKeys={multiSelect !== false && !!sites ? sites.map(s => s.url) : undefined}
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}

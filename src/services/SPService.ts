@@ -1,8 +1,10 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
-import { ISPField, ISPLists, IUploadImageResult } from "../common/SPEntities";
+import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
 import { urlCombine } from "../common/utilities";
+import filter from 'lodash/filter';
+import find from 'lodash/find';
 
 export default class SPService implements ISPService {
 
@@ -45,7 +47,9 @@ export default class SPService implements ISPService {
   public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
     let filtered: boolean;
     let queryUrl: string = `${this._webAbsoluteUrl}/_api/web/lists?$select=Title,id,BaseTemplate`;
-
+    if (options.contentTypeId) {
+      queryUrl += `,ContentTypes/Id&$expand=ContentTypes`;
+    }
     if (options.orderBy) {
       queryUrl += `&$orderby=${options.orderBy === LibsOrderBy.Id ? 'Id' : 'Title'}`;
     }
@@ -66,7 +70,16 @@ export default class SPService implements ISPService {
 
     const data = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);
     if (data.ok) {
-      return await data.json() as Promise<ISPLists>;
+      var result: ISPLists = await data.json();
+      var filteredLists = filter(result.value, (aList: ISPList) => {
+        debugger;
+        return find(aList.ContentTypes, (ct) => {
+          return ct.Id.StringValue.toUpperCase().startsWith(options.contentTypeId.toUpperCase());
+        });
+
+      });
+      result.value = filteredLists as ISPList[];
+      return result as ISPLists;
     } else {
       return null;
     }
@@ -75,7 +88,7 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filterString?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
     let returnItems: any[];
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
@@ -100,8 +113,8 @@ export default class SPService implements ISPService {
     }
     else {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-        `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
-        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
+        `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filterString ? ' and ' + filterString : ''}`
+        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filterString ? ' and ' + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
     }
 
