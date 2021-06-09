@@ -1,6 +1,6 @@
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { LibsOrderBy } from "../../services/ISPService";
+import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 
 export interface IListPickerProps {
   /**
@@ -51,7 +51,7 @@ export interface IListPickerProps {
   /**
   * Input placeholder text. Displayed until option is selected.
   */
- placeholder?: string;
+  placeholder?: string;
   /**
   * Callback issued when the selected option changes
   */
@@ -60,6 +60,14 @@ export interface IListPickerProps {
    * Absolute Web Url of target site (user requires permissions)
    */
   webAbsoluteUrl?: string;
+  /**
+  * Content type id which, if present, must be on the list
+  */
+  contentTypeId?: string;
+    /**
+  * if present can be used to force the control to refresh the list of lists by toggling its value
+  */
+     refreshToggle?: boolean;
 }
 
 export interface IListPickerState {

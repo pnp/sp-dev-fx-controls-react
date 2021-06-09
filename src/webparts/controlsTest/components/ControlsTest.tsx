@@ -1402,6 +1402,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
+                  contentTypeId="0x01"
                   // filter="Title eq 'Test List'"
                   onSelectionChanged={this.onListPickerChange} />
               </div>
