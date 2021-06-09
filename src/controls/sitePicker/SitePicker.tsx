@@ -240,8 +240,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection);
     }
 
-    promise.then(sites => {
-      const copy = orderBy(sites, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
+    promise.then(newSites => {
+      const copy = orderBy(newSites, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
       setAllSites(copy);
       setIsLoading(false);
     });
@@ -249,12 +249,12 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   }, [context, isLoading, mode, limitToCurrentSiteCollection]);
 
   React.useEffect(() => {
-    setAllSites(sites => {
-      if (!sites) {
-        return sites;
+    setAllSites(s => {
+      if (!s) {
+        return s;
       }
 
-      const copy = orderBy(sites, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
+      const copy = orderBy(s, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
       return copy;
     });
   }, [propOrderBy, isDesc]);
