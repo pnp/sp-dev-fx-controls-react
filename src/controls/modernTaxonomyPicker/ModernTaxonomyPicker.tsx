@@ -40,8 +40,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   React.useEffect(() => {
     sp.setup(props.context);
     taxonomyService.getTermStoreInfo()
-      .then((termStoreInfo) => {
-        setTermStoreInfo(termStoreInfo);
+      .then((localTermStoreInfo) => {
+        setTermStoreInfo(localTermStoreInfo);
       });
   }, []);
 
