@@ -11,6 +11,7 @@
 - `fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)
 - `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#914](https://github.com/pnp/sp-dev-fx-controls-react/pull/914)
 - `PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)
+- `ListPicker`: add contenttype id to list picker [#894](https://github.com/pnp/sp-dev-fx-controls-react/issues/894)
 
 ### Fixes
 
@@ -21,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Eduard Paul](https://github.com/eduardpaul), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergei Sergeev](https://github.com/s-KaiNet).
+Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Eduard Paul](https://github.com/eduardpaul), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Russell gove](https://github.com/russgove), [Sergei Sergeev](https://github.com/s-KaiNet).
 
 ## 3.1.0
 
