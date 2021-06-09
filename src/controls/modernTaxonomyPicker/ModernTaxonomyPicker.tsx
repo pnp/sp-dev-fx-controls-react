@@ -15,6 +15,7 @@ import * as strings from 'ControlStrings';
 import { TooltipHost } from '@microsoft/office-ui-fabric-react-bundle';
 import { useId } from '@uifabric/react-hooks';
 import { ITooltipHostStyles } from 'office-ui-fabric-react';
+import { ITermStoreInfo } from '@pnp/sp/taxonomy';
 export interface IModernTaxonomyPickerProps {
   allowMultipleSelections: boolean;
   termSetId: string;
@@ -30,13 +31,18 @@ export interface IModernTaxonomyPickerProps {
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
-  const [termsService] = React.useState(() => new SPTaxonomyService(props.context));
+  const [taxonomyService] = React.useState(() => new SPTaxonomyService(props.context));
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITag[]>(Object.prototype.toString.call(props.initialValues) === '[object Array]' ? props.initialValues : []);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITag[]>([]);
+  const [termStoreInfo, setTermStoreInfo] = React.useState<ITermStoreInfo>();
 
   React.useEffect(() => {
     sp.setup(props.context);
+    taxonomyService.getTermStoreInfo()
+      .then((termStoreInfo) => {
+        setTermStoreInfo(termStoreInfo);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -64,11 +70,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   }
 
   async function onResolveSuggestions(filter: string, selectedItems?: ITag[]): Promise<ITag[]> {
-    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
+    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : termStoreInfo.defaultLanguageTag;
     if (filter === '') {
       return [];
     }
-    const filteredTerms = await termsService.searchTerm(Guid.parse(props.termSetId), filter, languageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : undefined);
+    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, languageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : undefined);
     const filteredTermsWithoutSelectedItems = filteredTerms.filter((term) => {
       if (!selectedItems || selectedItems.length === 0) {
         return true;
@@ -80,8 +86,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     const filteredTermsAndAvailable = filteredTermsWithoutSelectedItems.filter((term) => term.isAvailableForTagging.filter((t) => t.setId === props.termSetId)[0].isAvailable);
     const filteredTags = filteredTermsAndAvailable.map((term) => {
       const key = term.id;
-      const name = term.labels.filter((termLabel) => (languageTag === '' || termLabel.languageTag === languageTag) &&
-        termLabel.name.toLowerCase().indexOf(filter.toLowerCase()) === 0)[0]?.name;
+      let labelsWithMatchingLanguageTag = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag));
+      if (labelsWithMatchingLanguageTag.length === 0) {
+        labelsWithMatchingLanguageTag = term.labels.filter((termLabel) => (termLabel.languageTag === termStoreInfo.defaultLanguageTag));
+      }
+      const name = labelsWithMatchingLanguageTag.filter((termLabel) => termLabel.name.toLowerCase().indexOf(filter.toLowerCase()) === 0)[0]?.name;
       return { key: key, name: name };
     });
     return filteredTags;
@@ -152,8 +161,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
               <TaxonomyForm
                 allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={onResolveSuggestions}
-                onLoadMoreData={termsService.getTerms}
-                getTermSetInfo={termsService.getTermSetInfo}
+                onLoadMoreData={taxonomyService.getTerms}
+                getTermSetInfo={taxonomyService.getTermSetInfo}
+                termStoreInfo={termStoreInfo}
                 context={props.context}
                 termSetId={Guid.parse(props.termSetId)}
                 pageSize={50}

@@ -3,7 +3,7 @@ import { Guid } from '@microsoft/sp-core-library';
 import { LambdaParser } from '@pnp/odata/parsers';
 import { SharePointQueryableCollection, sp } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
-import { ITermInfo, ITermSetInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 
 export class SPTaxonomyService {
 
@@ -75,5 +75,10 @@ export class SPTaxonomyService {
   public async getTermSetInfo(termSetId: Guid): Promise<ITermSetInfo | undefined> {
     const tsInfo = await sp.termStore.sets.getById(termSetId.toString()).get();
     return tsInfo;
+  }
+
+  public async getTermStoreInfo(): Promise<ITermStoreInfo | undefined> {
+    const termStoreInfo = await sp.termStore();
+    return termStoreInfo;
   }
 }

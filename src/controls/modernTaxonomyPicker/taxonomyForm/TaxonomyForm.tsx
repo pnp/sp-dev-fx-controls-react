@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './TaxonomyForm.module.scss';
 import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupedList, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Spinner, TagPicker } from 'office-ui-fabric-react';
-import { ITermInfo, ITermSetInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
@@ -17,6 +17,7 @@ export interface ITaxonomyFormProps {
   onResolveSuggestions: (filter: string, selectedItems?: ITag[]) => ITag[] | PromiseLike<ITag[]>;
   onLoadMoreData: (termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize?: number) => Promise<{ value: ITermInfo[], skiptoken: string }>;
   getTermSetInfo: (termSetId: Guid) => Promise<ITermSetInfo | undefined>;
+  termStoreInfo: ITermStoreInfo;
   placeHolder: string;
 }
 
@@ -30,9 +31,12 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
   React.useEffect(() => {
     props.getTermSetInfo(props.termSetId)
       .then((termSetInfo) => {
-        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
-
-        const termSetName = termSetInfo.localizedNames.filter((name) => name.languageTag === languageTag)[0].name;
+        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.termStoreInfo.defaultLanguageTag;
+        let termSetNames = termSetInfo.localizedNames.filter((name) => name.languageTag === languageTag);
+        if (termSetNames.length === 0) {
+          termSetNames = termSetInfo.localizedNames.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag);
+        }
+        const termSetName = termSetNames[0].name;
         const rootGroup: IGroup = { name: termSetName, key: termSetInfo.id, startIndex: -1, count: 50, level: 0, isCollapsed: false, data: { skiptoken: '' }, hasMoreData: termSetInfo.childrenCount > 0 };
         setGroups([rootGroup]);
         setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, termSetInfo.id]);
@@ -40,8 +44,12 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
           props.onLoadMoreData(props.termSetId, Guid.empty, '', true)
           .then((terms) => {
             const grps: IGroup[] = terms.value.map(term => {
+              let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
+              if (termNames.length === 0) {
+                termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+              }
               const g: IGroup = {
-                name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
+                name: termNames[0]?.name,
                 key: term.id,
                 startIndex: -1,
                 count: 50,
@@ -66,7 +74,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
   }, []);
 
   const onToggleCollapse = (group: IGroup): void => {
-    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
+    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.termStoreInfo.defaultLanguageTag;
 
     if (group.isCollapsed === true) {
       setGroups((prevGroups) => {
@@ -96,8 +104,12 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
         props.onLoadMoreData(props.termSetId, Guid.parse(group.key), '', true)
           .then((terms) => {
             const grps: IGroup[] = terms.value.map(term => {
+              let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
+              if (termNames.length === 0) {
+                termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+              }
               const g: IGroup = {
-                name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
+                name: termNames[0]?.name,
                 key: term.id,
                 startIndex: -1,
                 count: 50,
@@ -229,7 +241,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
 
   const onRenderFooter = (footerProps: IGroupFooterProps): JSX.Element => {
     if ((footerProps.group.hasMoreData || footerProps.group.children && footerProps.group.children.length === 0) && !footerProps.group.isCollapsed) {
-      const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.context.pageContext.web.languageName;
+      const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.termStoreInfo.defaultLanguageTag;
 
       if (groupsLoading.some(value => value === footerProps.group.key)) {
         const spinnerStyles: IStyleFunctionOrObject<ISpinnerStyleProps, ISpinnerStyles> = { circle: { verticalAlign: 'middle' } };
@@ -247,8 +259,12 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
             props.onLoadMoreData(props.termSetId, footerProps.group.key === props.termSetId.toString() ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, true)
               .then((terms) => {
                 const grps: IGroup[] = terms.value.map(term => {
+                  let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
+                  if (termNames.length === 0) {
+                    termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+                  }
                   const g: IGroup = {
-                    name: term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true))[0]?.name,
+                    name: termNames[0]?.name,
                     key: term.id,
                     startIndex: -1,
                     count: 50,
