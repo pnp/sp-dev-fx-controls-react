@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -36,7 +35,6 @@ export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendere
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         let termEls: JSX.Element | JSX.Element[] = null;
         if (Array.isArray(this.props.terms)) {

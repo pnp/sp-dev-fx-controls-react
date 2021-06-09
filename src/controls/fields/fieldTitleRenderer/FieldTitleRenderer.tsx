@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Link } from 'office-ui-fabric-react/lib/Link';
@@ -63,7 +62,6 @@ export class FieldTitleRenderer extends React.Component<IFieldTitleRendererProps
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         const isLink: boolean = this.props.isLink;
 

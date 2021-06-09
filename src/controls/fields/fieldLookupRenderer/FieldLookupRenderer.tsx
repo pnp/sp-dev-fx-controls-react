@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Dialog, DialogType } from 'office-ui-fabric-react/lib/Dialog';
@@ -77,7 +76,6 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
         };
     }
 
-    @override
     public render(): JSX.Element {
         const lookupLinks: JSX.Element[] = this.props.lookups.map((lookup) => {
             return <Link onClick={this._onClick.bind(this, lookup)} className={styles.lookup} style={this.props.cssProps}>{lookup.lookupValue}</Link>;
