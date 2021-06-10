@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './TaxonomyPanelContents.module.scss';
-import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Selection, Spinner, TagPicker } from 'office-ui-fabric-react';
+import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Selection, SelectionMode, SelectionZone, Spinner, TagPicker } from 'office-ui-fabric-react';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
@@ -194,58 +194,61 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
     }
   };
 
-  const onChoiceChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption): void => {
-    selection.setAllSelected(false);
-    selection.setKeySelected(option.key, true, true);
-  };
-
-  const onCheckboxChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean, tag?: ITag): void => {
-    if (checked) {
-      selection.setKeySelected(tag.key.toString(), true, true);
-    }
-    else {
-      selection.setKeySelected(tag.key.toString(), false, true);
-    }
-  };
-
   const onRenderTitle = (groupHeaderProps: IGroupHeaderProps) => {
     const isChildSelected = (children: IGroup[]): boolean => {
       let aChildIsSelected = children && children.some((child) => selection.isKeySelected(child.key) || isChildSelected(child.children));
       return aChildIsSelected;
     };
 
-    const isBold = isChildSelected(groupHeaderProps.group.children);
+    const childIsSelected = isChildSelected(groupHeaderProps.group.children);
 
     if (groupHeaderProps.group.level === 0) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: isBold ? "bold" : "normal"}};
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: childIsSelected ? "bold" : "normal"}};
       return (
         <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
       );
     }
 
+    const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
+    const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
+
+    const selectionProps = {
+      "data-selection-index": selection.getItems().findIndex((term) => term.key === groupHeaderProps.group.key)
+    };
+
     if (props.allowMultipleSelections) {
-      const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
-      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = isSelected || isBold ? { label: { fontWeight: 'bold' } } : { label: { fontWeight: 'normal' } };
+      if (isDisabled) {
+        selectionProps["data-selection-disabled"] = true;
+      }
+      else {
+        selectionProps["data-selection-toggle"] = true;
+      }
+
+      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = { root: {pointerEvents: 'none'} };
+      if (isSelected || childIsSelected) {
+        selectedStyles.label = { fontWeight: 'bold' };
+      }
+      else {
+        selectedStyles.label = { fontWeight: 'normal' };
+      }
 
       return (
-        <Checkbox
-          key={groupHeaderProps.group.key}
-          label={groupHeaderProps.group.name}
-          onChange={(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) =>
-            onCheckboxChange(ev, checked, { name: groupHeaderProps.group.name, key: groupHeaderProps.group.key })}
-          checked={isSelected}
-          styles={selectedStyles}
-          disabled={groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false}
-          onRenderLabel={(p) => <span className={css(styles.checkbox, isSelected && styles.selectedCheckbox)} title={p.title}>
-            {p.label}
-          </span>}
-        />
+        <div {...selectionProps}>
+          <Checkbox
+            key={groupHeaderProps.group.key}
+            label={groupHeaderProps.group.name}
+            checked={isSelected}
+            styles={selectedStyles}
+            disabled={isDisabled}
+            onRenderLabel={(p) => <span className={css(styles.checkbox, isSelected && styles.selectedCheckbox)} title={p.title}>
+              {p.label}
+            </span>}
+          />
+        </div>
       );
     }
     else {
-      const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
-      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || isBold ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
-      const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
+      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
       const options: IChoiceGroupOption[] = [{
                                                 key: groupHeaderProps.group.key,
                                                 text: groupHeaderProps.group.name,
@@ -256,13 +259,21 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
                                                   </span>
                                               }];
 
+      if (isDisabled) {
+        selectionProps["data-selection-disabled"] = true;
+      }
+      else {
+        selectionProps["data-selection-select"] = true;
+      }
+
       return (
-        <ChoiceGroup
-          options={options}
-          selectedKey={selection.getSelection()[0]?.key}
-          onChange={onChoiceChange}
-          disabled={isDisabled}
-        />
+        <div {...selectionProps}>
+          <ChoiceGroup
+            options={options}
+            selectedKey={selection.getSelection()[0]?.key}
+            disabled={isDisabled}
+          />
+        </div>
       );
     }
   };
@@ -376,7 +387,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
   const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
 
   return (
-    <div className={styles.taxonomyForm}>
+    <div className={styles.taxonomyPanelContents}>
       <div className={styles.taxonomyTreeSelector}>
         <div>
           <TagPicker
@@ -396,13 +407,18 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
       </div>
       <Label className={styles.taxonomyTreeLabel}>{strings.ModernTaxonomyPickerTreeTitle}</Label>
       <div>
-        <GroupedList
-          items={[]}
-          onRenderCell={null}
-          groups={groups}
-          groupProps={groupProps}
-          onShouldVirtualize={(p: IListProps<any>) => false}
-        />
+        <SelectionZone
+          selectionMode={props.allowMultipleSelections ? SelectionMode.multiple : SelectionMode.single}
+          selection={selection}
+        >
+          <GroupedList
+            items={[]}
+            onRenderCell={null}
+            groups={groups}
+            groupProps={groupProps}
+            onShouldVirtualize={(p: IListProps<any>) => false}
+          />
+        </SelectionZone>
       </div>
     </div>
   );

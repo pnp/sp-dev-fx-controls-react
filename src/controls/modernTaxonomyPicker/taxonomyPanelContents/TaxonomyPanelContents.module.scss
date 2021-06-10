@@ -1,12 +1,6 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
-.taxonomyForm {
-  .container {
-    max-width: 700px;
-    margin: 0px auto;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-  }
-
+.taxonomyPanelContents {
   .choiceOption {
     color: "[theme: bodyText, default: #323130]";
     padding-left: 26px;
