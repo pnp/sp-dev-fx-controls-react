@@ -21,8 +21,8 @@
   "dependencies": {
     "@fluentui/react-northstar": "0.51.3",
     "@microsoft/decorators": "1.12.1",
-    "@microsoft/mgt": "^2.1.0",
-    "@microsoft/mgt-react": "^2.1.0",
+    "@microsoft/mgt-spfx": "^2.2.0",
+    "@microsoft/mgt-react": "^2.2.0",
     "@microsoft/sp-core-library": "1.12.1",
     "@microsoft/sp-listview-extensibility": "1.12.1",
     "@microsoft/sp-lodash-subset": "1.12.1",
