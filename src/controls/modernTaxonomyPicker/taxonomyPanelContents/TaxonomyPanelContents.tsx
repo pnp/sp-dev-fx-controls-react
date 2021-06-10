@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './TaxonomyForm.module.scss';
+import styles from './TaxonomyPanelContents.module.scss';
 import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Selection, Spinner, TagPicker } from 'office-ui-fabric-react';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
@@ -23,7 +23,7 @@ export interface ITaxonomyFormProps {
   placeHolder: string;
 }
 
-export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
+export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
   const [terms, setTerms] = React.useState<ITag[]>(props.selectedPanelOptions?.length > 0 ? [...props.selectedPanelOptions] : []);

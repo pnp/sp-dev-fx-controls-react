@@ -10,7 +10,7 @@ import { IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack';
 import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 import { sp } from '@pnp/sp';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
-import { TaxonomyForm } from './taxonomyForm';
+import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import styles from './ModernTaxonomyPicker.module.scss';
 import * as strings from 'ControlStrings';
 import { TooltipHost } from '@microsoft/office-ui-fabric-react-bundle';
@@ -172,7 +172,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         {
           props.termSetId && (
             <div key={props.termSetId} >
-              <TaxonomyForm
+              <TaxonomyPanelContents
                 allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={onResolveSuggestions}
                 onLoadMoreData={taxonomyService.getTerms}
