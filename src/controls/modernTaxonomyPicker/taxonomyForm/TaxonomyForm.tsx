@@ -1,11 +1,12 @@
 import * as React from 'react';
 import styles from './TaxonomyForm.module.scss';
-import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupedList, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Spinner, TagPicker } from 'office-ui-fabric-react';
+import { Checkbox, ChoiceGroup, GroupedList, GroupHeader, IBasePickerStyleProps, IBasePickerStyles, ICheckboxStyleProps, ICheckboxStyles, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles, IGroup, IGroupFooterProps, IGroupHeaderProps, IGroupHeaderStyleProps, IGroupHeaderStyles, IGroupRenderProps, IGroupShowAllProps, ILabelStyleProps, ILabelStyles, ILinkStyleProps, ILinkStyles, IListProps, IRenderFunction, ISpinnerStyleProps, ISpinnerStyles, IStyleFunctionOrObject, ITag, Label, Link, Selection, Spinner, TagPicker } from 'office-ui-fabric-react';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
 import * as strings from 'ControlStrings';
+import { useForceUpdate } from '@uifabric/react-hooks';
 
 export interface ITaxonomyFormProps {
   context: BaseComponentContext;
@@ -16,61 +17,96 @@ export interface ITaxonomyFormProps {
   setSelectedPanelOptions: React.Dispatch<React.SetStateAction<ITag[]>>;
   onResolveSuggestions: (filter: string, selectedItems?: ITag[]) => ITag[] | PromiseLike<ITag[]>;
   onLoadMoreData: (termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize?: number) => Promise<{ value: ITermInfo[], skiptoken: string }>;
-  getTermSetInfo: (termSetId: Guid) => Promise<ITermSetInfo | undefined>;
+  anchorTermInfo: ITermInfo;
+  termSetInfo: ITermSetInfo;
   termStoreInfo: ITermStoreInfo;
   placeHolder: string;
 }
 
 export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
-  const groupedListRef = React.useRef<IGroupedList>();
-
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
+  const [terms, setTerms] = React.useState<ITag[]>(props.selectedPanelOptions?.length > 0 ? [...props.selectedPanelOptions] : []);
 
+  const forceUpdate = useForceUpdate();
+
+  const selection = React.useMemo(() => {
+    const s = new Selection<ITag>({onSelectionChanged: () => {
+      props.setSelectedPanelOptions((prevOptions) => [...selection.getSelection()]);
+      forceUpdate();
+    }});
+    s.setItems(terms);
+    for (const selectedOption of props.selectedPanelOptions) {
+      if (s.canSelectItem) {
+        s.setKeySelected(selectedOption.key.toString(), true, true);
+      }
+    }
+    return s;
+  }, [terms]);
 
   React.useEffect(() => {
-    props.getTermSetInfo(props.termSetId)
-      .then((termSetInfo) => {
-        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.termStoreInfo.defaultLanguageTag;
-        let termSetNames = termSetInfo.localizedNames.filter((name) => name.languageTag === languageTag);
-        if (termSetNames.length === 0) {
-          termSetNames = termSetInfo.localizedNames.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag);
-        }
-        const termSetName = termSetNames[0].name;
-        const rootGroup: IGroup = { name: termSetName, key: termSetInfo.id, startIndex: -1, count: 50, level: 0, isCollapsed: false, data: { skiptoken: '' }, hasMoreData: termSetInfo.childrenCount > 0 };
+    const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ? props.context.pageContext.cultureInfo.currentUICultureName : props.termStoreInfo.defaultLanguageTag;
+    let termRootName = "";
+    if (props.anchorTermInfo) {
+      let anchorTermNames = props.anchorTermInfo.labels.filter((name) => name.languageTag === languageTag && name.isDefault);
+      if (anchorTermNames.length === 0) {
+        anchorTermNames = props.anchorTermInfo.labels.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag && name.isDefault);
+      }
+      termRootName = anchorTermNames[0].name;
+    }
+    else {
+      let termSetNames = props.termSetInfo.localizedNames.filter((name) => name.languageTag === languageTag);
+      if (termSetNames.length === 0) {
+        termSetNames = props.termSetInfo.localizedNames.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag);
+      }
+      termRootName = termSetNames[0].name;
+    }
+    const rootGroup: IGroup = {
+      name: termRootName,
+      key: props.anchorTermInfo ? props.anchorTermInfo.id : props.termSetInfo.id,
+      startIndex: -1,
+      count: 50,
+      level: 0,
+      isCollapsed: false,
+      data: { skiptoken: '' },
+      hasMoreData: (props.anchorTermInfo ? props.anchorTermInfo.childrenCount : props.termSetInfo.childrenCount) > 0
+    };
+    setGroups([rootGroup]);
+    setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, props.termSetInfo.id]);
+    if (props.termSetInfo.childrenCount > 0) {
+      props.onLoadMoreData(props.termSetId, props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', true)
+      .then((loadedTerms) => {
+        const grps: IGroup[] = loadedTerms.value.map(term => {
+          let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
+          if (termNames.length === 0) {
+            termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+          }
+          const g: IGroup = {
+            name: termNames[0]?.name,
+            key: term.id,
+            startIndex: -1,
+            count: 50,
+            level: 1,
+            isCollapsed: true,
+            data: { skiptoken: '', term: term },
+            hasMoreData: term.childrenCount > 0,
+          };
+          if (g.hasMoreData) {
+            g.children = [];
+          }
+          return g;
+        });
+        setTerms((prevTerms) => {
+          const nonExistingTerms = grps.filter((grp) => prevTerms.every((prevTerm) => prevTerm.key !== grp.key));
+          return [...prevTerms, ...nonExistingTerms];
+        });
+        rootGroup.children = grps;
+        rootGroup.data.skiptoken = loadedTerms.skiptoken;
+        rootGroup.hasMoreData = loadedTerms.skiptoken !== '';
+        setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetId.toString()));
         setGroups([rootGroup]);
-        setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, termSetInfo.id]);
-        if (termSetInfo.childrenCount > 0) {
-          props.onLoadMoreData(props.termSetId, Guid.empty, '', true)
-          .then((terms) => {
-            const grps: IGroup[] = terms.value.map(term => {
-              let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
-              if (termNames.length === 0) {
-                termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
-              }
-              const g: IGroup = {
-                name: termNames[0]?.name,
-                key: term.id,
-                startIndex: -1,
-                count: 50,
-                level: 1,
-                isCollapsed: true,
-                data: { skiptoken: '', term: term },
-                hasMoreData: term.childrenCount > 0,
-              };
-              if (g.hasMoreData) {
-                g.children = [];
-              }
-              return g;
-            });
-            rootGroup.children = grps;
-            rootGroup.data.skiptoken = terms.skiptoken;
-            rootGroup.hasMoreData = terms.skiptoken !== '';
-            setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetId.toString()));
-            setGroups([rootGroup]);
-          });
-        }
       });
+    }
   }, []);
 
   const onToggleCollapse = (group: IGroup): void => {
@@ -102,8 +138,8 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
         group.data.isLoading = true;
 
         props.onLoadMoreData(props.termSetId, Guid.parse(group.key), '', true)
-          .then((terms) => {
-            const grps: IGroup[] = terms.value.map(term => {
+          .then((loadedTerms) => {
+            const grps: IGroup[] = loadedTerms.value.map(term => {
               let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
               if (termNames.length === 0) {
                 termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -123,9 +159,13 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
               }
               return g;
             });
+            setTerms((prevTerms) => {
+              const nonExistingTerms = grps.filter((grp) => prevTerms.every((prevTerm) => prevTerm.key !== grp.key));
+              return [...prevTerms, ...nonExistingTerms];
+            });
             group.children = grps;
-            group.data.skiptoken = terms.skiptoken;
-            group.hasMoreData = terms.skiptoken !== '';
+            group.data.skiptoken = loadedTerms.skiptoken;
+            group.hasMoreData = loadedTerms.skiptoken !== '';
             setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== group.key));
           });
       }
@@ -155,28 +195,37 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
   };
 
   const onChoiceChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption): void => {
-    props.setSelectedPanelOptions([{ key: option.key, name: option.text }]);
+    selection.setAllSelected(false);
+    selection.setKeySelected(option.key, true, true);
   };
 
   const onCheckboxChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean, tag?: ITag): void => {
     if (checked) {
-      props.setSelectedPanelOptions((prevOptions) => [...prevOptions, tag]);
+      selection.setKeySelected(tag.key.toString(), true, true);
     }
     else {
-      props.setSelectedPanelOptions((prevOptions) => prevOptions.filter((value) => value.key !== tag.key));
+      selection.setKeySelected(tag.key.toString(), false, true);
     }
   };
 
   const onRenderTitle = (groupHeaderProps: IGroupHeaderProps) => {
+    const isChildSelected = (children: IGroup[]): boolean => {
+      let aChildIsSelected = children && children.some((child) => selection.isKeySelected(child.key) || isChildSelected(child.children));
+      return aChildIsSelected;
+    };
+
+    const isBold = isChildSelected(groupHeaderProps.group.children);
+
     if (groupHeaderProps.group.level === 0) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: "normal"}};
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: isBold ? "bold" : "normal"}};
       return (
         <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
       );
     }
+
     if (props.allowMultipleSelections) {
-      const isSelected = props.selectedPanelOptions.some(value => value.key === groupHeaderProps.group.key);
-      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = isSelected ? { label: { fontWeight: 'bold' } } : { label: { fontWeight: 'normal' } };
+      const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
+      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = isSelected || isBold ? { label: { fontWeight: 'bold' } } : { label: { fontWeight: 'normal' } };
 
       return (
         <Checkbox
@@ -194,8 +243,8 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
       );
     }
     else {
-      const isSelected = props.selectedPanelOptions?.[0]?.key === groupHeaderProps.group.key;
-      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
+      const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
+      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || isBold ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
       const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
       const options: IChoiceGroupOption[] = [{
                                                 key: groupHeaderProps.group.key,
@@ -210,7 +259,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
       return (
         <ChoiceGroup
           options={options}
-          selectedKey={props.selectedPanelOptions?.[0]?.key}
+          selectedKey={selection.getSelection()[0]?.key}
           onChange={onChoiceChange}
           disabled={isDisabled}
         />
@@ -257,8 +306,8 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
           <Link onClick={() => {
             setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, footerProps.group.key]);
             props.onLoadMoreData(props.termSetId, footerProps.group.key === props.termSetId.toString() ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, true)
-              .then((terms) => {
-                const grps: IGroup[] = terms.value.map(term => {
+              .then((loadedTerms) => {
+                const grps: IGroup[] = loadedTerms.value.map(term => {
                   let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === languageTag && termLabel.isDefault === true));
                   if (termNames.length === 0) {
                     termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -278,9 +327,13 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
                   }
                   return g;
                 });
+                setTerms((prevTerms) => {
+                  const nonExistingTerms = grps.filter((grp) => prevTerms.every((prevTerm) => prevTerm.key !== grp.key));
+                  return [...prevTerms, ...nonExistingTerms];
+                });
                 footerProps.group.children = [...footerProps.group.children, ...grps];
-                footerProps.group.data.skiptoken = terms.skiptoken;
-                footerProps.group.hasMoreData = terms.skiptoken !== '';
+                footerProps.group.data.skiptoken = loadedTerms.skiptoken;
+                footerProps.group.hasMoreData = loadedTerms.skiptoken !== '';
                 setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== footerProps.group.key));
               });
           }}
@@ -308,11 +361,19 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
     return tag.name;
   }
 
-  const onPickerChange = (itms?: ITag[]): void => {
-    props.setSelectedPanelOptions(itms || []);
+  const onPickerChange = (items?: ITag[]): void => {
+    selection.setAllSelected(false);
+    const itemsToAdd = items.filter((item) => terms.every((term) => term.key !== item.key));
+    if (itemsToAdd.length > 0) {
+      selection.setItems([...terms, ...itemsToAdd]);
+      setTerms((prevTerms) => [...prevTerms, ...itemsToAdd]);
+    }
+    for (const item of items) {
+      selection.setKeySelected(item.key.toString(), true, true);
+    }
   };
 
-  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4}, input: {height: 34}, text: { borderStyle: 'none', borderWidth: '0px' } };
+  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
 
   return (
     <div className={styles.taxonomyForm}>
@@ -322,7 +383,7 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
             removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
             onResolveSuggestions={props.onResolveSuggestions}
             itemLimit={props.allowMultipleSelections ? undefined : 1}
-            selectedItems={props.selectedPanelOptions}
+            selectedItems={selection.getSelection()}
             onChange={onPickerChange}
             getTextFromItem={getTagText}
             styles={tagPickerStyles}
@@ -336,7 +397,6 @@ export function TaxonomyForm(props: ITaxonomyFormProps): React.ReactElement<ITax
       <Label className={styles.taxonomyTreeLabel}>{strings.ModernTaxonomyPickerTreeTitle}</Label>
       <div>
         <GroupedList
-          componentRef={groupedListRef}
           items={[]}
           onRenderCell={null}
           groups={groups}

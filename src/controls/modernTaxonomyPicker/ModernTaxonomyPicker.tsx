@@ -5,8 +5,9 @@ import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
 import { PrimaryButton, DefaultButton, IconButton, IButtonStyles } from 'office-ui-fabric-react/lib/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { ITag, TagPicker } from 'office-ui-fabric-react/lib/Pickers';
+import { IBasePickerStyleProps, IBasePickerStyles, ITag, TagPicker } from 'office-ui-fabric-react/lib/Pickers';
 import { IStackTokens, Stack } from 'office-ui-fabric-react/lib/Stack';
+import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 import { sp } from '@pnp/sp';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
 import { TaxonomyForm } from './taxonomyForm';
@@ -15,7 +16,8 @@ import * as strings from 'ControlStrings';
 import { TooltipHost } from '@microsoft/office-ui-fabric-react-bundle';
 import { useId } from '@uifabric/react-hooks';
 import { ITooltipHostStyles } from 'office-ui-fabric-react';
-import { ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+
 export interface IModernTaxonomyPickerProps {
   allowMultipleSelections: boolean;
   termSetId: string;
@@ -36,6 +38,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const [selectedOptions, setSelectedOptions] = React.useState<ITag[]>(Object.prototype.toString.call(props.initialValues) === '[object Array]' ? props.initialValues : []);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITag[]>([]);
   const [termStoreInfo, setTermStoreInfo] = React.useState<ITermStoreInfo>();
+  const [termSetInfo, setTermSetInfo] = React.useState<ITermSetInfo>();
+  const [anchorTermInfo, setAnchorTermInfo] = React.useState<ITermInfo>();
 
   React.useEffect(() => {
     sp.setup(props.context);
@@ -43,6 +47,16 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
       .then((localTermStoreInfo) => {
         setTermStoreInfo(localTermStoreInfo);
       });
+    taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
+      .then((localTermSetInfo) => {
+        setTermSetInfo(localTermSetInfo);
+      });
+    if (props.anchorTermId && props.anchorTermId !== Guid.empty.toString()) {
+      taxonomyService.getTermById(Guid.parse(props.termSetId), props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty)
+      .then((localAnchorTermInfo) => {
+        setAnchorTermInfo(localAnchorTermInfo);
+      });
+    }
   }, []);
 
   React.useEffect(() => {
@@ -74,14 +88,12 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     if (filter === '') {
       return [];
     }
-    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, languageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : undefined);
+    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, languageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty);
     const filteredTermsWithoutSelectedItems = filteredTerms.filter((term) => {
       if (!selectedItems || selectedItems.length === 0) {
         return true;
       }
-      for (const selectedItem of selectedItems) {
-        return selectedItem.key !== term.id;
-      }
+      return selectedItems.every((item) => item.key !== term.id);
     });
     const filteredTermsAndAvailable = filteredTermsWithoutSelectedItems.filter((term) => term.isAvailableForTagging.filter((t) => t.setId === props.termSetId)[0].isAvailable);
     const filteredTags = filteredTermsAndAvailable.map((term) => {
@@ -100,6 +112,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const tooltipId = useId('tooltip');
   const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
   const addTermButtonStyles: IButtonStyles = {rootHovered: {backgroundColor: "inherit"}, rootPressed: {backgroundColor: "inherit"}};
+  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { input: {minheight: 34}, text: {minheight: 34} };
 
   return (
     <div className={styles.modernTaxonomyPicker}>
@@ -112,6 +125,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
             itemLimit={props.allowMultipleSelections ? undefined : 1}
             selectedItems={selectedOptions}
             disabled={props.disabled}
+            styles={tagPickerStyles}
             onChange={(itms?: ITag[]) => {
               setSelectedOptions(itms || []);
               setSelectedPanelOptions(itms || []);
@@ -162,7 +176,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={onResolveSuggestions}
                 onLoadMoreData={taxonomyService.getTerms}
-                getTermSetInfo={taxonomyService.getTermSetInfo}
+                anchorTermInfo={anchorTermInfo}
+                termSetInfo={termSetInfo}
                 termStoreInfo={termStoreInfo}
                 context={props.context}
                 termSetId={Guid.parse(props.termSetId)}
