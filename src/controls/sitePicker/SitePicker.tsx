@@ -94,7 +94,6 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
 
   const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
     let newSelectedSites: ISite[] = [];
-    //debugger;
     if (multiSelect !== false) {
       newSelectedSites = sites ? [...sites] : [];
       const existingIndex = findIndex(newSelectedSites, s => s.url === item.key);
@@ -197,7 +196,6 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   }, []);
 
   React.useEffect(() => {
-    //debugger;
     setSites(selectedSites);
    // console.log(`firt useeffect set sites to ${selectedSites[0].title}`);
     if (!allSites) {
