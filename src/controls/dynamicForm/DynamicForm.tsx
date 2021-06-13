@@ -85,7 +85,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         if (val.required) {
           if (val.newValue === null) {
             if (val.fieldDefaultValue === null || val.fieldDefaultValue === '' || val.fieldDefaultValue.length === 0) {
-              val.fieldDefaultValue = '';
+              if (val.fieldType === "DateTime")
+                val.fieldDefaultValue = null;
+              else
+                val.fieldDefaultValue = '';
               shouldBeReturnBack = true;
             }
           }
@@ -145,6 +148,9 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else if (fieldType === "MultiChoice") {
             objects[columnInternalName] = { results: val.newValue };
           }
+          else if (fieldType === "Location") {
+            objects[columnInternalName] = JSON.stringify(val.newValue);
+          }
           else if (fieldType === "UserMulti") {
             objects[`${columnInternalName}Id`] = { results: val.newValue };
           }
@@ -169,7 +175,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       }
 
       if (onBeforeSubmit) {
-        const isCancelled =  await onBeforeSubmit(objects);
+        const isCancelled = await onBeforeSubmit(objects);
 
         if (isCancelled) {
           this.setState({
@@ -232,10 +238,15 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       }
       else if (field.fieldType === "UserMulti" && newValue.length !== 0) {
         field.newValue = [];
-        newValue.forEach(async element => {
-          let result = await sp.web.ensureUser(element.secondaryText);
+        for (let index = 0; index < newValue.length; index++) {
+          const element = newValue[index];
+          let user: string = element.secondaryText;
+          if (user.indexOf('@') === -1) {
+            user = element.loginName;
+          }
+          let result = await sp.web.ensureUser(user);
           field.newValue.push(result.data.Id);
-        });
+        }
       }
       this.setState({
         fieldCollection: fieldCol
@@ -392,6 +403,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             defaultValue = [];
           }
         }
+        else if (fieldType === "Location") {
+          defaultValue = JSON.parse(defaultValue);
+        }
+
         tempFields.push({
           newValue: null,
           fieldTermSetId: termSetId,

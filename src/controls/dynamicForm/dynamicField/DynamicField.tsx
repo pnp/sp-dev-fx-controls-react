@@ -9,6 +9,7 @@ import { PeoplePicker, PrincipalType } from '../../peoplepicker';
 import { FilePicker, IFilePickerResult } from '../../filePicker';
 import { TaxonomyPicker, IPickerTerms } from '../../taxonomyPicker';
 import { ListItemPicker } from '../../listItemPicker';
+import { LocationPicker } from '../../locationPicker';
 import { RichText } from '../../richText';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
@@ -182,6 +183,22 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             multiSelect
             onBlur={this.onBlur}
             errorMessage={errorText} />
+        </div>;
+
+      case 'Location':
+        return <div className={styles.fieldContainer}>
+          <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
+            <Icon className={styles.fieldIcon} iconName={"POI"} />
+            {labelEl}
+          </div>
+          <LocationPicker
+            context={context}
+            disabled={disabled}
+            placeholder={placeholder}
+            onSelectionChanged={(newValue) => { this.onChange(newValue); }}
+            defaultValue={defaultValue}
+            errorMessage={errorText}
+          />
         </div>;
 
       case 'Lookup':
@@ -504,6 +521,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     this.setState({
       changedValue: currValue
     });
+    this.props.onChanged(this.props.columnInternalName, currValue);
   }
 
   private onChange = (value: any) => {
@@ -565,47 +583,19 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private saveIntoSharePoint = async (files: IFilePickerResult[]) => {
     const {
-      context,
-      listId,
-      listItemId,
       columnInternalName,
-      onChanged,
-      fieldType
+      onChanged
     } = this.props;
 
     let newValue: any;
-    let preview: string | undefined;
-
     if (!files.length) {
       return;
     }
 
     try {
       const file = files[0];
-
-
-
       if (file.fileAbsoluteUrl === null) {
         newValue = file.previewDataUrl;
-        //await this.ensureSiteAssetsFolder();
-        //const folderUrl = urlCombine(context.pageContext.web.serverRelativeUrl, `SiteAssets/Lists/${listId}`, false);
-
-        // const resultContent = await file.downloadFileContent();
-        // const fileArrayBuffer = await resultContent.arrayBuffer;
-
-        // const fileResponse = await context.spHttpClient.post(`/_api/web/UplaodImage(imageName=@a2,listId=@a3,itemId=@4)?a2='${file.fileName}'&a3='${listId}'&a4=${listItemId || 0}`, SPHttpClient.configurations.v1, {
-        //   body: fileArrayBuffer,
-        //   headers: {
-        //     'content-length': fileArrayBuffer.byteLength.toString()
-        //   }
-        // });
-
-        // let fileResult = await fileResponse.json();
-        // newValue = {
-        //   "__metadata": { "type": "SP.FieldUrlValue" },
-        //   "Description": file.fileName,
-        //   "Url": document.location.origin + fileResult.data.ServerRelativeUrl
-        // };
       }
       else {
         newValue = file.fileAbsoluteUrl;
@@ -620,39 +610,6 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     }
     catch (error) {
       console.log(`Error save Into SharePoint`, error);
-    }
-  }
-
-  private ensureSiteAssetsFolder = async () => {
-    const {
-      context,
-      listId
-    } = this.props;
-    const siteRelativeUrl = context.pageContext.web.serverRelativeUrl;
-    const folderUrl = urlCombine(siteRelativeUrl, `SiteAssets/Lists/${listId}`, false);
-
-    let folder: IFolder | undefined;
-
-    try {
-      await sp.web.getFolderByServerRelativeUrl(folderUrl).get();
-      folder = sp.web.getFolderByServerRelativeUrl(folderUrl);
-    }
-    catch {
-      folder = undefined;
-      //const folderAddResult = await sp.web.folders.add(`SiteAssets/Lists/${docLibId}`);
-      //folder = await folderAddResult.folder.get();
-    }
-
-    if (!folder) { // we need to create a folder with all parents
-      const folderPath = ['Lists', listId];
-      // Site Assets root folder
-      let mainFolder: IFolder = sp.web.getFolderByServerRelativeUrl(urlCombine(siteRelativeUrl, 'SiteAssets'));
-
-      for (let i = 0, len = folderPath.length; i < len; i++) {
-        const folderName = folderPath[i];
-        mainFolder = await mainFolder.addSubFolderUsingPath(folderName);
-      }
-      folder = mainFolder;
     }
   }
 }

@@ -379,6 +379,8 @@ define([], () => {
     DynamicFormRequiredErrorMessage: "You can't leave this blank.",
     DynamicFormTermPanelTitle: "Select Term",
     DynamicFormEnterURLPlaceholder: "Enter a URL",
-    DynamicFormEnterDescriptionPlaceholder: "Alternative text"
+    DynamicFormEnterDescriptionPlaceholder: "Alternative text",
+
+    customDisplayName: 'Use this location:'
   };
 });
