@@ -338,6 +338,9 @@ declare interface IControlStrings {
   DynamicFormTermPanelTitle: string;
   DynamicFormEnterURLPlaceholder: string;
   DynamicFormEnterDescriptionPlaceholder: string;
+
+  // Location picker
+  customDisplayName:string;
 }
 
 declare interface IDateTimeStrings {

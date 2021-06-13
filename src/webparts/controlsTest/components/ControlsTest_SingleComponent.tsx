@@ -37,7 +37,8 @@ import { Carousel, CarouselButtonsLocation, CarouselButtonsDisplay } from '../..
 import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDisplayControlType';
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker, DynamicForm } from '../../..';
-import { IconPicker} from '../../../controls/iconPicker';
+import { IconPicker } from '../../../controls/iconPicker';
+import { LocationPicker,ILocationPickerItem } from '../../../controls/locationPicker';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -455,19 +456,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <LocationPicker context={this.props.context} label="Location" onSelectionChanged={(locValue:ILocationPickerItem)=>{console.log(locValue.DisplayName + ", " + locValue.Address.Street)}}></LocationPicker>
         <DynamicForm
           context={this.props.context}
-          listId={"2baf2f85-4f31-46c4-8f87-5fed93ecd20c"}
-          //listItemId={26}
+          listId={"3071c058-549f-461d-9d73-8b9a52049a80"}
+          contentTypeId={"0x0104003FD42C31C9FABD4E8D2821289F34BBEF"}
+          listItemId={13}
           onCancelled={() => { console.log('Cancelled'); }}
           onSubmitted={async (listItem) => { console.log(listItem); }}>
 
-          </DynamicForm>
+        </DynamicForm>
       </div>
     );
   }
 
-  private _getPage(page: number){
+  private _getPage(page: number) {
     console.log('Page:', page);
   }
 

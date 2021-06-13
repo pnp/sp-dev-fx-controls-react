@@ -313,15 +313,15 @@ define([], () => {
     SizeOptionMedium: "Medium",
     SizeOptionSmall: "Small",
     SizeUnit: [
-     "bytes",
-     "KB",
-     "MB",
-     "GB",
-     "TB",
-     "PB",
-     "EB",
-     "ZB",
-     "YB"
+      "bytes",
+      "KB",
+      "MB",
+      "GB",
+      "TB",
+      "PB",
+      "EB",
+      "ZB",
+      "YB"
     ],
     SorryWebSearch: "Sorry, this function isn't implemented in this sample, because it would require a Bing API key.",
     SortedAscending: "Sorted A to Z",
@@ -365,6 +365,8 @@ define([], () => {
     DynamicFormRequiredErrorMessage: "You can't leave this blank.",
     DynamicFormTermPanelTitle: "Select Term",
     DynamicFormEnterURLPlaceholder: "Enter a URL",
-    DynamicFormEnterDescriptionPlaceholder: "Alternative text"
+    DynamicFormEnterDescriptionPlaceholder: "Alternative text",
+
+    customDisplayName: 'Use this location:'
   };
 });

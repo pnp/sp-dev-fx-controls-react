@@ -472,7 +472,7 @@ export default class SPService implements ISPService {
     try {
       const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
       let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
-      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1,{
+      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
         body: JSON.stringify({
           parameters: {
             RenderOptions: 2,
