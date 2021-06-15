@@ -172,11 +172,12 @@ import {
 import { MyTeams } from "../../../controls/MyTeams";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import {​​ DragDropFiles }​​ from "../../../DragDropFiles";
-import {​​ SitePicker }​​ from "../../../controls/sitePicker/SitePicker";
+import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 import { DynamicForm } from '../../../controls/dynamicForm';
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
+import { debounce } from "lodash";
 
 
 
@@ -854,7 +855,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-<Stack styles={{ root: { marginBottom: 200 } }}>
+        <Stack styles={{ root: { marginBottom: 200 } }}>
           <MyTeams
             title="My Teams"
             webPartContext={this.props.context}
@@ -1274,12 +1275,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconName="Upload"
           labelMessage="My custom upload File"
         >
-        <Placeholder iconName='BulkUpload'
-          iconText='Drag files or folder with files here...'
-          description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-          buttonLabel='Configure'
-          hideButton={this.props.displayMode === DisplayMode.Read}
-          onConfigure={this._onConfigure} />
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
         </DragDropFiles>
         <br></br>
 
@@ -1387,14 +1388,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">Site picker tester:
               <SitePicker
-                context={this.props.context}
-                label={'select sites'}
-                mode={'site'}
-                allowSearch={true}
-                multiSelect={false}
-                onChange={(sites) => { console.log(sites); }}
-                placeholder={'Select sites'}
-                searchPlaceholder={'Filter sites'} />
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:
@@ -1596,11 +1597,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>File Picker</h3>
+          <TextField
+            label="Default SiteFileTab Folder"
+            onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
+            styles={{ root: { marginBottom: 10 } }}
+          />
           <FilePicker
             bingAPIKey="<BING API KEY>"
+            defaultFolderAbsolutePath={this.state.filePickerDefaultFolderAbsolutePath}
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
-
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
