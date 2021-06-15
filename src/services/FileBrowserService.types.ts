@@ -26,6 +26,10 @@ export interface IFile {
   supportsThumbnail: boolean;
 }
 
+export interface IFolder extends Pick<IFile, "name" | "absoluteUrl" | "serverRelativeUrl"> {
+
+}
+
 export interface ILibrary {
   title: string;
   absoluteUrl: string;
