@@ -27,7 +27,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         currentMode: Mode.view,
         searchText: null,
         isCalloutVisible: true,
-        seletedItem: props.defaultValue,
+        selectedItem: props.defaultValue,
       };
     }
     else {
@@ -36,7 +36,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         currentMode: Mode.empty,
         searchText: null,
         isCalloutVisible: true,
-        seletedItem: props.defaultValue,
+        selectedItem: props.defaultValue,
       };
     }
 
@@ -45,7 +45,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   public componentWillReceiveProps(nextProps: ILocationPickerProps) {
     if (!isEqual(nextProps.defaultValue, this.props.defaultValue)) {
       if (nextProps.defaultValue) {
-        this.setState({ seletedItem: nextProps.defaultValue, currentMode: Mode.view });
+        this.setState({ selectedItem: nextProps.defaultValue, currentMode: Mode.view });
       }
     }
   }
@@ -88,7 +88,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   }
 
   private getMainContent = (): React.ReactNode => {
-    const { options, seletedItem, currentMode } = this.state;
+    const { options, selectedItem, currentMode } = this.state;
     const { className, disabled, placeholder, errorMessage } = this.props;
 
     switch (currentMode) {
@@ -112,7 +112,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           errorMessage={errorMessage}
         />;
       case Mode.editView:
-        if (seletedItem.EntityType === "Custom") {
+        if (selectedItem.EntityType === "Custom") {
           return <div
             ref={this.focusRef}
             data-selection-index={0}
@@ -123,9 +123,9 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
             tabIndex={0}>
             <Persona
               data-is-focusable="false"
-              imageAlt={seletedItem.EntityType}
+              imageAlt={selectedItem.EntityType}
               tabIndex={0}
-              text={seletedItem.DisplayName}
+              text={selectedItem.DisplayName}
               title="Location"
               className={styles.persona}
               size={PersonaSize.size40}
@@ -152,12 +152,12 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           tabIndex={0}>
           <Persona
             data-is-focusable="false"
-            imageAlt={seletedItem.EntityType}
+            imageAlt={selectedItem.EntityType}
             tabIndex={0}
-            text={seletedItem.DisplayName}
+            text={selectedItem.DisplayName}
             title="Location"
             className={styles.persona}
-            secondaryText={this.getLocationText(seletedItem, "full")}
+            secondaryText={this.getLocationText(selectedItem, "full")}
             size={PersonaSize.size40}
             onRenderInitials={this.customRenderInitials} />
           {!disabled ?
@@ -172,21 +172,21 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         </div>;
 
       case Mode.view:
-        if (seletedItem.EntityType === 'Custom') {
+        if (selectedItem.EntityType === 'Custom') {
           return <div className={styles.locationAddressContainer}
             onClick={this.onClick}>
             <div className={styles.locationContainer} tabIndex={0}>
-              <div className={styles.locationDisplayName}>{seletedItem.DisplayName}</div>
+              <div className={styles.locationDisplayName}>{selectedItem.DisplayName}</div>
             </div>
           </div>;
         }
 
         return <div className={styles.locationAddressContainer} onClick={this.onClick}>
           <div className={styles.locationContainer} tabIndex={0}>
-            <div className={styles.locationDisplayName}>{seletedItem.DisplayName}</div>
+            <div className={styles.locationDisplayName}>{selectedItem.DisplayName}</div>
             <div className={styles.locationContent}>
-              <div className={styles.locationAddress}>{this.getLocationText(seletedItem, "street")}</div>
-              <div className={styles.locationAddress}>{this.getLocationText(seletedItem, "noStreet")}</div>
+              <div className={styles.locationAddress}>{this.getLocationText(selectedItem, "street")}</div>
+              <div className={styles.locationAddress}>{this.getLocationText(selectedItem, "noStreet")}</div>
             </div>
           </div>
         </div>;
@@ -213,7 +213,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   }
 
   private onIconButtonClick = () => {
-    this.setState({ currentMode: Mode.empty, seletedItem: null });
+    this.setState({ currentMode: Mode.empty, selectedItem: null });
   }
 
   private onClick = () => {
@@ -233,7 +233,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   }
 
   private onChange = (ev, option: ILocationBoxOption) => {
-    this.setState({ seletedItem: option.locationItem, currentMode: Mode.editView },
+    this.setState({ selectedItem: option.locationItem, currentMode: Mode.editView },
       () => {
         if (this.focusRef.current != null)
           this.focusRef.current.focus();

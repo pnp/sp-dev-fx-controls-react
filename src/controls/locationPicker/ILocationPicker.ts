@@ -63,7 +63,7 @@ export interface ILocationPickerState {
   currentMode: Mode;
   searchText: string;
   isCalloutVisible: boolean;
-  seletedItem: ILocationPickerItem;
+  selectedItem: ILocationPickerItem;
   /**
   * The options available to the listPicker
   */
