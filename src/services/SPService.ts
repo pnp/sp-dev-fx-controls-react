@@ -72,7 +72,6 @@ export default class SPService implements ISPService {
     if (data.ok) {
       var result: ISPLists = await data.json();
       var filteredLists = filter(result.value, (aList: ISPList) => {
-        debugger;
         return find(aList.ContentTypes, (ct) => {
           return ct.Id.StringValue.toUpperCase().startsWith(options.contentTypeId.toUpperCase());
         });
