@@ -38,7 +38,7 @@ import { TimeDisplayControlType } from '../../../controls/dateTimePicker/TimeDis
 import { GridLayout } from '../../../GridLayout';
 import { ComboBoxListItemPicker, DynamicForm } from '../../..';
 import { IconPicker } from '../../../controls/iconPicker';
-import { LocationPicker,ILocationPickerItem } from '../../../controls/locationPicker';
+import { LocationPicker, ILocationPickerItem } from '../../../controls/locationPicker';
 
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -459,12 +459,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
-        <LocationPicker context={this.props.context} label="Location" onSelectionChanged={(locValue:ILocationPickerItem)=>{console.log(locValue.DisplayName + ", " + locValue.Address.Street)}}></LocationPicker>
         <DynamicForm
           context={this.props.context}
-          listId={"3071c058-549f-461d-9d73-8b9a52049a80"}
-          contentTypeId={"0x0104003FD42C31C9FABD4E8D2821289F34BBEF"}
-          listItemId={13}
+          listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"}
+          //contentTypeId={"0x0104003FD42C31C9FABD4E8D2821289F34BBEF"}
+          //listItemId={13}
           onCancelled={() => { console.log('Cancelled'); }}
           onSubmitted={async (listItem) => { console.log(listItem); }}>
 

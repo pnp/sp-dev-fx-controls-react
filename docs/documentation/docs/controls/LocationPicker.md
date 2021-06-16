@@ -71,4 +71,4 @@ The `LocationPicker` can be configured with the following properties:
 | className | string  | no | Applies custom styling |
 | label | string  | no | Label to use for the control. |
 | placeholder | string  | no | Placeholder label to show in the dropdown. |
-| onSelectionChanged | (locItem: ILocationPickerItem) => void | no | The method that returns location data JSON object. |
+| onChange | (locItem: ILocationPickerItem) => void | no | The method that returns location data JSON object. |

@@ -175,6 +175,8 @@ import { TeamChannelPicker } from "../../../TeamChannelPicker";
 import {​​ DragDropFiles }​​ from "../../../DragDropFiles";
 import {​​ SitePicker }​​ from "../../../controls/sitePicker/SitePicker";
 import { DynamicForm } from '../../../controls/dynamicForm';
+import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
+import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 
 
 
@@ -1905,6 +1907,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </PrimaryButton>
             </div>
           </AnimatedDialog>
+
+          <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
         </div>
 
       </div>

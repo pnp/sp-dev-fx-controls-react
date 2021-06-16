@@ -5,13 +5,14 @@
   max-height: 300px;
 }
 
-.pickerItemcontainer {
+.pickerItemContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   border-style: solid;
   border-color: "[theme: themePrimary, default: #0078d7]";
   border-radius: 22px;
   min-width: 16px;
+  border-width: 2px;
   width: fit-content;
 }
 
@@ -29,16 +30,14 @@
   white-space: nowrap;
 }
 
-.locationAddressContainer:hover {
-  background-color: "[theme:listItemBackgroundHover, default:#f4f4f4]";
-}
-
-.locationAddressContainer:active {
-  border-color: "[theme: themePrimary, default: #0078d7]";
-}
-
 .locationAddressContainer {
   border: 2px solid transparent;
+  &:hover {
+    background-color: "[theme:listItemBackgroundHover, default:#f4f4f4]";
+  }
+  &:active {
+    border-color: "[theme: themePrimary, default: #0078d7]";
+  }
 }
 
 .locationContainer {
