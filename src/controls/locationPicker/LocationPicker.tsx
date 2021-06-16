@@ -57,10 +57,10 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     const { label } = this.props;
 
     return (
-      <>
+      <div>
         {label ? <Text>{label}</Text> : null}
         {this.getMainContent()}
-      </>
+      </div>
     );
   }
 

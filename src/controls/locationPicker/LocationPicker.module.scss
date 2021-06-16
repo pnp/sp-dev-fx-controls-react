@@ -6,8 +6,7 @@
 }
 
 .pickerItemContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
+  display: flex;
   border-style: solid;
   border-color: "[theme: themePrimary, default: #0078d7]";
   border-radius: 22px;
