@@ -4,7 +4,8 @@
       "version": "3.2.0",
       "changes": {
         "new": [
-          "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)"
+          "`DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)",
+          "`LocationPicker`: New Control - Location Picker [#915](https://github.com/pnp/sp-dev-fx-controls-react/issues/915)"
         ],
         "enhancements": [
           "`fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)",
