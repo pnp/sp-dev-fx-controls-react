@@ -19,10 +19,9 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   */
   constructor(props: ILocationPickerProps) {
     super(props);
-    this.getTocken();
+    this.getToken();
     this.focusRef = React.createRef();
-    console.log(props.defaultValue);
-    if (props.defaultValue != null && props.defaultValue.toString() != '') {
+    if (props.defaultValue) {
       this.state = {
         options: [],
         currentMode: Mode.view,
@@ -45,7 +44,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
   public componentWillReceiveProps(nextProps: ILocationPickerProps) {
     if (!isEqual(nextProps.defaultValue, this.props.defaultValue)) {
-      if (this.props.defaultValue != null && this.props.defaultValue.toString() != '') {
+      if (nextProps.defaultValue) {
         this.setState({ seletedItem: nextProps.defaultValue, currentMode: Mode.view });
       }
     }
@@ -55,100 +54,162 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   * Renders the LocationPicker controls with Office UI Fabric
   */
   public render(): JSX.Element {
-    const { options, seletedItem, currentMode } = this.state;
-    const { className, disabled, label, placeholder, errorMessage } = this.props;
-    const onRenderOption = (item: ILocationBoxOption) => {
-      if (item.locationItem["EntityType"] === "Custom")
-        return <Persona text={item.text} imageAlt={item.locationItem["EntityType"]} secondaryText={item.locationItem["DisplayName"]} size={PersonaSize.size40} onRenderInitials={this.customRenderInitials} />;
-      else
-        return <Persona text={item.text} imageAlt={item.locationItem["EntityType"]} secondaryText={(item.locationItem["Address"]["Street"] !== undefined ? item.locationItem["Address"]["Street"] + "," : '') + item.locationItem["Address"]["City"] + "," + item.locationItem["Address"]["State"] + "," + item.locationItem["Address"]["CountryOrRegion"]} size={PersonaSize.size40} onRenderInitials={this.customRenderInitials} />;
-    };
+    const { label } = this.props;
 
     return (
-      <div>
+      <>
         {label ? <Text>{label}</Text> : null}
-        {currentMode === Mode.empty ?
-          <ComboBox
-            className={className}
-            disabled={disabled}
-            placeholder={placeholder}
-            allowFreeform={true}
-            autoComplete="on"
-            options={options}
-            onRenderOption={onRenderOption}
-            calloutProps={{ className: styles.callout }}
-            buttonIconProps={{ iconName: 'MapPin' }}
-            useComboBoxAsMenuWidth={true}
-            openOnKeyboardFocus={true}
-            scrollSelectedToTop={true}
-            isButtonAriaHidden={true}
-            onInput={(e) => this.getLocatios(e.target["value"])}
-            onChange={this.onChange}
-            errorMessage={errorMessage}
-          /> :
-          (currentMode === Mode.editView && seletedItem["EntityType"] === "Custom") ?
-            <div ref={this.focusRef} data-selection-index={0} data-is-focusable={true} role="listitem" className={styles.pickerItemcontainer} onBlur={this.onBlur} tabIndex={0}>
-              <Persona
-                data-is-focusable="false"
-                imageAlt={seletedItem["EntityType"]}
-                tabIndex={0}
-                text={seletedItem["DisplayName"]}
-                title="Location"
-                className={styles.persona}
-                size={PersonaSize.size40}
-                onRenderInitials={this.customRenderInitials} />
-              <IconButton
-                data-is-focusable="false"
-                tabIndex={0}
-                iconProps={{ iconName: 'Cancel' }}
-                title="Clear"
-                ariaLabel="Clear"
-                disabled={disabled}
-                className={styles.closeButton}
-                onClick={this.onIconButtonClick} />
-            </div> : currentMode === Mode.editView ?
-              <div ref={this.focusRef} data-selection-index={0} data-is-focusable={true} role="listitem"
-                className={styles.pickerItemcontainer}
-                onBlur={this.onBlur}
-                tabIndex={0}>
-                <Persona
-                  data-is-focusable="false"
-                  imageAlt={seletedItem["EntityType"]}
-                  tabIndex={0}
-                  text={seletedItem["DisplayName"]}
-                  title="Location"
-                  className={styles.persona}
-                  secondaryText={seletedItem["Address"]["Street"] + "," + seletedItem["Address"]["City"] + "," + seletedItem["Address"]["State"] + "," + seletedItem["Address"]["CountryOrRegion"]}
-                  size={PersonaSize.size40}
-                  onRenderInitials={this.customRenderInitials} />
-                {!disabled ?
-                  <IconButton
-                    data-is-focusable="false"
-                    tabIndex={0}
-                    iconProps={{ iconName: 'Cancel' }}
-                    title="Clear"
-                    ariaLabel="Clear"
-                    disabled={disabled} className={styles.closeButton}
-                    onClick={this.onIconButtonClick} /> : null}
-              </div> :
-              (currentMode === Mode.view && seletedItem["EntityType"] === "Custom") ?
-                <div className={styles.locationAddressContainer}
-                  onClick={this.onClick}>
-                  <div className={styles.locationContainer} tabIndex={0}>
-                    <div className={styles.locationDisplayName}>{seletedItem["DisplayName"]}</div>
-                  </div>
-                </div> : currentMode === Mode.view ? <div className={styles.locationAddressContainer} onClick={this.onClick}>
-                  <div className={styles.locationContainer} tabIndex={0}>
-                    <div className={styles.locationDisplayName}>{seletedItem["DisplayName"]}</div>
-                    <div className={styles.locationContent}>
-                      <div className={styles.locationAddress}>{seletedItem["Address"]["Street"]}</div>
-                      <div className={styles.locationAddress}>{seletedItem["Address"]["City"] + "," + seletedItem["Address"]["State"] + "," + seletedItem["Address"]["CountryOrRegion"]}</div>
-                    </div>
-                  </div>
-                </div> : null
-        }
-      </div>
+        {this.getMainContent()}
+      </>
     );
+  }
+
+  private onRenderOption = (item: ILocationBoxOption) => {
+    const {
+      text,
+      locationItem
+    } = item;
+    if (locationItem.EntityType === "Custom") {
+      return <Persona
+        text={text}
+        imageAlt={locationItem.EntityType}
+        secondaryText={locationItem.DisplayName}
+        size={PersonaSize.size40}
+        onRenderInitials={this.customRenderInitials}
+      />;
+    }
+    else
+      return <Persona
+        text={text}
+        imageAlt={locationItem.EntityType}
+        secondaryText={this.getLocationText(locationItem, "full")}
+        size={PersonaSize.size40}
+        onRenderInitials={this.customRenderInitials} />;
+  }
+
+  private getMainContent = (): React.ReactNode => {
+    const { options, seletedItem, currentMode } = this.state;
+    const { className, disabled, placeholder, errorMessage } = this.props;
+
+    switch (currentMode) {
+      case Mode.empty:
+        return <ComboBox
+          className={className}
+          disabled={disabled}
+          placeholder={placeholder}
+          allowFreeform={true}
+          autoComplete="on"
+          options={options}
+          onRenderOption={this.onRenderOption}
+          calloutProps={{ className: styles.callout }}
+          buttonIconProps={{ iconName: "MapPin" }}
+          useComboBoxAsMenuWidth={true}
+          openOnKeyboardFocus={true}
+          scrollSelectedToTop={true}
+          isButtonAriaHidden={true}
+          onInput={(e) => this.getLocatios(e.target["value"])}
+          onChange={this.onChange}
+          errorMessage={errorMessage}
+        />;
+      case Mode.editView:
+        if (seletedItem.EntityType === "Custom") {
+          return <div
+            ref={this.focusRef}
+            data-selection-index={0}
+            data-is-focusable={true}
+            role="listitem"
+            className={styles.pickerItemContainer}
+            onBlur={this.onBlur}
+            tabIndex={0}>
+            <Persona
+              data-is-focusable="false"
+              imageAlt={seletedItem.EntityType}
+              tabIndex={0}
+              text={seletedItem.DisplayName}
+              title="Location"
+              className={styles.persona}
+              size={PersonaSize.size40}
+              onRenderInitials={this.customRenderInitials} />
+            <IconButton
+              data-is-focusable="false"
+              tabIndex={0}
+              iconProps={{ iconName: "Cancel" }}
+              title="Clear"
+              ariaLabel="Clear"
+              disabled={disabled}
+              className={styles.closeButton}
+              onClick={this.onIconButtonClick} />
+          </div>;
+        }
+
+        return <div
+          ref={this.focusRef}
+          data-selection-index={0}
+          data-is-focusable={true}
+          role="listitem"
+          className={styles.pickerItemContainer}
+          onBlur={this.onBlur}
+          tabIndex={0}>
+          <Persona
+            data-is-focusable="false"
+            imageAlt={seletedItem.EntityType}
+            tabIndex={0}
+            text={seletedItem.DisplayName}
+            title="Location"
+            className={styles.persona}
+            secondaryText={this.getLocationText(seletedItem, "full")}
+            size={PersonaSize.size40}
+            onRenderInitials={this.customRenderInitials} />
+          {!disabled ?
+            <IconButton
+              data-is-focusable="false"
+              tabIndex={0}
+              iconProps={{ iconName: "Cancel" }}
+              title="Clear"
+              ariaLabel="Clear"
+              disabled={disabled} className={styles.closeButton}
+              onClick={this.onIconButtonClick} /> : null}
+        </div>;
+
+      case Mode.view:
+        if (seletedItem.EntityType === 'Custom') {
+          return <div className={styles.locationAddressContainer}
+            onClick={this.onClick}>
+            <div className={styles.locationContainer} tabIndex={0}>
+              <div className={styles.locationDisplayName}>{seletedItem.DisplayName}</div>
+            </div>
+          </div>;
+        }
+
+        return <div className={styles.locationAddressContainer} onClick={this.onClick}>
+          <div className={styles.locationContainer} tabIndex={0}>
+            <div className={styles.locationDisplayName}>{seletedItem.DisplayName}</div>
+            <div className={styles.locationContent}>
+              <div className={styles.locationAddress}>{this.getLocationText(seletedItem, "street")}</div>
+              <div className={styles.locationAddress}>{this.getLocationText(seletedItem, "noStreet")}</div>
+            </div>
+          </div>
+        </div>;
+    }
+
+    return null;
+  }
+
+  private getLocationText = (item: ILocationPickerItem, mode: "full" | "street" | "noStreet"): string => {
+    if (!item.Address) {
+      return '';
+    }
+
+    const address = item.Address;
+
+    switch (mode) {
+      case "street":
+        return address.Street || "";
+      case "noStreet":
+        return `${address.City ? address.City + ", " : ''}${address.State ? address.State + ", " : ""}${address.CountryOrRegion || ""}`;
+    }
+
+    return `${address.Street ? address.Street + ", " : ''}${address.City ? address.City + ", " : ""}${address.State ? address.State + ", " : ''}${address.CountryOrRegion || ""}`;
   }
 
   private onIconButtonClick = () => {
@@ -171,26 +232,29 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     } catch { }
   }
 
-  private onChange = (ev, option) => {
-    this.setState({ seletedItem: option["locationItem"], currentMode: Mode.editView },
+  private onChange = (ev, option: ILocationBoxOption) => {
+    this.setState({ seletedItem: option.locationItem, currentMode: Mode.editView },
       () => {
         if (this.focusRef.current != null)
           this.focusRef.current.focus();
       });
-    this.props.onSelectionChanged(option["locationItem"]);
+
+    if (this.props.onChange) {
+      this.props.onChange(option.locationItem);
+    }
   }
 
   private customRenderInitials(props) {
     if (props.imageAlt === "Custom")
-      return <FontIcon aria-label="Poi" iconName="Poi" style={{ fontSize: '14pt' }} />;
+      return <FontIcon aria-label="Poi" iconName="Poi" style={{ fontSize: "14pt" }} />;
     else
-      return <FontIcon aria-label="EMI" iconName="EMI" style={{ fontSize: '14pt' }} />;
+      return <FontIcon aria-label="EMI" iconName="EMI" style={{ fontSize: "14pt" }} />;
   }
 
-  private async getTocken() {
+  private async getToken() {
     const requestHeaders: Headers = new Headers();
-    requestHeaders.append('Content-type', 'application/json');
-    requestHeaders.append('Cache-Control', 'no-cache');
+    requestHeaders.append("Content-type", "application/json");
+    requestHeaders.append("Cache-Control", "no-cache");
     const spOpts: ISPHttpClientOptions = {
       body: `{"resource":"https://outlook.office365.com"}`,
       headers: requestHeaders
@@ -205,15 +269,15 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     try {
       let optionsForCustomRender: ILocationBoxOption[] = [];
       const requestHeaders: Headers = new Headers();
-      requestHeaders.append('Content-type', 'application/json');
-      requestHeaders.append('Cache-Control', 'no-cache');
-      requestHeaders.append('Authorization', 'Bearer ' + this._token);
+      requestHeaders.append("Content-type", "application/json");
+      requestHeaders.append("Cache-Control", "no-cache");
+      requestHeaders.append("Authorization", `Bearer ${this._token}`);
       const spOpts: ISPHttpClientOptions = {
         body: `{"QueryConstraint":{"Query":"${searchText}"},"LocationProvider":32,"BingMarket":"en-IN"}`,
         headers: requestHeaders
       };
       let client1: AadHttpClient = await this.props.context.aadHttpClientFactory.getClient("https://outlook.office365.com");
-      let response1 = await client1.post(`https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations`, AadHttpClient.configurations.v1, spOpts);
+      let response1 = await client1.post("https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations", AadHttpClient.configurations.v1, spOpts);
       let json = await response1.json();
 
 
@@ -222,11 +286,11 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc });
       });
 
-      optionsForCustomRender.push({ text: strings.customDisplayName, key: 7, locationItem: { DisplayName: searchText, EntityType: 'Custom' } });
+      optionsForCustomRender.push({ text: strings.customDisplayName, key: 7, locationItem: { DisplayName: searchText, EntityType: "Custom" } });
       this.setState({ options: optionsForCustomRender });
     }
     catch (error) {
-      console.log(`Error get Items`, error);
+      console.log("Error get Items", error);
     }
 
   }

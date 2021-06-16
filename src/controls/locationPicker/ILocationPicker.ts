@@ -16,12 +16,11 @@ export interface ILocationPickerItem {
   Coordinates?: any;
 }
 
-interface IAddress
-{
-  City?:string;
-  CountryOrRegion?:string;
-  State?:string;
-  Street?:string;
+interface IAddress {
+  City?: string;
+  CountryOrRegion?: string;
+  State?: string;
+  Street?: string;
 }
 
 export interface ILocationPickerProps {
@@ -52,19 +51,19 @@ export interface ILocationPickerProps {
   /**
   * Callback issued when the selected option changes
   */
-  onSelectionChanged?: (newValue: ILocationPickerItem) => void;
+  onChange?: (newValue: ILocationPickerItem) => void;
 
   /**
   * This can be use to show error message for combobox
   */
-  errorMessage?:string;
+  errorMessage?: string;
 }
 
 export interface ILocationPickerState {
   currentMode: Mode;
   searchText: string;
   isCalloutVisible: boolean;
-  seletedItem: any;
+  seletedItem: ILocationPickerItem;
   /**
   * The options available to the listPicker
   */

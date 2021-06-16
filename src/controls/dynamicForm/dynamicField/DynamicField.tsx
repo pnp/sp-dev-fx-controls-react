@@ -195,7 +195,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             context={context}
             disabled={disabled}
             placeholder={placeholder}
-            onSelectionChanged={(newValue) => { this.onChange(newValue); }}
+            onChange={(newValue) => { this.onChange(newValue); }}
             defaultValue={defaultValue}
             errorMessage={errorText}
           />
@@ -503,7 +503,13 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
   }
 
   private onURLChange = (value: string, isUrl: boolean) => {
-    let currValue = this.state.changedValue || this.props.fieldDefaultValue || {
+    const {
+      fieldDefaultValue,
+      onChanged,
+      columnInternalName
+    } = this.props;
+
+    let currValue = this.state.changedValue || fieldDefaultValue || {
       Url: '',
       Description: ''
     };
@@ -521,7 +527,10 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     this.setState({
       changedValue: currValue
     });
-    this.props.onChanged(this.props.columnInternalName, currValue);
+
+    if (onChanged) {
+      onChanged(columnInternalName, currValue);
+    }
   }
 
   private onChange = (value: any) => {
