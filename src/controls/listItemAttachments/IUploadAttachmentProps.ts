@@ -2,11 +2,11 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IUploadAttachmentProps {
   listId: string;
-  itemId: number;
+  itemId?: number;
   className?: string;
-  webUrl?:string;
+  webUrl?: string;
   disabled?: boolean;
   context: BaseComponentContext;
-  fireUpload?:boolean;
-  onAttachmentUpload: () => void;
+  fireUpload?: boolean;
+  onAttachmentUpload: (file?: File) => void;
 }
