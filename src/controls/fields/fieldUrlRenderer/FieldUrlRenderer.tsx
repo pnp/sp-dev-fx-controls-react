@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Link } from 'office-ui-fabric-react/lib/Link';
@@ -44,7 +43,6 @@ export class FieldUrlRenderer extends React.Component<IFieldUrlRendererProps, IF
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         const isImageUrl: boolean = this.props.isImageUrl;
 

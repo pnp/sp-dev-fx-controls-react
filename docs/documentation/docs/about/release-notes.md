@@ -2,14 +2,29 @@
 
 ## 3.2.0
 
+### New control(s)
+
+- `DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)
+- `LocationPicker`: New Control - Location Picker [#915](https://github.com/pnp/sp-dev-fx-controls-react/issues/915)
+
+### Enhancements
+
+- `fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)
+- `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#914](https://github.com/pnp/sp-dev-fx-controls-react/pull/914)
+- `PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)
+- `ListPicker`: add contenttype id to list picker [#894](https://github.com/pnp/sp-dev-fx-controls-react/issues/894)
+
 ### Fixes
 
 - Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)
 - `SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `DatePicker`: Fix Spanish loc strings [#923](https://github.com/pnp/sp-dev-fx-controls-react/issues/923)
+- `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
+- `MyTeams`: Update MyTeams to use new library mgt-spfx [#918](https://github.com/pnp/sp-dev-fx-controls-react/issues/918)
 
 ### Contributors
 
-Special thanks to our contributor: [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Eduard Paul](https://github.com/eduardpaul), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Russell gove](https://github.com/russgove), [Sergei Sergeev](https://github.com/s-KaiNet), [João Mendes](https://github.com/joaojmendes).
 
 ## 3.1.0
 

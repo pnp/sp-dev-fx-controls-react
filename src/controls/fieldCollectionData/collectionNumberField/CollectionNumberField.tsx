@@ -64,7 +64,6 @@ export class CollectionNumberField extends React.Component<ICollectionNumberFiel
    * Delayed field validation
    */
   private valueValidation = async (field: ICustomCollectionField, value: number) => {
-    // debugger;
     const validation = await this.props.fValidation(field, value);
     // Update the error message
     this.setState({

@@ -42,6 +42,10 @@ export interface ISitePickerProps {
    * Intial data to load in the 'Selected sites' area (optional)
    */
   initialSites?: ISite[];
+   /**
+   * used to update the sites currently Selected in the contol
+   */
+    selectedSites?: ISite[];
   /**
    * Define if you want to allow multi site selection. True by default.
    */

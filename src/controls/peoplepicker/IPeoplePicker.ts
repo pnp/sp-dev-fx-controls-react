@@ -29,6 +29,10 @@ export interface IPeoplePickerProps {
    */
   groupName?: string;
   /**
+   * Id of SharePoint Group
+   */
+   groupId?: number;
+   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
   suggestionsLimit?: number;

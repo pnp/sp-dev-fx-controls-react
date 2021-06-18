@@ -1,6 +1,7 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IListItemPickerProps {
+
   columnInternalName: string;
   keyColumnInternalName?: string;
   context: BaseComponentContext;
@@ -21,4 +22,10 @@ export interface IListItemPickerProps {
   placeholder?: string;
 
   onSelectedItem: (item:any) => void;
+
+  /**
+   * The label for the control
+   */
+   label?: string;
+
 }
