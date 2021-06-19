@@ -21,6 +21,7 @@
 - `DatePicker`: Fix Spanish loc strings [#923](https://github.com/pnp/sp-dev-fx-controls-react/issues/923)
 - `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
 - `MyTeams`: Update MyTeams to use new library mgt-spfx [#918](https://github.com/pnp/sp-dev-fx-controls-react/issues/918)
+- `FieldCollectionData`: FieldCollectionData is not setting sortIdx on resulting collection when using 'Add and Save' [#929](https://github.com/pnp/sp-dev-fx-controls-react/issues/929)
 
 ### Contributors
 
