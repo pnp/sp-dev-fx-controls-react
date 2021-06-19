@@ -147,7 +147,9 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
   private addAndSave = () => {
     // Check if the item is not empty
     if (this.state.inCreationItem) {
-      this.props.fOnSave([...this.state.crntItems, this.state.inCreationItem]);
+      let crntItems = [...this.state.crntItems, this.state.inCreationItem];
+      crntItems = this.updateSortProperty(crntItems);
+      this.props.fOnSave(crntItems);
     } else {
       this.onSave();
     }
@@ -329,7 +331,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
       <div>
         {
           this.props.executeFiltering &&
-          <SearchBox onChanged={(newValue) => { this.setState({ searchFilter: newValue, currentPage: 1 }); }} placeholder={strings.CollectionDataSearch} className="FieldCollectionData__panel__search-box"/>
+          <SearchBox onChanged={(newValue) => { this.setState({ searchFilter: newValue, currentPage: 1 }); }} placeholder={strings.CollectionDataSearch} className="FieldCollectionData__panel__search-box" />
         }
         <div className={`FieldCollectionData__panel__table ${styles.table} ${this.props.tableClassName || ""}`}>
           <div className={`FieldCollectionData__panel__table-head ${styles.tableRow} ${styles.tableHead}`}>
