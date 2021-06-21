@@ -320,7 +320,7 @@ define([], () => {
   "SortedAscending": "Lajiteltu A-ö",
   "SortedDescending": "Lajiteltu Z-",
   "TypeAriaLabel": "Sarake toiminnot tiedosto tyypille, Lajittele tiedosto tyypin mukaan painamalla",
-  "UploadFileHeader": "Lataa",
+  "UploadFileHeader": "Lataa tiedosto",
   "UploadImageHeader": "Lataa kuva",
   "UploadLinkLabel": "Lataa",
   "WebSearchLinkLabel": "Verkkohaku",
