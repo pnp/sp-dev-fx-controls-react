@@ -381,6 +381,7 @@ define([], () => {
     DynamicFormEnterURLPlaceholder: "Enter a URL",
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
 
-    customDisplayName: 'Use this location:'
+    customDisplayName: "Use this location:",
+    OrgAssetsLinkLabel: "Your organisation"
   };
 });
