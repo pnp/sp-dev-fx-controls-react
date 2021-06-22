@@ -315,6 +315,7 @@ declare interface IControlStrings {
   StockImagesLinkLabel: string;
   StockImagesHeader: string;
   Yes: string;
+  OrgAssetsLinkLabel: string;
 
   // folder explorer
   NewFolderNamePlaceholder: string;

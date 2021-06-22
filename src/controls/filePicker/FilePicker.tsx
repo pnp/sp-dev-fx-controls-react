@@ -359,7 +359,7 @@ export class FilePicker extends React.Component<
       this.state.organisationAssetsEnabled
     ) {
       links.push({
-        name: "Your organisation",
+        name: strings.OrgAssetsLinkLabel,
         url: addUrl ? "#orgAssets" : undefined,
         icon: "FabricFolderConfirm",
         key: "keyOrgAssets",
