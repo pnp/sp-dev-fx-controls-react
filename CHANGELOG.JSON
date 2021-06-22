@@ -12,7 +12,8 @@
           "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#914](https://github.com/pnp/sp-dev-fx-controls-react/pull/914)",
           "`PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)",
           "`ListPicker`: add contenttype id to list picker [#894](https://github.com/pnp/sp-dev-fx-controls-react/issues/894)",
-          "`ListPicker`: Few more tests with a little better description [#906](https://github.com/pnp/sp-dev-fx-controls-react/pull/906)"
+          "`ListPicker`: Few more tests with a little better description [#906](https://github.com/pnp/sp-dev-fx-controls-react/pull/906)",
+          "Translations: Improved Finnish translations [#937](https://github.com/pnp/sp-dev-fx-controls-react/pull/937)"
         ],
         "fixes": [
           "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
@@ -32,7 +33,8 @@
         "[Russell gove](https://github.com/russgove)",
         "[Sergei Sergeev](https://github.com/s-KaiNet)",
         "[João Mendes](https://github.com/joaojmendes)",
-        "[Marcin Wojciechowski](https://github.com/mgwojciech)"
+        "[Marcin Wojciechowski](https://github.com/mgwojciech)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)"
       ]
     },
     {
