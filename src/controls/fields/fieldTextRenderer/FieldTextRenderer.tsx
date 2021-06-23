@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -49,7 +48,6 @@ export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, 
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         const isSafeForInnerHTML: boolean = this.props.isSafeForInnerHTML;
         const isTruncatedClassNameObj: any = {};

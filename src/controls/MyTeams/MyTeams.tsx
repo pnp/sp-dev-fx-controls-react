@@ -7,7 +7,7 @@ import { Customizer } from "office-ui-fabric-react/lib/Utilities";
 import * as React from "react";
 import { IMyTeamsProps } from "./IMyTeamsProps";
 import { getMyTeamsStyles } from "./MyTeamsStyles";
-import { Providers, SharePointProvider } from "@microsoft/mgt";
+import { Providers, SharePointProvider } from "@microsoft/mgt-spfx";
 import { Team } from "../MyTeams/components/Team";
 import { ITeam } from ".././MyTeams/components/Team";
 import { useTeams } from "./../../hooks";
@@ -38,7 +38,10 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
   const [state, dispatch] = React.useReducer(myTeamsReducer, initialState);
 
   Providers.globalProvider = React.useMemo(() => {
-    return new SharePointProvider(webPartContext);
+    if (!Providers.globalProvider) {
+      return new SharePointProvider(webPartContext);
+    }
+    return;
   }, [props.webPartContext]);
 
   const { getMyTeams } = useTeams(webPartContext.serviceScope);

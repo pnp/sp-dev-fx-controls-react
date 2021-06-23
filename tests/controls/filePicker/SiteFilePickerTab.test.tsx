@@ -8,18 +8,6 @@ import { assert } from "chai";
 
 configure({ adapter: new Adapter() });
 
-jest.mock("office-ui-fabric-react/lib/Utilities",()=>({
-    IRenderFunction:{
-
-    },
-    IRectangle:{
-
-    },
-    css: ()=>{
-
-    }
-}))
-
 describe("<SiteFilePickerTab />", ()=>{
     test("should load initial data", async ()=>{
         let browserService = new MockFileBrowserService();

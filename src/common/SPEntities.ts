@@ -1,3 +1,18 @@
+
+
+
+/**
+ * Represents SP  ContentType Id
+ */
+ export interface ISPContentTypeId {
+    StringValue: string;
+}
+/**
+ * Represents SP List ContentType
+ */
+export interface ISPListContentType {
+    Id: ISPContentTypeId;
+}
 /**
  * Represents SP List
  */
@@ -5,6 +20,7 @@ export interface ISPList {
     Id: string;
     Title: string;
     BaseTemplate: string;
+    ContentTypes? :ISPListContentType[];
 }
 
 /**
@@ -95,7 +111,7 @@ export interface ICultureCalendar {
 }
 
 /**
- * Replica of Microsoft's DateTimeFormat difinition for CultureInfo object
+ * Replica of Microsoft's DateTimeFormat definition for CultureInfo object
  */
 export interface ICultureDateTimeFormat {
     AMDesignator: string;
@@ -128,7 +144,7 @@ export interface ICultureDateTimeFormat {
 }
 
 /**
- * Replica of Microsoft's NumberFormat difinition for CultureInfo object
+ * Replica of Microsoft's NumberFormat definition for CultureInfo object
  */
 export interface ICultureNumberFormat {
     CurrencyDecimalDigits: number;
@@ -168,4 +184,10 @@ export interface ICultureInfo {
     name: string;
     dateTimeFormat: ICultureDateTimeFormat;
     numberFormat: ICultureNumberFormat;
+}
+
+export interface IUploadImageResult {
+  Name: string;
+  ServerRelativeUrl: string;
+  UniqueId: string;
 }

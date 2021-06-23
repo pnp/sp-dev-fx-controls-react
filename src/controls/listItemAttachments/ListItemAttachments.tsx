@@ -29,14 +29,13 @@ interface IPreviewImageCollection {
 
 export class ListItemAttachments extends React.Component<IListItemAttachmentsProps, IListItemAttachmentsState> {
   private _spservice: SPservice;
-  private previewImages: IPreviewImageCollection;
+  private previewImages: IPreviewImageCollection = {};
   private _utilities: utilities;
 
   constructor(props: IListItemAttachmentsProps) {
     super(props);
 
     telemetry.track('ReactListItemAttachments', {});
-
     this.state = {
       file: null,
       hideDialog: true,
@@ -45,7 +44,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       deleteAttachment: false,
       disableButton: false,
       showPlaceHolder: false,
-      fireUpload: false
+      fireUpload: false,
+      filesToUpload: [],
+      itemId: props.itemId
     };
 
     // Get SPService Factory
@@ -56,8 +57,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * componentDidMount lifecycle hook
    */
-  public componentDidMount() {
-    this.loadAttachments();
+  public async componentDidMount() {
+    await this.loadAttachments();
   }
 
   private async loadAttachmentPreview(file: IListItemAttachmentFile): Promise<IDocumentCardPreviewImage> {
@@ -73,33 +74,68 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     });
   }
 
-  /**
-   * Load Item Attachments
-   */
-  private async loadAttachments() {
-    this._spservice.getListItemAttachments(this.props.listId, this.props.itemId).then((files: IListItemAttachmentFile[]) => {
-      const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
-      return Promise.all(filePreviewImages).then(filePreviews => {
-        this.previewImages = {};
-        filePreviews.forEach(preview => {
-          this.previewImages[preview.name] = preview;
-        });
+  public async uploadAttachments(itemId: number){
+    if(this.state.filesToUpload){
+      await Promise.all(this.state.filesToUpload.map(file=>this._spservice.addAttachment(
+        this.props.listId,
+        itemId,
+        file.name,
+        file,
+        this.props.webUrl)));
+    }
+    return new Promise<void>((resolve,error)=>{
+      this.setState({
+      filesToUpload: [],
+      itemId: itemId
+    },()=>this.loadAttachments().then(resolve));
+    });
+  }
+  protected loadAttachmentsPreview(files: IListItemAttachmentFile[]){
+    const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
+    return Promise.all(filePreviewImages).then(filePreviews => {
+      filePreviews.forEach(preview => {
+        this.previewImages[preview.name] = preview;
+      });
 
-        this.setState({
+      this.setState({
           fireUpload: false,
           hideDialog: true,
           dialogMessage: '',
           attachments: files,
           showPlaceHolder: files.length === 0 ? true : false
         });
-      });
-    }).catch((error: Error) => {
-      this.setState({
-        fireUpload: false,
-        hideDialog: false,
-        dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
-      });
     });
+  }
+  /**
+   * Load Item Attachments
+   */
+  private async loadAttachments() {
+    if(this.state.itemId){
+      await this._spservice.getListItemAttachments(this.props.listId, this.state.itemId).then(async (files: IListItemAttachmentFile[]) => {
+        await this.loadAttachmentsPreview(files);
+      }).catch((error: Error) => {
+        this.setState({
+          fireUpload: false,
+          hideDialog: false,
+          dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
+        });
+      });
+  }
+  else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
+    let files = this.state.filesToUpload.map(file=>({
+      FileName: file.name,
+      ServerRelativeUrl: undefined
+    }));
+    await this.loadAttachmentsPreview(files);
+  }
+  else{
+    this.setState({
+      fireUpload: false,
+      hideDialog: true,
+      dialogMessage: '',
+      showPlaceHolder: true
+    });
+  }
   }
 
   /**
@@ -120,9 +156,16 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * Attachment uploaded event handler
    */
-  private _onAttachmentUpload = () => {
+  private _onAttachmentUpload = async (file: File) => {
     // load Attachments
-    this.loadAttachments();
+    if(!this.state.itemId){
+      let files = this.state.filesToUpload || [];
+      files.push(file);
+      this.setState({
+        filesToUpload: [...files]
+      });
+    }
+    await this.loadAttachments();
   }
 
   /**
@@ -153,8 +196,26 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     });
 
     try {
-      await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.props.itemId, this.props.webUrl);
+      if(this.state.itemId){
+        await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.state.itemId, this.props.webUrl);
+      }
+      else{
+        let filesToUpload = this.state.filesToUpload;
+        let fileToRemove = filesToUpload.find(f=>f.name === file.FileName);
+        if(fileToRemove){
+          filesToUpload.splice(filesToUpload.indexOf(fileToRemove),1);
+        }
+        let attachments = this.state.attachments;
+        let attachmentToRemove = attachments.find(attachment => attachment.FileName === file.FileName);
+        if(attachmentToRemove){
+          attachments.splice(attachments.indexOf(attachmentToRemove),1);
 
+        }
+        this.setState({
+          filesToUpload: [...filesToUpload],
+          attachments: [...attachments]
+        });
+      }
       this.setState({
         fireUpload: false,
         hideDialog: false,
@@ -183,7 +244,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       <div className={styles.ListItemAttachments}>
         <UploadAttachment
           listId={this.props.listId}
-          itemId={this.props.itemId}
+          itemId={this.state.itemId}
           disabled={this.props.disabled}
           context={this.props.context}
           onAttachmentUpload={this._onAttachmentUpload}

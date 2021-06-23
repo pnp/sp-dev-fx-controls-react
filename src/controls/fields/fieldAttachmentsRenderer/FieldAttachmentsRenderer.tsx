@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
@@ -38,7 +37,6 @@ export class FieldAttachmentsRenderer extends React.Component<IFieldAttachmentsR
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         return (
             <div className={css(this.props.className, styles.container, styles.fabricIcon)} style={this.props.cssProps}>

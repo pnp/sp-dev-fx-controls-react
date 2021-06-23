@@ -60,28 +60,34 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
     const reader = new FileReader();
     const file = e.target.files[0];
-
-    reader.onloadend = async () => {
-      this.setState({
-        file: file
-      });
-
-      try {
-        await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
-
+    return new Promise<void>((resolve,errorCallback)=>{
+      reader.onloadend = async () => {
         this.setState({
-          isLoading: false
+          file: file
         });
-        this.props.onAttachmentUpload();
-      } catch (error) {
-        this.setState({
-          hideDialog: false,
-          isLoading: false,
-          dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
-        });
-      }
-    };
-    reader.readAsDataURL(file);
+  
+        try {
+          if(this.props.itemId && this.props.itemId > 0){
+            await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+          }
+  
+          this.setState({
+            isLoading: false
+          });
+          this.props.onAttachmentUpload(file);
+          resolve();
+        } catch (error) {
+          this.setState({
+            hideDialog: false,
+            isLoading: false,
+            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
+          });
+          errorCallback(error);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+   
   }
 
   /**

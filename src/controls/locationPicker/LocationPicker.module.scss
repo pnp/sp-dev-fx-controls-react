@@ -1,0 +1,60 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+.callout {
+  overflow-y: scroll;
+  max-height: 300px;
+}
+
+.pickerItemContainer {
+  display: flex;
+  border-style: solid;
+  border-color: "[theme: themePrimary, default: #0078d7]";
+  border-radius: 22px;
+  min-width: 16px;
+  border-width: 2px;
+  width: fit-content;
+}
+
+.closeButton {
+  padding-top: 7px;
+  color: "[theme: themePrimary, default: #0078d7]";
+}
+
+.locationDisplayName {
+  max-width: 200px;
+  font-weight: 600;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.locationAddressContainer {
+  border: 2px solid transparent;
+  &:hover {
+    background-color: "[theme:listItemBackgroundHover, default:#f4f4f4]";
+  }
+  &:active {
+    border-color: "[theme: themePrimary, default: #0078d7]";
+  }
+}
+
+.locationContainer {
+  margin: 0;
+  max-width: 224px;
+  padding: 3px;
+}
+
+.locationContent {
+  max-width: 200px;
+  margin-top: 6px;
+}
+
+.locationAddress {
+  min-width: 50px;
+  margin: 0;
+}
+
+.persona {
+  max-width: 400px;
+}

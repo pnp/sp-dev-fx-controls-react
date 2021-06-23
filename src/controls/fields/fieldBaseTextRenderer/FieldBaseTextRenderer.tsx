@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 
@@ -36,7 +35,6 @@ export class FieldBaseTextRenderer extends React.Component<IFieldBaseTextRendere
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
         const text: string = this.props.text || ' ';
         return (<div className={css(this.props.className, styles.baseText)} style={this.props.cssProps}>

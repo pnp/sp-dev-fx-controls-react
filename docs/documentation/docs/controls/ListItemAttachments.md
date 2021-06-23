@@ -29,6 +29,25 @@ import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttach
                      disabled={false} />
 ```
 
+- If You want to use `ListItemAttachments` controls with new form You have to use React.createRef.
+
+Following example will add selected attachments to list item with id = 1
+
+```TypeScript
+let listItemAttachmentsComponentReference = React.createRef<ListItemAttachments>();
+...
+      <ListItemAttachments 
+        ref={listItemAttachmentsComponentReference} 
+        context={this.props.context} 
+        listId="dfcfdb95-2488-4757-b55b-14d94166ad87" 
+        itemId={0} />
+...
+<PrimaryButton text="Save to Item with id 1" onClick={()=>{
+        //@ts-ignore
+        listItemAttachmentsComponentReference.current.uploadAttachments(1);
+      }} />
+```
+
 ## Implementation
 
 The `ListItemAttachments` control can be configured with the following properties:
@@ -37,7 +56,7 @@ The `ListItemAttachments` control can be configured with the following propertie
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | context | BaseComponentContext | yes | SPFx web part or extention context |
-| itemId | number | yes | List Item Id  |
+| itemId | number | no | List Item Id  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |

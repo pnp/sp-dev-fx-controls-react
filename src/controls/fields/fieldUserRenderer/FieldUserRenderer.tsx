@@ -1,7 +1,6 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { clone } from '@microsoft/sp-lodash-subset';
+import clone from 'lodash/clone';
 import { IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
 import { DirectionalHint } from 'office-ui-fabric-react/lib/common/DirectionalHint';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
@@ -131,7 +130,6 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
     }
   }
 
-  @override
   public render(): JSX.Element {
     const userEls: JSX.Element[] = this.state.users.map((user, index) => {
       const expandingCardProps: IExpandingCardProps = {
