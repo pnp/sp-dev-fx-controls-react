@@ -61,6 +61,7 @@ The following controls are currently available:
 - [Dashboard](./controls/Dashboard) (Control to render dashboard in Microsoft Teams)
 - [DragDropFiles](./controls/DragDropFiles) (Allow drag and drop of files in selected areas)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
+- [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
 - [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)

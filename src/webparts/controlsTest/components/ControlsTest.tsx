@@ -164,6 +164,9 @@ import {
 } from "./IControlsTestProps";
 import { DragDropFiles } from "../../../DragDropFiles";
 import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import { DynamicForm } from '../../../controls/dynamicForm';
+import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
+import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 
 // Used to render document card
 /**
@@ -818,6 +821,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <div className="ms-font-m">
+          {/* Change the list Id and list item id before you start to test this control */}
+          {/* <DynamicForm context={this.props.context} listId={"3071c058-549f-461d-9d73-8b9a52049a80"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm> */}
+        </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty}
@@ -1835,6 +1842,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </PrimaryButton>
             </div>
           </AnimatedDialog>
+
+          <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
         </div>
 
       </div>

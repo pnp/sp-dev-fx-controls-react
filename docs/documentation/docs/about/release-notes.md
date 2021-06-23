@@ -1,5 +1,27 @@
 # Releases
 
+## 2.8.0
+
+### New control(s)
+
+- `DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)
+- `LocationPicker`: New Control - Location Picker [#915](https://github.com/pnp/sp-dev-fx-controls-react/issues/915)
+
+### Enhancements
+
+- `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#910](https://github.com/pnp/sp-dev-fx-controls-react/pull/910)
+- `PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)
+
+### Fixes
+
+- `SitePicker`: `SitePicker` does not display initial sites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
+- `FieldCollectionData`: FieldCollectionData is not setting sortIdx on resulting collection when using 'Add and Save' [#929](https://github.com/pnp/sp-dev-fx-controls-react/issues/929)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+
 ## 2.7.0
 
 ### New control(s)

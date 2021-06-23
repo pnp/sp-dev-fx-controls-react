@@ -2,6 +2,9 @@ declare var define: any;
 
 define([], () => {
   return {
+    "Save": "Save",
+    "Cancel": "Cancel",
+
     'SiteBreadcrumbLabel': 'Website breadcrumb',
 
     'ListViewGroupEmptyLabel': 'Empty',
@@ -310,15 +313,15 @@ define([], () => {
     SizeOptionMedium: "Medium",
     SizeOptionSmall: "Small",
     SizeUnit: [
-     "bytes",
-     "KB",
-     "MB",
-     "GB",
-     "TB",
-     "PB",
-     "EB",
-     "ZB",
-     "YB"
+      "bytes",
+      "KB",
+      "MB",
+      "GB",
+      "TB",
+      "PB",
+      "EB",
+      "ZB",
+      "YB"
     ],
     SorryWebSearch: "Sorry, this function isn't implemented in this sample, because it would require a Bing API key.",
     SortedAscending: "Sorted A to Z",
@@ -355,6 +358,15 @@ define([], () => {
     InvalidUrlError: "The provided URL is not valid",
     CollectionDataSearch: "Search",
 
-    ViewMore: "View more"
+    ViewMore: "View more",
+
+    DynamicFormLoading: "Loading...",
+    DynamicFormPleaseWait: "Please wait...",
+    DynamicFormRequiredErrorMessage: "You can't leave this blank.",
+    DynamicFormTermPanelTitle: "Select Term",
+    DynamicFormEnterURLPlaceholder: "Enter a URL",
+    DynamicFormEnterDescriptionPlaceholder: "Alternative text",
+
+    customDisplayName: 'Use this location:'
   };
 });
