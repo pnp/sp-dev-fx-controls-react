@@ -17,7 +17,7 @@
         ],
         "fixes": [
           "Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)",
-          "`SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)",
+          "`SitePicker`: `SitePicker` does not display initial sites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)",
           "`DatePicker`: Fix Spanish loc strings [#923](https://github.com/pnp/sp-dev-fx-controls-react/issues/923)",
           "`FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)",
           "`MyTeams`: Update MyTeams to use new library mgt-spfx [#918](https://github.com/pnp/sp-dev-fx-controls-react/issues/918)",
