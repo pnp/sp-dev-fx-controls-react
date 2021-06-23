@@ -128,7 +128,7 @@
       "@microsoft/sp-core-library": "identity-obj-proxy",
       "@microsoft/sp-application-base": "identity-obj-proxy",
       "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
-      "src/common/telemetry/(.*)$":"identity-obj-proxy",
+      "src/common/telemetry/(.*)$": "identity-obj-proxy",
       "@pnp/sp": "identity-obj-proxy",
       "'@pnp/sp/fields": "identity-obj-proxy",
       "ControlStrings": "identity-obj-proxy",
