@@ -14,7 +14,7 @@
 
 ### Fixes
 
-- `SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `SitePicker`: `SitePicker` does not display initial sites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
 - `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
 - `FieldCollectionData`: FieldCollectionData is not setting sortIdx on resulting collection when using 'Add and Save' [#929](https://github.com/pnp/sp-dev-fx-controls-react/issues/929)
 
