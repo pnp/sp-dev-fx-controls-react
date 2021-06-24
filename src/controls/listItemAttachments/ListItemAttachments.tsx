@@ -120,22 +120,22 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
         });
       });
-  }
-  else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
-    let files = this.state.filesToUpload.map(file=>({
-      FileName: file.name,
-      ServerRelativeUrl: undefined
-    }));
-    await this.loadAttachmentsPreview(files);
-  }
-  else{
-    this.setState({
-      fireUpload: false,
-      hideDialog: true,
-      dialogMessage: '',
-      showPlaceHolder: true
-    });
-  }
+    }
+    else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
+      let files = this.state.filesToUpload.map(file=>({
+        FileName: file.name,
+        ServerRelativeUrl: undefined
+      }));
+      await this.loadAttachmentsPreview(files);
+    }
+    else{
+      this.setState({
+        fireUpload: false,
+        hideDialog: true,
+        dialogMessage: '',
+        showPlaceHolder: true
+      });
+    }
   }
 
   /**
@@ -158,6 +158,10 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    */
   private _onAttachmentUpload = async (file: File) => {
     // load Attachments
+    this.setState({
+      fireUpload: false,
+    });
+
     if(!this.state.itemId){
       let files = this.state.filesToUpload || [];
       files.push(file);

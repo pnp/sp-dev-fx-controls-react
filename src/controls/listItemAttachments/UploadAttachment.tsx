@@ -17,7 +17,6 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     super(props);
 
     this.state = {
-      file: null,
       hideDialog: true,
       dialogMessage: '',
       isLoading: false,
@@ -35,7 +34,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
    * @param prevState
    */
   public componentDidUpdate(prevProps: IUploadAttachmentProps, prevState: IUploadAttachmentState): void {
-    if (this.props.fireUpload) {
+    if (this.props.fireUpload && !this.state.isLoading) {
       this.fileInput.current.value = '';
       this.fileInput.current.click();
     }
@@ -62,19 +61,16 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     const file = e.target.files[0];
     return new Promise<void>((resolve,errorCallback)=>{
       reader.onloadend = async () => {
-        this.setState({
-          file: file
-        });
-  
+
         try {
           if(this.props.itemId && this.props.itemId > 0){
             await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
           }
-  
+
+          this.props.onAttachmentUpload(file);
           this.setState({
             isLoading: false
           });
-          this.props.onAttachmentUpload(file);
           resolve();
         } catch (error) {
           this.setState({
@@ -87,7 +83,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
       };
       reader.readAsDataURL(file);
     });
-   
+
   }
 
   /**
