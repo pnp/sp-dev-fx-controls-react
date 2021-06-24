@@ -59,6 +59,8 @@ The `ListItemAttachments` control can be configured with the following propertie
 | itemId | number | no | List Item Id  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
+| label | string | no | Main text to display on the placeholder, next to the icon. |
+| description | string | no | Description text to display on the placeholder, below the main text and icon. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be openend in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
 
