@@ -308,7 +308,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 </div>
               );
             })}
-        {
+        { !this.state.hideDialog &&
 
           <Dialog
             hidden={this.state.hideDialog}
