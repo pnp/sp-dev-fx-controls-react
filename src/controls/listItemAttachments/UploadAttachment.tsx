@@ -12,6 +12,7 @@ import styles from './ListItemAttachments.module.scss';
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
   private fileInput;
+  private _isFileExplorerOpen = false;
 
   constructor(props: IUploadAttachmentProps) {
     super(props);
@@ -34,9 +35,10 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
    * @param prevState
    */
   public componentDidUpdate(prevProps: IUploadAttachmentProps, prevState: IUploadAttachmentState): void {
-    if (this.props.fireUpload && !this.state.isLoading) {
+    if (this.props.fireUpload && !this._isFileExplorerOpen) {
       this.fileInput.current.value = '';
       this.fileInput.current.click();
+      this._isFileExplorerOpen = true;
     }
   }
 
@@ -80,6 +82,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           });
           errorCallback(error);
         }
+        this._isFileExplorerOpen = false;
       };
       reader.readAsDataURL(file);
     });
