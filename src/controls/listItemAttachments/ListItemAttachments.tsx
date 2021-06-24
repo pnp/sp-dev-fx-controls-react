@@ -158,10 +158,6 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    */
   private _onAttachmentUpload = async (file: File) => {
     // load Attachments
-    this.setState({
-      fireUpload: false,
-    });
-
     if(!this.state.itemId){
       let files = this.state.filesToUpload || [];
       files.push(file);
