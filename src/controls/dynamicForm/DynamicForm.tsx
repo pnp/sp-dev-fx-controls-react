@@ -189,7 +189,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         try {
           const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
           if (onSubmitted) {
-            onSubmitted(iur.data);
+            onSubmitted(iur.item);
           }
         }
         catch (error) {
@@ -204,7 +204,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         try {
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
-            onSubmitted(iar.data);
+            onSubmitted(iar.item);
           }
         }
         catch (error) {
