@@ -120,22 +120,22 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           dialogMessage: strings.ListItemAttachmentserrorLoadAttachments.replace('{0}', error.message)
         });
       });
-  }
-  else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
-    let files = this.state.filesToUpload.map(file=>({
-      FileName: file.name,
-      ServerRelativeUrl: undefined
-    }));
-    await this.loadAttachmentsPreview(files);
-  }
-  else{
-    this.setState({
-      fireUpload: false,
-      hideDialog: true,
-      dialogMessage: '',
-      showPlaceHolder: true
-    });
-  }
+    }
+    else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
+      let files = this.state.filesToUpload.map(file=>({
+        FileName: file.name,
+        ServerRelativeUrl: undefined
+      }));
+      await this.loadAttachmentsPreview(files);
+    }
+    else{
+      this.setState({
+        fireUpload: false,
+        hideDialog: true,
+        dialogMessage: '',
+        showPlaceHolder: true
+      });
+    }
   }
 
   /**
@@ -255,8 +255,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           this.state.showPlaceHolder ?
             <Placeholder
               iconName='Upload'
-              iconText={strings.ListItemAttachmentslPlaceHolderIconText}
-              description={strings.ListItemAttachmentslPlaceHolderDescription}
+              iconText={this.props.label || strings.ListItemAttachmentslPlaceHolderIconText}
+              description={this.props.description || strings.ListItemAttachmentslPlaceHolderDescription}
               buttonLabel={strings.ListItemAttachmentslPlaceHolderButtonLabel}
               hideButton={this.props.disabled}
               onConfigure={() => this.setState({ fireUpload: true })} />
@@ -304,7 +304,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 </div>
               );
             })}
-        {
+        { !this.state.hideDialog &&
 
           <Dialog
             hidden={this.state.hideDialog}

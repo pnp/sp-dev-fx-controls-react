@@ -70,14 +70,16 @@ export default class SPService implements ISPService {
 
     const data = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);
     if (data.ok) {
-      var result: ISPLists = await data.json();
-      var filteredLists = filter(result.value, (aList: ISPList) => {
-        return find(aList.ContentTypes, (ct) => {
-          return ct.Id.StringValue.toUpperCase().startsWith(options.contentTypeId.toUpperCase());
-        });
+      const result: ISPLists = await data.json();
+      if (options.contentTypeId) {
+        const filteredLists = filter(result.value, (aList: ISPList) => {
+          return find(aList.ContentTypes, (ct) => {
+            return ct.Id.StringValue.toUpperCase().startsWith(options.contentTypeId.toUpperCase());
+          });
 
-      });
-      result.value = filteredLists as ISPList[];
+        });
+        result.value = filteredLists as ISPList[];
+      }
       return result as ISPLists;
     } else {
       return null;
