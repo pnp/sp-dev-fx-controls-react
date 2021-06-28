@@ -324,6 +324,8 @@ define([], () => {
   "UploadImageHeader": "Subir imagen",
   "UploadLinkLabel": "Subir",
   "WebSearchLinkLabel": "Búsqueda web",
+  "StockImagesLinkLabel": "Imágenes de stock",
+  "StockImagesHeader": "Imágenes de stock",
   "Yes": "Sí",
   "SelectedLabel": "Seleccionado",
   "SelectIcon": "Seleccionar icono"
