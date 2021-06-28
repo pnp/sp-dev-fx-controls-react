@@ -1,5 +1,11 @@
 # Releases
 
+## 3.2.1
+
+### Fixes
+
+- `ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)
+
 ## 3.3.0
 
 ### Enhancements
