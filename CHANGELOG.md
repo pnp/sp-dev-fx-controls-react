@@ -1,5 +1,15 @@
 # Releases
 
+## 3.3.0
+
+### Enhancements
+
+- `ListItemAttachments`: Add new label and description properties [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)
+
+### Fixes
+
+- `ListItemAttachments`: Fixed multiple bugs [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)
+
 ## 3.2.0
 
 ### New control(s)
