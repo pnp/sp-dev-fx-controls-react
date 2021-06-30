@@ -62,7 +62,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     // folderWebRelPath: "/DocLib/Folder"
     let folderWebRelPath = folderServRelPath && folderServRelPath.substr(webServRelUrl.length);
-    let libInternalName = folderWebRelPath && folderWebRelPath.substring(1, Math.max(folderWebRelPath.indexOf("/", 2), 0) || undefined)
+    let libInternalName = folderWebRelPath && folderWebRelPath.substring(1, Math.max(folderWebRelPath.indexOf("/", 2), 0) || undefined);
 
     // libraryServRelUrl: "/teams/Test/DocLib/"
     let libraryServRelUrl = urlCombine(webServRelUrl, libInternalName);
