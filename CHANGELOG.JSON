@@ -1,29 +1,30 @@
 {
   "versions": [
     {
+      "version": "3.3.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Sergio Ortega Martín](https://github.com/sortegamartin)"
+      ]
+    },
+    {
       "version": "3.2.1",
       "changes": {
         "new": [],
-        "enhancements": [],
-        "fixes": [
-          "`ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)"
-        ]
-      }
-    },
-    {
-      "version": "3.3.0",
-      "changes": {
-        "new": [
-        ],
         "enhancements": [
           "`ListItemAttachments`: Add new label and description properties [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)"
         ],
         "fixes": [
+          "`ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)",
           "`ListItemAttachments`: Fixed multiple bugs [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)"
         ]
-      },
-      "contributions": [
-      ]
+      }
     },
     {
       "version": "3.2.0",
