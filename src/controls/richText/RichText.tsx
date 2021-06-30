@@ -381,7 +381,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         <TextField label={strings.TextToDisplayLabel}
           value={this.state.insertUrlText}
           onChange={(e, newValue?: string) => {
-            if (newValue !== this.state.insertUrl) {
+            if (newValue !== this.state.insertUrlText) {
               this.setState({
                 insertUrlText: newValue
               });
