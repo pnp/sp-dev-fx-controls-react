@@ -12,6 +12,7 @@
 ### Fixes
 
 - `RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)
+- `RichText`: impossible to display link with the text equal to the url [#949](https://github.com/pnp/sp-dev-fx-controls-react/issues/949)
 
 ### Contributors
 
