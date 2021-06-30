@@ -5,10 +5,11 @@
 ### Enhancements
 
 - `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
+- `FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)
 
 ### Contributors
 
-Special thanks to our contributor: [Sergio Ortega Martín](https://github.com/sortegamartin).
+Special thanks to our contributors (in alphabetical order): [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Sergio Ortega Martín](https://github.com/sortegamartin).
 
 ## 3.2.1
 
