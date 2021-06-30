@@ -211,7 +211,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       placeholder,
       showLabels,
       minDate,
-      maxDate
+      maxDate,
+      minutesIncrementStep
     } = this.props;
 
     const hours: number = value != null ? value.getHours() : this.state.hours;
@@ -242,6 +243,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
             <div className={styles.picker}>
               <MinutesComponent disabled={disabled}
                 value={minutes}
+                minutesIncrementStep={minutesIncrementStep}
                 onChange={this.dropdownMinutesChanged}
                 timeDisplayControlType={timeDisplayControlType || TimeDisplayControlType.Text} />
             </div>
