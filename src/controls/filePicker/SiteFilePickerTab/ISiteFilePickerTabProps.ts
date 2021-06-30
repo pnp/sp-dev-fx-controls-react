@@ -10,5 +10,10 @@ export interface ISiteFilePickerTabProps extends IFilePickerTab {
    */
   breadcrumbFirstNode?: IBreadcrumbItem;
 
+  /**
+   * Specifies a default folder to be active in the Site Files tab
+   */
+  defaultFolderAbsolutePath?: string;
+
   includePageLibraries?: boolean;
 }

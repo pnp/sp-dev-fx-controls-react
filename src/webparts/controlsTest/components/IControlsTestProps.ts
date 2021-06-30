@@ -42,5 +42,5 @@ export interface IControlsTestState {
   showErrorDialog?: boolean;
   selectedTeam:ITag[];
   selectedTeamChannels:ITag[];
-
+  filePickerDefaultFolderAbsolutePath?: string;
 }
