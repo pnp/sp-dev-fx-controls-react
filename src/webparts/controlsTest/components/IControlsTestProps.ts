@@ -35,4 +35,5 @@ export interface IControlsTestState {
   showCustomisedAnimatedDialog?: boolean;
   showSuccessDialog?: boolean;
   showErrorDialog?: boolean;
+  filePickerDefaultFolderAbsolutePath?: string;
 }

@@ -1,6 +1,21 @@
 {
   "versions": [
     {
+      "version": "2.9.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)",
+          "`FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Ketill Antoníus Ágústsson](https://github.com/Katli95)",
+        "[Sergio Ortega Martín](https://github.com/sortegamartin)"
+      ]
+    },
+    {
       "version": "2.8.0",
       "changes": {
         "new": [

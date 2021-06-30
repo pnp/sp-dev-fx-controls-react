@@ -81,6 +81,30 @@ export class FileBrowserService {
   }
 
   /**
+   * Gets document and media libraries from the site
+   */
+  public getLibraryNameByInternalName = async (internalName: string): Promise<string> => {
+    try {
+      const absoluteUrl = this.context.pageContext.web.absoluteUrl;
+      const restApi = `${absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('${internalName}')/Properties?$select=vti_x005f_listtitle`;
+      const libraryResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+
+      if (!libraryResult || !libraryResult.ok) {
+        throw new Error(`Something went wrong when executing request. Status='${libraryResult.status}'`);
+      }
+      const libResults: { vti_x005f_listtitle: string } = await libraryResult.json();
+      if (!libResults || !libResults.vti_x005f_listtitle) {
+        throw new Error(`Cannot read data from the results.`);
+      }
+
+      return libResults.vti_x005f_listtitle != internalName && libResults.vti_x005f_listtitle || "";
+    } catch (error) {
+      console.error(`[FileBrowserService.getSiteLibraryNameByInternalName]: Err='${error.message}'`);
+      return null;
+    }
+  }
+
+  /**
    * Downloads document content from SP location.
    */
   public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
@@ -118,7 +142,7 @@ export class FileBrowserService {
         }
       };
       if (folderPath) {
-          body.parameters["FolderServerRelativeUrl"] = folderPath;
+        body.parameters["FolderServerRelativeUrl"] = folderPath;
       }
       const data: any = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {
         method: "POST",

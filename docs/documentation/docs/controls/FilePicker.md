@@ -75,7 +75,8 @@ The FilePicker component can be configured with the following properties:
 | label | string | no | Specifies the text describing the file picker. |
 | buttonLabel | string | no | Specifies the label of the file picker button. |
 | buttonIcon | string | no | In case it is provided the file picker will be rendered as an action button. |
-  buttonIconProps | IIconProps | no | In case it is provided the file picker will be rendered as an Icon the and all can define Properties for Icon  |
+| buttonIconProps | IIconProps | no | In case it is provided the file picker will be rendered as an Icon the and all can define Properties for Icon  |
+| defaultFolderAbsolutePath | string | no | Optional string parameter to set a default active folder/library for the SiteFilesTab. E.g. `"https://contoso.sharepoint.com/teams/siteName/documentLibrary/Folder 1/SubFolder 1"`  |
 | onSave | (filePickerResult: IFilePickerResult[]) => void | yes | Handler when the file has been selected and picker has been closed. |
 | onChange | (filePickerResult: IFilePickerResult[]) => void | no | Handler when the file selection has been changed. |
 | onCancel | () => void | no | Handler when file picker has been cancelled. |
