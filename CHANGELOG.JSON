@@ -6,12 +6,14 @@
         "new": [],
         "enhancements": [
           "`FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)",
-          "`FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)"
+          "`FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)",
+          "`DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)"
         ],
         "fixes": []
       },
       "contributions": [
         "[Ketill Antoníus Ágústsson](https://github.com/Katli95)",
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
         "[Sergio Ortega Martín](https://github.com/sortegamartin)"
       ]
     },
