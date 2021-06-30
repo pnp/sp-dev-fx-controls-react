@@ -71,6 +71,7 @@ The `DateTimePicker` control can be configured with the following properties:
 | placeholder | string | no | Placeholder text for the DatePicker. |
 | maxDate | Date | no | The maximum allowable date. |
 | minDate | Date | no | The minimum allowable date. |
+| minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdow` |
 
 Enum `TimeDisplayControlType`
 
@@ -102,5 +103,10 @@ Interface `IDateTimePickerStrings` extends [IDatePickerStrings](https://develope
 | timeSeparator | string | no | Separator between time of day components (hours, minutes, seconds). |
 | amDesignator | string | no | Used as AM designator when 12-hour clock is used. |
 | pmDesignator | string | no | Used as PM designator when 12-hour clock is used. |
+
+Type `MinutesIncrement`
+```typescript
+type MinutesIncrement = 1 | 5 | 10 | 15 | 30;
+```
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/DateTimePicker)
