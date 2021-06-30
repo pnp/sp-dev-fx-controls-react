@@ -21,7 +21,7 @@ import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
           onCancelled={() => { console.log('Cancelled') }}
           onBeforeSubmit={(async listItem) => { return true; }}
           onSubmitError={(listItem, error) => { alert(error.message); }}
-          onSubmitted={async (listItem) => {let item = await listItem.get(); console.log(item); }}>
+          onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
 ```
 ![DynamicForm](../assets/DynamicForm.png)
@@ -38,6 +38,7 @@ The `DynamicForm` can be configured with the following properties:
 | contentTypeId | string | no | content type ID |
 | disabled | boolean | no | Option allow to be enable or disable. Default value is `false`|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. |
-| onSubmitted | (listItem: any) => void | no | Method that returns listItem data JSON object. |
+| onSubmitted | (listItemData: any, listItem?: IItem) => void | no | Method that returns listItem data JSON object and PnPJS list item instance (`IItem`). |
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
+| returnListItemInstanceOnSubmit | boolean | no | Specifies if `onSubmitted` event should pass PnPJS list item (`IItem`) as a second parameter. Default - `true` |
