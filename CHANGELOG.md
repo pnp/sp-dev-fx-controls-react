@@ -1,12 +1,16 @@
 # Releases
 
-## 3.2.1
-
-### Fixes
-
-- `ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)
-
 ## 3.3.0
+
+### Enhancements
+
+- `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
+
+### Contributors
+
+Special thanks to our contributor: [Sergio Ortega Martín](https://github.com/sortegamartin).
+
+## 3.2.1
 
 ### Enhancements
 
@@ -14,6 +18,7 @@
 
 ### Fixes
 
+- `ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)
 - `ListItemAttachments`: Fixed multiple bugs [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)
 
 ## 3.2.0
