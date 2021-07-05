@@ -56,7 +56,7 @@ import {
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
-import { Accordion } from "../../../";
+import { Accordion } from "../../../controls/accordion";
 import {
   ChartControl,
   ChartType
@@ -172,8 +172,12 @@ import {
 import { MyTeams } from "../../../controls/MyTeams";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import {​​ DragDropFiles }​​ from "../../../DragDropFiles";
-import {​​ SitePicker }​​ from "../../../controls/sitePicker/SitePicker";
+import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import { DynamicForm } from '../../../controls/dynamicForm';
+import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
+import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
+import { debounce } from "lodash";
 
 
 
@@ -840,6 +844,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
+        <div className="ms-font-m">
+          {/* Change the list Id and list item id before you start to test this control */}
+          {/* <DynamicForm context={this.props.context} listId={"3071c058-549f-461d-9d73-8b9a52049a80"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm> */}
+        </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty}
@@ -847,7 +855,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-<Stack styles={{ root: { marginBottom: 200 } }}>
+        <Stack styles={{ root: { marginBottom: 200 } }}>
           <MyTeams
             title="My Teams"
             webPartContext={this.props.context}
@@ -1101,7 +1109,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
-        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -1267,12 +1275,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconName="Upload"
           labelMessage="My custom upload File"
         >
-        <Placeholder iconName='BulkUpload'
-          iconText='Drag files or folder with files here...'
-          description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-          buttonLabel='Configure'
-          hideButton={this.props.displayMode === DisplayMode.Read}
-          onConfigure={this._onConfigure} />
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
         </DragDropFiles>
         <br></br>
 
@@ -1380,14 +1388,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">Site picker tester:
               <SitePicker
-                context={this.props.context}
-                label={'select sites'}
-                mode={'site'}
-                allowSearch={true}
-                multiSelect={false}
-                onChange={(sites) => { console.log(sites); }}
-                placeholder={'Select sites'}
-                searchPlaceholder={'Filter sites'} />
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
               </div>
 
               <div className="ms-font-m">List picker tester:
@@ -1397,6 +1405,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   baseTemplate={100}
                   includeHidden={false}
                   multiSelect={true}
+                  contentTypeId="0x01"
                   // filter="Title eq 'Test List'"
                   onSelectionChanged={this.onListPickerChange} />
               </div>
@@ -1588,11 +1597,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>File Picker</h3>
+          <TextField
+            label="Default SiteFileTab Folder"
+            onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
+            styles={{ root: { marginBottom: 10 } }}
+          />
           <FilePicker
             bingAPIKey="<BING API KEY>"
+            defaultFolderAbsolutePath={this.state.filePickerDefaultFolderAbsolutePath}
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
-
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
@@ -1899,6 +1913,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </PrimaryButton>
             </div>
           </AnimatedDialog>
+
+          <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
         </div>
 
       </div>

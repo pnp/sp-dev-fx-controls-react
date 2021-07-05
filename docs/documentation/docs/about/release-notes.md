@@ -1,15 +1,62 @@
 # Releases
 
+## 3.3.0
+
+### Enhancements
+
+- `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
+- `FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)
+- `DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)
+- `DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)
+
+### Fixes
+
+- `RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)
+- `RichText`: impossible to display link with the text equal to the url [#949](https://github.com/pnp/sp-dev-fx-controls-react/issues/949)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
+
+## 3.2.1
+
+### Enhancements
+
+- `ListItemAttachments`: Add new label and description properties [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)
+
+### Fixes
+
+- `ListPicker`: `ListPicker` stopped working in upgrade from 3.1.0 to 3.2.0 [#945](https://github.com/pnp/sp-dev-fx-controls-react/issues/945)
+- `ListItemAttachments`: Fixed multiple bugs [#943](https://github.com/pnp/sp-dev-fx-controls-react/pull/943)
+
 ## 3.2.0
+
+### New control(s)
+
+- `DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)
+- `LocationPicker`: New Control - Location Picker [#915](https://github.com/pnp/sp-dev-fx-controls-react/issues/915)
+
+### Enhancements
+
+- `fast-serve`: Add fast-serve support [#916](https://github.com/pnp/sp-dev-fx-controls-react/pull/916)
+- `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#914](https://github.com/pnp/sp-dev-fx-controls-react/pull/914)
+- `PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)
+- `ListPicker`: add contenttype id to list picker [#894](https://github.com/pnp/sp-dev-fx-controls-react/issues/894)
+- `ListPicker`: Few more tests with a little better description [#906](https://github.com/pnp/sp-dev-fx-controls-react/pull/906)
+- Translations: Improved Finnish translations [#937](https://github.com/pnp/sp-dev-fx-controls-react/pull/937)
 
 ### Fixes
 
 - Documentation for `RichText`: correct event handler name [#898](https://github.com/pnp/sp-dev-fx-controls-react/pull/898)
-- `SitePicker`: `SitePicker` does not display initialsites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `SitePicker`: `SitePicker` does not display initial sites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `DatePicker`: Fix Spanish loc strings [#923](https://github.com/pnp/sp-dev-fx-controls-react/issues/923)
+- `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
+- `MyTeams`: Update MyTeams to use new library mgt-spfx [#918](https://github.com/pnp/sp-dev-fx-controls-react/issues/918)
+- `FieldCollectionData`: FieldCollectionData is not setting sortIdx on resulting collection when using 'Add and Save' [#929](https://github.com/pnp/sp-dev-fx-controls-react/issues/929)
 
 ### Contributors
 
-Special thanks to our contributor: [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Eduard Paul](https://github.com/eduardpaul), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Russell gove](https://github.com/russgove), [Sergei Sergeev](https://github.com/s-KaiNet), [João Mendes](https://github.com/joaojmendes), [Marcin Wojciechowski](https://github.com/mgwojciech), [Gautam Sheth](https://github.com/gautamdsheth).
 
 ## 3.1.0
 
@@ -55,6 +102,28 @@ Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https:
 
 - SharePoint Framework v1.12 support (breaking change)
 - Fluent UI v7 support
+
+## 2.8.0
+
+### New control(s)
+
+- `DynamicForm`: New Control: Dynamic form [#878](https://github.com/pnp/sp-dev-fx-controls-react/issues/878)
+- `LocationPicker`: New Control - Location Picker [#915](https://github.com/pnp/sp-dev-fx-controls-react/issues/915)
+
+### Enhancements
+
+- `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#910](https://github.com/pnp/sp-dev-fx-controls-react/pull/910)
+- `PeoplePicker`: new property `groupId`. [#917](https://github.com/pnp/sp-dev-fx-controls-react/pull/917)
+
+### Fixes
+
+- `SitePicker`: `SitePicker` does not display initial sites until you click the dropdown to select [#895](https://github.com/pnp/sp-dev-fx-controls-react/issues/895)
+- `FilePicker`: invalid CSS: relative in quotes. [#930](https://github.com/pnp/sp-dev-fx-controls-react/pull/930)
+- `FieldCollectionData`: FieldCollectionData is not setting sortIdx on resulting collection when using 'Add and Save' [#929](https://github.com/pnp/sp-dev-fx-controls-react/issues/929)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](https://github.com/nbelyh), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
 
 ## 2.7.0
 

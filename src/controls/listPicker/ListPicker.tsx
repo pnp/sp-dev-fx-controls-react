@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { IDropdownOption, IDropdownProps, Dropdown } from 'office-ui-fabric-react/lib/components/Dropdown';
+import { cloneDeep } from '@microsoft/sp-lodash-subset';
+import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/components/Spinner';
-import { IListPickerProps, IListPickerState } from './IListPicker';
+import * as React from 'react';
+
+import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
-import * as telemetry from '../../common/telemetry';
-
+import { IListPickerProps, IListPickerState } from './IListPicker';
 import styles from './ListPicker.module.scss';
-import { cloneDeep } from '@microsoft/sp-lodash-subset';
 
 /**
 * Empty list value, to be checked for single list selection
@@ -51,7 +51,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
       prevProps.baseTemplate !== this.props.baseTemplate ||
       prevProps.includeHidden !== this.props.includeHidden ||
       prevProps.orderBy !== this.props.orderBy ||
-      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl
+      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl||
+      prevProps.refreshToggle !== this.props.refreshToggle
     ) {
       this.loadLists();
     }
@@ -65,7 +66,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   * Loads the list from SharePoint current web site
   */
   private loadLists() {
-    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter, webAbsoluteUrl } = this.props;
+    const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter, webAbsoluteUrl, contentTypeId } = this.props;
 
     // Show the loading indicator and disable the dropdown
     this.setState({ loading: true });
@@ -75,7 +76,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
       baseTemplate: baseTemplate,
       includeHidden: includeHidden,
       orderBy: orderBy,
-      filter: filter
+      filter: filter,
+      contentTypeId: contentTypeId
     }).then((results) => {
       let options: IDropdownOption[] = [];
 
@@ -150,7 +152,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     const dropdownOptions: IDropdownProps = {
       className: className,
       options: options,
-      disabled: ( loading || disabled ),
+      disabled: (loading || disabled),
       label: label,
       placeHolder: placeholder || placeHolder,
       onChanged: this.onChanged
@@ -164,8 +166,8 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
     }
 
     return (
-      <div className={ styles.listPicker }>
-        { loading && <Spinner className={ styles.spinner } size={SpinnerSize.xSmall} /> }
+      <div className={styles.listPicker}>
+        { loading && <Spinner className={styles.spinner} size={SpinnerSize.xSmall} />}
         <Dropdown {...dropdownOptions} />
       </div>
     );

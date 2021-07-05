@@ -35,3 +35,4 @@ export * from './FieldUrlRenderer';
 export * from './FieldUserRenderer';
 export * from './Accordion';
 export * from './AnimatedDialog';
+export * from './DynamicForm';

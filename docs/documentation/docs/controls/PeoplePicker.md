@@ -60,7 +60,8 @@ The People picker control can be configured with the following properties:
 | ---- | ---- | ---- | ---- | ---- |
 | context | BaseComponentContext | yes | Context of the current web part. | |
 | titleText | string | no | Text to be displayed on the control | |
-| groupName | string | no | group from which users are fetched. Leave it blank if need to filter all users | _none_ |
+| groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | _none_ |
+| groupId | number | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. | _none_ |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
 | required | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |

@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css, ISerializableObject } from 'office-ui-fabric-react/lib/Utilities';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
@@ -40,7 +39,6 @@ export class FieldFileTypeRenderer extends React.Component<IFieldFileTypeRendere
     this.state = {};
   }
 
-  @override
   public render(): JSX.Element {
     const optionalStyles: ISerializableObject = {
     };

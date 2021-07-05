@@ -1,10 +1,10 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
-import { IFile, ILibrary } from "../../services/FileBrowserService.types";
+import { IFile, IFolder, ILibrary } from "../../services/FileBrowserService.types";
 
 export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
   libraryData?: ILibrary;
-  folderData?: IFile;
+  folderData?: IFolder;
 }
 
 export interface IFilePickerTab {
@@ -45,4 +45,9 @@ export interface IFilePickerResult {
    * Downloads file picker result content.
    */
   downloadFileContent: () => Promise<File>;
+
+  /**
+   * Preview
+   */
+  previewDataUrl?: string;
 }

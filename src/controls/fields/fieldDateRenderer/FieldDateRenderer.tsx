@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
@@ -33,7 +32,6 @@ export class FieldDateRenderer extends React.Component<IFieldDateRendererProps, 
         this.state = {};
     }
 
-    @override
     public render(): JSX.Element {
             return (<FieldBaseTextRenderer cssProps={this.props.cssProps} className={css(this.props.className)} noTextRender={true}>{this.props.text}</FieldBaseTextRenderer>);
     }

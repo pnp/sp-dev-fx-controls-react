@@ -3,6 +3,8 @@ import { TimeConvention, DateConvention } from './DateTimeConventions';
 import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
 
+export type MinutesIncrement = 1 | 5 | 10 | 15 | 30;
+
 /**
  * Public properties of the DateTimePicker custom field
  *
@@ -102,12 +104,12 @@ export interface IDateTimePickerProps {
    * Specify if labels in front of date and time parts should be rendered. True by default
    */
   showLabels?: boolean;
-  
+
   /**
    * Placeholder text for the DatePicker
    */
   placeholder?: string;
-  
+
   /**
    * The minimum allowable date for the DatePicker
    */
@@ -119,4 +121,9 @@ export interface IDateTimePickerProps {
    */
 
   maxDate?: Date;
+
+  /**
+   * Specifies minutes' increment step
+   */
+  minutesIncrementStep?: MinutesIncrement;
 }

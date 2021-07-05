@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ITeamProps } from "./ITeamProps";
-import { PersonCardInteraction, People } from "@microsoft/mgt-react";
+import { PersonCardInteraction } from "@microsoft/mgt-spfx";
+import { People } from "@microsoft/mgt-react/dist/es6/spfx";
 import { getMyTeamsStyles } from "../../MyTeamsStyles";
 import { CommandButton } from "office-ui-fabric-react/lib/Button";
 import { FontIcon } from "office-ui-fabric-react/lib/Icon";

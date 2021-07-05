@@ -3,6 +3,7 @@ import * as React from "react";
 import SPservice from "../../services/SPService";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
+import { getId } from 'office-ui-fabric-react/lib/Utilities';
 import { IListItemPickerProps, IListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
@@ -10,6 +11,7 @@ import isEqual from 'lodash/isEqual';
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
   private _spservice: SPservice;
+  private _tagPickerId = getId('tagPicker');
 
   constructor(props: IListItemPickerProps) {
     super(props);
@@ -49,8 +51,8 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     if (this.props.listId !== nextProps.listId
       || this.props.columnInternalName !== nextProps.columnInternalName
       || this.props.webUrl !== nextProps.webUrl) {
-        this.loadField(nextProps);
-      }
+      this.loadField(nextProps);
+    }
   }
 
   /**
@@ -67,22 +69,26 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
 
     return (
       <div>
-        <TagPicker onResolveSuggestions={this.onFilterChanged}
-          //   getTextFromItem={(item: any) => { return item.name; }}
-          getTextFromItem={this.getTextFromItem}
-          pickerSuggestionsProps={{
-            suggestionsHeaderText: suggestionsHeaderText,
-            noResultsFoundText: noresultsFoundText
-          }}
-          selectedItems={selectedItems}
-          onChange={this.onItemChanged}
-          className={className}
-          itemLimit={itemLimit}
-          disabled={disabled}
-          inputProps={{
-            placeholder: placeholder
-          }} />
-
+        {!!this.props.label &&
+          <Label htmlFor={this._tagPickerId} >{this.props.label}</Label>
+        }
+        <div id={this._tagPickerId}>
+          <TagPicker onResolveSuggestions={this.onFilterChanged}
+            //   getTextFromItem={(item: any) => { return item.name; }}
+            getTextFromItem={this.getTextFromItem}
+            pickerSuggestionsProps={{
+              suggestionsHeaderText: suggestionsHeaderText,
+              noResultsFoundText: noresultsFoundText
+            }}
+            selectedItems={selectedItems}
+            onChange={this.onItemChanged}
+            className={className}
+            itemLimit={itemLimit}
+            disabled={disabled}
+            inputProps={{
+              placeholder: placeholder
+            }} />
+        </div>
         {!!errorMessage &&
           (<Label style={{ color: '#FF0000' }}> {errorMessage} </Label>)}
       </div>

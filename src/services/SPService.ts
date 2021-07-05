@@ -1,7 +1,10 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
-import { ISPField, ISPLists } from "../common/SPEntities";
+import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
+import { urlCombine } from "../common/utilities";
+import filter from 'lodash/filter';
+import find from 'lodash/find';
 
 export default class SPService implements ISPService {
 
@@ -44,7 +47,9 @@ export default class SPService implements ISPService {
   public async getLibs(options?: ILibsOptions): Promise<ISPLists> {
     let filtered: boolean;
     let queryUrl: string = `${this._webAbsoluteUrl}/_api/web/lists?$select=Title,id,BaseTemplate`;
-
+    if (options.contentTypeId) {
+      queryUrl += `,ContentTypes/Id&$expand=ContentTypes`;
+    }
     if (options.orderBy) {
       queryUrl += `&$orderby=${options.orderBy === LibsOrderBy.Id ? 'Id' : 'Title'}`;
     }
@@ -65,7 +70,17 @@ export default class SPService implements ISPService {
 
     const data = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);
     if (data.ok) {
-      return await data.json() as Promise<ISPLists>;
+      const result: ISPLists = await data.json();
+      if (options.contentTypeId) {
+        const filteredLists = filter(result.value, (aList: ISPList) => {
+          return find(aList.ContentTypes, (ct) => {
+            return ct.Id.StringValue.toUpperCase().startsWith(options.contentTypeId.toUpperCase());
+          });
+
+        });
+        result.value = filteredLists as ISPList[];
+      }
+      return result as ISPLists;
     } else {
       return null;
     }
@@ -74,7 +89,7 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filter?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
+  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filterString?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
     let returnItems: any[];
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
@@ -99,8 +114,8 @@ export default class SPService implements ISPService {
     }
     else {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-        `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filter ? ' and ' + filter : ''}`
-        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filter ? ' and ' + filter : ''}`; //string = filterList  ? `and ${filterList}` : '';
+        `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filterString ? ' and ' + filterString : ''}`
+        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filterString ? ' and ' + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
     }
 
@@ -246,7 +261,7 @@ export default class SPService implements ISPService {
   public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
     try {
       // Remove special characters in FileName
-      //Updating the escape characters for filename as per the doucmentations 
+      //Updating the escape characters for filename as per the doucmentations
       //https://support.microsoft.com/en-us/kb/905231
       fileName = fileName.replace(/[\~\#\%\&\*\{\}\\\:\<\>\?\/\+\|]/gi, '');
       // Check if attachment exists
@@ -356,5 +371,176 @@ export default class SPService implements ISPService {
     }
 
     return;
+  }
+
+  public async getLookupValue(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const result = await data.json();
+        if (result && result[fieldName]) {
+          return [{ key: result[fieldName].ID, name: result[fieldName].Title }];
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getLookupValues(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const result = await data.json();
+        if (result && result[fieldName]) {
+          let lookups = [];
+          result[fieldName].forEach(element => {
+            lookups.push({ key: element.ID, name: element.Title });
+          });
+          return lookups;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/UserName&$expand=${fieldName}`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const result = await data.json();
+        if (result && result[fieldName]) {
+          let emails = [];
+          result[fieldName].forEach(element => {
+            emails.push(element.UserName);
+          });
+          return emails;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getUserUPNById(userId: number, webUrl?: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName`;
+
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results.UserPrincipalName;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any[]> {
+    try {
+      const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
+      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
+        body: JSON.stringify({
+          parameters: {
+            RenderOptions: 2,
+            ViewXml: `<View>
+                        <ViewFields>
+                          <FieldRef Name="${fieldName}"/>
+                        </ViewFields>
+                        <Query>
+                          <Where>
+                            <Eq>
+                              <FieldRef Name="ID"/>
+                              <Value Type="Number">${listItemId}</Value>
+                            </Eq>
+                          </Where>
+                        </Query>
+                        <RowLimit Paged="TRUE">1</RowLimit>
+                      </View>`
+          }
+        })
+      });
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results.Row[0][fieldName];
+        }
+      }
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  public async uploadImage(listId: string, itemId: number | undefined, fileName: string, file: ArrayBuffer, listTitle: string | undefined, webUrl?: string): Promise<IUploadImageResult> {
+    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+
+    let listTitleValue = listTitle;
+    if (!listTitle) {
+      const listApiUrl = urlCombine(webAbsoluteUrl, `/_api/web/lists('${listId}')`, false);
+      const listResponse = await this._context.spHttpClient.get(listApiUrl, SPHttpClient.configurations.v1);
+      const listJson = await listResponse.json();
+      listTitleValue = listJson.Title;
+    }
+
+    const apiUrl = urlCombine(webAbsoluteUrl, `/_api/web/UploadImage(listTitle=@a1,imageName=@a2,listId=@a3,itemId=@a4)?@a1='${listTitleValue}'&@a2='${fileName}'&@a3='${listId}'&@a4=${itemId || 0}`, false);
+
+    const response = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
+      body: file,
+      headers: {
+        'content-length': file.byteLength.toString()
+      }
+    });
+
+    const result = await response.json() as IUploadImageResult;
+
+    return result;
   }
 }

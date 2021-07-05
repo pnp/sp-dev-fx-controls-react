@@ -12,12 +12,12 @@ import styles from './ListItemAttachments.module.scss';
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
   private fileInput;
+  private _isFileExplorerOpen = false;
 
   constructor(props: IUploadAttachmentProps) {
     super(props);
 
     this.state = {
-      file: null,
       hideDialog: true,
       dialogMessage: '',
       isLoading: false,
@@ -35,9 +35,10 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
    * @param prevState
    */
   public componentDidUpdate(prevProps: IUploadAttachmentProps, prevState: IUploadAttachmentState): void {
-    if (this.props.fireUpload) {
+    if (this.props.fireUpload && !this._isFileExplorerOpen) {
       this.fileInput.current.value = '';
       this.fileInput.current.click();
+      this._isFileExplorerOpen = true;
     }
   }
 
@@ -60,28 +61,32 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
     const reader = new FileReader();
     const file = e.target.files[0];
+    return new Promise<void>((resolve,errorCallback)=>{
+      reader.onloadend = async () => {
 
-    reader.onloadend = async () => {
-      this.setState({
-        file: file
-      });
+        try {
+          if(this.props.itemId && this.props.itemId > 0){
+            await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+          }
 
-      try {
-        await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+          this.props.onAttachmentUpload(file);
+          this.setState({
+            isLoading: false
+          });
+          resolve();
+        } catch (error) {
+          this.setState({
+            hideDialog: false,
+            isLoading: false,
+            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
+          });
+          errorCallback(error);
+        }
+        this._isFileExplorerOpen = false;
+      };
+      reader.readAsDataURL(file);
+    });
 
-        this.setState({
-          isLoading: false
-        });
-        this.props.onAttachmentUpload();
-      } catch (error) {
-        this.setState({
-          hideDialog: false,
-          isLoading: false,
-          dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
-        });
-      }
-    };
-    reader.readAsDataURL(file);
   }
 
   /**

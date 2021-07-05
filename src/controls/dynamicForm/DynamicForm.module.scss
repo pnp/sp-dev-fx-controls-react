@@ -1,0 +1,101 @@
+@import "~office-ui-fabric-react/dist/sass/References.scss";
+
+.FieldEditor {
+	padding: 4px 3px;
+}
+
+.titleContainer {
+  display: flex;
+}
+
+.fieldLabel {
+	font-weight: 600;
+	font-size: 14px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+		"Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-weight: 600;
+	color: "[theme:neutralPrimary, default:#323130]";
+	box-sizing: border-box;
+	box-shadow: none;
+	margin: 0px;
+	overflow-wrap: break-word;
+  display: block;
+}
+
+.fieldIcon {
+	align-self: center;
+	font-size: 16px;
+	color: "[theme:neutralSecondary, default: #605e5c]";
+	margin-right: 8px;
+}
+
+.feildDisplayNoPadding {
+  display: inline-block;
+	vertical-align: top;
+	width: 100%;
+	font-size: 14px;
+	font-weight: 400;
+	outline: 0;
+}
+
+.feildDisplay {
+	@extend .feildDisplayNoPadding;
+	padding: 6px 0 7px 0;
+	//border: 2px solid;
+  //border-color: "[theme:white, default:#ffffff]";
+	//margin-left: -2px;
+}
+
+.fieldRequired::after {
+	content: " *";
+	color: "[theme:errorText, default:#a4262c]";
+	padding-right: 12px;
+}
+
+.buttons {
+	padding: 15px 4px;
+}
+
+.filePicker {
+	padding: 7px;
+	align-items: center;
+}
+
+.richText {
+  position: relative;
+}
+
+.errormessage {
+	animation-duration: 0.367s;
+	animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+	animation-fill-mode: both;
+	font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
+		"Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	font-size: 12px;
+	font-weight: 400;
+	color: "[theme:errorText, default:#a4262c]";
+	margin: 0px;
+	padding-top: 5px;
+	display: flex;
+	align-items: center;
+}
+
+.fieldContainer {
+  padding-bottom: 4px;
+}
+
+.labelContainer {
+  padding-bottom: 7px;
+}
+
+.pickersContainer {
+  padding: 6px 0 7px;
+}
+
+.thumbnailFieldButtons {
+  display: flex;
+}

@@ -1,4 +1,3 @@
-import { override } from '@microsoft/decorators';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -78,7 +77,6 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         this._onDoubleClick = this._onDoubleClick.bind(this);
     }
 
-    @override
     public componentDidMount() {
         //
         // small hack for double click.
@@ -92,14 +90,12 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         }
     }
 
-    @override
     public componentWillUnmount() {
         if (this._button) {
             this._button.removeEventListener('dblclick', this._onDoubleClick);
         }
     }
 
-    @override
     public render(): JSX.Element {
         const isLink: boolean = this.props.isLink;
         //

@@ -75,7 +75,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Get initial persons
    */
   private async getInitialPersons(props: IPeoplePickerProps) {
-    const { groupName, webAbsoluteUrl, defaultSelectedUsers, ensureUser, principalTypes } = props;
+    const { groupName, groupId, webAbsoluteUrl, defaultSelectedUsers, ensureUser, principalTypes } = props;
     // Check if a group property was provided, and get the group ID
     if (groupName) {
       this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
@@ -85,6 +85,8 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         });
         return;
       }
+    } else if (groupId) {
+      this.groupId = groupId;
     } else {
       this.groupId = null;
     }
