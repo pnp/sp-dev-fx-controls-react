@@ -136,6 +136,13 @@ export interface ITaxonomyPickerProps  {
    * By default this is set to false.
    */
   selectChildrenIfParentSelected?: boolean;
+
+  /**
+   * Specifies if you want to use the userLanguage
+   * Default will be false
+   */
+   useUserLanguage?: boolean;
+
 }
 
 /**
