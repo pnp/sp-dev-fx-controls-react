@@ -210,6 +210,7 @@ declare interface IControlStrings {
   DateTimePickerHourValueInvalid: string;
   DateTimePickerMinuteValueInvalid: string;
   DateTimePickerSecondValueInvalid: string;
+  DateTimePickerTextErrorMessage: string;
 
   // File picker
   AddFileButtonLabel: string;
