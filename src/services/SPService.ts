@@ -114,8 +114,8 @@ export default class SPService implements ISPService {
     }
     else {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-        `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})${filterString ? ' and ' + filterString : ''}`
-        : `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')${filterString ? ' and ' + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
+        `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
+        : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
     }
 

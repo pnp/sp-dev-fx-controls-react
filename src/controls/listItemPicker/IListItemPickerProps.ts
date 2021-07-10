@@ -28,4 +28,9 @@ export interface IListItemPickerProps {
    */
    label?: string;
 
+   /**
+    * Enable default suggestions. All options are displayed by default when clicking on the control
+    */
+   enableDefaultSuggestions?: boolean;
+
 }
