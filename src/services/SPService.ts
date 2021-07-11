@@ -440,7 +440,7 @@ export default class SPService implements ISPService {
   public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/UserName&$expand=${fieldName}`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -448,7 +448,7 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           let emails = [];
           result[fieldName].forEach(element => {
-            emails.push(element.UserName);
+            emails.push(element.Id + "/" + element.Title);
           });
           return emails;
         }
@@ -461,16 +461,16 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getUserUPNById(userId: number, webUrl?: string): Promise<any[]> {
+  public async getUserUPNById(userId: number, webUrl?: string): Promise<string> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName,Title`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const results = await data.json();
         if (results) {
-          return results.UserPrincipalName;
+          return userId + "/" + results.Title;
         }
       }
 

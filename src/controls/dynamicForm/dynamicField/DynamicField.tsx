@@ -74,7 +74,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       isRichText,
       //bingAPIKey,
       dateFormat,
-      columnInternalName
+      columnInternalName,
+      principalType
     } = this.props;
 
     const {
@@ -335,7 +336,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             personSelectionLimit={1}
             showtooltip={false}
             showHiddenInUI={false}
-            principalTypes={[PrincipalType.User]} // TODO: principal types should be read from the column settings
+            principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
             resolveDelay={1000}
             onChange={(items) => { this.onChange(items); }}
             disabled={disabled}
@@ -357,7 +358,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             personSelectionLimit={30}
             showtooltip={false}
             showHiddenInUI={false}
-            principalTypes={[PrincipalType.User]} // TODO: principal types should be read from the column settings
+            principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
             resolveDelay={1000}
             onChange={(items) => { this.onChange(items); }}
             disabled={disabled}
