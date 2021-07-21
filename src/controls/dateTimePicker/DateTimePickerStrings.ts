@@ -97,8 +97,7 @@ export class DateTimePickerStrings implements IDateTimePickerStrings {
   public timeSeparator: string = strings.DateTimePickerTimeSeparator;
   /**
    * error message when text is entered in the date picker
-   *  ?? added for a default label until loc strings are completed
    */
-   public textErrorMessage: string = strings?.DateTimePickerTextErrorMessage ?? "Please enter a valid date";
+   public textErrorMessage: string = strings.DateTimePickerTextErrorMessage; 
 
 }
