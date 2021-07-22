@@ -326,6 +326,9 @@ define([], () => {
     "WebSearchLinkLabel": "Vyhľadávanie na webe",
     "Yes": "áno",
     "SelectedLabel": "Zvolené",
-    "SelectIcon": "Vybrať ikonu"
+    "SelectIcon": "Vybrať ikonu",
+    "StockImagesLinkLabel": "Skladové obrázky",
+    "StockImagesHeader": "Skladové obrázky",
+    "OrgAssetsLinkLabel": "Vašej organizácie"
   };
 });
