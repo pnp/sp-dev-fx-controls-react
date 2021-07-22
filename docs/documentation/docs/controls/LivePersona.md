@@ -20,14 +20,14 @@ import { LivePersona } from "@pnp/spfx-controls-react/lib/LivePersona";
 
 
 ```TypeScript
-<LivePersona   upn="joao.j.mendes@spteck.com"
-               template={
-               <>
-                <Persona text="João Mendes" secondaryText="joao.j.mendes@sapteck.com" coinSize={48} />
-               </>
-               }
-               context={this.props.context}
-          />
+<LivePersona upn="joao.j.mendes@spteck.com"
+  template={
+    <>
+      <Persona text="João Mendes" secondaryText="joao.j.mendes@sapteck.com" coinSize={48} />
+    </>
+  }
+  context={this.props.context}
+/>
 ```
 
 
@@ -46,4 +46,4 @@ The `LivePersona` control can be configured with the following properties:
 
 ## Considerations
 
-The LivePersona Card use Internal SharePoint Component and it can be changed in future, use it on your own risc and be consciente that it's beahvour can be chasnged
+The LivePersona Card use Internal SharePoint Component and it can be changed in future, use it on your own risc and be consciente that it's behaviour can be changed
