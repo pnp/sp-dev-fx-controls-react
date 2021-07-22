@@ -11,7 +11,8 @@
           "`FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)",
           "`DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)",
           "`DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)",
-          "`ListItemPicker`: add property to show all options by default [#955](https://github.com/pnp/sp-dev-fx-controls-react/issues/955)"
+          "`ListItemPicker`: add property to show all options by default [#955](https://github.com/pnp/sp-dev-fx-controls-react/issues/955)",
+          "`ListItemPicker`: Missing translation keys, improved FI, NL translation [#957](https://github.com/pnp/sp-dev-fx-controls-react/pull/957)"
         ],
         "fixes": [
           "`RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)",
@@ -23,7 +24,8 @@
         "[Ketill Antoníus Ágústsson](https://github.com/Katli95)",
         "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
         "[Sergio Ortega Martín](https://github.com/sortegamartin)",
-        "[João Mendes](https://github.com/joaojmendes)"
+        "[João Mendes](https://github.com/joaojmendes)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)"
       ]
     },
     {
