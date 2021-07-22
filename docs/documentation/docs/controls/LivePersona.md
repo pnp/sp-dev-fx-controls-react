@@ -46,4 +46,4 @@ The `LivePersona` control can be configured with the following properties:
 
 ## Considerations
 
-The LivePersona Card use Internal SharePoint Component and it can be changed in future, use it on your own risc and be consciente that it's behaviour can be changed
+The LivePersona Card uses an internal SharePoint Component and it can be changed in the future. Use at your own risk and be conscious that it's behaviour can be changed
