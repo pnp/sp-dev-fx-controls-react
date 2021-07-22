@@ -1,4 +1,3 @@
-import { BaseComponentContext} from "@microsoft/sp-component-base";
 import * as React from "react";
 import { createElement, useEffect, useRef } from "react";
 import { useState } from "react";
@@ -28,18 +27,18 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
     })();
   }, []);
 
-let renderPersona: JSX.Element = null;
-if (isComponentLoaded) {
-    renderPersona = createElement(sharedLibrary.current.LivePersonaCard, {
-        className: 'livePersonaCard',
-        clientScenario: 'livePersonaCard',
-        disableHover:  disableHover,
-        hostAppPersonaInfo: {
-            PersonaType: 'User'
-        },
-        upn:  upn,
-        serviceScope: context.serviceScope,
-    }, createElement("div",{},template));
-}
-return renderPersona;
+  let renderPersona: JSX.Element = null;
+  if (isComponentLoaded) {
+      renderPersona = createElement(sharedLibrary.current.LivePersonaCard, {
+          className: 'livePersonaCard',
+          clientScenario: 'livePersonaCard',
+          disableHover:  disableHover,
+          hostAppPersonaInfo: {
+              PersonaType: 'User'
+          },
+          upn:  upn,
+          serviceScope: context.serviceScope,
+      }, createElement("div",{},template));
+  }
+  return renderPersona;
 };
