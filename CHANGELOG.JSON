@@ -3,7 +3,9 @@
     {
       "version": "3.3.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`LivePersona`: New Control LivePersona [#969](https://github.com/pnp/sp-dev-fx-controls-react/pull/969)"
+        ],
         "enhancements": [
           "`FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)",
           "`FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)",
@@ -20,7 +22,8 @@
       "contributions": [
         "[Ketill Antoníus Ágústsson](https://github.com/Katli95)",
         "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
-        "[Sergio Ortega Martín](https://github.com/sortegamartin)"
+        "[Sergio Ortega Martín](https://github.com/sortegamartin)",
+        "[João Mendes](https://github.com/joaojmendes)"
       ]
     },
     {
