@@ -51,6 +51,21 @@ private onTaxPickerChange(terms : IPickerTerms) {
 }
 ```
 
+- With the `onNewTerm` property you can capture the event, when text is in the input field and
+enter/return as pressed. With a controlled TaxonomyPicker, this enables you to create the term 
+and have the same flow as in SharePoint Keywords fields.
+
+```typescript
+    const onNewTerm = (value: IPickerTerm): void => {
+            if(value?.name && EmptyGuid === value.key ){
+                console.log(`TaxonmyPicker.onNewTerm name=${value.name}`, value );
+                // Create keyword
+            } else {
+                console.error(`TaxonmyPicker.onNewTerm name=${value?.name}`, value );
+            }
+        };
+```
+
 ## Term actions
 
 Since version `1.12.0`, you can apply term actions to all terms or specific ones. Term actions could for instance be used to retrieve the labels of the term, or retrieve other information. These term actions can be implemented as follows:
@@ -158,6 +173,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | allowMultipleSelections | boolean | no | Defines if the user can select only one or many term sets. Default value is false. |
 | termsetNameOrID | string | yes | The name or Id of your TermSet that you would like the Taxonomy Picker to chose terms from. |
 | onChange | function | no |  captures the event of when the terms in the picker has changed. |
+| onNewTerm | function | no | captures the event when text is in the input field and the user presses return |
 | isTermSetSelectable | boolean | no | Specify if the TermSet itself is selectable in the tree view. |
 | disabledTermIds | string[] | no | Specify which terms should be disabled in the term set so that they cannot be selected. |
 | disableChildrenOfDisabledParents | boolean | no | Specify if you want to disable the child terms when their parent is disabled. |
