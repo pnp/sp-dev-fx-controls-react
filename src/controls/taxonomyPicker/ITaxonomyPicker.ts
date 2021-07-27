@@ -1,4 +1,4 @@
-import { IPickerTerms } from './ITermPicker';
+import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
@@ -103,6 +103,11 @@ export interface ITaxonomyPickerProps  {
    *
    */
   onGetErrorMessage?: (value: IPickerTerms) => string | Promise<string>;
+
+  /**
+   *  Called when text is in the input field and the enter key is pressed.  
+   */
+  onNewTerm?: (value: IPickerTerm) => void;
 
   /**
    * Static error message displayed below the text field. Use onGetErrorMessage to dynamically change the error message displayed (if any) based on the current value. errorMessage and onGetErrorMessage are mutually exclusive (errorMessage takes precedence).

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BasePicker, IBasePickerProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
+import { BasePicker, IBasePickerProps, IInputProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
 import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
@@ -9,6 +9,7 @@ import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
 import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
+import { LegacyRef, KeyboardEvent } from 'react';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -17,6 +18,7 @@ export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPi
 
 export interface ITermPickerState {
   terms: IPickerTerms;
+  elRef?: LegacyRef<TermBasePicker> & LegacyRef<any>;
 }
 
 export interface ITermPickerProps {
@@ -30,6 +32,8 @@ export interface ITermPickerProps {
   disableChildrenOfDisabledParents?: boolean;
   placeholder?: string;
 
+  /** Called when text is in the input field and the enter key is pressed.  */
+  onNewTerm?: (newLabel: string) => void;
   onChanged: (items: IPickerTerm[]) => void;
   onInputChange: (input: string) => string;
   onBlur: (ev: React.FocusEvent<HTMLElement | Autofill>) => void;
@@ -201,6 +205,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       onChanged,
       onInputChange,
       onBlur,
+      onNewTerm,
       allowMultipleSelections,
       placeholder
     } = this.props;
@@ -209,9 +214,36 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       terms
     } = this.state;
 
+    const clearDisplayValue = () => {
+      const picker = this.state.elRef as unknown as TermBasePicker;
+      const autoFill = picker?.['input']?.current as Autofill;
+      if (autoFill) {
+        autoFill['_value'] = '';
+        autoFill.setState({ displayValue: '' });
+      } else {
+        throw new Error(`TermPicker.TermBasePicker.render.clearDisplayValue no autoFill to reset displayValue`);
+      }
+  };
+
+    const inputProps: IInputProps = { placeholder: placeholder };
+
+    if(onNewTerm) {
+      inputProps.onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e && e.key === 'Enter' && (! (e.ctrlKey || e.altKey || e.shiftKey)) && e.target?.['value'] ) {
+          onNewTerm(e.target['value']);
+          clearDisplayValue();
+        }
+      };
+    }
+
     return (
       <div>
         <TermBasePicker
+          ref={(elRef) => {
+            if (!this.state.elRef) {
+              this.setState({ elRef });
+            }
+          }}        
           disabled={disabled}
           onResolveSuggestions={this.onFilterChanged}
           onRenderSuggestionsItem={this.onRenderSuggestionsItem}
@@ -224,9 +256,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
           onBlur={onBlur}
           itemLimit={!allowMultipleSelections ? 1 : undefined}
           className={styles.termBasePicker}
-          inputProps={{
-            placeholder: placeholder
-          }}
+          inputProps={inputProps}
         />
       </div>
     );
