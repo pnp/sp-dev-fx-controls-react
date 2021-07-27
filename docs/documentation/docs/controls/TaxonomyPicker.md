@@ -52,7 +52,7 @@ private onTaxPickerChange(terms : IPickerTerms) {
 ```
 
 - With the `onNewTerm` property you can capture the event, when text is in the input field and
-enter/return as pressed. With a controlled TaxonomyPicker, this enables you to create the term 
+enter/return is pressed. With a controlled TaxonomyPicker, this enables you to create the term 
 and have the same flow as in SharePoint Keywords fields.
 
 ```typescript
