@@ -75,7 +75,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       //bingAPIKey,
       dateFormat,
       columnInternalName,
-      principalType
+      principalType,
+      description
     } = this.props;
 
     const {
@@ -95,6 +96,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const labelEl = <label className={(required) ? styles.fieldRequired + ' ' + styles.fieldLabel : styles.fieldLabel}>{labelText}</label>;
     const errorText = this.getRequiredErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
+    const descriptionEl = <text className={styles.fieldDescription}>{description}</text>;
 
     switch (fieldType) {
       case 'loading':
@@ -119,6 +121,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onBlur={this.onBlur}
             errorMessage={errorText}
           />
+          {descriptionEl}
         </div>;
 
       case 'Note':
@@ -135,6 +138,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               onChange={(newText) => { this.onChange(newText); return newText; }}
               isEditMode={disabled}>
             </RichText>
+            {descriptionEl}
             {errorTextEl}
           </div>;
         }
@@ -154,6 +158,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               onBlur={this.onBlur}
               errorMessage={errorText}
             />
+            {descriptionEl}
           </div>;
         }
 
@@ -169,6 +174,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, option) => { this.onChange(option); }}
             onBlur={this.onBlur}
             errorMessage={errorText} />
+          {descriptionEl}
         </div>;
 
       case 'MultiChoice':
@@ -184,6 +190,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             multiSelect
             onBlur={this.onBlur}
             errorMessage={errorText} />
+          {descriptionEl}
         </div>;
 
       case 'Location':
@@ -200,6 +207,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             defaultValue={defaultValue}
             errorMessage={errorText}
           />
+          {descriptionEl}
         </div>;
 
       case 'Lookup':
@@ -219,6 +227,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
             context={context}
           />
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -239,6 +248,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
             context={context}
           />
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -257,6 +267,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             disabled={disabled}
             onBlur={this.onBlur}
             errorMessage={errorText} />
+          {descriptionEl}
         </div>;
 
       case 'Currency':
@@ -274,6 +285,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             disabled={disabled}
             onBlur={this.onBlur}
             errorMessage={errorText} />
+          {descriptionEl}
         </div>;
 
       case 'DateTime':
@@ -302,6 +314,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               onChange={(newDate) => { this.onChange(newDate); }}
               disabled={disabled} />
           }
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -319,6 +332,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, checkedvalue) => { this.onChange(checkedvalue); }}
             disabled={disabled}
           />
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -341,6 +355,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(items) => { this.onChange(items); }}
             disabled={disabled}
           />
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -363,6 +378,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(items) => { this.onChange(items); }}
             disabled={disabled}
           />
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -388,6 +404,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               onChange={(e, newText) => { this.onURLChange(newText, false); }}
               disabled={disabled} />
           </Stack>
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -435,6 +452,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
                 />}
             </div>
           </Stack>
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -458,6 +476,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               isTermSetSelectable={false}
             />
           </div>
+          {descriptionEl}
           {errorTextEl}
         </div>;
 
@@ -480,6 +499,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
               isTermSetSelectable={false} />
           </div>
+          {descriptionEl}
           {errorTextEl}
         </div>;
     }
