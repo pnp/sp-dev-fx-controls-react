@@ -13,7 +13,8 @@
           "`DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)",
           "`ListItemPicker`: add property to show all options by default [#955](https://github.com/pnp/sp-dev-fx-controls-react/issues/955)",
           "`ListItemPicker`: Missing translation keys, improved FI, NL translation [#957](https://github.com/pnp/sp-dev-fx-controls-react/pull/957)",
-          "`TaxonomyPicker`: Added onNewTerm called when enter is pressed [#967](https://github.com/pnp/sp-dev-fx-controls-react/pull/967)"
+          "`TaxonomyPicker`: Added onNewTerm called when enter is pressed [#967](https://github.com/pnp/sp-dev-fx-controls-react/pull/967)",
+          "`DynamicForm`: Principal Types support [#956](https://github.com/pnp/sp-dev-fx-controls-react/pull/956)"
         ],
         "fixes": [
           "`RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)",
