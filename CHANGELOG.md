@@ -1,5 +1,24 @@
 # Releases
 
+## 2.9.0
+
+### Enhancements
+
+- `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
+- `FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)
+- `DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)
+- `DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)
+- `DynamicForm`: Principal Types support [#956](https://github.com/pnp/sp-dev-fx-controls-react/pull/956)
+
+### Fixes
+
+- `RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)
+- `RichText`: impossible to display link with the text equal to the url [#949](https://github.com/pnp/sp-dev-fx-controls-react/issues/949)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
+
 ## 2.8.0
 
 ### New control(s)
