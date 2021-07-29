@@ -229,7 +229,7 @@ export default class SPPeopleSearchService {
             switch (element.EntityType) {
               case 'User':
                 const accountName: string =  element.Description || "";
-                const email: string  =  element.EntityData.Email || element.Description;
+                const email: string  =  element.EntityData?.Email || element.Description;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
@@ -241,12 +241,13 @@ export default class SPPeopleSearchService {
                   optionalText: "" // anything
                 } as IPeoplePickerUserItem;
               case 'SecGroup':
+                const secondaryText = element.EntityData?.Email || element.ProviderName
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,
-                  secondaryText: element.ProviderName
+                  secondaryText,
                 } as IPeoplePickerUserItem;
               case 'FormsRole':
                 return {
