@@ -11,14 +11,10 @@ import { RenderComments } from "./RenderComments";
 import { RenderError } from "./RenderError";
 import { RenderScrollingInfo } from "./RenderScrollingInfo";
 import { Text } from "@fluentui/react/lib/Text";
-import { SPPermission } from "@microsoft/sp-page-context";
 
 import { AddComment } from "../AddComment/AddComment";
-import { SecurityTrimmedControl } from "../../../securityTrimmedControl";
-import { AppContext } from "../../common";
 export const CommentsList: React.FunctionComponent = () => {
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
-  const { webUrl, listId } = useContext(AppContext);
   const { configurationListClasses } = useListItemCommentsStyles();
   const { getListItemComments, getNextPageOfComments } = useSpAPI();
   const { comments, isScrolling, pageInfo } = listItemCommentsState;
