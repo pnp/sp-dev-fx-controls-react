@@ -5,15 +5,17 @@ import { useState } from "react";
 import { Log } from "@microsoft/sp-core-library";
 import { SPComponentLoader } from "@microsoft/sp-loader";
 import { ILivePersonatProps} from '.';
+import { mergeStyles, mergeStyleSets } from "@fluentui/react";
 
 const LIVE_PERSONA_COMPONENT_ID: string = "914330ee-2df2-4f6e-a858-30c23a812408";
+
 
 export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
   props: React.PropsWithChildren<ILivePersonatProps>
 ) => {
   const [isComponentLoaded, setIsComponentLoaded] = useState<boolean>(false);
   const sharedLibrary = useRef<any>();
-  const { upn, template, disableHover, context } = props;
+  const { upn, template, disableHover, context, serviceScope } = props;
 
   useEffect(() => {
     (async () => {
@@ -22,7 +24,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
           sharedLibrary.current = await SPComponentLoader.loadComponentById(LIVE_PERSONA_COMPONENT_ID);
           setIsComponentLoaded(true);
         } catch (error) {
-          Log.error(`[LivePersona]`, error, context.serviceScope);
+          Log.error(`[LivePersona]`, error, serviceScope ?? context.serviceScope);
         }
       }
     })();
@@ -38,7 +40,7 @@ if (isComponentLoaded) {
             PersonaType: 'User'
         },
         upn:  upn,
-        serviceScope: context.serviceScope,
+        serviceScope: serviceScope ?? context.serviceScope,
     }, createElement("div",{},template));
 }
 return renderPersona;
