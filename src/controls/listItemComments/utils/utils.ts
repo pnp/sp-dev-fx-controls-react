@@ -1,11 +1,10 @@
-
 import { SPComponentLoader } from "@microsoft/sp-loader";
 const DEFAULT_PERSONA_IMG_HASH: string = "7ad602295f8386b7615b582d87bcc294";
 const DEFAULT_IMAGE_PLACEHOLDER_HASH: string = "4a48f26592f4e1498d7a478a4c48609c";
 const MD5_MODULE_ID: string = "8494e7d7-6b99-47b2-a741-59873e42f16f";
 const PROFILE_IMAGE_URL: string = "/_layouts/15/userphoto.aspx?size=M&accountname=";
 
-export const getScrollPosition = (_dataListContainerRef:any) => {
+export const getScrollPosition = (_dataListContainerRef: any) => {
   const { scrollTop, scrollHeight, clientHeight } = _dataListContainerRef;
   const percentNow = (scrollTop / (scrollHeight - clientHeight)) * 100;
   return percentNow;
@@ -69,7 +68,7 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
  * Get MD5Hash for the image url to verify whether user has default image or custom image
  * @param url
  */
- export const getMd5HashForUrl = async (url: string) => {
+export const getMd5HashForUrl = async (url: string) => {
   return new Promise(async (resolve, reject) => {
     // tslint:disable-next-line: no-use-before-declare
     const library: any = await loadSPComponentById(MD5_MODULE_ID);
@@ -89,7 +88,7 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
  * Load SPFx component by id, SPComponentLoader is used to load the SPFx components
  * @param componentId - componentId, guid of the component library
  */
- export const loadSPComponentById = async (componentId: string) => {
+export const loadSPComponentById = async (componentId: string) => {
   return new Promise((resolve, reject) => {
     SPComponentLoader.loadComponentById(componentId)
       .then((component: any) => {
@@ -103,7 +102,7 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
  * @param userId
  * @returns user photo
  */
- export const getUserPhoto = async (userId): Promise<string> => {
+export const getUserPhoto = async (userId): Promise<string> => {
   const personaImgUrl = PROFILE_IMAGE_URL + userId;
 
   // tslint:disable-next-line: no-use-before-declare

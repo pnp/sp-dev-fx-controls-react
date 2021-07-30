@@ -8,11 +8,7 @@ import { useContext } from "react";
 import { ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 
-export interface IRenderScrollingInfoProps {}
-
-export const RenderSpinner: React.FunctionComponent<IRenderScrollingInfoProps> = (
-  props: React.PropsWithChildren<IRenderScrollingInfoProps>
-) => {
+export const RenderSpinner: React.FunctionComponent = () => {
   const { documentCardStyles } = useListItemCommentsStyles();
   const { listItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { isScrolling , isLoading} = listItemCommentsState;

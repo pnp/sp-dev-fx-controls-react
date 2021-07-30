@@ -1,9 +1,8 @@
 export interface IAddCommentPayload {
-  text:string;
+  text: string;
   mentions: IAddMention[];
 }
-
 interface IAddMention {
-  email:string;
+  email: string;
   name: string;
 }

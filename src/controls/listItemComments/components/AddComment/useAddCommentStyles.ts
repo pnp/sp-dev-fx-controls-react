@@ -1,16 +1,9 @@
 import * as React from "react";
-import { IDocumentCardStyles, IStackStyles, IStyle, mergeStyles, mergeStyleSets } from "@fluentui/react";
+import { IDocumentCardStyles, IStackStyles, IStyle, mergeStyleSets } from "@fluentui/react";
 import { AppContext } from "../../common";
-import { IScrollablePaneStyles } from "office-ui-fabric-react/lib/ScrollablePane";
-import { NoPresenterIcon } from "@fluentui/react-northstar";
-
-const TILE_HEIGHT: number = 70;
 
 export const useAddCommentStyles = () => {
-  const { theme, numberCommentsPerPage } = React.useContext(AppContext);
-  const tilesHeight: number = numberCommentsPerPage
-    ? (numberCommentsPerPage < 5 ? 5 : numberCommentsPerPage) * TILE_HEIGHT + 35
-    : 5 * TILE_HEIGHT;
+  const { theme } = React.useContext(AppContext);
   const itemContainerStyles: IStackStyles = {
     root: { paddingTop: 0, paddingLeft: 20, paddingRight: 20, paddingBottom: 20 } as IStyle,
   };
@@ -38,13 +31,11 @@ export const useAddCommentStyles = () => {
     },
   };
 
-
   const documentCardUserStyles: Partial<IDocumentCardStyles> = {
     root: {
       marginTop: 2,
       backgroundColor: theme?.white,
       boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
-
       ":hover": {
         borderColor: theme.themePrimary,
         backgroundColor: theme.neutralLighterAlt,

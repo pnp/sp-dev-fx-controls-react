@@ -7,7 +7,6 @@ import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 import { IlistItemCommentsResults, IPageInfo } from "../../models";
 import { getScrollPosition } from "../../utils/utils";
 import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
-import { RenderComments } from "./RenderComments";
 import { RenderError } from "./RenderError";
 import { RenderSpinner } from "./RenderSpinner";
 import { Text } from "@fluentui/react/lib/Text";
@@ -16,7 +15,7 @@ import { ECommentAction } from "../../common/ECommentAction";
 import { IAddCommentPayload } from "../../models/IAddCommentPayload";
 import { useCallback } from "react";
 import strings from "ControlStrings";
-import { IComment } from "./IComment";
+import { RenderComments } from "./RenderComments";
 
 export const CommentsList: React.FunctionComponent = () => {
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
@@ -97,19 +96,20 @@ export const CommentsList: React.FunctionComponent = () => {
         });
       }
     },
-    [setlistItemCommentsState, addComment, _loadComments]
+    [setlistItemCommentsState, _loadComments]
   );
 
   useEffect(() => {
     switch (commentAction) {
       case ECommentAction.ADD:
         (async () => {
-          // Add new comment and reset state action and comment object
+          // Add new comment
           await _onAddComment(commentToAdd);
         })();
         break;
       case ECommentAction.DELETE:
         (async () => {
+          // delete comment
           const commentId = Number(selectedComment.id);
           await _onADeleteComment(commentId);
         })();
@@ -117,7 +117,7 @@ export const CommentsList: React.FunctionComponent = () => {
       default:
         break;
     }
-  }, [commentAction, commentToAdd, _onAddComment]);
+  }, [commentAction, selectedComment, commentToAdd, _onAddComment, _onADeleteComment]);
 
   useEffect(() => {
     (async () => {

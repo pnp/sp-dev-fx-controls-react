@@ -1,13 +1,30 @@
 import * as React from "react";
-import { IDocumentCardStyles, IStackStyles, IStyle, mergeStyles, mergeStyleSets } from "@fluentui/react";
+import {
+  IDocumentCardStyles,
+  IProcessedStyleSet,
+  IStackStyles,
+  IStyle,
+  mergeStyles,
+  mergeStyleSets,
+} from "@fluentui/react";
 import { AppContext } from "../../common";
 import { IScrollablePaneStyles } from "office-ui-fabric-react/lib/ScrollablePane";
+import { TILE_HEIGHT } from "../../common/constants";
 
-const TILE_HEIGHT: number = 70;
+interface returnObjectStyles {
+  itemContainerStyles: IStackStyles;
+  deleteButtonContainerStyles: Partial<IStackStyles>;
+  userListContainerStyles: Partial<IStackStyles>;
+  renderUserContainerStyles: Partial<IStackStyles>;
+  documentCardStyles: Partial<IDocumentCardStyles>;
+  documentCardDeleteStyles: Partial<IDocumentCardStyles>;
+  documentCardUserStyles: Partial<IDocumentCardStyles>;
+  configurationListClasses: any;
+}
 
-export const useListItemCommentsStyles = () => {
+export const useListItemCommentsStyles = (): returnObjectStyles => {
   const { theme, numberCommentsPerPage } = React.useContext(AppContext);
-
+  // Calc Height List tiles Container Based on number Items per Page
   const tilesHeight: number = numberCommentsPerPage
     ? (numberCommentsPerPage < 5 ? 5 : numberCommentsPerPage) * TILE_HEIGHT + 35
     : 7 * TILE_HEIGHT;
@@ -24,35 +41,21 @@ export const useListItemCommentsStyles = () => {
     },
   };
 
-
-  const userListContainerStyles : Partial<IStackStyles> =  {
-    root: { paddingLeft: 2, paddingRight: 2, paddingBottom: 2 , minWidth: 206}
-  }
+  const userListContainerStyles: Partial<IStackStyles> = {
+    root: { paddingLeft: 2, paddingRight: 2, paddingBottom: 2, minWidth: 206 },
+  };
 
   const renderUserContainerStyles: Partial<IStackStyles> = {
-    root: {paddingTop:5,paddingBottom:5, paddingLeft:10, paddingRight:10 }
+    root: { paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10 },
   };
-
-  const scrollPaneStyles: Partial<IScrollablePaneStyles> = {
-    contentContainer: {
-      "&::-webkit-scrollbar-thumb": {
-        backgroundColor: theme.neutralLighter,
-      },
-      "&::-webkit-scrollbar": {
-        width: 5,
-      },
-    },
-  };
-
   const documentCardStyles: Partial<IDocumentCardStyles> = {
     root: {
       marginBottom: 7,
-      width:322,
+      width: 322,
       backgroundColor: theme.neutralLighterAlt,
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
-
       } as IStyle,
     } as IStyle,
   };
@@ -109,20 +112,18 @@ export const useListItemCommentsStyles = () => {
       },
       "&::-webkit-scrollbar": {
         width: 5,
-
       },
     } as IStyle,
   });
 
   return {
-    documentCardUserStyles,
-    deleteButtonContainerStyles,
-    configurationListClasses,
-    documentCardStyles,
-    scrollPaneStyles,
     itemContainerStyles,
-    renderUserContainerStyles,
+    deleteButtonContainerStyles,
     userListContainerStyles,
-    documentCardDeleteStyles
+    renderUserContainerStyles,
+    documentCardStyles,
+    documentCardDeleteStyles,
+    documentCardUserStyles,
+    configurationListClasses,
   };
 };

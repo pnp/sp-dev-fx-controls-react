@@ -12,7 +12,9 @@ import { RenderNoComments } from "./RenderNoComments";
 import { RenderSpinner } from "./RenderSpinner";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 import { useBoolean } from "@fluentui/react-hooks";
-import { ECommentAction } from "../../common/ECommentAction";
+import { List } from "@fluentui/react/lib/List";
+import { ECommentAction } from "../..";
+
 export interface IRenderCommentsProps {}
 
 export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () => {
@@ -22,51 +24,47 @@ export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () 
 
   const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
 
-  const renderComments = useCallback((): JSX.Element[] => {
-    const _renderComments: JSX.Element[] = [];
-    comments.length
-      ? comments.map((comment: IComment, i) => {
-          _renderComments.push(
-            <DocumentCard styles={documentCardStyles} key={i}>
-              <Stack horizontal horizontalAlign="end" styles={deleteButtonContainerStyles}>
-                <IconButton
-                  iconProps={{ iconName: "Delete" }}
-                  style={{ fontSize: 10 }}
-                  onClick={async () => {
-                    setlistItemCommentsState({
-                      type: EListItemCommentsStateTypes.SET_SELECTED_COMMENT,
-                      payload: comment,
-                    });
-                    setHideDialog();
-                  }}
-                ></IconButton>
-              </Stack>
-              <DocumentCardDetails styles={{ root: { paddingTop: 15 } }}>
-                <Stack
-                  horizontal
-                  horizontalAlign="start"
-                  verticalAlign="center"
-                  tokens={{ childrenGap: 12 }}
-                  styles={itemContainerStyles}
-                >
-                  <CommentItem comment={comment} />
-                </Stack>
-              </DocumentCardDetails>
-            </DocumentCard>
-          );
-        })
-      : _renderComments.push(<RenderNoComments />);
-
-    return _renderComments;
-  }, [comments]);
+  const onRenderCell = useCallback(
+    (comment: IComment, index: number): JSX.Element => {
+      return (
+        <DocumentCard styles={documentCardStyles} key={index}>
+          <Stack horizontal horizontalAlign="end" styles={deleteButtonContainerStyles}>
+            <IconButton
+              iconProps={{ iconName: "Delete" }}
+              style={{ fontSize: 10 }}
+              onClick={async () => {
+                setlistItemCommentsState({
+                  type: EListItemCommentsStateTypes.SET_SELECTED_COMMENT,
+                  payload: comment,
+                });
+                setHideDialog();
+              }}
+            ></IconButton>
+          </Stack>
+          <DocumentCardDetails styles={{ root: { paddingTop: 15 } }}>
+            <Stack
+              horizontal
+              horizontalAlign="start"
+              verticalAlign="center"
+              tokens={{ childrenGap: 12 }}
+              styles={itemContainerStyles}
+            >
+              <CommentItem comment={comment} />
+            </Stack>
+          </DocumentCardDetails>
+        </DocumentCard>
+      );
+    },
+    [comments]
+  );
 
   return (
     <>
-      {isLoading ? <RenderSpinner /> : renderComments()}
+      {isLoading ? <RenderSpinner /> : <List items={comments} onRenderCell={onRenderCell} />}
       <ConfirmDelete
         hideDialog={hideDialog}
         onDismiss={(deleteComment: boolean) => {
-          if (deleteComment){
+          if (deleteComment) {
             setlistItemCommentsState({
               type: EListItemCommentsStateTypes.SET_COMMENT_ACTION,
               payload: ECommentAction.DELETE,

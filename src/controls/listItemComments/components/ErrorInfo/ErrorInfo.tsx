@@ -1,7 +1,6 @@
 import * as React from "react";
 import { MessageBar, MessageBarType } from "@fluentui/react/lib/MessageBar";
 import { Stack } from "@fluentui/react/lib/Stack";
-
 export interface IErrorInfoProps {
   error: Error;
   showError: boolean;

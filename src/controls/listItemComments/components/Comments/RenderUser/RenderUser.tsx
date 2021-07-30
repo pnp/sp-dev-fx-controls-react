@@ -3,11 +3,9 @@ import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/Do
 import { Persona } from "office-ui-fabric-react/lib/Persona";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
-import { useMemo } from "react";
 import { IUserInfo } from "../../../models/IUsersResults";
 import { useListItemCommentsStyles } from "../useListItemCommentsStyles";
 import { PHOTO_URL } from "./../../../common/constants";
-import { getUserPhoto } from "./../../../utils/utils";
 
 export interface IRenderUserProps {
   user: IUserInfo;

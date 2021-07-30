@@ -4,12 +4,9 @@ import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
 import { Text } from "office-ui-fabric-react/lib/Text";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
+import strings from "ControlStrings";
 
-export interface IRenderNoCommentsProps {}
-
-export const RenderNoComments: React.FunctionComponent<IRenderNoCommentsProps> = (
-  props: React.PropsWithChildren<IRenderNoCommentsProps>
-) => {
+export const RenderNoComments: React.FunctionComponent = () => {
   const { documentCardStyles } = useListItemCommentsStyles();
   return (
     <>
@@ -22,7 +19,7 @@ export const RenderNoComments: React.FunctionComponent<IRenderNoCommentsProps> =
             tokens={{ padding: 20 }}
             key={Guid.newGuid().toString()}
           >
-            <Text variant={"smallPlus"}>There is no Comments</Text>
+            <Text variant={"smallPlus"}>{strings.ListItemCommentsNoCommentsLabel}</Text>
           </Stack>
         </DocumentCardDetails>
       </DocumentCard>

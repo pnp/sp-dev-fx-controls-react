@@ -254,6 +254,7 @@ define([], () => {
     LinkHeader: "From a link",
     LinkImageInstructions: "Paste a link to an image in OneDrive for Business or SharePoint Online",
     ListItemCommentsLabel: "Comments",
+    ListItemCommentsNoCommentsLabel: "There is no Comments",
     ListLayoutAriaLabel: "View options. {0}  {1} .",
     ListLayoutCompact: "Compact view",
     ListLayoutCompactDescription: "View items and details in a compact list",

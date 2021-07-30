@@ -3,21 +3,20 @@ import { useContext, useCallback } from "react";
 import { MSGraphClientFactory, MSGraphClient } from "@microsoft/sp-http";
 import { Person } from "@microsoft/microsoft-graph-types";
 import { IUserInfo, IUsersResults } from "../models/IUsersResults";
+
 interface returnObject {
   getUsers: (search: string) => Promise<IUsersResults>;
   getUsersNextPage: (nextLink: string) => Promise<IUsersResults>;
   getSuggestions: () => Promise<IUsersResults>;
 }
 
-//GET https://graph.microsoft.com/v1.0/me/people/?$filter=personType/class eq 'Person' and personType/subclass eq 'OrganizationUser'
 export const useMsGraphAPI = (): returnObject => {
   const { serviceScope } = useContext(AppContext);
   let _msGraphClient: MSGraphClient = undefined;
-  serviceScope.whenFinished( async ()=>{
-    _msGraphClient  = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient()
-  })
+  serviceScope.whenFinished(async () => {
+    _msGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
+  });
   const getSuggestions = useCallback(async (): Promise<IUsersResults> => {
-   /*  const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient(); */
     if (!_msGraphClient) return;
     const _users: IUserInfo[] = [];
 
@@ -48,13 +47,11 @@ export const useMsGraphAPI = (): returnObject => {
 
   const getUsers = useCallback(
     async (search: string): Promise<IUsersResults> => {
-     // const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
       if (!_msGraphClient || !search) return;
-      let _search = "";
       let _filter = "";
 
       if (search.length) {
-        _filter = `startswith(mail,'${search}') OR startswith(displayName,'${search}')`;
+        _filter = `mail ne null AND (startswith(mail,'${search}') OR startswith(displayName,'${search}'))`;
       }
 
       const usersResults = await _msGraphClient
@@ -65,7 +62,7 @@ export const useMsGraphAPI = (): returnObject => {
         .count(true)
         .top(25)
         .get();
-      console.log("rs", usersResults);
+
       const returnInfo: IUsersResults = {
         users: usersResults.value,
         hasMore: usersResults["@odata.nextLink"] ? true : false,
@@ -78,7 +75,6 @@ export const useMsGraphAPI = (): returnObject => {
 
   const getUsersNextPage = useCallback(
     async (nextLink: string): Promise<IUsersResults> => {
-      //const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
       if (!_msGraphClient) return;
       const usersResults = await _msGraphClient.api(`${nextLink}`).get();
       const returnInfo: IUsersResults = {

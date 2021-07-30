@@ -20,9 +20,7 @@ const initialState: IListItemCommentsState = {
 
 const stateInit: IListItemCommentsStateContext = {
   listItemCommentsState: initialState,
-  setlistItemCommentsState: ({ type:  EListItemCommentsStateTypes, payload: unknown }) => {
-    return;
-  },
+  setlistItemCommentsState: ({}) => {return;},
 };
 
 //  (store)
@@ -30,5 +28,9 @@ export const ListItemCommentsStateContext = createContext<IListItemCommentsState
 export const ListItemCommentsStateProvider = (props: { children: React.ReactNode }): JSX.Element => {
   const [listItemCommentsState, setlistItemCommentsState] = useReducer(ListItemCommentsStateReducer, initialState);
 
-  return <ListItemCommentsStateContext.Provider value={{listItemCommentsState, setlistItemCommentsState }}>{props.children}</ListItemCommentsStateContext.Provider>;
+  return (
+    <ListItemCommentsStateContext.Provider value={{ listItemCommentsState, setlistItemCommentsState }}>
+      {props.children}
+    </ListItemCommentsStateContext.Provider>
+  );
 };

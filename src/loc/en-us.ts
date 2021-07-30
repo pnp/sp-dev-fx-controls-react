@@ -382,6 +382,7 @@ define([], () => {
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
     customDisplayName: "Use this location:",
     ListItemCommentsLabel: "Comments",
+    ListItemCommentsNoCommentsLabel: "There is no Comments",
     OrgAssetsLinkLabel: "Your organisation"
   };
 });

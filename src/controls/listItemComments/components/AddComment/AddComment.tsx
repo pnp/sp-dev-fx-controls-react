@@ -1,60 +1,54 @@
 import { Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { useContext, useRef, useState } from "react";
-import { EListItemCommentsStateTypes, ListItemCommentsStateContext, useMsGraphAPI } from "../..";
+import { EListItemCommentsStateTypes, ListItemCommentsStateContext  } from "./../ListItemCommentsStateProvider";
 import { IUserInfo } from "../../models/IUsersResults";
-import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
 import { MentionsInput, Mention, SuggestionDataItem, MentionItem } from "react-mentions";
 import { useCallback } from "react";
 import { useAddCommentStyles } from "./useAddCommentStyles";
 import { PHOTO_URL } from "../../common/constants";
-import { IconButton, Text } from "@fluentui/react";
+import { IconButton } from "@fluentui/react/lib/Button";
+import { Text} from "@fluentui/react/lib/Text";
 import { ECommentAction } from "../../common/ECommentAction";
 import { IAddCommentPayload } from "../../models/IAddCommentPayload";
+import { useMsGraphAPI } from "../..";
 
-export interface IAddCommentProps {
-}
+export interface IAddCommentProps {}
 
-export const AddComment: React.FunctionComponent<IAddCommentProps> = (props:IAddCommentProps) => {
+export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAddCommentProps) => {
   const [commentText, setCommentText] = useState<any>("");
   const { getUsers, getSuggestions } = useMsGraphAPI();
   const { reactMentionStyles, mentionsClasses, componentClasses } = useAddCommentStyles();
   const [singleLine, setSingleLine] = useState<boolean>(true);
-  const { listItemCommentsState, setlistItemCommentsState} = useContext(ListItemCommentsStateContext);
-  let _addCommentText  = useRef<IAddCommentPayload>({ mentions: [], text: ''});
-
+  const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
+  let _addCommentText = useRef<IAddCommentPayload>({ mentions: [], text: "" });
 
   let sugestionsContainer = useRef<HTMLDivElement>();
   let _reactMentionStyles = reactMentionStyles;
 
-  const _onChange = useCallback((event, newValue:string, newPlainTextValue:string, mentions: MentionItem[]) => {
-
+  const _onChange = useCallback((event, newValue: string, newPlainTextValue: string, mentions: MentionItem[]) => {
     let _reactMentionStyles = reactMentionStyles;
     if (newValue) {
       setSingleLine(false);
       _reactMentionStyles["&multiLine"].control = { height: 63 };
       _addCommentText.current.text = newPlainTextValue;
       _addCommentText.current.mentions = [];
-    for (let index = 0; index < mentions.length; index++) {
-      const mention = mentions[index];
-      _addCommentText.current.text = _addCommentText.current.text.replace(mention.display,`@mention{${index}}`);
-      _addCommentText.current.mentions.push({email: mention.id, name: mention.display.replace('@','')});
-    }
-
+      for (let index = 0; index < mentions.length; index++) {
+        const mention = mentions[index];
+        _addCommentText.current.text = _addCommentText.current.text.replace(mention.display, `@mention{${index}}`);
+        _addCommentText.current.mentions.push({ email: mention.id, name: mention.display.replace("@", "") });
+      }
     } else {
       setSingleLine(true);
       _reactMentionStyles["&multiLine"].control = { height: 35 };
-      _addCommentText.current  = { mentions: [], text: ''};
+      _addCommentText.current = { mentions: [], text: "" };
     }
-
     setCommentText(newValue);
   }, []);
 
   const _addComment = useCallback(() => {
-    // TODO call API to Add Comment
-   // onAddComment && onAddComment(_addCommentText.current);
-   setlistItemCommentsState({type:EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload:ECommentAction.ADD });
-    setlistItemCommentsState({type:EListItemCommentsStateTypes.SET_ADD_COMMENT, payload:_addCommentText.current });
+    setlistItemCommentsState({ type: EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload: ECommentAction.ADD });
+    setlistItemCommentsState({ type: EListItemCommentsStateTypes.SET_ADD_COMMENT, payload: _addCommentText.current });
     setSingleLine(true);
     setCommentText("");
   }, []);
@@ -97,10 +91,9 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props:IAdd
     );
   }, []);
 
-
-
   return (
     <>
+    {/** Render Sugestions in the host element */}
       <div
         id="renderSugestions"
         ref={(el) => {

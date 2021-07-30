@@ -8,4 +8,5 @@ export interface IAppContext {
   listId: string;
   itemId: string;
   numberCommentsPerPage?: number;
+  label?:string;
 }
