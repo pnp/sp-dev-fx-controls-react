@@ -5,6 +5,7 @@ import { EListItemCommentsStateTypes } from "./EListItemCommentsStateTypes";
 import { IListItemCommentsState } from "./IListItemCommentsState";
 import { IPageInfo } from "../../models/IPageInfo";
 import { ECommentAction } from "../../common/ECommentAction";
+import { IAddCommentPayload } from "../../models/IAddCommentPayload";
 
 // Reducer
 export const ListItemCommentsStateReducer = (
@@ -24,6 +25,10 @@ export const ListItemCommentsStateReducer = (
       return { ...state, pageInfo: action.payload as IPageInfo };
     case EListItemCommentsStateTypes.SET_COMMENT_ACTION:
       return { ...state, commentAction: action.payload as ECommentAction };
+    case EListItemCommentsStateTypes.SET_ADD_COMMENT:
+      return { ...state, commentToAdd: action.payload as IAddCommentPayload };
+      case EListItemCommentsStateTypes.SET_SELECTED_COMMENT:
+        return { ...state, selectedComment: action.payload as IComment };
     default:
       return state;
   }

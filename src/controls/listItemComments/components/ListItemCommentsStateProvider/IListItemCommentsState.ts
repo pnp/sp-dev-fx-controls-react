@@ -4,6 +4,7 @@ import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
 import { IComment } from "../Comments/IComment";
 import { IPageInfo } from "../../models";
 import { ECommentAction } from "../../common/ECommentAction";
+import { IAddCommentPayload } from "../../models/IAddCommentPayload";
 
 // Global State (Store)
 export interface IListItemCommentsState {
@@ -13,5 +14,6 @@ export interface IListItemCommentsState {
   isScrolling: boolean;
   pageInfo: IPageInfo;
   commentAction: ECommentAction;
-
+  commentToAdd: IAddCommentPayload;
+  selectedComment: IComment;
 }

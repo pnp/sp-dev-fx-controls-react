@@ -10,13 +10,13 @@ import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 
 export interface IRenderScrollingInfoProps {}
 
-export const RenderScrollingInfo: React.FunctionComponent<IRenderScrollingInfoProps> = (
+export const RenderSpinner: React.FunctionComponent<IRenderScrollingInfoProps> = (
   props: React.PropsWithChildren<IRenderScrollingInfoProps>
 ) => {
   const { documentCardStyles } = useListItemCommentsStyles();
   const { listItemCommentsState } = useContext(ListItemCommentsStateContext);
-  const { isScrolling } = listItemCommentsState;
-  if (!isScrolling) return null;
+  const { isScrolling , isLoading} = listItemCommentsState;
+  if (!isScrolling && !isLoading) return null;
   return (
     <DocumentCard styles={documentCardStyles} key={"isScrolling"}>
       <DocumentCardDetails key={Guid.newGuid().toString()}>

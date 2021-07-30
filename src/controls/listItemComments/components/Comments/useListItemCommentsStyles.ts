@@ -7,9 +7,11 @@ const TILE_HEIGHT: number = 70;
 
 export const useListItemCommentsStyles = () => {
   const { theme, numberCommentsPerPage } = React.useContext(AppContext);
+
   const tilesHeight: number = numberCommentsPerPage
     ? (numberCommentsPerPage < 5 ? 5 : numberCommentsPerPage) * TILE_HEIGHT + 35
-    : 5 * TILE_HEIGHT;
+    : 7 * TILE_HEIGHT;
+
   const itemContainerStyles: IStackStyles = {
     root: { paddingTop: 0, paddingLeft: 20, paddingRight: 20, paddingBottom: 20 } as IStyle,
   };
@@ -44,13 +46,24 @@ export const useListItemCommentsStyles = () => {
 
   const documentCardStyles: Partial<IDocumentCardStyles> = {
     root: {
-      marginBottom: 5,
+      marginBottom: 7,
       width:322,
       backgroundColor: theme.neutralLighterAlt,
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
 
+      } as IStyle,
+    } as IStyle,
+  };
+
+  const documentCardDeleteStyles: Partial<IDocumentCardStyles> = {
+    root: {
+      marginBottom: 5,
+      backgroundColor: theme.neutralLighterAlt,
+      ":hover": {
+        borderColor: theme.themePrimary,
+        borderWidth: 1,
       } as IStyle,
     } as IStyle,
   };
@@ -109,6 +122,7 @@ export const useListItemCommentsStyles = () => {
     scrollPaneStyles,
     itemContainerStyles,
     renderUserContainerStyles,
-    userListContainerStyles
+    userListContainerStyles,
+    documentCardDeleteStyles
   };
 };

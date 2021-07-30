@@ -854,7 +854,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-<Stack styles={{ root: { marginBottom: 200 } }}>
+
+
+
+        <Stack styles={{ root: { marginBottom: 200 } }}>
           <MyTeams
             title="My Teams"
             webPartContext={this.props.context}

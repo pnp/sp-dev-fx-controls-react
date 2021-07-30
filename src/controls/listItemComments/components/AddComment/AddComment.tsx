@@ -4,33 +4,50 @@ import { useContext, useRef, useState } from "react";
 import { EListItemCommentsStateTypes, ListItemCommentsStateContext, useMsGraphAPI } from "../..";
 import { IUserInfo } from "../../models/IUsersResults";
 import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
-import { MentionsInput, Mention, SuggestionDataItem } from "react-mentions";
+import { MentionsInput, Mention, SuggestionDataItem, MentionItem } from "react-mentions";
 import { useCallback } from "react";
 import { useAddCommentStyles } from "./useAddCommentStyles";
 import { PHOTO_URL } from "../../common/constants";
 import { IconButton, Text } from "@fluentui/react";
 import { ECommentAction } from "../../common/ECommentAction";
+import { IAddCommentPayload } from "../../models/IAddCommentPayload";
+import DisplayName from "../../../accessibleAccordion/helpers/DisplayName";
+var emojiCompact = require('emoji.json/emoji-compact.json')
 
-export interface IAddCommentProps {}
+export interface IAddCommentProps {
+}
+const neverMatchingRegex = /($a)/;
 
-export const AddComment: React.FunctionComponent<IAddCommentProps> = () => {
+export const AddComment: React.FunctionComponent<IAddCommentProps> = (props:IAddCommentProps) => {
   const [commentText, setCommentText] = useState<any>("");
   const { getUsers, getSuggestions } = useMsGraphAPI();
-  const { setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { reactMentionStyles, mentionsClasses, componentClasses } = useAddCommentStyles();
   const [singleLine, setSingleLine] = useState<boolean>(true);
-  const [, setErrorInfo] = useState<IErrorInfo>({} as IErrorInfo);
+  const { listItemCommentsState, setlistItemCommentsState} = useContext(ListItemCommentsStateContext);
+  let _addCommentText  = useRef<IAddCommentPayload>({ mentions: [], text: ''});
+
+
   let sugestionsContainer = useRef<HTMLDivElement>();
   let _reactMentionStyles = reactMentionStyles;
 
-  const _onChange = useCallback((event, newValue) => {
+  const _onChange = useCallback((event, newValue:string, newPlainTextValue:string, mentions: MentionItem[]) => {
+
     let _reactMentionStyles = reactMentionStyles;
     if (newValue) {
       setSingleLine(false);
       _reactMentionStyles["&multiLine"].control = { height: 63 };
+      _addCommentText.current.text = newPlainTextValue;
+      _addCommentText.current.mentions = [];
+    for (let index = 0; index < mentions.length; index++) {
+      const mention = mentions[index];
+      _addCommentText.current.text = _addCommentText.current.text.replace(mention.display,`@mention{${index}}`);
+      _addCommentText.current.mentions.push({email: mention.id, name: mention.display.replace('@','')});
+    }
+
     } else {
       setSingleLine(true);
       _reactMentionStyles["&multiLine"].control = { height: 35 };
+      _addCommentText.current  = { mentions: [], text: ''};
     }
 
     setCommentText(newValue);
@@ -38,12 +55,15 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = () => {
 
   const _addComment = useCallback(() => {
     // TODO call API to Add Comment
-    setlistItemCommentsState({ type: EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload: ECommentAction.ADD });
+   // onAddComment && onAddComment(_addCommentText.current);
+   setlistItemCommentsState({type:EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload:ECommentAction.ADD });
+    setlistItemCommentsState({type:EListItemCommentsStateTypes.SET_ADD_COMMENT, payload:_addCommentText.current });
+    setSingleLine(true);
     setCommentText("");
   }, []);
 
   const _searchData = (search: string, callback: (users: SuggestionDataItem[]) => void) => {
-    // Try to get sugested users from recent comments when user type '@'
+    // Try to get sugested users when user type '@'
     if (!search) {
       getSuggestions()
         .then((res) => res.users.map((user) => ({ display: user.displayName, id: user.mail })))
@@ -79,6 +99,8 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = () => {
       </>
     );
   }, []);
+
+
 
   return (
     <>

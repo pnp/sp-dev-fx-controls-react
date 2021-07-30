@@ -2,21 +2,25 @@ import { IconButton } from "office-ui-fabric-react/lib/Button";
 import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useContext } from "react";
-import { ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
+import { ConfirmDelete } from "../ConfirmDelete/ConfirmDelete";
+import { EListItemCommentsStateTypes, ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
 import { CommentItem } from "./CommentItem";
 import { IComment } from "./IComment";
 import { RenderNoComments } from "./RenderNoComments";
+import { RenderSpinner } from "./RenderSpinner";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
-
+import { useBoolean } from "@fluentui/react-hooks";
+import { ECommentAction } from "../../common/ECommentAction";
 export interface IRenderCommentsProps {}
 
-export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = (
-) => {
-  const { listItemCommentsState } = useContext(ListItemCommentsStateContext);
+export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () => {
+  const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { documentCardStyles, itemContainerStyles, deleteButtonContainerStyles } = useListItemCommentsStyles();
-  const { comments } = listItemCommentsState;
+  const { comments, isLoading, selectedComment } = listItemCommentsState;
+
+  const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
 
   const renderComments = useCallback((): JSX.Element[] => {
     const _renderComments: JSX.Element[] = [];
@@ -29,18 +33,11 @@ export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = (
                   iconProps={{ iconName: "Delete" }}
                   style={{ fontSize: 10 }}
                   onClick={async () => {
-                    /*   const newListActivities = pullAllBy(listActivities, [listActivity]);
-              setRenderComments(
-                listActivities.length ? await _RenderComments() : await _renderNoComments()
-              );
-              setGlobalState({
-                type: EGlobalStateTypes.SET_LIST_ACTIVITY,
-                payload: newListActivities,
-              });
-              setGlobalState({
-                type: EGlobalStateTypes.SET_NUMBER_OF_Comments,
-                payload: newListActivities.length,
-              }); */
+                    setlistItemCommentsState({
+                      type: EListItemCommentsStateTypes.SET_SELECTED_COMMENT,
+                      payload: comment,
+                    });
+                    setHideDialog();
                   }}
                 ></IconButton>
               </Stack>
@@ -63,5 +60,21 @@ export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = (
     return _renderComments;
   }, [comments]);
 
-  return <>{renderComments()}</>;
+  return (
+    <>
+      {isLoading ? <RenderSpinner /> : renderComments()}
+      <ConfirmDelete
+        hideDialog={hideDialog}
+        onDismiss={(deleteComment: boolean) => {
+          if (deleteComment){
+            setlistItemCommentsState({
+              type: EListItemCommentsStateTypes.SET_COMMENT_ACTION,
+              payload: ECommentAction.DELETE,
+            });
+          }
+          setHideDialog();
+        }}
+      />
+    </>
+  );
 };

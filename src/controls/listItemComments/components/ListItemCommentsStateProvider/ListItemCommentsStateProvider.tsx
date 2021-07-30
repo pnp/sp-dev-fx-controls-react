@@ -3,6 +3,8 @@ import { ListItemCommentsStateReducer } from "./ListItemCommentsStateReducer";
 import { IListItemCommentsState } from "./IListItemCommentsState";
 import { IListItemCommentsStateContext } from "./IListItemCommentsStateContext";
 import { IPageInfo } from "../../models/IPageInfo";
+import { IAddCommentPayload } from "../../models/IAddCommentPayload";
+import { IComment } from "../Comments/IComment";
 // Reducer
 // Initial State (Store )
 const initialState: IListItemCommentsState = {
@@ -12,6 +14,8 @@ const initialState: IListItemCommentsState = {
   isScrolling: false,
   pageInfo: {} as IPageInfo,
   commentAction: undefined,
+  commentToAdd: {} as IAddCommentPayload,
+  selectedComment: {} as IComment,
 };
 
 const stateInit: IListItemCommentsStateContext = {

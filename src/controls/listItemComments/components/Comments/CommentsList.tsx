@@ -9,41 +9,121 @@ import { getScrollPosition } from "../../utils/utils";
 import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
 import { RenderComments } from "./RenderComments";
 import { RenderError } from "./RenderError";
-import { RenderScrollingInfo } from "./RenderScrollingInfo";
+import { RenderSpinner } from "./RenderSpinner";
 import { Text } from "@fluentui/react/lib/Text";
-
 import { AddComment } from "../AddComment/AddComment";
+import { ECommentAction } from "../../common/ECommentAction";
+import { IAddCommentPayload } from "../../models/IAddCommentPayload";
+import { useCallback } from "react";
+import strings from "ControlStrings";
+import { IComment } from "./IComment";
+
 export const CommentsList: React.FunctionComponent = () => {
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { configurationListClasses } = useListItemCommentsStyles();
-  const { getListItemComments, getNextPageOfComments } = useSpAPI();
-  const { comments, isScrolling, pageInfo } = listItemCommentsState;
+  const { getListItemComments, getNextPageOfComments, addComment, deleteComment } = useSpAPI();
+  const { comments, isScrolling, pageInfo, commentAction, commentToAdd, selectedComment } = listItemCommentsState;
   const { hasMore, nextLink } = pageInfo;
   const scrollPanelRef = useRef<HTMLDivElement>();
-
   const { errorInfo } = listItemCommentsState;
 
-  useEffect(() => {
-    (async () => {
+  const _loadComments = useCallback(async () => {
+    try {
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_IS_LOADING,
+        payload: true,
+      });
+      const _commentsResults: IlistItemCommentsResults = await getListItemComments();
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_LIST_ITEM_COMMENTS,
+        payload: _commentsResults.comments,
+      });
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_DATA_PAGE_INFO,
+        payload: { hasMore: _commentsResults.hasMore, nextLink: _commentsResults.nextLink } as IPageInfo,
+      });
+      setlistItemCommentsState({ type: EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload: undefined });
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_IS_LOADING,
+        payload: false,
+      });
+    } catch (error) {
+      const _errorInfo: IErrorInfo = { showError: true, error: error.message };
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+        payload: _errorInfo,
+      });
+    }
+  }, [setlistItemCommentsState]);
+
+  const _onAddComment = useCallback(
+    async (commentText: IAddCommentPayload) => {
       try {
-        const _commentsResults: IlistItemCommentsResults = await getListItemComments();
+        const _errorInfo: IErrorInfo = { showError: false, error: undefined };
         setlistItemCommentsState({
-          type: EListItemCommentsStateTypes.SET_LIST_ITEM_COMMENTS,
-          payload: _commentsResults.comments,
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
         });
-        setlistItemCommentsState({
-          type: EListItemCommentsStateTypes.SET_DATA_PAGE_INFO,
-          payload: { hasMore: _commentsResults.hasMore, nextLink: _commentsResults.nextLink } as IPageInfo,
-        });
+        await addComment(commentText);
+        await _loadComments();
       } catch (error) {
-        const _errorInfo: IErrorInfo = { showError: true, error: error.message };
+        const _errorInfo: IErrorInfo = { showError: true, error: error };
         setlistItemCommentsState({
           type: EListItemCommentsStateTypes.SET_ERROR_INFO,
           payload: _errorInfo,
         });
       }
+    },
+    [setlistItemCommentsState, addComment, _loadComments]
+  );
+
+  const _onADeleteComment = useCallback(
+    async (commentId: number) => {
+      if (!commentId) return;
+      try {
+        const _errorInfo: IErrorInfo = { showError: false, error: undefined };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+
+        await deleteComment(commentId);
+        await _loadComments();
+      } catch (error) {
+        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+      }
+    },
+    [setlistItemCommentsState, addComment, _loadComments]
+  );
+
+  useEffect(() => {
+    switch (commentAction) {
+      case ECommentAction.ADD:
+        (async () => {
+          // Add new comment and reset state action and comment object
+          await _onAddComment(commentToAdd);
+        })();
+        break;
+      case ECommentAction.DELETE:
+        (async () => {
+          const commentId = Number(selectedComment.id);
+          await _onADeleteComment(commentId);
+        })();
+        break;
+      default:
+        break;
+    }
+  }, [commentAction, commentToAdd, _onAddComment]);
+
+  useEffect(() => {
+    (async () => {
+      await _loadComments();
     })();
-  }, []);
+  }, [_loadComments]);
 
   const handleScroll = React.useCallback(async () => {
     const _scrollPosition = getScrollPosition(scrollPanelRef.current);
@@ -67,7 +147,7 @@ export const CommentsList: React.FunctionComponent = () => {
         payload: false,
       });
     }
-  }, [hasMore, nextLink, comments, isScrolling, scrollPanelRef.current]);
+  }, [hasMore, nextLink, isScrolling, setlistItemCommentsState]);
 
   return (
     <>
@@ -75,7 +155,7 @@ export const CommentsList: React.FunctionComponent = () => {
         <RenderError errorInfo={errorInfo} />
         <AddComment />
         <Text variant="small" block style={{ fontWeight: 600 }}>
-          Comments
+          {strings.ListItemCommentsLabel}
         </Text>
         <div className={configurationListClasses.titlesContainer} onScroll={handleScroll} ref={scrollPanelRef}>
           <Stack>
@@ -83,7 +163,7 @@ export const CommentsList: React.FunctionComponent = () => {
           </Stack>
         </div>
       </Stack>
-      <RenderScrollingInfo />
+      {<RenderSpinner />}
     </>
   );
 };

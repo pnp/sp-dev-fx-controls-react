@@ -6,6 +6,7 @@ import { ActivityItem, Link, Text } from "@fluentui/react";
 import { Stack } from "@fluentui/react/lib/Stack";
 import { IComment } from "./IComment";
 import { CommentText } from "./CommentText";
+import { isEmpty } from "lodash";
 
 const PHOTO_URL = "/_layouts/15/userphoto.aspx?size=M&accountname=";
 
@@ -16,6 +17,7 @@ export interface IRenderNotificationItemProps {
 export const CommentItem: React.FunctionComponent<IRenderNotificationItemProps> = (
   props: React.PropsWithChildren<IRenderNotificationItemProps>
 ) => {
+  if (isEmpty(props.comment)) return null;
   const { author, createdDate, text, mentions } = props.comment;
 
   const activityDescription = useMemo((): ReactNode => {

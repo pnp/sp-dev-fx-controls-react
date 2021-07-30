@@ -7,7 +7,7 @@ import { AppContext } from "../../common";
 import regexifyString from "regexify-string";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { isArray, isObject } from "lodash";
-
+import he from 'he';
 export interface ICommentTextProps {
   text: string;
   mentions: Mention[];
@@ -58,14 +58,14 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
               if (_el.length) {
                 return (
                   <Text style={{ paddingRight: 5 }} variant="small" key={i}>
-                    {_el}
+                    {he.decode(_el)}
                   </Text>
                 );
               }
             }
           })
         ) : (
-          <Text variant="small">{commentText}</Text>
+          <Text variant="small">{he.decode(commentText)}</Text>
         )}
       </Stack>
     </>

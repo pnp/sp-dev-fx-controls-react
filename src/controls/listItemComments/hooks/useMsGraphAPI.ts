@@ -12,12 +12,16 @@ interface returnObject {
 //GET https://graph.microsoft.com/v1.0/me/people/?$filter=personType/class eq 'Person' and personType/subclass eq 'OrganizationUser'
 export const useMsGraphAPI = (): returnObject => {
   const { serviceScope } = useContext(AppContext);
+  let _msGraphClient: MSGraphClient = undefined;
+  serviceScope.whenFinished( async ()=>{
+    _msGraphClient  = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient()
+  })
   const getSuggestions = useCallback(async (): Promise<IUsersResults> => {
-    const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
-    if (!msGraphClient) return;
+   /*  const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient(); */
+    if (!_msGraphClient) return;
     const _users: IUserInfo[] = [];
 
-    const suggestedUsersResults = (await msGraphClient
+    const suggestedUsersResults = (await _msGraphClient
       .api(`me/people`)
       .header("ConsistencyLevel", "eventual")
       .filter(`personType/class eq 'Person' and personType/subclass eq 'OrganizationUser'`)
@@ -44,8 +48,8 @@ export const useMsGraphAPI = (): returnObject => {
 
   const getUsers = useCallback(
     async (search: string): Promise<IUsersResults> => {
-      const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
-      if (!msGraphClient || !search) return;
+     // const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
+      if (!_msGraphClient || !search) return;
       let _search = "";
       let _filter = "";
 
@@ -53,7 +57,7 @@ export const useMsGraphAPI = (): returnObject => {
         _filter = `startswith(mail,'${search}') OR startswith(displayName,'${search}')`;
       }
 
-      const usersResults = await msGraphClient
+      const usersResults = await _msGraphClient
         .api(`/users`)
         .header("ConsistencyLevel", "eventual")
         .filter(_filter)
@@ -74,9 +78,9 @@ export const useMsGraphAPI = (): returnObject => {
 
   const getUsersNextPage = useCallback(
     async (nextLink: string): Promise<IUsersResults> => {
-      const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
-      if (!msGraphClient) return;
-      const usersResults = await msGraphClient.api(`${nextLink}`).get();
+      //const msGraphClient: MSGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
+      if (!_msGraphClient) return;
+      const usersResults = await _msGraphClient.api(`${nextLink}`).get();
       const returnInfo: IUsersResults = {
         users: usersResults.value,
         hasMore: usersResults["@odata.nextLink"] ? true : false,

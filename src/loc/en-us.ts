@@ -380,8 +380,8 @@ define([], () => {
     DynamicFormTermPanelTitle: "Select Term",
     DynamicFormEnterURLPlaceholder: "Enter a URL",
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
-
     customDisplayName: "Use this location:",
+    ListItemCommentsLabel: "Comments",
     OrgAssetsLinkLabel: "Your organisation"
   };
 });

@@ -22,7 +22,7 @@ export const RenderError: React.FunctionComponent<IRenderErrorProps> = (
           horizontal
           horizontalAlign="start"
           verticalAlign="center"
-          tokens={{ padding: 20 }}
+          tokens={{ padding: 5 }}
           key={Guid.newGuid().toString()}
         >
           <ErrorInfo showError={showError} error={error} />
