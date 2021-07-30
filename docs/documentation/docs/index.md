@@ -80,6 +80,7 @@ The following controls are currently available:
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
 - [ListView](./controls/ListView) (List view control)
+- [LocationPicker](./controls/LocationPicker) (Location Picker control)
 - [Map](./controls/Map) (renders a map in a web part)
 - [MyTeams](./controls/MyTeams) (My Teams)
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)

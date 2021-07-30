@@ -55,7 +55,7 @@ define([], () => {
   "TaxonomyPickerNoTerms": "Termi joukko ei sisällä mitään termejä",
   "TaxonomyPickerExpandTitle": "Laajenna tämä termi joukko",
   "TaxonomyPickerMenuTermSet": "Termi joukon valikko",
-  "TaxonomyPickerInLabel": "Tuumaa",
+  "TaxonomyPickerInLabel": "Paikassa",
   "TaxonomyPickerTermSetLabel": "Termi joukko",
   "peoplePickerComponentTooltipMessage": "Henkilöiden valitsin",
   "peoplePickerComponentErrorMessage": "Pakollinen kenttä",

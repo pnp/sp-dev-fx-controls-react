@@ -156,4 +156,9 @@ export interface IFilePickerProps {
    * Specifies if Site Pages library to be visible on Sites tab
    */
   includePageLibraries?: boolean;
+
+  /**
+   * Specifies a default folder to be active in the Site Files tab
+   */
+  defaultFolderAbsolutePath?: string;
 }

@@ -92,10 +92,12 @@ import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
 import { DragDropFiles } from "../../../DragDropFiles";
 import { SitePicker } from "../../../controls/sitePicker/SitePicker";
-import { DynamicForm } from "../../../controls/dynamicForm";
+import { DynamicForm } from '../../../controls/dynamicForm';
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
-import { ListItemComments } from "../../../controls/listItemComments";
+import { debounce } from "lodash";
+
+
 
 // Used to render document card
 /**
@@ -406,8 +408,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMovePrev: false,
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
-      comboBoxListItemPickerListId: "0ffa51d7-4ad1-4f04-8cfe-98209905d6da",
-      treeViewSelectedKeys: ["gc1", "gc3"],
+      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
+      comboBoxListItemPickerIds: [{Id: 1, Title: '111'}],
+      treeViewSelectedKeys: ['gc1', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
       showSuccessDialog: false,
@@ -823,9 +826,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
           } />
 
-
-
-
         <Stack styles={{ root: { marginBottom: 200 } }}>
           <MyTeams
             title="My Teams"
@@ -1080,7 +1080,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
-        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -1235,13 +1235,467 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           dateConvention={DateConvention.Date}
         />
 
-        <Stack>
-          <ListItemComments
-            numberCommentsPerPage={5}
-            webUrl="https://spteck.sharepoint.com/sites/ThePerspective"
-            listId="e738c4b3-6cff-493a-a8da-dbbf4732e3bf"
-            itemId={"30"}
-            serviceScope={this.props.context.serviceScope}
+        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+        <br></br>
+        <b>Drag and Drop Files</b>
+        <DragDropFiles
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
+        >
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
+        </DragDropFiles>
+        <br></br>
+
+
+        <ListView items={this.state.items}
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+          dragDropFiles={true}
+          onDrop={this._getDropFiles}
+          stickyHeader={true}
+        // defaultFilter="Team"
+        />
+
+
+        <ChartControl type={ChartType.Bar}
+          data={{
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }} />
+
+        <Map titleText="New map control"
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+          enableSearch={true}
+          mapType={MapType.normal}
+          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+        //  zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
+        //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+        />
+
+        <div className={styles.container}>
+          <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
+            <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
+              <span className="ms-font-xl">Controls testing</span>
+
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
+                <p>You have permissions to view list items.</p>
+              </SecurityTrimmedControl>
+
+              <p className="ms-font-l">
+                File type icon control
+              </p>
+              <div className="ms-font-m">
+                Font icons:&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.doc" />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
+              </div>
+              <div className="ms-font-m">
+                Image icons:&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
+              </div>
+              <div className="ms-font-m">Icon size tester:
+                <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+
+              <div className="ms-font-m">Site picker tester:
+              <SitePicker
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
+              </div>
+
+              <div className="ms-font-m">List picker tester:
+                <ListPicker context={this.props.context}
+                  label="Select your list(s)"
+                  placeholder="Select your list(s)"
+                  baseTemplate={100}
+                  includeHidden={false}
+                  multiSelect={true}
+                  contentTypeId="0x01"
+                  // filter="Title eq 'Test List'"
+                  onSelectionChanged={this.onListPickerChange} />
+              </div>
+
+              <div className="ms-font-m">List Item picker list data tester:
+
+                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
+                  columnInternalName="Title"
+                  keyColumnInternalName="Id"
+                  filter={"Title eq 'SPFx'"}
+                  orderBy={'Title desc'}
+                  itemLimit={5}
+                  context={this.props.context}
+                  placeholder={'Select list items'}
+                  onSelectedItem={this.listItemPickerDataSelected} />
+
+              </div>
+              <div>Icon Picker</div>
+              <div>
+                <IconPicker
+                  renderOption="panel"
+                  onSave={(value) => { console.log(value); }}
+                  currentIcon={'Warning'}
+                  buttonLabel="Icon Picker">
+                </IconPicker>
+              </div>
+
+              <div className="ms-font-m">ComboBoxListItemPicker:
+
+                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  defaultSelectedItems={this.state.comboBoxListItemPickerIds}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
+
+                <PrimaryButton text="Change List" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                  });
+                }} />
+                <PrimaryButton text="Change default items" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerIds: [{Id: 2, Title: '222'}]
+                  });
+                }} />
+
+              </div>
+
+              <div className="ms-font-m">iframe dialog tester:
+                <PrimaryButton
+                  text="Open iframe Dialog"
+                  onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
+                <IFrameDialog
+                  url={iframeUrl}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  hidden={!this.state.iFrameDialogOpened}
+                  onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
+                  modalProps={{
+                    isBlocking: true,
+                    styles: {
+                      root: {
+                        backgroundColor: '#00ff00'
+                      },
+                      main: {
+                        backgroundColor: '#ff0000'
+                      }
+                    }
+                  }}
+                  dialogContentProps={{
+                    type: DialogType.close,
+                    showCloseButton: true
+                  }}
+                  width={'570px'}
+                  height={'315px'} />
+              </div>
+              <div className="ms-font-m">iframe Panel tester:
+                <PrimaryButton
+                  text="Open iframe Panel"
+                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
+                <IFramePanel
+                  url={iframeUrl}
+                  type={PanelType.medium}
+                  //  height="300px"
+                  headerText="iframe panel title"
+                  closeButtonAriaLabel="Close"
+                  isOpen={this.state.iFramePanelOpened}
+                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                />
+              </div>
+              <div>
+                <FolderPicker context={this.props.context}
+                  rootFolder={{
+                    Name: 'Documents',
+                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+                  }}
+                  onSelect={this._onFolderSelect}
+                  label='Folder Picker'
+                  required={true}
+                  canCreateFolders={true}
+                ></FolderPicker>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3>Carousel with fixed elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.top}
+            buttonsDisplay={CarouselButtonsDisplay.block}
+
+            contentContainerStyles={styles.carouselContent}
+            containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+
+            element={this.carouselElements}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with CarouselImage elements:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.center}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselImageContent}
+            //containerButtonsStyles={styles.carouselButtonsContainer}
+
+            isInfinite={true}
+            indicatorShape={CarouselIndicatorShape.circle}
+            indicatorsDisplay={CarouselIndicatorsDisplay.block}
+            pauseOnHover={true}
+
+            element={[
+              {
+                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+                title: 'Colosseum',
+                description: 'This is Colosseum',
+                url: 'https://en.wikipedia.org/wiki/Colosseum',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
+                title: 'Stonehenge',
+                description: 'This is Stonehendle',
+                url: 'https://en.wikipedia.org/wiki/Stonehenge',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              },
+              {
+                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
+                title: 'Pyramids of Giza',
+                description: 'This are Pyramids of Giza (Egypt)',
+                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
+                showDetailsOnHover: true,
+                imageFit: ImageFit.cover
+              }
+            ]}
+            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            rootStyles={mergeStyles({
+              backgroundColor: '#C3C3C3'
+            })}
+          />
+        </div>
+
+        <div>
+          <h3>Carousel with triggerPageElement:</h3>
+          <Carousel
+            buttonsLocation={CarouselButtonsLocation.bottom}
+            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+            contentContainerStyles={styles.carouselContent}
+
+            canMoveNext={this.state.canMoveNext}
+            canMovePrev={this.state.canMovePrev}
+            triggerPageEvent={this.triggerNextElement}
+            element={this.state.currentCarouselElement}
+          />
+        </div>
+
+        <div className={styles.siteBreadcrumb}>
+          <SiteBreadcrumb context={this.props.context} />
+        </div>
+
+        <div>
+          <h3>File Picker</h3>
+          <TextField
+            label="Default SiteFileTab Folder"
+            onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
+            styles={{ root: { marginBottom: 10 } }}
+          />
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            defaultFolderAbsolutePath={this.state.filePickerDefaultFolderAbsolutePath}
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Add File"
+            buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
+            onSave={this._onFilePickerSave}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
+            context={this.props.context}
+            hideRecentTab={false}
+            includePageLibraries={true}
+          />
+          {
+            this.state.filePickerResult &&
+            <div>
+              <div>
+                FileName: {this.state.filePickerResult[0].fileName}
+              </div>
+              <div>
+                File size: {this.state.filePickerResult[0].fileSize}
+              </div>
+            </div>
+          }
+        </div>
+
+        <div>
+          <h3>File Picker with target folder browser</h3>
+          <FilePicker
+            bingAPIKey="<BING API KEY>"
+            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+            buttonLabel="Upload image"
+            buttonIcon="FileImage"
+            onSave={this._onFilePickerSave}
+            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
+            context={this.props.context}
+            hideRecentTab={false}
+            renderCustomUploadTabContent={() => (
+              <FolderExplorer context={this.props.context}
+                rootFolder={this.rootFolder}
+                defaultFolder={this.rootFolder}
+                onSelect={this._onFolderSelect}
+                canCreateFolders={true}
+              />)}
+          />
+        </div>
+
+        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
+        <div>
+          <Progress title={'Progress Test'}
+            showOverallProgress={true}
+            showIndeterminateOverallProgress={false}
+            hideNotStartedActions={false}
+            actions={this.state.progressActions}
+            currentActionIndex={this.state.currentProgressActionIndex}
+            longRunningText={'This operation takes longer than expected'}
+            longRunningTextDisplayDelay={7000}
+            height={'350px'}
+            inProgressIconName={'ChromeBackMirrored'} />
+          <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
+        </div>
+
+        <div className="ms-font-l">Grid Layout</div>
+        <GridLayout
+          ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
+          items={sampleGridData}
+          onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
+        />
+
+        <IconPicker buttonLabel={'Icon'}
+          onChange={(iconName: string) => { console.log(iconName); }}
+          onSave={(iconName: string) => { console.log(iconName); }} />
+
+        <div>
+          <FolderExplorer
+            context={this.props.context}
+            rootFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            defaultFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            onSelect={this._onFolderSelect}
+            canCreateFolders={true}
+            orderby='Name' //'ListItemAllFields/Created'
+            orderAscending={true}
+          />
+        </div>
+
+        <div>
+          <h3>Tree View</h3>
+          <TreeView items={this.treeitems}
+            defaultExpanded={false}
+            selectionMode={TreeViewSelectionMode.Multiple}
+            showCheckboxes={true}
+            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
+            defaultSelectedKeys={this.state.treeViewSelectedKeys}
+            onExpandCollapse={this.onExpandCollapseTree}
+            onSelect={this.onItemSelected}
+            defaultExpandedChildren={true}
+          //expandToSelected={true}
+          // onRenderItem={this.renderCustomTreeItem}
+          />
+          <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
+
+        </div>
+
+        <div>
+          <Pagination
+            currentPage={3}
+            onChange={(page) => (this._getPage(page))}
+            totalPages={this.props.totalPages || 13}
+          //limiter={3}
+          // hideFirstPageJump
+          //hideLastPageJump
+          //limiterIcon={"NumberedListText"}
           />
         </Stack>
       </div>

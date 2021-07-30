@@ -328,6 +328,9 @@ define([], () => {
     "WebSearchLinkLabel": "Recherche Internet",
     "Yes": "Oui",
     "SelectedLabel": "Sélectionné",
-    "SelectIcon": "Sélectionner une icône"
+    "SelectIcon": "Sélectionner une icône",
+    "StockImagesLinkLabel": "Banque d'images",
+    "StockImagesHeader": "Banque d'images",
+    "OrgAssetsLinkLabel": "Votre organisation"
   };
 });

@@ -34,6 +34,7 @@ export interface IControlsTestState {
   canMovePrev: boolean;
   canMoveNext: boolean;
   comboBoxListItemPickerListId: string;
+  comboBoxListItemPickerIds: any[];
   filePickerResult?: IFilePickerResult[];
   treeViewSelectedKeys?: string[];
   showAnimatedDialog?: boolean;
@@ -42,5 +43,5 @@ export interface IControlsTestState {
   showErrorDialog?: boolean;
   selectedTeam:ITag[];
   selectedTeamChannels:ITag[];
-
+  filePickerDefaultFolderAbsolutePath?: string;
 }

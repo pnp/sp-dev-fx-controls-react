@@ -212,6 +212,7 @@ export class FilePicker extends React.Component<
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
                 includePageLibraries={this.props.includePageLibraries}
+                defaultFolderAbsolutePath={this.props.defaultFolderAbsolutePath}
                 {...linkTabProps}
               />
             )}

@@ -189,7 +189,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         try {
           const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
           if (onSubmitted) {
-            onSubmitted(iur.data);
+            onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
           }
         }
         catch (error) {
@@ -204,7 +204,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         try {
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
-            onSubmitted(iar.data);
+            onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
           }
         }
         catch (error) {
@@ -227,35 +227,65 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   // trigger when the user change any value in the form
   private onChange = async (internalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => {
-    try {
-      let fieldCol = (this.state.fieldCollection || []).slice();
-      let field = fieldCol.filter((element, i) => { return element.columnInternalName === internalName; })[0];
-      field.newValue = newValue;
-      field.additionalData = additionalData;
-      if (field.fieldType === "User" && newValue.length !== 0) {
-        let result = await sp.web.ensureUser(newValue[0].secondaryText);
+    // try {
+    let fieldCol = (this.state.fieldCollection || []).slice();
+    let field = fieldCol.filter((element, i) => { return element.columnInternalName === internalName; })[0];
+    field.newValue = newValue;
+    field.additionalData = additionalData;
+    if (field.fieldType === "User" && newValue.length !== 0) {
+      // let result = await sp.web.ensureUser(newValue[0].secondaryText);
+      // field.newValue = result.data.Id;
+
+      if (newValue[0].id === undefined || parseInt(newValue[0].id, 10).toString() === "NaN") {
+        let user: string = newValue[0].secondaryText;
+        if (user.indexOf('@') === -1) {
+          user = newValue[0].loginName;
+        }
+        let result = await sp.web.ensureUser(user);
         field.newValue = result.data.Id;
       }
-      else if (field.fieldType === "UserMulti" && newValue.length !== 0) {
-        field.newValue = [];
-        for (let index = 0; index < newValue.length; index++) {
-          const element = newValue[index];
-          let user: string = element.secondaryText;
-          if (user.indexOf('@') === -1) {
-            user = element.loginName;
+      else {
+        field.newValue = newValue[0].id;
+      }
+
+    }
+    else if (field.fieldType === "UserMulti" && newValue.length !== 0) {
+      field.newValue = [];
+      for (let index = 0; index < newValue.length; index++) {
+        const element = newValue[index];
+        var retrivedItem: boolean = false;
+        if (field.fieldDefaultValue != null) {
+          if (field.fieldDefaultValue.join(',').indexOf(element.text) !== -1)
+            field.fieldDefaultValue.forEach(item => {
+              if (item.split('/')[1] === element.text) {
+                retrivedItem = true;
+                field.newValue.push(item.split('/')[0]);
+              }
+            });
+        }
+        if (!retrivedItem) {
+          if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
+            let user: string = element.secondaryText;
+            if (user.indexOf('@') === -1) {
+              user = element.loginName;
+            }
+            let result = await sp.web.ensureUser(user);
+            field.newValue.push(result.data.Id);
           }
-          let result = await sp.web.ensureUser(user);
-          field.newValue.push(result.data.Id);
+          else {
+            field.newValue.push(element.id);
+          }
         }
       }
-      this.setState({
-        fieldCollection: fieldCol
-      });
-    } catch (error) {
-
-      console.log(`Error onchange`, error);
-      return null;
     }
+    this.setState({
+      fieldCollection: fieldCol
+    });
+    // } catch (error) {
+
+    //   console.log(`Error onchange`, error);
+    //   return null;
+    // }
   }
 
   //getting all the fields information as part of get ready process
@@ -291,6 +321,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let selectedTags: any = [];
         let richText = false;
         let dateFormat: DateFormat | undefined;
+        let principalType = "";
         if (item !== null) {
           defaultValue = item[field.InternalName];
         }
@@ -387,6 +418,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else {
             defaultValue = [];
           }
+          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+          principalType = principalType.substring(0, principalType.indexOf('"'));
         }
         else if (fieldType === "Thumbnail") {
           if (defaultValue !== null) {
@@ -402,6 +435,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else {
             defaultValue = [];
           }
+          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+          principalType = principalType.substring(0, principalType.indexOf('"'));
         }
         else if (fieldType === "Location") {
           defaultValue = JSON.parse(defaultValue);
@@ -428,7 +463,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           Order: field.order,
           isRichText: richText,
           dateFormat: dateFormat,
-          listItemId: listItemId
+          listItemId: listItemId,
+          principalType: principalType
         });
         tempFields.sort((a, b) => a.Order - b.Order);
       }

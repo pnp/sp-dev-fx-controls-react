@@ -340,6 +340,9 @@ define([], () => {
     TeamPickerSugestionsHeaderText: "Suggested Teams",
     TeamsChannelPickerButtonRemoveTitle: "remove",
     TeamsChannelPickerNoresultsFoundText: "No channels found",
-    SelectIcon: "Hautatu ikonoa"
+    SelectIcon: "Hautatu ikonoa",
+    StockImagesLinkLabel: "Stock irudiak",
+    StockImagesHeader: "Stock irudiak",
+    OrgAssetsLinkLabel: "Zure erakundea"
   };
 });

@@ -1,4 +1,3 @@
-import { BaseComponentContext} from "@microsoft/sp-component-base";
 import * as React from "react";
 import { createElement, useEffect, useRef } from "react";
 import { useState } from "react";

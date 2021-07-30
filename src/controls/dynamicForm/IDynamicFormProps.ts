@@ -1,4 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { IItem } from '@pnp/sp/items';
 
 export interface IDynamicFormProps {
   /**
@@ -21,7 +22,7 @@ export interface IDynamicFormProps {
   /**
    * Handler for form submitted event
    */
-  onSubmitted?: (listItemData: any) => void;
+  onSubmitted?: (listItemData: any, listItem?: IItem) => void;
   /**
    * Handler of submission error
    */
@@ -38,6 +39,12 @@ export interface IDynamicFormProps {
    * Content type id of the item
    */
   contentTypeId?: string;
+
+  /**
+   * Specifies if onSubmitted event should pass PnPJS list item (IItem) as a second parameter. Default - true
+   */
+  returnListItemInstanceOnSubmit?: boolean;
+
   /**
  * Used to execute WebSearch. If not provided SearchTab will not be available.
  */

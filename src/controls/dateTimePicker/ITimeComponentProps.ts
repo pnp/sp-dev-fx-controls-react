@@ -1,5 +1,6 @@
 import { IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { TimeConvention } from './DateTimeConventions';
+import { MinutesIncrement } from './IDateTimePickerProps';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
 
 /**
@@ -9,6 +10,7 @@ export interface ITimeComponentProps {
   disabled?: boolean;
   value: number;
   timeDisplayControlType?: TimeDisplayControlType;
+  minutesIncrementStep?: MinutesIncrement;
   onChange: (value?: string) => void;
 }
 
