@@ -39,6 +39,7 @@
     "chart.js": "2.9.4",
     "color": "3.1.2",
     "date-fns": "^2.22.1",
+    "he": "^1.2.0",
     "lodash": "4.17.21",
     "office-ui-fabric-react": "7.156.0",
     "react": "16.9.0",

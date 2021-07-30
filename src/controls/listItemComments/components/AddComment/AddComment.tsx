@@ -11,12 +11,9 @@ import { PHOTO_URL } from "../../common/constants";
 import { IconButton, Text } from "@fluentui/react";
 import { ECommentAction } from "../../common/ECommentAction";
 import { IAddCommentPayload } from "../../models/IAddCommentPayload";
-import DisplayName from "../../../accessibleAccordion/helpers/DisplayName";
-var emojiCompact = require('emoji.json/emoji-compact.json')
 
 export interface IAddCommentProps {
 }
-const neverMatchingRegex = /($a)/;
 
 export const AddComment: React.FunctionComponent<IAddCommentProps> = (props:IAddCommentProps) => {
   const [commentText, setCommentText] = useState<any>("");
