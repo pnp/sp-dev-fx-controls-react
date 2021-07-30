@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+    ListItemCommentsLabel: "Comentários",
+    ListItemCommentsNoCommentsLabel: "Sem Comentários",
     MyTeamsLoadingMessage: "loading your teams",
     MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
     MyTeamsNoTeamsMessage: "Neste momento não tens nenhum Team",
