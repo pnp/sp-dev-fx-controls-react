@@ -6,8 +6,13 @@ import { LivePersona } from "../../../LivePersona";
 import { AppContext } from "../../common";
 import regexifyString from "regexify-string";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
+<<<<<<< HEAD
 import { isArray, isObject } from "lodash";
 import he from 'he';
+=======
+import { isArray, isElement, isObject } from "lodash";
+
+>>>>>>> 76d66b10ee79fba889d78178a01cb0a4345912af
 export interface ICommentTextProps {
   text: string;
   mentions: Mention[];
@@ -58,14 +63,22 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
               if (_el.length) {
                 return (
                   <Text style={{ paddingRight: 5 }} variant="small" key={i}>
+<<<<<<< HEAD
                     {he.decode(_el)}
+=======
+                    {_el}
+>>>>>>> 76d66b10ee79fba889d78178a01cb0a4345912af
                   </Text>
                 );
               }
             }
           })
         ) : (
+<<<<<<< HEAD
           <Text variant="small">{he.decode(commentText)}</Text>
+=======
+          <Text variant="small">{commentText}</Text>
+>>>>>>> 76d66b10ee79fba889d78178a01cb0a4345912af
         )}
       </Stack>
     </>

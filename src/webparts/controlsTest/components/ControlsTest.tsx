@@ -1,26 +1,12 @@
 import * as React from "react";
-import {
-  ITag,
-} from "office-ui-fabric-react/lib/Pickers";
-import {
-  Stack,
-} from "office-ui-fabric-react/lib/Stack";
-import {
-  Text,
-} from "office-ui-fabric-react/lib/Text";
-import {
-  TextField
-} from "office-ui-fabric-react/lib/TextField";
-import {
-  DefaultButton,
-  PrimaryButton
-} from "office-ui-fabric-react/lib/components/Button";
+import { ITag } from "office-ui-fabric-react/lib/Pickers";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Text } from "office-ui-fabric-react/lib/Text";
+import { TextField } from "office-ui-fabric-react/lib/TextField";
+import { DefaultButton, PrimaryButton } from "office-ui-fabric-react/lib/components/Button";
 import { DialogType, DialogFooter, IDialogContentProps } from "office-ui-fabric-react/lib/components/Dialog";
 import { IModalProps } from "office-ui-fabric-react/lib/Modal";
-import {
-  Dropdown,
-  IDropdownOption
-} from "office-ui-fabric-react/lib/components/Dropdown";
+import { Dropdown, IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
 import { Link } from "office-ui-fabric-react/lib/components/Link";
 import {
   DocumentCard,
@@ -29,229 +15,177 @@ import {
   DocumentCardPreview,
   DocumentCardTitle,
   DocumentCardType,
-  IDocumentCardPreviewProps
+  IDocumentCardPreviewProps,
 } from "office-ui-fabric-react/lib/DocumentCard";
 import { IIconProps } from "office-ui-fabric-react/lib/Icon";
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import { ImageFit } from "office-ui-fabric-react/lib/Image";
 import { PanelType } from "office-ui-fabric-react/lib/Panel";
 import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
 import { ISize } from "office-ui-fabric-react/lib/Utilities";
-import {
-  DayOfWeek
-} from "office-ui-fabric-react/lib/utilities/dateValues/DateValues";
+import { DayOfWeek } from "office-ui-fabric-react/lib/utilities/dateValues/DateValues";
 
 import {
   ExclamationCircleIcon,
   Flex,
   ScreenshareIcon,
   ShareGenericIcon,
-  Text as NorthstarText
+  Text as NorthstarText,
 } from "@fluentui/react-northstar";
-import {
-  DisplayMode,
-  Environment,
-  EnvironmentType
-} from "@microsoft/sp-core-library";
+import { DisplayMode, Environment, EnvironmentType } from "@microsoft/sp-core-library";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
 import { Accordion } from "../../../controls/accordion";
-import {
-  ChartControl,
-  ChartType
-} from "../../../ChartControl";
+import { ChartControl, ChartType } from "../../../ChartControl";
 import {
   Accordion as AccessibleAccordion,
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
-  AccordionItemPanel
+  AccordionItemPanel,
 } from "../../../controls/accessibleAccordion";
 import {
   Carousel,
   CarouselButtonsDisplay,
   CarouselButtonsLocation,
   CarouselIndicatorsDisplay,
-  CarouselIndicatorShape
+  CarouselIndicatorShape,
 } from "../../../controls/carousel";
-import {
-  Dashboard,
-  WidgetSize
-} from "../../../controls/dashboard";
-import {
-  TimeDisplayControlType
-} from "../../../controls/dateTimePicker/TimeDisplayControlType";
+import { Dashboard, WidgetSize } from "../../../controls/dashboard";
+import { TimeDisplayControlType } from "../../../controls/dateTimePicker/TimeDisplayControlType";
 import { IconPicker } from "../../../controls/iconPicker";
-import {
-  ComboBoxListItemPicker
-} from "../../../controls/listItemPicker/ComboBoxListItemPicker";
+import { ComboBoxListItemPicker } from "../../../controls/listItemPicker/ComboBoxListItemPicker";
 import { Pagination } from "../../../controls/pagination";
 import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
-import {
-  TermActionsDisplayMode
-} from "../../../controls/taxonomyPicker/termActions";
+import { TermActionsDisplayMode } from "../../../controls/taxonomyPicker/termActions";
 import { Toolbar } from "../../../controls/toolbar";
-import {
-  ITreeItem,
-  TreeItemActionsDisplayMode,
-  TreeView,
-  TreeViewSelectionMode
-} from "../../../controls/treeView";
-import {
-  DateConvention,
-  DateTimePicker,
-  TimeConvention
-} from "../../../DateTimePicker";
-import {
-  CustomCollectionFieldType,
-  FieldCollectionData
-} from "../../../FieldCollectionData";
-import {
-  FilePicker,
-  IFilePickerResult
-} from "../../../FilePicker";
-import {
-  ApplicationType,
-  FileTypeIcon,
-  IconType,
-  ImageSize
-} from "../../../FileTypeIcon";
-import {
-  FolderExplorer,
-  IBreadcrumbItem,
-  IFolder
-} from "../../../FolderExplorer";
+import { ITreeItem, TreeItemActionsDisplayMode, TreeView, TreeViewSelectionMode } from "../../../controls/treeView";
+import { DateConvention, DateTimePicker, TimeConvention } from "../../../DateTimePicker";
+import { CustomCollectionFieldType, FieldCollectionData } from "../../../FieldCollectionData";
+import { FilePicker, IFilePickerResult } from "../../../FilePicker";
+import { ApplicationType, FileTypeIcon, IconType, ImageSize } from "../../../FileTypeIcon";
+import { FolderExplorer, IBreadcrumbItem, IFolder } from "../../../FolderExplorer";
 import { FolderPicker } from "../../../FolderPicker";
 import { GridLayout } from "../../../GridLayout";
 import { IFrameDialog } from "../../../IFrameDialog";
 import { IFramePanel } from "../../../IFramePanel";
 import { ListItemPicker } from "../../../ListItemPicker";
 import { ListPicker } from "../../../ListPicker";
-import {
-  GroupOrder,
-  IGrouping,
-  IViewField,
-  ListView,
-  SelectionMode
-} from "../../../ListView";
-import {
-  Map,
-  MapType
-} from "../../../Map";
-import {
-  PeoplePicker,
-  PrincipalType
-} from "../../../PeoplePicker";
+import { GroupOrder, IGrouping, IViewField, ListView, SelectionMode } from "../../../ListView";
+import { Map, MapType } from "../../../Map";
+import { PeoplePicker, PrincipalType } from "../../../PeoplePicker";
 import { Placeholder } from "../../../Placeholder";
-import {
-  IProgressAction,
-  Progress
-} from "../../../Progress";
+import { IProgressAction, Progress } from "../../../Progress";
 import { RichText } from "../../../RichText";
-import {
-  PermissionLevel,
-  SecurityTrimmedControl
-} from "../../../SecurityTrimmedControl";
+import { PermissionLevel, SecurityTrimmedControl } from "../../../SecurityTrimmedControl";
 import { ITerm } from "../../../services/ISPTermStorePickerService";
-import SPTermStorePickerService
-  from "../../../services/SPTermStorePickerService";
+import SPTermStorePickerService from "../../../services/SPTermStorePickerService";
 import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
-import {
-  IPickerTerms,
-  TaxonomyPicker,
-  UpdateType
-} from "../../../TaxonomyPicker";
+import { IPickerTerms, TaxonomyPicker, UpdateType } from "../../../TaxonomyPicker";
 import { WebPartTitle } from "../../../WebPartTitle";
 import { AnimatedDialog } from "../../../AnimatedDialog";
 import styles from "./ControlsTest.module.scss";
-import {
-  IControlsTestProps,
-  IControlsTestState
-} from "./IControlsTestProps";
+import { IControlsTestProps, IControlsTestState } from "./IControlsTestProps";
 import { MyTeams } from "../../../controls/MyTeams";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import {​​ DragDropFiles }​​ from "../../../DragDropFiles";
-import {​​ SitePicker }​​ from "../../../controls/sitePicker/SitePicker";
-import { DynamicForm } from '../../../controls/dynamicForm';
+import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import { DynamicForm } from "../../../controls/dynamicForm";
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
-
-
+import { ListItemComments } from "../../../controls/listItemComments";
 
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
  */
-const sampleGridData: any[] = [{
-  thumbnail: "https://pixabay.com/get/57e9dd474952a414f1dc8460825668204022dfe05555754d742e7bd6/hot-air-balloons-1984308_640.jpg",
-  title: "Adventures in SPFx",
-  name: "Perry Losselyong",
-  profileImageSrc: "https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1",
-  location: "SharePoint",
-  activity: "3/13/2019"
-}, {
-  thumbnail: "https://pixabay.com/get/55e8d5474a52ad14f1dc8460825668204022dfe05555754d742d79d0/autumn-3804001_640.jpg",
-  title: "The Wild, Untold Story of SharePoint!",
-  name: "Ebonee Gallyhaock",
-  profileImageSrc: "https://robohash.org/delectusetcorporis.bmp?size=50x50&set=set1",
-  location: "SharePoint",
-  activity: "6/29/2019"
-}, {
-  thumbnail: "https://pixabay.com/get/57e8dd454c50ac14f1dc8460825668204022dfe05555754d742c72d7/log-cabin-1886620_640.jpg",
-  title: "Low Code Solutions: PowerApps",
-  name: "Seward Keith",
-  profileImageSrc: "https://robohash.org/asperioresautquasi.jpg?size=50x50&set=set1",
-  location: "PowerApps",
-  activity: "12/31/2018"
-}, {
-  thumbnail: "https://pixabay.com/get/55e3d445495aa514f1dc8460825668204022dfe05555754d742b7dd5/portrait-3316389_640.jpg",
-  title: "Not Your Grandpa's SharePoint",
-  name: "Sharona Selkirk",
-  profileImageSrc: "https://robohash.org/velnammolestiae.png?size=50x50&set=set1",
-  location: "SharePoint",
-  activity: "11/20/2018"
-}, {
-  thumbnail: "https://pixabay.com/get/57e6dd474352ae14f1dc8460825668204022dfe05555754d742a7ed1/faucet-1684902_640.jpg",
-  title: "Get with the Flow",
-  name: "Boyce Batstone",
-  profileImageSrc: "https://robohash.org/nulladistinctiomollitia.jpg?size=50x50&set=set1",
-  location: "Flow",
-  activity: "5/26/2019"
-}];
+const sampleGridData: any[] = [
+  {
+    thumbnail:
+      "https://pixabay.com/get/57e9dd474952a414f1dc8460825668204022dfe05555754d742e7bd6/hot-air-balloons-1984308_640.jpg",
+    title: "Adventures in SPFx",
+    name: "Perry Losselyong",
+    profileImageSrc: "https://robohash.org/blanditiisadlabore.png?size=50x50&set=set1",
+    location: "SharePoint",
+    activity: "3/13/2019",
+  },
+  {
+    thumbnail:
+      "https://pixabay.com/get/55e8d5474a52ad14f1dc8460825668204022dfe05555754d742d79d0/autumn-3804001_640.jpg",
+    title: "The Wild, Untold Story of SharePoint!",
+    name: "Ebonee Gallyhaock",
+    profileImageSrc: "https://robohash.org/delectusetcorporis.bmp?size=50x50&set=set1",
+    location: "SharePoint",
+    activity: "6/29/2019",
+  },
+  {
+    thumbnail:
+      "https://pixabay.com/get/57e8dd454c50ac14f1dc8460825668204022dfe05555754d742c72d7/log-cabin-1886620_640.jpg",
+    title: "Low Code Solutions: PowerApps",
+    name: "Seward Keith",
+    profileImageSrc: "https://robohash.org/asperioresautquasi.jpg?size=50x50&set=set1",
+    location: "PowerApps",
+    activity: "12/31/2018",
+  },
+  {
+    thumbnail:
+      "https://pixabay.com/get/55e3d445495aa514f1dc8460825668204022dfe05555754d742b7dd5/portrait-3316389_640.jpg",
+    title: "Not Your Grandpa's SharePoint",
+    name: "Sharona Selkirk",
+    profileImageSrc: "https://robohash.org/velnammolestiae.png?size=50x50&set=set1",
+    location: "SharePoint",
+    activity: "11/20/2018",
+  },
+  {
+    thumbnail:
+      "https://pixabay.com/get/57e6dd474352ae14f1dc8460825668204022dfe05555754d742a7ed1/faucet-1684902_640.jpg",
+    title: "Get with the Flow",
+    name: "Boyce Batstone",
+    profileImageSrc: "https://robohash.org/nulladistinctiomollitia.jpg?size=50x50&set=set1",
+    location: "Flow",
+    activity: "5/26/2019",
+  },
+];
 
 const sampleItems = [
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Charger des fichiers et dossiers',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    Langue: { Nom: "Français" },
+    Question: "Charger des fichiers et dossiers",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Enregistrer un fichier',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    Langue: { Nom: "Français" },
+    Question: "Enregistrer un fichier",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Troisième exemple',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    Langue: { Nom: "Français" },
+    Question: "Troisième exemple",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Quatrième exemple',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    Langue: { Nom: "Français" },
+    Question: "Quatrième exemple",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Cinquième exemple',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    Langue: { Nom: "Français" },
+    Question: "Cinquième exemple",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    Langue: { Nom: 'Français' },
-    Question: 'Sixième exemple',
-    Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-  }
+    Langue: { Nom: "Français" },
+    Question: "Sixième exemple",
+    Reponse:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
 ];
 
 /**
@@ -260,7 +194,6 @@ const sampleItems = [
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
-
 
   private onSelectedChannel = (teamsId: string, channelId: string) => {
     alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
@@ -272,33 +205,68 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Static array for carousel control example.
    */
   private carouselElements = [
-    <div id="1" key="1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a mattis libero, nec consectetur neque. Suspendisse potenti. Fusce ultrices faucibus consequat. Suspendisse ex diam, ullamcorper sit amet justo ac, accumsan congue neque. Vestibulum aliquam mauris non justo convallis, id molestie purus sodales. Maecenas scelerisque aliquet turpis, ac efficitur ex iaculis et. Vivamus finibus mi eget urna tempor, sed porta justo tempus. Vestibulum et lectus magna. Integer ante felis, ullamcorper venenatis lectus ac, vulputate pharetra magna. Morbi eget nisl tempus, viverra diam ac, mollis tortor. Nam odio ex, viverra bibendum mauris vehicula, consequat suscipit ligula. Nunc sed ultrices augue, eu tincidunt diam.</div>,
-    <div id="2" key="2">Quisque metus lectus, facilisis id consectetur ac, hendrerit eget quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut faucibus posuere felis vel efficitur. Maecenas et massa in sem tincidunt finibus. Duis sit amet bibendum nisi. Vestibulum pretium pretium libero, vel tincidunt sem vestibulum sed. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin quam lorem, venenatis id bibendum id, tempus eu nibh. Sed tristique semper ligula, vitae gravida diam gravida vitae. Donec eget posuere mauris, pharetra semper lectus.</div>,
-    <div id="3" key="3">Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis, placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.</div>,
-    <div id="4" key="4">Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam. Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.</div>,
-    <div id="5" key="5">Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem arcu ut felis. Nullam lacinia dapibus auctor.</div>
+    <div id="1" key="1">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a mattis libero, nec consectetur neque. Suspendisse
+      potenti. Fusce ultrices faucibus consequat. Suspendisse ex diam, ullamcorper sit amet justo ac, accumsan congue
+      neque. Vestibulum aliquam mauris non justo convallis, id molestie purus sodales. Maecenas scelerisque aliquet
+      turpis, ac efficitur ex iaculis et. Vivamus finibus mi eget urna tempor, sed porta justo tempus. Vestibulum et
+      lectus magna. Integer ante felis, ullamcorper venenatis lectus ac, vulputate pharetra magna. Morbi eget nisl
+      tempus, viverra diam ac, mollis tortor. Nam odio ex, viverra bibendum mauris vehicula, consequat suscipit ligula.
+      Nunc sed ultrices augue, eu tincidunt diam.
+    </div>,
+    <div id="2" key="2">
+      Quisque metus lectus, facilisis id consectetur ac, hendrerit eget quam. Interdum et malesuada fames ac ante ipsum
+      primis in faucibus. Ut faucibus posuere felis vel efficitur. Maecenas et massa in sem tincidunt finibus. Duis sit
+      amet bibendum nisi. Vestibulum pretium pretium libero, vel tincidunt sem vestibulum sed. Interdum et malesuada
+      fames ac ante ipsum primis in faucibus. Proin quam lorem, venenatis id bibendum id, tempus eu nibh. Sed tristique
+      semper ligula, vitae gravida diam gravida vitae. Donec eget posuere mauris, pharetra semper lectus.
+    </div>,
+    <div id="3" key="3">
+      Pellentesque tempor et leo at tincidunt. Vivamus et leo sed eros vehicula mollis vitae in dui. Duis posuere
+      sodales enim ut ultricies. Cras in venenatis nulla. Ut sed neque dignissim, sollicitudin tellus convallis,
+      placerat leo. Aliquam vestibulum, leo pharetra sollicitudin pretium, ipsum nisl tincidunt orci, in molestie ipsum
+      dui et mi. Praesent aliquam accumsan risus sed bibendum. Cras consectetur elementum turpis, a mollis velit gravida
+      sit amet. Praesent non augue cursus, varius justo at, molestie lorem. Nulla cursus tellus quis odio congue
+      elementum. Vivamus sit amet quam nec lectus hendrerit blandit. Duis ac condimentum sem. Morbi hendrerit elementum
+      purus, non facilisis arcu bibendum vitae. Vivamus commodo tristique euismod.
+    </div>,
+    <div id="4" key="4">
+      Proin semper egestas porta. Nullam risus nisl, auctor ac hendrerit in, dapibus quis ex. Quisque vitae nisi quam.
+      Etiam vel sapien ut libero ornare rhoncus nec vestibulum dolor. Curabitur lacinia aliquam arcu. Proin ultrices
+      risus velit, in vehicula tellus vehicula at. Sed ultrices et felis fringilla ultricies.
+    </div>,
+    <div id="5" key="5">
+      Donec orci lorem, imperdiet eu nisi sit amet, condimentum scelerisque tortor. Etiam nec lacinia dui. Duis non
+      turpis neque. Sed pellentesque a erat et accumsan. Pellentesque elit odio, elementum nec placerat nec, ornare in
+      tortor. Suspendisse gravida magna maximus mollis facilisis. Duis odio libero, finibus ac suscipit sed, aliquam et
+      diam. Aenean posuere lacus ex. Donec dapibus, sem ac luctus ultrices, justo libero tempor eros, vitae lacinia ex
+      ante non dolor. Curabitur condimentum, ligula id pharetra dictum, libero libero ullamcorper nunc, eu blandit sem
+      arcu ut felis. Nullam lacinia dapibus auctor.
+    </div>,
   ];
 
-  private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };
+  private skypeCheckIcon: IIconProps = { iconName: "SkypeCheck" };
   private treeitems = [
     {
       key: "R1",
       label: "Root",
       subLabel: "This is a sub label for node",
       iconProps: this.skypeCheckIcon,
-      actions: [{
-        title: "Get item",
-        iconProps: {
-          iconName: 'Warning',
-          style: {
-            color: 'salmon',
+      actions: [
+        {
+          title: "Get item",
+          iconProps: {
+            iconName: "Warning",
+            style: {
+              color: "salmon",
+            },
+          },
+          id: "GetItem",
+          actionCallback: async (treeItem: ITreeItem) => {
+            console.log(treeItem);
           },
         },
-        id: "GetItem",
-        actionCallback: async (treeItem: ITreeItem) => {
-          console.log(treeItem);
-        }
-      }],
+      ],
       children: [
         {
           key: "1",
@@ -309,55 +277,59 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               key: "3",
               label: "Child 1",
               subLabel: "This is a sub label for node",
-              actions: [{
-                title: "Share",
-                iconProps: {
-                  iconName: 'Share'
+              actions: [
+                {
+                  title: "Share",
+                  iconProps: {
+                    iconName: "Share",
+                  },
+                  id: "GetItem",
+                  actionCallback: async (treeItem: ITreeItem) => {
+                    console.log(treeItem);
+                  },
                 },
-                id: "GetItem",
-                actionCallback: async (treeItem: ITreeItem) => {
-                  console.log(treeItem);
-                }
-              }],
+              ],
               children: [
                 {
                   key: "gc1",
                   label: "Grand Child 1",
-                  actions: [{
-                    title: "Get Grand Child item",
-                    iconProps: {
-                      iconName: 'Mail'
+                  actions: [
+                    {
+                      title: "Get Grand Child item",
+                      iconProps: {
+                        iconName: "Mail",
+                      },
+                      id: "GetItem",
+                      actionCallback: async (treeItem: ITreeItem) => {
+                        console.log(treeItem);
+                      },
                     },
-                    id: "GetItem",
-                    actionCallback: async (treeItem: ITreeItem) => {
-                      console.log(treeItem);
-                    }
-                  }]
-                }
-              ]
+                  ],
+                },
+              ],
             },
             {
               key: "4",
               label: "Child 2",
-              iconProps: this.skypeCheckIcon
-            }
-          ]
+              iconProps: this.skypeCheckIcon,
+            },
+          ],
         },
         {
           key: "2",
-          label: "Parent 2"
+          label: "Parent 2",
         },
         {
           key: "5",
           label: "Parent 3",
-          disabled: true
+          disabled: true,
         },
         {
           key: "6",
           label: "Parent 4",
-          selectable: true
-        }
-      ]
+          selectable: true,
+        },
+      ],
     },
     {
       key: "R2",
@@ -365,22 +337,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       children: [
         {
           key: "8",
-          label: "Parent 5"
+          label: "Parent 5",
         },
         {
           key: "9",
-          label: "Parent 6"
-
+          label: "Parent 6",
         },
         {
           key: "10",
-          label: "Parent 7"
+          label: "Parent 7",
         },
         {
           key: "11",
-          label: "Parent 8"
-        }
-      ]
+          label: "Parent 8",
+        },
+      ],
     },
     {
       key: "R3",
@@ -388,7 +359,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       children: [
         {
           key: "12",
-          label: "Parent 9"
+          label: "Parent 9",
         },
         {
           key: "13",
@@ -400,22 +371,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               children: [
                 {
                   key: "ggc1",
-                  label: "Grandchild of Parent 10"
-                }
-              ]
+                  label: "Grandchild of Parent 10",
+                },
+              ],
             },
-          ]
+          ],
         },
         {
           key: "14",
-          label: "Parent 11"
+          label: "Parent 11",
         },
         {
           key: "15",
-          label: "Parent 12"
-        }
-      ]
-    }
+          label: "Parent 12",
+        },
+      ],
+    },
   ];
 
   constructor(props: IControlsTestProps) {
@@ -435,15 +406,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMovePrev: false,
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
-      comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
-      treeViewSelectedKeys: ['gc1', 'gc3'],
+      comboBoxListItemPickerListId: "0ffa51d7-4ad1-4f04-8cfe-98209905d6da",
+      treeViewSelectedKeys: ["gc1", "gc3"],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
       showSuccessDialog: false,
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
-
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -457,11 +427,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   public componentDidMount() {
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
-    this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
-      .then(resp => { return resp.json(); })
-      .then(items => {
+    this.props.context.spHttpClient
+      .get(restApi, SPHttpClient.configurations.v1)
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((items) => {
         this.setState({
-          items: items.value ? items.value : []
+          items: items.value ? items.value : [],
         });
       });
 
@@ -484,7 +457,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _onIconSizeChange(element?: IDropdownOption): void {
     this.setState({
-      imgSize: parseInt(element.key.toString())
+      imgSize: parseInt(element.key.toString()),
     });
   }
 
@@ -500,13 +473,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * @param items
    */
   private _getSelection(items: any[]) {
-    console.log('Items:', items);
+    console.log("Items:", items);
   }
 
   /**
-  * Method that retrieves files from drag and drop
-  * @param files
-  */
+   * Method that retrieves files from drag and drop
+   * @param files
+   */
   private _getDropFiles = (files) => {
     for (var i = 0; i < files.length; i++) {
       console.log("File name: " + files[i].name);
@@ -523,7 +496,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private onServicePickerChange = (terms: IPickerTerms): void => {
     this.setState({
-      initialValues: terms
+      initialValues: terms,
     });
     // console.log("serviceTerms", terms);
   }
@@ -534,7 +507,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
-      initialValues: terms
+      initialValues: terms,
     });
     console.log("Terms:", terms);
   }
@@ -555,7 +528,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private onListPickerChange = (lists: string | string[]) => {
     console.log("Lists:", lists);
     this.setState({
-      selectedList: typeof lists === "string" ? lists : lists.pop()
+      selectedList: typeof lists === "string" ? lists : lists.pop(),
     });
   }
 
@@ -567,7 +540,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     if (items.length >= 2) {
       items.splice(1, 1);
       this.setState({
-        items: items
+        items: items,
       });
     }
   }
@@ -577,7 +550,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * @param items
    */
   private _getPeoplePickerItems(items: any[]) {
-    console.log('Items:', items);
+    console.log("Items:", items);
   }
 
   /**
@@ -596,39 +569,38 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         clearInterval(intervalId);
       } else {
         const action = actions[currentIndex];
-        if (currentIndex == 1) { // just a test for error
+        if (currentIndex == 1) {
+          // just a test for error
           action.hasError = true;
-          action.errorMessage = 'some error message';
+          action.errorMessage = "some error message";
         }
       }
 
       this.setState({
         currentProgressActionIndex: currentIndex,
-        progressActions: actions
+        progressActions: actions,
       });
       currentIndex++;
     }, 5000);
   }
 
   private _initProgressActions(): IProgressAction[] {
-    return [{
-      title: 'First Step',
-      subActionsTitles: [
-        'Sub action 1',
-        'Sub action 2'
-      ]
-    }, {
-      title: 'Second step'
-    }, {
-      title: 'Third Step',
-      subActionsTitles: [
-        'Sub action 1',
-        'Sub action 2',
-        'Sub action 3'
-      ]
-    }, {
-      title: 'Fourth Step'
-    }];
+    return [
+      {
+        title: "First Step",
+        subActionsTitles: ["Sub action 1", "Sub action 2"],
+      },
+      {
+        title: "Second step",
+      },
+      {
+        title: "Third Step",
+        subActionsTitles: ["Sub action 1", "Sub action 2", "Sub action 3"],
+      },
+      {
+        title: "Fourth Step",
+      },
+    ];
   }
 
   /**
@@ -643,7 +615,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       this.setState({
         canMovePrev,
         canMoveNext,
-        currentCarouselElement: nextElement
+        currentCarouselElement: nextElement,
       });
     }, 500);
   }
@@ -661,12 +633,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private rootFolder: IFolder = {
     Name: "Site",
-    ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl
+    ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl,
   };
 
   private _onFolderSelect = (folder: IFolder): void => {
-    console.log('selected folder', folder);
-
+    console.log("selected folder", folder);
   }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
@@ -675,37 +646,34 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         {
           previewImageSrc: item.thumbnail,
           imageFit: ImageFit.cover,
-          height: 130
-        }
-      ]
+          height: 130,
+        },
+      ],
     };
 
-
-    return <div
-      //className={styles.documentTile}
-      data-is-focusable={true}
-      role="listitem"
-      aria-label={item.title}
-    >
-      <DocumentCard
-        type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
-        onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
-
+    return (
+      <div
+        //className={styles.documentTile}
+        data-is-focusable={true}
+        role="listitem"
+        aria-label={item.title}
       >
-        <DocumentCardPreview {...previewProps} />
-        {!isCompact && <DocumentCardLocation location={item.location} />}
-        <div>
-          <DocumentCardTitle
-            title={item.title}
-            shouldTruncate={true}
-          />
-          <DocumentCardActivity
-            activity={item.activity}
-            people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
-          />
-        </div>
-      </DocumentCard>
-    </div>;
+        <DocumentCard
+          type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
+          onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
+        >
+          <DocumentCardPreview {...previewProps} />
+          {!isCompact && <DocumentCardLocation location={item.location} />}
+          <div>
+            <DocumentCardTitle title={item.title} shouldTruncate={true} />
+            <DocumentCardActivity
+              activity={item.activity}
+              people={[{ name: item.name, profileImageSrc: item.profileImageSrc }]}
+            />
+          </div>
+        </DocumentCard>
+      </div>
+    );
   }
 
   /**
@@ -717,55 +685,53 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       {
         key: ImageSize.small,
         text: ImageSize[ImageSize.small],
-        selected: ImageSize.small === this.state.imgSize
+        selected: ImageSize.small === this.state.imgSize,
       },
       {
         key: ImageSize.medium,
         text: ImageSize[ImageSize.medium],
-        selected: ImageSize.medium === this.state.imgSize
+        selected: ImageSize.medium === this.state.imgSize,
       },
       {
         key: ImageSize.large,
         text: ImageSize[ImageSize.large],
-        selected: ImageSize.large === this.state.imgSize
-      }
+        selected: ImageSize.large === this.state.imgSize,
+      },
     ];
-
-
 
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
       {
-        name: 'ListItemAllFields.Id',
-        displayName: 'ID',
+        name: "ListItemAllFields.Id",
+        displayName: "ID",
         maxWidth: 40,
         sorting: true,
-        isResizable: true
+        isResizable: true,
       },
       {
-        name: 'ListItemAllFields.Underscore_Field',
+        name: "ListItemAllFields.Underscore_Field",
         displayName: "Underscore_Field",
         sorting: true,
-        isResizable: true
+        isResizable: true,
       },
       {
-        name: 'Name',
-        linkPropertyName: 'ServerRelativeUrl',
+        name: "Name",
+        linkPropertyName: "ServerRelativeUrl",
         sorting: true,
-        isResizable: true
+        isResizable: true,
       },
       {
-        name: 'ServerRelativeUrl',
-        displayName: 'Path',
+        name: "ServerRelativeUrl",
+        displayName: "Path",
         render: (item: any) => {
-          return <a href={item['ServerRelativeUrl']}>Link</a>;
+          return <a href={item["ServerRelativeUrl"]}>Link</a>;
         },
-        isResizable: true
+        isResizable: true,
       },
       {
-        name: 'Title',
-        isResizable: true
-      }
+        name: "Title",
+        isResizable: true,
+      },
     ];
 
     // Specify the fields on which you want to group your items
@@ -773,19 +739,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     // const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.City", order: GroupOrder.ascending }, { name: "ListItemAllFields.Country.Label", order: GroupOrder.descending }];
     const groupByFields: IGrouping[] = [{ name: "ListItemAllFields.Department.Label", order: GroupOrder.ascending }];
 
-    let iframeUrl: string = '/temp/workbench.html';
+    let iframeUrl: string = "/temp/workbench.html";
     if (Environment.type === EnvironmentType.SharePoint) {
-      iframeUrl = '/_layouts/15/sharepoint.aspx';
-    }
-    else if (Environment.type === EnvironmentType.ClassicSharePoint) {
+      iframeUrl = "/_layouts/15/sharepoint.aspx";
+    } else if (Environment.type === EnvironmentType.ClassicSharePoint) {
       iframeUrl = this.context.pageContext.web.serverRelativeUrl;
     }
 
-    const additionalBreadcrumbItems: IBreadcrumbItem[] = [{
-      text: 'Places', key: 'Places', onClick: () => {
-        console.log('additional breadcrumb item');
+    const additionalBreadcrumbItems: IBreadcrumbItem[] = [
+      {
+        text: "Places",
+        key: "Places",
+        onClick: () => {
+          console.log("additional breadcrumb item");
+        },
       },
-    }];
+    ];
 
     const linkExample = { href: "#" };
     const calloutItemsExample = [
@@ -803,43 +772,42 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     ];
 
     /**
-   * Animated dialog related
-   */
+     * Animated dialog related
+     */
 
     const animatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
-      title: 'Animated Dialog',
-      subText: 'Do you like the animated dialog?',
+      title: "Animated Dialog",
+      subText: "Do you like the animated dialog?",
     };
 
     const animatedModalProps: IModalProps = {
-      isDarkOverlay: true
+      isDarkOverlay: true,
     };
 
     const customizedAnimatedModalProps: IModalProps = {
       isDarkOverlay: true,
-      containerClassName: `${styles.dialogContainer}`
+      containerClassName: `${styles.dialogContainer}`,
     };
 
     const customizedAnimatedDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
-      title: 'Animated Dialog'
+      title: "Animated Dialog",
     };
 
     const successDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
-      title: 'Good answer!'
+      title: "Good answer!",
     };
 
     const errorDialogContentProps: IDialogContentProps = {
       type: DialogType.normal,
-      title: 'Uh oh!'
+      title: "Uh oh!",
     };
 
     const timeout = (ms: number): Promise<void> => {
       return new Promise((resolve, reject) => setTimeout(resolve, ms));
     };
-
 
     return (
       <div className={styles.controlsTest}>
@@ -847,7 +815,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           {/* Change the list Id and list item id before you start to test this control */}
           {/* <DynamicForm context={this.props.context} listId={"3071c058-549f-461d-9d73-8b9a52049a80"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm> */}
         </div>
-        <WebPartTitle displayMode={this.props.displayMode}
+        <WebPartTitle
+          displayMode={this.props.displayMode}
           title={this.props.title}
           updateProperty={this.props.updateProperty}
           moreLink={
@@ -1266,654 +1235,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           dateConvention={DateConvention.Date}
         />
 
-        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
-
-        <br></br>
-        <b>Drag and Drop Files</b>
-        <DragDropFiles
-          dropEffect="copy"
-          enable={true}
-          onDrop={this._getDropFiles}
-          iconName="Upload"
-          labelMessage="My custom upload File"
-        >
-        <Placeholder iconName='BulkUpload'
-          iconText='Drag files or folder with files here...'
-          description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-          buttonLabel='Configure'
-          hideButton={this.props.displayMode === DisplayMode.Read}
-          onConfigure={this._onConfigure} />
-        </DragDropFiles>
-        <br></br>
-
-
-        <ListView items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection}
-          showFilter={true}
-          dragDropFiles={true}
-          onDrop={this._getDropFiles}
-          stickyHeader={true}
-        // defaultFilter="Team"
-        />
-
-
-        <ChartControl type={ChartType.Bar}
-          data={{
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-            }]
-          }}
-          options={{
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }} />
-
-        <Map titleText="New map control"
-          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-          enableSearch={true}
-          mapType={MapType.normal}
-          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
-        //  zoom={15}
-        //mapType={MapType.cycle}
-        //width="50"
-        //height={150}
-        //loadingMessage="Loading maps"
-        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
-        />
-
-        <div className={styles.container}>
-          <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
-            <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
-              <span className="ms-font-xl">Controls testing</span>
-
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
-                <p>You have permissions to view list items.</p>
-              </SecurityTrimmedControl>
-
-              <p className="ms-font-l">
-                File type icon control
-              </p>
-              <div className="ms-font-m">
-                Font icons:&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.doc" />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
-              </div>
-              <div className="ms-font-m">
-                Image icons:&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
-                <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
-                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
-              </div>
-              <div className="ms-font-m">Icon size tester:
-                <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
-              </div>
-
-
-              <div className="ms-font-m">Site picker tester:
-              <SitePicker
-                context={this.props.context}
-                label={'select sites'}
-                mode={'site'}
-                allowSearch={true}
-                multiSelect={false}
-                onChange={(sites) => { console.log(sites); }}
-                placeholder={'Select sites'}
-                searchPlaceholder={'Filter sites'} />
-              </div>
-
-              <div className="ms-font-m">List picker tester:
-                <ListPicker context={this.props.context}
-                  label="Select your list(s)"
-                  placeholder="Select your list(s)"
-                  baseTemplate={100}
-                  includeHidden={false}
-                  multiSelect={true}
-                  contentTypeId="0x01"
-                  // filter="Title eq 'Test List'"
-                  onSelectionChanged={this.onListPickerChange} />
-              </div>
-
-              <div className="ms-font-m">List Item picker list data tester:
-
-                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
-                  columnInternalName="Title"
-                  keyColumnInternalName="Id"
-                  filter={"Title eq 'SPFx'"}
-                  orderBy={'Title desc'}
-                  itemLimit={5}
-                  context={this.props.context}
-                  placeholder={'Select list items'}
-                  onSelectedItem={this.listItemPickerDataSelected} />
-
-              </div>
-              <div>Icon Picker</div>
-              <div>
-                <IconPicker
-                  renderOption="panel"
-                  onSave={(value) => { console.log(value); }}
-                  currentIcon={'Warning'}
-                  buttonLabel="Icon Picker">
-                </IconPicker>
-              </div>
-
-              <div className="ms-font-m">ComboBoxListItemPicker:
-
-                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
-                  columnInternalName='Title'
-                  keyColumnInternalName='Id'
-                  multiSelect={true}
-                  onSelectedItem={(data) => {
-                    console.log(`Item(s):`, data);
-                  }}
-                  webUrl={this.props.context.pageContext.web.absoluteUrl}
-                  spHttpClient={this.props.context.spHttpClient} />
-
-                <PrimaryButton text="Change List" onClick={() => {
-                  this.setState({
-                    comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
-                  });
-                }} />
-
-              </div>
-
-              <div className="ms-font-m">iframe dialog tester:
-                <PrimaryButton
-                  text="Open iframe Dialog"
-                  onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
-                <IFrameDialog
-                  url={iframeUrl}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                  hidden={!this.state.iFrameDialogOpened}
-                  onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
-                  modalProps={{
-                    isBlocking: true,
-                    styles: {
-                      root: {
-                        backgroundColor: '#00ff00'
-                      },
-                      main: {
-                        backgroundColor: '#ff0000'
-                      }
-                    }
-                  }}
-                  dialogContentProps={{
-                    type: DialogType.close,
-                    showCloseButton: true
-                  }}
-                  width={'570px'}
-                  height={'315px'} />
-              </div>
-              <div className="ms-font-m">iframe Panel tester:
-                <PrimaryButton
-                  text="Open iframe Panel"
-                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
-                <IFramePanel
-                  url={iframeUrl}
-                  type={PanelType.medium}
-                  //  height="300px"
-                  headerText="iframe panel title"
-                  closeButtonAriaLabel="Close"
-                  isOpen={this.state.iFramePanelOpened}
-                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                />
-              </div>
-              <div>
-                <FolderPicker context={this.props.context}
-                  rootFolder={{
-                    Name: 'Documents',
-                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-                  }}
-                  onSelect={this._onFolderSelect}
-                  label='Folder Picker'
-                  required={true}
-                  canCreateFolders={true}
-                ></FolderPicker>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3>Carousel with fixed elements:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.top}
-            buttonsDisplay={CarouselButtonsDisplay.block}
-
-            contentContainerStyles={styles.carouselContent}
-            containerButtonsStyles={styles.carouselButtonsContainer}
-
-            isInfinite={true}
-
-            element={this.carouselElements}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+        <Stack>
+          <ListItemComments
+            numberCommentsPerPage={5}
+            webUrl="https://spteck.sharepoint.com/sites/ThePerspective"
+            listId="e738c4b3-6cff-493a-a8da-dbbf4732e3bf"
+            itemId={"30"}
+            serviceScope={this.props.context.serviceScope}
           />
-        </div>
-
-        <div>
-          <h3>Carousel with CarouselImage elements:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.center}
-            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
-
-            contentContainerStyles={styles.carouselImageContent}
-            //containerButtonsStyles={styles.carouselButtonsContainer}
-
-            isInfinite={true}
-            indicatorShape={CarouselIndicatorShape.circle}
-            indicatorsDisplay={CarouselIndicatorsDisplay.block}
-            pauseOnHover={true}
-
-            element={[
-              {
-                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
-                title: 'Colosseum',
-                description: 'This is Colosseum',
-                url: 'https://en.wikipedia.org/wiki/Colosseum',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
-              },
-              {
-                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
-                title: 'Stonehenge',
-                description: 'This is Stonehendle',
-                url: 'https://en.wikipedia.org/wiki/Stonehenge',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
-              },
-              {
-                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
-                title: 'Pyramids of Giza',
-                description: 'This are Pyramids of Giza (Egypt)',
-                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
-              }
-            ]}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
-            rootStyles={mergeStyles({
-              backgroundColor: '#C3C3C3'
-            })}
-          />
-        </div>
-
-        <div>
-          <h3>Carousel with triggerPageElement:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.bottom}
-            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
-
-            contentContainerStyles={styles.carouselContent}
-
-            canMoveNext={this.state.canMoveNext}
-            canMovePrev={this.state.canMovePrev}
-            triggerPageEvent={this.triggerNextElement}
-            element={this.state.currentCarouselElement}
-          />
-        </div>
-
-        <div className={styles.siteBreadcrumb}>
-          <SiteBreadcrumb context={this.props.context} />
-        </div>
-
-        <div>
-          <h3>File Picker</h3>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Add File"
-
-            buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
-            onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
-            context={this.props.context}
-            hideRecentTab={false}
-            includePageLibraries={true}
-          />
-          {
-            this.state.filePickerResult &&
-            <div>
-              <div>
-                FileName: {this.state.filePickerResult[0].fileName}
-              </div>
-              <div>
-                File size: {this.state.filePickerResult[0].fileSize}
-              </div>
-            </div>
-          }
-        </div>
-
-        <div>
-          <h3>File Picker with target folder browser</h3>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
-            onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
-            context={this.props.context}
-            hideRecentTab={false}
-            renderCustomUploadTabContent={() => (
-              <FolderExplorer context={this.props.context}
-                rootFolder={this.rootFolder}
-                defaultFolder={this.rootFolder}
-                onSelect={this._onFolderSelect}
-                canCreateFolders={true}
-              />)}
-          />
-        </div>
-
-        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
-        <div>
-          <Progress title={'Progress Test'}
-            showOverallProgress={true}
-            showIndeterminateOverallProgress={false}
-            hideNotStartedActions={false}
-            actions={this.state.progressActions}
-            currentActionIndex={this.state.currentProgressActionIndex}
-            longRunningText={'This operation takes longer than expected'}
-            longRunningTextDisplayDelay={7000}
-            height={'350px'}
-            inProgressIconName={'ChromeBackMirrored'} />
-          <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
-        </div>
-
-        <div className="ms-font-l">Grid Layout</div>
-        <GridLayout
-          ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
-          items={sampleGridData}
-          onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
-        />
-
-        <IconPicker buttonLabel={'Icon'}
-          onChange={(iconName: string) => { console.log(iconName); }}
-          onSave={(iconName: string) => { console.log(iconName); }} />
-
-        <div>
-          <FolderExplorer
-            context={this.props.context}
-            rootFolder={{
-              Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-            }}
-            defaultFolder={{
-              Name: 'Documents',
-              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-            }}
-            onSelect={this._onFolderSelect}
-            canCreateFolders={true}
-            orderby='Name' //'ListItemAllFields/Created'
-            orderAscending={true}
-          />
-        </div>
-
-        <div>
-          <h3>Tree View</h3>
-          <TreeView items={this.treeitems}
-            defaultExpanded={false}
-            selectionMode={TreeViewSelectionMode.Multiple}
-            showCheckboxes={true}
-            treeItemActionsDisplayMode={TreeItemActionsDisplayMode.ContextualMenu}
-            defaultSelectedKeys={this.state.treeViewSelectedKeys}
-            onExpandCollapse={this.onExpandCollapseTree}
-            onSelect={this.onItemSelected}
-            defaultExpandedChildren={true}
-          //expandToSelected={true}
-          // onRenderItem={this.renderCustomTreeItem}
-          />
-          <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
-
-        </div>
-
-        <div>
-          <Pagination
-            currentPage={3}
-            onChange={(page) => (this._getPage(page))}
-            totalPages={this.props.totalPages || 13}
-          //limiter={3}
-          // hideFirstPageJump
-          //hideLastPageJump
-          //limiterIcon={"NumberedListText"}
-          />
-        </div>
-
-        <div>
-          <FieldCollectionData
-            key={"FieldCollectionData"}
-            label={"Fields Collection"}
-            itemsPerPage={3}
-            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
-            panelHeader={"Manage values"}
-            enableSorting={true}
-
-            fields={[
-              { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
-              { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
-              { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
-              { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
-            ]}
-            value={this.getRandomCollectionFieldData()}
-          />
-        </div>
-        <Dashboard
-          widgets={[{
-            title: "Card 1",
-            desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
-            widgetActionGroup: calloutItemsExample,
-            size: WidgetSize.Triple,
-            body: [
-              {
-                id: "t1",
-                title: "Tab 1",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #1
-                  </NorthstarText>
-                  </Flex>
-                ),
-              },
-              {
-                id: "t2",
-                title: "Tab 2",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #2
-                  </NorthstarText>
-                  </Flex>
-                ),
-              },
-              {
-                id: "t3",
-                title: "Tab 3",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #3
-                  </NorthstarText>
-                  </Flex>
-                ),
-              },
-            ],
-            link: linkExample,
-          },
-          {
-            title: "Card 2",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 3",
-            size: WidgetSize.Double,
-            link: linkExample,
-          },
-          {
-            title: "Card 4",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 5",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 6",
-            size: WidgetSize.Single,
-            link: linkExample,
-          }]} />
-        <Toolbar actionGroups={{
-          'group1': {
-            'action1': {
-              title: 'Edit',
-              iconName: 'Edit',
-              onClick: () => { console.log('Edit action click'); }
-            },
-            'action2': {
-              title: 'New',
-              iconName: 'Add',
-              onClick: () => { console.log('New action click'); }
-            }
-          }
-        }} />
-
-        <div>
-          <h3>Animated Dialogs</h3>
-
-          {/* Multiple elements added only for demo - can be controlled with fewer elements */}
-
-          <PrimaryButton text='Show animated dialog' onClick={() => { this.setState({ showAnimatedDialog: true }); }} />
-          {/* Normal animated dialog */}
-          <AnimatedDialog
-            hidden={!this.state.showAnimatedDialog}
-            onDismiss={() => { this.setState({ showAnimatedDialog: false }); }}
-            dialogContentProps={animatedDialogContentProps}
-            modalProps={animatedModalProps}
-          >
-            <DialogFooter>
-              <PrimaryButton onClick={() => { this.setState({ showAnimatedDialog: false }); }} text="Yes" />
-              <DefaultButton onClick={() => { this.setState({ showAnimatedDialog: false }); }} text="No" />
-            </DialogFooter>
-          </AnimatedDialog>
-          <br />
-          <br />
-
-          <PrimaryButton text='Show animated dialog with icon' onClick={() => { this.setState({ showCustomisedAnimatedDialog: true }); }} />
-          {/* Animated dialog with icon */}
-          <AnimatedDialog
-            hidden={!this.state.showCustomisedAnimatedDialog}
-            onDismiss={() => { this.setState({ showCustomisedAnimatedDialog: false }); }}
-            dialogContentProps={customizedAnimatedDialogContentProps}
-            modalProps={customizedAnimatedModalProps}
-            dialogAnimationInType='fadeInDown'
-            dialogAnimationOutType='fadeOutDown'
-            iconName='UnknownSolid'
-            iconAnimationType='zoomInDown'
-            showAnimatedDialogFooter={true}
-            okButtonText="Yes"
-            cancelButtonText="No"
-            onOkClick={() => timeout(1500)}
-            onSuccess={() => {
-              this.setState({ showCustomisedAnimatedDialog: false });
-              this.setState({ showSuccessDialog: true });
-            }}
-            onError={() => {
-              this.setState({ showCustomisedAnimatedDialog: false });
-              this.setState({ showErrorDialog: true });
-            }}>
-            <div className={styles.dialogContent}>
-              <span>Do you like the animated dialog?</span>
-            </div>
-          </AnimatedDialog>
-
-          {/* Success animated dialog */}
-          <AnimatedDialog
-            hidden={!this.state.showSuccessDialog}
-            onDismiss={() => { this.setState({ showSuccessDialog: false }); }}
-            dialogContentProps={successDialogContentProps}
-            modalProps={customizedAnimatedModalProps}
-            iconName='CompletedSolid'
-          >
-            <div className={styles.dialogContent}><span>Thank you.</span></div>
-            <div className={styles.dialogFooter}>
-              <PrimaryButton onClick={() => { this.setState({ showSuccessDialog: false }); }} text="OK" >
-              </PrimaryButton>
-            </div>
-          </AnimatedDialog>
-
-          {/* Error animated dialog */}
-          <AnimatedDialog
-            hidden={!this.state.showErrorDialog}
-            onDismiss={() => { this.setState({ showErrorDialog: false }); }}
-            dialogContentProps={errorDialogContentProps}
-            modalProps={customizedAnimatedModalProps}
-            iconName='StatusErrorFull'
-          >
-            <div className={styles.dialogContent}><span>Ther was an error.</span></div>
-            <div className={styles.dialogFooter}>
-              <PrimaryButton onClick={() => { this.setState({ showErrorDialog: false }); }} text="OK" >
-              </PrimaryButton>
-            </div>
-          </AnimatedDialog>
-
-          <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
-        </div>
-
+        </Stack>
       </div>
     );
   }
@@ -1921,7 +1251,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private getRandomCollectionFieldData = () => {
     let result = [];
     for (let i = 1; i < 16; i++) {
-      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+      result.push({ Field1: `String${i}`, Field2: i, Field3: "https://pnp.github.io/", Field4: true });
     }
     return result;
   }
@@ -1937,17 +1267,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private renderCustomTreeItem(item: ITreeItem): JSX.Element {
     return (
       <span>
-        {
-          item.iconProps &&
-          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: '4px' }} />
-        }
+        {item.iconProps && (
+          <i className={"ms-Icon ms-Icon--" + item.iconProps.iconName} style={{ paddingRight: "4px" }} />
+        )}
         {item.label}
       </span>
     );
   }
 
   private _getPage(page: number) {
-    console.log('Page:', page);
+    console.log("Page:", page);
   }
 
   // private _onFolderSelect = (folder: IFolder): void => {
