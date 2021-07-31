@@ -220,7 +220,7 @@ define([], () => {
     DateTimePickerHourValueInvalid: "Incorrect hour value",
     DateTimePickerMinuteValueInvalid: "Incorrect minute value",
     DateTimePickerSecondValueInvalid: "Incorrect second value",
-
+    DateTimePickerTextErrorMessage:"Please enter a valid date",
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
     AriaCellValue: "{0} column, {1}",
