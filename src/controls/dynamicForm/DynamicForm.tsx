@@ -260,7 +260,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { context, listId, listItemId } = this.props;
+    const { context, listId, listItemId, disabledFields } = this.props;
     let contentTypeId = this.props.contentTypeId;
     //let arrayItems: { key: string; name: string }[] = [];
     try {
@@ -418,7 +418,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           fieldTitle: field.Title,
           fieldDefaultValue: defaultValue,
           context: this.props.context,
-          disabled: this.props.disabled,
+          disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
           listId: this.props.listId,
           columnInternalName: field.InternalName,
           label: field.Title,
@@ -428,7 +428,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           Order: field.order,
           isRichText: richText,
           dateFormat: dateFormat,
-          listItemId: listItemId
+          listItemId: listItemId,
+          description: field.Description
         });
         tempFields.sort((a, b) => a.Order - b.Order);
       }

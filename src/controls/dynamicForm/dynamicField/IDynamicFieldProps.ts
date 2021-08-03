@@ -32,4 +32,5 @@ export interface IDynamicFieldProps {
   //bingAPIKey?: string;
   dateFormat?: DateFormat;
   additionalData?: FieldChangeAdditionalData;
+  description?: string;
 }
