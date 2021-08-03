@@ -845,7 +845,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          <DynamicForm disabledFields={["TCorpDocumentType", "TCorpOrganisation", "TCorpPortalType", "TCorpReportType"]} context={this.props.context} contentTypeId="0x01010026CA1D190AC5324FBDB0BAD58CFAB19B0600862ABFDFDFDA2C42BC8301545D71FA46" listId={"c07d454d-6a5b-4182-b34b-501fb037fa78"} listItemId={24} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
