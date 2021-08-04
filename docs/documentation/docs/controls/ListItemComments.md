@@ -1,7 +1,7 @@
 # ListItemComments control
 
 This control allows you to manage list item comments, you can add or delete comments to an item. The comments are listed in tile view.
-user can scroll to load more comments if they exists (infinite scroll);
+user can scroll to load more comments if they exist (infinite scroll);
 
 
 Here is an example of the control:
@@ -44,7 +44,7 @@ The `ListItemComments` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| serviceScope | ServiceScope | yes | ServiceScope  |
+| serviceScope | ServiceScope | yes | SPFx Service Scope  |
 | itemId | number | yes | List Item Id  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
