@@ -2,7 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
-    ListItemCommentDIalogDeleteSubText: "Tem a certeza que quer eliminar este comentário ?",
+    ListItemCommentDIalogDeleteSubText: "Tem a certeza que quer eliminar este comentário?",
     ListItemCommentsDialogDeleteTitle: "Confirmar Eliminar Comentário",
     ListItemCommentsLabel: "Comentários",
     ListItemCommentsNoCommentsLabel: "Sem Comentários",
