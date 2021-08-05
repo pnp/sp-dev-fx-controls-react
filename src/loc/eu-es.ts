@@ -253,7 +253,7 @@ define([], () => {
     LinkFileInstructions: "Paste a link to a file in OneDrive for Business or SharePoint Online",
     LinkHeader: "From a link",
     LinkImageInstructions: "Paste a link to an image in OneDrive for Business or SharePoint Online",
-    ListItemCommentDIalogDeleteSubText: "Are you sure you want delete this Comment ?",
+    ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
     ListItemCommentsNoCommentsLabel: "There is no Comments",
