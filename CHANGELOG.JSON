@@ -4,7 +4,8 @@
       "version": "3.3.0",
       "changes": {
         "new": [
-          "`LivePersona`: New Control LivePersona [#969](https://github.com/pnp/sp-dev-fx-controls-react/pull/969)"
+          "`LivePersona`: New Control LivePersona [#969](https://github.com/pnp/sp-dev-fx-controls-react/pull/969)",
+          "`ListItemComments`: New Control ListItemComments [#979](https://github.com/pnp/sp-dev-fx-controls-react/pull/979)"
         ],
         "enhancements": [
           "`FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)",
