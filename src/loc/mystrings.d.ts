@@ -391,9 +391,6 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_Today: string;
 
 
-
-
-
 }
 
 declare module "ControlStrings" {
