@@ -2,8 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
-    ListItemCommentDIalogDeleteSubText: "Are you sure you want delete this Comment ?",
-    ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
+    ListItemCommentDIalogDeleteSubText: "Tem a certeza que quer eliminar este comentário ?",
+    ListItemCommentsDialogDeleteTitle: "Confirmar Eliminar Comentário",
     ListItemCommentsLabel: "Comentários",
     ListItemCommentsNoCommentsLabel: "Sem Comentários",
     MyTeamsLoadingMessage: "loading your teams",
