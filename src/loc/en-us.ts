@@ -383,6 +383,8 @@ define([], () => {
     DynamicFormEnterURLPlaceholder: "Enter a URL",
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
     customDisplayName: "Use this location:",
+    ListItemCommentDIalogDeleteSubText: "Are you sure you want delete this Comment ?",
+    ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
     ListItemCommentsNoCommentsLabel: "There is no Comments",
     OrgAssetsLinkLabel: "Your organisation"

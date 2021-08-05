@@ -9,6 +9,7 @@ import { DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
 import { Stack } from "@fluentui/react/lib/Stack";
 import { useListItemCommentsStyles } from "../Comments/useListItemCommentsStyles";
 import { IDialogContentStyles } from "office-ui-fabric-react";
+import strings from "ControlStrings";
 export interface IConfirmDeleteProps {
   hideDialog: boolean;
   onDismiss: (deleteComment: boolean) => void;
@@ -31,9 +32,9 @@ export const ConfirmDelete: React.FunctionComponent<IConfirmDeleteProps> = (
   };
   const dialogContentProps = {
     type: DialogType.largeHeader,
-    title: "Confirm Delete Comment",
+    title: strings.ListItemCommentsDialogDeleteTitle,
     styles: stylesSubText,
-    subText: "Are you sure you want delete this Comment ?",
+    subText: strings.ListItemCommentDIalogDeleteSubText,
   };
   return (
     <>
