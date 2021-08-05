@@ -1,4 +1,9 @@
 declare interface IControlStrings {
+  ListItemCommentsLabel: string;
+  ListItemCommentsNoCommentsLabel: string;
+  ListItemCommentDIalogDeleteSubText: string;
+  ListItemCommentsDialogDeleteTitle: string;
+
   MyTeamsMessageError:string;
   MyTeamsNoTeamsMessage:string;
   MyTeamsLoadingMessage:string;

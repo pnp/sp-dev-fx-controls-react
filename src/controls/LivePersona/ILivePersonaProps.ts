@@ -1,11 +1,15 @@
 import { BaseComponentContext} from "@microsoft/sp-component-base";
+import { ServiceScope } from "@microsoft/sp-core-library";
 
 export interface ILivePersonatProps {
   /**
    * The Web Part context
    */
-  context: BaseComponentContext;
-
+  context?: BaseComponentContext;
+/**
+   * The Web Part context
+   */
+ serviceScope: ServiceScope;
   /**
    * The user UPN to use for the live information
    */
