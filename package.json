@@ -26,6 +26,7 @@
     "@microsoft/mgt-spfx": "2.2.0",
     "@microsoft/sp-core-library": "1.12.1",
     "@microsoft/sp-listview-extensibility": "1.12.1",
+    "@microsoft/sp-loader": "1.12.1",
     "@microsoft/sp-lodash-subset": "1.12.1",
     "@microsoft/sp-office-ui-fabric-core": "1.12.1",
     "@microsoft/sp-property-pane": "1.12.1",
