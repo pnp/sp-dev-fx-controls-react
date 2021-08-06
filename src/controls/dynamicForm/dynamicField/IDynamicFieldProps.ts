@@ -33,4 +33,5 @@ export interface IDynamicFieldProps {
   dateFormat?: DateFormat;
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;
+  description?: string;
 }

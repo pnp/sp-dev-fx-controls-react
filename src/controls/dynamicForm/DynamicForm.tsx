@@ -464,7 +464,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           isRichText: richText,
           dateFormat: dateFormat,
           listItemId: listItemId,
-          principalType: principalType
+          principalType: principalType,
+          description: field.Description
         });
         tempFields.sort((a, b) => a.Order - b.Order);
       }
