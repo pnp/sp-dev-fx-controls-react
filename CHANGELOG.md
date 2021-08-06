@@ -5,6 +5,7 @@
 ### New control(s)
 
 - `LivePersona`: New Control LivePersona [#969](https://github.com/pnp/sp-dev-fx-controls-react/pull/969)
+- `ListItemComments`: New Control ListItemComments [#979](https://github.com/pnp/sp-dev-fx-controls-react/pull/979)
 
 ### Enhancements
 
@@ -16,6 +17,8 @@
 - `ListItemPicker`: Missing translation keys, improved FI, NL translation [#957](https://github.com/pnp/sp-dev-fx-controls-react/pull/957)
 - `TaxonomyPicker`: Added onNewTerm called when enter is pressed [#967](https://github.com/pnp/sp-dev-fx-controls-react/pull/967)
 - `DynamicForm`: Principal Types support [#956](https://github.com/pnp/sp-dev-fx-controls-react/pull/956)
+- `DateTimePicker`: Expose allowTextInput from the underlying date picker [#928](https://github.com/pnp/sp-dev-fx-controls-react/issues/928)
+- `Dynamic Form`: Show field descriptions [#975](https://github.com/pnp/sp-dev-fx-controls-react/issues/975)
 
 ### Fixes
 
@@ -26,7 +29,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin), [João Mendes](https://github.com/joaojmendes), [Gautam Sheth](https://github.com/gautamdsheth), [Dennis Kuhn](https://github.com/DennisKuhn).
+Special thanks to our contributors (in alphabetical order): [Daniel Stratton](https://github.com/gobigfoot), [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [João Mendes](https://github.com/joaojmendes), [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Modern Dev Dude](https://github.com/modern-dev-dude), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
 
 ## 3.2.1
 
