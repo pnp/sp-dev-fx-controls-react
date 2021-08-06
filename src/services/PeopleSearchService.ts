@@ -240,7 +240,7 @@ export default class SPPeopleSearchService {
                   optionalText: "" // anything
                 } as IPeoplePickerUserItem;
               case 'SecGroup':
-                const secondaryText = element.EntityData?.Email || element.ProviderName
+                const secondaryText = element.EntityData?.Email || element.ProviderName;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
