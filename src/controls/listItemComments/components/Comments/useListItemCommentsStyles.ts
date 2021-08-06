@@ -6,7 +6,7 @@ import {
   IStyle,
   mergeStyles,
   mergeStyleSets,
-} from "@fluentui/react";
+} from "office-ui-fabric-react";
 import { AppContext } from "../../common";
 import { IScrollablePaneStyles } from "office-ui-fabric-react/lib/ScrollablePane";
 import { TILE_HEIGHT } from "../../common/constants";

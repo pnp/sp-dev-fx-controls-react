@@ -4,8 +4,8 @@ import { ServiceScope } from "@microsoft/sp-core-library";
 import { AppContext } from "./common";
 import { Theme } from "spfx-uifabric-themes"; // Don't remove this import is need to theme load form global var from window object
 import { CommentsList } from "./components/Comments/CommentsList";
-import { Stack } from "@fluentui/react/lib/Stack";
-import { Text } from "@fluentui/react/lib/Text";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Text } from "office-ui-fabric-react/lib/Text";
 export interface IListItemCommentsProps {
   webUrl?: string;
   listId: string;

@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fluentui/react": "^8.23.7",
+    "@fluentui/react-hooks": "^8.2.6",
     "@fluentui/react-northstar": "0.51.3",
     "@microsoft/mgt-react": "2.2.0",
     "@microsoft/mgt-spfx": "2.2.0",
