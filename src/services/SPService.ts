@@ -489,7 +489,7 @@ export default class SPService implements ISPService {
         body: JSON.stringify({
           parameters: {
             RenderOptions: 2,
-            ViewXml: `<View>
+            ViewXml: `<View Scope="RecursiveAll">
                         <ViewFields>
                           <FieldRef Name="${fieldName}"/>
                         </ViewFields>

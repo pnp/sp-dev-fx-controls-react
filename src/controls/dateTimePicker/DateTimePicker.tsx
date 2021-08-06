@@ -188,6 +188,18 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
   }
 
   /**
+   * Validates string input on date time field
+   */
+  private handleTextChange = (e:React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue:string, locString:string) => {
+    if (!TimeHelper.isValidDate(newValue)) {
+      this.setState({
+        errorMessage:locString,
+      });
+      return;
+    }
+  }
+
+  /**
    * Renders the control
    */
   public render(): JSX.Element {
@@ -215,6 +227,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       minutesIncrementStep
     } = this.props;
 
+    const { textErrorMessage } = dateStrings;
     const hours: number = value != null ? value.getHours() : this.state.hours;
     const minutes: number = value != null ? value.getMinutes() : this.state.minutes;
     const seconds: number = value != null ? value.getSeconds() : this.state.seconds;
@@ -295,7 +308,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 strings={dateStrings}
                 isMonthPickerVisible={isMonthPickerVisible}
                 onSelectDate={this.onSelectDate}
-                allowTextInput={false}
+                allowTextInput={true}
                 firstDayOfWeek={firstDayOfWeek}
                 showGoToToday={showGoToToday}
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
@@ -303,6 +316,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 placeholder={placeholder}
                 minDate={minDate}
                 maxDate={maxDate}
+                textField={{
+                  onChange: (e, newValue) => this.handleTextChange(e, newValue, textErrorMessage)
+                }}
               />
             </div>
           </div>

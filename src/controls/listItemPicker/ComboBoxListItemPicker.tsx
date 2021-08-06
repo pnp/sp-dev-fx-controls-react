@@ -110,8 +110,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
         return {
           [this.props.keyColumnInternalName || "Id"]: item.key,
           [this.props.columnInternalName]: item.text
-        }
-      })
+        };
+      });
     }
 
     return selectedItems;

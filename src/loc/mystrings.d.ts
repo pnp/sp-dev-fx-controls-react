@@ -1,4 +1,9 @@
 declare interface IControlStrings {
+  ListItemCommentsLabel: string;
+  ListItemCommentsNoCommentsLabel: string;
+  ListItemCommentDIalogDeleteSubText: string;
+  ListItemCommentsDialogDeleteTitle: string;
+
   MyTeamsMessageError:string;
   MyTeamsNoTeamsMessage:string;
   MyTeamsLoadingMessage:string;
@@ -210,6 +215,7 @@ declare interface IControlStrings {
   DateTimePickerHourValueInvalid: string;
   DateTimePickerMinuteValueInvalid: string;
   DateTimePickerSecondValueInvalid: string;
+  DateTimePickerTextErrorMessage: string;
 
   // File picker
   AddFileButtonLabel: string;
