@@ -1,14 +1,12 @@
 import * as React from "react";
+import { IDocumentCardStyles } from "office-ui-fabric-react/lib/DocumentCard";
+import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
 import {
-  IDocumentCardStyles,
-  IProcessedStyleSet,
-  IStackStyles,
   IStyle,
   mergeStyles,
   mergeStyleSets,
-} from "office-ui-fabric-react";
+} from "office-ui-fabric-react/lib/Styling";
 import { AppContext } from "../../common";
-import { IScrollablePaneStyles } from "office-ui-fabric-react/lib/ScrollablePane";
 import { TILE_HEIGHT } from "../../common/constants";
 
 interface returnObjectStyles {

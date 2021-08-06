@@ -8,7 +8,7 @@ import { DocumentCard } from "office-ui-fabric-react/lib/components/DocumentCard
 import { DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { useListItemCommentsStyles } from "../Comments/useListItemCommentsStyles";
-import { IDialogContentStyles } from "office-ui-fabric-react";
+import { IDialogContentStyles } from "office-ui-fabric-react/lib/Dialog";
 import strings from "ControlStrings";
 export interface IConfirmDeleteProps {
   hideDialog: boolean;
