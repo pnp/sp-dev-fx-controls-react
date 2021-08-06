@@ -12,7 +12,7 @@ import { RenderNoComments } from "./RenderNoComments";
 import { RenderSpinner } from "./RenderSpinner";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 import { useBoolean } from "@fluentui/react-hooks";
-import { List } from "@fluentui/react/lib/List";
+import { List } from "office-ui-fabric-react/lib/List";
 import { ECommentAction } from "../..";
 
 export interface IRenderCommentsProps {}

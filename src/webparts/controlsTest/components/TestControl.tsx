@@ -1,5 +1,5 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { Stack } from "@fluentui/react/lib/Stack";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
 import { ListItemComments } from "../../../controls/listItemComments";
 export interface ITestControlProps {

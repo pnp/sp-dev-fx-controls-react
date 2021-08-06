@@ -1,4 +1,4 @@
-import { Spinner } from "@fluentui/react/lib/Spinner";
+import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { Guid } from "@microsoft/sp-core-library";
 import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
 import { SpinnerSize } from "office-ui-fabric-react/lib/Spinner";

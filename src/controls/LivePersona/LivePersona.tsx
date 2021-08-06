@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Log } from "@microsoft/sp-core-library";
 import { SPComponentLoader } from "@microsoft/sp-loader";
 import { ILivePersonatProps} from '.';
-import { mergeStyles, mergeStyleSets } from "@fluentui/react";
 
 const LIVE_PERSONA_COMPONENT_ID: string = "914330ee-2df2-4f6e-a858-30c23a812408";
 

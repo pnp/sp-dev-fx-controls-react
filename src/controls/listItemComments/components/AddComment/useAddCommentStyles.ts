@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IDocumentCardStyles, IStackStyles, IStyle, mergeStyleSets } from "@fluentui/react";
+import { IDocumentCardStyles, IStackStyles, IStyle, mergeStyleSets } from "office-ui-fabric-react";
 import { AppContext } from "../../common";
 
 export const useAddCommentStyles = () => {
