@@ -27,7 +27,6 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
   let _reactMentionStyles = reactMentionStyles;
 
   const _onChange = useCallback((event, newValue: string, newPlainTextValue: string, mentions: MentionItem[]) => {
-    let _reactMentionStyles = reactMentionStyles;
     if (newValue) {
       setSingleLine(false);
       _reactMentionStyles["&multiLine"].control = { height: 63 };
