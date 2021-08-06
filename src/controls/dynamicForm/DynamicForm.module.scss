@@ -57,7 +57,7 @@
 
 .feildDisplay {
 	@extend .feildDisplayNoPadding;
-	padding: 6px 0 7px 0;
+	padding: 6px 0 0px 0;
 	//border: 2px solid;
   //border-color: "[theme:white, default:#ffffff]";
 	//margin-left: -2px;
@@ -107,7 +107,7 @@
 }
 
 .pickersContainer {
-  padding: 6px 0 7px;
+  padding: 6px 0 0px;
 }
 
 .thumbnailFieldButtons {
