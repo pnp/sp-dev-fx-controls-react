@@ -27,10 +27,11 @@
 - `ComboBoxListItemPicker`: defaultSelectedItems not working [#954](https://github.com/pnp/sp-dev-fx-controls-react/issues/954)
 - `Dynamic Form`: query items in a folder (managed metadata field) [#973](https://github.com/pnp/sp-dev-fx-controls-react/issues/973)
 - `PeoplePicker`: Default selected items for groups [#958](https://github.com/pnp/sp-dev-fx-controls-react/issues/958)
+- Documentation: corrected Twitter handle for M365PnP [#984](https://github.com/pnp/sp-dev-fx-controls-react/pull/984)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexey Morozov](https://github.com/a1exymoroz), [Daniel Stratton](https://github.com/gobigfoot), [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [João Mendes](https://github.com/joaojmendes), [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Modern Dev Dude](https://github.com/modern-dev-dude), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
+Special thanks to our contributors (in alphabetical order): [Alexey Morozov](https://github.com/a1exymoroz), [Daniel Stratton](https://github.com/gobigfoot), [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [João Mendes](https://github.com/joaojmendes), [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Modern Dev Dude](https://github.com/modern-dev-dude), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 3.2.1
 
