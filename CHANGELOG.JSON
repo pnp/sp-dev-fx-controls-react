@@ -25,7 +25,8 @@
           "`ComboBoxListItemPicker`: defaultSelectedItems not working [#954](https://github.com/pnp/sp-dev-fx-controls-react/issues/954)",
           "`Dynamic Form`: query items in a folder (managed metadata field) [#973](https://github.com/pnp/sp-dev-fx-controls-react/issues/973)",
           "`PeoplePicker`: Default selected items for groups [#958](https://github.com/pnp/sp-dev-fx-controls-react/issues/958)",
-          "Documentation: corrected Twitter handle for M365PnP [#984](https://github.com/pnp/sp-dev-fx-controls-react/pull/984)"
+          "Documentation: corrected Twitter handle for M365PnP [#984](https://github.com/pnp/sp-dev-fx-controls-react/pull/984)",
+          "`Carousel`: Carousel is missing import of `ICarouselImageProps` [#986](https://github.com/pnp/sp-dev-fx-controls-react/issues/986)"
         ]
       },
       "contributions": [
