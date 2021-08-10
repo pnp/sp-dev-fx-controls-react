@@ -228,8 +228,8 @@ export default class SPPeopleSearchService {
           const userResults = values.map(element => {
             switch (element.EntityType) {
               case 'User':
-                const accountName: string =  element.Description || "";
-                const email: string  =  element.EntityData?.Email || element.Description;
+                const accountName: string = element.Description || "";
+                const email: string = element.EntityData && element.EntityData.Email ? element.EntityData.Email : element.Description;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
@@ -241,7 +241,7 @@ export default class SPPeopleSearchService {
                   optionalText: "" // anything
                 } as IPeoplePickerUserItem;
               case 'SecGroup':
-                const secondaryText = element.EntityData?.Email || element.ProviderName
+                const secondaryText = element.EntityData && element.EntityData.Email ? element.EntityData.Email : element.ProviderName;
                 return {
                   id: element.Key,
                   loginName: element.LoginName ? element.LoginName : element.Key,
