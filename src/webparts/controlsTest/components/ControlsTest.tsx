@@ -418,6 +418,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
+      comboBoxListItemPickerIds: [{Id: 1, Title: '111'}],
       treeViewSelectedKeys: ['3', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
@@ -1376,11 +1377,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     console.log(`Item(s):`, data);
                   }}
                   webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  defaultSelectedItems={this.state.comboBoxListItemPickerIds}
                   spHttpClient={this.props.context.spHttpClient} />
 
                 <PrimaryButton text="Change List" onClick={() => {
                   this.setState({
                     comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                  });
+                }} />
+                <PrimaryButton text="Change default items" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerIds: [{Id: 2, Title: '222'}]
                   });
                 }} />
 
