@@ -12,12 +12,13 @@ export class ListItemRepository {
      * @param keyInternalColumnName
      * @param webUrl
      * @param top
+     * @param orderBy text value of the filter part of oData query 'Title desc, Created'
      */
-    public async getListItemsByFilterClause(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, top?: number): Promise<any[]> {
-        let returnItems: any[];
+    public async getListItemsByFilterClause(filterText: string, listId: string, internalColumnName: string, keyInternalColumnName?: string, webUrl?: string, top?: number, orderBy?: string): Promise<any[]> {
         try {
             const webAbsoluteUrl = !webUrl ? this.SiteUrl : webUrl;
-            const apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}&$top=${top}`;
+            const apiUrl = orderBy ? `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}&$top=${top}&$orderBy=${orderBy}`
+                : `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}&$top=${top}`;
             const data = await this.SPClient.get(apiUrl, SPHttpClient.configurations.v1);
             if (data.ok) {
                 const results = await data.json();

@@ -25,6 +25,7 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
 ```TypeScript
 <ComboBoxListItemPicker listId='da8daf15-d84f-4ab1-9800-7568f82fed3f'
                         columnInternalName='Title'
+                        orderBy='Title asc'
                         keyColumnInternalName='Id'
                         filter="Title eq 'SPFx'"
                         onSelectedItem={this.onSelectedItem}
@@ -123,5 +124,6 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | onInitialized | () => void | no | Calls when component is ready|
 | itemLimit | number | no | Maximum number of items to be displayed in the combobox. Default: 100 |
 | label | string | no | Specifies the text describing the combobox ListItemPicker. |
+| orderBy | string | no | Specifies the sequence of the items in the comboBox ,same as $orderBy ODATA parameter|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ComboBoxListItemPicker)
