@@ -8,7 +8,7 @@ This control can dynamically generate SharePoint list or SharePoint document lib
 - Import the following modules to your component:
 
 ```TypeScript
-import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
+import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
 ```
 
 - Use the DynamicForm control in your code as follows:
