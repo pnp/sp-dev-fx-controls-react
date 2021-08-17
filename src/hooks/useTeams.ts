@@ -5,7 +5,7 @@ import { MSGraphClient, MSGraphClientFactory } from "@microsoft/sp-http";
 import { PageContext } from "@microsoft/sp-page-context";
 import { ITeam } from "./../common/model/ITeam";
 import { ITeamChannel } from "./../common/model/ITeamChannel";
-import { ITeamMenber } from "../common/model/ITeamMember";
+import { ITeamMember } from "../common/model/ITeamMember";
 
 export const useTeams = (serviceScope: ServiceScope) => {
   let _pageContext = React.useRef<PageContext>();
@@ -52,7 +52,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
   );
 
   const getTeamMembers = React.useCallback(async (teamId: string): Promise<
-    ITeamMenber[]
+    ITeamMember[]
   > => {
     await init();
     if (!_msgGraphClient.current) return;
@@ -64,7 +64,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
   }, [_msgGraphClient.current]);
 
   const getTeamOwners = React.useCallback(async (teamId: string): Promise<
-  ITeamMenber[]
+  ITeamMember[]
   > => {
     await init();
     if (!_msgGraphClient.current) return;
@@ -74,7 +74,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
         "microsoft.graph.aadUserConversationMember/roles/any(c:c eq 'owner')"
       )
       .get();
-    return usersResults?.value as ITeamMenber[];
+    return usersResults?.value as ITeamMember[];
   }, [_msgGraphClient.current]);
 
 
