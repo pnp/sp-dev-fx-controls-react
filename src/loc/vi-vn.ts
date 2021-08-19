@@ -185,7 +185,7 @@ define([], () => {
   "DatePickerMonthLongDecember": "Ngày",
   "DatePickerMonthShortDecember": "Tháng mười hai",
   "DatePickerDayLongSunday": "Chủ nhật",
-  "DatePickerDayShortSunday": "Mặt trời",
+  "DatePickerDayShortSunday": "Chủ nhật",
   "DatePickerDayLongMonday": "Thứ hai",
   "DatePickerDayShortMonday": "Của tôi",
   "DatePickerDayLongTuesday": "Thứ ba",

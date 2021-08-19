@@ -221,7 +221,7 @@ define([], () => {
   "CopyrightUrl": "https://www.microsoft.com/en-US/legal/copyright/default.aspx",
   "CopyrightWarning": "Telif hakkı da dahil olmak üzere başkalarının haklarına saygı göstermeksizin sorumlusunuz.",
   "CreativeCommonsMessage": "Bu sonuçlar Creative Commons lisansları ile etiketlenir. Uymanızı sağlamak için lisansları gözden geçirin.",
-  "DateFormat": "MM/DD/YYYY ss:mm A",
+  "DateFormat": "MM/DD/YYYY hh:mm A",
   "DocumentLabelTemplate": "{0}, Belge, Değiştirilmiş {1}, {2}, Özel",
   "DocumentLibraries": "Belge kitaplıkları",
   "EditedByNamePlate": "tarafından düzenlendi ",

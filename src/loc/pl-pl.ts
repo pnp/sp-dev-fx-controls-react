@@ -197,7 +197,7 @@ define([], () => {
   "DatePickerDayLongFriday": "Piątek",
   "DatePickerDayShortFriday": "Pt",
   "DatePickerDayLongSaturday": "Sobota",
-  "DatePickerDayShortSaturday": "Sobota",
+  "DatePickerDayShortSaturday": "Sob",
   "DatePickerGoToToday": "Dziś",
   "DatePickerIsRequiredErrorMessage": "",
   "DatePickerInvalidInputErrorMessage": "",

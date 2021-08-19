@@ -241,7 +241,7 @@ define([], () => {
   "ItemChildCountField": "Nombre d'enfants",
   "LayoutOptionAll": "Tous",
   "LayoutOptionSquare": "Carré",
-  "LayoutOptionTall": "Grand",
+  "LayoutOptionTall": "Grande",
   "LayoutOptionWide": "Large",
   "LearnMoreLink": "En savoir plus.",
   "LicenseOptionAll": "Tous",

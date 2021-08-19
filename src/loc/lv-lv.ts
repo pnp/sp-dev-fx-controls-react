@@ -193,7 +193,7 @@ define([], () => {
   "DatePickerDayLongWednesday": "Trešdiena",
   "DatePickerDayShortWednesday": "Wed",
   "DatePickerDayLongThursday": "Ceturtdiena",
-  "DatePickerDayShortThursday": "Rudens",
+  "DatePickerDayShortThursday": "Cet",
   "DatePickerDayLongFriday": "Piektdiena",
   "DatePickerDayShortFriday": "Fri",
   "DatePickerDayLongSaturday": "Sestdiena",
