@@ -381,7 +381,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         <TextField label={strings.TextToDisplayLabel}
           value={this.state.insertUrlText}
           onChanged={(newValue?: string) => {
-            if (newValue !== this.state.insertUrl) {
+            if (newValue !== this.state.insertUrlText) {
               this.setState({
                 insertUrlText: newValue
               });
@@ -602,7 +602,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
               <TooltipHost content={strings.ImageTitle}
                 id="image-richtextbutton"
                 calloutProps={{ gapSpace: 0 }}>
-                <IconButton checked={this.state.formats!.link !== undefined}
+                <IconButton //checked={this.state.formats!.link !== undefined}
                   onClick={this.showInsertImageDialog}
                   aria-describedby="image-richtextbutton"
                   iconProps={{
@@ -681,7 +681,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     // if we're already in list mode, toggle off
     const key = item.key;
     const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'numbered' && this.state.formats.list === 'numbered') ? false : key;
-    console.log(newAlignValue);
     this.applyFormat("list", newAlignValue);
   }
 

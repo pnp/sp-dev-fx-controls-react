@@ -1,11 +1,11 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
-import { IFile, ILibrary } from "../../services/FileBrowserService.types";
+import { IFile, IFolder, ILibrary } from "../../services/FileBrowserService.types";
 import { ExtensionContext } from "@microsoft/sp-extension-base";
 
 export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {
   libraryData?: ILibrary;
-  folderData?: IFile;
+  folderData?: IFolder;
 }
 
 export interface IFilePickerTab {

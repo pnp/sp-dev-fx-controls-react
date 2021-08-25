@@ -167,6 +167,7 @@ import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 import { DynamicForm } from '../../../controls/dynamicForm';
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
+import { debounce } from "lodash";
 
 // Used to render document card
 /**
@@ -417,6 +418,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
+      comboBoxListItemPickerIds: [{Id: 1, Title: '111'}],
       treeViewSelectedKeys: ['3', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
@@ -1044,7 +1046,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
-        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
         <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
         <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -1210,14 +1212,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           iconName="Upload"
           labelMessage="My custom upload File"
         >
-
           <Placeholder iconName='BulkUpload'
             iconText='Drag files or folder with files here...'
             description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
             buttonLabel='Configure'
             hideButton={this.props.displayMode === DisplayMode.Read}
             onConfigure={this._onConfigure} />
-
         </DragDropFiles>
         <br></br>
 
@@ -1322,7 +1322,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </div>
 
               <div className="ms-font-m">Site picker tester:
-                <SitePicker
+              <SitePicker
                   context={this.props.context}
                   label={'select sites'}
                   mode={'site'}
@@ -1377,11 +1377,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     console.log(`Item(s):`, data);
                   }}
                   webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  defaultSelectedItems={this.state.comboBoxListItemPickerIds}
                   spHttpClient={this.props.context.spHttpClient} />
 
                 <PrimaryButton text="Change List" onClick={() => {
                   this.setState({
                     comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                  });
+                }} />
+                <PrimaryButton text="Change default items" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerIds: [{Id: 2, Title: '222'}]
                   });
                 }} />
 
@@ -1531,11 +1537,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>File Picker</h3>
+          <TextField
+            label="Default SiteFileTab Folder"
+            onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
+            styles={{ root: { marginBottom: 10 } }}
+          />
           <FilePicker
             bingAPIKey="<BING API KEY>"
+            defaultFolderAbsolutePath={this.state.filePickerDefaultFolderAbsolutePath}
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
-
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
             onSave={this._onFilePickerSave}
             onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
