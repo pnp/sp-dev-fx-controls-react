@@ -42,6 +42,7 @@ nav:
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'
     - "ListView: add a contextual menu": 'controls/ListView.ContextualMenu.md'
+    - LocationPicker: 'controls/LocationPicker.md'
     - Map: 'controls/Map.md'
     - MyTeams: 'controls/MyTeams.md'
     - Pagination: 'controls/Pagination.md'
@@ -93,7 +94,7 @@ markdown_extensions:
 extra:
   social:
     - type: 'twitter'
-      link: 'https://twitter.com/officedevpnp'
+      link: 'https://twitter.com/m365pnp'
     - type: 'youtube'
       link: 'http://aka.ms/sppnp-videos'
     - type: 'link'

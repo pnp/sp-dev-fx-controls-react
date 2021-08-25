@@ -1,4 +1,4 @@
-import { IIconProps } from "office-ui-fabric-react";
+import { IIconProps } from "office-ui-fabric-react/lib/Icon";
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
@@ -156,4 +156,9 @@ export interface IFilePickerProps {
    * Specifies if Site Pages library to be visible on Sites tab
    */
   includePageLibraries?: boolean;
+
+  /**
+   * Specifies a default folder to be active in the Site Files tab
+   */
+  defaultFolderAbsolutePath?: string;
 }

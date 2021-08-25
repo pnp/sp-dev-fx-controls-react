@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import * as strings from "ControlStrings";
-import { IIconProps } from "office-ui-fabric-react";
+import { IIconProps } from "office-ui-fabric-react/lib/Icon";
 import {
   ActionButton,
   PrimaryButton
@@ -212,6 +212,7 @@ export class FilePicker extends React.Component<
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
                 includePageLibraries={this.props.includePageLibraries}
+                defaultFolderAbsolutePath={this.props.defaultFolderAbsolutePath}
                 {...linkTabProps}
               />
             )}

@@ -8,7 +8,7 @@ This control can dynamically generate SharePoint list or SharePoint document lib
 - Import the following modules to your component:
 
 ```TypeScript
-import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
+import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
 ```
 
 - Use the DynamicForm control in your code as follows:
@@ -17,9 +17,9 @@ import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
 <DynamicForm 
           context={this.props.context} 
           listId={"3071c058-549f-461d-9d73-8b9a52049a80"}  
-          listItemId={1}>
+          listItemId={1}
           onCancelled={() => { console.log('Cancelled') }}
-          onBeforeSubmit={(async listItem) => { return true; }}
+          onBeforeSubmit={async (listItem) => { return true; }}
           onSubmitError={(listItem, error) => { alert(error.message); }}
           onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
@@ -38,6 +38,7 @@ The `DynamicForm` can be configured with the following properties:
 | contentTypeId | string | no | content type ID |
 | disabled | boolean | no | Option allow to be enable or disable. Default value is `false`|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. |
-| onSubmitted | (listItem: any) => void | no | Method that returns listItem data JSON object. |
+| onSubmitted | (listItemData: any, listItem?: IItem) => void | no | Method that returns listItem data JSON object and PnPJS list item instance (`IItem`). |
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
+| returnListItemInstanceOnSubmit | boolean | no | Specifies if `onSubmitted` event should pass PnPJS list item (`IItem`) as a second parameter. Default - `true` |

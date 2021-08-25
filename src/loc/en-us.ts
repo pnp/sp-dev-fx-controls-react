@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+
+
     "Save": "Save",
     "Cancel": "Cancel",
 
@@ -220,7 +222,7 @@ define([], () => {
     DateTimePickerHourValueInvalid: "Incorrect hour value",
     DateTimePickerMinuteValueInvalid: "Incorrect minute value",
     DateTimePickerSecondValueInvalid: "Incorrect second value",
-
+    DateTimePickerTextErrorMessage:"Please enter a valid date",
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
     AriaCellValue: "{0} column, {1}",
@@ -380,8 +382,11 @@ define([], () => {
     DynamicFormTermPanelTitle: "Select Term",
     DynamicFormEnterURLPlaceholder: "Enter a URL",
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
-
     customDisplayName: "Use this location:",
+    ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
+    ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
+    ListItemCommentsLabel: "Comments",
+    ListItemCommentsNoCommentsLabel: "There is no Comments",
     OrgAssetsLinkLabel: "Your organisation"
   };
 });

@@ -7,11 +7,12 @@ import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
 import styles from './ComboBoxListItemPicker.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import { cloneDeep, isEqual } from 'lodash';
 
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
-  public selectedItems: any[];
+  private _options: any[] = null;
 
   constructor(props: IComboBoxListItemPickerProps) {
     super(props);
@@ -23,13 +24,13 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       noresultsFoundText: !this.props.noResultsFoundText ? strings.genericNoResultsFoundText : this.props.noResultsFoundText,
       showError: false,
       errorMessage: "",
-      suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText
+      suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText,
+      selectedItems: this.props.defaultSelectedItems || [],
     };
 
     // Get SPService Factory
     this._listItemRepo = new ListItemRepository(this.props.webUrl, this.props.spHttpClient);
 
-    this.selectedItems = [];
   }
 
   public componentDidMount(): void {
@@ -44,36 +45,33 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       columnInternalName,
       webUrl,
       itemLimit,
-      defaultSelectedItems,
       onInitialized
     } = props;
     let query = filter || "";
     //query += filter;
     let keyColumnName = keyColumnInternalName || "Id";
-    let listItems = await this._listItemRepo.getListItemsByFilterClause(query,
-      listId,
-      columnInternalName,
-      keyColumnInternalName,
-      webUrl,
-      itemLimit || 100);
 
-    let options = listItems.map(option => {
-      return {
-        key: option[keyColumnName],
-        text: option[columnInternalName || "Id"]
-      };
-    });
-    if (defaultSelectedItems) {
-      //if passed only ids
-      if (!isNaN(defaultSelectedItems[0])) {
-        this.selectedItems = options.filter(opt => defaultSelectedItems.indexOf(opt.key) >= 0);
-      }
-      else {
-        this.selectedItems = options.filter(opt => defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
-      }
+    if (!this._options || listId !== this.props.listId) {
+      const listItems = await this._listItemRepo.getListItemsByFilterClause(query,
+        listId,
+        columnInternalName,
+        keyColumnInternalName,
+        webUrl,
+        itemLimit || 100);
+
+        this._options = listItems.map(option => {
+          return {
+            key: option[keyColumnName],
+            text: option[columnInternalName || "Id"]
+          };
+        });
     }
+
+    const selectedItems = this._getSelectedItems(props);
+
     this.setState({
-      availableOptions: options
+      availableOptions: this._options,
+      selectedItems: selectedItems,
     });
     if (onInitialized && isInitialLoad !== false) {
       onInitialized();
@@ -82,9 +80,41 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
 
   public async componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
     if (nextProps.listId !== this.props.listId) {
+      this.setState({
+        selectedItems: [],
+      });
       await this.loadOptions(nextProps, false);
-      this.selectedItems = [];
     }
+    if (!isEqual(nextProps.defaultSelectedItems, this.props.defaultSelectedItems)) {
+      const selectedItems = this._getSelectedItems(nextProps);
+      this.setState({
+        selectedItems: selectedItems,
+      });
+    }
+  }
+
+  private _getSelectedItems(props: IComboBoxListItemPickerProps): any[] {
+    let selectedItems: any[] = [];
+    let keyColumnName = props.keyColumnInternalName || "Id";
+    if (props.defaultSelectedItems) {
+      //if passed only ids
+      if (!isNaN(props.defaultSelectedItems[0])) {
+        selectedItems = this._options.filter(opt => props.defaultSelectedItems.indexOf(opt.key) >= 0);
+      }
+      else {
+        selectedItems = this._options.filter(opt => props.defaultSelectedItems.map(selected => selected[keyColumnName]).indexOf(opt.key) >= 0);
+      }
+    }
+    if (selectedItems?.length > 0) {
+      selectedItems = selectedItems.map(item => {
+        return {
+          [this.props.keyColumnInternalName || "Id"]: item.key,
+          [this.props.columnInternalName]: item.text
+        };
+      });
+    }
+
+    return selectedItems;
   }
 
   /*public componentDidUpdate(prevProps: IComboBoxListItemPickerProps, prevState: IComboBoxListItemPickerState): void {
@@ -98,6 +128,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
    */
   public render(): React.ReactElement<IComboBoxListItemPickerProps> {
     const { className, disabled } = this.props;
+    const selectedKeys = this.state.selectedItems?.map(item => item[this.props.keyColumnInternalName || "Id"]) || [];
 
     return (
       <div className={styles.comboBoxListItemPickerWrapper}>
@@ -112,7 +143,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
           text={this.props.text}
           onChange={(e, value) => this.onChanged(value)}
           multiSelect={this.props.multiSelect}
-          defaultSelectedKey={this.selectedItems.map(item => item.key) || []}
+          selectedKey={selectedKeys}
           className={className}
           disabled={disabled} />
         {!this.state.errorMessage && !this.state.availableOptions && (<Spinner className={styles.loading} size={SpinnerSize.small} />)}
@@ -126,25 +157,30 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
    * On Selected Item
    */
   private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
+    let selectedItems: any[] = cloneDeep(this.state.selectedItems);
     if (this.props.multiSelect) {
       if (option && option.selected) {
-        this.selectedItems.push({
+        selectedItems.push({
           [this.props.keyColumnInternalName || "Id"]: option.key,
           [this.props.columnInternalName]: option.text,
           selected: option.selected
         });
       } else {
-        this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
+        selectedItems = selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] !== option.key);
       }
     } else {
-      this.selectedItems.push({
+      selectedItems.push({
         [this.props.keyColumnInternalName || "Id"]: option.key,
         [this.props.columnInternalName]: option.text
       });
 
-      this.selectedItems = this.selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] === option.key);
+      selectedItems = selectedItems.filter(o => o[this.props.keyColumnInternalName || "Id"] === option.key);
     }
 
-    this.props.onSelectedItem(this.selectedItems);
+    this.setState({
+      selectedItems: selectedItems,
+    });
+
+    this.props.onSelectedItem(selectedItems);
   }
 }

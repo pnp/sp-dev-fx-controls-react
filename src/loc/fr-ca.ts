@@ -2,6 +2,10 @@ declare var define: any;
 
 define([], () => {
   return {
+    ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
+    ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
+    ListItemCommentsLabel: "Comments",
+    ListItemCommentsNoCommentsLabel: "There is no Comments",
     MyTeamsLoadingMessage: "loading your teams",
     MyTeamsMessageDontHaveTeams: "You don't have any teams",
     MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
@@ -326,6 +330,9 @@ define([], () => {
     "WebSearchLinkLabel": "Recherche Internet",
     "Yes": "Oui",
     "SelectedLabel": "Sélectionné",
-    "SelectIcon": "Sélectionner une icône"
+    "SelectIcon": "Sélectionner une icône",
+    "StockImagesLinkLabel": "Banque d'images",
+    "StockImagesHeader": "Banque d'images",
+    "OrgAssetsLinkLabel": "Votre organisation"
   };
 });

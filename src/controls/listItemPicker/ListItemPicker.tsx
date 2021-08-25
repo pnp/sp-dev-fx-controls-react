@@ -7,6 +7,7 @@ import { getId } from 'office-ui-fabric-react/lib/Utilities';
 import { IListItemPickerProps, IListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
+import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
 
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
@@ -74,6 +75,11 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
         }
         <div id={this._tagPickerId}>
           <TagPicker onResolveSuggestions={this.onFilterChanged}
+            onEmptyResolveSuggestions={(selectLists) => {
+              if (this.props.enableDefaultSuggestions) {
+                return this.onFilterChanged("", selectLists);
+              }
+            }}
             //   getTextFromItem={(item: any) => { return item.name; }}
             getTextFromItem={this.getTextFromItem}
             pickerSuggestionsProps={{
@@ -115,8 +121,8 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   /**
    * Filter Change
    */
-  private onFilterChanged = async (filterText: string, tagList: { key: string; name: string }[]) => {
-    let resolvedSugestions: { key: string; name: string }[] = await this.loadListItems(filterText);
+  private onFilterChanged = async (filterText: string, tagList: ITag[]) => {
+    let resolvedSugestions: ITag[] = await this.loadListItems(filterText);
 
     const {
       selectedItems
