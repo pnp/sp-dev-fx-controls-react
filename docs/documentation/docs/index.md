@@ -13,8 +13,8 @@ Currently there are 3 active versions of the controls. Please, reference the tab
 | Version | SPFx minimal dependency | Fluent UI (Office UI Fabric React) version | SharePoint Version | Comments |
 | ------- | ----------------------- | ------------------------------------------ | ------------------ | -------- |
 | `v3` | `1.12.0` | `7.156.0` | Online | The most current, actively maintained version of the library. |
-| `v2` | `1.11.0` | `6.214.0` | Online | The version will be deprecated in **May/June timeframe**.<br>We strongly recommend to update to SPFx `1.12` and `v3` of Controls. |
-| `v1` | `1.3.0` | `5.131.0` | On-Prem | The version is maintained for SharePoint On-Prem 2016 and 2019 implementations. Be aware that the controls might not work in solutions you're building for on-premises. As for on-premises solutions version `1.1.0` will get used. |
+| `v2` | `1.11.0` | `6.214.0` | Online | **The last major version is 2.9.0**.<br>We strongly recommend to update to SPFx `1.12` and `v3` of Controls. |
+| `v1` | `1.3.0` | `5.131.0` | On-Prem | The version is maintained for SharePoint On-Prem 2016 and 2019 implementations. Be aware that the controls might not work in solutions you're building for on-premises as SharePoint On-Prem is based on SPFx `1.1.0`. |
 
 ## Getting started
 
@@ -77,9 +77,11 @@ The following controls are currently available:
 - [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [IFramePanel](./controls/IFramePanel) (renders a Panel with an iframe as a content)
+- [ListItemComments](./controls/ListItemComments) (controls that allows to manage list item comments similarly to out-of-the box experience)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
 - [ListView](./controls/ListView) (List view control)
+- [LivePersona](./controls/LivePersona) (Live Persona control)
 - [LocationPicker](./controls/LocationPicker) (Location Picker control)
 - [Map](./controls/Map) (renders a map in a web part)
 - [MyTeams](./controls/MyTeams) (My Teams)
