@@ -17,6 +17,7 @@ import TermParent from './TermParent';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import { initializeIcons } from '@uifabric/icons';
 import * as telemetry from '../../common/telemetry';
+import { EmptyGuid } from '../../common/Constants';
 
 /**
  * Image URLs / Base64
@@ -363,22 +364,63 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     return input;
   }
 
+  private async validateOnGetErrorMessage(targetValue: string): Promise<boolean> {
+    const errorMessage = await this.props.onGetErrorMessage(
+      [
+        {
+          key: EmptyGuid,
+          name: targetValue,
+          path: targetValue,
+          termSet: this.termsService.cleanGuid(this.props.termsetNameOrID)
+        }
+      ]
+    );
+
+    if (!!errorMessage) {
+      this.setState({
+        errorMessage: errorMessage
+      });
+    }
+    else {
+      this.setState({
+        errorMessage: null
+      });
+    }
+    return !errorMessage;
+  }
+
+  private onNewTerm = (newLabel: string) => {
+    this.props.onNewTerm(
+        {
+          key: EmptyGuid,
+          name: newLabel,
+          path: newLabel,
+          termSet: this.termsService.cleanGuid(this.props.termsetNameOrID)
+        }
+    );
+  }
+
   /**
    * Triggers when taxonomy picker control loses focus
    */
-  private onBlur(event: React.FocusEvent<HTMLElement | Autofill>): void {
+  private async onBlur(event: React.FocusEvent<HTMLElement | Autofill>): Promise<void> {
     const { validateInput } = this.props;
     if (!!validateInput) {
       // Perform validation of input text, only if taxonomy picker is configured with validateInput={true} property.
       const target: HTMLInputElement = event.target as HTMLInputElement;
       const targetValue = !!target ? target.value : null;
-      if (!!targetValue) {
-        this.invalidTerm = targetValue;
+
+      if(!!this.props.onGetErrorMessage && !!targetValue) {
+          await this.validateOnGetErrorMessage(targetValue);
+        } else {
+        if (!!targetValue) {
+          this.invalidTerm = targetValue;
+        }
+        else {
+          this.invalidTerm = null;
+        }
+        this.validateInputText();
       }
-      else {
-        this.invalidTerm = null;
-      }
-      this.validateInputText();
     }
   }
 
@@ -534,6 +576,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
               onChanged={this.termsFromPickerChanged}
               onInputChange={this.onInputChange}
               onBlur={this.onBlur}
+              onNewTerm={this.props.onNewTerm ? this.onNewTerm : undefined}
               allowMultipleSelections={allowMultipleSelections}
               disabledTermIds={disabledTermIds}
               disableChildrenOfDisabledParents={disableChildrenOfDisabledParents}

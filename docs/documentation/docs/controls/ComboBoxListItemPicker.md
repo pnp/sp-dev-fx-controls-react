@@ -52,7 +52,7 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
                         columnInternalName='Title'
                         keyColumnInternalName='Id'
                         filter="Title eq 'SPFx'" 
-                        defaultSelectedItems: [2]
+                        defaultSelectedItems={[2]}
                         onSelectedItem={this.onSelectedItem}
                         webUrl={this.context.pageContext.web.absoluteUrl}
                         spHttpClient={this.context.spHttpClient} />
@@ -87,7 +87,7 @@ const keyColumnInternalName = 'Id';
                         columnInternalName={columnInternalName}
                         keyColumnInternalName={keyColumnInternalName}
                         filter="Title eq 'SPFx'" 
-                        defaultSelectedItems: [2]
+                        defaultSelectedItems={[2]}
                         onSelectedItem={this.onSelectedItem}
                         webUrl={this.context.pageContext.web.absoluteUrl}
                         spHttpClient={this.context.spHttpClient} />

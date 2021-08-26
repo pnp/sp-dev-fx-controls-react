@@ -10,7 +10,7 @@ import {
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'ControlsTestWebPartStrings';
-import ControlsTest from './components/ControlsTest';
+ import { TestControl, ITestControlProps } from './components/TestControl';
 import { IControlsTestProps } from './components/IControlsTestProps';
 import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
 import {
@@ -18,6 +18,7 @@ import {
   ThemeChangedEventArgs,
   ThemeProvider,
 } from "@microsoft/sp-component-base";
+import ControlsTest from './components/ControlsTest';
 /**
  * Web part to test the React controls
  */
@@ -66,11 +67,18 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
     document.body.setAttribute("data-theme", theme);
   }
 
-
-
   public render(): void {
-    const element: React.ReactElement<IControlsTestProps> = React.createElement(
-      ControlsTest,
+   /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
+
+      TestControl,
+       {
+         context: this.context,
+       }
+     ); */
+
+   const element: React.ReactElement<IControlsTestProps> = React.createElement(
+
+     ControlsTest,
       {
 
         themeVariant: this._themeVariant,

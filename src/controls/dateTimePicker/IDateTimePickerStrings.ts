@@ -6,4 +6,5 @@ export interface IDateTimePickerStrings extends IDatePickerStrings {
   timeSeparator?: string;
   amDesignator?: string;
   pmDesignator?: string;
+  textErrorMessage?: string;
 }

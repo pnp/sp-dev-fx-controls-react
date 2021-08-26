@@ -2,21 +2,38 @@
 
 ## 3.3.0
 
+### New control(s)
+
+- `LivePersona`: New Control LivePersona [#969](https://github.com/pnp/sp-dev-fx-controls-react/pull/969)
+- `ListItemComments`: New Control ListItemComments [#979](https://github.com/pnp/sp-dev-fx-controls-react/pull/979)
+
 ### Enhancements
 
 - `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
 - `FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)
 - `DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)
 - `DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)
+- `ListItemPicker`: add property to show all options by default [#955](https://github.com/pnp/sp-dev-fx-controls-react/issues/955)
+- `ListItemPicker`: Missing translation keys, improved FI, NL translation [#957](https://github.com/pnp/sp-dev-fx-controls-react/pull/957)
+- `TaxonomyPicker`: Added onNewTerm called when enter is pressed [#967](https://github.com/pnp/sp-dev-fx-controls-react/pull/967)
+- `DynamicForm`: Principal Types support [#956](https://github.com/pnp/sp-dev-fx-controls-react/pull/956)
+- `DateTimePicker`: Expose allowTextInput from the underlying date picker [#928](https://github.com/pnp/sp-dev-fx-controls-react/issues/928)
+- `Dynamic Form`: Show field descriptions [#975](https://github.com/pnp/sp-dev-fx-controls-react/issues/975)
 
 ### Fixes
 
 - `RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)
 - `RichText`: impossible to display link with the text equal to the url [#949](https://github.com/pnp/sp-dev-fx-controls-react/issues/949)
+- `ComboBoxListItemPicker`: defaultSelectedItems not working [#954](https://github.com/pnp/sp-dev-fx-controls-react/issues/954)
+- `Dynamic Form`: query items in a folder (managed metadata field) [#973](https://github.com/pnp/sp-dev-fx-controls-react/issues/973)
+- `PeoplePicker`: Default selected items for groups [#958](https://github.com/pnp/sp-dev-fx-controls-react/issues/958)
+- Documentation: corrected Twitter handle for M365PnP [#984](https://github.com/pnp/sp-dev-fx-controls-react/pull/984)
+- `Carousel`: Carousel is missing import of `ICarouselImageProps` [#986](https://github.com/pnp/sp-dev-fx-controls-react/issues/986)
+- Documentation fix - `DynamicForm` example has incorrect syntax [#990](https://github.com/pnp/sp-dev-fx-controls-react/pull/990)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
+Special thanks to our contributors (in alphabetical order): [Alexey Morozov](https://github.com/a1exymoroz), [Daniel Stratton](https://github.com/gobigfoot), [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [João Mendes](https://github.com/joaojmendes), [Ketill Antoníus Ágústsson](https://github.com/Katli95), [kmrshubham0](https://github.com/kmrshubham0), [Modern Dev Dude](https://github.com/modern-dev-dude), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin), [Yannick Reekmans](https://github.com/YannickRe).
 
 ## 3.2.1
 
@@ -102,6 +119,28 @@ Special thanks to our contributors (in alphabetical order): [Ari Gunawan](https:
 
 - SharePoint Framework v1.12 support (breaking change)
 - Fluent UI v7 support
+
+## 2.9.0
+
+### Enhancements
+
+- `FilePicker`: spanish translation for Stock Images labels [#946](https://github.com/pnp/sp-dev-fx-controls-react/pull/946)
+- `FilePicker`: Add support for a defaultFolderAbsolutePath prop [#947](https://github.com/pnp/sp-dev-fx-controls-react/pull/947)
+- `DynamicForm`: Returning PnPJS `IItem` in `onSubmitted` event based on `returnListItemInstanceOnSubmit` property [#944](https://github.com/pnp/sp-dev-fx-controls-react/pull/944)
+- `DateTimePicker`: Add property for minutes dropdown increment [#939](https://github.com/pnp/sp-dev-fx-controls-react/issues/939)
+- `DynamicForm`: Principal Types support [#956](https://github.com/pnp/sp-dev-fx-controls-react/pull/956)
+- `Dynamic Form`: Show field descriptions [#975](https://github.com/pnp/sp-dev-fx-controls-react/issues/975)
+
+### Fixes
+
+- `RichText`: Image button is checked when hyperlink is added to the text [#948](https://github.com/pnp/sp-dev-fx-controls-react/issues/948)
+- `RichText`: impossible to display link with the text equal to the url [#949](https://github.com/pnp/sp-dev-fx-controls-react/issues/949)
+- `ComboBoxListItemPicker`: defaultSelectedItems not working [#954](https://github.com/pnp/sp-dev-fx-controls-react/issues/954)
+- `PeoplePicker`: Default selected items for groups [#958](https://github.com/pnp/sp-dev-fx-controls-react/issues/958)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alexey Morozov](https://github.com/a1exymoroz), [Daniel Stratton](https://github.com/gobigfoot), [Ketill Antoníus Ágústsson](https://github.com/Katli95), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog), [Sergio Ortega Martín](https://github.com/sortegamartin).
 
 ## 2.8.0
 

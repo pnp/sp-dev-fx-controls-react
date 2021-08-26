@@ -65,5 +65,6 @@ The `ListItemPicker` control can be configured with the following properties:
 | placeholder | string | no | Short text hint to display in empty picker |
 | substringSearch | boolean | no | Specifies if substring search should be used |
 | label | string | no | Specifies the text describing the ListItemPicker. |
+| enableDefaultSuggestions | boolean | no | Enable default suggestions. All options are displayed by default when clicking on the control. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemPicker)

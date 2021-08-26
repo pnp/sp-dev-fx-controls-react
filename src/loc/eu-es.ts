@@ -253,6 +253,10 @@ define([], () => {
     LinkFileInstructions: "Paste a link to a file in OneDrive for Business or SharePoint Online",
     LinkHeader: "From a link",
     LinkImageInstructions: "Paste a link to an image in OneDrive for Business or SharePoint Online",
+    ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
+    ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
+    ListItemCommentsLabel: "Comments",
+    ListItemCommentsNoCommentsLabel: "There is no Comments",
     ListLayoutAriaLabel: "View options. {0}  {1} .",
     ListLayoutCompact: "Compact view",
     ListLayoutCompactDescription: "View items and details in a compact list",
@@ -338,6 +342,9 @@ define([], () => {
     TeamPickerSugestionsHeaderText: "Suggested Teams",
     TeamsChannelPickerButtonRemoveTitle: "remove",
     TeamsChannelPickerNoresultsFoundText: "No channels found",
-    SelectIcon: "Hautatu ikonoa"
+    SelectIcon: "Hautatu ikonoa",
+    StockImagesLinkLabel: "Stock irudiak",
+    StockImagesHeader: "Stock irudiak",
+    OrgAssetsLinkLabel: "Zure erakundea"
   };
 });

@@ -103,6 +103,7 @@ Interface `IDateTimePickerStrings` extends [IDatePickerStrings](https://develope
 | timeSeparator | string | no | Separator between time of day components (hours, minutes, seconds). |
 | amDesignator | string | no | Used as AM designator when 12-hour clock is used. |
 | pmDesignator | string | no | Used as PM designator when 12-hour clock is used. |
+| textErrorMessage | string | no | Error message when text is entered in the date picker. |
 
 Type `MinutesIncrement`
 ```typescript

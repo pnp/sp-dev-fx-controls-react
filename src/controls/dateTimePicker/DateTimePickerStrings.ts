@@ -95,4 +95,9 @@ export class DateTimePickerStrings implements IDateTimePickerStrings {
    * Separator between time of day components (hours, minutes, seconds).
    */
   public timeSeparator: string = strings.DateTimePickerTimeSeparator;
+  /**
+   * error message when text is entered in the date picker
+   */
+   public textErrorMessage: string = strings.DateTimePickerTextErrorMessage;
+
 }

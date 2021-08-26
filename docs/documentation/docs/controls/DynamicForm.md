@@ -8,7 +8,7 @@ This control can dynamically generate SharePoint list or SharePoint document lib
 - Import the following modules to your component:
 
 ```TypeScript
-import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
+import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
 ```
 
 - Use the DynamicForm control in your code as follows:
@@ -17,9 +17,9 @@ import { DynamicForm } from "fx-controls-react/lib/DynamicForm";
 <DynamicForm 
           context={this.props.context} 
           listId={"3071c058-549f-461d-9d73-8b9a52049a80"}  
-          listItemId={1}>
+          listItemId={1}
           onCancelled={() => { console.log('Cancelled') }}
-          onBeforeSubmit={(async listItem) => { return true; }}
+          onBeforeSubmit={async (listItem) => { return true; }}
           onSubmitError={(listItem, error) => { alert(error.message); }}
           onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>

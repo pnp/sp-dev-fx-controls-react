@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import * as strings from "ControlStrings";
-import { IIconProps } from "office-ui-fabric-react";
+import { IIconProps } from "office-ui-fabric-react/lib/Icon";
 import {
   ActionButton,
   PrimaryButton

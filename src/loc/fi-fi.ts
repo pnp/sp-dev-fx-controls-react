@@ -2,6 +2,10 @@ declare var define: any;
 
 define([], () => {
   return {
+  ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
+  ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
+  ListItemCommentsLabel: "Comments",
+  ListItemCommentsNoCommentsLabel: "There is no Comments",
   MyTeamsLoadingMessage: "loading your teams",
   MyTeamsMessageDontHaveTeams: "You don't have any teams",
   MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
@@ -53,7 +57,7 @@ define([], () => {
   "TaxonomyPickerNoTerms": "Termi joukko ei sisällä mitään termejä",
   "TaxonomyPickerExpandTitle": "Laajenna tämä termi joukko",
   "TaxonomyPickerMenuTermSet": "Termi joukon valikko",
-  "TaxonomyPickerInLabel": "Tuumaa",
+  "TaxonomyPickerInLabel": "Paikassa",
   "TaxonomyPickerTermSetLabel": "Termi joukko",
   "peoplePickerComponentTooltipMessage": "Henkilöiden valitsin",
   "peoplePickerComponentErrorMessage": "Pakollinen kenttä",
