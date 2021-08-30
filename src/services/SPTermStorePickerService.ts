@@ -297,7 +297,7 @@ export default class SPTermStorePickerService {
           return null;
         }
       }
-      else{
+      else {
         return null;
       }
     } catch (error) {
@@ -424,10 +424,10 @@ export default class SPTermStorePickerService {
             resolve(null);
             return;
           }
-
+          let loc = LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo.currentUICultureName);
           let data = {
             start: searchText,
-            lcid: LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo.currentUICultureName) ?? this.context.pageContext.web.language,
+            lcid: loc !== 0 ? loc : this.context.pageContext.web.language,
             sspList: this.cleanGuid(termStore[0].Id),
             termSetList: TermSetId,
             anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
