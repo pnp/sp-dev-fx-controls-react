@@ -445,6 +445,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
+      errorMessage: "This field is required"
 
     };
 
@@ -536,7 +537,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
-      initialValues: terms
+      initialValues: terms,
+      errorMessage: terms.length > 0 ? '' : 'This field is required'
     });
     console.log("Terms:", terms);
   }
@@ -1031,6 +1033,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isTermSetSelectable={false}
             hideDeprecatedTags={true}
             hideTagsNotAvailableForTagging={true}
+            errorMessage={this.state.errorMessage}
             termActions={{
               actions: [{
                 title: "Get term labels",
@@ -1103,7 +1106,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 name: "HR",
                 path: "HR",
                 termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-              }]
+              }],
+              errorMessage: ""
             });
           }} />
         </div>
