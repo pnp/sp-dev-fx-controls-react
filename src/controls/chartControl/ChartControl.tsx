@@ -284,7 +284,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       type,
       plugins,
       useTheme
-    } = this.props;
+    } = props;
 
     // add event handlers -- if they weren't already provided through options
     if (this.props.onClick !== undefined) {
