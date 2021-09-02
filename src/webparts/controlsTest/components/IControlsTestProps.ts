@@ -44,4 +44,5 @@ export interface IControlsTestState {
   selectedTeam:ITag[];
   selectedTeamChannels:ITag[];
   filePickerDefaultFolderAbsolutePath?: string;
+  errorMessage?: string;
 }
