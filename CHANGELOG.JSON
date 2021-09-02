@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "3.4.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)"
+        ]
+      },
+      "contributions": [
+        "[hesperanca](https://github.com/hesperanca)"
+      ]
+    },
+    {
       "version": "3.3.0",
       "changes": {
         "new": [
