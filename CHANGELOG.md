@@ -1,5 +1,15 @@
 # Releases
 
+## 3.4.0
+
+### Fixes
+
+- `ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)
+
+### Contributors
+
+Special thanks to our contributor: [hesperanca](https://github.com/hesperanca).
+
 ## 3.3.0
 
 ### New control(s)
