@@ -6,10 +6,11 @@
 
 - `ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)
 - `TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)
+- `TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [hesperanca](https://github.com/hesperanca), [Peter Paul Kirschner](https://github.com/petkir).
+Special thanks to our contributors (in alphabetical order): [Jean-Luc Richer](https://github.com/umaknow-jeanluc), [hesperanca](https://github.com/hesperanca), [Peter Paul Kirschner](https://github.com/petkir).
 
 ## 3.3.0
 
