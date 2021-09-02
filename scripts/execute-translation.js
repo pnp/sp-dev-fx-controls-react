@@ -35,7 +35,7 @@ async function getAuthToken() {
 
     const options = {
       method: 'POST',
-      url: 'https://westeurope.api.cognitive.microsoft.com/sts/v1.0/issueToken',
+      url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
       headers: {
         'Ocp-Apim-Subscription-Key': subscriptionKey,
         'Content-type': 'application/x-www-form-urlencoded',
@@ -103,17 +103,22 @@ function compareTranslationKeys(srcObj, dstObj) {
   // Extract all the keys and set them in alpabetyical order
   let dstKeys = Object.keys(dstObj);
 
-  // Array<string>
   let toTranslate = [];
-  dstKeys.forEach((locKey) => {
-    if (typeof srcObj[locKey] !== "string") {
-      // In case we have nested translation objects
-      toTranslate = toTranslate.concat(compareTranslationKeys(srcObj[locKey], dstObj[locKey]));
-    } else if (srcObj[locKey] === dstObj[locKey]) {
-      // In case the english value is the same as localized one, add it to translate
-      toTranslate.push(srcObj[locKey]);
-    }
-  });
+  // Array<string>
+  try {    
+    dstKeys.forEach((locKey) => {
+      if (typeof srcObj[locKey] !== "string") {
+        // In case we have nested translation objects
+        toTranslate = toTranslate.concat(compareTranslationKeys(srcObj[locKey], dstObj[locKey]));
+      } else if (srcObj[locKey] === dstObj[locKey]) {
+        // In case the english value is the same as localized one, add it to translate
+        toTranslate.push(srcObj[locKey]);
+      }
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+  
 
   return toTranslate;
 }
