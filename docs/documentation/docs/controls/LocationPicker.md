@@ -17,7 +17,7 @@ This control allows you to search and select the Location, also allows enter a c
 
 ```TypeScript
 
-import { LocationPicker,ILocationPickerItem } from  "fx-controls-react/lib/LocationPicker";
+import { LocationPicker,ILocationPickerItem } from  "@pnp/spfx-controls-react/lib/LocationPicker";
 
 ```
 
