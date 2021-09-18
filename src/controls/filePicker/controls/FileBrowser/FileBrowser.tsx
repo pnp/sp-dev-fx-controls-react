@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IFile, FilesQueryResult } from '../../../../services/FileBrowserService.types';
-import { GeneralHelper } from '../../../../common/utilities/GeneralHelper';
+import { GeneralHelper, sortDate, sortString } from '../../../../common/utilities/GeneralHelper';
 import { LoadingState } from './IFileBrowserState';
 import { TilesList } from '../TilesList/TilesList';
 import { IFilePickerResult } from '../../FilePicker.types';
@@ -59,7 +59,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       {
         key: 'column2',
         name: strings.NameField,
-        fieldName: 'fileLeafRef',
+        fieldName: 'name',
         minWidth: 210,
         isRowHeader: true,
         isResizable: true,
@@ -81,11 +81,11 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       {
         key: 'column3',
         name: strings.ModifiedField,
-        fieldName: 'dateModifiedValue',
+        fieldName: 'modified',
         minWidth: 120,
         isResizable: true,
         onColumnClick: this._onColumnClick,
-        data: 'number',
+        data: 'date',
         onRender: (item: IFile) => {
           //const dateModified = moment(item.modified).format(strings.DateFormat);
           return <span>{item.modified}</span>;
@@ -108,7 +108,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       {
         key: 'column5',
         name: strings.FileSizeField,
-        fieldName: 'fileSizeRaw',
+        fieldName: 'fileSize',
         minWidth: 70,
         maxWidth: 90,
         isResizable: true,
@@ -169,9 +169,9 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
             <div className={styles.scrollablePaneWrapper}>
               <ScrollablePane>
 
-                  {
-                    this.state.selectedView !== 'tiles' ?
-                      (
+                {
+                  this.state.selectedView !== 'tiles' ?
+                    (
                       <DetailsList
                         items={this.state.items}
                         compact={this.state.selectedView === 'compact'}
@@ -187,17 +187,17 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                         onRenderRow={this._onRenderRow}
                         onRenderMissingItem={() => { this._loadNextDataRequest(); return null; }}
                       />) :
-                      (<TilesList
-                        fileBrowserService={this.props.fileBrowserService}
-                        filePickerResult={this.state.filePickerResult}
-                        selection={this._selection}
-                        items={this.state.items}
+                    (<TilesList
+                      fileBrowserService={this.props.fileBrowserService}
+                      filePickerResult={this.state.filePickerResult}
+                      selection={this._selection}
+                      items={this.state.items}
 
-                        onFolderOpen={this._handleOpenFolder}
-                        onFileSelected={this._itemSelectionChanged}
-                        onNextPageDataRequest={this._loadNextDataRequest}
-                      />)
-                  }
+                      onFolderOpen={this._handleOpenFolder}
+                      onFileSelected={this._itemSelectionChanged}
+                      onNextPageDataRequest={this._loadNextDataRequest}
+                    />)
+                }
               </ScrollablePane>
             </div>
           </div>
@@ -378,31 +378,56 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       isSortedDescending = !isSortedDescending;
     }
 
-    // Sort the items.
-    items = items!.concat([]).sort((a, b) => {
-      const firstValue = a[column.fieldName || ''];
-      const secondValue = b[column.fieldName || ''];
+    const updatedColumns: IColumn[] = columns!.map(col => {
+      col.isSorted = col.key === column.key;
 
-      if (isSortedDescending) {
-        return firstValue > secondValue ? -1 : 1;
-      } else {
-        return firstValue > secondValue ? 1 : -1;
+      if (col.isSorted) {
+        col.isSortedDescending = isSortedDescending;
       }
+
+      return col;
     });
 
-    // Reset the items and columns to match the state.
-    this.setState({
-      items: items,
-      columns: columns!.map(col => {
-        col.isSorted = col.key === column.key;
+    if (!this.state.nextPageQueryString) { // all items have been loaded to the client
+      // Sort the items.
+      items = items!.concat([]).sort((a, b) => {
+        if (a.isFolder && !b.isFolder) {
+          return 1;
+        }
+        else if (!a.isFolder && b.isFolder) {
+          return -1;
+        }
+        let firstValue = a[column.fieldName] || '';
+        let secondValue = b[column.fieldName] || '';
 
-        if (col.isSorted) {
-          col.isSortedDescending = isSortedDescending;
+        if (column.data === 'string') {
+          return sortString(firstValue, secondValue, isSortedDescending);
+        }
+        else if (column.data === 'date') {
+          return sortDate(firstValue, secondValue, isSortedDescending);
+        }
+        else if (column.data === 'number') {
+          firstValue = parseFloat(firstValue);
+          secondValue = parseFloat(secondValue);
         }
 
-        return col;
-      })
-    });
+        return isSortedDescending ? secondValue - firstValue : firstValue - secondValue;
+      });
+
+      // Reset the items and columns to match the state.
+      this.setState({
+        items: items,
+        columns: updatedColumns
+      });
+    }
+    else {
+      this.setState({
+        items: [],
+        columns: updatedColumns
+      }, () => {
+        this._getListItems(false);
+      });
+    }
   }
 
   /**
@@ -454,20 +479,20 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    * Handles item click.
    */
   private _handleItemInvoked = (item: IFile) => {
-   // If a file is selected, open the library
-   if (item.isFolder) {
-     this._handleOpenFolder(item);
-   } else {
-     // Otherwise, remember it was selected
-     this._itemSelectionChanged(item);
-   }
- }
+    // If a file is selected, open the library
+    if (item.isFolder) {
+      this._handleOpenFolder(item);
+    } else {
+      // Otherwise, remember it was selected
+      this._itemSelectionChanged(item);
+    }
+  }
 
   /**
    * Gets all files in a library with a matchihg path
    */
   private async _getListItems(concatenateResults: boolean = false) {
-    const { libraryUrl, folderPath, accepts } = this.props;
+    const { libraryUrl, folderPath, accepts, fileBrowserService } = this.props;
     let { items, nextPageQueryString } = this.state;
 
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
@@ -480,8 +505,18 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         loadingState,
         nextPageQueryString
       });
+
+      let sortField: string | undefined = undefined;
+      let isDesc: boolean | undefined = undefined;
+
+      const sortByCol = this.state.columns!.filter(c => c.isSorted)[0];
+      if (sortByCol) {
+        sortField = fileBrowserService.getSPFieldNameForFileProperty(sortByCol.fieldName);
+        isDesc = !!sortByCol.isSortedDescending;
+      }
+
       // Load files in the folder
-      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString);
+      filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString, sortField, isDesc);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);
@@ -514,5 +549,9 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         loadingState: LoadingState.idle
       });
     }
+  }
+
+  private _onClientSort(column: IColumn): void {
+
   }
 }

@@ -360,3 +360,40 @@ export const toRelativeUrl = (absoluteUrl: string): string => {
 
   return absoluteUrl.replace(/^(?:\/\/|[^/]+)*\//, '/');
 };
+
+export function sortString(a: string, b: string, isDesc: boolean): number {
+  const aProp = (a || '').toLowerCase();
+  const bProp = (b || '').toLowerCase();
+
+  if (aProp < bProp) {
+    return isDesc ? 1 : -1;
+  }
+  else if (aProp > bProp) {
+    return isDesc ? -1 : 1;
+  }
+
+  return 0;
+}
+
+export function sortDate(a: string | number | Date, b: string | number | Date, isDesc: boolean): number {
+  const aTime = dateToNumber(a);
+  const bTime = dateToNumber(b);
+
+  return isDesc ? bTime - aTime : aTime - bTime;
+}
+
+export function dateToNumber(date: string | number | Date): number {
+  if (typeof date === 'number') {
+    return date;
+  }
+
+  let dateObj: Date;
+  if (typeof date === 'string') {
+    dateObj = new Date(date);
+  }
+  else {
+    dateObj = date;
+  }
+
+  return dateObj.getTime();
+}
