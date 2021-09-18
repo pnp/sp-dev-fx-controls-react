@@ -15,7 +15,7 @@ import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { EmptyGuid } from '../common/Constants';
-
+import { LocalesHelper } from '../common/utilities/LocalesHelper';
 
 /**
  * Service implementation to manage term stores in SharePoint
@@ -400,10 +400,10 @@ export default class SPTermStorePickerService {
             resolve(null);
             return;
           }
-
+          let loc = LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo.currentUICultureName);
           let data = {
             start: searchText,
-            lcid : this.context.pageContext.web.language, // TODO : get the user's navitation LCID. Here it's the default web language LCID
+            lcid: loc !== 0 ? loc : this.context.pageContext.web.language,
             sspList: this.cleanGuid(termStore[0].Id),
             termSetList: TermSetId,
             anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
