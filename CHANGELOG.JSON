@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "2.10.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)"
+        ]
+      },
+      "contributions": [
+        "[Peter Paul Kirschner](https://github.com/petkir)"
+      ]
+    },
+    {
       "version": "2.9.0",
       "changes": {
         "new": [],
