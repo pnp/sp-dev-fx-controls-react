@@ -7,7 +7,9 @@
         "enhancements": [
           "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#909](https://github.com/pnp/sp-dev-fx-controls-react/pull/909)"
         ],
-        "fixes": []
+        "fixes": [
+          "`TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)"
+        ]
       },
       "contributions": [
         "[Peter Paul Kirschner](https://github.com/petkir)"
