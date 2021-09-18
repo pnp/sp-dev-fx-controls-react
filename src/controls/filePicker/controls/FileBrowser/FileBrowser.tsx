@@ -15,6 +15,8 @@ import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
 
 import styles from './FileBrowser.module.scss';
 import * as strings from 'ControlStrings';
+import { FileTypeIcon } from '../../../fileTypeIcon/FileTypeIcon';
+import { IconType, ImageSize } from '../../../fileTypeIcon';
 
 const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
 
@@ -37,23 +39,29 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         isIconOnly: true,
         fieldName: 'docIcon',
         headerClassName: styles.iconColumnHeader,
-        minWidth: 16,
-        maxWidth: 16,
+        minWidth: 20,
+        maxWidth: 20,
         onColumnClick: this._onColumnClick,
         onRender: (item: IFile) => {
-          const folderIcon: string = strings.FolderIconUrl;
-          // TODO: Improve file icon URL
-          const isPhoto = GeneralHelper.isImage(item.name);
-          let fileType = item.fileType;
-          if (fileType.toLowerCase() === 'aspx') {
-            fileType = 'html';
-          }
-          const iconUrl = isPhoto ? strings.PhotoIconUrl : `https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/${fileType}.png`;
+          // const folderIcon: string = strings.FolderIconUrl;
+          // // TODO: Improve file icon URL
+          // const isPhoto = GeneralHelper.isImage(item.name);
+          // let fileType = item.fileType;
+          // if (fileType.toLowerCase() === 'aspx') {
+          //   fileType = 'html';
+          // }
+          // const iconUrl = isPhoto ? strings.PhotoIconUrl : `https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/${fileType}.png`;
 
-          const altText: string = item.isFolder ? strings.FolderAltText : strings.ImageAltText.replace('{0}', item.fileType);
-          return <div className={styles.fileTypeIcon}>
-            <img src={item.isFolder ? folderIcon : iconUrl} className={styles.fileTypeIconIcon} alt={altText} title={altText} />
-          </div>;
+          // const altText: string = item.isFolder ? strings.FolderAltText : strings.ImageAltText.replace('{0}', item.fileType);
+          // return <div className={styles.fileTypeIcon}>
+          //   <img src={item.isFolder ? folderIcon : iconUrl} className={styles.fileTypeIconIcon} alt={altText} title={altText} />
+          // </div>;
+          if (item.isFolder) {
+            return <div className={styles.fileTypeIcon}>
+              <img src={strings.FolderIconUrl} className={styles.fileTypeIconIcon} alt={strings.FolderAltText} title={strings.FolderAltText} />
+            </div>;
+          }
+          return <FileTypeIcon type={IconType.image} path={item.serverRelativeUrl} size={ImageSize.normal} />;
         }
       },
       {
