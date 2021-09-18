@@ -6,6 +6,7 @@
 
 - Translations: Update translation keys [#994](https://github.com/pnp/sp-dev-fx-controls-react/pull/994)
 - `LocationPicker`: Update docs [#1009](https://github.com/pnp/sp-dev-fx-controls-react/pull/1009)
+- `FileTypeIcon`: Add support of 20px icons[#1013](https://github.com/pnp/sp-dev-fx-controls-react/issues/1013)
 
 ### Fixes
 
@@ -13,6 +14,7 @@
 - `TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)
 - `TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)
 - `FilePicker`: Sorting Not Working as Expected in Site Tab [#1011](https://github.com/pnp/sp-dev-fx-controls-react/issues/1011)
+- `FilePicker`: Site Tab - Lots of file types don't have appropriate icons [#1012](https://github.com/pnp/sp-dev-fx-controls-react/issues/1012)
 
 ### Contributors
 
