@@ -11,7 +11,8 @@
         "fixes": [
           "`ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)",
           "`TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)",
-          "`TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)"
+          "`TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)",
+          "`FilePicker`: Sorting Not Working as Expected in Site Tab [#1011](https://github.com/pnp/sp-dev-fx-controls-react/issues/1011)"
         ]
       },
       "contributions": [
