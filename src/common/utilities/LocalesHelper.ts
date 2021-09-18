@@ -53,7 +53,7 @@ export class LocalesHelper {
     10266: 'sr-Cyrl-RS',
   };
   public static getLocaleId(localeName: string): number {
-    const pos: number = (Object as any).values(this.locales).indexOf(localeName);
+    const pos: number = Object.keys(this.locales).findIndex(locKey => this.locales[locKey] === localeName);
     if (pos > -1) {
       return parseInt(Object.keys(this.locales)[pos]);
     }
@@ -63,13 +63,7 @@ export class LocalesHelper {
   }
 
   public static getLocaleName(localeId: number): string {
-    const pos: number = Object.keys(this.locales).indexOf(localeId.toString());
-    if (pos > -1) {
-      return (Object as any).values(this.locales)[pos];
-    }
-    else {
-      return '';
-    }
+    return this.locales[localeId] || '';
   }
 
 
