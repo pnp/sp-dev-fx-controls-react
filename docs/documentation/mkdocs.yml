@@ -46,6 +46,7 @@ nav:
     - LivePersona: 'controls/LivePersona.md'
     - LocationPicker: 'controls/LocationPicker.md'
     - Map: 'controls/Map.md'
+    - ModernTaxonomyPicker: 'controls/ModernTaxonomyPicker.md'
     - MyTeams: 'controls/MyTeams.md'
     - Pagination: 'controls/Pagination.md'
     - PeoplePicker: 'controls/PeoplePicker.md'
