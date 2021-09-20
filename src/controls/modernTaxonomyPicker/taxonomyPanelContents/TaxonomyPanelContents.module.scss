@@ -30,4 +30,17 @@
     font-size: 18px;
     font-weight: 100;
   }
+
+  .spinnerContainer {
+    height: 48px;
+    line-height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loadMoreContainer {
+    height: 48px;
+    line-height: 48px;
+  }
 }

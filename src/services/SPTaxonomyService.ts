@@ -7,9 +7,6 @@ import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 
 export class SPTaxonomyService {
 
-  /**
-   * Service constructor
-   */
   constructor(private context: BaseComponentContext) {
 
   }
@@ -54,7 +51,7 @@ export class SPTaxonomyService {
       return undefined;
     }
     try {
-      const termInfo = await sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString())();
+      const termInfo = await sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString()).expand("parent")();
       return termInfo;
     } catch (error) {
       return undefined;
