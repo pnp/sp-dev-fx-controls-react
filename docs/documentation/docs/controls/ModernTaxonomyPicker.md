@@ -70,5 +70,6 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | customPanelWidth | number | no | Custom panel width in pixels. |
 | onRenderItem | function | no | Modify the display of the items in the picker. |
 | onRenderSuggestionsItem | function | no | Modify the display of the items in the pickers suggestions list. |
+| themeVariant | IReadonlyTheme | no | The current loaded SharePoint theme/section background (More info: [Supporting section backgrounds](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/guidance/supporting-section-backgrounds)). |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)

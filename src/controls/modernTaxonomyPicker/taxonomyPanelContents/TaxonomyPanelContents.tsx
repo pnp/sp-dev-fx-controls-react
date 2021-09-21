@@ -46,6 +46,7 @@ import { css } from '@uifabric/utilities/lib/css';
 import * as strings from 'ControlStrings';
 import { useForceUpdate } from '@uifabric/react-hooks';
 import { ModernTermPicker } from '../modernTermPicker/ModernTermPicker';
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
 
 export interface ITaxonomyFormProps {
   context: BaseComponentContext;
@@ -64,6 +65,7 @@ export interface ITaxonomyFormProps {
   onRenderItem?: (props: IPickerItemProps<ITermInfo>) => JSX.Element;
   getTextFromItem: (item: ITermInfo, currentValue?: string) => string;
   languageTag: string;
+  themeVariant?: IReadonlyTheme;
 }
 
 export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
@@ -282,7 +284,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
             checked={isSelected}
             styles={selectedStyles}
             disabled={isDisabled}
-            onRenderLabel={(p) => <span className={css(styles.checkbox, isSelected && styles.selectedCheckbox)} title={p.title}>
+            onRenderLabel={(p) => <span className={css(!isDisabled && styles.checkbox, isDisabled && styles.disabledCheckbox, isSelected && styles.selectedCheckbox)} title={p.title}>
               {p.label}
             </span>}
           />
@@ -296,7 +298,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
                                                 text: groupHeaderProps.group.name,
                                                 styles: selectedStyle,
                                                 onRenderLabel: (p) =>
-                                                  <span id={p.labelId} className={css(styles.choiceOption, isSelected && styles.selectedChoiceOption)}>
+                                                  <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
                                                     {p.text}
                                                   </span>
                                               }];
@@ -322,8 +324,8 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
 
   const onRenderHeader = (headerProps: IGroupHeaderProps): JSX.Element => {
     const groupHeaderStyles: IStyleFunctionOrObject<IGroupHeaderStyleProps, IGroupHeaderStyles> = {
-      expand: { height: 42, visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible" },
-      expandIsCollapsed: { visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible" },
+      expand: { height: 42, visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible", fontSize: 14 },
+      expandIsCollapsed: { visibility: !headerProps.group.children || headerProps.group.level === 0 ? "hidden" : "visible", fontSize: 14 },
       check: { display: 'none' },
       headerCount: { display: 'none' },
       groupHeaderContainer: { height: 36, paddingTop: 3, paddingBottom: 3, paddingLeft: 3, paddingRight: 3, alignItems: 'center', },
@@ -337,6 +339,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
         onRenderTitle={onRenderTitle}
         onToggleCollapse={onToggleCollapse}
         indentWidth={20}
+        expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
       />
     );
   };
@@ -441,6 +444,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
             }}
             onRenderSuggestionsItem={props.onRenderSuggestionsItem}
             onRenderItem={props.onRenderItem}
+            themeVariant={props.themeVariant}
           />
         </div>
       </div>

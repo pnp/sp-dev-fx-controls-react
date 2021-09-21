@@ -3,8 +3,11 @@ import { IBasePickerProps } from "office-ui-fabric-react/lib/components/pickers/
 import { IPickerItemProps } from "office-ui-fabric-react/lib/components/pickers/PickerItem.types";
 import { IStyle, ITheme } from "office-ui-fabric-react/lib/Styling";
 import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
 
-export interface IModernTermPickerProps extends IBasePickerProps<ITermInfo> {}
+export interface IModernTermPickerProps extends IBasePickerProps<ITermInfo> {
+  themeVariant?: IReadonlyTheme;
+}
 
 export interface ITermItemProps extends IPickerItemProps<ITermInfo> {
   /** Additional CSS class(es) to apply to the TermItem root element. */

@@ -3,6 +3,13 @@
 .taxonomyPanelContents {
   .choiceOption {
     color: "[theme: bodyText, default: #323130]";
+    display: inline-block;
+    padding-left: 26px;
+  }
+
+  .disabledChoiceOption {
+    color: "[theme: disabledBodyText, default: #323130]";
+    display: inline-block;
     padding-left: 26px;
   }
 
@@ -12,6 +19,11 @@
 
   .checkbox {
     color: "[theme: bodyText, default: #323130]";
+    margin-left: 4px;
+  }
+
+  .disabledCheckbox {
+    color: "[theme: disabledBodyText, default: #323130]";
     margin-left: 4px;
   }
 

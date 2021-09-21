@@ -35,6 +35,7 @@ import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
 import { ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
+import { IReadonlyTheme } from "@microsoft/sp-component-base";
 
 export interface IModernTaxonomyPickerProps {
   allowMultipleSelections?: boolean;
@@ -51,6 +52,7 @@ export interface IModernTaxonomyPickerProps {
   onRenderSuggestionsItem?: (term: ITermInfo, itemProps: ISuggestionItemProps<ITermInfo>) => JSX.Element;
   placeHolder?: string;
   customPanelWidth?: number;
+  themeVariant?: IReadonlyTheme;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
@@ -205,6 +207,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
             }}
             onRenderSuggestionsItem={props.onRenderSuggestionsItem ?? onRenderSuggestionsItem}
             onRenderItem={props.onRenderItem ?? onRenderItem}
+            themeVariant={props.themeVariant}
           />
         </div>
         <div className={styles.termFieldButton}>
@@ -260,6 +263,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 onRenderItem={props.onRenderItem ?? onRenderItem}
                 getTextFromItem={getTextFromItem}
                 languageTag={currentLanguageTag}
+                themeVariant={props.themeVariant}
               />
             </div>
           )
