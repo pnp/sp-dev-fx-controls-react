@@ -1,7 +1,6 @@
 import React from "react";
 import { BasePicker } from "office-ui-fabric-react/lib/components/pickers/BasePicker";
 import { IModernTermPickerProps,
-         ITermInfoExt,
          ITermItemProps
        } from "./ModernTermPicker.types";
 import { TermItem } from "../termItem/TermItem";
@@ -14,9 +13,9 @@ import { initializeComponentRef,
          styled
        } from "office-ui-fabric-react/lib/Utilities";
 import { ISuggestionItemProps } from "office-ui-fabric-react/lib/components/pickers/Suggestions/SuggestionsItem.types";
-import { Guid } from "@microsoft/sp-core-library";
+import { ITermInfo } from "@pnp/sp/taxonomy";
 
-export class ModernTermPickerBase extends BasePicker<ITermInfoExt, IModernTermPickerProps> {
+export class ModernTermPickerBase extends BasePicker<ITermInfo, IModernTermPickerProps> {
   public static defaultProps = {
     onRenderItem: (props: ITermItemProps) => {
       let labels = props.item.labels.filter((name) => name.languageTag === props.languageTag && name.isDefault);
@@ -28,11 +27,8 @@ export class ModernTermPickerBase extends BasePicker<ITermInfoExt, IModernTermPi
         <TermItem {...props}>{labels[0].name}</TermItem>
       ) : null;
     },
-    onRenderSuggestionsItem: (props: ITermInfoExt, itemProps: ISuggestionItemProps<ITermInfoExt>) => {
-      const onLoadParentLabel = async (termId: Guid): Promise<string> => {
-        return Promise.resolve("");
-      };
-      return <TermItemSuggestion term={props} languageTag={props.languageTag} onLoadParentLabel={onLoadParentLabel} termStoreInfo={props.termStoreInfo} {...itemProps} />;
+    onRenderSuggestionsItem: (props: ITermInfo, itemProps: ISuggestionItemProps<ITermInfo>) => {
+      return <TermItemSuggestion term={props} {...itemProps} />;
     },
   };
 

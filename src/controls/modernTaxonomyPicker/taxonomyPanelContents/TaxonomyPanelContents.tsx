@@ -46,31 +46,30 @@ import { css } from '@uifabric/utilities/lib/css';
 import * as strings from 'ControlStrings';
 import { useForceUpdate } from '@uifabric/react-hooks';
 import { ModernTermPicker } from '../modernTermPicker/ModernTermPicker';
-import { ITermInfoExt } from '../modernTermPicker/ModernTermPicker.types';
 
 export interface ITaxonomyFormProps {
   context: BaseComponentContext;
   allowMultipleSelections?: boolean;
   termSetId: Guid;
   pageSize: number;
-  selectedPanelOptions: ITermInfoExt[];
-  setSelectedPanelOptions: React.Dispatch<React.SetStateAction<ITermInfoExt[]>>;
-  onResolveSuggestions: (filter: string, selectedItems?: ITermInfoExt[]) => ITermInfoExt[] | PromiseLike<ITermInfoExt[]>;
+  selectedPanelOptions: ITermInfo[];
+  setSelectedPanelOptions: React.Dispatch<React.SetStateAction<ITermInfo[]>>;
+  onResolveSuggestions: (filter: string, selectedItems?: ITermInfo[]) => ITermInfo[] | PromiseLike<ITermInfo[]>;
   onLoadMoreData: (termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize?: number) => Promise<{ value: ITermInfo[], skiptoken: string }>;
   anchorTermInfo: ITermInfo;
   termSetInfo: ITermSetInfo;
   termStoreInfo: ITermStoreInfo;
   placeHolder: string;
-  onRenderSuggestionsItem?: (props: ITermInfoExt, itemProps: ISuggestionItemProps<ITermInfoExt>) => JSX.Element;
-  onRenderItem?: (props: IPickerItemProps<ITermInfoExt>) => JSX.Element;
-  getTextFromItem: (item: ITermInfoExt, currentValue?: string) => string;
+  onRenderSuggestionsItem?: (props: ITermInfo, itemProps: ISuggestionItemProps<ITermInfo>) => JSX.Element;
+  onRenderItem?: (props: IPickerItemProps<ITermInfo>) => JSX.Element;
+  getTextFromItem: (item: ITermInfo, currentValue?: string) => string;
   languageTag: string;
 }
 
 export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
-  const [terms, setTerms] = React.useState<ITermInfoExt[]>(props.selectedPanelOptions?.length > 0 ? [...props.selectedPanelOptions] : []);
+  const [terms, setTerms] = React.useState<ITermInfo[]>(props.selectedPanelOptions?.length > 0 ? [...props.selectedPanelOptions] : []);
 
   const forceUpdate = useForceUpdate();
 
@@ -78,7 +77,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
     const s = new Selection({onSelectionChanged: () => {
       props.setSelectedPanelOptions((prevOptions) => [...selection.getSelection()]);
       forceUpdate();
-    }, getKey: (term: ITermInfoExt) => term.id});
+    }, getKey: (term: any) => term.id});
     s.setItems(terms);
     for (const selectedOption of props.selectedPanelOptions) {
       if (s.canSelectItem) {
@@ -141,8 +140,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
         });
         setTerms((prevTerms) => {
           const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
-          const nonExistingTermsAsExt = nonExistingTerms.map(term => { return { ...term, languageTag: props.languageTag, termStoreInfo: props.termStoreInfo  } as ITermInfoExt;});
-          return [...prevTerms, ...nonExistingTermsAsExt];
+          return [...prevTerms, ...nonExistingTerms];
         });
         rootGroup.children = grps;
         rootGroup.data.skiptoken = loadedTerms.skiptoken;
@@ -204,8 +202,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
 
             setTerms((prevTerms) => {
               const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
-              const nonExistingTermsAsExt = nonExistingTerms.map(term => { return { ...term, languageTag: props.languageTag, termStoreInfo: props.termStoreInfo  } as ITermInfoExt;});
-              return [...prevTerms, ...nonExistingTermsAsExt];
+              return [...prevTerms, ...nonExistingTerms];
             });
 
             group.children = grps;
@@ -384,8 +381,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
                 });
                 setTerms((prevTerms) => {
                   const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
-                  const nonExistingTermsAsExt = nonExistingTerms.map(term => { return { ...term, languageTag: props.languageTag, termStoreInfo: props.termStoreInfo  } as ITermInfoExt;});
-                  return [...prevTerms, ...nonExistingTermsAsExt];
+                  return [...prevTerms, ...nonExistingTerms];
                 });
                 footerProps.group.children = [...footerProps.group.children, ...grps];
                 footerProps.group.data.skiptoken = loadedTerms.skiptoken;
@@ -413,7 +409,7 @@ export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactEle
     onRenderShowAll: onRenderShowAll,
   };
 
-  const onPickerChange = (items?: ITermInfoExt[]): void => {
+  const onPickerChange = (items?: ITermInfo[]): void => {
     const itemsToAdd = items.filter((item) => terms.every((term) => term.id !== item.id));
     setTerms((prevTerms) => [...prevTerms, ...itemsToAdd]);
     selection.setItems([...selection.getItems(), ...itemsToAdd], true);

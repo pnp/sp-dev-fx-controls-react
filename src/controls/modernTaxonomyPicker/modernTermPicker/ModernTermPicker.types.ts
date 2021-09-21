@@ -4,14 +4,9 @@ import { IPickerItemProps } from "office-ui-fabric-react/lib/components/pickers/
 import { IStyle, ITheme } from "office-ui-fabric-react/lib/Styling";
 import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
 
-export interface ITermInfoExt extends ITermInfo {
-  termStoreInfo: ITermStoreInfo;
-  languageTag: string;
-  key: string;
-}
-export interface IModernTermPickerProps extends IBasePickerProps<ITermInfoExt> {}
+export interface IModernTermPickerProps extends IBasePickerProps<ITermInfo> {}
 
-export interface ITermItemProps extends IPickerItemProps<ITermInfoExt> {
+export interface ITermItemProps extends IPickerItemProps<ITermInfo> {
   /** Additional CSS class(es) to apply to the TermItem root element. */
   className?: string;
 
