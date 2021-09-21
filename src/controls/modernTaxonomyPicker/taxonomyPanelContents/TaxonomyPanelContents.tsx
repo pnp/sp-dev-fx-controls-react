@@ -48,7 +48,7 @@ import { useForceUpdate } from '@uifabric/react-hooks';
 import { ModernTermPicker } from '../modernTermPicker/ModernTermPicker';
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 
-export interface ITaxonomyFormProps {
+export interface ITaxonomyPanelContentsProps {
   context: BaseComponentContext;
   allowMultipleSelections?: boolean;
   termSetId: Guid;
@@ -68,7 +68,7 @@ export interface ITaxonomyFormProps {
   themeVariant?: IReadonlyTheme;
 }
 
-export function TaxonomyPanelContents(props: ITaxonomyFormProps): React.ReactElement<ITaxonomyFormProps> {
+export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React.ReactElement<ITaxonomyPanelContentsProps> {
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
   const [terms, setTerms] = React.useState<ITermInfo[]>(props.selectedPanelOptions?.length > 0 ? [...props.selectedPanelOptions] : []);
