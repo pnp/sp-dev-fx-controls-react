@@ -47,6 +47,8 @@ import * as strings from 'ControlStrings';
 import { useForceUpdate } from '@uifabric/react-hooks';
 import { ModernTermPicker } from '../modernTermPicker/ModernTermPicker';
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
+import { IModernTermPickerProps } from '../modernTermPicker/ModernTermPicker.types';
+import { Optional } from '../ModernTaxonomyPicker';
 
 export interface ITaxonomyPanelContentsProps {
   context: BaseComponentContext;
@@ -66,6 +68,7 @@ export interface ITaxonomyPanelContentsProps {
   getTextFromItem: (item: ITermInfo, currentValue?: string) => string;
   languageTag: string;
   themeVariant?: IReadonlyTheme;
+  termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
 }
 
 export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React.ReactElement<ITaxonomyPanelContentsProps> {
@@ -423,27 +426,28 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     }
   };
 
-  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
+  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
 
   return (
     <div className={styles.taxonomyPanelContents}>
       <div className={styles.taxonomyTreeSelector}>
         <div>
           <ModernTermPicker
+            {...props.termPickerProps}
             removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
-            onResolveSuggestions={props.onResolveSuggestions}
+            onResolveSuggestions={props.termPickerProps?.onResolveSuggestions ?? props.onResolveSuggestions}
             itemLimit={props.allowMultipleSelections ? undefined : 1}
             selectedItems={props.selectedPanelOptions}
-            styles={tagPickerStyles}
+            styles={props.termPickerProps?.styles ?? termPickerStyles}
             onChange={onPickerChange}
             getTextFromItem={props.getTextFromItem}
-            pickerSuggestionsProps={{noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
-            inputProps={{
+            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? {noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
+            inputProps={props.termPickerProps?.inputProps ?? {
               'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
               placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
-            onRenderSuggestionsItem={props.onRenderSuggestionsItem}
-            onRenderItem={props.onRenderItem}
+            onRenderSuggestionsItem={props.termPickerProps?.onRenderSuggestionsItem ?? props.onRenderSuggestionsItem}
+            onRenderItem={props.onRenderItem ?? props.onRenderItem}
             themeVariant={props.themeVariant}
           />
         </div>

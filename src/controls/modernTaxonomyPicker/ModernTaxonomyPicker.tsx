@@ -33,9 +33,12 @@ import { ITermInfo,
        } from '@pnp/sp/taxonomy';
 import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
-import { ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
+import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
+import { isUndefined } from 'lodash';
+
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export interface IModernTaxonomyPickerProps {
   allowMultipleSelections?: boolean;
@@ -53,6 +56,7 @@ export interface IModernTaxonomyPickerProps {
   placeHolder?: string;
   customPanelWidth?: number;
   themeVariant?: IReadonlyTheme;
+  termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
@@ -181,7 +185,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const tooltipId = useId('tooltip');
   const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
   const addTermButtonStyles: IButtonStyles = {rootHovered: {backgroundColor: "inherit"}, rootPressed: {backgroundColor: "inherit"}};
-  const tagPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { input: {minheight: 34}, text: {minheight: 34} };
+  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { input: {minheight: 34}, text: {minheight: 34} };
 
   return (
     <div className={styles.modernTaxonomyPicker}>
@@ -189,19 +193,20 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
       <div className={styles.termField}>
         <div className={styles.termFieldInput}>
           <ModernTermPicker
+            {...props.termPickerProps}
             removeButtonAriaLabel={strings.ModernTaxonomyPickerRemoveButtonText}
-            onResolveSuggestions={onResolveSuggestions}
+            onResolveSuggestions={props.termPickerProps?.onResolveSuggestions ?? onResolveSuggestions}
             itemLimit={props.allowMultipleSelections ? undefined : 1}
             selectedItems={selectedOptions}
             disabled={props.disabled}
-            styles={tagPickerStyles}
+            styles={props.termPickerProps?.styles ?? termPickerStyles}
             onChange={(itms?: ITermInfo[]) => {
               setSelectedOptions(itms || []);
               setSelectedPanelOptions(itms || []);
             }}
             getTextFromItem={getTextFromItem}
-            pickerSuggestionsProps={{noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
-            inputProps={{
+            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? {noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
+            inputProps={props.termPickerProps?.inputProps ?? {
               'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
               placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
@@ -248,7 +253,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
             <div key={props.termSetId} >
               <TaxonomyPanelContents
                 allowMultipleSelections={props.allowMultipleSelections}
-                onResolveSuggestions={onResolveSuggestions}
+                onResolveSuggestions={props.termPickerProps?.onResolveSuggestions ?? onResolveSuggestions}
                 onLoadMoreData={taxonomyService.getTerms}
                 anchorTermInfo={currentAnchorTermInfo}
                 termSetInfo={currentTermSetInfo}
@@ -264,6 +269,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 getTextFromItem={getTextFromItem}
                 languageTag={currentLanguageTag}
                 themeVariant={props.themeVariant}
+                termPickerProps={props.termPickerProps}
               />
             </div>
           )
