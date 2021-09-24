@@ -376,6 +376,8 @@ define([], () => {
   "ModernTaxonomyPickerCancelButtonText": "Avbryt",
   "ModernTaxonomyPickerLoadMoreText": "Läs in mer",
   "ModernTaxonomyPickerRemoveButtonText": "Ta bort",
-  "ModernTaxonomyPickerPanelCloseButtonText": "Stäng"
+  "ModernTaxonomyPickerPanelCloseButtonText": "Stäng",
+  "ModernTaxonomyPickerNoResultsFound": "Inga resultat hittades",
+  "ModernTaxonomyPickerSuggestionInLabel": "i"
 };
 });

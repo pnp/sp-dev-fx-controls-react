@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Comentarii",
   "ListItemCommentsNoCommentsLabel": "Nu există comentarii",
   "OrgAssetsLinkLabel": "Organizația dvs.",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Introduceți un termen pe care doriți să-l etichetați",
+  "ModernTaxonomyPickerTreeTitle": "Selectați o etichetă",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Adaugă etichetă",
+  "ModernTaxonomyPickerApplyButtonText": "Utilizați",
+  "ModernTaxonomyPickerCancelButtonText": "Anulați",
+  "ModernTaxonomyPickerLoadMoreText": "Aflați mai multe",
+  "ModernTaxonomyPickerRemoveButtonText": "Ștergeți",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Închide",
+  "ModernTaxonomyPickerNoResultsFound": "Nu s-au găsit rezultate",
+  "ModernTaxonomyPickerSuggestionInLabel": "In"
 };
 });

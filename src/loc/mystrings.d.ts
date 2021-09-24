@@ -6,7 +6,6 @@ declare interface IControlStrings {
 
   MyTeamsMessageError:string;
   MyTeamsNoTeamsMessage:string;
-  MyTeamsLoadingMessage:string;
   MyTeamsLoadingMessage: string;
   MyTeamsTeamChannelPublicMessage: string;
   MyTeamsTeamChannelTypeMessage: string;
@@ -373,6 +372,8 @@ declare interface IControlStrings {
   ModernTaxonomyPickerLoadMoreText: string;
   ModernTaxonomyPickerRemoveButtonText: string;
   ModernTaxonomyPickerPanelCloseButtonText: string;
+  ModernTaxonomyPickerNoResultsFound: string;
+  ModernTaxonomyPickerSuggestionInLabel: string;
 }
 
 declare interface IDateTimeStrings {

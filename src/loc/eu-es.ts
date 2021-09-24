@@ -345,6 +345,16 @@ define([], () => {
     SelectIcon: "Hautatu ikonoa",
     StockImagesLinkLabel: "Stock irudiak",
     StockImagesHeader: "Stock irudiak",
-    OrgAssetsLinkLabel: "Zure erakundea"
+    OrgAssetsLinkLabel: "Zure erakundea",
+    ModernTaxonomyPickerDefaultPlaceHolder: "Idatzi etiketatu nahi duzun terminoa",
+    ModernTaxonomyPickerTreeTitle: "Aukeratu etiketa",
+    ModernTaxonomyPickerAddTagButtonTooltip: "Gehitu etiketa",
+    ModernTaxonomyPickerApplyButtonText: "Erabili",
+    ModernTaxonomyPickerCancelButtonText: "Utzi",
+    ModernTaxonomyPickerLoadMoreText: "Lortu informazio gehiago",
+    ModernTaxonomyPickerRemoveButtonText: "Ezabatu",
+    ModernTaxonomyPickerPanelCloseButtonText: "Itxi",
+    ModernTaxonomyPickerNoResultsFound: "Ez da emaitzarik aurkitu",
+    ModernTaxonomyPickerSuggestionInLabel: "in"
   };
 });

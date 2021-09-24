@@ -41,7 +41,7 @@ define([], () => {
   "TaxonomyPickerNoTerms": "Termen set heeft geen termen beschikbaar",
   "TaxonomyPickerExpandTitle": "Vouw de termen set uit",
   "TaxonomyPickerMenuTermSet": "Menu van de termen set",
-  "TaxonomyPickerInLabel": "In",
+  "TaxonomyPickerInLabel": "Inch",
   "TaxonomyPickerTermSetLabel": "Termen set",
   "TaxonomyPickerTermsNotFound": "De volgende geselecteerde term(en) is(en) niet gevonden in het termenarchief: {0}",
   "TaxonomyPickerInvalidTerms": "Ongeldige term(en) repareren: {0}",
@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Opmerkingen",
   "ListItemCommentsNoCommentsLabel": "Er is geen commentaar",
   "OrgAssetsLinkLabel": "Uw organisatie",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Voer een term in die u wilt taggen",
+  "ModernTaxonomyPickerTreeTitle": "Selecteer een tag",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Tag toevoegen",
+  "ModernTaxonomyPickerApplyButtonText": "Gebruik",
+  "ModernTaxonomyPickerCancelButtonText": "Annuleren",
+  "ModernTaxonomyPickerLoadMoreText": "Meer informatie",
+  "ModernTaxonomyPickerRemoveButtonText": "Verwijderen",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Sluiten",
+  "ModernTaxonomyPickerNoResultsFound": "Geen resultaten gevonden",
+  "ModernTaxonomyPickerSuggestionInLabel": "Inch"
 };
 });

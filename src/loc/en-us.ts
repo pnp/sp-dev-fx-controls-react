@@ -396,6 +396,8 @@ define([], () => {
     ModernTaxonomyPickerCancelButtonText: "Cancel",
     ModernTaxonomyPickerLoadMoreText: "Load more",
     ModernTaxonomyPickerRemoveButtonText: "Remove",
-    ModernTaxonomyPickerPanelCloseButtonText: "Close"
-  };
+    ModernTaxonomyPickerPanelCloseButtonText: "Close",
+    ModernTaxonomyPickerNoResultsFound: "No results found",
+    ModernTaxonomyPickerSuggestionInLabel: "in"
+};
 });

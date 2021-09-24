@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Ý kiến",
   "ListItemCommentsNoCommentsLabel": "Không có bình luận",
   "OrgAssetsLinkLabel": "Tổ chức của bạn",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Nhập cụm từ bạn muốn gắn thẻ",
+  "ModernTaxonomyPickerTreeTitle": "Chọn thẻ",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Thêm thẻ",
+  "ModernTaxonomyPickerApplyButtonText": "Sử dụng",
+  "ModernTaxonomyPickerCancelButtonText": "Hủy",
+  "ModernTaxonomyPickerLoadMoreText": "Tìm hiểu thêm",
+  "ModernTaxonomyPickerRemoveButtonText": "Xóa",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Đóng",
+  "ModernTaxonomyPickerNoResultsFound": "Không tìm thấy kết quả",
+  "ModernTaxonomyPickerSuggestionInLabel": "In"
 };
 });

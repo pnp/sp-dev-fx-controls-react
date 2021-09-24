@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Komentáre",
   "ListItemCommentsNoCommentsLabel": "Nie sú žiadne komentáre",
   "OrgAssetsLinkLabel": "Vašej organizácie",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Zadajte výraz, ktorý chcete označiť",
+  "ModernTaxonomyPickerTreeTitle": "Vyberte značku",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Pridať značku",
+  "ModernTaxonomyPickerApplyButtonText": "Použiť",
+  "ModernTaxonomyPickerCancelButtonText": "Zrušiť",
+  "ModernTaxonomyPickerLoadMoreText": "Viac informácií",
+  "ModernTaxonomyPickerRemoveButtonText": "Odstrániť",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Zavrieť",
+  "ModernTaxonomyPickerNoResultsFound": "Nenašli sa žiadne výsledky",
+  "ModernTaxonomyPickerSuggestionInLabel": "Palcov"
 };
 });

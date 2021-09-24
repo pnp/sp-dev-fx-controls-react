@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Kommentit",
   "ListItemCommentsNoCommentsLabel": "Kommentteja ei ole",
   "OrgAssetsLinkLabel": "Oma organisaatio",
-  "MyTeamsMessageDontHaveTeams": "Sinulla ei ole yhtään tiimejä"
+  "MyTeamsMessageDontHaveTeams": "Sinulla ei ole yhtään tiimejä",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Kirjoita tagi, jonka haluat merkitä",
+  "ModernTaxonomyPickerTreeTitle": "Valitse tunniste",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Lisää tunniste",
+  "ModernTaxonomyPickerApplyButtonText": "Käytä",
+  "ModernTaxonomyPickerCancelButtonText": "Peruuta",
+  "ModernTaxonomyPickerLoadMoreText": "Lisätietoja",
+  "ModernTaxonomyPickerRemoveButtonText": "Poista",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Sulje",
+  "ModernTaxonomyPickerNoResultsFound": "Ei tuloksia",
+  "ModernTaxonomyPickerSuggestionInLabel": "Tuumaa"
 };
 });

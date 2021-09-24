@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "評論",
   "ListItemCommentsNoCommentsLabel": "沒有評論",
   "OrgAssetsLinkLabel": "您的組織",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "輸入您要標記的術語",
+  "ModernTaxonomyPickerTreeTitle": "選擇一個標籤",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "添加標籤",
+  "ModernTaxonomyPickerApplyButtonText": "使用",
+  "ModernTaxonomyPickerCancelButtonText": "取消",
+  "ModernTaxonomyPickerLoadMoreText": "了解更多",
+  "ModernTaxonomyPickerRemoveButtonText": "刪除",
+  "ModernTaxonomyPickerPanelCloseButtonText": "關閉",
+  "ModernTaxonomyPickerNoResultsFound": "未找到結果",
+  "ModernTaxonomyPickerSuggestionInLabel": "在"
 };
 });

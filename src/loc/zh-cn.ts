@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "评论",
   "ListItemCommentsNoCommentsLabel": "没有评论",
   "OrgAssetsLinkLabel": "您的组织",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "输入您要标记的术语",
+  "ModernTaxonomyPickerTreeTitle": "选择一个标签",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "添加标签",
+  "ModernTaxonomyPickerApplyButtonText": "使用",
+  "ModernTaxonomyPickerCancelButtonText": "取消",
+  "ModernTaxonomyPickerLoadMoreText": "了解更多",
+  "ModernTaxonomyPickerRemoveButtonText": "删除",
+  "ModernTaxonomyPickerPanelCloseButtonText": "关闭",
+  "ModernTaxonomyPickerNoResultsFound": "未找到结果",
+  "ModernTaxonomyPickerSuggestionInLabel": "在"
 };
 });

@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Komentāri",
   "ListItemCommentsNoCommentsLabel": "Nav komentāru",
   "OrgAssetsLinkLabel": "Jūsu organizācija",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Ievadiet vārdu, kuru vēlaties atzīmēt",
+  "ModernTaxonomyPickerTreeTitle": "Atlasiet tagu",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Pievienot tagu",
+  "ModernTaxonomyPickerApplyButtonText": "Izmantot",
+  "ModernTaxonomyPickerCancelButtonText": "Atcelt",
+  "ModernTaxonomyPickerLoadMoreText": "Uzziniet vairāk",
+  "ModernTaxonomyPickerRemoveButtonText": "Dzēst",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Aizvērt",
+  "ModernTaxonomyPickerNoResultsFound": "Rezultāti nav atrasti",
+  "ModernTaxonomyPickerSuggestionInLabel": "Collas"
 };
 });

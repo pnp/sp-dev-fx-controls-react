@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Σχόλια",
   "ListItemCommentsNoCommentsLabel": "No comments",
   "OrgAssetsLinkLabel": "Ο οργανισμός σας",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Εισαγάγετε έναν όρο που θέλετε να προσθέσετε ετικέτα",
+  "ModernTaxonomyPickerTreeTitle": "Επιλογή ετικέτας",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Προσθήκη ετικέτας",
+  "ModernTaxonomyPickerApplyButtonText": "Χρήση",
+  "ModernTaxonomyPickerCancelButtonText": "Ακύρωση",
+  "ModernTaxonomyPickerLoadMoreText": "Μάθετε περισσότερα",
+  "ModernTaxonomyPickerRemoveButtonText": "Διαγραφή",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Κλείσιμο",
+  "ModernTaxonomyPickerNoResultsFound": "Δεν βρέθηκαν αποτελέσματα",
+  "ModernTaxonomyPickerSuggestionInLabel": "In"
 };
 });
