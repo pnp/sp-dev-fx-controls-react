@@ -32,7 +32,7 @@ import { LocationPicker,ILocationPickerItem } from  "@pnp/spfx-controls-react/li
 <LocationPicker
           context={this.props.context}
           label="Location"
-          onSelectionChanged={(locValue: ILocationPickerItem) => {
+          onChange={(locValue: ILocationPickerItem) => {
             console.log(locValue.DisplayName + ", " + locValue.Address.Street)
           }
           }/>
