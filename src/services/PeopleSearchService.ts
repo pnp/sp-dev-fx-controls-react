@@ -219,7 +219,7 @@ export default class SPPeopleSearchService {
               secondaryText: user.Email, // email
               tertiaryText: '', // status
               optionalText: '' // anything
-            } as IPeoplePickerUserItem
+            } as IPeoplePickerUserItem;
           });
 
           return userResult;
