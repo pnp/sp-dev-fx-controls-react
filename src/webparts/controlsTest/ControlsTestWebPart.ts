@@ -19,6 +19,8 @@ import {
   ThemeProvider,
 } from "@microsoft/sp-component-base";
 import ControlsTest from './components/ControlsTest';
+import ControlsTest_SingleComponent from './components/ControlsTest_SingleComponent';
+import { sp } from '@pnp/sp';
 /**
  * Web part to test the React controls
  */
@@ -27,7 +29,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   private _themeVariant: IReadonlyTheme | undefined;
   protected async onInit(): Promise<void> {
 
-
+    sp.setup(this.context);
     this._themeProvider = this.context.serviceScope.consume(
       ThemeProvider.serviceKey
     );
@@ -78,18 +80,28 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
 
    const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
-     ControlsTest,
-      {
+    //  ControlsTest,
+    //   {
 
-        themeVariant: this._themeVariant,
+    //     themeVariant: this._themeVariant,
+    //     context: this.context,
+    //     description: this.properties.description,
+    //     title: this.properties.title,
+    //     displayMode: this.displayMode,
+    //     updateProperty: (value: string) => {
+    //       this.properties.title = value;
+    //     },
+    //     totalPages: this.properties.totalPages
+    //   }
+      ControlsTest_SingleComponent,
+      {
         context: this.context,
         description: this.properties.description,
         title: this.properties.title,
         displayMode: this.displayMode,
         updateProperty: (value: string) => {
           this.properties.title = value;
-        },
-        totalPages: this.properties.totalPages
+        }
       }
     );
 

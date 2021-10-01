@@ -61,7 +61,7 @@ The People picker control can be configured with the following properties:
 | context | BaseComponentContext | yes | Context of the current web part. | |
 | titleText | string | no | Text to be displayed on the control | |
 | groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | _none_ |
-| groupId | number | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. | _none_ |
+| groupId | number \| Guid | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If Guid is specified, Microsoft 365 Group is used | _none_ |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
 | required | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
@@ -93,4 +93,13 @@ The `PrincipalType` enum can be used to specify the types of information you wan
 | SecurityGroup | 4 |
 | SharePointGroup | 8 |
 
+
+ ## MSGraph Permissions required
+
+This control requires the following scopes if groupId is of type Guid:
+
+at least : GroupMember.Read.All,
+
+
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)
+

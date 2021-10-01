@@ -12,6 +12,7 @@ import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Per
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
+import { Guid } from '@microsoft/sp-core-library';
 
 /**
  * PeoplePicker component
@@ -19,7 +20,7 @@ import uniqBy from 'lodash/uniqBy';
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
-  private groupId: number;
+  private groupId: number | Guid;
 
   constructor(props: IPeoplePickerProps) {
     super(props);

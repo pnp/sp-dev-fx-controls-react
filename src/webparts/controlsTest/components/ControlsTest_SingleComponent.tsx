@@ -15,7 +15,7 @@ import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { IFramePanel } from '../../../IFramePanel';
 import { PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
+import { Environment, EnvironmentType, DisplayMode, Guid } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PeoplePicker, PrincipalType } from '../../../PeoplePicker';
@@ -460,15 +460,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
-        <DynamicForm
+        <PeoplePicker
           context={this.props.context}
-          listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"}
-          //contentTypeId={"0x0104003FD42C31C9FABD4E8D2821289F34BBEF"}
-          //listItemId={13}
-          onCancelled={() => { console.log('Cancelled'); }}
-          onSubmitted={async (listItem) => { console.log(listItem); }}>
-
-        </DynamicForm>
+          onChange={users => console.log(users)}
+          ensureUser
+          groupId={2}
+        />
       </div>
     );
   }
