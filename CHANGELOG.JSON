@@ -16,17 +16,18 @@
           "`TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)",
           "`FilePicker`: Sorting Not Working as Expected in Site Tab [#1011](https://github.com/pnp/sp-dev-fx-controls-react/issues/1011)",
           "`FilePicker`: Site Tab - Lots of file types don't have appropriate icons [#1012](https://github.com/pnp/sp-dev-fx-controls-react/issues/1012)",
-          "`LocationPicker`: Correct documentation [#1019](https://github.com/pnp/sp-dev-fx-controls-react/pull/1019)"
+          "`LocationPicker`: Correct documentation [#1019](https://github.com/pnp/sp-dev-fx-controls-react/pull/1019)",
+          "`FilePicker: `fileNameWithoutExtension` not calculated right [#1022](https://github.com/pnp/sp-dev-fx-controls-react/issues/1022)"
         ]
       },
       "contributions": [
+        "[Dennis Kuhn](https://github.com/DennisKuhn)",
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Jean-Luc Richer](https://github.com/umaknow-jeanluc)",
         "[hesperanca](https://github.com/hesperanca)",
+        "[Kiryl Shchasny](https://github.com/lirik30)",
         "[Peter Paul Kirschner](https://github.com/petkir)",
-        "[Gautam Sheth](https://github.com/gautamdsheth)",
-        "[Dennis Kuhn](https://github.com/DennisKuhn)",
-        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
-        "[Kiryl Shchasny](https://github.com/lirik30)"
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
       ]
     },
     {
