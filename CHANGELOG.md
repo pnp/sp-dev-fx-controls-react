@@ -2,6 +2,10 @@
 
 ## 3.4.0
 
+### New control(s)
+
+- `ModernTaxonomyPicker`: New control ModernTaxonomyPicker [#1014](https://github.com/pnp/sp-dev-fx-controls-react/pull/1014)
+
 ### Enhancements
 
 - Translations: Update translation keys [#994](https://github.com/pnp/sp-dev-fx-controls-react/pull/994)
@@ -21,7 +25,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [Jean-Luc Richer](https://github.com/umaknow-jeanluc), [hesperanca](https://github.com/hesperanca), [Kiryl Shchasny](https://github.com/lirik30), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+Special thanks to our contributors (in alphabetical order): [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [Jean-Luc Richer](https://github.com/umaknow-jeanluc), [hesperanca](https://github.com/hesperanca), [Kiryl Shchasny](https://github.com/lirik30), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
 
 ## 3.3.0
 
