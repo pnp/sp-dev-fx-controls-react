@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Коментари",
   "ListItemCommentsNoCommentsLabel": "No comments",
   "OrgAssetsLinkLabel": "Вашата организация",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Въведете термин, който искате да маркирате",
+  "ModernTaxonomyPickerTreeTitle": "Изберете маркер",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Добавяне на маркер",
+  "ModernTaxonomyPickerApplyButtonText": "Използване",
+  "ModernTaxonomyPickerCancelButtonText": "Отказ",
+  "ModernTaxonomyPickerLoadMoreText": "Научете повече",
+  "ModernTaxonomyPickerRemoveButtonText": "Изтриване",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Затваряне",
+  "ModernTaxonomyPickerNoResultsFound": "Няма намерени резултати",
+  "ModernTaxonomyPickerSuggestionInLabel": "Инча"
 };
 });

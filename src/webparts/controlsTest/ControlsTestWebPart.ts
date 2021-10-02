@@ -19,6 +19,7 @@ import {
   ThemeProvider,
 } from "@microsoft/sp-component-base";
 import ControlsTest from './components/ControlsTest';
+import ControlsTest_SingleComponent from './components/ControlsTest_SingleComponent';
 /**
  * Web part to test the React controls
  */

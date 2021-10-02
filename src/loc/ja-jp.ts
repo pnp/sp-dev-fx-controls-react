@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "コメント",
   "ListItemCommentsNoCommentsLabel": "コメントはありません",
   "OrgAssetsLinkLabel": "あなたの組織",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "タグ付けする用語を入力してください",
+  "ModernTaxonomyPickerTreeTitle": "タグを選択",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "タグを追加",
+  "ModernTaxonomyPickerApplyButtonText": "使用",
+  "ModernTaxonomyPickerCancelButtonText": "キャンセル",
+  "ModernTaxonomyPickerLoadMoreText": "詳細",
+  "ModernTaxonomyPickerRemoveButtonText": "削除",
+  "ModernTaxonomyPickerPanelCloseButtonText": "閉じる",
+  "ModernTaxonomyPickerNoResultsFound": "結果が見つかりませんでした",
+  "ModernTaxonomyPickerSuggestionInLabel": "インチ"
 };
 });

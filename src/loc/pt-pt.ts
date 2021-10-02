@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Comentários",
   "ListItemCommentsNoCommentsLabel": "Sem Comentários",
   "OrgAssetsLinkLabel": "Sua organização",
-  "MyTeamsMessageDontHaveTeams": "Neste momento não tens nenhum Team"
+  "MyTeamsMessageDontHaveTeams": "Neste momento não tens nenhum Team",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Digite um termo que deseja marcar",
+  "ModernTaxonomyPickerTreeTitle": "Selecione uma tag",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Adicionar tag",
+  "ModernTaxonomyPickerApplyButtonText": "Use",
+  "ModernTaxonomyPickerCancelButtonText": "Cancelar",
+  "ModernTaxonomyPickerLoadMoreText": "Saiba mais",
+  "ModernTaxonomyPickerRemoveButtonText": "Delete",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Fechar",
+  "ModernTaxonomyPickerNoResultsFound": "Nenhum resultado encontrado",
+  "ModernTaxonomyPickerSuggestionInLabel": "Em"
 };
 });

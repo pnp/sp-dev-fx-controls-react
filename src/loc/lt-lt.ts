@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Komentarai",
   "ListItemCommentsNoCommentsLabel": "Komentarų nėra",
   "OrgAssetsLinkLabel": "Savo organizacijoje",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Įveskite terminą, kurį norite pažymėti",
+  "ModernTaxonomyPickerTreeTitle": "Pasirinkite žymą",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Pridėti žymą",
+  "ModernTaxonomyPickerApplyButtonText": "Naudoti",
+  "ModernTaxonomyPickerCancelButtonText": "Atšaukti",
+  "ModernTaxonomyPickerLoadMoreText": "Sužinokite daugiau",
+  "ModernTaxonomyPickerRemoveButtonText": "Ištrinti",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Uždaryti",
+  "ModernTaxonomyPickerNoResultsFound": "Nerasta rezultatų",
+  "ModernTaxonomyPickerSuggestionInLabel": ""
 };
 });

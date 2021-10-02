@@ -84,6 +84,7 @@ The following controls are currently available:
 - [LivePersona](./controls/LivePersona) (Live Persona control)
 - [LocationPicker](./controls/LocationPicker) (Location Picker control)
 - [Map](./controls/Map) (renders a map in a web part)
+- [ModernTaxonomyPicker](./controls/ModernTaxonomyPicker) (Modern Taxonomy Picker)
 - [MyTeams](./controls/MyTeams) (My Teams)
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)

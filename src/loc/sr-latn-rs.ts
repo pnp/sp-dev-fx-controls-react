@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Komentare",
   "ListItemCommentsNoCommentsLabel": "Nema komentara",
   "OrgAssetsLinkLabel": "Vaša organizacija",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTakonomiPickerDefaultPlaceHolder": "Unesite termin koji želite da označite",
+  "ModernTakonomiPickerTreeTitle": "Izaberite oznaku",
+  "ModernTakonomiPickerAddTagButtonTooltip": "Dodaj oznaku",
+  "ModernTakonomiPickerAppliButtonTekt": "Koristi",
+  "ModernTakonomiPickerCancelButtonTekt": "Otkaži",
+  "ModernTakonomiPickerLoadMoreTekt": "Saznajte više",
+  "ModernTakonomiPickerRemoveButtonTekt": "Izbriši",
+  "ModernTakonomiPickerPanelCloseButtonTekt": "Zatvori",
+  "ModernTaxonomyPickerNoResultsFound": "Nisu pronađeni rezultati",
+  "ModernTaxonomyPickerSuggestionInLabel": "Inča"
 };
 });
