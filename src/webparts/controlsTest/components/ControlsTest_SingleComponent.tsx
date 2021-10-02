@@ -57,6 +57,7 @@ import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
+import { ModernTaxonomyPicker } from '../../../ModernTaxonomyPicker';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -459,16 +460,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }];
 
     return (
-      <div className={styles.controlsTest}>
-        <DynamicForm
-          context={this.props.context}
-          listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"}
-          //contentTypeId={"0x0104003FD42C31C9FABD4E8D2821289F34BBEF"}
-          //listItemId={13}
-          onCancelled={() => { console.log('Cancelled'); }}
-          onSubmitted={async (listItem) => { console.log(listItem); }}>
+      <div>
+      <ModernTaxonomyPicker
+        allowMultipleSelections={true}
+        termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
+        panelTitle="Panel title"
+        label={"Field title"}
+        context={this.props.context}
+        required={false}
+        initialValues={[{labels: [{name: "Test term", isDefault: true, languageTag: "en-US"}], id: "95f6991b-a0d7-492b-b211-091db33762ac", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
+        onChange={(values) => alert(values.map((value) => `${value?.id} - ${value?.labels[0].name}`).join("\n"))}
+        disabled={false}
+        customPanelWidth={400}
+      />
 
-        </DynamicForm>
       </div>
     );
   }

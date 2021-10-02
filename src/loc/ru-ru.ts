@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Комментарии",
   "ListItemCommentsNoCommentsLabel": "Нет комментариев",
   "OrgAssetsLinkLabel": "Ваша организация",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Введите термин, который нужно пометить",
+  "ModernTaxonomyPickerTreeTitle": "Выберите тег",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Добавить тег",
+  "ModernTaxonomyPickerApplyButtonText": "Использование",
+  "ModernTaxonomyPickerCancelButtonText": "Отмена",
+  "ModernTaxonomyPickerLoadMoreText": "Подробнее",
+  "ModernTaxonomyPickerRemoveButtonText": "Удалить",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Закрыть",
+  "ModernTaxonomyPickerNoResultsFound": "Ничего не найдено",
+  "ModernTaxonomyPickerSuggestionInLabel": "в"
 };
 });

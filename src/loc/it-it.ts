@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Commenti",
   "ListItemCommentsNoCommentsLabel": "Non ci sono commenti",
   "OrgAssetsLinkLabel": "Tua organizzazione",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Inserisci un termine che vuoi taggare",
+  "ModernTaxonomyPickerTreeTitle": "Seleziona un tag",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Aggiungi tag",
+  "ModernTaxonomyPickerApplyButtonText": "Usa",
+  "ModernTaxonomyPickerCancelButtonText": "Annulla",
+  "ModernTaxonomyPickerLoadMoreText": "Ulteriori informazioni",
+  "ModernTaxonomyPickerRemoveButtonText": "Elimina",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Chiudi",
+  "ModernTaxonomyPickerNoResultsFound": "Nessun risultato trovato",
+  "ModernTaxonomyPickerSuggestionInLabel": "Pollici"
 };
 });

@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Kommentaarid",
   "ListItemCommentsNoCommentsLabel": "Kommentaare pole",
   "OrgAssetsLinkLabel": "Teie organisatsioon",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Sisestage termin, mille soovite märgistada",
+  "ModernTaxonomyPickerTreeTitle": "Valige silt",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Lisa silt",
+  "ModernTaxonomyPickerApplyButtonText": "Kasuta",
+  "ModernTaxonomyPickerCancelButtonText": "Tühista",
+  "ModernTaxonomyPickerLoadMoreText": "Lisateave",
+  "ModernTaxonomyPickerRemoveButtonText": "Kustuta",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Sule",
+  "ModernTaxonomyPickerNoResultsFound": "Tulemusi ei leitud",
+  "ModernTaxonomyPickerSuggestionInLabel": "Sisse"
 };
 });

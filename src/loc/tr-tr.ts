@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Yorum",
   "ListItemCommentsNoCommentsLabel": "Yorum Yok",
   "OrgAssetsLinkLabel": "Kuruluşunuz",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Etiketlemek istediğiniz bir terim girin",
+  "ModernTaxonomyPickerTreeTitle": "Bir etiket seçin",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Etiket Ekle",
+  "ModernTaxonomyPickerApplyButtonText": "Kullan",
+  "ModernTaxonomyPickerCancelButtonText": "İptal",
+  "ModernTaxonomyPickerLoadMoreText": "Daha fazla bilgi edinin",
+  "ModernTaxonomyPickerRemoveButtonText": "Sil",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Kapat",
+  "ModernTaxonomyPickerNoResultsFound": "Sonuç bulunamadı",
+  "ModernTaxonomyPickerSuggestionInLabel": "Inç"
 };
 });

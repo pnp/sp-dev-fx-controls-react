@@ -178,6 +178,7 @@ import { DynamicForm } from '../../../controls/dynamicForm';
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 import { debounce } from "lodash";
+import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
 
 
 
@@ -1926,6 +1927,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </AnimatedDialog>
 
           <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
+
+          <ModernTaxonomyPicker
+            allowMultipleSelections={true}
+            termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
+            panelTitle="Panel title"
+            label={"Modern Taxonomy Picker"}
+            context={this.props.context}
+            required={false}
+            disabled={false}
+            customPanelWidth={400}
+          />
         </div>
 
       </div>

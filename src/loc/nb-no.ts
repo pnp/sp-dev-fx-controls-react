@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Kommentarer",
   "ListItemCommentsNoCommentsLabel": "Det finnes ingen kommentarer",
   "OrgAssetsLinkLabel": "Egen organisasjon",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Skriv inn termen som skal merkes",
+  "ModernTaxonomyPickerTreeTitle": "Velg ett eller flere merker",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Legg til merke",
+  "ModernTaxonomyPickerApplyButtonText": "Bruk",
+  "ModernTaxonomyPickerCancelButtonText": "Avbryt",
+  "ModernTaxonomyPickerLoadMoreText": "Les inn mer",
+  "ModernTaxonomyPickerRemoveButtonText": "Fjerne",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Lukk",
+  "ModernTaxonomyPickerNoResultsFound": "Ingen resultater funnet",
+  "ModernTaxonomyPickerSuggestionInLabel": "i"
 };
 });

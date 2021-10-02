@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Comentaris",
   "ListItemCommentsNoCommentsLabel": "No comments",
   "OrgAssetsLinkLabel": "La vostra organització",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Introduïu un terme que vulgueu etiquetar",
+  "ModernTaxonomyPickerTreeTitle": "Seleccioneu una etiqueta",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Afegeix etiqueta",
+  "ModernTaxonomyPickerApplyButtonText": "Utilitza",
+  "ModernTaxonomyPickerCancelButtonText": "Cancel·la",
+  "ModernTaxonomyPickerLoadMoreText": "Més informació",
+  "ModernTaxonomyPickerRemoveButtonText": "Suprimeix",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Tanca",
+  "ModernTaxonomyPickerNoResultsFound": "No s'han trobat resultats",
+  "ModernTaxonomyPickerSuggestionInLabel": "En"
 };
 });

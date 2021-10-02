@@ -368,6 +368,16 @@ define([], () => {
   "ListItemCommentsLabel": "Kommentarer",
   "ListItemCommentsNoCommentsLabel": "No comments",
   "OrgAssetsLinkLabel": "Din organisation",
-  "MyTeamsMessageDontHaveTeams": "You don't have any teams"
+  "MyTeamsMessageDontHaveTeams": "You don't have any teams",
+  "ModernTaxonomyPickerDefaultPlaceHolder": "Indtast et udtryk, du vil tagge",
+  "ModernTaxonomyPickerTreeTitle": "Vælg et tag",
+  "ModernTaxonomyPickerAddTagButtonTooltip": "Tilføj tag",
+  "ModernTaxonomyPickerApplyButtonText": "Brug",
+  "ModernTaxonomyPickerCancelButtonText": "Annuller",
+  "ModernTaxonomyPickerLoadMoreText": "Lær mere",
+  "ModernTaxonomyPickerRemoveButtonText": "Slet",
+  "ModernTaxonomyPickerPanelCloseButtonText": "Luk",
+  "ModernTaxonomyPickerNoResultsFound": "Ingen resultater fundet",
+  "ModernTaxonomyPickerSuggestionInLabel": "i"
 };
 });
