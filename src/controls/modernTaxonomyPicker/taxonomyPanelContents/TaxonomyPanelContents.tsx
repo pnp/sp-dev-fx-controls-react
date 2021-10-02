@@ -1,45 +1,38 @@
 import * as React from 'react';
 import styles from './TaxonomyPanelContents.module.scss';
-import { Checkbox,
-         ChoiceGroup,
-         GroupedList,
-         GroupHeader,
-         IBasePickerStyleProps,
-         IBasePickerStyles,
-         ICheckboxStyleProps,
-         ICheckboxStyles,
-         IChoiceGroupOption,
-         IChoiceGroupOptionStyleProps,
-         IChoiceGroupOptionStyles,
-         IGroup,
-         IGroupFooterProps,
-         IGroupHeaderProps,
-         IGroupHeaderStyleProps,
-         IGroupHeaderStyles,
-         IGroupRenderProps,
-         IGroupShowAllProps,
-         ILabelStyleProps,
-         ILabelStyles,
-         ILinkStyleProps,
-         ILinkStyles,
-         IListProps,
-         IPickerItemProps,
-         IRenderFunction,
-         ISpinnerStyleProps,
-         ISpinnerStyles,
-         IStyleFunctionOrObject,
-         ISuggestionItemProps,
-         Label,
-         Link,
-         Selection,
-         SelectionMode,
-         SelectionZone,
-         Spinner
-       } from 'office-ui-fabric-react';
-import { ITermInfo,
-         ITermSetInfo,
-         ITermStoreInfo
-       } from '@pnp/sp/taxonomy';
+import { Checkbox, ICheckboxStyleProps, ICheckboxStyles } from 'office-ui-fabric-react/lib/Checkbox';
+import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles } from 'office-ui-fabric-react/lib/ChoiceGroup';
+import {
+  GroupedList,
+  GroupHeader,
+  IGroup,
+  IGroupFooterProps,
+  IGroupHeaderProps,
+  IGroupHeaderStyleProps,
+  IGroupHeaderStyles,
+  IGroupRenderProps,
+  IGroupShowAllProps
+} from 'office-ui-fabric-react/lib/GroupedList';
+import { IBasePickerStyleProps, IBasePickerStyles, IPickerItemProps, ISuggestionItemProps } from 'office-ui-fabric-react/lib/Pickers';
+import {
+  ILabelStyleProps,
+  ILabelStyles,
+  Label
+} from 'office-ui-fabric-react/lib/Label';
+import {
+  ILinkStyleProps,
+  ILinkStyles,
+  Link
+} from 'office-ui-fabric-react/lib/Link';
+import { IListProps } from 'office-ui-fabric-react/lib/List';
+import { IRenderFunction, IStyleFunctionOrObject, Selection, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
+import { ISpinnerStyleProps, ISpinnerStyles, Spinner } from 'office-ui-fabric-react/lib/Spinner';
+import { SelectionZone } from 'office-ui-fabric-react/lib/Selection';
+import {
+  ITermInfo,
+  ITermSetInfo,
+  ITermStoreInfo
+} from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
@@ -79,10 +72,12 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
   const forceUpdate = useForceUpdate();
 
   const selection = React.useMemo(() => {
-    const s = new Selection({onSelectionChanged: () => {
-      props.setSelectedPanelOptions((prevOptions) => [...selection.getSelection()]);
-      forceUpdate();
-    }, getKey: (term: any) => term.id});
+    const s = new Selection({
+      onSelectionChanged: () => {
+        props.setSelectedPanelOptions((prevOptions) => [...selection.getSelection()]);
+        forceUpdate();
+      }, getKey: (term: any) => term.id
+    });
     s.setItems(terms);
     for (const selectedOption of props.selectedPanelOptions) {
       if (s.canSelectItem) {
@@ -122,37 +117,37 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, props.termSetInfo.id]);
     if (props.termSetInfo.childrenCount > 0) {
       props.onLoadMoreData(props.termSetId, props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', true)
-      .then((loadedTerms) => {
-        const grps: IGroup[] = loadedTerms.value.map(term => {
-          let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
-          if (termNames.length === 0) {
-            termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
-          }
-          const g: IGroup = {
-            name: termNames[0]?.name,
-            key: term.id,
-            startIndex: -1,
-            count: 50,
-            level: 1,
-            isCollapsed: true,
-            data: { skiptoken: '', term: term },
-            hasMoreData: term.childrenCount > 0,
-          };
-          if (g.hasMoreData) {
-            g.children = [];
-          }
-          return g;
+        .then((loadedTerms) => {
+          const grps: IGroup[] = loadedTerms.value.map(term => {
+            let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
+            if (termNames.length === 0) {
+              termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+            }
+            const g: IGroup = {
+              name: termNames[0]?.name,
+              key: term.id,
+              startIndex: -1,
+              count: 50,
+              level: 1,
+              isCollapsed: true,
+              data: { skiptoken: '', term: term },
+              hasMoreData: term.childrenCount > 0,
+            };
+            if (g.hasMoreData) {
+              g.children = [];
+            }
+            return g;
+          });
+          setTerms((prevTerms) => {
+            const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
+            return [...prevTerms, ...nonExistingTerms];
+          });
+          rootGroup.children = grps;
+          rootGroup.data.skiptoken = loadedTerms.skiptoken;
+          rootGroup.hasMoreData = loadedTerms.skiptoken !== '';
+          setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetId.toString()));
+          setGroups([rootGroup]);
         });
-        setTerms((prevTerms) => {
-          const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
-          return [...prevTerms, ...nonExistingTerms];
-        });
-        rootGroup.children = grps;
-        rootGroup.data.skiptoken = loadedTerms.skiptoken;
-        rootGroup.hasMoreData = loadedTerms.skiptoken !== '';
-        setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetId.toString()));
-        setGroups([rootGroup]);
-      });
     }
   }, []);
 
@@ -250,7 +245,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     const childIsSelected = isChildSelected(groupHeaderProps.group.children);
 
     if (groupHeaderProps.group.level === 0) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {fontWeight: childIsSelected ? "bold" : "normal"}};
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = { root: { fontWeight: childIsSelected ? "bold" : "normal" } };
       return (
         <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
       );
@@ -271,7 +266,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
         selectionProps["data-selection-toggle"] = true;
       }
 
-      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = { root: {pointerEvents: 'none'} };
+      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = { root: { pointerEvents: 'none' } };
       if (isSelected || childIsSelected) {
         selectedStyles.label = { fontWeight: 'bold' };
       }
@@ -295,16 +290,16 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
       );
     }
     else {
-      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold',  } } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal' } };
+      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'bold', } } : { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'normal' } };
       const options: IChoiceGroupOption[] = [{
-                                                key: groupHeaderProps.group.key,
-                                                text: groupHeaderProps.group.name,
-                                                styles: selectedStyle,
-                                                onRenderLabel: (p) =>
-                                                  <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
-                                                    {p.text}
-                                                  </span>
-                                              }];
+        key: groupHeaderProps.group.key,
+        text: groupHeaderProps.group.name,
+        styles: selectedStyle,
+        onRenderLabel: (p) =>
+          <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
+            {p.text}
+          </span>
+      }];
 
       if (isDisabled) {
         selectionProps["data-selection-disabled"] = true;
@@ -342,7 +337,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
         onRenderTitle={onRenderTitle}
         onToggleCollapse={onToggleCollapse}
         indentWidth={20}
-        expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
+        expandButtonProps={{ style: { color: props.themeVariant?.semanticColors.bodyText } }}
       />
     );
   };
@@ -426,7 +421,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     }
   };
 
-  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
+  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: { paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34 }, input: { minheight: 34 }, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
 
   return (
     <div className={styles.taxonomyPanelContents}>
@@ -441,7 +436,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
             styles={props.termPickerProps?.styles ?? termPickerStyles}
             onChange={onPickerChange}
             getTextFromItem={props.getTextFromItem}
-            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? {noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
+            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? { noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound }}
             inputProps={props.termPickerProps?.inputProps ?? {
               'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
               placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder

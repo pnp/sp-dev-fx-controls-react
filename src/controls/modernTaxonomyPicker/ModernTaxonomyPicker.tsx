@@ -2,41 +2,44 @@ import * as React from 'react';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
-import { PrimaryButton,
-         DefaultButton,
-         IconButton,
-         IButtonStyles
-       } from 'office-ui-fabric-react/lib/Button';
+import {
+  PrimaryButton,
+  DefaultButton,
+  IconButton,
+  IButtonStyles
+} from 'office-ui-fabric-react/lib/Button';
 import { Label } from 'office-ui-fabric-react/lib/Label';
-import { Panel,
-         PanelType
-       } from 'office-ui-fabric-react/lib/Panel';
-import { IBasePickerStyleProps,
-         IBasePickerStyles,
-         ISuggestionItemProps
-       } from 'office-ui-fabric-react/lib/Pickers';
-import { IStackTokens,
-         Stack
-       } from 'office-ui-fabric-react/lib/Stack';
+import {
+  Panel,
+  PanelType
+} from 'office-ui-fabric-react/lib/Panel';
+import {
+  IBasePickerStyleProps,
+  IBasePickerStyles,
+  ISuggestionItemProps
+} from 'office-ui-fabric-react/lib/Pickers';
+import {
+  IStackTokens,
+  Stack
+} from 'office-ui-fabric-react/lib/Stack';
 import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 import { sp } from '@pnp/sp';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
 import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import styles from './ModernTaxonomyPicker.module.scss';
 import * as strings from 'ControlStrings';
-import { TooltipHost } from '@microsoft/office-ui-fabric-react-bundle';
+import { TooltipHost, ITooltipHostStyles } from 'office-ui-fabric-react/lib/Tooltip';
 import { useId } from '@uifabric/react-hooks';
-import { ITooltipHostStyles } from 'office-ui-fabric-react';
-import { ITermInfo,
-         ITermSetInfo,
-         ITermStoreInfo
-       } from '@pnp/sp/taxonomy';
+import {
+  ITermInfo,
+  ITermSetInfo,
+  ITermStoreInfo
+} from '@pnp/sp/taxonomy';
 import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
 import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
-import { IReadonlyTheme } from "@microsoft/sp-component-base";
-import { isUndefined } from 'lodash';
+import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -75,11 +78,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
         setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
-            props.context.pageContext.cultureInfo.currentUICultureName :
-            currentTermStoreInfo.defaultLanguageTag);
-        setSelectedOptions(Object.prototype.toString.call(props.initialValues) === '[object Array]' ?
-            props.initialValues.map(term => { return { ...term, languageTag: currentLanguageTag, termStoreInfo: currentTermStoreInfo  } as ITermInfo;}) :
-            []);
+          props.context.pageContext.cultureInfo.currentUICultureName :
+          currentTermStoreInfo.defaultLanguageTag);
+        setSelectedOptions(Array.isArray(props.initialValues) ?
+          props.initialValues.map(term => { return { ...term, languageTag: currentLanguageTag, termStoreInfo: currentTermStoreInfo } as ITermInfo; }) :
+          []);
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
       .then((termSetInfo) => {
@@ -87,9 +90,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
       });
     if (props.anchorTermId && props.anchorTermId !== Guid.empty.toString()) {
       taxonomyService.getTermById(Guid.parse(props.termSetId), props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty)
-      .then((anchorTermInfo) => {
-        setCurrentAnchorTermInfo(anchorTermInfo);
-      });
+        .then((anchorTermInfo) => {
+          setCurrentAnchorTermInfo(anchorTermInfo);
+        });
     }
   }, []);
 
@@ -184,8 +187,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const calloutProps = { gapSpace: 0 };
   const tooltipId = useId('tooltip');
   const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
-  const addTermButtonStyles: IButtonStyles = {rootHovered: {backgroundColor: "inherit"}, rootPressed: {backgroundColor: "inherit"}};
-  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { input: {minheight: 34}, text: {minheight: 34} };
+  const addTermButtonStyles: IButtonStyles = { rootHovered: { backgroundColor: 'inherit' }, rootPressed: { backgroundColor: 'inherit' } };
+  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { input: { minheight: 34 }, text: { minheight: 34 } };
 
   return (
     <div className={styles.modernTaxonomyPicker}>
@@ -205,7 +208,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
               setSelectedPanelOptions(itms || []);
             }}
             getTextFromItem={getTextFromItem}
-            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? {noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound}}
+            pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? { noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound }}
             inputProps={props.termPickerProps?.inputProps ?? {
               'aria-label': props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder,
               placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
@@ -242,8 +245,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           };
           return (
             <Stack horizontal disableShrink tokens={horizontalGapStackTokens}>
-              <PrimaryButton text={strings.ModernTaxonomyPickerApplyButtonText} value="Apply" onClick={onApply} />
-              <DefaultButton text={strings.ModernTaxonomyPickerCancelButtonText} value="Cancel" onClick={onClosePanel} />
+              <PrimaryButton text={strings.ModernTaxonomyPickerApplyButtonText} value='Apply' onClick={onApply} />
+              <DefaultButton text={strings.ModernTaxonomyPickerCancelButtonText} value='Cancel' onClick={onClosePanel} />
             </Stack>
           );
         }}>

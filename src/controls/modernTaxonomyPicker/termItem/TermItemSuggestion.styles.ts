@@ -1,5 +1,5 @@
-import { getGlobalClassNames } from "office-ui-fabric-react/lib/Styling";
-import { ITermItemSuggestionStyleProps, ITermItemSuggestionStyles } from "../modernTermPicker/ModernTermPicker.types";
+import { getGlobalClassNames } from 'office-ui-fabric-react/lib/Styling';
+import { ITermItemSuggestionStyleProps, ITermItemSuggestionStyles } from '../modernTermPicker/ModernTermPicker.types';
 
 const GlobalClassNames = {
   suggestionTextOverflow: 'ms-TagItem-TextOverflow',

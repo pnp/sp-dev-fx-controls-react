@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { ISuggestionItemProps } from "office-ui-fabric-react";
+import React, { useEffect } from 'react';
+import { ISuggestionItemProps } from 'office-ui-fabric-react/lib/Pickers';
 import styles from './TermItemSuggestions.module.scss';
 import * as strings from 'ControlStrings';
-import { Guid } from "@microsoft/sp-core-library";
-import { ITermInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
+import { Guid } from '@microsoft/sp-core-library';
+import { ITermInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 
 export interface ITermItemSuggestionProps<T> extends ISuggestionItemProps<T> {
   term: ITermInfo;
