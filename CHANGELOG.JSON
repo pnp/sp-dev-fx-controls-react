@@ -7,7 +7,8 @@
         "enhancements": [
           "Translations: Update translation keys [#994](https://github.com/pnp/sp-dev-fx-controls-react/pull/994)",
           "`LocationPicker`: Update docs [#1009](https://github.com/pnp/sp-dev-fx-controls-react/pull/1009)",
-          "`FileTypeIcon`: Add support of 20px icons[#1013](https://github.com/pnp/sp-dev-fx-controls-react/issues/1013)"
+          "`FileTypeIcon`: Add support of 20px icons[#1013](https://github.com/pnp/sp-dev-fx-controls-react/issues/1013)",
+          "`Pagination`: Update import from lodash [#1021](https://github.com/pnp/sp-dev-fx-controls-react/pull/1021)"
         ],
         "fixes": [
           "`ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)",
@@ -24,7 +25,8 @@
         "[Peter Paul Kirschner](https://github.com/petkir)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Dennis Kuhn](https://github.com/DennisKuhn)",
-        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
+        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
+        "[Kiryl Shchasny](https://github.com/lirik30)"
       ]
     },
     {
