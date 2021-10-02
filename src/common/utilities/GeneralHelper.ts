@@ -266,9 +266,7 @@ export class GeneralHelper {
      */
     public static getFileNameWithoutExtension(itemUrl : string) {
       const fileNameWithExtension = GeneralHelper.getFileNameFromUrl(itemUrl);
-      const fileNameTokens = fileNameWithExtension.split(".");
-      const fileName = fileNameTokens[0];
-
+      const fileName = fileNameWithExtension.substr(0, fileNameWithExtension.lastIndexOf('.'));
       return fileName;
     }
 
