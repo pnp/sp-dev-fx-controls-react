@@ -10,6 +10,14 @@ export enum GroupOrder {
 
 export interface IListViewProps {
   /**
+    * If provided, class name to add to the wrapper.
+    */
+  wrapperClassName?: string;
+  /**
+    * If provided, class name to add to the list.
+    */
+  listClassName?: string;
+  /**
   * Specify if drag and drop option is selected.
   **/
   dragDropFiles?: boolean;
@@ -63,10 +71,10 @@ export interface IListViewProps {
    * Specify the initial filter to be applied to the list.
    */
   defaultFilter?: string;
-    /**
-   * Boolean value to create a fixed/sticky header.
-   * Set to false by default
-   */
+  /**
+ * Boolean value to create a fixed/sticky header.
+ * Set to false by default
+ */
   stickyHeader?: boolean;
   /**
    * Custom sorting function.
