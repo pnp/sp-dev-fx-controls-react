@@ -53,7 +53,7 @@ import { Guid } from "@microsoft/sp-core-library";
  */
 const ListViewWrapper = ({ stickyHeader, children, wrapperClassName }) =>
   stickyHeader ? (
-    <div className={css(styles.wrapper, wrapperClassName)}>
+    <div className={`${styles.wrapper} ${wrapperClassName}`}>
       <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
         {children}
       </ScrollablePane>
