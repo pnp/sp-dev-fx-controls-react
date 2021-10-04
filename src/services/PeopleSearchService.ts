@@ -1,5 +1,5 @@
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
-import { Environment, EnvironmentType, Guid } from '@microsoft/sp-core-library';
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
@@ -65,7 +65,7 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | Guid = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       const mockUsers = await this.searchPeopleFromMock(email);
@@ -79,7 +79,7 @@ export default class SPPeopleSearchService {
   /**
    * Search All Users from the SharePoint People database
    */
-  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | Guid = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
+  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.searchPeopleFromMock(query);
@@ -165,7 +165,7 @@ export default class SPPeopleSearchService {
   /**
    * Tenant search
    */
-  private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, groupId: number | Guid): Promise<IPeoplePickerUserItem[]> {
+  private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, groupId: number | string): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
       const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
@@ -192,8 +192,8 @@ export default class SPPeopleSearchService {
       }
 
       // Check if users need to be searched in a specific Office365 Group
-      else if(groupId && Guid.isValid(groupId.toString())) {
-        const graphUserRequestUrl = `https://graph.microsoft.com/v1.0/groups/${groupId.toString()}/members?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
+      else if(groupId && typeof(groupId) === 'string') {
+        const graphUserRequestUrl = `https://graph.microsoft.com/v1.0/groups/${groupId}/members?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
         const graphClient = await this.context.msGraphClientFactory.getClient();
         const graphUserResponse = await graphClient.api(graphUserRequestUrl).header('ConsistencyLevel', 'eventual').get();
 

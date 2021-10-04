@@ -1,5 +1,4 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { Guid } from '@microsoft/sp-core-library';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
@@ -30,9 +29,9 @@ export interface IPeoplePickerProps {
    */
   groupName?: string;
   /**
-   * Id of SharePoint Group (Number) or Office365 Group (Guid)
+   * Id of SharePoint Group (Number) or Office365 Group (String)
    */
-  groupId?: number | Guid;
+  groupId?: number | string;
   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
