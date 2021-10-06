@@ -19,7 +19,8 @@
           "`FilePicker`: Sorting Not Working as Expected in Site Tab [#1011](https://github.com/pnp/sp-dev-fx-controls-react/issues/1011)",
           "`FilePicker`: Site Tab - Lots of file types don't have appropriate icons [#1012](https://github.com/pnp/sp-dev-fx-controls-react/issues/1012)",
           "`LocationPicker`: Correct documentation [#1019](https://github.com/pnp/sp-dev-fx-controls-react/pull/1019)",
-          "`FilePicker: `fileNameWithoutExtension` not calculated right [#1022](https://github.com/pnp/sp-dev-fx-controls-react/issues/1022)"
+          "`FilePicker`: `fileNameWithoutExtension` not calculated right [#1022](https://github.com/pnp/sp-dev-fx-controls-react/issues/1022)",
+          "`FieldUserRenderer`: Add missing PnPJS imports [#1025](https://github.com/pnp/sp-dev-fx-controls-react/issues/1025)"
         ]
       },
       "contributions": [
