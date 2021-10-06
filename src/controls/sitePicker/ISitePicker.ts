@@ -100,4 +100,16 @@ export interface ISitePickerProps {
    * If provided, additional class name to provide on the dropdown element.
    */
   className?: string;
+
+  /**
+   * Specifies if the duplicates should be trimmed. false by default.
+   * Applicable if mode is set to site or web.
+   */
+  trimDuplicates?: boolean;
+
+  /**
+   * If provided will be added to the search query as AND part.
+   * Applicable if mode is set to site or web.
+   */
+  additionalQuery?: string;
 }

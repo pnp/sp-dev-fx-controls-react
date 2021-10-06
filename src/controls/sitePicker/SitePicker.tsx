@@ -71,7 +71,9 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     searchPlaceholder,
     deferredSearchTime,
     className,
-    selectedSites
+    selectedSites,
+    trimDuplicates,
+    additionalQuery
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
@@ -235,7 +237,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       promise = getHubSites(context);
     }
     else {
-      promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection);
+      promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
     }
 
     promise.then(newSites => {

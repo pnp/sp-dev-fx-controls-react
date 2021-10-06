@@ -2,18 +2,36 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISite } from '../controls/sitePicker/ISitePicker';
 import { SPHttpClient } from '@microsoft/sp-http';
 
-const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string): Promise<ISite[]> => {
+const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string, trimDuplicates: boolean): Promise<ISite[]> => {
   let startRow = 0;
   let rowLimit = 500;
   let totalRows = 0;
   const values: any[] = [];
 
+  const searchRequest = {
+    QueryTemplate: queryText,
+    RowLimit: rowLimit,
+    TrimDuplicates: trimDuplicates,
+    SelectProperties: ['SiteId', 'SiteID', 'WebId', 'DepartmentId', 'Title', 'Path'],
+    StartRow: 0
+  };
+
+  const requestUrl = `${ctx.pageContext.web.absoluteUrl}/_api/search/postquery`;
+
   //
   // getting all sites
   //
   do {
-    let userRequestUrl: string = `${ctx.pageContext.web.absoluteUrl}/_api/search/query?querytext='${queryText}'&selectproperties='SiteId,SiteID,WebId,DepartmentId,Title,Path'&rowlimit=${rowLimit}&startrow=${startRow}`;
-    let searchResponse = await ctx.spHttpClient.get(userRequestUrl, SPHttpClient.configurations.v1);
+    searchRequest.StartRow = startRow;
+
+    let searchResponse = await ctx.spHttpClient.post(requestUrl, SPHttpClient.configurations.v1, {
+      body: JSON.stringify({ request: searchRequest }),
+      headers: {
+        'Accept': 'application/json;odata=nometadata',
+        'Content-Type': 'application/json;charset=utf-8',
+        'odata-version': '3.0'
+      }
+    });
     let sitesResponse = await searchResponse.json();
     let relevantResults = sitesResponse.PrimaryQueryResult.RelevantResults;
 
@@ -61,16 +79,19 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string)
   return res;
 };
 
-export const getAllSites = async (ctx: BaseComponentContext, includeWebs: boolean, currentSiteCollectionOnly: boolean): Promise<ISite[]> => {
+export const getAllSites = async (ctx: BaseComponentContext, includeWebs: boolean, currentSiteCollectionOnly: boolean, trimDuplicates: boolean, additionaQuery?: string | undefined): Promise<ISite[]> => {
 
   let rootUrl: string = ctx.pageContext.web.absoluteUrl;
   if (ctx.pageContext.web.serverRelativeUrl !== '/' && (!includeWebs || !currentSiteCollectionOnly)) {
     rootUrl = ctx.pageContext.web.absoluteUrl.replace(ctx.pageContext.web.serverRelativeUrl, '');
   }
 
-  const queryText = `contentclass:STS_Site${includeWebs ? ' contentclass:STS_Web' : ''} Path:${rootUrl}*`;
+  let queryText = `(contentclass:STS_Site${includeWebs ? ' contentclass:STS_Web' : ''} Path:${rootUrl}*)`;
+  if (additionaQuery) {
+    queryText += ` AND (${additionaQuery})`;
+  }
 
-  return getAllSitesInternal(ctx, queryText);
+  return getAllSitesInternal(ctx, queryText, trimDuplicates);
 };
 
 export const getHubSites = async (ctx: BaseComponentContext): Promise<ISite[]> => {

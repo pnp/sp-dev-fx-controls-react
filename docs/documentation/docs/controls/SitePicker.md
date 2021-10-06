@@ -52,12 +52,14 @@ The `SitePicker` control can be configured with the following properties:
 | isDesc | boolean | no | Specifies if the list is sorted in descending order. Default: `false`. |
 | label | string | no | Label to use for the control. |
 | limitToCurrentSiteCollection | boolean | no | Specifies if the options should be limited by the current site collections. Taken into consideration if selectionMode is set to `web`. |
-| mode | `'site' \| 'web' \| 'hub'` | no | Defines what entities are available for selection: site collections, sites, hub sites. Default: `web`. |
+| mode | `'site' | 'web' | 'hub'` | no | Defines what entities are available for selection: site collections, sites, hub sites. Default: `web`. |
 | multiSelect | boolean | no | Optional mode indicates if multi-choice selections is allowed. Default: `true`. |
 | onChange | `(selectedSites: ISite[]) => void` | yes | Selection change handler. | 
-| orderBy | `'title' \| 'url'` | no | Specifices if the list is sorted by title or url. Default: `title`. |
+| orderBy | `'title' | 'url'` | no | Specifices if the list is sorted by title or url. Default: `title`. |
 | placeholder | string | no | Placeholder label to show in the dropdown. |
 | searchPlaceholder | string | no | Search input placeholder text. Displayed until search text is entered. |
+| trimDuplicates | boolean | no | Specifies if the duplicates should be trimmed. false by default. Applicable if mode is set to site or web. |
+| additionalQuery | string | no | If provided will be added to the search query as AND part. Applicable if mode is set to site or web. |
 
 Interface `ISite`
 
