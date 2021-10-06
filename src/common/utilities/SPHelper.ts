@@ -9,6 +9,7 @@ import '@pnp/sp/fields';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { IFieldInfo } from '@pnp/sp/fields';
 import '@pnp/sp/site-users/web';
+import '@pnp/sp/webs';
 
 declare var window: any;
 
