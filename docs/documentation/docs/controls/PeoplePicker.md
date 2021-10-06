@@ -96,7 +96,7 @@ The `PrincipalType` enum can be used to specify the types of information you wan
 
  ## MSGraph Permissions required
 
-This control requires the following scopes if groupId is of type Guid:
+This control requires the following scopes if groupId is of type String:
 
 at least : GroupMember.Read.All,
 

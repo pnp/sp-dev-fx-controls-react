@@ -209,8 +209,13 @@ export default class SPPeopleSearchService {
 
           await batch.execute();
 
-          let userResult: any[] = _users.map(user => {
-            return {
+          let userResult: IPeoplePickerUserItem[] = [];
+          for (const user of _users) {
+            if(user['odata.null']) {
+              continue;
+            }
+
+            userResult.push({
               id: ensureUser ? user.PrincipalId : user.LoginName,
               loginName: user.LoginName,
               imageUrl: this.generateUserPhotoLink(user.Email),
@@ -219,8 +224,8 @@ export default class SPPeopleSearchService {
               secondaryText: user.Email, // email
               tertiaryText: '', // status
               optionalText: '' // anything
-            } as IPeoplePickerUserItem;
-          });
+            });
+          }
 
           return userResult;
         }
