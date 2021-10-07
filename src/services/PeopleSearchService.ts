@@ -8,6 +8,7 @@ import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
 import { sp, PrincipalSource, PrincipalType as SPPrincipalType } from '@pnp/sp';
 import "@pnp/sp/sputilities";
 import "@pnp/sp/webs";
+import "@pnp/sp/site-users/web";
 
 /**
  * Service implementation to search people in SharePoint
@@ -203,24 +204,19 @@ export default class SPPeopleSearchService {
           const _users = [];
           const batch = sp.web.createBatch();
           for (const value of graphUserResponse.value) {
-            sp.utility.inBatch(batch).resolvePrincipal(value.mail, SPPrincipalType.User, PrincipalSource.All, true, false, true)
-              .then(p => _users.push(p));
+            sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data));
           }
 
           await batch.execute();
 
           let userResult: IPeoplePickerUserItem[] = [];
           for (const user of _users) {
-            if(user['odata.null']) {
-              continue;
-            }
-
             userResult.push({
-              id: ensureUser ? user.PrincipalId : user.LoginName,
+              id: ensureUser ? user.Id : user.LoginName,
               loginName: user.LoginName,
               imageUrl: this.generateUserPhotoLink(user.Email),
-              imageInitials: this.getFullNameInitials(user.DisplayName),
-              text: user.DisplayName, // name
+              imageInitials: this.getFullNameInitials(user.Title),
+              text: user.Title, // name
               secondaryText: user.Email, // email
               tertiaryText: '', // status
               optionalText: '' // anything
