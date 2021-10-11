@@ -5,8 +5,9 @@ import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
 import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
 import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
-import { sp, PrincipalSource, PrincipalType as SPPrincipalType } from '@pnp/sp';
+import { sp } from '@pnp/sp';
 import "@pnp/sp/sputilities";
+import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
 
@@ -202,7 +203,7 @@ export default class SPPeopleSearchService {
 
           // Get user loginName from user email
           const _users = [];
-          const batch = sp.web.createBatch();
+          const batch = Web(this.context.pageContext.web.absoluteUrl).createBatch();
           for (const value of graphUserResponse.value) {
             sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data));
           }
