@@ -30,14 +30,14 @@ const classNames = mergeStyleSets({
 /**
 * Wrap the listview in a scrollable pane if sticky header = true
 */
-const ListViewWrapper = ({ stickyHeader, children }) => (stickyHeader ?
-  <div className={classNames.wrapper} >
-    <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
-      {children}
-    </ScrollablePane>
-  </div>
-  : children
-);
+const ListViewWrapper = ({ stickyHeader, children, className }) => (stickyHeader ?
+    <div className={`${classNames.wrapper} ${className ?? ""}`} >
+      <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
+        {children}
+      </ScrollablePane>
+    </div>
+    : children
+  );
 
 /**
 * Lock the searchbox when scrolling if sticky header = true
@@ -595,7 +595,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return (
-      <ListViewWrapper stickyHeader={!!this.props.stickyHeader}>
+      <ListViewWrapper stickyHeader={!!this.props.stickyHeader} className={this.props.className}>
         <DragDropFiles enable={dragDropFiles}
           iconName="BulkUpload"
           labelMessage={strings.UploadFileHeader}

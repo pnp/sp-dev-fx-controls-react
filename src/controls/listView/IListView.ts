@@ -68,6 +68,10 @@ export interface IListViewProps {
    * Set to false by default
    */
   stickyHeader?: boolean;
+   /**
+   * Class name to apply additional styles on list view wrapper
+   */
+  className?: string;
   /**
    * Custom sorting function.
    * @returns sorted collection of items
