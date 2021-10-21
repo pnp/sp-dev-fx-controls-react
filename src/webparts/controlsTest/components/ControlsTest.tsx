@@ -1684,6 +1684,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <IconPicker buttonLabel={'Icon'}
           onChange={(iconName: string) => { console.log(iconName); }}
+          onCancel={() => { console.log("Panel closed"); }}
           onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>

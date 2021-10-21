@@ -48,6 +48,7 @@ The IconPicker component can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | buttonLabel | string | no | Specifies the label of the icon picker button. |
 | onSave | (iconName: string) => void | yes | Handler when the icon has been selected and picker has been closed. |
+| onCancel | () => void | no | Handler when the panel is closed. |
 | onChange | (iconName: string) => void | no | Handler when the icon selection has been changed. |
 | disabled | boolean | no | Specifies if the picker button is disabled |
 | buttonClassName | boolean | no | If provided, additional class name will be added to the picker button |
