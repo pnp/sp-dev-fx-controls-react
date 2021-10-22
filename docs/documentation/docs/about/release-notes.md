@@ -1,5 +1,15 @@
 # Releases
 
+## 2.10.0
+
+### Fixes
+
+- `TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)
+
+### Contributors
+
+Special thanks to our contributor: [Peter Paul Kirschner](https://github.com/petkir).
+
 ## 2.9.0
 
 ### Enhancements
