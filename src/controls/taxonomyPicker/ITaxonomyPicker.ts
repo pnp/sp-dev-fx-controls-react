@@ -21,7 +21,7 @@ export interface ITaxonomyPickerProps  {
    */
   allowMultipleSelections?: boolean;
   /**
-   * Defines the selected by default term sets.
+   * Defines the terms selected by default. For each term object, an empty string can be provided for properties path and termset.
    */
   initialValues?: IPickerTerms;
   /**
@@ -105,7 +105,7 @@ export interface ITaxonomyPickerProps  {
   onGetErrorMessage?: (value: IPickerTerms) => string | Promise<string>;
 
   /**
-   *  Called when text is in the input field and the enter key is pressed.  
+   *  Called when text is in the input field and the enter key is pressed.
    */
   onNewTerm?: (value: IPickerTerm) => void;
 

@@ -36,7 +36,8 @@ export enum ApplicationType {
 export enum ImageSize {
   small = 1,
   medium,
-  large
+  large,
+  normal
 }
 
 /**
@@ -71,7 +72,7 @@ export const ApplicationIconList: IApplicationIcons[] = [
   },
   {
     application: ApplicationType.Code,
-    extensions: ['js', 'ts', 'cs'],
+    extensions: ['js', 'ts', 'cs', 'json'],
     iconName: 'FileCode',
     imageName: [],
     cdnImageName: ['code']
@@ -197,6 +198,10 @@ export const IconSizes = [
   {
     size: ImageSize.large,
     name: 'icon96'
+  },
+  {
+    size: ImageSize.normal,
+    name: 'icon20'
   }
 ];
 
@@ -231,6 +236,8 @@ export interface IFileTypeIconProps {
  * Generic file type icons base64 encoded
  */
 export const ICON_GENERIC_16 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAACxUExURf///6CgoZeYmJ+goJSVlpydnaampqWlpaOjo6KioqCgoZ+fn52enpycnJqbm/39/fz9/fz8/dzc3Pr7+/r6+/n6+vn5+vj5+vj4+erq6oyMjJGSk/n6+/f4+fv8/JCRkvj5+Y+QkPv7/I2Oj/f4+IyNjvb3+IqMjJmZmvz8/ImKi5eYmPf3+IeJipaXl/X294aHiJSVlvb394SGh5OUlPb294OFhZKTk4GDhICCg////6edRp4AAAAGdFJOUwD5MPww+XxQO+MAAAABYktHRACIBR1IAAAAsElEQVQY0z3L2RqCIBCGYdq0MkPCgqxxQaI9LFvs/m8smIP+s++dZwghQTieTKNZPO/1CS6klCaMsWAxGCKMKU+XKyGD9WKEMKGpBxFk2QZhStPl1gFAXiBEiW9ZSsgrhBlzZwluqkaImVgJKAG02iHMmRAuQRu1RzgcSyl9G3VCOOf+/2KM4VeEW661T2N5g3BXvszDWt4iPD28rBt/I3z4fx1CUdW7/enatO/uS8gP83oU3WB3gUcAAAAASUVORK5CYII=';
+
+export const ICON_GENERIC_20 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALBJREFUeNpiYKAyYETmJMTFzARSXETom7Vg0ZLDBFUBDVz88+fP//gASE1+bs4WIG2LzQwmdAE2NjaCFgeHhFixsrLlYDOUiZxwsrWzFwwLD3cFWp4ENFSeIgO5uLl53r59y+Di6iYYGhbuDxSqQpZnIdVAU1Mzvbra6g3fvn79ArMDb6T8JxGA9FAchvjAqIGjBg5KA3/9+kW0Zmxq0fPyt/TU5CUkOuobAy0BQIABAAt9e++IKuZcAAAAAElFTkSuQmCC';
 
 export const ICON_GENERIC_48 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAGeUExURf///6Kio5iZmaSkpZeYmKOjpJaXl6ChopWWlp+goZSVlZ6en5OTlJucnZGSk5qbm6ampqWlpaSkpaSkpKOjo6KioqGioqGhoaCgoJ+goJ+fn56fn56enp2enp2dnZydnZycnJubnJqbm5qam5mamv39/fz9/fz8/fz9/Pz8/Pv8/P3+/unp6fv7+/r7+/r6+/r6+vn6+vn6+/n5+vj5+vj4+ff4+fj5+fLy8unq6vT09PHx8ejp6fv7/PPz8+/v7+Xl5e3t7evr6+Hh4e7u7ufn597e3vn6+erq6ujo6OPj49ra2vn5+YyMjJCSkuLi497f4N7f397e393e3+Hh4pCRkff4+Pf3+Pb3+I+QkY+QkI6PkI6Pj42Oj4yOjoyNjouNjYuMjYqMjIqLjImLi4mKi/b294iKipmZmvX294eJipiZmfb394eIiZiYmYaIiZeYmIaHiJeXmIWHiJaXl4WGh5WWl4SGh5WWloSFhpSVloOFhpSVlYKEhZOUlZOTlIKDhJKTlIGDhJKTk4CCg5GSkn+Bgn+BgX6Agf///0viRIgAAAAQdFJOUwD5MPww/DD8MPww/DD7MPl5g3acAAAAAWJLR0QAiAUdSAAAAmRJREFUSMfN0Wdf01AUwOG6twYolL3T2NjeEpMmao1AHTgq1kEb9i4Gi4iIiFhFrODH9o4kve1J+5rz+v+cc/NLIHByRxAaGpuCweaWUKi1rb2js6u7p7evf2Dw1OlaQHQmjEeSbkpSRJIjt4TombP+oEGMxRCKx+NDinJbVRVNS2i6IQt37p477wsaMWCCBxHhXvL+hYt+oEk0AdAweJAcHrl02QcE6ZOqL8hCcng09fDK1VqA+waVgUejqejjJ9euA9Assv34AAFjLkg9jT4bef7iBgAtIuvxAUVVVUNLM/CSzTgAITEeLx9wvtlIvMpkMq/fvH03UQMMsd59kZHQ8WRzljkJQKvIcvdAWsNA98AUAG1hheW41wxygLzIA9MAtIfd9ao2Rr+AO2CZMwB0hNl21qfZF5TBLACdkspGMWiPH+QcoGAOgC4GFLye9uRB3gHLnAegW9LwJ5BcTdDeexAFCwD0SBodlawv9+yAZS4C0Cux2llf2VvmEgB9kUSC1pW9C5YB6HeeRHO9qrdiKwAMEKCTmuRVvYVWARiMGGy8nOvzaA2A9wTopHZyvrfROgAf2Ee7Nd8XbBttAPBR1vnJsh9Gx8ZgE4BPckXO9XkCtgD4LPvntLfRNgBfZK4u5wXa22gHgK9ylk6Oz9l6AnYB+GbmcpUx19toD4DvplU9Ba+30T4AP8zaOQZFAH6atXNf8IsH+cocgwMAfpve7uqagEMA/sTydGzfQSUA/iK7zviA8frgCIAJVHeOAZicmp6ZnZtfWFxaXlldW9/Y3Nre2d3bLxYPDkulo+N/gZM7/wGRlGTTsm+SowAAAABJRU5ErkJggg==';
 

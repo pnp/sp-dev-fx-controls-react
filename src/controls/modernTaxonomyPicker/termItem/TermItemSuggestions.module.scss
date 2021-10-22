@@ -1,0 +1,26 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+html[dir='ltr'] .termSuggestionContainer
+{
+  text-align: left;
+}
+
+html[dir='rtl'] .termSuggestionContainer
+{
+  text-align: right;
+}
+
+.termSuggestionContainer
+{
+  padding-top: 7px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 7px;
+
+  .termSuggestionPath
+  {
+    font-size: 12px;
+    color: #666666;
+  }
+
+}
