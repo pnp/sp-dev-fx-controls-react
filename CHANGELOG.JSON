@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)"
+          "Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)",
+          "`ListView`: Add ability to provide CSS class names for list wrapper and list itself [#1007](https://github.com/pnp/sp-dev-fx-controls-react/issues/1007)"
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
@@ -15,6 +16,8 @@
       "contributions": [
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Jouni Pohjolainen](https://github.com/jonepo)",
+        "[Michalis Koutroupis](https://github.com/mkoutroupis)",
+        "[MonalisaBaltatescu](https://github.com/MonalisaBaltatescu)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)"
       ]
     },
