@@ -438,7 +438,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
-      comboBoxListItemPickerIds: [{Id: 1, Title: '111'}],
+      comboBoxListItemPickerIds: [{ Id: 1, Title: '111' }],
       treeViewSelectedKeys: ['gc1', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
@@ -1290,21 +1290,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </DragDropFiles>
         <br></br>
 
-
-        <ListView items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection}
-          showFilter={true}
-          dragDropFiles={true}
-          onDrop={this._getDropFiles}
-          stickyHeader={true}
-        // defaultFilter="Team"
-        />
-
+          <ListView items={this.state.items}
+            viewFields={viewFields}
+            iconFieldName='ServerRelativeUrl'
+            groupByFields={groupByFields}
+            compact={true}
+            selectionMode={SelectionMode.single}
+            selection={this._getSelection}
+            showFilter={true}
+            dragDropFiles={true}
+            onDrop={this._getDropFiles}
+            stickyHeader={true}
+            className={styles.listViewWrapper}
+          // defaultFilter="Team"
+          />
 
         <ChartControl type={ChartType.Bar}
           data={{
@@ -1393,7 +1392,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
               <div className="ms-font-m">Site picker tester:
-              <SitePicker
+                <SitePicker
                   context={this.props.context}
                   label={'select sites'}
                   mode={'site'}
@@ -1459,7 +1458,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 }} />
                 <PrimaryButton text="Change default items" onClick={() => {
                   this.setState({
-                    comboBoxListItemPickerIds: [{Id: 2, Title: '222'}]
+                    comboBoxListItemPickerIds: [{ Id: 2, Title: '222' }]
                   });
                 }} />
 
@@ -1770,7 +1769,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #1
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },
@@ -1785,7 +1784,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #2
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },
@@ -1800,7 +1799,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #3
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },
