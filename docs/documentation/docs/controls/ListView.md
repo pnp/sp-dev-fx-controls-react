@@ -37,7 +37,9 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   groupByFields={groupByFields}
   dragDropFiles={true}
   onDrop={this._getDropFiles}
-  stickyHeader={true} />
+  stickyHeader={true}
+  className={styles.listWrapper}
+  listClassName={styles.list} />
 ```
 - The control provides full text filtering through all the columns. If you want to execute filtering on the specified columns, you can use syntax : `<ColumndName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
 
@@ -98,6 +100,8 @@ The ListView control can be configured with the following properties:
 | onDrop | file | no | Event handler returns files from drag and drop. |
 | stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky |
 | sortItems | (items: any[], columnName: string, descending: boolean) =&gt; any[] | no | Custom sorting function to handle sorting by column |
+| className | string | no | Class name to apply additional styles on list view wrapper |
+| listClassName | string | no | Class name to apply additional styles on list view |
 
 The `IViewField` has the following implementation:
 

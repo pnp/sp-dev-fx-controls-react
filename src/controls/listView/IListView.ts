@@ -73,6 +73,10 @@ export interface IListViewProps {
    */
   className?: string;
   /**
+   * Class name to apply additional styles on list view
+   */
+  listClassName?: string;
+  /**
    * Custom sorting function.
    * @returns sorted collection of items
    */

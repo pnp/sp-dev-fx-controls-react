@@ -580,7 +580,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   public render(): React.ReactElement<IListViewProps> {
     let groupProps: IGroupRenderProps = {};
 
-    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact } = this.props;
+    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact, className, listClassName } = this.props;
     let { filterValue, items, columns, groups } = this.state;
 
     // Check if selection mode is single selection,
@@ -595,7 +595,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     }
 
     return (
-      <ListViewWrapper stickyHeader={!!this.props.stickyHeader} className={this.props.className}>
+      <ListViewWrapper stickyHeader={!!stickyHeader} className={className}>
         <DragDropFiles enable={dragDropFiles}
           iconName="BulkUpload"
           labelMessage={strings.UploadFileHeader}
@@ -607,7 +607,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           } >
           {
             showFilter &&
-            <SearchBoxWrapper stickyHeader={!!this.props.stickyHeader}>
+            <SearchBoxWrapper stickyHeader={!!stickyHeader}>
               <SearchBox placeholder={filterPlaceHolder || strings.ListViewFilterLabel} onSearch={this._updateFilterValue} onChange={(e, value) => this._updateFilterValue(value)} value={filterValue} />
             </SearchBoxWrapper>
           }
@@ -623,6 +623,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             compact={compact}
             setKey='ListViewControl'
             groupProps={groupProps}
+            className={listClassName}
             onRenderDetailsHeader={this._onRenderDetailsHeader}
             componentRef={ref => {
               if (ref) {
