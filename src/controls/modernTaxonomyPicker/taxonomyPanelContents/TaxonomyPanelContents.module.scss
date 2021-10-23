@@ -4,13 +4,13 @@
   .choiceOption {
     color: "[theme: bodyText, default: #323130]";
     display: inline-block;
-    padding-left: 26px;
+    padding-inline-start: 26px;
   }
 
   .disabledChoiceOption {
     color: "[theme: disabledBodyText, default: #323130]";
     display: inline-block;
-    padding-left: 26px;
+    padding-inline-start: 26px;
   }
 
   .selectedChoiceOption {
@@ -19,12 +19,12 @@
 
   .checkbox {
     color: "[theme: bodyText, default: #323130]";
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
 
   .disabledCheckbox {
     color: "[theme: disabledBodyText, default: #323130]";
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
 
   .selectedCheckbox {
