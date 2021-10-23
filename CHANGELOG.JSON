@@ -8,12 +8,14 @@
           "Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)"
         ],
         "fixes": [
-          "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)"
+          "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
+          "`ModernTaxonomyPicker`: correctly display with RTL mode [#1041](https://github.com/pnp/sp-dev-fx-controls-react/pull/1041)"
         ]
       },
       "contributions": [
         "[Gautam Sheth](https://github.com/gautamdsheth)",
-        "[Jouni Pohjolainen](https://github.com/jonepo)"
+        "[Jouni Pohjolainen](https://github.com/jonepo)",
+        "[Patrik Hellgren](https://github.com/patrikhellgren)"
       ]
     },
     {
