@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "3.5.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)"
+        ]
+      },
+      "contributions": [
+        "[Gautam Sheth](https://github.com/gautamdsheth)"
+      ]
+    },
+    {
       "version": "3.4.0",
       "changes": {
         "new": [
