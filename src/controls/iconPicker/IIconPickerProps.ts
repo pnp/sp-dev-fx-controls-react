@@ -4,6 +4,10 @@ export interface IIconPickerProps {
      */
     onSave(iconName: string): void;
     /**
+     * call-back function when cancel is clicked
+     */
+    onCancel?(): void;
+    /**
      * call-back function when icon has changed
      */
     onChange?(iconName: string): void;
