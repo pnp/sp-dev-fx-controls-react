@@ -75,7 +75,10 @@ export class FieldTitleRenderer extends React.Component<IFieldTitleRendererProps
 
     private _onClick(): void {
         if (this.props.onClick) {
-            const args: IFieldTitleClickEventArgs = this.props as IFieldTitleClickEventArgs;
+            const args: IFieldTitleClickEventArgs = {
+                listId: this.props.listId,
+                id: this.props.id.toString()
+            };
             this.props.onClick(args);
             return;
         }
