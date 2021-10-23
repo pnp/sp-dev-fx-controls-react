@@ -1,5 +1,15 @@
 # Releases
 
+## 3.5.0
+
+### Fixes
+
+- `FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)
+
+### Contributors
+
+Special thanks to our contributor: [Gautam Sheth](https://github.com/gautamdsheth).
+
 ## 3.4.0
 
 ### New control(s)
