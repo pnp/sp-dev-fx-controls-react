@@ -2,13 +2,17 @@
 
 ## 3.5.0
 
+### Enhancements
+
+- Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)
+
 ### Fixes
 
 - `FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)
 
 ### Contributors
 
-Special thanks to our contributor: [Gautam Sheth](https://github.com/gautamdsheth).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo).
 
 ## 3.4.0
 
