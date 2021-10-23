@@ -9,10 +9,11 @@
 ### Fixes
 
 - `FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)
+- `ModernTaxonomyPicker`: correctly display with RTL mode [#1041](https://github.com/pnp/sp-dev-fx-controls-react/pull/1041)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [Patrik Hellgren](https://github.com/patrikhellgren).
 
 ## 3.4.0
 
