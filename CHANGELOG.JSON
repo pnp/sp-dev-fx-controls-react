@@ -4,13 +4,16 @@
       "version": "3.5.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)"
+        ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)"
         ]
       },
       "contributions": [
-        "[Gautam Sheth](https://github.com/gautamdsheth)"
+        "[Gautam Sheth](https://github.com/gautamdsheth)",
+        "[Jouni Pohjolainen](https://github.com/jonepo)"
       ]
     },
     {
