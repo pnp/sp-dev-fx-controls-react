@@ -134,7 +134,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       nextPageQueryString: null,
       loadingState: LoadingState.loading,
       selectedView: lastLayout,
-      filePickerResults: null
+      filePickerResults: []
     };
   }
 
@@ -196,7 +196,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                       />) :
                     (<TilesList
                       fileBrowserService={this.props.fileBrowserService}
-                      filePickerResult={this.state.filePickerResults[0]}
+                      filePickerResult={this.state.filePickerResults ? this.state.filePickerResults[0] : null}
                       selection={this._selection}
                       items={this.state.items}
                       onFolderOpen={this._handleOpenFolder}
@@ -455,10 +455,10 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   private _itemSelectionChanged = () => {
     let filePickerResults: IFilePickerResult[] = [];
     this._selection.getSelection().map((item: IFile, index: number) => {
-      if(item.isFolder) {
+      if (item.isFolder) {
         this._selection.toggleIndexSelected(index);
       }
-     else {
+      else {
         filePickerResults.push({
           fileAbsoluteUrl: item.absoluteUrl,
           fileName: GeneralHelper.getFileNameFromUrl(item.name),

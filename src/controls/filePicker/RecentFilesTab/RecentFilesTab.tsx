@@ -45,7 +45,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     this.state = {
       isLoading: true,
       results: [],
-      filePickerResults: null
+      filePickerResults: []
     };
   }
 
@@ -101,7 +101,6 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     let filePickerResults: IFilePickerResult[] = [];
     // Get the selected item
     this._selection.getSelection().map((selectedKey: IRecentFile) => {
-    this._selection.setKeySelected(selectedKey.key, true, true);
       filePickerResults.push({
         fileAbsoluteUrl: selectedKey.fileUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl),
@@ -160,7 +159,9 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   private _renderGridList = (): JSX.Element => {
     return <span className={styles.recentGridList} role="grid">
       <FocusZone>
-        <SelectionZone selection={this._selection} selectionMode={SelectionMode.multiple} onItemInvoked={(item: IRecentFile) => this._handleItemInvoked(item)}>
+        <SelectionZone selection={this._selection}
+          selectionMode={SelectionMode.multiple}
+          onItemInvoked={(item: IRecentFile) => this._handleItemInvoked(item)}>
           <List
             ref={this._linkElement}
             items={this.state.results}
