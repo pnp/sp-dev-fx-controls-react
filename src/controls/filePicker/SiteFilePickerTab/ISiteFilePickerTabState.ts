@@ -1,7 +1,7 @@
 import { IFilePickerResult , FilePickerBreadcrumbItem} from "../FilePicker.types";
 
 export interface ISiteFilePickerTabState {
-  filePickerResult: IFilePickerResult;
+  filePickerResults: IFilePickerResult[];
   libraryAbsolutePath: string;
   libraryUrl: string;
   libraryPath: string;
