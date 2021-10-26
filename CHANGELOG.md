@@ -1,5 +1,33 @@
 # Releases
 
+## 3.4.0
+
+### New control(s)
+
+- `ModernTaxonomyPicker`: New control ModernTaxonomyPicker [#1014](https://github.com/pnp/sp-dev-fx-controls-react/pull/1014)
+
+### Enhancements
+
+- Translations: Update translation keys [#994](https://github.com/pnp/sp-dev-fx-controls-react/pull/994)
+- `LocationPicker`: Update docs [#1009](https://github.com/pnp/sp-dev-fx-controls-react/pull/1009)
+- `FileTypeIcon`: Add support of 20px icons[#1013](https://github.com/pnp/sp-dev-fx-controls-react/issues/1013)
+- `Pagination`: Update import from lodash [#1021](https://github.com/pnp/sp-dev-fx-controls-react/pull/1021)
+
+### Fixes
+
+- `ChartControl`: Charts not updating properly when properties are changed [#997](https://github.com/pnp/sp-dev-fx-controls-react/pull/997)
+- `TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)
+- `TaxonomyPicker`: `errorMessage` label not being removed [#953](https://github.com/pnp/sp-dev-fx-controls-react/issues/953)
+- `FilePicker`: Sorting Not Working as Expected in Site Tab [#1011](https://github.com/pnp/sp-dev-fx-controls-react/issues/1011)
+- `FilePicker`: Site Tab - Lots of file types don't have appropriate icons [#1012](https://github.com/pnp/sp-dev-fx-controls-react/issues/1012)
+- `LocationPicker`: Correct documentation [#1019](https://github.com/pnp/sp-dev-fx-controls-react/pull/1019)
+- `FilePicker`: `fileNameWithoutExtension` not calculated right [#1022](https://github.com/pnp/sp-dev-fx-controls-react/issues/1022)
+- `FieldUserRenderer`: Add missing PnPJS imports [#1025](https://github.com/pnp/sp-dev-fx-controls-react/issues/1025)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Dennis Kuhn](https://github.com/DennisKuhn), [Gautam Sheth](https://github.com/gautamdsheth), [Jean-Luc Richer](https://github.com/umaknow-jeanluc), [hesperanca](https://github.com/hesperanca), [Kiryl Shchasny](https://github.com/lirik30), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Ravichandran Krishnasamy](https://github.com/ravichandran-blog).
+
 ## 3.3.0
 
 ### New control(s)

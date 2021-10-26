@@ -129,6 +129,8 @@ workflows:
               only:
                 - dev
                 - v2
+              ignore:
+                - v2-dev
       - build_next:
           requires:
             - build

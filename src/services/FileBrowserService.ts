@@ -24,7 +24,7 @@ export class FileBrowserService {
    * @param folderPath
    * @param acceptedFilesExtensions
    */
-  public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string, sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/GetList('${listUrl}')/RenderListDataAsStream`;
@@ -36,7 +36,7 @@ export class FileBrowserService {
         folderPath = null;
       }
 
-      filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensions);
+      filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensions, sortBy, isDesc);
     } catch (error) {
       filesQueryResult.items = null;
       console.error(error.message);
@@ -124,12 +124,44 @@ export class FileBrowserService {
   }
 
   /**
+   * Maps IFile property name to SharePoint item field name
+   * @param filePropertyName File Property
+   * @returns SharePoint Field Name
+   */
+  public getSPFieldNameForFileProperty(filePropertyName: string): string {
+    let fieldName = '';
+    switch (filePropertyName) {
+      case 'fileIcon':
+        fieldName = 'DocIcon';
+        break;
+      case 'serverRelativeUrl':
+        fieldName = 'FileRef';
+        break;
+      case 'modified':
+      case 'modifiedDate':
+        fieldName = 'Modified';
+        break;
+      case 'fileSize':
+        fieldName = 'File_x0020_Size';
+        break;
+      case 'fileType':
+        fieldName = 'File_x0020_Type';
+        break;
+      case 'modifiedBy':
+        fieldName = 'Editor';
+        break;
+    }
+
+    return fieldName;
+  }
+
+  /**
    * Executes query to load files with possible extension filtering
    * @param restApi
    * @param folderPath
    * @param acceptedFilesExtensions
    */
-  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensions?: string[]): Promise<FilesQueryResult> => {
+  protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensions?: string[], sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       const body = {
@@ -137,7 +169,7 @@ export class FileBrowserService {
           AllowMultipleValueFilterForTaxonomyFields: true,
           // ContextInfo (1), ListData (2), ListSchema (4), ViewMetadata (1024), EnableMediaTAUrls (4096), ParentInfo (8192)
           RenderOptions: 1 | 2 | 4 | 1024 | 4096 | 8192,
-          ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensions)
+          ViewXml: this.getFilesCamlQueryViewXml(acceptedFilesExtensions, sortBy || 'FileLeafRef', !!isDesc)
         }
       };
       if (folderPath) {
@@ -195,7 +227,7 @@ export class FileBrowserService {
   /**
    * Generates Files CamlQuery ViewXml
    */
-  protected getFilesCamlQueryViewXml = (accepts: string[]) => {
+  protected getFilesCamlQueryViewXml = (accepts: string[], sortBy: string, isDesc: boolean) => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
     let queryCondition = fileFilter && fileFilter != "" ?
       `<Query>
@@ -217,8 +249,8 @@ export class FileBrowserService {
             </In>
           </Or>
         </Where>
-        <OrderBy><FieldRef Name="FileLeafRef" /></OrderBy>
-      </Query>` : `<Query><OrderBy><FieldRef Name="FileLeafRef" /></OrderBy></Query>`;
+        <OrderBy><FieldRef Name="${sortBy}" Ascending="${isDesc ? 'False' : 'True'}" /></OrderBy>
+      </Query>` : `<Query><OrderBy><FieldRef Name="${sortBy}" Ascending="${isDesc ? 'False' : 'True'}" /></OrderBy></Query>`;
 
     // Add files types condiiton
     const viewXml = `<View>
@@ -264,6 +296,7 @@ export class FileBrowserService {
       fileIcon: fileItem.DocIcon,
       serverRelativeUrl: fileItem.FileRef,
       modified: modified,
+      modifiedDate: new Date(fileItem.Modified),
       fileSize: fileItem.File_x0020_Size,
       fileType: fileItem.File_x0020_Type,
       modifiedBy: fileItem.Editor![0]!.title,

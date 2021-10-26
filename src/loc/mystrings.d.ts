@@ -6,7 +6,6 @@ declare interface IControlStrings {
 
   MyTeamsMessageError:string;
   MyTeamsNoTeamsMessage:string;
-  MyTeamsLoadingMessage:string;
   MyTeamsLoadingMessage: string;
   MyTeamsTeamChannelPublicMessage: string;
   MyTeamsTeamChannelTypeMessage: string;
@@ -363,6 +362,18 @@ declare interface IControlStrings {
 
   // Location picker
   customDisplayName:string;
+
+  // Modern taxonomy picker
+  ModernTaxonomyPickerDefaultPlaceHolder: string;
+  ModernTaxonomyPickerTreeTitle: string;
+  ModernTaxonomyPickerAddTagButtonTooltip: string;
+  ModernTaxonomyPickerApplyButtonText: string;
+  ModernTaxonomyPickerCancelButtonText: string;
+  ModernTaxonomyPickerLoadMoreText: string;
+  ModernTaxonomyPickerRemoveButtonText: string;
+  ModernTaxonomyPickerPanelCloseButtonText: string;
+  ModernTaxonomyPickerNoResultsFound: string;
+  ModernTaxonomyPickerSuggestionInLabel: string;
 }
 
 declare interface IDateTimeStrings {

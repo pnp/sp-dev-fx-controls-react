@@ -178,6 +178,7 @@ import { DynamicForm } from '../../../controls/dynamicForm';
 import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 import { debounce } from "lodash";
+import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
 
 
 
@@ -445,6 +446,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
+      errorMessage: "This field is required"
 
     };
 
@@ -536,7 +538,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    */
   private _onTaxPickerChange = (terms: IPickerTerms) => {
     this.setState({
-      initialValues: terms
+      initialValues: terms,
+      errorMessage: terms.length > 0 ? '' : 'This field is required'
     });
     console.log("Terms:", terms);
   }
@@ -1031,6 +1034,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             isTermSetSelectable={false}
             hideDeprecatedTags={true}
             hideTagsNotAvailableForTagging={true}
+            errorMessage={this.state.errorMessage}
             termActions={{
               actions: [{
                 title: "Get term labels",
@@ -1103,7 +1107,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 name: "HR",
                 path: "HR",
                 termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-              }]
+              }],
+              errorMessage: ""
             });
           }} />
         </div>
@@ -1922,6 +1927,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </AnimatedDialog>
 
           <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
+
+          <ModernTaxonomyPicker
+            allowMultipleSelections={true}
+            termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
+            panelTitle="Panel title"
+            label={"Modern Taxonomy Picker"}
+            context={this.props.context}
+            required={false}
+            disabled={false}
+            customPanelWidth={400}
+          />
         </div>
 
       </div>

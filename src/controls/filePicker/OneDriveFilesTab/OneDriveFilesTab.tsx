@@ -35,6 +35,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     const oneDriveFolderData: IFile = {
       isFolder: true,
       modified: null,
+      modifiedDate: null,
       absoluteUrl: libraryAbsolutePath,
       name: libraryTitle,
       fileIcon: "",
