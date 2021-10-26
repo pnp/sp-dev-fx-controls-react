@@ -8,6 +8,7 @@
 - `ListView`: Add ability to provide CSS class names for list wrapper and list itself [#1007](https://github.com/pnp/sp-dev-fx-controls-react/issues/1007)
 - `IconPicker`: `onCancel` property is added [#1043](https://github.com/pnp/sp-dev-fx-controls-react/issues/1043)
 - SharePoint Framework v1.13 support
+- `DynamicForm`: `disabledFields` property added [#987](https://github.com/pnp/sp-dev-fx-controls-react/pull/987)
 
 ### Fixes
 
@@ -16,7 +17,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren), [jumpei-yamauchi](https://github.com/jumpei-yamauchi).
 
 ## 3.4.0
 
