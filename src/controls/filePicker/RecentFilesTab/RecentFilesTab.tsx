@@ -235,7 +235,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    * Gets called what a file is selected.
    */
   private _handleItemInvoked = (item: IRecentFile) => {
-    this._selection.setKeySelected(item.key, true, true);
+    this._selection.toggleKeySelected(item.key);
   }
 
   /**
