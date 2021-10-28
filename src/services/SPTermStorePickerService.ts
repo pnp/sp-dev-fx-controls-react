@@ -149,7 +149,7 @@ export default class SPTermStorePickerService {
    * Retrieve all terms for the given term set
    * @param termset
    */
-  public async getAllTerms(termset: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean): Promise<ITermSet> {
+  public async getAllTerms(termset: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean, useSessionStorage: boolean = true): Promise<ITermSet> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.getAllMockTerms();
@@ -168,7 +168,7 @@ export default class SPTermStorePickerService {
         }
       }
 
-      let childTerms = this.getTermsById(termsetId);
+      let childTerms = this.getTermsById(termsetId, useSessionStorage);
 
       if (childTerms) {
         return childTerms;
@@ -231,7 +231,13 @@ export default class SPTermStorePickerService {
               }
             }
 
-            sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
+            try {
+              if (useSessionStorage && window.sessionStorage) {
+                window.sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
+              }
+            } catch (error) {
+              // Do nothing, sometimes storage quota exceed error if too many items
+            }
             return termStoreResultTermSet;
           }
           return null;
@@ -282,12 +288,21 @@ export default class SPTermStorePickerService {
     }
   }
 
-  private getTermsById(termId) {
-    var terms = sessionStorage.getItem(termId);
-    if (terms)
-      return JSON.parse(terms);
-    else
+  private getTermsById(termId, useSessionStorage: boolean = true) {
+    try {
+      if (useSessionStorage && window.sessionStorage) {
+        let terms = window.sessionStorage.getItem(termId);
+        if (terms)
+          return JSON.parse(terms);
+        else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (error) {
       return null;
+    }
   }
 
   private searchTermsBySearchText(terms, searchText) {
@@ -303,7 +318,8 @@ export default class SPTermStorePickerService {
       // If the running environment is local, load the data from the mock
       return SPTermStoreMockHttpClient.searchTermsByName(searchText);
     } else {
-      var childTerms = this.getTermsById(termId);
+      const { useSessionStorage } = this.props;
+      let childTerms = this.getTermsById(termId, useSessionStorage);
       if (childTerms) {
         return this.searchTermsBySearchText(childTerms, searchText);
       }
@@ -318,7 +334,8 @@ export default class SPTermStorePickerService {
           termsetNameOrID,
           termId,
           hideDeprecatedTags,
-          hideTagsNotAvailableForTagging);
+          hideTagsNotAvailableForTagging,
+          useSessionStorage);
 
         if (terms) {
           return this.searchTermsBySearchText(terms, searchText);
@@ -332,7 +349,7 @@ export default class SPTermStorePickerService {
   /**
    * Retrieve all terms for the given term set and anchorId
    */
-  public async getAllTermsByAnchorId(termsetNameOrID: string, anchorId: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean): Promise<IPickerTerm[]> {
+  public async getAllTermsByAnchorId(termsetNameOrID: string, anchorId: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean, useSessionStorage: boolean = true): Promise<IPickerTerm[]> {
 
     let returnTerms: IPickerTerm[] = [];
 
@@ -343,7 +360,7 @@ export default class SPTermStorePickerService {
         returnTerms.push(this.convertTermToPickerTerm(term));
       });
     } else {
-      const childTerms = this.getTermsById(anchorId);
+      const childTerms = this.getTermsById(anchorId, useSessionStorage);
       if (childTerms) {
         return childTerms;
       }
@@ -361,7 +378,13 @@ export default class SPTermStorePickerService {
             returnTerms.push(this.convertTermToPickerTerm(term));
           });
 
-          sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
+          try {
+            if (useSessionStorage && window.sessionStorage) {
+              window.sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
+            }
+          } catch (error) {
+            // Do nothing
+          }
         }
       } else {
         terms.forEach(term => {

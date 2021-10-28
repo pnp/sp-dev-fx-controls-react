@@ -120,6 +120,12 @@ export interface ITaxonomyPickerProps  {
    * Note that error message should be specified in onGetErrorMessage
    */
   required?: boolean;
+
+  /**
+   * Specifies if you want to use session storage
+   * Default will be true
+   */
+   useSessionStorage?: boolean;
 }
 
 /**

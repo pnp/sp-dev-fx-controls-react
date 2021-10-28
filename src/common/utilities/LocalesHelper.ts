@@ -1,3 +1,5 @@
+import { findIndex } from '@microsoft/sp-lodash-subset';
+
 export class LocalesHelper {
 
   private static locales = {
@@ -53,7 +55,7 @@ export class LocalesHelper {
     10266: 'sr-Cyrl-RS',
   };
   public static getLocaleId(localeName: string): number {
-    const pos: number = Object.keys(this.locales).findIndex(locKey => this.locales[locKey] === localeName);
+    const pos: number = findIndex(Object.keys(this.locales), locKey => this.locales[locKey] === localeName);
     if (pos > -1) {
       return parseInt(Object.keys(this.locales)[pos]);
     }

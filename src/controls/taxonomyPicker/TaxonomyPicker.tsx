@@ -111,7 +111,8 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       hideTagsNotAvailableForTagging,
       initialValues,
       validateOnLoad,
-      termsetNameOrID
+      termsetNameOrID,
+      useSessionStorage
     } = this.props;
 
     let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
@@ -120,7 +121,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       const notFoundTerms: string[] = [];
       const notFoundTermIds: string[] = [];
 
-      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+      const termSet = await this.termsService.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging, useSessionStorage);
       const allTerms = termSet.Terms;
 
       for (let i = 0, len = initialValues.length; i < len; i++) {
@@ -152,7 +153,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       // });
     }
 
-    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging).then((response: ITermSet) => {
+    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage).then((response: ITermSet) => {
       // Check if a response was retrieved
       let termSetAndTerms = response ? response : null;
       this.setState({
@@ -166,7 +167,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * Force update of the taxonomy tree - required by term action in case the term has been added, deleted or moved.
    */
   private async updateTaxonomyTree(): Promise<void> {
-    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging);
+    const termSetAndTerms = await this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage);
 
     this.setState({
       termSetAndTerms
