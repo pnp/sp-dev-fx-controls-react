@@ -1,4 +1,4 @@
-import { IPickerTerms } from './ITermPicker';
+import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { IWebPartContext } from '@microsoft/sp-webpart-base';
 import { ITermActions } from './termActions/ITermsActions';
@@ -126,6 +126,17 @@ export interface ITaxonomyPickerProps  {
    * Default will be true
    */
    useSessionStorage?: boolean;
+
+   /**
+   * Panel selection change handler. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked.
+   */
+  onPanelSelectionChange?: (prevValue: IPickerTerms, newValue: IPickerTerms) => void;
+
+  /**
+   * Specifies if the childrens should be selected when parent is selected.
+   * By default this is set to false.
+   */
+  selectChildrenIfParentSelected?: boolean;
 }
 
 /**

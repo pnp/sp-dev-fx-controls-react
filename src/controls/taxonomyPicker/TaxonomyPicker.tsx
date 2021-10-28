@@ -15,8 +15,9 @@ import { sortBy, cloneDeep, isEqual } from '@microsoft/sp-lodash-subset';
 import uniqBy = require('lodash/uniqBy');
 import TermParent from './TermParent';
 import FieldErrorMessage from './ErrorMessage';
-
+import { initializeIcons } from '@uifabric/icons';
 import * as telemetry from '../../common/telemetry';
+import { EmptyGuid } from '../../common/Constants';
 
 /**
  * Image URLs / Base64
@@ -26,6 +27,8 @@ export const EXPANDED_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AA
 export const GROUP_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAC9SURBVDhPY2CgNXh1qEkdiJ8D8X90TNBuJM0V6IpBhoHFgIxebKYTIwYzAMNpxGhGdsFwNoBgNEFjAWsYgOSKiorMgPgbEP/Hgj8AxXpB0Yg1gQAldYuLix8/efLkzn8s4O7du9eAan7iM+DV/v37z546der/jx8/sJkBdhVOA5qbm08ePnwYrOjQoUOkGwDU+AFowLmjR4/idwGukAYaYAkMgxfPnj27h816kDg4DPABoAI/IP6DIxZA4l0AOd9H3QXl5+cAAAAASUVORK5CYII='; // /_layouts/15/Images/EMMGroup.png
 export const TERMSET_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACaSURBVDhPrZLRCcAgDERdpZMIjuQA7uWH4CqdxMY0EQtNjKWB0A/77sxF55SKMTalk8a61lqCFqsLiwKac84ZRUUBi7MoYHVmAfjfjzE6vJqZQfie0AcwBQVW8ATi7AR7zGGGNSE6Q2cyLSPIjRswjO7qKhcPDN2hK46w05wZMcEUIG+HrzzcrRsQBIJ5hS8C9fGAPmRwu/9RFxW6L8CM4Ry8AAAAAElFTkSuQmCC'; // /_layouts/15/Images/EMMTermSet.png
 export const TERM_IMG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACzSURBVDhPY2AYNKCoqIgTiOcD8X8S8F6wB4Aa1IH4akNDw+mPHz++/E8EuHTp0jmQRSDNCcXFxa/XrVt3gAh9KEpgBvx/9OjRLVI1g9TDDYBp3rlz5//Kysr/IJoYgGEASPPatWsbQDQxAMOAbdu2gZ0FookBcAOePHlyhxgN6GqQY+Hdhg0bDpJqCNgAaDrQAnJuNDY2nvr06dMbYgw6e/bsabgBUEN4yEiJ2wdNViLfIQC3sTh2vtJcswAAAABJRU5ErkJggg==';
+
+initializeIcons();
 
 /**
  * Renders the controls for PropertyFieldTermPicker component
@@ -89,7 +92,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       };
     }
 
-    if (nextProps.errorMessage) {
+    if (nextProps.errorMessage !== this.props.errorMessage) {
       if (!newState) {
         newState = {};
       }
@@ -230,10 +233,19 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    */
   private termsChanged(term: ITerm, checked: boolean): void {
 
-    let activeNodes = this.state.activeNodes;
+    let activeNodes = this.state.activeNodes.slice();
     if (typeof term === 'undefined' || term === null) {
       return;
     }
+
+    const {
+      allowMultipleSelections,
+      selectChildrenIfParentSelected
+    } = this.props;
+
+    const {
+      termSetAndTerms
+    } = this.state;
 
     // Term item to add to the active nodes array
     const termItem = {
@@ -243,24 +255,58 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       termSet: term.TermSet.Id
     };
 
+    // Check if we need to process child terms
+    let children: ITerm[] = [];
+    if (allowMultipleSelections && selectChildrenIfParentSelected) {
+      if (term.Id === term.TermSet.Id) {
+        children = termSetAndTerms.Terms || [];
+      } else {
+        children = termSetAndTerms.Terms ? termSetAndTerms.Terms.filter(t => {
+          return t.PathOfTerm.indexOf(`${term.PathOfTerm}`) !== -1;
+        }) : [];
+      }
+    }
+
     // Check if the term is checked or unchecked
     if (checked) {
       // Check if it is allowed to select multiple terms
-      if (this.props.allowMultipleSelections) {
+      if (allowMultipleSelections) {
         // Add the checked term
         activeNodes.push(termItem);
-        // Filter out the duplicate terms
-        activeNodes = uniqBy(activeNodes, 'key');
       } else {
         // Only store the current selected item
         activeNodes = [termItem];
       }
+
+      if (children.length) {
+        activeNodes.push(...children.map(c => {
+          return {
+            name: c.Name,
+            key: c.Id,
+            path: c.PathOfTerm,
+            termSet: c.TermSet.Id
+          };
+        }));
+      }
+
+      // Filter out the duplicate terms
+      activeNodes = uniqBy(activeNodes, 'key');
     } else {
       // Remove the term from the list of active nodes
       activeNodes = activeNodes.filter(item => item.key !== term.Id);
+
+      if (children.length) {
+        const childIds = children.map(c => c.Id);
+        activeNodes = activeNodes.filter(item => childIds.indexOf(item.key) === -1);
+      }
     }
     // Sort all active nodes
     activeNodes = sortBy(activeNodes, 'path');
+
+    if (this.props.onPanelSelectionChange) {
+      this.props.onPanelSelectionChange(this.state.activeNodes.slice(), activeNodes);
+    }
+
     // Update the current state
     this.setState({
       activeNodes: activeNodes
@@ -313,22 +359,51 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     return input;
   }
 
+  private async validateOnGetErrorMessage(targetValue: string): Promise<boolean> {
+    const errorMessage = await this.props.onGetErrorMessage(
+      [
+        {
+          key: EmptyGuid,
+          name: targetValue,
+          path: targetValue,
+          termSet: this.termsService.cleanGuid(this.props.termsetNameOrID)
+        }
+      ]
+    );
+
+    if (!!errorMessage) {
+      this.setState({
+        errorMessage: errorMessage
+      });
+    } else {
+      this.setState({
+        errorMessage: null
+      });
+    }
+
+    return !errorMessage;
+  }
+
   /**
    * Triggers when taxonomy picker control loses focus
    */
-  private onBlur(event: React.FocusEvent<HTMLElement | Autofill>): void {
+  private async onBlur(event: React.FocusEvent<HTMLElement | Autofill>): Promise<void> {
     const { validateInput } = this.props;
     if (!!validateInput) {
       // Perform validation of input text, only if taxonomy picker is configured with validateInput={true} property.
       const target: HTMLInputElement = event.target as HTMLInputElement;
       const targetValue = !!target ? target.value : null;
-      if (!!targetValue) {
-        this.invalidTerm = targetValue;
+      if (!!this.props.onGetErrorMessage && !!targetValue) {
+        await this.validateOnGetErrorMessage(targetValue);
+      } else {
+        if (!!targetValue) {
+          this.invalidTerm = targetValue;
+        }
+        else {
+          this.invalidTerm = null;
+        }
+        this.validateInputText();
       }
-      else {
-        this.invalidTerm = null;
-      }
-      this.validateInputText();
     }
   }
   
@@ -404,6 +479,9 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     if (typeof result === 'string') {
       if (!result) {
         this.validated(value);
+        this.setState({
+          errorMessage: undefined
+        });
       }
       else {
         this.setState({
@@ -417,6 +495,9 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
 
         if (!resolvedResult) {
           this.validated(value);
+          this.setState({
+            errorMessage: undefined
+          });
         }
         else {
           this.setState({
