@@ -1,5 +1,6 @@
 # Releases
 
+<<<<<<< HEAD
 ## 3.5.0
 
 ### Enhancements
@@ -17,6 +18,9 @@
 ### Contributors
 
 Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren).
+=======
+## 3.4.1
+>>>>>>> master
 
 ## 3.4.0
 
