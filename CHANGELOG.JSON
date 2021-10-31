@@ -13,6 +13,7 @@
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
+          "`FilePicker`: Fixed showing the selection circle on recent tabs [#1048](https://github.com/pnp/sp-dev-fx-controls-react/issues/1048)",
           "`ModernTaxonomyPicker`: correctly display with RTL mode [#1041](https://github.com/pnp/sp-dev-fx-controls-react/pull/1041)"
         ]
       },
