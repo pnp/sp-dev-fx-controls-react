@@ -10,7 +10,7 @@ export enum LibsOrderBy {
  */
 export interface ILibsOptions {
     orderBy?: LibsOrderBy;
-    baseTemplate?: number;
+    baseTemplate?: number | number[];
     includeHidden?: boolean;
     filter?: string;
     contentTypeId?: string;

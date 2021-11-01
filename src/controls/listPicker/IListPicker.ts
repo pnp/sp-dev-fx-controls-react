@@ -18,7 +18,7 @@ export interface IListPickerProps {
   /**
   * The SharePoint BaseTemplate to filter the list options by
   */
-  baseTemplate?: number;
+  baseTemplate?: number | number[];
   /**
   * Whether or not to include hidden lists. Default is true
   */
