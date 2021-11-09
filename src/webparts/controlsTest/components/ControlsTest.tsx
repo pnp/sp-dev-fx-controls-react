@@ -1443,6 +1443,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
                   columnInternalName='Title'
                   keyColumnInternalName='Id'
+                  orderBy='Title desc'
                   multiSelect={true}
                   onSelectedItem={(data) => {
                     console.log(`Item(s):`, data);

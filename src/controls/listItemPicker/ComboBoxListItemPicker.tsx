@@ -1,10 +1,11 @@
 import * as strings from 'ControlStrings';
-import * as React from "react";
-import { Label } from "office-ui-fabric-react/lib/Label";
-import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
-import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
+import { Label } from "office-ui-fabric-react/lib/Label";
+import * as React from "react";
+
+import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
+import * as telemetry from '../../common/telemetry';
 import styles from './ComboBoxListItemPicker.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
 import { cloneDeep, isEqual } from 'lodash';
@@ -45,7 +46,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       columnInternalName,
       webUrl,
       itemLimit,
-      onInitialized
+      onInitialized,
+      orderBy
     } = props;
     let query = filter || "";
     //query += filter;
@@ -57,7 +59,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
         columnInternalName,
         keyColumnInternalName,
         webUrl,
-        itemLimit || 100);
+        itemLimit || 100,
+        orderBy);
 
         this._options = listItems.map(option => {
           return {

@@ -29,4 +29,5 @@ export interface IComboBoxListItemPickerProps {
     onInitialized?: () => void;
     onSelectedItem: (item: any) => void;
     label?: string;
+    orderBy?:string;
 }
