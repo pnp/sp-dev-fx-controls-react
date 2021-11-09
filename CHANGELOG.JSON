@@ -10,7 +10,8 @@
           "`IconPicker`: `onCancel` property is added [#1043](https://github.com/pnp/sp-dev-fx-controls-react/issues/1043)",
           "SharePoint Framework v1.13 support",
           "`DynamicForm`: `disabledFields` property added [#987](https://github.com/pnp/sp-dev-fx-controls-react/pull/987)",
-          "`ListPicker`: Add multi numbers support for baseTemplate option [#1016](https://github.com/pnp/sp-dev-fx-controls-react/issues/1016)"
+          "`ListPicker`: Add multi numbers support for baseTemplate option [#1016](https://github.com/pnp/sp-dev-fx-controls-react/issues/1016)",
+          "`ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)"
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
@@ -26,7 +27,8 @@
         "[Michalis Koutroupis](https://github.com/mkoutroupis)",
         "[MonalisaBaltatescu](https://github.com/MonalisaBaltatescu)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
-        "[Xiyitifu](https://github.com/Xiyitifu)"
+        "[Xiyitifu](https://github.com/Xiyitifu)",
+        "[Russell gove](https://github.com/russgove)"
       ]
     },
     {
