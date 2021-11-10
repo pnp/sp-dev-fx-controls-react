@@ -35,11 +35,12 @@ import { ModernTaxonomyPicker } from "@pnp/spfx-controls-react/lib/ModernTaxonom
 
 ```TypeScript
 <ModernTaxonomyPicker allowMultipleSelections={true}
-                termSetId="f233d4b7-68fb-41ef-8b58-2af0bafc0d38"
-                panelTitle="Select Term"
-                label="Taxonomy Picker"
-                context={this.props.context}
-                onChange={this.onTaxPickerChange} />
+  termSetId="f233d4b7-68fb-41ef-8b58-2af0bafc0d38"
+  panelTitle="Select Term"
+  label="Taxonomy Picker"
+  context={this.props.context}
+  onChange={this.onTaxPickerChange}
+/>
 ```
 
 - With the `onChange` property you can capture the event of when the terms in the picker has changed:
@@ -48,6 +49,78 @@ import { ModernTaxonomyPicker } from "@pnp/spfx-controls-react/lib/ModernTaxonom
 private onTaxPickerChange(terms : ITermInfo[]) {
   console.log("Terms", terms);
 }
+```
+
+## Advanced example
+Custom rendering of a More actions button that displays a context menu for each term in the term set and the term set itself and with different options for the terms and the term set. This could for example be used to add terms to an open term set. It also shows how to set the initialsValues property when just knowing the name and the id of the term, the rest of the term properties must be provided but doesn't need to be the correct values.
+
+```TypeScript
+<ModernTaxonomyPicker
+  allowMultipleSelections={true}
+  termSetId={"36d21c3f-b83b-4acc-a223-4df6fa8e946d"}
+  panelTitle="Panel title"
+  label={"Field title"}
+  context={this.props.context}
+  required={false}
+  initialValues={[{labels: [{name: "Subprocess A1", isDefault: true, languageTag: "en-US"}], id: "29eced8f-cf08-454b-bd9e-6443bc0a0f5e", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
+  onChange={this.onTaxPickerChange}
+  disabled={false}
+  customPanelWidth={700}
+  isLightDismiss={false}
+  isBlocking={false}
+  onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => {
+    const menuIcon: IIconProps = { iconName: 'MoreVertical', "aria-label": "More actions", style: { fontSize: "medium" } };
+    if (termInfo) {
+      const menuProps: IContextualMenuProps = {
+        items: [
+          {
+            key: 'addTerm',
+            text: 'Add Term',
+            iconProps: { iconName: 'Tag' },
+            onClick: () => onContextualMenuClick(termInfo.id)
+          },
+          {
+            key: 'deleteTerm',
+            text: 'Delete term',
+            iconProps: { iconName: 'Untag' },
+            onClick: () => onContextualMenuClick(termInfo.id)
+          },
+        ],
+      };
+
+      return (
+        <IconButton
+          menuProps={menuProps}
+          menuIconProps={menuIcon}
+          style={this.state.clickedActionTerm && this.state.clickedActionTerm.id === termInfo.id ? {opacity: 1} : null}
+          onMenuClick={(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, button?: IButtonProps) => {
+            this.setState({clickedActionTerm: termInfo});
+          }}
+          onAfterMenuDismiss={() => this.setState({clickedActionTerm: null})}
+        />
+      );
+    }
+    else {
+      const menuProps: IContextualMenuProps = {
+        items: [
+          {
+            key: 'addTerm',
+            text: 'Add term',
+            iconProps: { iconName: 'Tag' },
+            onClick: () => onContextualMenuClick(termSetInfo.id)
+          },
+        ],
+      };
+      return (
+        <IconButton
+          menuProps={menuProps}
+          menuIconProps={menuIcon}
+          style={{opacity: 1}}
+        />
+      );
+    }
+  }}
+/>
 ```
 
 ## Implementation
@@ -70,5 +143,8 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | customPanelWidth | number | no | Custom panel width in pixels. |
 | termPickerProps | IModernTermPickerProps | no | Custom properties for the term picker (More info: [IBasePickerProps interface](https://developer.microsoft.com/en-us/fluentui#/controls/web/pickers#IBasePickerProps)).  |
 | themeVariant | IReadonlyTheme | no | The current loaded SharePoint theme/section background (More info: [Supporting section backgrounds](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/guidance/supporting-section-backgrounds)). |
+| isLightDismiss | boolean | no | Whether the panel can be light dismissed. |
+| isBlocking | boolean | no | Whether the panel uses a modal overlay or not. |
+| onRenderActionButton | function | no | Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)

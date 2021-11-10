@@ -60,6 +60,9 @@ export interface IModernTaxonomyPickerProps {
   customPanelWidth?: number;
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
+  isLightDismiss?: boolean;
+  isBlocking?: boolean;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
@@ -235,7 +238,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         hasCloseButton={true}
         closeButtonAriaLabel={strings.ModernTaxonomyPickerPanelCloseButtonText}
         onDismiss={onClosePanel}
-        isLightDismiss={true}
+        isLightDismiss={props.isLightDismiss}
+        isBlocking={props.isBlocking}
         type={props.customPanelWidth ? PanelType.custom : PanelType.medium}
         customWidth={props.customPanelWidth ? `${props.customPanelWidth}px` : undefined}
         headerText={props.panelTitle}
@@ -273,6 +277,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 languageTag={currentLanguageTag}
                 themeVariant={props.themeVariant}
                 termPickerProps={props.termPickerProps}
+                onRenderActionButton={props.onRenderActionButton}
               />
             </div>
           )

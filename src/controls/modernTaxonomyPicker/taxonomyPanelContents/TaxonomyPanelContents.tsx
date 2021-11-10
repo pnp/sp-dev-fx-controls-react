@@ -1,38 +1,51 @@
 import * as React from 'react';
 import styles from './TaxonomyPanelContents.module.scss';
-import { Checkbox, ICheckboxStyleProps, ICheckboxStyles } from 'office-ui-fabric-react/lib/Checkbox';
-import { ChoiceGroup, IChoiceGroupOption, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles } from 'office-ui-fabric-react/lib/ChoiceGroup';
-import {
-  GroupedList,
-  GroupHeader,
-  IGroup,
-  IGroupFooterProps,
-  IGroupHeaderProps,
-  IGroupHeaderStyleProps,
-  IGroupHeaderStyles,
-  IGroupRenderProps,
-  IGroupShowAllProps
-} from 'office-ui-fabric-react/lib/GroupedList';
-import { IBasePickerStyleProps, IBasePickerStyles, IPickerItemProps, ISuggestionItemProps } from 'office-ui-fabric-react/lib/Pickers';
-import {
-  ILabelStyleProps,
-  ILabelStyles,
-  Label
-} from 'office-ui-fabric-react/lib/Label';
-import {
-  ILinkStyleProps,
-  ILinkStyles,
-  Link
-} from 'office-ui-fabric-react/lib/Link';
-import { IListProps } from 'office-ui-fabric-react/lib/List';
-import { IRenderFunction, IStyleFunctionOrObject, Selection, SelectionMode } from 'office-ui-fabric-react/lib/Utilities';
-import { ISpinnerStyleProps, ISpinnerStyles, Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { SelectionZone } from 'office-ui-fabric-react/lib/Selection';
-import {
-  ITermInfo,
-  ITermSetInfo,
-  ITermStoreInfo
-} from '@pnp/sp/taxonomy';
+import { Checkbox,
+         ChoiceGroup,
+         FocusZone,
+         FocusZoneDirection,
+         getRTLSafeKeyCode,
+         GroupedList,
+         GroupHeader,
+         IBasePickerStyleProps,
+         IBasePickerStyles,
+         ICheckboxStyleProps,
+         ICheckboxStyles,
+         IChoiceGroupOption,
+         IChoiceGroupOptionStyleProps,
+         IChoiceGroupOptionStyles,
+         IChoiceGroupStyleProps,
+         IChoiceGroupStyles,
+         IGroup,
+         IGroupFooterProps,
+         IGroupHeaderProps,
+         IGroupHeaderStyleProps,
+         IGroupHeaderStyles,
+         IGroupRenderProps,
+         IGroupShowAllProps,
+         ILabelStyleProps,
+         ILabelStyles,
+         ILinkStyleProps,
+         ILinkStyles,
+         IListProps,
+         IPickerItemProps,
+         IRenderFunction,
+         ISpinnerStyleProps,
+         ISpinnerStyles,
+         IStyleFunctionOrObject,
+         ISuggestionItemProps,
+         KeyCodes,
+         Label,
+         Link,
+         Selection,
+         SelectionMode,
+         SelectionZone,
+         Spinner
+       } from 'office-ui-fabric-react';
+import { ITermInfo,
+         ITermSetInfo,
+         ITermStoreInfo
+       } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
@@ -62,6 +75,7 @@ export interface ITaxonomyPanelContentsProps {
   languageTag: string;
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
 export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React.ReactElement<ITaxonomyPanelContentsProps> {
@@ -245,77 +259,89 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     const childIsSelected = isChildSelected(groupHeaderProps.group.children);
 
     if (groupHeaderProps.group.level === 0) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = { root: { fontWeight: childIsSelected ? "bold" : "normal" } };
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {width: "100%", fontWeight: childIsSelected ? "bold" : "normal"}};
       return (
-        <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
+        <FocusZone
+          direction={FocusZoneDirection.horizontal}
+          className={styles.taxonomyItemFocusZone}
+        >
+          <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
+          <div className={styles.actionButtonContainer}>
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, props.anchorTermInfo)}
+          </div>
+        </FocusZone>
       );
     }
 
     const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
     const isSelected = selection.isKeySelected(groupHeaderProps.group.key);
 
-    const selectionProps = {
-      "data-selection-index": selection.getItems().findIndex((term) => term.id === groupHeaderProps.group.key)
-    };
-
     if (props.allowMultipleSelections) {
-      if (isDisabled) {
-        selectionProps["data-selection-disabled"] = true;
-      }
-      else {
-        selectionProps["data-selection-toggle"] = true;
-      }
-
-      const selectedStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = { root: { pointerEvents: 'none' } };
+      const checkBoxStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = {root: { flex: "1" } };
       if (isSelected || childIsSelected) {
-        selectedStyles.label = { fontWeight: 'bold' };
+        checkBoxStyles.label = { fontWeight: 'bold' };
       }
       else {
-        selectedStyles.label = { fontWeight: 'normal' };
+        checkBoxStyles.label = { fontWeight: 'normal' };
       }
 
       return (
-        <div {...selectionProps}>
+        <FocusZone
+          direction={FocusZoneDirection.horizontal}
+          className={styles.taxonomyItemFocusZone}
+        >
           <Checkbox
             key={groupHeaderProps.group.key}
             label={groupHeaderProps.group.name}
             checked={isSelected}
-            styles={selectedStyles}
+            styles={checkBoxStyles}
             disabled={isDisabled}
             onRenderLabel={(p) => <span className={css(!isDisabled && styles.checkbox, isDisabled && styles.disabledCheckbox, isSelected && styles.selectedCheckbox)} title={p.title}>
               {p.label}
             </span>}
+            onChange={(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
+              selection.setKeySelected(groupHeaderProps.group.key, checked, false);
+            }}
           />
-        </div>
+          <div className={styles.actionButtonContainer}>
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
+          </div>
+        </FocusZone>
       );
     }
     else {
-      const selectedStyle: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'bold', } } : { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'normal' } };
+      const choiceGroupOptionStyles: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold', flex: '1' }, field: { width: '100%'} } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal', flex: '1' }, field: { width: '100%'} };
       const options: IChoiceGroupOption[] = [{
-        key: groupHeaderProps.group.key,
-        text: groupHeaderProps.group.name,
-        styles: selectedStyle,
-        onRenderLabel: (p) =>
-          <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
-            {p.text}
-          </span>
-      }];
+                                                key: groupHeaderProps.group.key,
+                                                text: groupHeaderProps.group.name,
+                                                styles: choiceGroupOptionStyles,
+                                                onRenderLabel: (p) =>
+                                                  <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
+                                                    {p.text}
+                                                  </span>,
+                                                onClick: () => {
+                                                  selection.setAllSelected(false);
+                                                  selection.setKeySelected(groupHeaderProps.group.key, true, false);
+                                                }
+                                              }];
 
-      if (isDisabled) {
-        selectionProps["data-selection-disabled"] = true;
-      }
-      else {
-        selectionProps["data-selection-select"] = true;
-      }
+      const choiceGroupStyles: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = { root: { flex: "1" }, applicationRole: { width: "100%" } };
 
       return (
-        <div {...selectionProps}>
-          <ChoiceGroup
-            options={options}
-            selectedKey={selection.getSelection()[0]?.id}
-            disabled={isDisabled}
-          />
-        </div>
+        <FocusZone
+          direction={FocusZoneDirection.horizontal}
+          className={styles.taxonomyItemFocusZone}
+        >
+            <ChoiceGroup
+              options={options}
+              selectedKey={selection.getSelection()[0]?.id}
+              disabled={isDisabled}
+              styles={choiceGroupStyles}
+            />
+          <div className={styles.actionButtonContainer}>
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
+          </div>
+        </FocusZone>
       );
     }
   };
@@ -330,14 +356,28 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
       root: { height: 42 },
     };
 
+    const isDisabled = headerProps.group.data.term && headerProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetId.toString())[0].isAvailable === false;
+
     return (
       <GroupHeader
         {...headerProps}
         styles={groupHeaderStyles}
+        className={styles.taxonomyItemHeader}
         onRenderTitle={onRenderTitle}
         onToggleCollapse={onToggleCollapse}
         indentWidth={20}
-        expandButtonProps={{ style: { color: props.themeVariant?.semanticColors.bodyText } }}
+        expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
+        onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
+          if ((ev.keyCode == 32 || ev.keyCode == 13) && !isDisabled) {
+            if (props.allowMultipleSelections) {
+              selection.toggleKeySelected(headerProps.group.key);
+            }
+            else {
+              selection.setAllSelected(false);
+              selection.setKeySelected(headerProps.group.key, true, false);
+            }
+          }
+        }}
       />
     );
   };
@@ -421,7 +461,11 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     }
   };
 
-  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: { paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34 }, input: { minheight: 34 }, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
+  const shouldEnterInnerZone = (ev: React.KeyboardEvent<HTMLElement>): boolean => {
+    return ev.which === getRTLSafeKeyCode(KeyCodes.right);
+  };
+
+  const termPickerStyles: IStyleFunctionOrObject<IBasePickerStyleProps, IBasePickerStyles> = { root: {paddingTop: 4, paddingBottom: 4, paddingRight: 4, minheight: 34}, input: {minheight: 34}, text: { minheight: 34, borderStyle: 'none', borderWidth: '0px' } };
 
   return (
     <div className={styles.taxonomyPanelContents}>
@@ -442,25 +486,22 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
               placeholder: props.placeHolder || strings.ModernTaxonomyPickerDefaultPlaceHolder
             }}
             onRenderSuggestionsItem={props.termPickerProps?.onRenderSuggestionsItem ?? props.onRenderSuggestionsItem}
-            onRenderItem={props.onRenderItem ?? props.onRenderItem}
+            onRenderItem={props.onRenderItem}
             themeVariant={props.themeVariant}
           />
         </div>
       </div>
       <Label className={styles.taxonomyTreeLabel}>{strings.ModernTaxonomyPickerTreeTitle}</Label>
       <div>
-        <SelectionZone
-          selectionMode={props.allowMultipleSelections ? SelectionMode.multiple : SelectionMode.single}
-          selection={selection}
-        >
-          <GroupedList
-            items={[]}
-            onRenderCell={null}
-            groups={groups}
-            groupProps={groupProps}
-            onShouldVirtualize={(p: IListProps<any>) => false}
-          />
-        </SelectionZone>
+        <GroupedList
+          items={[]}
+          onRenderCell={null}
+          groups={groups}
+          groupProps={groupProps}
+          onShouldVirtualize={(p: IListProps<any>) => false}
+          data-is-focusable={true}
+          focusZoneProps={{direction: FocusZoneDirection.vertical, shouldEnterInnerZone: shouldEnterInnerZone}}
+        />
       </div>
     </div>
   );

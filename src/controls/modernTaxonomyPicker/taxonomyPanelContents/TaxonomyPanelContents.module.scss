@@ -55,4 +55,22 @@
     height: 48px;
     line-height: 48px;
   }
+
+  .taxonomyItemFocusZone {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .taxonomyItemHeader {
+    width: 100%;
+  }
+
+  .taxonomyItemHeader .actionButtonContainer > * {
+    opacity: 0;
+  }
+
+  .taxonomyItemHeader:hover .actionButtonContainer > *, .taxonomyItemHeader:focus .actionButtonContainer > *, .taxonomyItemHeader .actionButtonContainer:focus-within > * {
+    opacity: 1;
+  }
 }
