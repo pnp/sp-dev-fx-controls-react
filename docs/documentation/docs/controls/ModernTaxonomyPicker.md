@@ -68,7 +68,7 @@ Custom rendering of a More actions button that displays a context menu for each 
   customPanelWidth={700}
   isLightDismiss={false}
   isBlocking={false}
-  onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => {
+  onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo): JSX.Element => {
     const menuIcon: IIconProps = { iconName: 'MoreVertical', "aria-label": "More actions", style: { fontSize: "medium" } };
     if (termInfo) {
       const menuProps: IContextualMenuProps = {
@@ -147,4 +147,45 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | isBlocking | boolean | no | Whether the panel uses a modal overlay or not. |
 | onRenderActionButton | function | no | Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view. |
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)
+## Standalone TaxonomyTree control
+
+You can also use the `TaxonomyTree` control separately to just render a stand-alone tree-view of a term set with action buttons.
+
+- Use the `TaxonomyTree` control in your code as follows:  
+  Initialize the taxonomy service and state, load basic info from term store and display the `TaxonomyTree` component.
+
+```TypeScript
+      const taxonomyService = new SPTaxonomyService(props.context);
+      const [terms, setTerms] = React.useState<ITermInfo[]>();
+      const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
+      const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
+      const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
+
+      React.useEffect(() => {
+        sp.setup(props.context);
+        taxonomyService.getTermStoreInfo()
+          .then((termStoreInfo) => {
+            setCurrentTermStoreInfo(termStoreInfo);
+            setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+              props.context.pageContext.cultureInfo.currentUICultureName :
+              currentTermStoreInfo.defaultLanguageTag);
+          });
+        taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
+          .then((termSetInfo) => {
+            setCurrentTermSetInfo(termSetInfo);
+          });
+      }, []);
+
+      <TaxonomyTree
+        languageTag={currentLanguageTag}
+        onLoadMoreData={taxonomyService.getTerms}
+        pageSize={50}
+        setTerms={setTerms}
+        termSetInfo={currentTermSetInfo}
+        termStoreInfo={currentTermStoreInfo}
+        terms={terms}
+        onRenderActionButton={onRenderActionButton}
+      />
+```
+
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ModernTaxonomyPicker)

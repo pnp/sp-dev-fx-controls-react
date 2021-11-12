@@ -1,36 +1,6 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 .taxonomyPanelContents {
-  .choiceOption {
-    color: "[theme: bodyText, default: #323130]";
-    display: inline-block;
-    padding-inline-start: 26px;
-  }
-
-  .disabledChoiceOption {
-    color: "[theme: disabledBodyText, default: #323130]";
-    display: inline-block;
-    padding-inline-start: 26px;
-  }
-
-  .selectedChoiceOption {
-    font-weight: bold;
-  }
-
-  .checkbox {
-    color: "[theme: bodyText, default: #323130]";
-    margin-inline-start: 4px;
-  }
-
-  .disabledCheckbox {
-    color: "[theme: disabledBodyText, default: #323130]";
-    margin-inline-start: 4px;
-  }
-
-  .selectedCheckbox {
-    font-weight: bold;
-  }
-
   .taxonomyTreeSelector {
     border-bottom-color: blue;
     border-bottom-style: solid;
@@ -41,36 +11,5 @@
   .taxonomyTreeLabel {
     font-size: 18px;
     font-weight: 100;
-  }
-
-  .spinnerContainer {
-    height: 48px;
-    line-height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .loadMoreContainer {
-    height: 48px;
-    line-height: 48px;
-  }
-
-  .taxonomyItemFocusZone {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
-
-  .taxonomyItemHeader {
-    width: 100%;
-  }
-
-  .taxonomyItemHeader .actionButtonContainer > * {
-    opacity: 0;
-  }
-
-  .taxonomyItemHeader:hover .actionButtonContainer > *, .taxonomyItemHeader:focus .actionButtonContainer > *, .taxonomyItemHeader .actionButtonContainer:focus-within > * {
-    opacity: 1;
   }
 }
