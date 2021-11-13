@@ -60,3 +60,8 @@
 .taxonomyItemHeader:hover .actionButtonContainer > *, .taxonomyItemHeader:focus .actionButtonContainer > *, .taxonomyItemHeader .actionButtonContainer:focus-within > * {
   opacity: 1;
 }
+
+.taxonomyItemIcon {
+  margin-inline-start: 8px;
+  margin-inline-end: 8px;
+}

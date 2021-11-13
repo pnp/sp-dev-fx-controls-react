@@ -38,7 +38,7 @@ export interface ITermItemStyles {
   close: IStyle;
 }
 
-export interface ITermItemSuggestionProps extends React.AllHTMLAttributes<HTMLElement> {
+export interface ITermItemSuggestionElementProps extends React.AllHTMLAttributes<HTMLElement> {
   /** Additional CSS class(es) to apply to the TermItemSuggestion div element */
   className?: string;
 
@@ -49,8 +49,8 @@ export interface ITermItemSuggestionProps extends React.AllHTMLAttributes<HTMLEl
   theme?: ITheme;
 }
 
-export type ITermItemSuggestionStyleProps = Required<Pick<ITermItemSuggestionProps, 'theme'>> &
-  Pick<ITermItemSuggestionProps, 'className'> & {};
+export type ITermItemSuggestionStyleProps = Required<Pick<ITermItemSuggestionElementProps, 'theme'>> &
+  Pick<ITermItemSuggestionElementProps, 'className'> & {};
 
 export interface ITermItemSuggestionStyles {
   /** Refers to the text element of the TermItemSuggestion */

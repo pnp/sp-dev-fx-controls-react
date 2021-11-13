@@ -112,6 +112,8 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
         terms={terms}
         allowMultipleSelections={props.allowMultipleSelections}
         onRenderActionButton={props.onRenderActionButton}
+        hideDeprecatedTerms={true}
+        showIcons={false}
       />
     </div>
   );

@@ -1,2 +1,6 @@
 export * from './ModernTaxonomyPicker';
-export * from './termItem/TermItem';
+export * from './modernTermPicker/index';
+export * from './taxonomyPanelContents/index';
+export * from './taxonomyTree/index';
+export * from './termItem/index';
+export * from '../../services/SPTaxonomyService';

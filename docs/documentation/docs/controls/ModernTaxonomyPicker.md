@@ -156,7 +156,7 @@ You can also use the `TaxonomyTree` control separately to just render a stand-al
 
 ```TypeScript
       const taxonomyService = new SPTaxonomyService(props.context);
-      const [terms, setTerms] = React.useState<ITermInfo[]>();
+      const [terms, setTerms] = React.useState<ITermInfo[]>([]);
       const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
       const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
       const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
@@ -176,16 +176,21 @@ You can also use the `TaxonomyTree` control separately to just render a stand-al
           });
       }, []);
 
-      <TaxonomyTree
-        languageTag={currentLanguageTag}
-        onLoadMoreData={taxonomyService.getTerms}
-        pageSize={50}
-        setTerms={setTerms}
-        termSetInfo={currentTermSetInfo}
-        termStoreInfo={currentTermStoreInfo}
-        terms={terms}
-        onRenderActionButton={onRenderActionButton}
-      />
+      return (
+        {currentTermSetInfo && (  
+          <TaxonomyTree
+            languageTag={currentLanguageTag}
+            onLoadMoreData={taxonomyService.getTerms}
+            pageSize={50}
+            setTerms={setTerms}
+            termSetInfo={currentTermSetInfo}
+            termStoreInfo={currentTermStoreInfo}
+            terms={terms}
+            onRenderActionButton={onRenderActionButton}
+            hideDeprecatedTerms={false}
+            showIcons={true}
+          />
+        )}
 ```
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ModernTaxonomyPicker)

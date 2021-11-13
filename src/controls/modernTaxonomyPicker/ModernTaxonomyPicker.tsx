@@ -50,7 +50,7 @@ export interface IModernTaxonomyPickerProps {
   panelTitle: string;
   label: string;
   context: BaseComponentContext;
-  initialValues?: ITermInfo[];
+  initialValues?: Optional<ITermInfo, "childrenCount" | "createdDateTime" | "lastModifiedDateTime" | "descriptions" | "customSortOrder" | "properties" | "localProperties" | "isDeprecated" | "isAvailableForTagging" | "topicRequested">[];
   disabled?: boolean;
   required?: boolean;
   onChange?: (newValue?: ITermInfo[]) => void;

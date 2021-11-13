@@ -4,6 +4,7 @@ import { Checkbox,
          css,
          FocusZone,
          FocusZoneDirection,
+         FontIcon,
          getRTLSafeKeyCode,
          GroupedList,
          GroupHeader,
@@ -55,6 +56,8 @@ export interface ITaxonomyTreeProps {
   terms: ITermInfo[];
   setTerms: React.Dispatch<React.SetStateAction<ITermInfo[]>>;
   selection?: Selection<any>;
+  hideDeprecatedTerms?: boolean;
+  showIcons?: boolean;
 }
 
 export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITaxonomyTreeProps> {
@@ -90,7 +93,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     setGroups([rootGroup]);
     setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, props.termSetInfo.id]);
     if (props.termSetInfo.childrenCount > 0) {
-      props.onLoadMoreData(Guid.parse(props.termSetInfo.id), props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', true)
+      props.onLoadMoreData(Guid.parse(props.termSetInfo.id), props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', props.hideDeprecatedTerms)
         .then((loadedTerms) => {
           const grps: IGroup[] = loadedTerms.value.map(term => {
             let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
@@ -151,7 +154,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, group.key]);
         group.data.isLoading = true;
 
-        props.onLoadMoreData(Guid.parse(props.termSetInfo.id), Guid.parse(group.key), '', true)
+        props.onLoadMoreData(Guid.parse(props.termSetInfo.id), Guid.parse(group.key), '', props.hideDeprecatedTerms)
           .then((loadedTerms) => {
             const grps: IGroup[] = loadedTerms.value.map(term => {
               let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
@@ -225,6 +228,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
           direction={FocusZoneDirection.horizontal}
           className={styles.taxonomyItemFocusZone}
         >
+          {props.showIcons && (
+            <FontIcon iconName="Tag"  className={styles.taxonomyItemIcon} />
+          )}
           <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
           <div className={styles.actionButtonContainer}>
             {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, props.anchorTermInfo)}
@@ -235,11 +241,15 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
 
     if (!props.selection) {
       const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {width: "100%", fontWeight: childIsSelected ? "bold" : "normal"}};
+      let taxonomyItemIconName: string = groupHeaderProps.group.data.term.isDeprecated ? "Blocked" : "Tag";
       return (
         <FocusZone
           direction={FocusZoneDirection.horizontal}
           className={styles.taxonomyItemFocusZone}
         >
+          {props.showIcons && (
+            <FontIcon iconName={taxonomyItemIconName} className={styles.taxonomyItemIcon} />
+          )}
           <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
           <div className={styles.actionButtonContainer}>
             {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
@@ -373,7 +383,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         <div className={styles.loadMoreContainer}>
           <Link onClick={() => {
             setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, footerProps.group.key]);
-            props.onLoadMoreData(Guid.parse(props.termSetInfo.id), footerProps.group.key === props.termSetInfo.id ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, true)
+            props.onLoadMoreData(Guid.parse(props.termSetInfo.id), footerProps.group.key === props.termSetInfo.id ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, props.hideDeprecatedTerms)
               .then((loadedTerms) => {
                 const grps: IGroup[] = loadedTerms.value.map(term => {
                   let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
