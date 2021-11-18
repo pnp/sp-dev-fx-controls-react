@@ -19,7 +19,7 @@ export class ListItemRepository {
             const webAbsoluteUrl = !webUrl ? this.SiteUrl : webUrl;
             let apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterText}&$top=${top}`;
             if (orderBy) {
-              apiUrl += `&$orderBy=${orderBy}`
+              apiUrl += `&$orderBy=${orderBy}`;
             }
             const data = await this.SPClient.get(apiUrl, SPHttpClient.configurations.v1);
             if (data.ok) {
