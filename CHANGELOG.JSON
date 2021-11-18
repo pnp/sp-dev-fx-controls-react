@@ -11,7 +11,8 @@
           "SharePoint Framework v1.13 support",
           "`DynamicForm`: `disabledFields` property added [#987](https://github.com/pnp/sp-dev-fx-controls-react/pull/987)",
           "`ListPicker`: Add multi numbers support for baseTemplate option [#1016](https://github.com/pnp/sp-dev-fx-controls-react/issues/1016)",
-          "`ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)"
+          "`ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)",
+          "`PeoplePicker`: Added filter for Microsoft 365 Group [#985](https://github.com/pnp/sp-dev-fx-controls-react/pull/1027)"
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
@@ -28,7 +29,8 @@
         "[MonalisaBaltatescu](https://github.com/MonalisaBaltatescu)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Xiyitifu](https://github.com/Xiyitifu)",
-        "[Russell gove](https://github.com/russgove)"
+        "[Russell gove](https://github.com/russgove)",
+        "[Andreas Omayrat](https://github.com/andreasomayrat)"
       ]
     },
     {
