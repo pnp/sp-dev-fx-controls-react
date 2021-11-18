@@ -19,7 +19,7 @@ import uniqBy from 'lodash/uniqBy';
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
-  private groupId: number;
+  private groupId: number | string;
 
   constructor(props: IPeoplePickerProps) {
     super(props);
