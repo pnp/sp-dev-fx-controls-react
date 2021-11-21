@@ -1,4 +1,4 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export interface IUploadAttachmentProps {
   listId: string;
@@ -6,7 +6,7 @@ export interface IUploadAttachmentProps {
   className?: string;
   webUrl?: string;
   disabled?: boolean;
-  context: BaseComponentContext;
+  context: SPFxContext;
   fireUpload?: boolean;
   onAttachmentUpload: (file?: File) => void;
 }

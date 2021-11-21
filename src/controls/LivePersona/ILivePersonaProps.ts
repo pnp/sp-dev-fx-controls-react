@@ -1,11 +1,11 @@
-import { BaseComponentContext} from "@microsoft/sp-component-base";
 import { ServiceScope } from "@microsoft/sp-core-library";
+import { SPFxContext } from "../../common/Types";
 
 export interface ILivePersonatProps {
   /**
    * The Web Part context
    */
-  context?: BaseComponentContext;
+  context?: SPFxContext;
 /**
    * The Web Part context
    */

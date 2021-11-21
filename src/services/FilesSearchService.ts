@@ -1,8 +1,8 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
+import { SPFxContext } from '../common/Types';
 
 /**
  * Maximum file size when searching
@@ -15,10 +15,10 @@ const MAXFILESIZE = 52428800;
 const MAXRESULTS = 100;
 
 export class FilesSearchService {
-  private context: BaseComponentContext;
+  private context: SPFxContext;
   private bingAPIKey: string;
 
-  constructor(context: BaseComponentContext, bingAPIKey: string) {
+  constructor(context: SPFxContext, bingAPIKey: string) {
     this.context = context;
     this.bingAPIKey = bingAPIKey;
   }

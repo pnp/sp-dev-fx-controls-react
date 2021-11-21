@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
 import {
@@ -40,6 +39,7 @@ import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
 import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -49,7 +49,7 @@ export interface IModernTaxonomyPickerProps {
   anchorTermId?: string;
   panelTitle: string;
   label: string;
-  context: BaseComponentContext;
+  context: SPFxContext;
   initialValues?: ITermInfo[];
   disabled?: boolean;
   required?: boolean;

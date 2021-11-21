@@ -1,7 +1,7 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
+import { SPFxContext } from '../../common/Types';
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
@@ -11,7 +11,7 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * Text of the Control
   */

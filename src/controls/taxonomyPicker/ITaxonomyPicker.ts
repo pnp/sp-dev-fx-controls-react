@@ -2,7 +2,7 @@ import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import { ITermSet, ITerm } from '../../services/ISPTermStorePickerService';
 import { ITermActions } from './termActions/ITermsActions';
 import SPTermStorePickerService from '../../services/SPTermStorePickerService';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 /**
  * PropertyFieldTermPickerHost properties interface
@@ -27,7 +27,7 @@ export interface ITaxonomyPickerProps  {
   /**
    * WebPart's context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * Limit the terms that can be picked by the Term Set name or ID
    */

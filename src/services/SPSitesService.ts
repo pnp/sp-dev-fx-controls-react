@@ -1,8 +1,8 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISite } from '../controls/sitePicker/ISitePicker';
 import { SPHttpClient } from '@microsoft/sp-http';
+import { SPFxContext } from '../common/Types';
 
-const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string, trimDuplicates: boolean): Promise<ISite[]> => {
+const getAllSitesInternal = async (ctx: SPFxContext, queryText: string, trimDuplicates: boolean): Promise<ISite[]> => {
   let startRow = 0;
   let rowLimit = 500;
   let totalRows = 0;
@@ -79,7 +79,7 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
   return res;
 };
 
-export const getAllSites = async (ctx: BaseComponentContext, includeWebs: boolean, currentSiteCollectionOnly: boolean, trimDuplicates: boolean, additionaQuery?: string | undefined): Promise<ISite[]> => {
+export const getAllSites = async (ctx: SPFxContext, includeWebs: boolean, currentSiteCollectionOnly: boolean, trimDuplicates: boolean, additionaQuery?: string | undefined): Promise<ISite[]> => {
 
   let rootUrl: string = ctx.pageContext.web.absoluteUrl;
   if (ctx.pageContext.web.serverRelativeUrl !== '/' && (!includeWebs || !currentSiteCollectionOnly)) {
@@ -94,7 +94,7 @@ export const getAllSites = async (ctx: BaseComponentContext, includeWebs: boolea
   return getAllSitesInternal(ctx, queryText, trimDuplicates);
 };
 
-export const getHubSites = async (ctx: BaseComponentContext): Promise<ISite[]> => {
+export const getHubSites = async (ctx: SPFxContext): Promise<ISite[]> => {
   const hubSites: ISite[] = [];
 
   const requestUrl = `${ctx.pageContext.site.absoluteUrl}/_api/HubSites?$select=SiteId,ID,SiteUrl,Title`;

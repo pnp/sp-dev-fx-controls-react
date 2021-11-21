@@ -1,11 +1,11 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../../common/Types';
 import { IFolder } from '../../../services/IFolderExplorerService';
 
 export interface INewFolderProps {
   /**
    * Current context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
 
   /**
    * The absolute url of the target site. Only required if not the current site

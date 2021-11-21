@@ -1,13 +1,12 @@
-import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
-import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IFilePickerResult } from '../../filePicker';
+import { SPFxContext } from '../../..';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
 export type FieldChangeAdditionalData = IFilePickerResult;
 
 export interface IDynamicFieldProps {
-  context: WebPartContext | ExtensionContext;
+  context: SPFxContext;
   disabled?: boolean;
   listId: string;
   listItemId?: number;

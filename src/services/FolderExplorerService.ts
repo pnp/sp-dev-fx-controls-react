@@ -8,12 +8,13 @@ import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
+import { RecursivePicker } from "../common/Types";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
   public static readonly serviceKey: ServiceKey<IFolderExplorerService> = ServiceKey.create<IFolderExplorerService>('SPFx:SPService', FolderExplorerService);
 
-  constructor(serviceScope: ServiceScope) {
+  constructor(serviceScope: RecursivePicker<ServiceScope>) {
 
     serviceScope.whenFinished(() => {
 

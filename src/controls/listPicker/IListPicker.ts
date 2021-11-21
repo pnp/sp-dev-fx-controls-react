@@ -1,12 +1,12 @@
 import { LibsOrderBy } from "../../services/ISPService";
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
+import { SPFxContext } from "../../common/Types";
 
 export interface IListPickerProps {
   /**
   * The web part context
   */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
   * If provided, additional class name to provide on the dropdown element.
   */

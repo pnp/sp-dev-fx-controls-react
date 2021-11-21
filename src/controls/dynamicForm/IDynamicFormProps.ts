@@ -1,11 +1,11 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IItem } from '@pnp/sp/items';
+import { SPFxContext } from '../../common/Types';
 
 export interface IDynamicFormProps {
   /**
    * Current context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * Specifies if the form is disabled
    */

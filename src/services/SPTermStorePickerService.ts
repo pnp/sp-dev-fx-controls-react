@@ -7,7 +7,6 @@
 
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
 import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ISuggestTerm } from './ISPTermStorePickerService';
@@ -15,6 +14,7 @@ import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { EmptyGuid } from '../common/Constants';
 import { LocalesHelper } from '../common/utilities/LocalesHelper';
+import { SPFxContext } from '../common/Types';
 
 
 /**
@@ -29,7 +29,7 @@ export default class SPTermStorePickerService {
   /**
    * Service constructor
    */
-  constructor(private props: ITaxonomyPickerProps, private context: BaseComponentContext) {
+  constructor(private props: ITaxonomyPickerProps, private context: SPFxContext) {
     if (Environment.type !== EnvironmentType.Local) {
       {
         this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';

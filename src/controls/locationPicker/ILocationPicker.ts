@@ -1,6 +1,7 @@
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { IComboBoxOption } from 'office-ui-fabric-react/lib/';
+import { SPFxContext } from '../..';
 
 export interface ILocationBoxOption extends IComboBoxOption {
   locationItem: ILocationPickerItem;
@@ -27,7 +28,7 @@ export interface ILocationPickerProps {
   /**
 * The web part context
 */
-  context: WebPartContext | ExtensionContext;
+  context: SPFxContext;
   /**
   * If provided, additional class name to provide on the dropdown element.
   */

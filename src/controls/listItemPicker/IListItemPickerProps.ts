@@ -1,10 +1,10 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export interface IListItemPickerProps {
 
   columnInternalName: string;
   keyColumnInternalName?: string;
-  context: BaseComponentContext;
+  context: SPFxContext;
   listId: string;
   itemLimit: number;
   filter?: string;

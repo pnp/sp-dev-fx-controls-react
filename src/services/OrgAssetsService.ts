@@ -1,12 +1,12 @@
 import { FileBrowserService } from "./FileBrowserService";
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { ILibrary, FilesQueryResult } from "./FileBrowserService.types";
+import { SPFxContext } from "../common/Types";
 
 export class OrgAssetsService extends FileBrowserService {
   private _orgAssetsLibraryServerRelativeSiteUrl: string = null;
 
-  constructor(context: BaseComponentContext, itemsToDownloadCount?: number) {
+  constructor(context: SPFxContext, itemsToDownloadCount?: number) {
     super(context, itemsToDownloadCount);
   }
 

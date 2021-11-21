@@ -4,12 +4,12 @@ import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
 import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
 import { LegacyRef, KeyboardEvent } from 'react';
+import { SPFxContext } from '../../common/Types';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
 {
@@ -23,7 +23,7 @@ export interface ITermPickerState {
 
 export interface ITermPickerProps {
   termPickerHostProps: ITaxonomyPickerProps;
-  context: BaseComponentContext;
+  context: SPFxContext;
   disabled: boolean;
   value: IPickerTerms;
   allowMultipleSelections : boolean;
@@ -243,7 +243,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
             if (!this.state.elRef) {
               this.setState({ elRef });
             }
-          }}        
+          }}
           disabled={disabled}
           onResolveSuggestions={this.onFilterChanged}
           onRenderSuggestionsItem={this.onRenderSuggestionsItem}

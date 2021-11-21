@@ -1,4 +1,4 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 /**
  * Selected terms
@@ -40,7 +40,7 @@ export interface IPropertyFieldTermPickerProps {
   /**
    * WebPart's context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * Limit the term sets that can be used by the group name or ID
    */

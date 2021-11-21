@@ -1,11 +1,11 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 import { IFolder } from '../../services/IFolderExplorerService';
 
 export interface IFolderPickerProps {
   /**
    * Current context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
 
   /**
    * The label for the control

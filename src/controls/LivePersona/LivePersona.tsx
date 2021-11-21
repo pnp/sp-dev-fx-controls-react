@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createElement, useEffect, useRef } from "react";
 import { useState } from "react";
-import { Log } from "@microsoft/sp-core-library";
+import { Log, ServiceScope } from "@microsoft/sp-core-library";
 import { SPComponentLoader } from "@microsoft/sp-loader";
 import { ILivePersonatProps} from '.';
 
@@ -22,7 +22,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
           sharedLibrary.current = await SPComponentLoader.loadComponentById(LIVE_PERSONA_COMPONENT_ID);
           setIsComponentLoaded(true);
         } catch (error) {
-          Log.error(`[LivePersona]`, error, serviceScope ?? context.serviceScope);
+          Log.error(`[LivePersona]`, error, serviceScope ?? context.serviceScope as ServiceScope);
         }
       }
     })();

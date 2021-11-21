@@ -16,6 +16,7 @@ import styles from './SiteFilePickerTab.module.scss';
 import * as strings from 'ControlStrings';
 import { urlCombine } from '../../../common/utilities';
 import { cloneDeep } from '@microsoft/sp-lodash-subset';
+import { SPFxWeb } from '../../..';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
   private _defaultLibraryNamePromise: Promise<void | string> = Promise.resolve();
@@ -54,7 +55,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     };
   }
 
-  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }: SPWeb) {
+  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }: SPFxWeb) {
     // folderAbsPath: "https://tenant.sharepoint.com/teams/Test/DocLib/Folder"
 
     // folderServRelPath: "/teams/Test/DocLib/Folder"

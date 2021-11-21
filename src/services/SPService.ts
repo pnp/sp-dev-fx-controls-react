@@ -1,16 +1,16 @@
 import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
 import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
 import { urlCombine } from "../common/utilities";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
+import { SPFxContext } from "../common/Types";
 
 export default class SPService implements ISPService {
 
   private _webAbsoluteUrl: string;
 
-  constructor(private _context: BaseComponentContext, webAbsoluteUrl?: string) {
+  constructor(private _context: SPFxContext, webAbsoluteUrl?: string) {
     this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
   }
 

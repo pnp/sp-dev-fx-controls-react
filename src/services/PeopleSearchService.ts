@@ -1,6 +1,5 @@
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
 import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
@@ -10,6 +9,7 @@ import "@pnp/sp/sputilities";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
+import { SPFxContext } from '../common/Types';
 
 /**
  * Service implementation to search people in SharePoint
@@ -21,7 +21,7 @@ export default class SPPeopleSearchService {
   /**
    * Service constructor
    */
-  constructor(private context: BaseComponentContext) {
+  constructor(private context: SPFxContext) {
     this.cachedPersonas = {};
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];

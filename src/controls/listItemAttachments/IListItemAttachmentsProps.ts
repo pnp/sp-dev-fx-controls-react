@@ -1,4 +1,4 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export interface IListItemAttachmentsProps {
   listId: string;
@@ -6,7 +6,7 @@ export interface IListItemAttachmentsProps {
   className?: string;
   webUrl?:string;
   disabled?: boolean;
-  context: BaseComponentContext;
+  context: SPFxContext;
   openAttachmentsInNewWindow?: boolean; // JJ - 20200613 - needed to support Microsoft Teams
   /**
    * Main text to display on the placeholder, next to the icon

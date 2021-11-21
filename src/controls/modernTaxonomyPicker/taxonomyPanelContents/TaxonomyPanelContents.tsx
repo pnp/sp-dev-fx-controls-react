@@ -34,7 +34,6 @@ import {
   ITermStoreInfo
 } from '@pnp/sp/taxonomy';
 import { Guid } from '@microsoft/sp-core-library';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { css } from '@uifabric/utilities/lib/css';
 import * as strings from 'ControlStrings';
 import { useForceUpdate } from '@uifabric/react-hooks';
@@ -42,9 +41,10 @@ import { ModernTermPicker } from '../modernTermPicker/ModernTermPicker';
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { IModernTermPickerProps } from '../modernTermPicker/ModernTermPicker.types';
 import { Optional } from '../ModernTaxonomyPicker';
+import { SPFxContext } from '../../../common/Types';
 
 export interface ITaxonomyPanelContentsProps {
-  context: BaseComponentContext;
+  context: SPFxContext;
   allowMultipleSelections?: boolean;
   termSetId: Guid;
   pageSize: number;

@@ -1,4 +1,4 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export interface ISite {
   /**
@@ -37,7 +37,7 @@ export interface ISitePickerProps {
   /**
    * Web Part context
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * Intial data to load in the 'Selected sites' area (optional)
    */

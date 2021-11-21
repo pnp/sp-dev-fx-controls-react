@@ -1,13 +1,13 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { LambdaParser } from '@pnp/odata/parsers';
 import { SharePointQueryableCollection, sp } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { SPFxContext } from '../common/Types';
 
 export class SPTaxonomyService {
 
-  constructor(private context: BaseComponentContext) {
+  constructor(private context: SPFxContext) {
 
   }
 

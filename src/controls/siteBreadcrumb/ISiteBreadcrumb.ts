@@ -1,9 +1,9 @@
 import { IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { SPFxContext } from '../../common/Types';
 
 export interface ISiteBreadcrumbProps {
 
-  context: BaseComponentContext;
+  context: SPFxContext;
 }
 
 export interface ISiteBreadcrumbState {

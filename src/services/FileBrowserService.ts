@@ -1,17 +1,17 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
+import { SPFxContext } from '../common/Types';
 
 export class FileBrowserService {
   protected itemsToDownloadCount: number;
-  protected context: BaseComponentContext;
+  protected context: SPFxContext;
 
   protected driveAccessToken: string;
   protected mediaBaseUrl: string;
   protected callerStack: string;
 
-  constructor(context: BaseComponentContext, itemsToDownloadCount: number = 100) {
+  constructor(context: SPFxContext, itemsToDownloadCount: number = 100) {
     this.context = context;
 
     this.itemsToDownloadCount = itemsToDownloadCount;

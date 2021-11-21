@@ -1,13 +1,13 @@
 
 import React from "react";
-import { ServiceScope } from "@microsoft/sp-core-library";
 import { MSGraphClient, MSGraphClientFactory } from "@microsoft/sp-http";
 import { PageContext } from "@microsoft/sp-page-context";
 import { ITeam } from "./../common/model/ITeam";
 import { ITeamChannel } from "./../common/model/ITeamChannel";
 import { ITeamMenber } from "../common/model/ITeamMember";
+import { RecursivePicker, SPFxServiceScope } from "../common/Types";
 
-export const useTeams = (serviceScope: ServiceScope) => {
+export const useTeams = (serviceScope: SPFxServiceScope) => {
   let _pageContext = React.useRef<PageContext>();
   let _msgGraphClient = React.useRef<MSGraphClient>();
 

@@ -1,12 +1,12 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PermissionLevel } from '.';
+import { SPFxContext } from '../../common/Types';
 
 export interface ISecurityTrimmedControlProps {
   /**
    * Context of the web part, application customizer, field customizer, or list view command set.
    */
-  context: BaseComponentContext;
+  context: SPFxContext;
   /**
    * The permissions to check for the user.
    */
