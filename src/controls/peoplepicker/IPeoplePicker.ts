@@ -1,4 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { IBasePickerStyles } from "office-ui-fabric-react";
 import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
 import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
@@ -116,6 +117,10 @@ export interface IPeoplePickerProps {
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
+   /**
+   * styles to apply on control
+   */
+    styles?: Partial<IBasePickerStyles>;
 }
 
 export interface IPeoplePickerState {

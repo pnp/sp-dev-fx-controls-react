@@ -287,6 +287,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         {titleText && <Label required={required}>{titleText}</Label>}
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
+          styles={this.props.styles ?? undefined}
           onResolveSuggestions={this.onSearchFieldChanged}
           onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
           getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}
