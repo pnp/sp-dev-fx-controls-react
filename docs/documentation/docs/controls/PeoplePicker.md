@@ -81,6 +81,7 @@ The People picker control can be configured with the following properties:
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
 | placeholder | string | no | Short text hint to display in empty picker |
+| styles | Partial<IBasePickerStyles> | no | Styles to apply on control |
 
 Enum `PrincipalType`
 
