@@ -7,9 +7,13 @@
 - Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)
 - `ListView`: Add ability to provide CSS class names for list wrapper and list itself [#1007](https://github.com/pnp/sp-dev-fx-controls-react/issues/1007)
 - `IconPicker`: `onCancel` property is added [#1043](https://github.com/pnp/sp-dev-fx-controls-react/issues/1043)
-- SharePoint Framework v1.13 support
+- SharePoint Framework v1.13.* support
 - `DynamicForm`: `disabledFields` property added [#987](https://github.com/pnp/sp-dev-fx-controls-react/pull/987)
 - `ListPicker`: Add multi numbers support for baseTemplate option [#1016](https://github.com/pnp/sp-dev-fx-controls-react/issues/1016)
+- `ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)
+- `PeoplePicker`: Added filter for Microsoft 365 Group [#985](https://github.com/pnp/sp-dev-fx-controls-react/pull/1027)
+- `Accordion`: Added custom icons [#1033](https://github.com/pnp/sp-dev-fx-controls-react/issues/1033)
+- Localization: Corrections for norwegian localizations [#1060](https://github.com/pnp/sp-dev-fx-controls-react/pull/1060)
 
 ### Fixes
 
@@ -19,7 +23,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [jumpei-yamauchi](https://github.com/jumpei-yamauchi), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren), [Xiyitifu](https://github.com/Xiyitifu).
+Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [jumpei-yamauchi](https://github.com/jumpei-yamauchi), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren), [Xiyitifu](https://github.com/Xiyitifu), [Russell gove](https://github.com/russgove), [Andreas Omayrat](https://github.com/andreasomayrat), [Abderahman Moujahid](https://github.com/Abderahman88), [Alexander M](https://github.com/alexanmo).
 
 ## 3.4.1
 
