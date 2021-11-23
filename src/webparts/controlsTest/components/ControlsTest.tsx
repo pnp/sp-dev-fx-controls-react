@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  IBasePickerStyles,
   ITag,
 } from "office-ui-fabric-react/lib/Pickers";
 import {
@@ -262,8 +263,40 @@ const sampleItems = [
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
-
-
+  private theme =  window["__themeState__"].theme;
+  private pickerStylesSingle: Partial<IBasePickerStyles> = {
+    root: {
+      width: "100%",
+      borderRadius: 0,
+      marginTop: 0,
+    },
+    input: {
+      width: "100%",
+      backgroundColor:  this.theme.white,
+    },
+    text: {
+      borderStyle: "solid",
+      width: "100%",
+      borderWidth: 1,
+      backgroundColor:  this.theme.white,
+      borderRadius: 0,
+      borderColor:  this.theme.neutralQuaternaryAlt,
+      ":focus": {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor:  this.theme.themePrimary,
+      },
+      ":hover": {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor:  this.theme.themePrimary,
+      },
+      ":after": {
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    },
+  };
   private onSelectedChannel = (teamsId: string, channelId: string) => {
     alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
     console.log("TeamsId", teamsId);
@@ -1144,6 +1177,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           buttonLabel='Configure'
           hideButton={this.props.displayMode === DisplayMode.Read}
           onConfigure={this._onConfigure} />
+
+         <PeoplePicker context={this.props.context}
+          titleText="People Picker custom styles"
+          styles={this.pickerStylesSingle}
+          personSelectionLimit={5}
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+
+          onChange={this._getPeoplePickerItems} />
+
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker (Group not found)"

@@ -14,7 +14,8 @@
           "`ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)",
           "`PeoplePicker`: Added filter for Microsoft 365 Group [#985](https://github.com/pnp/sp-dev-fx-controls-react/pull/1027)",
           "`Accordion`: Added custom icons [#1033](https://github.com/pnp/sp-dev-fx-controls-react/issues/1033)",
-          "Localization: Corrections for norwegian localizations [#1060](https://github.com/pnp/sp-dev-fx-controls-react/pull/1060)"
+          "Localization: Corrections for norwegian localizations [#1060](https://github.com/pnp/sp-dev-fx-controls-react/pull/1060)",
+          "`PeoplePicker `: Added Styles property [#1061](https://github.com/pnp/sp-dev-fx-controls-react/pull/1061)"
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
@@ -34,7 +35,8 @@
         "[Russell gove](https://github.com/russgove)",
         "[Andreas Omayrat](https://github.com/andreasomayrat)",
         "[Abderahman Moujahid](https://github.com/Abderahman88)",
-        "[Alexander M](https://github.com/alexanmo)"
+        "[Alexander M](https://github.com/alexanmo)",
+        "[João Mendes](https://github.com/joaojmendes)"
       ]
     },
     {
