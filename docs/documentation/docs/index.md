@@ -12,8 +12,8 @@ Currently there are 3 active versions of the controls. Please, reference the tab
 
 | Version | SPFx minimal dependency | Fluent UI (Office UI Fabric React) version | SharePoint Version | Comments |
 | ------- | ----------------------- | ------------------------------------------ | ------------------ | -------- |
-| `v3` | `1.13.0` | `7.174.1` | Online | The most current, actively maintained version of the library. |
-| `v2` | `1.11.0` | `6.214.0` | Online | **The last major version is 2.9.0**.<br>We strongly recommend to update to SPFx `1.13` and `v3` of Controls. |
+| `v3` | `1.13.*` | `7.174.1` | Online | The most current, actively maintained version of the library. |
+| `v2` | `1.11.0` | `6.214.0` | Online | **The last major version is 2.9.0**.<br>We strongly recommend to update to SPFx `1.13.*` and `v3` of Controls. |
 | `v1` | `1.3.0` | `5.131.0` | On-Prem | The version is maintained for SharePoint On-Prem 2016 and 2019 implementations. Be aware that the controls might not work in solutions you're building for on-premises as SharePoint On-Prem is based on SPFx `1.1.0`. |
 
 !!! attention
