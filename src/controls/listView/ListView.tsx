@@ -25,7 +25,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   private dropArea = null;
   private dropRef = element => {
     this.dropArea = element;
-  };
+  }
 
   constructor(props: IListViewProps) {
     super(props);
