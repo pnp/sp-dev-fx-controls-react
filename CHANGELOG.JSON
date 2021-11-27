@@ -14,15 +14,16 @@
           "`ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)",
           "`PeoplePicker`: Added filter for Microsoft 365 Group [#985](https://github.com/pnp/sp-dev-fx-controls-react/pull/1027)",
           "`Accordion`: Added custom icons [#1033](https://github.com/pnp/sp-dev-fx-controls-react/issues/1033)",
+          "Localization: Correction for german localizations [#1059](https://github.com/pnp/sp-dev-fx-controls-react/issues/1059)",
           "Localization: Corrections for norwegian localizations [#1060](https://github.com/pnp/sp-dev-fx-controls-react/pull/1060)",
           "`PeoplePicker `: Added Styles property [#1061](https://github.com/pnp/sp-dev-fx-controls-react/pull/1061)",
           "Localization: Update pt-pt and pt-br loc files [#1066](https://github.com/pnp/sp-dev-fx-controls-react/pull/1066)"
         ],
         "fixes": [
           "`FilePicker`: `defaultFolderAbsolutePath` does not work Out of context [#1023](https://github.com/pnp/sp-dev-fx-controls-react/issues/1023)",
+          "`ModernTaxonomyPicker`: correctly display with RTL mode [#1041](https://github.com/pnp/sp-dev-fx-controls-react/pull/1041)",
           "`FilePicker`: Fixed showing the selection circle on recent tabs [#1048](https://github.com/pnp/sp-dev-fx-controls-react/issues/1048)",
-          "`FilePicker`: Your organisation tab breadcrumb not working [#1056](https://github.com/pnp/sp-dev-fx-controls-react/issues/1056)",
-          "`ModernTaxonomyPicker`: correctly display with RTL mode [#1041](https://github.com/pnp/sp-dev-fx-controls-react/pull/1041)"
+          "`FilePicker`: Your organisation tab breadcrumb not working [#1056](https://github.com/pnp/sp-dev-fx-controls-react/issues/1056)"
         ]
       },
       "contributions": [
