@@ -28,8 +28,9 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       isCurrentItem: false,
       text: props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString(),
-      onClick: (ev, itm) => { this.onBreadcrumpItemClick(itm); }
     };
+    // add click event after defining breadcrumb so that it also applies to breadcrumb items passed to the component as properties
+    breadcrumbSiteNode.onClick = (ev, itm) => { this.onBreadcrumpItemClick(itm); }
 
     let breadcrumbItems: FilePickerBreadcrumbItem[] = [breadcrumbSiteNode];
 
