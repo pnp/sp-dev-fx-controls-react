@@ -658,6 +658,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div className="ms-font-m">Services tester:
           <TaxonomyPicker
             allowMultipleSelections={true}
+            selectChildrenIfParentSelected={true}
             //termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
             termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
             initialValues={[{
@@ -708,6 +709,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               ],
               termActionsDisplayMode: TermActionsDisplayMode.buttons,
               termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }}
+            onPanelSelectionChange={(prev, next) => {
+              console.log(prev);
+              console.log(next);
             }}
           />
 

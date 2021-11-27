@@ -1,6 +1,23 @@
 {
   "versions": [
     {
+      "version": "1.21.2",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#909](https://github.com/pnp/sp-dev-fx-controls-react/pull/909)",
+          "`Taxonomy picker` - useSessionStorage property integration [#998](https://github.com/pnp/sp-dev-fx-controls-react/issues/998)"
+        ],
+        "fixes": [
+          "`TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)"
+        ]
+      },
+      "contributions": [
+        "[Emmanuel Sapet](https://github.com/Whiteshark57)",
+        "[Peter Paul Kirschner](https://github.com/petkir)"
+      ]
+    },
+    {
       "version": "1.21.1",
       "changes": {
         "new": [],
