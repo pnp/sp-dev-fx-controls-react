@@ -28,8 +28,9 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       isCurrentItem: false,
       text: props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString(),
-      onClick: (ev, itm) => { this.onBreadcrumpItemClick(itm); }
     };
+    // add click event after defining breadcrumb so that it also applies to breadcrumb items passed to the component as properties
+    breadcrumbSiteNode.onClick = (ev, itm) => { this.onBreadcrumpItemClick(itm); };
 
     let breadcrumbItems: FilePickerBreadcrumbItem[] = [breadcrumbSiteNode];
 
@@ -60,21 +61,33 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     // folderServRelPath: "/teams/Test/DocLib/Folder"
     let folderServRelPath = folderAbsPath && folderAbsPath.substr(folderAbsPath.indexOf(webServRelUrl));
 
+    // folderAbsPath: "https://tenant.sharepoint.com/DocLib/Folder"
+    if (webServRelUrl === "/") {
+      folderServRelPath = folderAbsPath && folderAbsPath.split(webAbsUrl)[1];
+    }
+
     // folderWebRelPath: "/DocLib/Folder"
     let folderWebRelPath = folderServRelPath && folderServRelPath.substr(webServRelUrl.length);
     let libInternalName = folderWebRelPath && folderWebRelPath.substring(1, Math.max(folderWebRelPath.indexOf("/", 2), 0) || undefined);
+    if (webServRelUrl === "/") {
+      libInternalName = folderWebRelPath && folderWebRelPath.substring(0, Math.max(folderWebRelPath.indexOf("/", 2), 0) || undefined);
+    }
 
     // libraryServRelUrl: "/teams/Test/DocLib/"
     let libraryServRelUrl = urlCombine(webServRelUrl, libInternalName);
 
     let tenantUrl = folderAbsPath.substring(0, folderAbsPath.indexOf(webServRelUrl));
+    if (webAbsUrl === "/") {
+      tenantUrl = webAbsUrl;
+    }
     let folderBreadcrumbs: FilePickerBreadcrumbItem[] = this.parseBreadcrumbsFromPaths(
       libraryServRelUrl,
       folderServRelPath,
       folderWebRelPath,
       webAbsUrl,
       tenantUrl,
-      libInternalName
+      libInternalName,
+      webServRelUrl
     );
 
     return { libraryServRelUrl, folderServRelPath, folderAbsPath, folderBreadcrumbs };
@@ -86,7 +99,8 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     folderWebRelPath: string,
     webAbsUrl: string,
     tenantUrl: string,
-    libInternalName: string
+    libInternalName: string,
+    webServRelUrl: string
   ) {
     this._defaultLibraryNamePromise = this.props.fileBrowserService.getLibraryNameByInternalName(libInternalName);
     let folderBreadcrumbs: FilePickerBreadcrumbItem[] = [];
@@ -104,6 +118,10 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     if (folderServRelPath != libraryServRelUrl) {
       let folderLibRelPath = folderWebRelPath.substring(libInternalName.length + 2);
+      if (webServRelUrl === "/") {
+        folderLibRelPath = folderWebRelPath.substring(libInternalName.length + 1);
+      }
+
       let breadcrumbFolderServRelPath = libraryServRelUrl;
 
       let crumbs: FilePickerBreadcrumbItem[] = folderLibRelPath.split("/").map((currFolderName => {

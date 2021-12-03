@@ -38,7 +38,7 @@ nav:
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'
     - ListItemAttachments: 'controls/ListItemAttachments.md'
-    - ListItemComments: 'controls/ListItemComments.mds'
+    - ListItemComments: 'controls/ListItemComments.md'
     - ListItemPicker: 'controls/ListItemPicker.md'
     - ListPicker: 'controls/ListPicker.md'
     - ListView: 'controls/ListView.md'

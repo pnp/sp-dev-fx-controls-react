@@ -23,10 +23,10 @@
 }
 
 .itemTile {
-  -webkit-transition: -webkit-transform .1s linear;
-  transition: -webkit-transform .1s linear;
-  transition: transform .1s linear;
-  transition: transform .1s linear,-webkit-transform .1s linear;
+  -webkit-transition: -webkit-transform 0.1s linear;
+  transition: -webkit-transform 0.1s linear;
+  transition: transform 0.1s linear;
+  transition: transform 0.1s linear, -webkit-transform 0.1s linear;
   position: relative;
   display: inline-block;
   left: 0;
@@ -131,26 +131,26 @@
   }
 }
 
-.gridListCell.isSelected .itemTileCheckCircle,
-.gridListCell:hover,
-.gridListCell:hover .itemTileCheckCircle {
-  opacity: 1;
+.itemTile.isSelected {
+  .itemTileCheckCircle {
+    opacity: 1;
+  }
 }
 
 .itemTileNamePlate {
   position: absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  min-height:20px;
-  padding:4px 8px 8px;
-  background-color:$ms-color-white;
-  color:$ms-color-neutralPrimary;
-  white-space:nowrap;
-  text-overflow:ellipsis
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 20px;
+  padding: 4px 8px 8px;
+  background-color: $ms-color-white;
+  color: $ms-color-neutralPrimary;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .itemTile.isFile .itemTileNamePlate {
-  opacity: .95;
+  opacity: 0.95;
   border-top-width: 1px;
   border-top-style: solid;
   border-top-color: $ms-color-neutralLight;
@@ -162,8 +162,9 @@
   line-height: 20px;
 }
 
-
-.itemTileChildCount, .itemTileName, .itemTileSubText {
+.itemTileChildCount,
+.itemTileName,
+.itemTileSubText {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -171,7 +172,7 @@
 
 .itemTileSubText {
   font-size: 11px;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .recentGridList {

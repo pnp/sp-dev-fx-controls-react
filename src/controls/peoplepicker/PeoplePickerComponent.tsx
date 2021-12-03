@@ -19,7 +19,7 @@ import uniqBy from 'lodash/uniqBy';
 export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePickerState> {
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
-  private groupId: number;
+  private groupId: number | string;
 
   constructor(props: IPeoplePickerProps) {
     super(props);
@@ -287,6 +287,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
         {titleText && <Label required={required}>{titleText}</Label>}
 
         <NormalPeoplePicker pickerSuggestionsProps={suggestionProps}
+          styles={this.props.styles ?? undefined}
           onResolveSuggestions={this.onSearchFieldChanged}
           onEmptyInputFocus={this.returnMostRecentlyUsedPerson}
           getTextFromItem={(peoplePersonaMenu: IPersonaProps) => peoplePersonaMenu.text}

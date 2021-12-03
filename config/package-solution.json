@@ -6,7 +6,14 @@
     "version": "1.0.0.0",
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
-    "includeClientSideAssets": true
+    "includeClientSideAssets": true,
+    "developer": {
+      "name": "Microsoft 365 PnP",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "websiteUrl": "",
+      "mpnId": "Undefined-1.13.0"
+    }
   },
   "paths": {
     "zippedPackage": "solution/sp-dev-fx-controls-react.sppkg"

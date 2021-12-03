@@ -107,6 +107,9 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
   }
 
   private closePanel = (): void => {
+    if (this.props.onCancel) {
+      this.props.onCancel();
+    }
     this.setState({
       currentIcon: this.props.currentIcon,
       isPanelOpen: false

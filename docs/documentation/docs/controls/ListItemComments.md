@@ -53,7 +53,6 @@ The `ListItemComments` control can be configured with the following properties:
 
 ## MSGraph Permissions required
 
-This control required the flowing scopes:
-at least : People.Read   
+This control requires at least the flowing scopes: `People.Read`, `User.ReadBasic.All`
  
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemComments)

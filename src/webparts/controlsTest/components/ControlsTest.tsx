@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  IBasePickerStyles,
   ITag,
 } from "office-ui-fabric-react/lib/Pickers";
 import {
@@ -262,8 +263,40 @@ const sampleItems = [
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
-
-
+  private theme =  window["__themeState__"].theme;
+  private pickerStylesSingle: Partial<IBasePickerStyles> = {
+    root: {
+      width: "100%",
+      borderRadius: 0,
+      marginTop: 0,
+    },
+    input: {
+      width: "100%",
+      backgroundColor:  this.theme.white,
+    },
+    text: {
+      borderStyle: "solid",
+      width: "100%",
+      borderWidth: 1,
+      backgroundColor:  this.theme.white,
+      borderRadius: 0,
+      borderColor:  this.theme.neutralQuaternaryAlt,
+      ":focus": {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor:  this.theme.themePrimary,
+      },
+      ":hover": {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor:  this.theme.themePrimary,
+      },
+      ":after": {
+        borderWidth: 0,
+        borderRadius: 0,
+      },
+    },
+  };
   private onSelectedChannel = (teamsId: string, channelId: string) => {
     alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
     console.log("TeamsId", teamsId);
@@ -438,7 +471,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
-      comboBoxListItemPickerIds: [{Id: 1, Title: '111'}],
+      comboBoxListItemPickerIds: [{ Id: 1, Title: '111' }],
       treeViewSelectedKeys: ['gc1', 'gc3'],
       showAnimatedDialog: false,
       showCustomisedAnimatedDialog: false,
@@ -1145,6 +1178,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           hideButton={this.props.displayMode === DisplayMode.Read}
           onConfigure={this._onConfigure} />
 
+         <PeoplePicker context={this.props.context}
+          titleText="People Picker custom styles"
+          styles={this.pickerStylesSingle}
+          personSelectionLimit={5}
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+
+          onChange={this._getPeoplePickerItems} />
+
+
         <PeoplePicker context={this.props.context}
           titleText="People Picker (Group not found)"
           webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
@@ -1290,21 +1333,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </DragDropFiles>
         <br></br>
 
-
-        <ListView items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection}
-          showFilter={true}
-          dragDropFiles={true}
-          onDrop={this._getDropFiles}
-          stickyHeader={true}
-        // defaultFilter="Team"
-        />
-
+          <ListView items={this.state.items}
+            viewFields={viewFields}
+            iconFieldName='ServerRelativeUrl'
+            groupByFields={groupByFields}
+            compact={true}
+            selectionMode={SelectionMode.single}
+            selection={this._getSelection}
+            showFilter={true}
+            dragDropFiles={true}
+            onDrop={this._getDropFiles}
+            stickyHeader={true}
+            className={styles.listViewWrapper}
+          // defaultFilter="Team"
+          />
 
         <ChartControl type={ChartType.Bar}
           data={{
@@ -1393,7 +1435,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
 
               <div className="ms-font-m">Site picker tester:
-              <SitePicker
+                <SitePicker
                   context={this.props.context}
                   label={'select sites'}
                   mode={'site'}
@@ -1444,6 +1486,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
                   columnInternalName='Title'
                   keyColumnInternalName='Id'
+                  orderBy='Title desc'
                   multiSelect={true}
                   onSelectedItem={(data) => {
                     console.log(`Item(s):`, data);
@@ -1459,7 +1502,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 }} />
                 <PrimaryButton text="Change default items" onClick={() => {
                   this.setState({
-                    comboBoxListItemPickerIds: [{Id: 2, Title: '222'}]
+                    comboBoxListItemPickerIds: [{ Id: 2, Title: '222' }]
                   });
                 }} />
 
@@ -1684,6 +1727,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <IconPicker buttonLabel={'Icon'}
           onChange={(iconName: string) => { console.log(iconName); }}
+          onCancel={() => { console.log("Panel closed"); }}
           onSave={(iconName: string) => { console.log(iconName); }} />
 
         <div>
@@ -1770,7 +1814,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #1
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },
@@ -1785,7 +1829,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #2
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },
@@ -1800,7 +1844,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   >
                     <NorthstarText size="large" weight="semibold">
                       Content #3
-                  </NorthstarText>
+                    </NorthstarText>
                   </Flex>
                 ),
               },

@@ -5,6 +5,11 @@ import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
 import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
 import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
+import { sp } from '@pnp/sp';
+import "@pnp/sp/sputilities";
+import { Web } from "@pnp/sp/webs";
+import "@pnp/sp/webs";
+import "@pnp/sp/site-users/web";
 
 /**
  * Service implementation to search people in SharePoint
@@ -20,6 +25,8 @@ export default class SPPeopleSearchService {
     this.cachedPersonas = {};
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
+    // Setup PnPjs
+    sp.setup(this.context);
   }
 
   /**
@@ -62,7 +69,7 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       const mockUsers = await this.searchPeopleFromMock(email);
@@ -76,7 +83,7 @@ export default class SPPeopleSearchService {
   /**
    * Search All Users from the SharePoint People database
    */
-  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
+  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.searchPeopleFromMock(query);
@@ -162,7 +169,7 @@ export default class SPPeopleSearchService {
   /**
    * Tenant search
    */
-  private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, groupId: number): Promise<IPeoplePickerUserItem[]> {
+  private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, groupId: number | string): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
       const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
@@ -183,9 +190,47 @@ export default class SPPeopleSearchService {
         searchBody.queryParams["SharePointGroupID"] = 0;
       }
 
-      // Check if users need to be searched in a specific group
-      if (groupId) {
+      // Check if users need to be searched in a specific SharePoint Group
+      if (groupId && typeof(groupId) === 'number') {
         searchBody.queryParams["SharePointGroupID"] = groupId;
+      }
+
+      // Check if users need to be searched in a specific Office365 Group
+      else if(groupId && typeof(groupId) === 'string') {
+        const graphUserRequestUrl = `/groups/${groupId}/members?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
+        const graphClient = await this.context.msGraphClientFactory.getClient();
+        const graphUserResponse = await graphClient.api(graphUserRequestUrl).header('ConsistencyLevel', 'eventual').get();
+
+        if(graphUserResponse.value && graphUserResponse.value.length > 0) {
+
+          // Get user loginName from user email
+          const _users = [];
+          const batch = Web(this.context.pageContext.web.absoluteUrl).createBatch();
+          for (const value of graphUserResponse.value) {
+            sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data));
+          }
+
+          await batch.execute();
+
+          let userResult: IPeoplePickerUserItem[] = [];
+          for (const user of _users) {
+            userResult.push({
+              id: ensureUser ? user.Id : user.LoginName,
+              loginName: user.LoginName,
+              imageUrl: this.generateUserPhotoLink(user.Email),
+              imageInitials: this.getFullNameInitials(user.Title),
+              text: user.Title, // name
+              secondaryText: user.Email, // email
+              tertiaryText: '', // status
+              optionalText: '' // anything
+            });
+          }
+
+          return userResult;
+        }
+
+        //Nothing to return
+        return [];
       }
 
       const httpPostOptions: ISPHttpClientOptions = {

@@ -6,7 +6,7 @@ import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
 import styles from './ComboBoxListItemPicker.module.scss';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { cloneDeep, isEqual } from 'lodash';
 
 
@@ -45,7 +45,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       columnInternalName,
       webUrl,
       itemLimit,
-      onInitialized
+      onInitialized,
+      orderBy
     } = props;
     let query = filter || "";
     //query += filter;
@@ -57,7 +58,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
         columnInternalName,
         keyColumnInternalName,
         webUrl,
-        itemLimit || 100);
+        itemLimit || 100,
+        orderBy);
 
         this._options = listItems.map(option => {
           return {

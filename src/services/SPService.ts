@@ -58,8 +58,21 @@ export default class SPService implements ISPService {
       queryUrl += `&$filter=${encodeURIComponent(options.filter)}`;
     } else {
       if (options.baseTemplate) {
-        queryUrl += `&$filter=BaseTemplate eq ${options.baseTemplate}`;
-        filtered = true;
+        if (Array.isArray(options.baseTemplate)) {
+          const numbers: number[] = options.baseTemplate;
+          const mapNumbers = numbers.map((i) => {
+            if (i == numbers[0]) {
+              return `BaseTemplate eq ${i}`;
+            } else {
+              return `or BaseTemplate eq ${i}`;
+            }
+          });
+          queryUrl += `&$filter=${mapNumbers.join(" ")}`;
+          filtered = true;
+        } else {
+          queryUrl += `&$filter=BaseTemplate eq ${options.baseTemplate}`;
+          filtered = true;
+        }
       }
 
       if (options.includeHidden === false) {
