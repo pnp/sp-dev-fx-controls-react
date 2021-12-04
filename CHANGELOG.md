@@ -5,6 +5,7 @@
 ### Fixes
 
 - `LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)
+- `ListView`: documentation spelling mistake 'ColumndName' [#1063](https://github.com/pnp/sp-dev-fx-controls-react/issues/1063)
 
 ## 3.5.0
 
