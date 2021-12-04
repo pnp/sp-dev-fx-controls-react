@@ -2,6 +2,10 @@
 
 ## 3.6.0
 
+### Fixes
+
+- `LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)
+
 ## 3.5.0
 
 ### Enhancements
