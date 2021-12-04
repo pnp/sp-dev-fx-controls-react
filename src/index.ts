@@ -38,3 +38,4 @@ export * from './AnimatedDialog';
 export * from './DynamicForm';
 export * from './Carousel';
 export * from './ModernTaxonomyPicker';
+export * from './LivePersona';
