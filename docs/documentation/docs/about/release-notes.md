@@ -29,8 +29,6 @@
 
 Special thanks to our contributors (in alphabetical order): [Gautam Sheth](https://github.com/gautamdsheth), [Jouni Pohjolainen](https://github.com/jonepo), [jumpei-yamauchi](https://github.com/jumpei-yamauchi), [Louis Pineau](https://github.com/pineaulo), [Michalis Koutroupis](https://github.com/mkoutroupis), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren), [Xiyitifu](https://github.com/Xiyitifu), [Russell gove](https://github.com/russgove), [Andreas Omayrat](https://github.com/andreasomayrat), [Abderahman Moujahid](https://github.com/Abderahman88), [Alexander M](https://github.com/alexanmo), [João Mendes](https://github.com/joaojmendes).
 
-## 3.4.1
-
 ## 3.4.0
 
 ### New control(s)
