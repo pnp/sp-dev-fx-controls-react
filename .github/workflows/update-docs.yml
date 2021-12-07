@@ -21,8 +21,5 @@ jobs:
     - name: Install MkDocs theme
       run: sudo pip install mkdocs-material==3.1.0
 
-    - name: Avoid hosts unknown for github
-      run: echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-
     - name: Build docs
       run: cd docs/documentation && mkdocs gh-deploy
