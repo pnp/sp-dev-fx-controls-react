@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-python@v2
       with:
-        node-version: 14
-        registry-url: 'https://registry.npmjs.org'
+        python-version: 3.x
 
-    - name: Install mkdocs
-      run: sudo pip install mkdocs
+    # - name: Install mkdocs
+    #   run: pip install mkdocs
 
     - name: Install MkDocs theme
-      run: sudo pip install mkdocs-material==3.1.0
+      run: pip install mkdocs-material==3.1.0
 
     - name: Build docs
-      run: cd docs/documentation && mkdocs gh-deploy
+      run: mkdocs gh-deploy
+      working-directory: docs/documentation
