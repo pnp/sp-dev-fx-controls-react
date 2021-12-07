@@ -224,7 +224,7 @@ Interface `ITermAction`
 | iconName | string | no | Name of the icon to be used to display action |
 | hidden | boolean | no | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
 | invokeActionOnRender | boolean | no | Specifies if you want to invoke the action on render |
-| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => void) => Promise\<boolean> \| boolean | yes | Method checks if the current term is supported for the action. The method provices a couple of additional callback functions to make it possibe to programatically change the terms and its actions. |
+| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" \| "hidden", value: boolean) => void) => Promise\<boolean\> \| boolean | yes | Method checks if the current term is supported for the action. The method provices a couple of additional callback functions to make it possibe to programatically change the terms and its actions. |
 | actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise\<UpdateAction\> | yes | Method to be executed when action is fired |
 
 
