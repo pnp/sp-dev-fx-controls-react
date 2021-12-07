@@ -1,0 +1,25 @@
+name: Update docs
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    # - name: Install mkdocs
+    #   run: pip install mkdocs
+
+    - name: Install MkDocs theme
+      run: pip install mkdocs-material==3.1.0
+
+    - name: Build docs
+      run: mkdocs gh-deploy --force -m "[ci skip]"
+      working-directory: docs/documentation
