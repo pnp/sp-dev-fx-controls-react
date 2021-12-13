@@ -215,8 +215,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     if (props.termSetInfo.childrenCount > 0) {
       props.onLoadMoreData(Guid.parse(props.termSetInfo.id), props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', props.hideDeprecatedTerms)
         .then((loadedTerms) => {
-          const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
-          const grps: IGroup[] = nonExistingTerms.map(term => {
+          const grps: IGroup[] = loadedTerms.value.map(term => {
             let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
             if (termNames.length === 0) {
               termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -237,6 +236,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             return g;
           });
           props.setTerms((prevTerms) => {
+            const nonExistingTerms = loadedTerms.value.filter((newTerm) => prevTerms.every((prevTerm) => prevTerm.id !== newTerm.id));
             return [...prevTerms, ...nonExistingTerms];
           });
           rootGroup.children = grps;
@@ -276,8 +276,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
 
         props.onLoadMoreData(Guid.parse(props.termSetInfo.id), Guid.parse(group.key), '', props.hideDeprecatedTerms)
           .then((loadedTerms) => {
-            const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
-            const grps: IGroup[] = nonExistingTerms.map(term => {
+            const grps: IGroup[] = loadedTerms.value.map(term => {
               let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
               if (termNames.length === 0) {
                 termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -299,10 +298,12 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             });
 
             props.setTerms((prevTerms) => {
+              const nonExistingTerms = loadedTerms.value.filter((newTerm) => prevTerms.every((prevTerm) => prevTerm.id !== newTerm.id));
               return [...prevTerms, ...nonExistingTerms];
             });
 
-            group.children = grps;
+            const nonExistingChildren = grps.filter((grp) => group.children?.every((child) => child.key !== grp.key));
+            group.children = nonExistingChildren;
             group.data.skiptoken = loadedTerms.skiptoken;
             group.hasMoreData = loadedTerms.skiptoken !== '';
             setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== group.key));
@@ -513,8 +514,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, footerProps.group.key]);
             props.onLoadMoreData(Guid.parse(props.termSetInfo.id), footerProps.group.key === props.termSetInfo.id ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, props.hideDeprecatedTerms)
               .then((loadedTerms) => {
-                const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
-                const grps: IGroup[] = nonExistingTerms.map(term => {
+                const grps: IGroup[] = loadedTerms.value.map(term => {
                   let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
                   if (termNames.length === 0) {
                     termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -535,9 +535,11 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                   return g;
                 });
                 props.setTerms((prevTerms) => {
+                  const nonExistingTerms = loadedTerms.value.filter((newTerm) => prevTerms.every((prevTerm) => prevTerm.id !== newTerm.id));
                   return [...prevTerms, ...nonExistingTerms];
                 });
-                footerProps.group.children = [...footerProps.group.children, ...grps];
+                const nonExistingChildren = grps.filter((grp) => footerProps.group.children?.every((child) => child.key !== grp.key));
+                footerProps.group.children = [...footerProps.group.children, ...nonExistingChildren];
                 footerProps.group.data.skiptoken = loadedTerms.skiptoken;
                 footerProps.group.hasMoreData = loadedTerms.skiptoken !== '';
                 setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== footerProps.group.key));
