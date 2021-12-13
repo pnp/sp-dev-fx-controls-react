@@ -52,7 +52,7 @@ export interface ITaxonomyTreeProps {
   termStoreInfo: ITermStoreInfo;
   languageTag: string;
   themeVariant?: IReadonlyTheme;
-  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
   terms: ITermInfo[];
   setTerms: React.Dispatch<React.SetStateAction<ITermInfo[]>>;
   selection?: Selection<any>;
@@ -63,6 +63,126 @@ export interface ITaxonomyTreeProps {
 export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITaxonomyTreeProps> {
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
+
+  const updateTaxonomyTreeViewWithNewTermItems = (newTermItems: ITermInfo[]): void => {
+    for (const term of newTermItems) {
+
+      const findGroupContainingTerm = (currentGroup: IGroup): IGroup => {
+        if (!term.parent || currentGroup.key === term.parent.id) {
+          return currentGroup;
+        }
+        if (currentGroup.children?.length > 0) {
+          for (const child of currentGroup.children) {
+            const foundGroup = findGroupContainingTerm(child);
+            if (foundGroup) {
+              return foundGroup;
+            }
+          }
+        }
+        return null;
+      };
+
+      const groupToAddTermTo = findGroupContainingTerm(groups[0]);
+      let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
+      if (termNames.length === 0) {
+        termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+      }
+
+      const g: IGroup = {
+        name: termNames[0]?.name,
+        key: term.id,
+        startIndex: -1,
+        count: 50,
+        level: groupToAddTermTo.level + 1,
+        isCollapsed: true,
+        data: { skiptoken: '', term: term },
+        hasMoreData: term.childrenCount > 0,
+      };
+      if (g.hasMoreData) {
+        g.children = [];
+      }
+      groupToAddTermTo.children = [...groupToAddTermTo.children ?? [], g];
+      props.setTerms((prevTerms) => {
+        const nonExistingTerms = newTermItems.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
+        return [...prevTerms, ...nonExistingTerms];
+      });
+    }
+  }
+
+  const updateTaxonomyTreeViewWithUpdatedTermItems = (updatedTermItems: ITermInfo[]): void => {
+    for (const term of updatedTermItems) {
+
+      const findGroupForTerm = (currentGroup: IGroup): IGroup => {
+        if (currentGroup.key === term.id) {
+          return currentGroup;
+        }
+        if (currentGroup.children?.length > 0) {
+          for (const child of currentGroup.children) {
+            const foundGroup = findGroupForTerm(child);
+            if (foundGroup) {
+              return foundGroup;
+            }
+          }
+        }
+        return null;
+      };
+
+      const groupForUpdatedTerm = findGroupForTerm(groups[0]);
+      let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
+      if (termNames.length === 0) {
+        termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+      }
+
+      groupForUpdatedTerm.name = termNames[0]?.name;
+      groupForUpdatedTerm.data.term = term;
+      if (term.childrenCount > 0 && !groupForUpdatedTerm.children) {
+        groupForUpdatedTerm.children = [];
+      }
+      groupForUpdatedTerm.hasMoreData = groupForUpdatedTerm.children && term.childrenCount > groupForUpdatedTerm.children.length;
+      props.setTerms((prevTerms) => {
+        return [...prevTerms.filter(t => t.id !== term.id), term];
+      });
+    }
+  }
+
+  const updateTaxonomyTreeViewWithDeletedTermItems = (deletedTermItems: ITermInfo[]): void => {
+    for (const term of deletedTermItems) {
+
+      const deleteGroupForTerm = (currentGroup: IGroup): void => {
+        if (currentGroup.children?.length > 0) {
+          for (const child of currentGroup.children) {
+            deleteGroupForTerm(child);
+          }
+          if (currentGroup.children.some(t => t.key === term.id)) {
+            currentGroup.children = currentGroup.children.filter(t => t.key !== term.id);
+            if (currentGroup.children?.length === 0) {
+              currentGroup.hasMoreData = false;
+              currentGroup.children = undefined;
+            }
+          }
+        }
+      };
+
+      deleteGroupForTerm(groups[0]);
+      props.setTerms((prevTerms) => {
+        return [...prevTerms.filter(t => t.id !== term.id)];
+      });
+    }
+  }
+
+  const updateTaxonomyTreeView = (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]): void => {
+    if (newTermItems) {
+      updateTaxonomyTreeViewWithNewTermItems(newTermItems);
+    }
+
+    if (updatedTermItems) {
+      updateTaxonomyTreeViewWithUpdatedTermItems(updatedTermItems);
+    }
+
+    if (deletedTermItems) {
+      updateTaxonomyTreeViewWithDeletedTermItems(deletedTermItems);
+    }
+  }
 
   React.useEffect(() => {
     let termRootName = "";
@@ -95,7 +215,8 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     if (props.termSetInfo.childrenCount > 0) {
       props.onLoadMoreData(Guid.parse(props.termSetInfo.id), props.anchorTermInfo ? Guid.parse(props.anchorTermInfo.id) : Guid.empty, '', props.hideDeprecatedTerms)
         .then((loadedTerms) => {
-          const grps: IGroup[] = loadedTerms.value.map(term => {
+          const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
+          const grps: IGroup[] = nonExistingTerms.map(term => {
             let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
             if (termNames.length === 0) {
               termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -116,7 +237,6 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             return g;
           });
           props.setTerms((prevTerms) => {
-            const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
             return [...prevTerms, ...nonExistingTerms];
           });
           rootGroup.children = grps;
@@ -156,7 +276,8 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
 
         props.onLoadMoreData(Guid.parse(props.termSetInfo.id), Guid.parse(group.key), '', props.hideDeprecatedTerms)
           .then((loadedTerms) => {
-            const grps: IGroup[] = loadedTerms.value.map(term => {
+            const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
+            const grps: IGroup[] = nonExistingTerms.map(term => {
               let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
               if (termNames.length === 0) {
                 termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -178,7 +299,6 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             });
 
             props.setTerms((prevTerms) => {
-              const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
               return [...prevTerms, ...nonExistingTerms];
             });
 
@@ -215,7 +335,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
 
   const onRenderTitle = (groupHeaderProps: IGroupHeaderProps) => {
     const isChildSelected = (children: IGroup[]): boolean => {
-      let aChildIsSelected = children && children.some((child) => props.selection.isKeySelected(child.key) || isChildSelected(child.children));
+      let aChildIsSelected = children && children.some((child) => props.selection && props.selection.isKeySelected(child.key) || isChildSelected(child.children));
       return aChildIsSelected;
     };
 
@@ -233,7 +353,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
           )}
           <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
           <div className={styles.actionButtonContainer}>
-            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, props.anchorTermInfo)}
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, props.anchorTermInfo, updateTaxonomyTreeView)}
           </div>
         </FocusZone>
       );
@@ -252,14 +372,14 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
           )}
           <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
           <div className={styles.actionButtonContainer}>
-            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term, updateTaxonomyTreeView)}
           </div>
         </FocusZone>
       );
     }
 
     const isDisabled = groupHeaderProps.group.data.term.isAvailableForTagging.filter((t) => t.setId === props.termSetInfo.id)[0].isAvailable === false;
-    const isSelected = props.selection.isKeySelected(groupHeaderProps.group.key);
+    const isSelected = props.selection && props.selection.isKeySelected(groupHeaderProps.group.key);
 
     if (props.allowMultipleSelections) {
       const checkBoxStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = {root: { flex: "1" } };
@@ -285,11 +405,11 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
               {p.label}
             </span>}
             onChange={(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
-              props.selection.setKeySelected(groupHeaderProps.group.key, checked, false);
+              props.selection && props.selection.setKeySelected(groupHeaderProps.group.key, checked, false);
             }}
           />
           <div className={styles.actionButtonContainer}>
-            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term, updateTaxonomyTreeView)}
           </div>
         </FocusZone>
       );
@@ -305,8 +425,8 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                                                     {p.text}
                                                   </span>,
                                                 onClick: () => {
-                                                  props.selection.setAllSelected(false);
-                                                  props.selection.setKeySelected(groupHeaderProps.group.key, true, false);
+                                                  props.selection && props.selection.setAllSelected(false);
+                                                  props.selection && props.selection.setKeySelected(groupHeaderProps.group.key, true, false);
                                                 }
                                               }];
 
@@ -319,12 +439,12 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         >
             <ChoiceGroup
               options={options}
-              selectedKey={props.selection.getSelection()[0]?.id}
+              selectedKey={props.selection && props.selection.getSelection()[0]?.id}
               disabled={isDisabled}
               styles={choiceGroupStyles}
             />
           <div className={styles.actionButtonContainer}>
-            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term)}
+            {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term, updateTaxonomyTreeView)}
           </div>
         </FocusZone>
       );
@@ -355,11 +475,11 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
           if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
             if (props.allowMultipleSelections) {
-              props.selection.toggleKeySelected(headerProps.group.key);
+              props.selection && props.selection.toggleKeySelected(headerProps.group.key);
             }
             else {
-              props.selection.setAllSelected(false);
-              props.selection.setKeySelected(headerProps.group.key, true, false);
+              props.selection && props.selection.setAllSelected(false);
+              props.selection && props.selection.setKeySelected(headerProps.group.key, true, false);
             }
           }
         }}
@@ -385,7 +505,8 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, footerProps.group.key]);
             props.onLoadMoreData(Guid.parse(props.termSetInfo.id), footerProps.group.key === props.termSetInfo.id ? Guid.empty : Guid.parse(footerProps.group.key), footerProps.group.data.skiptoken, props.hideDeprecatedTerms)
               .then((loadedTerms) => {
-                const grps: IGroup[] = loadedTerms.value.map(term => {
+                const nonExistingTerms = loadedTerms.value.filter((term) => props.terms.every((prevTerm) => prevTerm.id !== term.id));
+                const grps: IGroup[] = nonExistingTerms.map(term => {
                   let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
                   if (termNames.length === 0) {
                     termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
@@ -406,7 +527,6 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                   return g;
                 });
                 props.setTerms((prevTerms) => {
-                  const nonExistingTerms = loadedTerms.value.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
                   return [...prevTerms, ...nonExistingTerms];
                 });
                 footerProps.group.children = [...footerProps.group.children, ...grps];

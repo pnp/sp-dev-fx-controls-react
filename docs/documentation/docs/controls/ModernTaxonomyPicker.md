@@ -52,23 +52,53 @@ private onTaxPickerChange(terms : ITermInfo[]) {
 ```
 
 ## Advanced example
-Custom rendering of a More actions button that displays a context menu for each term in the term set and the term set itself and with different options for the terms and the term set. This could for example be used to add terms to an open term set. It also shows how to set the initialsValues property when just knowing the name and the id of the term, the rest of the term properties must be provided but doesn't need to be the correct values.
+Custom rendering of a More actions button that displays a context menu for each term in the term set and the term set itself and with different options for the terms and the term set. This could for example be used to add terms to an open term set. It also shows how to set the initialsValues property when just knowing the name and the id of the term.
 
 ```TypeScript
+const termSetId = "36d21c3f-b83b-4acc-a223-4df6fa8e946d";
+const [clickedActionTerm, setClickedActionTerm] = React.useState<ITermInfo>();
+
+const addChildTerm = (parentTermId, updateTaxonomyTreeViewCallback): void => {
+  spPost(sp.termStore.sets.getById(termSetId).terms.getById(parentTermId).children, {
+    body: JSON.stringify({
+      "labels": [
+        {
+          "languageTag": "en-US",
+          "name": "Test",
+          "isDefault": true
+        }
+      ]
+    }),
+  })
+  .then(addedTerm => {
+    return sp.termStore.sets.getById(termSetId).terms.getById(addedTerm.id).expand("parent")();
+  })
+  .then(term => {
+    updateTaxonomyTreeViewCallback([term], null, null);
+  });
+}
+
+...
+
 <ModernTaxonomyPicker
   allowMultipleSelections={true}
-  termSetId={"36d21c3f-b83b-4acc-a223-4df6fa8e946d"}
+  termSetId={termSetId}
   panelTitle="Panel title"
   label={"Field title"}
   context={this.props.context}
   required={false}
-  initialValues={[{labels: [{name: "Subprocess A1", isDefault: true, languageTag: "en-US"}], id: "29eced8f-cf08-454b-bd9e-6443bc0a0f5e", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
+  initialValues={[{labels: [{name: "Subprocess A1", isDefault: true, languageTag: "en-US"}], id: "29eced8f-cf08-454b-bd9e-6443bc0a0f5e"}]}
   onChange={this.onTaxPickerChange}
   disabled={false}
   customPanelWidth={700}
   isLightDismiss={false}
   isBlocking={false}
-  onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo): JSX.Element => {
+  onRenderActionButton={(
+      termStoreInfo: ITermStoreInfo, 
+      termSetInfo: ITermSetInfo, 
+      termInfo: ITermInfo
+      updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void
+    ): JSX.Element => {
     const menuIcon: IIconProps = { iconName: 'MoreVertical', "aria-label": "More actions", style: { fontSize: "medium" } };
     if (termInfo) {
       const menuProps: IContextualMenuProps = {
@@ -77,13 +107,13 @@ Custom rendering of a More actions button that displays a context menu for each 
             key: 'addTerm',
             text: 'Add Term',
             iconProps: { iconName: 'Tag' },
-            onClick: () => onContextualMenuClick(termInfo.id)
+            onClick: () => addChildTerm(termInfo.id, updateTaxonomyTreeViewCallback)
           },
           {
             key: 'deleteTerm',
             text: 'Delete term',
             iconProps: { iconName: 'Untag' },
-            onClick: () => onContextualMenuClick(termInfo.id)
+            onClick: () => deleteTerm(termInfo.id, updateTaxonomyTreeViewCallback)
           },
         ],
       };
@@ -92,11 +122,11 @@ Custom rendering of a More actions button that displays a context menu for each 
         <IconButton
           menuProps={menuProps}
           menuIconProps={menuIcon}
-          style={this.state.clickedActionTerm && this.state.clickedActionTerm.id === termInfo.id ? {opacity: 1} : null}
+          style={clickedActionTerm && clickedActionTerm.id === termInfo.id ? {opacity: 1} : null}
           onMenuClick={(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, button?: IButtonProps) => {
-            this.setState({clickedActionTerm: termInfo});
+            setClickedActionTerm(termInfo));
           }}
-          onAfterMenuDismiss={() => this.setState({clickedActionTerm: null})}
+          onAfterMenuDismiss={() => setClickedActionTerm(null)}
         />
       );
     }
@@ -107,7 +137,7 @@ Custom rendering of a More actions button that displays a context menu for each 
             key: 'addTerm',
             text: 'Add term',
             iconProps: { iconName: 'Tag' },
-            onClick: () => onContextualMenuClick(termSetInfo.id)
+            onClick: () => addTerm(termInfo.id, updateTaxonomyTreeViewCallback)
           },
         ],
       };
@@ -177,7 +207,7 @@ You can also use the `TaxonomyTree` control separately to just render a stand-al
       }, []);
 
       return (
-        {currentTermSetInfo && (  
+        {currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (  
           <TaxonomyTree
             languageTag={currentLanguageTag}
             onLoadMoreData={taxonomyService.getTerms}
