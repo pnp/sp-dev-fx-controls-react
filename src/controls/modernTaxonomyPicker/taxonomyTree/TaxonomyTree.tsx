@@ -103,11 +103,11 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
       }
       groupToAddTermTo.children = [...groupToAddTermTo.children ?? [], g];
       props.setTerms((prevTerms) => {
-        const nonExistingTerms = newTermItems.filter((term) => prevTerms.every((prevTerm) => prevTerm.id !== term.id));
+        const nonExistingTerms = newTermItems.filter((newTerm) => prevTerms.every((prevTerm) => prevTerm.id !== newTerm.id));
         return [...prevTerms, ...nonExistingTerms];
       });
     }
-  }
+  };
 
   const updateTaxonomyTreeViewWithUpdatedTermItems = (updatedTermItems: ITermInfo[]): void => {
     for (const term of updatedTermItems) {
@@ -143,7 +143,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         return [...prevTerms.filter(t => t.id !== term.id), term];
       });
     }
-  }
+  };
 
   const updateTaxonomyTreeViewWithDeletedTermItems = (deletedTermItems: ITermInfo[]): void => {
     for (const term of deletedTermItems) {
@@ -168,7 +168,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         return [...prevTerms.filter(t => t.id !== term.id)];
       });
     }
-  }
+  };
 
   const updateTaxonomyTreeView = (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]): void => {
     if (newTermItems) {
@@ -182,7 +182,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     if (deletedTermItems) {
       updateTaxonomyTreeViewWithDeletedTermItems(deletedTermItems);
     }
-  }
+  };
 
   React.useEffect(() => {
     let termRootName = "";
@@ -405,7 +405,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
               {p.label}
             </span>}
             onChange={(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
-              props.selection && props.selection.setKeySelected(groupHeaderProps.group.key, checked, false);
+              if (props.selection) {
+                props.selection.setKeySelected(groupHeaderProps.group.key, checked, false);
+              }
             }}
           />
           <div className={styles.actionButtonContainer}>
@@ -425,8 +427,10 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                                                     {p.text}
                                                   </span>,
                                                 onClick: () => {
-                                                  props.selection && props.selection.setAllSelected(false);
-                                                  props.selection && props.selection.setKeySelected(groupHeaderProps.group.key, true, false);
+                                                  if (props.selection) {
+                                                    props.selection.setAllSelected(false);
+                                                    props.selection.setKeySelected(groupHeaderProps.group.key, true, false);
+                                                  }
                                                 }
                                               }];
 
@@ -475,11 +479,15 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
           if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
             if (props.allowMultipleSelections) {
-              props.selection && props.selection.toggleKeySelected(headerProps.group.key);
+              if (props.selection) {
+                props.selection.toggleKeySelected(headerProps.group.key);
+              }
             }
             else {
-              props.selection && props.selection.setAllSelected(false);
-              props.selection && props.selection.setKeySelected(headerProps.group.key, true, false);
+              if (props.selection) {
+                props.selection.setAllSelected(false);
+                props.selection.setKeySelected(headerProps.group.key, true, false);
+              }
             }
           }
         }}
