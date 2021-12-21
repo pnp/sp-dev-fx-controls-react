@@ -18,7 +18,7 @@ export interface ISiteFilePickerTabProps extends IFilePickerTab {
  /**
    * Title of the default site
    */
-  defaultSiteTitle?: string;
+  webTitle?: string;
 
   includePageLibraries?: boolean;
 }

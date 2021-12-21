@@ -55,7 +55,7 @@ export class FilePicker extends React.Component<
     this.fileBrowserService = new FileBrowserService(
       props.context,
       this.props.itemsCountQueryLimit,
-      this.props.defaultSiteUrl
+      this.props.webAbsoluteUrl
     );
     this.oneDriveService = new OneDriveService(
       props.context,
@@ -89,10 +89,10 @@ export class FilePicker extends React.Component<
       organisationAssetsEnabled: orgAssetsEnabled,
       selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
     });
-    if (!!this.props.context && !!this.props.defaultSiteUrl){
-      let defaultSiteTitle = await this.fileBrowserService.getSiteTitle();
+    if (!!this.props.context && !!this.props.webAbsoluteUrl){
+      let webTitle = await this.fileBrowserService.getSiteTitle();
       this.setState({
-        defaultSiteTitle
+        webTitle
       })
     }
   }
@@ -220,7 +220,7 @@ export class FilePicker extends React.Component<
                 fileBrowserService={this.fileBrowserService}
                 includePageLibraries={this.props.includePageLibraries}
                 defaultFolderAbsolutePath={this.props.defaultFolderAbsolutePath}
-                defaultSiteTitle={this.state.defaultSiteTitle}
+                webTitle={this.state.webTitle}
                 {...linkTabProps}
               />
             )}
@@ -232,7 +232,7 @@ export class FilePicker extends React.Component<
                   key: "keyOrgAssets",
                 }}
                 fileBrowserService={this.orgAssetsService}
-                defaultSiteTitle={this.state.defaultSiteTitle}
+                webTitle={this.state.webTitle}
                 {...linkTabProps}
               />
             )}

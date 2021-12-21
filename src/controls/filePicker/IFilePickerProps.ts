@@ -165,5 +165,5 @@ export interface IFilePickerProps {
   /**
    * Specifies a default site in the Site Files tab
    */
-   defaultSiteUrl?: string;
+   webAbsoluteUrl?: string;
 }
