@@ -50,7 +50,7 @@ export interface IModernTaxonomyPickerProps {
   panelTitle: string;
   label: string;
   context: BaseComponentContext;
-  initialValues?: ITermInfo[];
+  initialValues?: Optional<ITermInfo, "childrenCount" | "createdDateTime" | "lastModifiedDateTime" | "descriptions" | "customSortOrder" | "properties" | "localProperties" | "isDeprecated" | "isAvailableForTagging" | "topicRequested">[];
   disabled?: boolean;
   required?: boolean;
   onChange?: (newValue?: ITermInfo[]) => void;
@@ -60,10 +60,13 @@ export interface IModernTaxonomyPickerProps {
   customPanelWidth?: number;
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
+  isLightDismiss?: boolean;
+  isBlocking?: boolean;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
-  const [taxonomyService] = React.useState(() => new SPTaxonomyService(props.context));
+  const taxonomyService = new SPTaxonomyService(props.context);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITermInfo[]>([]);
@@ -235,7 +238,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         hasCloseButton={true}
         closeButtonAriaLabel={strings.ModernTaxonomyPickerPanelCloseButtonText}
         onDismiss={onClosePanel}
-        isLightDismiss={true}
+        isLightDismiss={props.isLightDismiss}
+        isBlocking={props.isBlocking}
         type={props.customPanelWidth ? PanelType.custom : PanelType.medium}
         customWidth={props.customPanelWidth ? `${props.customPanelWidth}px` : undefined}
         headerText={props.panelTitle}
@@ -261,8 +265,6 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 anchorTermInfo={currentAnchorTermInfo}
                 termSetInfo={currentTermSetInfo}
                 termStoreInfo={currentTermStoreInfo}
-                context={props.context}
-                termSetId={Guid.parse(props.termSetId)}
                 pageSize={50}
                 selectedPanelOptions={selectedPanelOptions}
                 setSelectedPanelOptions={setSelectedPanelOptions}
@@ -273,6 +275,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 languageTag={currentLanguageTag}
                 themeVariant={props.themeVariant}
                 termPickerProps={props.termPickerProps}
+                onRenderActionButton={props.onRenderActionButton}
               />
             </div>
           )
