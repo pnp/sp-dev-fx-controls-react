@@ -7,10 +7,13 @@
         "enhancements": [],
         "fixes": [
           "`LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)",
-          "`ListView`: documentation spelling mistake 'ColumndName' [#1063](https://github.com/pnp/sp-dev-fx-controls-react/issues/1063)"
+          "`ListView`: documentation spelling mistake 'ColumndName' [#1063](https://github.com/pnp/sp-dev-fx-controls-react/issues/1063)",
+          "Fixes for Norwegian localization [#1083](https://github.com/pnp/sp-dev-fx-controls-react/pull/1083)"
         ]
       },
-      "contributions": []
+      "contributions": [
+        "[Alexander M](https://github.com/alexanmo)"
+      ]
     },
     {
       "version": "3.5.0",
