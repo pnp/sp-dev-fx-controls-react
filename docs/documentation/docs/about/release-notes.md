@@ -7,10 +7,11 @@
 - `LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)
 - `ListView`: documentation spelling mistake 'ColumndName' [#1063](https://github.com/pnp/sp-dev-fx-controls-react/issues/1063)
 - Fixes for Norwegian localization [#1083](https://github.com/pnp/sp-dev-fx-controls-react/pull/1083)
+- `DynamicForm`: doesn't load or save correctly when field name starts with a special character [#1077](https://github.com/pnp/sp-dev-fx-controls-react/issues/1077)
 
 ### Contributors
 
-Special thanks to our contributor: [Alexander M](https://github.com/alexanmo).
+Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Tom G](https://github.com/t0mgerman).
 
 ## 3.5.0
 
