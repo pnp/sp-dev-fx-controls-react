@@ -441,6 +441,9 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         else if (fieldType === "Location") {
           defaultValue = JSON.parse(defaultValue);
         }
+        else if (fieldType === "Boolean") {
+          defaultValue = Boolean(Number(defaultValue));
+        }
 
         tempFields.push({
           newValue: null,
