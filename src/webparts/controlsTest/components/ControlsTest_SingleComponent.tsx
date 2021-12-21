@@ -3,7 +3,7 @@ import styles from './ControlsTest.module.scss';
 import { IControlsTestProps, IControlsTestState } from './IControlsTestProps';
 import { FileTypeIcon, IconType, ApplicationType, ImageSize } from '../../../FileTypeIcon';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
+import { PrimaryButton, DefaultButton, IconButton, IButtonProps } from 'office-ui-fabric-react/lib/components/Button';
 import { DialogType } from 'office-ui-fabric-react/lib/components/Dialog';
 import { Placeholder } from '../../../Placeholder';
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from '../../../ListView';
@@ -14,7 +14,7 @@ import { TaxonomyPicker, IPickerTerms, UpdateType } from '../../../TaxonomyPicke
 import { ListPicker } from '../../../ListPicker';
 import { IFrameDialog } from '../../../IFrameDialog';
 import { IFramePanel } from '../../../IFramePanel';
-import { PanelType } from 'office-ui-fabric-react/lib/Panel';
+import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
 import { SecurityTrimmedControl, PermissionLevel } from '../../../SecurityTrimmedControl';
 import { SPPermission } from '@microsoft/sp-page-context';
@@ -58,6 +58,8 @@ import { FilePicker, IFilePickerResult } from '../../../FilePicker';
 import { FolderExplorer, IFolder, IBreadcrumbItem } from '../../../FolderExplorer';
 import { Pagination } from '../../../controls/pagination';
 import { ModernTaxonomyPicker } from '../../../ModernTaxonomyPicker';
+import { IContextualMenuProps, IIconProps } from 'office-ui-fabric-react';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -137,8 +139,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       comboBoxListItemPickerListId: '0ffa51d7-4ad1-4f04-8cfe-98209905d6da',
       comboBoxListItemPickerIds: [],
       selectedTeam: [],
-      selectedTeamChannels: []
-
+      selectedTeamChannels: [],
+      termPanelIsOpen: false,
+      actionTermId: null,
+      clickedActionTerm: null,
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -459,21 +463,88 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       },
     }];
 
+    const onContextualMenuClick = (id: string) => {
+      this.setState({termPanelIsOpen: true, actionTermId: id});
+    };
+
     return (
       <div>
       <ModernTaxonomyPicker
         allowMultipleSelections={true}
-        termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
+        termSetId={"36d21c3f-b83b-4acc-a223-4df6fa8e946d"}
         panelTitle="Panel title"
         label={"Field title"}
         context={this.props.context}
         required={false}
-        initialValues={[{labels: [{name: "Test term", isDefault: true, languageTag: "en-US"}], id: "95f6991b-a0d7-492b-b211-091db33762ac", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
-        onChange={(values) => alert(values.map((value) => `${value?.id} - ${value?.labels[0].name}`).join("\n"))}
+        // initialValues={[{labels: [{name: "Subprocess A1", isDefault: true, languageTag: "en-US"}], id: "29eced8f-cf08-454b-bd9e-6443bc0a0f5e", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
+        // onChange={(values) => alert(values.map((value) => `${value?.id} - ${value?.labels[0].name}`).join("\n"))}
         disabled={false}
-        customPanelWidth={400}
-      />
+        customPanelWidth={700}
+        isLightDismiss={false}
+        isBlocking={false}
+        onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => {
+          const menuIcon: IIconProps = { iconName: 'MoreVertical', "aria-label": "More actions", style: { fontSize: "medium" } };
+          if (termInfo) {
+            const menuProps: IContextualMenuProps = {
+              items: [
+                {
+                  key: 'addTerm',
+                  text: 'Add Term',
+                  iconProps: { iconName: 'Tag' },
+                  onClick: () => onContextualMenuClick(termInfo.id)
+                },
+                {
+                  key: 'deleteTerm',
+                  text: 'Delete term',
+                  iconProps: { iconName: 'Untag' },
+                  onClick: () => onContextualMenuClick(termInfo.id)
+                },
+              ],
+            };
 
+            return (
+              <IconButton
+                menuProps={menuProps}
+                menuIconProps={menuIcon}
+                style={this.state.clickedActionTerm && this.state.clickedActionTerm.id === termInfo.id ? {opacity: 1} : null}
+                onMenuClick={(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, button?: IButtonProps) => {
+                  this.setState({clickedActionTerm: termInfo});
+                }}
+                onAfterMenuDismiss={() => this.setState({clickedActionTerm: null})}
+              />
+            );
+          }
+          else {
+            const menuProps: IContextualMenuProps = {
+              items: [
+                {
+                  key: 'addTerm',
+                  text: 'Add term',
+                  iconProps: { iconName: 'Tag' },
+                  onClick: () => onContextualMenuClick(termSetInfo.id)
+                },
+              ],
+            };
+            return (
+              <IconButton
+                menuProps={menuProps}
+                menuIconProps={menuIcon}
+                style={{opacity: 1}}
+              />
+            );
+          }
+        }}
+      />
+      <Panel
+       isOpen={this.state.termPanelIsOpen}
+       onDismiss={() => this.setState({termPanelIsOpen: false, actionTermId: null})}
+       hasCloseButton={true}
+       isLightDismiss={false}
+       isBlocking={false}
+
+      >
+        <span>{this.state.actionTermId && this.state.actionTermId}</span>
+      </Panel>
       </div>
     );
   }

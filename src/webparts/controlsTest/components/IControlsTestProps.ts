@@ -8,6 +8,7 @@ import {
   IReadonlyTheme,
 
 } from "@microsoft/sp-component-base";
+import { ITermInfo } from '@pnp/sp/taxonomy';
 export interface IControlsTestProps {
   context: WebPartContext;
   description: string;
@@ -45,4 +46,7 @@ export interface IControlsTestState {
   selectedTeamChannels:ITag[];
   filePickerDefaultFolderAbsolutePath?: string;
   errorMessage?: string;
+  termPanelIsOpen?: boolean;
+  actionTermId?: string;
+  clickedActionTerm?: ITermInfo;
 }
