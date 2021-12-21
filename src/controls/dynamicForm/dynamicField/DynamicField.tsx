@@ -299,7 +299,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <DatePicker
               placeholder={placeholder}
               className={styles.pickersContainer}
-              formatDate={(date) => { return date.toLocaleDateString(context.pageContext.web.languageName); }}
+              formatDate={(date) => { return date.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName); }}
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onSelectDate={(newDate) => { this.onChange(newDate); }}
               disabled={disabled}
@@ -309,7 +309,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <DateTimePicker
               key={columnInternalName}
               placeholder={placeholder}
-              formatDate={(date) => { return date.toLocaleDateString(context.pageContext.web.languageName); }}
+              formatDate={(date) => { return date.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName); }}
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onChange={(newDate) => { this.onChange(newDate); }}
               disabled={disabled} />
