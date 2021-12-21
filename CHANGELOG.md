@@ -8,6 +8,7 @@
 - `ListView`: documentation spelling mistake 'ColumndName' [#1063](https://github.com/pnp/sp-dev-fx-controls-react/issues/1063)
 - Fixes for Norwegian localization [#1083](https://github.com/pnp/sp-dev-fx-controls-react/pull/1083)
 - `DynamicForm`: doesn't load or save correctly when field name starts with a special character [#1077](https://github.com/pnp/sp-dev-fx-controls-react/issues/1077)
+- `DynamicForm`: fields in DynamicForm do not honour regional settings [#1075](https://github.com/pnp/sp-dev-fx-controls-react/issues/1075)
 
 ### Contributors
 
