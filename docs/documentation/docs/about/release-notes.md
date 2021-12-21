@@ -2,6 +2,10 @@
 
 ## 3.6.0
 
+### Enhancements
+
+- `ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)
+
 ### Fixes
 
 - `LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)
@@ -14,7 +18,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Patrik Hellgren](https://github.com/patrikhellgren), [Tom G](https://github.com/t0mgerman).
 
 ## 3.5.0
 
