@@ -57,6 +57,10 @@ export interface ITreeViewProps {
    */
   treeItemActionsDisplayMode?: TreeItemActionsDisplayMode;
   /**
+   * Keys of items expanded by default
+   */
+   defaultExpandedKeys?: string[];
+  /**
    * Keys of items selected by default
    */
   defaultSelectedKeys?: string[];
