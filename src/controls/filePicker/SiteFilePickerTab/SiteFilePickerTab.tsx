@@ -26,7 +26,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     // Add current site to the breadcrumb or the provided node
     const breadcrumbSiteNode: FilePickerBreadcrumbItem = this.props.breadcrumbFirstNode ? this.props.breadcrumbFirstNode : {
       isCurrentItem: false,
-      text: props.context.pageContext.web.title,
+      text: props.webTitle || props.context.pageContext.web.title,
       key: props.context.pageContext.web.id.toString(),
     };
     // add click event after defining breadcrumb so that it also applies to breadcrumb items passed to the component as properties
