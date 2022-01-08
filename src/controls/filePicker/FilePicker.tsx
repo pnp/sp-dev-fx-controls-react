@@ -93,7 +93,7 @@ export class FilePicker extends React.Component<
       let webTitle = await this.fileBrowserService.getSiteTitle();
       this.setState({
         webTitle
-      })
+      });
     }
   }
 
