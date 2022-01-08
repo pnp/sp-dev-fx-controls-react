@@ -16,6 +16,7 @@
 - `DynamicForm`: fields in DynamicForm do not honour regional settings [#1075](https://github.com/pnp/sp-dev-fx-controls-react/issues/1075)
 - `DynamicForm`: Boolean fields do not honour the default value in list settings [#1073](https://github.com/pnp/sp-dev-fx-controls-react/issues/1073)
 - `TaxonomyPicker`: table markdown fix in documentation [#1072](https://github.com/pnp/sp-dev-fx-controls-react/pull/1072)
+- `WebPartTitle`: Fix for styling of WebPartTitle to better match the styling of the oob webpart titles. [#1088](https://github.com/pnp/sp-dev-fx-controls-react/pull/1088)
 
 ### Contributors
 
