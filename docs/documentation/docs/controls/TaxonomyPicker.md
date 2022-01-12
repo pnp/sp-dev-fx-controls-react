@@ -169,7 +169,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | label | string | yes | Text displayed above the Taxonomy Picker. |
 | disabled | boolean | no | Specify if the control needs to be disabled. |
 | context | BaseComponentContext | yes | Context of the current web part or extension. |
-| initialValues | IPickerTerms | no | Defines the terms selected by default. For each term object, an empty string can be provided for properties path and termset. |
+| initialValues | IPickerTerms | no | Defines the terms selected by default. For each term object selected by default, an empty string can be provided for the `path` and `termset` properties as these properties are ignored when setting initial values. |
 | allowMultipleSelections | boolean | no | Defines if the user can select only one or many term sets. Default value is false. |
 | termsetNameOrID | string | yes | The name or Id of your TermSet that you would like the Taxonomy Picker to chose terms from. |
 | onChange | function | no |  captures the event of when the terms in the picker has changed. |
@@ -215,7 +215,7 @@ Interface `ITermActions`
 | termActionsDisplayMode | TermActionsDisplayMode | no | Defines how to display term actions, as buttons or dropdown | buttons |
 | initialize | (spTermService: SPTermStorePickerService) => Promise\<void\> | no | Initializes the term action with the taxonomy service |
 
-Interface `ITermAction`
+Interface `ITreeItemAction`
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
