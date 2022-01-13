@@ -13,7 +13,7 @@ This control renders a Pagination component which can be used to show limited in
 - Import the following modules to your component:
 
 ```typescript
-import { Pagination } from "@pnp/spfx-controls-react/lib/pagination";
+import { Pagination } from "@pnp/spfx-controls-react/lib/Pagination";
 ```
 
 - Use the `Pagination` control in your code as follows:
