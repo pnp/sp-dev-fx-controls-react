@@ -20,6 +20,7 @@
           "`TaxonomyPicker`: table markdown fix in documentation [#1072](https://github.com/pnp/sp-dev-fx-controls-react/pull/1072)",
           "`WebPartTitle`: Fix for styling of WebPartTitle to better match the styling of the oob webpart titles. [#1088](https://github.com/pnp/sp-dev-fx-controls-react/pull/1088)",
           "`LivePersona`: fix for documentation typos [#1106](https://github.com/pnp/sp-dev-fx-controls-react/pull/1106)",
+          "`LivePersona`: remove property for SPFx context [#1108](https://github.com/pnp/sp-dev-fx-controls-react/pull/1108)",
           "Documentation fix for swedish translations [#1100](https://github.com/pnp/sp-dev-fx-controls-react/pull/1100)"
         ]
       },
@@ -28,6 +29,7 @@
         "[Carlos Marins Jr](https://github.com/kadu-jr)",
         "[Henrik](https://github.com/Henke-visual)",
         "[Jasey Waegebaert](https://github.com/Jwaegebaert)",
+        "[João Mendes](https://github.com/joaojmendes)",
         "[Milan Holemans](https://github.com/milanholemans)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Tom G](https://github.com/t0mgerman)"
