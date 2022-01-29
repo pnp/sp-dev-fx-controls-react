@@ -50,4 +50,4 @@ The `LivePersona` control can be configured with the following properties:
 | context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | upn |string | yes | User UPN. |
 | disableHover | boolean | no | If info should not appear on hover. |
-| template | JSX.ELement | yes | The content to wrap with persona info. |
+| template | string \| JSX.ELement | yes | The content to wrap with persona info. |
