@@ -13,7 +13,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
 ) => {
   const [isComponentLoaded, setIsComponentLoaded] = useState<boolean>(false);
   const sharedLibrary = useRef<any>();
-  const { upn, template, disableHover, context, serviceScope } = props;
+  const { upn, template, disableHover, serviceScope } = props;
 
   useEffect(() => {
     (async () => {
@@ -22,7 +22,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
           sharedLibrary.current = await SPComponentLoader.loadComponentById(LIVE_PERSONA_COMPONENT_ID);
           setIsComponentLoaded(true);
         } catch (error) {
-          Log.error(`[LivePersona]`, error, serviceScope ?? context.serviceScope);
+          Log.error(`[LivePersona]`, error, serviceScope );
         }
       }
     })();
@@ -38,7 +38,7 @@ if (isComponentLoaded) {
             PersonaType: 'User'
         },
         upn:  upn,
-        serviceScope: serviceScope ?? context.serviceScope,
+        serviceScope: serviceScope,
     }, createElement("div",{},template));
 }
 return renderPersona;
