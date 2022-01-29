@@ -60,6 +60,11 @@ export interface IDateTimePickerProps {
    */
   deferredValidationTime?: number;
   /**
+   * Whether the user is allowed to enter a date instead of picking one from the date picker.
+   * @defaultvalue false
+   */
+  allowTextInput?: boolean;
+  /**
    * Whether the "Go to today" link should be shown or not
    */
   showGoToToday?: boolean;

@@ -213,6 +213,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       firstDayOfWeek,
       isMonthPickerVisible = true,
       showGoToToday,
+      allowTextInput = false,
       showMonthPickerAsOverlay = false,
       showWeekNumbers = false,
       showSeconds = false,
@@ -308,7 +309,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 strings={dateStrings}
                 isMonthPickerVisible={isMonthPickerVisible}
                 onSelectDate={this.onSelectDate}
-                allowTextInput={true}
+                allowTextInput={allowTextInput}
                 firstDayOfWeek={firstDayOfWeek}
                 showGoToToday={showGoToToday}
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
