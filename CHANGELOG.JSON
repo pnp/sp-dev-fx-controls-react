@@ -7,7 +7,8 @@
         "enhancements": [
           "`ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)",
           "`FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)",
-          "`Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)"
+          "`Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)",
+          "`FilePicker`: ability to allow external link and disable file existance chech [commit](https://github.com/pnp/sp-dev-fx-controls-react/commit/41ed4dd2277cf33050f9aeffe743dd684ed9d782)"
         ],
         "fixes": [
           "`LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)",
