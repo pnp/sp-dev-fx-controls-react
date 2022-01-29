@@ -60,7 +60,7 @@ export interface IDateTimePickerProps {
    */
   deferredValidationTime?: number;
   /**
-   * Whether the user is allowed to enter a date instead of picking one from the date picker.
+   * Whether the user is allowed to enter a date as text instead of picking one from the date picker.
    * @defaultvalue false
    */
   allowTextInput?: boolean;
