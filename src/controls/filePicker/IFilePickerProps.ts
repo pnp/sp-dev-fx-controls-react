@@ -161,9 +161,18 @@ export interface IFilePickerProps {
    * Specifies a default folder to be active in the Site Files tab
    */
   defaultFolderAbsolutePath?: string;
-  
+
   /**
    * Specifies a default site in the Site Files tab
    */
    webAbsoluteUrl?: string;
+
+   /**
+   * Specifies if external links are allowed
+   */
+  allowExternalLinks?: boolean;
+  /**
+   * Specifies if file check should be done
+   */
+   checkIfFileExists?: boolean;
 }

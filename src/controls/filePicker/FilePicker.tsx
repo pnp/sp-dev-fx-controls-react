@@ -193,7 +193,8 @@ export class FilePicker extends React.Component<
                 renderCustomLinkTabContent={
                   this.props.renderCustomLinkTabContent
                 }
-                allowExternalTenantLinks={true}
+                allowExternalLinks={this.props.allowExternalLinks}
+                checkIfFileExists={this.props.checkIfFileExists !== false}
                 {...linkTabProps}
               />
             )}

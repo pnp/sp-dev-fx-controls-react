@@ -1668,6 +1668,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             context={this.props.context}
             hideRecentTab={false}
             includePageLibraries={true}
+            checkIfFileExists={false}
           />
           {
             this.state.filePickerResult &&

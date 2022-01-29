@@ -79,7 +79,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
 
    const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
-     ControlsTest_SingleComponent,
+    ControlsTest,
       {
 
         themeVariant: this._themeVariant,
