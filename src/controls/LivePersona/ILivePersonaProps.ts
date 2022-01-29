@@ -1,13 +1,9 @@
-import { BaseComponentContext} from "@microsoft/sp-component-base";
 import { ServiceScope } from "@microsoft/sp-core-library";
 
 export interface ILivePersonatProps {
-  /**
-   * The Web Part context
-   */
-  context?: BaseComponentContext;
+
 /**
-   * The Web Part context
+   * The service locator pattern used by the SharePoint Framework.
    */
  serviceScope: ServiceScope;
   /**
