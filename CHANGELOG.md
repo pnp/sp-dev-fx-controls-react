@@ -6,6 +6,7 @@
 
 - `ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)
 - `FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)
+- `Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)
 
 ### Fixes
 
@@ -17,10 +18,11 @@
 - `DynamicForm`: Boolean fields do not honour the default value in list settings [#1073](https://github.com/pnp/sp-dev-fx-controls-react/issues/1073)
 - `TaxonomyPicker`: table markdown fix in documentation [#1072](https://github.com/pnp/sp-dev-fx-controls-react/pull/1072)
 - `WebPartTitle`: Fix for styling of WebPartTitle to better match the styling of the oob webpart titles. [#1088](https://github.com/pnp/sp-dev-fx-controls-react/pull/1088)
+- `LivePersona`: fix for documentation typos [#1106](https://github.com/pnp/sp-dev-fx-controls-react/pull/1106)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Carlos Marins Jr](https://github.com/kadu-jr), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Patrik Hellgren](https://github.com/patrikhellgren), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Carlos Marins Jr](https://github.com/kadu-jr), [Henrik](https://github.com/Henke-visual), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Milan Holemans](https://github.com/milanholemans), [Patrik Hellgren](https://github.com/patrikhellgren), [Tom G](https://github.com/t0mgerman).
 
 ## 3.5.0
 
