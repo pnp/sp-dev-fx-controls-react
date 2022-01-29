@@ -49,8 +49,8 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
     <>
         <Stack>
         <ListItemComments
-          listId={"e738c4b3-6cff-493a-a8da-dbbf4732e3bf"}
-          itemId={"26"}
+          listId={"967a984f-0622-4912-b881-97eb9d48ff9c"}
+          itemId={"1"}
           serviceScope={props.context.serviceScope}
           numberCommentsPerPage={10}
           label="List Item Comments"
