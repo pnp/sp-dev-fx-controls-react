@@ -7,6 +7,7 @@
 - `ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)
 - `FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)
 - `Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)
+- `FilePicker`: ability to allow external link and disable file existance chech [commit](https://github.com/pnp/sp-dev-fx-controls-react/commit/41ed4dd2277cf33050f9aeffe743dd684ed9d782)
 
 ### Fixes
 
@@ -19,6 +20,7 @@
 - `TaxonomyPicker`: table markdown fix in documentation [#1072](https://github.com/pnp/sp-dev-fx-controls-react/pull/1072)
 - `WebPartTitle`: Fix for styling of WebPartTitle to better match the styling of the oob webpart titles. [#1088](https://github.com/pnp/sp-dev-fx-controls-react/pull/1088)
 - `LivePersona`: fix for documentation typos [#1106](https://github.com/pnp/sp-dev-fx-controls-react/pull/1106)
+- Documentation fix for swedish translations [#1100](https://github.com/pnp/sp-dev-fx-controls-react/pull/1100)
 
 ### Contributors
 
