@@ -213,7 +213,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       firstDayOfWeek,
       isMonthPickerVisible = true,
       showGoToToday,
-      allowTextInput = false,
+      allowTextInput = true,
       showMonthPickerAsOverlay = false,
       showWeekNumbers = false,
       showSeconds = false,
