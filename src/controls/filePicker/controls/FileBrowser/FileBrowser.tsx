@@ -455,10 +455,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   private _itemSelectionChanged = () => {
     let filePickerResults: IFilePickerResult[] = [];
     this._selection.getSelection().map((item: IFile, index: number) => {
-      if (item.isFolder) {
-        this._selection.toggleIndexSelected(index);
-      }
-      else {
+      if (!item.isFolder) {
         filePickerResults.push({
           fileAbsoluteUrl: item.absoluteUrl,
           fileName: GeneralHelper.getFileNameFromUrl(item.name),

@@ -101,6 +101,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     let filePickerResults: IFilePickerResult[] = [];
     // Get the selected item
     this._selection.getSelection().map((selectedKey: IRecentFile) => {
+      if(!selectedKey.isFolder && selectedKey.fileUrl)
       filePickerResults.push({
         fileAbsoluteUrl: selectedKey.fileUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl),
@@ -161,7 +162,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
       <FocusZone>
         <SelectionZone selection={this._selection}
           selectionMode={SelectionMode.multiple}
-          onItemInvoked={(item: IRecentFile) => this._handleItemInvoked(item)}>
+          onItemInvoked={(item: any) => this._handleItemInvoked(item)}>
           <List
             ref={this._linkElement}
             items={this.state.results}
@@ -235,7 +236,9 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    * Gets called what a file is selected.
    */
   private _handleItemInvoked = (item: IRecentFile) => {
-    this._selection.toggleKeySelected(item.key);
+    if(!item.isFolder) {
+      this._selection.toggleKeySelected(item.key);
+    }
   }
 
   /**
