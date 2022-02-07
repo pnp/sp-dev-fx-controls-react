@@ -46,7 +46,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     breadcrumbItems[breadcrumbItems.length - 1].isCurrentItem = true;
 
     this.state = {
-      filePickerResult: null,
+      filePickerResults: [],
       libraryAbsolutePath: folderAbsPath || undefined,
       libraryUrl: libraryServRelUrl || urlCombine(props.context.pageContext.web.serverRelativeUrl, '/Shared%20Documents'),
       libraryPath: folderServRelPath,
@@ -175,7 +175,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
-              onChange={(filePickerResult: IFilePickerResult) => this._handleSelectionChange(filePickerResult)}
+              onChange={(filePickerResults: IFilePickerResult[]) => this._handleSelectionChange(filePickerResults)}
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.fileBrowserService}
               libraryUrl={this.state.libraryUrl}
@@ -185,7 +185,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.filePickerResult}
+              disabled={this.state.filePickerResults && !this.state.filePickerResults.length}
               onClick={() => this._handleSave()} className={styles.actionButton}>{strings.OpenButtonLabel}</PrimaryButton>
             <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
           </div>
@@ -233,28 +233,26 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
 
     this.setState({
       breadcrumbItems,
-      filePickerResult: undefined
+      filePickerResults: undefined
     });
   }
 
   /**
    * Is called when user selects a different file
    */
-  private _handleSelectionChange = (filePickerResult: IFilePickerResult) => {
-    if (filePickerResult) {
+  private _handleSelectionChange = (filePickerResults: IFilePickerResult[]) => {
+    filePickerResults.map((filePickerResult: IFilePickerResult) => {
       filePickerResult.downloadFileContent = () => { return this.props.fileBrowserService.downloadSPFileContent(filePickerResult.fileAbsoluteUrl, filePickerResult.fileName); };
-    }
-    // this.props.fileBrowserService
-    this.setState({
-      filePickerResult
     });
+    // this.props.fileBrowserService
+    this.setState({ filePickerResults });
   }
 
   /**
    * Called when user saves
    */
   private _handleSave = () => {
-    this.props.onSave([this.state.filePickerResult]);
+    this.props.onSave(this.state.filePickerResults);
   }
 
   /**
@@ -283,7 +281,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     }
 
     this.setState({
-      filePickerResult: null,
+      filePickerResults: null,
       libraryPath: folder.serverRelativeUrl,
       folderName: folder.name,
       libraryAbsolutePath: folder.absoluteUrl,

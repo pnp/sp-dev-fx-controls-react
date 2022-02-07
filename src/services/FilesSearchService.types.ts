@@ -3,6 +3,7 @@ export interface IRecentFile {
   key: string;
   name: string;
   editedBy: string;
+  isFolder: boolean;
 }
 
 export interface BingQuerySearchParams {
