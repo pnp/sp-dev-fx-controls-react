@@ -9,7 +9,9 @@
           "`FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)",
           "`Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)",
           "`FilePicker`: ability to allow external link and disable file existance chech [commit](https://github.com/pnp/sp-dev-fx-controls-react/commit/41ed4dd2277cf33050f9aeffe743dd684ed9d782)",
-          "`FilePicker`: support for multi-select on additional sources [#1047](https://github.com/pnp/sp-dev-fx-controls-react/pull/1047)"
+          "`FilePicker`: support for multi-select on additional sources [#1047](https://github.com/pnp/sp-dev-fx-controls-react/pull/1047)",
+          "`DateTimePicker`: new property for allowTextInput [#1094](https://github.com/pnp/sp-dev-fx-controls-react/issues/1094)"
+
         ],
         "fixes": [
           "`LivePersona`: Cannot find module '@pnp/spfx-controls-react/lib/LivePersona'[#1069](https://github.com/pnp/sp-dev-fx-controls-react/issues/1069)",
