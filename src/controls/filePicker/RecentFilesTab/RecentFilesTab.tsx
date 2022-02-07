@@ -39,16 +39,13 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   constructor(props: IRecentFilesTabProps) {
     super(props);
 
-    this._selection = new Selection({
-      selectionMode: SelectionMode.single,
-      onSelectionChanged: this._onSelectionChanged
-    });
+    this._selection = null;
 
 
     this.state = {
       isLoading: true,
       results: [],
-      filePickerResult: null
+      filePickerResults: []
     };
   }
 
@@ -57,6 +54,10 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    */
   public async componentDidMount() {
     const recentFilesResult = await this.props.fileSearchService.executeRecentSearch(this.props.accepts);
+    this._selection = new Selection({
+      selectionMode: SelectionMode.multiple,
+      onSelectionChanged: this._onSelectionChanged
+    });
     this._selection.setItems(recentFilesResult, true);
 
     this.setState({
@@ -85,7 +86,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
-              disabled={!this.state.filePickerResult}
+              disabled={this.state.filePickerResults && !this.state.filePickerResults.length}
               onClick={() => this._handleSave()}
               className={styles.actionButton}
             >{strings.OpenButtonLabel}</PrimaryButton>
@@ -97,28 +98,20 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   }
 
   private _onSelectionChanged = () => {
+    let filePickerResults: IFilePickerResult[] = [];
     // Get the selected item
-    const selectedItems = this._selection.getSelection();
-    if (selectedItems && selectedItems.length > 0) {
-      //Get the selected key
-      const selectedKey: IRecentFile = selectedItems[0] as IRecentFile;
-      const filePickerResult: IFilePickerResult = {
+    this._selection.getSelection().map((selectedKey: IRecentFile) => {
+      if(!selectedKey.isFolder && selectedKey.fileUrl)
+      filePickerResults.push({
         fileAbsoluteUrl: selectedKey.fileUrl,
         fileName: GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl),
         fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedKey.fileUrl),
         downloadFileContent: () => { return this.props.fileSearchService.downloadSPFileContent(selectedKey.fileUrl, GeneralHelper.getFileNameFromUrl(selectedKey.fileUrl)); }
-      };
+      });
+    });
 
-      // Save the selected file
-      this.setState({
-        filePickerResult
-      });
-    } else {
-      // Remove any selected file
-      this.setState({
-        filePickerResult: undefined
-      });
-    }
+    this.setState({ filePickerResults });
+
     if (this._listElem) {
       // Force the list to update to show the selection check
       this._listElem.forceUpdate();
@@ -168,7 +161,8 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     return <span className={styles.recentGridList} role="grid">
       <FocusZone>
         <SelectionZone selection={this._selection}
-          onItemInvoked={(item: IRecentFile) => this._handleItemInvoked(item)}>
+          selectionMode={SelectionMode.multiple}
+          onItemInvoked={(item: any) => this._handleItemInvoked(item)}>
           <List
             ref={this._linkElement}
             items={this.state.results}
@@ -188,8 +182,8 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   private _onRenderCell = (item: IRecentFile, index: number | undefined): JSX.Element => {
     let isSelected: boolean = false;
 
-    if (this._selection && index !== undefined) {
-      isSelected = this._selection.isIndexSelected(index);
+    if (this._selection) {
+      isSelected = this._selection.isKeySelected(item.key);
     }
 
     return (
@@ -242,14 +236,16 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
    * Gets called what a file is selected.
    */
   private _handleItemInvoked = (item: IRecentFile) => {
-    this._selection.setKeySelected(item.key, true, true);
+    if(!item.isFolder) {
+      this._selection.toggleKeySelected(item.key);
+    }
   }
 
   /**
    * Gets called when it is time to save the currently selected item
    */
   private _handleSave = () => {
-    this.props.onSave([this.state.filePickerResult]);
+    this.props.onSave(this.state.filePickerResults);
   }
 
   /**

@@ -224,7 +224,8 @@ export class FilesSearchService {
       key: keyCell ? keyCell.Value : null,
       name: titleCell ? titleCell.Value : null,
       fileUrl: fileUrlCell ? fileUrlCell.Value : null,
-      editedBy: editedByCell ? editedByCell.Value : null
+      editedBy: editedByCell ? editedByCell.Value : null,
+      isFolder: !fileUrlCell.Value
     };
     return recentFile;
   }

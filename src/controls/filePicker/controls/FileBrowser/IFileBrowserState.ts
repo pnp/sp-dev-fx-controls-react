@@ -16,7 +16,7 @@ export interface IFileBrowserState {
   items: IFile[];
   nextPageQueryString: string;
   // currentPath: string;
-  filePickerResult: IFilePickerResult;
+  filePickerResults: IFilePickerResult[];
   columns: IColumn[];
   selectedView: ViewType;
 }

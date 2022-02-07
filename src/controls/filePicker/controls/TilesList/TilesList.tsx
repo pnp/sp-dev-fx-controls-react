@@ -67,7 +67,6 @@ export class TilesList extends React.Component<ITilesListProps> {
             ref={(e:any) => { this._listElem = e; }}
             className={styles.folderList}
             items={this.props.items}
-
             getItemCountForPage={this._getItemCountForPage}
             getPageHeight={this._getPageHeight}
             onRenderPage={(pageProps: IPageProps, defaultRender?: IRenderFunction<IPageProps>) => this._onRenderPage(pageProps, defaultRender)}
