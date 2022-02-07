@@ -1,0 +1,142 @@
+.ac-container:focus:focus,
+.ac-adaptiveCard:focus {
+    outline: none !important;
+}
+
+.ac-pushButton {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 10px 5px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 32px;
+    border-radius: 2px;
+    border: 1px solid var(--ach-fui-buttonBorder, #6290FF);
+    background-color: var(--ach-fui-buttonBackground, white);
+    color: var(--ach-fui-buttonText, #0079db);
+}
+
+.ac-pushButton-disabled {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 10px 5px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 32px;
+    border-radius: 2px;
+    border: 1px solid var(--ach-fui-buttonBorderDisabled, #EEEEEE);
+    background-color: var(--ach-fui-buttonBackgroundDisabled, #EEEEEE);
+    color: var(--ach-fui-buttonTextDisabled, #666666);
+}
+
+.ac-pushButton:hover {
+    border: 1px solid var(--ach-fui-buttonBorder, #73C1FD);
+    background-color: var(--ach-fui-buttonBackgroundHovered, #0078D7);
+    color: var(--ach-fui-buttonTextHovered, white);
+}
+
+.ac-pushButton:active {
+    background-color: var(--ach-fui-buttonBackgroundPressed, #464B93);
+    color: var(--ach-fui-buttonTextPressed, white);
+    border: 1px solid var(--ach-fui-buttonBorder, #464B93);
+}
+
+.ac-ctrl-overlay {
+    font-family: var(--ach-fui-fontFamily, "Segoe UI", sans-serif);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+}
+
+.ac-ctrl {
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.ac-ctrl-popup-container {
+    background-color: var(--ach-fui-bodyBackground, white);
+    position: absolute;
+    overflow-y: auto;
+    box-shadow: rgb(0 0 0 / 13%) 0px 3.2px 7.2px 0px, rgb(0 0 0 / 11%) 0px 0.6px 1.8px 0px;
+    border-radius: 2px;
+}
+
+.ac-ctrl-popup-container:focus {
+    outline: 0;
+}
+
+.ac-ctrl-slide {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.ac-ctrl-slide.ac-ctrl-slideTopToBottom {
+    animation-name: fadeIn, slideTopToBottom;
+}
+
+.ac-ctrl-slide.ac-ctrl-slideBottomToTop {
+    animation-name: fadeIn, slideBottomToTop;
+}
+
+.ac-ctrl-slide.ac-ctrl-slideLeftToRight {
+    animation-name: fadeIn, slideLeftToRight;
+}
+
+.ac-ctrl-slide.ac-ctrl-slideRightToLeft {
+    animation-name: fadeIn, slideRightToLeft;
+}
+
+.ac-ctrl-dropdown-item {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    padding: 0px 12px 0px 12px;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: var(--ach-fui-bodyBackground, #ffffff);
+    color: var(--ach-fui-bodyText, #323130);
+}
+
+.ac-ctrl-dropdown-item-disabled {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    padding: 0px 12px 0px 12px;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: var(--ach-fui-neutralLighter, #f3f2f1);
+    color: var(--ach-fui-neutralTertiary, #a19f9d);
+}
+
+.ac-ctrl-dropdown-item:hover {
+    background-color: var(--ach-fui-neutralLighter, #f3f2f1);
+    color: var(--ach-fui-neutralDark, #201f1e);
+}
+
+.ac-ctrl-dropdown-item:focus {
+    outline: 0;
+    background-color: var(--ach-fui-neutralLight, #edebe9);
+    color: var(--ach-fui-neutralDark, #201f1e);
+}
