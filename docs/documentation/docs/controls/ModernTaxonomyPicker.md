@@ -185,42 +185,43 @@ You can also use the `TaxonomyTree` control separately to just render a stand-al
   Initialize the taxonomy service and state, load basic info from term store and display the `TaxonomyTree` component.
 
 ```TypeScript
-      const taxonomyService = new SPTaxonomyService(props.context);
-      const [terms, setTerms] = React.useState<ITermInfo[]>([]);
-      const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
-      const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
-      const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
+const taxonomyService = new SPTaxonomyService(props.context);
+const [terms, setTerms] = React.useState<ITermInfo[]>([]);
+const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
+const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
+const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
 
-      React.useEffect(() => {
-        sp.setup(props.context);
-        taxonomyService.getTermStoreInfo()
-          .then((termStoreInfo) => {
-            setCurrentTermStoreInfo(termStoreInfo);
-            setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
-              props.context.pageContext.cultureInfo.currentUICultureName :
-              currentTermStoreInfo.defaultLanguageTag);
-          });
-        taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
-          .then((termSetInfo) => {
-            setCurrentTermSetInfo(termSetInfo);
-          });
-      }, []);
+React.useEffect(() => {
+  sp.setup(props.context);
+  taxonomyService.getTermStoreInfo()
+    .then((termStoreInfo) => {
+      setCurrentTermStoreInfo(termStoreInfo);
+      setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+        props.context.pageContext.cultureInfo.currentUICultureName :
+        currentTermStoreInfo.defaultLanguageTag);
+    });
+  taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
+    .then((termSetInfo) => {
+      setCurrentTermSetInfo(termSetInfo);
+    });
+}, []);
 
-      return (
-        {currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (  
-          <TaxonomyTree
-            languageTag={currentLanguageTag}
-            onLoadMoreData={taxonomyService.getTerms}
-            pageSize={50}
-            setTerms={setTerms}
-            termSetInfo={currentTermSetInfo}
-            termStoreInfo={currentTermStoreInfo}
-            terms={terms}
-            onRenderActionButton={onRenderActionButton}
-            hideDeprecatedTerms={false}
-            showIcons={true}
-          />
-        )}
+return (
+  {currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (
+    <TaxonomyTree
+      languageTag={currentLanguageTag}
+      onLoadMoreData={taxonomyService.getTerms}
+      pageSize={50}
+      setTerms={setTerms}
+      termSetInfo={currentTermSetInfo}
+      termStoreInfo={currentTermStoreInfo}
+      terms={terms}
+      onRenderActionButton={onRenderActionButton}
+      hideDeprecatedTerms={false}
+      showIcons={true}
+    />
+  )}
+);
 ```
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ModernTaxonomyPicker)
