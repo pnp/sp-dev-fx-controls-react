@@ -68,6 +68,7 @@ export interface IModernTaxonomyPickerProps {
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const taxonomyService = new SPTaxonomyService(props.context);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
+  const initialLoadComplete = React.useRef(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITermInfo[]>([]);
   const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
@@ -87,6 +88,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         setSelectedOptions(Array.isArray(props.initialValues) ?
           props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
           []);
+          initialLoadComplete.current = true;
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
       .then((termSetInfo) => {
@@ -101,7 +103,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   }, []);
 
   React.useEffect(() => {
-    if (props.onChange) {
+    if (props.onChange && initialLoadComplete.current) {
       props.onChange(selectedOptions);
     }
   }, [selectedOptions]);
