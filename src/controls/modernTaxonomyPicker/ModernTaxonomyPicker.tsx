@@ -80,11 +80,12 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     taxonomyService.getTermStoreInfo()
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
-        setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
           props.context.pageContext.cultureInfo.currentUICultureName :
-          currentTermStoreInfo.defaultLanguageTag);
+          currentTermStoreInfo.defaultLanguageTag;
+        setCurrentLanguageTag(languageTag);
         setSelectedOptions(Array.isArray(props.initialValues) ?
-          props.initialValues.map(term => { return { ...term, languageTag: currentLanguageTag, termStoreInfo: currentTermStoreInfo } as ITermInfo; }) :
+          props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
           []);
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
