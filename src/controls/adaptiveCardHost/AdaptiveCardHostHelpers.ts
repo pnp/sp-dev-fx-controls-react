@@ -1,9 +1,9 @@
-import { mergeThemes } from '@fluentui/theme';
 import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
+import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { ActionAlignment, AdaptiveCard, TextColor, TextWeight } from 'adaptivecards';
 import * as markdown from 'markdown-it';
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react';
+import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { getDefaultFluentUITheme } from './fluentUI';
 
 const fluentUICSSVariablePrefix = "ach-fui";

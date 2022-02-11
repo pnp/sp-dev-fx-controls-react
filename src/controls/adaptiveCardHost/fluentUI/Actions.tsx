@@ -1,5 +1,6 @@
 import { ActionButtonState, ActionIconPlacement, defaultHostConfig, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards";
-import { BaseButton, Button, CompoundButton, createTheme, DefaultButton, ITheme, PrimaryButton } from "office-ui-fabric-react";
+import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from "office-ui-fabric-react/lib/Button";
+import { createTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { getDefaultFluentUITheme, hostCapabilitiesFluentUIThemeKey } from "./FluentUI";
@@ -59,9 +60,6 @@ export class FluentUIOpenUrlAction extends OpenUrlAction {
 export class FluentUIShowCardAction extends ShowCardAction {
     protected updateCssClasses() {
         if (this.renderedElement) {
-            const effectiveHostConfig = this.parent ? this.parent.hostConfig : defaultHostConfig;
-
-            this.renderedElement.classList.add(effectiveHostConfig.makeCssClassName("expandable"));
             this.renderedElement.setAttribute(
                 "aria-expanded",
                 (this.state === ActionButtonState.Expanded).toString()
@@ -117,6 +115,12 @@ export class FluentUISubmitAction extends SubmitAction {
 
 export class FluentUIToggleVisibilityAction extends ToggleVisibilityAction {
     protected updateCssClasses() {
+        if (this.renderedElement) {
+            this.renderedElement.setAttribute(
+                "aria-expanded",
+                (this.state === ActionButtonState.Expanded).toString()
+            );
+        }
     }
 
     private actionClickHandler = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement>): void => {

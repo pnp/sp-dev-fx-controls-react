@@ -1,9 +1,10 @@
 
 
-import { PartialTheme, Theme, ThemeProvider } from '@fluentui/react-theme-provider';
+import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { Action, AdaptiveCard, CardElement, CardObjectRegistry, ExecuteAction, GlobalRegistry, HostConfig, OpenUrlAction, SerializationContext, SubmitAction } from 'adaptivecards';
 import { Template } from 'adaptivecards-templating';
-import { CustomizerContext, ITheme } from 'office-ui-fabric-react';
+import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { CustomizerContext } from 'office-ui-fabric-react/lib/Utilities';
 import * as React from 'react';
 import {
     useCallback,
@@ -13,7 +14,7 @@ import {
 import './AdaptiveCardHost.css';
 import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, setFluentUIThemeAsCSSVariables } from './AdaptiveCardHostHelpers';
 import { createDarkTeamsTheme, createDefaultTeamsTheme, createHighContrastTeamsTheme, getDefaultFluentUITheme, setFluentUIThemeAsHostCapability, useLocalFluentUI } from './fluentUI';
-import { IAdaptiveCardHostActionResult, IAdaptiveCardHostProps, AdaptiveCardHostThemeType } from './IAdaptiveCardHostProps';
+import { AdaptiveCardHostThemeType, IAdaptiveCardHostActionResult, IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
 
 // Init Process Markdown
 initProcessMarkdown();
@@ -21,9 +22,10 @@ initProcessMarkdown();
 export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     const adaptiveCardInstanceRef = useRef<AdaptiveCard>(null);
     const serializationContextInstanceRef = useRef<SerializationContext>(null);
+    const fluentUIThemeInstanceRef = useRef<ITheme>(null);
+
     const renderElementRef = useRef<HTMLDivElement>(null);
     const fluentUICustomizerContext = React.useContext(CustomizerContext);
-    const fluentUIThemeInstanceRef = useRef<ITheme>(null);
 
     // create the instance of AdaptiveCard & SerializationContext
     useEffect(() => {
@@ -41,7 +43,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
                 case OpenUrlAction.JsonTypeName: {
                     let typedAction = action as OpenUrlAction;
                     actionResult = {
-                        type: typedAction.getJsonTypeName(),
+                        type: type,
                         title: typedAction.title,
                         url: typedAction.url
                     };
@@ -51,7 +53,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
                 case SubmitAction.JsonTypeName: {
                     let typedAction = action as SubmitAction;
                     actionResult = {
-                        type: typedAction.getJsonTypeName(),
+                        type: type,
                         title: typedAction.title,
                         data: typedAction.data
                     };
@@ -60,7 +62,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
                 case ExecuteAction.JsonTypeName: {
                     let typedAction = action as ExecuteAction;
                     actionResult = {
-                        type: typedAction.getJsonTypeName(),
+                        type: type,
                         title: typedAction.title,
                         data: typedAction.data,
                         verb: typedAction.verb
@@ -76,7 +78,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
 
     // set hostConfig
     useEffect(() => {
-        let theme: PartialTheme | Theme;
+        let theme: IPartialTheme | ITheme;
         let themeType = props.themeType;
 
         if (!themeType) {
@@ -147,12 +149,10 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
         );
 
         // just to fix the colors of the list actions menu
-        if (props.isUniqueControlInPage) {
-            setFluentUIThemeAsCSSVariables(
-                document.body,
-                theme
-            );
-        }
+        setFluentUIThemeAsCSSVariables(
+            document.body,
+            (props.isUniqueControlInPage) ? theme : getDefaultFluentUITheme()
+        );
         // *****
 
     }, [adaptiveCardInstanceRef.current, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig, props.isUniqueControlInPage]);

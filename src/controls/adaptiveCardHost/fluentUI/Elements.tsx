@@ -1,6 +1,16 @@
-import { ThemeProvider } from "@fluentui/react-theme-provider";
+import { IStyle, ThemeProvider } from "@fluentui/react-theme-provider";
 import { Action, ActionProperty, BoolProperty, Choice, EnumProperty, Input, InputTextStyle, NumProperty, property, SerializableObject, SerializableObjectCollectionProperty, StringProperty, Strings, TimeProperty, ValidationEvent, ValidationResults, ValueSetProperty, Versions } from "adaptivecards";
-import { Button, Checkbox, ChoiceGroup, ComboBox, DatePicker, DefaultButton, ICheckbox, IChoiceGroup, IChoiceGroupOption, IComboBox, IComboBoxOption, IconButton, IDatePicker, IDropdown, IDropdownOption, ISpinButton, IStyle, ITextField, ITheme, IToggle, SpinButton, Stack, TextField, Toggle } from "office-ui-fabric-react";
+import { Button, DefaultButton, IconButton } from "office-ui-fabric-react/lib/Button";
+import { Checkbox, ICheckbox } from "office-ui-fabric-react/lib/Checkbox";
+import { ChoiceGroup, IChoiceGroup, IChoiceGroupOption } from "office-ui-fabric-react/lib/ChoiceGroup";
+import { ComboBox, IComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
+import { DatePicker, IDatePicker } from "office-ui-fabric-react/lib/DatePicker";
+import { IDropdown, IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
+import { ISpinButton, SpinButton } from "office-ui-fabric-react/lib/SpinButton";
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { ITheme } from "office-ui-fabric-react/lib/Styling";
+import { ITextField, TextField } from "office-ui-fabric-react/lib/TextField";
+import { IToggle, Toggle } from "office-ui-fabric-react/lib/Toggle";
 import * as React from "react";
 import { getFluentUIThemeFromHostCapability, hostCapabilitiesFluentUIThemeKey } from "./FluentUI";
 import { internalRender } from "./Shared";

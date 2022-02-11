@@ -1,5 +1,5 @@
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react';
 import { Action, CardElement, CardObjectRegistry, HostCapabilities } from 'adaptivecards';
+import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 
 export interface IAdaptiveCardHostProps {
     /**
@@ -37,7 +37,7 @@ export interface IAdaptiveCardHostProps {
      * Used only if the "themeType" property is set to 'ThemeType.SharePoint'. 
      * If not set or set to null or not defined, the theme passed through context will be searched, or the default theme of the page will be loaded.
      */
-     theme?: IPartialTheme | ITheme;
+    theme?: IPartialTheme | ITheme;
     /**
      * Select the Type of Theme you want to use.
      * If it is not set or set to null or undefined, the 'ThemeType.SharePoint' value will be used and the "theme" property or the theme passed through the context or default page will be loaded. 
