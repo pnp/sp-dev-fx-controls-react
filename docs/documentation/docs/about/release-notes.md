@@ -1,5 +1,20 @@
 # Releases
 
+## 1.21.2
+
+### Enhancements
+
+- `ComboBoxListItemPicker` and `ListItemPicker`: Add label to control [#909](https://github.com/pnp/sp-dev-fx-controls-react/pull/909)
+- `Taxonomy picker` - useSessionStorage property integration [#998](https://github.com/pnp/sp-dev-fx-controls-react/issues/998)
+
+### Fixes
+
+- `TaxonomyPicker`: suggestions language is always English [#879](https://github.com/pnp/sp-dev-fx-controls-react/issues/879)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Emmanuel Sapet](https://github.com/Whiteshark57), [Peter Paul Kirschner](https://github.com/petkir).
+
 ## 1.21.1
 
 ### Enhancements
