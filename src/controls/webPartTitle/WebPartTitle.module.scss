@@ -8,7 +8,7 @@
 }
 
 .webPartTitle {
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 11px;
   //color: "[theme:neutralPrimary, default: #333333]";
@@ -17,14 +17,6 @@
   flex-grow: 1;
   overflow-x: hidden;
   text-overflow: ellipsis;
-
-  @media (min-width: 320px) {
-    font-size: 16px;
-  }
-
-  @media (min-width: 480px) {
-    font-size: 20px;
-  }
 
   // Edit mode
   textarea {
@@ -35,7 +27,7 @@
     display: block;
     font-family: inherit;
     font-size: inherit;
-    font-weight: inherit;
+    font-weight: 400;
     height: 40px;
     line-height: inherit;
     margin: 0;
@@ -48,8 +40,7 @@
 
     &::placeholder,
     &::-webkit-input-placeholder {
-      color: inherit !important;
-      font-weight: 600;
+      color: "[theme:inputPlaceholderText, default: #605e5c]";
     }
   }
 

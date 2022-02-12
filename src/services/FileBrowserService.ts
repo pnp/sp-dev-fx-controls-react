@@ -6,13 +6,15 @@ import { GeneralHelper } from "../common/utilities/GeneralHelper";
 export class FileBrowserService {
   protected itemsToDownloadCount: number;
   protected context: BaseComponentContext;
+  protected siteAbsoluteUrl: string;
 
   protected driveAccessToken: string;
   protected mediaBaseUrl: string;
   protected callerStack: string;
 
-  constructor(context: BaseComponentContext, itemsToDownloadCount: number = 100) {
+  constructor(context: BaseComponentContext, itemsToDownloadCount: number = 100, siteAbsoluteUrl?: string) {
     this.context = context;
+    this.siteAbsoluteUrl = siteAbsoluteUrl || context.pageContext.web.absoluteUrl;
 
     this.itemsToDownloadCount = itemsToDownloadCount;
     this.driveAccessToken = null;
@@ -27,7 +29,7 @@ export class FileBrowserService {
   public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string, sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-      let restApi = `${this.context.pageContext.web.absoluteUrl}/_api/web/GetList('${listUrl}')/RenderListDataAsStream`;
+      let restApi = `${this.siteAbsoluteUrl}/_api/web/GetList('${listUrl}')/RenderListDataAsStream`;
 
       // Do not pass FolderServerRelativeUrl as query parameter
       // Attach passed nextPageQueryStringParams values to REST URL
@@ -59,7 +61,7 @@ export class FileBrowserService {
    */
   public getSiteMediaLibraries = async (includePageLibraries: boolean = false) => {
     try {
-      const absoluteUrl = this.context.pageContext.web.absoluteUrl;
+      const absoluteUrl = this.siteAbsoluteUrl;
       const restApi = `${absoluteUrl}/_api/SP.Web.GetDocumentAndMediaLibraries?webFullUrl='${encodeURIComponent(absoluteUrl)}'&includePageLibraries='${includePageLibraries}'`;
       const mediaLibrariesResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
 
@@ -84,7 +86,7 @@ export class FileBrowserService {
    */
   public getLibraryNameByInternalName = async (internalName: string): Promise<string> => {
     try {
-      const absoluteUrl = this.context.pageContext.web.absoluteUrl;
+      const absoluteUrl = this.siteAbsoluteUrl;
       const restApi = `${absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('${internalName}')/Properties?$select=vti_x005f_listtitle`;
       const libraryResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
 
@@ -153,6 +155,25 @@ export class FileBrowserService {
     }
 
     return fieldName;
+  }
+
+  /**
+   * Gets the Title of the current Web
+   * @returns SharePoint Site Title
+   */
+  public getSiteTitle = async (): Promise<string> => {
+    const restApi = `${this.siteAbsoluteUrl}/_api/web?$select=Title`;
+    const webResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+
+    if (!webResult || !webResult.ok) {
+      throw new Error(`Something went wrong when executing request. Status='${webResult.status}'`);
+    }
+    if (!webResult || !webResult) {
+      throw new Error(`Cannot read data from the results.`);
+    }
+    let webJson = await webResult.json();
+    return webJson.Title;
+
   }
 
   /**
@@ -325,7 +346,7 @@ export class FileBrowserService {
    * Creates an absolute URL
    */
   protected buildAbsoluteUrl = (relativeUrl: string) => {
-    const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.context.pageContext.web.absoluteUrl);
+    const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.siteAbsoluteUrl);
     return `${siteUrl}${relativeUrl.indexOf('/') === 0 ? '' : '/'}${relativeUrl}`;
   }
 

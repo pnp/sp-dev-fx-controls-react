@@ -180,6 +180,7 @@ import { LocationPicker } from "../../../controls/locationPicker/LocationPicker"
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 import { debounce } from "lodash";
 import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
+import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType } from "../../../AdaptiveCardHost";
 
 
 
@@ -1668,6 +1669,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             context={this.props.context}
             hideRecentTab={false}
             includePageLibraries={true}
+            checkIfFileExists={false}
           />
           {
             this.state.filePickerResult &&
@@ -1981,6 +1983,264 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             required={false}
             disabled={false}
             customPanelWidth={400}
+          />
+        </div>
+
+        <div>
+          <h3>Adaptive Card Host</h3>
+          <AdaptiveCardHost
+            card={{
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "type": "AdaptiveCard",
+              "version": "1.0",
+              "body": [
+                {
+                  "type": "TextBlock",
+                  "size": "medium",
+                  "weight": "bolder",
+                  "text": " ${ParticipantInfoForm.title}",
+                  "horizontalAlignment": "center",
+                  "wrap": true,
+                  "style": "heading"
+                },
+                {
+                  "type": "Input.Text",
+                  "label": "Name",
+                  "style": "text",
+                  "id": "SimpleVal",
+                  "isRequired": true,
+                  "errorMessage": "Name is required"
+                },
+                {
+                  "type": "Input.Text",
+                  "label": "Homepage",
+                  "style": "url",
+                  "id": "UrlVal"
+                },
+                {
+                  "type": "Input.Text",
+                  "label": "Email",
+                  "style": "email",
+                  "id": "EmailVal"
+                },
+                {
+                  "type": "Input.Text",
+                  "label": "Phone",
+                  "style": "tel",
+                  "id": "TelVal"
+                },
+                {
+                  "type": "Input.Text",
+                  "label": "Comments",
+                  "style": "text",
+                  "isMultiline": true,
+                  "id": "MultiLineVal"
+                },
+                {
+                  "type": "Input.Number",
+                  "label": "Quantity",
+                  "min": -5,
+                  "max": 5,
+                  "value": 1,
+                  "id": "NumVal",
+                  "errorMessage": "The quantity must be between -5 and 5"
+                },
+                {
+                  "type": "Input.Date",
+                  "label": "Due Date",
+                  "id": "DateVal",
+                  "value": "2017-09-20"
+                },
+                {
+                  "type": "Input.Time",
+                  "label": "Start time",
+                  "id": "TimeVal",
+                  "value": "16:59"
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "medium",
+                  "weight": "bolder",
+                  "text": "${Survey.title} ",
+                  "horizontalAlignment": "center",
+                  "wrap": true,
+                  "style": "heading"
+                },
+                {
+                  "type": "Input.ChoiceSet",
+                  "id": "CompactSelectVal",
+                  "label": "${Survey.questions[0].question}",
+                  "style": "compact",
+                  "value": "1",
+                  "choices": [
+                    {
+                      "$data": "${Survey.questions[0].items}",
+                      "title": "${choice}",
+                      "value": "${value}"
+                    }
+                  ]
+                },
+                {
+                  "type": "Input.ChoiceSet",
+                  "id": "SingleSelectVal",
+                  "label": "${Survey.questions[1].question}",
+                  "style": "expanded",
+                  "value": "1",
+                  "choices": [
+                    {
+                      "$data": "${Survey.questions[1].items}",
+                      "title": "${choice}",
+                      "value": "${value}"
+                    }
+                  ]
+                },
+                {
+                  "type": "Input.ChoiceSet",
+                  "id": "MultiSelectVal",
+                  "label": "${Survey.questions[2].question}",
+                  "isMultiSelect": true,
+                  "value": "1,3",
+                  "choices": [
+                    {
+                      "$data": "${Survey.questions[2].items}",
+                      "title": "${choice}",
+                      "value": "${value}"
+                    }
+                  ]
+                },
+                {
+                  "type": "TextBlock",
+                  "size": "medium",
+                  "weight": "bolder",
+                  "text": "Input.Toggle",
+                  "horizontalAlignment": "center",
+                  "wrap": true,
+                  "style": "heading"
+                },
+                {
+                  "type": "Input.Toggle",
+                  "label": "Please accept the terms and conditions:",
+                  "title": "${Survey.questions[3].question}",
+                  "valueOn": "true",
+                  "valueOff": "false",
+                  "id": "AcceptsTerms",
+                  "isRequired": true,
+                  "errorMessage": "Accepting the terms and conditions is required"
+                },
+                {
+                  "type": "Input.Toggle",
+                  "label": "How do you feel about red cars?",
+                  "title": "${Survey.questions[4].question}",
+                  "valueOn": "RedCars",
+                  "valueOff": "NotRedCars",
+                  "id": "ColorPreference"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "Action.Submit",
+                  "title": "Submit",
+                  "data": {
+                    "id": "1234567890"
+                  }
+                },
+                {
+                  "type": "Action.ShowCard",
+                  "title": "Show Card",
+                  "card": {
+                    "type": "AdaptiveCard",
+                    "body": [
+                      {
+                        "type": "Input.Text",
+                        "label": "enter comment",
+                        "style": "text",
+                        "id": "CommentVal"
+                      }
+                    ],
+                    "actions": [
+                      {
+                        "type": "Action.Submit",
+                        "title": "OK"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }}
+            data={{
+              "$root": {
+                "ParticipantInfoForm": {
+                  "title": "Input.Text elements"
+                },
+                "Survey": {
+                  "title": "Input ChoiceSet",
+                  "questions": [
+                    {
+                      "question": "What color do you want? (compact)",
+                      "items": [
+                        {
+                          "choice": "Red",
+                          "value": "1"
+                        },
+                        {
+                          "choice": "Green",
+                          "value": "2"
+                        },
+                        {
+                          "choice": "Blue",
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "question": "What color do you want? (expanded)",
+                      "items": [
+                        {
+                          "choice": "Red",
+                          "value": "1"
+                        },
+                        {
+                          "choice": "Green",
+                          "value": "2"
+                        },
+                        {
+                          "choice": "Blue",
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "question": "What color do you want? (multiselect)",
+                      "items": [
+                        {
+                          "choice": "Red",
+                          "value": "1"
+                        },
+                        {
+                          "choice": "Green",
+                          "value": "2"
+                        },
+                        {
+                          "choice": "Blue",
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "question": "I accept the terms and conditions (True/False)"
+                    },
+                    {
+                      "question": "Red cars are better than other cars"
+                    }
+                  ]
+                }
+              }
+            }}
+            theme={this.props.themeVariant}
+            themeType={AdaptiveCardHostThemeType.SharePoint}
+            onInvokeAction={(action: IAdaptiveCardHostActionResult) => { alert(JSON.stringify(action)); }}
+            onError={(error: Error) => { alert(error.message); }}
+            isUniqueControlInPage={true}
           />
         </div>
 

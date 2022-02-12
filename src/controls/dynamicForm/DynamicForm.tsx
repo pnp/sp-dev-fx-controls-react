@@ -323,7 +323,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let dateFormat: DateFormat | undefined;
         let principalType = "";
         if (item !== null) {
-          defaultValue = item[field.InternalName];
+          defaultValue = item[field.EntityPropertyName];
         }
         else {
           defaultValue = field.DefaultValue;
@@ -441,6 +441,9 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         else if (fieldType === "Location") {
           defaultValue = JSON.parse(defaultValue);
         }
+        else if (fieldType === "Boolean") {
+          defaultValue = Boolean(Number(defaultValue));
+        }
 
         tempFields.push({
           newValue: null,
@@ -455,7 +458,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           context: this.props.context,
           disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
           listId: this.props.listId,
-          columnInternalName: field.InternalName,
+          columnInternalName: field.EntityPropertyName,
           label: field.Title,
           onChanged: this.onChange,
           required: field.Required,

@@ -62,6 +62,7 @@ The `DateTimePicker` control can be configured with the following properties:
 | isMonthPickerVisible | boolean | no | Controls whether the month picker is shown beside the day picker or hidden. |
 | showMonthPickerAsOverlay | boolean | no | Show month picker on top of date picker when visible. |
 | showWeekNumbers | boolean | no | Controls whether the calendar should show the week number (weeks 1 to 53) before each week row |
+| allowTextInput | boolean | no | Whether the user is allowed to enter a date as text instead of picking one from the date picker. |
 | strings | IDatePickerStrings | no | Localized strings to use in the DateTimePicker |
 | value | Date | no | Default value of the DatePicker, if any |
 | onChange | function | no | Callback issued when date or time is changed |

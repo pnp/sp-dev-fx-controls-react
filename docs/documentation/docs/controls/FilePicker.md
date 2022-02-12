@@ -101,6 +101,8 @@ The FilePicker component can be configured with the following properties:
 | renderCustomMultipleUploadTabContent | (filePickerResult: IFilePickerResult[]) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Multi-Upload" tab |
 | renderCustomLinkTabContent | (filePickerResult: IFilePickerResult) => JSX.Element \| null | no | Optional renderer to add custom user-defined fields to "Link" tab |
 | includePageLibraries | boolean | no | Specifies if Site Pages library to be visible on Sites tab |
+| allowExternalLinks | boolean | no | Specifies if external links should be allowed. |
+| checkIfFileExists | boolean | no | When using file links, this property allows the user to choose if the control should check if the link point to a file that exists or not. |
 
 interface `IFilePickerResult`
 

@@ -63,6 +63,7 @@ The following controls are currently available:
 
 - [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
+- [AdaptiveCardHost](./controls/AdaptiveCardHost.md) (Control to render Adaptive Cards)
 - [AnimatedDialog](./controls/AnimatedDialog) (Animated dialog control)
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)

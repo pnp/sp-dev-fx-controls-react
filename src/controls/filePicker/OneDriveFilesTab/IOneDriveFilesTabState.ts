@@ -2,7 +2,7 @@ import { OneDriveFilesBreadcrumbItem } from "./OneDriveFilesTab.types";
 import { IFilePickerResult } from "../FilePicker.types";
 
 export interface IOneDriveFilesTabState {
-  filePickerResult: IFilePickerResult;
+  filePickerResults: IFilePickerResult[];
   libraryAbsolutePath: string;
   libraryUrl: string;
   folderPath: string;

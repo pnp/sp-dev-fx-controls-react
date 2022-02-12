@@ -50,7 +50,7 @@ export interface IModernTaxonomyPickerProps {
   panelTitle: string;
   label: string;
   context: BaseComponentContext;
-  initialValues?: ITermInfo[];
+  initialValues?: Optional<ITermInfo, "childrenCount" | "createdDateTime" | "lastModifiedDateTime" | "descriptions" | "customSortOrder" | "properties" | "localProperties" | "isDeprecated" | "isAvailableForTagging" | "topicRequested">[];
   disabled?: boolean;
   required?: boolean;
   onChange?: (newValue?: ITermInfo[]) => void;
@@ -60,11 +60,15 @@ export interface IModernTaxonomyPickerProps {
   customPanelWidth?: number;
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
+  isLightDismiss?: boolean;
+  isBlocking?: boolean;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
-  const [taxonomyService] = React.useState(() => new SPTaxonomyService(props.context));
+  const taxonomyService = new SPTaxonomyService(props.context);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
+  const initialLoadComplete = React.useRef(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
   const [selectedPanelOptions, setSelectedPanelOptions] = React.useState<ITermInfo[]>([]);
   const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
@@ -77,12 +81,14 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     taxonomyService.getTermStoreInfo()
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
-        setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
           props.context.pageContext.cultureInfo.currentUICultureName :
-          currentTermStoreInfo.defaultLanguageTag);
+          currentTermStoreInfo.defaultLanguageTag;
+        setCurrentLanguageTag(languageTag);
         setSelectedOptions(Array.isArray(props.initialValues) ?
-          props.initialValues.map(term => { return { ...term, languageTag: currentLanguageTag, termStoreInfo: currentTermStoreInfo } as ITermInfo; }) :
+          props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
           []);
+          initialLoadComplete.current = true;
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
       .then((termSetInfo) => {
@@ -97,7 +103,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   }, []);
 
   React.useEffect(() => {
-    if (props.onChange) {
+    if (props.onChange && initialLoadComplete.current) {
       props.onChange(selectedOptions);
     }
   }, [selectedOptions]);
@@ -235,7 +241,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
         hasCloseButton={true}
         closeButtonAriaLabel={strings.ModernTaxonomyPickerPanelCloseButtonText}
         onDismiss={onClosePanel}
-        isLightDismiss={true}
+        isLightDismiss={props.isLightDismiss}
+        isBlocking={props.isBlocking}
         type={props.customPanelWidth ? PanelType.custom : PanelType.medium}
         customWidth={props.customPanelWidth ? `${props.customPanelWidth}px` : undefined}
         headerText={props.panelTitle}
@@ -261,8 +268,6 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 anchorTermInfo={currentAnchorTermInfo}
                 termSetInfo={currentTermSetInfo}
                 termStoreInfo={currentTermStoreInfo}
-                context={props.context}
-                termSetId={Guid.parse(props.termSetId)}
                 pageSize={50}
                 selectedPanelOptions={selectedPanelOptions}
                 setSelectedPanelOptions={setSelectedPanelOptions}
@@ -273,6 +278,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 languageTag={currentLanguageTag}
                 themeVariant={props.themeVariant}
                 termPickerProps={props.termPickerProps}
+                onRenderActionButton={props.onRenderActionButton}
               />
             </div>
           )

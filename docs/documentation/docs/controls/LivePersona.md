@@ -35,7 +35,7 @@ import { LivePersona } from "@pnp/spfx-controls-react/lib/LivePersona";
       <Persona text="João Mendes" secondaryText="joao.j.mendes@sapteck.com" coinSize={48} />
     </>
   }
-  context={this.props.context}
+ serviceScope={this.context.serviceScope}
 />
 ```
 
@@ -47,7 +47,7 @@ The `LivePersona` control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
-| upn |string | yes | User UPN |
-| disableHover | bollean | no | If info should not appear on hover |
-| template | string | JSX.ELement | yes | The content to wrap with persona info |
+| serviceScope | ServiceScope | yes | The SPFx ServiceScope object loaded from context of web part or extension. |
+| upn |string | yes | User UPN. |
+| disableHover | boolean | no | If info should not appear on hover. |
+| template | string | JSX.ELement | yes | The content to wrap with persona info. |

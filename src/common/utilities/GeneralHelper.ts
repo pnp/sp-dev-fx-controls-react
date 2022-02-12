@@ -232,6 +232,18 @@ export class GeneralHelper {
       }
     }
 
+    public static getDomain(url: string, includeProtocol?: boolean): string {
+      if (url !== undefined) {
+        const myURL = new URL(url.toLowerCase());
+        if (includeProtocol) {
+          return `${myURL.protocol}//${myURL.hostname}`;
+        }
+        return myURL.hostname;
+      }
+
+      return '';
+    }
+
     /**
      * To support IE11 that has no support for File constructor
      * @param blob

@@ -8,7 +8,7 @@ import { IFileBrowserProps } from './IFileBrowserProps';
 import { IFileBrowserState } from './IFileBrowserState';
 import { ViewType } from './FileBrowser.types';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow, IObjectWithKey } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
@@ -128,17 +128,13 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       }
     ];
 
-    this._selection = new Selection({
-      selectionMode: SelectionMode.single
-    });
-
     this.state = {
       columns: columns,
       items: [],
       nextPageQueryString: null,
       loadingState: LoadingState.loading,
       selectedView: lastLayout,
-      filePickerResult: null
+      filePickerResults: []
     };
   }
 
@@ -160,6 +156,10 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    */
   public componentDidMount(): void {
     this._getListItems();
+    this._selection = new Selection({
+      selectionMode: SelectionMode.multiple,
+      onSelectionChanged: this._itemSelectionChanged
+    });
   }
 
   public render(): React.ReactElement<IFileBrowserProps> {
@@ -184,12 +184,11 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                         items={this.state.items}
                         compact={this.state.selectedView === 'compact'}
                         columns={this.state.columns}
-                        selectionMode={SelectionMode.single}
+                        selectionMode={SelectionMode.multiple}
                         setKey="set"
                         layoutMode={DetailsListLayoutMode.justified}
                         isHeaderVisible={true}
                         selection={this._selection}
-                        onActiveItemChanged={(item: IFile, index: number, ev: React.FormEvent<Element>) => this._handleItemInvoked(item)}
                         selectionPreservedOnEmptyClick={true}
                         enterModalSelectionOnTouch={true}
                         onRenderRow={this._onRenderRow}
@@ -197,10 +196,9 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                       />) :
                     (<TilesList
                       fileBrowserService={this.props.fileBrowserService}
-                      filePickerResult={this.state.filePickerResult}
+                      filePickerResult={this.state.filePickerResults ? this.state.filePickerResults[0] : null}
                       selection={this._selection}
                       items={this.state.items}
-
                       onFolderOpen={this._handleOpenFolder}
                       onFileSelected={this._itemSelectionChanged}
                       onNextPageDataRequest={this._loadNextDataRequest}
@@ -447,53 +445,29 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     // item in the folder will appear selected
     this.setState({
       loadingState: LoadingState.loading,
-      filePickerResult: undefined
+      filePickerResults: undefined
     }, () => { this.props.onOpenFolder(item); });
   }
 
   /**
    * Handles selected item change
    */
-  private _itemSelectionChanged = (item?: IFile) => {
-    let selectedItem: IFile = null;
-    // Deselect item
-    if (item && this.state.filePickerResult && item.absoluteUrl == this.state.filePickerResult.fileAbsoluteUrl) {
-      this._selection.setAllSelected(false);
-      selectedItem = null;
-    }
-    else if (item) {
-      const selectedItemIndex = this.state.items.indexOf(item);
-      this._selection.selectToIndex(selectedItemIndex);
-      selectedItem = item;
-    }
-
-    let filePickerResult: IFilePickerResult = null;
-    if (selectedItem && !selectedItem.isFolder) {
-      filePickerResult = {
-        fileAbsoluteUrl: selectedItem.absoluteUrl,
-        fileName: GeneralHelper.getFileNameFromUrl(selectedItem.name),
-        fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(selectedItem.name),
-        spItemUrl: selectedItem.spItemUrl,
-        downloadFileContent: null
-      };
-    }
-    this.props.onChange(filePickerResult);
-    this.setState({
-      filePickerResult
+  private _itemSelectionChanged = () => {
+    let filePickerResults: IFilePickerResult[] = [];
+    this._selection.getSelection().map((item: IFile, index: number) => {
+      if (!item.isFolder) {
+        filePickerResults.push({
+          fileAbsoluteUrl: item.absoluteUrl,
+          fileName: GeneralHelper.getFileNameFromUrl(item.name),
+          fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(item.name),
+          spItemUrl: item.spItemUrl,
+          downloadFileContent: null
+        });
+      }
     });
-  }
 
-  /**
-   * Handles item click.
-   */
-  private _handleItemInvoked = (item: IFile) => {
-    // If a file is selected, open the library
-    if (item.isFolder) {
-      this._handleOpenFolder(item);
-    } else {
-      // Otherwise, remember it was selected
-      this._itemSelectionChanged(item);
-    }
+    this.props.onChange(filePickerResults);
+    this.setState({ filePickerResults });
   }
 
   /**
