@@ -111,36 +111,38 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
                 break;
         }
 
-        fluentUIThemeInstanceRef.current = convertFromPartialThemeToTheme(theme);
+        let currentTheme = convertFromPartialThemeToTheme(theme);
+        fluentUIThemeInstanceRef.current = currentTheme;
 
         let hostConfig = props.hostConfig;
         if (!hostConfig) {
             switch (themeType) {
                 case AdaptiveCardHostThemeType.SharePoint: {
-                    hostConfig = createSharePointHostConfig(fluentUIThemeInstanceRef.current);
+                    hostConfig = createSharePointHostConfig(currentTheme);
                 }
                     break;
                 case AdaptiveCardHostThemeType.Teams: {
-                    hostConfig = createDefaultTeamsHostConfig(fluentUIThemeInstanceRef.current);
+                    hostConfig = createDefaultTeamsHostConfig(currentTheme);
                 }
                     break;
                 case AdaptiveCardHostThemeType.TeamsDark: {
-                    hostConfig = createDarkTeamsHostConfig(fluentUIThemeInstanceRef.current);
+                    hostConfig = createDarkTeamsHostConfig(currentTheme);
                 }
                     break;
                 case AdaptiveCardHostThemeType.TeamsHighContrast: {
-                    hostConfig = createHighContrastTeamsHostConfig(fluentUIThemeInstanceRef.current);
+                    hostConfig = createHighContrastTeamsHostConfig(currentTheme);
                 }
                     break;
             }
         }
 
-        adaptiveCardInstanceRef.current.hostConfig = new HostConfig(hostConfig);
+        let currentHostConfig = new HostConfig(hostConfig);
+        adaptiveCardInstanceRef.current.hostConfig = currentHostConfig;
 
-        setFluentUIThemeAsHostCapability(adaptiveCardInstanceRef.current.hostConfig, fluentUIThemeInstanceRef.current);
+        setFluentUIThemeAsHostCapability(currentHostConfig, currentTheme);
 
         if (props.onUpdateHostCapabilities) {
-            props.onUpdateHostCapabilities(adaptiveCardInstanceRef.current.hostConfig.hostCapabilities);
+            props.onUpdateHostCapabilities(currentHostConfig.hostCapabilities);
         }
 
         setFluentUIThemeAsCSSVariables(
@@ -182,21 +184,22 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
             props.onSetCustomActions(actionRegistry);
         }
 
-        serializationContextInstanceRef.current.setElementRegistry(elementRegistry);
-        serializationContextInstanceRef.current.setActionRegistry(actionRegistry);
+        let currentSerializationContext = serializationContextInstanceRef.current;
+        currentSerializationContext.setElementRegistry(elementRegistry);
+        currentSerializationContext.setActionRegistry(actionRegistry);
 
     }, [serializationContextInstanceRef.current]);
     // *****
 
     // set Adaptive Card
     useEffect(() => {
-        if (!renderElementRef.current) {
+        let currentRenderElement = renderElementRef.current;
+
+        if (!currentRenderElement) {
             return;
         }
 
-        let adaptiveCard = adaptiveCardInstanceRef.current;
-        let serializationContext = serializationContextInstanceRef.current;
-
+        let currentAdaptiveCard = adaptiveCardInstanceRef.current;
         try {
             let cardPayload;
             if (props.data) {
@@ -207,11 +210,11 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
                 cardPayload = props.card;
             }
 
-            adaptiveCard.parse(cardPayload, serializationContext);
+            currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
 
-            let renderedElement = adaptiveCard.render();
-            renderElementRef.current.innerHTML = "";
-            renderElementRef.current.appendChild(renderedElement);
+            let renderedElement = currentAdaptiveCard.render();
+            currentRenderElement.innerHTML = "";
+            currentRenderElement.appendChild(renderedElement);
         } catch (cardRenderError) {
             if (props.onError) {
                 props.onError(cardRenderError);

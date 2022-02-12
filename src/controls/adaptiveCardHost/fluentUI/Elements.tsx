@@ -341,7 +341,9 @@ export class FluentUIDateInput extends Input {
 
     public get value(): string | undefined {
         if (this._value) {
-            return this._value.toISOString();
+            const offset = this._value.getTimezoneOffset();
+            let value = new Date(this._value.getTime() - (offset * 60 * 1000));
+            return value.toISOString().split('T')[0];
         }
         else {
             return undefined;
