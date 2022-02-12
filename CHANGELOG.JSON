@@ -3,7 +3,9 @@
     {
       "version": "3.6.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`AdaptiveCardHost`: React control that allows you to render an Adaptive Card as a component [#1096](https://github.com/pnp/sp-dev-fx-controls-react/issues/1096)"
+        ],
         "enhancements": [
           "`ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)",
           "`FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)",
@@ -30,6 +32,7 @@
       "contributions": [
         "[Alexander M](https://github.com/alexanmo)",
         "[Carlos Marins Jr](https://github.com/kadu-jr)",
+        "[Fabio Franzini](https://github.com/fabiofranzini)",
         "[Henrik](https://github.com/Henke-visual)",
         "[Jasey Waegebaert](https://github.com/Jwaegebaert)",
         "[João Mendes](https://github.com/joaojmendes)",
