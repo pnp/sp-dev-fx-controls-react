@@ -2,12 +2,18 @@
 
 ## 3.6.0
 
+### New control(s)
+
+- `AdaptiveCardHost`: React control that allows you to render an Adaptive Card as a component [#1096](https://github.com/pnp/sp-dev-fx-controls-react/issues/1096)
+
 ### Enhancements
 
 - `ModernTaxonomyPicker`: ability to add action buttons to terms [#1058](https://github.com/pnp/sp-dev-fx-controls-react/pull/1058)
 - `FilePicker`: allow to select files from other sites [#907](https://github.com/pnp/sp-dev-fx-controls-react/issues/907)
 - `Localization`: Update Swedish translations [#1099](https://github.com/pnp/sp-dev-fx-controls-react/pull/1099)
 - `FilePicker`: ability to allow external link and disable file existance chech [commit](https://github.com/pnp/sp-dev-fx-controls-react/commit/41ed4dd2277cf33050f9aeffe743dd684ed9d782)
+- `FilePicker`: support for multi-select on additional sources [#1047](https://github.com/pnp/sp-dev-fx-controls-react/pull/1047)
+- `DateTimePicker`: new property for allowTextInput [#1094](https://github.com/pnp/sp-dev-fx-controls-react/issues/1094)
 
 ### Fixes
 
@@ -20,11 +26,12 @@
 - `TaxonomyPicker`: table markdown fix in documentation [#1072](https://github.com/pnp/sp-dev-fx-controls-react/pull/1072)
 - `WebPartTitle`: Fix for styling of WebPartTitle to better match the styling of the oob webpart titles. [#1088](https://github.com/pnp/sp-dev-fx-controls-react/pull/1088)
 - `LivePersona`: fix for documentation typos [#1106](https://github.com/pnp/sp-dev-fx-controls-react/pull/1106)
+- `LivePersona`: remove property for SPFx context [#1108](https://github.com/pnp/sp-dev-fx-controls-react/pull/1108)
 - Documentation fix for swedish translations [#1100](https://github.com/pnp/sp-dev-fx-controls-react/pull/1100)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Carlos Marins Jr](https://github.com/kadu-jr), [Henrik](https://github.com/Henke-visual), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Milan Holemans](https://github.com/milanholemans), [Patrik Hellgren](https://github.com/patrikhellgren), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Alexander M](https://github.com/alexanmo), [Carlos Marins Jr](https://github.com/kadu-jr), [Fabio Franzini](https://github.com/fabiofranzini), [Henrik](https://github.com/Henke-visual), [Jasey Waegebaert](https://github.com/Jwaegebaert), [João Mendes](https://github.com/joaojmendes), [Milan Holemans](https://github.com/milanholemans), [MonalisaBaltatescu](https://github.com/MonalisaBaltatescu), [Patrik Hellgren](https://github.com/patrikhellgren), [Tom G](https://github.com/t0mgerman).
 
 ## 3.5.0
 
