@@ -23,6 +23,7 @@
     "@fluentui/react-hooks": "^8.2.6",
     "@fluentui/react-northstar": "0.51.3",
     "@fluentui/react-theme-provider": "^0.18.5",
+    "@fluentui/scheme-utilities": "^8.2.12",
     "@fluentui/theme": "^2.4.7",
     "@microsoft/mgt-react": "2.3.0",
     "@microsoft/mgt-spfx": "2.3.0",
