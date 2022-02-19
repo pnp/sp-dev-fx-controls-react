@@ -1,0 +1,29 @@
+import { IJscriptDiagnosticsOptions } from "./IJscriptDiagnosticsOptions";
+import {  IJsonDiagnosticsOptions } from "./IJsonDiagnosticsOptions";
+import * as monaco from "monaco-editor";
+export enum Elanguages {
+    typescript = 'typescript',
+    javascript = 'javascript',
+    css = 'css',
+    html = 'html',
+    json = 'json',
+    xml = 'xml',
+    markdown = 'markdown',
+    less = 'less',
+    scss = 'scss',
+    handlebars = 'handlebars',
+
+
+}
+export interface IMonacoEditorProps {
+	value: string;
+	theme: string;
+	readOnly: boolean;
+	showLineNumbers: boolean;
+	showMiniMap: boolean;
+	onValueChange: (newValue:string, validationErrors:string[]) => void;
+  language: Elanguages;
+  jsonDiagnosticsOptions?: monaco.languages.json.DiagnosticsOptions;
+  jscriptDiagnosticsOptions?: monaco.languages.typescript.DiagnosticsOptions;
+
+}
