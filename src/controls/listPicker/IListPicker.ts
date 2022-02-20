@@ -1,5 +1,5 @@
 import { LibsOrderBy } from "../../services/ISPService";
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+<import { BaseComponentContext } from '@microsoft/sp-component-base';>
 import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 
 export interface IListPickerProps {
