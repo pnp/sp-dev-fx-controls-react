@@ -12,7 +12,6 @@ export const useMonaco = () => {
   const [monaco, setMonaco] = useState<Monaco>(undefined);
   const [status, setStatus] = useState<EStatus>(EStatus.LOADING);
   const [error, setError] = useState<Error>(undefined);
-  // you can change the source of the monaco files
 
   useEffect(() => {
     (async () => {

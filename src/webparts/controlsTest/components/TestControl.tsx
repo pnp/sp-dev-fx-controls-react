@@ -1,10 +1,8 @@
+import { reactionSlotClassNames } from "@fluentui/react-northstar";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
-import { ListItemComments } from "../../../controls/listItemComments";
-import { Elanguages, MonacoEditor } from "../../../controls/monacoEditor";
-import { PeoplePicker, PrincipalType } from "../../../PeoplePicker";
+import {  MonacoEditor } from "../../../controls/monacoEditor";
 export interface ITestControlProps {
   context: WebPartContext;
 }
@@ -12,23 +10,22 @@ export interface ITestControlProps {
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
+  const defaultValue  = React.useMemo(() => {
+    return (['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'));
+  } , []);
+
+  const onValueChange = React.useCallback( (newValue: string, validationErrors: string[]): void => {
+  console.log(newValue);
+ } , []);
+
   return (
     <>
       <Stack>
         <MonacoEditor
-          value={""}
-          theme={"vs"}
-          readOnly={false}
-          showLineNumbers={true}
+          value={defaultValue}
           showMiniMap={true}
-
-          onValueChange={function (newValue: string, validationErrors: string[]): void {
-            console.log(newValue);
-
-          }}
-          language={
-            Elanguages.json
-          }
+          onValueChange={onValueChange}
+          language={"javascript"}
         />
       </Stack>
     </>

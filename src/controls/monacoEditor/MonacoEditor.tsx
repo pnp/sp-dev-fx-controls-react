@@ -22,10 +22,12 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
     jsonDiagnosticsOptions,
     jscriptDiagnosticsOptions,
   } = props || ({} as IMonacoEditorProps);
+
   const containerRef = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<any>(null);
   const { controlClasses } = useMonacoEditorStyles();
   const { monaco, status, error } = useMonaco();
+
   const onDidChangeModelContent = React.useCallback(
     (e: any): void => {
       if (editorRef.current) {

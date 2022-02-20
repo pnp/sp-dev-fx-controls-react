@@ -1,5 +1,4 @@
-import { IJscriptDiagnosticsOptions } from "./IJscriptDiagnosticsOptions";
-import {  IJsonDiagnosticsOptions } from "./IJsonDiagnosticsOptions";
+
 import * as monaco from "monaco-editor";
 export enum Elanguages {
     typescript = 'typescript',
@@ -17,12 +16,12 @@ export enum Elanguages {
 }
 export interface IMonacoEditorProps {
 	value: string;
-	theme: string;
-	readOnly: boolean;
-	showLineNumbers: boolean;
-	showMiniMap: boolean;
-	onValueChange: (newValue:string, validationErrors:string[]) => void;
-  language: Elanguages;
+	theme?: string;
+	readOnly?: boolean;
+	showLineNumbers?: boolean;
+	showMiniMap?: boolean;
+	onValueChange?: (newValue:string, validationErrors:string[]) => void;
+  language: string | Elanguages;
   jsonDiagnosticsOptions?: monaco.languages.json.DiagnosticsOptions;
   jscriptDiagnosticsOptions?: monaco.languages.typescript.DiagnosticsOptions;
 
