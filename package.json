@@ -25,7 +25,7 @@
     "@fluentui/react-theme-provider": "^0.18.5",
     "@fluentui/theme": "^2.4.7",
     "@microsoft/mgt-react": "2.3.0",
-    "@microsoft/mgt-spfx": "2.3.0",
+    "@microsoft/mgt-spfx": "^2.3.0",
     "@microsoft/sp-core-library": "1.13.1",
     "@microsoft/sp-listview-extensibility": "1.13.1",
     "@microsoft/sp-loader": "1.13.1",
