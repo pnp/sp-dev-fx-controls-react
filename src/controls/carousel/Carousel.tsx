@@ -66,6 +66,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       loadingComponentContainerStyles,
       prevButtonIconName = 'ChevronLeft',
       nextButtonIconName = 'ChevronRight',
+      prevButtonAriaLabel = 'Previous item',
+      nextButtonAriaLabel = 'Next item',
       loadingComponent = <Spinner />,
       pauseOnHover,
       interval,
@@ -88,7 +90,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
             onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
             <IconButton
               className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
-              iconProps={{ iconName: prevButtonIconName }}
+              iconProps={{ iconName: prevButtonIconName, ariaLabel: prevButtonAriaLabel }}
               disabled={prevButtonDisabled}
               onClick={() => { this.onCarouselButtonClicked(false); }} />
           </div>
@@ -115,7 +117,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
             onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
             <IconButton
               className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
-              iconProps={{ iconName: nextButtonIconName }}
+              iconProps={{ iconName: nextButtonIconName, ariaLabel: nextButtonAriaLabel }}
               disabled={nextButtonDisabled}
               onClick={() => { this.onCarouselButtonClicked(true); }} />
           </div>

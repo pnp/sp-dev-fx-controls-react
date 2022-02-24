@@ -123,6 +123,15 @@ export interface ICarouselProps {
    */
   nextButtonIconName?: string;
   /**
+   * Aria label of the PreviousItem button. Default 'Previous item'.
+   */
+  prevButtonAriaLabel?: string;
+
+  /**
+   * Aria label of the NextItem button. Default 'Next item'.
+   */
+  nextButtonAriaLabel?: string;
+  /**
    * Triggers parent control to provide new element to be displayed. After the method is executed, carousel control switches to processing mode and loadingComponent is displayed.
    */
   triggerPageEvent?: (index: number) => void;
