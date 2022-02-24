@@ -2,6 +2,10 @@
 
 ## 3.7.0
 
+### Enhancements
+
+- `Carousel`: Prev and Next Buttons are not labeled, and read as 'Unlabeled button' by screen readers [#1137](https://github.com/pnp/sp-dev-fx-controls-react/issues/1137)
+
 ## 3.6.0
 
 ### New control(s)
