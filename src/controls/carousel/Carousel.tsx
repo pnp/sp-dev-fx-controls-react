@@ -89,8 +89,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
             onClick={() => { if (!prevButtonDisabled) { this.onCarouselButtonClicked(false); } }} >
             <IconButton
+              ariaLabel={prevButtonAriaLabel}
               className={this.getMergedStyles(this.getButtonStyles(false), prevButtonStyles)}
-              iconProps={{ iconName: prevButtonIconName, ariaLabel: prevButtonAriaLabel }}
+              iconProps={{ iconName: prevButtonIconName }}
               disabled={prevButtonDisabled}
               onClick={() => { this.onCarouselButtonClicked(false); }} />
           </div>
@@ -116,8 +117,9 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
           <div className={this.getMergedStyles(this.getButtonContainerStyles(), containerButtonsStyles)}
             onClick={() => { if (!nextButtonDisabled) { this.onCarouselButtonClicked(true); } }}>
             <IconButton
+              ariaLabel={nextButtonAriaLabel}
               className={this.getMergedStyles(this.getButtonStyles(true), nextButtonStyles)}
-              iconProps={{ iconName: nextButtonIconName, ariaLabel: nextButtonAriaLabel }}
+              iconProps={{ iconName: nextButtonIconName }}
               disabled={nextButtonDisabled}
               onClick={() => { this.onCarouselButtonClicked(true); }} />
           </div>
