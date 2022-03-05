@@ -181,6 +181,8 @@ import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationP
 import { debounce } from "lodash";
 import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
 import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType } from "../../../AdaptiveCardHost";
+import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
+import { Label } from "office-ui-fabric-react/lib/Label";
 
 
 
@@ -264,7 +266,7 @@ const sampleItems = [
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private richTextValue: string = null;
-  private theme =  window["__themeState__"].theme;
+  private theme = window["__themeState__"].theme;
   private pickerStylesSingle: Partial<IBasePickerStyles> = {
     root: {
       width: "100%",
@@ -273,24 +275,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     },
     input: {
       width: "100%",
-      backgroundColor:  this.theme.white,
+      backgroundColor: this.theme.white,
     },
     text: {
       borderStyle: "solid",
       width: "100%",
       borderWidth: 1,
-      backgroundColor:  this.theme.white,
+      backgroundColor: this.theme.white,
       borderRadius: 0,
-      borderColor:  this.theme.neutralQuaternaryAlt,
+      borderColor: this.theme.neutralQuaternaryAlt,
       ":focus": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor:  this.theme.themePrimary,
+        borderColor: this.theme.themePrimary,
       },
       ":hover": {
         borderStyle: "solid",
         borderWidth: 1,
-        borderColor:  this.theme.themePrimary,
+        borderColor: this.theme.themePrimary,
       },
       ":after": {
         borderWidth: 0,
@@ -1179,7 +1181,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           hideButton={this.props.displayMode === DisplayMode.Read}
           onConfigure={this._onConfigure} />
 
-         <PeoplePicker context={this.props.context}
+        <PeoplePicker context={this.props.context}
           titleText="People Picker custom styles"
           styles={this.pickerStylesSingle}
           personSelectionLimit={5}
@@ -1334,20 +1336,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </DragDropFiles>
         <br></br>
 
-          <ListView items={this.state.items}
-            viewFields={viewFields}
-            iconFieldName='ServerRelativeUrl'
-            groupByFields={groupByFields}
-            compact={true}
-            selectionMode={SelectionMode.single}
-            selection={this._getSelection}
-            showFilter={true}
-            dragDropFiles={true}
-            onDrop={this._getDropFiles}
-            stickyHeader={true}
-            className={styles.listViewWrapper}
-          // defaultFilter="Team"
-          />
+        <ListView items={this.state.items}
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+          dragDropFiles={true}
+          onDrop={this._getDropFiles}
+          stickyHeader={true}
+          className={styles.listViewWrapper}
+        // defaultFilter="Team"
+        />
 
         <ChartControl type={ChartType.Bar}
           data={{
@@ -2244,6 +2246,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
         </div>
 
+        <div>
+          <h3>Variant Theme Provider</h3>
+          <VariantThemeProvider variantType={VariantType.Strong}>
+            <Stack tokens={{ childrenGap: 5, padding: 5 }}>
+              <Label>This Web Part implements an example on how to use the 'Fluent UI' theme library and how to apply/generate theme variation for the Web Part itself.</Label>
+              <PrimaryButton>Primary Button</PrimaryButton>
+              <DefaultButton>Default Button</DefaultButton>
+              <Link>Link</Link>
+            </Stack>
+          </VariantThemeProvider>
+        </div>
       </div>
     );
   }
