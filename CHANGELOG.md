@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `Carousel`: Prev and Next Buttons are not labeled, and read as 'Unlabeled button' by screen readers [#1137](https://github.com/pnp/sp-dev-fx-controls-react/issues/1137)
+- SharePoint Framework v1.14.0 support
 
 ## 3.6.0
 
