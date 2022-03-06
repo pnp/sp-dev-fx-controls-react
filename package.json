@@ -97,6 +97,7 @@
     "spfx-fast-serve-helpers": "~1.13.0",
     "ts-jest": "^25.5.1",
     "tslib": "2.0.0",
+    "tslint-microsoft-contrib": "6.2.0",
     "webpack-bundle-analyzer": "^4.1.0"
   },
   "repository": {

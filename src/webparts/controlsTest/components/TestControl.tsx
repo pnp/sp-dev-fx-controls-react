@@ -1,8 +1,11 @@
-import { reactionSlotClassNames } from "@fluentui/react-northstar";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
-import {  MonacoEditor } from "../../../controls/monacoEditor";
+
+import { Stack } from "office-ui-fabric-react/lib/Stack";
+
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+
+import { MonacoEditor } from "../../../controls/monacoEditor";
+
 export interface ITestControlProps {
   context: WebPartContext;
 }
@@ -26,6 +29,7 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
           showMiniMap={true}
           onValueChange={onValueChange}
           language={"javascript"}
+          showLineNumbers={true}
         />
       </Stack>
     </>

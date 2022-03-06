@@ -1,25 +1,26 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
-import { Version } from '@microsoft/sp-core-library';
-import {
-  BaseClientSideWebPart,
-} from '@microsoft/sp-webpart-base';
-import {
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
+import * as React from "react";
+import * as ReactDom from "react-dom";
 
-import * as strings from 'ControlsTestWebPartStrings';
- import { TestControl, ITestControlProps } from './components/TestControl';
-import { IControlsTestProps } from './components/IControlsTestProps';
-import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
+import * as strings from "ControlsTestWebPartStrings";
+
 import {
   IReadonlyTheme,
   ThemeChangedEventArgs,
   ThemeProvider,
 } from "@microsoft/sp-component-base";
-import ControlsTest from './components/ControlsTest';
-import ControlsTest_SingleComponent from './components/ControlsTest_SingleComponent';
+import { Version } from "@microsoft/sp-core-library";
+import {
+  IPropertyPaneConfiguration,
+  PropertyPaneTextField,
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
+
+import {
+  ITestControlProps,
+  TestControl,
+} from "./components/TestControl";
+import { IControlsTestWebPartProps } from "./IControlsTestWebPartProps";
+
 /**
  * Web part to test the React controls
  */
@@ -69,15 +70,15 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-   /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
+     const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
          context: this.context,
        }
      );
- */
-  const element: React.ReactElement<IControlsTestProps> = React.createElement(
+
+  /* const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
     ControlsTest,
       {
@@ -93,7 +94,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         totalPages: this.properties.totalPages
       }
     );
-
+ */
     ReactDom.render(element, this.domElement);
   }
 
