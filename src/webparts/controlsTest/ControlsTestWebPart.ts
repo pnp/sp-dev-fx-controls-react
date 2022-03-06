@@ -15,10 +15,8 @@ import {
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import {
-  ITestControlProps,
-  TestControl,
-} from "./components/TestControl";
+import ControlsTest from "./components/ControlsTest";
+import { IControlsTestProps } from "./components/IControlsTestProps";
 import { IControlsTestWebPartProps } from "./IControlsTestWebPartProps";
 
 /**
@@ -70,15 +68,15 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-     const element: React.ReactElement<ITestControlProps> = React.createElement(
+    /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
          context: this.context,
        }
-     );
+     ); */
 
-  /* const element: React.ReactElement<IControlsTestProps> = React.createElement(
+const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
     ControlsTest,
       {
@@ -94,7 +92,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         totalPages: this.properties.totalPages
       }
     );
- */
+
     ReactDom.render(element, this.domElement);
   }
 
