@@ -1,5 +1,5 @@
-
 import * as monaco from "monaco-editor";
+
 export enum Elanguages {
     typescript = 'typescript',
     javascript = 'javascript',

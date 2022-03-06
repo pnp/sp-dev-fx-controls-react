@@ -48,6 +48,7 @@
     "he": "^1.2.0",
     "lodash": "4.17.21",
     "markdown-it": "^12.3.2",
+    "monaco-editor": "^0.32.1",
     "office-ui-fabric-react": "7.174.1",
     "react": "16.13.1",
     "react-accessible-accordion": "^3.3.3",
