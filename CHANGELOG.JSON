@@ -4,7 +4,8 @@
       "version": "3.7.0",
       "changes": {
         "new": [
-          "`VariantThemeProvider`: new `VariantThemeProvider` control"
+          "`VariantThemeProvider`: new `VariantThemeProvider` control [#1120](https://github.com/pnp/sp-dev-fx-controls-react/issues/1120)",
+          "`MonacoEditor`: new `MonacoEditor` control [#1134](https://github.com/pnp/sp-dev-fx-controls-react/pull/1134)"
         ],
         "enhancements": [
           "`Carousel`: Prev and Next Buttons are not labeled, and read as 'Unlabeled button' by screen readers [#1137](https://github.com/pnp/sp-dev-fx-controls-react/issues/1137)",
@@ -14,6 +15,7 @@
       },
       "contributors": [
         "[Fabio Franzini](https://github.com/fabiofranzini)",
+        "[João Mendes](https://github.com/joaojmendes)",
         "[Won Song](https://github.com/WonSong)"
       ]
     },
