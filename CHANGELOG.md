@@ -4,7 +4,8 @@
 
 ### New control(s)
 
-- `VariantThemeProvider`: new `VariantThemeProvider` control
+- `VariantThemeProvider`: new `VariantThemeProvider` control [#1120](https://github.com/pnp/sp-dev-fx-controls-react/issues/1120)
+- `MonacoEditor`: new `MonacoEditor` control [#1134](https://github.com/pnp/sp-dev-fx-controls-react/pull/1134)
 
 ### Enhancements
 
