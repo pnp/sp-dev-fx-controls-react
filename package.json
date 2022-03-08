@@ -34,6 +34,7 @@
     "@microsoft/sp-office-ui-fabric-core": "1.14.0",
     "@microsoft/sp-property-pane": "1.14.0",
     "@microsoft/sp-webpart-base": "1.14.0",
+    "@monaco-editor/loader": "^1.2.0",
     "@pnp/sp": "2.5.0",
     "@pnp/telemetry-js": "2.0.0",
     "@popperjs/core": "2.5.4",
@@ -48,6 +49,7 @@
     "he": "^1.2.0",
     "lodash": "4.17.21",
     "markdown-it": "^12.3.2",
+    "monaco-editor": "^0.32.1",
     "office-ui-fabric-react": "7.174.1",
     "react": "16.13.1",
     "react-accessible-accordion": "^3.3.3",
@@ -96,6 +98,7 @@
     "spfx-fast-serve-helpers": "~1.13.0",
     "ts-jest": "^25.5.1",
     "tslib": "2.0.0",
+    "tslint-microsoft-contrib": "6.2.0",
     "webpack-bundle-analyzer": "^4.1.0"
   },
   "repository": {
