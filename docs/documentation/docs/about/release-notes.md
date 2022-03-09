@@ -12,6 +12,10 @@
 - `Carousel`: Prev and Next Buttons are not labeled, and read as 'Unlabeled button' by screen readers [#1137](https://github.com/pnp/sp-dev-fx-controls-react/issues/1137)
 - SharePoint Framework v1.14.0 support
 
+### Fixes
+
+- `FilePicker`: `defaultFolderAbsolutePath` doesn't work with `webAbsoluteUrl` [#1129](https://github.com/pnp/sp-dev-fx-controls-react/issues/1129)
+
 ## 3.6.0
 
 ### New control(s)
