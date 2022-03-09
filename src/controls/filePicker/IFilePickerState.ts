@@ -3,6 +3,7 @@ export interface IFilePickerState {
   panelOpen?: boolean;
   selectedTab?: string;
   webTitle?: string;
+  webId?: string;
 
   organisationAssetsEnabled?: boolean;
 }

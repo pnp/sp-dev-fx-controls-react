@@ -14,7 +14,7 @@ import { SPWeb } from "@microsoft/sp-page-context";
 
 import styles from './SiteFilePickerTab.module.scss';
 import * as strings from 'ControlStrings';
-import { urlCombine } from '../../../common/utilities';
+import { toRelativeUrl, urlCombine } from '../../../common/utilities';
 import { cloneDeep } from '@microsoft/sp-lodash-subset';
 
 export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTabProps, ISiteFilePickerTabState> {
@@ -27,17 +27,23 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     const breadcrumbSiteNode: FilePickerBreadcrumbItem = this.props.breadcrumbFirstNode ? this.props.breadcrumbFirstNode : {
       isCurrentItem: false,
       text: props.webTitle || props.context.pageContext.web.title,
-      key: props.context.pageContext.web.id.toString(),
+      key: props.webId || props.context.pageContext.web.id.toString(),
     };
     // add click event after defining breadcrumb so that it also applies to breadcrumb items passed to the component as properties
     breadcrumbSiteNode.onClick = (ev, itm) => { this.onBreadcrumpItemClick(itm); };
 
     let breadcrumbItems: FilePickerBreadcrumbItem[] = [breadcrumbSiteNode];
 
+    let webAbsoluteUrl = props.webAbsoluteUrl || props.context.pageContext.web.absoluteUrl;
+    let webServerRelativeUrl = toRelativeUrl(webAbsoluteUrl);
+
     let { folderAbsPath = undefined, libraryServRelUrl = undefined, folderServRelPath = undefined, folderBreadcrumbs = [] } = props.defaultFolderAbsolutePath
       ? this._parseInitialLocationState(
         props.defaultFolderAbsolutePath,
-        props.context.pageContext.web
+        {
+          serverRelativeUrl: webServerRelativeUrl,
+          absoluteUrl: webAbsoluteUrl
+        }
       )
       : {};
 
@@ -55,7 +61,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     };
   }
 
-  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }: SPWeb) {
+  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }) {
     // folderAbsPath: "https://tenant.sharepoint.com/teams/Test/DocLib/Folder"
 
     // folderServRelPath: "/teams/Test/DocLib/Folder"
@@ -179,7 +185,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               onOpenFolder={(folder: IFile) => this._handleOpenFolder(folder, true)}
               fileBrowserService={this.props.fileBrowserService}
               libraryUrl={this.state.libraryUrl}
-              folderPath={this.state.libraryPath}
+              folderPath={decodeURIComponent(this.state.libraryPath)}
               accepts={this.props.accepts} />}
         </div>
         <div className={styles.actionButtonsContainer}>
