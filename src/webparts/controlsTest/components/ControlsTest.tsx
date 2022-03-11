@@ -2244,6 +2244,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onInvokeAction={(action: IAdaptiveCardHostActionResult) => { alert(JSON.stringify(action)); }}
             onError={(error: Error) => { alert(error.message); }}
             isUniqueControlInPage={true}
+            context={this.props.context}
           />
         </div>
 

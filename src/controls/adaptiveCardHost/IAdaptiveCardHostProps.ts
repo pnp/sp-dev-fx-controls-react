@@ -1,3 +1,4 @@
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Action, CardElement, CardObjectRegistry, HostCapabilities } from 'adaptivecards';
 import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 
@@ -77,6 +78,10 @@ export interface IAdaptiveCardHostProps {
      * Set to true if you want to use only one instance of this control per page, false for multiple controls. This affects how CSS variables are set.
      */
     isUniqueControlInPage?: boolean;
+    /**
+     * Set the context from SPFx component.
+     */
+    context: BaseComponentContext;
 }
 
 export enum AdaptiveCardHostThemeType {

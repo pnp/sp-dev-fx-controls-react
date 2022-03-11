@@ -1,7 +1,8 @@
 import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
 import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { BaseComponentContext, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { ActionAlignment, AdaptiveCard, TextColor, TextWeight } from 'adaptivecards';
+import { IEvaluationContext } from 'adaptivecards-templating/lib/template-engine';
 import * as markdown from 'markdown-it';
 import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { getDefaultFluentUITheme } from './fluentUI';
@@ -1024,4 +1025,27 @@ const setCSSVariables = (domElement: HTMLElement, prefix: string, obj: any) => {
             domElement.style.setProperty(`--${prefix}-${key}`, obj[key]);
         });
     }
+};
+
+export const injectContextProperty = (dataObject: { "$root": object }, theme: ITheme, spfxContext: BaseComponentContext): IEvaluationContext => {
+    let evaluationContext: IEvaluationContext;
+    let context = {
+        theme: theme,
+        aadInfo: (spfxContext?.pageContext?.aadInfo) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.aadInfo)) : undefined,
+        cultureInfo: (spfxContext?.pageContext?.cultureInfo) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.cultureInfo)) : undefined,
+        legacyPageContext: (spfxContext?.pageContext?.legacyPageContext) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.legacyPageContext)) : undefined,
+        list: (spfxContext?.pageContext?.list) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.list)) : undefined,
+        listItem: (spfxContext?.pageContext?.listItem) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.listItem)) : undefined,
+        site: (spfxContext?.pageContext?.site) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.site)) : undefined,
+        user: (spfxContext?.pageContext?.user) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.user)) : undefined,
+        web: (spfxContext?.pageContext?.web) ? JSON.parse(JSON.stringify(spfxContext?.pageContext?.web)) : undefined
+    };
+
+    if (dataObject) {
+        evaluationContext = { $root: { ...dataObject?.$root, "@context": context } };
+    } else {
+        evaluationContext = { $root: { "@context": context } };
+    }
+
+    return evaluationContext;
 };
