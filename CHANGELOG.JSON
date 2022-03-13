@@ -12,7 +12,8 @@
           "SharePoint Framework v1.14.0 support"
         ],
         "fixes": [
-          "`FilePicker`: `defaultFolderAbsolutePath` doesn't work with `webAbsoluteUrl` [#1129](https://github.com/pnp/sp-dev-fx-controls-react/issues/1129)"
+          "`FilePicker`: `defaultFolderAbsolutePath` doesn't work with `webAbsoluteUrl` [#1129](https://github.com/pnp/sp-dev-fx-controls-react/issues/1129)",
+          "`LocationPicker`: Location picker not resolving locations [#1149](https://github.com/pnp/sp-dev-fx-controls-react/issues/1149)"
         ]
       },
       "contributors": [
