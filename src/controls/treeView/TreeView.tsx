@@ -240,7 +240,8 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       showCheckboxes,
       treeItemActionsDisplayMode,
       defaultExpanded,
-      defaultExpandedChildren
+      defaultExpandedChildren,
+      defaultExpandedKeys
     } = this.props;
 
     return (
@@ -260,7 +261,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               onRenderItem={onRenderItem}
               showCheckboxes={showCheckboxes}
               treeItemActionsDisplayMode={treeItemActionsDisplayMode}
-              nodesToExpand={this.nodesToExpand}
+              nodesToExpand={defaultExpandedKeys}
             />
           ))
         }
