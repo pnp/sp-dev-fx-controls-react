@@ -10,11 +10,15 @@
 ### Enhancements
 
 - `Carousel`: Prev and Next Buttons are not labeled, and read as 'Unlabeled button' by screen readers [#1137](https://github.com/pnp/sp-dev-fx-controls-react/issues/1137)
+- `TreeView`: Ability to set keys of items that should be expanded by default [#1084](https://github.com/pnp/sp-dev-fx-controls-react/pull/1084)
 - SharePoint Framework v1.14.0 support
 
 ### Fixes
 
 - `FilePicker`: `defaultFolderAbsolutePath` doesn't work with `webAbsoluteUrl` [#1129](https://github.com/pnp/sp-dev-fx-controls-react/issues/1129)
+- `LocationPicker`: Location picker not resolving locations [#1149](https://github.com/pnp/sp-dev-fx-controls-react/issues/1149)
+- `DynamicForm`: `RichText` Field losing focus on typing [#1024](https://github.com/pnp/sp-dev-fx-controls-react/issues/1024)
+- `LivePersona`: Documentation fix for `template` type [#1147](https://github.com/pnp/sp-dev-fx-controls-react/pull/1147)
 
 ## 3.6.0
 
