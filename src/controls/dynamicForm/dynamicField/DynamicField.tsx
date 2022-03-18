@@ -126,6 +126,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
       case 'Note':
         if (isRichText) {
+          const value = this.props.newValue ? this.props.newValue : defaultValue;
           return <div className={styles.richText}>
             <div className={styles.titleContainer}>
               <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
@@ -133,7 +134,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             </div>
             <RichText
               placeholder={placeholder}
-              value={defaultValue}
+              value={value}
               className={styles.feildDisplay}
               onChange={(newText) => { this.onChange(newText); return newText; }}
               isEditMode={disabled}>
