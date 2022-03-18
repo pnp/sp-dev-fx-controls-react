@@ -101,6 +101,7 @@ The `TreeView` control can be configured with the following properties:
 | onSelect                       | function                   | no       | Captures the event of when the tree item selection has changed.                                                                    |
 | onRenderItem                   | function                   | no       | Optional callback to provide custom rendering of the item (default is simple text of item label and a checkbox for selection).     |
 | defaultExpandedChildren        | boolean                    | no       | Default expand / collapse behavior for the child nodes. By default this is set to true. |
+| defaultExpandedKeys | string[] | no      | Keys of items expanded by default. |
 
 Enum `TreeViewSelectionMode`
 
