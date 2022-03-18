@@ -14,11 +14,21 @@ export interface ISiteFilePickerTabProps extends IFilePickerTab {
    * Specifies a default folder to be active in the Site Files tab
    */
   defaultFolderAbsolutePath?: string;
-  
- /**
+
+  /**
    * Title of the default site
    */
   webTitle?: string;
+
+  /**
+   * Id of the default site
+   */
+  webId?: string;
+
+  /**
+   * Absolute Url of the default site
+   */
+  webAbsoluteUrl?: string;
 
   includePageLibraries?: boolean;
 }

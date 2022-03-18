@@ -89,10 +89,11 @@ export class FilePicker extends React.Component<
       organisationAssetsEnabled: orgAssetsEnabled,
       selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
     });
-    if (!!this.props.context && !!this.props.webAbsoluteUrl){
-      let webTitle = await this.fileBrowserService.getSiteTitle();
+    if (!!this.props.context && !!this.props.webAbsoluteUrl) {
+      const { title, id } = await this.fileBrowserService.getSiteTitleAndId();
       this.setState({
-        webTitle
+        webTitle: title,
+        webId: id
       });
     }
   }
@@ -222,6 +223,8 @@ export class FilePicker extends React.Component<
                 includePageLibraries={this.props.includePageLibraries}
                 defaultFolderAbsolutePath={this.props.defaultFolderAbsolutePath}
                 webTitle={this.state.webTitle}
+                webId={this.state.webId}
+                webAbsoluteUrl={this.props.webAbsoluteUrl}
                 {...linkTabProps}
               />
             )}

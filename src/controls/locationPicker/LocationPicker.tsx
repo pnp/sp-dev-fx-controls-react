@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ILocationPickerProps, ILocationPickerState, Mode, ILocationBoxOption, ILocationPickerItem } from './ILocationPicker';
 import styles from './LocationPicker.module.scss';
-import { SPHttpClient, ISPHttpClientOptions, SPHttpClientResponse, AadHttpClient } from '@microsoft/sp-http';
+import { SPHttpClient, ISPHttpClientOptions, SPHttpClientResponse, HttpClient, HttpClientResponse } from '@microsoft/sp-http';
 import { Text } from 'office-ui-fabric-react/lib/Text';
 import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
 import { ComboBox } from 'office-ui-fabric-react/lib/ComboBox';
@@ -276,8 +276,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         body: `{"QueryConstraint":{"Query":"${searchText}"},"LocationProvider":32,"BingMarket":"en-IN"}`,
         headers: requestHeaders
       };
-      let client1: AadHttpClient = await this.props.context.aadHttpClientFactory.getClient("https://outlook.office365.com");
-      let response1 = await client1.post("https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations", AadHttpClient.configurations.v1, spOpts);
+      let response1: HttpClientResponse = await this.props.context.httpClient.post("https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations", HttpClient.configurations.v1, spOpts);
       let json = await response1.json();
 
 

@@ -132,6 +132,8 @@ The Carousel component can be configured with the following properties:
 | indicatorsDisplay | CarouselIndicatorsDisplay | no | Specifies display mode of the indicators. Default value `overlap`. |
 | rootStyles | ICssInput | no | Allows to specify own styles for root element |
 | indicatorsContainerStyles | ICssInput | no | Allows to specify own styles for indicators container when indicatorsDisplay is set to "block" |
+| prevButtonAriaLabel | string | no | Aria label of the PreviousItem button. Default 'Previous item'. |
+| nextButtonAriaLabel | string | no | Aria label of the NextItem button. Default 'Next item'. |
 
 enum `CarouselButtonsLocation`
 

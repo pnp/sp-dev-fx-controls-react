@@ -176,6 +176,21 @@ export class FileBrowserService {
 
   }
 
+  public getSiteTitleAndId = async (): Promise<{ title: string, id: string }> => {
+    const restApi = `${this.siteAbsoluteUrl}/_api/web?$select=Title,Id`;
+    const webResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+
+    if (!webResult || !webResult.ok) {
+      throw new Error(`Something went wrong when executing request. Status='${webResult.status}'`);
+    }
+    if (!webResult || !webResult) {
+      throw new Error(`Cannot read data from the results.`);
+    }
+    let webJson = await webResult.json();
+    return { title: webJson.Title, id: webJson.Id };
+
+  }
+
   /**
    * Executes query to load files with possible extension filtering
    * @param restApi

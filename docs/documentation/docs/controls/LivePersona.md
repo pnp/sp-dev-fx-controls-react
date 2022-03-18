@@ -50,4 +50,4 @@ The `LivePersona` control can be configured with the following properties:
 | serviceScope | ServiceScope | yes | The SPFx ServiceScope object loaded from context of web part or extension. |
 | upn |string | yes | User UPN. |
 | disableHover | boolean | no | If info should not appear on hover. |
-| template | string | JSX.ELement | yes | The content to wrap with persona info. |
+| template | string \| JSX.Element | yes | The content to wrap with persona info. |
