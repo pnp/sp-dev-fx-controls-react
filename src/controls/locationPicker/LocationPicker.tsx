@@ -260,7 +260,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
       headers: requestHeaders
     };
 
-    let response: SPHttpClientResponse = await this.props.context.spHttpClient.post(`${this.props.context.pageContext.web.serverRelativeUrl}/_api/SP.OAuth.Token/Acquire`, SPHttpClient.configurations.v1, spOpts);
+    let response: SPHttpClientResponse = await this.props.context.spHttpClient.post(`${this.props.context.pageContext.web.absoluteUrl}/_api/SP.OAuth.Token/Acquire`, SPHttpClient.configurations.v1, spOpts);
     let PrimaryQueryResult: any = await response.json();
     this._token = PrimaryQueryResult.access_token;
   }
