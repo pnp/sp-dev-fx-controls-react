@@ -14,15 +14,15 @@ All Elements and Actions of Adaptive Cards have been redefined using Fluent UI R
 Thanks to the "context" property that allows you to pass the SPFx context, whether the "data" property is passed or not, a new field called @context will be injected into the data object.
 
 This allows, using Adaptive Cards templating syntax, to access to the context informations using the following fields (for more information on these fields, refer to the [BaseComponentContext](https://docs.microsoft.com/en-us/javascript/api/sp-component-base/basecomponentcontext) class):
-- "aadInfo": property "aadInfo" of the SPFx context object.
-- "cultureInfo": "cultureInfo" property of the SPFx context object.
-- "legacyPageContext": "legacyPageContext" property of the SPFx context object.
-- "list": property "list" of the SPFx context object.
-- "listItem": property "listItem" of the SPFx context object.
-- "site": property "site" of the SPFx context object.
-- "user": "user" property of the SPFx context object.
-- "web": "web" property of the SPFx context object.
 - "theme": property "theme" from the current theme applied to the card.
+- "aadInfo": Azure AD informations retrieved from the SPFx context object.
+- "cultureInfo": Culture informations retrieved from the SPFx context object.
+- "userInfo": User informations retrieved from the SPFx context object.
+- "spListInfo": Current List informations retrieved from the SPFx context object.
+- "spListItemInfo": Current List item informations retrieved from the SPFx context object.
+- "spSiteInfo": Current Site informations retrieved from the SPFx context object.
+- "spWebInfo": Current Web informations retrieved from the SPFx context object.
+- "spPartialLegacyContext": Subset of the "legacyPageContext" property retrieved from the SPFx context object.
 
 The Adaptive Cards version supported is 1.5, by using the 'adaptivecards' npm package version 2.10.0.
 

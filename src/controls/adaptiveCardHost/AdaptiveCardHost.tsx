@@ -12,7 +12,7 @@ import {
     useRef
 } from 'react';
 import './AdaptiveCardHost.css';
-import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, injectContextProperty, setFluentUIThemeAsCSSVariables } from './AdaptiveCardHostHelpers';
+import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, addSPFxContextDataToDataObject, setFluentUIThemeAsCSSVariables } from './AdaptiveCardHostHelpers';
 import { createDarkTeamsTheme, createDefaultTeamsTheme, createHighContrastTeamsTheme, getDefaultFluentUITheme, setFluentUIThemeAsHostCapability, useLocalFluentUI } from './fluentUI';
 import { AdaptiveCardHostThemeType, IAdaptiveCardHostActionResult, IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
 
@@ -202,7 +202,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
         let currentAdaptiveCard = adaptiveCardInstanceRef.current;
         try {
             let template = new Template(props.card);
-            let evaluationContext = injectContextProperty(props.data, fluentUIThemeInstanceRef.current, props.context);
+            let evaluationContext = addSPFxContextDataToDataObject(props.data, fluentUIThemeInstanceRef.current, props.context);
             let cardPayload = template.expand(evaluationContext);
 
             currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
