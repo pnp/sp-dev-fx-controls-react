@@ -94,6 +94,7 @@ The FilePicker component can be configured with the following properties:
 | hideOneDriveTab | boolean | no | Specifies if OneDriveTab should be hidden. |
 | hideSiteFilesTab | boolean | no | Specifies if SiteFilesTab should be hidden. |
 | hideLocalUploadTab | boolean | no | Specifies if LocalUploadTab should be hidden. |
+| hideLocalMultipleUploadTab | boolean | no | Specifies if LocalMultipleUploadTab should be hidden. |
 | hideLinkUploadTab | boolean | no | Specifies if LinkUploadTab should be hidden. |
 | storeLastActiveTab | boolean | no | Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default `true` |
 | isPanelOpen | boolean | no | Specifies if the file picker panel is open by default or not |
