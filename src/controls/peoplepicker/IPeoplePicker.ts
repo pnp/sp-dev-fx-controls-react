@@ -32,7 +32,7 @@ export interface IPeoplePickerProps {
   /**
    * Id of SharePoint Group (Number) or Office365 Group (String)
    */
-  groupId?: number | string;
+  groupId?: number | string | (string|number)[];
   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
