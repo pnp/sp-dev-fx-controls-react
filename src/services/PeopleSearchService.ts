@@ -76,7 +76,7 @@ export default class SPPeopleSearchService {
       return (mockUsers && mockUsers.length > 0) ? mockUsers[0] : null;
     } else {
       // If groupId is array, load data from all groups
-      if (groupId !== null && typeof(groupId) === 'object') {
+      if (Array.isArray(groupId)) {
         let userResults: IPeoplePickerUserItem[] = [];
         for (const id of groupId) {
           let tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, id);
@@ -88,7 +88,7 @@ export default class SPPeopleSearchService {
         let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
         return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
       } else {
-        const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, groupId as string|number);
+        const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, groupId);
         return (userResults && userResults.length > 0) ? userResults[0] : null;
       }
     }
@@ -103,7 +103,7 @@ export default class SPPeopleSearchService {
       return this.searchPeopleFromMock(query);
     } else {
       // If groupId is array, load data from all groups
-      if (groupId !== null && typeof(groupId) === 'object') {
+      if (Array.isArray(groupId)) {
         let userResults: IPeoplePickerUserItem[] = [];
         for (const id of groupId) {
           let tmpResults = await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, id);
@@ -115,7 +115,7 @@ export default class SPPeopleSearchService {
         let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
         return filteredUserResults;
       } else {
-        return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, groupId as string|number);
+        return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, groupId);
       }
     }
   }
