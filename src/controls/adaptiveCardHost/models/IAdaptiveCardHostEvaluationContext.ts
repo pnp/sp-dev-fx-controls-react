@@ -16,5 +16,4 @@ export interface IAdaptiveCardHostEvaluationContext {
   spListItemInfo: ISPListItemInfo;
   spSiteInfo: ISPSiteInfo;
   spWebInfo: ISPWebInfo;
-  spPartialLegacyContext: { [Key: string]: any; };
 }

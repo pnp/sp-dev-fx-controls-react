@@ -22,7 +22,6 @@ This allows, using Adaptive Cards templating syntax, to access to the context in
 - "spListItemInfo": Current List item informations retrieved from the SPFx context object.
 - "spSiteInfo": Current Site informations retrieved from the SPFx context object.
 - "spWebInfo": Current Web informations retrieved from the SPFx context object.
-- "spPartialLegacyContext": Subset of the "legacyPageContext" property retrieved from the SPFx context object.
 
 The Adaptive Cards version supported is 1.5, by using the 'adaptivecards' npm package version 2.10.0.
 
