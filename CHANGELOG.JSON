@@ -1,17 +1,13 @@
 {
   "versions": [
     {
-      "version": "3.8.0",
+      "version": "3.7.1",
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": [
-          "`LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)"
-        ]
+        "fixes": []
       },
-      "contributors": [
-        "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)"
-      ]
+      "contributors": []
     },
     {
       "version": "3.7.0",
