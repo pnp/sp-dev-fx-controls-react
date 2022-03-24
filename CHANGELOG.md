@@ -1,5 +1,11 @@
 # Releases
 
+## 3.8.0
+
+### Fixes
+
+- `LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)
+
 ## 3.7.2
 
 ## 3.7.0
