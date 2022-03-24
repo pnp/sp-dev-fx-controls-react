@@ -1,5 +1,7 @@
 # Releases
 
+## 3.7.2
+
 ## 3.7.0
 
 ### New control(s)
