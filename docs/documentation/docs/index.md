@@ -89,6 +89,7 @@ The following controls are currently available:
 - [LocationPicker](./controls/LocationPicker) (Location Picker control)
 - [Map](./controls/Map) (renders a map in a web part)
 - [ModernTaxonomyPicker](./controls/ModernTaxonomyPicker) (Modern Taxonomy Picker)
+- [MonacoEditor](./controls/MonacoEditor) (Monaco Editor)
 - [MyTeams](./controls/MyTeams) (My Teams)
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)
@@ -101,6 +102,7 @@ The following controls are currently available:
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
 - [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
+- [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 
 
