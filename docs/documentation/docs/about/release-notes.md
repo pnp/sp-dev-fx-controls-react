@@ -1,5 +1,7 @@
 # Releases
 
+## 1.22.3
+
 ## 1.21.2
 
 ### Enhancements
