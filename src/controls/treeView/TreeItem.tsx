@@ -106,7 +106,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     let active = props.activeItems.filter(item => item.key === props.treeItem.key);
 
     let expanded = props.defaultExpanded;
-    if (!expanded && props.nodesToExpand.indexOf(props.treeItem.key) != -1) {
+    if (!expanded && (props.nodesToExpand && props.nodesToExpand.indexOf(props.treeItem.key) !== -1)) {
       expanded = true;
     }
 
@@ -149,15 +149,21 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * @param nextContext
    */
   public componentWillReceiveProps(nextProps: ITreeItemProps): void {
+    const {
+      selectionMode,
+      nodesToExpand,
+      treeItem
+    } = this.props;
     // If selection is turned on, set the item as selected
-   if (this.props.selectionMode != TreeViewSelectionMode.None) {
-      let active = nextProps.activeItems.filter(item => item.key === this.props.treeItem.key);
+   if (selectionMode != TreeViewSelectionMode.None) {
+
+      let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
       let _isExpanded:boolean=this.state.expanded;
-      if(!_isExpanded &&  this.props.nodesToExpand.indexOf(this.props.treeItem.key) != -1) {
+      if(!_isExpanded &&  nodesToExpand?.indexOf(this.props.treeItem.key) != -1) {
         _isExpanded = true;
       }
-      if(_isExpanded && this.props.nodesToExpand.indexOf(this.props.treeItem.key) == -1){
+      if(_isExpanded && nodesToExpand?.indexOf(this.props.treeItem.key) == -1){
         _isExpanded=false;
       }
 
