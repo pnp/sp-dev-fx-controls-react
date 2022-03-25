@@ -24,6 +24,9 @@ import '@pnp/sp/folders';
 import '@pnp/sp/webs';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { ActionButton } from 'office-ui-fabric-react';
+import { FieldUrlRenderer } from '../../fields/fieldUrlRenderer';
+import { FieldDateRenderer } from '../../fields/fieldDateRenderer';
+import { FieldTaxonomyRenderer } from '../../fields/fieldTaxonomyRenderer';
 
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
@@ -76,7 +79,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       dateFormat,
       columnInternalName,
       principalType,
-      description
+      description,
+      isEditMode
     } = this.props;
 
     const {
@@ -112,43 +116,41 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"TextField"} />
             {labelEl}
           </div>
-          <TextField
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-            className={styles.feildDisplay}
-            onChange={(e, newText) => { this.onChange(newText); }}
-            disabled={disabled}
-            onBlur={this.onBlur}
-            errorMessage={errorText}
-          />
-          {descriptionEl}
+          {isEditMode && <>
+            <TextField
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              className={styles.feildDisplay}
+              onChange={(e, newText) => { this.onChange(newText); }}
+              disabled={disabled}
+              onBlur={this.onBlur}
+              errorMessage={errorText}
+            />
+            {descriptionEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'Note':
-        if (isRichText) {
-          const value = this.props.newValue ? this.props.newValue : defaultValue;
-          return <div className={styles.richText}>
-            <div className={styles.titleContainer}>
-              <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
-              {labelEl}
-            </div>
-            <RichText
-              placeholder={placeholder}
-              value={value}
-              className={styles.feildDisplay}
-              onChange={(newText) => { this.onChange(newText); return newText; }}
-              isEditMode={disabled}>
-            </RichText>
+        let valueComponent: JSX.Element;
+        const value = this.props.newValue ? this.props.newValue : defaultValue;
+        if (!isEditMode) {
+          valueComponent = <div className={styles.fieldMultilineReadMode} dangerouslySetInnerHTML={{ __html: value }}></div>;
+        }
+        else if (isRichText) {
+          valueComponent = <><RichText
+            placeholder={placeholder}
+            value={value}
+            className={styles.feildDisplay}
+            onChange={(newText) => { this.onChange(newText); return newText; }}
+            isEditMode={disabled}>
+          </RichText>
             {descriptionEl}
             {errorTextEl}
-          </div>;
+          </>;
         }
         else {
-          return <div>
-            <div className={styles.titleContainer}>
-              <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
-              {labelEl}
-            </div>
+          valueComponent = <>
             <TextField
               defaultValue={defaultValue}
               placeholder={placeholder}
@@ -160,8 +162,15 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               errorMessage={errorText}
             />
             {descriptionEl}
-          </div>;
+          </>;
         }
+        return <div className={styles.richText}>
+          <div className={styles.titleContainer}>
+            <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
+            {labelEl}
+          </div>
+          {valueComponent}
+        </div>;
 
       case 'Choice':
         return <div className={styles.fieldContainer}>
@@ -169,13 +178,16 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"CheckMark"} />
             {labelEl}
           </div>
-          <Dropdown
-            {...dropdownOptions}
-            defaultSelectedKey={defaultValue}
-            onChange={(e, option) => { this.onChange(option); }}
-            onBlur={this.onBlur}
-            errorMessage={errorText} />
-          {descriptionEl}
+          {isEditMode && <>
+            <Dropdown
+              {...dropdownOptions}
+              defaultSelectedKey={defaultValue}
+              onChange={(e, option) => { this.onChange(option); }}
+              onBlur={this.onBlur}
+              errorMessage={errorText} />
+            {descriptionEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'MultiChoice':
@@ -184,14 +196,17 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"MultiSelect"} />
             {labelEl}
           </div>
-          <Dropdown
-            {...dropdownOptions}
-            defaultSelectedKeys={defaultValue}
-            onChange={this.MultiChoice_selection}
-            multiSelect
-            onBlur={this.onBlur}
-            errorMessage={errorText} />
-          {descriptionEl}
+          {isEditMode && <>
+            <Dropdown
+              {...dropdownOptions}
+              defaultSelectedKeys={defaultValue}
+              onChange={this.MultiChoice_selection}
+              multiSelect
+              onBlur={this.onBlur}
+              errorMessage={errorText} />
+            {descriptionEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'Location':
@@ -202,13 +217,13 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           </div>
           <LocationPicker
             context={context}
-            disabled={disabled}
+            disabled={disabled || !isEditMode}
             placeholder={placeholder}
             onChange={(newValue) => { this.onChange(newValue); }}
             defaultValue={defaultValue}
             errorMessage={errorText}
           />
-          {descriptionEl}
+          {!isEditMode && descriptionEl}
         </div>;
 
       case 'Lookup':
@@ -217,19 +232,22 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"Switch"} />
             {labelEl}
           </div>
-          <ListItemPicker
-            disabled={disabled}
-            listId={lookupListID}
-            defaultSelectedItems={defaultValue}
-            columnInternalName={lookupField}
-            className={styles.feildDisplay}
-            keyColumnInternalName='Id'
-            itemLimit={1}
-            onSelectedItem={(newValue) => { this.onChange(newValue); }}
-            context={context}
-          />
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <ListItemPicker
+              disabled={disabled}
+              listId={lookupListID}
+              defaultSelectedItems={defaultValue}
+              columnInternalName={lookupField}
+              className={styles.feildDisplay}
+              keyColumnInternalName='Id'
+              itemLimit={1}
+              onSelectedItem={(newValue) => { this.onChange(newValue); }}
+              context={context}
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue && defaultValue['name']}</div>}
         </div>;
 
       case 'LookupMulti':
@@ -238,19 +256,22 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"Switch"} />
             {labelEl}
           </div>
-          <ListItemPicker
-            disabled={disabled}
-            listId={lookupListID}
-            defaultSelectedItems={defaultValue}
-            columnInternalName={lookupField}
-            className={styles.feildDisplay}
-            keyColumnInternalName='Id'
-            itemLimit={100}
-            onSelectedItem={(newValue) => { this.onChange(newValue); }}
-            context={context}
-          />
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <ListItemPicker
+              disabled={disabled}
+              listId={lookupListID}
+              defaultSelectedItems={defaultValue}
+              columnInternalName={lookupField}
+              className={styles.feildDisplay}
+              keyColumnInternalName='Id'
+              itemLimit={100}
+              onSelectedItem={(newValue) => { this.onChange(newValue); }}
+              context={context}
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue && [...defaultValue].map(v => v['name']).join(', ')}</div>}
         </div>;
 
       case 'Number':
@@ -259,7 +280,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"NumberField"} />
             {labelEl}
           </div>
-          <TextField
+          {isEditMode && <><TextField
             defaultValue={defaultValue}
             placeholder={placeholder}
             className={styles.feildDisplay}
@@ -268,7 +289,9 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             disabled={disabled}
             onBlur={this.onBlur}
             errorMessage={errorText} />
-          {descriptionEl}
+            {descriptionEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'Currency':
@@ -277,7 +300,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"AllCurrency"} />
             {labelEl}
           </div>
-          <TextField
+          {isEditMode && <><TextField
             defaultValue={defaultValue}
             placeholder={placeholder}
             className={styles.feildDisplay}
@@ -286,17 +309,20 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             disabled={disabled}
             onBlur={this.onBlur}
             errorMessage={errorText} />
-          {descriptionEl}
+            {descriptionEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'DateTime':
-        return <div className={styles.fieldContainer}>
-          <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Calendar"} />
-            {labelEl}
-          </div>
-          {
-            dateFormat === 'DateOnly' &&
+        let dateComponent: JSX.Element;
+        if (!isEditMode) {
+          dateComponent = <div className={styles.fieldReadMode}>
+            <FieldDateRenderer text={dateFormat === 'DateOnly' ? defaultValue.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName) : defaultValue.toLocaleString(context.pageContext.cultureInfo.currentCultureName)} />
+          </div>;
+        }
+        else if (dateFormat === 'DateOnly') {
+          dateComponent = <>
             <DatePicker
               placeholder={placeholder}
               className={styles.pickersContainer}
@@ -304,9 +330,13 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onSelectDate={(newDate) => { this.onChange(newDate); }}
               disabled={disabled}
-            />}
-          {
-            dateFormat === 'DateTime' &&
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>;
+        }
+        else if (dateFormat === 'DateTime') {
+          dateComponent = <>
             <DateTimePicker
               key={columnInternalName}
               placeholder={placeholder}
@@ -314,9 +344,16 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onChange={(newDate) => { this.onChange(newDate); }}
               disabled={disabled} />
-          }
-          {descriptionEl}
-          {errorTextEl}
+            {descriptionEl}
+            {errorTextEl}
+          </>;
+        }
+        return <div className={styles.fieldContainer}>
+          <div className={styles.titleContainer}>
+            <Icon className={styles.fieldIcon} iconName={"Calendar"} />
+            {labelEl}
+          </div>
+          {dateComponent}
         </div>;
 
       case 'Boolean':
@@ -325,16 +362,19 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"CheckboxComposite"} />
             {labelEl}
           </div>
-          <Toggle
-            className={styles.feildDisplay}
-            defaultChecked={defaultValue}
-            onText={strings.Yes}
-            offText={strings.No}
-            onChange={(e, checkedvalue) => { this.onChange(checkedvalue); }}
-            disabled={disabled}
-          />
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <Toggle
+              className={styles.feildDisplay}
+              defaultChecked={defaultValue}
+              onText={strings.Yes}
+              offText={strings.No}
+              onChange={(e, checkedvalue) => { this.onChange(checkedvalue); }}
+              disabled={disabled}
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'User':
@@ -343,21 +383,24 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"Contact"} />
             {labelEl}
           </div>
-          <PeoplePicker
-            placeholder={placeholder}
-            defaultSelectedUsers={defaultValue}
-            peoplePickerCntrlclassName={styles.feildDisplay}
-            context={context}
-            personSelectionLimit={1}
-            showtooltip={false}
-            showHiddenInUI={false}
-            principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
-            resolveDelay={1000}
-            onChange={(items) => { this.onChange(items); }}
-            disabled={disabled}
-          />
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <PeoplePicker
+              placeholder={placeholder}
+              defaultSelectedUsers={defaultValue}
+              peoplePickerCntrlclassName={styles.feildDisplay}
+              context={context}
+              personSelectionLimit={1}
+              showtooltip={false}
+              showHiddenInUI={false}
+              principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
+              resolveDelay={1000}
+              onChange={(items) => { this.onChange(items); }}
+              disabled={disabled}
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'UserMulti':
@@ -366,21 +409,24 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"Contact"} />
             {labelEl}
           </div>
-          <PeoplePicker
-            placeholder={placeholder}
-            defaultSelectedUsers={defaultValue}
-            peoplePickerCntrlclassName={styles.feildDisplay}
-            context={context}
-            personSelectionLimit={30}
-            showtooltip={false}
-            showHiddenInUI={false}
-            principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
-            resolveDelay={1000}
-            onChange={(items) => { this.onChange(items); }}
-            disabled={disabled}
-          />
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <PeoplePicker
+              placeholder={placeholder}
+              defaultSelectedUsers={defaultValue}
+              peoplePickerCntrlclassName={styles.feildDisplay}
+              context={context}
+              personSelectionLimit={30}
+              showtooltip={false}
+              showHiddenInUI={false}
+              principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
+              resolveDelay={1000}
+              onChange={(items) => { this.onChange(items); }}
+              disabled={disabled}
+            />
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>{defaultValue}</div>}
         </div>;
 
       case 'URL':
@@ -389,24 +435,29 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"Link"} />
             {labelEl}
           </div>
-          <Stack
-            tokens={{ childrenGap: 4 }}>
-            <TextField
-              defaultValue={defaultValue ? defaultValue['Url'] : ''}
-              placeholder={strings.DynamicFormEnterURLPlaceholder}
-              className={styles.feildDisplayNoPadding}
-              onChange={(e, newText) => { this.onURLChange(newText, true); }}
-              disabled={disabled}
-              onBlur={this.onBlur} />
-            <TextField
-              defaultValue={defaultValue ? defaultValue['Description'] : ''}
-              placeholder={strings.DynamicFormEnterDescriptionPlaceholder}
-              className={styles.feildDisplayNoPadding}
-              onChange={(e, newText) => { this.onURLChange(newText, false); }}
-              disabled={disabled} />
-          </Stack>
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <Stack
+              tokens={{ childrenGap: 4 }}>
+              <TextField
+                defaultValue={defaultValue ? defaultValue['Url'] : ''}
+                placeholder={strings.DynamicFormEnterURLPlaceholder}
+                className={styles.feildDisplayNoPadding}
+                onChange={(e, newText) => { this.onURLChange(newText, true); }}
+                disabled={disabled}
+                onBlur={this.onBlur} />
+              <TextField
+                defaultValue={defaultValue ? defaultValue['Description'] : ''}
+                placeholder={strings.DynamicFormEnterDescriptionPlaceholder}
+                className={styles.feildDisplayNoPadding}
+                onChange={(e, newText) => { this.onURLChange(newText, false); }}
+                disabled={disabled} />
+            </Stack>
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>
+            <FieldUrlRenderer url={defaultValue['Url']} text={defaultValue['Description']} />
+          </div>}
         </div>;
 
       case 'Thumbnail':
@@ -427,7 +478,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               src={changedValue}
               height={60}
             />}
-            <div className={styles.thumbnailFieldButtons}>
+            {isEditMode && <div className={styles.thumbnailFieldButtons}>
               <FilePicker
                 buttonClassName={styles.feildDisplay}
                 //bingAPIKey={bingAPIKey}
@@ -451,10 +502,12 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
                   }}
                   onClick={this.onDeleteImage}
                 />}
-            </div>
+            </div>}
           </Stack>
-          {descriptionEl}
-          {errorTextEl}
+          {!!isEditMode && <>
+            {descriptionEl}
+            {errorTextEl}
+          </>}
         </div>;
 
       case 'TaxonomyFieldTypeMulti':
@@ -463,22 +516,32 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"BulletedTreeList"} />
             {labelEl}
           </div>
-          <div className={styles.pickersContainer}>
-            <TaxonomyPicker
-              label=""
-              disabled={disabled}
-              initialValues={defaultValue}
-              placeholder={placeholder}
-              allowMultipleSelections={true}
-              termsetNameOrID={fieldTermSetId}
-              panelTitle={strings.DynamicFormTermPanelTitle}
-              context={context}
-              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
-              isTermSetSelectable={false}
-            />
-          </div>
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <div className={styles.pickersContainer}>
+              <TaxonomyPicker
+                label=""
+                disabled={disabled}
+                initialValues={defaultValue}
+                placeholder={placeholder}
+                allowMultipleSelections={true}
+                termsetNameOrID={fieldTermSetId}
+                panelTitle={strings.DynamicFormTermPanelTitle}
+                context={context}
+                onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
+                isTermSetSelectable={false}
+              />
+            </div>
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>
+            <FieldTaxonomyRenderer terms={[...defaultValue].map(v => {
+              return {
+                Label: v['name'],
+                TermID: v['key']
+              };
+            })} />
+          </div>}
         </div>;
 
       case 'TaxonomyFieldType':
@@ -487,21 +550,29 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <Icon className={styles.fieldIcon} iconName={"BulletedTreeList"} />
             {labelEl}
           </div>
-          <div className={styles.pickersContainer}>
-            <TaxonomyPicker
-              label=""
-              disabled={disabled}
-              initialValues={defaultValue}
-              placeholder={placeholder}
-              allowMultipleSelections={false}
-              termsetNameOrID={fieldTermSetId}
-              panelTitle={strings.DynamicFormTermPanelTitle}
-              context={context}
-              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
-              isTermSetSelectable={false} />
-          </div>
-          {descriptionEl}
-          {errorTextEl}
+          {isEditMode && <>
+            <div className={styles.pickersContainer}>
+              <TaxonomyPicker
+                label=""
+                disabled={disabled}
+                initialValues={defaultValue}
+                placeholder={placeholder}
+                allowMultipleSelections={false}
+                termsetNameOrID={fieldTermSetId}
+                panelTitle={strings.DynamicFormTermPanelTitle}
+                context={context}
+                onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
+                isTermSetSelectable={false} />
+            </div>
+            {descriptionEl}
+            {errorTextEl}
+          </>}
+          {!isEditMode && <div className={styles.fieldReadMode}>
+            <FieldTaxonomyRenderer terms={[{
+              Label: defaultValue['name'],
+              TermID: defaultValue['key']
+            }]} />
+          </div>}
         </div>;
     }
 

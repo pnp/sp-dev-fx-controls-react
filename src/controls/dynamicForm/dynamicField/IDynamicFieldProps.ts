@@ -34,4 +34,5 @@ export interface IDynamicFieldProps {
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;
   description?: string;
+  isEditMode: boolean;
 }

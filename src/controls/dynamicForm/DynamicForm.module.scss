@@ -113,3 +113,15 @@
 .thumbnailFieldButtons {
   display: flex;
 }
+
+.fieldReadMode {
+  max-height: 32px;
+  min-height: 32px;
+  text-overflow: ellipsis;
+}
+
+.fieldMultilineReadMode {
+  min-height: 32px;
+  word-break: break-word;
+  white-space: normal;
+}

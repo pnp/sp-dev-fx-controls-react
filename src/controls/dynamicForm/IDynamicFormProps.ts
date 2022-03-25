@@ -46,11 +46,13 @@ export interface IDynamicFormProps {
   returnListItemInstanceOnSubmit?: boolean;
 
   /**
- * Used to execute WebSearch. If not provided SearchTab will not be available.
- */
-  //bingAPIKey?: string;
-  /**
    * InternalName of fields that should be disabled
    */
-   disabledFields?: string[];
+  disabledFields?: string[];
+
+  /**
+   * Specifies if the form should be rendered in edit mode.
+   * Default - true
+   */
+  isEditMode?: boolean;
 }

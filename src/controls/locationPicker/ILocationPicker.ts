@@ -57,6 +57,8 @@ export interface ILocationPickerProps {
   * This can be use to show error message for combobox
   */
   errorMessage?: string;
+
+  isEditMode?: boolean;
 }
 
 export interface ILocationPickerState {

@@ -51,17 +51,21 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       fieldCollection,
       isSaving
     } = this.state;
+    const {
+      isEditMode,
+      onCancelled
+    } = this.props;
     return (
       <div>
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              return <DynamicField {...v} disabled={v.disabled || isSaving} />;
+              return <DynamicField {...v} disabled={v.disabled || isSaving} isEditMode={isEditMode !== false} />;
             })}
-            <Stack className={styles.buttons} horizontal tokens={stackTokens}>
+            {isEditMode !== false && <Stack className={styles.buttons} horizontal tokens={stackTokens}>
               <PrimaryButton disabled={isSaving} text={strings.Save} onClick={() => this.onSubmitClick()} />
-              <DefaultButton disabled={isSaving} text={strings.Cancel} onClick={this.props.onCancelled} />
-            </Stack>
+              <DefaultButton disabled={isSaving} text={strings.Cancel} onClick={onCancelled} />
+            </Stack>}
           </div>
         }
       </div>
@@ -290,7 +294,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { context, listId, listItemId, disabledFields } = this.props;
+    const { context, listId, listItemId, disabledFields, isEditMode } = this.props;
     let contentTypeId = this.props.contentTypeId;
     //let arrayItems: { key: string; name: string }[] = [];
     try {
@@ -468,7 +472,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           dateFormat: dateFormat,
           listItemId: listItemId,
           principalType: principalType,
-          description: field.Description
+          description: field.Description,
+          isEditMode: isEditMode !== false
         });
         tempFields.sort((a, b) => a.Order - b.Order);
       }
