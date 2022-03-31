@@ -195,9 +195,9 @@ export default class SPPeopleSearchService {
         searchBody.queryParams["SharePointGroupID"] = groupId;
       }
 
-      // Check if users need to be searched in a specific Office365 Group
+      // Check if users need to be searched in a specific Microsoft 365 Group, Security Group (incl. nested groups) or Distribution List
       else if(groupId && typeof(groupId) === 'string') {
-        const graphUserRequestUrl = `/groups/${groupId}/members?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
+        const graphUserRequestUrl = `/groups/${groupId}/transitiveMembers?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
         const graphClient = await this.context.msGraphClientFactory.getClient();
         const graphUserResponse = await graphClient.api(graphUserRequestUrl).header('ConsistencyLevel', 'eventual').get();
 
