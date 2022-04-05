@@ -52,7 +52,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     //query += filter;
     let keyColumnName = keyColumnInternalName || "Id";
 
-    if (!this._options || listId !== this.props.listId) {
+    if (!this._options || listId !== this.props.listId|| filter !== this.props.filter) {
       const listItems = await this._listItemRepo.getListItemsByFilterClause(query,
         listId,
         columnInternalName,
@@ -61,12 +61,12 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
         itemLimit || 100,
         orderBy);
 
-        this._options = listItems.map(option => {
-          return {
-            key: option[keyColumnName],
-            text: option[columnInternalName || "Id"]
-          };
-        });
+      this._options = listItems.map(option => {
+        return {
+          key: option[keyColumnName],
+          text: option[columnInternalName || "Id"]
+        };
+      });
     }
 
     const selectedItems = this._getSelectedItems(props);
@@ -81,10 +81,15 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   }
 
   public async componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
+    debugger;
     if (nextProps.listId !== this.props.listId) {
       this.setState({
         selectedItems: [],
       });
+      await this.loadOptions(nextProps, false);
+    }
+    if (nextProps.filter !== this.props.filter) {
+
       await this.loadOptions(nextProps, false);
     }
     if (!isEqual(nextProps.defaultSelectedItems, this.props.defaultSelectedItems)) {
