@@ -160,10 +160,8 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
       let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
       let _isExpanded:boolean=this.state.expanded;
-      if(!_isExpanded &&  nodesToExpand?.indexOf(this.props.treeItem.key) != -1) {
-        _isExpanded = true;
-      }
-      if(_isExpanded && nodesToExpand?.indexOf(this.props.treeItem.key) == -1){
+      
+      if(!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) == -1){
         _isExpanded=false;
       }
 
