@@ -17,6 +17,7 @@
 - NPM Audit Critical Issues [#1187](https://github.com/pnp/sp-dev-fx-controls-react/issues/1187)
 - Bump momentjs from 2.29.1 to 2.29.2 [#1185](https://github.com/pnp/sp-dev-fx-controls-react/pull/1185)
 - `TaxonomyPicker`: Sorting the terms in locale language [#1160](https://github.com/pnp/sp-dev-fx-controls-react/pull/1160)
+- `ComboboxListItemPicker`: options are not reloaded after the filter is changed [#1180](https://github.com/pnp/sp-dev-fx-controls-react/issues/1180)
 
 ## 3.7.2
 
