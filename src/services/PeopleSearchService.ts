@@ -69,26 +69,54 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string|number)[] = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       const mockUsers = await this.searchPeopleFromMock(email);
       return (mockUsers && mockUsers.length > 0) ? mockUsers[0] : null;
     } else {
-      const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, groupId);
-      return (userResults && userResults.length > 0) ? userResults[0] : null;
+      // If groupId is array, load data from all groups
+      if (Array.isArray(groupId)) {
+        let userResults: IPeoplePickerUserItem[] = [];
+        for (const id of groupId) {
+          let tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, id);
+          userResults = userResults.concat(tmpResults);
+        }
+
+        // Remove duplicate results in case user is present in multiple groups
+        let logins = userResults.map(u => u.loginName);
+        let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
+        return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
+      } else {
+        const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, groupId);
+        return (userResults && userResults.length > 0) ? userResults[0] : null;
+      }
     }
   }
 
   /**
    * Search All Users from the SharePoint People database
    */
-  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
+  public async searchPeople(query: string, maximumSuggestions: number, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string|number)[] = null, ensureUser: boolean = false): Promise<IPeoplePickerUserItem[]> {
     if (Environment.type === EnvironmentType.Local) {
       // If the running environment is local, load the data from the mock
       return this.searchPeopleFromMock(query);
     } else {
-      return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, groupId);
+      // If groupId is array, load data from all groups
+      if (Array.isArray(groupId)) {
+        let userResults: IPeoplePickerUserItem[] = [];
+        for (const id of groupId) {
+          let tmpResults = await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, id);
+          userResults = userResults.concat(tmpResults);
+        }
+
+        // Remove duplicate results in case user is present in multiple groups
+        let logins = userResults.map(u => u.loginName);
+        let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
+        return filteredUserResults;
+      } else {
+        return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, groupId);
+      }
     }
   }
 
