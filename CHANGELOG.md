@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)
+- `PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)
 
 ### Fixes
 
