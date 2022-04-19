@@ -43,14 +43,16 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     let result: string;
     if (array) {
       array.some(({ key, children = [] }) => {
+        const alreadyExistInNodesToExpand = this.nodesToExpand.some((node) => node === key);
+
         if (key === target) {
-          this.nodesToExpand.push(key);
+          !alreadyExistInNodesToExpand && this.nodesToExpand.push(key);
           result = key;
           return true;
         }
         let temp = this.pathTo(children, target);
         if (temp) {
-          this.nodesToExpand.push(key);
+          !alreadyExistInNodesToExpand && this.nodesToExpand.push(key);
           result = key + '.' + temp;
           return true;
         }
@@ -90,6 +92,12 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
    * @argument isExpanded The status of item  (expanded / collapsed)
    */
   private handleTreeExpandCollapse(item: ITreeItem, isExpanded: boolean): void {
+    if (isExpanded) {
+      this.nodesToExpand.push(item.key);
+    } else {
+      this.nodesToExpand = this.nodesToExpand.filter((node) => node !== item.key);
+    }
+
     if (typeof this.props.onExpandCollapse === "function") {
       this.props.onExpandCollapse(item, isExpanded);
     }
@@ -240,8 +248,8 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       showCheckboxes,
       treeItemActionsDisplayMode,
       defaultExpanded,
-      defaultExpandedChildren,
-      defaultExpandedKeys
+      defaultExpandedChildren = this.props.defaultExpandedChildren ?? true,
+      defaultExpandedKeys = this.props.defaultExpandedKeys ?? [],
     } = this.props;
 
     return (
@@ -253,7 +261,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               leftOffset={20}
               isFirstRender={true}
               defaultExpanded={defaultExpanded}
-              defaultExpandedChildren={defaultExpandedChildren !== undefined ? defaultExpandedChildren : true}
+              defaultExpandedChildren={defaultExpandedChildren}
               selectionMode={selectionMode}
               activeItems={this.state.activeItems}
               parentCallbackExpandCollapse={this.handleTreeExpandCollapse}
@@ -261,7 +269,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
               onRenderItem={onRenderItem}
               showCheckboxes={showCheckboxes}
               treeItemActionsDisplayMode={treeItemActionsDisplayMode}
-              nodesToExpand={defaultExpandedKeys}
+              nodesToExpand={[...this.nodesToExpand, ...defaultExpandedKeys]}
             />
           ))
         }
