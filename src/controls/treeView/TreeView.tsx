@@ -46,13 +46,17 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
         const alreadyExistInNodesToExpand = this.nodesToExpand.some((node) => node === key);
 
         if (key === target) {
-          !alreadyExistInNodesToExpand && this.nodesToExpand.push(key);
+          if (!alreadyExistInNodesToExpand) {
+            this.nodesToExpand.push(key);
+          }
           result = key;
           return true;
         }
         let temp = this.pathTo(children, target);
         if (temp) {
-          !alreadyExistInNodesToExpand && this.nodesToExpand.push(key);
+          if (!alreadyExistInNodesToExpand) {
+            this.nodesToExpand.push(key);
+          }
           result = key + '.' + temp;
           return true;
         }
