@@ -6,6 +6,7 @@
 
 - `LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)
 - `TreeView`: TreeView Control is broken after updating to v3.7.0 [#1170](https://github.com/pnp/sp-dev-fx-controls-react/issues/1170)
+- NPM Audit Critical Issues [#1187](https://github.com/pnp/sp-dev-fx-controls-react/issues/1187)
 
 ## 3.7.2
 
