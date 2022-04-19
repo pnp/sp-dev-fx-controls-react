@@ -214,6 +214,9 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
   private onIconButtonClick = () => {
     this.setState({ currentMode: Mode.empty, selectedItem: null });
+    if (this.props.onChange) {
+      this.props.onChange(null);
+    }
   }
 
   private onClick = () => {
