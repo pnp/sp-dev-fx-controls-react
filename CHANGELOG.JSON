@@ -4,7 +4,9 @@
       "version": "3.8.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)"
+        ],
         "fixes": [
           "`LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)",
           "`TreeView`: TreeView Control is broken after updating to v3.7.0 [#1170](https://github.com/pnp/sp-dev-fx-controls-react/issues/1170)",
@@ -16,6 +18,7 @@
         ]
       },
       "contributors": [
+        "[Andreas Omayrat](https://github.com/andreasomayrat)",
         "[brianpmccullough](https://github.com/brianpmccullough)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Joel Lopes](https://github.com/Dixdjo)",
