@@ -64,6 +64,15 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
 
+  const onToggleSelection = React.useCallback((groupKey: string, isSelected?: boolean) => {
+    if (isSelected === undefined) {
+      props.selection.toggleKeySelected(groupKey);
+    }
+
+
+
+  }, [props]);
+
   const updateTaxonomyTreeViewWithNewTermItems = (newTermItems: ITermInfo[]): void => {
     for (const term of newTermItems) {
 
@@ -249,7 +258,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
   }, []);
 
   const onToggleCollapse = (group: IGroup): void => {
-    if (group.isCollapsed === true) {
+    if (group.isCollapsed === true) { // expanding the group
       setGroups((prevGroups) => {
         const recurseGroups = (currentGroup: IGroup) => {
           if (currentGroup.key === group.key) {
