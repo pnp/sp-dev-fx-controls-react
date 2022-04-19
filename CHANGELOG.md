@@ -9,6 +9,7 @@
 ### Fixes
 
 - `LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)
+- `LocationPicker`: Trigger onChange on picker clear action [#1165](https://github.com/pnp/sp-dev-fx-controls-react/pull/1165)
 - `TreeView`: TreeView Control is broken after updating to v3.7.0 [#1170](https://github.com/pnp/sp-dev-fx-controls-react/issues/1170)
 - `TreeView`: collapses on selection of a child node [#1182](https://github.com/pnp/sp-dev-fx-controls-react/issues/1182)
 - `TreeView`: expanded nodes state is getting lost after refresh [#1062](https://github.com/pnp/sp-dev-fx-controls-react/issues/1062)
