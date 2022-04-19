@@ -2,6 +2,10 @@
 
 ## 3.8.0
 
+### Enhancements
+
+- `PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)
+
 ### Fixes
 
 - `LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)
