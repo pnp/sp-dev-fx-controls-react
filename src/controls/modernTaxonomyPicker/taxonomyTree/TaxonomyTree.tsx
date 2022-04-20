@@ -64,14 +64,23 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
 
-  const onToggleSelection = React.useCallback((groupKey: string, isSelected?: boolean) => {
-    if (isSelected === undefined) {
-      props.selection.toggleKeySelected(groupKey);
+  //
+  // Handles the selection/deselection of a term
+  //
+  const onGroupSelectionChange = React.useCallback((groupKey: string, isSelected?: boolean) => {
+    if (props.allowMultipleSelections) {
+      if (isSelected === undefined) {
+        props.selection?.toggleKeySelected(groupKey);
+      }
+      else {
+        props.selection?.toggleKeySelected(groupKey);
+      }
     }
-
-
-
-  }, [props]);
+    else {
+        props.selection?.setAllSelected(false);
+        props.selection?.setKeySelected(groupKey, !!isSelected, false);
+    }
+  }, [props.allowMultipleSelections, props.selection]);
 
   const updateTaxonomyTreeViewWithNewTermItems = (newTermItems: ITermInfo[]): void => {
     for (const term of newTermItems) {
@@ -415,9 +424,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
               {p.label}
             </span>}
             onChange={(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
-              if (props.selection) {
-                props.selection.setKeySelected(groupHeaderProps.group.key, checked, false);
-              }
+              onGroupSelectionChange(groupHeaderProps.group.key, checked);
             }}
           />
           <div className={styles.actionButtonContainer}>
@@ -437,10 +444,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                                                     {p.text}
                                                   </span>,
                                                 onClick: () => {
-                                                  if (props.selection) {
-                                                    props.selection.setAllSelected(false);
-                                                    props.selection.setKeySelected(groupHeaderProps.group.key, true, false);
-                                                  }
+                                                  onGroupSelectionChange(groupHeaderProps.group.key, true);
                                                 }
                                               }];
 
@@ -488,17 +492,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
           if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
-            if (props.allowMultipleSelections) {
-              if (props.selection) {
-                props.selection.toggleKeySelected(headerProps.group.key);
-              }
-            }
-            else {
-              if (props.selection) {
-                props.selection.setAllSelected(false);
-                props.selection.setKeySelected(headerProps.group.key, true, false);
-              }
-            }
+            onGroupSelectionChange(group.key, props.allowMultipleSelections ? undefined : true);
           }
         }}
       />

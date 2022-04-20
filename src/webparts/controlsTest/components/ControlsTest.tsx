@@ -1978,7 +1978,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
 
           <ModernTaxonomyPicker
-            allowMultipleSelections={true}
+            allowMultipleSelections={false}
             termSetId={"8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"}
             panelTitle="Panel title"
             label={"Modern Taxonomy Picker"}
