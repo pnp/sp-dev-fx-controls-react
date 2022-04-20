@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styles from './TreeView.module.scss';
 import uniqBy from 'lodash/uniqBy';
-import { ITreeViewProps, SelectChildrenMode, TreeViewSelectionMode } from './ITreeViewProps';
+import { SelectChildrenMode } from '../../common/model/TreeCommon';
+import { ITreeViewProps, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
 import { ITreeItem } from './ITreeItem';
 import TreeItem from './TreeItem';

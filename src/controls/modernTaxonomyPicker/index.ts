@@ -4,3 +4,4 @@ export * from './taxonomyPanelContents/index';
 export * from './taxonomyTree/index';
 export * from './termItem/index';
 export * from '../../services/SPTaxonomyService';
+export { SelectChildrenMode } from '../../common/model/TreeCommon';

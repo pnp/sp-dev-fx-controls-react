@@ -40,29 +40,94 @@ import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
 import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { SelectChildrenMode } from '../../common/model/TreeCommon';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
 export interface IModernTaxonomyPickerProps {
+  /**
+   * Defines if the user can select only one or multiple terms. Default value is false.
+   */
   allowMultipleSelections?: boolean;
+  /**
+   * The Id of the TermSet that you would like the Taxonomy Picker to select terms from.
+   */
   termSetId: string;
+  /**
+   * Set the id of a child term in the TermSet to be able to select terms from that level and below.
+   */
   anchorTermId?: string;
+  /**
+   * TermSet Picker Panel title.
+   */
   panelTitle: string;
+  /**
+   * Text displayed above the Taxonomy Picker.
+   */
   label: string;
+  /**
+   * Context of the current web part or extension.
+   */
   context: BaseComponentContext;
+  /**
+   * Defines the terms selected by default. ITermInfo comes from PnP/PnPjs and can be imported with import { ITermInfo } from '@pnp/sp/taxonomy';
+   */
   initialValues?: Optional<ITermInfo, "childrenCount" | "createdDateTime" | "lastModifiedDateTime" | "descriptions" | "customSortOrder" | "properties" | "localProperties" | "isDeprecated" | "isAvailableForTagging" | "topicRequested">[];
+  /**
+   * Specify if the control should be disabled. Default value is false.
+   */
   disabled?: boolean;
+  /**
+   * Specifies if to display an asterisk near the label. Default value is false.
+   */
   required?: boolean;
+  /**
+   * Captures the event of when the terms in the picker has changed.
+   */
   onChange?: (newValue?: ITermInfo[]) => void;
+  /**
+   * Optional custom renderer for a picker item.
+   */
   onRenderItem?: (itemProps: ITermItemProps) => JSX.Element;
+  /**
+   * Optional custom renderer for picker's suggestions item.
+   */
   onRenderSuggestionsItem?: (term: ITermInfo, itemProps: ISuggestionItemProps<ITermInfo>) => JSX.Element;
+  /**
+   * Short text hint to display in picker.
+   */
   placeHolder?: string;
+  /**
+   * Custom panel width in pixels.
+   */
   customPanelWidth?: number;
+  /**
+   * The current loaded SharePoint theme/section background.
+   */
   themeVariant?: IReadonlyTheme;
+  /**
+   * Custom properties for the term picker.
+   */
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
+  /**
+   * Whether the panel can be light dismissed.
+   */
   isLightDismiss?: boolean;
+  /**
+   * Whether the panel uses a modal overlay or not.
+   */
   isBlocking?: boolean;
+  /**
+   * Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view.
+   */
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
+  /**
+   * Specifies if the children should be selected when parent item is selected (defaults to None).
+   * Current options are None or Select | Unselect.
+   * If Select or Unselect is specified it will be converted to Select | Unselect.
+   * If any other value is specified it will be converted to None.
+   */
+  selectChildrenMode?: SelectChildrenMode;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {

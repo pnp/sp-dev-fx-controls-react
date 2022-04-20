@@ -1,5 +1,9 @@
+import { SelectChildrenMode } from '../../common/model/TreeCommon';
 import { ITreeItem } from './ITreeItem';
 import { TreeItemActionsDisplayMode } from './ITreeItemActions';
+
+// backward compatibility
+export { SelectChildrenMode } from '../../common/model/TreeCommon';
 
 /**
  * Selection mode of tree item
@@ -8,15 +12,6 @@ export enum TreeViewSelectionMode {
   Single = 0,
   Multiple = 1,
   None = 2
-}
-
-export enum SelectChildrenMode {
-  None = 0,
-  Select = 1 << 0, // 0001
-  Unselect = 1 << 1,     // 0010
-  Mount = 1 << 2,    // 0100
-  Update = 1 << 3,   // 1000
-  All = ~(~0 << 4)   // 1111
 }
 
 /**

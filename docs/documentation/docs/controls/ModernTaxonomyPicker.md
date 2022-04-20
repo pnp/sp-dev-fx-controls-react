@@ -176,6 +176,9 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | isLightDismiss | boolean | no | Whether the panel can be light dismissed. |
 | isBlocking | boolean | no | Whether the panel uses a modal overlay or not. |
 | onRenderActionButton | function | no | Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view. |
+| onRenderItem | function | no | Optional custom renderer for a picker item. |
+| onRenderSuggestionsItem | function | no | Optional custom renderer for picker's suggestions item. |
+| selectChildrenMode | SelectChildrenMode | no | Specifies if the children should be selected when parent item is selected (defaults to `None`).<br>Current options are None or `Select \| Unselect`.<br>If `Select` or `Unselect` is specified it will be converted to `Select \| Unselect`.<br>If any other value is specified it will be converted to `None`. |
 
 ## Standalone TaxonomyTree control
 
