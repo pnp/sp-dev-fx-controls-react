@@ -1,42 +1,36 @@
 import * as React from 'react';
-import { Checkbox,
-         ChoiceGroup,
-         css,
-         FocusZone,
-         FocusZoneDirection,
-         FontIcon,
-         getRTLSafeKeyCode,
-         GroupedList,
-         GroupHeader,
-         ICheckboxStyleProps,
-         ICheckboxStyles,
-         IChoiceGroupOption,
-         IChoiceGroupOptionStyleProps,
-         IChoiceGroupOptionStyles,
-         IChoiceGroupStyleProps,
-         IChoiceGroupStyles,
-         IGroup,
-         IGroupFooterProps,
-         IGroupHeaderProps,
-         IGroupHeaderStyleProps,
-         IGroupHeaderStyles,
-         IGroupRenderProps,
-         IGroupShowAllProps,
-         ILabelStyleProps,
-         ILabelStyles,
-         ILinkStyleProps,
-         ILinkStyles,
-         IListProps,
-         IRenderFunction,
-         ISpinnerStyleProps,
-         ISpinnerStyles,
-         IStyleFunctionOrObject,
-         KeyCodes,
-         Label,
-         Link,
-         Selection,
-         Spinner
-       } from 'office-ui-fabric-react';
+import {
+  GroupedList,
+  GroupHeader,
+  IGroup,
+  IGroupFooterProps,
+  IGroupHeaderProps,
+  IGroupHeaderStyleProps,
+  IGroupHeaderStyles,
+  IGroupRenderProps,
+  IGroupShowAllProps
+} from 'office-ui-fabric-react/lib/GroupedList';
+import { IListProps } from 'office-ui-fabric-react/lib/List';
+import { Selection } from 'office-ui-fabric-react/lib/Selection';
+import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
+import { FocusZone, FocusZoneDirection } from 'office-ui-fabric-react/lib/FocusZone';
+import { css, getRTLSafeKeyCode, IRenderFunction, IStyleFunctionOrObject, KeyCodes } from 'office-ui-fabric-react/lib/Utilities';
+import {
+  ChoiceGroup,
+  IChoiceGroupOption,
+  IChoiceGroupOptionStyleProps,
+  IChoiceGroupOptionStyles,
+  IChoiceGroupStyleProps,
+  IChoiceGroupStyles
+} from 'office-ui-fabric-react/lib/ChoiceGroup';
+import { Checkbox, ICheckboxStyleProps, ICheckboxStyles } from 'office-ui-fabric-react/lib/Checkbox';
+import { Label, ILabelStyleProps, ILabelStyles } from 'office-ui-fabric-react/lib/Label';
+import { Link, ILinkStyleProps, ILinkStyles } from 'office-ui-fabric-react/lib/Link';
+import {
+  Spinner,
+  ISpinnerStyleProps,
+  ISpinnerStyles
+} from 'office-ui-fabric-react/lib/Spinner';
 import * as strings from 'ControlStrings';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
@@ -77,8 +71,8 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
       }
     }
     else {
-        props.selection?.setAllSelected(false);
-        props.selection?.setKeySelected(groupKey, !!isSelected, false);
+      props.selection?.setAllSelected(false);
+      props.selection?.setKeySelected(groupKey, !!isSelected, false);
     }
   }, [props.allowMultipleSelections, props.selection]);
 
@@ -361,14 +355,14 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     const childIsSelected = props.selection && isChildSelected(groupHeaderProps.group.children);
 
     if (groupHeaderProps.group.level === 0) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {width: "100%", fontWeight: childIsSelected ? "bold" : "normal"}};
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = { root: { width: "100%", fontWeight: childIsSelected ? "bold" : "normal" } };
       return (
         <FocusZone
           direction={FocusZoneDirection.horizontal}
           className={styles.taxonomyItemFocusZone}
         >
           {props.showIcons && (
-            <FontIcon iconName="Tag"  className={styles.taxonomyItemIcon} />
+            <FontIcon iconName="Tag" className={styles.taxonomyItemIcon} />
           )}
           <Label styles={labelStyles}>{groupHeaderProps.group.name}</Label>
           <div className={styles.actionButtonContainer}>
@@ -379,7 +373,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     }
 
     if (!props.selection) {
-      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {width: "100%", fontWeight: childIsSelected ? "bold" : "normal"}};
+      const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = { root: { width: "100%", fontWeight: childIsSelected ? "bold" : "normal" } };
       let taxonomyItemIconName: string = groupHeaderProps.group.data.term.isDeprecated ? "Blocked" : "Tag";
       return (
         <FocusZone
@@ -401,7 +395,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     const isSelected = props.selection && props.selection.isKeySelected(groupHeaderProps.group.key);
 
     if (props.allowMultipleSelections) {
-      const checkBoxStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = {root: { flex: "1" } };
+      const checkBoxStyles: IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles> = { root: { flex: "1" } };
       if (isSelected || childIsSelected) {
         checkBoxStyles.label = { fontWeight: 'bold' };
       }
@@ -434,19 +428,19 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
       );
     }
     else {
-      const choiceGroupOptionStyles: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'bold', flex: '1' }, field: { width: '100%'} } : { root: {marginTop: 0}, choiceFieldWrapper: { fontWeight: 'normal', flex: '1' }, field: { width: '100%'} };
+      const choiceGroupOptionStyles: IStyleFunctionOrObject<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles> = isSelected || childIsSelected ? { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'bold', flex: '1' }, field: { width: '100%' } } : { root: { marginTop: 0 }, choiceFieldWrapper: { fontWeight: 'normal', flex: '1' }, field: { width: '100%' } };
       const options: IChoiceGroupOption[] = [{
-                                                key: groupHeaderProps.group.key,
-                                                text: groupHeaderProps.group.name,
-                                                styles: choiceGroupOptionStyles,
-                                                onRenderLabel: (p) =>
-                                                  <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
-                                                    {p.text}
-                                                  </span>,
-                                                onClick: () => {
-                                                  onGroupSelectionChange(groupHeaderProps.group.key, true);
-                                                }
-                                              }];
+        key: groupHeaderProps.group.key,
+        text: groupHeaderProps.group.name,
+        styles: choiceGroupOptionStyles,
+        onRenderLabel: (p) =>
+          <span id={p.labelId} className={css(!isDisabled && styles.choiceOption, isDisabled && styles.disabledChoiceOption, isSelected && styles.selectedChoiceOption)}>
+            {p.text}
+          </span>,
+        onClick: () => {
+          onGroupSelectionChange(groupHeaderProps.group.key, true);
+        }
+      }];
 
       const choiceGroupStyles: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = { root: { flex: "1" }, applicationRole: { width: "100%" } };
 
@@ -455,12 +449,12 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
           direction={FocusZoneDirection.horizontal}
           className={styles.taxonomyItemFocusZone}
         >
-            <ChoiceGroup
-              options={options}
-              selectedKey={props.selection && props.selection.getSelection()[0]?.id}
-              disabled={isDisabled}
-              styles={choiceGroupStyles}
-            />
+          <ChoiceGroup
+            options={options}
+            selectedKey={props.selection && props.selection.getSelection()[0]?.id}
+            disabled={isDisabled}
+            styles={choiceGroupStyles}
+          />
           <div className={styles.actionButtonContainer}>
             {props.onRenderActionButton && props.onRenderActionButton(props.termStoreInfo, props.termSetInfo, groupHeaderProps.group.data.term, updateTaxonomyTreeView)}
           </div>
@@ -489,9 +483,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         onRenderTitle={onRenderTitle}
         onToggleCollapse={onToggleCollapse}
         indentWidth={20}
-        expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
+        expandButtonProps={{ style: { color: props.themeVariant?.semanticColors.bodyText } }}
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
-          if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
+          if ((ev.key == " " || ev.key == "Enter") && !isDisabled) {
             onGroupSelectionChange(group.key, props.allowMultipleSelections ? undefined : true);
           }
         }}
@@ -581,7 +575,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         groupProps={groupProps}
         onShouldVirtualize={(p: IListProps<any>) => false}
         data-is-focusable={true}
-        focusZoneProps={{direction: FocusZoneDirection.vertical, shouldEnterInnerZone: shouldEnterInnerZone}}
+        focusZoneProps={{ direction: FocusZoneDirection.vertical, shouldEnterInnerZone: shouldEnterInnerZone }}
       />
     </div>
   );

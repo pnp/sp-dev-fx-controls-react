@@ -1,4 +1,4 @@
-import { IconButton } from 'office-ui-fabric-react/lib/components/Button/IconButton/IconButton';
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { classNamesFunction, styled } from 'office-ui-fabric-react/lib/Utilities';
 import * as React from 'react';
 import { ITermItemProps, ITermItemStyleProps, ITermItemStyles } from '../modernTermPicker/ModernTermPicker.types';
