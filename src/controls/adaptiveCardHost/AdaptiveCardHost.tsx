@@ -11,10 +11,11 @@ import {
   useEffect,
   useRef
 } from 'react';
-import './AdaptiveCardHost.css';
-import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, addSPFxContextDataToDataObject, setFluentUIThemeAsCSSVariables } from './AdaptiveCardHostHelpers';
+import { applyAdaptiveCardHostStyles } from './AdaptiveCardHostCssStyles';
+import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, injectContextProperty } from './AdaptiveCardHostHelpers';
 import { createDarkTeamsTheme, createDefaultTeamsTheme, createHighContrastTeamsTheme, getDefaultFluentUITheme, setFluentUIThemeAsHostCapability, useLocalFluentUI } from './fluentUI';
 import { AdaptiveCardHostThemeType, IAdaptiveCardHostActionResult, IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
+import { Text } from '@microsoft/sp-core-library';
 import * as telemetry from '../../common/telemetry';
 
 // Init Process Markdown
@@ -152,19 +153,12 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
       props.onUpdateHostCapabilities(currentHostConfig.hostCapabilities);
     }
 
-    setFluentUIThemeAsCSSVariables(
-      renderElementRef.current,
-      theme
-    );
+    // ****
+    currentHostConfig.cssClassNamePrefix = `ach${Text.replaceAll(Math.random().toString(), ".", "")}`;
+    applyAdaptiveCardHostStyles(theme, currentHostConfig.cssClassNamePrefix);
+    // ****
 
-    // just to fix the colors of the list actions menu
-    setFluentUIThemeAsCSSVariables(
-      document.body,
-      (props.isUniqueControlInPage) ? theme : getDefaultFluentUITheme()
-    );
-    // *****
-
-  }, [adaptiveCardInstanceRef.current, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig, props.isUniqueControlInPage]);
+  }, [adaptiveCardInstanceRef.current, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig]);
   // *****
 
   // set invokeAction
@@ -209,7 +203,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     let currentAdaptiveCard = adaptiveCardInstanceRef.current;
     try {
       let template = new Template(props.card);
-      let evaluationContext = addSPFxContextDataToDataObject(props.data, fluentUIThemeInstanceRef.current, props.context);
+      let evaluationContext = injectContextProperty(props.data, fluentUIThemeInstanceRef.current, props.context);
       let cardPayload = template.expand(evaluationContext);
 
       currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
@@ -217,6 +211,10 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
       let renderedElement = currentAdaptiveCard.render();
       currentRenderElement.innerHTML = "";
       currentRenderElement.appendChild(renderedElement);
+
+      // just for debugging pourpouse
+      console.log(evaluationContext);
+      // *****
     } catch (cardRenderError) {
       if (props.onError) {
         props.onError(cardRenderError);

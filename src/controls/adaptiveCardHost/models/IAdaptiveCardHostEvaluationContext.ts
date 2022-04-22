@@ -9,11 +9,11 @@ import { IUserInfo } from './IUserInfo';
 
 export interface IAdaptiveCardHostEvaluationContext {
   theme: IPartialTheme | ITheme;
-  aadInfo: IAadInfo;
-  cultureInfo: ICultureInfo;
-  userInfo: IUserInfo;
-  spListInfo: ISPListInfo;
-  spListItemInfo: ISPListItemInfo;
-  spSiteInfo: ISPSiteInfo;
-  spWebInfo: ISPWebInfo;
+  aadInfo?: IAadInfo;
+  cultureInfo?: ICultureInfo;
+  userInfo?: IUserInfo;
+  spListInfo?: ISPListInfo;
+  spListItemInfo?: ISPListItemInfo;
+  spSiteInfo?: ISPSiteInfo;
+  spWebInfo?: ISPWebInfo;
 }

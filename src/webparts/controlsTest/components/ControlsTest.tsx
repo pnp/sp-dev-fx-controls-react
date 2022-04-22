@@ -180,7 +180,7 @@ import { LocationPicker } from "../../../controls/locationPicker/LocationPicker"
 import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
 import { debounce } from "lodash";
 import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
-import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType } from "../../../AdaptiveCardHost";
+import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
 import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
 import { Label } from "office-ui-fabric-react/lib/Label";
 
@@ -2241,9 +2241,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }}
             theme={this.props.themeVariant}
             themeType={AdaptiveCardHostThemeType.SharePoint}
-            onInvokeAction={(action: IAdaptiveCardHostActionResult) => { alert(JSON.stringify(action)); }}
-            onError={(error: Error) => { alert(error.message); }}
-            isUniqueControlInPage={true}
+            onInvokeAction={(action) => alert(JSON.stringify(action))}
+            onError={(error) => alert(error.message)}
+            onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => {}}
+            onSetCustomActions={(registry: CardObjectRegistry<Action>) => {}}
+            onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
+              hostCapabilities.setCustomProperty("CustomPropertyName", Date.now);
+            }}
             context={this.props.context}
           />
         </div>
