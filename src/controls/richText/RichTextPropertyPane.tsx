@@ -162,7 +162,6 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
       <div className={styles.propertyPaneGroupField}>
         <Dropdown label={strings.FontStyleTitle}
           ariaLabel={strings.FontStyleTitle}
-          defaultSelectedKey={0}
           selectedKey={selectedHeader}
           options={[
             { key: 0, text: strings.HeaderNormalText },
@@ -188,7 +187,6 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
       <div className={styles.propertyPaneGroupField}>
         <Dropdown label={strings.FontSizeTitle}
           ariaLabel={strings.FontSizeTitle}
-          defaultSelectedKey={'large'}
           selectedKey={selectedSize}
           options={[
             { key: 'small', text: '12' },
