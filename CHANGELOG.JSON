@@ -6,7 +6,8 @@
         "new": [],
         "enhancements": [
           "`PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)",
-          "`PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)"
+          "`PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)",
+          "`ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)"
         ],
         "fixes": [
           "`LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)",
@@ -26,6 +27,7 @@
         "[Christophe Humbert](https://github.com/PathToSharePoint)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Joel Lopes](https://github.com/Dixdjo)",
+        "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Ravichandran Krishnasamy](https://github.com/ravichandran-blog)",
         "[Rico van de Ven](https://github.com/RicoNL)",
         "[Russell gove](https://github.com/russgove)"
