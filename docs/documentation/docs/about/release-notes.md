@@ -6,6 +6,9 @@
 
 - `PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)
 - `PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)
+- `ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)
+- `AdaptiveCardHost`: Add SPFx Context property [#1145](https://github.com/pnp/sp-dev-fx-controls-react/issues/1145)
+- `AdaptiveCardHost`: Remove the `isUniqueControlInPage` from the control by rebuilding the way to apply AC CSS class names [#1154](https://github.com/pnp/sp-dev-fx-controls-react/issues/1154)
 
 ### Fixes
 
@@ -18,6 +21,8 @@
 - Bump momentjs from 2.29.1 to 2.29.2 [#1185](https://github.com/pnp/sp-dev-fx-controls-react/pull/1185)
 - `TaxonomyPicker`: Sorting the terms in locale language [#1160](https://github.com/pnp/sp-dev-fx-controls-react/pull/1160)
 - `ComboboxListItemPicker`: options are not reloaded after the filter is changed [#1180](https://github.com/pnp/sp-dev-fx-controls-react/issues/1180)
+- `FieldRendererHelper`: Add missing PnPjs import to SPHelper [#1140](https://github.com/pnp/sp-dev-fx-controls-react/issues/1140)
+- `RichText`: Update font style and font size on property pane [#1151](https://github.com/pnp/sp-dev-fx-controls-react/issues/1151)
 
 ## 3.7.2
 
