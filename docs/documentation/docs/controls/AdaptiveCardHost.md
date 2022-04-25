@@ -11,6 +11,18 @@ Three custom themes have been created for Microsoft Teams to emulate the colors 
 
 All Elements and Actions of Adaptive Cards have been redefined using Fluent UI React, both for SharePoint and Microsoft Teams (in this case the "Fluent UI Northstar" library is not used), adding and improving features that are not managed in Microsoft's implementation of the "adaptivecards-fluentui" library (Theme support for example).
 
+Thanks to the "context" property that allows you to pass the SPFx context, whether the "data" property is passed or not, a new field called @context will be injected into the data object.
+
+This allows, using Adaptive Cards templating syntax, to access to the context informations using the following fields (for more information on these fields, refer to the [BaseComponentContext](https://docs.microsoft.com/en-us/javascript/api/sp-component-base/basecomponentcontext) class):
+- "theme": property "theme" from the current theme applied to the card.
+- "aadInfo": Azure AD informations retrieved from the SPFx context object.
+- "cultureInfo": Culture informations retrieved from the SPFx context object.
+- "userInfo": User informations retrieved from the SPFx context object.
+- "spListInfo": Current List informations retrieved from the SPFx context object.
+- "spListItemInfo": Current List item informations retrieved from the SPFx context object.
+- "spSiteInfo": Current Site informations retrieved from the SPFx context object.
+- "spWebInfo": Current Web informations retrieved from the SPFx context object.
+
 The Adaptive Cards version supported is 1.5, by using the 'adaptivecards' npm package version 2.10.0.
 
 Here is an example of the control in action inside a Web Part:
@@ -27,22 +39,23 @@ Here is an example of the previous Web Part (using different Card), hosted as a 
 - In your component file, import the `AdaptiveCardHost` control as follows:
 
 ```TypeScript
-import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType } from "@pnp/spfx-controls-react/lib/AdaptiveCardHost";
+import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, Action, CardElement, CardObjectRegistry, HostCapabilities } from "@pnp/spfx-controls-react/lib/AdaptiveCardHost";
 ```
 
 - Example on use the `AdaptiveCardHost` control with only required properties:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with all properties:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   data={data}
@@ -62,63 +75,68 @@ import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeT
   onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
     hostCapabilities.setCustomProperty("CustomPropertyName", Date.now);
   }}
-  isUniqueControlInPage={true}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with SharePoint Theme:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   themeType={AdaptiveCardHostThemeType.SharePoint}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with SharePoint Theme "Section Variation" ('this.props.theme' is the theme that come from the Web Part) */):
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   theme={this.props.theme}
   themeType={AdaptiveCardHostThemeType.SharePoint}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with Teams "Default" Theme:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   themeType={AdaptiveCardHostThemeType.Teams}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with Teams "Dark" Theme:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   themeType={AdaptiveCardHostThemeType.TeamsDark}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
 - Example on use the `AdaptiveCardHost` control with Teams "High Contrast" Theme:
 
-```TSX
+```TypeScript
 <AdaptiveCardHost
   card={card}
   themeType={AdaptiveCardHostThemeType.TeamsHighContrast}
   onInvokeAction={(action) => alert(JSON.stringify(action))}
   onError={(error) => alert(error.message)}
+  context={this.props.context}
 />
 ```
 
@@ -132,7 +150,7 @@ The `AdaptiveCardHost` control can be configured with the following properties:
 | data | { "$root": object } | no | Set Data Source for template rendering. |
 | style | React.CSSProperties | no | Set CSS Style. |
 | className | string | no | Set CSS Class. |
-| theme | IPartialTheme or ITheme | no | Set Fluent UI Theme. Used only if the "themeType" property is set to 'ThemeType.SharePoint'. If not set or set to null or not defined, the theme passed through context will be searched, or the default theme of the page will be loaded.  |
+| theme | IPartialTheme or ITheme | no | Set Fluent UI Theme. Used only if the "themeType" property is set to 'ThemeType.SharePoint'. If not set or set to null or not defined, the theme passed through context will be searched, or the default theme of the page will be loaded. However, the Theme object will be automatically injected into the data object, so that it can be used by the Adaptive Cards binding engine. |
 | themeType | ThemeType | no | Select the Type of Theme you want to use. If it is not set or set to null or undefined, the 'ThemeType.SharePoint' value will be used and the "theme" property or the theme passed through the context or default page will be loaded. In other cases, the chosen Microsoft Teams theme will be applied. |
 | hostConfig | object | no | Set custom HostConfig. |
 | onInvokeAction | (action: IAdaptiveCardActionResult) => void | yes | Invoked every time an Action is performed. |
@@ -140,7 +158,7 @@ The `AdaptiveCardHost` control can be configured with the following properties:
 | onSetCustomElements | (registry: CardObjectRegistry<CardElement>) => void | no | Invoked to manage Elements to the current Adaptive Card instance. |
 | onSetCustomActions | (registry: CardObjectRegistry<Action>) => void | no | Invoked to manage Actions to the current Adaptive Card instance. |
 | onUpdateHostCapabilities | (hostCapabilities: HostCapabilities) => void | no | Invoked to manage the HostCapabilities object like add custom properties. |
-| isUniqueControlInPage | boolean | no | Set to true if you want to use only one instance of this control per page, false for multiple controls. This affects how CSS variables are set. |
+| context | BaseComponentContext | no | Set the context from the SPFx component. If set, some context properties will be automatically injected into the data object, so they can be used by the Adaptive Cards binding engine. |
 
 Interface `IAdaptiveCardHostActionResult`
 
