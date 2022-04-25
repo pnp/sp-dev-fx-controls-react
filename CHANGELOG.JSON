@@ -7,7 +7,9 @@
         "enhancements": [
           "`PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)",
           "`PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)",
-          "`ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)"
+          "`ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)",
+          "`AdaptiveCardHost`: Add SPFx Context property [#1145](https://github.com/pnp/sp-dev-fx-controls-react/issues/1145)",
+          "`AdaptiveCardHost`: Remove the `isUniqueControlInPage` from the control by rebuilding the way to apply AC CSS class names [#1154](https://github.com/pnp/sp-dev-fx-controls-react/issues/1154)"
         ],
         "fixes": [
           "`LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)",
@@ -27,6 +29,7 @@
         "[Andreas Omayrat](https://github.com/andreasomayrat)",
         "[brianpmccullough](https://github.com/brianpmccullough)",
         "[Christophe Humbert](https://github.com/PathToSharePoint)",
+        "[Fabio Franzini](https://github.com/fabiofranzini)",
         "[Gautam Sheth](https://github.com/gautamdsheth)",
         "[Joel Lopes](https://github.com/Dixdjo)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
