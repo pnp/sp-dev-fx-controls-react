@@ -158,7 +158,7 @@ The `AdaptiveCardHost` control can be configured with the following properties:
 | onSetCustomElements | (registry: CardObjectRegistry<CardElement>) => void | no | Invoked to manage Elements to the current Adaptive Card instance. |
 | onSetCustomActions | (registry: CardObjectRegistry<Action>) => void | no | Invoked to manage Actions to the current Adaptive Card instance. |
 | onUpdateHostCapabilities | (hostCapabilities: HostCapabilities) => void | no | Invoked to manage the HostCapabilities object like add custom properties. |
-| context | BaseComponentContext | yes | Set the context from the SPFx component. If set, some context properties will be automatically injected into the data object, so they can be used by the Adaptive Cards binding engine. |
+| context | BaseComponentContext | no | Set the context from the SPFx component. If set, some context properties will be automatically injected into the data object, so they can be used by the Adaptive Cards binding engine. |
 
 Interface `IAdaptiveCardHostActionResult`
 
