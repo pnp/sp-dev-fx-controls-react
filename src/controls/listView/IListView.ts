@@ -1,7 +1,4 @@
-import {
-  SelectionMode, IColumn,
-  IDetailsRowProps, IGroup
-} from 'office-ui-fabric-react';
+import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export { SelectionMode };
 
