@@ -1179,7 +1179,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
           buttonLabel='Configure'
           hideButton={this.props.displayMode === DisplayMode.Read}
-          onConfigure={this._onConfigure} />
+          onConfigure={this._onConfigure}
+          theme={this.props.themeVariant} />
 
         <PeoplePicker context={this.props.context}
           titleText="People Picker custom styles"

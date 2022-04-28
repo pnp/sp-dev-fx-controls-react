@@ -20,7 +20,8 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
              iconText='Configure your web part'
              description='Please configure the web part.'
              buttonLabel='Configure'
-             onConfigure={this._onConfigure} />
+             onConfigure={this._onConfigure}
+             theme={this.props.themeVariant} />
 ```
 
 - With custom element for `description`:
@@ -30,7 +31,8 @@ import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
              iconText='Configure your web part'
              description={defaultClassNames => <span className={`${defaultClassNames} ${additionalStyles}`}>Please configure the web part.</span>}
              buttonLabel='Configure'
-             onConfigure={this._onConfigure} />
+             onConfigure={this._onConfigure}
+             theme={this.props.themeVariant} />
 ```
 
 - With the `onConfigure` property you can define what it needs to do when you click on the button. Like for example opening the property pane:
@@ -50,7 +52,8 @@ Sample of using the `hideButton` functionality for hiding the button when page i
              description='Please configure the web part.'
              buttonLabel='Configure'
              hideButton={this.props.displayMode === DisplayMode.Read}
-             onConfigure={this._onConfigure} />
+             onConfigure={this._onConfigure}
+             theme={this.props.themeVariant} />
 ```
 
 ## Implementation
@@ -66,5 +69,6 @@ The placeholder control can be configured with the following properties:
 | iconText | string \| ((defaultClassNames: string) =&gt; React.ReactElement) | yes | Heading text or render function which is displayed next to the icon. |
 | hideButton | boolean | no | Specify if you want to hide the button. Default is `false`. |
 | onConfigure | function | no | onConfigure handler for the button. The button is optional. |
+| theme | IPartialTheme \| ITheme | no | Set Fluent UI Theme. If not set or set to null or not defined, the theme passed through context will be used, or the default theme of the page will be loaded. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Placeholder)

@@ -5,9 +5,14 @@ import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
 import { setIconOptions } from 'office-ui-fabric-react/lib/Styling';
 import { Placeholder } from './PlaceholderComponent';
-import styles from './PlaceholderComponent.module.scss';
+//import styles from './PlaceholderComponent.module.scss';
+import { getClassNames } from './PlaceholderComponent.styles';
+import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
 
 declare const sinon;
+
+const themeToApply = getFluentUIThemeOrDefault();
+const styles = getClassNames(themeToApply);
 
 describe('<Placeholder />', () => {
   let placeholder: ReactWrapper;
