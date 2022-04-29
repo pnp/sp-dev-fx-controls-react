@@ -1,5 +1,4 @@
-import { Selection, SelectionMode } from 'office-ui-fabric-react/lib/DetailsList';
-import { IColumn, IGroup } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 
 export { SelectionMode };
 
@@ -68,6 +67,10 @@ export interface IListViewProps {
    * Set to false by default
    */
   stickyHeader?: boolean;
+  /**
+   * Callback to override the default row rendering.
+   */
+  onRenderRow?: (props: IDetailsRowProps) => JSX.Element | null;
    /**
    * Class name to apply additional styles on list view wrapper
    */

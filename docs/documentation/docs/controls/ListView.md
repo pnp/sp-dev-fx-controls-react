@@ -99,6 +99,7 @@ The ListView control can be configured with the following properties:
 | dragDropFiles | boolean | no | Specify the drag and drop files area option. Default false. |
 | onDrop | file | no | Event handler returns files from drag and drop. |
 | stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky |
+| onRenderRow | (props: IDetailsRowProps) => JSX.Element \| null | no | Callback to override the default row rendering. |
 | sortItems | (items: any[], columnName: string, descending: boolean) =&gt; any[] | no | Custom sorting function to handle sorting by column |
 | className | string | no | Class name to apply additional styles on list view wrapper |
 | listClassName | string | no | Class name to apply additional styles on list view |
