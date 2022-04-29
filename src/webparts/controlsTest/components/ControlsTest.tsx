@@ -938,7 +938,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </Stack>
 
 
-        <AccessibleAccordion allowZeroExpanded>
+        <AccessibleAccordion allowZeroExpanded theme={this.props.themeVariant}>
           <AccordionItem key={"Headding 1"}>
             <AccordionItemHeading>
               <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>

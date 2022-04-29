@@ -2,7 +2,6 @@ import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
 import { Theme } from '@fluentui/react-theme-provider/lib/types';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
-import { createTheme } from 'office-ui-fabric-react/lib/Styling';
 import * as React from 'react';
 import { IPlaceholderState } from '.';
 import * as telemetry from '../../common/telemetry';
