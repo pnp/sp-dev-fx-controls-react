@@ -1,14 +1,15 @@
-import * as React from 'react';
-import styles from './TreeView.module.scss';
+import * as strings from 'ControlStrings';
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
-import * as strings from 'ControlStrings';
+import { ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { css } from 'office-ui-fabric-react/lib/Utilities';
+import * as React from 'react';
 import { ITreeItem } from './ITreeItem';
+import { TreeItemActionsDisplayMode } from './ITreeItemActions';
 import { TreeViewSelectionMode } from './ITreeViewProps';
 import TreeItemActionsControl from './TreeItemActionsControl';
-import { TreeItemActionsDisplayMode } from './ITreeItemActions';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import styles from './TreeView.module.scss';
 
 /**
  * TreeItem properties interface
@@ -61,13 +62,15 @@ export interface ITreeItemProps {
   onRenderItem?: (item: ITreeItem) => JSX.Element;
 
   nodesToExpand: any[];
-   /**
-   * Specifies whether current tree item's children should be rendered as expanded.
-   */
+  /**
+  * Specifies whether current tree item's children should be rendered as expanded.
+  */
   defaultExpandedChildren?: boolean;
+  /**
+  * Set Fluent UI Theme.
+  */
+  theme: ITheme;
 }
-
-
 
 /**
  * TreeItem state interface
@@ -82,13 +85,6 @@ export interface ITreeItemState {
    */
   expanded?: boolean;
 }
-
-/**
- * CSS styles for checkbox
- */
-const checkBoxStyle: React.CSSProperties = {
-  display: "inline-flex"
-};
 
 /**
  * Renders the controls for TreeItem component
@@ -155,14 +151,14 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
       treeItem
     } = this.props;
     // If selection is turned on, set the item as selected
-   if (selectionMode != TreeViewSelectionMode.None) {
+    if (selectionMode != TreeViewSelectionMode.None) {
 
       let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
-      let _isExpanded:boolean=this.state.expanded;
-      
-      if(!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) == -1){
-        _isExpanded=false;
+      let _isExpanded: boolean = this.state.expanded;
+
+      if (!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) == -1) {
+        _isExpanded = false;
       }
 
       this.setState({
@@ -202,9 +198,9 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             // Rendering when item has iconProps
             item.iconProps &&
             <span>
-              <Icon className={styles.icon} iconName={item.iconProps.iconName} style={item.iconProps.style} />
+              <Icon className={styles.icon} iconName={item.iconProps.iconName} style={item.iconProps.style} theme={this.props.theme} />
               &nbsp;
-              </span>
+            </span>
           }
 
           {item.label}
@@ -255,6 +251,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             showCheckboxes={showCheckboxes}
             treeItemActionsDisplayMode={treeItemActionsDisplayMode}
             nodesToExpand={this.props.nodesToExpand}
+            theme={this.props.theme}
           />
         );
       });
@@ -299,7 +296,8 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
                 iconProps={expanded ? { iconName: 'ChevronDown' } : { iconName: 'ChevronRight' }}
                 alt={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
                 title={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
-                onClick={() => this._handleExpandCollapse()}>
+                onClick={() => this._handleExpandCollapse()}
+                theme={this.props.theme}>
               </IconButton>
             }
           </div>
@@ -328,6 +326,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
                 disabled={treeItem.disabled}
                 className={styles.checkbox}
                 onChange={this._itemSelected}
+                theme={this.props.theme}
               />
             }
             {
@@ -343,7 +342,8 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
                     actions: treeItem.actions,
                     treeItemActionsDisplayMode: treeItemActionsDisplayMode
                   }}
-                  treeItemActionCallback={this.treeItemActionCallback} />
+                  treeItemActionCallback={this.treeItemActionCallback}
+                  theme={this.props.theme} />
               </div>
             }
           </div>

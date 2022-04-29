@@ -1,11 +1,15 @@
-import * as React from 'react';
-import styles from './TreeView.module.scss';
+import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
+import { Theme } from '@fluentui/react-theme-provider/lib/types';
+import { Json } from 'adaptive-expressions/lib/builtinFunctions';
 import uniqBy from 'lodash/uniqBy';
+import * as React from 'react';
+import * as telemetry from '../../common/telemetry';
+import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
+import { ITreeItem } from './ITreeItem';
 import { ITreeViewProps, SelectChildrenMode, TreeViewSelectionMode } from './ITreeViewProps';
 import { ITreeViewState } from './ITreeViewState';
-import { ITreeItem } from './ITreeItem';
 import TreeItem from './TreeItem';
-import * as telemetry from '../../common/telemetry';
+import styles from './TreeView.module.scss';
 
 /**
  * Renders the controls for TreeItem component
@@ -13,6 +17,7 @@ import * as telemetry from '../../common/telemetry';
 export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
 
   private nodesToExpand: string[] = [];
+  private divToInjectCssVariables = React.createRef<HTMLDivElement>();
   /**
    * Constructor method
    * @param props properties interface
@@ -37,7 +42,6 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       });
     }
   }
-
 
   private pathTo = (array: ITreeItem[], target: string): string => {
     let result: string;
@@ -254,29 +258,53 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       defaultExpanded,
       defaultExpandedChildren = this.props.defaultExpandedChildren ?? true,
       defaultExpandedKeys = this.props.defaultExpandedKeys ?? [],
+      theme
     } = this.props;
 
     return (
-      <div className={styles.treeView}>
-        {
-          items.map((treeNodeItem, index) => (
-            <TreeItem
-              treeItem={treeNodeItem}
-              leftOffset={20}
-              isFirstRender={true}
-              defaultExpanded={defaultExpanded}
-              defaultExpandedChildren={defaultExpandedChildren}
-              selectionMode={selectionMode}
-              activeItems={this.state.activeItems}
-              parentCallbackExpandCollapse={this.handleTreeExpandCollapse}
-              parentCallbackOnSelect={this.handleOnSelect}
-              onRenderItem={onRenderItem}
-              showCheckboxes={showCheckboxes}
-              treeItemActionsDisplayMode={treeItemActionsDisplayMode}
-              nodesToExpand={[...this.nodesToExpand, ...defaultExpandedKeys]}
-            />
-          ))
-        }
+      <div ref={this.divToInjectCssVariables}>
+        <ThemeContext.Consumer>
+          {(contextTheme: Theme | undefined) => {
+
+            const themeToApply = getFluentUIThemeOrDefault((theme) ? theme : contextTheme);
+            const div = this.divToInjectCssVariables.current;
+            if (div) {
+              div.style.setProperty(`--treeview-disabledBodyText`, themeToApply.semanticColors.disabledBodyText);
+              div.style.setProperty(`--treeview-disabledSubtext`, themeToApply.semanticColors.disabledSubtext);
+              div.style.setProperty(`--treeview-listItemBackgroundHovered`, themeToApply.semanticColors.listItemBackgroundHovered);
+              div.style.setProperty(`--treeview-listItemBackgroundChecked`, themeToApply.semanticColors.listItemBackgroundChecked);
+              div.style.setProperty(`--treeview-bodySubtext`, themeToApply.semanticColors.bodySubtext);
+              div.style.setProperty(`--treeview-buttonBackgroundHovered`, themeToApply.semanticColors.buttonBackgroundHovered);
+              div.style.setProperty(`--treeview-buttonTextHovered`, themeToApply.semanticColors.buttonTextHovered);
+              div.style.setProperty(`--treeview-buttonBackgroundPressed`, themeToApply.semanticColors.buttonBackgroundPressed);
+              div.style.setProperty(`--treeview-buttonTextPressed`, themeToApply.semanticColors.buttonTextPressed);
+            }
+
+            return (
+              <div className={styles.treeView}>
+                {
+                  items.map((treeNodeItem, index) => (
+                    <TreeItem
+                      treeItem={treeNodeItem}
+                      leftOffset={20}
+                      isFirstRender={true}
+                      defaultExpanded={defaultExpanded}
+                      defaultExpandedChildren={defaultExpandedChildren}
+                      selectionMode={selectionMode}
+                      activeItems={this.state.activeItems}
+                      parentCallbackExpandCollapse={this.handleTreeExpandCollapse}
+                      parentCallbackOnSelect={this.handleOnSelect}
+                      onRenderItem={onRenderItem}
+                      showCheckboxes={showCheckboxes}
+                      treeItemActionsDisplayMode={treeItemActionsDisplayMode}
+                      nodesToExpand={[...this.nodesToExpand, ...defaultExpandedKeys]}
+                      theme={themeToApply}
+                    />
+                  ))
+                }
+              </div>);
+          }}
+        </ThemeContext.Consumer>
       </div>
     );
   }

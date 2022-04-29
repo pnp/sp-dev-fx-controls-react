@@ -42,7 +42,8 @@ import { TreeView, ITreeItem, TreeViewSelectionMode } from "@pnp/spfx-controls-r
     defaultExpandedChildren={true}
     onSelect={this.onTreeItemSelect}
     onExpandCollapse={this.onTreeItemExpandCollapse}
-    onRenderItem={this.renderCustomTreeItem} />
+    onRenderItem={this.renderCustomTreeItem}
+    theme={this.props.themeVariant} />
 ```
 
 - With the `onSelect` property you can capture the event of when the tree item in the TreeView has changed the selection:
@@ -102,6 +103,7 @@ The `TreeView` control can be configured with the following properties:
 | onRenderItem                   | function                   | no       | Optional callback to provide custom rendering of the item (default is simple text of item label and a checkbox for selection).     |
 | defaultExpandedChildren        | boolean                    | no       | Default expand / collapse behavior for the child nodes. By default this is set to true. |
 | defaultExpandedKeys | string[] | no      | Keys of items expanded by default. |
+| theme | IPartialTheme \| ITheme | no | Set Fluent UI Theme. If not set or set to null or not defined, the theme passed through context will be used, or the default theme of the page will be loaded. |
 
 Enum `TreeViewSelectionMode`
 
