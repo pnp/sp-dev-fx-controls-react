@@ -23,6 +23,7 @@
 - `ComboboxListItemPicker`: options are not reloaded after the filter is changed [#1180](https://github.com/pnp/sp-dev-fx-controls-react/issues/1180)
 - `FieldRendererHelper`: Add missing PnPjs import to SPHelper [#1140](https://github.com/pnp/sp-dev-fx-controls-react/issues/1140)
 - `RichText`: Update font style and font size on property pane [#1151](https://github.com/pnp/sp-dev-fx-controls-react/issues/1151)
+- `Placeholder`: Support section variations for themes [#1193](https://github.com/pnp/sp-dev-fx-controls-react/issues/1193)
 
 ## 3.7.2
 
