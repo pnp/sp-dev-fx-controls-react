@@ -36,6 +36,7 @@ import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import styles from './TaxonomyTree.module.scss';
+import { SelectChildrenMode } from '../../../common/model/TreeCommon';
 
 export interface ITaxonomyTreeProps {
   allowMultipleSelections?: boolean;
@@ -52,6 +53,7 @@ export interface ITaxonomyTreeProps {
   selection?: Selection<any>;
   hideDeprecatedTerms?: boolean;
   showIcons?: boolean;
+  selectChildrenMode?: SelectChildrenMode;
 }
 
 export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITaxonomyTreeProps> {
@@ -59,22 +61,116 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
   const [groups, setGroups] = React.useState<IGroup[]>([]);
 
   //
+  // Loads the whole subtree for the selected group and optionally selects all the subitems
+  //
+  const loadSubtree = React.useCallback(async (groupKey: string, selectAll: boolean) => {
+    const groupToLoad = groups.filter(g => g.key === groupKey)[0];
+    if (!groupToLoad) {
+      return;
+    }
+
+    const allLoadedGroups: IGroup[] = [];
+    const allLoadedTerms: ITermInfo[] = [];
+
+    setGroupsLoading((prevGroupsLoading) => [...prevGroupsLoading, groupKey]);
+    groupToLoad.data.isLoading = true;
+
+    const loadSubtreeInternal = async (group: IGroup) => {
+      let nonExistingChildren: IGroup[] = [];
+      if (group.children && group.children.length === 0) {
+
+        const loadedTerms = await props.onLoadMoreData(Guid.parse(props.termSetInfo.id), Guid.parse(group.key), '', props.hideDeprecatedTerms);
+
+        const grps: IGroup[] = loadedTerms.value.map(term => {
+          let termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.languageTag && termLabel.isDefault === true));
+          if (termNames.length === 0) {
+            termNames = term.labels.filter((termLabel) => (termLabel.languageTag === props.termStoreInfo.defaultLanguageTag && termLabel.isDefault === true));
+          }
+          const g: IGroup = {
+            name: termNames[0]?.name,
+            key: term.id,
+            startIndex: -1,
+            count: 50,
+            level: group.level + 1,
+            isCollapsed: true,
+            data: { skiptoken: '', term: term },
+            hasMoreData: term.childrenCount > 0,
+          };
+          if (g.hasMoreData) {
+            g.children = [];
+          }
+          return g;
+        });
+
+        allLoadedTerms.push(...loadedTerms.value);
+
+        nonExistingChildren = grps.filter((grp) => group.children?.every((child) => child.key !== grp.key));
+        group.children = nonExistingChildren;
+        group.data.skiptoken = loadedTerms.skiptoken;
+        group.hasMoreData = loadedTerms.skiptoken !== '';
+      }
+      else {
+        nonExistingChildren = group.children;
+      }
+
+      allLoadedGroups.push(...nonExistingChildren);
+
+      for (let i = 0, len = nonExistingChildren.length; i < len; i++) {
+        await loadSubtreeInternal(nonExistingChildren[i]);
+      }
+    };
+
+    await loadSubtreeInternal(groupToLoad);
+
+    props.setTerms((prevTerms) => {
+      const nonExistingTerms = allLoadedTerms.filter((newTerm) => prevTerms.every((prevTerm) => prevTerm.id !== newTerm.id));
+      return [...prevTerms, ...nonExistingTerms];
+    });
+
+    setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== groupKey));
+
+    if (selectAll && props.selection) {
+      allLoadedGroups.forEach(g => {
+        props.selection.setKeySelected(g.key, true, false);
+      });
+    }
+
+  }, [groups, props]);
+
+  const deselectChildren = (group: IGroup | undefined) => {
+    if (!group) {
+      return;
+    }
+    if (group.children) {
+      group.children.forEach(child => {
+        props.selection.setKeySelected(child.key, false, false);
+        deselectChildren(child);
+      });
+    }
+  };
+
+  //
   // Handles the selection/deselection of a term
   //
   const onGroupSelectionChange = React.useCallback((groupKey: string, isSelected?: boolean) => {
     if (props.allowMultipleSelections) {
-      if (isSelected === undefined) {
-        props.selection?.toggleKeySelected(groupKey);
+      const newIsSelected = !props.selection.isKeySelected(groupKey);
+      props.selection?.toggleKeySelected(groupKey);
+
+      if (newIsSelected && (props.selectChildrenMode & SelectChildrenMode.Select) === SelectChildrenMode.Select) {
+        // select all children
+        loadSubtree(groupKey, true);
       }
-      else {
-        props.selection?.toggleKeySelected(groupKey);
+      else if (!newIsSelected && (props.selectChildrenMode & SelectChildrenMode.Unselect) === SelectChildrenMode.Unselect) {
+        // deselect all children
+        deselectChildren(groups.filter (g => g.key === groupKey)[0]);
       }
     }
     else {
       props.selection?.setAllSelected(false);
       props.selection?.setKeySelected(groupKey, !!isSelected, false);
     }
-  }, [props.allowMultipleSelections, props.selection]);
+  }, [props.allowMultipleSelections, props.selection, props.selectChildrenMode, groups]);
 
   const updateTaxonomyTreeViewWithNewTermItems = (newTermItems: ITermInfo[]): void => {
     for (const term of newTermItems) {

@@ -22,6 +22,7 @@ import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { IModernTermPickerProps } from '../modernTermPicker/ModernTermPicker.types';
 import { Optional } from '../ModernTaxonomyPicker';
 import { TaxonomyTree } from '../taxonomyTree/TaxonomyTree';
+import { SelectChildrenMode } from '../../../common/model/TreeCommon';
 
 export interface ITaxonomyPanelContentsProps {
   allowMultipleSelections?: boolean;
@@ -41,6 +42,7 @@ export interface ITaxonomyPanelContentsProps {
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
+  selectChildrenMode?: SelectChildrenMode;
 }
 
 export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React.ReactElement<ITaxonomyPanelContentsProps> {
@@ -116,6 +118,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
         onRenderActionButton={props.onRenderActionButton}
         hideDeprecatedTerms={true}
         showIcons={false}
+        selectChildrenMode={props.selectChildrenMode}
       />
     </div>
   );
