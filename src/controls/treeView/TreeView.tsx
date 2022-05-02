@@ -1,8 +1,8 @@
+import * as React from 'react';
 import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
 import { Theme } from '@fluentui/react-theme-provider/lib/types';
 import { Json } from 'adaptive-expressions/lib/builtinFunctions';
 import uniqBy from 'lodash/uniqBy';
-import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
 import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
 import { ITreeItem } from './ITreeItem';
