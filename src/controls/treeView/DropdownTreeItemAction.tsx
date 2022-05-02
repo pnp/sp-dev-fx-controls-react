@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
+import * as React from 'react';
 import { ITreeItem } from './ITreeItem';
-import { ITreeItemAction, IConcreteTreeItemActionProps } from './ITreeItemActions';
+import { IConcreteTreeItemActionProps, ITreeItemAction } from './ITreeItemActions';
 import styles from './TreeView.module.scss';
 
 /**
@@ -48,20 +48,6 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
   }
 
   /**
-   * Prepare treeItem action button style.
-   */
-  private getTreeItemActionActionButtonStyle = (): React.CSSProperties => {
-    let result: React.CSSProperties = {
-      backgroundColor: "transparent",
-      width: "14px",
-      display: "inline-flex",
-      padding: "0px"
-    };
-
-    return result;
-  }
-
-  /**
    * Check if there are action to immediatly invoke
    */
   private checkForImmediateInvocations() {
@@ -97,6 +83,7 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
           className={styles.actionMore}
           title="More"
           ariaLabel="More"
+          theme={this.props.theme}
         />
       </div>
     );

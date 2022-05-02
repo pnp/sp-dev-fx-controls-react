@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
 import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { ITreeItemAction, IConcreteTreeItemActionProps } from './ITreeItemActions';
+import * as React from 'react';
+import { IConcreteTreeItemActionProps, ITreeItemAction } from './ITreeItemActions';
 import styles from './TreeView.module.scss';
 
 /**
@@ -26,18 +26,6 @@ export default class ButtonTreeItemAction extends React.Component<IConcreteTreeI
     let btnTitle: string = treeItemAction.title;
 
     return { name, text, iconProps, btnTitle };
-  }
-
-  /**
-   * Gets the action button styling
-   */
-  private getTreeItemActionButtonStyle = (treeItemAction: ITreeItemAction): React.CSSProperties => {
-    let result: React.CSSProperties = {
-      backgroundColor: "transparent",
-      height: "32px"
-    };
-
-    return result;
   }
 
   /**
@@ -84,17 +72,18 @@ export default class ButtonTreeItemAction extends React.Component<IConcreteTreeI
               treeItemAction.hidden ? (
                 null
               ) : (
-                  <div>
-                    <CommandBarButton split={true}
-                      onClick={() => { this.onActionExecute(treeItemAction); }}
-                      iconProps={iconProps}
-                      text={text}
-                      title={btnTitle}
-                      name={name}
-                      key={treeItem.key}
-                      className={styles.actionButton} />
-                  </div>
-                )
+                <div>
+                  <CommandBarButton split={true}
+                    onClick={() => { this.onActionExecute(treeItemAction); }}
+                    iconProps={iconProps}
+                    text={text}
+                    title={btnTitle}
+                    name={name}
+                    key={treeItem.key}
+                    className={styles.actionButton}
+                    theme={this.props.theme} />
+                </div>
+              )
             );
           })
         }

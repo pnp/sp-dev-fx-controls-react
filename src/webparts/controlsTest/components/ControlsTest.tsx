@@ -1765,6 +1765,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onExpandCollapse={this.onExpandCollapseTree}
             onSelect={this.onItemSelected}
             defaultExpandedChildren={true}
+            theme={this.props.themeVariant}
           //expandToSelected={true}
           // onRenderItem={this.renderCustomTreeItem}
           />

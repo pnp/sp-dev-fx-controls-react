@@ -13,6 +13,7 @@
     vertical-align: middle;
     margin: 4px 4px 0 0;
     cursor: pointer;
+
     &>button {
       height: 20px;
       width: 20px;
@@ -29,22 +30,22 @@
 
     &.disabled {
       cursor: default;
-      color: '[theme:disabledBodyText, default:#a6a6a6]';
+      color: var(--treeview-disabledBodyText);
 
       .labels {
         .itemSubLabel {
-          color: '[theme:disabledSubtext, default:#d0d0d0]';
+          color: var(--treeview-disabledSubtext);
         }
       }
     }
 
     &.noCheckBox:not(.disabled) {
-        &:hover {
-        background-color: '[theme:listItemBackgroundHover, default:#f4f4f4]';
+      &:hover {
+        background-color: var(--treeview-listItemBackgroundHovered);
       }
 
       &.checked {
-        background-color: '[theme:listItemBackgroundChecked, default:#eaeaea]';
+        background-color: var(--treeview-listItemBackgroundChecked);
       }
     }
 
@@ -59,13 +60,14 @@
 
     .labels {
       line-height: 18px;
+
       .itemLabel {
         padding: 0;
       }
 
       .itemSubLabel {
         font-size: 12px;
-        color: '[theme:bodySubtext, default:#666666]';
+        color: var(--treeview-bodySubtext);
       }
     }
   }
@@ -84,22 +86,25 @@
       height: 20px;
       padding: 0;
       background-color: transparent;
+
       &:hover {
-        background-color: '[theme:buttonBackgroundHovered, default:#f4f4f4]';
-        color: '[theme:buttonTextHovered, default:#212121]';
+        background-color: var(--treeview-buttonBackgroundHovered);
+        color: var(--treeview-buttonTextHovered);
       }
+
       &:pressed {
-        background-color: '[theme:buttonBackgroundPressed, default:#eaeaea]';
-        color: '[theme:buttonTextPressed, default:#212121]';
+        background-color: var(--treeview-buttonBackgroundPressed);
+        color: var(--treeview-buttonTextPressed);
       }
     }
   }
 
   .tree {
 
-    label > span {
+    label>span {
       padding-left: 0px;
     }
+
     .blankspace {
       padding-left: 35px;
     }
