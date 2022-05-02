@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as strings from 'ControlStrings';
 import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
