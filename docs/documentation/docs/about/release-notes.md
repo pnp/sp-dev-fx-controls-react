@@ -9,6 +9,9 @@
 - `ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)
 - `AdaptiveCardHost`: Add SPFx Context property [#1145](https://github.com/pnp/sp-dev-fx-controls-react/issues/1145)
 - `AdaptiveCardHost`: Remove the `isUniqueControlInPage` from the control by rebuilding the way to apply AC CSS class names [#1154](https://github.com/pnp/sp-dev-fx-controls-react/issues/1154)
+- `ListView`: Different background color to even and odd rows in ListView [#1153](https://github.com/pnp/sp-dev-fx-controls-react/issues/1153)
+- `AccessibleAccordion`: Support of section variations [#1195](https://github.com/pnp/sp-dev-fx-controls-react/issues/1195)
+- `TreeView`: Support of section variations [#1196](https://github.com/pnp/sp-dev-fx-controls-react/issues/1196)
 
 ### Fixes
 
@@ -23,6 +26,7 @@
 - `ComboboxListItemPicker`: options are not reloaded after the filter is changed [#1180](https://github.com/pnp/sp-dev-fx-controls-react/issues/1180)
 - `FieldRendererHelper`: Add missing PnPjs import to SPHelper [#1140](https://github.com/pnp/sp-dev-fx-controls-react/issues/1140)
 - `RichText`: Update font style and font size on property pane [#1151](https://github.com/pnp/sp-dev-fx-controls-react/issues/1151)
+- `Placeholder`: Support section variations for themes [#1193](https://github.com/pnp/sp-dev-fx-controls-react/issues/1193)
 
 ## 3.7.2
 
