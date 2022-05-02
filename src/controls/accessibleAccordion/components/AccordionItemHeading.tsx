@@ -1,5 +1,3 @@
-import "../css/AccordionStylesOverride.css";
-
 import * as React from "react";
 
 import { InjectedHeadingAttributes } from "../helpers/AccordionStore";

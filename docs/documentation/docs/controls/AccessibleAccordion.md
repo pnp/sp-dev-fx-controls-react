@@ -73,6 +73,7 @@ The `Accordion` control can be configured with the following properties:
 | preExpanded | string[] | no | Accepts an array of strings and any `AccordionItem` whose `uuid` prop matches any one of these strings will be expanded on mount. | `[]` |
 | className | string | no | Class(es) to apply to element. | "accordion" |
 | onChange | (string[]) => void | no | Callback which is invoked when items are expanded or collapsed. Gets passed `uuid`s of the currently expanded `AccordionItem`s. | |
+| theme | IPartialTheme \| ITheme | no | Set Fluent UI Theme. If not set or set to null or not defined, the theme passed through context will be used, or the default theme of the page will be loaded. |
 
 
 
