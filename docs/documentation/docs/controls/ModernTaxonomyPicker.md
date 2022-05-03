@@ -185,43 +185,60 @@ You can also use the `TaxonomyTree` control separately to just render a stand-al
   Initialize the taxonomy service and state, load basic info from term store and display the `TaxonomyTree` component.
 
 ```TypeScript
-const taxonomyService = new SPTaxonomyService(props.context);
-const [terms, setTerms] = React.useState<ITermInfo[]>([]);
-const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
-const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
-const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
+import * as React from "react";
+import { Guid } from "@microsoft/sp-core-library";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { sp } from "@pnp/sp";
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
+import { SPTaxonomyService, TaxonomyTree } from "@pnp/spfx-controls-react";
 
-React.useEffect(() => {
-  sp.setup(props.context);
-  taxonomyService.getTermStoreInfo()
-    .then((termStoreInfo) => {
-      setCurrentTermStoreInfo(termStoreInfo);
-      setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
-        props.context.pageContext.cultureInfo.currentUICultureName :
-        currentTermStoreInfo.defaultLanguageTag);
-    });
-  taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
-    .then((termSetInfo) => {
-      setCurrentTermSetInfo(termSetInfo);
-    });
-}, []);
+export interface ITestTaxonomyTreeReactHooksProps {
+  context: WebPartContext;
+  termSetId: string;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
+}
 
-return (
-  {currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (
-    <TaxonomyTree
-      languageTag={currentLanguageTag}
-      onLoadMoreData={taxonomyService.getTerms}
-      pageSize={50}
-      setTerms={setTerms}
-      termSetInfo={currentTermSetInfo}
-      termStoreInfo={currentTermStoreInfo}
-      terms={terms}
-      onRenderActionButton={onRenderActionButton}
-      hideDeprecatedTerms={false}
-      showIcons={true}
-    />
-  )}
-);
+export function TestTaxonomyTreeReactHooks(
+	props: ITestTaxonomyTreeReactHooksProps
+): React.ReactElement<ITestTaxonomyTreeReactHooksProps> {
+  const taxonomyService = new SPTaxonomyService(props.context);
+  const [terms, setTerms] = React.useState<ITermInfo[]>([]);
+  const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
+  const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
+  const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
+  
+  React.useEffect(() => {
+    sp.setup(props.context);
+    taxonomyService.getTermStoreInfo()
+      .then((termStoreInfo) => {
+        setCurrentTermStoreInfo(termStoreInfo);
+        setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+          props.context.pageContext.cultureInfo.currentUICultureName :
+          currentTermStoreInfo.defaultLanguageTag);
+      });
+    taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
+      .then((termSetInfo) => {
+        setCurrentTermSetInfo(termSetInfo);
+      });
+  }, []);
+  
+  return (
+    currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (
+      <TaxonomyTree
+        languageTag={currentLanguageTag}
+        onLoadMoreData={taxonomyService.getTerms}
+        pageSize={50}
+        setTerms={setTerms}
+        termSetInfo={currentTermSetInfo}
+        termStoreInfo={currentTermStoreInfo}
+        terms={terms}
+        onRenderActionButton={props.onRenderActionButton}
+        hideDeprecatedTerms={false}
+        showIcons={true}
+      />
+    ) || null
+  );
+}
 ```
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ModernTaxonomyPicker)

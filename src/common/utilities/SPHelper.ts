@@ -10,6 +10,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { IFieldInfo } from '@pnp/sp/fields';
 import '@pnp/sp/site-users/web';
 import '@pnp/sp/webs';
+import "@pnp/sp/lists";
 
 declare var window: any;
 

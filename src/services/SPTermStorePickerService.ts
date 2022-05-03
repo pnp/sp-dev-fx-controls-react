@@ -531,10 +531,10 @@ export default class SPTermStorePickerService {
    */
   private sortTermByPath(a: ITerm, b: ITerm) {
     if (a.CustomSortOrderIndex === -1) {
-      if (a.PathOfTerm.toLowerCase() < b.PathOfTerm.toLowerCase()) {
+      if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
         return -1;
       }
-      if (a.PathOfTerm.toLowerCase() > b.PathOfTerm.toLowerCase()) {
+      if (a.Name.toLowerCase() > b.Name.toLowerCase()) {
         return 1;
       }
       return 0;

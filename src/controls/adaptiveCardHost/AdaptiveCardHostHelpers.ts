@@ -1,12 +1,12 @@
 import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
 import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { BaseComponentContext, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { ActionAlignment, AdaptiveCard, TextColor, TextWeight } from 'adaptivecards';
+import { IEvaluationContext } from 'adaptivecards-templating/lib/template-engine';
 import * as markdown from 'markdown-it';
 import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { getDefaultFluentUITheme } from './fluentUI';
-
-const fluentUICSSVariablePrefix = "ach-fui";
+import { IAdaptiveCardHostEvaluationContext } from './models/IAdaptiveCardHostEvaluationContext';
 
 const lightenDarkenColor = (col, amt) => {
     let usePound = false;
@@ -1003,25 +1003,79 @@ export const createHighContrastTeamsHostConfig = (theme: ITheme): any => {
     return hostConfig;
 };
 
-export const setFluentUIThemeAsCSSVariables = (domElement: HTMLElement, theme: IReadonlyTheme) => {
-    setCSSVariables(domElement, fluentUICSSVariablePrefix, theme.semanticColors);
-    setCSSVariables(domElement, fluentUICSSVariablePrefix, theme.palette);
-    setCSSVariables(domElement, fluentUICSSVariablePrefix, {
-        fontFamily: (theme.fonts.medium.fontFamily)
-            ? theme.fonts.medium.fontFamily
-            : LocalizedFontFamilies.WestEuropean
-    });
-};
-
 export const convertFromPartialThemeToTheme = (partialTheme: IPartialTheme): ITheme => {
     return mergeThemes(getDefaultFluentUITheme(), partialTheme);
 };
 
-const setCSSVariables = (domElement: HTMLElement, prefix: string, obj: any) => {
-    let keys = Object.keys(obj);
-    if (keys !== null) {
-        keys.forEach(key => {
-            domElement.style.setProperty(`--${prefix}-${key}`, obj[key]);
-        });
+export const injectContextProperty = (dataObject: { "$root": object }, theme: ITheme, spfxContext?: BaseComponentContext): IEvaluationContext => {
+    let evaluationContext: IEvaluationContext;
+    let context: IAdaptiveCardHostEvaluationContext;
+
+    if (spfxContext) {
+        context = {
+            theme: theme,
+            aadInfo: (spfxContext?.pageContext?.aadInfo) ? {
+                instanceUrl: spfxContext.pageContext.aadInfo?.instanceUrl,
+                tenantId: spfxContext.pageContext.aadInfo?.tenantId?._guid,
+                userId: spfxContext.pageContext.aadInfo?.userId?._guid,
+            } : null,
+            cultureInfo: (spfxContext?.pageContext?.cultureInfo) ? {
+                currentCultureName: spfxContext.pageContext.cultureInfo.currentCultureName,
+                currentUICultureName: spfxContext.pageContext.cultureInfo.currentUICultureName,
+                isRightToLeft: spfxContext.pageContext.cultureInfo.isRightToLeft
+            } : null,
+            userInfo: (spfxContext?.pageContext?.user) ? {
+                displayName: spfxContext.pageContext.user.displayName,
+                email: spfxContext.pageContext.user.email,
+                isAnonymousGuestUser: spfxContext.pageContext.user.isAnonymousGuestUser,
+                isExternalGuestUser: spfxContext.pageContext.user.isExternalGuestUser,
+                loginName: spfxContext.pageContext.user.loginName,
+                preferUserTimeZone: spfxContext.pageContext.user.preferUserTimeZone
+            } : null,
+            spListInfo: (spfxContext?.pageContext?.list) ? {
+                id: spfxContext.pageContext.list.id.toString(),
+                serverRelativeUrl: spfxContext.pageContext.list.serverRelativeUrl,
+                title: spfxContext.pageContext.list.title
+            } : null,
+            spListItemInfo: (spfxContext?.pageContext?.listItem) ? {
+                id: spfxContext.pageContext.listItem.id.toString(),
+            } : null,
+            spSiteInfo: (spfxContext?.pageContext?.site) ? {
+                absoluteUrl: spfxContext.pageContext.site.absoluteUrl,
+                cdnPrefix: spfxContext.pageContext.site.cdnPrefix,
+                classification: spfxContext.pageContext.site.classification,
+                correlationId: spfxContext.pageContext.site.correlationId.toString(),
+                id: spfxContext.pageContext.site.id.toString(),
+                isNoScriptEnabled: spfxContext.pageContext.site.isNoScriptEnabled,
+                recycleBinItemCount: spfxContext.pageContext.site.recycleBinItemCount,
+                serverRelativeUrl: spfxContext.pageContext.site.serverRelativeUrl,
+                serverRequestPath: spfxContext.pageContext.site.serverRequestPath,
+                sitePagesEnabled: spfxContext.pageContext.site.sitePagesEnabled
+            } : null,
+            spWebInfo: (spfxContext?.pageContext?.web) ? {
+                absoluteUrl: spfxContext.pageContext.web.absoluteUrl,
+                id: spfxContext.pageContext.web.id.toString(),
+                isAppWeb: spfxContext.pageContext.web.isAppWeb,
+                language: spfxContext.pageContext.web.language,
+                languageName: spfxContext.pageContext.web.languageName,
+                logoUrl: spfxContext.pageContext.web.logoUrl,
+                serverRelativeUrl: spfxContext.pageContext.web.serverRelativeUrl,
+                templateName: spfxContext.pageContext.web.templateName,
+                title: spfxContext.pageContext.web.title,
+                description: spfxContext.pageContext.web.description
+            } : null
+        };
+    } else {
+        context = {
+            theme: theme
+        };
     }
+
+    if (dataObject) {
+        evaluationContext = { $root: { ...dataObject?.$root, "@context": context } };
+    } else {
+        evaluationContext = { $root: { "@context": context } };
+    }
+
+    return evaluationContext;
 };

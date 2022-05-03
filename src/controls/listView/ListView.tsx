@@ -580,7 +580,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   public render(): React.ReactElement<IListViewProps> {
     let groupProps: IGroupRenderProps = {};
 
-    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact, className, listClassName } = this.props;
+    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact, className, listClassName, onRenderRow } = this.props;
     let { filterValue, items, columns, groups } = this.state;
 
     // Check if selection mode is single selection,
@@ -625,6 +625,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             groupProps={groupProps}
             className={listClassName}
             onRenderDetailsHeader={this._onRenderDetailsHeader}
+            onRenderRow={onRenderRow}
             componentRef={ref => {
               if (ref) {
                 ref.forceUpdate();

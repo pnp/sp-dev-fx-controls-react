@@ -1,10 +1,13 @@
-import * as React from 'react';
-import { IPlaceholderProps } from './IPlaceholderComponent';
+import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
+import { Theme } from '@fluentui/react-theme-provider/lib/types';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
-import styles from './PlaceholderComponent.module.scss';
-import * as telemetry from '../../common/telemetry';
-import { IPlaceholderState } from '.';
 import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
+import * as React from 'react';
+import { IPlaceholderState } from '.';
+import * as telemetry from '../../common/telemetry';
+import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
+import { IPlaceholderProps } from './IPlaceholderComponent';
+import { getClassNames } from './PlaceholderComponent.styles';
 
 /**
  * Placeholder component
@@ -59,10 +62,10 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
     * Return/re-render, bexeting the function, if the props change
     */
     for (const property in nextProps) {
-      if (property != '_onConfigure'){
-          if (nextProps[property] != this.props[property]) {
-              return true;
-          }
+      if (property != '_onConfigure') {
+        if (nextProps[property] != this.props[property]) {
+          return true;
+        }
       }
     }
     return this.state.width !== nextState.width || this.props.hideButton !== nextProps.hideButton;
@@ -102,43 +105,52 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
       description,
       children,
       buttonLabel,
-      hideButton
+      hideButton,
+      theme
     } = this.props;
 
-    const iconTextClassNames = `${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : "" }`;
-    const iconTextEl = typeof iconText === 'string' ? <span className={iconTextClassNames}>{this.props.iconText}</span> : iconText(iconTextClassNames);
-    const descriptionEl = typeof description === 'string' ? <span className={styles.placeholderDescriptionText}>{this.props.description}</span> : description(styles.placeholderDescriptionText);
 
     return (
-      <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>
-        <div className={styles.placeholderContainer}>
-          <div className={styles.placeholderHead}>
-            <div className={styles.placeholderHeadContainer}>
-              {
-                iconName && <Icon iconName={iconName} className={styles.placeholderIcon} />
-              }
-              {iconTextEl}
-            </div>
-          </div>
-          <div className={styles.placeholderDescription}>
-            {descriptionEl}
-          </div>
-          {children}
-          <div className={styles.placeholderDescription}>
-            {
-              (buttonLabel && !hideButton) &&
-              <PrimaryButton
-                text={buttonLabel}
-                ariaLabel={buttonLabel}
-                ariaDescription={typeof description === 'string' ? description : ''}
-                onClick={this._handleBtnClick} />
-            }
-          </div>
-        </div>
-      </div>
+      <ThemeContext.Consumer>
+        {(contextTheme: Theme | undefined) => {
+
+          const themeToApply = getFluentUIThemeOrDefault((theme) ? theme : contextTheme);
+          const styles = getClassNames(themeToApply);
+
+          const iconTextClassNames = `${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : ""}`;
+          const iconTextEl = typeof iconText === 'string' ? <span className={iconTextClassNames}>{this.props.iconText}</span> : iconText(iconTextClassNames);
+          const descriptionEl = typeof description === 'string' ? <span className={styles.placeholderDescriptionText}>{this.props.description}</span> : description(styles.placeholderDescriptionText);
+
+          return (
+            <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>
+              <div className={styles.placeholderContainer}>
+                <div className={styles.placeholderHead}>
+                  <div className={styles.placeholderHeadContainer}>
+                    {
+                      iconName && <Icon iconName={iconName} className={styles.placeholderIcon} />
+                    }
+                    {iconTextEl}
+                  </div>
+                </div>
+                <div className={styles.placeholderDescription}>
+                  {descriptionEl}
+                </div>
+                {children}
+                <div className={styles.placeholderDescription}>
+                  {
+                    (buttonLabel && !hideButton) &&
+                    <PrimaryButton
+                      text={buttonLabel}
+                      ariaLabel={buttonLabel}
+                      ariaDescription={typeof description === 'string' ? description : ''}
+                      onClick={this._handleBtnClick}
+                      theme={themeToApply} />
+                  }
+                </div>
+              </div>
+            </div>);
+        }}
+      </ThemeContext.Consumer>
     );
   }
 }
-
-
-

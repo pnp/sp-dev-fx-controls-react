@@ -1,7 +1,5 @@
 // tslint:disable:max-classes-per-file
 
-import "../css/AccordionStylesOverride.css";
-
 import * as React from "react";
 
 import * as telemetry from '../../../common/telemetry';
@@ -82,7 +80,7 @@ export class Provider extends React.PureComponent<
         return this.state.isItemExpanded(key);
     }
 
- private   getPanelAttributes = (
+ private  getPanelAttributes = (
         key: UUID,
         dangerouslySetExpanded?: boolean,
     ): InjectedPanelAttributes => {

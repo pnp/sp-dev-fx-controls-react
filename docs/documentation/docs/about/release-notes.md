@@ -1,5 +1,33 @@
 # Releases
 
+## 3.8.0
+
+### Enhancements
+
+- `PeoplePicker`: Allow the use of multiple groupId-s [#1163](https://github.com/pnp/sp-dev-fx-controls-react/issues/1163)
+- `PeoplePicker`: search users in nested security groups [#1173](https://github.com/pnp/sp-dev-fx-controls-react/issues/1173)
+- `ModenrTaxonomyPicker`: Add more complete example of TaxonomyTree usage [#1190](https://github.com/pnp/sp-dev-fx-controls-react/pull/1190)
+- `AdaptiveCardHost`: Add SPFx Context property [#1145](https://github.com/pnp/sp-dev-fx-controls-react/issues/1145)
+- `AdaptiveCardHost`: Remove the `isUniqueControlInPage` from the control by rebuilding the way to apply AC CSS class names [#1154](https://github.com/pnp/sp-dev-fx-controls-react/issues/1154)
+- `ListView`: Different background color to even and odd rows in ListView [#1153](https://github.com/pnp/sp-dev-fx-controls-react/issues/1153)
+- `AccessibleAccordion`: Support of section variations [#1195](https://github.com/pnp/sp-dev-fx-controls-react/issues/1195)
+- `TreeView`: Support of section variations [#1196](https://github.com/pnp/sp-dev-fx-controls-react/issues/1196)
+
+### Fixes
+
+- `LocationPicker`: Resolve issue when in root site [#1162](https://github.com/pnp/sp-dev-fx-controls-react/pull/1162)
+- `LocationPicker`: Trigger onChange on picker clear action [#1165](https://github.com/pnp/sp-dev-fx-controls-react/pull/1165)
+- `TreeView`: TreeView Control is broken after updating to v3.7.0 [#1170](https://github.com/pnp/sp-dev-fx-controls-react/issues/1170)
+- `TreeView`: collapses on selection of a child node [#1182](https://github.com/pnp/sp-dev-fx-controls-react/issues/1182)
+- `TreeView`: expanded nodes state is getting lost after refresh [#1062](https://github.com/pnp/sp-dev-fx-controls-react/issues/1062)
+- NPM Audit Critical Issues [#1187](https://github.com/pnp/sp-dev-fx-controls-react/issues/1187)
+- Bump momentjs from 2.29.1 to 2.29.2 [#1185](https://github.com/pnp/sp-dev-fx-controls-react/pull/1185)
+- `TaxonomyPicker`: Sorting the terms in locale language [#1160](https://github.com/pnp/sp-dev-fx-controls-react/pull/1160)
+- `ComboboxListItemPicker`: options are not reloaded after the filter is changed [#1180](https://github.com/pnp/sp-dev-fx-controls-react/issues/1180)
+- `FieldRendererHelper`: Add missing PnPjs import to SPHelper [#1140](https://github.com/pnp/sp-dev-fx-controls-react/issues/1140)
+- `RichText`: Update font style and font size on property pane [#1151](https://github.com/pnp/sp-dev-fx-controls-react/issues/1151)
+- `Placeholder`: Support section variations for themes [#1193](https://github.com/pnp/sp-dev-fx-controls-react/issues/1193)
+
 ## 3.7.2
 
 ## 3.7.0
