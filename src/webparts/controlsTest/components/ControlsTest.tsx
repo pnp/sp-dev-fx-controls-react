@@ -183,6 +183,8 @@ import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/Mod
 import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
 import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
 import { Label } from "office-ui-fabric-react/lib/Label";
+import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
+import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
 
 
 
@@ -2265,6 +2267,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </VariantThemeProvider>
         </div>
+
+        <div>
+          <h3>Enhanced Theme Provider</h3>
+          <EnhancedThemeProvider applyTo="element" context={this.props.context} theme={this.props.themeVariant}>
+            <ControlsTestEnhancedThemeProviderFunctionComponent />
+            <ControlsTestEnhancedThemeProvider />
+          </EnhancedThemeProvider>
+        </div>
+
       </div>
     );
   }
