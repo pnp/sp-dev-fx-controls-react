@@ -94,4 +94,4 @@ export class ControlsTestEnhancedThemeProvider extends React.Component {
       </ThemeContext.Consumer>
     );
   }
-};
+}
