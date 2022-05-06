@@ -386,8 +386,8 @@ define([], () => {
     ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
-    ListItemCommentsNoCommentsLabel: "There is no Comments",
-    OrgAssetsLinkLabel: "Your organisation",
+    ListItemCommentsNoCommentsLabel: "There are no Comments",
+    OrgAssetsLinkLabel: "Your organization",
 
     ModernTaxonomyPickerDefaultPlaceHolder: "Type term to tag",
     ModernTaxonomyPickerTreeTitle: "Select one or more tags",
