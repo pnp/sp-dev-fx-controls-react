@@ -29,6 +29,7 @@ nav:
     - DateTimePicker: 'controls/DateTimePicker.md'
     - DragDropFiles: 'controls/DragDropFiles.md'
     - DynamicForm: 'controls/DynamicForm.md'
+    - EnhancedThemeProvider: 'controls/EnhancedThemeProvider.md'
     - FieldCollectionData: 'controls/FieldCollectionData.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'

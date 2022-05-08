@@ -72,6 +72,7 @@ The following controls are currently available:
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [DragDropFiles](./controls/DragDropFiles) (Allow drag and drop of files in selected areas)
 - [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
+- [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (Enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
 - [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
