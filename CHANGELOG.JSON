@@ -3,11 +3,15 @@
     {
       "version": "3.9.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)"
+        ],
         "enhancements": [],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Fabio Franzini](https://github.com/fabiofranzini)"
+      ]
     },
     {
       "version": "3.8.0",
