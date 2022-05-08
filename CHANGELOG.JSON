@@ -7,9 +7,12 @@
           "`EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)"
         ],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)"
+        ]
       },
       "contributions": [
+        "[Annie-Johnson](https://github.com/Annie-Johnson)",
         "[Fabio Franzini](https://github.com/fabiofranzini)"
       ]
     },
