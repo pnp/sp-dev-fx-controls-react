@@ -5,7 +5,6 @@ import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { css } from 'office-ui-fabric-react/lib/Utilities';
-import * as React from 'react';
 import { ITreeItem } from './ITreeItem';
 import { TreeItemActionsDisplayMode } from './ITreeItemActions';
 import { TreeViewSelectionMode } from './ITreeViewProps';
