@@ -8,12 +8,14 @@
         ],
         "enhancements": [],
         "fixes": [
-          "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)"
+          "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)",
+          "`Localization`: Updates to Dutch localizations [#1209](https://github.com/pnp/sp-dev-fx-controls-react/issues/1209)"
         ]
       },
       "contributions": [
         "[Annie-Johnson](https://github.com/Annie-Johnson)",
-        "[Fabio Franzini](https://github.com/fabiofranzini)"
+        "[Fabio Franzini](https://github.com/fabiofranzini)",
+        "[Milan Holemans](https://github.com/milanholemans)"
       ]
     },
     {
