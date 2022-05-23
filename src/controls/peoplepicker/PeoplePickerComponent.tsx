@@ -185,6 +185,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     if (!result) {
       this.validated(items);
+
+      this.setState({
+        errorMessage: undefined
+      });
       return;
     }
 
