@@ -152,6 +152,15 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     this.validate(items);
   }
 
+  /**
+   * On blur UI event
+   * @param ev 
+   */
+   private onBlur = (ev) => {
+    if (this.props.validateOnFocusOut)
+      this.validate(this.state.selectedPersons);
+  }
+
 
   /**
    * Returns the most recently used person
@@ -306,6 +315,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           itemLimit={personSelectionLimit || 1}
           disabled={disabled || !!internalErrorMessage}
           onChange={this.onChange}
+          onBlur={this.onBlur}
           resolveDelay={resolveDelay} />
       </div>
     );

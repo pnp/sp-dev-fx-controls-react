@@ -73,6 +73,10 @@ export interface IPeoplePickerProps {
    */
   onGetErrorMessage?: (items: IPersonaProps[]) => string | Promise<string>;
   /**
+   * Prop to validate contents on blur
+   */
+   validateOnFocusOut?: boolean;
+  /**
    * Method to check value of People Picker text
    */
   onChange?: (items: IPersonaProps[]) => void;
