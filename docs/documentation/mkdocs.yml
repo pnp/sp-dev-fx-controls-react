@@ -30,6 +30,7 @@ nav:
     - DragDropFiles: 'controls/DragDropFiles.md'
     - DynamicForm: 'controls/DynamicForm.md'
     - FieldCollectionData: 'controls/FieldCollectionData.md'
+    - FieldPicker: 'controls/FieldPicker.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - FolderExplorer: 'controls/FolderExplorer.md'
