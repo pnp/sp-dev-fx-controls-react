@@ -424,10 +424,10 @@ export default class SPTermStorePickerService {
             resolve(null);
             return;
           }
-
+            
           let data = {
             start: searchText,
-            lcid: LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo.currentUICultureName) ?? this.context.pageContext.web.language,
+            lcid: LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo?.currentUICultureName) ?? this.context.pageContext.web.language,
 
             sspList: this.cleanGuid(termStore[0].Id),
             termSetList: TermSetId,
