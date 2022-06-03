@@ -131,4 +131,14 @@ export interface IDateTimePickerProps {
    * Specifies minutes' increment step
    */
   minutesIncrementStep?: MinutesIncrement;
+
+  /**
+    * Whether the clearDate iconbutton must be available when date is selected, default to false
+    */
+  showClearDate?: boolean;
+
+  /**
+   * Icon used for clearDate iconbutton. Defaults to RemoveEvent
+   */
+  showClearDateIcon?: string;
 }

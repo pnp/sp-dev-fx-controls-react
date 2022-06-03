@@ -73,6 +73,8 @@ The `DateTimePicker` control can be configured with the following properties:
 | maxDate | Date | no | The maximum allowable date. |
 | minDate | Date | no | The minimum allowable date. |
 | minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdow` |
+| showClearDate | boolean | no | Controls whether the clearDate iconbutton must be available when date is selected, default to false
+| showClearDateIcon | string | no | Controls the icon used for clearDate iconbutton. Defaults to 'RemoveEvent'
 
 Enum `TimeDisplayControlType`
 
