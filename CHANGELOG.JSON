@@ -11,11 +11,13 @@
         ],
         "fixes": [
           "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)",
-          "`Localization`: Updates to Dutch localizations [#1209](https://github.com/pnp/sp-dev-fx-controls-react/issues/1209)"
+          "`Localization`: Updates to Dutch localizations [#1209](https://github.com/pnp/sp-dev-fx-controls-react/issues/1209)",
+          "`TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)"
         ]
       },
       "contributions": [
         "[Annie-Johnson](https://github.com/Annie-Johnson)",
+        "[Dennis Kuhn](https://github.com/DennisKuhn)",
         "[Fabio Franzini](https://github.com/fabiofranzini)",
         "[Milan Holemans](https://github.com/milanholemans)",
         "[Rico van de Ven](https://github.com/RicoNL)"
