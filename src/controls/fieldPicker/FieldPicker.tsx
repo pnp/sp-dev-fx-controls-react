@@ -1,11 +1,11 @@
-import { cloneDeep } from "lodash";
-import { Dropdown, IDropdownOption, IDropdownProps, Spinner, SpinnerSize } from "office-ui-fabric-react";
-import React from "react";
-import { ISPField } from "../../common/SPEntities";
+import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
+import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import * as telemetry from '../../common/telemetry';
-import { ISPService } from "../../services/ISPService";
-import { SPServiceFactory } from "../../services/SPServiceFactory";
-import { IFieldPickerProps, IFieldPickerState } from "./IFieldPicker";
+import { ISPService } from '../../services/ISPService';
+import { SPServiceFactory } from '../../services/SPServiceFactory';
+import { IFieldPickerProps, IFieldPickerState } from './IFieldPicker';
 
 const EMPTY_FIELD_KEY = 'NO_FIELD_SELECTED';
 
@@ -179,7 +179,7 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
 
     return (
       <>
-        { loading && <Spinner size={SpinnerSize.xSmall} /> }
+        {loading && <Spinner size={SpinnerSize.xSmall} />}
         <Dropdown {...dropdownProps} />
       </>
     );
