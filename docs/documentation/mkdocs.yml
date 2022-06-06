@@ -31,6 +31,7 @@ nav:
     - DynamicForm: 'controls/DynamicForm.md'
     - EnhancedThemeProvider: 'controls/EnhancedThemeProvider.md'
     - FieldCollectionData: 'controls/FieldCollectionData.md'
+    - FieldPicker: 'controls/FieldPicker.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
     - FolderExplorer: 'controls/FolderExplorer.md'

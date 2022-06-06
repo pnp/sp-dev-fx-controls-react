@@ -1,4 +1,4 @@
-import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
+import { ISPService, ILibsOptions, LibsOrderBy, IFieldsOptions, FieldsOrderBy } from "./ISPService";
 import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
@@ -12,6 +12,50 @@ export default class SPService implements ISPService {
 
   constructor(private _context: BaseComponentContext, webAbsoluteUrl?: string) {
     this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
+  }
+
+  public async getFields(options: IFieldsOptions): Promise<ISPField[]> {
+    try {
+      let queryUrlString: string = `${this._webAbsoluteUrl}/_api/web`;
+      if (options.listId) {
+        queryUrlString += `/lists('${options.listId}')`;
+      }
+      queryUrlString += `/fields?`;
+
+      const queryUrl = new URL(queryUrlString);
+
+      if (options.orderBy) {
+        queryUrl.searchParams.set('$orderby', options.orderBy.toString());
+      }
+      if (options.filter) {
+        queryUrl.searchParams.set('$filter', options.filter);
+      }
+      else {
+        if (options.group) {
+          queryUrl.searchParams.set('$filter', `Group eq '${options.group}'`);
+        }
+        if (!options.includeHidden) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'Hidden eq false');
+        }
+        if (!options.includeReadOnly) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'ReadOnlyField eq false');
+        }
+      }
+
+      const data = await this._context.spHttpClient.get(queryUrl.toString(), SPHttpClient.configurations.v1);
+      if (!data.ok) {
+        return null;
+      }
+
+      const result: { value: ISPField[] } = await data.json();
+      return result.value;
+    } catch (error) {
+      throw Error(error);
+    }
   }
 
   public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
