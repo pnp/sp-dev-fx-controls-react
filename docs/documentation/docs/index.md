@@ -74,6 +74,7 @@ The following controls are currently available:
 - [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
 - [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (Enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
 - [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
+- [FieldPicker](./controls/FieldPicker) (control to pick one or multiple fields from a list or a site)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
 - [FolderExplorer](./controls/FolderExplorer) (Control that allows to browse the folders and sub-folders from a root folder)
