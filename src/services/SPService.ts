@@ -430,16 +430,16 @@ export default class SPService implements ISPService {
     return;
   }
 
-  public async getLookupValue(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          return [{ key: result[fieldName].ID, name: result[fieldName].Title }];
+          return [{ key: result[fieldName].ID, name: result[fieldName][lookupFieldName || 'Title'] }];
         }
       }
 
@@ -450,10 +450,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getLookupValues(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -461,7 +461,7 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           let lookups = [];
           result[fieldName].forEach(element => {
-            lookups.push({ key: element.ID, name: element.Title });
+            lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
           });
           return lookups;
         }

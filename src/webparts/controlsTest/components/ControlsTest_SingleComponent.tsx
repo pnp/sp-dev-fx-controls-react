@@ -464,87 +464,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }];
 
     const onContextualMenuClick = (id: string) => {
-      this.setState({termPanelIsOpen: true, actionTermId: id});
+      this.setState({ termPanelIsOpen: true, actionTermId: id });
     };
 
     return (
       <div>
-      <ModernTaxonomyPicker
-        allowMultipleSelections={true}
-        termSetId={"36d21c3f-b83b-4acc-a223-4df6fa8e946d"}
-        panelTitle="Panel title"
-        label={"Field title"}
-        context={this.props.context}
-        required={false}
-        // initialValues={[{labels: [{name: "Subprocess A1", isDefault: true, languageTag: "en-US"}], id: "29eced8f-cf08-454b-bd9e-6443bc0a0f5e", childrenCount: 0, createdDateTime: "", lastModifiedDateTime: "", descriptions: [], customSortOrder: [], properties: [], localProperties: [], isDeprecated: false, isAvailableForTagging: [], topicRequested: false}]}
-        // onChange={(values) => alert(values.map((value) => `${value?.id} - ${value?.labels[0].name}`).join("\n"))}
-        disabled={false}
-        customPanelWidth={700}
-        isLightDismiss={false}
-        isBlocking={false}
-        onRenderActionButton={(termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => {
-          const menuIcon: IIconProps = { iconName: 'MoreVertical', "aria-label": "More actions", style: { fontSize: "medium" } };
-          if (termInfo) {
-            const menuProps: IContextualMenuProps = {
-              items: [
-                {
-                  key: 'addTerm',
-                  text: 'Add Term',
-                  iconProps: { iconName: 'Tag' },
-                  onClick: () => onContextualMenuClick(termInfo.id)
-                },
-                {
-                  key: 'deleteTerm',
-                  text: 'Delete term',
-                  iconProps: { iconName: 'Untag' },
-                  onClick: () => onContextualMenuClick(termInfo.id)
-                },
-              ],
-            };
-
-            return (
-              <IconButton
-                menuProps={menuProps}
-                menuIconProps={menuIcon}
-                style={this.state.clickedActionTerm && this.state.clickedActionTerm.id === termInfo.id ? {opacity: 1} : null}
-                onMenuClick={(ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, button?: IButtonProps) => {
-                  this.setState({clickedActionTerm: termInfo});
-                }}
-                onAfterMenuDismiss={() => this.setState({clickedActionTerm: null})}
-              />
-            );
-          }
-          else {
-            const menuProps: IContextualMenuProps = {
-              items: [
-                {
-                  key: 'addTerm',
-                  text: 'Add term',
-                  iconProps: { iconName: 'Tag' },
-                  onClick: () => onContextualMenuClick(termSetInfo.id)
-                },
-              ],
-            };
-            return (
-              <IconButton
-                menuProps={menuProps}
-                menuIconProps={menuIcon}
-                style={{opacity: 1}}
-              />
-            );
-          }
-        }}
-      />
-      <Panel
-       isOpen={this.state.termPanelIsOpen}
-       onDismiss={() => this.setState({termPanelIsOpen: false, actionTermId: null})}
-       hasCloseButton={true}
-       isLightDismiss={false}
-       isBlocking={false}
-
-      >
-        <span>{this.state.actionTermId && this.state.actionTermId}</span>
-      </Panel>
+        <DynamicForm context={this.props.context} listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
       </div>
     );
   }

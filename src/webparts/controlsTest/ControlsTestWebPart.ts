@@ -15,7 +15,7 @@ import {
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import ControlsTest from "./components/ControlsTest";
+import ControlsTest from "./components/ControlsTest_SingleComponent";
 import { IControlsTestProps } from "./components/IControlsTestProps";
 import { IControlsTestWebPartProps } from "./IControlsTestWebPartProps";
 
