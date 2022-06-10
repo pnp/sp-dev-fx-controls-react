@@ -6,9 +6,16 @@ import { urlCombine } from "../common/utilities";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 
+interface ICachedListItems {
+    items: any[];
+    expiration: number;
+}
+
 export default class SPService implements ISPService {
 
   private _webAbsoluteUrl: string;
+  private _cachedListItems: Map<string, ICachedListItems> = new Map<string, ICachedListItems>();
+
 
   constructor(private _context: BaseComponentContext, webAbsoluteUrl?: string) {
     this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
@@ -146,13 +153,24 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filterString?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
+  public async getListItems(
+      filterText: string,
+      listId: string,
+      internalColumnName: string,
+      field: ISPField | undefined,
+      keyInternalColumnName?: string,
+      webUrl?: string,
+      filterString?: string,
+      substringSearch: boolean = false,
+      orderBy?: string,
+      cacheInterval: number = 1): Promise<any[]> {
     let returnItems: any[];
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
+    let processItems: ((items: any[]) => any[]) | undefined;
 
-    if (field && field.TypeAsString === 'Calculated') { // for calculated fields we need to use CAML query
+    if (field && field.TypeAsString === 'Calculated' && this._isTextFieldType(field.ResultType)) { // for calculated fields we need to use CAML query
       let orderByStr = '';
 
       if (orderBy) {
@@ -169,11 +187,32 @@ export default class SPService implements ISPService {
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
     }
-    else {
+    else if (this._isTextFieldType(field.TypeAsString)) {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
+    }
+    else { // we need to get FieldValuesAsText and cache them
+      const mapKey = `${webAbsoluteUrl}##${listId}##${internalColumnName}##${keyInternalColumnName || 'Id'}`;
+      const cachedItems = this._cachedListItems.get(mapKey);
+
+      if (cachedItems && cachedItems.expiration < Date.now()) {
+        return this._filterListItemsFieldValuesAsText(cachedItems.items, internalColumnName, filterText, substringSearch);
+      }
+
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems?$select=${keyInternalColumnName || 'Id'},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
+      isPost = true;
+
+      processItems = (items: any[]) => {
+
+        this._cachedListItems.set(mapKey, {
+          items,
+          expiration: Date.now() + cacheInterval * 60 * 1000
+        });
+
+        return this._filterListItemsFieldValuesAsText(items, internalColumnName, filterText, substringSearch);
+      };
     }
 
     try {
@@ -181,7 +220,7 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const results = await data.json();
         if (results && results.value && results.value.length > 0) {
-          return results.value;
+          return processItems ? processItems(results.value) : results.value;
         }
       }
 
@@ -190,8 +229,6 @@ export default class SPService implements ISPService {
       return Promise.reject(error);
     }
   }
-
-
 
   /**
 * Gets list items for list item picker
@@ -599,5 +636,31 @@ export default class SPService implements ISPService {
     const result = await response.json() as IUploadImageResult;
 
     return result;
+  }
+
+  private _isTextFieldType(fieldType?: string): boolean {
+    if (!fieldType) {
+      return true;
+    }
+    const lowercasedFieldType = fieldType.toLowerCase();
+    return lowercasedFieldType === 'text' || lowercasedFieldType === 'note';
+  }
+
+  private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] {
+    const lowercasedFilterText = filterText.toLowerCase();
+
+    return items.filter(i => {
+      let fieldValue = i.FieldValuesAsText[internalColumnName];
+      if (!fieldValue) {
+        return false;
+      }
+      fieldValue = fieldValue.toLowerCase();
+
+      if (!filterText) {
+        return true;
+      }
+
+      return substringSearch ? fieldValue.indexOf(lowercasedFilterText) > -1 : fieldValue.startsWith(lowercasedFilterText);
+    });
   }
 }
