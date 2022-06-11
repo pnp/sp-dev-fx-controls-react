@@ -888,7 +888,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          {/* <DynamicForm context={this.props.context} listId={"3071c058-549f-461d-9d73-8b9a52049a80"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm> */}
+          <DynamicForm context={this.props.context} listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
@@ -1466,10 +1466,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">List Item picker list data tester:
 
-                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
-                  columnInternalName="Title"
+                <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
+                  columnInternalName="DateAndTime"
                   keyColumnInternalName="Id"
-                  filter={"Title eq 'SPFx'"}
+                  // filter={"Title eq 'SPFx'"}
                   orderBy={'Title desc'}
                   itemLimit={5}
                   context={this.props.context}
