@@ -164,7 +164,6 @@ export default class SPService implements ISPService {
       substringSearch: boolean = false,
       orderBy?: string,
       cacheInterval: number = 1): Promise<any[]> {
-    let returnItems: any[];
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
@@ -197,8 +196,9 @@ export default class SPService implements ISPService {
       const mapKey = `${webAbsoluteUrl}##${listId}##${internalColumnName}##${keyInternalColumnName || 'Id'}`;
       const cachedItems = this._cachedListItems.get(mapKey);
 
-      if (cachedItems && cachedItems.expiration < Date.now()) {
-        return this._filterListItemsFieldValuesAsText(cachedItems.items, internalColumnName, filterText, substringSearch);
+      if (cachedItems && cachedItems.expiration > Date.now()) {
+        const filteredItems = this._filterListItemsFieldValuesAsText(cachedItems.items, internalColumnName, filterText, substringSearch);
+        return filteredItems;
       }
 
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
