@@ -1466,10 +1466,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">List Item picker list data tester:
 
-                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
-                  columnInternalName="Title"
+                <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
+                  columnInternalName="DateAndTime"
                   keyColumnInternalName="Id"
-                  filter={"Title eq 'SPFx'"}
+                  // filter={"Title eq 'SPFx'"}
                   orderBy={'Title desc'}
                   itemLimit={5}
                   context={this.props.context}

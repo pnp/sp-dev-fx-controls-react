@@ -2,7 +2,7 @@ import { ISPService, ILibsOptions, LibsOrderBy, IFieldsOptions, FieldsOrderBy } 
 import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
-import { urlCombine } from "../common/utilities";
+import { SPHelper, urlCombine } from "../common/utilities";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 
@@ -170,7 +170,7 @@ export default class SPService implements ISPService {
     let isPost = false;
     let processItems: ((items: any[]) => any[]) | undefined;
 
-    if (field && field.TypeAsString === 'Calculated' && this._isTextFieldType(field.ResultType)) { // for calculated fields we need to use CAML query
+    if (field && field.TypeAsString === 'Calculated' && SPHelper.isTextFieldType(field.ResultType)) { // for calculated fields we need to use CAML query
       let orderByStr = '';
 
       if (orderBy) {
@@ -187,7 +187,7 @@ export default class SPService implements ISPService {
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
     }
-    else if (this._isTextFieldType(field.TypeAsString)) {
+    else if (SPHelper.isTextFieldType(field.TypeAsString)) {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
@@ -201,8 +201,8 @@ export default class SPService implements ISPService {
         return this._filterListItemsFieldValuesAsText(cachedItems.items, internalColumnName, filterText, substringSearch);
       }
 
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems?$select=${keyInternalColumnName || 'Id'},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
-      isPost = true;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
+      isPost = false;
 
       processItems = (items: any[]) => {
 
@@ -636,14 +636,6 @@ export default class SPService implements ISPService {
     const result = await response.json() as IUploadImageResult;
 
     return result;
-  }
-
-  private _isTextFieldType(fieldType?: string): boolean {
-    if (!fieldType) {
-      return true;
-    }
-    const lowercasedFieldType = fieldType.toLowerCase();
-    return lowercasedFieldType === 'text' || lowercasedFieldType === 'note';
   }
 
   private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] {

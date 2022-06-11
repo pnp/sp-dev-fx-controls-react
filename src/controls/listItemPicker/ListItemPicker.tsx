@@ -8,6 +8,7 @@ import { IListItemPickerProps, IListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
 import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
+import { SPHelper } from '../../common/utilities/SPHelper';
 
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
@@ -168,7 +169,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {
-          arrayItems.push({ key: item[keyColumn], name: item[columnInternalName] });
+          arrayItems.push({ key: item[keyColumn], name: SPHelper.isTextFieldType(field.TypeAsString === 'Calculated' ? field.ResultType : field.TypeAsString) ? item[columnInternalName] : item.FieldValuesAsText[columnInternalName] });
         }
       }
       return arrayItems;
