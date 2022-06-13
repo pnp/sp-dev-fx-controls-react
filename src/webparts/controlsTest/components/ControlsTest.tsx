@@ -262,6 +262,15 @@ const sampleItems = [
   }
 ];
 
+const toolbarFilters = [{
+  id: "filter1",
+  title: "filter1"
+},
+{
+  id: "filter2",
+  title: "filter2"
+}];
+
 /**
  * Component that can be used to test out the React controls from this project
  */
@@ -484,8 +493,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
-      errorMessage: "This field is required"
-
+      errorMessage: "This field is required",
+      selectedFilters: ["filter1"]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -700,6 +709,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         console.log(fileResultContent);
       }
     }
+  }
+
+  private onToolbarSelectedFiltersChange = (filterIds: string[]) => {
+    this.setState({
+      selectedFilters: filterIds
+    });
+  }
+
+  private toggleToolbarFilter = (filterId: string) => {
+    this.setState(({selectedFilters}) => {
+    if (selectedFilters.includes(filterId)) {
+      return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
+    } else {
+      return { selectedFilters: [...selectedFilters, filterId] };
+    }});
   }
 
   private rootFolder: IFolder = {
@@ -1885,6 +1909,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             size: WidgetSize.Single,
             link: linkExample,
           }]} />
+
+        <h3>Uncontrolled toolbar</h3>
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
@@ -1898,7 +1924,33 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               onClick: () => { console.log('New action click'); }
             }
           }
-        }} />
+        }}
+        filters={toolbarFilters}
+        onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
+        />
+
+        <div>
+        <h3>Controlled toolbar</h3>
+          <Toolbar actionGroups={{
+            'group1': {
+              'action1': {
+                title: 'Edit',
+                iconName: 'Edit',
+                onClick: () => { console.log('Edit action click'); }
+              },
+              'action2': {
+                title: 'New',
+                iconName: 'Add',
+                onClick: () => { console.log('New action click'); }
+              }
+            }}}
+            filters={toolbarFilters}
+            selectedFilterIds={this.state.selectedFilters}
+            onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
+        </div>
+        <div>Selected filter IDs: {this.state.selectedFilters.join(", ")}</div>
+        <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
+        <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
 
         <div>
           <h3>Animated Dialogs</h3>
