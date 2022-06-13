@@ -114,6 +114,10 @@ export interface IPeoplePickerProps {
    */
   ensureUser?: boolean;
   /**
+   * When true, allow email addresses that have not been validated to be entered, effectively allowing any use
+   */
+  allowUnvalidated?: boolean;
+  /**
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
@@ -149,4 +153,5 @@ export interface IPeoplePickerUserItem {
   secondaryText: string; // role
   tertiaryText: string; // status
   optionalText: string; // anything
+  userUnvalidated?: boolean;
 }
