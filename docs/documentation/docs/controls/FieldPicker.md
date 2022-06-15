@@ -61,16 +61,16 @@ disabled | boolean | no | Whether or not the control is disabled. |
 includeHidden | boolean | no | Whether or not to include hidden fields. Default is true. |
 includeReadOnly | boolean | no | Whether or not to include read-only fields. Default is true. |
 group | string | no | Only show fields of a certain group. |
-filter | string | no | Filter fields from OData query (takes the upperhand of Hidden, ReadOnly and Group Filters). |
+filter | string | no | Filter fields from OData query (takes the upperhand of `hidden`, `readOnly` and `group` Filters). |
 orderBy | FieldsOrderBy | no | How to order the fields. |
-selectedFields | string \| string[] | no | Internal names of the selected item(s). If you provide this, you must maintain selection state by observing onSelectionChanged events and passing a new value in when changed.
-multiSelect | boolean | no | Indicates if multi-choice selections is allowed. Default to false. |
+selectedFields | string \| string[] | no | Internal names of the selected item(s). If you provide this, you must maintain selection state by observing `onSelectionChanged` events and passing a new value in when changed.
+multiSelect | boolean | no | Indicates if multi-choice selections is allowed. Default is false. |
 label | string | no | The label to display. |
 placeholder | string | no | Input placeholder text. Displayed until option is selected. |
 onSelectionChanged | (newValue: ISPField \| ISPField[]): void | no | Callback issued when the selected option changes. |
 filterItems | (fields: ISPField[]): ISPField[] | no | This function is invoked after the filtering has been done. This allows you to add additional custom filtering.
 webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
-showBlankOption | boolean | no | Whether or not to show a blank option. Default false. Works only when multiSelect is false. |
+showBlankOption | boolean | no | Whether or not to show a blank option. Default is false. Works only when `multiSelect` is false. |
 
 Enum `FieldsOrderBy`
 

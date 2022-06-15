@@ -76,7 +76,7 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
   /**
    * Set the currently selected field(s);
    */
-  private setSelectedFields() {
+  private setSelectedFields(): void {
     this._selectedFields = cloneDeep(this.props.selectedFields);
 
     this.setState({

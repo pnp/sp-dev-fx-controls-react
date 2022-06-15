@@ -25,6 +25,7 @@ nav:
       - "Radar Chart": 'controls/charts/RadarChart.md'
       - "Scatter Chart": 'controls/charts/ScatterChart.md'
     - ComboBoxListItemPicker: 'controls/ComboBoxListItemPicker.md'
+    - ContentTypePicker: 'controls/ContentTypePicker.md'
     - Dashboard: 'controls/Dashboard.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
     - DragDropFiles: 'controls/DragDropFiles.md'
