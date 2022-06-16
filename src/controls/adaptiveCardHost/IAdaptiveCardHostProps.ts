@@ -1,6 +1,8 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Action, CardElement, CardObjectRegistry, HostCapabilities } from 'adaptivecards';
 import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { AdaptiveCardHostThemeType } from './models/AdaptiveCardHostThemeType';
+import { IAdaptiveCardHostActionResult } from './models/IAdaptiveCardHostActionResult';
 
 export interface IAdaptiveCardHostProps {
     /**
@@ -83,19 +85,4 @@ export interface IAdaptiveCardHostProps {
     * @deprecated (The property should not be used) Set to true if you want to use only one instance of this control per page, false for multiple controls. This affects how CSS variables are set.
     */
     isUniqueControlInPage?: boolean;
-}
-
-export enum AdaptiveCardHostThemeType {
-    SharePoint = 0,
-    Teams = 1,
-    TeamsDark = 2,
-    TeamsHighContrast = 3
-}
-
-export interface IAdaptiveCardHostActionResult {
-    type: string;
-    title?: string;
-    url?: string;
-    data?: object;
-    verb?: string;
 }

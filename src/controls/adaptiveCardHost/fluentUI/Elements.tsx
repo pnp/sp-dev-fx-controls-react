@@ -1,5 +1,6 @@
 import { IStyle, ThemeProvider } from "@fluentui/react-theme-provider";
-import { Action, ActionProperty, BoolProperty, Choice, EnumProperty, Input, InputTextStyle, NumProperty, property, SerializableObject, SerializableObjectCollectionProperty, StringProperty, Strings, TimeProperty, ValidationEvent, ValidationResults, ValueSetProperty, Versions } from "adaptivecards";
+import { Action, ActionProperty, BoolProperty, CardElement, CardObjectRegistry, Choice, EnumProperty, Input, InputTextStyle, NumProperty, property, SerializableObject, SerializableObjectCollectionProperty, StringProperty, Strings, TimeProperty, ValidationEvent, ValidationResults, ValueSetProperty, Versions } from "adaptivecards";
+import { initializeIcons } from "office-ui-fabric-react";
 import { Button, DefaultButton, IconButton } from "office-ui-fabric-react/lib/Button";
 import { Checkbox, ICheckbox } from "office-ui-fabric-react/lib/Checkbox";
 import { ChoiceGroup, IChoiceGroup, IChoiceGroupOption } from "office-ui-fabric-react/lib/ChoiceGroup";
@@ -12,12 +13,19 @@ import { ITheme } from "office-ui-fabric-react/lib/Styling";
 import { ITextField, TextField } from "office-ui-fabric-react/lib/TextField";
 import { IToggle, Toggle } from "office-ui-fabric-react/lib/Toggle";
 import * as React from "react";
-import { getFluentUIThemeFromHostCapability, hostCapabilitiesFluentUIThemeKey } from "./FluentUI";
-import { internalRender } from "./Shared";
+import * as ReactDOM from "react-dom";
+import { getFluentUIThemeFromHostCapability, hostCapabilitiesFluentUIThemeKey } from "./HostCapability";
 
-const inlineButtonRootStyle: IStyle = {
-    marginLeft: 8,
-};
+export function registerFluentUIElements(registry: CardObjectRegistry<CardElement>) {
+    initializeIcons();
+
+    registry.register("Input.Text", FluentUITextInput);
+    registry.register("Input.Number", FluentUINumberInput);
+    registry.register("Input.Time", FluentUITimeInput);
+    registry.register("Input.Date", FluentUIDateInput);
+    registry.register("Input.Toggle", FluentUIToggleInput);
+    registry.register("Input.ChoiceSet", FluentUIChoiceSetInput);
+}
 
 export class FluentUIChoiceSetInput extends Input {
     public static readonly valueProperty = new StringProperty(Versions.v1_0, "value");
@@ -848,3 +856,13 @@ export class FluentUIToggleInput extends Input {
         }
     }
 }
+
+const inlineButtonRootStyle: IStyle = {
+    marginLeft: 8,
+};
+
+const internalRender = (renderReact: () => JSX.Element): HTMLElement => {
+    const div = document.createElement("div");
+    ReactDOM.render(renderReact(), div);
+    return div;
+};
