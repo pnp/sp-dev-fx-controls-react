@@ -8,7 +8,8 @@
           "`FieldPicker`: Added `FieldPicker` control [#1219](https://github.com/pnp/sp-dev-fx-controls-react/issues/1219)"
         ],
         "enhancements": [
-          "`DateTimePicker`: Added button to clear date [#1217](https://github.com/pnp/sp-dev-fx-controls-react/issues/1217)"
+          "`DateTimePicker`: Added button to clear date [#1217](https://github.com/pnp/sp-dev-fx-controls-react/issues/1217)",
+          "`Toolbar`: Allow filters on a Toolbar to be controlled externally [#1222](https://github.com/pnp/sp-dev-fx-controls-react/issues/1222)"
         ],
         "fixes": [
           "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)",
@@ -18,6 +19,7 @@
       },
       "contributions": [
         "[Annie-Johnson](https://github.com/Annie-Johnson)",
+        "[Daniel Watford](https://github.com/danwatford)",
         "[Dennis Kuhn](https://github.com/DennisKuhn)",
         "[Fabio Franzini](https://github.com/fabiofranzini)",
         "[Milan Holemans](https://github.com/milanholemans)",
