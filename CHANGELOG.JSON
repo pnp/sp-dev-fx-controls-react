@@ -16,7 +16,8 @@
           "`Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)",
           "`Localization`: Updates to Dutch localizations [#1209](https://github.com/pnp/sp-dev-fx-controls-react/issues/1209)",
           "`Localization`: Updates to Danish localizations [#1233](https://github.com/pnp/sp-dev-fx-controls-react/pull/1233)",
-          "`TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)"
+          "`TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)",
+          "`FieldCollectionData`: Updated docs to fix duplicated property [#1236](https://github.com/pnp/sp-dev-fx-controls-react/pull/1236)"
         ]
       },
       "contributions": [
@@ -27,7 +28,8 @@
         "[Jake Stanger](https://github.com/JakeStanger)",
         "[Milan Holemans](https://github.com/milanholemans)",
         "[Morten Andersen](https://github.com/spcph)",
-        "[Rico van de Ven](https://github.com/RicoNL)"
+        "[Rico van de Ven](https://github.com/RicoNL)",
+        "[ryanexner](https://github.com/ryanexner)"
       ]
     },
     {
