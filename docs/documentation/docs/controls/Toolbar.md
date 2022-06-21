@@ -54,6 +54,13 @@ import { Toolbar } from '@pnp/spfx-controls-react/lib/Toolbar';
   find={true} />
 ```
 
+## Controlled or uncontrolled management of selected filters
+The Toolbar component can internally manage the set of selected filters (uncontrolled) or the set of selected filters can be defined using property, `selectedFilterIds `(controlled).
+
+If property `selectedFilterIds` is undefined then the set of selected filter IDs is uncontrolled and the Toolbar will initialise with an empty set of selected filters. As the user toggles the Toolbar's filters the function set on property, `onSelectedFiltersChange`, will be called with an array parameter of the currently selected filter IDs. The implementation of this function can return void or an array of filter IDs that the Toolbar should set. By returning an array of filter IDs the `onSelectedFiltersChange` implementation can alter the selected filters of an uncontrolled Toolbar in response to user attempts to set/clear filters.
+
+If the `selectedFilterIds` property is defined then the set of selected filter IDs is controlled and the Toolbar shall display selected filters according the contents of the array property. The `onSelectedFiltersChange` function will still be called, but the returned value will have no effect on the filters displayed as selected by the Toolbar.
+
 ## Implementation
 
 The Toolbar component can be configured with the following properties:
@@ -64,7 +71,8 @@ The Toolbar component can be configured with the following properties:
 | filters | TFilters | no | Toolbar filters. |
 | find | boolean | no | Specifies if searchbox should be displayed. |
 | filtersSingleSelect | boolean | no | Specifies if a user can select only one filter at a time. |
-| onSelectedFiltersChange | (selectedFilters: string[]) => string[] | no | Filter changed handler. |
+| onSelectedFiltersChange | (selectedFilters: string[]) => (string[] \| void) | no | Filter changed handler. Called when user toggles selection of a filter. |
+| selectedFilterIds | string[] | no | Specifies the IDs of the filters which should be displayed as selected by the Toolbar. |
 | onFindQueryChange | (findQuery: string) => string | no | Search query changed handler. |
 
 
