@@ -104,7 +104,7 @@ The `FieldCollectionData` control can be configured with the following propertie
 | panelClassName | string | no | Allows you to specify a custom CSS class name for the collection data panel. | |
 | tableClassName | string | no | Allows you to specify a custom CSS class name for the collection data table inside the panel. | |
 | itemsPerPage | number | no | Allows you to specify the amount of items displayed per page. Paging control is added automatically. | |
-| itemsPerPage | (searchFilter: string, item: any) => boolean | no | Allows you to show Search Box and specify own filtering logic. | |
+| executeFiltering | (searchFilter: string, item: any) => boolean | no | Allows you to show Search Box and specify own filtering logic. | |
 
 Interface `ICustomCollectionField`
 
