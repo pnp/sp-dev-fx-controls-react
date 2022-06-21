@@ -114,7 +114,7 @@ export interface IPeoplePickerProps {
    */
   ensureUser?: boolean;
   /**
-   * When true, allow email addresses that have not been validated to be entered, effectively allowing any use
+   * When true, allow email addresses that have not been validated to be entered, effectively allowing any user
    */
   allowUnvalidated?: boolean;
   /**
