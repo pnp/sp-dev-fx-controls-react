@@ -1,6 +1,3 @@
-// import { PauseIcon, PlayIcon, SpeakerMuteIcon, VolumeDownIcon, VolumeUpIcon } from "@fluentui/react-northstar";
-import { initializeIcons } from '@uifabric/icons';
-initializeIcons();
 import * as React from "react";
 import styles from './ModernAudio.module.scss';
 import * as strings from 'ControlStrings';
@@ -59,15 +56,10 @@ export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProp
             <div style={{textAlign: "center"}}><label>{props.label}</label></div>}
             <div className={styles.audioPanel}>
                 {props.audioUrl !== "" && <audio ref={audioComp} src={props.audioUrl}></audio>}
-                {/* <PlayIcon className={styles.audioIcon} size={props.size} disabled={playing} onClick={playAudio} /> */}
                 <IconButton iconProps={{ iconName: 'Play' }} className={styles.audioIcon} title={strings.ModernAudioPlay} disabled={playing} onClick={playAudio} />
-                {/* <PauseIcon className={styles.audioIcon} size={props.size} disabled={!playing} onClick={pauseAudio} /> */}
-                <IconButton iconProps={{ iconName: 'Pause' }} className={styles.audioIcon} title={strings.ModernAudioPause} disabled={!playing} onClick={pauseAudio} />
-                {/* <VolumeUpIcon className={styles.audioIcon} size={props.size} title="Increase volume" onClick={incVolume} /> */}                
+                <IconButton iconProps={{ iconName: 'Pause' }} className={styles.audioIcon} title={strings.ModernAudioPause} disabled={!playing} onClick={pauseAudio} />    
                 <IconButton iconProps={{ iconName: 'Volume2' }} className={styles.audioIcon} title={strings.ModernAudioIncVol} onClick={incVolume} />
-                {/* <VolumeDownIcon className={styles.audioIcon} size={props.size} title="Decrease volume" disabled={muted} onClick={decVolume} /> */}
                 <IconButton iconProps={{ iconName: 'Volume0' }} className={styles.audioIcon} title={strings.ModernAudioDecVol} disabled={muted} onClick={decVolume} />
-                {/* <SpeakerMuteIcon className={styles.audioIcon} size={props.size} title="Mute" disabled={muted} onClick={muteAudio} /> */}
                 <IconButton iconProps={{ iconName: 'VolumeDisabled' }} className={styles.audioIcon} title={strings.ModernAudioMute} disabled={muted} onClick={muteAudio} />
             </div>
             {props.labelPosition === ModernAudioLabelPosition.BottomLeft &&

@@ -9,6 +9,10 @@ This control renders an Audio Control in a modern and themable way. It is contro
 
 ![Modern Audio](../assets/ModernAudioDefault.png)
 
+**Modern Audio control rendered with dark (lime) theme and label positioned BottomLeft**
+
+![Modern Audio dark](../assets/ModernAudioDarkLime.png)
+
 **Modern Audio control in action with label positioned at BottomCenter**
 
 ![Modern Audio in action](../assets/ModernAudioInAction.gif)
