@@ -19,7 +19,8 @@
           "`TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)",
           "`FieldCollectionData`: Updated docs to fix duplicated property [#1236](https://github.com/pnp/sp-dev-fx-controls-react/pull/1236)",
           "`Changelog`: Fix changelog script by setting CHANGELOG.JSON filename extension to lower case [#1242](https://github.com/pnp/sp-dev-fx-controls-react/pull/1242)",
-          "`LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)"
+          "`LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)",
+          "`PeoplePicker`: PeoplePicker validation on focus out [#1221](https://github.com/pnp/sp-dev-fx-controls-react/pull/1221)"
         ]
       },
       "contributions": [
@@ -29,6 +30,7 @@
         "[Dennis Kuhn](https://github.com/DennisKuhn)",
         "[Fabio Franzini](https://github.com/fabiofranzini)",
         "[Jake Stanger](https://github.com/JakeStanger)",
+        "[Joseph Halvey](https://github.com/HardluckHalvey)",
         "[Milan Holemans](https://github.com/milanholemans)",
         "[Morten Andersen](https://github.com/spcph)",
         "[Rico van de Ven](https://github.com/RicoNL)",
