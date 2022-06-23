@@ -38,6 +38,7 @@ if (isComponentLoaded) {
             PersonaType: 'User'
         },
         upn:  upn,
+        legacyUpn: upn,
         serviceScope: serviceScope,
     }, createElement("div",{},template));
 }
