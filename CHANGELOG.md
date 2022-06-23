@@ -1,5 +1,11 @@
 # Releases
 
+## 3.8.1
+
+### Fixes
+
+- `LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)
+
 ## 3.8.0
 
 ### Enhancements
