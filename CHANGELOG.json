@@ -18,10 +18,12 @@
           "`Localization`: Updates to Danish localizations [#1233](https://github.com/pnp/sp-dev-fx-controls-react/pull/1233)",
           "`TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)",
           "`FieldCollectionData`: Updated docs to fix duplicated property [#1236](https://github.com/pnp/sp-dev-fx-controls-react/pull/1236)",
-          "`Changelog`: Fix changelog script by setting CHANGELOG.JSON filename extension to lower case [#1242](https://github.com/pnp/sp-dev-fx-controls-react/pull/1242)"
+          "`Changelog`: Fix changelog script by setting CHANGELOG.JSON filename extension to lower case [#1242](https://github.com/pnp/sp-dev-fx-controls-react/pull/1242)",
+          "`LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)"
         ]
       },
       "contributions": [
+        "[Alexander Kleshcheov](https://github.com/SharePickle)",
         "[Annie-Johnson](https://github.com/Annie-Johnson)",
         "[Daniel Watford](https://github.com/danwatford)",
         "[Dennis Kuhn](https://github.com/DennisKuhn)",
