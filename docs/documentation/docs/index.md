@@ -90,6 +90,7 @@ The following controls are currently available:
 - [LivePersona](./controls/LivePersona) (Live Persona control)
 - [LocationPicker](./controls/LocationPicker) (Location Picker control)
 - [Map](./controls/Map) (renders a map in a web part)
+- [ModernAudio](./controls/ModernAudio) (Modern Audio control)
 - [ModernTaxonomyPicker](./controls/ModernTaxonomyPicker) (Modern Taxonomy Picker)
 - [MonacoEditor](./controls/MonacoEditor) (Monaco Editor)
 - [MyTeams](./controls/MyTeams) (My Teams)

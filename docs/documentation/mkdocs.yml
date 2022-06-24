@@ -49,6 +49,7 @@ nav:
     - LivePersona: 'controls/LivePersona.md'
     - LocationPicker: 'controls/LocationPicker.md'
     - Map: 'controls/Map.md'
+    - ModernAudio: 'controls/ModernAudio.md'
     - ModernTaxonomyPicker: 'controls/ModernTaxonomyPicker.md'
     - MonacoEditor: 'controls/MonacoEditor.md'
     - MyTeams: 'controls/MyTeams.md'
