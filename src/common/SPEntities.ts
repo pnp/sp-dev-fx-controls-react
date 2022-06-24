@@ -1,6 +1,3 @@
-
-
-
 /**
  * Represents SP  ContentType Id
  */
@@ -35,6 +32,11 @@ export interface ISPLists {
  */
 export interface ISPField {
     Id: string;
+    Title?: string;
+    InternalName?: string;
+    Hidden?: boolean;
+    ReadOnlyField?: boolean;
+    Group?: string;
     Format?: string;
     RichText?: boolean;
     SchemaXml?: string;

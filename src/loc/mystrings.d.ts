@@ -374,6 +374,13 @@ declare interface IControlStrings {
   ModernTaxonomyPickerPanelCloseButtonText: string;
   ModernTaxonomyPickerNoResultsFound: string;
   ModernTaxonomyPickerSuggestionInLabel: string;
+
+  // Modern Audio control
+  ModernAudioPlay: string;
+  ModernAudioPause: string;
+  ModernAudioIncVol: string;
+  ModernAudioDecVol: string;
+  ModernAudioMute: string;
 }
 
 declare interface IDateTimeStrings {

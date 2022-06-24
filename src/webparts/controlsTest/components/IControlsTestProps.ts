@@ -49,4 +49,5 @@ export interface IControlsTestState {
   termPanelIsOpen?: boolean;
   actionTermId?: string;
   clickedActionTerm?: ITermInfo;
+  selectedFilters?: string[];
 }
