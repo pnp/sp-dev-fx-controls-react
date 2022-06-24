@@ -6,6 +6,7 @@
 
 - `EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)
 - `FieldPicker`: Added `FieldPicker` control [#1219](https://github.com/pnp/sp-dev-fx-controls-react/issues/1219)
+- `ModernAudio`: Added `ModernAudio` control [#1224](https://github.com/pnp/sp-dev-fx-controls-react/issues/1224)
 
 ### Enhancements
 
@@ -26,7 +27,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexander Kleshcheov](https://github.com/SharePickle), [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner).
+Special thanks to our contributors (in alphabetical order): [Alexander Kleshcheov](https://github.com/SharePickle), [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner).
 
 ## 3.8.1
 
