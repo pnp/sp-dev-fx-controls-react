@@ -185,7 +185,7 @@ import { VariantThemeProvider, VariantType } from "../../../controls/variantThem
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
-
+import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 
 
 // Used to render document card
@@ -1425,6 +1425,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         //loadingMessage="Loading maps"
         //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
+
+        <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
 
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
