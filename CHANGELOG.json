@@ -38,6 +38,19 @@
       ]
     },
     {
+      "version": "3.8.1",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)"
+        ]
+      },
+      "contributors": [
+        "[Alexander Kleshcheov](https://github.com/SharePickle)"
+      ]
+    },
+    {
       "version": "3.8.0",
       "changes": {
         "new": [],

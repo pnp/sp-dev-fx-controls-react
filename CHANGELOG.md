@@ -20,6 +20,11 @@
 ### Contributors
 
 Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Milan Holemans](https://github.com/milanholemans), [Rico van de Ven](https://github.com/RicoNL).
+## 3.8.1
+
+### Fixes
+
+- `LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)
 
 ## 3.8.0
 
