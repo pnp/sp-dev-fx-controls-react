@@ -24,7 +24,8 @@ This control renders a People picker field which can be used to select one or mo
 - Import the following modules to your component:
 
 ```typescript
-import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
+import {PeoplePicker, PrincipalType} from "@pnp/spfx-controls-react/lib/controls/peoplepicker";
+
 ```
 
 - Use the `PeoplePicker` control in your code as follows:
