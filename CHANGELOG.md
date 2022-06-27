@@ -22,12 +22,12 @@
 - `TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)
 - `FieldCollectionData`: Updated docs to fix duplicated property [#1236](https://github.com/pnp/sp-dev-fx-controls-react/pull/1236)
 - `Changelog`: Fix changelog script by setting CHANGELOG.JSON filename extension to lower case [#1242](https://github.com/pnp/sp-dev-fx-controls-react/pull/1242)
-- `LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)
 - `PeoplePicker`: PeoplePicker validation on focus out [#1221](https://github.com/pnp/sp-dev-fx-controls-react/pull/1221)
+- `DynamicForm`: Cannot display lookup value when the source field is not Title [#1215](https://github.com/pnp/sp-dev-fx-controls-react/issues/1215)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alexander Kleshcheov](https://github.com/SharePickle), [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner).
+Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner).
 
 ## 3.8.1
 
