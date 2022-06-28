@@ -3,8 +3,9 @@ import React from 'react';
 import { IContentTypePickerProps, IContentTypePickerState } from './IContentTypePicker';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
-import { cloneDeep } from 'lodash';
-import { Dropdown, IDropdownOption, IDropdownProps, Spinner, SpinnerSize } from 'office-ui-fabric-react';
+import cloneDeep from 'lodash/cloneDeep';
+import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
 const EMPTY_CONTENTTYPE_KEY = 'NO_CONTENTTYPE_SELECTED';
 

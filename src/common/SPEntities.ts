@@ -7,7 +7,7 @@
 /**
  * Represents SP List ContentType
  */
-export interface ISPContentType {
+export interface ISPListContentType {
     Id: ISPContentTypeId;
     Name?: string;
     Description?: string;
@@ -19,6 +19,10 @@ export interface ISPContentType {
     DocumentTemplateUrl?: string;
     SchemaXml?: string;
 }
+
+// Alias for ISPListContentType
+export interface ISPContentType extends ISPListContentType {}
+
 /**
  * Represents SP List
  */

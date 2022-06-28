@@ -23,12 +23,7 @@ export default class SPService implements ISPService {
 
   public async getContentTypes(options?: IContentTypesOptions): Promise<ISPContentType[]> {
     try {
-      let queryUrlString: string = `${this._webAbsoluteUrl}/_api/web`;
-      if (options.listId) {
-        queryUrlString += `/lists('${options.listId}')`;
-      }
-      queryUrlString += `/ContentTypes?`;
-
+      const queryUrlString: string = options.listId ? `${this._webAbsoluteUrl}/_api/web/lists('${options.listId}')/ContentTypes?` : `${this._webAbsoluteUrl}/_api/web/ContentTypes?`;
       const queryUrl = new URL(queryUrlString);
 
       if (options.orderBy) {
