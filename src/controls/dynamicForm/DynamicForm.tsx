@@ -21,19 +21,36 @@ const stackTokens: IStackTokens = { childrenGap: 20 };
  * DynamicForm Class Control
  */
 export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicFormState> {
+
   private _spService: SPservice;
+  private webURL = this.props.webAbsoluteUrl ? this.props.webAbsoluteUrl : this.props.context.pageContext.web.absoluteUrl;
+
   constructor(props: IDynamicFormProps) {
     super(props);
     // Initialize pnp sp
-    sp.setup({
-      spfxContext: this.props.context
-    });
+
+    if (this.props.webAbsoluteUrl) {
+      sp.setup({
+        sp: {
+          headers: {
+            Accept: "application/json;odata=verbose",
+          },
+          baseUrl: this.props.webAbsoluteUrl
+        },
+      });
+    } else {
+      sp.setup({
+        spfxContext: this.props.context
+      });
+    }
+
     // Initialize state
     this.state = {
       fieldCollection: []
     };
     // Get SPService Factory
-    this._spService = new SPservice(this.props.context);
+    this._spService = this.props.webAbsoluteUrl ? new SPservice(this.props.context, this.props.webAbsoluteUrl) : new SPservice(this.props.context);
+
   }
 
   /**
@@ -58,10 +75,15 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             {fieldCollection.map((v, i) => {
               return <DynamicField {...v} disabled={v.disabled || isSaving} />;
             })}
-            <Stack className={styles.buttons} horizontal tokens={stackTokens}>
-              <PrimaryButton disabled={isSaving} text={strings.Save} onClick={() => this.onSubmitClick()} />
-              <DefaultButton disabled={isSaving} text={strings.Cancel} onClick={this.props.onCancelled} />
-            </Stack>
+            {
+              !this.props.disabled &&
+              <Stack className={styles.buttons} horizontal tokens={stackTokens}>
+                <PrimaryButton disabled={isSaving} text={strings.Save} onClick={() => this.onSubmitClick()} />
+                <DefaultButton disabled={isSaving} text={strings.Cancel} onClick={this.props.onCancelled} />
+              </Stack>
+            }
+
+
           </div>
         }
       </div>
@@ -303,7 +325,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let defaultContentType = await spList.contentTypes.select("Id", "Name").get();
         contentTypeId = defaultContentType[0]["Id"].StringValue;
       }
-      const listFeilds = await this.getFormFields(listId, contentTypeId, context.pageContext.web.absoluteUrl);
+      const listFeilds = await this.getFormFields(listId, contentTypeId, this.webURL);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFeilds['value'];
@@ -340,7 +362,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.InternalName, this.webURL);
           }
           else {
             defaultValue = [];
@@ -351,14 +373,14 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.InternalName, this.webURL);
           }
           else {
             defaultValue = [];
           }
         }
         else if (fieldType === "TaxonomyFieldTypeMulti") {
-          let response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.props.context.pageContext.web.absoluteUrl);
+          let response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
           hiddenName = response["value"];
           termSetId = field["TermSetId"];
           if (item !== null) {
@@ -414,7 +436,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
         else if (fieldType === "UserMulti") {
           if (item !== null)
-            defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, context.pageContext.web.absoluteUrl);
+            defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL);
           else {
             defaultValue = [];
           }
@@ -423,7 +445,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
         else if (fieldType === "Thumbnail") {
           if (defaultValue !== null) {
-            defaultValue = context.pageContext.web.absoluteUrl.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+            defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
           }
         }
         else if (fieldType === "User") {
@@ -517,7 +539,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const {
         context
       } = this.props;
-      const webAbsoluteUrl = !webUrl ? context.pageContext.web.absoluteUrl : webUrl;
+      const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
       let apiUrl = '';
       if (contentTypeId !== undefined && contentTypeId !== '') {
         apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
