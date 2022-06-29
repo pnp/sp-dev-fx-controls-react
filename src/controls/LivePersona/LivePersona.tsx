@@ -37,7 +37,8 @@ if (isComponentLoaded) {
         hostAppPersonaInfo: {
             PersonaType: 'User'
         },
-        upn:  upn,
+        upn: upn,
+        legacyUpn: upn,
         serviceScope: serviceScope,
     }, createElement("div",{},template));
 }

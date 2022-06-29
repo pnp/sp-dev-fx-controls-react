@@ -35,6 +35,11 @@ export interface IToolbarProps extends PropsOfElement<"div"> {
    */
   filters?: TFilters;
   /**
+   * When using the Toolbar as a controlled component, use this property to set the IDs of selected filters.
+   * Leave this property undefined to use the Toolbar as an uncontrolled component.
+   */
+  selectedFilterIds?: string[];
+  /**
    * Specifies if searchbox should be displayed
    */
   find?: boolean;
@@ -45,7 +50,7 @@ export interface IToolbarProps extends PropsOfElement<"div"> {
   /**
    * Filter changed handler
    */
-  onSelectedFiltersChange?: (selectedFilters: string[]) => string[];
+  onSelectedFiltersChange?: (selectedFilters: string[]) => (string[] | void);
   /**
    * Search query changed handler
    */
@@ -53,7 +58,7 @@ export interface IToolbarProps extends PropsOfElement<"div"> {
 }
 
 export const Toolbar = (props: IToolbarProps) => {
-  const { actionGroups, filters, filtersSingleSelect, find } = props;
+  const { actionGroups, filters, selectedFilterIds, filtersSingleSelect, find } = props;
 
   const allActions = flattenedActions(actionGroups);
 
@@ -169,6 +174,7 @@ export const Toolbar = (props: IToolbarProps) => {
                 <ToolbarFilter
                   layout={layout}
                   filters={filters}
+                  selectedFilterIds={selectedFilterIds}
                   singleSelect={!!filtersSingleSelect}
                   open={filtersOpen}
                   onOpenChange={(_e, changeProps) => {
