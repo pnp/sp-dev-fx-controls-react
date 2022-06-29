@@ -2,7 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
-  "Save": "Redden",
+  "Save": "Opslaan",
   "Cancel": "Annuleren",
   "SiteBreadcrumbLabel": "Website broodkruimelpad",
   "ListViewGroupEmptyLabel": "Leeg",

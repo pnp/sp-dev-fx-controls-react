@@ -75,7 +75,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * Get initial persons
    */
   private async getInitialPersons(props: IPeoplePickerProps) {
-    const { groupName, groupId, webAbsoluteUrl, defaultSelectedUsers, ensureUser, principalTypes } = props;
+    const { groupName, groupId, webAbsoluteUrl, defaultSelectedUsers, ensureUser, allowUnvalidated, principalTypes } = props;
     // Check if a group property was provided, and get the group ID
     if (groupName) {
       this.groupId = await this.peopleSearchService.getGroupId(groupName, webAbsoluteUrl);
@@ -101,7 +101,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           valueAndTitle = userValue.split('/');
         }
 
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated);
         if (userResult) {
           selectedPersons.push(userResult);
         }
@@ -124,7 +124,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    */
   private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> => {
     if (searchText.length > 2) {
-      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser);
+      const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser, this.props.allowUnvalidated);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;
       const filteredPersons = this.removeDuplicates(results, selectedPersons);
@@ -150,6 +150,15 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     });
 
     this.validate(items);
+  }
+
+  /**
+   * On blur UI event
+   * @param ev 
+   */
+   private onBlur = (ev) => {
+    if (this.props.validateOnFocusOut)
+      this.validate(this.state.selectedPersons);
   }
 
 
@@ -185,6 +194,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     if (!result) {
       this.validated(items);
+
+      this.setState({
+        errorMessage: undefined
+      });
       return;
     }
 
@@ -302,6 +315,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           itemLimit={personSelectionLimit || 1}
           disabled={disabled || !!internalErrorMessage}
           onChange={this.onChange}
+          onBlur={this.onBlur}
           resolveDelay={resolveDelay} />
       </div>
     );

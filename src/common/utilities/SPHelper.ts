@@ -372,6 +372,14 @@ export class SPHelper {
             });
     }
 
+    public static isTextFieldType(fieldType?: string): boolean {
+      if (!fieldType) {
+        return true;
+      }
+      const lowercasedFieldType = fieldType.toLowerCase();
+      return lowercasedFieldType === 'text' || lowercasedFieldType === 'note';
+    }
+
 
     private static _updateFieldInSessionStorage(field: ISPField, context: IContext): void {
         let loadedViewFields: { [viewId: string]: IFields } = SPHelper._getLoadedViewFieldsFromStorage();

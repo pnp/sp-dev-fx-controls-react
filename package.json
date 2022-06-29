@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "scripts": {
     "build": "gulp build",
     "clean": "gulp clean",
@@ -83,7 +83,7 @@
     "ajv": "~5.2.2",
     "amd-loader": "0.0.8",
     "chai": "^4.3.4",
-    "codecov": "3.6.5",
+    "codecov": "3.8.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "gulp": "4.0.2",

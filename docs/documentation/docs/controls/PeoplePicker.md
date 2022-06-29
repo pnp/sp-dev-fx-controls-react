@@ -78,6 +78,7 @@ The People picker control can be configured with the following properties:
 | webAbsoluteUrl | string | no | Specify the site URL on which you want to perform the user query call. If not provided, the people picker will perform a tenant wide people/group search. When provided it will search users/groups on the provided site. | |
 | principalTypes | PrincipalType[] | no | Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible. | |
 | ensureUser | boolean | no | When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search. | false |
+| allowUnvalidated | boolean | no | When true, allow email addresses that have not been validated to be entered, effectively allowing any user. | false |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
 | placeholder | string | no | Short text hint to display in empty picker |
