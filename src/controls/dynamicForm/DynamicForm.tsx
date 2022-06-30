@@ -362,7 +362,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.InternalName, this.webURL);
+            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
           }
           else {
             defaultValue = [];
@@ -373,7 +373,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           lookupListId = field["LookupList"];
           lookupField = field["LookupField"];
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.InternalName, this.webURL);
+            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
           }
           else {
             defaultValue = [];
