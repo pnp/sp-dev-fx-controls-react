@@ -6,6 +6,7 @@
         "new": [
           "`EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)",
           "`FieldPicker`: Added `FieldPicker` control [#1219](https://github.com/pnp/sp-dev-fx-controls-react/issues/1219)",
+          "`ContentTypePicler`: Added `ContentTypePicker` control [#1220](https://github.com/pnp/sp-dev-fx-controls-react/issues/1220)",
           "`ModernAudio`: Added `ModernAudio` control [#1224](https://github.com/pnp/sp-dev-fx-controls-react/issues/1224)"
         ],
         "enhancements": [

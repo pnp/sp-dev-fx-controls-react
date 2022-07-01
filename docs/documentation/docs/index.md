@@ -68,6 +68,7 @@ The following controls are currently available:
 - [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
+- [ContentTypePicker](./controls/ContentTypePicker) (Control to pick a content type)
 - [Dashboard](./controls/Dashboard) (Control to render dashboard in Microsoft Teams)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
 - [DragDropFiles](./controls/DragDropFiles) (Allow drag and drop of files in selected areas)
