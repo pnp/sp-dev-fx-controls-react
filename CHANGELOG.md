@@ -6,6 +6,7 @@
 
 - `EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)
 - `FieldPicker`: Added `FieldPicker` control [#1219](https://github.com/pnp/sp-dev-fx-controls-react/issues/1219)
+- `ContentTypePicler`: Added `ContentTypePicker` control [#1220](https://github.com/pnp/sp-dev-fx-controls-react/issues/1220)
 - `ModernAudio`: Added `ModernAudio` control [#1224](https://github.com/pnp/sp-dev-fx-controls-react/issues/1224)
 
 ### Enhancements
@@ -13,6 +14,7 @@
 - `DateTimePicker`: Added button to clear date [#1217](https://github.com/pnp/sp-dev-fx-controls-react/issues/1217)
 - `Toolbar`: Allow filters on a Toolbar to be controlled externally [#1222](https://github.com/pnp/sp-dev-fx-controls-react/issues/1222)
 - `PeoplePicker`: add new allowUnvalidated option to allow adding non-tenant users [#1232](https://github.com/pnp/sp-dev-fx-controls-react/pull/1232)
+- `DynamicForm`: Add support for `webAbsoluteUrl` [#1244](https://github.com/pnp/sp-dev-fx-controls-react/pull/1244)
 
 ### Fixes
 
@@ -27,7 +29,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner).
+Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner), [Sergio Villalta](https://github.com/6gal6ler6).
 
 ## 3.8.1
 
