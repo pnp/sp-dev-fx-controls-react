@@ -43,3 +43,4 @@ The `DynamicForm` can be configured with the following properties:
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
 | returnListItemInstanceOnSubmit | boolean | no | Specifies if `onSubmitted` event should pass PnPJS list item (`IItem`) as a second parameter. Default - `true` |
+| webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
