@@ -9,7 +9,20 @@
  */
 export interface ISPListContentType {
     Id: ISPContentTypeId;
+    Name?: string;
+    Description?: string;
+    Group?: string;
+    Hidden?: boolean;
+    ReadOnly?: boolean;
+    StringId?: string;
+    DocumentTemplate?: string;
+    DocumentTemplateUrl?: string;
+    SchemaXml?: string;
 }
+
+// Alias for ISPListContentType
+export interface ISPContentType extends ISPListContentType {}
+
 /**
  * Represents SP List
  */
@@ -17,7 +30,7 @@ export interface ISPList {
     Id: string;
     Title: string;
     BaseTemplate: string;
-    ContentTypes? :ISPListContentType[];
+    ContentTypes? :ISPContentType[];
 }
 
 /**

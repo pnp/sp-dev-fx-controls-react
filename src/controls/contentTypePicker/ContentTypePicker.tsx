@@ -1,37 +1,34 @@
+import * as telemetry from '../../common/telemetry';
 import React from 'react';
+import { IContentTypePickerProps, IContentTypePickerState } from './IContentTypePicker';
+import { ISPService } from '../../services/ISPService';
+import { SPServiceFactory } from '../../services/SPServiceFactory';
 import cloneDeep from 'lodash/cloneDeep';
 import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import * as telemetry from '../../common/telemetry';
-import { ISPService } from '../../services/ISPService';
-import { SPServiceFactory } from '../../services/SPServiceFactory';
-import { IFieldPickerProps, IFieldPickerState } from './IFieldPicker';
 
-const EMPTY_FIELD_KEY = 'NO_FIELD_SELECTED';
+const EMPTY_CONTENTTYPE_KEY = 'NO_CONTENTTYPE_SELECTED';
 
-export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPickerState> {
+export class ContentTypePicker extends React.Component<IContentTypePickerProps, IContentTypePickerState> {
 
-  private _selectedFields: string | string[] = null;
+  private _selectedContentTypes: string | string[] = null;
 
-  constructor(props: IFieldPickerProps) {
+  constructor(props: IContentTypePickerProps) {
     super(props);
 
-    telemetry.track('ReactFieldPicker');
+    telemetry.track('ReactContentTypePicker');
 
     this.state = {
-      fields: [],
+      contentTypes: [],
       loading: false,
     };
   }
 
   public componentDidMount(): void {
-    this.loadFields();
+    this.loadContentTypes();
   }
 
-  /**
-   * Loads the fields from the provided SharePoint site and updates the options state.
-   */
-  private async loadFields(): Promise<void> {
+  private async loadContentTypes(): Promise<void> {
     const {
       context,
       listId,
@@ -48,14 +45,14 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
     this.setState({ loading: true });
 
     const service: ISPService = SPServiceFactory.createService(context, true, 5000, webAbsoluteUrl);
-    let results = await service.getFields(
+    let results = await service.getContentTypes(
       {
         listId,
         filter,
         includeHidden,
         includeReadOnly,
         orderBy,
-        group
+        group,
       }
     );
 
@@ -64,33 +61,33 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
       results = filterItems(results);
     }
 
-    // Hide loading indicator and set the dropdown options.
+    // Hide the loading indicator and set the dropdown options
     this.setState({
       loading: false,
-      fields: results,
+      contentTypes: results,
     });
 
-    this.setSelectedFields();
+    this.setSelectedContentTypes();
   }
 
   /**
-   * Set the currently selected field(s);
+   * Set the currently selected content type(s).
    */
-  private setSelectedFields(): void {
-    this._selectedFields = cloneDeep(this.props.selectedFields);
+  private setSelectedContentTypes(): void {
+    this._selectedContentTypes = cloneDeep(this.props.selectedContentTypes);
 
     this.setState({
-      selectedFields: this._selectedFields,
+      selectedContentTypes: this._selectedContentTypes,
     });
   }
 
-  public componentDidUpdate(prevProps: Readonly<IFieldPickerProps>, prevState: Readonly<IFieldPickerState>): void {
+  public componentDidUpdate(prevProps: Readonly<IContentTypePickerProps>, prevState: Readonly<IContentTypePickerState>): void {
     const {
       includeHidden,
       includeReadOnly,
       orderBy,
       webAbsoluteUrl,
-      selectedFields,
+      selectedContentTypes,
       listId,
     } = this.props;
 
@@ -101,61 +98,62 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
       prevProps.webAbsoluteUrl !== webAbsoluteUrl ||
       prevProps.listId !== listId
     ) {
-      this.loadFields();
+      this.loadContentTypes();
     }
 
-    if (prevProps.selectedFields !== selectedFields) {
-      this.setSelectedFields();
+    if (prevProps.selectedContentTypes !== selectedContentTypes) {
+      this.setSelectedContentTypes();
     }
   }
 
   /**
-   * Fires when a field has been selected from the dropdown.
+   * Fires when an item has been selected from the dropdown.
+   * @param event Event that has been fired.
    * @param option The new selection.
    * @param index Index of the selection.
    */
   private onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption, index?: number): void => {
     const { multiSelect, onSelectionChanged } = this.props;
-    const { fields } = this.state;
+    const { contentTypes } = this.state;
 
     if (multiSelect) {
-      let selectedFields = this._selectedFields ? cloneDeep(this._selectedFields) as string[] : [];
+      let selectedContentTypes = this._selectedContentTypes ? cloneDeep(this._selectedContentTypes) as string[] : [];
 
       if (option.selected) {
-        selectedFields.push(option.key.toString());
+        selectedContentTypes.push(option.key.toString());
       }
       else {
-        selectedFields = selectedFields.filter(field => field !== option.key);
+        selectedContentTypes = selectedContentTypes.filter(ct => ct !== option.key);
       }
-      this._selectedFields = selectedFields;
+      this._selectedContentTypes = selectedContentTypes;
     }
     else {
-      this._selectedFields = option.key.toString();
+      this._selectedContentTypes = option.key.toString();
     }
 
     if (onSelectionChanged) {
       if (multiSelect) {
-        onSelectionChanged(cloneDeep(fields.filter(f => (this._selectedFields as string[]).some(sf => f.InternalName === sf))));
+        onSelectionChanged(cloneDeep(contentTypes.filter(ct => (this._selectedContentTypes as string[]).some(sct => ct.StringId === sct))));
       }
       else {
-        onSelectionChanged(cloneDeep(fields.find(f => f.InternalName === this._selectedFields as string)));
+        onSelectionChanged(cloneDeep(contentTypes.find(ct => ct.StringId === this._selectedContentTypes as string)));
       }
     }
   }
 
-  public render(): React.ReactElement<IFieldPickerProps> {
-    const { loading, fields, selectedFields } = this.state;
+  public render(): React.ReactElement<IContentTypePickerProps> {
+    const { loading, contentTypes, selectedContentTypes } = this.state;
     const { className, disabled, multiSelect, label, placeholder, showBlankOption } = this.props;
 
-    const options: IDropdownOption[] = fields.map(f => ({
-      key: f.InternalName,
-      text: f.Title
+    const options: IDropdownOption[] = contentTypes.map(f => ({
+      key: f.StringId,
+      text: f.Name,
     }));
 
     if (showBlankOption && !multiSelect) {
       // Provide empty option
       options.unshift({
-        key: EMPTY_FIELD_KEY,
+        key: EMPTY_CONTENTTYPE_KEY,
         text: '',
       });
     }
@@ -171,10 +169,10 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
 
     if (multiSelect) {
       dropdownProps.multiSelect = true;
-      dropdownProps.selectedKeys = selectedFields as string[];
+      dropdownProps.selectedKeys = selectedContentTypes as string[];
     }
     else {
-      dropdownProps.selectedKey = selectedFields as string;
+      dropdownProps.selectedKey = selectedContentTypes as string;
     }
 
     return (

@@ -1,4 +1,4 @@
-import { ISPField, ISPLists } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPLists } from "../common/SPEntities";
 
 export enum LibsOrderBy {
     Id = 1,
@@ -8,6 +8,11 @@ export enum LibsOrderBy {
 export enum FieldsOrderBy {
   Title = 'Title',
   InternalName = 'InternalName',
+}
+
+export enum ContentTypesOrderBy {
+  Name = 'Name',
+  Id = 'StringId',
 }
 
 /**
@@ -30,6 +35,15 @@ export interface IFieldsOptions {
   group?: string;
 }
 
+export interface IContentTypesOptions {
+  listId?: string;
+  orderBy?: ContentTypesOrderBy;
+  includeHidden?: boolean;
+  includeReadOnly?: boolean;
+  filter?: string;
+  group?: string;
+}
+
 export interface ISPService {
     /**
      * Get the lists from SharePoint
@@ -43,4 +57,10 @@ export interface ISPService {
      * @param options Options used to order and filter during the API query.
      */
     getFields(options?: IFieldsOptions): Promise<ISPField[]>;
+
+    /**
+     * Get the content types from SharePoint web or list.
+     * @param options Options used to order and filter during the API query.
+     */
+    getContentTypes(options?: IContentTypesOptions): Promise<ISPContentType[]>;
 }
