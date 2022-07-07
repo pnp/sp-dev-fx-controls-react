@@ -1,7 +1,7 @@
 import * as monacoLoader from '@monaco-editor/loader';
 import { Versions } from 'adaptivecards';
 import { BindingPreviewMode, CardDesigner, FieldDefinition, GlobalSettings, HostContainer, ToolbarChoicePicker } from 'adaptivecards-designer';
-import * as markdownit from "markdown-it";
+import * as markdownit from 'markdown-it';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -14,15 +14,15 @@ import { initializeDesignerPeers } from './fluentUI/peers/DesignerPeers';
 import { IAdaptiveCardDesignerHostProps } from './IAdaptiveCardDesignerProps';
 
 export const EmptyCard = {
-    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-    "type": "AdaptiveCard",
-    "version": "1.5"
+    '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
+    'type': 'AdaptiveCard',
+    'version': '1.5'
 };
 
 export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
     const adaptiveCardDesignerInstanceRef = useRef<CardDesigner>(null);
     const renderElementRef = useRef<HTMLDivElement>();
-    const currentBreakpointValueRef = useRef<string>("100%");
+    const currentBreakpointValueRef = useRef<string>('100%');
     const [isMonacoLoaded, setIsMonacoLoaded] = useState(false);
     const monacoRef = useRef<HTMLDivElement>(null);
 
@@ -92,10 +92,10 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
 
         if (props.addDefaultAdaptiveCardHostContainer) {
             hosts.push(...[
-                new AdaptiveCardHostContainer("ACH - Default", AdaptiveCardHostContainerType.Default),
-                new AdaptiveCardHostContainer("ACH - Teams", AdaptiveCardHostContainerType.TeamsDefault),
-                new AdaptiveCardHostContainer("ACH - Teams Dark", AdaptiveCardHostContainerType.TeamsDark),
-                new AdaptiveCardHostContainer("ACH - Teams High Contrast", AdaptiveCardHostContainerType.TeamsHighContrast)
+                new AdaptiveCardHostContainer('ACH - Default', AdaptiveCardHostContainerType.Default),
+                new AdaptiveCardHostContainer('ACH - Teams', AdaptiveCardHostContainerType.TeamsDefault),
+                new AdaptiveCardHostContainer('ACH - Teams Dark', AdaptiveCardHostContainerType.TeamsDark),
+                new AdaptiveCardHostContainer('ACH - Teams High Contrast', AdaptiveCardHostContainerType.TeamsHighContrast)
             ]);
         }
 
@@ -105,12 +105,12 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             ? props.bindingPreviewMode
             : BindingPreviewMode.GeneratedData;
 
-        addToolbarButton(cardDesigner, "New Card", "acd-icon-newCard",
+        addToolbarButton(cardDesigner, 'New Card', 'acd-icon-newCard',
             CardDesigner.ToolbarCommands.NewCard,
             true,
             CardDesigner.ToolbarCommands.NewCard,
             (sender) => {
-                let text = "Do you want to create a new Card?";
+                let text = 'Do you want to create a new Card?';
                 if (confirm(text) == true) {
                     cardDesigner.setCard((props.newCardPayload) ? props.newCardPayload : EmptyCard);
                     cardDesigner.clearUndoStack();
@@ -119,7 +119,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             });
 
         if (props.onSave) {
-            addToolbarButton(cardDesigner, "Save", "acd-icon-save",
+            addToolbarButton(cardDesigner, 'Save', 'acd-icon-save',
                 CardDesigner.ToolbarCommands.NewCard,
                 true,
                 null,
@@ -130,15 +130,15 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
         }
 
         if (props.showFluentBreakpointsPicker) {
-            addToolbarChoicePicker(cardDesigner, CardDesigner.ToolbarCommands.HostAppPicker, true, "Breakpoints:",
+            addToolbarChoicePicker(cardDesigner, CardDesigner.ToolbarCommands.HostAppPicker, true, 'Breakpoints:',
                 [
-                    { name: "Fluid (fit content)", value: "100%" },
-                    { name: "Small (>= 320px)", value: "320px" },
-                    { name: "Medium (>= 480px)", value: "480px" },
-                    { name: "Large (>= 640px)", value: "640px" },
-                    { name: "Extra large (>= 1024px)", value: "1024px" },
-                    { name: "Extra extra large (>= 1366px)", value: "1366px" },
-                    { name: "Extra extra extra large (>= 1920px)", value: "1920px" }
+                    { name: 'Fluid (fit content)', value: '100%' },
+                    { name: 'Small (>= 320px)', value: '320px' },
+                    { name: 'Medium (>= 480px)', value: '480px' },
+                    { name: 'Large (>= 640px)', value: '640px' },
+                    { name: 'Extra large (>= 1024px)', value: '1024px' },
+                    { name: 'Extra extra large (>= 1366px)', value: '1366px' },
+                    { name: 'Extra extra extra large (>= 1920px)', value: '1920px' }
                 ],
                 (sender: ToolbarChoicePicker) => {
                     currentBreakpointValueRef.current = sender.value;
@@ -175,7 +175,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             console.log(hostConfig);
         };
 
-        cardDesigner.designerSurface.context.hostContainer.cardHost.style.width = "100%";
+        cardDesigner.designerSurface.context.hostContainer.cardHost.style.width = '100%';
         cardDesigner.dataToolbox.collapse();
 
         let data = (props.data) ? props.data : { $root: {} };
@@ -197,15 +197,15 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
         {!isMonacoLoaded &&
             <Spinner
                 style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100%"
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%'
                 }}
                 size={SpinnerSize.medium}
-                label="loading..."
-                ariaLive="assertive"
-                labelPosition="bottom" />
+                label='loading...'
+                ariaLive='assertive'
+                labelPosition='bottom' />
         }
     </>);
 };

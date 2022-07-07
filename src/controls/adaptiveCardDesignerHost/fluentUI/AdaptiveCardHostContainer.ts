@@ -6,8 +6,6 @@ import { registerFluentUIActions } from "../../adaptiveCardHost/fluentUI/Actions
 import { registerFluentUIElements } from "../../adaptiveCardHost/fluentUI/Elements";
 import { AdaptiveCardHostThemeType } from "../../adaptiveCardHost/models/AdaptiveCardHostThemeType";
 import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDefaultTheme";
-//import { createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig } from "../adaptiveCardHost";
-//import { createDarkTeamsTheme, createDefaultTeamsTheme, createHighContrastTeamsTheme, getDefaultFluentUITheme, setFluentUIThemeAsHostCapability, useLocalFluentUI } from "../adaptiveCardHost/fluentUI";
 
 export enum AdaptiveCardHostContainerType {
     Default = "default",
