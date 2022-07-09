@@ -154,7 +154,7 @@ export class FilesSearchService {
       });
 
       if (!searchDataResponse || !searchDataResponse.ok) {
-        throw new Error(`Something went wrong when executing search query. Status='${searchDataResponse.statusMessage}'`);
+        throw new Error(`Something went wrong when executing search query. Status='${searchDataResponse.statusText}'`);
       }
       const searchData = await searchDataResponse.json();
       if (!searchData || !searchData.value) {
