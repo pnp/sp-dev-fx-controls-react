@@ -14,8 +14,14 @@ export class OrgAssetsService extends FileBrowserService {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
       // Retrieve Lib path from folder path
-      let libName = folderPath;
-
+      
+      if (folderPath.charAt(0) === "/") {
+        folderPath = folderPath.substring(1);
+      }
+      
+      // Remove all the rest of the folder path
+      let libName = folderPath; //.replace(`${this._orgAssetsLibraryServerRelativeSiteUrl}/`, "");
+      //libName = libName.split("/")[0];
       // Buil absolute library URL
       const libFullUrl = this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}${libName}`);
 
