@@ -367,8 +367,8 @@ export const toRelativeUrl = (absoluteUrl: string): string => {
   if (!absoluteUrl) {
     return '';
   }
-
-  return absoluteUrl.replace(/^(?:\/\/|[^/]+)*\//, '/');
+  const relativeUrl: string = new URL(absoluteUrl).pathname;
+  return relativeUrl;
 };
 
 export function sortString(a: string, b: string, isDesc: boolean): number {
