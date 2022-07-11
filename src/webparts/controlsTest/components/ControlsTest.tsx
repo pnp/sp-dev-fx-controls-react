@@ -186,6 +186,8 @@ import { Label } from "office-ui-fabric-react/lib/Label";
 import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
+import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
+
 
 // Used to render document card
 /**
@@ -260,6 +262,15 @@ const sampleItems = [
     Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   }
 ];
+
+const toolbarFilters = [{
+  id: "filter1",
+  title: "filter1"
+},
+{
+  id: "filter2",
+  title: "filter2"
+}];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -483,8 +494,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
-      errorMessage: "This field is required"
-
+      errorMessage: "This field is required",
+      selectedFilters: ["filter1"]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -699,6 +710,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         console.log(fileResultContent);
       }
     }
+  }
+
+  private onToolbarSelectedFiltersChange = (filterIds: string[]) => {
+    this.setState({
+      selectedFilters: filterIds
+    });
+  }
+
+  private toggleToolbarFilter = (filterId: string) => {
+    this.setState(({selectedFilters}) => {
+    if (selectedFilters.includes(filterId)) {
+      return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
+    } else {
+      return { selectedFilters: [...selectedFilters, filterId] };
+    }});
   }
 
   private rootFolder: IFolder = {
@@ -1401,6 +1427,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
+        <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
+
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
@@ -1884,6 +1912,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             size: WidgetSize.Single,
             link: linkExample,
           }]} />
+
+        <h3>Uncontrolled toolbar</h3>
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
@@ -1897,7 +1927,33 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               onClick: () => { console.log('New action click'); }
             }
           }
-        }} />
+        }}
+        filters={toolbarFilters}
+        onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
+        />
+
+        <div>
+        <h3>Controlled toolbar</h3>
+          <Toolbar actionGroups={{
+            'group1': {
+              'action1': {
+                title: 'Edit',
+                iconName: 'Edit',
+                onClick: () => { console.log('Edit action click'); }
+              },
+              'action2': {
+                title: 'New',
+                iconName: 'Add',
+                onClick: () => { console.log('New action click'); }
+              }
+            }}}
+            filters={toolbarFilters}
+            selectedFilterIds={this.state.selectedFilters}
+            onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
+        </div>
+        <div>Selected filter IDs: {this.state.selectedFilters.join(", ")}</div>
+        <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
+        <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
 
         <div>
           <h3>Animated Dialogs</h3>

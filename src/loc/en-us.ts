@@ -398,6 +398,12 @@ define([], () => {
     ModernTaxonomyPickerRemoveButtonText: "Remove",
     ModernTaxonomyPickerPanelCloseButtonText: "Close",
     ModernTaxonomyPickerNoResultsFound: "No results found",
-    ModernTaxonomyPickerSuggestionInLabel: "in"
+    ModernTaxonomyPickerSuggestionInLabel: "in",
+
+    ModernAudioPlay: "Play",
+    ModernAudioPause: "Pause",
+    ModernAudioIncVol: "Increase Volume",
+    ModernAudioDecVol: "Decrease Volume",
+    ModernAudioMute: "Mute"
 };
 });

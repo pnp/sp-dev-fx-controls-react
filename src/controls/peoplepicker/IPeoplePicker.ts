@@ -73,6 +73,10 @@ export interface IPeoplePickerProps {
    */
   onGetErrorMessage?: (items: IPersonaProps[]) => string | Promise<string>;
   /**
+   * Prop to validate contents on blur
+   */
+   validateOnFocusOut?: boolean;
+  /**
    * Method to check value of People Picker text
    */
   onChange?: (items: IPersonaProps[]) => void;
@@ -114,6 +118,10 @@ export interface IPeoplePickerProps {
    */
   ensureUser?: boolean;
   /**
+   * When true, allow email addresses that have not been validated to be entered, effectively allowing any user
+   */
+  allowUnvalidated?: boolean;
+  /**
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
@@ -149,4 +157,5 @@ export interface IPeoplePickerUserItem {
   secondaryText: string; // role
   tertiaryText: string; // status
   optionalText: string; // anything
+  userUnvalidated?: boolean;
 }

@@ -1,0 +1,13 @@
+.modernAudio {
+    display: table-cell;
+    padding: 8px;
+    .audioPanel {
+        border: 1px dotted;
+        border-radius: 8px;
+        padding: 8px;
+        display: inline-block;
+    }
+    .audioIcon {
+        cursor: pointer;
+    }
+}

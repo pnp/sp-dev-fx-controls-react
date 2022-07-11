@@ -378,6 +378,11 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Löschen",
   "ModernTaxonomyPickerPanelCloseButtonText": "Schließen",
   "ModernTaxonomyPickerNoResultsFound": "Keine Ergebnisse gefunden",
-  "ModernTaxonomyPickerSuggestionInLabel": "In"
+  "ModernTaxonomyPickerSuggestionInLabel": "In",
+  "ModernAudioPlay": "Abspielen",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Lauter",
+  "ModernAudioDecVol": "Leiser",
+  "ModernAudioMute": "Ton aus"
 };
 });

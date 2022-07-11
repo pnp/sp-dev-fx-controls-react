@@ -6,20 +6,36 @@
 
 - `EnhancedThemeProvider`: Added 'EnhancedThemeProvider' control [#1202](https://github.com/pnp/sp-dev-fx-controls-react/issues/1202)
 - `FieldPicker`: Added `FieldPicker` control [#1219](https://github.com/pnp/sp-dev-fx-controls-react/issues/1219)
+- `ContentTypePicler`: Added `ContentTypePicker` control [#1220](https://github.com/pnp/sp-dev-fx-controls-react/issues/1220)
+- `ModernAudio`: Added `ModernAudio` control [#1224](https://github.com/pnp/sp-dev-fx-controls-react/issues/1224)
 
 ### Enhancements
 
 - `DateTimePicker`: Added button to clear date [#1217](https://github.com/pnp/sp-dev-fx-controls-react/issues/1217)
+- `Toolbar`: Allow filters on a Toolbar to be controlled externally [#1222](https://github.com/pnp/sp-dev-fx-controls-react/issues/1222)
+- `PeoplePicker`: add new allowUnvalidated option to allow adding non-tenant users [#1232](https://github.com/pnp/sp-dev-fx-controls-react/pull/1232)
+- `DynamicForm`: Add support for `webAbsoluteUrl` [#1244](https://github.com/pnp/sp-dev-fx-controls-react/pull/1244)
 
 ### Fixes
 
 - `Localization`: Updates to English localizations [#1207](https://github.com/pnp/sp-dev-fx-controls-react/issues/1207)
 - `Localization`: Updates to Dutch localizations [#1209](https://github.com/pnp/sp-dev-fx-controls-react/issues/1209)
+- `Localization`: Updates to Danish localizations [#1233](https://github.com/pnp/sp-dev-fx-controls-react/pull/1233)
 - `TaxonomyPicker`: Check if cultureInfo is valid [#1226](https://github.com/pnp/sp-dev-fx-controls-react/issues/1226)
+- `FieldCollectionData`: Updated docs to fix duplicated property [#1236](https://github.com/pnp/sp-dev-fx-controls-react/pull/1236)
+- `Changelog`: Fix changelog script by setting CHANGELOG.JSON filename extension to lower case [#1242](https://github.com/pnp/sp-dev-fx-controls-react/pull/1242)
+- `PeoplePicker`: PeoplePicker validation on focus out [#1221](https://github.com/pnp/sp-dev-fx-controls-react/pull/1221)
+- `DynamicForm`: Cannot display lookup value when the source field is not Title [#1215](https://github.com/pnp/sp-dev-fx-controls-react/issues/1215)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Milan Holemans](https://github.com/milanholemans), [Rico van de Ven](https://github.com/RicoNL).
+Special thanks to our contributors (in alphabetical order): [Annie-Johnson](https://github.com/Annie-Johnson), [Daniel Watford](https://github.com/danwatford), [Dennis Kuhn](https://github.com/DennisKuhn), [Fabio Franzini](https://github.com/fabiofranzini), [Jake Stanger](https://github.com/JakeStanger), [Joseph Halvey](https://github.com/HardluckHalvey), [Markus Möller](https://github.com/mmsharepoint), [Milan Holemans](https://github.com/milanholemans), [Morten Andersen](https://github.com/spcph), [Rico van de Ven](https://github.com/RicoNL), [ryanexner](https://github.com/ryanexner), [Sergio Villalta](https://github.com/6gal6ler6).
+
+## 3.8.1
+
+### Fixes
+
+- `LivePersona`: Fix LivePersona not showing card on hover [#1241](https://github.com/pnp/sp-dev-fx-controls-react/issues/1241)
 
 ## 3.8.0
 
