@@ -83,7 +83,7 @@ The FilePicker component can be configured with the following properties:
 | context | BaseComponentContext | yes | Current context. |
 | accepts | string[] | no | Array of strings containing allowed files extensions. E.g. [".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"] |
 | required | boolean | no | Sets the label to inform that the value is required. |
-| bingAPIKey | string | no | Used to execute WebSearch. If not provided SearchTab will not be available. |
+| bingAPIKey | string | no | Used to execute WebSearch. If not provided SearchTab will not be available. The API key can be created on a Azure account ([Bing image search API](https://www.microsoft.com/en-us/bing/apis/bing-image-search-api)), a free version exist for 1000 query per month ([Pricing](https://www.microsoft.com/en-us/bing/apis/pricing)) |
 | disabled | boolean | no | Specifies if the picker button is disabled |
 | hidden | boolean | no | Specifies if the picker button is hidden (if hidden, panel visibility can still be controlled with isPanelOpen) |
 | itemsCountQueryLimit | number | no | Number of items to obtain when executing REST queries. Default 100. |
