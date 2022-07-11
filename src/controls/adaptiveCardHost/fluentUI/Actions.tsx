@@ -1,4 +1,7 @@
-import { Action, ActionButtonState, ActionIconPlacement, CardObjectRegistry, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards";
+
+import { Action, ActionButtonState, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards/lib/card-elements";
+import { ActionIconPlacement } from "adaptivecards/lib/enums";
+import { CardObjectRegistry } from "adaptivecards/lib/registry";
 import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from "office-ui-fabric-react/lib/Button";
 import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 import { createTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
