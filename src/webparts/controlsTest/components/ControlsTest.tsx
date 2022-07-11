@@ -185,6 +185,7 @@ import { VariantThemeProvider, VariantType } from "../../../controls/variantThem
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
+import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 
 
@@ -2301,8 +2302,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             themeType={AdaptiveCardHostThemeType.SharePoint}
             onInvokeAction={(action) => alert(JSON.stringify(action))}
             onError={(error) => alert(error.message)}
-            onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => {}}
-            onSetCustomActions={(registry: CardObjectRegistry<Action>) => {}}
+            onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => { }}
+            onSetCustomActions={(registry: CardObjectRegistry<Action>) => { }}
             onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
               hostCapabilities.setCustomProperty("CustomPropertyName", Date.now);
             }}
@@ -2328,6 +2329,54 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <ControlsTestEnhancedThemeProviderFunctionComponent />
             <ControlsTestEnhancedThemeProvider />
           </EnhancedThemeProvider>
+        </div>
+
+        <div>
+          <h3>Adaptive Card Designer Host</h3>
+          <AdaptiveCardDesignerHost
+            headerText={`Adaptive Card Designer`}
+            buttonText="Open Designer"
+            card={{"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","type":"AdaptiveCard","version":"1.5","body":[{"type":"ColumnSet","columns":[{"width":"auto","items":[{"type":"Image","size":"Small","style":"Person","url":"/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}"}],"type":"Column"},{"width":"stretch","items":[{"type":"TextBlock","text":"${$root['@context']['userInfo']['displayName']}","weight":"Bolder"},{"type":"TextBlock","spacing":"None","text":"${$root['@context']['userInfo']['email']}"}],"type":"Column"}]}]}}
+            data={undefined}
+            context={this.props.context}
+            theme={this.props.themeVariant}
+            onSave={(payload: object) => alert(JSON.stringify(payload))}
+            snippets={[{
+              name: "Persona",
+              category: "Snippets",
+              payload: {
+                type: "ColumnSet",
+                columns: [
+                  {
+                    width: "auto",
+                    items: [
+                      {
+                        type: "Image",
+                        size: "Small",
+                        style: "Person",
+                        url: "/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}"
+                      }
+                    ]
+                  },
+                  {
+                    width: "stretch",
+                    items: [
+                      {
+                        type: "TextBlock",
+                        text: "${$root['@context']['userInfo']['displayName']}",
+                        weight: "Bolder"
+                      },
+                      {
+                        type: "TextBlock",
+                        spacing: "None",
+                        text: "${$root['@context']['userInfo']['email']}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }]}
+          />
         </div>
 
       </div>

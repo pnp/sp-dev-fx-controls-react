@@ -1,11 +1,49 @@
-import { ActionButtonState, ActionIconPlacement, defaultHostConfig, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards";
+
+import { Action, ActionButtonState, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards/lib/card-elements";
+import { ActionIconPlacement } from "adaptivecards/lib/enums";
+import { CardObjectRegistry } from "adaptivecards/lib/registry";
 import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from "office-ui-fabric-react/lib/Button";
+import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
 import { createTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { getDefaultFluentUITheme, hostCapabilitiesFluentUIThemeKey } from "./FluentUI";
-import { createDiv } from "./Shared";
-const redFluentUIPalette = require("../themes/redPalette.json");
+import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDefaultTheme";
+import { hostCapabilitiesFluentUIThemeKey } from "./HostCapability";
+
+const redPalette = {
+    themePrimary: "#d40004",
+    themeLighterAlt: "#fdf3f3",
+    themeLighter: "#f8d0d1",
+    themeLight: "#f2a9ab",
+    themeTertiary: "#e55c5e",
+    themeSecondary: "#d91a1d",
+    themeDarkAlt: "#be0003",
+    themeDark: "#a10003",
+    themeDarker: "#770002",
+    neutralLighterAlt: "#faf9f8",
+    neutralLighter: "#f3f2f1",
+    neutralLight: "#edebe9",
+    neutralQuaternaryAlt: "#e1dfdd",
+    neutralQuaternary: "#d0d0d0",
+    neutralTertiaryAlt: "#c8c6c4",
+    neutralTertiary: "#a19f9d",
+    neutralSecondary: "#605e5c",
+    neutralPrimaryAlt: "#3b3a39",
+    neutralPrimary: "#323130",
+    neutralDark: "#201f1e",
+    black: "#000000",
+    white: "#ffffff"
+};
+
+export function registerFluentUIActions(registry: CardObjectRegistry<Action>) {
+    initializeIcons();
+
+    registry.register("Action.Submit", FluentUISubmitAction);
+    registry.register("Action.OpenUrl", FluentUIOpenUrlAction);
+    registry.register("Action.ShowCard", FluentUIShowCardAction);
+    registry.register("Action.ToggleVisibility", FluentUIToggleVisibilityAction);
+    registry.register("Action.Execute", FluentUIExecuteAction);
+}
 
 export class FluentUIExecuteAction extends ExecuteAction {
     protected updateCssClasses() {
@@ -153,7 +191,7 @@ const createActionDiv = (
     actionClickHandler: (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement>) => void,
     style: string,
     theme?: ITheme): HTMLDivElement => {
-    const div = createDiv();
+    const div = document.createElement("div");
     div.className = "fluentUI";
     ReactDOM.render(
         <ActionButton
@@ -169,7 +207,7 @@ const createActionDiv = (
     return div;
 };
 
-interface ActionButtonProps {
+interface IActionButtonProps {
     text: string;
     className?: string;
     iconUrl?: string;
@@ -180,9 +218,9 @@ interface ActionButtonProps {
     theme?: ITheme;
 }
 
-const ActionButton = (props: ActionButtonProps) => {
+const ActionButton = (props: IActionButtonProps) => {
     let control;
-    let theme = (props.theme) ? props.theme : getDefaultFluentUITheme();
+    let theme = (props.theme) ? props.theme : fluentUIDefaultTheme();
 
     if (props.iconUrl) {
         control =
@@ -216,7 +254,7 @@ const ActionButton = (props: ActionButtonProps) => {
                 theme={theme}
                 onClick={props.actionClickHandler} />;
         } else if (props.style.toLocaleLowerCase().trim() == 'destructive') {
-            const dangerButtonTheme: ITheme = createTheme({ palette: redFluentUIPalette });
+            const dangerButtonTheme: ITheme = createTheme({ palette: redPalette });
             control = <PrimaryButton
                 className={props.className}
                 text={props.text}

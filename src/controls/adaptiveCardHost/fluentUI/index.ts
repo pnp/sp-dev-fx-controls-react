@@ -1,4 +1,5 @@
 export * from './Actions';
 export * from './Elements';
-export * from './FluentUI';
-export * from './Shared';
+export * from './HostCapability';
+export * from './HostConfig';
+export * from './Styles';

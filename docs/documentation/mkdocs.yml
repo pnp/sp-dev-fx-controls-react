@@ -12,6 +12,7 @@ nav:
     - AccessibleAccordion: 'controls/AccessibleAccordion.md'
     - Accordion: 'controls/Accordion.md'
     - AdaptiveCardHost: 'controls/AdaptiveCardHost.md'
+    - AdaptiveCardDesignerHost: 'controls/AdaptiveCardDesignerHost.md'
     - AnimatedDialog: 'controls/AnimatedDialog.md'
     - Carousel: 'controls/Carousel.md'
     - Charts:

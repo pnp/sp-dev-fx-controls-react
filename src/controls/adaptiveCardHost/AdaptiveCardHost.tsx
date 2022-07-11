@@ -1,7 +1,6 @@
-
-
 import { ThemeProvider } from '@fluentui/react-theme-provider';
-import { Action, AdaptiveCard, CardElement, CardObjectRegistry, ExecuteAction, GlobalRegistry, HostConfig, OpenUrlAction, SerializationContext, SubmitAction } from 'adaptivecards';
+import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
+import { Action, AdaptiveCard, CardElement, CardObjectRegistry, ExecuteAction, GlobalRegistry, OpenUrlAction, SerializationContext, SubmitAction } from 'adaptivecards';
 import { Template } from 'adaptivecards-templating';
 import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { CustomizerContext } from 'office-ui-fabric-react/lib/Utilities';
@@ -11,27 +10,25 @@ import {
   useEffect,
   useRef
 } from 'react';
-import { applyAdaptiveCardHostStyles } from './AdaptiveCardHostCssStyles';
-import { convertFromPartialThemeToTheme, createDarkTeamsHostConfig, createDefaultTeamsHostConfig, createHighContrastTeamsHostConfig, createSharePointHostConfig, initProcessMarkdown, injectContextProperty } from './AdaptiveCardHostHelpers';
-import { createDarkTeamsTheme, createDefaultTeamsTheme, createHighContrastTeamsTheme, getDefaultFluentUITheme, setFluentUIThemeAsHostCapability, useLocalFluentUI } from './fluentUI';
-import { AdaptiveCardHostThemeType, IAdaptiveCardHostActionResult, IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
-import { Text } from '@microsoft/sp-core-library';
-import * as telemetry from '../../common/telemetry';
-
-// Init Process Markdown
-initProcessMarkdown();
+import { fluentUIDefaultTheme } from '../../common/fluentUIThemes/FluentUIDefaultTheme';
+import { initializeAdaptiveCardHost } from './AdaptiveCardHost.HostConfig';
+import { initProcessMarkdown, injectContextProperty } from './AdaptiveCardHost.Utilities';
+import { registerFluentUIActions, registerFluentUIElements } from './fluentUI';
+import { IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
+import { AdaptiveCardHostThemeType } from './models/AdaptiveCardHostThemeType';
+import { IAdaptiveCardHostActionResult } from './models/IAdaptiveCardHostActionResult';
 
 export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
+  const renderElementRef = useRef<HTMLDivElement>(null);
   const adaptiveCardInstanceRef = useRef<AdaptiveCard>(null);
   const serializationContextInstanceRef = useRef<SerializationContext>(null);
   const fluentUIThemeInstanceRef = useRef<ITheme>(null);
-
-  const renderElementRef = useRef<HTMLDivElement>(null);
   const fluentUICustomizerContext = React.useContext(CustomizerContext);
+  const adaptiveCardInstanceRefDependencies = [props.card, props.onSetCustomElements, props.onSetCustomActions, props.onUpdateHostCapabilities];
 
-  // track the telemetry as 'ReactAdaptiveCardHost'
+  // Init Process Markdown
   useEffect(() => {
-    telemetry.track('ReactAdaptiveCardHost');
+    initProcessMarkdown();
   }, []);
   // *****
 
@@ -39,7 +36,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
   useEffect(() => {
     adaptiveCardInstanceRef.current = new AdaptiveCard();
     serializationContextInstanceRef.current = new SerializationContext();
-  }, [props.card, props.onSetCustomElements, props.onSetCustomActions, props.onUpdateHostCapabilities]);
+  }, [...adaptiveCardInstanceRefDependencies]);
   // *****
 
   // create executeAction
@@ -50,31 +47,17 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
       switch (type) {
         case OpenUrlAction.JsonTypeName: {
           let typedAction = action as OpenUrlAction;
-          actionResult = {
-            type: type,
-            title: typedAction.title,
-            url: typedAction.url
-          };
+          actionResult = { type: type, title: typedAction.title, url: typedAction.url };
         }
           break;
-
         case SubmitAction.JsonTypeName: {
           let typedAction = action as SubmitAction;
-          actionResult = {
-            type: type,
-            title: typedAction.title,
-            data: typedAction.data
-          };
+          actionResult = { type: type, title: typedAction.title, data: typedAction.data };
         }
           break;
         case ExecuteAction.JsonTypeName: {
           let typedAction = action as ExecuteAction;
-          actionResult = {
-            type: type,
-            title: typedAction.title,
-            data: typedAction.data,
-            verb: typedAction.verb
-          };
+          actionResult = { type: type, title: typedAction.title, data: typedAction.data, verb: typedAction.verb };
         }
           break;
       }
@@ -86,85 +69,45 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
 
   // set hostConfig
   useEffect(() => {
-    let theme: IPartialTheme | ITheme;
-    let themeType = props.themeType;
+    // set the input Fluent UI Theme
+    let inputFluentUITheme: IPartialTheme | ITheme;
+    let inputThemeType = props.themeType;
 
-    if (!themeType) {
-      themeType = AdaptiveCardHostThemeType.SharePoint;
+    if (!inputThemeType) {
+      inputThemeType = AdaptiveCardHostThemeType.SharePoint;
     }
 
-    switch (themeType) {
-      case AdaptiveCardHostThemeType.SharePoint: {
-        let contextTheme = fluentUICustomizerContext.customizations.settings["theme"];
-        if (props.theme) {
-          theme = props.theme;
-        } else if (contextTheme) {
-          theme = contextTheme;
-        } else {
-          theme = getDefaultFluentUITheme();
-        }
-      }
-        break;
-      case AdaptiveCardHostThemeType.Teams: {
-        theme = createDefaultTeamsTheme();
-      }
-        break;
-      case AdaptiveCardHostThemeType.TeamsDark: {
-        theme = createDarkTeamsTheme();
-      }
-        break;
-      case AdaptiveCardHostThemeType.TeamsHighContrast: {
-        theme = createHighContrastTeamsTheme();
-      }
-        break;
+    // if this control is wrapped on "ThemeProvider" take the theme from the context
+    let contextTheme = fluentUICustomizerContext.customizations.settings["theme"];
+    // *****
+
+    if (props.theme) {
+      inputFluentUITheme = props.theme;
+    } else if (contextTheme) {
+      inputFluentUITheme = contextTheme;
+    } else {
+      inputFluentUITheme = fluentUIDefaultTheme();
     }
+    // **********
 
-    let currentTheme = convertFromPartialThemeToTheme(theme);
-    fluentUIThemeInstanceRef.current = currentTheme;
+    let hostConfigResult = initializeAdaptiveCardHost(inputThemeType, mergeThemes(fluentUIDefaultTheme(), inputFluentUITheme));
+    let currentHostConfig = hostConfigResult.hostConfig;
 
-    let hostConfig = props.hostConfig;
-    if (!hostConfig) {
-      switch (themeType) {
-        case AdaptiveCardHostThemeType.SharePoint: {
-          hostConfig = createSharePointHostConfig(currentTheme);
-        }
-          break;
-        case AdaptiveCardHostThemeType.Teams: {
-          hostConfig = createDefaultTeamsHostConfig(currentTheme);
-        }
-          break;
-        case AdaptiveCardHostThemeType.TeamsDark: {
-          hostConfig = createDarkTeamsHostConfig(currentTheme);
-        }
-          break;
-        case AdaptiveCardHostThemeType.TeamsHighContrast: {
-          hostConfig = createHighContrastTeamsHostConfig(currentTheme);
-        }
-          break;
-      }
-    }
+    fluentUIThemeInstanceRef.current = hostConfigResult.theme;
+    adaptiveCardInstanceRef.current.hostConfig = hostConfigResult.hostConfig;
 
-    let currentHostConfig = new HostConfig(hostConfig);
-    adaptiveCardInstanceRef.current.hostConfig = currentHostConfig;
-
-    setFluentUIThemeAsHostCapability(currentHostConfig, currentTheme);
 
     if (props.onUpdateHostCapabilities) {
       props.onUpdateHostCapabilities(currentHostConfig.hostCapabilities);
     }
 
-    // ****
-    currentHostConfig.cssClassNamePrefix = `ach${Text.replaceAll(Math.random().toString(), ".", "")}`;
-    applyAdaptiveCardHostStyles(theme, currentHostConfig.cssClassNamePrefix);
-    // ****
-
-  }, [adaptiveCardInstanceRef.current, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig]);
+  }, [...adaptiveCardInstanceRefDependencies, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig]);
   // *****
 
   // set invokeAction
   useEffect(() => {
     adaptiveCardInstanceRef.current.onExecuteAction = invokeAction;
-  }, [adaptiveCardInstanceRef.current, invokeAction]);
+  }, [...adaptiveCardInstanceRefDependencies, invokeAction]);
   // *****
 
   // set elements & actions registry
@@ -175,7 +118,8 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     GlobalRegistry.populateWithDefaultElements(elementRegistry);
     GlobalRegistry.populateWithDefaultActions(actionRegistry);
 
-    useLocalFluentUI(elementRegistry, actionRegistry);
+    registerFluentUIElements(elementRegistry);
+    registerFluentUIActions(actionRegistry);
 
     if (props.onSetCustomElements) {
       props.onSetCustomElements(elementRegistry);
@@ -189,7 +133,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     currentSerializationContext.setElementRegistry(elementRegistry);
     currentSerializationContext.setActionRegistry(actionRegistry);
 
-  }, [serializationContextInstanceRef.current]);
+  }, [...adaptiveCardInstanceRefDependencies]);
   // *****
 
   // set Adaptive Card
@@ -220,11 +164,11 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
         props.onError(cardRenderError);
       }
     }
-  }, [adaptiveCardInstanceRef.current, props.data, props.hostConfig, props.onError]);
+  }, [...adaptiveCardInstanceRefDependencies, props.data, props.hostConfig, props.onError]);
   // *****
 
   return (
-    <ThemeProvider theme={(fluentUIThemeInstanceRef.current) ? fluentUIThemeInstanceRef.current : getDefaultFluentUITheme()}>
+    <ThemeProvider theme={(fluentUIThemeInstanceRef.current) ? fluentUIThemeInstanceRef.current : fluentUIDefaultTheme()}>
       <div
         ref={renderElementRef}
         className={`${(props.className) ? props.className : ""}`}
