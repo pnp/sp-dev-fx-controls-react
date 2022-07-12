@@ -1,10 +1,10 @@
-import { ISPService, ILibsOptions, LibsOrderBy, IFieldsOptions, IContentTypesOptions } from "./ISPService";
-import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
-import { SPHelper, urlCombine } from "../common/utilities";
+import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
+import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
+import { SPHelper, urlCombine } from "../common/utilities";
+import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrderBy } from "./ISPService";
 
 interface ICachedListItems {
     items: any[];
@@ -509,7 +509,7 @@ export default class SPService implements ISPService {
   public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -529,13 +529,13 @@ export default class SPService implements ISPService {
   public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          let lookups = [];
+          const lookups = [];
           result[fieldName].forEach(element => {
             lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
           });
@@ -550,10 +550,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -573,13 +573,13 @@ export default class SPService implements ISPService {
   public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          let emails = [];
+          const emails = [];
           result[fieldName].forEach(element => {
             emails.push(element.Id + "/" + element.Title);
           });
@@ -597,7 +597,7 @@ export default class SPService implements ISPService {
   public async getUserUPNById(userId: number, webUrl?: string): Promise<string> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName,Title`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName,Title`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -614,10 +614,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any[]> {
+  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> {
     try {
       const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
         body: JSON.stringify({
           parameters: {

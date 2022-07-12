@@ -1,13 +1,17 @@
-import * as React from 'react';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { BaseComponentContext, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
+import { sp } from '@pnp/sp';
 import {
-  PrimaryButton,
-  DefaultButton,
-  IconButton,
-  IButtonStyles
+  ITermInfo,
+  ITermSetInfo,
+  ITermStoreInfo
+} from '@pnp/sp/taxonomy';
+import { useId } from '@uifabric/react-hooks';
+import * as strings from 'ControlStrings';
+import {
+  DefaultButton, IButtonStyles, IconButton, PrimaryButton
 } from 'office-ui-fabric-react/lib/Button';
+import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import {
   Panel,
@@ -22,24 +26,17 @@ import {
   IStackTokens,
   Stack
 } from 'office-ui-fabric-react/lib/Stack';
+import { ITooltipHostStyles, TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
-import { sp } from '@pnp/sp';
+import * as React from 'react';
+import { useMemo } from 'react';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
-import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import styles from './ModernTaxonomyPicker.module.scss';
-import * as strings from 'ControlStrings';
-import { TooltipHost, ITooltipHostStyles } from 'office-ui-fabric-react/lib/Tooltip';
-import { useId } from '@uifabric/react-hooks';
-import {
-  ITermInfo,
-  ITermSetInfo,
-  ITermStoreInfo
-} from '@pnp/sp/taxonomy';
-import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
 import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
+import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import { TermItem } from './termItem/TermItem';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -66,7 +63,7 @@ export interface IModernTaxonomyPickerProps {
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
-  const taxonomyService = new SPTaxonomyService(props.context);
+  const taxonomyService = useMemo(()=>new SPTaxonomyService(props.context), [props.context]);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const initialLoadComplete = React.useRef(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
@@ -77,7 +74,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
 
   React.useEffect(() => {
-    sp.setup(props.context);
+    sp.setup({ pageContext: props.context.pageContext });
     taxonomyService.getTermStoreInfo()
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
@@ -100,13 +97,13 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           setCurrentAnchorTermInfo(anchorTermInfo);
         });
     }
-  }, []);
+  }, [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.initialValues, props.termSetId, taxonomyService]);
 
   React.useEffect(() => {
     if (props.onChange && initialLoadComplete.current) {
       props.onChange(selectedOptions);
     }
-  }, [selectedOptions]);
+  }, [props, selectedOptions]);
 
   function onOpenPanel(): void {
     if (props.disabled === true) {
