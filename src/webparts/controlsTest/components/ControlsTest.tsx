@@ -183,7 +183,10 @@ import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/Mod
 import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
 import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
 import { Label } from "office-ui-fabric-react/lib/Label";
-
+import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
+import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
+import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
+import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 
 
 // Used to render document card
@@ -259,6 +262,15 @@ const sampleItems = [
     Reponse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   }
 ];
+
+const toolbarFilters = [{
+  id: "filter1",
+  title: "filter1"
+},
+{
+  id: "filter2",
+  title: "filter2"
+}];
 
 /**
  * Component that can be used to test out the React controls from this project
@@ -482,8 +494,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
-      errorMessage: "This field is required"
-
+      errorMessage: "This field is required",
+      selectedFilters: ["filter1"]
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -700,6 +712,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
   }
 
+  private onToolbarSelectedFiltersChange = (filterIds: string[]) => {
+    this.setState({
+      selectedFilters: filterIds
+    });
+  }
+
+  private toggleToolbarFilter = (filterId: string) => {
+    this.setState(({selectedFilters}) => {
+    if (selectedFilters.includes(filterId)) {
+      return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
+    } else {
+      return { selectedFilters: [...selectedFilters, filterId] };
+    }});
+  }
+
   private rootFolder: IFolder = {
     Name: "Site",
     ServerRelativeUrl: this.props.context.pageContext.web.serverRelativeUrl
@@ -886,7 +913,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          {/* <DynamicForm context={this.props.context} listId={"3071c058-549f-461d-9d73-8b9a52049a80"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm> */}
+          <DynamicForm context={this.props.context} listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
@@ -1400,6 +1427,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
         />
 
+        <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
+
         <div className={styles.container}>
           <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
             <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
@@ -1464,10 +1493,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">List Item picker list data tester:
 
-                <ListItemPicker listId={'76a8231b-35b6-4703-b1f4-5d03d3dfb1ca'}
-                  columnInternalName="Title"
+                <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
+                  columnInternalName="DateAndTime"
                   keyColumnInternalName="Id"
-                  filter={"Title eq 'SPFx'"}
+                  // filter={"Title eq 'SPFx'"}
                   orderBy={'Title desc'}
                   itemLimit={5}
                   context={this.props.context}
@@ -1883,6 +1912,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             size: WidgetSize.Single,
             link: linkExample,
           }]} />
+
+        <h3>Uncontrolled toolbar</h3>
         <Toolbar actionGroups={{
           'group1': {
             'action1': {
@@ -1896,7 +1927,33 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               onClick: () => { console.log('New action click'); }
             }
           }
-        }} />
+        }}
+        filters={toolbarFilters}
+        onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
+        />
+
+        <div>
+        <h3>Controlled toolbar</h3>
+          <Toolbar actionGroups={{
+            'group1': {
+              'action1': {
+                title: 'Edit',
+                iconName: 'Edit',
+                onClick: () => { console.log('Edit action click'); }
+              },
+              'action2': {
+                title: 'New',
+                iconName: 'Add',
+                onClick: () => { console.log('New action click'); }
+              }
+            }}}
+            filters={toolbarFilters}
+            selectedFilterIds={this.state.selectedFilters}
+            onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
+        </div>
+        <div>Selected filter IDs: {this.state.selectedFilters.join(", ")}</div>
+        <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
+        <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
 
         <div>
           <h3>Animated Dialogs</h3>
@@ -2245,8 +2302,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             themeType={AdaptiveCardHostThemeType.SharePoint}
             onInvokeAction={(action) => alert(JSON.stringify(action))}
             onError={(error) => alert(error.message)}
-            onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => {}}
-            onSetCustomActions={(registry: CardObjectRegistry<Action>) => {}}
+            onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => { }}
+            onSetCustomActions={(registry: CardObjectRegistry<Action>) => { }}
             onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
               hostCapabilities.setCustomProperty("CustomPropertyName", Date.now);
             }}
@@ -2265,6 +2322,63 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </VariantThemeProvider>
         </div>
+
+        <div>
+          <h3>Enhanced Theme Provider</h3>
+          <EnhancedThemeProvider applyTo="element" context={this.props.context} theme={this.props.themeVariant}>
+            <ControlsTestEnhancedThemeProviderFunctionComponent />
+            <ControlsTestEnhancedThemeProvider />
+          </EnhancedThemeProvider>
+        </div>
+
+        <div>
+          <h3>Adaptive Card Designer Host</h3>
+          <AdaptiveCardDesignerHost
+            headerText={`Adaptive Card Designer`}
+            buttonText="Open Designer"
+            card={{"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","type":"AdaptiveCard","version":"1.5","body":[{"type":"ColumnSet","columns":[{"width":"auto","items":[{"type":"Image","size":"Small","style":"Person","url":"/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}"}],"type":"Column"},{"width":"stretch","items":[{"type":"TextBlock","text":"${$root['@context']['userInfo']['displayName']}","weight":"Bolder"},{"type":"TextBlock","spacing":"None","text":"${$root['@context']['userInfo']['email']}"}],"type":"Column"}]}]}}
+            data={undefined}
+            context={this.props.context}
+            theme={this.props.themeVariant}
+            onSave={(payload: object) => alert(JSON.stringify(payload))}
+            snippets={[{
+              name: "Persona",
+              category: "Snippets",
+              payload: {
+                type: "ColumnSet",
+                columns: [
+                  {
+                    width: "auto",
+                    items: [
+                      {
+                        type: "Image",
+                        size: "Small",
+                        style: "Person",
+                        url: "/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}"
+                      }
+                    ]
+                  },
+                  {
+                    width: "stretch",
+                    items: [
+                      {
+                        type: "TextBlock",
+                        text: "${$root['@context']['userInfo']['displayName']}",
+                        weight: "Bolder"
+                      },
+                      {
+                        type: "TextBlock",
+                        spacing: "None",
+                        text: "${$root['@context']['userInfo']['email']}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }]}
+          />
+        </div>
+
       </div>
     );
   }

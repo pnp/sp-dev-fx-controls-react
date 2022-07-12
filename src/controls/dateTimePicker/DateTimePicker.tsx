@@ -3,6 +3,7 @@ import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
 import { DatePicker } from "office-ui-fabric-react/lib/DatePicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
+import { IconButton } from "office-ui-fabric-react/lib/Button";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import styles from "./DateTimePicker.module.scss";
 import HoursComponent from "./HoursComponent";
@@ -97,9 +98,11 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
    * Function called when the DatePicker Office UI Fabric component selected date changed
    */
   private onSelectDate = (date: Date): void => {
+
     if (!TimeHelper.isValidDate(date)) {
       return;
     }
+
     // Get hours, minutes and seconds from state or default to zero
     const { hours = 0, minutes = 0, seconds = 0 } = this.state;
     const day = TimeHelper.cloneDate(date);
@@ -109,7 +112,14 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     this.setState({ day }, () => this.delayedValidate(this.state.day));
   }
 
-
+  /**
+   * Function called from the clearDate iconbutton
+   */
+  private clearDate() {
+    this.setState({
+      day: null
+    });
+  }
 
   /**
    * Function called when hours value have been changed
@@ -225,7 +235,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showLabels,
       minDate,
       maxDate,
-      minutesIncrementStep
+      minutesIncrementStep,
+      showClearDate = false,
+      showClearDateIcon= 'RemoveEvent'
     } = this.props;
 
     const { textErrorMessage } = dateStrings;
@@ -322,6 +334,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 }}
               />
             </div>
+            {showClearDate === true && this.state.day !==null ? <IconButton iconProps={{iconName: showClearDateIcon}} onClick={() => this.clearDate()} /> : <></>}
+            
           </div>
 
           {timeElm}

@@ -1,5 +1,7 @@
+export * from './AdaptiveCardHost.Exports';
+export * from './AdaptiveCardHost.HostConfig';
 export * from './AdaptiveCardHost';
-export * from './AdaptiveCardHostHelpers';
+export * from './AdaptiveCardHost.Utilities';
 export * from './fluentUI';
 export * from './IAdaptiveCardHostProps';
-export { Action, CardElement, CardObjectRegistry, HostCapabilities } from 'adaptivecards';
+export * from './models';

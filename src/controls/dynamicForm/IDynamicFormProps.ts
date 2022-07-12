@@ -52,5 +52,10 @@ export interface IDynamicFormProps {
   /**
    * InternalName of fields that should be disabled
    */
-   disabledFields?: string[];
+  disabledFields?: string[];
+
+  /**
+   * Absolute Web Url of target site (user requires permissions)
+   * */
+  webAbsoluteUrl?: string;
 }

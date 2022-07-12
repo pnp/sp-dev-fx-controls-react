@@ -1,17 +1,107 @@
-import { ISPService, ILibsOptions, LibsOrderBy } from "./ISPService";
-import { ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
+import { ISPService, ILibsOptions, LibsOrderBy, IFieldsOptions, IContentTypesOptions } from "./ISPService";
+import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, ISPHttpClientOptions } from "@microsoft/sp-http";
-import { urlCombine } from "../common/utilities";
+import { SPHelper, urlCombine } from "../common/utilities";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
+
+interface ICachedListItems {
+    items: any[];
+    expiration: number;
+}
 
 export default class SPService implements ISPService {
 
   private _webAbsoluteUrl: string;
+  private _cachedListItems: Map<string, ICachedListItems> = new Map<string, ICachedListItems>();
+
 
   constructor(private _context: BaseComponentContext, webAbsoluteUrl?: string) {
     this._webAbsoluteUrl = webAbsoluteUrl ? webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
+  }
+
+  public async getContentTypes(options?: IContentTypesOptions): Promise<ISPContentType[]> {
+    try {
+      const queryUrlString: string = options.listId ? `${this._webAbsoluteUrl}/_api/web/lists('${options.listId}')/ContentTypes?` : `${this._webAbsoluteUrl}/_api/web/ContentTypes?`;
+      const queryUrl = new URL(queryUrlString);
+
+      if (options.orderBy) {
+        queryUrl.searchParams.set('$orderby', options.orderBy.toString());
+      }
+      if (options.filter) {
+        queryUrl.searchParams.set('$filter', options.filter);
+      }
+      else {
+        if (options.group) {
+          queryUrl.searchParams.set('$filter', `Group eq '${options.group}'`);
+        }
+        if (!options.includeHidden) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'Hidden eq false');
+        }
+        if (!options.includeReadOnly) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'ReadOnly eq false');
+        }
+      }
+
+      const data = await this._context.spHttpClient.get(queryUrl.toString(), SPHttpClient.configurations.v1);
+      if (!data.ok) {
+        return null;
+      }
+
+      const result: { value: ISPContentType[] } = await data.json();
+      return result.value;
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
+  public async getFields(options: IFieldsOptions): Promise<ISPField[]> {
+    try {
+      let queryUrlString: string = `${this._webAbsoluteUrl}/_api/web`;
+      if (options.listId) {
+        queryUrlString += `/lists('${options.listId}')`;
+      }
+      queryUrlString += `/fields?`;
+
+      const queryUrl = new URL(queryUrlString);
+
+      if (options.orderBy) {
+        queryUrl.searchParams.set('$orderby', options.orderBy.toString());
+      }
+      if (options.filter) {
+        queryUrl.searchParams.set('$filter', options.filter);
+      }
+      else {
+        if (options.group) {
+          queryUrl.searchParams.set('$filter', `Group eq '${options.group}'`);
+        }
+        if (!options.includeHidden) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'Hidden eq false');
+        }
+        if (!options.includeReadOnly) {
+          const usedFilter = queryUrl.searchParams.get('$filter');
+          const filterPrefix = usedFilter ? usedFilter + ' and ' : '';
+          queryUrl.searchParams.set('$filter', filterPrefix + 'ReadOnlyField eq false');
+        }
+      }
+
+      const data = await this._context.spHttpClient.get(queryUrl.toString(), SPHttpClient.configurations.v1);
+      if (!data.ok) {
+        return null;
+      }
+
+      const result: { value: ISPField[] } = await data.json();
+      return result.value;
+    } catch (error) {
+      throw Error(error);
+    }
   }
 
   public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
@@ -102,13 +192,23 @@ export default class SPService implements ISPService {
   /**
    * Get List Items
    */
-  public async getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField | undefined, keyInternalColumnName?: string, webUrl?: string, filterString?: string, substringSearch: boolean = false, orderBy?: string): Promise<any[]> {
-    let returnItems: any[];
+  public async getListItems(
+      filterText: string,
+      listId: string,
+      internalColumnName: string,
+      field: ISPField | undefined,
+      keyInternalColumnName?: string,
+      webUrl?: string,
+      filterString?: string,
+      substringSearch: boolean = false,
+      orderBy?: string,
+      cacheInterval: number = 1): Promise<any[]> {
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
+    let processItems: ((items: any[]) => any[]) | undefined;
 
-    if (field && field.TypeAsString === 'Calculated') { // for calculated fields we need to use CAML query
+    if (field && field.TypeAsString === 'Calculated' && SPHelper.isTextFieldType(field.ResultType)) { // for calculated fields we need to use CAML query
       let orderByStr = '';
 
       if (orderBy) {
@@ -125,11 +225,33 @@ export default class SPService implements ISPService {
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
     }
-    else {
+    else if (SPHelper.isTextFieldType(field.TypeAsString)) {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
+    }
+    else { // we need to get FieldValuesAsText and cache them
+      const mapKey = `${webAbsoluteUrl}##${listId}##${internalColumnName}##${keyInternalColumnName || 'Id'}`;
+      const cachedItems = this._cachedListItems.get(mapKey);
+
+      if (cachedItems && cachedItems.expiration > Date.now()) {
+        const filteredItems = this._filterListItemsFieldValuesAsText(cachedItems.items, internalColumnName, filterText, substringSearch);
+        return filteredItems;
+      }
+
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
+      isPost = false;
+
+      processItems = (items: any[]) => {
+
+        this._cachedListItems.set(mapKey, {
+          items,
+          expiration: Date.now() + cacheInterval * 60 * 1000
+        });
+
+        return this._filterListItemsFieldValuesAsText(items, internalColumnName, filterText, substringSearch);
+      };
     }
 
     try {
@@ -137,7 +259,7 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const results = await data.json();
         if (results && results.value && results.value.length > 0) {
-          return results.value;
+          return processItems ? processItems(results.value) : results.value;
         }
       }
 
@@ -146,8 +268,6 @@ export default class SPService implements ISPService {
       return Promise.reject(error);
     }
   }
-
-
 
   /**
 * Gets list items for list item picker
@@ -386,16 +506,16 @@ export default class SPService implements ISPService {
     return;
   }
 
-  public async getLookupValue(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          return [{ key: result[fieldName].ID, name: result[fieldName].Title }];
+          return [{ key: result[fieldName].ID, name: result[fieldName][lookupFieldName || 'Title'] }];
         }
       }
 
@@ -406,10 +526,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getLookupValues(listId: string, listItemID: number, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      let apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -417,7 +537,7 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           let lookups = [];
           result[fieldName].forEach(element => {
-            lookups.push({ key: element.ID, name: element.Title });
+            lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
           });
           return lookups;
         }
@@ -555,5 +675,23 @@ export default class SPService implements ISPService {
     const result = await response.json() as IUploadImageResult;
 
     return result;
+  }
+
+  private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] {
+    const lowercasedFilterText = filterText.toLowerCase();
+
+    return items.filter(i => {
+      let fieldValue = i.FieldValuesAsText[internalColumnName];
+      if (!fieldValue) {
+        return false;
+      }
+      fieldValue = fieldValue.toLowerCase();
+
+      if (!filterText) {
+        return true;
+      }
+
+      return substringSearch ? fieldValue.indexOf(lowercasedFilterText) > -1 : fieldValue.startsWith(lowercasedFilterText);
+    });
   }
 }

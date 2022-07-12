@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { SPHttpClient } from "@microsoft/sp-http";
+import { SPHttpClient, HttpClientResponse } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
@@ -143,15 +143,18 @@ export class FilesSearchService {
       }
 
       // Submit the request
-      const apiUrl: string = `https://www.bingapis.com/api/v7/images/search?appid=${this.bingAPIKey}&traffictype=Internal_monitor&q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&size=${size}&mkt=en-US&license=${license}`;
+      const apiUrl: string = `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(query)}&count=${maxResults}&aspect=${aspect}&maxFileSize=${maxFileSize}&size=${size}&mkt=en-US&license=${license}`;
 
-      const searchDataResponse: any = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {
+      const searchDataResponse: HttpClientResponse = await this.context.httpClient.get(apiUrl, SPHttpClient.configurations.v1, {
         method: 'GET',
-        mode: 'cors'
+        mode: 'cors',
+        headers: {
+          'Ocp-Apim-Subscription-Key': this.bingAPIKey,
+        }
       });
 
       if (!searchDataResponse || !searchDataResponse.ok) {
-        throw new Error(`Something went wrong when executing search query. Status='${searchDataResponse.statusMessage}'`);
+        throw new Error(`Something went wrong when executing search query. Status='${searchDataResponse.statusText}'`);
       }
       const searchData = await searchDataResponse.json();
       if (!searchData || !searchData.value) {
