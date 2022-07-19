@@ -143,6 +143,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       termPanelIsOpen: false,
       actionTermId: null,
       clickedActionTerm: null,
+	  termStoreInfo: null,
+	  termSetInfo: null,
+	  testTerms: [],
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
