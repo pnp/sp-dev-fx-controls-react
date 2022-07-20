@@ -176,6 +176,7 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | isLightDismiss | boolean | no | Whether the panel can be light dismissed. |
 | isBlocking | boolean | no | Whether the panel uses a modal overlay or not. |
 | onRenderActionButton | function | no | Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view. |
+| isPathRendred | boolean | no | Whether the terms will be rendered with the term label or the full path up to the root. |
 
 ## Standalone TaxonomyTree control
 
