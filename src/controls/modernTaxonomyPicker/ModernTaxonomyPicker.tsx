@@ -37,7 +37,7 @@ import {
 } from '@pnp/sp/taxonomy';
 import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
-import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
+import { IModernTermPickerProps, ITermItemProps, ITermItemStyles } from './modernTermPicker/ModernTermPicker.types';
 import { TermItem } from './termItem/TermItem';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { ITermLabel } from '@pnp/sp/taxonomy/types';
