@@ -8,11 +8,14 @@
           "`DynamicForm`: possibility to override field rendering for individual fields [#1257](https://github.com/pnp/sp-dev-fx-controls-react/issues/1257)",
           "`ModernTaxonomyPicker`: Display the full path of a term [#1172](https://github.com/pnp/sp-dev-fx-controls-react/issues/1172)"
         ],
-        "fixes": []
+        "fixes": [
+          "`DateTimePicker`: `onChange` not triggered when clearing date [#1277](https://github.com/pnp/sp-dev-fx-controls-react/issues/1277)"
+        ]
       },
       "contributions": [
         "[Bart-Jan Dekker](https://github.com/bjdekker)",
-        "[Edin Kapic](https://github.com/ekapic)"
+        "[Edin Kapic](https://github.com/ekapic)",
+        "[Milan Holemans](https://github.com/milanholemans)"
       ]
     },
     {
