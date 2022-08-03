@@ -16,7 +16,7 @@ mockHttpClient.Requests.push({
 });
 describe('<ComboBoxListItemPicker />', () => {
   it("Should render initial data", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -32,7 +32,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should call onSelectedItem", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -57,7 +57,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (id)", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -76,7 +76,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (object)", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -96,7 +96,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should call onSelectedItem (multi)", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -124,7 +124,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (multi) (object)", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
@@ -149,7 +149,7 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (multi) (id)", () => {
-    return new Promise((resolve, error) => {
+    return new Promise<void>((resolve, error) => {
       let comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}

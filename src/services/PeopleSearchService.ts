@@ -1,15 +1,15 @@
-import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
-import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
-import { PrincipalType, IPeoplePickerUserItem } from "../PeoplePicker";
-import { IUsers, IUserInfo } from "../controls/peoplepicker/IUsers";
+import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { cloneDeep, findIndex } from "@microsoft/sp-lodash-subset";
 import { sp } from '@pnp/sp';
-import "@pnp/sp/sputilities";
-import { Web } from "@pnp/sp/webs";
-import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
+import "@pnp/sp/sputilities";
+import "@pnp/sp/webs";
+import { Web } from "@pnp/sp/webs";
+import { IUserInfo, IUsers } from "../controls/peoplepicker/IUsers";
+import { IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
+import { MockUsers, PeoplePickerMockClient } from './PeoplePickerMockClient';
 
 /**
  * Service implementation to search people in SharePoint
@@ -26,7 +26,7 @@ export default class SPPeopleSearchService {
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
     // Setup PnPjs
-    sp.setup(this.context);
+    sp.setup({ pageContext: this.context.pageContext });
   }
 
   /**
@@ -79,13 +79,13 @@ export default class SPPeopleSearchService {
       if (Array.isArray(groupId)) {
         let userResults: IPeoplePickerUserItem[] = [];
         for (const id of groupId) {
-          let tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, id);
+          const tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, id);
           userResults = userResults.concat(tmpResults);
         }
 
         // Remove duplicate results in case user is present in multiple groups
-        let logins = userResults.map(u => u.loginName);
-        let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
+        const logins = userResults.map(u => u.loginName);
+        const filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
         return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
       } else {
         const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, groupId);
@@ -106,13 +106,13 @@ export default class SPPeopleSearchService {
       if (Array.isArray(groupId)) {
         let userResults: IPeoplePickerUserItem[] = [];
         for (const id of groupId) {
-          let tmpResults = await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, id);
+          const tmpResults = await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, id);
           userResults = userResults.concat(tmpResults);
         }
 
         // Remove duplicate results in case user is present in multiple groups
-        let logins = userResults.map(u => u.loginName);
-        let filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
+        const logins = userResults.map(u => u.loginName);
+        const filteredUserResults = userResults.filter(({loginName}, index) => !logins.includes(loginName, index + 1));
         return filteredUserResults;
       } else {
         return await this.searchTenant(siteUrl, query, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, groupId);
@@ -209,24 +209,25 @@ export default class SPPeopleSearchService {
           MaximumEntitySuggestions: maximumSuggestions,
           PrincipalSource: 15,
           PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
-          QueryString: query
+          QueryString: query,
+          SharePointGroupID : null
         }
       };
 
       // Search on the local site when "0"
       if (siteUrl) {
-        searchBody.queryParams["SharePointGroupID"] = 0;
+        searchBody.queryParams.SharePointGroupID = 0;
       }
 
       // Check if users need to be searched in a specific SharePoint Group
       if (groupId && typeof(groupId) === 'number') {
-        searchBody.queryParams["SharePointGroupID"] = groupId;
+        searchBody.queryParams.SharePointGroupID = groupId;
       }
 
       // Check if users need to be searched in a specific Microsoft 365 Group, Security Group (incl. nested groups) or Distribution List
       else if(groupId && typeof(groupId) === 'string') {
         const graphUserRequestUrl = `/groups/${groupId}/transitiveMembers?$count=true&$search="displayName:${query}" OR "mail:${query}"`;
-        const graphClient = await this.context.msGraphClientFactory.getClient();
+        const graphClient = await this.context.msGraphClientFactory.getClient("3");
         const graphUserResponse = await graphClient.api(graphUserRequestUrl).header('ConsistencyLevel', 'eventual').get();
 
         if(graphUserResponse.value && graphUserResponse.value.length > 0) {
@@ -240,7 +241,7 @@ export default class SPPeopleSearchService {
 
           await batch.execute();
 
-          let userResult: IPeoplePickerUserItem[] = [];
+          const userResult: IPeoplePickerUserItem[] = [];
           for (const user of _users) {
             userResult.push({
               id: ensureUser ? user.Id : user.LoginName,
@@ -417,8 +418,8 @@ export default class SPPeopleSearchService {
    * Returns fake people results for the Mock mode
    */
   private searchPeopleFromMock(query: string): Promise<Array<IPeoplePickerUserItem>> {
-    let mockClient: PeoplePickerMockClient = new PeoplePickerMockClient();
-    let filterValue = { valToCompare: query };
+    const mockClient: PeoplePickerMockClient = new PeoplePickerMockClient();
+    const filterValue = { valToCompare: query };
     return new Promise<Array<IPeoplePickerUserItem>>((resolve) => resolve(MockUsers.filter(mockClient.filterPeople, filterValue)));
   }
 }

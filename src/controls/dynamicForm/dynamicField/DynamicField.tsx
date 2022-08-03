@@ -1,29 +1,27 @@
-import * as React from 'react';
-import styles from '../DynamicForm.module.scss';
-import { IDropdownOption, IDropdownProps, Dropdown } from 'office-ui-fabric-react/lib/components/Dropdown';
+import '@pnp/sp/folders';
+import { sp } from '@pnp/sp/presets/all';
+import '@pnp/sp/webs';
+import * as strings from 'ControlStrings';
+import { ActionButton } from 'office-ui-fabric-react';
+import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
-import { IDynamicFieldProps } from './IDynamicFieldProps';
-import { IDynamicFieldState } from './IDynamicFieldState';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { Image } from 'office-ui-fabric-react/lib/Image';
+import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { PeoplePicker, PrincipalType } from '../../peoplepicker';
+import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
+import * as React from 'react';
+import { DateTimePicker } from '../../dateTimePicker/DateTimePicker';
 import { FilePicker, IFilePickerResult } from '../../filePicker';
-import { TaxonomyPicker, IPickerTerms } from '../../taxonomyPicker';
 import { ListItemPicker } from '../../listItemPicker';
 import { LocationPicker } from '../../locationPicker';
+import { PeoplePicker, PrincipalType } from '../../peoplepicker';
 import { RichText } from '../../richText';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { Shimmer } from 'office-ui-fabric-react/lib/Shimmer';
-import { Toggle } from 'office-ui-fabric-react/lib/Toggle';
-import { Image } from 'office-ui-fabric-react/lib/Image';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { DateTimePicker } from '../../dateTimePicker/DateTimePicker';
-import { IFolder, sp } from '@pnp/sp/presets/all';
-import * as strings from 'ControlStrings';
-import { urlCombine } from '../../../common/utilities/GeneralHelper';
-import '@pnp/sp/folders';
-import '@pnp/sp/webs';
-import { SPHttpClient } from '@microsoft/sp-http';
-import { ActionButton } from 'office-ui-fabric-react';
+import { IPickerTerms, TaxonomyPicker } from '../../taxonomyPicker';
+import styles from '../DynamicForm.module.scss';
+import { IDynamicFieldProps } from './IDynamicFieldProps';
+import { IDynamicFieldState } from './IDynamicFieldState';
 
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
@@ -31,7 +29,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
   constructor(props: IDynamicFieldProps) {
     super(props);
     sp.setup({
-      spfxContext: this.props.context
+      spfxContext: { pageContext: this.props.context.pageContext }
     });
     this.state = {
       changedValue: props.fieldType === 'Thumbnail' ? props.fieldDefaultValue : null
@@ -89,9 +87,9 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       placeholder: placeholder
     };
 
-    const labelText = fieldTitle != null ? fieldTitle : label;
+    const labelText = fieldTitle !== null ? fieldTitle : label;
     const defaultValue = fieldDefaultValue;
-    let empty = null;
+
 
     const labelEl = <label className={(required) ? styles.fieldRequired + ' ' + styles.fieldLabel : styles.fieldLabel}>{labelText}</label>;
     const errorText = this.getRequiredErrorText();
@@ -137,8 +135,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               value={value}
               className={styles.feildDisplay}
               onChange={(newText) => { this.onChange(newText); return newText; }}
-              isEditMode={disabled}>
-            </RichText>
+              isEditMode={disabled} />
             {descriptionEl}
             {errorTextEl}
           </div>;
@@ -392,14 +389,14 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <Stack
             tokens={{ childrenGap: 4 }}>
             <TextField
-              defaultValue={defaultValue ? defaultValue['Url'] : ''}
+              defaultValue={defaultValue ? defaultValue.Url : ''}
               placeholder={strings.DynamicFormEnterURLPlaceholder}
               className={styles.feildDisplayNoPadding}
               onChange={(e, newText) => { this.onURLChange(newText, true); }}
               disabled={disabled}
               onBlur={this.onBlur} />
             <TextField
-              defaultValue={defaultValue ? defaultValue['Description'] : ''}
+              defaultValue={defaultValue ? defaultValue.Description : ''}
               placeholder={strings.DynamicFormEnterDescriptionPlaceholder}
               className={styles.feildDisplayNoPadding}
               onChange={(e, newText) => { this.onURLChange(newText, false); }}
@@ -588,7 +585,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     } = this.state;
     try {
       let seletedItemArr;
-      if (changedValue === null && this.props.fieldDefaultValue != null) {
+      if (changedValue === null && this.props.fieldDefaultValue !== null) {
         seletedItemArr = [];
         this.props.fieldDefaultValue.forEach(element => {
           seletedItemArr.push(element);
@@ -600,7 +597,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         seletedItemArr.push(item.key);
       }
       else {
-        let i = seletedItemArr.indexOf(item.key);
+        const i = seletedItemArr.indexOf(item.key);
         if (i >= 0) {
           seletedItemArr.splice(i, 1);
         }
