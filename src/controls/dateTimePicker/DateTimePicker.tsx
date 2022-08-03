@@ -119,6 +119,10 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     this.setState({
       day: null
     });
+
+    if (this.props.onChange) {
+      this.props.onChange(null);
+    }
   }
 
   /**
@@ -334,8 +338,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 }}
               />
             </div>
-            {showClearDate === true && this.state.day !==null ? <IconButton iconProps={{iconName: showClearDateIcon}} onClick={() => this.clearDate()} /> : <></>}
-            
+            {showClearDate === true && this.state.day !== null && <IconButton iconProps={{iconName: showClearDateIcon}} onClick={() => this.clearDate()} />}
+
           </div>
 
           {timeElm}
