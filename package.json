@@ -50,6 +50,7 @@
     "he": "^1.2.0",
     "lodash": "4.17.21",
     "markdown-it": "^12.3.2",
+    "moment": "2.29.4",
     "monaco-editor": "^0.32.1",
     "nano-css": "^5.3.4",
     "office-ui-fabric-react": "7.174.1",
