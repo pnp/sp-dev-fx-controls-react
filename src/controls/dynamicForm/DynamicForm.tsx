@@ -68,11 +68,18 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       fieldCollection,
       isSaving
     } = this.state;
+    
+    const fieldOverrides = this.props.fieldOverrides;
+    
     return (
       <div>
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
+              if(fieldOverrides?.hasOwnProperty(v.columnInternalName)) {
+                v.disabled = v.disabled || isSaving;
+                return fieldOverrides[v.columnInternalName](v);
+              }
               return <DynamicField {...v} disabled={v.disabled || isSaving} />;
             })}
             {
