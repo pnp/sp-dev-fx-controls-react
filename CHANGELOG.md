@@ -2,6 +2,14 @@
 
 ## 3.10.0
 
+### Enhancements
+
+- `DynamicForm`: possibility to override field rendering for individual fields [#1257](https://github.com/pnp/sp-dev-fx-controls-react/issues/1257)
+
+### Contributors
+
+Special thanks to our contributor: [Bart-Jan Dekker](https://github.com/bjdekker).
+
 ## 3.9.0
 
 ### New control(s)
