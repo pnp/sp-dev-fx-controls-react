@@ -5,10 +5,11 @@
 ### Enhancements
 
 - `DynamicForm`: possibility to override field rendering for individual fields [#1257](https://github.com/pnp/sp-dev-fx-controls-react/issues/1257)
+- `ModernTaxonomyPicker`: Display the full path of a term [#1172](https://github.com/pnp/sp-dev-fx-controls-react/issues/1172)
 
 ### Contributors
 
-Special thanks to our contributor: [Bart-Jan Dekker](https://github.com/bjdekker).
+Special thanks to our contributors (in alphabetical order): [Bart-Jan Dekker](https://github.com/bjdekker), [Edin Kapic](https://github.com/ekapic).
 
 ## 3.9.0
 
