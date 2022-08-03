@@ -4,10 +4,14 @@
       "version": "3.10.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`DynamicForm`: possibility to override field rendering for individual fields [#1257](https://github.com/pnp/sp-dev-fx-controls-react/issues/1257)"
+        ],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Bart-Jan Dekker](https://github.com/bjdekker)"
+      ]
     },
     {
       "version": "3.9.0",
