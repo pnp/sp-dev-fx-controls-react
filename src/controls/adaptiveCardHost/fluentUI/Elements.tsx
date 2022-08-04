@@ -122,7 +122,7 @@ export class FluentUIChoiceSetInput extends Input {
 
         let control = () =>
             <>
-                {this.isMultiSelect == false && this.style === "expanded" &&
+                {this.isMultiSelect === false && this.style === "expanded" &&
                     <ThemeProvider theme={theme} style={{ backgroundColor: "transparent" }}>
                         <ChoiceGroup
                             defaultSelectedKey={this.defaultValue}
@@ -136,7 +136,7 @@ export class FluentUIChoiceSetInput extends Input {
                     </ThemeProvider>
                 }
 
-                {this.isMultiSelect == true && this.style === "expanded" &&
+                {this.isMultiSelect === true && this.style === "expanded" &&
                     <Stack tokens={{ childrenGap: this.hostConfig.spacing.default }}>
                         {this.choices.map((x, index) => {
                             let defaultChecked = this.defaultSelectedValues.indexOf(x.value) > -1;
@@ -150,7 +150,7 @@ export class FluentUIChoiceSetInput extends Input {
                                         this.valueChanged();
                                     }}
                                     componentRef={(input) => {
-                                        if (index == 0)
+                                        if (index === 0)
                                             this.refControl = input;
                                     }}
                                 />
@@ -849,7 +849,7 @@ export class FluentUIToggleInput extends Input {
     }
 
     public get value(): string | undefined {
-        if (this._value != null && this._value != undefined) {
+        if (this._value !== null && this._value !== undefined) {
             return this._value ? this.valueOn : this.valueOff;
         } else {
             if (this.isRequired) {

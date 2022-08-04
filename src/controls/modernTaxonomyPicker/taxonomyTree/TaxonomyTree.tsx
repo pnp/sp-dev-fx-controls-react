@@ -478,7 +478,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         indentWidth={20}
         expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
-          if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
+          if ((ev.key === " " || ev.key === "Enter" ) && !isDisabled) {
             if (props.allowMultipleSelections) {
               if (props.selection) {
                 props.selection.toggleKeySelected(headerProps.group.key);

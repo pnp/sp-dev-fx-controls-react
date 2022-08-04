@@ -151,13 +151,13 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
       treeItem
     } = this.props;
     // If selection is turned on, set the item as selected
-    if (selectionMode != TreeViewSelectionMode.None) {
+    if (selectionMode !== TreeViewSelectionMode.None) {
 
       let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
       let _isExpanded: boolean = this.state.expanded;
 
-      if (!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) == -1) {
+      if (!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) === -1) {
         _isExpanded = false;
       }
 
@@ -182,7 +182,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
         <div
           className={styles.labels}
           onClick={(e) => {
-            if (this.props.selectionMode != TreeViewSelectionMode.None && item.selectable != false) {
+            if (this.props.selectionMode !== TreeViewSelectionMode.None && item.selectable !== false) {
               e.stopPropagation();
               if (!item.disabled) {
                 this._itemSelected(e, !this.state.selected);
@@ -190,7 +190,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             }
           }}>
           {
-            this.props.showCheckboxes && item.selectable == false && !item.children &&
+            this.props.showCheckboxes && item.selectable === false && !item.children &&
             <span className={styles.blankspace}>&nbsp;</span>
           }
 
@@ -310,7 +310,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             })}
             style={contentStyles}
             onClick={(e) => {
-              if (this.props.selectionMode != TreeViewSelectionMode.None && treeItem.selectable != false) {
+              if (this.props.selectionMode !== TreeViewSelectionMode.None && treeItem.selectable !== false) {
                 e.stopPropagation();
                 if (!treeItem.disabled && e.currentTarget === e.target) {
                   this._itemSelected(e, !this.state.selected);
@@ -320,7 +320,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
           >
             {
               // Render checkbox (if item is selectable, Selection mode is not None, and showCheckboxes property is set to true)
-              (treeItem.selectable != false) && selectionMode != TreeViewSelectionMode.None && showCheckboxes &&
+              (treeItem.selectable !== false) && selectionMode !== TreeViewSelectionMode.None && showCheckboxes &&
               <Checkbox
                 checked={selected}
                 disabled={treeItem.disabled}

@@ -64,7 +64,7 @@ export function Dashboard({
   return (
     <FluentUIThemeConsumer
       render={(globalTheme) => {
-        if (!globalTheme || globalTheme.fontFaces.length == 0) {
+        if (!globalTheme || globalTheme.fontFaces.length === 0) {
           globalTheme = teamsTheme;
         }
         return (

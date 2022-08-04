@@ -29,19 +29,19 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
  */
   public componentDidMount(): void {
     const { dropEffect, enable } = this.props;
-    if (dropEffect == undefined || dropEffect == "") {
+    if (dropEffect === undefined || dropEffect === "") {
       this._dropEffect = "copy";
     } else {
       this._dropEffect = dropEffect;
     }
-    if (enable == undefined) {
+    if (enable === undefined) {
       this._enable = true;
     } else {
       this._enable = enable;
     }
     // Add EventListeners for drag zone area
     let divDropArea = this.dropRef.current;
-    if (this._enable == true) {
+    if (this._enable === true) {
       divDropArea.addEventListener('dragenter', this.handleonDragEnter);
       divDropArea.addEventListener('dragleave', this.handleonDragLeave);
       divDropArea.addEventListener('dragover', this.handleonDragOver);
@@ -102,8 +102,8 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
 
   /**
      * Add File to Array Files of type File[]
-     * https://www.meziantou.net/upload-files-and-directories-using-an-input-drag-and-drop-or-copy-and-paste-with.htm 
-     * @param dataTransfer 
+     * https://www.meziantou.net/upload-files-and-directories-using-an-input-drag-and-drop-or-copy-and-paste-with.htm
+     * @param dataTransfer
      */
   private getFilesAsync = async (e) => {
     const Customfiles = e.dataTransfer;
@@ -116,7 +116,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
       if (item.kind === "file") {
         /**
          * This method retrieves Files from Folders
-         * defensive code to only use method when exist in browser if not only return files. 
+         * defensive code to only use method when exist in browser if not only return files.
          * https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
         */
         if (item.getAsEntry) {
@@ -141,7 +141,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
               files.push(file);
             }
           }
-        } else if ("function" == typeof item.getAsFile) {
+        } else if ("function" === typeof item.getAsFile) {
           const file = item.getAsFile();
           if (file) {
             file.fullPath = "";
@@ -160,8 +160,8 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
 
   // Returns a promise with all the files of the directory hierarchy
   /**
-   * 
-   * @param entry 
+   *
+   * @param entry
    */
   private readEntryContentAsync = (Directory) => {
     return new Promise<File[]>((resolve, reject) => {
@@ -212,12 +212,12 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
     let { dragStatus } = this.state;
     let { labelMessage, iconName } = this.props;
 
-    if (labelMessage == undefined || labelMessage == "") {
+    if (labelMessage === undefined || labelMessage === "") {
       this._LabelMessage = "";
     } else {
       this._LabelMessage = labelMessage;
     }
-    if (iconName == undefined || iconName == "") {
+    if (iconName === undefined || iconName === "") {
       this._IconName = "";
     } else {
       this._IconName = iconName;

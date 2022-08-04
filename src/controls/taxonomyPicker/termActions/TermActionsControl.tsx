@@ -92,7 +92,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
     return (
       <div>
         {
-          displayMode == TermActionsDisplayMode.dropdown ?
+          displayMode === TermActionsDisplayMode.dropdown ?
             <DropdownTermAction key={`DdAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />
             :
             <ButtonTermAction key={`BtnAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />

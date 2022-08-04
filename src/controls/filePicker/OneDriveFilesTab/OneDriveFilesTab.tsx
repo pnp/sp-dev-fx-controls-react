@@ -103,7 +103,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
-    if (node.folderData == null) {
+    if (node.folderData === null) {
       this.setState({
         libraryAbsolutePath: undefined,
         folderPath: undefined,
@@ -111,7 +111,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
       });
     }
     // Check if it is folder item
-    else if (node.folderData != null) {
+    else if (node.folderData !== null) {
       this._handleOpenFolder(node.folderData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteUrl === node.key);

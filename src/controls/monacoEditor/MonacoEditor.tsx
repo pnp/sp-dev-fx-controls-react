@@ -50,7 +50,7 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
   );
 
   React.useEffect(() => {
-    if (status != EStatus.LOADED) return;
+    if (status !== EStatus.LOADED) return;
 
     if (!isEmpty(jsonDiagnosticsOptions) && language === Elanguages.json) {
       monaco.languages.json.jsonDefaults.setDiagnosticsOptions(jsonDiagnosticsOptions);

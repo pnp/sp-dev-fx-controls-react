@@ -155,7 +155,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     let selectedItems: ITreeItem[] = this.state.activeItems;
 
     if (isSelected) {
-      if (this.props.selectionMode == TreeViewSelectionMode.Multiple) {
+      if (this.props.selectionMode === TreeViewSelectionMode.Multiple) {
         // Add the checked term
         selectedItems.push(item);
 
@@ -189,7 +189,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
       }
 
       unselectArray.forEach(element => {
-        selectedItems = selectedItems.filter(i => i.key != element);
+        selectedItems = selectedItems.filter(i => i.key !== element);
       });
 
       this.setState({

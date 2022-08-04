@@ -33,7 +33,7 @@ import { useMemo } from 'react';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
 import styles from './ModernTaxonomyPicker.module.scss';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
-import { IModernTermPickerProps, ITermItemProps, ITermItemStyles } from './modernTermPicker/ModernTermPicker.types';
+import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
 import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import { TermItem } from './termItem/TermItem';
 import { TermItemSuggestion } from './termItem/TermItemSuggestion';
@@ -193,7 +193,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     );
   }
 
-  function getLabelsForCurrentLanguage(item: ITermInfo): ITermLabel[] {
+  function getLabelsForCurrentLanguage(item: ITermInfo): {
+    name: string;
+    isDefault: boolean;
+    languageTag: string;
+}[] {
     let labels = item.labels.filter((name) => name.languageTag === currentLanguageTag && name.isDefault);
     if (labels.length === 0) {
       labels = item.labels.filter((name) => name.languageTag === currentTermStoreInfo.defaultLanguageTag && name.isDefault);

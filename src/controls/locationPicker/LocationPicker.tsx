@@ -222,7 +222,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   private onClick = () => {
     this.setState({ currentMode: Mode.editView },
       () => {
-        if (this.focusRef.current != null)
+        if (this.focusRef.current !== null)
           this.focusRef.current.focus();
       });
   }
@@ -238,7 +238,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
   private onChange = (ev, option: ILocationBoxOption) => {
     this.setState({ selectedItem: option.locationItem, currentMode: Mode.editView },
       () => {
-        if (this.focusRef.current != null)
+        if (this.focusRef.current !== null)
           this.focusRef.current.focus();
       });
 

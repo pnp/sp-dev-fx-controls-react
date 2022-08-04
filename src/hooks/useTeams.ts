@@ -1,4 +1,3 @@
-
 import { ServiceScope } from "@microsoft/sp-core-library";
 import { MSGraphClientFactory, MSGraphClientV3 } from '@microsoft/sp-http';
 import { PageContext } from "@microsoft/sp-page-context";
@@ -8,6 +7,7 @@ import { ITeam } from "./../common/model/ITeam";
 import { ITeamChannel } from "./../common/model/ITeamChannel";
 
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useTeams = (serviceScope: ServiceScope) => {
   const _pageContext = React.useRef<PageContext>();
   const _msgGraphClient = React.useRef<MSGraphClientV3>();

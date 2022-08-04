@@ -5,7 +5,7 @@ import { ITheme } from 'office-ui-fabric-react/lib/Styling';
 const lightenDarkenColor = (col, amt) => {
     let usePound = false;
 
-    if (col[0] == "#") {
+    if (col[0] === "#") {
         col = col.slice(1);
         usePound = true;
     }

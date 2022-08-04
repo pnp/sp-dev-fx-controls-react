@@ -41,7 +41,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     const nextPropsElementKey = currProps.triggerPageEvent && currProps.element ? (currProps.element as JSX.Element).key : null;
 
     // Checking if component is in processing state and the key of the current element has been changed
-    if (this.state.processingState === ProcessingState.processing && nextPropsElementKey != null && prevPropsElementKey != nextPropsElementKey) {
+    if (this.state.processingState === ProcessingState.processing && nextPropsElementKey !== null && prevPropsElementKey !== nextPropsElementKey) {
       this.setState({
         processingState: ProcessingState.idle
       });
@@ -305,17 +305,17 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
    */
   private isCarouselButtonDisabled = (nextButton: boolean): boolean => {
     // false by default
-    const isInfinite = this.props.isInfinite != undefined ? this.props.isInfinite : false;
+    const isInfinite = this.props.isInfinite !== undefined ? this.props.isInfinite : false;
     const currentIndex = this.state.currentIndex;
     let result = false;
 
     // Use validation from parent control or calcualte it based on the current index
     if (nextButton) {
-      result = this.props.canMoveNext != undefined ?
+      result = this.props.canMoveNext !== undefined ?
         !this.props.canMoveNext :
         (currentIndex === (this.props.element as JSX.Element[]).length - 1) && !isInfinite;
     } else {
-      result = this.props.canMovePrev != undefined ?
+      result = this.props.canMovePrev !== undefined ?
         !this.props.canMovePrev :
         (0 === currentIndex) && !isInfinite;
     }

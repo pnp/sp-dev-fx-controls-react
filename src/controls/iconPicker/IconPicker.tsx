@@ -201,7 +201,7 @@ export class IconPicker extends React.Component<IIconPickerProps, IIconPickerSta
     return <li className={styles.iconItem}>
       <input type="radio" name={this.radioIdBase} id={radioId} className={styles.iconRadio}
         data-automation-id={`icon-picker-${item}`}
-        checked={item == this.state.currentIcon}
+        checked={item === this.state.currentIcon}
         onChange={() => this.iconOnClick(item)} />
       <label className={styles.iconLabel} htmlFor={radioId} title={item}>
         <Icon iconName={item} className={styles.iconGlyph} />

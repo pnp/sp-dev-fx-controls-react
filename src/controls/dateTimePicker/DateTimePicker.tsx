@@ -148,7 +148,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
           }
         }
         else if (hours === 12) {
-          //am - if hours == 12, set hours to 0 here
+          //am - if hours === 12, set hours to 0 here
           hours = 0;
         }
       }
@@ -245,9 +245,9 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
     } = this.props;
 
     const { textErrorMessage } = dateStrings;
-    const hours: number = value != null ? value.getHours() : this.state.hours;
-    const minutes: number = value != null ? value.getMinutes() : this.state.minutes;
-    const seconds: number = value != null ? value.getSeconds() : this.state.seconds;
+    const hours: number = value !== null ? value.getHours() : this.state.hours;
+    const minutes: number = value !== null ? value.getMinutes() : this.state.minutes;
+    const seconds: number = value !== null ? value.getSeconds() : this.state.seconds;
 
     // Check if the time element needs to be rendered
     let timeElm: JSX.Element = <div className="hidden" />;

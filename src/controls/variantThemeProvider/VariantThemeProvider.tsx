@@ -21,7 +21,7 @@ export const VariantThemeProvider = (props: VariantThemeProviderProps) => {
                 }
             }
 
-            let themeVariantToApply = (props.variantType == VariantType.None)
+            let themeVariantToApply = (props.variantType === VariantType.None)
                 ? workingTheme
                 : generateThemeVariant(workingTheme, workingVariantType);
 

@@ -18,7 +18,7 @@ export class TermLabelAction implements ITermAction {
   }
 
   public applyToTerm = (currentTerm: ITerm): boolean => {
-    const termIndex = findIndex(this._processedTerms, term => term.Id == currentTerm.Id);
+    const termIndex = findIndex(this._processedTerms, term => term.Id === currentTerm.Id);
     if (termIndex >= 0) {
       return false;
     }

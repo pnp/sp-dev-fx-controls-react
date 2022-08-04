@@ -13,7 +13,7 @@ export class OrgAssetsService extends FileBrowserService {
   public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-      
+
       // Retrieve Lib path from folder path
       const isRootSite = this.context.pageContext.site.serverRelativeUrl === '/';
 
@@ -79,7 +79,7 @@ export class OrgAssetsService extends FileBrowserService {
     }
   }
 
-  private _parseOrgAssetsLibraryItem = (libItem: any) => {
+  private _parseOrgAssetsLibraryItem = (libItem: any): ILibrary => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const orgAssetsLibrary: ILibrary = {
       absoluteUrl: this.buildAbsoluteUrl(libItem.LibraryUrl.DecodedUrl),
       title: libItem.DisplayName,

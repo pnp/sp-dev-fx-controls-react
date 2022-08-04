@@ -6,7 +6,6 @@ const fs = require('fs');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-Grid' is not camelCase and will not be type-safe.`);
-build.addSuppression(/Warning/gi);
 
 // Update the version number in the version.ts file
 gulp.task('versionUpdater', (done) => {

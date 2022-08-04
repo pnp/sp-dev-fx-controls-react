@@ -39,7 +39,7 @@ export class GeneralHelper {
         let result: string = null;
         let placeholdersString: string = null;
 
-        if (formatParts[0] == '0')
+        if (formatParts[0] === '0')
             return format.substring(2);
         const isFuture: boolean = formatParts[1] === '1';
         const formatType: string = formatParts[2];
@@ -60,7 +60,7 @@ export class GeneralHelper {
                 result = isFuture ? strings.DateTime['L_RelativeDateTime_AboutAnHourFuture'] : strings.DateTime['L_RelativeDateTime_AboutAnHour'];
                 break;
             case '5':
-                if (timeString == null) {
+                if (timeString === null) {
                     result = isFuture ? strings.DateTime['L_RelativeDateTime_Tomorrow'] : strings.DateTime['L_RelativeDateTime_Yesterday'];
                 }
                 else {
@@ -74,7 +74,7 @@ export class GeneralHelper {
                     Number(timeString));
                 break;
             case '7':
-                if (dayString == null) {
+                if (dayString === null) {
                     result = timeString;
                 }
                 else {
@@ -90,9 +90,9 @@ export class GeneralHelper {
             case '9':
                 result = strings.DateTime['L_RelativeDateTime_Today'];
         }
-        if (placeholdersString != null) {
+        if (placeholdersString !== null) {
             result = placeholdersString.replace("{0}", timeString);
-            if (dayString != null) {
+            if (dayString !== null) {
                 result = result.replace("{1}", dayString);
             }
         }
@@ -104,7 +104,7 @@ export class GeneralHelper {
      * I've tried to rename all the vars to have meaningful names... but some were too unclear
      */
     public static getLocalizedCountValue(format: string, first: string, second: number): string {
-        if (format == undefined || first == undefined || second == undefined)
+        if (format === undefined || first === undefined || second === undefined)
             return null;
         let result: string = '';
         let a = -1;
@@ -113,19 +113,19 @@ export class GeneralHelper {
         for (let firstOperandOptionsIdx = 0, firstOperandOptionsLen = firstOperandOptions.length; firstOperandOptionsIdx < firstOperandOptionsLen; firstOperandOptionsIdx++) {
             const firstOperandOption: string = firstOperandOptions[firstOperandOptionsIdx];
 
-            if (firstOperandOption == null || firstOperandOption === '')
+            if (firstOperandOption === null || firstOperandOption === '')
                 continue;
             let optionParts: string[] = firstOperandOption.split(',');
 
             for (var optionPartsIdx = 0, optionPartsLen = optionParts.length; optionPartsIdx < optionPartsLen; optionPartsIdx++) {
                 const optionPart: string = optionParts[optionPartsIdx];
 
-                if (optionPart == null || optionPart === '')
+                if (optionPart === null || optionPart === '')
                     continue;
                 if (isNaN(optionPart.parseNumberInvariant())) {
                     const dashParts: string[] = optionPart.split('-');
 
-                    if (dashParts == null || dashParts.length !== 2)
+                    if (dashParts === null || dashParts.length !== 2)
                         continue;
                     var j, n;
 
@@ -165,7 +165,7 @@ export class GeneralHelper {
         if (a !== -1) {
             var e = format.split('||');
 
-            if (e != null && e[a] != null && e[a] != '')
+            if (e !== null && e[a] !== null && e[a] !== '')
                 result = e[a];
         }
         return result;
@@ -206,7 +206,7 @@ export class GeneralHelper {
      * @param value value
      */
     public static isDefined(value): boolean {
-        return value != null;
+        return value !== null;
     }
 
     /**
@@ -263,7 +263,7 @@ export class GeneralHelper {
     }
 
     public static formatBytes(bytes, decimals) {
-      if (bytes == 0) {
+      if (bytes === 0) {
         return strings.EmptyFileSize;
       }
 

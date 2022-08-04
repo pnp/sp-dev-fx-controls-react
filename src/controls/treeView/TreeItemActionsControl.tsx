@@ -64,7 +64,7 @@ export default class TreeItemActionsControl extends React.Component<ITreeItemAct
     return (
       <div>
         {
-          displayMode == TreeItemActionsDisplayMode.ContextualMenu ?
+          displayMode === TreeItemActionsDisplayMode.ContextualMenu ?
             <DropdownTreeItemAction key={`DdAction-${treeItem.key}`}
               treeItemActions={availableActions}
               treeItem={treeItem}

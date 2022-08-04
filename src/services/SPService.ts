@@ -7,6 +7,7 @@ import { SPHelper, urlCombine } from "../common/utilities";
 import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrderBy } from "./ISPService";
 
 interface ICachedListItems {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     items: any[];
     expiration: number;
 }
@@ -151,7 +152,7 @@ export default class SPService implements ISPService {
         if (Array.isArray(options.baseTemplate)) {
           const numbers: number[] = options.baseTemplate;
           const mapNumbers = numbers.map((i) => {
-            if (i == numbers[0]) {
+            if (i === numbers[0]) {
               return `BaseTemplate eq ${i}`;
             } else {
               return `or BaseTemplate eq ${i}`;
@@ -202,11 +203,11 @@ export default class SPService implements ISPService {
       filterString?: string,
       substringSearch: boolean = false,
       orderBy?: string,
-      cacheInterval: number = 1): Promise<any[]> {
+      cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
-    let processItems: ((items: any[]) => any[]) | undefined;
+    let processItems: ((items: any[]) => any[]) | undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     if (field && field.TypeAsString === 'Calculated' && SPHelper.isTextFieldType(field.ResultType)) { // for calculated fields we need to use CAML query
       let orderByStr = '';
@@ -243,6 +244,7 @@ export default class SPService implements ISPService {
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
       isPost = false;
 
+      //eslint-disable-next-line @typescript-eslint/no-explicit-any
       processItems = (items: any[]) => {
 
         this._cachedListItems.set(mapKey, {
@@ -286,7 +288,7 @@ export default class SPService implements ISPService {
     keyInternalColumnName?: string,
     webUrl?: string,
     filterList?: string
-  ): Promise<any[]> {
+  ): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     let _filter: string = `$filter=startswith(${internalColumnName},'${encodeURIComponent(
       filterText.replace("'", "''")
     )}') `;
@@ -297,9 +299,9 @@ export default class SPService implements ISPService {
 
     // test wild character "*"  if "*" load first 30 items
     if (
-      (filterText.trim().indexOf("*") == 0 &&
-        filterText.trim().length == 1) ||
-      filterText.trim().length == 0
+      (filterText.trim().indexOf("*") === 0 &&
+        filterText.trim().length === 1) ||
+      filterText.trim().length === 0
     ) {
       _filter = "";
       costumfilter = filterList ? `$filter=${filterList}&` : "";
@@ -341,7 +343,7 @@ export default class SPService implements ISPService {
    * @param itemId
    * @param webUrl
    */
-  public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> {
+  public async getListItemAttachments(listId: string, itemId: number, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
@@ -375,7 +377,7 @@ export default class SPService implements ISPService {
       };
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/getByFileName(@fileName)/RecycleObject?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
-      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+      await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);
@@ -396,7 +398,7 @@ export default class SPService implements ISPService {
       // Remove special characters in FileName
       //Updating the escape characters for filename as per the doucmentations
       //https://support.microsoft.com/en-us/kb/905231
-      fileName = fileName.replace(/[\~\#\%\&\*\{\}\\\:\<\>\?\/\+\|]/gi, '');
+      fileName = fileName.replace(/[~#%&*{}\\:<>?/+|]/gi, '');
       // Check if attachment exists
       const fileExists = await this.checkAttachmentExists(listId, itemId, fileName, webUrl);
       // Delete attachment if it exists
@@ -409,7 +411,7 @@ export default class SPService implements ISPService {
       };
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/add(FileName=@fileName)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
-      const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+      await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
       return;
     } catch (error) {
       return Promise.reject(error);
@@ -424,7 +426,7 @@ export default class SPService implements ISPService {
    * @param fileName
    * @param webUrl
    */
-  public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+  public async getAttachment(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/GetByFileBame(@fileName))?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
     const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
@@ -446,7 +448,7 @@ export default class SPService implements ISPService {
    * @param fileName
    * @param webUrl
    */
-  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> {
+  public async checkAttachmentExists(listId: string, itemId: number, fileName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const listServerRelativeUrl = await this.getListServerRelativeUrl(listId, webUrl);
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
@@ -506,7 +508,7 @@ export default class SPService implements ISPService {
     return;
   }
 
-  public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
+  public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
@@ -526,7 +528,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> {
+  public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
@@ -550,7 +552,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any> {
+  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
@@ -570,7 +572,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> {
+  public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id&$expand=${fieldName}`;
@@ -614,7 +616,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> {
+  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
@@ -677,7 +679,7 @@ export default class SPService implements ISPService {
     return result;
   }
 
-  private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] {
+  private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     const lowercasedFilterText = filterText.toLowerCase();
 
     return items.filter(i => {

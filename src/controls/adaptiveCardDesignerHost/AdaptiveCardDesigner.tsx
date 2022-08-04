@@ -111,7 +111,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             CardDesigner.ToolbarCommands.NewCard,
             (sender) => {
                 let text = 'Do you want to create a new Card?';
-                if (confirm(text) == true) {
+                if (confirm(text) === true) {
                     cardDesigner.setCard((props.newCardPayload) ? props.newCardPayload : EmptyCard);
                     cardDesigner.clearUndoStack();
                     cardDesigner.designerSurface.updateLayout(true);

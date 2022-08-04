@@ -816,7 +816,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * This prevents the user of adding an empty hyperlink
    */
   private checkLinkUrl = () => {
-    if (this.state.insertUrl !== undefined && this.state.insertUrl != "") {
+    if (this.state.insertUrl !== undefined && this.state.insertUrl !== "") {
       return false;
     }
     return true;
@@ -827,7 +827,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * This prevents the user of adding an empty image
    */
   private checkImageLinkUrl = () => {
-    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl != "") {
+    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl !== "") {
       return false;
     }
     return true;

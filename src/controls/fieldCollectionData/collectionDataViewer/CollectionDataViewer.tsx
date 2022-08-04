@@ -297,7 +297,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
     if (!items || items.length <= 0) {
       return false;
     }
-    if (executeFiltering == null) {
+    if (executeFiltering === null) {
       return false;
     }
     if (isEmpty(searchFilter)) {

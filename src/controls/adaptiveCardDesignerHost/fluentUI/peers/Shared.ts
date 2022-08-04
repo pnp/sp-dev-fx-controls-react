@@ -47,7 +47,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
             );
         }
 
-        if (nameValuePairs.length == 0) {
+        if (nameValuePairs.length === 0) {
             let messageTextBlock = new Adaptive.TextBlock();
             messageTextBlock.spacing = Adaptive.Spacing.Small;
             messageTextBlock.text = this.messageIfEmpty;

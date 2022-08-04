@@ -48,7 +48,7 @@ export class FilesSearchService {
   /**
    * Executes Recent files search.
    */
-  public executeRecentSearch = async (accepts?: string[]) => {
+  public executeRecentSearch = async (accepts?: string[]): Promise<IRecentFile[] | undefined> => {
     try {
       const webId = this.context.pageContext.web.id.toString();
       const siteId = this.context.pageContext.site.id.toString();
@@ -120,7 +120,7 @@ export class FilesSearchService {
       return recentFilesResult;
     } catch (err) {
       console.error(`[BingFilesService.executeRecentSearch]: Err='${err.message}'`);
-      return null;
+      return undefined;
     }
   }
 
@@ -217,11 +217,11 @@ export class FilesSearchService {
   /**
    * Parses Recent Search results.
    */
-  private parseRecentSearchResult = (cells: Array<any>) => {
-    const titleCell = find(cells, x => x.Key == "Title");
-    const keyCell = find(cells, x => x.Key == "UniqueID");
-    const fileUrlCell = find(cells, x => x.Key == "DefaultEncodingURL");
-    const editedByCell = find(cells, x => x.Key == "ModifiedBy");
+  private parseRecentSearchResult = (cells: Array<any>): IRecentFile => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    const titleCell = find(cells, x => x.Key === "Title");
+    const keyCell = find(cells, x => x.Key === "UniqueID");
+    const fileUrlCell = find(cells, x => x.Key === "DefaultEncodingURL");
+    const editedByCell = find(cells, x => x.Key === "ModifiedBy");
 
     const recentFile: IRecentFile = {
       key: keyCell ? keyCell.Value : null,
@@ -238,8 +238,8 @@ export class FilesSearchService {
    */
   private parseBingSearchResult = (bingResult: IBingSearchResult): ISearchResult => {
     // Get dimensions
-    const width: number = bingResult!.thumbnail!.width ? bingResult!.thumbnail!.width : bingResult!.width;
-    const height: number = bingResult!.thumbnail!.height ? bingResult!.thumbnail!.height : bingResult!.height;
+    const width: number = bingResult.thumbnail.width ? bingResult.thumbnail.width : bingResult.width;
+    const height: number = bingResult.thumbnail.height ? bingResult.thumbnail.height : bingResult.height;
 
     // Create a search result
     const searchResult: ISearchResult = {
@@ -256,7 +256,7 @@ export class FilesSearchService {
   /**
    * Builds a file filter using the accepted file extensions
    */
-  private _getFileFilter(accepts?: string[]) {
+  private _getFileFilter(accepts?: string[]): string | undefined {
     let fileFilter: string = undefined;
     if (accepts) {
       fileFilter = " AND (";

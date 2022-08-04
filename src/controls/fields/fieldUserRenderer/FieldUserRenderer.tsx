@@ -237,7 +237,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
       workPhone: userProfileProperties.workPhone,
       cellPhone: userProfileProperties.cellPhone,
       userUrl: this._getUserUrlTemplate().replace('{0}', principal.email), //userProfileProperties.userUrl
-      currentUser: principal.id == this.props.context.pageContext.legacyPageContext.userId
+      currentUser: principal.id === this.props.context.pageContext.legacyPageContext.userId
     };
   }
 

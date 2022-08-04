@@ -247,13 +247,13 @@ const ActionButton = (props: IActionButtonProps) => {
                 </div>
             </CompoundButton>;
     } else {
-        if (props.style.toLocaleLowerCase().trim() == 'positive') {
+        if (props.style.toLocaleLowerCase().trim() === 'positive') {
             control = <PrimaryButton
                 className={props.className}
                 text={props.text}
                 theme={theme}
                 onClick={props.actionClickHandler} />;
-        } else if (props.style.toLocaleLowerCase().trim() == 'destructive') {
+        } else if (props.style.toLocaleLowerCase().trim() === 'destructive') {
             const dangerButtonTheme: ITheme = createTheme({ palette: redPalette });
             control = <PrimaryButton
                 className={props.className}

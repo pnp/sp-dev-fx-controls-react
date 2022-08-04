@@ -99,7 +99,7 @@ export const Toolbar = (props: IToolbarProps) => {
     <FluentUIThemeConsumer
       render={(globalTheme) => {
 
-        if (!globalTheme || globalTheme.fontFaces.length == 0) {
+        if (!globalTheme || globalTheme.fontFaces.length === 0) {
           globalTheme = teamsTheme;
         }
         return <ToolbarTheme globalTheme={globalTheme}>

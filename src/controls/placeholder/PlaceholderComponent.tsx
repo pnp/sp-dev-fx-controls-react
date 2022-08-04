@@ -62,8 +62,8 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
     * Return/re-render, bexeting the function, if the props change
     */
     for (const property in nextProps) {
-      if (property != '_onConfigure') {
-        if (nextProps[property] != this.props[property]) {
+      if (property !== '_onConfigure') {
+        if (nextProps[property] !== this.props[property]) {
           return true;
         }
       }
