@@ -45,7 +45,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.getInitialPersons(this.props);
   }
 
@@ -53,7 +53,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentWillUpdate(nextProps: IPeoplePickerProps, nextState: IPeoplePickerState): void {
+  public UNSAFE_componentWillUpdate(nextProps: IPeoplePickerProps, nextState: IPeoplePickerState): void {
     if (!isEqual(this.props.defaultSelectedUsers, nextProps.defaultSelectedUsers) ||
       this.props.groupName !== nextProps.groupName ||
       this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
@@ -62,7 +62,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
-  public componentWillReceiveProps(nextProps: IPeoplePickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IPeoplePickerProps) {
     if (nextProps.errorMessage !== this.props.errorMessage) {
       this.setState({
         errorMessage: nextProps.errorMessage

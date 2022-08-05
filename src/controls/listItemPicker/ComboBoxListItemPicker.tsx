@@ -80,7 +80,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     }
   }
 
-  public async componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
+  public async UNSAFE_componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
     if (nextProps.listId !== this.props.listId) {
       this.setState({
         selectedItems: [],

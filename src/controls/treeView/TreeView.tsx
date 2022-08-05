@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
 import { Theme } from '@fluentui/react-theme-provider/lib/types';
-import { Json } from 'adaptive-expressions/lib/builtinFunctions';
 import uniqBy from 'lodash/uniqBy';
 import * as telemetry from '../../common/telemetry';
 import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
@@ -56,7 +55,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
           result = key;
           return true;
         }
-        let temp = this.pathTo(children, target);
+        const temp = this.pathTo(children, target);
         if (temp) {
           if (!alreadyExistInNodesToExpand) {
             this.nodesToExpand.push(key);
@@ -70,7 +69,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
   }
 
   private getSelectedItems(treeItems: ITreeItem[], selectedKeys: string[], selectedChildren: boolean): ITreeItem[] {
-    let selectedItems: ITreeItem[] = [];
+    const selectedItems: ITreeItem[] = [];
 
     treeItems.forEach(item => {
       if (selectedKeys.indexOf(item.key) !== -1 && item.selectable !== false && !item.disabled) {
@@ -133,7 +132,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
    * Unselects all child nodes of selected parent.
    */
   private unSelectChildren(item, unselectArray: string[]): void {
-    const tempItem: any = item;
+    const tempItem: any = item; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     if (tempItem.children) {
       tempItem.children.forEach(element => {
@@ -181,7 +180,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     }
     else {
       // Remove the item from the list of active nodes
-      let unselectArray: string[] = [];
+      const unselectArray: string[] = [];
       unselectArray.push(item.key);
 
       if (this.checkIfChildrenShouldBeSelected(SelectChildrenMode.Unselect)) {
@@ -202,7 +201,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     }
   }
 
-  private checkIfChildrenShouldBeSelected(testMode: SelectChildrenMode) {
+  private checkIfChildrenShouldBeSelected(testMode: SelectChildrenMode): boolean {
     let selectChildrenMode = SelectChildrenMode.None;
     if (this.props.selectChildrenMode) {
       selectChildrenMode = this.props.selectChildrenMode;
@@ -219,7 +218,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     return false;
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     const {
       items,
       defaultSelectedKeys
@@ -232,7 +231,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
     }
   }
 
-  public componentWillReceiveProps(nextProps: ITreeViewProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: ITreeViewProps): void {
     const {
       items,
       defaultSelectedKeys
@@ -285,6 +284,7 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
                 {
                   items.map((treeNodeItem, index) => (
                     <TreeItem
+                      key={treeNodeItem.key}
                       treeItem={treeNodeItem}
                       leftOffset={20}
                       isFirstRender={true}

@@ -195,7 +195,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     return true;
   }
 
-  public componentWillReceiveProps(nextProps: IRichTextProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IRichTextProps) {
     if (nextProps.value !== this.props.value && nextProps.value !== this.state.text) {
       this.setState({
         text: nextProps.value

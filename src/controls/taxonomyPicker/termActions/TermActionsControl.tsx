@@ -24,7 +24,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.getAvailableActions();
   }
 

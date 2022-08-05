@@ -96,7 +96,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param prevProps
    * @param prevState
    */
-  public componentWillReceiveProps(nextProps: IListViewProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: IListViewProps): void {
 
     const modifiedNextProps = this._filterFunctions(nextProps);
     const modifiedProps = this._filterFunctions(this.props);

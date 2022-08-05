@@ -26,7 +26,7 @@ export default class TreeItemActionsControl extends React.Component<ITreeItemAct
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.getAvailableActions();
   }
 

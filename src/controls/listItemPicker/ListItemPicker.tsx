@@ -37,7 +37,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     this.loadField(this.props);
   }
 
-  public componentWillReceiveProps(nextProps: IListItemPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IListItemPickerProps) {
     let newSelectedItems: any[] | undefined;
     if (this.props.listId !== nextProps.listId) {
       newSelectedItems = [];

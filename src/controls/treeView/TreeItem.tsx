@@ -144,7 +144,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * @param nextProps
    * @param nextContext
    */
-  public componentWillReceiveProps(nextProps: ITreeItemProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: ITreeItemProps): void {
     const {
       selectionMode,
       nodesToExpand,

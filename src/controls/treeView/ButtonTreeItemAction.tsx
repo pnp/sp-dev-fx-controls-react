@@ -12,7 +12,7 @@ export default class ButtonTreeItemAction extends React.Component<IConcreteTreeI
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.checkForImmediateInvocations();
   }
 

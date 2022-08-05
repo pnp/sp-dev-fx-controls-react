@@ -83,7 +83,7 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.setState({
       dialogId: `dialog-${Guid.newGuid().toString()}`
     });
@@ -96,7 +96,7 @@ export class IFrameDialog extends React.Component<IFrameDialogProps, IFrameDialo
     this.setDialogStyling();
   }
 
-  public componentWillReceiveProps(nextProps: IFrameDialogProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFrameDialogProps) {
     if (nextProps.hidden && nextProps.hidden !== this.props.hidden) {
       this.setState({
         isStylingSet: false

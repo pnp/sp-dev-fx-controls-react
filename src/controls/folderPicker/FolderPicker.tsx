@@ -27,7 +27,7 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
     };
   }
 
-  public componentWillReceiveProps(nextProps: IFolderPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFolderPickerProps) {
 
     this.setState({
       selectedFolder: nextProps.defaultFolder,

@@ -79,7 +79,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    *
    * @param nextProps
    */
-  public componentWillReceiveProps(nextProps: IChartControlProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: IChartControlProps): void {
     if (nextProps.datapromise !== this.props.datapromise) {
       this.setState({
         isLoading: false

@@ -13,7 +13,7 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.checkForImmediateInvocations();
   }
 

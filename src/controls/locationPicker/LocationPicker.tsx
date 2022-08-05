@@ -42,7 +42,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
   }
 
-  public componentWillReceiveProps(nextProps: ILocationPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: ILocationPickerProps) {
     if (!isEqual(nextProps.defaultValue, this.props.defaultValue)) {
       if (nextProps.defaultValue) {
         this.setState({ selectedItem: nextProps.defaultValue, currentMode: Mode.view });

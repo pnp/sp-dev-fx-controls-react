@@ -8,7 +8,7 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.checkForImmediateInvocations();
   }
 

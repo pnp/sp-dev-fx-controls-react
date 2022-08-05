@@ -115,7 +115,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
     };
   }
 
-  public componentWillReceiveProps(nextProps: IFieldUserRendererProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFieldUserRendererProps) {
     const currentPrincipals = this.props.users ? this.props.users.map(u => u.id) : [];
     const newPrincipals = nextProps.users ? nextProps.users.map(u => u.id) : [];
 

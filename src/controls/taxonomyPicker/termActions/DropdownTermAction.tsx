@@ -10,7 +10,7 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.checkForImmediateInvocations();
   }
 

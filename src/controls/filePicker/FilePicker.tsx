@@ -103,7 +103,7 @@ export class FilePicker extends React.Component<
  *
  * @param nextProps
  */
-  public componentWillReceiveProps(nextProps: IFilePickerProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFilePickerProps): void {
     if (nextProps.isPanelOpen || nextProps.isPanelOpen !== this.props.isPanelOpen) {
       this.setState({
         panelOpen: nextProps.isPanelOpen

@@ -45,7 +45,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   /**
    * componentWillUpdate lifecycle hook
    */
-  public componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
+  public UNSAFE_componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
     if (!isEqual(this.props.coordinates, nextProps.coordinates)) {
       this.setState({
         coordinates: nextProps.coordinates

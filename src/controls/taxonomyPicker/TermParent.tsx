@@ -31,7 +31,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   /**
    * componentWillMount
    */
-  public componentWillMount() {
+  public UNSAFE_componentWillMount() {
     // fix term depth if anchroid for rendering
     if (this.props.anchorId)
     {
