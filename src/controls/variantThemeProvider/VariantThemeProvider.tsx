@@ -5,10 +5,10 @@ import { useCallback } from "react";
 import { generateThemeFromColors, generateThemeVariant, getDefaultTheme } from "./VariantThemeProviderHelpers";
 import { VariantThemeProviderProps, VariantType } from "./VariantThemeProviderProps";
 
-export const VariantThemeProvider = (props: VariantThemeProviderProps) => {
+export const VariantThemeProvider = (props: VariantThemeProviderProps): JSX.Element => {
     const themeToApply = useCallback(
         () => {
-            let workingVariantType = (props.variantType) ? props.variantType : VariantType.None;
+            const workingVariantType = (props.variantType) ? props.variantType : VariantType.None;
             let workingTheme: IPartialTheme | ITheme;
 
             if (props.themeColors) {
@@ -21,7 +21,7 @@ export const VariantThemeProvider = (props: VariantThemeProviderProps) => {
                 }
             }
 
-            let themeVariantToApply = (props.variantType === VariantType.None)
+            const themeVariantToApply = (props.variantType === VariantType.None)
                 ? workingTheme
                 : generateThemeVariant(workingTheme, workingVariantType);
 
