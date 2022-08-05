@@ -103,13 +103,13 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       if (existingIndex >= 0) {
         newSelectedSites.splice(existingIndex, 1);
       }
-      else {
+      else if (item.data) {
         newSelectedSites.push({
-          ...item.data!
+          ...item.data
         });
       }
     }
-    else {
+    else if (item.data) {
       newSelectedSites = [{
         ...item.data!
       }];
@@ -188,7 +188,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     return <div className={styles.siteOption}>
       <div className={styles.siteOptionContent}>
         <span className={styles.siteOptionTitle}>{option.text}</span>
-        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data!.url)}</span>
+        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data ? option.data.url : '')}</span>
       </div>
     </div>;
   };
@@ -244,6 +244,9 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       const copy = orderBy(newSites, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
       setAllSites(copy);
       setIsLoading(false);
+    })
+    .catch(() => {
+      // no-op;
     });
 
   }, [context, isLoading, mode, limitToCurrentSiteCollection]);

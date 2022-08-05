@@ -21,14 +21,22 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
    * Prepates contextual menu items for dropdown.
    */
   private prepareContextualMenuProps = (treeItem: ITreeItem, treeItemActions: ITreeItemAction[]): IContextualMenuProps => {
-    let items: IContextualMenuItem[] = [];
+    const items: IContextualMenuItem[] = [];
     let useTargetWidth = true;
 
     for (const treeItemAction of treeItemActions) {
       if (!treeItemAction.hidden) {
-        let treeItemActionMenuItem: IContextualMenuItem = {
+        const treeItemActionMenuItem: IContextualMenuItem = {
           key: treeItem.key.toString(),
-          onClick: () => { this.onActionExecute(treeItemAction); }
+          onClick: () => {
+            this.onActionExecute(treeItemAction)
+            .then(() => {
+              // no-op;
+            })
+            .catch(() => {
+              // no-op;
+            });
+          }
         };
 
         treeItemActionMenuItem.text = treeItemAction.title;
@@ -50,11 +58,17 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
   /**
    * Check if there are action to immediatly invoke
    */
-  private checkForImmediateInvocations() {
+  private checkForImmediateInvocations(): void {
     const { treeItemActions } = this.props;
     for (const action of treeItemActions) {
       if (action.invokeActionOnRender) {
-        this.onActionExecute(action);
+        this.onActionExecute(action)
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
       }
     }
   }
@@ -62,8 +76,8 @@ export class DropdownTreeItemAction extends React.Component<IConcreteTreeItemAct
   /**
    * Handler to execute selected action.
    */
-  private onActionExecute = async (treeItemAction: ITreeItemAction) => {
-    const updateAction = await treeItemAction.actionCallback(this.props.treeItem);
+  private onActionExecute = async (treeItemAction: ITreeItemAction): Promise<void> => {
+    await treeItemAction.actionCallback(this.props.treeItem);
     this.props.treeItemActionCallback();
   }
 

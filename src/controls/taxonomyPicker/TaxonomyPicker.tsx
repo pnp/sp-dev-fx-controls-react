@@ -69,8 +69,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
   /**
    * componentDidMount lifecycle hook
    */
-  public componentDidMount() {
-    this.validateTerms();
+  public componentDidMount(): void {
+    this.validateTerms()
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
   /**
@@ -82,7 +88,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     });
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: ITaxonomyPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: ITaxonomyPickerProps): void {
     let newState: ITaxonomyPickerState | undefined;
     // Check if the initial values objects are not equal, if that is the case, data can be refreshed
     if (!isEqual(this.props.initialValues, nextProps.initialValues)) {
@@ -117,7 +123,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       useSessionStorage
     } = this.props;
 
-    let isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
+    const isValidateOnLoad = validateOnLoad && initialValues && initialValues.length >= 1;
     if (isValidateOnLoad) {
 
       const notFoundTerms: string[] = [];
@@ -149,20 +155,27 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    */
   private loadTermStores(): void {
     if (this.props.termActions && this.props.termActions.initialize) {
-      this.props.termActions.initialize(this.termsService);
-      // this.props.termActions.actions.forEach(x => {
-      //   x.initialize(this.termsService);
-      // });
+      this.props.termActions.initialize(this.termsService)
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
     }
 
-    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage).then((response: ITermSet) => {
-      // Check if a response was retrieved
-      let termSetAndTerms = response ? response : null;
-      this.setState({
-        termSetAndTerms,
-        loaded: true
+    this.termsService.getAllTerms(this.props.termsetNameOrID, this.props.hideDeprecatedTags, this.props.hideTagsNotAvailableForTagging, this.props.useSessionStorage)
+      .then((response: ITermSet) => {
+        // Check if a response was retrieved
+        const termSetAndTerms = response ? response : null;
+        this.setState({
+          termSetAndTerms,
+          loaded: true
+        });
+      })
+      .catch(() => {
+        // no-op;
       });
-    });
   }
 
   /**
@@ -223,7 +236,13 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     this.cancel = false;
     this.onClosePanel();
 
-    this.validate(this.state.activeNodes);
+    this.validate(this.state.activeNodes)
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
   /**
@@ -322,12 +341,18 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
  * Fires When Items Changed in TermPicker
  * @param node
  */
-  private termsFromPickerChanged(terms: IPickerTerms) {
+  private termsFromPickerChanged(terms: IPickerTerms): void {
     this.setState({
       activeNodes: terms
     });
 
-    this.validate(terms);
+    this.validate(terms)
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
   /**
@@ -389,14 +414,14 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
     return !errorMessage;
   }
 
-  private onNewTerm = (newLabel: string) => {
+  private onNewTerm = (newLabel: string): void => {
     this.props.onNewTerm(
-        {
-          key: EmptyGuid,
-          name: newLabel,
-          path: newLabel,
-          termSet: this.termsService.cleanGuid(this.props.termsetNameOrID)
-        }
+      {
+        key: EmptyGuid,
+        name: newLabel,
+        path: newLabel,
+        termSet: this.termsService.cleanGuid(this.props.termsetNameOrID)
+      }
     );
   }
 
@@ -410,9 +435,9 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
       const target: HTMLInputElement = event.target as HTMLInputElement;
       const targetValue = !!target ? target.value : null;
 
-      if(!!this.props.onGetErrorMessage && !!targetValue) {
-          await this.validateOnGetErrorMessage(targetValue);
-        } else {
+      if (!!this.props.onGetErrorMessage && !!targetValue) {
+        await this.validateOnGetErrorMessage(targetValue);
+      } else {
         if (!!targetValue) {
           this.invalidTerm = targetValue;
         }
@@ -442,7 +467,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
    * @param termSet
    * @param isChecked
    */
-  private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean) => {
+  private termSetSelectedChange = (termSet: ITermSet, isChecked: boolean): void => {
     const ts: ITermSet = { ...termSet };
     // Clean /Guid.../ from the ID
     ts.Id = this.termsService.cleanGuid(ts.Id);

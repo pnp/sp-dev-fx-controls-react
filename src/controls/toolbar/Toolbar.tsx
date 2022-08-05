@@ -1,6 +1,5 @@
 import * as React from "react";
 import omit from "lodash/omit";
-import cloneDeep from "lodash/cloneDeep";
 
 import {
   Box,
@@ -57,7 +56,7 @@ export interface IToolbarProps extends PropsOfElement<"div"> {
   onFindQueryChange?: (findQuery: string) => string;
 }
 
-export const Toolbar = (props: IToolbarProps) => {
+export const Toolbar = (props: IToolbarProps): JSX.Element => {
   const { actionGroups, filters, selectedFilterIds, filtersSingleSelect, find } = props;
 
   const allActions = flattenedActions(actionGroups);
@@ -70,7 +69,7 @@ export const Toolbar = (props: IToolbarProps) => {
 
   const layoutQuery = React.useRef<MediaQueryList | null>(null);
 
-  const onChangeLayout = () => {
+  const onChangeLayout = (): void => {
     setLayout(
       layoutQuery.current && layoutQuery.current.matches ? "verbose" : "compact"
     );

@@ -38,7 +38,7 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
    * Gets the action button styling
    */
   private getTermActionActionButtonStyle = (): React.CSSProperties => {
-    let result: React.CSSProperties = {
+    const result: React.CSSProperties = {
       backgroundColor: "transparent",
       width: this.props.displayStyle === TermActionsDisplayStyle.icon ? "32px" : null,
       height: "32px"
@@ -50,11 +50,17 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
   /**
    * Check if there are action to immediatly invoke
    */
-  private checkForImmediateInvocations() {
+  private checkForImmediateInvocations(): void {
     const { termActions } = this.props;
     for (const action of termActions) {
       if (action.invokeActionOnRender) {
-        this.onActionExecute(action);
+        this.onActionExecute(action)
+          .then(() => {
+            // no-op;
+          })
+          .catch(() => {
+            // no-op;
+          });
       }
     }
   }
@@ -62,7 +68,7 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
   /**
    * On action execution
    */
-  private onActionExecute = async (termAction: ITermAction) => {
+  private onActionExecute = async (termAction: ITermAction): Promise<void> => {
     const updateAction = await termAction.actionCallback(this.props.spTermService, this.props.term);
     this.props.termActionCallback(updateAction);
   }
@@ -71,7 +77,7 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
   /**
    * Render all the term actions
    */
-  private renderTermActions() {
+  private renderTermActions(): JSX.Element[] {
     const { term, termActions, termActionChanges } = this.props;
     // Get term action changes
     const tac: ActionChange[] = termActionChanges[term.Id];
@@ -90,22 +96,31 @@ export default class ButtonTermAction extends React.Component<IConcreteTermActio
         }
 
         return (
-            <div>
-              <CommandBarButton split={true}
-                                onClick={() => { this.onActionExecute(termAction); }}
-                                iconProps={{
-                                  iconName: iconName || null,
-                                  style: { display: iconName ? null : "none"}
-                                }}
-                                disabled={actionDisabled}
-                                text={text}
-                                title={btnTitle}
-                                name={name}
-                                key={term.Id}
-                                style={this.getTermActionActionButtonStyle()} />
-            </div>
-          );
-        }
+          <div key={termAction.id}>
+            <CommandBarButton
+              split={true}
+              onClick={() => {
+                this.onActionExecute(termAction)
+                  .then(() => {
+                    // no-op;
+                  })
+                  .catch(() => {
+                    // no-op;
+                  });
+              }}
+              iconProps={{
+                iconName: iconName || null,
+                style: { display: iconName ? null : "none" }
+              }}
+              disabled={actionDisabled}
+              text={text}
+              title={btnTitle}
+              name={name}
+              key={term.Id}
+              style={this.getTermActionActionButtonStyle()} />
+          </div>
+        );
+      }
       )
     );
   }

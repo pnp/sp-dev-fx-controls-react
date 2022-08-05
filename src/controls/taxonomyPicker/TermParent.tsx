@@ -31,7 +31,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   /**
    * componentWillMount
    */
-  public UNSAFE_componentWillMount() {
+  public UNSAFE_componentWillMount(): void {
     // fix term depth if anchroid for rendering
     if (this.props.anchorId)
     {
@@ -57,7 +57,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
   /**
    * Handle the click event: collapse or expand
    */
-  private _handleClick() {
+  private _handleClick(): void {
     this.setState({
       expanded: !this.state.expanded
     });
@@ -86,7 +86,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     // Check if the terms have been loaded
     if (this.state.loaded) {
       if (this._terms.length > 0) {
-        let disabledPaths = [];
+        const disabledPaths = [];
         termElm = (
           <div style={styleProps}>
             {

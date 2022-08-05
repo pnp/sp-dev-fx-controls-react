@@ -32,7 +32,7 @@ export class TermLabelAction implements ITermAction {
       this._labels = await spTermService.getTermLabels(currentTerm.Id);
 
       if (this._labels) {
-        let termLabel: string = this._labels.join(" ; ");
+        const termLabel: string = this._labels.join(" ; ");
         updateAction = {
           updateActionType: UpdateType.updateTermLabel,
           value: termLabel

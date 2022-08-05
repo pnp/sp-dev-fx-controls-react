@@ -61,7 +61,7 @@ export interface ITreeItemProps {
    */
   onRenderItem?: (item: ITreeItem) => JSX.Element;
 
-  nodesToExpand: any[];
+  nodesToExpand: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
   * Specifies whether current tree item's children should be rendered as expanded.
   */
@@ -99,7 +99,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     super(props);
 
     // Check if current item is selected
-    let active = props.activeItems.filter(item => item.key === props.treeItem.key);
+    const active = props.activeItems.filter(item => item.key === props.treeItem.key);
 
     let expanded = props.defaultExpanded;
     if (!expanded && (props.nodesToExpand && props.nodesToExpand.indexOf(props.treeItem.key) !== -1)) {
@@ -153,7 +153,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     // If selection is turned on, set the item as selected
     if (selectionMode !== TreeViewSelectionMode.None) {
 
-      let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
+      const active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
       let _isExpanded: boolean = this.state.expanded;
 
@@ -219,10 +219,9 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
   /**
    * Process the child nodes
    */
-  public createChildNodes = (list, paddingLeft) => {
+  public createChildNodes = (list: ITreeItem[], paddingLeft: number): JSX.Element[] => {
     if (list.length) {
       const {
-        treeItem,
         selectionMode,
         activeItems,
         parentCallbackExpandCollapse,
@@ -235,11 +234,12 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
 
       const { expanded } = this.state;
 
-      let childrenWithHandlers = list.map((item, index) => {
+      const childrenWithHandlers = list.map((item) => {
         return (
           <TreeItem
+            key={item.key}
             treeItem={item}
-            defaultExpanded={defaultExpandedChildren ? expanded : expanded && !item.hasOwnProperty('children')}
+            defaultExpanded={defaultExpandedChildren ? expanded : expanded && !item.children}
             defaultExpandedChildren={defaultExpandedChildren}
             leftOffset={paddingLeft}
             selectionMode={selectionMode}
@@ -264,6 +264,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * Default action callback
    */
   private treeItemActionCallback = (): void => {
+    // no-op;
   }
 
   /**
@@ -297,8 +298,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
                 alt={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
                 title={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
                 onClick={() => this._handleExpandCollapse()}
-                theme={this.props.theme}>
-              </IconButton>
+                theme={this.props.theme} />
             }
           </div>
           <div

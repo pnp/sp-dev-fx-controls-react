@@ -17,7 +17,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     super(props);
 
     // Check if current term is selected
-    let active = this.props.activeNodes.filter(item => item.key === this.props.term.Id);
+    const active = this.props.activeNodes.filter(item => item.key === this.props.term.Id);
 
     this.state = {
       selected: active.length > 0,
@@ -32,7 +32,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
   /**
    * Handle the checkbox change trigger
    */
-  private _handleChange(ev: React.FormEvent<HTMLElement>, isChecked: boolean) {
+  private _handleChange(ev: React.FormEvent<HTMLElement>, isChecked: boolean): void {
     this.setState({
       selected: isChecked
     });
@@ -44,10 +44,10 @@ export default class Term extends React.Component<ITermProps, ITermState> {
    * @param nextProps
    * @param nextContext
    */
-  public UNSAFE_componentWillReceiveProps?(nextProps: ITermProps, nextContext: any): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: ITermProps, nextContext: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
     // If multi-selection is turned off, only a single term can be selected
     //if (!this.props.multiSelection) {
-      let active = nextProps.activeNodes.filter(item => item.key === this.props.term.Id);
+      const active = nextProps.activeNodes.filter(item => item.key === this.props.term.Id);
       this.setState ({
         selected: active.length > 0,
         termLabel: this.state.termLabel
@@ -58,7 +58,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
   /**
    * Get the right class name for the term
    */
-  private getClassName() {
+  private getClassName(): string {
     if (this.props.term.IsDeprecated) {
       return styles.termDisabled;
     }

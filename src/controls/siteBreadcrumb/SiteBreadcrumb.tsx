@@ -30,7 +30,7 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
   /**
    * React component lifecycle hook, runs after render
    */
-  public componentDidMount() {
+  public componentDidMount(): void {
     // Start generating the links for the breadcrumb
     this._generateLinks();
   }
@@ -38,7 +38,7 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
   /**
    * Start the link generation for the breadcrumb
    */
-  private _generateLinks() {
+  private _generateLinks(): void {
     // Add the current site to the links list
     this._linkItems.push({
       text: this.props.context.pageContext.web.title,
@@ -76,7 +76,7 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
    * Retrieve the parent web URLs
    * @param webUrl Current URL of the web to process
    */
-  private _getParentWeb(webUrl: string) {
+  private _getParentWeb(webUrl: string): void {
     // Retrieve the parent web info
     const apiUrl = `${webUrl}/_api/web/parentweb?$select=Id,Title,ServerRelativeUrl`;
     this.props.context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1)
@@ -110,6 +110,9 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
           // Set the current breadcrumb data which is already retrieved
           this._setBreadcrumbData();
         }
+      })
+      .catch(() => {
+        // no-op;
       });
   }
 
