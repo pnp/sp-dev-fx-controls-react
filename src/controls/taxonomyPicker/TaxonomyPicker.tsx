@@ -498,7 +498,7 @@ export class TaxonomyPicker extends React.Component<ITaxonomyPickerProps, ITaxon
         return !!value.filter(term => term.key === id).length;
       });
 
-      let internalErrorMessage = changedInvalidNodeIds.length ? this.state.internalErrorMessage : '';
+      const internalErrorMessage = changedInvalidNodeIds.length ? this.state.internalErrorMessage : '';
 
       this.setState({
         invalidNodeIds: changedInvalidNodeIds,

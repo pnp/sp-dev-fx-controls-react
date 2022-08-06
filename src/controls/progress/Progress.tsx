@@ -23,7 +23,7 @@ export class Progress extends React.Component<IProgressProps, IProgressState> {
   /**
    * componentDidUpdate lifecycle hook
    */
-  public componentDidUpdate() {
+  public componentDidUpdate(): void {
     // Check if we need to start a timer to display long running text
     if (this.props.longRunningText && this.props.longRunningTextDisplayDelay && this.props.currentActionIndex === 0) {
       setTimeout(() => {

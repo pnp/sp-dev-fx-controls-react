@@ -111,7 +111,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     }
     else if (item.data) {
       newSelectedSites = [{
-        ...item.data!
+        ...item.data
       }];
     }
 
@@ -143,7 +143,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       });
     }
 
-    const selectedSitesIds: string[] = sites ? sites.map(s => s.url!) : [];
+    const selectedSitesIds: string[] = sites ? sites.map(s => s.url) : [];
 
     if (filteredSites) {
       filteredSites.forEach(s => {

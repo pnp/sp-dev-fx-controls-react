@@ -46,7 +46,13 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * componentWillMount lifecycle hook
    */
   public UNSAFE_componentWillMount(): void {
-    this.getInitialPersons(this.props);
+    this.getInitialPersons(this.props)
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
 
@@ -58,11 +64,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       this.props.groupName !== nextProps.groupName ||
       this.props.webAbsoluteUrl !== nextProps.webAbsoluteUrl ||
       this.peopleSearchService.getSumOfPrincipalTypes(this.props.principalTypes) !== this.peopleSearchService.getSumOfPrincipalTypes(nextProps.principalTypes)) {
-      this.getInitialPersons(nextProps);
+      this.getInitialPersons(nextProps)
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
     }
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: IPeoplePickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IPeoplePickerProps): void {
     if (nextProps.errorMessage !== this.props.errorMessage) {
       this.setState({
         errorMessage: nextProps.errorMessage
@@ -74,7 +86,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   /**
    * Get initial persons
    */
-  private async getInitialPersons(props: IPeoplePickerProps) {
+  private async getInitialPersons(props: IPeoplePickerProps): Promise<void> {
     const { groupName, groupId, webAbsoluteUrl, defaultSelectedUsers, ensureUser, allowUnvalidated, principalTypes } = props;
     // Check if a group property was provided, and get the group ID
     if (groupName) {
@@ -93,7 +105,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
 
     // Check for default user values
     if (defaultSelectedUsers) {
-      let selectedPersons: IPersonaProps[] = [];
+      const selectedPersons: IPersonaProps[] = [];
       for (const userValue of props.defaultSelectedUsers) {
         let valueAndTitle: string[] = [];
         valueAndTitle.push(userValue);
@@ -149,16 +161,29 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       selectedPersons: items
     });
 
-    this.validate(items);
+    this.validate(items)
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
   /**
    * On blur UI event
-   * @param ev 
+   * @param ev
    */
-   private onBlur = (ev) => {
-    if (this.props.validateOnFocusOut)
-      this.validate(this.state.selectedPersons);
+  private onBlur = (ev): void => {
+    if (this.props.validateOnFocusOut) {
+      this.validate(this.state.selectedPersons)
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
+    }
   }
 
 
@@ -168,7 +193,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * @param currentPersonas
    */
   private returnMostRecentlyUsedPerson = (currentPersonas: IPersonaProps[]): IPersonaProps[] => {
-    let { mostRecentlyUsedPersons } = this.state;
+    const { mostRecentlyUsedPersons } = this.state;
     return this.removeDuplicates(mostRecentlyUsedPersons, currentPersonas);
   }
 
@@ -331,10 +356,10 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
               {peoplepicker}
             </TooltipHost>
           ) : (
-              <div>
-                {peoplepicker}
-              </div>
-            )
+            <div>
+              {peoplepicker}
+            </div>
+          )
         }
         <FieldErrorMessage errorMessage={errorMessage || internalErrorMessage} className={errorMessageClassName} />
       </div>

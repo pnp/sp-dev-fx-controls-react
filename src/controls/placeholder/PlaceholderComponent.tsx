@@ -81,7 +81,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
   /**
    * Set the current zone width
    */
-  private _setZoneWidth = () => {
+  private _setZoneWidth = (): void => {
     this.setState({
       width: this._crntElm.clientWidth
     });
@@ -90,7 +90,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
   /**
    * Stores the current element
    */
-  private _linkElm = (e: HTMLDivElement) => {
+  private _linkElm = (e: HTMLDivElement): void => {
     this._crntElm = e;
   }
 

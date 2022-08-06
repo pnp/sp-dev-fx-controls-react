@@ -119,7 +119,7 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
   /**
    * Set the current breadcrumb data
    */
-  private _setBreadcrumbData() {
+  private _setBreadcrumbData(): void {
     this.setState({
       breadcrumbItems: this._linkItems
     });

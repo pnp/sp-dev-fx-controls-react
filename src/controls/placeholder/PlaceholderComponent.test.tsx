@@ -88,9 +88,9 @@ describe('<Placeholder />', () => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} buttonLabel={dummyLabel} onConfigure={dummyOnConfigure} />);
 
     placeholder.find('button').simulate('click');
-    /* tslint:disable */
+    /* eslint-disable */
     expect(dummyOnConfigure.called).to.be.true;
-    /* tslint:enable */
+    /* eslint-enable */
 
     done();
   });
