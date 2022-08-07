@@ -5,7 +5,7 @@ import { IModernAudioProps } from "./IModernAudioProps";
 import { IconButton } from "office-ui-fabric-react";
 import { ModernAudioLabelPosition } from './ModernAudioLabelPosition';
 
-export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProps) => {
+export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProps): JSX.Element => {
     const audioComp = React.useRef<HTMLAudioElement>(new Audio(props.audioUrl));
     const [muted, setMuted] = React.useState<boolean>(false);
     const [playing, setPlaying] = React.useState<boolean>(false);
@@ -16,13 +16,13 @@ export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProp
 
     const playAudio = () => {
         setPlaying(true);
-        audioComp.current.play();
+        audioComp.current.play().then(() => { /* no-op */ }).catch(() => { /* no-op */ });
     };
-    const pauseAudio = () => {
+    const pauseAudio = (): void => {
         setPlaying(false);
         audioComp.current.pause();
     };
-    const incVolume = () => {
+    const incVolume = (): void => {
         if (audioComp.current.volume <= 0.9) {
             audioComp.current.volume += 0.1;
         }
@@ -34,7 +34,7 @@ export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProp
             setMuted(false);
         }
     };
-    const decVolume = () => {
+    const decVolume = (): void => {
         audioComp.current.volume -= 0.1;
         if (audioComp.current.volume < 0.1) {
             audioComp.current.volume = 0;
@@ -42,22 +42,22 @@ export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProp
             setMuted(true);
         }
     };
-    const muteAudio = () => {
+    const muteAudio = (): void => {
         audioComp.current.muted = !muted;
         setMuted(!muted);
     };
     return (
         <div className={styles.modernAudio}>
             {props.labelPosition === ModernAudioLabelPosition.TopLeft &&
-            props.label !== "" && 
+            props.label !== "" &&
             <div><label>{props.label}</label></div>}
-            {props.labelPosition === ModernAudioLabelPosition.TopCenter && 
+            {props.labelPosition === ModernAudioLabelPosition.TopCenter &&
             props.label !== "" &&
             <div style={{textAlign: "center"}}><label>{props.label}</label></div>}
             <div className={styles.audioPanel}>
-                {props.audioUrl !== "" && <audio ref={audioComp} src={props.audioUrl}></audio>}
+                {props.audioUrl !== "" && <audio ref={audioComp} src={props.audioUrl} />}
                 <IconButton iconProps={{ iconName: 'Play' }} className={styles.audioIcon} title={strings.ModernAudioPlay} disabled={playing} onClick={playAudio} />
-                <IconButton iconProps={{ iconName: 'Pause' }} className={styles.audioIcon} title={strings.ModernAudioPause} disabled={!playing} onClick={pauseAudio} />    
+                <IconButton iconProps={{ iconName: 'Pause' }} className={styles.audioIcon} title={strings.ModernAudioPause} disabled={!playing} onClick={pauseAudio} />
                 <IconButton iconProps={{ iconName: 'Volume2' }} className={styles.audioIcon} title={strings.ModernAudioIncVol} onClick={incVolume} />
                 <IconButton iconProps={{ iconName: 'Volume0' }} className={styles.audioIcon} title={strings.ModernAudioDecVol} disabled={muted} onClick={decVolume} />
                 <IconButton iconProps={{ iconName: 'VolumeDisabled' }} className={styles.audioIcon} title={strings.ModernAudioMute} disabled={muted} onClick={muteAudio} />

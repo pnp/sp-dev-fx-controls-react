@@ -1,7 +1,9 @@
 import * as strings from 'ControlStrings';
 import * as React from 'react';
 import styles from './Maps.module.scss';
-import { IMapProps, ICoordinates, MapType, LocationInfo, IMapState } from '.';
+import { IMapProps } from './IMapProps';
+import { IMapState } from './IMapState';
+import { ICoordinates, MapType, LocationInfo } from './IMap';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { Icon } from "office-ui-fabric-react/lib/components/Icon";
@@ -34,15 +36,6 @@ export class Map extends React.Component<IMapProps, IMapState> {
   }
 
   /**
-   * componentWillMount lifecycle hook
-   */
-  // public componentWillMount(): void {
-  //   this.setState({
-  //     coordinates: this.props.coordinates
-  //   });
-  // }
-
-  /**
    * componentWillUpdate lifecycle hook
    */
   public UNSAFE_componentWillUpdate(nextProps: IMapProps, nextState: IMapState): void {
@@ -70,7 +63,7 @@ export class Map extends React.Component<IMapProps, IMapState> {
   private _getWidth(): string {
     let widthToReturn: string = this.props.width;
     if (widthToReturn) {
-      let lastChar: string = widthToReturn.substr(widthToReturn.length - 1);
+      const lastChar: string = widthToReturn.substr(widthToReturn.length - 1);
       if (lastChar !== '%') {
         widthToReturn = `${widthToReturn}%`;
       }
@@ -207,9 +200,9 @@ export class Map extends React.Component<IMapProps, IMapState> {
    */
   public render(): React.ReactElement<IMapProps> {
     const { mapSource } = this.props;
-    let width: string = this._getWidth();
-    let height: number = this._getHeight();
-    let mapUrl: string = ["BingDraggable", "BingStatic"].indexOf(mapSource) !== -1 ? this._getBingMapUrl(width, height) : this._getMapUrl(); //20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)
+    const width: string = this._getWidth();
+    const height: number = this._getHeight();
+    const mapUrl: string = ["BingDraggable", "BingStatic"].indexOf(mapSource) !== -1 ? this._getBingMapUrl(width, height) : this._getMapUrl(); //20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)
 
     return (
       <div id="mapsContainer" className={`${styles.mapContainer} ${this.props.mapsClassName ? this.props.mapsClassName : ''}`}>
@@ -243,8 +236,8 @@ export class Map extends React.Component<IMapProps, IMapState> {
           ) : (
               (mapUrl.length > 0 && !this.state.showmessageerror) ? (
                 <div id="mapsIframe">
-                  <iframe width={width} height={height} scrolling="no" src={mapUrl}></iframe>
-                  {mapSource === "BingStatic" && <Icon iconName="Location" style={{fontSize: "26px", position:"relative", top: (Math.floor(-height/2)), left: "50%", marginTop: "-14px"}} ></Icon>}{/* 20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)*/}
+                  <iframe width={width} height={height} scrolling="no" src={mapUrl} />
+                  {mapSource === "BingStatic" && <Icon iconName="Location" style={{fontSize: "26px", position:"relative", top: (Math.floor(-height/2)), left: "50%", marginTop: "-14px"}} />}{/* 20200614 - JJ - rudimentary bing map support (draggable/static) with pushpin (static only)*/}
                 </div>
               ) : (
                   <p className={`ms-TextField-errorMessage ${styles.errorMessage} ${this.props.errorMessageClassName ? this.props.errorMessageClassName : ''}`}>

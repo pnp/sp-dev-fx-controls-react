@@ -63,7 +63,7 @@ export interface IModernTaxonomyPickerProps {
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
-export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
+export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Element {
   const taxonomyService = useMemo(()=>new SPTaxonomyService(props.context), [props.context]);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const initialLoadComplete = React.useRef(false);
@@ -87,15 +87,24 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
           []);
           initialLoadComplete.current = true;
+      })
+      .catch(() => {
+        // no-op;
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
       .then((termSetInfo) => {
         setCurrentTermSetInfo(termSetInfo);
+      })
+      .catch(() => {
+        // no-op;
       });
     if (props.anchorTermId && props.anchorTermId !== Guid.empty.toString()) {
       taxonomyService.getTermById(Guid.parse(props.termSetId), props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty)
         .then((anchorTermInfo) => {
           setCurrentAnchorTermInfo(anchorTermInfo);
+        })
+        .catch(() => {
+          // no-op;
         });
     }
   }, [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.initialValues, props.termSetId, taxonomyService]);
@@ -212,7 +221,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     if(props.isPathRendered) {
       let currentTermProps = itemProps.item;
       while(currentTermProps.parent !== undefined) {
-        let currentParentLabels = getLabelsForCurrentLanguage(currentTermProps.parent);
+        const currentParentLabels = getLabelsForCurrentLanguage(currentTermProps.parent);
         fullParentPrefixes.push(currentParentLabels[0].name);
         currentTermProps = currentTermProps.parent;
       }

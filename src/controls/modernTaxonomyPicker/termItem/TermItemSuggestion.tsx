@@ -20,6 +20,9 @@ export function TermItemSuggestion(props: ITermItemSuggestionProps<ITermInfo>): 
       props.onLoadParentLabel(Guid.parse(props.term.id.toString()))
       .then((localParentInfo) => {
         setParentLabel(localParentInfo);
+      })
+      .catch(() => {
+        // no-op;
       });
     }
   }, []);

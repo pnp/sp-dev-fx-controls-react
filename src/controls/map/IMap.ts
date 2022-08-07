@@ -14,7 +14,7 @@ export interface ICoordinates {
   /**
    * Address of the location
    */
-  address?: any; // 20200614 - JJ - address
+  address?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export enum MapType {
@@ -38,5 +38,5 @@ export interface LocationInfo {
   type: string;
   importance: number;
   icon: string;
-  address?: any; // 20200614 - JJ - the address data from nominatim
+  address?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
