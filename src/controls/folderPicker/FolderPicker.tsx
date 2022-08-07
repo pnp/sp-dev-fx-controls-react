@@ -27,7 +27,7 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
     };
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: IFolderPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFolderPickerProps): void {
 
     this.setState({
       selectedFolder: nextProps.defaultFolder,
@@ -95,15 +95,15 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
     );
   }
 
-  private _showPanel = () => {
+  private _showPanel = (): void => {
     this.setState({ showPanel: true });
   }
 
-  private _hidePanel = () => {
+  private _hidePanel = (): void => {
     this.setState({ showPanel: false });
   }
 
-  private _onRenderFooterContent = () => {
+  private _onRenderFooterContent = (): JSX.Element => {
     return (
       <div className={styles.actions}>
         <PrimaryButton iconProps={{ iconName: 'Save' }} onClick={this._onFolderSave}>

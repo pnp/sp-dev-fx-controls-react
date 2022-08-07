@@ -13,7 +13,7 @@ import { isEqual } from '@microsoft/sp-lodash-subset';
 
 export class LocationPicker extends React.Component<ILocationPickerProps, ILocationPickerState> {
   private _token: string | string[] = null;
-  private focusRef: any = null; // eslint-disable-line @typescript-eslint/no-implicit-any
+  private focusRef: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
   * Constructor method
   */
@@ -264,7 +264,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     };
 
     const response: SPHttpClientResponse = await this.props.context.spHttpClient.post(`${this.props.context.pageContext.web.absoluteUrl}/_api/SP.OAuth.Token/Acquire`, SPHttpClient.configurations.v1, spOpts);
-    const PrimaryQueryResult: any = await response.json();
+    const PrimaryQueryResult: any = await response.json(); // eslint-disable-line @typescript-eslint/no-explicit-any
     this._token = PrimaryQueryResult.access_token;
   }
 
@@ -284,8 +284,8 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
 
       json.MeetingLocations.forEach((v, i) => {
-        const loc: ILocationPickerItem = v["MeetingLocation"];
-        optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc });
+        const loc: ILocationPickerItem = v["MeetingLocation"]; // eslint-disable-line dot-notation
+        optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc }); // eslint-disable-line dot-notation
       });
 
       optionsForCustomRender.push({ text: strings.customDisplayName, key: 7, locationItem: { DisplayName: searchText, EntityType: "Custom" } });

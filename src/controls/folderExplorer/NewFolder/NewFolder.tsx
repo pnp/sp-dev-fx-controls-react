@@ -47,7 +47,7 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
           }} /></span>
         }
         {!this.state.loading &&
-          <Icon iconName="FabricNewFolder" className={styles.folderIcon}></Icon>
+          <Icon iconName="FabricNewFolder" className={styles.folderIcon} />
         }
         {!this.state.showInput &&
           <div className={styles.defaultText} onClick={this._onShowInputChange}>New folder</div>
@@ -82,11 +82,11 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
     );
   }
 
-  private _onFolderNameChange = (newValue?: string) => {
+  private _onFolderNameChange = (newValue?: string): void => {
     this.setState({ folderName: newValue || '', errorMessage: '' });
   }
 
-  private _onShowInputChange = (event: React.MouseEvent<HTMLDivElement>) => {
+  private _onShowInputChange = (event: React.MouseEvent<HTMLDivElement>): void => {
     this.setState({ showInput: true });
   }
 
@@ -122,6 +122,6 @@ export class NewFolder extends React.Component<INewFolderProps, INewFolderState>
     }
 
     // callback
-    this.props.addSubFolder(newFolder);
+    this.props.addSubFolder(newFolder).then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
   }
 }

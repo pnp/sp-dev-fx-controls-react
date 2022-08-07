@@ -20,7 +20,7 @@ const initialState: IListItemCommentsState = {
 
 const stateInit: IListItemCommentsStateContext = {
   listItemCommentsState: initialState,
-  setlistItemCommentsState: ({}) => {return;},
+  setlistItemCommentsState: () => { return; },
 };
 
 //  (store)

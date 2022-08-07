@@ -23,7 +23,7 @@ export const RenderSpinner: React.FunctionComponent = () => {
           tokens={{ padding: 20 }}
           key={Guid.newGuid().toString()}
         >
-          <Spinner size={SpinnerSize.medium}></Spinner>
+          <Spinner size={SpinnerSize.medium} />
         </Stack>
       </DocumentCardDetails>
     </DocumentCard>

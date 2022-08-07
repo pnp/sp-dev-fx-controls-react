@@ -39,8 +39,6 @@ const TILE_HORZ_PADDING: number = 32;
  */
 const BOTTOM_MARGIN: number = 36;
 
-const LAYOUT_STORAGE_KEY: string = 'comparerOneDriveLayout';
-
 
 export class TilesList extends React.Component<ITilesListProps> {
   private _columnCount: number;
@@ -53,7 +51,7 @@ export class TilesList extends React.Component<ITilesListProps> {
     super(props);
   }
 
-  public componentDidUpdate(prevProps: ITilesListProps) {
+  public componentDidUpdate(prevProps: ITilesListProps): void {
     if (this.props.filePickerResult !== prevProps.filePickerResult) {
       this._listElem.forceUpdate();
     }
@@ -61,10 +59,10 @@ export class TilesList extends React.Component<ITilesListProps> {
 
   public render(): React.ReactElement<ITilesListProps> {
     return (
-      <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => {this._handleItemInvoked(item);}}>
+      <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => { this._handleItemInvoked(item); }}>
         <FocusZone>
           <List
-            ref={(e:any) => { this._listElem = e; }}
+            ref={(e: List) => { this._listElem = e; }}
             className={styles.folderList}
             items={this.props.items}
             getItemCountForPage={this._getItemCountForPage}
@@ -79,20 +77,20 @@ export class TilesList extends React.Component<ITilesListProps> {
   /**
   * Gets called what a file is selected.
   */
- private _handleItemInvoked = (item: IFile) => {
-  // If a file is selected, open the library
-  if (item.isFolder) {
-    this.props.onFolderOpen(item);
-  } else {
-    // Otherwise, remember it was selected
-    this.props.onFileSelected(item);
+  private _handleItemInvoked = (item: IFile): void => {
+    // If a file is selected, open the library
+    if (item.isFolder) {
+      this.props.onFolderOpen(item);
+    } else {
+      // Otherwise, remember it was selected
+      this.props.onFileSelected(item);
+    }
   }
-}
 
   /**
     * Calculates how many items there should be in the page
     */
-   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
+  private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
     if (itemIndex === 0) {
       this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
       this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
@@ -165,7 +163,7 @@ export class TilesList extends React.Component<ITilesListProps> {
       this.props.onNextPageDataRequest();
       return null;
     }
-    let isSelected: boolean = this.props.filePickerResult && item.absoluteUrl === this.props.filePickerResult.fileAbsoluteUrl;
+    const isSelected: boolean = this.props.filePickerResult && item.absoluteUrl === this.props.filePickerResult.fileAbsoluteUrl;
 
     // I know this is a lot of divs and spans inside of each other, but my
     // goal was to mimic the HTML and style of the out-of-the-box file picker
@@ -203,7 +201,7 @@ export class TilesList extends React.Component<ITilesListProps> {
                   }}
                   onItemInvoked={(itemInvoked: IFile) => this._handleItemInvoked(itemInvoked)}
                 />
-              :
+                :
                 <DocumentTile
                   fileBroserService={this.props.fileBrowserService}
                   item={item}
@@ -216,7 +214,7 @@ export class TilesList extends React.Component<ITilesListProps> {
                   }}
                   onItemInvoked={(itemInvoked: IFile) => this._handleItemInvoked(itemInvoked)}
                 />
-              }
+            }
           </div>
         </div>
       </div>

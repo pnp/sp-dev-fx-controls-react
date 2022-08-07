@@ -14,7 +14,7 @@ export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProp
         audioComp.current.onended = () => { setPlaying(false); };
     }, []);
 
-    const playAudio = () => {
+    const playAudio = (): void => {
         setPlaying(true);
         audioComp.current.play().then(() => { /* no-op */ }).catch(() => { /* no-op */ });
     };

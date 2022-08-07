@@ -4,7 +4,8 @@ import SPservice from "../../services/SPService";
 import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
 import { Label } from "office-ui-fabric-react/lib/Label";
 import { getId } from 'office-ui-fabric-react/lib/Utilities';
-import { IListItemPickerProps, IListItemPickerState } from ".";
+import { IListItemPickerProps } from "./IListItemPickerProps";
+import { IListItemPickerState } from "./IListItemPickerState";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
 import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
@@ -33,12 +34,12 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     this._spservice = new SPservice(this.props.context);
   }
 
-  public componentDidMount() {
-    this.loadField(this.props);
+  public componentDidMount(): void {
+    this.loadField(this.props).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: IListItemPickerProps) {
-    let newSelectedItems: any[] | undefined;
+  public UNSAFE_componentWillReceiveProps(nextProps: IListItemPickerProps): void {
+    let newSelectedItems: any[] | undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
     if (this.props.listId !== nextProps.listId) {
       newSelectedItems = [];
     }
@@ -53,7 +54,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     if (this.props.listId !== nextProps.listId
       || this.props.columnInternalName !== nextProps.columnInternalName
       || this.props.webUrl !== nextProps.webUrl) {
-      this.loadField(nextProps);
+      this.loadField(nextProps).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     }
   }
 
@@ -105,7 +106,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   /**
    * Get text from Item
    */
-  private getTextFromItem(item: any): string {
+  private getTextFromItem(item: any): string { // eslint-disable-line @typescript-eslint/no-explicit-any
     return item.name;
   }
 
@@ -122,7 +123,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   /**
    * Filter Change
    */
-  private onFilterChanged = async (filterText: string, tagList: ITag[]) => {
+  private onFilterChanged = async (filterText: string, tagList: ITag[]): Promise<ITag[]> => {
     let resolvedSugestions: ITag[] = await this.loadListItems(filterText);
 
     const {
@@ -131,7 +132,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
 
     // Filter out the already retrieved items, so that they cannot be selected again
     if (selectedItems && selectedItems.length > 0) {
-      let filteredSuggestions = [];
+      const filteredSuggestions = [];
       for (const suggestion of resolvedSugestions) {
         const exists = selectedItems.filter(sItem => sItem.key === suggestion.key);
         if (!exists || exists.length === 0) {
@@ -157,15 +158,15 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Function to load List Items
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
-    let { listId, columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
+    const { listId, columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
     const {
       field
     } = this.state;
-    let arrayItems: { key: string; name: string }[] = [];
-    let keyColumn: string = keyColumnInternalName || 'Id';
+    const arrayItems: { key: string; name: string }[] = [];
+    const keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      let listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
+      const listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {

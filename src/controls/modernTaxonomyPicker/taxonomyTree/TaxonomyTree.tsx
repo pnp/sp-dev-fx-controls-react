@@ -549,6 +549,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                 footerProps.group.data.skiptoken = loadedTerms.skiptoken;
                 footerProps.group.hasMoreData = loadedTerms.skiptoken !== '';
                 setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== footerProps.group.key));
+              })
+              .catch(() => {
+                // no-op;
               });
           }}
             styles={linkStyles}>

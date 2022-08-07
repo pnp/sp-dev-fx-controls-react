@@ -25,7 +25,7 @@ export const useMsGraphAPI = (): returnObject => {
       .header("ConsistencyLevel", "eventual")
       .filter(`personType/class eq 'Person' and personType/subclass eq 'OrganizationUser'`)
       .orderby(`displayName`)
-      .get()) as any;
+      .get()) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     console.log("rs", suggestedUsersResults);
     const _sugestions: Person[] = suggestedUsersResults.value as Person[];
     for (const sugestion of _sugestions) {

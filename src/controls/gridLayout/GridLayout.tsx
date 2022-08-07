@@ -93,7 +93,7 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
   /**
    * Calls the passed onRenderCell
    */
-  private _onRenderCell = (item: any, index: number | undefined): JSX.Element => {
+  private _onRenderCell = (item: any, index: number | undefined): JSX.Element => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const isCompact: boolean = this._isCompact;
     const cellPadding: number = index % this._columnCount !== this._columnCount - 1 && !isCompact ? PADDING : 0;
     const finalSize: ISize = { width: this._columnWidth, height: this._rowHeight };

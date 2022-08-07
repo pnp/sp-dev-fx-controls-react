@@ -11,7 +11,7 @@ export interface IListItemPickerProps {
   orderBy?: string;
   className?: string;
   webUrl?: string;
-  defaultSelectedItems?: any[];
+  defaultSelectedItems?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   disabled?: boolean;
   suggestionsHeaderText?:string;
   noResultsFoundText?:string;
@@ -21,7 +21,7 @@ export interface IListItemPickerProps {
    */
   placeholder?: string;
 
-  onSelectedItem: (item:any) => void;
+  onSelectedItem: (item: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /**
    * The label for the control
