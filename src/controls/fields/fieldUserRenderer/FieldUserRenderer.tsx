@@ -115,7 +115,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
     };
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: IFieldUserRendererProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFieldUserRendererProps): void {
     const currentPrincipals = this.props.users ? this.props.users.map(u => u.id) : [];
     const newPrincipals = nextProps.users ? nextProps.users.map(u => u.id) : [];
 
@@ -145,7 +145,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
         displayName: user.displayName,
         cssProps: this.props.cssProps
       };
-      return <FieldUserHoverCard {...hoverCardProps} />;
+      return <FieldUserHoverCard key={user.id} {...hoverCardProps} />;
     });
     return <div style={this.props.cssProps} className={css(this.props.className)}>{userEls}</div>;
   }
@@ -156,7 +156,7 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
    * @param user IUser
    */
   private _onRenderCompactCard(index: number, user: IFieldUser): JSX.Element {
-    this._requestUserProfile(user, index);
+    this._requestUserProfile(user, index).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     const sip: string = user.sip || user.email;
     let actionsEl: JSX.Element;
     if (user.currentUser) {

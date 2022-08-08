@@ -5,7 +5,6 @@ import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
 import { Label } from 'office-ui-fabric-react/lib/components/Label';
 import { CollectionDataViewer } from './collectionDataViewer';
 import { IFieldCollectionDataProps, IFieldCollectionDataState } from "./IFieldCollectionData";
-// import FieldErrorMessage from '../errorMessage/FieldErrorMessage';
 import * as strings from 'ControlStrings';
 import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 

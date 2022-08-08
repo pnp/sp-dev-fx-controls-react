@@ -3,6 +3,7 @@ import { SPHttpClient, HttpClientResponse } from "@microsoft/sp-http";
 import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
+import type { IBingSearchResult } from '../controls/filePicker/WebSearchTab/IBingSearchResult';
 
 /**
  * Maximum file size when searching

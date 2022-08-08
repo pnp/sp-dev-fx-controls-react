@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styles from '../FieldCollectionData.module.scss';
 import { Async } from 'office-ui-fabric-react/lib/Utilities';
-import { ICollectionNumberFieldProps, ICollectionNumberFieldState } from '.';
-import { ICustomCollectionField } from '..';
+import { ICollectionNumberFieldProps } from './ICollectionNumberFieldProps';
+import { ICollectionNumberFieldState } from './ICollectionNumberFieldState';
+import { ICustomCollectionField } from '../ICustomCollectionField';
 import { isEqual } from '@microsoft/sp-lodash-subset';
 
 export class CollectionNumberField extends React.Component<ICollectionNumberFieldProps, ICollectionNumberFieldState> {
@@ -51,7 +52,7 @@ export class CollectionNumberField extends React.Component<ICollectionNumberFiel
    * @param field
    * @param value
    */
-  private valueChange = (field: ICustomCollectionField, value: string | number) => {
+  private valueChange = (field: ICustomCollectionField, value: string | number): void => {
     const inputVal = typeof value === "string" ? parseInt(value) : value;
     this.setState({
       value: inputVal
@@ -63,7 +64,7 @@ export class CollectionNumberField extends React.Component<ICollectionNumberFiel
   /**
    * Delayed field validation
    */
-  private valueValidation = async (field: ICustomCollectionField, value: number) => {
+  private valueValidation = async (field: ICustomCollectionField, value: number): Promise<void> => {
     const validation = await this.props.fValidation(field, value);
     // Update the error message
     this.setState({

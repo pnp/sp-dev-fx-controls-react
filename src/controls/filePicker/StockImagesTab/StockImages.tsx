@@ -6,11 +6,11 @@ import { GeneralHelper } from '../../../Utilities';
 import { IFilePickerResult } from '../FilePicker.types';
 
 export class StockImages extends React.Component<IStockImagesProps> {
-  public componentDidMount() {
+  public componentDidMount(): void {
     window.addEventListener("message", this._handleImageIframeEvent);
   }
 
-  public componentWillUnmount() {
+  public componentWillUnmount(): void {
     window.removeEventListener("message", this._handleImageIframeEvent);
   }
 
@@ -32,7 +32,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
     );
   }
 
-  private _handleImageIframeEvent = (event) => {
+  private _handleImageIframeEvent = (event): void => {
     if (!event || !event.origin || event.origin.indexOf("https://hubblecontent.osi.office.net") !== 0) {
       return;
     }
@@ -49,7 +49,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
   /**
    * Called when user saves
    */
-  private _handleSave = (event: StockImagesEvent) => {
+  private _handleSave = (event: StockImagesEvent): void => {
     let filePickerResult: IFilePickerResult = null;
     const cdnFileInfo: SubmitValue = event.Values && (event.Values as SubmitValue[]).length > 0 ? (event.Values as SubmitValue[])[0] : null;
     if (cdnFileInfo) {
@@ -67,19 +67,19 @@ export class StockImages extends React.Component<IStockImagesProps> {
   /**
    * Called when user closes tab
    */
-  private _handleClose = () => {
+  private _handleClose = (): void => {
     this.props.onClose();
   }
 
-  private getCurrentThemeConfiguration() {
+  private getCurrentThemeConfiguration(): string {
     if (!window["__themeState__"] || !window["__themeState__"].theme) {
       return "";
     }
 
-    const primaryColor = window["__themeState__"].theme["themePrimary"];
-    const textColor = window["__themeState__"].theme["primaryText"];
-    const primaryBackground = window["__themeState__"].theme["bodyBackground"];
-    const neutralLighter = window["__themeState__"].theme["neutralLighter"];
+    const primaryColor = window["__themeState__"].theme.themePrimary;
+    const textColor = window["__themeState__"].theme.primaryText;
+    const primaryBackground = window["__themeState__"].theme.bodyBackground;
+    const neutralLighter = window["__themeState__"].theme.neutralLighter;
 
     const theme = `{"primaryColor":"${primaryColor}","textColor":"${textColor}","backgroundColor":"${primaryBackground}","neutralLighterColor":"${neutralLighter}"}`;
     return theme;

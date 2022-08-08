@@ -1,4 +1,3 @@
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
 import { BaseComponentContext } from "@microsoft/sp-component-base";
 import { FieldsOrderBy } from "../../services/ISPService";
 import { ISPField } from "../../common/SPEntities";
