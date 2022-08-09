@@ -22,7 +22,7 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
   /**
    * Open the panel
    */
-  private openPanel = () => {
+  private openPanel = (): void => {
     this.setState({
       panelOpen: true
     });
@@ -31,7 +31,7 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
   /**
    * Closes the panel
    */
-  private closePanel = () => {
+  private closePanel = (): void => {
     this.setState({
       panelOpen: false
     });
@@ -40,7 +40,7 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
   /**
    * On save action
    */
-  private onSave = (items: any[]) => {
+  private onSave = (items: any[]): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     this.props.onChanged(items);
     this.setState({
       panelOpen: false
@@ -65,7 +65,7 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
                onDismiss={this.closePanel}
                type={PanelType.large}
                headerText={this.props.panelHeader}
-               onOuterClick={()=>{}}
+               onOuterClick={()=>{ /* no-op; */}}
                className={`FieldCollectionData__panel ${this.props.panelClassName || ""}`}>
           {
             this.props.panelDescription && (

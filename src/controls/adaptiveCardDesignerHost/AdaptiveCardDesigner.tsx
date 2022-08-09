@@ -12,6 +12,7 @@ import { applyAdaptiveCardDesignerStyles } from './AdaptiveCardDesigner.Styles';
 import { AdaptiveCardHostContainer, AdaptiveCardHostContainerType } from './fluentUI/AdaptiveCardHostContainer';
 import { initializeDesignerPeers } from './fluentUI/peers/DesignerPeers';
 import { IAdaptiveCardDesignerHostProps } from './IAdaptiveCardDesignerProps';
+import type * as editor from 'monaco-editor';
 
 export const EmptyCard = {
     '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
@@ -19,16 +20,16 @@ export const EmptyCard = {
     'version': '1.5'
 };
 
-export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
+export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps): JSX.Element => {
     const adaptiveCardDesignerInstanceRef = useRef<CardDesigner>(null);
     const renderElementRef = useRef<HTMLDivElement>();
     const currentBreakpointValueRef = useRef<string>('100%');
     const [isMonacoLoaded, setIsMonacoLoaded] = useState(false);
-    const monacoRef = useRef<HTMLDivElement>(null);
+    const monacoRef = useRef<typeof editor>(null);
 
     // updateLayout on windows resize
     useEffect(() => {
-        function handleResize() {
+        function handleResize(): void {
             adaptiveCardDesignerInstanceRef.current?.designerSurface?.updateLayout(true);
         }
 
@@ -50,9 +51,10 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
 
         monacoLoader.default.init().then(monaco => {
             // monaco as any => fix the problem with the type definition
-            monacoRef.current = monaco as any;
+            monacoRef.current = monaco;
             setIsMonacoLoaded(true);
-        });
+        })
+        .catch(() => { /* no-op; */ });
     }, []);
 
     useEffect(() => {
@@ -84,7 +86,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             return;
         }
 
-        let hosts: HostContainer[] = [];
+        const hosts: HostContainer[] = [];
 
         if (props.hostContainers) {
             hosts.push(...props.hostContainers);
@@ -99,7 +101,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             ]);
         }
 
-        let cardDesigner = new CardDesigner(hosts);
+        const cardDesigner = new CardDesigner(hosts);
 
         cardDesigner.bindingPreviewMode = (props.bindingPreviewMode)
             ? props.bindingPreviewMode
@@ -110,7 +112,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
             true,
             CardDesigner.ToolbarCommands.NewCard,
             (sender) => {
-                let text = 'Do you want to create a new Card?';
+                const text = 'Do you want to create a new Card?';
                 if (confirm(text) === true) {
                     cardDesigner.setCard((props.newCardPayload) ? props.newCardPayload : EmptyCard);
                     cardDesigner.clearUndoStack();
@@ -124,7 +126,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
                 true,
                 null,
                 (sender) => {
-                    let payload = cardDesigner.designerSurface.getCardPayloadAsObject();
+                    const payload = cardDesigner.designerSurface.getCardPayloadAsObject();
                     props.onSave(payload);
                 });
         }
@@ -169,7 +171,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
         cardDesigner.designerSurface.updateLayout(true);
 
         cardDesigner.onActiveHostContainerChanged = (designer: CardDesigner) => {
-            let hostConfig = designer.hostContainer.getHostConfig();
+            const hostConfig = designer.hostContainer.getHostConfig();
             cardDesigner.designerSurface.context.hostContainer.cardHost.style.width = currentBreakpointValueRef.current;
             cardDesigner.designerSurface.updateLayout(false);
             console.log(hostConfig);
@@ -178,8 +180,8 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps) => {
         cardDesigner.designerSurface.context.hostContainer.cardHost.style.width = '100%';
         cardDesigner.dataToolbox.collapse();
 
-        let data = (props.data) ? props.data : { $root: {} };
-        let dataObject = injectContextProperty(data,
+        const data = (props.data) ? props.data : { $root: {} };
+        const dataObject = injectContextProperty(data,
             fluentUIDefaultTheme(),
             props.context);
 

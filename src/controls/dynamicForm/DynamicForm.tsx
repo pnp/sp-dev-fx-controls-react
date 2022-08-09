@@ -57,8 +57,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   /**
    * Lifecycle hook when component is mounted
    */
-  public componentDidMount() {
-    this.getFieldInformations();
+  public componentDidMount(): void {
+    this.getFieldInformations().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }
 
   /**
@@ -69,19 +69,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       fieldCollection,
       isSaving
     } = this.state;
-    
+
     const fieldOverrides = this.props.fieldOverrides;
-    
+
     return (
       <div>
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              if(fieldOverrides?.hasOwnProperty(v.columnInternalName)) {
+              if(Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
                 v.disabled = v.disabled || isSaving;
                 return fieldOverrides[v.columnInternalName](v);
               }
-              return <DynamicField {...v} disabled={v.disabled || isSaving} />;
+              return <DynamicField key={v.columnInternalName} {...v} disabled={v.disabled || isSaving} />;
             })}
             {
               !this.props.disabled &&
@@ -99,7 +99,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   }
 
   //trigger when the user submits the form.
-  private onSubmitClick = async () => {
+  private onSubmitClick = async (): Promise<void> => {
     const {
       listId,
       listItemId,
@@ -256,15 +256,13 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   }
 
   // trigger when the user change any value in the form
-  private onChange = async (internalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => {
+  private onChange = async (internalName: string, newValue: any, additionalData?: FieldChangeAdditionalData): Promise<void> => { // eslint-disable-line @typescript-eslint/no-explicit-any
     // try {
     const fieldCol = (this.state.fieldCollection || []).slice();
     const field = fieldCol.filter((element, i) => { return element.columnInternalName === internalName; })[0];
     field.newValue = newValue;
     field.additionalData = additionalData;
     if (field.fieldType === "User" && newValue.length !== 0) {
-      // let result = await sp.web.ensureUser(newValue[0].secondaryText);
-      // field.newValue = result.data.Id;
 
       if (newValue[0].id === undefined || parseInt(newValue[0].id, 10).toString() === "NaN") {
         let user: string = newValue[0].secondaryText;
@@ -272,7 +270,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           user = newValue[0].loginName;
         }
         const result = await sp.web.ensureUser(user);
-        field.newValue = result.data.Id;
+        field.newValue = result.data.Id; // eslint-disable-line require-atomic-updates
       }
       else {
         field.newValue = newValue[0].id;
@@ -311,18 +309,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     this.setState({
       fieldCollection: fieldCol
     });
-    // } catch (error) {
-
-    //   console.log(`Error onchange`, error);
-    //   return null;
-    // }
   }
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { context, listId, listItemId, disabledFields } = this.props;
+    const { listId, listItemId, disabledFields } = this.props;
     let contentTypeId = this.props.contentTypeId;
-    //let arrayItems: { key: string; name: string }[] = [];
     try {
       const spList = await sp.web.lists.getById(listId);
       let item = null;
@@ -348,7 +340,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         let lookupField = "";
         const choices: IDropdownOption[] = [];
         let defaultValue = null;
-        const selectedTags: any = [];
+        const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
         let richText = false;
         let dateFormat: DateFormat | undefined;
         let principalType = "";
@@ -438,7 +430,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
 
           const schemaXml = field.SchemaXml;
-          const dateFormatRegEx = /\s+Format=\"([^\"]+)\"/gmi.exec(schemaXml);
+          const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
           dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
 
         }
@@ -542,7 +534,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     });
   }
 
-  private getFormFields = async (listId: string, contentTypeId: string | undefined, webUrl?: string): Promise<any> => {
+  private getFormFields = async (listId: string, contentTypeId: string | undefined, webUrl?: string): Promise<any> => { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const {
         context

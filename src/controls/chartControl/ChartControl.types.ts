@@ -36,13 +36,13 @@ export interface IChartControlProps {
   If using datapromises, sets the content to display while loading the data.
   @type {JSX.Element | Function}
    */
-  loadingtemplate?: JSX.Element | Function;
+  loadingtemplate?: JSX.Element | (() => JSX.Element | undefined);
 
   /**
   If using datapromises, sets the content to display when a promise is rejected
   @type {JSX.Element | Function}
    */
-  rejectedtemplate?: JSX.Element | Function;
+  rejectedtemplate?: JSX.Element | ((rejected: {}) => JSX.Element | undefined);
 
   /**
   The options for the chart

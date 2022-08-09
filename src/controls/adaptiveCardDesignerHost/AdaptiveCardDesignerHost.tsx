@@ -1,4 +1,4 @@
-import { IStyleFunctionOrObject } from "office-ui-fabric-react";
+import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
 import { DefaultButton } from "office-ui-fabric-react/lib/Button";
 import { ThemeProvider } from "office-ui-fabric-react/lib/Foundation";
 import { IPanelStyleProps, IPanelStyles, Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
@@ -22,7 +22,7 @@ const panelStyles:IStyleFunctionOrObject<IPanelStyleProps, IPanelStyles> = {
     commands: { marginBottom: 15 }
 };
 
-export const AdaptiveCardDesignerHost = (props: IAdaptiveCardDesignerHostProps) => {
+export const AdaptiveCardDesignerHost = (props: IAdaptiveCardDesignerHostProps): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

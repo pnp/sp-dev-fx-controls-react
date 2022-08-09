@@ -5,13 +5,14 @@ initializeIcons();
 
 import * as React from "react";
 import styles from "./Carousel.module.scss";
-import { ICarouselProps, ICarouselState, CarouselButtonsDisplay, CarouselButtonsLocation, CarouselIndicatorShape } from ".";
+import { ICarouselProps, CarouselButtonsDisplay, CarouselButtonsLocation, CarouselIndicatorShape } from "./ICarouselProps";
+import { ICarouselState } from "./ICarouselState";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
 import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
-import CarouselImage from "./CarouselImage";
+import CarouselImage, { ICarouselImageProps } from "./CarouselImage";
 import { CarouselIndicatorsDisplay } from "./ICarouselProps";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
@@ -34,7 +35,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
    * Handles component update lifecycle method.
    * @param prevProps
    */
-  public componentDidUpdate(prevProps: ICarouselProps) {
+  public componentDidUpdate(prevProps: ICarouselProps): void {
     const currProps = this.props;
 
     const prevPropsElementKey = prevProps.triggerPageEvent && prevProps.element ? (prevProps.element as JSX.Element).key : null;
@@ -49,7 +50,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     }
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     // starting auto cycling
     this.startCycle();
   }
@@ -142,7 +143,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     } = this.state;
 
     if (!isAnimated || previousIndex === undefined) {
-      return [<div className={styles.slideWrapper}>
+      return [<div key={currentIndex} className={styles.slideWrapper}>
         {element}
       </div>];
     }
@@ -184,7 +185,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       return null;
     }
 
-    const elementsCount = triggerPageEvent ? this.props.elementsCount : isArray(this.props.element) ? (this.props.element as any[]).length : 1;
+    const elementsCount = triggerPageEvent ? this.props.elementsCount : isArray(this.props.element) ? (this.props.element as (JSX.Element[] | ICarouselImageProps[])).length : 1;
 
     const indicatorElements: JSX.Element[] = [];
     for (let i = 0; i < elementsCount; i++) {
@@ -282,7 +283,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
    * Return merged styles for Buttons.
    * @param nextButton
    */
-  private getButtonStyles(nextButton: boolean) {
+  private getButtonStyles(nextButton: boolean): string {
     const buttonsDisplayMode = this.props.buttonsDisplay ? this.props.buttonsDisplay : CarouselButtonsDisplay.block;
     let result = "";
     if (buttonsDisplayMode === CarouselButtonsDisplay.buttonsOnly) {
@@ -425,7 +426,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     if (!element) {
       result = null;
     }
-    else if (isArray(element) && (arrayLen = (element as any[]).length) > 0) {
+    else if (isArray(element) && (arrayLen = (element as JSX.Element[] | ICarouselImageProps[]).length) > 0) {
       // Retrieve proper element from the array
       if (currentIndex >= 0 && arrayLen > currentIndex) {
         const arrayEl = element[currentIndex];

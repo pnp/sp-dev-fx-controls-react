@@ -3,7 +3,7 @@ import * as React from "react";
 import { IWidget } from "./IWidget";
 
 
-const EmptyState = ({ borderColor }: { borderColor: string }) => {
+const EmptyState = ({ borderColor }: { borderColor: string }): JSX.Element => {
     return (
         <Box
             styles={{
@@ -20,7 +20,7 @@ export const WidgetBody = ({
 }: {
     widget: IWidget;
     siteVariables: SiteVariablesPrepared;
-}) => {
+}): JSX.Element => {
     const [activeTabId, setActiveTabId] = React.useState(0);
     return (
         <Card.Body

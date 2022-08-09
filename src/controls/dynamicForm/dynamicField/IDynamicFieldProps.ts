@@ -13,22 +13,21 @@ export interface IDynamicFieldProps {
   columnInternalName: string;
   label?: string;
   placeholder?: string;
-  onChanged?: (columnInternalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => void;
-  value?: any;
+  onChanged?: (columnInternalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  value?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   required: boolean;
-  newValue?: any;
+  newValue?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   fieldType: string;
   fieldTitle: string;
-  fieldDefaultValue: any;
+  fieldDefaultValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   options?: IDropdownOption[];
   fieldTermSetId?: string;
   lookupListID?: string;
   lookupField?: string;
-  changedValue: any;
+  changedValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   hiddenFieldName?: string;
   Order: number;
   isRichText?: boolean;
-  //bingAPIKey?: string;
   dateFormat?: DateFormat;
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;

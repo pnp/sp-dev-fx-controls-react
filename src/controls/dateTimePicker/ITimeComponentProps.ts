@@ -1,4 +1,3 @@
-import { IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { TimeConvention } from './DateTimeConventions';
 import { MinutesIncrement } from './IDateTimePickerProps';
 import { TimeDisplayControlType } from './TimeDisplayControlType';

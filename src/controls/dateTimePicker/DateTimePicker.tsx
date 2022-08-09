@@ -11,7 +11,9 @@ import MinutesComponent from "./MinutesComponent";
 import SecondsComponent from "./SecondsComponent";
 import * as telemetry from "../../common/telemetry";
 import { Async, css } from 'office-ui-fabric-react/lib/Utilities';
-import { IDateTimePickerProps, IDateTimePickerState, DateTimePickerStrings } from ".";
+import { IDateTimePickerProps } from "./IDateTimePickerProps";
+import { IDateTimePickerState } from "./IDateTimePickerState";
+import { DateTimePickerStrings } from "./DateTimePickerStrings";
 import { TimeHelper } from "./TimeHelper";
 import { TimeDisplayControlType } from "./TimeDisplayControlType";
 
@@ -62,7 +64,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
   /**
    * Called when the component will unmount
    */
-  public componentWillUnmount() {
+  public componentWillUnmount(): void {
     this.async.dispose();
   }
 
@@ -115,7 +117,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
   /**
    * Function called from the clearDate iconbutton
    */
-  private clearDate() {
+  private clearDate(): void {
     this.setState({
       day: null
     });
@@ -204,10 +206,10 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
   /**
    * Validates string input on date time field
    */
-  private handleTextChange = (e:React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue:string, locString:string) => {
+  private handleTextChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue: string, locString: string): void => {
     if (!TimeHelper.isValidDate(newValue)) {
       this.setState({
-        errorMessage:locString,
+        errorMessage: locString,
       });
       return;
     }
@@ -241,7 +243,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       maxDate,
       minutesIncrementStep,
       showClearDate = false,
-      showClearDateIcon= 'RemoveEvent'
+      showClearDateIcon = 'RemoveEvent'
     } = this.props;
 
     const { textErrorMessage } = dateStrings;
@@ -338,7 +340,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 }}
               />
             </div>
-            {showClearDate === true && this.state.day !== null && <IconButton iconProps={{iconName: showClearDateIcon}} onClick={() => this.clearDate()} />}
+            {showClearDate === true && this.state.day !== null && <IconButton iconProps={{ iconName: showClearDateIcon }} onClick={() => this.clearDate()} />}
 
           </div>
 
@@ -367,7 +369,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
 
     this._latestValidateValue = timestamp;
 
-    const result: string | PromiseLike<string> = this.props.onGetErrorMessage(dateVal);
+    const result: string | Promise<string> = this.props.onGetErrorMessage(dateVal);
     if (typeof result !== 'undefined') {
       if (typeof result === 'string') {
         if (result === '') {
@@ -386,7 +388,8 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
           this.setState({
             errorMessage: errorMessage
           });
-        });
+        })
+        .catch(() => { /* no-op; */ });
       }
     } else {
       this.notifyAfterValidate(this.props.value, dateVal);
@@ -396,7 +399,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
   /**
    * Notifies the parent Web Part of a property value change
    */
-  private notifyAfterValidate = (oldValue: Date, newValue: Date) => {
+  private notifyAfterValidate = (oldValue: Date, newValue: Date): void => {
     if (typeof this.props.onChange !== 'undefined' && this.props.onChange !== null && newValue !== null) {
       this.props.onChange(newValue);
     }

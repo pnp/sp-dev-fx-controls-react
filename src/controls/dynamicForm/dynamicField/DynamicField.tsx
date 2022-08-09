@@ -2,7 +2,7 @@ import '@pnp/sp/folders';
 import { sp } from '@pnp/sp/presets/all';
 import '@pnp/sp/webs';
 import * as strings from 'ControlStrings';
-import { ActionButton } from 'office-ui-fabric-react';
+import { ActionButton } from 'office-ui-fabric-react/lib/Button';
 import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/components/Dropdown';
 import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
@@ -36,7 +36,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     };
   }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(): void {
     if (this.props.fieldDefaultValue === "" && this.state.changedValue === null) {
       this.setState({ changedValue: "" });
     }
@@ -95,6 +95,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const errorText = this.getRequiredErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
     const descriptionEl = <text className={styles.fieldDescription}>{description}</text>;
+    const hasImage = !!changedValue;
 
     switch (fieldType) {
       case 'loading':
@@ -407,7 +408,6 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'Thumbnail':
-        const hasImage = !!changedValue;// || !!defaultValue;
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={"photo2"} />
@@ -505,7 +505,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     return null;
   }
 
-  private onDeleteImage = () => {
+  private onDeleteImage = (): void => {
 
     const {
       onChanged,
@@ -521,7 +521,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     }
   }
 
-  private onURLChange = (value: string, isUrl: boolean) => {
+  private onURLChange = (value: string, isUrl: boolean): void => {
     const {
       fieldDefaultValue,
       onChanged,
@@ -552,7 +552,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     }
   }
 
-  private onChange = (value: any) => {
+  private onChange = (value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const {
       onChanged,
       columnInternalName
@@ -566,7 +566,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     });
   }
 
-  private onBlur = () => {
+  private onBlur = (): void => {
     if (this.state.changedValue === null && this.props.fieldDefaultValue === "") {
       this.setState({ changedValue: "" });
     }
@@ -579,7 +579,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     return (changedValue === undefined || changedValue === '') && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
   }
 
-  private MultiChoice_selection = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption) => {
+  private MultiChoice_selection = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
     const {
       changedValue
     } = this.state;
@@ -609,13 +609,13 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     }
   }
 
-  private saveIntoSharePoint = async (files: IFilePickerResult[]) => {
+  private saveIntoSharePoint = async (files: IFilePickerResult[]): Promise<void> => {
     const {
       columnInternalName,
       onChanged
     } = this.props;
 
-    let newValue: any;
+    let newValue: string;
     if (!files.length) {
       return;
     }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import styles from './DragDropFiles.module.scss';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import { IDragDropFilesState, IDragDropFilesProps } from './IDragDropFiles';
-import * as strings from 'ControlStrings';
 
 /**
  * DragDropFiles Class Control
@@ -40,7 +39,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
       this._enable = enable;
     }
     // Add EventListeners for drag zone area
-    let divDropArea = this.dropRef.current;
+    const divDropArea = this.dropRef.current;
     if (this._enable === true) {
       divDropArea.addEventListener('dragenter', this.handleonDragEnter);
       divDropArea.addEventListener('dragleave', this.handleonDragLeave);
@@ -53,7 +52,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    * Stop listeners from onDragOver event.
    * @param e
    */
-  private handleonDragOver = (e) => {
+  private handleonDragOver = (e): void => {
     e.preventDefault();
     e.stopPropagation();
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
@@ -64,7 +63,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    * Stop listeners from onDragEnter event, enable drag and drop view.
    * @param e
    */
-  private handleonDragEnter = (e) => {
+  private handleonDragEnter = (e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
     this.dragCounter++;
@@ -77,7 +76,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    * Stop listeners from ondragenter event, disable drag and drop view.
    * @param e
    */
-  private handleonDragLeave = (e) => {
+  private handleonDragLeave = (e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
     this.dragCounter--;
@@ -89,7 +88,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
   * Stop listeners from onDrop event and load files to property onDrop.
   * @param e
   */
-  private handleonDrop = async (e) => {
+  private handleonDrop = async (e: DragEvent): Promise<void> => {
     e.preventDefault();
     e.stopPropagation();
     this.setState({ dragStatus: false });
@@ -105,11 +104,11 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
      * https://www.meziantou.net/upload-files-and-directories-using-an-input-drag-and-drop-or-copy-and-paste-with.htm
      * @param dataTransfer
      */
-  private getFilesAsync = async (e) => {
+  private getFilesAsync = async (e: DragEvent): Promise<File[]> => {
     const Customfiles = e.dataTransfer;
     const items = Customfiles.items;
-    const Directory = [];
-    let entry: any;
+    const Directory: FileSystemDirectoryEntry[] = [];
+    let entry: FileSystemEntry;
     const files: File[] = [];
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
@@ -119,32 +118,32 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
          * defensive code to only use method when exist in browser if not only return files.
          * https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
         */
-        if (item.getAsEntry) {
-          entry = item.getAsEntry();
+        if ((item as any).getAsEntry) { // eslint-disable-line @typescript-eslint/no-explicit-any
+          entry = (item as any).getAsEntry(); // eslint-disable-line @typescript-eslint/no-explicit-any
           if (entry.isDirectory) {
-            Directory.push(entry);
+            Directory.push(entry as FileSystemDirectoryEntry);
           } else {
             const file = item.getAsFile();
             if (file) {
-              file.fullPath = "";
+              (file as any).fullPath = ""; // eslint-disable-line @typescript-eslint/no-explicit-any
               files.push(file);
             }
           }
         } else if (item.webkitGetAsEntry) {
           entry = item.webkitGetAsEntry();
           if (entry.isDirectory) {
-            Directory.push(entry);
+            Directory.push(entry as FileSystemDirectoryEntry);
           } else {
             const file = item.getAsFile();
             if (file) {
-              file.fullPath = "";
+              (file as any).fullPath = ""; // eslint-disable-line @typescript-eslint/no-explicit-any
               files.push(file);
             }
           }
         } else if ("function" === typeof item.getAsFile) {
           const file = item.getAsFile();
           if (file) {
-            file.fullPath = "";
+            (file as any).fullPath = ""; // eslint-disable-line @typescript-eslint/no-explicit-any
             files.push(file);
           }
         }
@@ -163,7 +162,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    *
    * @param entry
    */
-  private readEntryContentAsync = (Directory) => {
+  private readEntryContentAsync = (Directory: FileSystemDirectoryEntry[]): Promise<File[]> => {
     return new Promise<File[]>((resolve, reject) => {
       let reading = 0;
       const contents: File[] = [];
@@ -171,14 +170,14 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
         readEntry(entry, "");
       });
 
-      function readEntry(entry, path) {
+      function readEntry(entry: FileSystemEntry, path: string): void {
         if (entry.isDirectory) {
-          readReaderContent(entry.createReader());
+          readReaderContent((entry as FileSystemDirectoryEntry).createReader());
         } else {
           reading++;
-          entry.file(file => {
+          (entry as FileSystemFileEntry).file(file => {
             reading--;
-            file.fullPath = path;
+            (file as any).fullPath = path; // eslint-disable-line @typescript-eslint/no-explicit-any
             contents.push(file);
 
             if (reading === 0) {
@@ -188,7 +187,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
         }
       }
 
-      function readReaderContent(reader) {
+      function readReaderContent(reader: FileSystemDirectoryReader): void {
         reading++;
 
         reader.readEntries((entries) => {
@@ -209,8 +208,8 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    * Default React component render method
    */
   public render(): React.ReactElement<IDragDropFilesProps> {
-    let { dragStatus } = this.state;
-    let { labelMessage, iconName } = this.props;
+    const { dragStatus } = this.state;
+    const { labelMessage, iconName } = this.props;
 
     if (labelMessage === undefined || labelMessage === "") {
       this._LabelMessage = "";

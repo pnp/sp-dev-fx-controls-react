@@ -90,7 +90,7 @@ export interface IDateTimePickerProps {
   /**
    * Callback issued when date/time is changed
    */
-  onChange?: (date: Date | null | undefined) => void;
+  onChange?: (date: Date | undefined) => void;
   /*
    * Localized strings to use in the DateTimePicker.
    */

@@ -6,8 +6,6 @@ import { mount, ReactWrapper } from 'enzyme';
 import { AccessibleChartTable, ChartType } from './';
 import styles from './ChartControl.module.scss';
 
-declare const sinon;
-
 describe('<AccessibleChartTable />', () => {
   let tableControl: ReactWrapper;
   const dummyClass: string = "DummyClass";

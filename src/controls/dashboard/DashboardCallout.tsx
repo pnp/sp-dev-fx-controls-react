@@ -26,7 +26,7 @@ export interface IDashboardCallout {
   };
 }
 
-const getLocalTheme = () => {
+const getLocalTheme = () => { // eslint-disable-line @typescript-eslint/explicit-function-return-type
   return {
     componentVariables: {
       PopupContent: ({
@@ -86,11 +86,11 @@ export const DashboardCallout = ({
   globalTheme,
   widgetActionGroup,
   actionHandlers
-}: IDashboardCallout) => {
-  
+}: IDashboardCallout): JSX.Element => {
+
   const theme = mergeThemes(globalTheme, getLocalTheme());
-  const getMenuItems = () => {
-    let result = [];
+  const getMenuItems = (): any[] => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    const result: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
     if (widgetActionGroup) {
       result.push(...widgetActionGroup.map(
         (widgetAction: IWidgetActionKey) => {
@@ -115,7 +115,7 @@ export const DashboardCallout = ({
     }
     return result;
   };
-  let items = getMenuItems();
+  const items = getMenuItems();
   if(items.length === 0){
     return null;
   }
