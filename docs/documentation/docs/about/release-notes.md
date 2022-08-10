@@ -6,6 +6,7 @@
 
 - `DynamicForm`: possibility to override field rendering for individual fields [#1257](https://github.com/pnp/sp-dev-fx-controls-react/issues/1257)
 - `ModernTaxonomyPicker`: Display the full path of a term [#1172](https://github.com/pnp/sp-dev-fx-controls-react/issues/1172)
+- SharePoint Framework v1.15.2 support [#1261](https://github.com/pnp/sp-dev-fx-controls-react/pull/1261)
 
 ### Fixes
 
@@ -13,7 +14,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Bart-Jan Dekker](https://github.com/bjdekker), [Edin Kapic](https://github.com/ekapic), [Milan Holemans](https://github.com/milanholemans).
+Special thanks to our contributors (in alphabetical order): [Bart-Jan Dekker](https://github.com/bjdekker), [Edin Kapic](https://github.com/ekapic), [Milan Holemans](https://github.com/milanholemans), [Steve Beaugé](https://github.com/stevebeauge).
 
 ## 3.9.0
 
