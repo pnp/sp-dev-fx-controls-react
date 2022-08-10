@@ -7,7 +7,7 @@ import {
 import { ITextStyles } from "office-ui-fabric-react/lib/Text";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 const currentTheme = window.__themeState__.theme;
-export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => {
+export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => { // eslint-disable-line @typescript-eslint/explicit-function-return-type
   const commentTextStyles: ITextStyles = {
     root: {
       marginBottom: 15,

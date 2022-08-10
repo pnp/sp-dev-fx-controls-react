@@ -23,7 +23,7 @@ const AccordionItemButton = ({
     toggleExpanded,
     className = 'accordion__button',
     ...rest
-}: Props) => {
+}: Props): JSX.Element => {
     const handleKeyPress = (evt: React.KeyboardEvent<HTMLDivElement>): void => {
         const keyCode = evt.key;
 

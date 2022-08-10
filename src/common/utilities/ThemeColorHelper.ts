@@ -1,8 +1,4 @@
-interface Window {
-  __themeState__: any;
-}
-
-declare var window: Window;
+import type { IThemeState } from "spfx-uifabric-themes";
 
 export class ThemeColorHelper {
   /**
@@ -32,7 +28,7 @@ export class ThemeColorHelper {
             // This should definitely be easier to do in SPFx!
 
             // tslint:disable-next-line
-            const themeStateVariable: any = window.__themeState__;
+            const themeStateVariable: IThemeState = window.__themeState__;
             if (themeStateVariable === undefined) {
               return defaultValue;
             }
@@ -43,7 +39,7 @@ export class ThemeColorHelper {
             }
 
             for (const varName in themeState) {
-              if (!themeState.hasOwnProperty(varName)) {
+              if (!Object.prototype.hasOwnProperty.call(themeState, varName)) {
                 continue;
               }
 
@@ -60,7 +56,7 @@ export class ThemeColorHelper {
         }
       }
     } catch (error) {
-
+      // do nothing
     }
 
     return value;

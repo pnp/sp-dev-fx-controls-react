@@ -77,7 +77,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              if(Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
+              if(fieldOverrides && Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
                 v.disabled = v.disabled || isSaving;
                 return fieldOverrides[v.columnInternalName](v);
               }

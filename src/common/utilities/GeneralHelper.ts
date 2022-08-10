@@ -1,8 +1,4 @@
-import { IContext } from '../Interfaces';
-import { SPHelper } from './SPHelper';
 import '../extensions/String.extensions';
-
-//import * as _ from '@microsoft/sp-lodash-subset';
 
 import * as strings from 'ControlStrings';
 
@@ -48,29 +44,31 @@ export class GeneralHelper {
 
         switch (formatType) {
             case '1':
-                result = isFuture ? strings.DateTime['L_RelativeDateTime_AFewSecondsFuture'] : strings.DateTime['L_RelativeDateTime_AFewSeconds'];
+                result = isFuture ? strings.DateTime.L_RelativeDateTime_AFewSecondsFuture : strings.DateTime.L_RelativeDateTime_AFewSeconds;
                 break;
             case '2':
-                result = isFuture ? strings.DateTime['L_RelativeDateTime_AboutAMinuteFuture'] : strings.DateTime['L_RelativeDateTime_AboutAMinute'];
+                result = isFuture ? strings.DateTime.L_RelativeDateTime_AboutAMinuteFuture : strings.DateTime.L_RelativeDateTime_AboutAMinute;
                 break;
             case '3':
-                placeholdersString = this.getLocalizedCountValue(isFuture ? strings.DateTime['L_RelativeDateTime_XMinutesFuture'] : strings.DateTime['L_RelativeDateTime_XMinutes'], isFuture ? strings.DateTime['L_RelativeDateTime_XMinutesFutureIntervals'] : strings.DateTime['L_RelativeDateTime_XMinutesIntervals'], Number(timeString));
+                placeholdersString = this.getLocalizedCountValue(
+                  isFuture ? strings.DateTime.L_RelativeDateTime_XMinutesFuture : strings.DateTime.L_RelativeDateTime_XMinutes,
+                  isFuture ? strings.DateTime.L_RelativeDateTime_XMinutesFutureIntervals : strings.DateTime.L_RelativeDateTime_XMinutesIntervals, Number(timeString));
                 break;
             case '4':
-                result = isFuture ? strings.DateTime['L_RelativeDateTime_AboutAnHourFuture'] : strings.DateTime['L_RelativeDateTime_AboutAnHour'];
+                result = isFuture ? strings.DateTime.L_RelativeDateTime_AboutAnHourFuture : strings.DateTime.L_RelativeDateTime_AboutAnHour;
                 break;
             case '5':
                 if (timeString === null) {
-                    result = isFuture ? strings.DateTime['L_RelativeDateTime_Tomorrow'] : strings.DateTime['L_RelativeDateTime_Yesterday'];
+                    result = isFuture ? strings.DateTime.L_RelativeDateTime_Tomorrow : strings.DateTime.L_RelativeDateTime_Yesterday;
                 }
                 else {
-                    placeholdersString = isFuture ? strings.DateTime['L_RelativeDateTime_TomorrowAndTime'] : strings.DateTime['L_RelativeDateTime_YesterdayAndTime'];
+                    placeholdersString = isFuture ? strings.DateTime.L_RelativeDateTime_TomorrowAndTime : strings.DateTime.L_RelativeDateTime_YesterdayAndTime;
                 }
                 break;
             case '6':
                 placeholdersString = this.getLocalizedCountValue(
-                    isFuture ? strings.DateTime['L_RelativeDateTime_XHoursFuture'] : strings.DateTime['L_RelativeDateTime_XHours'],
-                    isFuture ? strings.DateTime['L_RelativeDateTime_XHoursFutureIntervals'] : strings.DateTime['L_RelativeDateTime_XHoursIntervals'],
+                    isFuture ? strings.DateTime.L_RelativeDateTime_XHoursFuture : strings.DateTime.L_RelativeDateTime_XHours,
+                    isFuture ? strings.DateTime.L_RelativeDateTime_XHoursFutureIntervals : strings.DateTime.L_RelativeDateTime_XHoursIntervals,
                     Number(timeString));
                 break;
             case '7':
@@ -78,17 +76,17 @@ export class GeneralHelper {
                     result = timeString;
                 }
                 else {
-                    placeholdersString = strings.DateTime['L_RelativeDateTime_DayAndTime'];
+                    placeholdersString = strings.DateTime.L_RelativeDateTime_DayAndTime;
                 }
                 break;
             case '8':
                 placeholdersString = this.getLocalizedCountValue(
-                    isFuture ? strings.DateTime['L_RelativeDateTime_XDaysFuture'] : strings.DateTime['L_RelativeDateTime_XDays'],
-                    isFuture ? strings.DateTime['L_RelativeDateTime_XDaysFutureIntervals'] : strings.DateTime['L_RelativeDateTime_XDaysIntervals'],
+                    isFuture ? strings.DateTime.L_RelativeDateTime_XDaysFuture : strings.DateTime.L_RelativeDateTime_XDays,
+                    isFuture ? strings.DateTime.L_RelativeDateTime_XDaysFutureIntervals : strings.DateTime.L_RelativeDateTime_XDaysIntervals,
                     Number(timeString));
                 break;
             case '9':
-                result = strings.DateTime['L_RelativeDateTime_Today'];
+                result = strings.DateTime.L_RelativeDateTime_Today;
         }
         if (placeholdersString !== null) {
             result = placeholdersString.replace("{0}", timeString);
@@ -108,16 +106,16 @@ export class GeneralHelper {
             return null;
         let result: string = '';
         let a = -1;
-        let firstOperandOptions: string[] = first.split('||');
+        const firstOperandOptions: string[] = first.split('||');
 
         for (let firstOperandOptionsIdx = 0, firstOperandOptionsLen = firstOperandOptions.length; firstOperandOptionsIdx < firstOperandOptionsLen; firstOperandOptionsIdx++) {
             const firstOperandOption: string = firstOperandOptions[firstOperandOptionsIdx];
 
             if (firstOperandOption === null || firstOperandOption === '')
                 continue;
-            let optionParts: string[] = firstOperandOption.split(',');
+            const optionParts: string[] = firstOperandOption.split(',');
 
-            for (var optionPartsIdx = 0, optionPartsLen = optionParts.length; optionPartsIdx < optionPartsLen; optionPartsIdx++) {
+            for (let optionPartsIdx = 0, optionPartsLen = optionParts.length; optionPartsIdx < optionPartsLen; optionPartsIdx++) {
                 const optionPart: string = optionParts[optionPartsIdx];
 
                 if (optionPart === null || optionPart === '')
@@ -127,7 +125,7 @@ export class GeneralHelper {
 
                     if (dashParts === null || dashParts.length !== 2)
                         continue;
-                    var j, n;
+                    let j: number, n: number;
 
                     if (dashParts[0] === '')
                         j = 0;
@@ -151,7 +149,7 @@ export class GeneralHelper {
                     }
                 }
                 else {
-                    var p = parseInt(optionPart);
+                    const p = parseInt(optionPart);
 
                     if (second === p) {
                         a = firstOperandOptionsIdx;
@@ -163,7 +161,7 @@ export class GeneralHelper {
                 break;
         }
         if (a !== -1) {
-            var e = format.split('||');
+            const e: string[] = format.split('||');
 
             if (e !== null && e[a] !== null && e[a] !== '')
                 result = e[a];
@@ -178,9 +176,9 @@ export class GeneralHelper {
     public static getTextFromHTML(html: string): string {
         let result: string = html;
         let oldResult: string = result;
-        const tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+        const tagBody: string = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
 
-        const tagOrComment = new RegExp(
+        const tagOrComment: RegExp = new RegExp(
             '<(?:'
             // Comment body.
             + '!--(?:(?:-*[^->])*--+|-?)'
@@ -196,7 +194,7 @@ export class GeneralHelper {
         do {
             oldResult = result;
             result = result.replace(tagOrComment, '');
-        } while (result !== result);
+        } while (result !== oldResult);
 
         return result;
     }
@@ -205,7 +203,7 @@ export class GeneralHelper {
      * Checks if value is defined (not null and not undefined)
      * @param value value
      */
-    public static isDefined(value): boolean {
+    public static isDefined(value: any): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any
         return value !== null;
     }
 
@@ -213,9 +211,9 @@ export class GeneralHelper {
      * Creates Document element based on Xml string
      * @param xmlString XML string to parse
      */
-    public static parseXml(xmlString): Document {
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(xmlString, 'text/xml');
+    public static parseXml(xmlString: string): Document {
+        const parser: DOMParser = new DOMParser();
+        const xml: Document = parser.parseFromString(xmlString, 'text/xml');
         return xml;
     }
 
@@ -249,7 +247,7 @@ export class GeneralHelper {
      * @param blob
      */
     public static getFileFromBlob(blob :Blob, fileName: string) : File {
-      let result : any = null;
+      let result : any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
       // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
       try {
         result = new File([blob], fileName);
@@ -262,7 +260,7 @@ export class GeneralHelper {
       return result;
     }
 
-    public static formatBytes(bytes, decimals) {
+    public static formatBytes(bytes, decimals): string {
       if (bytes === 0) {
         return strings.EmptyFileSize;
       }
@@ -276,7 +274,7 @@ export class GeneralHelper {
     /**
      * Returns file name without extension.
      */
-    public static getFileNameWithoutExtension(itemUrl : string) {
+    public static getFileNameWithoutExtension(itemUrl : string): string {
       const fileNameWithExtension = GeneralHelper.getFileNameFromUrl(itemUrl);
       const fileName = fileNameWithExtension.substr(0, fileNameWithExtension.lastIndexOf('.'));
       return fileName;
@@ -285,7 +283,7 @@ export class GeneralHelper {
     /**
      * Returns file name with the extension
      */
-    public static getFileNameFromUrl(itemUrl : string) {
+    public static getFileNameFromUrl(itemUrl : string): string {
       const urlTokens = itemUrl.split("?");
       const url = urlTokens[0];
       const tokens = url.split("/");
@@ -343,7 +341,7 @@ export function urlCombine(urlStart: string, urlFinish: string, escapeFinish: bo
   }
   if (urlFinish) {
     if (escapeFinish) {
-      const escapeFunc = (str: string) => {
+      const escapeFunc = (str: string): string => {
         return encodeURIComponent(unescape(str))
           .replace(/[!'()*]/g, escape)
           .replace(/\./g, '%2E');

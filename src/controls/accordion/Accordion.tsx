@@ -20,9 +20,9 @@ export class Accordion extends React.Component<IAccordionProps, IAccordionState>
     this.state = {
       expanded: !props.defaultCollapsed
     };
-    
-    !!props.collapsedIcon? collapsedIcon.iconName = props.collapsedIcon : collapsedIcon.iconName = 'ChevronRight';
-    !!props.expandedIcon? expandedIcon.iconName = props.expandedIcon : expandedIcon.iconName = 'ChevronDown';
+
+    collapsedIcon.iconName = props.collapsedIcon || 'CheveronRight';
+    expandedIcon.iconName = props.expandedIcon || 'CheveronDown';
 
     telemetry.track('ReactAccordion', {});
   }
