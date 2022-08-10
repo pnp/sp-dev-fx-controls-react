@@ -58,6 +58,7 @@ export interface ITaxonomyTreeProps {
   selection?: Selection<any>;
   hideDeprecatedTerms?: boolean;
   showIcons?: boolean;
+  allowSelectingChildren?: boolean;
 }
 
 export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITaxonomyTreeProps> {
@@ -228,7 +229,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
               level: 1,
               isCollapsed: true,
               data: { skiptoken: '', term: term },
-              hasMoreData: term.childrenCount > 0,
+              hasMoreData: props.allowSelectingChildren !== false && term.childrenCount > 0,
             };
             if (g.hasMoreData) {
               g.children = [];

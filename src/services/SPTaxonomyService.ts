@@ -58,11 +58,33 @@ export class SPTaxonomyService {
     }
   }
 
-  public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, stringMatchId: string = '0', pageSize: number = 50): Promise<ITermInfo[]> {
+  public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, allowSelectingChildren = true, stringMatchId: string = '0', pageSize: number = 50): Promise<ITermInfo[]> {
     try {
-      const searchTermUrl = sp.termStore.concat(`/searchTerm(label='${label}',setId='${termSetId}',languageTag='${languageTag}',stringMatchId='${stringMatchId}'${parentTermId && parentTermId !== Guid.empty ? `,parentTermId='${parentTermId}'` : ''})`).toUrl();
+      let query = [
+        `label='${label}'`,
+        `setId='${termSetId}'`,
+        `languageTag='${languageTag}'`,
+        `stringMatchId='${stringMatchId}'`
+      ];
+
+      if(parentTermId !== Guid.empty) {
+        query.push(`parentTermId='${parentTermId}'`);
+      }
+
+      const searchTermUrl = sp.termStore.concat(`/searchTerm(${query.join(',')})`).toUrl();
       const searchTermQuery = SharePointQueryableCollection(searchTermUrl).top(pageSize);
-      const filteredTerms = await searchTermQuery();
+      let filteredTerms: ITermInfo[] = await searchTermQuery();
+
+      if(allowSelectingChildren === false) {
+        const hasParentId = parentTermId !== Guid.empty;
+
+        const set = sp.termStore.sets.getById(termSetId.toString());
+        const collection = hasParentId ? set.terms.getById(parentTermId.toString()).children : set.children;
+
+        const childrenIds = await collection.select("id").get().then(children => children.map(c => c.id));
+        filteredTerms = filteredTerms.filter(term => childrenIds.includes(term.id));
+      }
+
       return filteredTerms;
     } catch (error) {
       return [];

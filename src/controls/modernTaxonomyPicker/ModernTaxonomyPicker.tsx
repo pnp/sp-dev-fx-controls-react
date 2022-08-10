@@ -63,6 +63,7 @@ export interface IModernTaxonomyPickerProps {
   isLightDismiss?: boolean;
   isBlocking?: boolean;
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
+  allowSelectingChildren?: boolean;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
@@ -130,14 +131,19 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     if (filter === '') {
       return [];
     }
-    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty);
+    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren);
+
     const filteredTermsWithoutSelectedItems = filteredTerms.filter((term) => {
       if (!selectedItems || selectedItems.length === 0) {
         return true;
       }
       return selectedItems.every((item) => item.id !== term.id);
     });
-    const filteredTermsAndAvailable = filteredTermsWithoutSelectedItems.filter((term) => term.isAvailableForTagging.filter((t) => t.setId === props.termSetId)[0].isAvailable);
+
+    const filteredTermsAndAvailable = filteredTermsWithoutSelectedItems
+      .filter((term) =>
+        term.isAvailableForTagging
+          .filter((t) => t.setId === props.termSetId)[0].isAvailable);
     return filteredTermsAndAvailable;
   }
 
@@ -279,6 +285,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
                 themeVariant={props.themeVariant}
                 termPickerProps={props.termPickerProps}
                 onRenderActionButton={props.onRenderActionButton}
+                allowSelectingChildren={props.allowSelectingChildren}
               />
             </div>
           )
