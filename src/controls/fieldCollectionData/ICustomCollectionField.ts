@@ -38,7 +38,7 @@ export interface ICustomCollectionField {
   /**
    * Default value for the field
    */
-  defaultValue?: any;
+  defaultValue?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Field will start to validate after users stop typing for `deferredValidationTime` milliseconds. Default: 200ms.
    */
@@ -50,12 +50,21 @@ export interface ICustomCollectionField {
    * - If valid, it returns empty string.
    * - If invalid, the field will show a red border
    */
-  onGetErrorMessage?: (value: any, index: number, currentItem: any) => string | Promise<string>;
+  onGetErrorMessage?: (value: any, index: number, currentItem: any) => string | Promise<string>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /**
    * Custom field rendering support
    */
-  onCustomRender?: (field: ICustomCollectionField, value: any, onUpdate: (fieldId: string, value: any) => void, item: any, rowUniqueId: string, onCustomFieldValidation: (fieldId: string, errorMessage: string) => void) => JSX.Element;
+  onCustomRender?: (
+    field: ICustomCollectionField,
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    value: any,
+    onUpdate: (fieldId: string, value: any) => void,
+    item: any,
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+    rowUniqueId: string,
+    onCustomFieldValidation: (fieldId: string, errorMessage: string) => void
+  ) => JSX.Element;
 }
 
 export enum CustomCollectionFieldType {

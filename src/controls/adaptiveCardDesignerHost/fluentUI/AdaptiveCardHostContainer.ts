@@ -8,57 +8,53 @@ import { AdaptiveCardHostThemeType } from "../../adaptiveCardHost/models/Adaptiv
 import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDefaultTheme";
 
 export enum AdaptiveCardHostContainerType {
-    Default = "default",
-    TeamsDefault = "TeamsDefault",
-    TeamsDark = "TeamsDark",
-    TeamsHighContrast = "TeamsHighContrast"
+  Default = "default",
+  TeamsDefault = "TeamsDefault",
+  TeamsDark = "TeamsDark",
+  TeamsHighContrast = "TeamsHighContrast"
 }
 
 export class AdaptiveCardHostContainer extends HostContainer {
-    private type: AdaptiveCardHostContainerType;
+  private type: AdaptiveCardHostContainerType;
 
-    public constructor(name: string, type: AdaptiveCardHostContainerType) {
-        super(name, "");
-        this.type = type;
+  public constructor(name: string, type: AdaptiveCardHostContainerType) {
+    super(name, "");
+    this.type = type;
 
-        registerFluentUIElements(this.elementsRegistry);
-        registerFluentUIActions(this.actionsRegistry);
+    registerFluentUIElements(this.elementsRegistry);
+    registerFluentUIActions(this.actionsRegistry);
+  }
+
+  public renderTo(hostElement: HTMLElement): void {
+    const container = document.createElement("div");
+    container.className = "adaptiveCardHostContainer";
+    container.appendChild(this.cardHost);
+    hostElement.appendChild(container);
+  }
+
+  public getHostConfig(): HostConfig {
+    let hostThemeType: AdaptiveCardHostThemeType;
+
+    switch (this.type) {
+      case AdaptiveCardHostContainerType.Default:
+        hostThemeType = AdaptiveCardHostThemeType.SharePoint;
+        break;
+      case AdaptiveCardHostContainerType.TeamsDefault:
+        hostThemeType = AdaptiveCardHostThemeType.Teams;
+        break;
+      case AdaptiveCardHostContainerType.TeamsDark:
+        hostThemeType = AdaptiveCardHostThemeType.TeamsDark;
+        break;
+      case AdaptiveCardHostContainerType.TeamsHighContrast:
+        hostThemeType = AdaptiveCardHostThemeType.TeamsHighContrast;
+        break;
     }
 
-    public renderTo(hostElement: HTMLElement) {
-        let container = document.createElement("div");
-        container.className = "adaptiveCardHostContainer";
-        container.appendChild(this.cardHost);
-        hostElement.appendChild(container);
-    }
+    const adaptiveCardHostConfigResult = initializeAdaptiveCardHost(hostThemeType, fluentUIDefaultTheme());
+    return adaptiveCardHostConfigResult.hostConfig;
+  }
 
-    public getHostConfig(): HostConfig {
-        let hostThemeType: AdaptiveCardHostThemeType;
-
-        switch (this.type) {
-            case AdaptiveCardHostContainerType.Default: {
-                hostThemeType = AdaptiveCardHostThemeType.SharePoint;
-            }
-                break;
-            case AdaptiveCardHostContainerType.TeamsDefault: {
-                hostThemeType = AdaptiveCardHostThemeType.Teams;
-            }
-                break;
-            case AdaptiveCardHostContainerType.TeamsDark: {
-                hostThemeType = AdaptiveCardHostThemeType.TeamsDark;
-            }
-                break;
-            case AdaptiveCardHostContainerType.TeamsHighContrast: {
-                hostThemeType = AdaptiveCardHostThemeType.TeamsHighContrast;
-            }
-                break;
-        }
-
-        let adaptiveCardHostConfigResult = initializeAdaptiveCardHost(hostThemeType, fluentUIDefaultTheme());
-        return adaptiveCardHostConfigResult.hostConfig;
-    }
-
-    get targetVersion(): Version {
-        return Versions.v1_5;
-    }
+  get targetVersion(): Version {
+    return Versions.v1_5;
+  }
 }

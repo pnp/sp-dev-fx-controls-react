@@ -17,7 +17,7 @@ interface returnObjectStyles {
   documentCardStyles: Partial<IDocumentCardStyles>;
   documentCardDeleteStyles: Partial<IDocumentCardStyles>;
   documentCardUserStyles: Partial<IDocumentCardStyles>;
-  configurationListClasses: any;
+  configurationListClasses: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const useListItemCommentsStyles = (): returnObjectStyles => {

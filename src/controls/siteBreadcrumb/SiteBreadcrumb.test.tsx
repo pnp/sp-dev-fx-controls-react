@@ -1,13 +1,13 @@
 /// <reference types="sinon" />
 
-import * as React from 'react';
-import { assert, expect } from 'chai';
-import { mount, ReactWrapper } from 'enzyme';
-import { SiteBreadcrumb } from './SiteBreadcrumb';
-import { ISiteBreadcrumbProps } from './ISiteBreadcrumb';
-import styles from './SiteBreadcrumb.module.scss';
+// import * as React from 'react';
+// import { assert, expect } from 'chai';
+// import { mount, ReactWrapper } from 'enzyme';
+// import { SiteBreadcrumb } from './SiteBreadcrumb';
+// import { ISiteBreadcrumbProps } from './ISiteBreadcrumb';
+// import styles from './SiteBreadcrumb.module.scss';
 
-declare const sinon;
+// declare const sinon;
 
 /**
  * DISCLAIMER: Currently does not work because of the following issue:

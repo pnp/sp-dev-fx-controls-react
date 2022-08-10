@@ -649,7 +649,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         clearInterval(intervalId);
       } else {
         const action = actions[currentIndex];
-        if (currentIndex == 1) { // just a test for error
+        if (currentIndex === 1) { // just a test for error
           action.hasError = true;
           action.errorMessage = 'some error message';
         }

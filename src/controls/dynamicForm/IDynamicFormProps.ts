@@ -20,15 +20,15 @@ export interface IDynamicFormProps {
    * Before submit handler.
    * Allows to modify the object to be submitted or cancel the submission.
    */
-  onBeforeSubmit?: (listItemData: any) => Promise<boolean>;
+  onBeforeSubmit?: (listItemData: any) => Promise<boolean>; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler for form submitted event
    */
-  onSubmitted?: (listItemData: any, listItem?: IItem) => void;
+  onSubmitted?: (listItemData: any, listItem?: IItem) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler of submission error
    */
-  onSubmitError?: (listItemData: any, error: Error) => void;
+  onSubmitError?: (listItemData: any, error: Error) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler for form cancelled event
    */

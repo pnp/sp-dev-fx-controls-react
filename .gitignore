@@ -43,3 +43,5 @@ docs/documentation/site
 # release
 release
 *.scss.d.ts
+
+.heft

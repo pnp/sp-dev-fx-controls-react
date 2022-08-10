@@ -1,13 +1,17 @@
-import * as React from 'react';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
+import { BaseComponentContext, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
+import { sp } from '@pnp/sp';
 import {
-  PrimaryButton,
-  DefaultButton,
-  IconButton,
-  IButtonStyles
+  ITermInfo,
+  ITermSetInfo,
+  ITermStoreInfo
+} from '@pnp/sp/taxonomy';
+import { useId } from '@uifabric/react-hooks';
+import * as strings from 'ControlStrings';
+import {
+  DefaultButton, IButtonStyles, IconButton, PrimaryButton
 } from 'office-ui-fabric-react/lib/Button';
+import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import {
   Panel,
@@ -22,25 +26,17 @@ import {
   IStackTokens,
   Stack
 } from 'office-ui-fabric-react/lib/Stack';
+import { ITooltipHostStyles, TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
-import { sp } from '@pnp/sp';
+import * as React from 'react';
+import { useMemo } from 'react';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
-import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import styles from './ModernTaxonomyPicker.module.scss';
-import * as strings from 'ControlStrings';
-import { TooltipHost, ITooltipHostStyles } from 'office-ui-fabric-react/lib/Tooltip';
-import { useId } from '@uifabric/react-hooks';
-import {
-  ITermInfo,
-  ITermSetInfo,
-  ITermStoreInfo
-} from '@pnp/sp/taxonomy';
-import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 import { ModernTermPicker } from './modernTermPicker/ModernTermPicker';
-import { IModernTermPickerProps, ITermItemProps, ITermItemStyles } from './modernTermPicker/ModernTermPicker.types';
+import { IModernTermPickerProps, ITermItemProps } from './modernTermPicker/ModernTermPicker.types';
+import { TaxonomyPanelContents } from './taxonomyPanelContents';
 import { TermItem } from './termItem/TermItem';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
-import { ITermLabel } from '@pnp/sp/taxonomy/types';
+import { TermItemSuggestion } from './termItem/TermItemSuggestion';
 
 export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -67,8 +63,8 @@ export interface IModernTaxonomyPickerProps {
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
 }
 
-export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
-  const taxonomyService = new SPTaxonomyService(props.context);
+export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Element {
+  const taxonomyService = useMemo(()=>new SPTaxonomyService(props.context), [props.context]);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const initialLoadComplete = React.useRef(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
@@ -79,7 +75,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
   const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
 
   React.useEffect(() => {
-    sp.setup(props.context);
+    sp.setup({ pageContext: props.context.pageContext });
     taxonomyService.getTermStoreInfo()
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
@@ -91,24 +87,33 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
           props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
           []);
           initialLoadComplete.current = true;
+      })
+      .catch(() => {
+        // no-op;
       });
     taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
       .then((termSetInfo) => {
         setCurrentTermSetInfo(termSetInfo);
+      })
+      .catch(() => {
+        // no-op;
       });
     if (props.anchorTermId && props.anchorTermId !== Guid.empty.toString()) {
       taxonomyService.getTermById(Guid.parse(props.termSetId), props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty)
         .then((anchorTermInfo) => {
           setCurrentAnchorTermInfo(anchorTermInfo);
+        })
+        .catch(() => {
+          // no-op;
         });
     }
-  }, []);
+  }, [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.initialValues, props.termSetId, taxonomyService]);
 
   React.useEffect(() => {
     if (props.onChange && initialLoadComplete.current) {
       props.onChange(selectedOptions);
     }
-  }, [selectedOptions]);
+  }, [props, selectedOptions]);
 
   function onOpenPanel(): void {
     if (props.disabled === true) {
@@ -144,7 +149,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
 
   async function addParentInformationToTerms(filteredTerms: ITermInfo[]): Promise<ITermInfo[]> {
     for(const filteredTerm of filteredTerms) {
-      const termParent = await getParentTree(filteredTerm);      
+      const termParent = await getParentTree(filteredTerm);
       filteredTerm.parent = termParent;
     }
 
@@ -197,7 +202,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     );
   }
 
-  function getLabelsForCurrentLanguage(item: ITermInfo): ITermLabel[] {
+  function getLabelsForCurrentLanguage(item: ITermInfo): {
+    name: string;
+    isDefault: boolean;
+    languageTag: string;
+}[] {
     let labels = item.labels.filter((name) => name.languageTag === currentLanguageTag && name.isDefault);
     if (labels.length === 0) {
       labels = item.labels.filter((name) => name.languageTag === currentTermStoreInfo.defaultLanguageTag && name.isDefault);
@@ -212,7 +221,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps) {
     if(props.isPathRendered) {
       let currentTermProps = itemProps.item;
       while(currentTermProps.parent !== undefined) {
-        let currentParentLabels = getLabelsForCurrentLanguage(currentTermProps.parent);
+        const currentParentLabels = getLabelsForCurrentLanguage(currentTermProps.parent);
         fullParentPrefixes.push(currentParentLabels[0].name);
         currentTermProps = currentTermProps.parent;
       }

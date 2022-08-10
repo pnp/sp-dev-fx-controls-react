@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { getVariant, VariantThemeType } from "@fluentui/scheme-utilities";
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import { createTheme, getTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { createTheme, getTheme, IPalette, ITheme } from "office-ui-fabric-react/lib/Styling";
 import * as React from "react";
 import { useCallback, useEffect, useState } from 'react';
 import { fluentUITeamsDarkTheme } from '../../common/fluentUIThemes/FluentUITeamsDarkTheme';
@@ -11,9 +11,15 @@ import { IEnhancedThemeProviderProps } from './IEnhancedThemeProviderProps';
 import { ThemeContext, useTheme } from '@fluentui/react-theme-provider';
 import * as telemetry from '../../common/telemetry';
 
+declare const window: Window & {
+  __themeState__: {
+    theme: Partial<IPalette>;
+  }
+};
+
 const getDefaultTheme = (): ITheme => {
   let currentTheme;
-  const themeColorsFromWindow: any = (window as any)?.__themeState__?.theme;
+  const themeColorsFromWindow: Partial<IPalette> = window.__themeState__?.theme;
   if (themeColorsFromWindow) {
     currentTheme = createTheme({
       palette: themeColorsFromWindow
@@ -26,7 +32,7 @@ const getDefaultTheme = (): ITheme => {
   return currentTheme;
 };
 
-const EnhancedThemeProvider = (props: IEnhancedThemeProviderProps) => {
+const EnhancedThemeProvider = (props: IEnhancedThemeProviderProps): JSX.Element => {
 
   const [isInTeams, setIsInTeams] = useState(false);
   const [teamsThemeName, setTeamsThemeName] = useState<string>(null);

@@ -16,5 +16,5 @@ export interface IWebInfo {
   Id: string;
   Title: string;
   ServerRelativeUrl: string;
-  error?: any;
+  error?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

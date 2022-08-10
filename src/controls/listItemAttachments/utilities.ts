@@ -25,7 +25,9 @@ export const DOCICONURL_VIDEO = "https://static2.sharepointonline.com/files/fabr
 
 export default class utilities {
 
-  constructor() {}
+  constructor() {
+    // no-op;
+  }
 
   /**
    * GetFileImageUrl

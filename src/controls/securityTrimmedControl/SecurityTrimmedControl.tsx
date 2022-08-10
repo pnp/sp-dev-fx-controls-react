@@ -42,7 +42,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
   /**
    * Check if the user has the permissions to render the element
    */
-  private checkPermissions() {
+  private checkPermissions(): void {
     const { context, level } = this.props;
     // Check if the permission level needs to be checked on the current site
     if (level === PermissionLevel.currentWeb || level === PermissionLevel.currentList) {
@@ -62,21 +62,44 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
       }
     } else if (level === PermissionLevel.remoteWeb) {
       // Check permissions on remote site
-      this.checkRemoteSitePermissions();
+      this.checkRemoteSitePermissions()
+        .then(() => {
+          // no-op;
+        }).catch(() => {
+          // no-op;
+        });
     } else if (level === PermissionLevel.remoteListOrLib) {
       // Check permissions on remote list/library
-      this.checkRemoteListOrLibPermissions();
+      this.checkRemoteListOrLibPermissions()
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
     } else if (level === PermissionLevel.remoteListItem) {
-      this.checkRemoteListItem();
+      this.checkRemoteListItem()
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
     } else if (level === PermissionLevel.remoteFolder) {
-      this.checkRemoteFolder();
+      this.checkRemoteFolder()
+        .then(() => {
+          // no-op;
+        })
+        .catch(() => {
+          // no-op;
+        });
     }
   }
 
   /**
    * Check the user its permissions on the remote site
    */
-  private async checkRemoteSitePermissions() {
+  private async checkRemoteSitePermissions(): Promise<void> {
     const { context, remoteSiteUrl, permissions } = this.props;
     if (remoteSiteUrl && permissions) {
       for (const permission of permissions) {
@@ -123,7 +146,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
   /**
    * Check the user its permissions on the remote list or library
    */
-  private async checkRemoteListOrLibPermissions() {
+  private async checkRemoteListOrLibPermissions(): Promise<void> {
     const { remoteSiteUrl, relativeLibOrListUrl, permissions } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions) {
@@ -139,7 +162,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
   /**
    * Check permissions on item level
    */
-  private async checkRemoteListItem() {
+  private async checkRemoteListItem(): Promise<void> {
     const { remoteSiteUrl, relativeLibOrListUrl, permissions, itemId } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions && itemId) {
@@ -155,7 +178,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
   /**
    * Check permissions on folder
    */
-  private async checkRemoteFolder() {
+  private async checkRemoteFolder(): Promise<void> {
     const { remoteSiteUrl, relativeLibOrListUrl, permissions, folderPath } = this.props;
     // Check if all properties are provided
     if (remoteSiteUrl && relativeLibOrListUrl && permissions && folderPath) {
@@ -174,7 +197,7 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
    *
    * @param apiUrl
    */
-  private async checkRemotePermissions(apiUrl: string) {
+  private async checkRemotePermissions(apiUrl: string): Promise<boolean> {
     const { context, permissions } = this.props;
     const data = await context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
     // Check if a result was retrieved
@@ -205,13 +228,13 @@ export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedCont
    */
   public render(): React.ReactElement<ISecurityTrimmedControlProps> {
     const { className } = this.props;
-    if(this.state.loading && this.props.showLoadingAnimation){
+    if (this.state.loading && this.props.showLoadingAnimation) {
       return <Spinner />;
     }
-    if(this.state.allowRender){
+    if (this.state.allowRender) {
       return <div className={className ? className : ""}>{this.props.children}</div>;
     }
-    else if(this.props.noPermissionsControl){
+    else if (this.props.noPermissionsControl) {
       return this.props.noPermissionsControl;
     }
     return null;

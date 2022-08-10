@@ -1,4 +1,4 @@
-interface IBingSearchResult {
+export interface IBingSearchResult {
   webSearchUrl: string;
   webSearchUrlPingSuffix: string;
   name: string;

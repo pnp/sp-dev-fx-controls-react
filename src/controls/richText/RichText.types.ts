@@ -108,14 +108,14 @@ export interface IRichTextState {
   /**
    * The formats of the current range selection
    */
-  formats: any;
+  formats: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /**
    * Whether to hide the insert link dialog
    */
   hideDialog: boolean;
 
-  
+
   /**
    * Whether to hide the insert image dialog
    */
@@ -144,7 +144,7 @@ export interface IRichTextState {
   /**
    * The currently selected range
    */
-  selectedRange?: any;
+  selectedRange?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /**
    * The currently selected text

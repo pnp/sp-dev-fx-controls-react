@@ -43,7 +43,7 @@ export const MockUsers : IPeoplePickerUserItem[] = [{
 ];
 
 export class PeoplePickerMockClient {
-  public filterPeople = function(value : any, index : number, ar : any[]) {
+  public filterPeople = function(value : any, index : number, ar : any[]): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (value.secondaryText.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1 || value.text.toLowerCase().indexOf(this.valToCompare.toLowerCase()) !== -1) {
       return true;
     } else {

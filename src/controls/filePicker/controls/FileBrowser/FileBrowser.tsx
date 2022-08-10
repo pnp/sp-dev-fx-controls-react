@@ -8,7 +8,7 @@ import { IFileBrowserProps } from './IFileBrowserProps';
 import { IFileBrowserState } from './IFileBrowserState';
 import { ViewType } from './FileBrowser.types';
 import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow, IObjectWithKey } from 'office-ui-fabric-react/lib/DetailsList';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
 import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
 import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
 import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
@@ -147,7 +147,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
     if (this.props.folderPath !== prevProps.folderPath) {
       this._selection.setAllSelected(false);
-      this._getListItems();
+      this._getListItems().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     }
   }
 
@@ -155,7 +155,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    * Gets the list of files when tab first loads
    */
   public componentDidMount(): void {
-    this._getListItems();
+    this._getListItems().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     this._selection = new Selection({
       selectionMode: SelectionMode.multiple,
       onSelectionChanged: this._itemSelectionChanged
@@ -166,7 +166,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
     return (
       <div>
         {
-          (this.state.items && this.state.items.length > 0 && this.state.loadingState != LoadingState.loading) &&
+          (this.state.items && this.state.items.length > 0 && this.state.loadingState !== LoadingState.loading) &&
           <div>
             <div className={styles.itemPickerTopBar}>
               <CommandBar
@@ -192,7 +192,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                         selectionPreservedOnEmptyClick={true}
                         enterModalSelectionOnTouch={true}
                         onRenderRow={this._onRenderRow}
-                        onRenderMissingItem={() => { this._loadNextDataRequest(); return null; }}
+                        onRenderMissingItem={() => { this._loadNextDataRequest().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ }); return null; }}
                       />) :
                     (<TilesList
                       fileBrowserService={this.props.fileBrowserService}
@@ -216,7 +216,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         }
 
         {
-          this.state.loadingState != LoadingState.idle &&
+          this.state.loadingState !== LoadingState.idle &&
           <Spinner label={strings.Loading} />
         }
       </div>
@@ -226,8 +226,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Triggers paged data load
    */
-  private _loadNextDataRequest = async () => {
-    if (this.state.loadingState == LoadingState.idle) {
+  private _loadNextDataRequest = async (): Promise<void> => {
+    if (this.state.loadingState === LoadingState.idle) {
       // Load next list items from next page
       await this._getListItems(true);
     }
@@ -358,7 +358,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Called when users switch the view
    */
-  private _handleSwitchLayout = (item?: IContextualMenuItem) => {
+  private _handleSwitchLayout = (item?: IContextualMenuItem): void => {
     if (item) {
       // Store the user's favourite layout
       if (localStorage) {
@@ -384,7 +384,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       isSortedDescending = !isSortedDescending;
     }
 
-    const updatedColumns: IColumn[] = columns!.map(col => {
+    const updatedColumns: IColumn[] = columns.map(col => {
       col.isSorted = col.key === column.key;
 
       if (col.isSorted) {
@@ -396,7 +396,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
     if (!this.state.nextPageQueryString) { // all items have been loaded to the client
       // Sort the items.
-      items = items!.concat([]).sort((a, b) => {
+      items = items.concat([]).sort((a, b) => {
         if (a.isFolder && !b.isFolder) {
           return 1;
         }
@@ -431,7 +431,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         items: [],
         columns: updatedColumns
       }, () => {
-        this._getListItems(false);
+        this._getListItems(false).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
       });
     }
   }
@@ -439,7 +439,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * When a folder is opened, calls parent tab to navigate down
    */
-  private _handleOpenFolder = (item: IFile) => {
+  private _handleOpenFolder = (item: IFile): void => {
     // De-select the list item that was clicked, the item in the same position
     this._selection.setAllSelected(false);
     // item in the folder will appear selected
@@ -452,8 +452,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Handles selected item change
    */
-  private _itemSelectionChanged = () => {
-    let filePickerResults: IFilePickerResult[] = [];
+  private _itemSelectionChanged = (): void => {
+    const filePickerResults: IFilePickerResult[] = [];
     this._selection.getSelection().map((item: IFile, index: number) => {
       if (!item.isFolder) {
         filePickerResults.push({
@@ -473,9 +473,10 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   /**
    * Gets all files in a library with a matchihg path
    */
-  private async _getListItems(concatenateResults: boolean = false) {
+  private async _getListItems(concatenateResults: boolean = false): Promise<void> {
     const { libraryUrl, folderPath, accepts, fileBrowserService } = this.props;
-    let { items, nextPageQueryString } = this.state;
+    const { items } = this.state;
+    let nextPageQueryString = this.state.nextPageQueryString;
 
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     const loadingState = concatenateResults ? LoadingState.loadingNextPage : LoadingState.loading;
@@ -491,7 +492,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       let sortField: string | undefined = undefined;
       let isDesc: boolean | undefined = undefined;
 
-      const sortByCol = this.state.columns!.filter(c => c.isSorted)[0];
+      const sortByCol = this.state.columns.filter(c => c.isSorted)[0];
       if (sortByCol) {
         sortField = fileBrowserService.getSPFieldNameForFileProperty(sortByCol.fieldName);
         isDesc = !!sortByCol.isSortedDescending;
@@ -506,7 +507,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
 
       // Remove the null mark from the end of the items array
-      if (concatenateResults && items && items.length > 0 && items.length[items.length - 1] == null) {
+      if (concatenateResults && items && items.length > 0 && items.length[items.length - 1] === null) {
         // Remove the null mark
         items.splice(items.length - 1, 1);
       }
@@ -514,7 +515,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       const newItems = concatenateResults ? items.concat(filesQueryResult.items) : filesQueryResult.items;
 
       // If there are more items to load -> add null mark at the end of the array
-      if (filesQueryResult.nextHref != null) {
+      if (filesQueryResult.nextHref !== null) {
         newItems.push(null);
       }
 
@@ -531,9 +532,5 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         loadingState: LoadingState.idle
       });
     }
-  }
-
-  private _onClientSort(column: IColumn): void {
-
   }
 }

@@ -6,7 +6,7 @@ import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { ConstrainMode, IColumn, IDetailsList, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
@@ -30,23 +30,30 @@ const classNames = mergeStyleSets({
 /**
 * Wrap the listview in a scrollable pane if sticky header = true
 */
-const ListViewWrapper = ({ stickyHeader, children, className }) => (stickyHeader ?
-    <div className={`${classNames.wrapper} ${className ?? ""}`} >
-      <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
-        {children}
-      </ScrollablePane>
-    </div>
-    : children
-  );
+const ListViewWrapper: ({ stickyHeader, children, className }: {
+  stickyHeader: boolean;
+  children: React.ReactNode;
+  className: string | undefined;
+}) => JSX.Element = ({ stickyHeader, children, className }) => (stickyHeader ?
+  <div className={`${classNames.wrapper} ${className ?? ""}`} >
+    <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
+      {children}
+    </ScrollablePane>
+  </div>
+  : <>{children}</>
+);
 
 /**
 * Lock the searchbox when scrolling if sticky header = true
 */
-const SearchBoxWrapper = ({ stickyHeader, children }) => (stickyHeader ?
+const SearchBoxWrapper: ({ stickyHeader, children }: {
+  stickyHeader: boolean;
+  children: React.ReactNode;
+}) => JSX.Element = ({ stickyHeader, children }) => (stickyHeader ?
   <Sticky stickyPosition={StickyPositionType.Header}>
     {children}
   </Sticky>
-  : children
+  : <>{children}</>
 );
 
 
@@ -55,7 +62,7 @@ const SearchBoxWrapper = ({ stickyHeader, children }) => (stickyHeader ?
  */
 export class ListView extends React.Component<IListViewProps, IListViewState> {
   private _selection: Selection;
-  private originalItems: any[];
+  private originalItems: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   private originalGroups: IGroup[];
   private originalColumns: IColumn[];
 
@@ -96,7 +103,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param prevProps
    * @param prevState
    */
-  public componentWillReceiveProps(nextProps: IListViewProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: IListViewProps): void {
 
     const modifiedNextProps = this._filterFunctions(nextProps);
     const modifiedProps = this._filterFunctions(this.props);
@@ -139,10 +146,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param items
    * @param groupByFields
    */
-  private _getGroups(items: any[], groupByFields: IGrouping[], level: number = 0, startIndex: number = 0): IGroupsItems {
+  private _getGroups(items: any[], groupByFields: IGrouping[], level: number = 0, startIndex: number = 0): IGroupsItems { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Group array which stores the configured grouping
-    let groups: IGroup[] = [];
-    let updatedItemsOrder: any[] = [];
+    const groups: IGroup[] = [];
+    const updatedItemsOrder: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
     // Check if there are groupby fields set
     if (groupByFields) {
       const groupField = groupByFields[level];
@@ -150,7 +157,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       if (groupByFields && groupByFields.length > 0) {
         // Create grouped items object
         const groupedItems = {};
-        items.forEach((item: any) => {
+        items.forEach((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           let groupName = item[groupField.name];
           // Check if the group name exists
           if (typeof groupName === "undefined") {
@@ -180,6 +187,9 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
         // Loop over all the groups
         for (const groupItems in sortedGroups) {
+          if (!Object.prototype.hasOwnProperty.call(sortedGroups, groupItems)) {
+            continue;
+          }
           // Retrieve the total number of items per group
           const totalItems = groupedItems[groupItems].length;
           // Create the new group
@@ -219,10 +229,10 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   /**
    * Process all the component properties
    */
-  private _processProperties(props: IListViewProps) {
-    const { dragDropFiles, items, iconFieldName, viewFields, groupByFields, showFilter } = props;
+  private _processProperties(props: IListViewProps): void {
+    const { items, iconFieldName, viewFields, groupByFields, showFilter } = props;
 
-    let tempState: IListViewState = cloneDeep(this.state);
+    const tempState: IListViewState = cloneDeep(this.state);
     let columns: IColumn[] = null;
     // Check if a set of items was provided
     if (typeof items !== 'undefined' && items !== null) {
@@ -279,7 +289,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Flatten all objects in every item
    * @param items
    */
-  private _flattenItems(items: any[]): any[] {
+  private _flattenItems(items: any[]): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Flatten items
     const flattenItems = items.map(item => {
       // Flatten all objects in the item
@@ -292,18 +302,18 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Flatten all object in the item
    * @param item
    */
-  private _flattenItem(item: any): any {
-    let flatItem: any = {};
-    for (let parentPropName in item) {
+  private _flattenItem(item: any): any { // eslint-disable-line @typescript-eslint/no-explicit-any
+    const flatItem: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
+    for (const parentPropName in item) {
       // Check if property already exists
-      if (!item.hasOwnProperty(parentPropName)) continue;
+      if (!Object.prototype.hasOwnProperty.call(item, parentPropName)) continue;
 
       // Check if the property is of type object
       if ((typeof item[parentPropName]) === 'object') {
         // Flatten every object
         const flatObject = this._flattenItem(item[parentPropName]);
-        for (let childPropName in flatObject) {
-          if (!flatObject.hasOwnProperty(childPropName)) continue;
+        for (const childPropName in flatObject) {
+          if (!Object.prototype.hasOwnProperty.call(flatObject, childPropName)) continue;
           flatItem[`${parentPropName}.${childPropName}`] = flatObject[childPropName];
         }
       } else {
@@ -335,7 +345,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       fieldName: 'fileType',
       minWidth: 16,
       maxWidth: 16,
-      onRender: (item: any) => {
+      onRender: (item: any): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
         return (
           <FileTypeIcon type={IconType.image} path={item[iconFieldName]} />
         );
@@ -367,7 +377,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Check how field needs to be rendered
    * @param field
    */
-  private _fieldRender(field: IViewField): any | void {
+  private _fieldRender(field: IViewField): any | void { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Check if a render function is specified
     if (field.render) {
       return field.render;
@@ -375,7 +385,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
 
     // Check if the URL property is specified
     if (field.linkPropertyName) {
-      return (item: any, index?: number, column?: IColumn) => {
+      return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         return <a href={item[field.linkPropertyName]}>{item[column.fieldName]}</a>;
       };
     }
@@ -426,7 +436,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * Method updates the controlled value of the filter field
    * @param newValue
    */
-  private _updateFilterValue = (filterValue: string) => {
+  private _updateFilterValue = (filterValue: string): void => {
     let items = cloneDeep(this.originalItems);
     let groups = cloneDeep(this.originalGroups);
     const columns = cloneDeep(this.originalColumns);
@@ -459,7 +469,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param columnName
    * @param descending
    */
-  private _sortItems(items: any[], columnName: string, descending = false): any[] {
+  private _sortItems(items: any[], columnName: string, descending = false): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (this.props.sortItems) {
       return this.props.sortItems(items, columnName, descending);
     }
@@ -477,7 +487,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param items
    * @param columns
    */
-  private _executeFiltering(filterValue: string, items: any[], columns: IColumn[]): any[] {
+  private _executeFiltering(filterValue: string, items: any[], columns: IColumn[]): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     const filterSeparator = ":";
 
     let filterColumns = [...columns];
@@ -497,12 +507,12 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param items
    * @param columns
    */
-  private _getFilteredItems(filterValue: string, items: any[], columns: IColumn[]): any[] {
+  private _getFilteredItems(filterValue: string, items: any[], columns: IColumn[]): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (!filterValue) {
       return items;
     }
 
-    let result: any[] = [];
+    const result: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
     for (const item of items) {
       let addItemToResultSet: boolean = false;
       for (const viewField of columns) {
@@ -530,7 +540,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
    * @param property
    * @param filterValue
    */
-  private _doesPropertyContainsValue(item: any, property: string, filterValue: string): boolean {
+  private _doesPropertyContainsValue(item: any, property: string, filterValue: string): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any
     const propertyValue = item[property];
     let result = false;
     if (propertyValue) {
@@ -541,7 +551,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     return result;
   }
 
-  private _filterFunctions(p: IListViewProps) {
+  private _filterFunctions(p: IListViewProps): Partial<IListViewProps> {
     const modifiedProps = omit(p, functions(p));
     if (modifiedProps.items) {
       modifiedProps.items = modifiedProps.items.map(i => omit(i, functions(i)));
@@ -565,14 +575,14 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (this.props.stickyHeader) {
       return (
         <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
-          {defaultRender!({
+          {defaultRender({
             ...props,
           })}
         </Sticky>
       );
     }
 
-    return defaultRender!(props);
+    return defaultRender(props);
   }
   /**
    * Default React component render method
@@ -580,8 +590,8 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
   public render(): React.ReactElement<IListViewProps> {
     let groupProps: IGroupRenderProps = {};
 
-    let { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact, className, listClassName, onRenderRow } = this.props;
-    let { filterValue, items, columns, groups } = this.state;
+    const { showFilter, filterPlaceHolder, dragDropFiles, stickyHeader, selectionMode, compact, className, listClassName, onRenderRow } = this.props;
+    const { filterValue, items, columns, groups } = this.state;
 
     // Check if selection mode is single selection,
     // if that is the case, disable the selection on grouping headers

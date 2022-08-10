@@ -10,7 +10,7 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
+  public UNSAFE_componentWillMount(): void {
     this.checkForImmediateInvocations();
   }
 
@@ -18,7 +18,7 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
    * Prepates contextual menu items for dropdown.
    */
   private prepareContextualMenuProps = (term: ITerm, termActions: ITermAction[]): IContextualMenuProps => {
-    let items: IContextualMenuItem[] = [];
+    const items: IContextualMenuItem[] = [];
     const displayStyle = this.props.displayStyle;
     let useTargetWidth = true;
 
@@ -30,9 +30,17 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
       const { actionDisabled, actionHidden } = getTermActionChange(tac, termAction);
 
       if ((!termAction.hidden && !actionHidden) || !actionHidden) {
-        let termActionMenuItem: IContextualMenuItem = {
+        const termActionMenuItem: IContextualMenuItem = {
           key: term.Id.toString(),
-          onClick: () => { this.onActionExecute(termAction); },
+          onClick: () => {
+            this.onActionExecute(termAction)
+              .then(() => {
+                // no-op;
+              })
+              .catch(() => {
+                // no-op;
+              });
+          },
           disabled: actionDisabled
         };
 
@@ -60,7 +68,7 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
    * Prepare term action button style.
    */
   private getTermActionActionButtonStyle = (): React.CSSProperties => {
-    let result: React.CSSProperties = {
+    const result: React.CSSProperties = {
       backgroundColor: "transparent",
       width: "14px",
       display: "inline-flex",
@@ -73,11 +81,17 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
   /**
    * Check if there are action to immediatly invoke
    */
-  private checkForImmediateInvocations() {
+  private checkForImmediateInvocations(): void {
     const { termActions } = this.props;
     for (const action of termActions) {
       if (action.invokeActionOnRender) {
-        this.onActionExecute(action);
+        this.onActionExecute(action)
+          .then(() => {
+            // no-op;
+          })
+          .catch(() => {
+            // no-op;
+          });
       }
     }
   }
@@ -85,7 +99,7 @@ export class DropdownTermAction extends React.Component<IConcreteTermActionProps
   /**
    * Handler to execute selected action.
    */
-  private onActionExecute = async (termAction: ITermAction) => {
+  private onActionExecute = async (termAction: ITermAction): Promise<void> => {
     const updateAction = await termAction.actionCallback(this.props.spTermService, this.props.term);
     this.props.termActionCallback(updateAction);
   }

@@ -27,12 +27,14 @@ const theme = window.__themeState__.theme;
 const initialState: ITeamChannelPickerState = {
   selectedTeamsChannels: [],
 };
-const getTextFromItem = (item: ITag) => item.name.split(",")[0];
+const getTextFromItem = (item: ITag): string => item.name.split(",")[0];
 // Reducer to update state
 const reducer = (
   state: ITeamChannelPickerState,
-  action: { type: string; payload: any }
-) => {
+  action: { type: string; payload: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+): {
+  selectedTeamsChannels: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+} => {
   switch (action.type) {
     case "UPDATE_SELECTEDITEM":
       return { ...state, selectedTeamsChannels: action.payload };
@@ -54,7 +56,6 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
     onSelectedChannels,
     selectedChannels,
     itemLimit,
-    label,
     styles,
     themeVariant,
   } = props;
@@ -78,7 +79,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
    */
   const useFilterSuggestedTeamsChannels = React.useCallback(
     async (filterText: string, teamsChannelList: ITag[]): Promise<ITag[]> => {
-      let tags: ITag[] = [];
+      const tags: ITag[] = [];
       try {
         const teamsChannels: ITeamChannel[] = await getTeamChannels(
           props.teamId.toString(),
@@ -113,7 +114,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
 
   const _renderChannelInformation = React.useCallback(
     (propsTag: ITag): JSX.Element[] => {
-      let _returnControls: JSX.Element[] = [];
+      const _returnControls: JSX.Element[] = [];
       const _splitName: string[] = propsTag.name.split(",");
       const _displayName: string = _splitName[0];
       const _membershipType: string = _splitName[1];
@@ -128,7 +129,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
             iconName="LockSolid"
             className={componentClasses.iconChannelInfoStyles}
 
-          ></FontIcon>
+          />
         );
       }
       if (_isFavoriteByDefault && _isFavoriteByDefault === "true") {
@@ -138,7 +139,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
             iconName="FavoriteStarFill"
             className={componentClasses.iconChannelInfoStyles}
 
-          ></FontIcon>
+          />
         );
       }
       return _returnControls;
@@ -159,7 +160,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
           <FontIcon
             iconName="ChatInviteFriend"
             className={componentClasses.iconChannelItemStyles}
-          ></FontIcon>
+          />
           {_renderChannelInformation(propsTag)}
         </Stack>
       );
@@ -189,7 +190,7 @@ export const TeamChannelPicker: React.FunctionComponent<ITeamChannelPickerProps>
               iconName="ChatInviteFriend"
               className={componentClasses.iconChannelItemStyles}
 
-            ></FontIcon>
+            />
 
             {_renderChannelInformation(itemProps.item)}
 

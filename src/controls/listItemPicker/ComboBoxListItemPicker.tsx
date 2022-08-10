@@ -12,7 +12,7 @@ import { cloneDeep, isEqual } from 'lodash';
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
-  private _options: any[] = null;
+  private _options: any[] = null; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   constructor(props: IComboBoxListItemPickerProps) {
     super(props);
@@ -34,7 +34,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   }
 
   public componentDidMount(): void {
-    this.loadOptions(this.props);
+    this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
   }
 
   protected async loadOptions(props: IComboBoxListItemPickerProps, isInitialLoad?: boolean): Promise<void> {
@@ -48,9 +48,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       onInitialized,
       orderBy
     } = props;
-    let query = filter || "";
-    //query += filter;
-    let keyColumnName = keyColumnInternalName || "Id";
+    const query = filter || "";
+    const keyColumnName = keyColumnInternalName || "Id";
 
     if (!this._options || listId !== this.props.listId|| filter !== this.props.filter) {
       const listItems = await this._listItemRepo.getListItemsByFilterClause(query,
@@ -80,7 +79,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     }
   }
 
-  public async componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
+  public async UNSAFE_componentWillReceiveProps(nextProps: IComboBoxListItemPickerProps): Promise<void> {
     if (nextProps.listId !== this.props.listId) {
       this.setState({
         selectedItems: [],
@@ -99,9 +98,9 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     }
   }
 
-  private _getSelectedItems(props: IComboBoxListItemPickerProps): any[] {
-    let selectedItems: any[] = [];
-    let keyColumnName = props.keyColumnInternalName || "Id";
+  private _getSelectedItems(props: IComboBoxListItemPickerProps): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let selectedItems: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const keyColumnName = props.keyColumnInternalName || "Id";
     if (props.defaultSelectedItems) {
       //if passed only ids
       if (!isNaN(props.defaultSelectedItems[0])) {
@@ -162,8 +161,8 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   /**
    * On Selected Item
    */
-  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => {
-    let selectedItems: any[] = cloneDeep(this.state.selectedItems);
+  private onChanged = (option?: IComboBoxOption, index?: number, value?: string, submitPendingValueEvent?: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let selectedItems: any[] = cloneDeep(this.state.selectedItems); // eslint-disable-line @typescript-eslint/no-explicit-any
     if (this.props.multiSelect) {
       if (option && option.selected) {
         selectedItems.push({

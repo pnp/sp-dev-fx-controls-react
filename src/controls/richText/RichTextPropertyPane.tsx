@@ -8,6 +8,7 @@ import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
+import { RangeStatic } from 'quill';
 
 export default class RichTextPropertyPane extends React.Component<IRichTextPropertyPaneProps, IRichTextPropertyPaneState> {
 
@@ -83,7 +84,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   /**
    * On selection changed event handler
    */
-  public onChangeSelection = (range, oldRange?, source?) => {
+  public onChangeSelection = (range: RangeStatic, oldRange?: RangeStatic, source?: RangeStatic): void => {
     const quill = this.props.editor;
     if (quill === undefined || range === undefined) {
       return;
@@ -156,7 +157,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    * Render font styles group
    */
   private renderFontStylesGroup = (): JSX.Element => {
-    const selectedHeader = this.state.formats!.header ? this.state.formats!.header : 0;
+    const selectedHeader = this.state.formats?.header ? this.state.formats.header : 0;
 
     return (
       <div className={styles.propertyPaneGroupField}>
@@ -181,7 +182,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    */
   private renderFontSizesGroup = (): JSX.Element => {
     // get the selected header
-    const selectedSize = this.state.formats!.size ? this.state.formats!.size : 'large';
+    const selectedSize = this.state.formats?.size ? this.state.formats.size : 'large';
 
     return (
       <div className={styles.propertyPaneGroupField}>
@@ -217,8 +218,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.BoldTitle}
               id="bold-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.bold}
-                onClick={() => this.applyFormat('bold', !this.state.formats!.bold)}
+              <IconButton checked={this.state.formats.bold}
+                onClick={() => this.applyFormat('bold', !this.state.formats.bold)}
                 className={styles.propertyPaneButton}
                 aria-describedby="bold-propertyPaneButton"
                 iconProps={{
@@ -232,8 +233,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.ItalicTitle}
               id="italic-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.italic}
-                onClick={() => this.applyFormat('italic', !this.state.formats!.italic)}
+              <IconButton checked={this.state.formats.italic}
+                onClick={() => this.applyFormat('italic', !this.state.formats.italic)}
                 className={styles.propertyPaneButton}
                 aria-describedby="italic-propertyPaneButton"
                 iconProps={{
@@ -247,8 +248,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.UnderlineTitle}
               id="underline-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.underline}
-                onClick={() => this.applyFormat('underline', !this.state.formats!.underline)}
+              <IconButton checked={this.state.formats.underline}
+                onClick={() => this.applyFormat('underline', !this.state.formats.underline)}
                 className={styles.propertyPaneButton}
                 aria-describedby="underline-propertyPaneButton"
                 iconProps={{
@@ -262,8 +263,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.StrikethroughTitle}
               id="strikethrough-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.strike}
-                onClick={() => this.applyFormat('strike', !this.state.formats!.strike)}
+              <IconButton checked={this.state.formats.strike}
+                onClick={() => this.applyFormat('strike', !this.state.formats.strike)}
                 className={styles.propertyPaneButton}
                 aria-describedby="strikethrough-propertyPaneButton"
                 iconProps={{
@@ -277,8 +278,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.SuperscriptTitle}
               id="superscript-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.script === 'super'}
-                onClick={() => this.applyFormat('script', this.state.formats!.script === 'super' ? '' : 'super')}
+              <IconButton checked={this.state.formats.script === 'super'}
+                onClick={() => this.applyFormat('script', this.state.formats.script === 'super' ? '' : 'super')}
                 className={styles.propertyPaneButton}
                 aria-describedby="superscript-propertyPaneButton"
                 iconProps={{
@@ -292,8 +293,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.SubscriptTitle}
               id="subscript-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.script === 'sub'}
-                onClick={() => this.applyFormat('script', this.state.formats!.script === 'sub' ? '' : 'sub')}
+              <IconButton checked={this.state.formats.script === 'sub'}
+                onClick={() => this.applyFormat('script', this.state.formats.script === 'sub' ? '' : 'sub')}
                 className={styles.propertyPaneButton}
                 aria-describedby="subscript-propertyPaneButton"
                 iconProps={{
@@ -319,7 +320,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
     /**
      * Add custom colors if passed as a property
      */
-    let fontColorGroups = ["themeColors","standardColors"];
+    const fontColorGroups = ["themeColors","standardColors"];
     if(this.props.customColors) fontColorGroups.push('customColors');
 
     return (
@@ -366,7 +367,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.AlignLeft}
               id="left-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.align === undefined}
+              <IconButton checked={this.state.formats.align === undefined}
                 onClick={() => this.applyFormat('align', undefined)}
                 className={styles.propertyPaneButton}
                 aria-describedby="left-propertyPaneButton"
@@ -381,7 +382,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.AlignCenter}
               id="center-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.align === 'center'}
+              <IconButton checked={this.state.formats.align === 'center'}
                 onClick={() => this.applyFormat('align', 'center')}
                 className={styles.propertyPaneButton}
                 aria-describedby="center-propertyPaneButton"
@@ -396,7 +397,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.AlignRight}
               id="right-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.align === 'right'}
+              <IconButton checked={this.state.formats.align === 'right'}
                 onClick={() => this.applyFormat('align', 'right')}
                 className={styles.propertyPaneButton}
                 aria-describedby="right-propertyPaneButton"
@@ -411,7 +412,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.AlignJustify}
               id="justify-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.align === 'justify'}
+              <IconButton checked={this.state.formats.align === 'justify'}
                 onClick={() => this.applyFormat('align', 'justify')}
                 className={styles.propertyPaneButton}
                 aria-describedby="justify-propertyPaneButton"
@@ -468,7 +469,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
           <TooltipHost content={strings.ListBullet}
             id="bullet-propertyPaneButton"
             calloutProps={{ gapSpace: 0 }}>
-            <IconButton checked={this.state.formats!.list === 'bullet'}
+            <IconButton checked={this.state.formats.list === 'bullet'}
               onClick={() => this.applyFormat('list', 'bullet')}
               className={styles.propertyPaneButton}
               aria-describedby="bullet-propertyPaneButton"
@@ -483,7 +484,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
           <TooltipHost content={strings.ListNumbered}
             id="ordered-propertyPaneButton"
             calloutProps={{ gapSpace: 0 }}>
-            <IconButton checked={this.state.formats!.list === 'ordered'}
+            <IconButton checked={this.state.formats.list === 'ordered'}
               onClick={() => this.applyFormat('list', 'ordered')}
               className={styles.propertyPaneButton}
               aria-describedby="ordered-propertyPaneButton"
@@ -510,7 +511,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.LinkTitle}
               id="link-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton checked={this.state.formats!.link !== undefined}
+              <IconButton checked={this.state.formats.link !== undefined}
                 onClick={() => this.props.onLink()}
                 className={styles.propertyPaneButton}
                 aria-describedby="link-propertyPaneButton"
@@ -525,7 +526,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
             <TooltipHost content={strings.RemoveLinkLabel}
               id="unlink-propertyPaneButton"
               calloutProps={{ gapSpace: 0 }}>
-              <IconButton disabled={this.state.formats!.link === undefined}
+              <IconButton disabled={this.state.formats.link === undefined}
                 onClick={() => this.applyFormat('link', false)}
                 className={styles.propertyPaneButton}
                 aria-describedby="unlink-propertyPaneButton"
@@ -545,14 +546,14 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   /**
    * Handle fill color change
    */
-  private handleFillColorChanged = (color: string) => {
+  private handleFillColorChanged = (color: string): void => {
     this.applyFormat('color', color);
   }
 
   /**
    * Handle the hightlight color change
    */
-  private handleHighlightColorChanged = (color: string) => {
+  private handleHighlightColorChanged = (color: string): void => {
     this.applyFormat('background', color);
   }
 
@@ -567,7 +568,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   /**
    * On indentation change.
    */
-  private onChangeIndent = (direction: 1 | -1) => {
+  private onChangeIndent = (direction: 1 | -1): void => {
     const quill = this.props.editor;
     const current = +(quill.getFormat(quill.getSelection()).indent || 0);
     this.applyFormat("indent", current + direction);
@@ -587,7 +588,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    * @param name
    * @param value
    */
-  private applyFormat(name: string, value: any) {
+  private applyFormat(name: string, value: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
     const quill = this.props.editor;
     quill.format(name, value);
     setTimeout(() => {
@@ -600,7 +601,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    */
   private handleUndo = (): void => {
     const quill = this.props.editor;
-    quill!.getModule("history")!.undo();
+    quill.getModule("history").undo();
     setTimeout(() => {
       this.onChangeSelection(quill.getSelection());
     }, 100);
@@ -611,7 +612,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    */
   private handleClearFormatting = (): void => {
     const quill = this.props.editor;
-    var range = quill.getSelection();
+    const range = quill.getSelection();
     if (range) {
       if (range.length > 0) {
         quill.removeFormat(range.index, range.length);
@@ -627,7 +628,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    */
   private handleRedo = (): void => {
     const quill = this.props.editor;
-    quill!.getModule("history")!.redo();
+    quill.getModule("history").redo();
     setTimeout(() => {
       this.onChangeSelection(quill.getSelection());
     }, 100);

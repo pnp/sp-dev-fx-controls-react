@@ -21,7 +21,9 @@ export interface IControlsTestProps {
 
 export interface IControlsTestState {
   imgSize: ImageSize;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialValues: any[];
   iFrameDialogOpened?: boolean;
   iFramePanelOpened?: boolean;
@@ -35,6 +37,7 @@ export interface IControlsTestState {
   canMovePrev: boolean;
   canMoveNext: boolean;
   comboBoxListItemPickerListId: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comboBoxListItemPickerIds: any[];
   filePickerResult?: IFilePickerResult[];
   treeViewSelectedKeys?: string[];

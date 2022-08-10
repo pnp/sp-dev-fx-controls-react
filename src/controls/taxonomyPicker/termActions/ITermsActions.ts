@@ -17,7 +17,7 @@ export interface ITermActionsControlProps {
   /**
    * Callback after execution term action.
    */
-  termActionCallback: (updateAction: UpdateAction | null) => void;
+  termActionCallback: (updateAction: UpdateAction | undefined) => void;
 }
 
 export interface ITermActionsControlState {
@@ -56,7 +56,7 @@ export interface IConcreteTermActionProps {
   spTermService: SPTermStorePickerService;
   termActionChanges: TermActionChange;
 
-  termActionCallback: (updateAction: UpdateAction | null) => void;
+  termActionCallback: (updateAction: UpdateAction | undefined) => void;
 }
 
 /**

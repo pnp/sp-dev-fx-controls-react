@@ -5,7 +5,7 @@ import { IFile } from '../../../services/FileBrowserService.types';
 import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-import { FileBrowser } from '../controls';
+import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { IFilePickerResult } from '../FilePicker.types';
@@ -27,7 +27,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
     };
   }
 
-  public async componentDidMount() {
+  public async componentDidMount(): Promise<void> {
     const folderPath = await this.props.oneDriveService.getOneDriveRootFolderRelativeUrl();
     const libraryAbsolutePath = await this.props.oneDriveService.getOneDriveRootFolderFullUrl();
     const libraryTitle = await this.props.oneDriveService.getOneDrivePersonalLibraryTitle();
@@ -99,11 +99,11 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
   /**
    * Handles breadcrump item click
    */
-  private onBreadcrumpItemClick = (node: OneDriveFilesBreadcrumbItem) => {
+  private onBreadcrumpItemClick = (node: OneDriveFilesBreadcrumbItem): void => {
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
-    if (node.folderData == null) {
+    if (node.folderData === null) {
       this.setState({
         libraryAbsolutePath: undefined,
         folderPath: undefined,
@@ -111,7 +111,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
       });
     }
     // Check if it is folder item
-    else if (node.folderData != null) {
+    else if (node.folderData !== null) {
       this._handleOpenFolder(node.folderData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteUrl === node.key);
@@ -131,7 +131,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
   /**
    * Is called when user selects a different file
    */
-  private _handleSelectionChange = (filePickerResults: IFilePickerResult[]) => {
+  private _handleSelectionChange = (filePickerResults: IFilePickerResult[]): void => {
     filePickerResults.map((filePickerResult: IFilePickerResult) => {
       filePickerResult.downloadFileContent = () => { return this.props.oneDriveService.downloadSPFileContent(filePickerResult.spItemUrl, filePickerResult.fileName); };
     });
@@ -142,25 +142,25 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
   /**
    * Called when user saves
    */
-  private _handleSave = () => {
+  private _handleSave = (): void => {
     this.props.onSave(this.state.filePickerResults);
   }
 
   /**
    * Called when user closes tab
    */
-  private _handleClose = () => {
+  private _handleClose = (): void => {
     this.props.onClose();
   }
 
   /**
    * Triggered when user opens a file folder
    */
-  private _handleOpenFolder = (folder: IFile, addBreadcrumbNode: boolean) => {
+  private _handleOpenFolder = (folder: IFile, addBreadcrumbNode: boolean): void => {
     const { breadcrumbItems } = this.state;
 
     if (addBreadcrumbNode) {
-      breadcrumbItems.map(item => item.isCurrentItem = false);
+      breadcrumbItems.map(item => { item.isCurrentItem = false });
       const breadcrumbNode: OneDriveFilesBreadcrumbItem = {
         folderData: folder,
         isCurrentItem: true,

@@ -1,7 +1,7 @@
-import { ErrorMsg } from ".";
+import { ErrorMsg } from "./ErrorMsg";
 
 export interface ICollectionDataItemState {
-  crntItem: any;
+  crntItem: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   errorMsgs?: ErrorMsg[];
   showCallout?: boolean;
 }

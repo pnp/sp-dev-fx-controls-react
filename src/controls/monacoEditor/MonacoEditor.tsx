@@ -7,6 +7,7 @@ import { EStatus, useMonaco } from "./useMonaco";
 import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { Error } from "./Error";
+import { editor } from "monaco-editor";
 
 export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
   props: React.PropsWithChildren<IMonacoEditorProps>
@@ -24,19 +25,19 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
   } = props || ({} as IMonacoEditorProps);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const editorRef = React.useRef<any>(null);
+  const editorRef = React.useRef<any>(null); // eslint-disable-line @typescript-eslint/no-explicit-any
   const { controlClasses } = useMonacoEditorStyles();
   const { monaco, status, error } = useMonaco();
 
   const onDidChangeModelContent = React.useCallback(
-    (e: any): void => {
+    (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
       if (editorRef.current) {
-        let currentValue: string = editorRef.current.getValue();
+        const currentValue: string = editorRef.current.getValue();
         if (currentValue !== value) {
-          let validationErrors: string[] = [];
+          const validationErrors: string[] = [];
           try {
             if (language === Elanguages.json) {
-              let jsonParsed: any = JSON.parse(currentValue);
+              JSON.parse(currentValue);
             }
           } catch (e) {
             validationErrors.push(e.message);
@@ -50,7 +51,7 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
   );
 
   React.useEffect(() => {
-    if (status != EStatus.LOADED) return;
+    if (status !== EStatus.LOADED) return;
 
     if (!isEmpty(jsonDiagnosticsOptions) && language === Elanguages.json) {
       monaco.languages.json.jsonDefaults.setDiagnosticsOptions(jsonDiagnosticsOptions);
@@ -59,7 +60,7 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
       monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions(jscriptDiagnosticsOptions);
     }
 
-    monaco.editor.onDidCreateModel((m: any) => {
+    monaco.editor.onDidCreateModel((m: editor.ITextModel) => {
       m.updateOptions({
         tabSize: 2,
       });

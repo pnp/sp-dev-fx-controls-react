@@ -1,14 +1,12 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
-import { mount, ReactWrapper } from 'enzyme';
+import { expect } from 'chai';
+import { mount } from 'enzyme';
 import { ComboBoxListItemPicker } from './ComboBoxListItemPicker';
 import { RequestClientMock } from '../../common/mocks/RequestClientMock';
 
-declare const sinon;
-
-let mockHttpClient: RequestClientMock = new RequestClientMock(null);
+const mockHttpClient: RequestClientMock = new RequestClientMock(null);
 mockHttpClient.Requests.push({
   url: "/sites/test-site/_api/web/lists('TestId')/items?$select=Id,Title&$filter=Id gt 0",
   method: "GET",
@@ -16,8 +14,8 @@ mockHttpClient.Requests.push({
 });
 describe('<ComboBoxListItemPicker />', () => {
   it("Should render initial data", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -32,8 +30,8 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should call onSelectedItem", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -41,10 +39,10 @@ describe('<ComboBoxListItemPicker />', () => {
         listId="TestId"
         onInitialized={() => {
 
-          let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
+          const ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           //actual list is not part of the component
-          let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[3];
+          const checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[3];
           (checkBoxBtn as HTMLButtonElement).click();
 
           //ddBtn.simulate('click');
@@ -57,8 +55,8 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (id)", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -66,8 +64,8 @@ describe('<ComboBoxListItemPicker />', () => {
         filter="Id gt 0"
         listId="TestId"
         onInitialized={() => {
-          let ddInput = comboBox.find('.ms-ComboBox-Input').first();
-          expect((ddInput.getNode() as any).value).to.be.equal("Test 1");
+          const ddInput = comboBox.find('.ms-ComboBox-Input').first();
+          expect((ddInput.getNode() as any).value).to.be.equal("Test 1"); // eslint-disable-line @typescript-eslint/no-explicit-any
 
           resolve();
         }}
@@ -76,8 +74,8 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (object)", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -86,8 +84,8 @@ describe('<ComboBoxListItemPicker />', () => {
         listId="TestId"
         onInitialized={() => {
 
-          let ddInput = comboBox.find('.ms-ComboBox-Input').first();
-          expect((ddInput.getNode() as any).value).to.be.equal("Test 1");
+          const ddInput = comboBox.find('.ms-ComboBox-Input').first();
+          expect((ddInput.getNode() as any).value).to.be.equal("Test 1"); // eslint-disable-line @typescript-eslint/no-explicit-any
 
           resolve();
         }}
@@ -96,8 +94,8 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should call onSelectedItem (multi)", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -106,10 +104,10 @@ describe('<ComboBoxListItemPicker />', () => {
         multiSelect={true}
         onInitialized={() => {
 
-          let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
+          const ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           //actual list is not part of the component
-          let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[3];
+          const checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[3];
           (checkBoxBtn as HTMLButtonElement).click();
           //ddBtn.simulate('click');
         }}
@@ -117,15 +115,15 @@ describe('<ComboBoxListItemPicker />', () => {
           expect(item.Id).to.equal(4);
           expect(item.selected).to.be.equal(true);
 
-          let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
+          const ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
           resolve();
         }} />);
     });
   });
   it("Should initialize with default selection (multi) (object)", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -135,12 +133,12 @@ describe('<ComboBoxListItemPicker />', () => {
         multiSelect={true}
         onInitialized={() => {
 
-          let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
+          const ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
-          let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];
+          const checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];
           expect(checkBoxBtn.classList.contains("is-checked")).to.be.equal(true);
-          let ddInput = comboBox.find('.ms-ComboBox-Input').first();
-          expect((ddInput.getNode() as any).value).to.be.equal("Test 1, Test 2");
+          const ddInput = comboBox.find('.ms-ComboBox-Input').first();
+          expect((ddInput.getNode() as any).value).to.be.equal("Test 1, Test 2"); // eslint-disable-line @typescript-eslint/no-explicit-any
           ddBtn.simulate('click');
           resolve();
         }}
@@ -149,8 +147,8 @@ describe('<ComboBoxListItemPicker />', () => {
     });
   });
   it("Should initialize with default selection (multi) (id)", () => {
-    return new Promise((resolve, error) => {
-      let comboBox = mount(<ComboBoxListItemPicker
+    return new Promise<void>((resolve, reject) => {
+      const comboBox = mount(<ComboBoxListItemPicker
         columnInternalName="Title"
         spHttpClient={mockHttpClient}
         webUrl="/sites/test-site"
@@ -160,13 +158,13 @@ describe('<ComboBoxListItemPicker />', () => {
         multiSelect={true}
         onInitialized={() => {
 
-          let ddBtn = comboBox.find('.ms-Button-flexContainer').first();
+          const ddBtn = comboBox.find('.ms-Button-flexContainer').first();
           ddBtn.simulate('click');
-          let checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];
+          const checkBoxBtn = document.querySelectorAll('.ms-ComboBox-option')[0];
           expect(checkBoxBtn.classList.contains("is-checked")).to.be.equal(true);
 
-          let ddInput = comboBox.find('.ms-ComboBox-Input').first();
-          expect((ddInput.getNode() as any).value).to.be.equal("Test 1, Test 2");
+          const ddInput = comboBox.find('.ms-ComboBox-Input').first();
+          expect((ddInput.getNode() as any).value).to.be.equal("Test 1, Test 2"); // eslint-disable-line @typescript-eslint/no-explicit-any
           ddBtn.simulate('click');
           resolve();
         }}

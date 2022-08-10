@@ -17,7 +17,7 @@ export class SPTaxonomyService {
           const json = await r.json();
           let newSkiptoken='';
           if(json['@odata.nextLink']) {
-            var urlParams = new URLSearchParams(json['@odata.nextLink'].split('?')[1]);
+            const urlParams = new URLSearchParams(json['@odata.nextLink'].split('?')[1]);
             if(urlParams.has('$skiptoken')) {
               newSkiptoken = urlParams.get('$skiptoken');
             }

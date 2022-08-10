@@ -1,5 +1,3 @@
-
-
 export interface ITeam {
   id: string;
   createdDateTime?: string;
@@ -7,15 +5,15 @@ export interface ITeam {
   description: string;
   internalId?: string;
   classification?: string;
-  specialization?: any;
-  visibility?: any;
+  specialization?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  visibility?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   webUrl?: string;
   isArchived: boolean;
-  isMembershipLimitedToOwners?: any;
-  memberSettings?: any;
-  guestSettings?: any;
-  messagingSettings?: any;
-  funSettings?: any;
-  discoverySettings?: any;
+  isMembershipLimitedToOwners?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  memberSettings?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  guestSettings?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  messagingSettings?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  funSettings?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  discoverySettings?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 

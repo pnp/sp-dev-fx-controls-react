@@ -11,7 +11,7 @@ import { ISwatchColor } from './SwatchColorPickerGroup.types';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 
 export default class RteColorPicker extends React.Component<IRteColorPickerProps, IRteColorPickerState> {
-  private wrapperRef: any = undefined;
+  private wrapperRef: any = undefined; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   constructor(props: IRteColorPickerProps) {
     super(props);
@@ -28,7 +28,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
     const { buttonLabel, defaultButtonLabel, fillThemeColor, id, previewColor } = this.props;
     return (
       <div>
-        <div ref={(ref) => this.wrapperRef = ref}>
+        <div ref={(ref) =>  { this.wrapperRef = ref }}>
           <TooltipHost content={buttonLabel}
                        id={id}
                        calloutProps={{ gapSpace: 0 }}>
@@ -41,7 +41,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
                    viewBox="0 0 20 20">
                 <rect className={styles.previewRectangle}
                       width="100%"
-                      height="100%"></rect>
+                      height="100%" />
               </svg>
               <div className={styles.buttonLabel}>{buttonLabel}</div>
               <Icon iconName="CaretDownSolid8" className={styles.previewIcon} />
@@ -67,7 +67,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
                    viewBox="0 0 20 20">
                 <rect className={styles.previewRectangle}
                       width="100%"
-                      height="100%"></rect>
+                      height="100%" />
               </svg>
               <div className={styles.buttonLabel}>{defaultButtonLabel}</div>
             </DefaultButton>
@@ -85,7 +85,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
   /**
    * Handle switch to default
    */
-  private handleSwitchToDefault = () => {
+  private handleSwitchToDefault = (): void => {
     this.setState({ isCalloutVisible: !this.state.isCalloutVisible });
     this.props.switchToDefaultColor();
   }
@@ -93,7 +93,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
   /**
    * Handle color change
    */
-  private handleColorChanged = (color: string) => {
+  private handleColorChanged = (color: string): void => {
     this.setState({ isCalloutVisible: !this.state.isCalloutVisible });
     this.props.onColorChanged(color);
   }
@@ -101,7 +101,7 @@ export default class RteColorPicker extends React.Component<IRteColorPickerProps
   /**
    * Get swatch color picker group
    */
-  private getSwatchColorPickerGroup = (pickerGroup: string) => {
+  private getSwatchColorPickerGroup = (pickerGroup: string): JSX.Element => {
     let groupName: string = undefined;
     switch (pickerGroup) {
       case "themeColors":

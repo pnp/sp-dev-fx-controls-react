@@ -16,14 +16,14 @@ import { useMsGraphAPI } from "../..";
 export interface IAddCommentProps {}
 
 export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAddCommentProps) => {
-  const [commentText, setCommentText] = useState<any>("");
+  const [commentText, setCommentText] = useState<string>("");
   const { getUsers, getSuggestions } = useMsGraphAPI();
   const { reactMentionStyles, mentionsClasses, componentClasses } = useAddCommentStyles();
   const [singleLine, setSingleLine] = useState<boolean>(true);
-  const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
-  let _addCommentText = useRef<IAddCommentPayload>({ mentions: [], text: "" });
+  const { setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
+  const _addCommentText = useRef<IAddCommentPayload>({ mentions: [], text: "" });
 
-  let sugestionsContainer = useRef<HTMLDivElement>();
+  const sugestionsContainer = useRef<HTMLDivElement>();
   let _reactMentionStyles = reactMentionStyles;
 
   const _onChange = useCallback((event, newValue: string, newPlainTextValue: string, mentions: MentionItem[]) => {
@@ -53,16 +53,18 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
     setCommentText("");
   }, []);
 
-  const _searchData = (search: string, callback: (users: SuggestionDataItem[]) => void) => {
+  const _searchData = (search: string, callback: (users: SuggestionDataItem[]) => void): void => {
     // Try to get sugested users when user type '@'
     if (!search) {
       getSuggestions()
         .then((res) => res.users.map((user) => ({ display: user.displayName, id: user.mail })))
-        .then(callback);
+        .then(callback)
+        .catch(() => { /* no-op; */ });
     } else {
       getUsers(search)
         .then((res) => res.users.map((user) => ({ display: user.displayName, id: user.mail })))
-        .then(callback);
+        .then(callback)
+        .catch(() => { /* no-op; */ });
     }
   };
 
@@ -99,7 +101,7 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
         ref={(el) => {
           sugestionsContainer.current = el;
         }}
-      ></div>
+      />
       <div className={componentClasses.container} style={{ height: singleLine ? 35 : "unset" }}>
         <MentionsInput
           value={commentText}

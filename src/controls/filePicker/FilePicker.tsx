@@ -77,7 +77,7 @@ export class FilePicker extends React.Component<
     };
   }
 
-  public async componentDidMount() {
+  public async componentDidMount(): Promise<void> {
     // Load information about Organisation Assets Library
     let orgAssetsEnabled: boolean = false;
     if (!this.props.hideOrganisationalAssetTab) {
@@ -103,7 +103,7 @@ export class FilePicker extends React.Component<
  *
  * @param nextProps
  */
-  public componentWillReceiveProps(nextProps: IFilePickerProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: IFilePickerProps): void {
     if (nextProps.isPanelOpen || nextProps.isPanelOpen !== this.props.isPanelOpen) {
       this.setState({
         panelOpen: nextProps.isPanelOpen
@@ -289,7 +289,7 @@ export class FilePicker extends React.Component<
   /**
    * Open the panel
    */
-  private _handleOpenPanel = () => {
+  private _handleOpenPanel = (): void => {
     this.setState({
       panelOpen: true,
       selectedTab: this.getDefaultSelectedTabKey(
@@ -302,7 +302,7 @@ export class FilePicker extends React.Component<
   /**
    * Closes the panel
    */
-  private _handleClosePanel = () => {
+  private _handleClosePanel = (): void => {
     if (this.props.onCancel) {
       this.props.onCancel();
     }
@@ -314,14 +314,14 @@ export class FilePicker extends React.Component<
   /**
    * On save action
    */
-  private _handleSave = (filePickerResult: IFilePickerResult[]) => {
+  private _handleSave = (filePickerResult: IFilePickerResult[]): void => {
     this.props.onSave(filePickerResult);
     this.setState({
       panelOpen: false,
     });
   }
 
-  private _handleOnChange = (filePickerResult: IFilePickerResult[]) => {
+  private _handleOnChange = (filePickerResult: IFilePickerResult[]): void => {
     if (this.props.onChange) {
       this.props.onChange(filePickerResult);
     }
@@ -333,16 +333,16 @@ export class FilePicker extends React.Component<
   private _handleLinkClick = (
     ev?: React.MouseEvent<HTMLElement>,
     item?: INavLink
-  ) => {
+  ): void => {
     this.setState({ selectedTab: item.key });
   }
 
   /**
    * Prepares navigation panel options
    */
-  private _getNavPanelOptions = () => {
+  private _getNavPanelOptions = (): INavLinkGroup[] => {
     const addUrl = this.props.storeLastActiveTab !== false;
-    let links = [];
+    const links = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
@@ -420,7 +420,7 @@ export class FilePicker extends React.Component<
       });
     }
 
-    let groups: INavLinkGroup[] = [{ links }];
+    const groups: INavLinkGroup[] = [{ links }];
     return groups;
   }
 

@@ -5,7 +5,7 @@ import {
   teamsDarkTheme,
   teamsHighContrastTheme
 } from "@fluentui/react-northstar";
-import { createTheme, getTheme, IPartialTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { createTheme, getTheme, IPalette, IPartialTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
 
 import { ComponentVariablesObject } from "@fluentui/styles";
 import { getVariant, VariantThemeType } from "@fluentui/scheme-utilities";
@@ -338,7 +338,7 @@ const teamsNextThemeSiteVariables = {
     },
   },
 };
-export const themes: { [themeKey: string]: ThemeInput<any> } = {
+export const themes: { [themeKey: string]: ThemeInput<any> } = { // eslint-disable-line @typescript-eslint/no-explicit-any
   teamsTheme: mergeThemes(teamsTheme, {
     siteVariables: teamsNextThemeSiteVariables.teamsTheme,
   }),
@@ -433,7 +433,7 @@ export const getFluentUIThemeOrDefault = (theme?: IPartialTheme | ITheme): IThem
   if (theme) {
     currentTheme = getVariant(theme, VariantThemeType.None);
   } else {
-    let themeColorsFromWindow: any = (window as any)?.__themeState__?.theme;
+    const themeColorsFromWindow: Partial<IPalette> = window.__themeState__?.theme;
     if (themeColorsFromWindow) {
       currentTheme = createTheme({
         palette: themeColorsFromWindow

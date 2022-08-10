@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { css, ICssInput } from 'office-ui-fabric-react/lib/Utilities';
 
 import styles from './FieldTextRenderer.module.scss';
 
@@ -50,7 +50,7 @@ export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, 
 
     public render(): JSX.Element {
         const isSafeForInnerHTML: boolean = this.props.isSafeForInnerHTML;
-        const isTruncatedClassNameObj: any = {};
+        const isTruncatedClassNameObj: ICssInput = {};
         isTruncatedClassNameObj[styles.isTruncated] = this.props.isTruncated;
         let text: string = this.props.text;
         if (isSafeForInnerHTML && this.props.isTruncated) {
@@ -59,7 +59,7 @@ export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, 
 
 
         if (isSafeForInnerHTML) {
-            return (<div className={css(this.props.className, styles.fieldRendererText, isTruncatedClassNameObj)} style={this.props.cssProps} dangerouslySetInnerHTML={{__html: text}}></div>);
+            return (<div className={css(this.props.className, styles.fieldRendererText, isTruncatedClassNameObj)} style={this.props.cssProps} dangerouslySetInnerHTML={{__html: text}} />);
         }
         else {
             return (<FieldBaseTextRenderer className={css(this.props.className, styles.fieldRendererText)} cssProps={this.props.cssProps} text={this.props.text} />);

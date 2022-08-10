@@ -7,7 +7,7 @@ export class TimeHelper {
    *
    * @param value
    */
-  public static isValidDate(value: any): value is Date {
+  public static isValidDate(value: any): value is Date { // eslint-disable-line @typescript-eslint/no-explicit-any
     return Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime());
   }
 
@@ -23,7 +23,7 @@ export class TimeHelper {
   /**
    * Suffix number with zero
    */
-  public static suffixZero(value: string, size: number = 2) {
+  public static suffixZero(value: string, size: number = 2): string {
     while (value.length < size) {
       value = `0${value}`;
     }

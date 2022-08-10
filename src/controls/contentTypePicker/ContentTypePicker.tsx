@@ -25,7 +25,7 @@ export class ContentTypePicker extends React.Component<IContentTypePickerProps, 
   }
 
   public componentDidMount(): void {
-    this.loadContentTypes();
+    this.loadContentTypes().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }
 
   private async loadContentTypes(): Promise<void> {
@@ -98,7 +98,7 @@ export class ContentTypePicker extends React.Component<IContentTypePickerProps, 
       prevProps.webAbsoluteUrl !== webAbsoluteUrl ||
       prevProps.listId !== listId
     ) {
-      this.loadContentTypes();
+      this.loadContentTypes().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     }
 
     if (prevProps.selectedContentTypes !== selectedContentTypes) {

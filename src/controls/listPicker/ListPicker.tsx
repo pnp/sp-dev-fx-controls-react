@@ -37,7 +37,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   /**
   * Lifecycle hook when component is mounted
   */
-  public componentDidMount() {
+  public componentDidMount(): void {
     this.loadLists();
   }
 
@@ -65,7 +65,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
   /**
   * Loads the list from SharePoint current web site
   */
-  private loadLists() {
+  private loadLists(): void {
     const { context, baseTemplate, includeHidden, orderBy, multiSelect, filter, webAbsoluteUrl, contentTypeId } = this.props;
 
     // Show the loading indicator and disable the dropdown
@@ -102,13 +102,16 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
         loading: false,
         options: options
       });
+    })
+    .catch(() => {
+      // no-op;
     });
   }
 
   /**
    * Set the currently selected list
    */
-  private setSelectedLists() {
+  private setSelectedLists(): void {
     this._selectedList = cloneDeep(this.props.selectedList);
     this.setState({
       selectedList: this._selectedList
