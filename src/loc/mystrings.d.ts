@@ -381,6 +381,7 @@ declare interface IControlStrings {
   ModernAudioIncVol: string;
   ModernAudioDecVol: string;
   ModernAudioMute: string;
+  ProgressStepsIndicatorNoSteps:  string;
 }
 
 declare interface IDateTimeStrings {
