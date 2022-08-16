@@ -94,7 +94,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
     // Generate the Y header row
     const yHeaderRow: JSX.Element = yAxisLabel
       && <tr key={`yHeader-${Guid.newGuid().toString()}`}>
-        <th></th>
+        <th />
         <th colSpan={datasets.length}>{escape(yAxisLabel)}</th>
       </tr>;
 

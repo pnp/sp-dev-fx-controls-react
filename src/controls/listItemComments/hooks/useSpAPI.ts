@@ -30,7 +30,7 @@ export const useSpAPI = (): returnObject => {
       const spOpts: ISPHttpClientOptions = {
         method: "DELETE",
       };
-      const _deleteResults: SPHttpClientResponse = await spHttpClient.fetch(
+      await spHttpClient.fetch(
         `${_endPointUrl}`,
         SPHttpClient.configurations.v1,
         spOpts
@@ -73,7 +73,7 @@ export const useSpAPI = (): returnObject => {
       `${_endPointUrl}`,
       SPHttpClient.configurations.v1
     );
-    const _commentsResults = (await _listResults.json()) as any;
+    const _commentsResults = (await _listResults.json()) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     const _returnComments: IlistItemCommentsResults = {
       comments: _commentsResults.value,
       hasMore: _commentsResults["@odata.nextLink"] ? true : false,
@@ -91,7 +91,7 @@ export const useSpAPI = (): returnObject => {
         `${_endPointUrl}`,
         SPHttpClient.configurations.v1
       );
-      const _commentsResults = (await _listResults.json()) as any;
+      const _commentsResults = (await _listResults.json()) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
       const _returnComments: IlistItemCommentsResults = {
         comments: _commentsResults.value,
         hasMore: _commentsResults["@odata.nextLink"] ? true : false,

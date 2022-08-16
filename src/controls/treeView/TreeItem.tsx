@@ -61,7 +61,7 @@ export interface ITreeItemProps {
    */
   onRenderItem?: (item: ITreeItem) => JSX.Element;
 
-  nodesToExpand: any[];
+  nodesToExpand: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
   * Specifies whether current tree item's children should be rendered as expanded.
   */
@@ -99,7 +99,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
     super(props);
 
     // Check if current item is selected
-    let active = props.activeItems.filter(item => item.key === props.treeItem.key);
+    const active = props.activeItems.filter(item => item.key === props.treeItem.key);
 
     let expanded = props.defaultExpanded;
     if (!expanded && (props.nodesToExpand && props.nodesToExpand.indexOf(props.treeItem.key) !== -1)) {
@@ -144,20 +144,20 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * @param nextProps
    * @param nextContext
    */
-  public componentWillReceiveProps(nextProps: ITreeItemProps): void {
+  public UNSAFE_componentWillReceiveProps(nextProps: ITreeItemProps): void {
     const {
       selectionMode,
       nodesToExpand,
       treeItem
     } = this.props;
     // If selection is turned on, set the item as selected
-    if (selectionMode != TreeViewSelectionMode.None) {
+    if (selectionMode !== TreeViewSelectionMode.None) {
 
-      let active = nextProps.activeItems.filter(item => item.key === treeItem.key);
+      const active = nextProps.activeItems.filter(item => item.key === treeItem.key);
 
       let _isExpanded: boolean = this.state.expanded;
 
-      if (!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) == -1) {
+      if (!_isExpanded && nodesToExpand.indexOf(this.props.treeItem.key) === -1) {
         _isExpanded = false;
       }
 
@@ -182,7 +182,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
         <div
           className={styles.labels}
           onClick={(e) => {
-            if (this.props.selectionMode != TreeViewSelectionMode.None && item.selectable != false) {
+            if (this.props.selectionMode !== TreeViewSelectionMode.None && item.selectable !== false) {
               e.stopPropagation();
               if (!item.disabled) {
                 this._itemSelected(e, !this.state.selected);
@@ -190,7 +190,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             }
           }}>
           {
-            this.props.showCheckboxes && item.selectable == false && !item.children &&
+            this.props.showCheckboxes && item.selectable === false && !item.children &&
             <span className={styles.blankspace}>&nbsp;</span>
           }
 
@@ -219,10 +219,9 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
   /**
    * Process the child nodes
    */
-  public createChildNodes = (list, paddingLeft) => {
+  public createChildNodes = (list: ITreeItem[], paddingLeft: number): JSX.Element[] => {
     if (list.length) {
       const {
-        treeItem,
         selectionMode,
         activeItems,
         parentCallbackExpandCollapse,
@@ -235,11 +234,12 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
 
       const { expanded } = this.state;
 
-      let childrenWithHandlers = list.map((item, index) => {
+      const childrenWithHandlers = list.map((item) => {
         return (
           <TreeItem
+            key={item.key}
             treeItem={item}
-            defaultExpanded={defaultExpandedChildren ? expanded : expanded && !item.hasOwnProperty('children')}
+            defaultExpanded={defaultExpandedChildren ? expanded : expanded && !item.children}
             defaultExpandedChildren={defaultExpandedChildren}
             leftOffset={paddingLeft}
             selectionMode={selectionMode}
@@ -264,6 +264,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
    * Default action callback
    */
   private treeItemActionCallback = (): void => {
+    // no-op;
   }
 
   /**
@@ -297,8 +298,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
                 alt={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
                 title={expanded ? strings.TreeViewCollapseTitle : strings.TreeViewExpandTitle}
                 onClick={() => this._handleExpandCollapse()}
-                theme={this.props.theme}>
-              </IconButton>
+                theme={this.props.theme} />
             }
           </div>
           <div
@@ -310,7 +310,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             })}
             style={contentStyles}
             onClick={(e) => {
-              if (this.props.selectionMode != TreeViewSelectionMode.None && treeItem.selectable != false) {
+              if (this.props.selectionMode !== TreeViewSelectionMode.None && treeItem.selectable !== false) {
                 e.stopPropagation();
                 if (!treeItem.disabled && e.currentTarget === e.target) {
                   this._itemSelected(e, !this.state.selected);
@@ -320,7 +320,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
           >
             {
               // Render checkbox (if item is selectable, Selection mode is not None, and showCheckboxes property is set to true)
-              (treeItem.selectable != false) && selectionMode != TreeViewSelectionMode.None && showCheckboxes &&
+              (treeItem.selectable !== false) && selectionMode !== TreeViewSelectionMode.None && showCheckboxes &&
               <Checkbox
                 checked={selected}
                 disabled={treeItem.disabled}

@@ -14,12 +14,12 @@ import { useBoolean } from "@fluentui/react-hooks";
 import { List } from "office-ui-fabric-react/lib/List";
 import { ECommentAction } from "../..";
 
-export interface IRenderCommentsProps {}
+export interface IRenderCommentsProps { }
 
 export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () => {
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { documentCardStyles, itemContainerStyles, deleteButtonContainerStyles } = useListItemCommentsStyles();
-  const { comments, isLoading, selectedComment } = listItemCommentsState;
+  const { comments, isLoading } = listItemCommentsState;
 
   const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
 
@@ -38,7 +38,7 @@ export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () 
                 });
                 setHideDialog();
               }}
-            ></IconButton>
+            />
           </Stack>
           <DocumentCardDetails styles={{ root: { paddingTop: 15 } }}>
             <Stack

@@ -27,7 +27,7 @@ export interface IGetListDataAsStreamResult {
   HttpRoot:                                             string;
   NoScriptEnabled:                                      boolean;
   imagesPath:                                           string;
-  PortalUrl:                                            null;
+  PortalUrl:                                            undefined;
   SendToLocationName:                                   string;
   SendToLocationUrl:                                    string;
   RecycleBinEnabled:                                    number;
@@ -156,8 +156,8 @@ export interface IEditor {
 
 export interface IListSchema {
   Field:                            { [key: string]: string }[];
-  RequiredFields:                   any[];
-  JSLink:                           any[];
+  RequiredFields:                   any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  JSLink:                           any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   LCID:                             string;
   Userid:                           string;
   PagePath:                         string;

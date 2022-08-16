@@ -18,7 +18,7 @@ export interface IToolbarFindProps {
   onFindQueryChange?: (findQuery: string) => string;
 }
 
-export const ToolbarFind = (props: IToolbarFindProps) => {
+export const ToolbarFind = (props: IToolbarFindProps): JSX.Element => {
   switch (props.layout) {
     case "verbose":
       return (

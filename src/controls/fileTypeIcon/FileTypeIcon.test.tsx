@@ -1,12 +1,10 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
 import { FileTypeIcon } from './FileTypeIcon';
-import { IFileTypeIconProps, IconType, ApplicationType, ImageSize } from './IFileTypeIcon';
-
-declare const sinon;
+import { IconType, ApplicationType, ImageSize } from './IFileTypeIcon';
 
 describe('<FileTypeIcon />', () => {
   let fileTypeIcon: ReactWrapper;

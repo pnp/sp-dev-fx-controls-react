@@ -4,7 +4,7 @@ import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDef
 
 export const hostCapabilitiesFluentUIThemeKey = "fluentUITheme";
 
-export const setFluentUIThemeAsHostCapability = (hostConfig: HostConfig, theme: ITheme) => {
+export const setFluentUIThemeAsHostCapability = (hostConfig: HostConfig, theme: ITheme): void => {
     hostConfig.hostCapabilities.setCustomProperty(hostCapabilitiesFluentUIThemeKey, theme);
 };
 

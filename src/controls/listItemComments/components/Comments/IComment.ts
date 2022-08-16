@@ -45,7 +45,7 @@ export interface Author {
 }
 
 interface Replies {
-  results: any[];
+  results: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 interface LikedBy {

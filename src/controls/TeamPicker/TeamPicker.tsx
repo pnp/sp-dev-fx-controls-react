@@ -31,12 +31,14 @@ const pickerSuggestionsProps: IBasePickerSuggestionsProps = {
 const initialState: ITeamPickerState = {
   savedSelectedTeams: [],
 };
-const getTextFromItem = (item: ITag) => item.name;
+const getTextFromItem = (item: ITag): string => item.name;
 // Reducer to update state
 const reducer = (
   state: ITeamPickerState,
-  action: { type: string; payload: any }
-) => {
+  action: { type: string; payload: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+): {
+  savedSelectedTeams: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+} => {
   switch (action.type) {
     case "UPDATE_SELECTEDITEM":
       return { ...state, savedSelectedTeams: action.payload };
@@ -72,7 +74,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
 
   const useFilterSuggestedTeams = React.useCallback(
     async (filterText: string, teamsList: ITag[]): Promise<ITag[]> => {
-      let tags: ITag[] = [];
+      const tags: ITag[] = [];
       try {
         const teams: ITeam[] = await getMyTeams(filterText);
         if (teams?.length) {
@@ -120,7 +122,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
                 width: 18,
                 height: 18,
               }}
-            ></ImageIcon>
+            />
 
             <Text variant="medium">{itemProps.item.name}</Text>
             <IconButton
@@ -170,7 +172,7 @@ export const TeamPicker: React.FunctionComponent<ITeamPickerProps> = (
               width: 18,
               height: 18,
             }}
-          ></ImageIcon>
+          />
           <Text variant="smallPlus">{propsTag.name}</Text>
         </Stack>
       );

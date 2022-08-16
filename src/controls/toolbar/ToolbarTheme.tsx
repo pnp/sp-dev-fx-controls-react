@@ -19,11 +19,13 @@ export interface IToolbarThemeProps {
   children: React.ReactNode;
 }
 
-const getLocalTheme = (themeKey: string): ThemeInput<any> => {
+const getLocalTheme = (themeKey: string): ThemeInput<any> => { // eslint-disable-line @typescript-eslint/no-explicit-any
   const buttonRootVariables = ({
     colorScheme,
-    theme,
-  }: ComponentVariablesInput) => {
+    theme
+  }: ComponentVariablesInput): {
+    color: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  } => {
     let color = colorScheme.black.foreground;
     switch (theme) {
       case "teamsDarkTheme":
@@ -38,7 +40,10 @@ const getLocalTheme = (themeKey: string): ThemeInput<any> => {
     };
   };
 
-  const menuContentStyles = ({ theme }: ComponentVariablesObject) => {
+  const menuContentStyles = ({ theme }: ComponentVariablesObject): {
+    borderWidth: string | number;
+    boxShadow: string | number;
+  } => {
     const { theme: siteThemeKey, colorScheme } = theme.siteVariables;
     return {
       borderWidth: siteThemeKey === "teamsHighContrastTheme" ? "1px" : 0,
@@ -106,7 +111,7 @@ const getLocalTheme = (themeKey: string): ThemeInput<any> => {
   };
 };
 
-export const ToolbarTheme = ({ globalTheme, children }: IToolbarThemeProps) => {
+export const ToolbarTheme = ({ globalTheme, children }: IToolbarThemeProps): JSX.Element => {
   const mainTheme = (globalTheme.siteVariables && globalTheme.siteVariables.theme)
     ? globalTheme
     : themes.teamsTheme;

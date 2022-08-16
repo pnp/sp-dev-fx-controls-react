@@ -39,8 +39,6 @@ const TILE_HORZ_PADDING: number = 32;
  */
 const BOTTOM_MARGIN: number = 36;
 
-const LAYOUT_STORAGE_KEY: string = 'comparerOneDriveLayout';
-
 
 export class TilesList extends React.Component<ITilesListProps> {
   private _columnCount: number;
@@ -53,8 +51,8 @@ export class TilesList extends React.Component<ITilesListProps> {
     super(props);
   }
 
-  public componentDidUpdate(prevProps: ITilesListProps) {
-    if (this.props.filePickerResults != prevProps.filePickerResults) {
+  public componentDidUpdate(prevProps: ITilesListProps): void {
+    if (this.props.filePickerResults !== prevProps.filePickerResults) {
       this._listElem.forceUpdate();
     }
   }
@@ -64,7 +62,7 @@ export class TilesList extends React.Component<ITilesListProps> {
       <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => { this._handleItemInvoked(item); }}>
         <FocusZone>
           <List
-            ref={(e: any) => { this._listElem = e; }}
+            ref={(e: List) => { this._listElem = e; }}
             className={styles.folderList}
             items={this.props.items}
             getItemCountForPage={this._getItemCountForPage}
@@ -79,7 +77,7 @@ export class TilesList extends React.Component<ITilesListProps> {
   /**
   * Gets called what a file is selected.
   */
-  private _handleItemInvoked = (item: IFile) => {
+  private _handleItemInvoked = (item: IFile): void => {
     // If a file is selected, open the library
     if (item.isFolder) {
       this.props.onFolderOpen(item);

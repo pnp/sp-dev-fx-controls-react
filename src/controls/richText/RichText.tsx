@@ -133,7 +133,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Attaches to mouse down events to determine if we clicked outside
    */
-  public componentDidMount() {
+  public componentDidMount(): void {
     // If we're in edit mode, attach the mouse down event
     if (this.props.isEditMode) {
       document.addEventListener('click', this.handleClickOutside);
@@ -152,7 +152,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Removes the mouse down event
    */
-  public componentWillUnmount() {
+  public componentWillUnmount(): void {
     // If we were in edit mode, remove the mouse down handler
     if (this.props.isEditMode) {
       document.removeEventListener('click', this.handleClickOutside);
@@ -195,7 +195,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     return true;
   }
 
-  public componentWillReceiveProps(nextProps: IRichTextProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: IRichTextProps): void {
     if (nextProps.value !== this.props.value && nextProps.value !== this.state.text) {
       this.setState({
         text: nextProps.value
@@ -208,7 +208,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   public getEditor = (): Quill => {
     try {
-      return this._quillElem!.getEditor();
+      return this._quillElem.getEditor();
     } catch (error) {
       return undefined;
     }
@@ -224,7 +224,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       <TooltipHost content={option.text}
         id={`${option.text}-toolbarButton`}
         calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
+        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
           aria-describedby={`${option.text}-toolbarButton`}>
           <span>{option.text}</span>
         </div>
@@ -262,7 +262,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       <TooltipHost content={option.text}
         id={`${option.text}-toolbarButton`}
         calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
+        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
           aria-describedby={`${option.text}-toolbarButton`}>
           <Icon className={styles.toolbarDropDownIcon}
             iconName={option.data.icon}
@@ -326,7 +326,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       <TooltipHost content={option.text}
         id={`${option.text}-toolbarButton`}
         calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data!.className ? option.data!.className : ""}`}
+        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
           aria-describedby={`${option.text}-toolbarButton`}>
           <Icon className={styles.toolbarDropDownIcon}
             iconName={option.data.icon}
@@ -448,8 +448,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (!isEditMode) {
       return (
         <div className={`ql-editor ${styles.richtext} ${this.props.className || ''}`}
-          dangerouslySetInnerHTML={{ __html: text }}>
-        </div>
+          dangerouslySetInnerHTML={{ __html: text }} />
       );
     }
 
@@ -470,12 +469,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     };
 
     // Remove fonts and set Segoe UI as the main font
-    let font = Quill.import('formats/font');
+    const font = Quill.import('formats/font');
     font.whitelist = ['Segoe UI'];
     Quill.register(font, true);
 
     // Set headers and add blockquote capability
-    let header = Quill.import('formats/header');
+    const header = Quill.import('formats/header');
     header.tagName = [
       'H1',
       'H2',
@@ -487,8 +486,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     Quill.register(header, true);
 
     // Add the SharePoint font sizes
-    let SizeClass = Quill.import('formats/size');
-    SizeClass.whitelist = [
+    const sizeClass = Quill.import('formats/size');
+    sizeClass.whitelist = [
       'small',
       'medium',
       'mediumplus',
@@ -499,10 +498,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'xxxlarge',
       'xxlargeplus',
       'super'];
-    Quill.register(SizeClass, true);
+    Quill.register(sizeClass, true);
 
     return (
-      <div ref={(ref) => this._wrapperRef = ref} className={`${styles.richtext && this.state.editing ? 'ql-active' : ''} ${this.props.className}`}>
+      <div ref={(ref) => { this._wrapperRef = ref; }} className={`${styles.richtext && this.state.editing ? 'ql-active' : ''} ${this.props.className}`}>
         <div id={this._toolbarId} style={{ top: this.state.wrapperTop }}>
           {
             showStyles && (
@@ -588,7 +587,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
               <TooltipHost content={strings.LinkTitle}
                 id="link-richtextbutton"
                 calloutProps={{ gapSpace: 0 }}>
-                <IconButton checked={this.state.formats!.link !== undefined}
+                <IconButton checked={this.state.formats?.link !== undefined}
                   onClick={this.showInsertLinkDialog}
                   aria-describedby="link-richtextbutton"
                   iconProps={{
@@ -687,7 +686,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Displays the insert link dialog
    */
-  private showInsertLinkDialog = () => {
+  private showInsertLinkDialog = (): void => {
     const quill = this.getEditor();
     const range = quill.getSelection();
 
@@ -718,14 +717,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Hides the insert link dialog
    */
-  private closeDialog = () => {
+  private closeDialog = (): void => {
     this.setState({ hideDialog: true });
   }
 
   /**
    * Displays the insert link dialog
    */
-  private showInsertImageDialog = () => {
+  private showInsertImageDialog = (): void => {
     const quill = this.getEditor();
     const range = quill.getSelection();
 
@@ -738,7 +737,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Hides the insert image dialog
    */
-  private closeImageDialog = () => {
+  private closeImageDialog = (): void => {
     this.setState({
       hideImageDialog: true,
       insertImageUrl: undefined,
@@ -748,7 +747,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * When user enters the richtext editor, displays the border
    */
-  private handleOnFocus = (range, source, editor) => {
+  private handleOnFocus = (range, source, editor): void => {
     if (!this.state.editing) {
       this.setState({ editing: true });
     }
@@ -757,7 +756,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when user removes the link
    */
-  private handleRemoveLink = () => {
+  private handleRemoveLink = (): void => {
     const quill = this.getEditor();
     quill.format('link', false);
     this.closeDialog();
@@ -766,10 +765,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when user creates a new link
    */
-  private handleCreateLink = () => {
+  private handleCreateLink = (): void => {
     const quill = this.getEditor();
     const range = this.state.selectedRange;
-    const cursorPosition: number = range!.index;
+    const cursorPosition: number = range.index;
     if (range.length > 0) {
       quill.deleteText(range.index, range.length);
     }
@@ -792,11 +791,11 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when user insert an image
    */
-  private handleInsertImage = () => {
+  private handleInsertImage = (): void => {
     const { insertImageUrl, selectedRange } = this.state;
     try {
       const quill = this.getEditor();
-      const cursorPosition: number = selectedRange!.index;
+      const cursorPosition: number = selectedRange.index;
       quill.insertEmbed(cursorPosition, 'image', insertImageUrl, "user");
       this.setState({
         insertImageUrl: undefined,
@@ -815,8 +814,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * Disable Save-button if hyperlink is undefined or empty
    * This prevents the user of adding an empty hyperlink
    */
-  private checkLinkUrl = () => {
-    if (this.state.insertUrl !== undefined && this.state.insertUrl != "") {
+  private checkLinkUrl = (): boolean => {
+    if (this.state.insertUrl !== undefined && this.state.insertUrl !== "") {
       return false;
     }
     return true;
@@ -826,8 +825,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * Disable Save-button if hyperlink for the imported image is undefined or empty
    * This prevents the user of adding an empty image
    */
-  private checkImageLinkUrl = () => {
-    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl != "") {
+  private checkImageLinkUrl = (): boolean => {
+    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl !== "") {
       return false;
     }
     return true;
@@ -838,7 +837,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * @param name format name
    * @param value format value, or false to unset format
    */
-  private applyFormat(name: string, value: any) {
+  private applyFormat(name: string, value: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
     const quill = this.getEditor();
     quill.format(name, value);
 
@@ -851,7 +850,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when richtext selection changes
    */
-  private handleChangeSelection = (range, oldRange, source) => {
+  private handleChangeSelection = (range, oldRange, source): void => {
     const quill = this.getEditor();
     try {
       if (quill) {
@@ -875,7 +874,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         }
       }
     } catch (error) {
-
+      // no-op;
     }
   }
 
@@ -896,7 +895,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when user clicks on the more button
    */
-  private handleShowMore = () => {
+  private handleShowMore = (): void => {
     this.setState({
       morePaneVisible: !this.state.morePaneVisible
     }, () => {
@@ -907,10 +906,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when user changes the text of the editor
    */
-  private handleChange = (value: string) => {
+  private handleChange = (value: string): void => {
     const { onChange } = this.props;
 
-    const newState: any = {};
+    const newState: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     const quill = this.getEditor();
     if (quill) {
@@ -929,7 +928,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     // do we need to pass this to a handler?
     if (onChange) {
       // yes, get the changed text from the handler
-      let newText: string = onChange(value);
+      const newText: string = onChange(value);
       newState.text = newText;
     } else {
       // no, write the text to the state
@@ -944,8 +943,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Keeps track of whether we clicked outside the element
    */
-  private handleClickOutside = (event) => {
-    let outside: boolean = !elementContains(this._wrapperRef, event.target);
+  private handleClickOutside = (event): void => {
+    const outside: boolean = !elementContains(this._wrapperRef, event.target);
 
     // Did we click outside?
     if (outside) {
@@ -968,14 +967,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Links to the quill reference
    */
-  private linkQuill = (e: any) => {
+  private linkQuill = (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     this._quillElem = e;
   }
 
   /**
    * Links to the property pane element
    */
-  private linkPropertyPane = (e: any) => {
+  private linkPropertyPane = (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     this._propertyPaneRef = e;
   }
 }

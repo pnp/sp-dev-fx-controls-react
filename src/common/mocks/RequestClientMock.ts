@@ -4,7 +4,7 @@ export class RequestClientMock extends SPHttpClient {
     public Requests: { url: string, method: string, options?: ISPHttpClientOptions, resultString: string }[] = [];
     public OnRequest: (url: string, method: string, options?: ISPHttpClientOptions) => void;
     public fetch(url: string, configuration: SPHttpClientConfiguration, options: ISPHttpClientOptions): Promise<SPHttpClientResponse> {
-        let mockedResponse = this.Requests.filter(req => req.method === options.method && req.url == url)[0];
+        const mockedResponse = this.Requests.filter(req => req.method === options.method && req.url === url)[0];
         let response: Response;
         if (mockedResponse) {
             response = new Response(mockedResponse.resultString, {

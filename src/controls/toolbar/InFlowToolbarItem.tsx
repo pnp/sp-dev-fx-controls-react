@@ -28,7 +28,7 @@ const toolbarActionTooltipProps = (() => {
     return props;
 })();
 
-export const InFlowToolbarItem = ({ action, layout }: IInFlowToolbarItemProps) => {
+export const InFlowToolbarItem = ({ action, layout }: IInFlowToolbarItemProps): JSX.Element => {
     const { iconName, title } = action;
     const contentIcon = iconName && (
         <Box className={"extended-toolbar__near-side__item__icon " + styles.inFlowToolbarItemBox} >

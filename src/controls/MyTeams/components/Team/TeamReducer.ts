@@ -1,8 +1,8 @@
 import { ETeamTypes } from "./ETeamTypes";
 import { ITeamState } from "./ITeamState";
-export const teamsReducer = (
+export const teamsReducer = ( // eslint-disable-line @typescript-eslint/explicit-function-return-type
   state: ITeamState,
-  action: { type: ETeamTypes; payload: any }
+  action: { type: ETeamTypes; payload: any } // eslint-disable-line @typescript-eslint/no-explicit-any
 ) => {
   switch (action.type) {
     case ETeamTypes.SET_TEAM_MEMBERS:

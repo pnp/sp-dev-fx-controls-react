@@ -1,20 +1,15 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
 import { ChartControl } from './ChartControl';
 import styles from './ChartControl.module.scss';
-
-declare const sinon;
-
-
 
 describe('<ChartControl />', () => {
   let chartControl: ReactWrapper;
   const dummyTitle = "Dummy Title";
   const dummyClass = "DummyClass";
-  const dummySummary = "Dummy Summary";
   const dummyData = {
     labels: ['Human', 'Chimp', 'Dolphin', 'Cat'],
     datasets: [

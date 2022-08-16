@@ -30,7 +30,7 @@ export default class OotbFields extends React.Component<IOotbFieldsProps, IOotbF
     this.state = {};
   }
 
-  public componentWillMount() {
+  public UNSAFE_componentWillMount() {
     FieldRendererHelper.getFieldRenderer(this.props.value, {
       className: this.props.className,
       cssProps: this.props.cssProps

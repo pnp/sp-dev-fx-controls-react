@@ -63,7 +63,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
   /**
    * Called as user types in a new value
    */
-  private _handleChange = (fileUrl: string) => {
+  private _handleChange = (fileUrl: string): void => {
     const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
       fileAbsoluteUrl: fileUrl,
       fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
@@ -113,14 +113,14 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
   /**
    * Handles when user saves
    */
-  private _handleSave = () => {
+  private _handleSave = (): void => {
     this.props.onSave([this.state.filePickerResult]);
   }
 
   /**
    * HAndles when user closes without saving
    */
-  private _handleClose = () => {
+  private _handleClose = (): void => {
     this.props.onClose();
   }
 

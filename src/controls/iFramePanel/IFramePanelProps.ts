@@ -17,7 +17,7 @@ export interface IIFramePanelProps extends IPanelProps {
   /**
    * iframe's onload event handler
    */
-  iframeOnLoad?: (iframe: any) => void;
+  iframeOnLoad?: (iframe: HTMLIFrameElement) => void;
   /**
    * Specifies if transparency is allowed in iframe
    */

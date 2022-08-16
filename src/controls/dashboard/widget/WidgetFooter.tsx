@@ -3,7 +3,7 @@ import * as React from "react";
 import { IWidget } from "./IWidget";
 import * as strings from 'ControlStrings';
 
-export const WidgetFooter = ({ widget }: { widget: IWidget }) => (
+export const WidgetFooter = ({ widget }: { widget: IWidget }): JSX.Element => (
     <Card.Footer fitted>
         <Flex space="between" vAlign="center">
             <Text

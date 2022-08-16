@@ -4,32 +4,32 @@ const DEFAULT_IMAGE_PLACEHOLDER_HASH: string = "4a48f26592f4e1498d7a478a4c48609c
 const MD5_MODULE_ID: string = "8494e7d7-6b99-47b2-a741-59873e42f16f";
 const PROFILE_IMAGE_URL: string = "/_layouts/15/userphoto.aspx?size=M&accountname=";
 
-export const getScrollPosition = (_dataListContainerRef: any) => {
+export const getScrollPosition = (_dataListContainerRef: any): number => { // eslint-disable-line @typescript-eslint/no-explicit-any
   const { scrollTop, scrollHeight, clientHeight } = _dataListContainerRef;
   const percentNow = (scrollTop / (scrollHeight - clientHeight)) * 100;
   return percentNow;
 };
 
-export const b64toBlob = async (b64Data: any, contentType: string, sliceSize?: number): Promise<Blob> => {
+export const b64toBlob = async (b64Data: string, contentType: string, sliceSize?: number): Promise<Blob> => {
   contentType = contentType || "image/png";
   sliceSize = sliceSize || 512;
 
-  let byteCharacters: string = atob(b64Data);
-  let byteArrays = [];
+  const byteCharacters: string = atob(b64Data);
+  const byteArrays = [];
 
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    let slice = byteCharacters.slice(offset, offset + sliceSize);
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-    let byteNumbers = new Array(slice.length);
+    const byteNumbers = new Array(slice.length);
     for (let i = 0; i < slice.length; i++) {
       byteNumbers[i] = slice.charCodeAt(i);
     }
 
-    let byteArray = new Uint8Array(byteNumbers);
+    const byteArray = new Uint8Array(byteNumbers);
     byteArrays.push(byteArray);
   }
 
-  let blob = new Blob(byteArrays, { type: contentType });
+  const blob = new Blob(byteArrays, { type: contentType });
   return blob;
 };
 export const blobToBase64 = (blob: Blob): Promise<string> => {
@@ -46,12 +46,12 @@ export const blobToBase64 = (blob: Blob): Promise<string> => {
 export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
   console.log(pictureUrl);
   return new Promise((resolve, reject) => {
-    let image = new Image();
+    const image = new Image();
     image.addEventListener("load", () => {
-      let tempCanvas = document.createElement("canvas");
-      (tempCanvas.width = image.width),
-        (tempCanvas.height = image.height),
-        tempCanvas.getContext("2d").drawImage(image, 0, 0);
+      const tempCanvas = document.createElement("canvas");
+      tempCanvas.width = image.width;
+      tempCanvas.height = image.height;
+      tempCanvas.getContext("2d").drawImage(image, 0, 0);
       let base64Str;
       try {
         base64Str = tempCanvas.toDataURL("image/png");
@@ -64,39 +64,40 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
     image.src = pictureUrl;
   });
 };
-/**
- * Get MD5Hash for the image url to verify whether user has default image or custom image
- * @param url
- */
-export const getMd5HashForUrl = async (url: string) => {
-  return new Promise(async (resolve, reject) => {
-    // tslint:disable-next-line: no-use-before-declare
-    const library: any = await loadSPComponentById(MD5_MODULE_ID);
-    try {
-      const md5Hash = library.Md5Hash;
-      if (md5Hash) {
-        const convertedHash = md5Hash(url);
-        resolve(convertedHash);
-      }
-    } catch (error) {
-      resolve(url);
-    }
-  });
-};
 
 /**
  * Load SPFx component by id, SPComponentLoader is used to load the SPFx components
  * @param componentId - componentId, guid of the component library
  */
-export const loadSPComponentById = async (componentId: string) => {
+export const loadSPComponentById = async (componentId: string): Promise<unknown> => {
   return new Promise((resolve, reject) => {
     SPComponentLoader.loadComponentById(componentId)
-      .then((component: any) => {
+      .then((component: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         resolve(component);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        // no-op;
+      });
   });
 };
+
+/**
+ * Get MD5Hash for the image url to verify whether user has default image or custom image
+ * @param url
+ */
+export const getMd5HashForUrl = async (url: string): Promise<string> => {
+  const library: any = await loadSPComponentById(MD5_MODULE_ID); // eslint-disable-line @typescript-eslint/no-explicit-any
+  try {
+    const md5Hash = library.Md5Hash;
+    if (md5Hash) {
+      const convertedHash: string = md5Hash(url);
+      return convertedHash;
+    }
+  } catch (error) {
+    return url;
+  }
+};
+
 /**
  * Gets user photo
  * @param userId
@@ -105,9 +106,7 @@ export const loadSPComponentById = async (componentId: string) => {
 export const getUserPhoto = async (userId): Promise<string> => {
   const personaImgUrl = PROFILE_IMAGE_URL + userId;
 
-  // tslint:disable-next-line: no-use-before-declare
   const url: string = await getImageBase64(personaImgUrl);
-  // tslint:disable-next-line: no-use-before-declare
   const newHash = await getMd5HashForUrl(url);
 
   if (newHash !== DEFAULT_PERSONA_IMG_HASH && newHash !== DEFAULT_IMAGE_PLACEHOLDER_HASH) {

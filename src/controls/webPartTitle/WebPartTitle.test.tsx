@@ -1,7 +1,7 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
 import { WebPartTitle } from './WebPartTitle';
 import styles from './WebPartTitle.module.scss';
@@ -15,7 +15,6 @@ describe('<WebPartTitle />', () => {
   const dummyClass = "DummyClass";
   const dummyMoreLink = "See all";
   const dummyColor = "#ffffff";
-  const dummyPlaceholder = "News";
   const dummyUpdateFnc = sinon.spy((value) => { return value; });
 
   afterEach(() => {
@@ -49,9 +48,9 @@ describe('<WebPartTitle />', () => {
     textArea.simulate('change', { target: { value: "New web part title" }});
 
     // Check if function is called
-    /* tslint:disable */
+    /* eslint-disable */
     expect(dummyUpdateFnc.called).to.be.true;
-    /* tslint:enable */
+    /* eslint-enable */
 
     // Check if the returned value is correct
     expect(dummyUpdateFnc.args[0]).contains("New web part title");

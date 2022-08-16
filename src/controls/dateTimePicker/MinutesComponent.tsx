@@ -69,9 +69,9 @@ export default class MinutesComponent extends React.Component<ITimeComponentProp
     }
   }
 
-  private _initMinutesOptions(step: number) {
+  private _initMinutesOptions(step: number): void {
 
-    let minutes: IDropdownOption[] = [];
+    const minutes: IDropdownOption[] = [];
     for (let j = 0; j < 60; j += step) {
       let digitMin: string;
       if (j < 10) {

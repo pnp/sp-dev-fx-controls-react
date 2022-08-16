@@ -1,6 +1,3 @@
-
-import * as React from 'react';
-
 export enum ProcessingState {
   idle,
   processing

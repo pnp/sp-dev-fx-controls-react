@@ -1,5 +1,6 @@
+/* eslint no-useless-escape: 0 */
 import { ITermStore, ITerm, ITermSet  } from './ISPTermStorePickerService';
-import {IPickerTerms, IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
+import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 /**
 * Defines a http client to request mock data to use the web part with the local workbench
 */
@@ -189,6 +190,7 @@ export default class SPTermStoreMockHttpClient {
   /**
    * Mock method which returns mock terms stores
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static getTermStores(restUrl: string, options?: any): Promise<ITermStore[]> {
     return new Promise<ITermStore[]>((resolve) => {
       resolve(SPTermStoreMockHttpClient._mockTermStores);

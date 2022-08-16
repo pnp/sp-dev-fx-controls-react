@@ -5,6 +5,6 @@ export interface IListItemPickerState {
   showError: boolean;
   errorMessage: string;
   suggestionsHeaderText:string;
-  selectedItems?: any[];
+  selectedItems?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   field?: ISPField;
 }

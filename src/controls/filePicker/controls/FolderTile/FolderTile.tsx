@@ -44,20 +44,19 @@ export class FolderTile extends React.Component<IFolderTileProps> {
                   <div
                     className={css(styles.folderCover, styles.isLarge)}>
                     <Icon
-                      className={styles.folderCoverBack}                      
+                      className={styles.folderCoverBack}
                       imageProps={{
                         src: strings.FolderBackPlate
                       }} />
                     {item.totalFileCount > 0 &&
                       <span className={styles.folderCoverContent}>
                         <span className={styles.folderCoverFrame}>
-                          <span className={styles.itemTileBlankCover} style={{ width: 104, height: 72 }}>
-                          </span>
+                          <span className={styles.itemTileBlankCover} style={{ width: 104, height: 72 }} />
                         </span>
                       </span>
                     }
                     <Icon
-                      className={styles.folderCoverFront}                      
+                      className={styles.folderCoverFront}
                       imageProps={{
                         src: strings.FolderFrontPlate
                       }} />

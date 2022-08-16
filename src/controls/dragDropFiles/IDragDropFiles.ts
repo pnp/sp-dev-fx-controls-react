@@ -13,10 +13,10 @@ export interface IDragDropFilesProps {
    * Specifies the icon to display
    */
   iconName?: string;
-  /**  
-  * Handler to return the files from drag and drop. 
+  /**
+  * Handler to return the files from drag and drop.
   **/
-  onDrop?: any;
+  onDrop?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
   * Specify if drag and drop option is enable.
   **/
