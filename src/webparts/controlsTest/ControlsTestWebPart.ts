@@ -15,8 +15,10 @@ import {
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
-import ControlsTest from './components/ControlsTest';
-import { IControlsTestProps } from './components/IControlsTestProps';
+import {
+  ITestControlProps,
+  TestControl,
+} from './components/TestControl';
 import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
 
 /**
@@ -68,16 +70,16 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-    /*   const element: React.ReactElement<ITestControlProps> = React.createElement(
+      const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
          context: this.context,
          themeVariant: this._themeVariant,
        }
-     ); */
+     );
 
-const element: React.ReactElement<IControlsTestProps> = React.createElement(
+/* const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
     ControlsTest,
       {
@@ -92,7 +94,7 @@ const element: React.ReactElement<IControlsTestProps> = React.createElement(
         },
         totalPages: this.properties.totalPages
       }
-    );
+    ); */
 
     ReactDom.render(element, this.domElement);
   }
