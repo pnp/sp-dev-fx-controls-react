@@ -98,7 +98,7 @@ export const ProgressStepsIndicator: React.FunctionComponent<IProgressStepsIndic
           {renderSteps}
         </Stack>
       </Stack>
-      <Stack horizontal horizontalAlign="space-between" styles={{ root: { marginTop: "10px !important" } }}>
+      <Stack horizontal horizontalAlign="space-between" styles={{ root: { marginTop: "7px !important" } }}>
         {renderStepsTitle}
       </Stack>
     </Customizer>
