@@ -24,8 +24,14 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
-    this.getAvailableActions();
+  public UNSAFE_componentWillMount(): void {
+    this.getAvailableActions()
+      .then(() => {
+        // no-op;
+      })
+      .catch(() => {
+        // no-op;
+      });
   }
 
   /**
@@ -55,9 +61,9 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
    * Sets the visibility of a certain action
    * @param isHidden
    */
-  private setActionStateForTerm = (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean) => {
+  private setActionStateForTerm = (actionId: string, termId: string, type: "disabled" | "hidden", value: boolean): void => {
     this.setState((prevState: ITermActionsControlState) => {
-      let termActionChanges = prevState.termActionChanges;
+      const termActionChanges = prevState.termActionChanges;
       if (!termActionChanges[termId]) {
         termActionChanges[termId] = [];
       }
@@ -92,7 +98,7 @@ export default class TermActionsControl extends React.Component<ITermActionsCont
     return (
       <div>
         {
-          displayMode == TermActionsDisplayMode.dropdown ?
+          displayMode === TermActionsDisplayMode.dropdown ?
             <DropdownTermAction key={`DdAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />
             :
             <ButtonTermAction key={`BtnAction-${term.Id}`} termActions={availableActions} term={term} displayStyle={displayStyle} termActionCallback={this.props.termActionCallback} spTermService={this.props.spTermService} termActionChanges={termActionChanges} />

@@ -15,7 +15,7 @@ export default class SPServiceMock implements ISPService {
   public getContentTypes(options?: IContentTypesOptions): Promise<ISPContentType[]> {
     throw new Error("Method not implemented.");
   }
-  public getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField, keyInternalColumnName?: string, webUrl?: string): Promise<any[]> {
+  public getListItems(filterText: string, listId: string, internalColumnName: string, field: ISPField, keyInternalColumnName?: string, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     throw new Error("Method not implemented.");
   }
   public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
@@ -33,6 +33,7 @@ export default class SPServiceMock implements ISPService {
     ]
   };
   public getLibs(options?: ILibsOptions): Promise<ISPLists> {
+    // eslint-disable-next-line no-async-promise-executor
     return new Promise<ISPLists>(async resolve => {
       if (this._includeDelay === true) {
         await this.sleep(this._delayTimeout); // Simulate network load

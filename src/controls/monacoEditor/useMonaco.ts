@@ -8,7 +8,11 @@ export enum EStatus {
   ERROR,
 }
 
-export const useMonaco = () => {
+export const useMonaco = (): {
+  monaco: Monaco;
+  status: EStatus;
+  error: Error;
+} => {
   const [monaco, setMonaco] = useState<Monaco>(undefined);
   const [status, setStatus] = useState<EStatus>(EStatus.LOADING);
   const [error, setError] = useState<Error>(undefined);
@@ -25,7 +29,7 @@ export const useMonaco = () => {
         setMonaco(undefined);
         setError(error);
       }
-    })();
+    })().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }, []);
 
   return {

@@ -5,7 +5,7 @@ import { FluentUIChoiceSetInput, FluentUIDateInput, FluentUINumberInput, FluentU
 import { ChoiceSetInputPeer, DateInputPeer, NumberInputPeer, TextInputPeer, TimeInputPeer, ToggleInputPeer } from "./InputPeers";
 import { DesignerPeerCategory } from "./Shared";
 
-export function initializeDesignerPeers() {
+export function initializeDesignerPeers(): void {
     //https://github.com/microsoft/AdaptiveCards/blob/87e44941433326a9238de2161124fc246f12a1b6/source/nodejs/adaptivecards-designer/src/card-designer-surface.ts
     CardDesignerSurface.cardElementPeerRegistry.registerPeer(FluentUITextInput, TextInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputText");
     CardDesignerSurface.cardElementPeerRegistry.registerPeer(FluentUINumberInput, NumberInputPeer, DesignerPeerCategory.Inputs, "acd-icon-inputNumber");

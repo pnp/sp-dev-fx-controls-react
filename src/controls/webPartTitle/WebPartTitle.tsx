@@ -3,6 +3,7 @@ import * as strings from 'ControlStrings';
 import { DisplayMode } from '@microsoft/sp-core-library';
 import styles from './WebPartTitle.module.scss';
 import * as telemetry from '../../common/telemetry';
+import type { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 export interface IWebPartTitleProps {
   displayMode: DisplayMode;
@@ -10,8 +11,8 @@ export interface IWebPartTitleProps {
   updateProperty: (value: string) => void;
   className?: string;
   placeholder?: string;
-  moreLink?: JSX.Element | Function;
-  themeVariant?: any; // TODO: type should be IReadonlyTheme from @microsoft/sp-component-base
+  moreLink?: JSX.Element | (() => React.ReactNode);
+  themeVariant?: IReadonlyTheme;
 }
 
 /**
@@ -36,7 +37,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
   /**
    * Process the text area change
    */
-  private _onChange(event) {
+  private _onChange(event): void {
     this.props.updateProperty(event.target.value);
   }
 
@@ -50,10 +51,10 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
     if (this.props.title || this.props.moreLink || this.props.displayMode === DisplayMode.Edit) {
       return (
         <div className={`${styles.webPartHeader} ${this.props.className ? this.props.className : ""}`}>
-          <div className={styles.webPartTitle} style={{color: color}}>
+          <div className={styles.webPartTitle} style={{ color: color }}>
             {
               this.props.displayMode === DisplayMode.Edit && (
-                <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title}></textarea>
+                <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title} />
               )
             }
 

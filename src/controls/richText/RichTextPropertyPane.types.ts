@@ -11,5 +11,5 @@ export interface IRichTextPropertyPaneProps {
 }
 
 export interface IRichTextPropertyPaneState {
-  formats: any;
+  formats: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

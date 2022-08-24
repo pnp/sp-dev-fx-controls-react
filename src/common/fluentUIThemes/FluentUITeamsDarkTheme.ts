@@ -1,6 +1,7 @@
+import { Theme } from "@fluentui/theme";
 import { createTheme } from "office-ui-fabric-react/lib/Styling";
 
-export const fluentUITeamsDarkTheme = createTheme({
+export const fluentUITeamsDarkTheme : Theme = createTheme({
     palette: {
         themePrimary: "#7f85f5",
         themeLighterAlt: "#05050a",

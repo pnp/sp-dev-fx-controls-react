@@ -1,21 +1,15 @@
 
 import { IButtonStyles } from "office-ui-fabric-react/lib/Button";
 import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
-import { ITextStyles } from "office-ui-fabric-react/lib/Text";
 import {
   mergeStyles,
   mergeStyleSets,
 } from "office-ui-fabric-react/lib/Styling";
-import { Theme } from "spfx-uifabric-themes";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
 const theme = window.__themeState__.theme;
 
-export const useTeamPickerStyles = (themeVariant:  IReadonlyTheme | undefined) => {
-  const textHeaderStyles: Partial<ITextStyles> = {
-    root: { color: theme?.themePrimary },
-  };
-
+export const useTeamPickerStyles = (themeVariant:  IReadonlyTheme | undefined) => { // eslint-disable-line @typescript-eslint/explicit-function-return-type
 
 const renderIconButtonRemoveStyles:Partial<IButtonStyles> = {
   root:{

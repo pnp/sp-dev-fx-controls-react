@@ -15,11 +15,11 @@ export class DesignerPeerCategory {
 }
 
 export class NameValuePairPropertyEditor extends PropertySheetEntry {
-    private collectionChanged(context: PropertySheetContext, nameValuePairs: INameValuePair[], refreshPropertySheet: boolean) {
+    private collectionChanged(context: PropertySheetContext, nameValuePairs: INameValuePair[], refreshPropertySheet: boolean): void {
         context.target[this.collectionPropertyName] = [];
 
-        for (let nameValuePair of nameValuePairs) {
-            let item = this.createCollectionItem(nameValuePair.name, nameValuePair.value);
+        for (const nameValuePair of nameValuePairs) {
+            const item = this.createCollectionItem(nameValuePair.name, nameValuePair.value);
 
             context.target[this.collectionPropertyName].push(item);
         }
@@ -28,17 +28,17 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
     }
 
     public render(context: PropertySheetContext): Adaptive.CardElement {
-        let result = new Adaptive.Container();
+        const result = new Adaptive.Container();
 
-        let collection = context.target[this.collectionPropertyName];
+        const collection = context.target[this.collectionPropertyName];
 
         if (!Array.isArray(collection)) {
             throw new Error("The " + this.collectionPropertyName + " property on " + context.peer.getCardObject().getJsonTypeName() + " either doesn't exist or isn't an array.");
         }
 
-        let nameValuePairs: INameValuePair[] = [];
+        const nameValuePairs: INameValuePair[] = [];
 
-        for (let pair of collection) {
+        for (const pair of collection) {
             nameValuePairs.push(
                 {
                     name: pair[this.namePropertyName],
@@ -47,8 +47,8 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
             );
         }
 
-        if (nameValuePairs.length == 0) {
-            let messageTextBlock = new Adaptive.TextBlock();
+        if (nameValuePairs.length === 0) {
+            const messageTextBlock = new Adaptive.TextBlock();
             messageTextBlock.spacing = Adaptive.Spacing.Small;
             messageTextBlock.text = this.messageIfEmpty;
 
@@ -65,7 +65,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, false);
                 };
 
-                let nameColumn = new Adaptive.Column("stretch");
+                const nameColumn = new Adaptive.Column("stretch");
                 nameColumn.addItem(textInput);
 
                 textInput = new Adaptive.TextInput();
@@ -77,11 +77,11 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, false);
                 };
 
-                let valueColumn = new Adaptive.Column("stretch");
+                const valueColumn = new Adaptive.Column("stretch");
                 valueColumn.spacing = Adaptive.Spacing.Small;
                 valueColumn.addItem(textInput);
 
-                let removeAction = new Adaptive.SubmitAction();
+                const removeAction = new Adaptive.SubmitAction();
                 removeAction.title = "X";
                 removeAction.tooltip = "Remove";
                 removeAction.onExecute = (sender) => {
@@ -90,14 +90,14 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
                     this.collectionChanged(context, nameValuePairs, true);
                 };
 
-                let newActionSet = new Adaptive.ActionSet();
+                const newActionSet = new Adaptive.ActionSet();
                 newActionSet.addAction(removeAction);
 
-                let removeColumn = new Adaptive.Column("auto");
+                const removeColumn = new Adaptive.Column("auto");
                 removeColumn.spacing = Adaptive.Spacing.Small;
                 removeColumn.addItem(newActionSet);
 
-                let columnSet = new Adaptive.ColumnSet();
+                const columnSet = new Adaptive.ColumnSet();
                 columnSet.spacing = Adaptive.Spacing.Small;
                 columnSet.addColumn(nameColumn);
                 columnSet.addColumn(valueColumn);
@@ -107,7 +107,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
             }
         }
 
-        let addAction = new Adaptive.SubmitAction();
+        const addAction = new Adaptive.SubmitAction();
         addAction.title = this.addButtonTitle;
         addAction.onExecute = (sender) => {
             nameValuePairs.push({ name: "", value: "" });
@@ -115,7 +115,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
             this.collectionChanged(context, nameValuePairs, true);
         };
 
-        let actionSet = new Adaptive.ActionSet();
+        const actionSet = new Adaptive.ActionSet();
         actionSet.spacing = Adaptive.Spacing.Small;
         actionSet.addAction(addAction);
 
@@ -129,7 +129,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
         readonly collectionPropertyName: string,
         readonly namePropertyName: string,
         readonly valuePropertyName: string,
-        readonly createCollectionItem: (name: string, value: string) => any,
+        readonly createCollectionItem: (name: string, value: string) => any, // eslint-disable-line @typescript-eslint/no-explicit-any
         readonly namePropertyLabel: string = "Name",
         readonly valuePropertyLabel: string = "Value",
         readonly addButtonTitle: string = "Add",

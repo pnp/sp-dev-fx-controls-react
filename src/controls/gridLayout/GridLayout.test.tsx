@@ -1,7 +1,7 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
+import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
 import { GridLayout } from './GridLayout';
 
@@ -18,12 +18,18 @@ import {
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { ISize } from 'office-ui-fabric-react/lib/Utilities';
 
-
-declare const sinon;
+interface IDummyItem {
+  thumbnail: string;
+  title: string;
+  name: string;
+  profileImageSrc: string;
+  location: string;
+  activity: string;
+}
 
 describe('<GridLayout />', () => {
   let gridLayout: ReactWrapper;
-  const dummyItems: any[] = [{
+  const dummyItems: IDummyItem[] = [{
     thumbnail: "https://pixabay.com/get/57e9dd474952a414f1dc8460825668204022dfe05555754d742e7bd6/hot-air-balloons-1984308_640.jpg",
     title: "Adventures in SPFx",
     name: "Perry Losselyong",
@@ -60,9 +66,7 @@ describe('<GridLayout />', () => {
     activity: "5/26/2019"
   }];
 
-  const dummyOnClick = sinon.spy((evt) => { /* Nothing to do here */ });
-
-  const dummyOnRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
+  const dummyOnRenderGridItem = (item: IDummyItem, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
         {
@@ -105,7 +109,7 @@ describe('<GridLayout />', () => {
   });
 
   it('Test grid layout', (done) => {
-    gridLayout = mount(<GridLayout items={dummyItems} onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean)=>dummyOnRenderGridItem(item, finalSize, isCompact)} />);
+    gridLayout = mount(<GridLayout items={dummyItems} onRenderGridItem={(item: IDummyItem, finalSize: ISize, isCompact: boolean) => dummyOnRenderGridItem(item, finalSize, isCompact)} />);
     expect(gridLayout.find('.ms-List-surface')).to.have.length(1);
     done();
   });

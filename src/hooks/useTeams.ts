@@ -1,22 +1,23 @@
-
-import React from "react";
 import { ServiceScope } from "@microsoft/sp-core-library";
-import { MSGraphClient, MSGraphClientFactory } from "@microsoft/sp-http";
+import { MSGraphClientFactory, MSGraphClientV3 } from '@microsoft/sp-http';
 import { PageContext } from "@microsoft/sp-page-context";
+import React from "react";
+import { ITeamMenber } from "../common/model/ITeamMember";
 import { ITeam } from "./../common/model/ITeam";
 import { ITeamChannel } from "./../common/model/ITeamChannel";
-import { ITeamMenber } from "../common/model/ITeamMember";
 
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useTeams = (serviceScope: ServiceScope) => {
-  let _pageContext = React.useRef<PageContext>();
-  let _msgGraphClient = React.useRef<MSGraphClient>();
+  const _pageContext = React.useRef<PageContext>();
+  const _msgGraphClient = React.useRef<MSGraphClientV3>();
 
   const init = React.useCallback(async () => {
 
       _pageContext.current = serviceScope.consume(PageContext.serviceKey);
       _msgGraphClient.current = await serviceScope
         .consume(MSGraphClientFactory.serviceKey)
-        .getClient();
+        .getClient("3");
 
   }, [serviceScope]);
 
@@ -33,7 +34,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
       .select("id,displayName")
       .get();
     return teamsResults.value as ITeam[];
-  }, [_msgGraphClient.current]);
+  }, [init]);
 
   const getTeamChannels = React.useCallback(
     async (teamId: string, filter?: string): Promise<ITeamChannel[]> => {
@@ -48,7 +49,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
 
       return teamsChannelResults.value as ITeamChannel[];
     },
-    [_msgGraphClient.current]
+    [init]
   );
 
   const getTeamMembers = React.useCallback(async (teamId: string): Promise<
@@ -61,7 +62,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
       .get();
 
     return usersResults.value;
-  }, [_msgGraphClient.current]);
+  }, [init]);
 
   const getTeamOwners = React.useCallback(async (teamId: string): Promise<
   ITeamMenber[]
@@ -75,7 +76,7 @@ export const useTeams = (serviceScope: ServiceScope) => {
       )
       .get();
     return usersResults?.value as ITeamMenber[];
-  }, [_msgGraphClient.current]);
+  }, [init]);
 
 
 

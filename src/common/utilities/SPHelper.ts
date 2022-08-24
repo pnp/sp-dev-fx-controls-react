@@ -11,8 +11,7 @@ import { IFieldInfo } from '@pnp/sp/fields';
 import '@pnp/sp/site-users/web';
 import '@pnp/sp/webs';
 import "@pnp/sp/lists";
-
-declare var window: any;
+import { ISiteUserInfo } from '@pnp/sp/site-users/types';
 
 interface IFieldLookupInfo extends IFieldInfo {
   LookupWebId: string;
@@ -41,7 +40,7 @@ export class SPHelper {
      * @param listItem List Item accessor
      * @param context Customizer's context
      */
-    public static getFieldText(fieldValue: any, listItem: ListItemAccessor, context: IContext): Promise<string> {
+    public static getFieldText(fieldValue: any, listItem: ListItemAccessor, context: IContext): Promise<string> { // eslint-disable-line @typescript-eslint/no-explicit-any
         return new Promise<string>(resolve => {
             const field: SPField = context.field;
 
@@ -53,6 +52,15 @@ export class SPHelper {
             const fieldName: string = field.internalName; //this.getFieldNameById(field.id.toString());
             const fieldType: string = field.fieldType;
             const strFieldValue: string = fieldValue ? fieldValue.toString() : '';
+            let friendlyDisplay: string | undefined;
+            let titles: string[] | undefined;
+            let users: IPrincipal[] | undefined;
+            let lookupValues: ISPFieldLookupValue[] | undefined;
+            let lookupTexts: string[] | undefined;
+            let isImage: boolean = false;
+            let terms: ITerm[] | undefined;
+            let termTexts: string[] | undefined;
+            let storedName: string | undefined;
 
             switch (fieldType) {
                 case 'Note':
@@ -62,16 +70,16 @@ export class SPHelper {
                             resolve(GeneralHelper.getTextFromHTML(strFieldValue));
                         }
                         resolve(fieldValue);
-                    });
+                    }).catch(() => { /* no-op; */ });
                     break;
                 case 'DateTime':
-                    const friendlyDisplay: string = SPHelper.getRowItemValueByName(listItem, `${fieldName}.FriendlyDisplay`);
+                    friendlyDisplay = SPHelper.getRowItemValueByName(listItem, `${fieldName}.FriendlyDisplay`);
                     resolve(friendlyDisplay ? GeneralHelper.getRelativeDateTimeString(friendlyDisplay) : strFieldValue);
                     break;
                 case 'User':
                 case 'UserMulti':
-                    const titles: string[] = [];
-                    const users: IPrincipal[] = <IPrincipal[]>fieldValue;
+                    titles = [];
+                    users = <IPrincipal[]>fieldValue;
 
                     if (!users) {
                         resolve('');
@@ -84,13 +92,13 @@ export class SPHelper {
                     break;
                 case "Lookup":
                 case "LookupMulti":
-                    const lookupValues = fieldValue as ISPFieldLookupValue[];
+                    lookupValues = fieldValue as ISPFieldLookupValue[];
 
                     if (!lookupValues) {
                         resolve('');
                     }
 
-                    const lookupTexts: string[] = [];
+                    lookupTexts = [];
                     for (let i = 0, len = lookupValues.length; i < len; i++) {
                         lookupTexts.push(lookupValues[i].lookupValue);
                     }
@@ -98,23 +106,23 @@ export class SPHelper {
                     break;
                 case 'URL':
                     SPHelper.getFieldProperty(field.id.toString(), 'Format', context, true).then(format => {
-                        const isImage: boolean = format === 'Image';
+                        isImage = format === 'Image';
                         if (isImage) {
                             resolve('');
                         }
                         resolve(SPHelper.getRowItemValueByName(listItem, `${fieldName}.desc`));
-                    });
+                    }).catch(() => { /* no-op; */ });
                     break;
                 case 'Taxonomy':
                 case 'TaxonomyFieldType':
                 case 'TaxonomyFieldTypeMulti':
-                    const terms: ITerm[] = Array.isArray(fieldValue) ? <ITerm[]>fieldValue : <ITerm[]>[fieldValue];
+                    terms = Array.isArray(fieldValue) ? <ITerm[]>fieldValue : <ITerm[]>[fieldValue];
 
                     if (!terms) {
                         resolve('');
                     }
 
-                    const termTexts: string[] = [];
+                    termTexts = [];
                     for (let i = 0, len = terms.length; i < len; i++) {
                         termTexts.push(terms[i].Label);
                     }
@@ -124,7 +132,7 @@ export class SPHelper {
                     resolve('');
                     break;
                 case 'Computed':
-                    const storedName: string = this.getStoredFieldName(fieldName);
+                    storedName = this.getStoredFieldName(fieldName);
                     if (storedName === 'URL') {
                         resolve(this.getRowItemValueByName(listItem, 'URL.desc') || strFieldValue);
                     }
@@ -143,8 +151,8 @@ export class SPHelper {
      * @param context SPFx context
      * @param fromSchemaXml true if the field should be read from Field Schema Xml
      */
-    public static getFieldProperty(fieldId: string, propertyName: string, context: IContext, fromSchemaXml: boolean): Promise<any> {
-        return new Promise<any>(resolve => {
+    public static getFieldProperty(fieldId: string, propertyName: string, context: IContext, fromSchemaXml: boolean): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+        return new Promise<any>(resolve => { // eslint-disable-line @typescript-eslint/no-explicit-any
             let loadedViewFields: { [viewId: string]: IFields } = SPHelper._getLoadedViewFieldsFromStorage();
             const viewId: string = SPHelper.getPageViewId(context);
 
@@ -201,7 +209,7 @@ export class SPHelper {
                     loadedViewFields[viewId][field.Id] = field;
 
                     SPHelper._updateSessionStorageLoadedViewFields(loadedViewFields);
-                    resolve(field);
+                    resolve(field[propertyName]);
                 }, (error) => {
                     resolve('');
                 });
@@ -214,8 +222,8 @@ export class SPHelper {
      * @param fieldId Field Id
      * @param context SPFx Context
      */
-    public static getLookupFieldListDispFormUrl(fieldId: string, context: IContext): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
+    public static getLookupFieldListDispFormUrl(fieldId: string, context: IContext): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
             let loadedViewFields: { [viewId: string]: IFields } = SPHelper._getLoadedViewFieldsFromStorage();
             const viewId: string = SPHelper.getPageViewId(context);
 
@@ -250,8 +258,8 @@ export class SPHelper {
                     }, (error) => {
                         reject(error);
                     });
-                });
-            });
+                }).catch(() => { /* no-op; */ });
+            }).catch(() => { /* no-op; */ });
         });
     }
 
@@ -261,6 +269,7 @@ export class SPHelper {
      * @param listItem List Item Accessor
      * @param itemName column name
      */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     public static getRowItemValueByName(listItem: ListItemAccessor, itemName: string): any {
         const _values: any = (<any>listItem)._values;
 
@@ -277,6 +286,7 @@ export class SPHelper {
             return null;
         }
     }
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     /**
      * Gets SchemaXml for the field by List Title and Field Id
@@ -344,7 +354,7 @@ export class SPHelper {
      * @param id user id
      * @param context SPFx context
      */
-    public static async getUserById(id: number, context: IContext): Promise<any> {
+    public static async getUserById(id: number, context: IContext): Promise<ISiteUserInfo> {
         sp.setup({
             spfxContext: context
         });
@@ -357,14 +367,14 @@ export class SPHelper {
      * @param loginName User's login name
      * @param context SPFx context
      */
-    public static async getUserProperties(loginName: string, context: IContext): Promise<any> {
+    public static async getUserProperties(loginName: string, context: IContext): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
         let url: string;
         url = context.pageContext.web.absoluteUrl;
         url = GeneralHelper.trimSlash(url);
 
         url += "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(loginName) + "'";
          return context.spHttpClient.get(url, SPHttpClient.configurations.v1)
-            .then((response): Promise<any> => {
+            .then((response): Promise<any> => { // eslint-disable-line @typescript-eslint/no-explicit-any
                 return response.json();
             })
             .then((value) => {

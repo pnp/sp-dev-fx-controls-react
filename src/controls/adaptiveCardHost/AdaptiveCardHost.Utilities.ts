@@ -5,7 +5,7 @@ import * as markdown from 'markdown-it';
 import { ITheme } from 'office-ui-fabric-react/lib/Styling';
 import { IAdaptiveCardHostEvaluationContext } from './models/IAdaptiveCardHostEvaluationContext';
 
-export const initProcessMarkdown = () => {
+export const initProcessMarkdown = (): void => {
     if (!AdaptiveCard.onProcessMarkdown) {
         AdaptiveCard.onProcessMarkdown = (text, result) => {
             result.outputHtml = new markdown.default().render(text);

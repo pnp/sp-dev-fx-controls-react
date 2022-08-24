@@ -32,7 +32,7 @@ export interface ITreeItem {
   /**
    * Additional data of the tree item.
    */
-  data?: any;
+  data?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * List of actions.
    */

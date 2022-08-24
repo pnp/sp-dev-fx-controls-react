@@ -39,7 +39,7 @@ export class FieldTaxonomyRenderer extends React.Component<IFieldTaxonomyRendere
         let termEls: JSX.Element | JSX.Element[] = null;
         if (Array.isArray(this.props.terms)) {
             termEls = this.props.terms.map((term) => {
-                return <div className={styles.term} style={this.props.cssProps}><span>{term.Label}</span></div>;
+                return <div key={term.TermID} className={styles.term} style={this.props.cssProps}><span>{term.Label}</span></div>;
             });
         } else {
             termEls = <div className={styles.term} style={this.props.cssProps}><span>{this.props.terms.Label}</span></div>;

@@ -1,4 +1,4 @@
-import { ICustomCollectionField } from ".";
+import { ICustomCollectionField } from "./ICustomCollectionField";
 
 export interface IFieldCollectionDataProps {
   /**
@@ -40,7 +40,7 @@ export interface IFieldCollectionDataProps {
   /**
    * The collection data value.
    */
-  value: any[];
+  value: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Specify if you want to enable sorting
    */
@@ -72,9 +72,9 @@ export interface IFieldCollectionDataProps {
   /**
    * Allows you to show Search Box and specify own filtering logic.
    */
-  executeFiltering?: (searchFilter: string, item: any) => boolean;
+  executeFiltering?: (searchFilter: string, item: any) => boolean; // eslint-disable-line @typescript-eslint/no-explicit-any
 
-  onChanged: (value: any[]) => void;
+  onChanged: (value: any[]) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export interface IFieldCollectionDataState {

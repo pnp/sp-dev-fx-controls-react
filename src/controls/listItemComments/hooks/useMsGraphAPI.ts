@@ -1,7 +1,7 @@
-import { AppContext } from "../common";
-import { useContext, useCallback } from "react";
-import { MSGraphClientFactory, MSGraphClient } from "@microsoft/sp-http";
 import { Person } from "@microsoft/microsoft-graph-types";
+import { MSGraphClientFactory, MSGraphClientV3 } from "@microsoft/sp-http";
+import { useCallback, useContext } from "react";
+import { AppContext } from "../common";
 import { IUserInfo, IUsersResults } from "../models/IUsersResults";
 
 interface returnObject {
@@ -12,9 +12,9 @@ interface returnObject {
 
 export const useMsGraphAPI = (): returnObject => {
   const { serviceScope } = useContext(AppContext);
-  let _msGraphClient: MSGraphClient = undefined;
+  let _msGraphClient: MSGraphClientV3 = undefined;
   serviceScope.whenFinished(async () => {
-    _msGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient();
+    _msGraphClient = await serviceScope.consume(MSGraphClientFactory.serviceKey).getClient("3");
   });
   const getSuggestions = useCallback(async (): Promise<IUsersResults> => {
     if (!_msGraphClient) return;
@@ -25,7 +25,7 @@ export const useMsGraphAPI = (): returnObject => {
       .header("ConsistencyLevel", "eventual")
       .filter(`personType/class eq 'Person' and personType/subclass eq 'OrganizationUser'`)
       .orderby(`displayName`)
-      .get()) as any;
+      .get()) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     console.log("rs", suggestedUsersResults);
     const _sugestions: Person[] = suggestedUsersResults.value as Person[];
     for (const sugestion of _sugestions) {
@@ -43,7 +43,7 @@ export const useMsGraphAPI = (): returnObject => {
       nextLink: undefined,
     };
     return returnInfo;
-  }, [serviceScope, MSGraphClientFactory]);
+  }, [_msGraphClient]);
 
   const getUsers = useCallback(
     async (search: string): Promise<IUsersResults> => {
@@ -70,7 +70,7 @@ export const useMsGraphAPI = (): returnObject => {
       };
       return returnInfo;
     },
-    [serviceScope, MSGraphClientFactory]
+    [_msGraphClient]
   );
 
   const getUsersNextPage = useCallback(
@@ -84,7 +84,7 @@ export const useMsGraphAPI = (): returnObject => {
       };
       return returnInfo;
     },
-    [serviceScope, MSGraphClientFactory]
+    [_msGraphClient]
   );
 
   return { getUsers, getUsersNextPage, getSuggestions };

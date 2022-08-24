@@ -1,16 +1,13 @@
 /// <reference types="sinon" />
 
 import * as React from 'react';
-import { assert, expect } from 'chai';
-import { mount, ReactWrapper, ShallowWrapper } from 'enzyme';
+import { expect } from 'chai';
+import { mount, ReactWrapper } from 'enzyme';
 import { ListView } from './ListView';
-import { IListViewProps, IViewField } from './IListView';
-import { IconType } from '../fileTypeIcon/IFileTypeIcon';
-
-declare const sinon;
+import { IViewField } from './IListView';
 
 class Wrapper extends React.Component {
-  public render() {
+  public render(): React.ReactNode {
     return React.Children.only(this.props.children);
   }
 }
@@ -49,8 +46,8 @@ describe('<ListView />', () => {
     },
     {
       name: "path",
-      render: (item: any) => {
-        return <a href={item["ServerRelativeUrl"]}>Link</a>;
+      render: (item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+        return <a href={item.ServerRelativeUrl}>Link</a>;
       }
     }
   ];
@@ -65,7 +62,7 @@ describe('<ListView />', () => {
     listView = mount(<ListView items={[]} />).update();
 
     expect(listView.state('items')).to.have.length(0);
-    expect(listView.state('columns')).to.be.null;
+    expect(listView.state('columns')).to.be.null; // eslint-disable-line no-unused-expressions
     done();
   });
 
@@ -73,7 +70,7 @@ describe('<ListView />', () => {
     listView = mount(<ListView items={dummyItems} />).update();
 
     expect(listView.state('items')).to.have.length(2);
-    expect(listView.state('columns')).to.be.null;
+    expect(listView.state('columns')).to.be.null; // eslint-disable-line no-unused-expressions
     done();
   });
 
@@ -97,7 +94,7 @@ describe('<ListView />', () => {
 
   it('Test view with iconFieldName render method', (done) => {
     listView = mount(<ListView items={dummyItems} iconFieldName="path" />).update();
-    const iconField = mount(React.createElement(Wrapper, {}, listView.state('columns')[0]["onRender"](dummyItems[0])));
+    const iconField = mount(React.createElement(Wrapper, {}, listView.state('columns')[0].onRender(dummyItems[0])));
 
     // Check if Word icon gets rendered
     expect(iconField.find('.ms-BrandIcon--docx')).to.have.length(1);

@@ -25,7 +25,7 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
   }
 
   public componentDidMount(): void {
-    this.loadFields();
+    this.loadFields().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }
 
   /**
@@ -101,7 +101,7 @@ export class FieldPicker extends React.Component<IFieldPickerProps, IFieldPicker
       prevProps.webAbsoluteUrl !== webAbsoluteUrl ||
       prevProps.listId !== listId
     ) {
-      this.loadFields();
+      this.loadFields().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     }
 
     if (prevProps.selectedFields !== selectedFields) {

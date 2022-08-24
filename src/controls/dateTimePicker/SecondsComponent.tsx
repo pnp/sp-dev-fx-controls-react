@@ -68,8 +68,8 @@ export default class SecondsComponent extends React.Component<ITimeComponentProp
     }
   }
 
-  private _initSecondsOptions() {
-    let seconds: IDropdownOption[] = [];
+  private _initSecondsOptions(): void {
+    const seconds: IDropdownOption[] = [];
     for (let k = 0; k < 60; k++) {
       let digitSec: string;
       if (k < 10) {

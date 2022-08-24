@@ -82,22 +82,11 @@ export default class HoursComponent extends React.Component<IHoursComponentProps
     }
   }
 
-  private _initHoursOptions() {
+  private _initHoursOptions(): void {
     const amDesignator = 'AM';
     const pmDesignator = 'PM';
 
-    const {
-      value,
-      timeConvention
-    } = this.props;
-    /*if (strings.AMDesignator) {
-      amDesignator = ` ${strings.AMDesignator}`;
-    }
-    if (strings.PMDesignator) {
-      pmDesignator = ` ${strings.PMDesignator}`;
-    }*/
-
-    let hours: IDropdownOption[] = [];
+    const hours: IDropdownOption[] = [];
     for (let i = 0; i < 24; i++) {
       let digit: string;
       if (this.props.timeConvention === TimeConvention.Hours24) {

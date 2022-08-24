@@ -59,7 +59,7 @@ export class FileBrowserService {
   /**
    * Gets document and media libraries from the site
    */
-  public getSiteMediaLibraries = async (includePageLibraries: boolean = false) => {
+  public getSiteMediaLibraries = async (includePageLibraries: boolean = false): Promise<ILibrary[] | undefined> => {
     try {
       const absoluteUrl = this.siteAbsoluteUrl;
       const restApi = `${absoluteUrl}/_api/SP.Web.GetDocumentAndMediaLibraries?webFullUrl='${encodeURIComponent(absoluteUrl)}'&includePageLibraries='${includePageLibraries}'`;
@@ -77,7 +77,7 @@ export class FileBrowserService {
       return result;
     } catch (error) {
       console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error.message}'`);
-      return null;
+      return undefined;
     }
   }
 
@@ -98,7 +98,7 @@ export class FileBrowserService {
         throw new Error(`Cannot read data from the results.`);
       }
 
-      return libResults.vti_x005f_listtitle != internalName && libResults.vti_x005f_listtitle || "";
+      return libResults.vti_x005f_listtitle !== internalName && libResults.vti_x005f_listtitle || "";
     } catch (error) {
       console.error(`[FileBrowserService.getSiteLibraryNameByInternalName]: Err='${error.message}'`);
       return null;
@@ -171,7 +171,7 @@ export class FileBrowserService {
     if (!webResult || !webResult) {
       throw new Error(`Cannot read data from the results.`);
     }
-    let webJson = await webResult.json();
+    const webJson = await webResult.json();
     return webJson.Title;
 
   }
@@ -186,7 +186,7 @@ export class FileBrowserService {
     if (!webResult || !webResult) {
       throw new Error(`Cannot read data from the results.`);
     }
-    let webJson = await webResult.json();
+    const webJson = await webResult.json();
     return { title: webJson.Title, id: webJson.Id };
 
   }
@@ -209,8 +209,10 @@ export class FileBrowserService {
         }
       };
       if (folderPath) {
+        // eslint-disable-next-line dot-notation
         body.parameters["FolderServerRelativeUrl"] = folderPath;
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const data: any = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {
         method: "POST",
         body: JSON.stringify(body)
@@ -233,7 +235,7 @@ export class FileBrowserService {
         nextHref: filesResult.ListData.NextHref
       };
     } catch (error) {
-      filesQueryResult.items = null;
+      filesQueryResult.items = undefined;
       console.error(error.message);
     }
     return filesQueryResult;
@@ -243,7 +245,7 @@ export class FileBrowserService {
    * Generates CamlQuery files filter.
    * @param accepts
    */
-  protected getFileTypeFilter(accepts: string[]) {
+  protected getFileTypeFilter(accepts: string[]): string {
     let fileFilter: string = "";
 
     if (accepts && accepts.length > 0) {
@@ -263,9 +265,9 @@ export class FileBrowserService {
   /**
    * Generates Files CamlQuery ViewXml
    */
-  protected getFilesCamlQueryViewXml = (accepts: string[], sortBy: string, isDesc: boolean) => {
+  protected getFilesCamlQueryViewXml = (accepts: string[], sortBy: string, isDesc: boolean): string => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
-    let queryCondition = fileFilter && fileFilter != "" ?
+    const queryCondition = fileFilter && fileFilter !== "" ?
       `<Query>
         <Where>
           <Or>
@@ -315,11 +317,11 @@ export class FileBrowserService {
   /**
    * Converts REST call results to IFile
    */
-  protected parseFileItem = (fileItem: any): IFile => {
+  protected parseFileItem = (fileItem: any): IFile => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const modifiedFriendly: string = fileItem["Modified.FriendlyDisplay"];
 
     // Get the modified date
-    const modifiedParts: string[] = modifiedFriendly!.split('|');
+    const modifiedParts: string[] = modifiedFriendly.split('|');
     let modified: string = fileItem.Modified;
 
     // If there is a friendly modified date, use that
@@ -335,7 +337,7 @@ export class FileBrowserService {
       modifiedDate: new Date(fileItem.Modified),
       fileSize: fileItem.File_x0020_Size,
       fileType: fileItem.File_x0020_Type,
-      modifiedBy: fileItem.Editor![0]!.title,
+      modifiedBy: fileItem.Editor[0].title,
       isFolder: fileItem.FSObjType === "1",
       absoluteUrl: this.buildAbsoluteUrl(fileItem.FileRef),
 
@@ -346,7 +348,7 @@ export class FileBrowserService {
     return file;
   }
 
-  protected parseLibItem = (libItem: any, webUrl: string): ILibrary => {
+  protected parseLibItem = (libItem: any, webUrl: string): ILibrary => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const library: ILibrary = {
       title: libItem.Title,
       absoluteUrl: libItem.AbsoluteUrl,
@@ -360,12 +362,12 @@ export class FileBrowserService {
   /**
    * Creates an absolute URL
    */
-  protected buildAbsoluteUrl = (relativeUrl: string) => {
+  protected buildAbsoluteUrl = (relativeUrl: string): string => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.siteAbsoluteUrl);
     return `${siteUrl}${relativeUrl.indexOf('/') === 0 ? '' : '/'}${relativeUrl}`;
   }
 
-  protected processResponse = (fileResponse: any): void => {
+  protected processResponse = (fileResponse: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Extract media base URL
     this.mediaBaseUrl = fileResponse.ListSchema[".mediaBaseUrl"];
     this.callerStack = fileResponse.ListSchema[".callerStack"];

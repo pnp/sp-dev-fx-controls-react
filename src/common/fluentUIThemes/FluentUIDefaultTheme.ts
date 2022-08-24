@@ -1,8 +1,9 @@
-import { createTheme, getTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { Theme } from "@fluentui/theme";
+import { createTheme, getTheme, IPalette, ITheme } from "office-ui-fabric-react/lib/Styling";
 
 export const fluentUIDefaultTheme = (): ITheme => {
-    let currentTheme;
-    const themeColorsFromWindow: any = (window as any).__themeState__.theme;
+    let currentTheme: Theme;
+    const themeColorsFromWindow: Partial<IPalette> = window.__themeState__.theme;
     if (themeColorsFromWindow) {
         currentTheme = createTheme({
             palette: themeColorsFromWindow

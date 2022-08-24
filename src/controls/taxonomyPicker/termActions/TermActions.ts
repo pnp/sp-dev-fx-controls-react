@@ -18,7 +18,7 @@ export class TermLabelAction implements ITermAction {
   }
 
   public applyToTerm = (currentTerm: ITerm): boolean => {
-    const termIndex = findIndex(this._processedTerms, term => term.Id == currentTerm.Id);
+    const termIndex = findIndex(this._processedTerms, term => term.Id === currentTerm.Id);
     if (termIndex >= 0) {
       return false;
     }
@@ -32,7 +32,7 @@ export class TermLabelAction implements ITermAction {
       this._labels = await spTermService.getTermLabels(currentTerm.Id);
 
       if (this._labels) {
-        let termLabel: string = this._labels.join(" ; ");
+        const termLabel: string = this._labels.join(" ; ");
         updateAction = {
           updateActionType: UpdateType.updateTermLabel,
           value: termLabel

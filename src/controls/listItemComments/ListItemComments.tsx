@@ -2,6 +2,7 @@ import * as React from "react";
 import { ListItemCommentsStateProvider } from "./components/ListItemCommentsStateProvider";
 import { ServiceScope } from "@microsoft/sp-core-library";
 import { AppContext } from "./common";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Theme } from "spfx-uifabric-themes"; // Don't remove this import is need to theme load form global var from window object
 import { CommentsList } from "./components/Comments/CommentsList";
 import { Stack } from "office-ui-fabric-react/lib/Stack";

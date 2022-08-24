@@ -40,7 +40,7 @@ export class FieldAttachmentsRenderer extends React.Component<IFieldAttachmentsR
     public render(): JSX.Element {
         return (
             <div className={css(this.props.className, styles.container, styles.fabricIcon)} style={this.props.cssProps}>
-                {this.props.count && <Icon iconName={'Attach'}></Icon>}
+                {this.props.count && <Icon iconName={'Attach'} />}
             </div>
         );
     }

@@ -1,6 +1,6 @@
 export function getClosestAccordion(
-    el: HTMLElement | null,
-): HTMLElement | null {
+    el: HTMLElement | undefined,
+): HTMLElement | undefined {
     return (
         el &&
         (el.matches('[data-accordion-component="Accordion"]')
@@ -9,7 +9,7 @@ export function getClosestAccordion(
     );
 }
 
-export function getSiblingButtons(item: HTMLElement): HTMLElement[] | null {
+export function getSiblingButtons(item: HTMLElement): HTMLElement[] | undefined {
     const parentAccordion = getClosestAccordion(item);
 
     return (

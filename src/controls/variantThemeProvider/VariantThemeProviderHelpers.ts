@@ -25,7 +25,7 @@ export const generateThemeVariant = (theme: IPartialTheme | ITheme, themeType: V
 
 export const getDefaultTheme = (): ITheme => {
     let currentTheme;
-    const themeColorsFromWindow: any = (window as any)?.__themeState__?.theme;
+    const themeColorsFromWindow: any = (window as any)?.__themeState__?.theme; // eslint-disable-line @typescript-eslint/no-explicit-any
     if (themeColorsFromWindow) {
         currentTheme = createTheme({
             palette: themeColorsFromWindow
@@ -40,11 +40,11 @@ export const getDefaultTheme = (): ITheme => {
 export const generateThemeFromColors = (primaryColor: string, textColor: string, backgroundColor: string): ITheme => {
     const themeRules = themeRulesStandardCreator();
     const colors = {
-        primaryColor: getColorFromString(primaryColor)!,
-        textColor: getColorFromString(textColor)!,
-        backgroundColor: getColorFromString(backgroundColor)!,
+        primaryColor: getColorFromString(primaryColor),
+        textColor: getColorFromString(textColor),
+        backgroundColor: getColorFromString(backgroundColor),
     };
-    const currentIsDark = isDark(themeRules[BaseSlots[BaseSlots.backgroundColor]].color!);
+    const currentIsDark = isDark(themeRules[BaseSlots[BaseSlots.backgroundColor]].color);
 
     ThemeGenerator.insureSlots(themeRules, currentIsDark);
     ThemeGenerator.setSlot(

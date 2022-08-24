@@ -10,8 +10,8 @@ import { ISPField } from './SPEntities';
 export interface IContext {
     spHttpClient: SPHttpClient;
     pageContext: PageContext;
-    listView?: ListViewAccessor | null;
-    field?: SPField | null;
+    listView?: ListViewAccessor | undefined;
+    field?: SPField | undefined;
 }
 
 /**

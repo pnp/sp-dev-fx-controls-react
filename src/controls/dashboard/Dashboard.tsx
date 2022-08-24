@@ -41,7 +41,7 @@ export interface IDashboardProps {
   /**
    * Optional component which wraps every Widget component. Useful for a custom error handling or styling.
    */
-  WidgetContentWrapper?: React.ComponentType<React.PropsWithChildren<any>>;
+  WidgetContentWrapper?: React.ComponentType<React.PropsWithChildren<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export function Dashboard({
@@ -50,7 +50,7 @@ export function Dashboard({
   onWidgetHiding,
   toolbarProps,
   WidgetContentWrapper: WidgetWrapperComponent,
-}: IDashboardProps) {
+}: IDashboardProps): JSX.Element {
   const [stateWidgets, setWidgets] = React.useState(widgets);
   const widgetRenderer = WidgetWrapperComponent
     ? renderWidgetWithWrappedContent
@@ -64,7 +64,7 @@ export function Dashboard({
   return (
     <FluentUIThemeConsumer
       render={(globalTheme) => {
-        if (!globalTheme || globalTheme.fontFaces.length == 0) {
+        if (!globalTheme || globalTheme.fontFaces.length === 0) {
           globalTheme = teamsTheme;
         }
         return (
@@ -80,7 +80,7 @@ export function Dashboard({
   );
 
   function renderWidgetWithWrappedContent(
-    globalTheme: ThemePrepared<any>
+    globalTheme: ThemePrepared<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   ): (value?: IWidget, index?: number) => JSX.Element {
     return (widget: IWidget, key: number) => {
       return (
@@ -92,7 +92,7 @@ export function Dashboard({
   }
 
   function renderWidget(
-    globalTheme: ThemePrepared<any>
+    globalTheme: ThemePrepared<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   ): (value?: IWidget, index?: number) => JSX.Element {
     return (widget: IWidget, key: number) => (
       <Widget key={key} widget={widget}>

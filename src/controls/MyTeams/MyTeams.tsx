@@ -89,7 +89,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
           payload: true
         });
       }
-    })();
+    })().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }, []);
 
 
@@ -132,12 +132,13 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
                 myTeams.map((team: ITeam) => {
                   return (
                     <Team
+                      key={team.id}
                       team={team}
                       serviceScope={webPartContext.serviceScope}
                       themeVariant={themeVariant}
                       onSelectedChannel={onSelectedChannel}
                       enablePersonCardInteraction={enablePersonCardInteraction}
-                    ></Team>
+                    />
                   );
                 })
               )}

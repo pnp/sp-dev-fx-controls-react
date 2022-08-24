@@ -55,7 +55,7 @@ export interface ITaxonomyTreeProps {
   onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
   terms: ITermInfo[];
   setTerms: React.Dispatch<React.SetStateAction<ITermInfo[]>>;
-  selection?: Selection<any>;
+  selection?: Selection<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
   hideDeprecatedTerms?: boolean;
   showIcons?: boolean;
 }
@@ -244,6 +244,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
           rootGroup.hasMoreData = loadedTerms.skiptoken !== '';
           setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== props.termSetInfo.id));
           setGroups([rootGroup]);
+        })
+        .catch(() => {
+          // no-op;
         });
     }
   }, []);
@@ -251,7 +254,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
   const onToggleCollapse = (group: IGroup): void => {
     if (group.isCollapsed === true) {
       setGroups((prevGroups) => {
-        const recurseGroups = (currentGroup: IGroup) => {
+        const recurseGroups = (currentGroup: IGroup): void => {
           if (currentGroup.key === group.key) {
             currentGroup.isCollapsed = false;
           }
@@ -261,7 +264,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             }
           }
         };
-        let newGroupsState: IGroup[] = [];
+        const newGroupsState: IGroup[] = [];
         for (const prevGroup of prevGroups) {
           recurseGroups(prevGroup);
           newGroupsState.push(prevGroup);
@@ -307,12 +310,15 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             group.data.skiptoken = loadedTerms.skiptoken;
             group.hasMoreData = loadedTerms.skiptoken !== '';
             setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== group.key));
+          })
+          .catch(() => {
+            // no-op;
           });
       }
     }
     else {
       setGroups((prevGroups) => {
-        const recurseGroups = (currentGroup: IGroup) => {
+        const recurseGroups = (currentGroup: IGroup): void => {
           if (currentGroup.key === group.key) {
             currentGroup.isCollapsed = true;
           }
@@ -322,7 +328,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
             }
           }
         };
-        let newGroupsState: IGroup[] = [];
+        const newGroupsState: IGroup[] = [];
         for (const prevGroup of prevGroups) {
           recurseGroups(prevGroup);
           newGroupsState.push(prevGroup);
@@ -334,9 +340,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
     }
   };
 
-  const onRenderTitle = (groupHeaderProps: IGroupHeaderProps) => {
+  const onRenderTitle = (groupHeaderProps: IGroupHeaderProps): JSX.Element => {
     const isChildSelected = (children: IGroup[]): boolean => {
-      let aChildIsSelected = children && children.some((child) => props.selection && props.selection.isKeySelected(child.key) || isChildSelected(child.children));
+      const aChildIsSelected = children && children.some((child) => props.selection && props.selection.isKeySelected(child.key) || isChildSelected(child.children));
       return aChildIsSelected;
     };
 
@@ -362,7 +368,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
 
     if (!props.selection) {
       const labelStyles: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> = {root: {width: "100%", fontWeight: childIsSelected ? "bold" : "normal"}};
-      let taxonomyItemIconName: string = groupHeaderProps.group.data.term.isDeprecated ? "Blocked" : "Tag";
+      const taxonomyItemIconName: string = groupHeaderProps.group.data.term.isDeprecated ? "Blocked" : "Tag";
       return (
         <FocusZone
           direction={FocusZoneDirection.horizontal}
@@ -478,7 +484,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         indentWidth={20}
         expandButtonProps={{style: {color: props.themeVariant?.semanticColors.bodyText}}}
         onGroupHeaderKeyUp={(ev: React.KeyboardEvent<HTMLElement>, group: IGroup) => {
-          if ((ev.key == " " || ev.key == "Enter" ) && !isDisabled) {
+          if ((ev.key === " " || ev.key === "Enter" ) && !isDisabled) {
             if (props.allowMultipleSelections) {
               if (props.selection) {
                 props.selection.toggleKeySelected(headerProps.group.key);
@@ -543,6 +549,9 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
                 footerProps.group.data.skiptoken = loadedTerms.skiptoken;
                 footerProps.group.hasMoreData = loadedTerms.skiptoken !== '';
                 setGroupsLoading((prevGroupsLoading) => prevGroupsLoading.filter((value) => value !== footerProps.group.key));
+              })
+              .catch(() => {
+                // no-op;
               });
           }}
             styles={linkStyles}>
@@ -576,7 +585,7 @@ export function TaxonomyTree(props: ITaxonomyTreeProps): React.ReactElement<ITax
         onRenderCell={null}
         groups={groups}
         groupProps={groupProps}
-        onShouldVirtualize={(p: IListProps<any>) => false}
+        onShouldVirtualize={(p: IListProps<any>) => false} // eslint-disable-line @typescript-eslint/no-explicit-any
         data-is-focusable={true}
         focusZoneProps={{direction: FocusZoneDirection.vertical, shouldEnterInnerZone: shouldEnterInnerZone}}
       />

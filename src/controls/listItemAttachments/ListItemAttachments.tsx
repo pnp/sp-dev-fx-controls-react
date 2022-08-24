@@ -14,8 +14,8 @@ import {
   IDocumentCardPreviewImage
 } from 'office-ui-fabric-react/lib/DocumentCard';
 import { ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { IListItemAttachmentsProps } from '.';
-import { IListItemAttachmentsState } from '.';
+import { IListItemAttachmentsProps } from './IListItemAttachmentsProps';
+import { IListItemAttachmentsState } from './IListItemAttachmentsState';
 import SPservice from "../../services/SPService";
 import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
@@ -57,7 +57,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * componentDidMount lifecycle hook
    */
-  public async componentDidMount() {
+  public async componentDidMount(): Promise<void> {
     await this.loadAttachments();
   }
 
@@ -74,23 +74,23 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     });
   }
 
-  public async uploadAttachments(itemId: number){
-    if(this.state.filesToUpload){
-      await Promise.all(this.state.filesToUpload.map(file=>this._spservice.addAttachment(
+  public async uploadAttachments(itemId: number): Promise<void> {
+    if (this.state.filesToUpload) {
+      await Promise.all(this.state.filesToUpload.map(file => this._spservice.addAttachment(
         this.props.listId,
         itemId,
         file.name,
         file,
         this.props.webUrl)));
     }
-    return new Promise<void>((resolve,error)=>{
+    return new Promise<void>((resolve, reject) => {
       this.setState({
-      filesToUpload: [],
-      itemId: itemId
-    },()=>this.loadAttachments().then(resolve));
+        filesToUpload: [],
+        itemId: itemId
+      }, () => this.loadAttachments().then(resolve));
     });
   }
-  protected loadAttachmentsPreview(files: IListItemAttachmentFile[]){
+  protected loadAttachmentsPreview(files: IListItemAttachmentFile[]): Promise<void> {
     const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
     return Promise.all(filePreviewImages).then(filePreviews => {
       filePreviews.forEach(preview => {
@@ -98,19 +98,19 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       });
 
       this.setState({
-          fireUpload: false,
-          hideDialog: true,
-          dialogMessage: '',
-          attachments: files,
-          showPlaceHolder: files.length === 0 ? true : false
-        });
+        fireUpload: false,
+        hideDialog: true,
+        dialogMessage: '',
+        attachments: files,
+        showPlaceHolder: files.length === 0 ? true : false
+      });
     });
   }
   /**
    * Load Item Attachments
    */
-  private async loadAttachments() {
-    if(this.state.itemId){
+  private async loadAttachments(): Promise<void> {
+    if (this.state.itemId) {
       await this._spservice.getListItemAttachments(this.props.listId, this.state.itemId).then(async (files: IListItemAttachmentFile[]) => {
         await this.loadAttachmentsPreview(files);
       }).catch((error: Error) => {
@@ -121,14 +121,14 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         });
       });
     }
-    else if(this.state.filesToUpload && this.state.filesToUpload.length > 0){
-      let files = this.state.filesToUpload.map(file=>({
+    else if (this.state.filesToUpload && this.state.filesToUpload.length > 0) {
+      const files = this.state.filesToUpload.map(file => ({
         FileName: file.name,
         ServerRelativeUrl: undefined
       }));
       await this.loadAttachmentsPreview(files);
     }
-    else{
+    else {
       this.setState({
         fireUpload: false,
         hideDialog: true,
@@ -141,7 +141,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * Close the dialog
    */
-  private _closeDialog = () => {
+  private _closeDialog = (): void => {
     this.setState({
       fireUpload: false,
       hideDialog: true,
@@ -150,16 +150,16 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       deleteAttachment: false,
     });
 
-    this.loadAttachments();
+    this.loadAttachments().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }
 
   /**
    * Attachment uploaded event handler
    */
-  private _onAttachmentUpload = async (file: File) => {
+  private _onAttachmentUpload = async (file: File): Promise<void> => {
     // load Attachments
-    if(!this.state.itemId){
-      let files = this.state.filesToUpload || [];
+    if (!this.state.itemId) {
+      const files = this.state.filesToUpload || [];
       files.push(file);
       this.setState({
         filesToUpload: [...files]
@@ -173,7 +173,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
    *
    * @param file
    */
-  private onDeleteAttachment = (file: IListItemAttachmentFile) => {
+  private onDeleteAttachment = (file: IListItemAttachmentFile): void => {
     this.setState({
       fireUpload: false,
       hideDialog: false,
@@ -186,7 +186,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * Delete the attachment once it was confirmed
    */
-  private onConfirmedDeleteAttachment = async () => {
+  private onConfirmedDeleteAttachment = async (): Promise<void> => {
     // Delete Attachment
     const { file } = this.state;
 
@@ -196,19 +196,19 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     });
 
     try {
-      if(this.state.itemId){
+      if (this.state.itemId) {
         await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.state.itemId, this.props.webUrl);
       }
-      else{
-        let filesToUpload = this.state.filesToUpload;
-        let fileToRemove = filesToUpload.find(f=>f.name === file.FileName);
-        if(fileToRemove){
-          filesToUpload.splice(filesToUpload.indexOf(fileToRemove),1);
+      else {
+        const filesToUpload = this.state.filesToUpload;
+        const fileToRemove = filesToUpload.find(f => f.name === file.FileName);
+        if (fileToRemove) {
+          filesToUpload.splice(filesToUpload.indexOf(fileToRemove), 1);
         }
-        let attachments = this.state.attachments;
-        let attachmentToRemove = attachments.find(attachment => attachment.FileName === file.FileName);
-        if(attachmentToRemove){
-          attachments.splice(attachments.indexOf(attachmentToRemove),1);
+        const attachments = this.state.attachments;
+        const attachmentToRemove = attachments.find(attachment => attachment.FileName === file.FileName);
+        if (attachmentToRemove) {
+          attachments.splice(attachments.indexOf(attachmentToRemove), 1);
 
         }
         this.setState({
@@ -238,7 +238,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
   /**
    * Default React render method
    */
-  public render() {
+  public render(): React.ReactElement<IListItemAttachmentsProps> {
     const { openAttachmentsInNewWindow } = this.props;
     return (
       <div className={styles.ListItemAttachments}>
@@ -304,7 +304,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 </div>
               );
             })}
-        { !this.state.hideDialog &&
+        {!this.state.hideDialog &&
 
           <Dialog
             hidden={this.state.hideDialog}

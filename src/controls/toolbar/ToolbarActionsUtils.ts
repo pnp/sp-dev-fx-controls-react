@@ -45,7 +45,7 @@ export function flattenedActions(actionGroups: TActionGroups): TActions {
         {}
     );
 }
-export function getInFlowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element) {
+export function getInFlowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element): TToolbarItems {
     return Object.keys(allActions).reduce(
         (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
             const action = allActions[actionSlug];
@@ -75,7 +75,7 @@ export function getInFlowToolbarItems(allActions: TActions, childredFactory: (ac
     );
 }
 
-export function getOverflowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element) {
+export function getOverflowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element): TToolbarItems {
     return Object.keys(allActions).reduce(
         (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
             const action = allActions[actionSlug];

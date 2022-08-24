@@ -18,7 +18,7 @@ export interface IConfirmDeleteProps {
 export const ConfirmDelete: React.FunctionComponent<IConfirmDeleteProps> = (
   props: React.PropsWithChildren<IConfirmDeleteProps>
 ) => {
-  const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
+  const { listItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { documentCardDeleteStyles, itemContainerStyles } = useListItemCommentsStyles();
   const { hideDialog, onDismiss } = props;
   const { selectedComment } = listItemCommentsState;
