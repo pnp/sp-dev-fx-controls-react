@@ -119,18 +119,17 @@ export default class SPPeopleSearchService {
           PrincipalSource: 15,
           PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query,
-          SharePointGroupID: null
         }
       };
 
       // Search on the local site when "0"
       if (siteUrl) {
-        searchBody.queryParams.SharePointGroupID = 0;
+        searchBody.queryParams["SharePointGroupID"] = 0;
       }
 
       // Check if users need to be searched in a specific SharePoint Group
       if (groupId && typeof (groupId) === 'number') {
-        searchBody.queryParams.SharePointGroupID = groupId;
+        searchBody.queryParams["SharePointGroupID"] = groupId;
       }
 
       // Check if users need to be searched in a specific Microsoft 365 Group, Security Group (incl. nested groups) or Distribution List
