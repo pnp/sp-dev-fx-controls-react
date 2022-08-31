@@ -8,7 +8,8 @@ import {
   IReadonlyTheme,
 
 } from "@microsoft/sp-component-base";
-import { ITermInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+
 export interface IControlsTestProps {
   context: WebPartContext;
   description: string;
@@ -53,4 +54,7 @@ export interface IControlsTestState {
   actionTermId?: string;
   clickedActionTerm?: ITermInfo;
   selectedFilters?: string[];
+  termStoreInfo: ITermStoreInfo;
+  termSetInfo: ITermSetInfo;
+  testTerms: ITermInfo[];
 }

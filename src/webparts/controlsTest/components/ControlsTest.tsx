@@ -52,8 +52,10 @@ import {
 import {
   DisplayMode,
   Environment,
-  EnvironmentType
+  EnvironmentType,
+  Guid
 } from "@microsoft/sp-core-library";
+
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
@@ -187,6 +189,7 @@ import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
+import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 
 
 // Used to render document card
@@ -277,6 +280,8 @@ const toolbarFilters = [{
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
+  private spTaxonomyService = new SPTaxonomyService(this.props.context);
+
   private richTextValue: string = null;
   private theme = window["__themeState__"].theme;
   private pickerStylesSingle: Partial<IBasePickerStyles> = {
@@ -495,7 +500,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedTeam: [],
       selectedTeamChannels: [],
       errorMessage: "This field is required",
-      selectedFilters: ["filter1"]
+      selectedFilters: ["filter1"],
+	  termStoreInfo: null,
+	  termSetInfo: null,
+	  testTerms: [],
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -507,15 +515,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   /**
    * React componentDidMount lifecycle hook
    */
-  public componentDidMount() {
+  public async componentDidMount() {
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
-    this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
-      .then(resp => { return resp.json(); })
-      .then(items => {
-        this.setState({
-          items: items.value ? items.value : []
-        });
-      });
+    const response = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+	const items = await response.json();
+
+	this.setState({
+		items: items.value ? items.value : [],
+		termStoreInfo: await this.spTaxonomyService.getTermStoreInfo(),
+		termSetInfo: await this.spTaxonomyService.getTermSetInfo(Guid.parse("4bc86596-7caf-4e70-80c9-d9769e448988")),  
+	});
 
     // // Get Authors in the SharePoint Document library -- For People Picker Testing
     // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
@@ -2377,6 +2386,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               }
             }]}
           />
+        </div>
+
+		<div>
+          <h3>Modern Taxonomy Tree</h3>
+		  {this.state.termStoreInfo && (
+          <TaxonomyTree
+			languageTag={this.state.termStoreInfo.defaultLanguageTag}
+			onLoadMoreData={this.spTaxonomyService.getTerms}
+			pageSize={50}
+			setTerms={(value) => this.setState({testTerms: value as any})}
+			termStoreInfo={this.state.termStoreInfo}
+			termSetInfo={this.state.termSetInfo}
+			terms={this.state.testTerms as any[]}
+			onRenderActionButton={() => <button>test button</button>}
+			hideDeprecatedTerms={false}
+			showIcons={true}
+			/>
+		  )}
         </div>
 
       </div>
