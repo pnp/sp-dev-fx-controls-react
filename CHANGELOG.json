@@ -1,6 +1,20 @@
 {
   "versions": [
     {
+      "version": "3.11.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)"
+        ],
+        "fixes": [
+        ]
+      },
+      "contributions": [
+        "[Hilton Giesenow](https://github.com/HiltonGiesenow)"
+      ]
+    },
+    {
       "version": "3.10.0",
       "changes": {
         "new": [],
