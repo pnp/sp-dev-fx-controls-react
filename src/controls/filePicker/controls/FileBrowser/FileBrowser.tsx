@@ -196,7 +196,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                       />) :
                     (<TilesList
                       fileBrowserService={this.props.fileBrowserService}
-                      filePickerResult={this.state.filePickerResults ? this.state.filePickerResults[0] : null}
+                      filePickerResults={this.state.filePickerResults ? this.state.filePickerResults : null}
                       selection={this._selection}
                       items={this.state.items}
                       onFolderOpen={this._handleOpenFolder}
@@ -518,6 +518,8 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       if (filesQueryResult.nextHref !== null) {
         newItems.push(null);
       }
+
+      this._selection.setItems(newItems);
 
       if (!concatenateResults) {
         // de-select anything that was previously selected

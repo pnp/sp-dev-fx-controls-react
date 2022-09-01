@@ -52,7 +52,7 @@ export class TilesList extends React.Component<ITilesListProps> {
   }
 
   public componentDidUpdate(prevProps: ITilesListProps): void {
-    if (this.props.filePickerResult !== prevProps.filePickerResult) {
+    if (this.props.filePickerResults !== prevProps.filePickerResults) {
       this._listElem.forceUpdate();
     }
   }
@@ -163,7 +163,7 @@ export class TilesList extends React.Component<ITilesListProps> {
       this.props.onNextPageDataRequest();
       return null;
     }
-    const isSelected: boolean = this.props.filePickerResult && item.absoluteUrl === this.props.filePickerResult.fileAbsoluteUrl;
+    const isSelected: boolean = this.props.filePickerResults.filter(x => x.fileAbsoluteUrl === item.absoluteUrl).length > 0;
 
     // I know this is a lot of divs and spans inside of each other, but my
     // goal was to mimic the HTML and style of the out-of-the-box file picker
