@@ -8,10 +8,12 @@
           "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)"
         ],
         "fixes": [
+          "`FilePicker`: Tile view fix [#1272](https://github.com/pnp/sp-dev-fx-controls-react/issues/1272)"
         ]
       },
       "contributions": [
-        "[Hilton Giesenow](https://github.com/HiltonGiesenow)"
+        "[Hilton Giesenow](https://github.com/HiltonGiesenow)",
+        "[Victor Romanov](https://github.com/VRomanovTau)"
       ]
     },
     {
