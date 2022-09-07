@@ -1,6 +1,6 @@
-import { 
-    Card, 
-    Flex, 
+import {
+    Card,
+    Flex,
     ThemePrepared,
     Text } from "@fluentui/react-northstar";
 import * as React from "react";
@@ -14,10 +14,10 @@ export const WidgetTitle = ({
     onWidgetHiding
 }: {
     widget: IWidget;
-    globalTheme: ThemePrepared<any>,
+    globalTheme: ThemePrepared<any>, // eslint-disable-line @typescript-eslint/no-explicit-any
     allowHidingWidget: boolean,
     onWidgetHiding?: (widget: IWidget) => void
-}) => {
+}): JSX.Element => {
     const [calloutOpen, setCalloutOpen] = React.useState(false);
     return (
         <Card.Header>

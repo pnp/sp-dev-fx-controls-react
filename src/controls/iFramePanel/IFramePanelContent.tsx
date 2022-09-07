@@ -8,7 +8,7 @@ import { IIFramePanelContentProps, IIFramePanelContentState } from ".";
  * IFrame Panel content
  */
 export class IFramePanelContent extends React.Component<IIFramePanelContentProps, IIFramePanelContentState> {
-  private _iframe: any;
+  private _iframe: HTMLIFrameElement;
 
   constructor(props: IIFramePanelContentProps) {
     super(props);
@@ -22,7 +22,7 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
   /**
    * Resize the iframe element
    */
-  private resizeIframe = () => {
+  private resizeIframe = (): void => {
     if (!this.props.height) {
       if (this._iframe) {
         const mainDiv = this.findParent(this._iframe, "ms-Panel-main");
@@ -47,7 +47,7 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
    * @param elm
    * @param className
    */
-  private findParent(elm: HTMLElement, className: string) {
+  private findParent(elm: HTMLElement, className: string): HTMLElement {
     while ((elm = elm.parentElement) && !elm.classList.contains(className));
     return elm;
   }
@@ -77,12 +77,14 @@ export class IFramePanelContent extends React.Component<IIFramePanelContentProps
   /**
    * On iframe load event
    */
-  private iframeOnLoad = () => {
+  private iframeOnLoad = (): void => {
     try { // for cross origin requests we can have issues with accessing frameElement
-      this._iframe.contentWindow.frameElement.cancelPopUp = this.props.close;
-      this._iframe.contentWindow.frameElement.commitPopUp = this.props.close;
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      (this._iframe.contentWindow.frameElement as any).cancelPopUp = this.props.close;
+      (this._iframe.contentWindow.frameElement as any).commitPopUp = this.props.close;
       // SP.UI.Dialog has misspelling of commitPopUp
-      this._iframe.contentWindow.frameElement.commitPopup = this.props.close;
+      (this._iframe.contentWindow.frameElement as any).commitPopup = this.props.close;
+      /* eslint-enable @typescript-eslint/no-explicit-any */
     }
     catch (err) {
       if (err.name !== 'SecurityError') {

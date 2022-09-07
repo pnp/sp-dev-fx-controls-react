@@ -21,9 +21,9 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
     };
   }
 
-  private displayFileNames = (filesResult: IFilePickerResult[]) => {
-    const result = [];
-    for (var i = 0; i < filesResult.length; i++) {
+  private displayFileNames = (filesResult: IFilePickerResult[]): JSX.Element[] => {
+    const result: JSX.Element[] = [];
+    for (let i = 0; i < filesResult.length; i++) {
       result.push(<div key={i.toString()} className={styles.localTabFilename}>{filesResult[i].fileName}</div>);
     }
     return result;
@@ -76,13 +76,12 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
   /**
    * Gets called when files are uploaded via drag and drop
    */
-  private _handleFileUpload = (files: File[]) => {
+  private _handleFileUpload = (files: File[]): void => {
     if (files.length < 1) {
       return;
     } else {
-
       const filePickerResultsArray: IFilePickerResult[] = [];
-      for (var i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i++) {
         const file: File = files[i];
         const filePickerResult: IFilePickerResult = {
           fileAbsoluteUrl: null,
@@ -105,12 +104,12 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
   /**
    * Gets called when files are uploaded via file explorer
    */
-  private _handleFileUploadExplorer = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private _handleFileUploadExplorer = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (!event || event.target.files.length < 1) {
       return;
     } else {
       const files: File[] = [];
-      for (var i = 0; i < event.target.files.length; i++) {
+      for (let i = 0; i < event.target.files.length; i++) {
         const file: File = event.target.files.item(i);
         files.push(file);
       }
@@ -121,14 +120,14 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
   /**
    * Saves base64 encoded image back to property pane file picker
    */
-  private _handleSave = () => {
+  private _handleSave = (): void => {
     this.props.onSave(this.state.filePickerResult);
   }
 
   /**
    * Closes tab without saving
    */
-  private _handleClose = () => {
+  private _handleClose = (): void => {
     this.props.onClose();
   }
 }

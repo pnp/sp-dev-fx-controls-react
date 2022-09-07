@@ -174,7 +174,7 @@ export interface ICarouselProps {
   /**
    * The amount of time to delay between automatically cycling an item. If null, carousel will not automatically cycle.
    */
-  interval?: number | null;
+  interval?: number | undefined;
 
   /**
    * Specifies if slides cycling should pause when hovering over the content (touchStart on touch devices)

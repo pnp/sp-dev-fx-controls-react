@@ -1,6 +1,5 @@
 import * as React from "react";
-import { createElement, useEffect, useRef } from "react";
-import { useState } from "react";
+import { createElement, useEffect, useRef , useState} from "react";
 import { Log } from "@microsoft/sp-core-library";
 import { SPComponentLoader } from "@microsoft/sp-loader";
 import { ILivePersonatProps} from '.';
@@ -12,7 +11,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
   props: React.PropsWithChildren<ILivePersonatProps>
 ) => {
   const [isComponentLoaded, setIsComponentLoaded] = useState<boolean>(false);
-  const sharedLibrary = useRef<any>();
+  const sharedLibrary = useRef<any>(); // eslint-disable-line @typescript-eslint/no-explicit-any
   const { upn, template, disableHover, serviceScope } = props;
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
           Log.error(`[LivePersona]`, error, serviceScope );
         }
       }
-    })();
+    })().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }, []);
 
 let renderPersona: JSX.Element = null;

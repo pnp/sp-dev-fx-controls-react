@@ -2,15 +2,15 @@ import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
 import { ActionAlignment, HostConfig, TextColor, TextWeight } from 'adaptivecards';
 import { ITheme } from 'office-ui-fabric-react/lib/Styling';
 
-const lightenDarkenColor = (col, amt) => {
+const lightenDarkenColor = (col: string, amt: number): string => {
     let usePound = false;
 
-    if (col[0] == "#") {
+    if (col[0] === "#") {
         col = col.slice(1);
         usePound = true;
     }
 
-    let num = parseInt(col, 16);
+    const num = parseInt(col, 16);
 
     let r = (num >> 16) + amt;
 
@@ -30,8 +30,8 @@ const lightenDarkenColor = (col, amt) => {
     return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
 };
 
-export const createSharePointHostConfig = (theme: ITheme): any => {
-    let hostConfig: any = {
+export const createSharePointHostConfig = (theme: ITheme): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let hostConfig: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         fontFamily: (theme.fonts.medium.fontFamily)
             ? theme.fonts.medium.fontFamily
             : LocalizedFontFamilies.WestEuropean
@@ -264,8 +264,8 @@ export const createSharePointHostConfig = (theme: ITheme): any => {
     return new HostConfig(hostConfig);
 };
 
-export const createDefaultTeamsHostConfig = (theme: ITheme): any => {
-    let hostConfig: any = {
+export const createDefaultTeamsHostConfig = (theme: ITheme): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let hostConfig: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         fontFamily: (theme.fonts.medium.fontFamily)
             ? theme.fonts.medium.fontFamily
             : LocalizedFontFamilies.WestEuropean
@@ -502,8 +502,8 @@ export const createDefaultTeamsHostConfig = (theme: ITheme): any => {
     return new HostConfig(hostConfig);
 };
 
-export const createDarkTeamsHostConfig = (theme: ITheme): any => {
-    let hostConfig: any = {
+export const createDarkTeamsHostConfig = (theme: ITheme): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let hostConfig: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         fontFamily: (theme.fonts.medium.fontFamily)
             ? theme.fonts.medium.fontFamily
             : LocalizedFontFamilies.WestEuropean
@@ -741,8 +741,8 @@ export const createDarkTeamsHostConfig = (theme: ITheme): any => {
     return new HostConfig(hostConfig);
 };
 
-export const createHighContrastTeamsHostConfig = (theme: ITheme): any => {
-    let hostConfig: any = {
+export const createHighContrastTeamsHostConfig = (theme: ITheme): any => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let hostConfig: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
         fontFamily: (theme.fonts.medium.fontFamily)
             ? theme.fonts.medium.fontFamily
             : LocalizedFontFamilies.WestEuropean

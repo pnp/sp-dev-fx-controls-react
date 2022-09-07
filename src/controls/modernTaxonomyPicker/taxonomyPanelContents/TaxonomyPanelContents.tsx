@@ -52,7 +52,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
       onSelectionChanged: () => {
         props.setSelectedPanelOptions((prevOptions) => [...selection.getSelection()]);
         forceUpdate();
-      }, getKey: (term: any) => term.id
+      }, getKey: (term: any) => term.id // eslint-disable-line @typescript-eslint/no-explicit-any
     });
     s.setItems(terms);
     for (const selectedOption of props.selectedPanelOptions) {

@@ -78,7 +78,7 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
 
     public render(): JSX.Element {
         const lookupLinks: JSX.Element[] = this.props.lookups.map((lookup) => {
-            return <Link onClick={this._onClick.bind(this, lookup)} className={styles.lookup} style={this.props.cssProps}>{lookup.lookupValue}</Link>;
+            return <Link key={lookup.lookupId} onClick={this._onClick.bind(this, lookup)} className={styles.lookup} style={this.props.cssProps}>{lookup.lookupValue}</Link>;
         });
         return (
             <div style={this.props.cssProps} className={css(this.props.className)}>{lookupLinks}
@@ -148,11 +148,14 @@ export class FieldLookupRenderer extends React.Component<IFieldLookupRendererPro
                         lookupDispFormUrl: `${listDispFormUrl}&ID=${lookup.lookupId}&RootFolder=*&IsDlg=1`
                     };
                 });
+            })
+            .catch(() => {
+              // no-op;
             });
         }
     }
 
-    private _onIframeLoaded(iframe: any): void {
+    private _onIframeLoaded(iframe: HTMLIFrameElement): void {
         //
         // some additional configuration to beutify content of the iframe
         //

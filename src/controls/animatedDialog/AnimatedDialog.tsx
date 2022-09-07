@@ -28,7 +28,7 @@ const mainAnimationClass: string = `${animationPrefix}animated`;
 const defaultDialogAnimationClass: string = `${animationPrefix}bounceIn`;
 const defaultIconAnimationClass: string = `${animationPrefix}zoomIn`;
 
-export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogProps>) {
+export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogProps>): JSX.Element {
 
     const [dialogProps, setDialogProps] = useState<IDialogProps>(props);
     const [animatedDialogContentProps, setAnimatedDialogContentProps] = useState<IDialogContentProps>(props.dialogContentProps);

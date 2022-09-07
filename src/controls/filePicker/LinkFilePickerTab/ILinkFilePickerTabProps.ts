@@ -5,5 +5,5 @@ export interface ILinkFilePickerTabProps extends IFilePickerTab {
   allowExternalLinks: boolean;
   checkIfFileExists: boolean;
   fileSearchService: FilesSearchService;
-  renderCustomLinkTabContent: (filePickerResult: IFilePickerResult) => JSX.Element | null;
+  renderCustomLinkTabContent: (filePickerResult: IFilePickerResult) => JSX.Element | undefined;
 }

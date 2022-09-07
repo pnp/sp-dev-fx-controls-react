@@ -12,7 +12,7 @@ export interface IToolbarThemeProps {
   children: React.ReactNode;
 }
 
-const getLocalTheme = () => {
+const getLocalTheme = () => { // eslint-disable-line @typescript-eslint/explicit-function-return-type
   return {
     componentVariables: {
       Card: ({
@@ -57,7 +57,7 @@ const getLocalTheme = () => {
 export const DashboardTheme = ({
   globalTheme,
   children,
-}: IToolbarThemeProps) => {
+}: IToolbarThemeProps): JSX.Element => {
   const theme = mergeThemes(globalTheme, getLocalTheme());
   return (
     <FluentUIThemeProvider

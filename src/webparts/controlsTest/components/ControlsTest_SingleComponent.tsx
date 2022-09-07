@@ -143,6 +143,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       termPanelIsOpen: false,
       actionTermId: null,
       clickedActionTerm: null,
+	  termStoreInfo: null,
+	  termSetInfo: null,
+	  testTerms: [],
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -283,7 +286,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         clearInterval(intervalId);
       } else {
         const action = actions[currentIndex];
-        if (currentIndex == 1) { // just a test for error
+        if (currentIndex === 1) { // just a test for error
           action.hasError = true;
           action.errorMessage = 'some error message';
         }

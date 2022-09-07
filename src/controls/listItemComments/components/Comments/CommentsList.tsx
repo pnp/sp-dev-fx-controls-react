@@ -105,14 +105,14 @@ export const CommentsList: React.FunctionComponent = () => {
         (async () => {
           // Add new comment
           await _onAddComment(commentToAdd);
-        })();
+        })().then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
         break;
       case ECommentAction.DELETE:
         (async () => {
           // delete comment
           const commentId = Number(selectedComment.id);
           await _onADeleteComment(commentId);
-        })();
+        })().then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
         break;
       default:
         break;
@@ -122,7 +122,7 @@ export const CommentsList: React.FunctionComponent = () => {
   useEffect(() => {
     (async () => {
       await _loadComments();
-    })();
+    })().then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
   }, [_loadComments]);
 
   const handleScroll = React.useCallback(async () => {

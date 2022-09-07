@@ -10,7 +10,7 @@ export const Widget = ({
 }: {
     children: React.ReactNode;
     widget: IWidget;
-}) => {
+}): JSX.Element => {
     const cardStyle = {
         gridColumnEnd: "auto",
         gridRowEnd: "auto",

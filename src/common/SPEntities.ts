@@ -155,7 +155,7 @@ export interface ICultureDateTimeFormat {
     TimeSeparator: string;
     UniversalSortableDateTimePattern: string;
     YearMonthPattern: string;
-    eras: any[];
+    eras: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 /**

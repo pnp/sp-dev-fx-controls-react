@@ -1,5 +1,7 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IItem } from '@pnp/sp/items';
+import React from 'react';
+import { IDynamicFieldProps } from './dynamicField';
 
 export interface IDynamicFormProps {
   /**
@@ -18,15 +20,15 @@ export interface IDynamicFormProps {
    * Before submit handler.
    * Allows to modify the object to be submitted or cancel the submission.
    */
-  onBeforeSubmit?: (listItemData: any) => Promise<boolean>;
+  onBeforeSubmit?: (listItemData: any) => Promise<boolean>; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler for form submitted event
    */
-  onSubmitted?: (listItemData: any, listItem?: IItem) => void;
+  onSubmitted?: (listItemData: any, listItem?: IItem) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler of submission error
    */
-  onSubmitError?: (listItemData: any, error: Error) => void;
+  onSubmitError?: (listItemData: any, error: Error) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler for form cancelled event
    */
@@ -40,6 +42,10 @@ export interface IDynamicFormProps {
    */
   contentTypeId?: string;
 
+  /**
+   * Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render
+   */
+  fieldOverrides?: {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement<IDynamicFieldProps>}};
   /**
    * Specifies if onSubmitted event should pass PnPJS list item (IItem) as a second parameter. Default - true
    */

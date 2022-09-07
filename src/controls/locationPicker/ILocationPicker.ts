@@ -13,7 +13,7 @@ export interface ILocationPickerItem {
   UniqueId?: string;
   DisplayName: string;
   Address?: IAddress;
-  Coordinates?: any;
+  Coordinates?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 interface IAddress {

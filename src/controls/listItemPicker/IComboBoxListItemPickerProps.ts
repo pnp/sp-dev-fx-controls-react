@@ -22,12 +22,12 @@ export interface IComboBoxListItemPickerProps {
     itemLimit?: number;
     filter?: string;
     className?: string;
-    defaultSelectedItems?: any[];
+    defaultSelectedItems?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
     disabled?: boolean;
     suggestionsHeaderText?: string;
     noResultsFoundText?: string;
     onInitialized?: () => void;
-    onSelectedItem: (item: any) => void;
+    onSelectedItem: (item: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
     label?: string;
     orderBy?:string;
 }

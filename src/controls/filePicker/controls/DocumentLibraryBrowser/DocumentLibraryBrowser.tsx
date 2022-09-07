@@ -40,7 +40,7 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
     };
   }
 
-  public async componentDidMount() {
+  public async componentDidMount(): Promise<void> {
     const lists = await this.props.fileBrowserService.getSiteMediaLibraries(this.props.includePageLibraries);
     this.setState({
       lists: lists,
@@ -119,7 +119,7 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
   /**
    * Calls parent when library is opened
    */
-  private _handleOpenLibrary = (library: ILibrary) => {
+  private _handleOpenLibrary = (library: ILibrary): void => {
     this.props.onOpenLibrary(library);
   }
 }

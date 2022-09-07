@@ -9,7 +9,7 @@ const getClassNames = classNamesFunction<ITermItemStyleProps, ITermItemStyles>()
 /**
  * {@docCategory TagPicker}
  */
-export const TermItemBase = (props: ITermItemProps) => {
+export const TermItemBase = (props: ITermItemProps): JSX.Element => {
   const {
     theme,
     styles,
@@ -21,12 +21,11 @@ export const TermItemBase = (props: ITermItemProps) => {
     index,
     onRemoveItem,
     removeButtonAriaLabel,
-    termStoreInfo,
     languageTag,
   } = props;
 
   const classNames = getClassNames(styles, {
-    theme: theme!,
+    theme: theme,
     className,
     selected,
     disabled,

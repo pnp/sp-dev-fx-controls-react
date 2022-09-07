@@ -6,12 +6,10 @@
  */
 
 import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';
-import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ITaxonomyPickerProps } from '../controls/taxonomyPicker/ITaxonomyPicker';
 import { IPickerTerm } from '../controls/taxonomyPicker/ITermPicker';
 import { ITermStore, ITerms, ITerm, IGroup, ITermSet, ISuggestTerm } from './ISPTermStorePickerService';
-import SPTermStoreMockHttpClient from './SPTermStorePickerMockService';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { EmptyGuid } from '../common/Constants';
 import { LocalesHelper } from '../common/utilities/LocalesHelper';
@@ -30,20 +28,9 @@ export default class SPTermStorePickerService {
    * Service constructor
    */
   constructor(private props: ITaxonomyPickerProps, private context: BaseComponentContext) {
-    if (Environment.type !== EnvironmentType.Local) {
-      {
-        this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
-        this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + "/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
-      }
-    }
   }
 
   public async getTermLabels(termId: string): Promise<string[]> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return null;
-    }
-
     let result = null;
     try {
       const data = `<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="8" ObjectPathId="7" /><ObjectIdentityQuery Id="9" ObjectPathId="7" /><ObjectPath Id="11" ObjectPathId="10" /><ObjectIdentityQuery Id="12" ObjectPathId="10" /><ObjectPath Id="14" ObjectPathId="13" /><ObjectIdentityQuery Id="15" ObjectPathId="13" /><Query Id="16" ObjectPathId="13"><Query SelectAllProperties="false"><Properties><Property Name="Labels" SelectAll="true"><Query SelectAllProperties="false"><Properties /></Query></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="7" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="10" ParentId="7" Name="GetDefaultKeywordsTermStore" /><Method Id="13" ParentId="10" Name="GetTerm"><Parameters><Parameter Type="Guid">${termId}</Parameter></Parameters></Method></ObjectPaths></Request>`;
@@ -60,7 +47,7 @@ export default class SPTermStorePickerService {
       const callResult = await this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions);
       const jsonResult = await callResult.json();
 
-      let node = jsonResult.find(x => x._ObjectType_ == "SP.Taxonomy.Term");
+      const node = jsonResult.find(x => x._ObjectType_ === "SP.Taxonomy.Term");
       if (node && node.Labels && node.Labels._Child_Items_) {
         result = node.Labels._Child_Items_.map(termLabel => termLabel.Value);
       }
@@ -75,74 +62,65 @@ export default class SPTermStorePickerService {
    * Gets the collection of term stores in the current SharePoint env
    */
   public getTermStores(): Promise<ITermStore[]> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return this.getTermStoresFromMock();
-    } else {
-      // Retrieve the term store name, groups, and term sets
-      const data = '<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="2" ObjectPathId="1" /><ObjectIdentityQuery Id="3" ObjectPathId="1" /><ObjectPath Id="5" ObjectPathId="4" /><ObjectIdentityQuery Id="6" ObjectPathId="4" /><Query Id="7" ObjectPathId="4"><Query SelectAllProperties="false"><Properties><Property Name="Id" ScalarProperty="true" /><Property Name="Name" ScalarProperty="true" /><Property Name="Groups"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="Name" ScalarProperty="true" /><Property Name="Id" ScalarProperty="true" /><Property Name="IsSystemGroup" ScalarProperty="true" /><Property Name="TermSets"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="Name" ScalarProperty="true" /><Property Name="Id" ScalarProperty="true" /><Property Name="Description" ScalarProperty="true" /><Property Name="Names" ScalarProperty="true" /></Properties></ChildItemQuery></Property></Properties></ChildItemQuery></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="1" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="4" ParentId="1" Name="GetDefaultSiteCollectionTermStore" /></ObjectPaths></Request>';
+    // Retrieve the term store name, groups, and term sets
+    const data = '<Request AddExpandoFieldTypeSuffix="true" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName=".NET Library" xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009"><Actions><ObjectPath Id="2" ObjectPathId="1" /><ObjectIdentityQuery Id="3" ObjectPathId="1" /><ObjectPath Id="5" ObjectPathId="4" /><ObjectIdentityQuery Id="6" ObjectPathId="4" /><Query Id="7" ObjectPathId="4"><Query SelectAllProperties="false"><Properties><Property Name="Id" ScalarProperty="true" /><Property Name="Name" ScalarProperty="true" /><Property Name="Groups"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="Name" ScalarProperty="true" /><Property Name="Id" ScalarProperty="true" /><Property Name="IsSystemGroup" ScalarProperty="true" /><Property Name="TermSets"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="Name" ScalarProperty="true" /><Property Name="Id" ScalarProperty="true" /><Property Name="Description" ScalarProperty="true" /><Property Name="Names" ScalarProperty="true" /></Properties></ChildItemQuery></Property></Properties></ChildItemQuery></Property></Properties></Query></Query></Actions><ObjectPaths><StaticMethod Id="1" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="4" ParentId="1" Name="GetDefaultSiteCollectionTermStore" /></ObjectPaths></Request>';
 
-      const reqHeaders = new Headers();
-      reqHeaders.append("accept", "application/json");
-      reqHeaders.append("content-type", "application/xml");
+    const reqHeaders = new Headers();
+    reqHeaders.append("accept", "application/json");
+    reqHeaders.append("content-type", "application/xml");
 
-      const httpPostOptions: ISPHttpClientOptions = {
-        headers: reqHeaders,
-        body: data
-      };
+    const httpPostOptions: ISPHttpClientOptions = {
+      headers: reqHeaders,
+      body: data
+    };
 
-      return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
-        return serviceResponse.json().then((serviceJSONResponse: any) => {
-          // Construct results
-          let termStoreResult: ITermStore[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
-          // Check if term store was retrieved
-          if (termStoreResult.length > 0) {
-            // Check if the termstore needs to be filtered or limited
-            if (this.props.termsetNameOrID) {
-              return termStoreResult.map(termstore => {
-                let termGroups = termstore.Groups._Child_Items_;
+    return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return serviceResponse.json().then((serviceJSONResponse: any) => {
+        // Construct results
+        const termStoreResult: ITermStore[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermStore');
+        // Check if term store was retrieved
+        if (termStoreResult.length > 0) {
+          // Check if the termstore needs to be filtered or limited
+          if (this.props.termsetNameOrID) {
+            return termStoreResult.map(termstore => {
+              let termGroups = termstore.Groups._Child_Items_;
 
-                // Check if the groups have to be limited to a specific term set
-                if (this.props.termsetNameOrID) {
-                  const termsetNameOrId = this.props.termsetNameOrID;
-                  termGroups = termGroups.map((group: IGroup) => {
-                    group.TermSets._Child_Items_ = group.TermSets._Child_Items_.filter((termSet: ITermSet) => termSet.Name === termsetNameOrId || this.cleanGuid(termSet.Id).toLowerCase() === this.cleanGuid(termsetNameOrId).toLowerCase());
-                    return group;
-                  });
-                }
+              // Check if the groups have to be limited to a specific term set
+              if (this.props.termsetNameOrID) {
+                const termsetNameOrId = this.props.termsetNameOrID;
+                termGroups = termGroups.map((group: IGroup) => {
+                  group.TermSets._Child_Items_ = group.TermSets._Child_Items_.filter((termSet: ITermSet) => termSet.Name === termsetNameOrId || this.cleanGuid(termSet.Id).toLowerCase() === this.cleanGuid(termsetNameOrId).toLowerCase());
+                  return group;
+                });
+              }
 
-                // Filter out all systen groups
-                termGroups = termGroups.filter(group => !group.IsSystemGroup);
+              // Filter out all systen groups
+              termGroups = termGroups.filter(group => !group.IsSystemGroup);
 
-                // Filter out empty groups
-                termGroups = termGroups.filter((group: IGroup) => group.TermSets._Child_Items_.length > 0);
+              // Filter out empty groups
+              termGroups = termGroups.filter((group: IGroup) => group.TermSets._Child_Items_.length > 0);
 
-                // Map the new groups
-                termstore.Groups._Child_Items_ = termGroups;
-                return termstore;
-              });
-            }
-
-            // Return the term store results
-            return termStoreResult;
+              // Map the new groups
+              termstore.Groups._Child_Items_ = termGroups;
+              return termstore;
+            });
           }
-          return [];
-        });
+
+          // Return the term store results
+          return termStoreResult;
+        }
+        return [];
       });
-    }
+    });
   }
 
   /**
    * Gets the current term set
    */
   public async getTermSet(): Promise<ITermSet> {
-    if (Environment.type === EnvironmentType.Local) {
-      const termSetInfo = await SPTermStoreMockHttpClient.getAllTerms();
-      return termSetInfo;
-    } else {
-      const termStore = await this.getTermStores();
-      return this.getTermSetId(termStore, this.props.termsetNameOrID);
-    }
+    const termStore = await this.getTermStores();
+    return this.getTermSetId(termStore, this.props.termsetNameOrID);
   }
 
   /**
@@ -150,99 +128,95 @@ export default class SPTermStorePickerService {
    * @param termset
    */
   public async getAllTerms(termset: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean, useSessionStorage: boolean = true): Promise<ITermSet> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return this.getAllMockTerms();
-    } else {
-      let termsetId: string = termset;
-      // Check if the provided term set property is a GUID or string
-      if (!this.isGuid(termset)) {
-        // Fetch the term store information
-        const termStore = await this.getTermStores();
-        // Get the ID of the provided term set name
-        const crntTermSet = this.getTermSetId(termStore, termset);
-        if (crntTermSet) {
-          termsetId = this.cleanGuid(crntTermSet.Id);
-        } else {
-          return null;
-        }
+    let termsetId: string = termset;
+    // Check if the provided term set property is a GUID or string
+    if (!this.isGuid(termset)) {
+      // Fetch the term store information
+      const termStore = await this.getTermStores();
+      // Get the ID of the provided term set name
+      const crntTermSet = this.getTermSetId(termStore, termset);
+      if (crntTermSet) {
+        termsetId = this.cleanGuid(crntTermSet.Id);
+      } else {
+        return null;
       }
-
-      let childTerms = this.getTermsById(termsetId, useSessionStorage);
-
-      if (childTerms) {
-        return childTerms;
-      }
-
-      // Request body to retrieve all terms for the given term set
-      const data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="6"><Query SelectAllProperties="true"><Properties /></Query></Query><Query Id="12" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Labels" SelectAll="true" /><Property Name="TermsCount" SelectAll="true" /><Property Name="CustomSortOrder" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="Parent" SelectAll="true" /><Property Name="LocalCustomProperties" SelectAll="true" /><Property Name="IsDeprecated" ScalarProperty="true" /><Property Name="IsAvailableForTagging" ScalarProperty="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultKeywordsTermStore" /><Method Id="6" ParentId="3" Name="GetTermSet"><Parameters><Parameter Type="Guid">${termsetId}</Parameter></Parameters></Method><Method Id="9" ParentId="6" Name="GetAllTerms" /></ObjectPaths></Request>`;
-
-
-      const reqHeaders = new Headers();
-      reqHeaders.append("accept", "application/json");
-      reqHeaders.append("content-type", "application/xml");
-
-      const httpPostOptions: ISPHttpClientOptions = {
-        headers: reqHeaders,
-        body: data
-      };
-
-      return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
-        return serviceResponse.json().then((serviceJSONResponse: any) => {
-          const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
-
-          if (termStoreResultTermSets.length > 0) {
-            let termStoreResultTermSet = termStoreResultTermSets[0];
-            termStoreResultTermSet.Terms = [];
-            // Retrieve the term collection results
-            const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
-            if (termStoreResultTerms.length > 0) {
-              // Retrieve all terms
-              let terms = termStoreResultTerms[0]._Child_Items_;
-
-              if (hideDeprecatedTags === true) {
-                terms = terms.filter(d => d["IsDeprecated"] === false);
-              }
-
-              if (hideTagsNotAvailableForTagging === true) {
-                terms = terms.filter(d => d["IsAvailableForTagging"] === true);
-              }
-
-              // Clean the term ID and specify the path depth
-              terms = terms.map(term => {
-                if (term.IsRoot) {
-                  term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
-                } else {
-                  term.CustomSortOrderIndex = (term["Parent"].CustomSortOrder) ? term["Parent"].CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
-                }
-                term.Id = this.cleanGuid(term.Id);
-                term['PathDepth'] = term.PathOfTerm.split(';').length;
-                term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
-                if (term["Parent"]) {
-                  term.ParentId = this.cleanGuid(term["Parent"].Id);
-                }
-                return term;
-              });
-              // Check if the term set was not empty
-              if (terms.length > 0) {
-                // Sort the terms by PathOfTerm and their depth
-                terms = this.sortTerms(terms);
-                termStoreResultTermSet.Terms = terms;
-              }
-            }
-            try {
-              if (useSessionStorage && window.sessionStorage) {
-                window.sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
-              }
-            } catch (error) {
-              // do nothing, sometimes storage quota exceed error if too many items
-            }
-            return termStoreResultTermSet;
-          }
-          return null;
-        });
-      });
     }
+
+    const childTerms = this.getTermsById<ITermSet>(termsetId, useSessionStorage);
+
+    if (childTerms) {
+      return childTerms;
+    }
+
+    // Request body to retrieve all terms for the given term set
+    const data = `<Request xmlns="http://schemas.microsoft.com/sharepoint/clientquery/2009" SchemaVersion="15.0.0.0" LibraryVersion="16.0.0.0" ApplicationName="Javascript Library"><Actions><ObjectPath Id="1" ObjectPathId="0" /><ObjectIdentityQuery Id="2" ObjectPathId="0" /><ObjectPath Id="4" ObjectPathId="3" /><ObjectIdentityQuery Id="5" ObjectPathId="3" /><ObjectPath Id="7" ObjectPathId="6" /><ObjectIdentityQuery Id="8" ObjectPathId="6" /><ObjectPath Id="10" ObjectPathId="9" /><Query Id="11" ObjectPathId="6"><Query SelectAllProperties="true"><Properties /></Query></Query><Query Id="12" ObjectPathId="9"><Query SelectAllProperties="false"><Properties /></Query><ChildItemQuery SelectAllProperties="false"><Properties><Property Name="IsRoot" SelectAll="true" /><Property Name="Labels" SelectAll="true" /><Property Name="TermsCount" SelectAll="true" /><Property Name="CustomSortOrder" SelectAll="true" /><Property Name="Id" SelectAll="true" /><Property Name="Name" SelectAll="true" /><Property Name="PathOfTerm" SelectAll="true" /><Property Name="Parent" SelectAll="true" /><Property Name="LocalCustomProperties" SelectAll="true" /><Property Name="IsDeprecated" ScalarProperty="true" /><Property Name="IsAvailableForTagging" ScalarProperty="true" /></Properties></ChildItemQuery></Query></Actions><ObjectPaths><StaticMethod Id="0" Name="GetTaxonomySession" TypeId="{981cbc68-9edc-4f8d-872f-71146fcbb84f}" /><Method Id="3" ParentId="0" Name="GetDefaultKeywordsTermStore" /><Method Id="6" ParentId="3" Name="GetTermSet"><Parameters><Parameter Type="Guid">${termsetId}</Parameter></Parameters></Method><Method Id="9" ParentId="6" Name="GetAllTerms" /></ObjectPaths></Request>`;
+
+
+    const reqHeaders = new Headers();
+    reqHeaders.append("accept", "application/json");
+    reqHeaders.append("content-type", "application/xml");
+
+    const httpPostOptions: ISPHttpClientOptions = {
+      headers: reqHeaders,
+      body: data
+    };
+
+    return this.context.spHttpClient.post(this.clientServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return serviceResponse.json().then((serviceJSONResponse: any) => {
+        const termStoreResultTermSets: ITermSet[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermSet');
+
+        if (termStoreResultTermSets.length > 0) {
+          const termStoreResultTermSet = termStoreResultTermSets[0];
+          termStoreResultTermSet.Terms = [];
+          // Retrieve the term collection results
+          const termStoreResultTerms: ITerms[] = serviceJSONResponse.filter((r: { [x: string]: string; }) => r['_ObjectType_'] === 'SP.Taxonomy.TermCollection');
+          if (termStoreResultTerms.length > 0) {
+            // Retrieve all terms
+            let terms = termStoreResultTerms[0]._Child_Items_;
+
+            if (hideDeprecatedTags === true) {
+              terms = terms.filter(d => d.IsDeprecated === false);
+            }
+
+            if (hideTagsNotAvailableForTagging === true) {
+              terms = terms.filter(d => d.IsAvailableForTagging === true);
+            }
+
+            // Clean the term ID and specify the path depth
+            terms = terms.map(term => {
+              if (term.IsRoot) {
+                term.CustomSortOrderIndex = (termStoreResultTermSet.CustomSortOrder) ? termStoreResultTermSet.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+              } else {
+                term.CustomSortOrderIndex = term.Parent?.CustomSortOrder ? term.Parent.CustomSortOrder.split(":").indexOf(this.cleanGuid(term.Id)) : -1;
+              }
+              term.Id = this.cleanGuid(term.Id);
+              term.PathDepth = term.PathOfTerm.split(';').length;
+              term.TermSet = { Id: this.cleanGuid(termStoreResultTermSet.Id), Name: termStoreResultTermSet.Name };
+              if (term.Parent) {
+                term.ParentId = this.cleanGuid(term.Parent.Id);
+              }
+              return term;
+            });
+            // Check if the term set was not empty
+            if (terms.length > 0) {
+              // Sort the terms by PathOfTerm and their depth
+              terms = this.sortTerms(terms);
+              termStoreResultTermSet.Terms = terms;
+            }
+          }
+          try {
+            if (useSessionStorage && window.sessionStorage) {
+              window.sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
+            }
+          } catch (error) {
+            // do nothing, sometimes storage quota exceed error if too many items
+          }
+          return termStoreResultTermSet;
+        }
+        return null;
+      });
+    });
   }
 
   /**
@@ -279,25 +253,21 @@ export default class SPTermStorePickerService {
    * @param searchText
    */
   public searchTermsByName(searchText: string): Promise<IPickerTerm[]> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return SPTermStoreMockHttpClient.searchTermsByName(searchText);
-    } else {
-      return this.searchTermsByTermSet(searchText);
-    }
+    return this.searchTermsByTermSet(searchText);
   }
 
-  private getTermsById(termId, useSessionStorage: boolean = true) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private getTermsById<T>(termId, useSessionStorage: boolean = true): T | null {
     try {
       if (useSessionStorage && window.sessionStorage) {
-        let terms = window.sessionStorage.getItem(termId);
+        const terms = window.sessionStorage.getItem(termId);
         if (terms) {
-          return JSON.parse(terms);
+          return JSON.parse(terms) as T;
         } else {
           return null;
         }
       }
-      else{
+      else {
         return null;
       }
     } catch (error) {
@@ -305,7 +275,7 @@ export default class SPTermStorePickerService {
     }
   }
 
-  private searchTermsBySearchText(terms, searchText) {
+  private searchTermsBySearchText(terms: IPickerTerm[] | undefined, searchText: string): IPickerTerm[] {
     if (terms) {
       return terms.filter((t) => { return t.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1; });
     }
@@ -314,36 +284,31 @@ export default class SPTermStorePickerService {
   }
 
   public async searchTermsByTermId(searchText: string, termId: string): Promise<IPickerTerm[]> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return SPTermStoreMockHttpClient.searchTermsByName(searchText);
-    } else {
-      const { useSessionStorage } = this.props;
-      let childTerms = this.getTermsById(termId, useSessionStorage);
-      if (childTerms) {
-        return this.searchTermsBySearchText(childTerms, searchText);
-      }
-      else {
-        const {
-          termsetNameOrID,
-          hideDeprecatedTags,
-          hideTagsNotAvailableForTagging,
-        } = this.props;
-
-        const terms = await this.getAllTermsByAnchorId(
-          termsetNameOrID,
-          termId,
-          hideDeprecatedTags,
-          hideTagsNotAvailableForTagging,
-          useSessionStorage);
-
-        if (terms) {
-          return this.searchTermsBySearchText(terms, searchText);
-        }
-      }
-
-      return null;
+    const { useSessionStorage } = this.props;
+    const childTerms = this.getTermsById<IPickerTerm[]>(termId, useSessionStorage);
+    if (childTerms) {
+      return this.searchTermsBySearchText(childTerms, searchText);
     }
+    else {
+      const {
+        termsetNameOrID,
+        hideDeprecatedTags,
+        hideTagsNotAvailableForTagging,
+      } = this.props;
+
+      const terms = await this.getAllTermsByAnchorId(
+        termsetNameOrID,
+        termId,
+        hideDeprecatedTags,
+        hideTagsNotAvailableForTagging,
+        useSessionStorage);
+
+      if (terms) {
+        return this.searchTermsBySearchText(terms, searchText);
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -351,47 +316,39 @@ export default class SPTermStorePickerService {
    */
   public async getAllTermsByAnchorId(termsetNameOrID: string, anchorId: string, hideDeprecatedTags?: boolean, hideTagsNotAvailableForTagging?: boolean, useSessionStorage: boolean = true): Promise<IPickerTerm[]> {
 
-    let returnTerms: IPickerTerm[] = [];
+    const returnTerms: IPickerTerm[] = [];
 
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      let terms = await this.getAllMockTermsByAnchor();
+    const childTerms = this.getTermsById<IPickerTerm[]>(anchorId, useSessionStorage);
+    if (childTerms) {
+      return childTerms;
+    }
+
+    const termSet = await this.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
+    const terms = termSet.Terms;
+    if (anchorId) {
+      const anchorTerm = terms.filter(t => t.Id.toLowerCase() === anchorId.toLowerCase()).shift();
+      if (anchorTerm) {
+        // Append ';' separator, as a suffix to anchor term path.
+        const anchorTermPath = `${anchorTerm.PathOfTerm};`;
+        const anchorTerms: ITerm[] = terms.filter(t => t.PathOfTerm.substring(0, anchorTermPath.length) === anchorTermPath && t.Id !== anchorTerm.Id);
+
+        anchorTerms.forEach(term => {
+          returnTerms.push(this.convertTermToPickerTerm(term));
+        });
+
+        try {
+          if (useSessionStorage && window.sessionStorage) {
+            window.sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
+          }
+        }
+        catch (error) {
+          // do nothing
+        }
+      }
+    } else {
       terms.forEach(term => {
         returnTerms.push(this.convertTermToPickerTerm(term));
       });
-    } else {
-      const childTerms = this.getTermsById(anchorId, useSessionStorage);
-      if (childTerms) {
-        return childTerms;
-      }
-
-      let termSet = await this.getAllTerms(termsetNameOrID, hideDeprecatedTags, hideTagsNotAvailableForTagging);
-      let terms = termSet.Terms;
-      if (anchorId) {
-        const anchorTerm = terms.filter(t => t.Id.toLowerCase() === anchorId.toLowerCase()).shift();
-        if (anchorTerm) {
-          // Append ';' separator, as a suffix to anchor term path.
-          const anchorTermPath = `${anchorTerm.PathOfTerm};`;
-          const anchorTerms: ITerm[] = terms.filter(t => t.PathOfTerm.substring(0, anchorTermPath.length) === anchorTermPath && t.Id !== anchorTerm.Id);
-
-          anchorTerms.forEach(term => {
-            returnTerms.push(this.convertTermToPickerTerm(term));
-          });
-
-          try {
-            if (useSessionStorage && window.sessionStorage) {
-              window.sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
-            }
-          }
-          catch (error) {
-            // do nothing
-          }
-        }
-      } else {
-        terms.forEach(term => {
-          returnTerms.push(this.convertTermToPickerTerm(term));
-        });
-      }
     }
 
     return returnTerms;
@@ -403,77 +360,75 @@ export default class SPTermStorePickerService {
      * @param termsetId
      */
   private searchTermsByTermSet(searchText: string): Promise<IPickerTerm[]> {
-    if (Environment.type === EnvironmentType.Local) {
-      // If the running environment is local, load the data from the mock
-      return SPTermStoreMockHttpClient.searchTermsByName(searchText);
-    } else {
-      return new Promise<IPickerTerm[]>(resolve => {
-        this.getTermStores().then(termStore => {
-          let TermSetId = this.props.termsetNameOrID;
-          if (!this.isGuid(TermSetId)) {
-            // Get the ID of the provided term set name
-            const crntTermSet = this.getTermSetId(termStore, TermSetId);
-            if (crntTermSet) {
-              TermSetId = this.cleanGuid(crntTermSet.Id);
-            } else {
-              resolve(null);
-              return;
-            }
-          }
-          if (termStore === undefined || termStore.length === 0) {
+    return new Promise<IPickerTerm[]>((resolve, reject) => {
+      this.getTermStores().then(termStore => {
+        let TermSetId = this.props.termsetNameOrID;
+        if (!this.isGuid(TermSetId)) {
+          // Get the ID of the provided term set name
+          const crntTermSet = this.getTermSetId(termStore, TermSetId);
+          if (crntTermSet) {
+            TermSetId = this.cleanGuid(crntTermSet.Id);
+          } else {
             resolve(null);
             return;
           }
-            
-          let data = {
-            start: searchText,
-            lcid: LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo?.currentUICultureName) ?? this.context.pageContext.web.language,
+        }
+        if (termStore === undefined || termStore.length === 0) {
+          resolve(null);
+          return;
+        }
 
-            sspList: this.cleanGuid(termStore[0].Id),
-            termSetList: TermSetId,
-            anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
-            isSpanTermStores: false,
-            isSpanTermSets: false,
-            isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging === true,
-            isIncludeDeprecated: this.props.hideDeprecatedTags === true,
-            isAddTerms: false,
-            isIncludePathData: false,
-            excludeKeyword: false,
-            excludedTermset: EmptyGuid
-          };
+        const data = {
+          start: searchText,
+          lcid: LocalesHelper.getLocaleId(this.context.pageContext.cultureInfo?.currentUICultureName) ?? this.context.pageContext.web.language,
 
-          const reqHeaders = new Headers();
-          reqHeaders.append("accept", "application/json");
-          reqHeaders.append("content-type", "application/json");
+          sspList: this.cleanGuid(termStore[0].Id),
+          termSetList: TermSetId,
+          anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
+          isSpanTermStores: false,
+          isSpanTermSets: false,
+          isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging === true,
+          isIncludeDeprecated: this.props.hideDeprecatedTags === true,
+          isAddTerms: false,
+          isIncludePathData: false,
+          excludeKeyword: false,
+          excludedTermset: EmptyGuid
+        };
 
-          const httpPostOptions: ISPHttpClientOptions = {
-            headers: reqHeaders,
-            body: JSON.stringify(data)
-          };
+        const reqHeaders = new Headers();
+        reqHeaders.append("accept", "application/json");
+        reqHeaders.append("content-type", "application/json");
+
+        const httpPostOptions: ISPHttpClientOptions = {
+          headers: reqHeaders,
+          body: JSON.stringify(data)
+        };
 
 
-          return this.context.spHttpClient.post(this.suggestionServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
-            return serviceResponse.json().then((serviceJSONResponse: any) => {
-              const groups = serviceJSONResponse.d.Groups;
-              if (groups && groups.length > 0) {
-                // Retrieve the term collection results
-                const terms: ISuggestTerm[] = groups[0].Suggestions;
-                if (terms.length > 0) {
-                  // Retrieve all terms
-
-                  let returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term, TermSetId));
-                  resolve(returnTerms);
-                  return;
-                }
-
+        return this.context.spHttpClient.post(this.suggestionServiceUrl, SPHttpClient.configurations.v1, httpPostOptions).then((serviceResponse: SPHttpClientResponse) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          return serviceResponse.json().then((serviceJSONResponse: any) => {
+            const groups = serviceJSONResponse.d.Groups;
+            if (groups && groups.length > 0) {
+              // Retrieve the term collection results
+              const terms: ISuggestTerm[] = groups[0].Suggestions;
+              if (terms.length > 0) {
+                // Retrieve all terms
+                const returnTerms: IPickerTerm[] = terms.map((term: ISuggestTerm) => this.convertSuggestTermToPickerTerm(term, TermSetId));
+                resolve(returnTerms);
+                return;
               }
 
-              resolve([]);
-            });
+            }
+
+            resolve([]);
           });
         });
-      });
-    }
+      })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 
   private isGuid(strGuid: string): boolean {
@@ -485,7 +440,7 @@ export default class SPTermStorePickerService {
    *
    * @param terms
    */
-  private sortTerms(terms: ITerm[]) {
+  private sortTerms(terms: ITerm[]): ITerm[] {
     // Start sorting by depth
     let newTermsOrder: ITerm[] = [];
     let itemsToSort = true;
@@ -529,7 +484,7 @@ export default class SPTermStorePickerService {
    * @param a term 2
    * @param b term 2
    */
-  private sortTermByPath(a: ITerm, b: ITerm) {
+  private sortTermByPath(a: ITerm, b: ITerm): number {
     if (a.CustomSortOrderIndex === -1) {
       if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
         return -1;
@@ -559,33 +514,6 @@ export default class SPTermStorePickerService {
     } else {
       return '';
     }
-  }
-
-  /**
-   * Returns 3 fake SharePoint lists for the Mock mode
-   */
-  private getTermStoresFromMock(): Promise<ITermStore[]> {
-    return SPTermStoreMockHttpClient.getTermStores(this.context.pageContext.web.absoluteUrl).then((data) => {
-      return data;
-    }) as Promise<ITermStore[]>;
-  }
-
-  /**
-   * Returns 3 fake SharePoint lists for the Mock mode
-   */
-  private getAllMockTerms(): Promise<ITermSet> {
-    return SPTermStoreMockHttpClient.getAllTerms().then((data) => {
-      return data;
-    }) as Promise<ITermSet>;
-  }
-
-  /**
-   * Returns 3 fake SharePoint lists for the Mock mode
-   */
-  private getAllMockTermsByAnchor(): Promise<ITerm[]> {
-    return SPTermStoreMockHttpClient.getAllTermsByAnchorId().then((data) => {
-      return data;
-    }) as Promise<ITerm[]>;
   }
 
   private convertTermToPickerTerm(term: ITerm): IPickerTerm {

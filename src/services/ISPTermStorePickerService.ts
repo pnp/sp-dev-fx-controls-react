@@ -77,8 +77,12 @@ export interface ITerm {
   ParentId?: string;
   TermsCount?: number;
   LocalCustomProperties?: {
-    [property: string]: any
+    [property: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
   };
+  Parent?: {
+    Id: string;
+    CustomSortOrder?: string;
+  }
 }
 
 export interface ISuggestTerm {

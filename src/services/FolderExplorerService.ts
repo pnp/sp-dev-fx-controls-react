@@ -42,6 +42,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     let results: IFolder[] = [];
     try {
       const web = Web(webAbsoluteUrl);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title').get();
 
       results = libraries.map((library): IFolder => {
@@ -72,9 +73,9 @@ export class FolderExplorerService implements IFolderExplorerService {
     let results: IFolder[] = [];
     try {
       const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
-      results = foldersResult.filter(f => f.Name != "Forms");
+      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
+      const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
+      results = foldersResult.filter(f => f.Name !== "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
     }
@@ -101,8 +102,8 @@ export class FolderExplorerService implements IFolderExplorerService {
     let folder: IFolder = null;
     try {
       const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/\'/ig, "''");
-      let folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(name);
+      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
+      const folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(name);
       if (folderAddResult && folderAddResult.data) {
         folder = {
           Name: folderAddResult.data.Name,

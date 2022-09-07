@@ -2,7 +2,7 @@ import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { create } from 'nano-css';
 
-export const applyAdaptiveCardHostStyles = (theme: IReadonlyTheme, classPrefix: string) => {
+export const applyAdaptiveCardHostStyles = (theme: IReadonlyTheme, classPrefix: string): void => {
     const nanoCss = create();
     nanoCss.put(`.${classPrefix}-ac-container:focus`, {
         outline: "none !important"

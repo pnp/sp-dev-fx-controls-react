@@ -11,7 +11,7 @@ const CONTROL_TYPE = "react";
  * @param componentName
  * @param properties
  */
-export function track(componentName: string, properties: any = {}): void {
+export function track(componentName: string, properties: any = {}): void { // eslint-disable-line @typescript-eslint/no-explicit-any
   const telemetry = PnPTelemetry.getInstance();
   telemetry.trackEvent(componentName, {
     version,
@@ -22,7 +22,7 @@ export function track(componentName: string, properties: any = {}): void {
   });
 }
 
-export const useTelemetry = (componentName: string, properties: any = {}) => {
+export const useTelemetry = (componentName: string, properties: any = {}): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
   const [hasBeenCalled, setHasBeenCalled] = React.useState<boolean>(false);
 
   if (hasBeenCalled) {

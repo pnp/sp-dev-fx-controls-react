@@ -39,7 +39,7 @@ export const CommentItem: React.FunctionComponent<IRenderNotificationItemProps> 
           activityPersonas={[{ imageUrl: `${PHOTO_URL}${author.email}` }]}
           activityDescription={activityDescription}
           timeStamp={format(parseISO(createdDate), "PPpp")}
-        ></ActivityItem>
+        />
       </Stack>
     </>
   );

@@ -52,8 +52,10 @@ import {
 import {
   DisplayMode,
   Environment,
-  EnvironmentType
+  EnvironmentType,
+  Guid
 } from "@microsoft/sp-core-library";
+
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
 
@@ -187,6 +189,7 @@ import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
+import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 
 
 // Used to render document card
@@ -277,6 +280,8 @@ const toolbarFilters = [{
  */
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
+  private spTaxonomyService = new SPTaxonomyService(this.props.context);
+
   private richTextValue: string = null;
   private theme = window["__themeState__"].theme;
   private pickerStylesSingle: Partial<IBasePickerStyles> = {
@@ -495,7 +500,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedTeam: [],
       selectedTeamChannels: [],
       errorMessage: "This field is required",
-      selectedFilters: ["filter1"]
+      selectedFilters: ["filter1"],
+      termStoreInfo: null,
+      termSetInfo: null,
+      testTerms: [],
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -507,15 +515,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   /**
    * React componentDidMount lifecycle hook
    */
-  public componentDidMount() {
+  public async componentDidMount() {
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
-    this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1)
-      .then(resp => { return resp.json(); })
-      .then(items => {
-        this.setState({
-          items: items.value ? items.value : []
-        });
-      });
+    const response = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
+    const items = await response.json();
+
+    this.setState({
+      items: items.value ? items.value : [],
+      termStoreInfo: await this.spTaxonomyService.getTermStoreInfo(),
+      termSetInfo: await this.spTaxonomyService.getTermSetInfo(Guid.parse("4bc86596-7caf-4e70-80c9-d9769e448988")),
+    });
 
     // // Get Authors in the SharePoint Document library -- For People Picker Testing
     // const restAuthorApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/lists/GetByTitle('Documents')/Items?$select=Id, Author/EMail&$expand=Author/EMail`;
@@ -649,7 +658,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         clearInterval(intervalId);
       } else {
         const action = actions[currentIndex];
-        if (currentIndex == 1) { // just a test for error
+        if (currentIndex === 1) { // just a test for error
           action.hasError = true;
           action.errorMessage = 'some error message';
         }
@@ -719,12 +728,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   private toggleToolbarFilter = (filterId: string) => {
-    this.setState(({selectedFilters}) => {
-    if (selectedFilters.includes(filterId)) {
-      return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
-    } else {
-      return { selectedFilters: [...selectedFilters, filterId] };
-    }});
+    this.setState(({ selectedFilters }) => {
+      if (selectedFilters.includes(filterId)) {
+        return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
+      } else {
+        return { selectedFilters: [...selectedFilters, filterId] };
+      }
+    });
   }
 
   private rootFolder: IFolder = {
@@ -1928,12 +1938,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }
           }
         }}
-        filters={toolbarFilters}
-        onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
+          filters={toolbarFilters}
+          onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
         />
 
         <div>
-        <h3>Controlled toolbar</h3>
+          <h3>Controlled toolbar</h3>
           <Toolbar actionGroups={{
             'group1': {
               'action1': {
@@ -1946,7 +1956,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 iconName: 'Add',
                 onClick: () => { console.log('New action click'); }
               }
-            }}}
+            }
+          }}
             filters={toolbarFilters}
             selectedFilterIds={this.state.selectedFilters}
             onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
@@ -2336,7 +2347,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <AdaptiveCardDesignerHost
             headerText={`Adaptive Card Designer`}
             buttonText="Open Designer"
-            card={{"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","type":"AdaptiveCard","version":"1.5","body":[{"type":"ColumnSet","columns":[{"width":"auto","items":[{"type":"Image","size":"Small","style":"Person","url":"/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}"}],"type":"Column"},{"width":"stretch","items":[{"type":"TextBlock","text":"${$root['@context']['userInfo']['displayName']}","weight":"Bolder"},{"type":"TextBlock","spacing":"None","text":"${$root['@context']['userInfo']['email']}"}],"type":"Column"}]}]}}
+            card={{ "$schema": "http://adaptivecards.io/schemas/adaptive-card.json", "type": "AdaptiveCard", "version": "1.5", "body": [{ "type": "ColumnSet", "columns": [{ "width": "auto", "items": [{ "type": "Image", "size": "Small", "style": "Person", "url": "/_layouts/15/userphoto.aspx?size=M&username=${$root['@context']['userInfo']['email']}" }], "type": "Column" }, { "width": "stretch", "items": [{ "type": "TextBlock", "text": "${$root['@context']['userInfo']['displayName']}", "weight": "Bolder" }, { "type": "TextBlock", "spacing": "None", "text": "${$root['@context']['userInfo']['email']}" }], "type": "Column" }] }] }}
             data={undefined}
             context={this.props.context}
             theme={this.props.themeVariant}
@@ -2377,6 +2388,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               }
             }]}
           />
+        </div>
+
+        <div>
+          <h3>Modern Taxonomy Tree</h3>
+          {this.state.termStoreInfo && (
+            <TaxonomyTree
+              languageTag={this.state.termStoreInfo.defaultLanguageTag}
+              onLoadMoreData={this.spTaxonomyService.getTerms}
+              pageSize={50}
+              setTerms={(value) => this.setState({ testTerms: value as any })}
+              termStoreInfo={this.state.termStoreInfo}
+              termSetInfo={this.state.termSetInfo}
+              terms={this.state.testTerms as any[]}
+              onRenderActionButton={() => <button>test button</button>}
+              hideDeprecatedTerms={false}
+              showIcons={true}
+            />
+          )}
         </div>
 
       </div>

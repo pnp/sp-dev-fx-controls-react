@@ -13,13 +13,13 @@ import { isEqual } from '@microsoft/sp-lodash-subset';
 
 export class LocationPicker extends React.Component<ILocationPickerProps, ILocationPickerState> {
   private _token: string | string[] = null;
-  private focusRef: any = null;
+  private focusRef: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
   * Constructor method
   */
   constructor(props: ILocationPickerProps) {
     super(props);
-    this.getToken();
+    this.getToken().then(() => { /* no-op; */}).catch(() => { /* no-op; */});
     this.focusRef = React.createRef();
     if (props.defaultValue) {
       this.state = {
@@ -42,7 +42,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
   }
 
-  public componentWillReceiveProps(nextProps: ILocationPickerProps) {
+  public UNSAFE_componentWillReceiveProps(nextProps: ILocationPickerProps): void {
     if (!isEqual(nextProps.defaultValue, this.props.defaultValue)) {
       if (nextProps.defaultValue) {
         this.setState({ selectedItem: nextProps.defaultValue, currentMode: Mode.view });
@@ -64,7 +64,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     );
   }
 
-  private onRenderOption = (item: ILocationBoxOption) => {
+  private onRenderOption = (item: ILocationBoxOption): JSX.Element => {
     const {
       text,
       locationItem
@@ -107,7 +107,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           openOnKeyboardFocus={true}
           scrollSelectedToTop={true}
           isButtonAriaHidden={true}
-          onInput={(e) => this.getLocatios(e.target["value"])}
+          onInput={(e) => this.getLocatios(e.target["value"])} // eslint-disable-line dot-notation
           onChange={this.onChange}
           errorMessage={errorMessage}
         />;
@@ -212,33 +212,33 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     return `${address.Street ? address.Street + ", " : ''}${address.City ? address.City + ", " : ""}${address.State ? address.State + ", " : ''}${address.CountryOrRegion || ""}`;
   }
 
-  private onIconButtonClick = () => {
+  private onIconButtonClick = (): void => {
     this.setState({ currentMode: Mode.empty, selectedItem: null });
     if (this.props.onChange) {
       this.props.onChange(null);
     }
   }
 
-  private onClick = () => {
+  private onClick = (): void => {
     this.setState({ currentMode: Mode.editView },
       () => {
-        if (this.focusRef.current != null)
+        if (this.focusRef.current !== null)
           this.focusRef.current.focus();
       });
   }
 
-  private onBlur = (ev) => {
+  private onBlur = (ev): void => {
     try {
-      if (ev !== null && ev.relatedTarget["title"] !== "Location" && ev.relatedTarget["title"] !== "Clear") {
+      if (ev !== null && ev.relatedTarget["title"] !== "Location" && ev.relatedTarget["title"] !== "Clear") { // eslint-disable-line dot-notation
         this.setState({ currentMode: Mode.view });
       }
-    } catch { }
+    } catch { /* no-op; */ }
   }
 
-  private onChange = (ev, option: ILocationBoxOption) => {
+  private onChange = (ev, option: ILocationBoxOption): void => {
     this.setState({ selectedItem: option.locationItem, currentMode: Mode.editView },
       () => {
-        if (this.focusRef.current != null)
+        if (this.focusRef.current !== null)
           this.focusRef.current.focus();
       });
 
@@ -247,14 +247,14 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     }
   }
 
-  private customRenderInitials(props) {
+  private customRenderInitials(props): JSX.Element {
     if (props.imageAlt === "Custom")
       return <FontIcon aria-label="Poi" iconName="Poi" style={{ fontSize: "14pt" }} />;
     else
       return <FontIcon aria-label="EMI" iconName="EMI" style={{ fontSize: "14pt" }} />;
   }
 
-  private async getToken() {
+  private async getToken(): Promise<void> {
     const requestHeaders: Headers = new Headers();
     requestHeaders.append("Content-type", "application/json");
     requestHeaders.append("Cache-Control", "no-cache");
@@ -263,14 +263,14 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
       headers: requestHeaders
     };
 
-    let response: SPHttpClientResponse = await this.props.context.spHttpClient.post(`${this.props.context.pageContext.web.absoluteUrl}/_api/SP.OAuth.Token/Acquire`, SPHttpClient.configurations.v1, spOpts);
-    let PrimaryQueryResult: any = await response.json();
+    const response: SPHttpClientResponse = await this.props.context.spHttpClient.post(`${this.props.context.pageContext.web.absoluteUrl}/_api/SP.OAuth.Token/Acquire`, SPHttpClient.configurations.v1, spOpts);
+    const PrimaryQueryResult: any = await response.json(); // eslint-disable-line @typescript-eslint/no-explicit-any
     this._token = PrimaryQueryResult.access_token;
   }
 
-  private async getLocatios(searchText) {
+  private async getLocatios(searchText): Promise<void> {
     try {
-      let optionsForCustomRender: ILocationBoxOption[] = [];
+      const optionsForCustomRender: ILocationBoxOption[] = [];
       const requestHeaders: Headers = new Headers();
       requestHeaders.append("Content-type", "application/json");
       requestHeaders.append("Cache-Control", "no-cache");
@@ -279,13 +279,13 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
         body: `{"QueryConstraint":{"Query":"${searchText}"},"LocationProvider":32,"BingMarket":"en-IN"}`,
         headers: requestHeaders
       };
-      let response1: HttpClientResponse = await this.props.context.httpClient.post("https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations", HttpClient.configurations.v1, spOpts);
-      let json = await response1.json();
+      const response1: HttpClientResponse = await this.props.context.httpClient.post("https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations", HttpClient.configurations.v1, spOpts);
+      const json = await response1.json();
 
 
       json.MeetingLocations.forEach((v, i) => {
-        let loc: ILocationPickerItem = v["MeetingLocation"];
-        optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc });
+        const loc: ILocationPickerItem = v["MeetingLocation"]; // eslint-disable-line dot-notation
+        optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc }); // eslint-disable-line dot-notation
       });
 
       optionsForCustomRender.push({ text: strings.customDisplayName, key: 7, locationItem: { DisplayName: searchText, EntityType: "Custom" } });

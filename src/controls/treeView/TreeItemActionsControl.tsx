@@ -26,8 +26,14 @@ export default class TreeItemActionsControl extends React.Component<ITreeItemAct
   /**
    * componentWillMount lifecycle hook
    */
-  public componentWillMount(): void {
-    this.getAvailableActions();
+  public UNSAFE_componentWillMount(): void {
+    this.getAvailableActions()
+    .then(() => {
+      // no-op;
+    })
+    .catch(() => {
+      // no-op;
+    });
   }
 
   /**
@@ -64,7 +70,7 @@ export default class TreeItemActionsControl extends React.Component<ITreeItemAct
     return (
       <div>
         {
-          displayMode == TreeItemActionsDisplayMode.ContextualMenu ?
+          displayMode === TreeItemActionsDisplayMode.ContextualMenu ?
             <DropdownTreeItemAction key={`DdAction-${treeItem.key}`}
               treeItemActions={availableActions}
               treeItem={treeItem}

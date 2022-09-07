@@ -4,8 +4,9 @@ import { SPHttpClient } from '@microsoft/sp-http';
 
 const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string, trimDuplicates: boolean): Promise<ISite[]> => {
   let startRow = 0;
-  let rowLimit = 500;
+  const rowLimit = 500;
   let totalRows = 0;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const values: any[] = [];
 
   const searchRequest = {
@@ -24,7 +25,7 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
   do {
     searchRequest.StartRow = startRow;
 
-    let searchResponse = await ctx.spHttpClient.post(requestUrl, SPHttpClient.configurations.v1, {
+    const searchResponse = await ctx.spHttpClient.post(requestUrl, SPHttpClient.configurations.v1, {
       body: JSON.stringify({ request: searchRequest }),
       headers: {
         'Accept': 'application/json;odata=nometadata',
@@ -32,8 +33,8 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
         'odata-version': '3.0'
       }
     });
-    let sitesResponse = await searchResponse.json();
-    let relevantResults = sitesResponse.PrimaryQueryResult.RelevantResults;
+    const sitesResponse = await searchResponse.json();
+    const relevantResults = sitesResponse.PrimaryQueryResult.RelevantResults;
 
     values.push(...relevantResults.Table.Rows);
     totalRows = relevantResults.TotalRows;

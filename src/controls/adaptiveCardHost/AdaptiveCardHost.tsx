@@ -18,7 +18,7 @@ import { IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
 import { AdaptiveCardHostThemeType } from './models/AdaptiveCardHostThemeType';
 import { IAdaptiveCardHostActionResult } from './models/IAdaptiveCardHostActionResult';
 
-export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
+export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => {
   const renderElementRef = useRef<HTMLDivElement>(null);
   const adaptiveCardInstanceRef = useRef<AdaptiveCard>(null);
   const serializationContextInstanceRef = useRef<SerializationContext>(null);
@@ -46,18 +46,18 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
       const type = action.getJsonTypeName();
       switch (type) {
         case OpenUrlAction.JsonTypeName: {
-          let typedAction = action as OpenUrlAction;
-          actionResult = { type: type, title: typedAction.title, url: typedAction.url };
+          const openUrlAction = action as OpenUrlAction;
+          actionResult = { type: type, title: openUrlAction.title, url: openUrlAction.url };
         }
           break;
         case SubmitAction.JsonTypeName: {
-          let typedAction = action as SubmitAction;
-          actionResult = { type: type, title: typedAction.title, data: typedAction.data };
+          const submitAction = action as SubmitAction;
+          actionResult = { type: type, title: submitAction.title, data: submitAction.data };
         }
           break;
         case ExecuteAction.JsonTypeName: {
-          let typedAction = action as ExecuteAction;
-          actionResult = { type: type, title: typedAction.title, data: typedAction.data, verb: typedAction.verb };
+          const executeAction = action as ExecuteAction;
+          actionResult = { type: type, title: executeAction.title, data: executeAction.data, verb: executeAction.verb };
         }
           break;
       }
@@ -78,7 +78,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     }
 
     // if this control is wrapped on "ThemeProvider" take the theme from the context
-    let contextTheme = fluentUICustomizerContext.customizations.settings["theme"];
+    const contextTheme: ITheme | IPartialTheme = fluentUICustomizerContext.customizations.settings.theme;
     // *****
 
     if (props.theme) {
@@ -90,8 +90,8 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
     }
     // **********
 
-    let hostConfigResult = initializeAdaptiveCardHost(inputThemeType, mergeThemes(fluentUIDefaultTheme(), inputFluentUITheme));
-    let currentHostConfig = hostConfigResult.hostConfig;
+    const hostConfigResult = initializeAdaptiveCardHost(inputThemeType, mergeThemes(fluentUIDefaultTheme(), inputFluentUITheme));
+    const currentHostConfig = hostConfigResult.hostConfig;
 
     fluentUIThemeInstanceRef.current = hostConfigResult.theme;
     adaptiveCardInstanceRef.current.hostConfig = hostConfigResult.hostConfig;
@@ -112,8 +112,8 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
 
   // set elements & actions registry
   useEffect(() => {
-    let elementRegistry = new CardObjectRegistry<CardElement>();
-    let actionRegistry = new CardObjectRegistry<Action>();
+    const elementRegistry = new CardObjectRegistry<CardElement>();
+    const actionRegistry = new CardObjectRegistry<Action>();
 
     GlobalRegistry.populateWithDefaultElements(elementRegistry);
     GlobalRegistry.populateWithDefaultActions(actionRegistry);
@@ -129,7 +129,7 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
       props.onSetCustomActions(actionRegistry);
     }
 
-    let currentSerializationContext = serializationContextInstanceRef.current;
+    const currentSerializationContext = serializationContextInstanceRef.current;
     currentSerializationContext.setElementRegistry(elementRegistry);
     currentSerializationContext.setActionRegistry(actionRegistry);
 
@@ -138,21 +138,21 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps) => {
 
   // set Adaptive Card
   useEffect(() => {
-    let currentRenderElement = renderElementRef.current;
+    const currentRenderElement = renderElementRef.current;
 
     if (!currentRenderElement) {
       return;
     }
 
-    let currentAdaptiveCard = adaptiveCardInstanceRef.current;
+    const currentAdaptiveCard = adaptiveCardInstanceRef.current;
     try {
-      let template = new Template(props.card);
-      let evaluationContext = injectContextProperty(props.data, fluentUIThemeInstanceRef.current, props.context);
-      let cardPayload = template.expand(evaluationContext);
+      const template = new Template(props.card);
+      const evaluationContext = injectContextProperty(props.data, fluentUIThemeInstanceRef.current, props.context);
+      const cardPayload = template.expand(evaluationContext);
 
       currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
 
-      let renderedElement = currentAdaptiveCard.render();
+      const renderedElement = currentAdaptiveCard.render();
       currentRenderElement.innerHTML = "";
       currentRenderElement.appendChild(renderedElement);
 
