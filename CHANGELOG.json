@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)"
+          "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)",
+          "`ModernTaxonomyPicker`: ability to disallow selecting children [#1279](https://github.com/pnp/sp-dev-fx-controls-react/pull/1279)"
         ],
         "fixes": [
           "`FilePicker`: Tile view fix [#1272](https://github.com/pnp/sp-dev-fx-controls-react/issues/1272)"
@@ -13,6 +14,7 @@
       },
       "contributions": [
         "[Hilton Giesenow](https://github.com/HiltonGiesenow)",
+        "[Jake Stanger](https://github.com/JakeStanger)",
         "[Victor Romanov](https://github.com/VRomanovTau)"
       ]
     },
