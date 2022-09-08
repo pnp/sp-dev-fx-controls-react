@@ -110,7 +110,8 @@ export default class SPPeopleSearchService {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
       const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
-      const searchBody = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const searchBody: any = {
         queryParams: {
           AllowEmailAddresses: true,
           AllowMultipleEntities: false,
@@ -119,7 +120,6 @@ export default class SPPeopleSearchService {
           PrincipalSource: 15,
           PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query,
-          SharePointGroupID: null
         }
       };
 
