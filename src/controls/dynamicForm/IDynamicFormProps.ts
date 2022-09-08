@@ -55,10 +55,16 @@ export interface IDynamicFormProps {
  * Used to execute WebSearch. If not provided SearchTab will not be available.
  */
   //bingAPIKey?: string;
+  
   /**
    * InternalName of fields that should be disabled
    */
   disabledFields?: string[];
+
+  /**
+   * InternalName of fields that should be hidden
+   */
+  hiddenFields?: string[];
 
   /**
    * Absolute Web Url of target site (user requires permissions)

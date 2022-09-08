@@ -1,6 +1,18 @@
 {
   "versions": [
     {
+      "version": "3.11.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`Dynamic Form`: Allow to hide fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307)"
+        ]
+      },
+      "contributions": [
+        "[Paolo Pialorsi](https://github.com/PaoloPia)"
+      ]
+    },
+    {
       "version": "3.10.0",
       "changes": {
         "new": [],
