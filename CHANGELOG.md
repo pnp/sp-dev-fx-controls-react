@@ -1,5 +1,15 @@
 # Releases
 
+## 3.11.0
+
+### Enhancements
+
+- `Dynamic Form`: Allow to hide fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307)
+
+### Contributors
+
+Special thanks to our contributor: [Paolo Pialorsi](https://github.com/PaoloPia).
+
 ## 3.10.0
 
 ### Enhancements
