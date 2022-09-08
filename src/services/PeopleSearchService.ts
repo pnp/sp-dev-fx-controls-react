@@ -110,7 +110,7 @@ export default class SPPeopleSearchService {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
       const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
-      const searchBody = {
+      const searchBody: any = {
         queryParams: {
           AllowEmailAddresses: true,
           AllowMultipleEntities: false,
@@ -124,12 +124,12 @@ export default class SPPeopleSearchService {
 
       // Search on the local site when "0"
       if (siteUrl) {
-        searchBody.queryParams["SharePointGroupID"] = 0;
+        searchBody.queryParams.SharePointGroupID = 0;
       }
 
       // Check if users need to be searched in a specific SharePoint Group
       if (groupId && typeof (groupId) === 'number') {
-        searchBody.queryParams["SharePointGroupID"] = groupId;
+        searchBody.queryParams.SharePointGroupID = groupId;
       }
 
       // Check if users need to be searched in a specific Microsoft 365 Group, Security Group (incl. nested groups) or Distribution List
