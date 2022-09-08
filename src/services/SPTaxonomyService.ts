@@ -60,7 +60,7 @@ export class SPTaxonomyService {
 
   public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, allowSelectingChildren = true, stringMatchId: string = '0', pageSize: number = 50): Promise<ITermInfo[]> {
     try {
-      let query = [
+      const query = [
         `label='${label}'`,
         `setId='${termSetId}'`,
         `languageTag='${languageTag}'`,
