@@ -203,7 +203,7 @@ export default class SPPeopleSearchService {
             for (const value of values) {
               // Only ensure the user if it is not a SharePoint group
               if (!value.EntityData || (value.EntityData && typeof value.EntityData.SPGroupID === "undefined" && value.EntityData.PrincipalType !== "UNVALIDATED_EMAIL_ADDRESS")) {
-                const id = await this.ensureUser(value.Key);
+                const id = await this.ensureUser(value.Key, siteUrl || this.context.pageContext.web.absoluteUrl);
                 value.LoginName = value.Key;
                 value.Key = id;
               }
@@ -272,9 +272,10 @@ export default class SPPeopleSearchService {
    * Retrieves the local user ID
    *
    * @param userId
+   * @param siteUrl
    */
-  private async ensureUser(userId: string): Promise<number> {
-    const siteUrl = this.context.pageContext.web.absoluteUrl;
+  private async ensureUser(userId: string, siteUrl: string): Promise<number> {
+    // const siteUrl = this.context.pageContext.web.absoluteUrl;
     if (this.cachedLocalUsers && this.cachedLocalUsers[siteUrl]) {
       const users = this.cachedLocalUsers[siteUrl];
       const userIdx = findIndex(users, u => u.LoginName === userId);
