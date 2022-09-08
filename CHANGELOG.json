@@ -6,7 +6,8 @@
         "new": [],
         "enhancements": [
           "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)",
-          "`ModernTaxonomyPicker`: ability to disallow selecting children [#1279](https://github.com/pnp/sp-dev-fx-controls-react/pull/1279)"
+          "`ModernTaxonomyPicker`: ability to disallow selecting children [#1279](https://github.com/pnp/sp-dev-fx-controls-react/pull/1279)",
+          "`PeoplePicker`: Use webAbsoluteUrl if provided through props to ensure user [#1273](https://github.com/pnp/sp-dev-fx-controls-react/issues/1273)"
         ],
         "fixes": [
           "`FilePicker`: Tile view fix [#1272](https://github.com/pnp/sp-dev-fx-controls-react/issues/1272)"
