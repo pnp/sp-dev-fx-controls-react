@@ -108,7 +108,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
           // no-op;
         });
     }
-  }, [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.initialValues, props.termSetId, taxonomyService]);
+  },
+    // Do NOT add initial values as dependencies because it should trigger term resolution when the component rerender (https://github.com/pnp/sp-dev-fx-controls-react/issues/1306)
+    [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.termSetId, taxonomyService]);
 
   React.useEffect(() => {
     if (props.onChange && initialLoadComplete.current) {
