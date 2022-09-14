@@ -28,8 +28,6 @@ export default class SPTermStorePickerService {
    * Service constructor
    */
   constructor(private props: ITaxonomyPickerProps, private context: BaseComponentContext) {
-    this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
-    this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + "/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
   }
 
   public async getTermLabels(termId: string): Promise<string[]> {
