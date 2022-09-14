@@ -359,7 +359,7 @@ define([], () => {
   "DynamicFormLoading": "Laden...",
   "DynamicFormPleaseWait": "Bitte warten...",
   "DynamicFormRequiredErrorMessage": "Sie können dieses Feld nicht leer lassen.",
-  "DynamicFormTermPanelTitle": "Laufzeit auswählen",
+  "DynamicFormTermPanelTitle": "Knoten auswählen",
   "DynamicFormEnterURLPlaceholder": "Geben Sie eine URL ein",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativtext",
   "customDisplayName": "Verwenden Sie diesen Speicherort:",
