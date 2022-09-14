@@ -59,6 +59,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       options,
       fieldTermSetId,
+      fieldAnchorId,
       lookupListID,
       lookupField,
       fieldType,
@@ -468,6 +469,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={true}
               termsetNameOrID={fieldTermSetId}
+              anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
@@ -492,6 +494,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={false}
               termsetNameOrID={fieldTermSetId}
+              anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}

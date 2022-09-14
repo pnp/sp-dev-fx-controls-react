@@ -336,6 +336,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         field.order = order;
         let hiddenName = "";
         let termSetId = "";
+        let anchorId = "";
         let lookupListId = "";
         let lookupField = "";
         const choices: IDropdownOption[] = [];
@@ -383,6 +384,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
           hiddenName = response.value;
           termSetId = field.TermSetId;
+          anchorId = field.AnchorId;
           if (item !== null) {
             item[field.InternalName].forEach(element => {
               selectedTags.push({ key: element.TermGuid, name: element.Label });
@@ -406,6 +408,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         else if (fieldType === "TaxonomyFieldType") {
 
           termSetId = field.TermSetId;
+          anchorId = field.AnchorId;
           if (item !== null) {
             const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
             if (response) {
@@ -470,6 +473,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         tempFields.push({
           newValue: null,
           fieldTermSetId: termSetId,
+          fieldAnchorId: anchorId,
           options: choices,
           lookupListID: lookupListId,
           lookupField: lookupField,
