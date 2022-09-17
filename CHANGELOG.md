@@ -12,6 +12,7 @@
 
 - `PeoplePicker`: fixes where people picker returns no results [#1292](https://github.com/pnp/sp-dev-fx-controls-react/issues/1292)
 - `FilePicker`: Tile view fix [#1272](https://github.com/pnp/sp-dev-fx-controls-react/issues/1272)
+- Issues with v1.15.2 [#1288](https://github.com/pnp/sp-dev-fx-controls-react/issues/1288)
 
 ### Contributors
 
