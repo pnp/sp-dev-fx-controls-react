@@ -8,7 +8,8 @@
           "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)",
           "`ModernTaxonomyPicker`: ability to disallow selecting children [#1279](https://github.com/pnp/sp-dev-fx-controls-react/pull/1279)",
           "`PeoplePicker`: Use webAbsoluteUrl if provided through props to ensure user [#1273](https://github.com/pnp/sp-dev-fx-controls-react/issues/1273)",
-          "`DynamicForm`: Allow to hide fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307)"
+          "`DynamicForm`: Allow to hide fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307)",
+          "`DynamicForm`: Support for hidden fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307/)"
         ],
         "fixes": [
           "`PeoplePicker`: fixes where people picker returns no results [#1292](https://github.com/pnp/sp-dev-fx-controls-react/issues/1292)",
@@ -22,6 +23,7 @@
         "[Hilton Giesenow](https://github.com/HiltonGiesenow)",
         "[Jake Stanger](https://github.com/JakeStanger)",
         "[Mark Bice](https://github.com/mbice)",
+        "[Paolo Pialorsi](https://github.com/PaoloPia)",
         "[Victor Romanov](https://github.com/VRomanovTau)"
       ]
     },
