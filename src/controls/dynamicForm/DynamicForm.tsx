@@ -329,11 +329,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFeilds.value;
+      const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
       for (let i = 0, len = responseValue.length; i < len; i++) {
         const field = responseValue[i];
 
         // Handle only fields that are not marked as hidden
-        if (this.props.hiddenFields.indexOf(field.EntityPropertyName) < 0) {
+        if (hiddenFields.indexOf(field.EntityPropertyName) < 0) {
           order++;
           const fieldType = field.TypeAsString;
           field.order = order;
@@ -370,7 +371,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             else {
               defaultValue = [];
             }
-  
+
           }
           else if (fieldType === "LookupMulti") {
             lookupListId = field.LookupList;
@@ -390,7 +391,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               item[field.InternalName].forEach(element => {
                 selectedTags.push({ key: element.TermGuid, name: element.Label });
               });
-  
+
               defaultValue = selectedTags;
             }
             else {
@@ -399,7 +400,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
                   if (element.indexOf('|') !== -1)
                     selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
                 });
-  
+
                 defaultValue = selectedTags;
               }
             }
@@ -407,7 +408,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               defaultValue = null;
           }
           else if (fieldType === "TaxonomyFieldType") {
-  
+
             termSetId = field.TermSetId;
             if (item !== null) {
               const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
@@ -431,11 +432,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             else if (defaultValue === '[today]') {
               defaultValue = new Date();
             }
-  
+
             const schemaXml = field.SchemaXml;
             const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
             dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
-  
+
           }
           else if (fieldType === "UserMulti") {
             if (item !== null)
@@ -469,7 +470,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
           }
-  
+
           tempFields.push({
             newValue: null,
             fieldTermSetId: termSetId,
