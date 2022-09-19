@@ -329,174 +329,162 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFeilds.value;
+      const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
       for (let i = 0, len = responseValue.length; i < len; i++) {
         const field = responseValue[i];
-        order++;
-        const fieldType = field.TypeAsString;
-        field.order = order;
-        let hiddenName = "";
-        let termSetId = "";
-        let anchorId = "";
-        let lookupListId = "";
-        let lookupField = "";
-        const choices: IDropdownOption[] = [];
-        let defaultValue = null;
-        const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-        let richText = false;
-        let dateFormat: DateFormat | undefined;
-        let principalType = "";
-        if (item !== null) {
-          defaultValue = item[field.EntityPropertyName];
-        }
-        else {
-          defaultValue = field.DefaultValue;
-        }
-        if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
-          field.Choices.forEach(element => {
-            choices.push({ key: element, text: element });
-          });
-        }
-        else if (fieldType === "Note") {
-          richText = field.RichText;
-        }
-        else if (fieldType === "Lookup") {
-          lookupListId = field.LookupList;
-          lookupField = field.LookupField;
-          if (item !== null) {
-            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-          }
-          else {
-            defaultValue = [];
-          }
 
-        }
-        else if (fieldType === "LookupMulti") {
-          lookupListId = field.LookupList;
-          lookupField = field.LookupField;
+        // Handle only fields that are not marked as hidden
+        if (hiddenFields.indexOf(field.EntityPropertyName) < 0) {
+          order++;
+          const fieldType = field.TypeAsString;
+          field.order = order;
+          let hiddenName = "";
+          let termSetId = "";
+          let anchorId = "";
+          let lookupListId = "";
+          let lookupField = "";
+          const choices: IDropdownOption[] = [];
+          let defaultValue = null;
+          const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+          let richText = false;
+          let dateFormat: DateFormat | undefined;
+          let principalType = "";
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            defaultValue = item[field.EntityPropertyName];
+          } else {
+            defaultValue = field.DefaultValue;
           }
-          else {
-            defaultValue = [];
-          }
-        }
-        else if (fieldType === "TaxonomyFieldTypeMulti") {
-          const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
-          hiddenName = response.value;
-          termSetId = field.TermSetId;
-          anchorId = field.AnchorId;
-          if (item !== null) {
-            item[field.InternalName].forEach(element => {
-              selectedTags.push({ key: element.TermGuid, name: element.Label });
+          if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
+            field.Choices.forEach(element => {
+              choices.push({key: element, text: element});
             });
+          } else if (fieldType === "Note") {
+            richText = field.RichText;
+          } else if (fieldType === "Lookup") {
+            lookupListId = field.LookupList;
+            lookupField = field.LookupField;
+            if (item !== null) {
+              defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            } else {
+              defaultValue = [];
+            }
 
-            defaultValue = selectedTags;
-          }
-          else {
-            if (defaultValue !== "") {
-              defaultValue.split(/#|;/).forEach(element => {
-                if (element.indexOf('|') !== -1)
-                  selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
+          } else if (fieldType === "LookupMulti") {
+            lookupListId = field.LookupList;
+            lookupField = field.LookupField;
+            if (item !== null) {
+              defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            } else {
+              defaultValue = [];
+            }
+          } else if (fieldType === "TaxonomyFieldTypeMulti") {
+            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
+            hiddenName = response.value;
+            termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
+            if (item !== null) {
+              item[field.InternalName].forEach(element => {
+                selectedTags.push({key: element.TermGuid, name: element.Label});
               });
 
               defaultValue = selectedTags;
+            } else {
+              if (defaultValue !== "") {
+                defaultValue.split(/#|;/).forEach(element => {
+                  if (element.indexOf('|') !== -1)
+                    selectedTags.push({key: element.split('|')[1], name: element.split('|')[0]});
+                });
+
+                defaultValue = selectedTags;
+              }
             }
-          }
-          if (defaultValue === "")
-            defaultValue = null;
-        }
-        else if (fieldType === "TaxonomyFieldType") {
+            if (defaultValue === "")
+              defaultValue = null;
+          } else if (fieldType === "TaxonomyFieldType") {
 
-          termSetId = field.TermSetId;
-          anchorId = field.AnchorId;
-          if (item !== null) {
-            const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
-            if (response) {
-              selectedTags.push({ key: response.TermID, name: response.Label });
-              defaultValue = selectedTags;
+            termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
+            if (item !== null) {
+              const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+              if (response) {
+                selectedTags.push({key: response.TermID, name: response.Label});
+                defaultValue = selectedTags;
+              }
+            } else {
+              if (defaultValue !== "") {
+                selectedTags.push({key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1]});
+                defaultValue = selectedTags;
+              }
             }
-          }
-          else {
-            if (defaultValue !== "") {
-              selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
-              defaultValue = selectedTags;
+            if (defaultValue === "")
+              defaultValue = null;
+          } else if (fieldType === "DateTime") {
+            if (item !== null && item[field.InternalName])
+              defaultValue = new Date(item[field.InternalName]);
+            else if (defaultValue === '[today]') {
+              defaultValue = new Date();
             }
-          }
-          if (defaultValue === "")
-            defaultValue = null;
-        }
-        else if (fieldType === "DateTime") {
-          if (item !== null && item[field.InternalName])
-            defaultValue = new Date(item[field.InternalName]);
-          else if (defaultValue === '[today]') {
-            defaultValue = new Date();
+
+            const schemaXml = field.SchemaXml;
+            const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
+            dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
+
+          } else if (fieldType === "UserMulti") {
+            if (item !== null)
+              defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL);
+            else {
+              defaultValue = [];
+            }
+            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+            principalType = principalType.substring(0, principalType.indexOf('"'));
+          } else if (fieldType === "Thumbnail") {
+            if (defaultValue !== null) {
+              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+            }
+          } else if (fieldType === "User") {
+            if (item !== null) {
+              const userEmails: string[] = [];
+              userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
+              defaultValue = userEmails;
+            } else {
+              defaultValue = [];
+            }
+            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+            principalType = principalType.substring(0, principalType.indexOf('"'));
+          } else if (fieldType === "Location") {
+            defaultValue = JSON.parse(defaultValue);
+          } else if (fieldType === "Boolean") {
+            defaultValue = Boolean(Number(defaultValue));
           }
 
-          const schemaXml = field.SchemaXml;
-          const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
-          dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
-
+          tempFields.push({
+            newValue: null,
+            fieldTermSetId: termSetId,
+            fieldAnchorId: anchorId,
+            options: choices,
+            lookupListID: lookupListId,
+            lookupField: lookupField,
+            changedValue: defaultValue,
+            fieldType: field.TypeAsString,
+            fieldTitle: field.Title,
+            fieldDefaultValue: defaultValue,
+            context: this.props.context,
+            disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
+            listId: this.props.listId,
+            columnInternalName: field.EntityPropertyName,
+            label: field.Title,
+            onChanged: this.onChange,
+            required: field.Required,
+            hiddenFieldName: hiddenName,
+            Order: field.order,
+            isRichText: richText,
+            dateFormat: dateFormat,
+            listItemId: listItemId,
+            principalType: principalType,
+            description: field.Description
+          });
+          tempFields.sort((a, b) => a.Order - b.Order);
         }
-        else if (fieldType === "UserMulti") {
-          if (item !== null)
-            defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL);
-          else {
-            defaultValue = [];
-          }
-          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-          principalType = principalType.substring(0, principalType.indexOf('"'));
-        }
-        else if (fieldType === "Thumbnail") {
-          if (defaultValue !== null) {
-            defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
-          }
-        }
-        else if (fieldType === "User") {
-          if (item !== null) {
-            const userEmails: string[] = [];
-            userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
-            defaultValue = userEmails;
-          }
-          else {
-            defaultValue = [];
-          }
-          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-          principalType = principalType.substring(0, principalType.indexOf('"'));
-        }
-        else if (fieldType === "Location") {
-          defaultValue = JSON.parse(defaultValue);
-        }
-        else if (fieldType === "Boolean") {
-          defaultValue = Boolean(Number(defaultValue));
-        }
-
-        tempFields.push({
-          newValue: null,
-          fieldTermSetId: termSetId,
-          fieldAnchorId: anchorId,
-          options: choices,
-          lookupListID: lookupListId,
-          lookupField: lookupField,
-          changedValue: defaultValue,
-          fieldType: field.TypeAsString,
-          fieldTitle: field.Title,
-          fieldDefaultValue: defaultValue,
-          context: this.props.context,
-          disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
-          listId: this.props.listId,
-          columnInternalName: field.EntityPropertyName,
-          label: field.Title,
-          onChanged: this.onChange,
-          required: field.Required,
-          hiddenFieldName: hiddenName,
-          Order: field.order,
-          isRichText: richText,
-          dateFormat: dateFormat,
-          listItemId: listItemId,
-          principalType: principalType,
-          description: field.Description
-        });
-        tempFields.sort((a, b) => a.Order - b.Order);
       }
 
       this.setState({ fieldCollection: tempFields });
