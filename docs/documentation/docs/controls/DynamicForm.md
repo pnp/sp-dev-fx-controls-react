@@ -19,7 +19,7 @@ import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
           listId={"3071c058-549f-461d-9d73-8b9a52049a80"}  
           listItemId={1}
           onCancelled={() => { console.log('Cancelled') }}
-          onBeforeSubmit={async (listItem) => { return true; }}
+          onBeforeSubmit={async (listItem) => { return false; }}
           onSubmitError={(listItem, error) => { alert(error.message); }}
           onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
@@ -38,7 +38,7 @@ The `DynamicForm` can be configured with the following properties:
 | contentTypeId | string | no | content type ID |
 | disabled | boolean | no | Allows form to be disabled. Default value is `false`|
 | disabledFields | string[] | no | InternalName of fields that should be disabled. Default value is `false`|
-| onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. |
+| onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
 | onSubmitted | (listItemData: any, listItem?: IItem) => void | no | Method that returns listItem data JSON object and PnPJS list item instance (`IItem`). |
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
