@@ -10,7 +10,9 @@
           "`PeoplePicker`: Use webAbsoluteUrl if provided through props to ensure user [#1273](https://github.com/pnp/sp-dev-fx-controls-react/issues/1273)",
           "`DynamicForm`: Support for hidden fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307/)",
           "`Placeholder`: Documentation example to only display in edit mode [#1280](https://github.com/pnp/sp-dev-fx-controls-react/issues/1280)",
-          "`DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)"
+          "`DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)",
+          "`DynamicForm`: FirstDayOfWeek in DatePickers from webs regional settings [#1317](https://github.com/pnp/sp-dev-fx-controls-react/issues/1317)"
+
         ],
         "fixes": [
           "`PeoplePicker`: fixes where people picker returns no results [#1292](https://github.com/pnp/sp-dev-fx-controls-react/issues/1292)",
