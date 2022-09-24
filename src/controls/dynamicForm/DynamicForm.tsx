@@ -330,6 +330,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       let order: number = 0;
       const responseValue = listFeilds.value;
       const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+      let defaultDayOfWeek: number = 0;
       for (let i = 0, len = responseValue.length; i < len; i++) {
         const field = responseValue[i];
 
@@ -436,7 +437,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             const schemaXml = field.SchemaXml;
             const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
             dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
-
+            defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
           }
           else if (fieldType === "UserMulti") {
             if (item !== null)
@@ -492,6 +493,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             Order: field.order,
             isRichText: richText,
             dateFormat: dateFormat,
+            firstDayOfWeek: defaultDayOfWeek,
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description
