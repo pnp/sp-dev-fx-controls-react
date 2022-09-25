@@ -3,12 +3,22 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import {
   Customizer,
-  Icon,
-  Label,
-  MessageBar,
-  MessageBarType,
+} from 'office-ui-fabric-react/lib/Utilities';
+
+import {
   Stack,
-} from 'office-ui-fabric-react';
+} from 'office-ui-fabric-react/lib/Stack';
+import {
+  Icon,
+} from 'office-ui-fabric-react/lib/Icon';
+
+import {
+  Label,
+} from 'office-ui-fabric-react/lib/Label';
+import {
+  MessageBarType,
+ MessageBar,
+} from 'office-ui-fabric-react/lib/MessageBar';
 
 import { IProgressStepsIndicatorProps } from './IProgressStepsIndicatorProps';
 import {
