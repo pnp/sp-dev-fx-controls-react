@@ -3,7 +3,9 @@
     {
       "version": "3.11.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`ProgressStepsIndicator`: New control that shows a progress of steps. [#1322](https://github.com/pnp/sp-dev-fx-controls-react/pull/1322)"
+        ],
         "enhancements": [
           "`DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)",
           "`ModernTaxonomyPicker`: ability to disallow selecting children [#1279](https://github.com/pnp/sp-dev-fx-controls-react/pull/1279)",
@@ -29,6 +31,7 @@
         "[Hilton Giesenow](https://github.com/HiltonGiesenow)",
         "[Jake Stanger](https://github.com/JakeStanger)",
         "[Jasey Waegebaert](https://github.com/Jwaegebaert)",
+        "[João Mendes](https://github.com/joaojmendes)",
         "[Josef Benda](https://github.com/SmarterJB)",
         "[Mark Bice](https://github.com/mbice)",
         "[Paolo Pialorsi](https://github.com/PaoloPia)",
