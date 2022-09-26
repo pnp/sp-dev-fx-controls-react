@@ -11,7 +11,7 @@ Here is an example of the control in action:
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
-- In your component file, import the `Accordion` control as follows:
+- In your component file, import the `ProgressStepsIndicator` control as follows:
 
 ```TypeScript
 import { ProgressStepsIndicator } from '"@pnp/spfx-controls-react/lib/ProgressStepsIndicator';
