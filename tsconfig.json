@@ -32,6 +32,10 @@
   },
   "include": [
     "src/**/*.ts",
+<<<<<<< HEAD
     "src/**/*.tsx"
   ]
+=======
+    "src/**/*.tsx"]
+>>>>>>> 87597f4807b3ea5e3ce603a7b0f335ca1aed9328
 }

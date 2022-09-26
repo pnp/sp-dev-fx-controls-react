@@ -1,10 +1,18 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {
   ILabelStyles,
+
+} from 'office-ui-fabric-react/lib/Label';
+import {
   IStackStyles,
-  IStyle,
-  mergeStyleSets,
-} from 'office-ui-fabric-react';
+
+} from 'office-ui-fabric-react/lib/Stack';
+
+import {
+  IStyle, mergeStyleSets,
+
+} from 'office-ui-fabric-react/lib/Styling';
 
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
