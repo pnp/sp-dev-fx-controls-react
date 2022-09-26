@@ -404,6 +404,7 @@ define([], () => {
     ModernAudioPause: "Pause",
     ModernAudioIncVol: "Increase Volume",
     ModernAudioDecVol: "Decrease Volume",
-    ModernAudioMute: "Mute"
+    ModernAudioMute: "Mute",
+    ProgressStepsIndicatorNoSteps: "No steps",
 };
 });
