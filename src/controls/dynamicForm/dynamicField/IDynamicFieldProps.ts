@@ -30,6 +30,7 @@ export interface IDynamicFieldProps {
   Order: number;
   isRichText?: boolean;
   dateFormat?: DateFormat;
+  firstDayOfWeek: number;
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;
   description?: string;

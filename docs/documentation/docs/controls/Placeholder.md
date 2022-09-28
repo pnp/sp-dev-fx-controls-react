@@ -56,6 +56,21 @@ Sample of using the `hideButton` functionality for hiding the button when page i
              theme={this.props.themeVariant} />
 ```
 
+Sample to only display `Placeholder` when the web part is in edit mode:
+
+```TypeScript
+{
+  this.displayMode === DisplayMode.Edit ?
+  <Placeholder iconName='Edit'
+               iconText='Configure your web part'
+               description='Please configure the web part.'
+               buttonLabel='Configure'
+               onConfigure={this._onConfigure}
+               theme={this.props.themeVariant} /> :
+  <div />
+}
+```
+
 ## Implementation
 
 The placeholder control can be configured with the following properties:

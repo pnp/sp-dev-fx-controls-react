@@ -679,6 +679,16 @@ export default class SPService implements ISPService {
     return result;
   }
 
+  public async getRegionalWebSettings(webUrl?: string): Promise<any> {
+    const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+    const apiRequestPath = "/_api/web/regionalsettings";
+
+    const apiUrl = urlCombine(webAbsoluteUrl, apiRequestPath, false);
+    const response = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    const result = await response.json();
+    return result;
+  }
+
   private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any
     const lowercasedFilterText = filterText.toLowerCase();
 

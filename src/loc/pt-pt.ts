@@ -378,6 +378,8 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Remover",
   "ModernTaxonomyPickerPanelCloseButtonText": "Fechar",
   "ModernTaxonomyPickerNoResultsFound": "Nenhum resultado encontrado",
-  "ModernTaxonomyPickerSuggestionInLabel": "Em"
+  "ModernTaxonomyPickerSuggestionInLabel": "Em",
+  "ProgressStepsIndicatorNoSteps": "Nenhuma etapa definida",
+
 };
 });
