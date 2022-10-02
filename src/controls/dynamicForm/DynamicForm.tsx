@@ -443,7 +443,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else if (fieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
-              userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
+              userEmails.push(await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
               defaultValue = userEmails;
             }
             else {
