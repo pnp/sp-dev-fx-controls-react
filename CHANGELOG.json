@@ -23,7 +23,8 @@
           "`RichText`: Fix broken arrow icons [#1302](https://github.com/pnp/sp-dev-fx-controls-react/pull/1302)",
           "`TaxonomyPicker`: Does not show term set labels in Version 3.10.0 [#1299](https://github.com/pnp/sp-dev-fx-controls-react/issues/1299)",
           "`TaxonomyPicker`: Dynamic form select term not working [#1303](https://github.com/pnp/sp-dev-fx-controls-react/issues/1303)",
-          "`DynamicForm`: Check if hiddenfields property is undefined [#1314](https://github.com/pnp/sp-dev-fx-controls-react/pull/1314)"
+          "`DynamicForm`: Check if hiddenfields property is undefined [#1314](https://github.com/pnp/sp-dev-fx-controls-react/pull/1314)",
+          "`DynamicForm`: PeoplePicker preselects wrong user if PrincipalType allows groups [#1315](https://github.com/pnp/sp-dev-fx-controls-react/issues/1315)"
         ]
       },
       "contributions": [
