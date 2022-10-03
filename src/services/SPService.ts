@@ -597,7 +597,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getUserUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> {
+  public async getUserUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id,${fieldName}/Name&$expand=${fieldName}`;
@@ -682,7 +682,7 @@ export default class SPService implements ISPService {
     return result;
   }
 
-  public async getRegionalWebSettings(webUrl?: string): Promise<any> {
+  public async getRegionalWebSettings(webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
     const apiRequestPath = "/_api/web/regionalsettings";
 
