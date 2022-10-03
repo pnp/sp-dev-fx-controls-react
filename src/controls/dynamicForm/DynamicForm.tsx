@@ -281,28 +281,16 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       field.newValue = [];
       for (let index = 0; index < newValue.length; index++) {
         const element = newValue[index];
-        let retrivedItem = false;
-        if (field.fieldDefaultValue !== null) {
-          if (field.fieldDefaultValue.join(',').indexOf(element.text) !== -1)
-            field.fieldDefaultValue.forEach(item => {
-              if (item.split('/')[1] === element.text) {
-                retrivedItem = true;
-                field.newValue.push(item.split('/')[0]);
-              }
-            });
+        if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
+          let user: string = element.secondaryText;
+          if (user.indexOf('@') === -1) {
+            user = element.loginName;
+          }
+          const result = await sp.web.ensureUser(user);
+          field.newValue.push(result.data.Id);
         }
-        if (!retrivedItem) {
-          if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
-            let user: string = element.secondaryText;
-            if (user.indexOf('@') === -1) {
-              user = element.loginName;
-            }
-            const result = await sp.web.ensureUser(user);
-            field.newValue.push(result.data.Id);
-          }
-          else {
-            field.newValue.push(element.id);
-          }
+        else {
+          field.newValue.push(element.id);
         }
       }
     }
@@ -456,7 +444,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           else if (fieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
-              userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
+              userEmails.push(await this._spService.getUserUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
               defaultValue = userEmails;
             }
             else {
