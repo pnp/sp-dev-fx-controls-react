@@ -575,7 +575,7 @@ export default class SPService implements ISPService {
   public async getUsersUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id,${fieldName}/Name&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -583,7 +583,8 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           const emails = [];
           result[fieldName].forEach(element => {
-            emails.push(element.Id + "/" + element.Title);
+            const loginNameWithoutClaimsToken = element.Name.split("|").pop();
+            emails.push(loginNameWithoutClaimsToken + "/" + element.Title);
           });
           return emails;
         }
@@ -596,16 +597,18 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getUserUPNById(userId: number, webUrl?: string): Promise<string> {
+  public async getUserUPNFromFieldValue(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> {
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/getuserbyid(${userId})?$select=UserPrincipalName,Title`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/Title,${fieldName}/Id,${fieldName}/Name&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
-        const results = await data.json();
-        if (results) {
-          return userId + "/" + results.Title;
+        const result = await data.json();
+        if (result && result[fieldName]) {
+          const element = result[fieldName]
+            const loginNameWithoutClaimsToken = element.Name.split("|").pop();
+            return loginNameWithoutClaimsToken + "/" + element.Title;
         }
       }
 
