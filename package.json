@@ -100,7 +100,7 @@
     "karma-remap-coverage": "^0.1.4",
     "react-addons-test-utils": "15.6.0",
     "request-promise": "4.2.5",
-    "sonarqube-scanner": "2.1.2",
+    "sonarqube-scanner": "2.8.2",
     "spfx-fast-serve-helpers": "~1.15.3",
     "ts-jest": "^25.5.1",
     "tslib": "2.3.1",
