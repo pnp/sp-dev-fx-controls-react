@@ -281,28 +281,16 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       field.newValue = [];
       for (let index = 0; index < newValue.length; index++) {
         const element = newValue[index];
-        let retrivedItem = false;
-        if (field.fieldDefaultValue !== null) {
-          if (field.fieldDefaultValue.join(',').indexOf(element.text) !== -1)
-            field.fieldDefaultValue.forEach(item => {
-              if (item.split('/')[1] === element.text) {
-                retrivedItem = true;
-                field.newValue.push(item.split('/')[0]);
-              }
-            });
+        if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
+          let user: string = element.secondaryText;
+          if (user.indexOf('@') === -1) {
+            user = element.loginName;
+          }
+          const result = await sp.web.ensureUser(user);
+          field.newValue.push(result.data.Id);
         }
-        if (!retrivedItem) {
-          if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
-            let user: string = element.secondaryText;
-            if (user.indexOf('@') === -1) {
-              user = element.loginName;
-            }
-            const result = await sp.web.ensureUser(user);
-            field.newValue.push(result.data.Id);
-          }
-          else {
-            field.newValue.push(element.id);
-          }
+        else {
+          field.newValue.push(element.id);
         }
       }
     }
@@ -329,170 +317,177 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFeilds.value;
+      const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+      let defaultDayOfWeek: number = 0;
       for (let i = 0, len = responseValue.length; i < len; i++) {
         const field = responseValue[i];
-        order++;
-        const fieldType = field.TypeAsString;
-        field.order = order;
-        let hiddenName = "";
-        let termSetId = "";
-        let lookupListId = "";
-        let lookupField = "";
-        const choices: IDropdownOption[] = [];
-        let defaultValue = null;
-        const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-        let richText = false;
-        let dateFormat: DateFormat | undefined;
-        let principalType = "";
-        if (item !== null) {
-          defaultValue = item[field.EntityPropertyName];
-        }
-        else {
-          defaultValue = field.DefaultValue;
-        }
-        if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
-          field.Choices.forEach(element => {
-            choices.push({ key: element, text: element });
-          });
-        }
-        else if (fieldType === "Note") {
-          richText = field.RichText;
-        }
-        else if (fieldType === "Lookup") {
-          lookupListId = field.LookupList;
-          lookupField = field.LookupField;
-          if (item !== null) {
-            defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-          }
-          else {
-            defaultValue = [];
-          }
 
-        }
-        else if (fieldType === "LookupMulti") {
-          lookupListId = field.LookupList;
-          lookupField = field.LookupField;
+        // Handle only fields that are not marked as hidden
+        if (hiddenFields.indexOf(field.EntityPropertyName) < 0) {
+          order++;
+          const fieldType = field.TypeAsString;
+          field.order = order;
+          let hiddenName = "";
+          let termSetId = "";
+          let lookupListId = "";
+          let lookupField = "";
+          const choices: IDropdownOption[] = [];
+          let defaultValue = null;
+          const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+          let richText = false;
+          let dateFormat: DateFormat | undefined;
+          let principalType = "";
           if (item !== null) {
-            defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            defaultValue = item[field.EntityPropertyName];
           }
           else {
-            defaultValue = [];
+            defaultValue = field.DefaultValue;
           }
-        }
-        else if (fieldType === "TaxonomyFieldTypeMulti") {
-          const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
-          hiddenName = response.value;
-          termSetId = field.TermSetId;
-          if (item !== null) {
-            item[field.InternalName].forEach(element => {
-              selectedTags.push({ key: element.TermGuid, name: element.Label });
+          if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
+            field.Choices.forEach(element => {
+              choices.push({ key: element, text: element });
             });
-
-            defaultValue = selectedTags;
           }
-          else {
-            if (defaultValue !== "") {
-              defaultValue.split(/#|;/).forEach(element => {
-                if (element.indexOf('|') !== -1)
-                  selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
+          else if (fieldType === "Note") {
+            richText = field.RichText;
+          }
+          else if (fieldType === "Lookup") {
+            lookupListId = field.LookupList;
+            lookupField = field.LookupField;
+            if (item !== null) {
+              defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            }
+            else {
+              defaultValue = [];
+            }
+
+          }
+          else if (fieldType === "LookupMulti") {
+            lookupListId = field.LookupList;
+            lookupField = field.LookupField;
+            if (item !== null) {
+              defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
+            }
+            else {
+              defaultValue = [];
+            }
+          }
+          else if (fieldType === "TaxonomyFieldTypeMulti") {
+            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
+            hiddenName = response.value;
+            termSetId = field.TermSetId;
+            if (item !== null) {
+              item[field.InternalName].forEach(element => {
+                selectedTags.push({ key: element.TermGuid, name: element.Label });
               });
 
               defaultValue = selectedTags;
             }
-          }
-          if (defaultValue === "")
-            defaultValue = null;
-        }
-        else if (fieldType === "TaxonomyFieldType") {
+            else {
+              if (defaultValue !== "") {
+                defaultValue.split(/#|;/).forEach(element => {
+                  if (element.indexOf('|') !== -1)
+                    selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
+                });
 
-          termSetId = field.TermSetId;
-          if (item !== null) {
-            const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
-            if (response) {
-              selectedTags.push({ key: response.TermID, name: response.Label });
-              defaultValue = selectedTags;
+                defaultValue = selectedTags;
+              }
+            }
+            if (defaultValue === "")
+              defaultValue = null;
+          }
+          else if (fieldType === "TaxonomyFieldType") {
+
+            termSetId = field.TermSetId;
+            if (item !== null) {
+              const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+              if (response) {
+                selectedTags.push({ key: response.TermID, name: response.Label });
+                defaultValue = selectedTags;
+              }
+            }
+            else {
+              if (defaultValue !== "") {
+                selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
+                defaultValue = selectedTags;
+              }
+            }
+            if (defaultValue === "")
+              defaultValue = null;
+          }
+          else if (fieldType === "DateTime") {
+            if (item !== null && item[field.InternalName])
+              defaultValue = new Date(item[field.InternalName]);
+            else if (defaultValue === '[today]') {
+              defaultValue = new Date();
+            }
+
+            const schemaXml = field.SchemaXml;
+            const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
+            dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
+            defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
+          }
+          else if (fieldType === "UserMulti") {
+            if (item !== null)
+              defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL);
+            else {
+              defaultValue = [];
+            }
+            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+            principalType = principalType.substring(0, principalType.indexOf('"'));
+          }
+          else if (fieldType === "Thumbnail") {
+            if (defaultValue !== null) {
+              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
             }
           }
-          else {
-            if (defaultValue !== "") {
-              selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
-              defaultValue = selectedTags;
+          else if (fieldType === "User") {
+            if (item !== null) {
+              const userEmails: string[] = [];
+              userEmails.push(await this._spService.getUserUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
+              defaultValue = userEmails;
             }
+            else {
+              defaultValue = [];
+            }
+            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
+            principalType = principalType.substring(0, principalType.indexOf('"'));
           }
-          if (defaultValue === "")
-            defaultValue = null;
-        }
-        else if (fieldType === "DateTime") {
-          if (item !== null && item[field.InternalName])
-            defaultValue = new Date(item[field.InternalName]);
-          else if (defaultValue === '[today]') {
-            defaultValue = new Date();
+          else if (fieldType === "Location") {
+            defaultValue = JSON.parse(defaultValue);
+          }
+          else if (fieldType === "Boolean") {
+            defaultValue = Boolean(Number(defaultValue));
           }
 
-          const schemaXml = field.SchemaXml;
-          const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
-          dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
-
+          tempFields.push({
+            newValue: null,
+            fieldTermSetId: termSetId,
+            options: choices,
+            lookupListID: lookupListId,
+            lookupField: lookupField,
+            changedValue: defaultValue,
+            fieldType: field.TypeAsString,
+            fieldTitle: field.Title,
+            fieldDefaultValue: defaultValue,
+            context: this.props.context,
+            disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
+            listId: this.props.listId,
+            columnInternalName: field.EntityPropertyName,
+            label: field.Title,
+            onChanged: this.onChange,
+            required: field.Required,
+            hiddenFieldName: hiddenName,
+            Order: field.order,
+            isRichText: richText,
+            dateFormat: dateFormat,
+            firstDayOfWeek: defaultDayOfWeek,
+            listItemId: listItemId,
+            principalType: principalType,
+            description: field.Description
+          });
+          tempFields.sort((a, b) => a.Order - b.Order);
         }
-        else if (fieldType === "UserMulti") {
-          if (item !== null)
-            defaultValue = await this._spService.getUsersUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL);
-          else {
-            defaultValue = [];
-          }
-          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-          principalType = principalType.substring(0, principalType.indexOf('"'));
-        }
-        else if (fieldType === "Thumbnail") {
-          if (defaultValue !== null) {
-            defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
-          }
-        }
-        else if (fieldType === "User") {
-          if (item !== null) {
-            const userEmails: string[] = [];
-            userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
-            defaultValue = userEmails;
-          }
-          else {
-            defaultValue = [];
-          }
-          principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-          principalType = principalType.substring(0, principalType.indexOf('"'));
-        }
-        else if (fieldType === "Location") {
-          defaultValue = JSON.parse(defaultValue);
-        }
-        else if (fieldType === "Boolean") {
-          defaultValue = Boolean(Number(defaultValue));
-        }
-
-        tempFields.push({
-          newValue: null,
-          fieldTermSetId: termSetId,
-          options: choices,
-          lookupListID: lookupListId,
-          lookupField: lookupField,
-          changedValue: defaultValue,
-          fieldType: field.TypeAsString,
-          fieldTitle: field.Title,
-          fieldDefaultValue: defaultValue,
-          context: this.props.context,
-          disabled: this.props.disabled || (disabledFields && disabledFields.indexOf(field.InternalName) > -1),
-          listId: this.props.listId,
-          columnInternalName: field.EntityPropertyName,
-          label: field.Title,
-          onChanged: this.onChange,
-          required: field.Required,
-          hiddenFieldName: hiddenName,
-          Order: field.order,
-          isRichText: richText,
-          dateFormat: dateFormat,
-          listItemId: listItemId,
-          principalType: principalType,
-          description: field.Description
-        });
-        tempFields.sort((a, b) => a.Order - b.Order);
       }
 
       this.setState({ fieldCollection: tempFields });

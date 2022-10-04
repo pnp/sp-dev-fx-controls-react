@@ -5,7 +5,7 @@ import { IFilePickerResult } from "../../FilePicker.types";
 
 export interface ITilesListProps {
   fileBrowserService: FileBrowserService;
-  filePickerResult: IFilePickerResult;
+  filePickerResults: IFilePickerResult[];
   selection: Selection;
   items: IFile[];
 

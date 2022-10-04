@@ -99,6 +99,7 @@ The following controls are currently available:
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)
 - [Progress](./controls/Progress) (shows progress of multiple SEQUENTIALLY executed actions)
+- [ProgressStepsIndicator.md](./controls/ProgressStepsIndicator) (shows a progress of steps)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SitePicker](./controls/SitePicker) (Site Picker control)

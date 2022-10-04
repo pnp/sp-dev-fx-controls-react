@@ -1,4 +1,5 @@
 declare interface IControlStrings {
+  ProgressStepsIndicatorNoSteps:string;
   ListItemCommentsLabel: string;
   ListItemCommentsNoCommentsLabel: string;
   ListItemCommentDIalogDeleteSubText: string;

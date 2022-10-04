@@ -59,6 +59,7 @@ nav:
     - PeoplePicker: 'controls/PeoplePicker.md'
     - Placeholder: 'controls/Placeholder.md'
     - Progress: 'controls/Progress.md'
+    - ProgressStepsIndicator: 'controls/ProgressStepsIndicator.md'
     - RichText: 'controls/RichText.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
