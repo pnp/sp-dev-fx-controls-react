@@ -16,6 +16,11 @@ import styles from './DynamicForm.module.scss';
 import { IDynamicFormProps } from './IDynamicFormProps';
 import { IDynamicFormState } from './IDynamicFormState';
 
+import '@pnp/sp/lists';
+import '@pnp/sp/content-types';
+import '@pnp/sp/folders';
+import '@pnp/sp/items';
+
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
 /**
@@ -103,6 +108,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     const {
       listId,
       listItemId,
+      contentTypeId,
       onSubmitted,
       onBeforeSubmit,
       onSubmitError
@@ -215,6 +221,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       }
 
+      // If we have the item ID, we simply need to update it
       if (listItemId) {
         try {
           const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
@@ -231,19 +238,48 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
       }
       else {
-        try {
-          const iar = await sp.web.lists.getById(listId).items.add(objects);
-          if (onSubmitted) {
-            onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
+
+        // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
+        if (!contentTypeId || !contentTypeId.startsWith('0x0120')) {
+            // We are adding a new list item
+            try {
+              const iar = await sp.web.lists.getById(listId).items.add(objects);
+              if (onSubmitted) {
+                onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
+              }
+            }
+            catch (error) {
+              if (onSubmitError) {
+                onSubmitError(objects, error);
+              }
+              console.log("Error", error);
+            }
+        } else if (contentTypeId.startsWith('0x0120')) {
+          // We are adding a folder or a Document Set
+          try {
+            const library = await sp.web.lists.getById(listId);
+            const newFolder = await library.rootFolder.addSubFolderUsingPath(objects['Title']);
+            const fields = await newFolder.listItemAllFields();
+            const folderId = fields['ID'];
+
+            // Set the content type ID for the target item
+            objects['ContentTypeId'] = contentTypeId;
+
+            // Update the just created folder or Document Set
+            const iur = await library.items.getById(folderId).update(objects);
+            if (onSubmitted) {
+              onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+            }
           }
-        }
-        catch (error) {
-          if (onSubmitError) {
-            onSubmitError(objects, error);
+          catch (error) {
+            if (onSubmitError) {
+              onSubmitError(objects, error);
+            }
+            console.log("Error", error);
           }
-          console.log("Error", error);
         }
       }
+
       this.setState({
         isSaving: false
       });
@@ -313,10 +349,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         const defaultContentType = await spList.contentTypes.select("Id", "Name").get();
         contentTypeId = defaultContentType[0].Id.StringValue;
       }
-      const listFeilds = await this.getFormFields(listId, contentTypeId, this.webURL);
+      const listFields = await this.getFormFields(listId, contentTypeId, this.webURL);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
-      const responseValue = listFeilds.value;
+      const responseValue = listFields.value;
       const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
       let defaultDayOfWeek: number = 0;
       for (let i = 0, len = responseValue.length; i < len; i++) {
