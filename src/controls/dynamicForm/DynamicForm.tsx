@@ -273,7 +273,6 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
               // Set the content type ID for the target item
               objects[contentTypeIdField] = contentTypeId;
-
               // Update the just created folder or Document Set
               const iur = await library.items.getById(folderId).update(objects);
               if (onSubmitted) {
