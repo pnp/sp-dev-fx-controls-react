@@ -262,10 +262,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
             const library = await sp.web.lists.getById(listId);
             const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
-              encodeURIComponent(objects[titleField]) : ''; // Empty string will be replaced by SPO with Folder Item ID
+              (objects[titleField] as string).replace(/["|*|:|<|>|?|/|\\||]/g, "_") : // Replace not allowed chars in folder name
+              ''; // Empty string will be replaced by SPO with Folder Item ID
             const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
             const fields = await newFolder.listItemAllFields();
-            if (fields[idField] !== undefined) {
+            if (fields[idField]) {
 
               // Read the ID of the just created folder or Document Set
               const folderId = fields[idField];
