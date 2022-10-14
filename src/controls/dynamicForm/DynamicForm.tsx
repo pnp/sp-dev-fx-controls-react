@@ -237,9 +237,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
 
       }
+      // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
       else {
-
-        // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
         if (contentTypeId === undefined || contentTypeId === '' || !contentTypeId.startsWith('0x0120')) {
             // We are adding a new list item
             try {
@@ -257,18 +256,30 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         } else if (contentTypeId !== undefined && contentTypeId !== '' && contentTypeId.startsWith('0x0120')) {
           // We are adding a folder or a Document Set
           try {
+            const idField = 'ID';
+            const titleField = 'Title';
+            const contentTypeIdField = 'ContentTypeId';
+
             const library = await sp.web.lists.getById(listId);
-            const newFolder = await library.rootFolder.addSubFolderUsingPath(objects['Title']);
+            const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
+              encodeURIComponent(objects[titleField]) : ''; // Empty string will be replaced by SPO with Folder Item ID
+            const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
             const fields = await newFolder.listItemAllFields();
-            const folderId = fields['ID'];
+            if (fields[idField] !== undefined) {
 
-            // Set the content type ID for the target item
-            objects['ContentTypeId'] = contentTypeId;
+              // Read the ID of the just created folder or Document Set
+              const folderId = fields[idField];
 
-            // Update the just created folder or Document Set
-            const iur = await library.items.getById(folderId).update(objects);
-            if (onSubmitted) {
-              onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+              // Set the content type ID for the target item
+              objects[contentTypeIdField] = contentTypeId;
+  
+              // Update the just created folder or Document Set
+              const iur = await library.items.getById(folderId).update(objects);
+              if (onSubmitted) {
+                onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+              }
+            } else {
+              throw new Error('Unable to read the ID of the just created folder or Document Set');
             }
           }
           catch (error) {
