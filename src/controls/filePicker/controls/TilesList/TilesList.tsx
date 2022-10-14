@@ -61,14 +61,16 @@ export class TilesList extends React.Component<ITilesListProps> {
     return (
       <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => { this._handleItemInvoked(item); }}>
         <FocusZone>
-          <List
-            ref={(e: List) => { this._listElem = e; }}
-            className={styles.folderList}
-            items={this.props.items}
-            getItemCountForPage={this._getItemCountForPage}
-            getPageHeight={this._getPageHeight}
-            onRenderPage={(pageProps: IPageProps, defaultRender?: IRenderFunction<IPageProps>) => this._onRenderPage(pageProps, defaultRender)}
-          />
+          <div data-is-scrollable>
+            <List
+              ref={(e: List) => { this._listElem = e; }}
+              className={styles.folderList}
+              items={this.props.items}
+              getItemCountForPage={this._getItemCountForPage}
+              getPageHeight={this._getPageHeight}
+              onRenderPage={(pageProps: IPageProps, defaultRender?: IRenderFunction<IPageProps>) => this._onRenderPage(pageProps, defaultRender)}
+            />
+          </div>
         </FocusZone>
       </SelectionZone>
     );
