@@ -240,7 +240,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       else {
 
         // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
-        if (!contentTypeId || !contentTypeId.startsWith('0x0120')) {
+        if (contentTypeId === undefined || contentTypeId === '' || !contentTypeId.startsWith('0x0120')) {
             // We are adding a new list item
             try {
               const iar = await sp.web.lists.getById(listId).items.add(objects);
@@ -254,7 +254,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               }
               console.log("Error", error);
             }
-        } else if (contentTypeId.startsWith('0x0120')) {
+        } else if (contentTypeId !== undefined && contentTypeId !== '' && contentTypeId.startsWith('0x0120')) {
           // We are adding a folder or a Document Set
           try {
             const library = await sp.web.lists.getById(listId);
