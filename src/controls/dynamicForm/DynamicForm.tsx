@@ -561,7 +561,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
       let apiUrl = '';
       if (contentTypeId !== undefined && contentTypeId !== '') {
-        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        if (contentTypeId.startsWith('0x0120')) {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and (Hidden eq false or StaticName eq 'Title') and (FromBaseType eq false or StaticName eq 'Title')`;
+        } else {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        }
       }
       else {
         apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
