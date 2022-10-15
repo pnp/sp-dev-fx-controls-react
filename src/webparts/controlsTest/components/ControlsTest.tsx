@@ -190,6 +190,7 @@ import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFun
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
+import { TestControl } from "./TestControl";
 
 
 // Used to render document card
@@ -2406,6 +2407,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               showIcons={true}
             />
           )}
+        </div>
+
+        <div>
+          <h3>Monaco Editor</h3>
+          <TestControl context={this.props.context} />
         </div>
 
       </div>
