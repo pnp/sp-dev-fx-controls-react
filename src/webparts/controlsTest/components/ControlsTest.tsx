@@ -1703,8 +1703,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
           <FilePicker
             bingAPIKey="<BING API KEY>"
-            webAbsoluteUrl="https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo"
-            defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
+            //webAbsoluteUrl="https://023xn.sharepoint.com/sites/test1"
+            //defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
