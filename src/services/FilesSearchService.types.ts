@@ -68,3 +68,9 @@ export interface Thumbnail {
   width: number;
   height: number;
 }
+
+export interface ISiteWebInfo {
+  title: string,
+  webId: string,
+  siteId: string
+}
