@@ -1,5 +1,5 @@
 import * as telemetry from '../../common/telemetry';
-import React from 'react';
+import * as React from 'react';
 import { IContentTypePickerProps, IContentTypePickerState } from './IContentTypePicker';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
