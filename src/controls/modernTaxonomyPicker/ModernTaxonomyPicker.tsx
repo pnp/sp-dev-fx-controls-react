@@ -108,13 +108,13 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
           // no-op;
         });
     }
-  }, [currentTermStoreInfo?.defaultLanguageTag, props.anchorTermId, props.context.pageContext, props.initialValues, props.termSetId, taxonomyService]);
+  }, []);
 
   React.useEffect(() => {
     if (props.onChange && initialLoadComplete.current) {
       props.onChange(selectedOptions);
     }
-  }, [props, selectedOptions]);
+  }, [selectedOptions]);
 
   function onOpenPanel(): void {
     if (props.disabled === true) {
