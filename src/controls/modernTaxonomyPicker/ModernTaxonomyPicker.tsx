@@ -130,7 +130,18 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   }
 
   function onApply(): void {
-    setSelectedOptions([...selectedPanelOptions]);
+    if (props.isPathRendered) {
+      addParentInformationToTerms([...selectedPanelOptions])
+        .then((selectedTermsWithPath) => {
+          setSelectedOptions(selectedTermsWithPath);
+        })
+        .catch(() => {
+          // no-op;
+        });
+    }
+    else {
+      setSelectedOptions([...selectedPanelOptions]);
+    }
     onClosePanel();
   }
 
@@ -148,13 +159,13 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     }
   }
 
-  async function addParentInformationToTerms(filteredTerms: ITermInfo[]): Promise<ITermInfo[]> {
-    for(const filteredTerm of filteredTerms) {
-      const termParent = await getParentTree(filteredTerm);
-      filteredTerm.parent = termParent;
+  async function addParentInformationToTerms(terms: ITermInfo[]): Promise<ITermInfo[]> {
+    for(const term of terms) {
+      const termParent = await getParentTree(term);
+      term.parent = termParent;
     }
 
-    return filteredTerms;
+    return terms;
   }
 
   async function onResolveSuggestions(filter: string, selectedItems?: ITermInfo[]): Promise<ITermInfo[]> {
@@ -163,8 +174,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     }
     const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren);
 
-    const filteredTermsWithParentInformation = props.isPathRendered ? await addParentInformationToTerms(filteredTerms) : filteredTerms;
-    const filteredTermsWithoutSelectedItems = filteredTermsWithParentInformation.filter((term) => {
+    const filteredTermsWithoutSelectedItems = filteredTerms.filter((term) => {
       if (!selectedItems || selectedItems.length === 0) {
         return true;
       }
@@ -234,8 +244,25 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
       fullParentPrefixes = fullParentPrefixes.reverse();
     }
     return labels.length > 0 ? (
-      <TermItem languageTag={currentLanguageTag} termStoreInfo={currentTermStoreInfo} {...itemProps}>{fullParentPrefixes.join(":")}</TermItem>
+      <TermItem languageTag={currentLanguageTag} termStoreInfo={currentTermStoreInfo} name={fullParentPrefixes.join(":")} {...itemProps}>{fullParentPrefixes.join(":")}</TermItem>
     ) : null;
+  }
+
+  function onTermPickerChange(itms?: ITermInfo[]): void {
+    if (itms && props.isPathRendered) {
+      addParentInformationToTerms(itms)
+        .then((itmsWithPath) => {
+          setSelectedOptions(itmsWithPath || []);
+          setSelectedPanelOptions(itmsWithPath || []);
+        })
+        .catch(() => {
+          //no-op;
+        });
+    }
+    else {
+      setSelectedOptions(itms || []);
+      setSelectedPanelOptions(itms || []);
+    }
   }
 
   function getTextFromItem(termInfo: ITermInfo): string {
@@ -265,10 +292,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
             selectedItems={selectedOptions}
             disabled={props.disabled}
             styles={props.termPickerProps?.styles ?? termPickerStyles}
-            onChange={(itms?: ITermInfo[]) => {
-              setSelectedOptions(itms || []);
-              setSelectedPanelOptions(itms || []);
-            }}
+            onChange={onTermPickerChange}
             getTextFromItem={getTextFromItem}
             pickerSuggestionsProps={props.termPickerProps?.pickerSuggestionsProps ?? { noResultsFoundText: strings.ModernTaxonomyPickerNoResultsFound }}
             inputProps={props.termPickerProps?.inputProps ?? {
