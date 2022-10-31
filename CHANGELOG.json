@@ -6,10 +6,12 @@
         "new": [],
         "enhancements": [],
         "fixes": [
-          "`FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)"
+          "`FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)",
+          "`ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)"
         ]
       },
       "contributions": [
+        "[Nizar Grindi](https://github.com/NizarGrindi)",
         "[Victor Romanov](https://github.com/VRomanovTau)"
       ]
     },
