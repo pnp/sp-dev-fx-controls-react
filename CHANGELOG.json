@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "3.12.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)"
+        ]
+      },
+      "contributions": [
+        "[Victor Romanov](https://github.com/VRomanovTau)"
+      ]
+    },
+    {
       "version": "3.11.0",
       "changes": {
         "new": [
