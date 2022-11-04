@@ -21,7 +21,6 @@ export const TermItemBase = (props: ITermItemProps): JSX.Element => {
     index,
     onRemoveItem,
     removeButtonAriaLabel,
-    languageTag,
   } = props;
 
   const classNames = getClassNames(styles, {
@@ -31,11 +30,6 @@ export const TermItemBase = (props: ITermItemProps): JSX.Element => {
     disabled,
   });
 
-  let labels = props.item.labels.filter((name) => name.languageTag === languageTag && name.isDefault);
-  if (labels.length === 0) {
-    labels = props.item.labels.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag && name.isDefault);
-  }
-
   return (
     <div
       className={classNames.root}
@@ -44,7 +38,7 @@ export const TermItemBase = (props: ITermItemProps): JSX.Element => {
       data-selection-index={index}
       data-is-focusable={(enableTermFocusInDisabledPicker || !disabled) && true}
     >
-      <span className={classNames.text} aria-label={labels[0].name} title={labels[0].name}>
+      <span className={classNames.text} aria-label={children as string} title={children as string}>
         {children}
       </span>
       <IconButton
