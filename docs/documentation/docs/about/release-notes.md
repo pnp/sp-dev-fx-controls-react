@@ -10,10 +10,11 @@
 
 - `FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)
 - `ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)
+- `FilePicker`: correctly request data from provided `webAbsoluteUrl` [#1340](https://github.com/pnp/sp-dev-fx-controls-react/pull/1340)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Nizar Grindi](https://github.com/NizarGrindi), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
+Special thanks to our contributors (in alphabetical order): [Nizar Grindi](https://github.com/NizarGrindi), [Paolo Pialorsi](https://github.com/PaoloPia), [Peter Paul Kirschner](https://github.com/petkir), [Victor Romanov](https://github.com/VRomanovTau).
 
 ## 3.11.0
 
