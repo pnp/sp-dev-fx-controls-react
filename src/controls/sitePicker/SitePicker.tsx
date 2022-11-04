@@ -10,8 +10,8 @@ import * as React from 'react';
 
 import * as telemetry from '../../common/telemetry';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
-import { getAllSites, getHubSites } from '../../services/SPSitesService';
-import { ISite, ISitePickerProps } from './ISitePicker';
+import { getAllSites, getHubSites, ISite } from '../../services/SPSitesService';
+import { ISitePickerProps } from './ISitePicker';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
