@@ -4,9 +4,9 @@ import { IColumn } from 'office-ui-fabric-react/lib/DetailsList';
 import { IFilePickerResult } from "../../FilePicker.types";
 
 export enum LoadingState {
-  idle = 1,
-  loading = 2,
-  loadingNextPage
+  idle = 'idle',
+  loading = 'loading',
+  loadingNextPage = 'loadingNextPage'
 }
 
 export interface IFileBrowserState {
