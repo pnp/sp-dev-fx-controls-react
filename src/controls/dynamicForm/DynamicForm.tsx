@@ -253,7 +253,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               }
               console.log("Error", error);
             }
-        } else if (contentTypeId !== undefined && contentTypeId !== '' && contentTypeId.startsWith('0x0120')) {
+        } else if (contentTypeId.startsWith('0x0120')) {
           // We are adding a folder or a Document Set
           try {
             const idField = 'ID';
