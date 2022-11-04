@@ -238,8 +238,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
       }
       // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
-      else {
-        if (contentTypeId === undefined || contentTypeId === '' || !contentTypeId.startsWith('0x0120')) {
+      else if (contentTypeId === undefined || contentTypeId === '') {
+         if (!contentTypeId.startsWith('0x0120')) {
             // We are adding a new list item
             try {
               const iar = await sp.web.lists.getById(listId).items.add(objects);
@@ -253,7 +253,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               }
               console.log("Error", error);
             }
-        } else if (contentTypeId !== undefined && contentTypeId !== '' && contentTypeId.startsWith('0x0120')) {
+        } else if (contentTypeId.startsWith('0x0120')) {
           // We are adding a folder or a Document Set
           try {
             const idField = 'ID';
@@ -273,7 +273,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
               // Set the content type ID for the target item
               objects[contentTypeIdField] = contentTypeId;
-  
+
               // Update the just created folder or Document Set
               const iur = await library.items.getById(folderId).update(objects);
               if (onSubmitted) {
