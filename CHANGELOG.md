@@ -2,6 +2,10 @@
 
 ## 3.12.0
 
+### Enhancements
+
+- `DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)
+
 ### Fixes
 
 - `FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)
@@ -9,7 +13,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Nizar Grindi](https://github.com/NizarGrindi), [Victor Romanov](https://github.com/VRomanovTau).
+Special thanks to our contributors (in alphabetical order): [Nizar Grindi](https://github.com/NizarGrindi), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
 
 ## 3.11.0
 
