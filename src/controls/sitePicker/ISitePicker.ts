@@ -1,29 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-
-export interface ISite {
-  /**
-   * ID of the site
-   */
-  id?: string;
-  /**
-   * Title
-   */
-  title?: string;
-  /**
-  * Base URL
-  */
-  url?: string;
-
-  /**
-   * ID of the web
-   */
-  webId?: string;
-
-  /**
-   * ID of the hub site
-   */
-  hubSiteId?: string;
-}
+import { ISite } from '../../services/SPSitesService';
 
 export interface ISitePickerProps {
   /**

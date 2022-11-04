@@ -1,6 +1,36 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { ISite } from '../controls/sitePicker/ISitePicker';
 import { SPHttpClient } from '@microsoft/sp-http';
+
+export interface ISite {
+  /**
+   * ID of the site
+   */
+  id?: string;
+  /**
+   * Title
+   */
+  title?: string;
+  /**
+  * Base URL
+  */
+  url?: string;
+
+  /**
+   * ID of the web
+   */
+  webId?: string;
+
+  /**
+   * ID of the hub site
+   */
+  hubSiteId?: string;
+}
+
+export interface ISiteWebInfo {
+  title: string,
+  webId: string,
+  siteId: string
+}
 
 const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string, trimDuplicates: boolean): Promise<ISite[]> => {
   let startRow = 0;
@@ -113,3 +143,21 @@ export const getHubSites = async (ctx: BaseComponentContext): Promise<ISite[]> =
 
   return hubSites;
 };
+
+export const getSiteWebInfo = async (ctx: BaseComponentContext, webUrl: string): Promise<ISiteWebInfo> => {
+  const webInfo = await ctx.spHttpClient.get(`${webUrl}/_api/web?$select=id,Title`, SPHttpClient.configurations.v1);
+  if (!webInfo || !webInfo.ok) {
+    throw new Error(`[FileBrowser.getWebInfo]: Something went wrong when executing request. Status='${webInfo.statusText}'`);
+  }
+  const siteInfo = await ctx.spHttpClient.get(`${webUrl}/_api/site?$select=id`, SPHttpClient.configurations.v1);
+  if (!siteInfo || !siteInfo.ok) {
+    throw new Error(`[FileBrowser.getWebInfo]: Something went wrong when executing request. Status='${webInfo.statusText}'`);
+  }
+  const webInfoResult = await webInfo.json();
+  const siteInfoResult = await siteInfo.json();
+  return {
+    title: webInfoResult.Title,
+    webId: webInfoResult.Id,
+    siteId: siteInfoResult.Id
+  };
+}

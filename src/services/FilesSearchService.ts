@@ -1,9 +1,10 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient, HttpClientResponse } from "@microsoft/sp-http";
-import { ISearchResult, BingQuerySearchParams, IRecentFile, ISiteWebInfo } from "./FilesSearchService.types";
+import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearchService.types";
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
 import type { IBingSearchResult } from '../controls/filePicker/WebSearchTab/IBingSearchResult';
+import { getSiteWebInfo } from './SPSitesService';
 
 /**
  * Maximum file size when searching
@@ -56,7 +57,7 @@ export class FilesSearchService {
       let webId = this.context.pageContext.web.id.toString();
       let siteId = this.context.pageContext.site.id.toString();
       if (this.siteAbsoluteUrl !== this.context.pageContext.web.absoluteUrl) {
-        const siteinfo = await this.getSiteInfos(this.siteAbsoluteUrl);
+        const siteinfo = await getSiteWebInfo(this.context, this.siteAbsoluteUrl);
         webId = siteinfo.webId;
         siteId = siteinfo.siteId;
       }
@@ -295,22 +296,5 @@ export class FilesSearchService {
     // Split the URL on the first slash
     const splitUrl = url.split('/');
     return splitUrl[0];
-  }
-  private getSiteInfos = async (absUrl: string): Promise<ISiteWebInfo> => {
-    const webInfo = await this.context.spHttpClient.get(absUrl + '/_api/web?$select=id,Title', SPHttpClient.configurations.v1);
-    if (!webInfo || !webInfo.ok) {
-      throw new Error(`[FileBrowser.getWebInfo]: Something went wrong when executing request. Status='${webInfo.statusText}'`);
-    }
-    const siteInfo = await this.context.spHttpClient.get(absUrl + '/_api/site?$select=id', SPHttpClient.configurations.v1);
-    if (!siteInfo || !siteInfo.ok) {
-      throw new Error(`[FileBrowser.getWebInfo]: Something went wrong when executing request. Status='${webInfo.statusText}'`);
-    }
-    const webInfoResult = await webInfo.json();
-    const siteInfoResult = await siteInfo.json();
-    return ({
-      title: webInfoResult.Title,
-      webId: webInfoResult.Id,
-      siteId: siteInfoResult.Id
-    })
   }
 }
