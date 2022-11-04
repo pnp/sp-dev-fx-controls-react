@@ -87,6 +87,7 @@ export class FolderPicker extends React.Component<IFolderPickerProps, IFolderPic
               defaultFolder={this.state.selectedFolder}
               onSelect={this._onFolderSelect}
               canCreateFolders={this.props.canCreateFolders}
+              siteAbsoluteUrl={this.props.siteAbsoluteUrl}
             />
           </div>
         </Panel>
