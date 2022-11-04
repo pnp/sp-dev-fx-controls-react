@@ -1,5 +1,16 @@
 # Releases
 
+## 3.12.0
+
+### Fixes
+
+- `FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)
+- `ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Nizar Grindi](https://github.com/NizarGrindi), [Victor Romanov](https://github.com/VRomanovTau).
+
 ## 3.11.0
 
 ### New control(s)
