@@ -2,6 +2,10 @@
 
 ## 3.11.0
 
+### New control(s)
+
+- `ProgressStepsIndicator`: New control that shows a progress of steps. [#1322](https://github.com/pnp/sp-dev-fx-controls-react/pull/1322)
+
 ### Enhancements
 
 - `DynamicForm`: Add taxonomy tree to test harness [#1269](https://github.com/pnp/sp-dev-fx-controls-react/pull/1269)
@@ -10,6 +14,7 @@
 - `DynamicForm`: Support for hidden fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307/)
 - `Placeholder`: Documentation example to only display in edit mode [#1280](https://github.com/pnp/sp-dev-fx-controls-react/issues/1280)
 - `DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)
+- `DynamicForm`: FirstDayOfWeek in DatePickers from webs regional settings [#1317](https://github.com/pnp/sp-dev-fx-controls-react/issues/1317)
 
 ### Fixes
 
@@ -20,10 +25,11 @@
 - `TaxonomyPicker`: Does not show term set labels in Version 3.10.0 [#1299](https://github.com/pnp/sp-dev-fx-controls-react/issues/1299)
 - `TaxonomyPicker`: Dynamic form select term not working [#1303](https://github.com/pnp/sp-dev-fx-controls-react/issues/1303)
 - `DynamicForm`: Check if hiddenfields property is undefined [#1314](https://github.com/pnp/sp-dev-fx-controls-react/pull/1314)
+- `DynamicForm`: PeoplePicker preselects wrong user if PrincipalType allows groups [#1315](https://github.com/pnp/sp-dev-fx-controls-react/issues/1315)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [João Mendes](https://github.com/joaojmendes), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
 
 ## 3.10.0
 
