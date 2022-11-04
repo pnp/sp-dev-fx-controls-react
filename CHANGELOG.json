@@ -13,10 +13,12 @@
           "`FilePicker`: correctly request data from provided `webAbsoluteUrl` [#1340](https://github.com/pnp/sp-dev-fx-controls-react/pull/1340)",
           "`ModernTaxonomyPicker`: Fix infinite loop [#1342](https://github.com/pnp/sp-dev-fx-controls-react/pull/1342)",
           "`ModernTaxonomyPicker`: improve display of the term path to align with out of the box control UI [#1343](https://github.com/pnp/sp-dev-fx-controls-react/pull/1343)",
+          "`FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)",
           "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)"
         ]
       },
       "contributions": [
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
         "[Paolo Pialorsi](https://github.com/PaoloPia)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
