@@ -154,7 +154,9 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
             if (disableChildrenOfDisabledParents) {
               // Check if terms were already retrieved
               if (!this.allTerms) {
-                this.allTerms = await this.termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID);
+                this.allTerms = await this.termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID, 
+                  this.props.termPickerHostProps.hideDeprecatedTags, 
+                  this.props.termPickerHostProps.hideTagsNotAvailableForTagging);
               }
 
               // Check if there are terms retrieved
