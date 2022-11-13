@@ -15,10 +15,12 @@
           "`ModernTaxonomyPicker`: improve display of the term path to align with out of the box control UI [#1343](https://github.com/pnp/sp-dev-fx-controls-react/pull/1343)",
           "`FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)",
           "`FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)",
-          "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)"
+          "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)",
+          "`TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)"
         ]
       },
       "contributions": [
+        "[Edin Kapic](https://github.com/ekapic)",
         "[Nello D'Andrea](https://github.com/ferrarirosso)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
