@@ -37,6 +37,7 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
   let startRow = 0;
   const rowLimit = 500;
   let totalRows = 0;
+  let currentRows = 0;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const values: any[] = [];
 
@@ -70,8 +71,9 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
     values.push(...relevantResults.Table.Rows);
     totalRows = relevantResults.TotalRows;
     startRow += rowLimit;
+    currentRows = relevantResults.Table.Rows?.length;
 
-  } while (values.length < totalRows);
+  } while (values.length < totalRows && currentRows !== 0);
 
   // Do the call against the SP REST API search endpoint
 
