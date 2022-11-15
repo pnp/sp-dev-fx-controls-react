@@ -1,5 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient } from '@microsoft/sp-http';
+import { IHubSiteData } from '../common/Interfaces';
 
 export interface ISite {
   /**
@@ -36,6 +37,7 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
   let startRow = 0;
   const rowLimit = 500;
   let totalRows = 0;
+  let currentRows = 0;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const values: any[] = [];
 
@@ -69,8 +71,9 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
     values.push(...relevantResults.Table.Rows);
     totalRows = relevantResults.TotalRows;
     startRow += rowLimit;
+    currentRows = relevantResults.Table.Rows?.length;
 
-  } while (values.length < totalRows);
+  } while (values.length < totalRows && currentRows !== 0);
 
   // Do the call against the SP REST API search endpoint
 
@@ -161,3 +164,25 @@ export const getSiteWebInfo = async (ctx: BaseComponentContext, webUrl: string):
     siteId: siteInfoResult.Id
   };
 }
+
+export const getAssociatedSites = async (ctx: BaseComponentContext, trimDuplicates: boolean, hubSiteId?: string): Promise<ISite[]> => {
+  if (!hubSiteId){
+  
+    const requestUrl = `${ctx.pageContext.site.absoluteUrl}/_api/web/HubsiteData`;
+    const response = await ctx.spHttpClient.get(requestUrl, SPHttpClient.configurations.v1);
+    const json = await response.json();
+  
+    const hubsiteData: IHubSiteData = JSON.parse(json.value);
+  
+    if (hubsiteData === null)
+      return [];
+  
+    hubSiteId = hubsiteData.relatedHubSiteIds[0];
+
+  }
+
+  const queryText = `(contentclass:STS_Site DepartmentId:${hubSiteId})`;
+
+
+  return getAllSitesInternal(ctx, queryText, trimDuplicates);
+};
