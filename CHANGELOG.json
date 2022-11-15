@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)"
+          "`DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)",
+          "`SitePicker`: add HubId to filter to only sites within a hub [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)"
         ],
         "fixes": [
           "`FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)",
@@ -16,10 +17,12 @@
           "`FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)",
           "`FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)",
           "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)",
-          "`TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)"
+          "`TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)",
+          "`SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)"
         ]
       },
       "contributions": [
+        "[Carlos Marins Jr](https://github.com/kadu-jr)",
         "[Edin Kapic](https://github.com/ekapic)",
         "[Nello D'Andrea](https://github.com/ferrarirosso)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
