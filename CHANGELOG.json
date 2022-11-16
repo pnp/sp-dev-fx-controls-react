@@ -18,12 +18,14 @@
           "`FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)",
           "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)",
           "`TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)",
-          "`SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)"
+          "`SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)",
+          "`DynamicForm`: `AnchorId` of `TaxonomyField` gets ignored and the whole tree is rendered [#1310](https://github.com/pnp/sp-dev-fx-controls-react/issues/1310)"
         ]
       },
       "contributions": [
         "[Carlos Marins Jr](https://github.com/kadu-jr)",
         "[Edin Kapic](https://github.com/ekapic)",
+        "[Josef Benda](https://github.com/SmarterJB)",
         "[Nello D'Andrea](https://github.com/ferrarirosso)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Nizar Grindi](https://github.com/NizarGrindi)",
