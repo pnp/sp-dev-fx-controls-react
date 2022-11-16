@@ -376,6 +376,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           field.order = order;
           let hiddenName = "";
           let termSetId = "";
+          let anchorId = "";
           let lookupListId = "";
           let lookupField = "";
           const choices: IDropdownOption[] = [];
@@ -386,55 +387,48 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           let principalType = "";
           if (item !== null) {
             defaultValue = item[field.EntityPropertyName];
-          }
-          else {
+          } else {
             defaultValue = field.DefaultValue;
           }
           if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
             field.Choices.forEach(element => {
-              choices.push({ key: element, text: element });
+              choices.push({key: element, text: element});
             });
-          }
-          else if (fieldType === "Note") {
+          } else if (fieldType === "Note") {
             richText = field.RichText;
-          }
-          else if (fieldType === "Lookup") {
+          } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
 
-          }
-          else if (fieldType === "LookupMulti") {
+          } else if (fieldType === "LookupMulti") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
-          }
-          else if (fieldType === "TaxonomyFieldTypeMulti") {
+          } else if (fieldType === "TaxonomyFieldTypeMulti") {
             const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
             hiddenName = response.value;
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
               item[field.InternalName].forEach(element => {
-                selectedTags.push({ key: element.TermGuid, name: element.Label });
+                selectedTags.push({key: element.TermGuid, name: element.Label});
               });
 
               defaultValue = selectedTags;
-            }
-            else {
+            } else {
               if (defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
-                    selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
+                    selectedTags.push({key: element.split('|')[1], name: element.split('|')[0]});
                 });
 
                 defaultValue = selectedTags;
@@ -442,27 +436,25 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "TaxonomyFieldType") {
+          } else if (fieldType === "TaxonomyFieldType") {
 
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
               const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
               if (response) {
-                selectedTags.push({ key: response.TermID, name: response.Label });
+                selectedTags.push({key: response.TermID, name: response.Label});
                 defaultValue = selectedTags;
               }
-            }
-            else {
+            } else {
               if (defaultValue !== "") {
-                selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
+                selectedTags.push({key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1]});
                 defaultValue = selectedTags;
               }
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "DateTime") {
+          } else if (fieldType === "DateTime") {
             if (item !== null && item[field.InternalName])
               defaultValue = new Date(item[field.InternalName]);
             else if (defaultValue === '[today]') {
@@ -482,34 +474,30 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Thumbnail") {
+          } else if (fieldType === "Thumbnail") {
             if (defaultValue !== null) {
               defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
             }
-          }
-          else if (fieldType === "User") {
+          } else if (fieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
               userEmails.push(await this._spService.getUserUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
               defaultValue = userEmails;
-            }
-            else {
+            } else {
               defaultValue = [];
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Location") {
+          } else if (fieldType === "Location") {
             defaultValue = JSON.parse(defaultValue);
-          }
-          else if (fieldType === "Boolean") {
+          } else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
           }
 
           tempFields.push({
             newValue: null,
             fieldTermSetId: termSetId,
+            fieldAnchorId: anchorId,
             options: choices,
             lookupListID: lookupListId,
             lookupField: lookupField,
