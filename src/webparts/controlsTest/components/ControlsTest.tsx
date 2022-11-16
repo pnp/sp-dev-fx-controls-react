@@ -2313,7 +2313,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             theme={this.props.themeVariant}
             themeType={AdaptiveCardHostThemeType.SharePoint}
             onInvokeAction={(action) => alert(JSON.stringify(action))}
-            onError={(error) => alert(error.message)}
+            onError={(error) => console.log(error.message)}
             onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => { }}
             onSetCustomActions={(registry: CardObjectRegistry<Action>) => { }}
             onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
