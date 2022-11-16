@@ -10,8 +10,8 @@ import * as React from 'react';
 
 import * as telemetry from '../../common/telemetry';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
-import { getAllSites, getHubSites } from '../../services/SPSitesService';
-import { ISite, ISitePickerProps } from './ISitePicker';
+import { getAllSites, getHubSites, ISite, getAssociatedSites } from '../../services/SPSitesService';
+import { ISitePickerProps } from './ISitePicker';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -73,7 +73,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     className,
     selectedSites,
     trimDuplicates,
-    additionalQuery
+    additionalQuery, 
+    hubsiteId
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
@@ -233,11 +234,18 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     setFilteredSites([]);
 
     let promise: Promise<ISite[]>;
-    if (mode === 'hub') {
-      promise = getHubSites(context);
-    }
-    else {
-      promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
+    switch (mode) {
+      case 'hub':
+        promise = getHubSites(context);
+        break;
+        
+      case 'associatedsites':
+        promise = getAssociatedSites(context, trimDuplicates === true, hubsiteId);
+        break;
+    
+      default:
+        promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
+        break;
     }
 
     promise.then(newSites => {

@@ -507,7 +507,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
 
       // Remove the null mark from the end of the items array
-      if (concatenateResults && items && items.length > 0 && items.length[items.length - 1] === null) {
+      if (concatenateResults && items && items.length > 0 && items[items.length - 1] === null) {
         // Remove the null mark
         items.splice(items.length - 1, 1);
       }
@@ -515,7 +515,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       const newItems = concatenateResults ? items.concat(filesQueryResult.items) : filesQueryResult.items;
 
       // If there are more items to load -> add null mark at the end of the array
-      if (filesQueryResult.nextHref !== null) {
+      if (filesQueryResult.nextHref) {
         newItems.push(null);
       }
 

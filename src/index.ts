@@ -42,3 +42,4 @@ export * from './Carousel';
 export * from './ModernTaxonomyPicker';
 export * from './LivePersona';
 export * from './ModernAudio';
+export * from './MonacoEditor';

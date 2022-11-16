@@ -1,6 +1,42 @@
 {
   "versions": [
     {
+      "version": "3.12.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)",
+          "`SitePicker`: add HubId to filter to only sites within a hub [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)",
+          "SharePoint Framework v1.16.0 support"
+        ],
+        "fixes": [
+          "`FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)",
+          "`ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)",
+          "`FilePicker`: correctly request data from provided `webAbsoluteUrl` [#1340](https://github.com/pnp/sp-dev-fx-controls-react/pull/1340)",
+          "`ModernTaxonomyPicker`: Fix infinite loop [#1342](https://github.com/pnp/sp-dev-fx-controls-react/pull/1342)",
+          "`ModernTaxonomyPicker`: improve display of the term path to align with out of the box control UI [#1343](https://github.com/pnp/sp-dev-fx-controls-react/pull/1343)",
+          "`FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)",
+          "`FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)",
+          "Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)",
+          "`TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)",
+          "`SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)",
+          "`DynamicForm`: `AnchorId` of `TaxonomyField` gets ignored and the whole tree is rendered [#1310](https://github.com/pnp/sp-dev-fx-controls-react/issues/1310)"
+        ]
+      },
+      "contributions": [
+        "[Carlos Marins Jr](https://github.com/kadu-jr)",
+        "[Edin Kapic](https://github.com/ekapic)",
+        "[Josef Benda](https://github.com/SmarterJB)",
+        "[Nello D'Andrea](https://github.com/ferrarirosso)",
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
+        "[Nizar Grindi](https://github.com/NizarGrindi)",
+        "[Paolo Pialorsi](https://github.com/PaoloPia)",
+        "[Patrik Hellgren](https://github.com/patrikhellgren)",
+        "[Peter Paul Kirschner](https://github.com/petkir)",
+        "[Victor Romanov](https://github.com/VRomanovTau)"
+      ]
+    },
+    {
       "version": "3.11.0",
       "changes": {
         "new": [

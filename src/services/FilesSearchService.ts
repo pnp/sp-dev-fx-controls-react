@@ -4,6 +4,7 @@ import { ISearchResult, BingQuerySearchParams, IRecentFile } from "./FilesSearch
 import { find } from "office-ui-fabric-react/lib/Utilities";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
 import type { IBingSearchResult } from '../controls/filePicker/WebSearchTab/IBingSearchResult';
+import { getSiteWebInfo } from './SPSitesService';
 
 /**
  * Maximum file size when searching
@@ -18,10 +19,12 @@ const MAXRESULTS = 100;
 export class FilesSearchService {
   private context: BaseComponentContext;
   private bingAPIKey: string;
+  private siteAbsoluteUrl: string;
 
-  constructor(context: BaseComponentContext, bingAPIKey: string) {
+  constructor(context: BaseComponentContext, bingAPIKey: string, siteAbsoluteUrl?: string) {
     this.context = context;
     this.bingAPIKey = bingAPIKey;
+    this.siteAbsoluteUrl = siteAbsoluteUrl || context.pageContext.web.absoluteUrl
   }
 
   /**
@@ -51,8 +54,13 @@ export class FilesSearchService {
    */
   public executeRecentSearch = async (accepts?: string[]): Promise<IRecentFile[] | undefined> => {
     try {
-      const webId = this.context.pageContext.web.id.toString();
-      const siteId = this.context.pageContext.site.id.toString();
+      let webId = this.context.pageContext.web.id.toString();
+      let siteId = this.context.pageContext.site.id.toString();
+      if (this.siteAbsoluteUrl !== this.context.pageContext.web.absoluteUrl) {
+        const siteinfo = await getSiteWebInfo(this.context, this.siteAbsoluteUrl);
+        webId = siteinfo.webId;
+        siteId = siteinfo.siteId;
+      }
       const fileFilter = this._getFileFilter(accepts);
 
       const queryTemplate: string = `((SiteID:${siteId} OR SiteID: {${siteId}}) AND (WebId: ${webId} OR WebId: {${webId}})) AND LastModifiedTime < {Today} AND -Title:OneNote_DeletedPages AND -Title:OneNote_RecycleBin${fileFilter}`;
@@ -96,7 +104,7 @@ export class FilesSearchService {
           ]
         }
       };
-      const searchApi = `${this.context.pageContext.web.absoluteUrl}/_api/search/postquery`;
+      const searchApi = `${this.siteAbsoluteUrl}/_api/search/postquery`;
 
       const recentSearchDataResult = await this.context.spHttpClient.post(searchApi, SPHttpClient.configurations.v1, {
         headers: {
