@@ -6,6 +6,7 @@
 
 - `DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)
 - `SitePicker`: add HubId to filter to only sites within a hub [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)
+- SharePoint Framework v1.16.0 support
 
 ### Fixes
 
