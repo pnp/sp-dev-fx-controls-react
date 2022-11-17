@@ -386,7 +386,14 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     // Check if the URL property is specified
     if (field.linkPropertyName) {
       return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        return <a href={item[field.linkPropertyName]}>{item[column.fieldName]}</a>;
+        
+        // Testing to see if Url value is valid... has a value, is a string, and either starts with http or /sites/
+        const isValid = item[field.linkPropertyName] && typeof item[field.linkPropertyName] === "string" &&
+            ( item[field.linkPropertyName].indexOf("/sites/") === 0 || item[field.linkPropertyName].indexOf("http") === 0 ) ? true : false;
+
+        // Return element as a link if the Url passes simple validation.  Else just return the displayed value as normal span
+        return isValid === true ? <a href={item[field.linkPropertyName]}>{item[column.fieldName]}</a> :
+          <span>{item[column.fieldName]}</span>;
       };
     }
   }
