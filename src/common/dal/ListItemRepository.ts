@@ -42,4 +42,22 @@ export class ListItemRepository {
       return Promise.reject(error);
     }
   }
+
+  public async getListId(
+    listName: string,
+    webUrl?: string,
+  ): Promise<string> {
+
+    const webAbsoluteUrl = !webUrl ? this.SiteUrl : webUrl;  
+    const apiUrl = `${webAbsoluteUrl}/_api/web/lists/getByTitle(@listName)/Id?@listName='${encodeURIComponent(listName)}'`;
+    const data = await this.SPClient.get(apiUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      const results = await data.json();
+      if (results) {
+        return results.value;
+      }
+    }
+
+    return;
+}
 }

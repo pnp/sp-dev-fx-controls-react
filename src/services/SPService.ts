@@ -190,6 +190,23 @@ export default class SPService implements ISPService {
     }
   }
 
+  public async getListId(
+      listName: string,
+  ): Promise<string> {
+
+    const webAbsoluteUrl = this._webAbsoluteUrl
+    const apiUrl = `${webAbsoluteUrl}/_api/web/lists/getByTitle(@listName)/Id?@listName='${encodeURIComponent(listName)}'`;
+    const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      const results = await data.json();
+      if (results) {
+        return results.value;
+      }
+    }
+
+    return;
+  }
+
   /**
    * Get List Items
    */
