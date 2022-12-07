@@ -8,6 +8,7 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 import {
   UploadFiles,
 } from '../../../controls/uploadFiles/components/UploadFiles/UploadFiles';
+import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
 
 export interface ITestControlProps {
   context: WebPartContext;
@@ -21,9 +22,9 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
 
   return (
     <>
+    <EnhancedThemeProvider theme={themeVariant} context={context}>
       <Stack>
         <UploadFiles
-          pageSize={30}
           context={context}
           title="Upload Files"
           onUploadFiles={(files) => {
@@ -32,6 +33,7 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
           themeVariant={themeVariant}
         />
       </Stack>
+      </EnhancedThemeProvider>
     </>
   );
 };

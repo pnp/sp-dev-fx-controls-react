@@ -1,6 +1,6 @@
 # UploadFiles
 
-This control allows to drag and drop files  and manage files before upload.
+This control allows to drag and drop files and manage files before upload.
 
 ## How to use this control in your solutions
 
@@ -17,7 +17,7 @@ import {
 
 ```jsx
  <UploadFiles
-          pageSize={30}
+          pageSize={20}
           context={context}
           title="Upload Files"
           onUploadFiles={(files) => {
@@ -28,15 +28,17 @@ import {
 ```
 
  
-![Custom html with drag and drop](../assets/UploadFiles.gif)
-
+![uploadFiles](../assets/UploadFiles.gif)
+![uploadFiles](../assets/UploadFiles02.png)
+![uploadFiles](../assets/UploadFiles01.png)
+ 
 ## Implementation
 
 The `UploadFiles` can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| pageSize | number  | no | number of files to show per page base on this value the height is calculate |
+| pageSize | number  | no | number of files to show per page base on this value the height of control is calculate, default 15 |
 | context | WebPartContext | yes | webPartContext |
 | title | string | yes | title |
 | onUploadFiles | (files: File[]) => void; | yes | Method that returns all Files[]     |

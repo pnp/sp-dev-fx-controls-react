@@ -8,16 +8,19 @@ import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
 
 import { globalState } from '../../jotai/atoms/globalState';
 
-export const useUploadFilesStyles =() => {
-  const appGlobalState =  useAtomValue(globalState);
-  const {themeVariant  } = appGlobalState;
+export const useUploadFilesStyles = () => {
+  const appGlobalState = useAtomValue(globalState);
+  const { themeVariant } = appGlobalState;
 
-  const  titleStyles:ITextStyles =  React.useMemo(() => {
+  const titleStyles: ITextStyles = React.useMemo(() => {
     return {
-    root: {
-      padding: 20, fontWeight: FontWeights.semibold
-    },
-  };
+      root: {
+        paddingRight: 20,
+        paddingLeft: 20,
+
+        fontWeight: FontWeights.semibold,
+      },
+    };
   }, [themeVariant]);
 
   const mainContainer: IStackStyles = React.useMemo(() => {
@@ -28,7 +31,7 @@ export const useUploadFilesStyles =() => {
         overflow: "hidden",
       },
     };
- }, [themeVariant]);
+  }, [themeVariant]);
 
-  return {titleStyles, mainContainer}
-}
+  return { titleStyles, mainContainer };
+};

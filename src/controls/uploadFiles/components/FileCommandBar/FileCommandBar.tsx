@@ -5,18 +5,14 @@ import * as React from 'react';
 
 import strings from 'ControlStrings';
 import { useAtom } from 'jotai';
-/* import {
-  isEqual,
-  pullAllWith,
-} from 'lodash'; */
+import { ActionButton } from 'office-ui-fabric-react/lib/Button';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import {
-  ActionButton,
-  Checkbox,
   CommandBar,
   ICommandBarItemProps,
-  IComponentAs,
-  Stack,
-} from 'office-ui-fabric-react';
+} from 'office-ui-fabric-react/lib/CommandBar';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import { IComponentAs } from 'office-ui-fabric-react/lib/Utilities';
 
 import { globalState } from '../../jotai/atoms';
 import { UploadButton } from '../UploadButton/UploadButton';
@@ -32,6 +28,7 @@ export const FileCommandBar: React.FunctionComponent<IFileCommandBarProps> = (
     controlStyles,
     commandbarButtonStyles,
     checkBoxStyles,
+    buttonIconStyles
   } = useFileCommandBarStyles();
   const [appGlobalState, setGlobalState] = useAtom(globalState);
   const { selectedFiles, files } = appGlobalState;
@@ -39,36 +36,14 @@ export const FileCommandBar: React.FunctionComponent<IFileCommandBarProps> = (
 
   const [isAllSelected, setIsAllSelected] = React.useState<boolean>(false);
   const { onUpload, onDelete, onSelectedAll } = props;
-  /* const [isDelete, setIsDelete] = React.useState<boolean>(false); */
 
-/*   const onSelectedAll = React.useCallback((ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => {
-    setIsAllSelected(checked );
-  }, []); */
-
-/*   const onDelete = React.useCallback(() => {
-    const newFiles = pullAllWith(files, selectedFiles, isEqual);
-    setGlobalState((prevState) => {
-      return { ...prevState, files: newFiles, selectedFiles: [] };
-    });
-    if (!newFiles.length) {
-      setIsAllSelected(false);
-    }
-  }, [selectedFiles, files]); */
-
-
-/*   const onUpload = React.useCallback((file:File) => {
-    const newFiles = [...files, file];
-    setGlobalState((prevState) => {
-      return { ...prevState, files:  newFiles };
-    });
-  }, [files]); */
 
   const commandDeleteButton: IComponentAs<ICommandBarItemProps> = React.useCallback(
     (props) => {
       return (
         <ActionButton
-          iconProps={{ iconName: "Delete" }}
-          styles={commandbarButtonStyles()}
+          iconProps={{ iconName: "Delete" , styles: buttonIconStyles}}
+          styles={commandbarButtonStyles}
           onClick={() => {
             setIsAllSelected(false);
             onDelete();

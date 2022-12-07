@@ -1,59 +1,77 @@
 import * as React from 'react';
 
 import { useAtomValue } from 'jotai/utils';
+import { IButtonStyles } from 'office-ui-fabric-react/lib/Button';
 import {
-  IButtonStyles,
   ICheckboxProps,
   ICheckboxStyles,
-  ICommandBarStyles,
-  IStackStyles,
-  IStyleFunctionOrObject,
+} from 'office-ui-fabric-react/lib/Checkbox';
+import { ICommandBarStyles } from 'office-ui-fabric-react/lib/CommandBar';
+import { IIconStyles } from 'office-ui-fabric-react/lib/Icon';
+import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
+import {
   mergeStyles,
   mergeStyleSets,
-} from 'office-ui-fabric-react';
+} from 'office-ui-fabric-react/lib/Styling';
+import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
 export const useFileCommandBarStyles = () => {
   const appGlobalState = useAtomValue(globalState);
-  const { themeVariant ,  selectedFiles} = appGlobalState;
+  const { themeVariant, selectedFiles } = appGlobalState;
 
-  const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback((props: ICheckboxProps) => {
-    return {
-      checkbox: {
-        borderRadius: "50%",
-        borderWidth: 1,
-        borderStyle: "solid",
-        borderColor: `${themeVariant?.palette?.themePrimary} !important`,
-        color: `${themeVariant?.palette?.themePrimary} !important`,
-        backgroundColor:  !props.checked ? themeVariant?.palette.white : '',
-      },
-      root: {
-        alignItems: "center",
-
-        borderColor: `${themeVariant?.palette?.themePrimary} !important`,
-        color: `${themeVariant?.palette?.themePrimary} !important`,
-      },
-      checkmark: {
-        color: themeVariant?.palette?.white,
-      },
-      text:{
-        ":hover": {
-
-          color: `${themeVariant?.palette?.themePrimary} !important`,
-        },
-      },
-      label:{
-        ":hover": {
+  const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback(
+    (props: ICheckboxProps) => {
+      return {
+        checkbox: {
+          borderRadius: "50%",
+          borderWidth: 1,
+          borderStyle: "solid",
           borderColor: `${themeVariant?.palette?.themePrimary} !important`,
-          color: `${themeVariant?.palette?.themePrimary} !important`,
-        }
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+          backgroundColor: !props.checked ? themeVariant?.palette.white : themeVariant?.palette.themeLighter,
+        },
+        root: {
+          alignItems: "center",
+
+          borderColor: `${themeVariant?.palette?.themePrimary} !important`,
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+          ":hover": {
+            ".ms-Checkbox-checkbox": {
+              backgroundColor: `${themeVariant?.palette.themeLight} !important`,
+            },
+          },
+        },
+        checkmark: {
+          color: `${themeVariant?.semanticColors?.bodyText} !important`,
+        },
+        text: {
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+          ":hover": {
+            color: `${themeVariant?.semanticColors.bodyText} !important`,
+          },
+        },
+        label: {
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+          ":hover": {
+            borderColor: `${themeVariant?.palette?.themePrimary} !important`,
+            color: `${themeVariant?.semanticColors.bodyText} !important`,
+          },
+        },
+      };
+    },
+    [themeVariant]
+  );
+
+  const buttonIconStyles: IIconStyles = React.useMemo(() => {
+    return {
+      root: {
+        color: `${themeVariant?.semanticColors.bodyText} !important`,
       },
-
     };
-  }, [themeVariant, ]);
-
+  }, [themeVariant]);
 
   const controlStyles = React.useMemo(() => {
     return mergeStyleSets({
@@ -81,9 +99,8 @@ export const useFileCommandBarStyles = () => {
       }),
 
       separator: mergeStyles({
-        margin: 10,
+        margin: 20,
         height: "1px",
-
         backgroundColor: themeVariant?.palette?.neutralLight,
         opacity: themeVariant?.isInverted ? "0.2" : "1",
       }),
@@ -93,9 +110,7 @@ export const useFileCommandBarStyles = () => {
         borderLeftStyle: "solid",
         borderLeftWidth: "1px",
         borderLeftColor: themeVariant?.palette?.themePrimary,
-
       }),
-
     });
   }, [themeVariant]);
 
@@ -108,12 +123,18 @@ export const useFileCommandBarStyles = () => {
     };
   }, [themeVariant]);
 
-  const commandbarButtonStyles = React.useCallback((): IButtonStyles => {
+  const commandbarButtonStyles: IButtonStyles = React.useMemo((): IButtonStyles => {
     return {
+      rootHovered: {
+        color: `${themeVariant?.semanticColors.bodyText} !important`,
+      },
+      labelHovered: {
+        color: `${themeVariant?.semanticColors.bodyText} !important`,
+      },
       root: {
         paddingLeft: 15,
-
         display: selectedFiles.length ? "block" : "none",
+        color: themeVariant?.semanticColors.bodyText,
       },
     };
   }, [selectedFiles]);
@@ -123,10 +144,16 @@ export const useFileCommandBarStyles = () => {
       root: {
         width: "100%",
         padding: "0 20px",
-        /*  backgroundColor: themeVariant?.palette?.neutralLighterAlt, */
       },
     };
   }, [themeVariant]);
 
-  return {checkBoxStyles, stackContainerStyles, controlStyles, commandBarStyles, commandbarButtonStyles };
+  return {
+    buttonIconStyles,
+    checkBoxStyles,
+    stackContainerStyles,
+    controlStyles,
+    commandBarStyles,
+    commandbarButtonStyles,
+  };
 };

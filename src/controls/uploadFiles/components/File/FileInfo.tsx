@@ -1,16 +1,17 @@
 import * as React from 'react';
 
 import { format } from 'date-fns';
+import { useAtomValue } from 'jotai';
+import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import {
-  Checkbox,
   DocumentCard,
   DocumentCardDetails,
   DocumentCardImage,
-  IIconProps,
-  ImageFit,
-  Stack,
-  Text,
-} from 'office-ui-fabric-react';
+} from 'office-ui-fabric-react/lib/DocumentCard';
+import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import { Text } from 'office-ui-fabric-react/lib/Text';
 
 import {
   getFileTypeIconProps,
@@ -18,6 +19,7 @@ import {
 } from '@fluentui/react-file-type-icons';
 
 import { useUtils } from '../../hooks/useUtils';
+import { globalState } from '../../jotai/atoms';
 import { useFileStyles } from './useFileStyles';
 
 initializeFileTypeIcons();
@@ -31,13 +33,14 @@ export const FileInfo: React.FunctionComponent<IFileInfoProps> = (props: React.P
   const { fileInfo, onSelected, isSelected } = props;
   const { name, size, lastModified } = fileInfo;
 
-  const { checkBoxStyles, documentCardStyles, stackCheckboxStyles, fileNameStyles } = useFileStyles();
+  const { checkBoxStyles, documentCardStyles, stackCheckboxStyles, fileNameStyles,documentImageStyles } = useFileStyles();
   const { getShortText, getFileExtension, getFileSize } = useUtils();
   const fileSize = getFileSize(size);
   const fileExtension = getFileExtension(name);
   const fileModified = format(new Date(lastModified), "dd, MMM yyyy");
   const [isChecked, setIsChecked] = React.useState<boolean>(false);
-
+  const appGlobalState  = useAtomValue(globalState);
+  const { themeVariant,   } = appGlobalState;
   const fileIcon: IIconProps = React.useMemo(() => {
     return {
       ...getFileTypeIconProps({ extension: fileExtension, size: 48, imageFileType: "svg" }),
@@ -61,16 +64,17 @@ export const FileInfo: React.FunctionComponent<IFileInfoProps> = (props: React.P
   const renderNormalCard = React.useCallback(() => {
     return (
       <>
+
         <Stack>
           <DocumentCard styles={documentCardStyles} title={name}>
-            <DocumentCardImage height={100} imageFit={ImageFit.cover} iconProps={fileIcon} />
+            <DocumentCardImage height={100} imageFit={ImageFit.cover} iconProps={fileIcon} styles={documentImageStyles} />
             <Stack
               horizontal
               horizontalAlign="end"
               tokens={{ childrenGap: 5, padding: 7 }}
               styles={stackCheckboxStyles}
             >
-              <Checkbox styles={checkBoxStyles} checked={isChecked} onChange={onCheckboxChange} />
+              <Checkbox   styles={checkBoxStyles} checked={isChecked} onChange={onCheckboxChange} />
             </Stack>
 
             <DocumentCardDetails>
@@ -86,9 +90,10 @@ export const FileInfo: React.FunctionComponent<IFileInfoProps> = (props: React.P
             </DocumentCardDetails>
           </DocumentCard>
         </Stack>
+
       </>
     );
-  }, [isChecked, fileIcon, fileSize, fileModified, getShortText, name, onCheckboxChange]);
+  }, [isChecked, fileIcon, fileSize, fileModified, getShortText, name, onCheckboxChange, themeVariant]);
 
   return <>{renderNormalCard()}</>;
 };

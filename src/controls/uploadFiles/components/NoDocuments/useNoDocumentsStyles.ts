@@ -13,7 +13,9 @@ import { globalState } from '../../jotai/atoms';
 
 export const useNoDocumentsStyles = () => {
   const appGlobalState = useAtomValue(globalState);
-  const { themeVariant } = appGlobalState;
+  const { themeVariant  } = appGlobalState;
+
+
   const controlStyles = React.useMemo(
     () =>
       mergeStyleSets({
@@ -29,7 +31,7 @@ export const useNoDocumentsStyles = () => {
     return {
       root: {
         width: "100%",
-        height: 400,
+        height:  450,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -39,7 +41,7 @@ export const useNoDocumentsStyles = () => {
         borderColor: themeVariant?.palette?.neutralTertiaryAlt,
       },
     };
-  }, [themeVariant]);
+  }, [themeVariant,  ]);
 
   return { stackContainerStyles, controlStyles };
 };

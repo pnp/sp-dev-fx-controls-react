@@ -1,44 +1,65 @@
 import * as React from 'react';
 
 import { useAtomValue } from 'jotai/utils';
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import {
+  ICheckboxProps,
+  ICheckboxStyles,
+} from 'office-ui-fabric-react/lib/Checkbox';
+import {
+  IDocumentCardImageStyles,
+  IDocumentCardStyles,
+} from 'office-ui-fabric-react/lib/DocumentCard';
+import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 import {
   FontSizes,
   FontWeights,
-  ICheckboxProps,
-  ICheckboxStyles,
-  IDocumentCardStyles,
-  IStackStyles,
-  IStyleFunctionOrObject,
-  ITextStyles,
-} from 'office-ui-fabric-react';
+  mergeStyleSets,
+} from 'office-ui-fabric-react/lib/Styling';
+import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
+import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
 export const useFileStyles = () => {
   const appGlobalState = useAtomValue(globalState);
   const { themeVariant } = appGlobalState;
 
+
+  const documentImageStyles: Partial<IDocumentCardImageStyles> = React.useMemo(() => {
+    return {
+      root: {
+
+      },
+    }
+  }, [themeVariant]);
+
   const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback(
     (props: ICheckboxProps) => {
       return {
         checkbox: {
+          color: `${themeVariant?.semanticColors?.bodyText} !important`,
           borderRadius: "50%",
           borderWidth: 1,
           borderStyle: "solid",
-          backgroundColor: !props.checked ? themeVariant?.palette.white : "",
           borderColor: themeVariant?.palette?.neutralQuaternaryAlt,
           ":hover": {
             borderColor: `${themeVariant?.palette?.themePrimary} !important`,
           },
+          backgroundColor: !props.checked ? themeVariant?.palette.white : themeVariant?.palette.themeLighter,
         },
         root: {
           ":hover": {
             borderColor: `${themeVariant?.palette?.themePrimary} !important`,
+            color: `${themeVariant?.semanticColors.bodyText} !important`,
+            ":hover": {
+              ".ms-Checkbox-checkbox": {
+              backgroundColor: `${themeVariant?.palette.themeLight} !important`,
+            }},
           },
         },
         checkmark: {
-          color: themeVariant?.palette?.white,
+          color:`${themeVariant?.semanticColors?.bodyText} !important`,
         },
       };
     },
@@ -48,10 +69,13 @@ export const useFileStyles = () => {
   const documentCardStyles: IDocumentCardStyles = React.useMemo(() => {
     return {
       root: {
+        color: themeVariant?.semanticColors.bodyText,
+        backgroundColor: themeVariant?.semanticColors.bodyBackground,
+        borderColor: themeVariant?.palette.neutralLight,
         minWidth: 160,
         minHeight: 180,
         ":hover": {
-          borderColor: themeVariant?.palette?.themeLight,
+          borderColor: themeVariant?.palette?.neutralQuaternary,
         },
       },
     };
@@ -74,7 +98,9 @@ export const useFileStyles = () => {
   }, [themeVariant]);
 
   const fileNameStyles: ITextStyles = React.useMemo(() => {
-    return { root: { fontWeight: FontWeights.semibold } };
+    return { root: { fontWeight: FontWeights.semibold,
+      color: themeVariant?.semanticColors.bodyText,
+    } };
   }, [themeVariant]);
 
   const nameStyles: ITextStyles = React.useMemo(() => {
@@ -89,8 +115,18 @@ export const useFileStyles = () => {
         overflow: "hidden",
         textAlign: "start",
         wordBreak: "break-word",
+        color: themeVariant?.semanticColors.bodyText,
       },
     };
+  }, [themeVariant]);
+
+  const controlStyles = React.useMemo(() => {
+    return mergeStyleSets({
+      ".ms-Checkbox-text": {
+         color: `${themeVariant?.semanticColors?.bodyText} !important`,
+      },
+
+    });
   }, [themeVariant]);
 
   return {
@@ -100,5 +136,7 @@ export const useFileStyles = () => {
     stackCheckboxStyles,
     fileNameStyles,
     nameStyles,
+    documentImageStyles,
+    controlStyles
   };
 };

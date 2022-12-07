@@ -28,10 +28,10 @@ import { useDocumentListStyles } from './useDocumentListStyles';
 export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
   props: React.PropsWithChildren<IDocumentListProps>
 ) => {
-  const { documentListStyles, scollableContainerStyles } = useDocumentListStyles();
+  const { documentListStyles, scollableContainerStyles, bootomContainerStyles } = useDocumentListStyles();
   const [appGlobalState, setGlobalState] = useAtom(globalState);
   const [renderFiles, setRenderFiles] = React.useState<React.ReactNode[]>([]);
-  const { selectedFiles, files, containerWidth } = appGlobalState;
+  const { selectedFiles, files, containerWidth, themeVariant } = appGlobalState;
   const currentPage = React.useRef<number>(0);
   const currentFiles = React.useRef<File[]>([]);
   const { onUploadFiles } = props;
@@ -88,7 +88,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         return { ...prevState, files: newsFiles };
       });
     },
-    [files]
+    [files, themeVariant]
   );
 
   const onDelete = React.useCallback(() => {
@@ -161,23 +161,26 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto} styles={scollableContainerStyles}>
           <div className={documentListStyles.documentList}>
             <DragDropFiles dropEffect="upload" enable={true} onDrop={onDrop}>
-              <div style={{ padding: 20 }}>
+              <Stack tokens={{ padding: 20 }}>
                 {renderFiles.length ? (
                   <div className={documentListStyles.filesContainerGrid}>{renderFiles}</div>
                 ) : (
                   <NoDocuments />
                 )}
-              </div>
+              </Stack>
             </DragDropFiles>
           </div>
         </ScrollablePane>
-        <Stack horizontalAlign="end" tokens={{ childrenGap: 20, padding: 20 }}>
+        <Stack styles={bootomContainerStyles} horizontalAlign="end" tokens={{ childrenGap: 20, }}>
+        <div className={documentListStyles.separator} />
           {selectedFiles.length > 0 && (
-            <PrimaryButton
-              iconProps={{ iconName: "upload" }}
-              text={strings.UploadFilesUploadButtonLabel}
-              onClick={() => onUploadFiles(selectedFiles)}
-            />
+            <>
+              <PrimaryButton
+                iconProps={{ iconName: "upload" }}
+                text={strings.UploadFilesUploadButtonLabel}
+                onClick={() => onUploadFiles(selectedFiles)}
+              />
+            </>
           )}
         </Stack>
       </div>
