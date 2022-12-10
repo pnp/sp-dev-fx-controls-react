@@ -1,3 +1,5 @@
+import { IDropdownStyles } from 'office-ui-fabric-react';
+
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface ISite {
@@ -112,4 +114,5 @@ export interface ISitePickerProps {
    * Applicable if mode is set to site or web.
    */
   additionalQuery?: string;
+  styles?:IDropdownStyles;
 }

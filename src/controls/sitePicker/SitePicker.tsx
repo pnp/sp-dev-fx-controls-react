@@ -1,17 +1,34 @@
-import { Async } from '@uifabric/utilities/lib/Async';
+import * as React from 'react';
+
 import findIndex from 'lodash/findIndex';
 import orderBy from 'lodash/orderBy';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import {
+  Dropdown,
+  IDropdownOption,
+} from 'office-ui-fabric-react/lib/Dropdown';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import {
+  Spinner,
+  SpinnerSize,
+} from 'office-ui-fabric-react/lib/Spinner';
 import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { ISelectableOption, SelectableOptionMenuItemType } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
-import * as React from 'react';
+import {
+  ISelectableOption,
+  SelectableOptionMenuItemType,
+} from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
+
+import { Async } from '@uifabric/utilities/lib/Async';
 
 import * as telemetry from '../../common/telemetry';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
-import { getAllSites, getHubSites } from '../../services/SPSitesService';
-import { ISite, ISitePickerProps } from './ISitePicker';
+import {
+  getAllSites,
+  getHubSites,
+} from '../../services/SPSitesService';
+import {
+  ISite,
+  ISitePickerProps,
+} from './ISitePicker';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -73,7 +90,8 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     className,
     selectedSites,
     trimDuplicates,
-    additionalQuery
+    additionalQuery,
+    styles
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
@@ -283,6 +301,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         onChange={onSelectionChange}
         notifyOnReselect={true}
         className={className}
+        styles={styles}
       />
     </>
   );
