@@ -309,7 +309,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         onChange={onSelectionChange}
         notifyOnReselect={true}
         className={className}
-        styles={styles}
+        styles={props.styles}
       />
     </>
   );
