@@ -23,6 +23,7 @@ import * as telemetry from '../../common/telemetry';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
 import {
   getAllSites,
+  getAssociatedSites,
   getHubSites,
 } from '../../services/SPSitesService';
 import {
@@ -91,7 +92,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     selectedSites,
     trimDuplicates,
     additionalQuery,
-    styles
+    hubsiteId
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
@@ -251,11 +252,18 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     setFilteredSites([]);
 
     let promise: Promise<ISite[]>;
-    if (mode === 'hub') {
-      promise = getHubSites(context);
-    }
-    else {
-      promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
+    switch (mode) {
+      case 'hub':
+        promise = getHubSites(context);
+        break;
+
+      case 'associatedsites':
+        promise = getAssociatedSites(context, trimDuplicates === true, hubsiteId);
+        break;
+
+      default:
+        promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
+        break;
     }
 
     promise.then(newSites => {

@@ -190,6 +190,7 @@ import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFun
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
+import { TestControl } from "./TestControl";
 
 
 // Used to render document card
@@ -1702,8 +1703,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
           <FilePicker
             bingAPIKey="<BING API KEY>"
-            webAbsoluteUrl="https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo"
-            defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
+            //webAbsoluteUrl="https://023xn.sharepoint.com/sites/test1"
+            //defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
             //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
             buttonLabel="Add File"
             buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
@@ -2312,7 +2313,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             theme={this.props.themeVariant}
             themeType={AdaptiveCardHostThemeType.SharePoint}
             onInvokeAction={(action) => alert(JSON.stringify(action))}
-            onError={(error) => alert(error.message)}
+            onError={(error) => console.log(error.message)}
             onSetCustomElements={(registry: CardObjectRegistry<CardElement>) => { }}
             onSetCustomActions={(registry: CardObjectRegistry<Action>) => { }}
             onUpdateHostCapabilities={(hostCapabilities: HostCapabilities) => {
@@ -2406,6 +2407,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               showIcons={true}
             />
           )}
+        </div>
+
+        <div>
+          <h3>Monaco Editor</h3>
+          <TestControl context={this.props.context} />
         </div>
 
       </div>

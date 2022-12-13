@@ -1,6 +1,36 @@
 # Releases
 
+## 3.12.0
+
+### Enhancements
+
+- `DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)
+- `SitePicker`: add HubId to filter to only sites within a hub [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)
+- SharePoint Framework v1.16.0 support
+
+### Fixes
+
+- `FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)
+- `ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)
+- `FilePicker`: correctly request data from provided `webAbsoluteUrl` [#1340](https://github.com/pnp/sp-dev-fx-controls-react/pull/1340)
+- `ModernTaxonomyPicker`: Fix infinite loop [#1342](https://github.com/pnp/sp-dev-fx-controls-react/pull/1342)
+- `ModernTaxonomyPicker`: improve display of the term path to align with out of the box control UI [#1343](https://github.com/pnp/sp-dev-fx-controls-react/pull/1343)
+- `FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)
+- `FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)
+- Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)
+- `TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)
+- `SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)
+- `DynamicForm`: `AnchorId` of `TaxonomyField` gets ignored and the whole tree is rendered [#1310](https://github.com/pnp/sp-dev-fx-controls-react/issues/1310)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Carlos Marins Jr](https://github.com/kadu-jr), [Edin Kapic](https://github.com/ekapic), [Josef Benda](https://github.com/SmarterJB), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Nizar Grindi](https://github.com/NizarGrindi), [Paolo Pialorsi](https://github.com/PaoloPia), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Victor Romanov](https://github.com/VRomanovTau).
+
 ## 3.11.0
+
+### New control(s)
+
+- `ProgressStepsIndicator`: New control that shows a progress of steps. [#1322](https://github.com/pnp/sp-dev-fx-controls-react/pull/1322)
 
 ### Enhancements
 
@@ -10,6 +40,7 @@
 - `DynamicForm`: Support for hidden fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307/)
 - `Placeholder`: Documentation example to only display in edit mode [#1280](https://github.com/pnp/sp-dev-fx-controls-react/issues/1280)
 - `DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)
+- `DynamicForm`: FirstDayOfWeek in DatePickers from webs regional settings [#1317](https://github.com/pnp/sp-dev-fx-controls-react/issues/1317)
 
 ### Fixes
 
@@ -20,10 +51,11 @@
 - `TaxonomyPicker`: Does not show term set labels in Version 3.10.0 [#1299](https://github.com/pnp/sp-dev-fx-controls-react/issues/1299)
 - `TaxonomyPicker`: Dynamic form select term not working [#1303](https://github.com/pnp/sp-dev-fx-controls-react/issues/1303)
 - `DynamicForm`: Check if hiddenfields property is undefined [#1314](https://github.com/pnp/sp-dev-fx-controls-react/pull/1314)
+- `DynamicForm`: PeoplePicker preselects wrong user if PrincipalType allows groups [#1315](https://github.com/pnp/sp-dev-fx-controls-react/issues/1315)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [João Mendes](https://github.com/joaojmendes), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
 
 ## 3.10.0
 

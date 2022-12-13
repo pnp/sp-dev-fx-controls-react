@@ -8,6 +8,11 @@ export interface IFolderPickerProps {
   context: BaseComponentContext;
 
   /**
+   * The absolute url of the target site. Only required if not the current site
+   */
+  siteAbsoluteUrl?: string;
+
+  /**
    * The label for the control
    */
   label: string;

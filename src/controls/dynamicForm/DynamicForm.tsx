@@ -16,6 +16,11 @@ import styles from './DynamicForm.module.scss';
 import { IDynamicFormProps } from './IDynamicFormProps';
 import { IDynamicFormState } from './IDynamicFormState';
 
+import '@pnp/sp/lists';
+import '@pnp/sp/content-types';
+import '@pnp/sp/folders';
+import '@pnp/sp/items';
+
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
 /**
@@ -103,6 +108,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     const {
       listId,
       listItemId,
+      contentTypeId,
       onSubmitted,
       onBeforeSubmit,
       onSubmitError
@@ -215,6 +221,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       }
 
+      // If we have the item ID, we simply need to update it
       if (listItemId) {
         try {
           const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
@@ -230,20 +237,60 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
 
       }
-      else {
-        try {
-          const iar = await sp.web.lists.getById(listId).items.add(objects);
-          if (onSubmitted) {
-            onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
+      // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
+      else if (contentTypeId === undefined || contentTypeId === '') {
+         if (!contentTypeId.startsWith('0x0120')) {
+            // We are adding a new list item
+            try {
+              const iar = await sp.web.lists.getById(listId).items.add(objects);
+              if (onSubmitted) {
+                onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
+              }
+            }
+            catch (error) {
+              if (onSubmitError) {
+                onSubmitError(objects, error);
+              }
+              console.log("Error", error);
+            }
+        } else if (contentTypeId.startsWith('0x0120')) {
+          // We are adding a folder or a Document Set
+          try {
+            const idField = 'ID';
+            const titleField = 'Title';
+            const contentTypeIdField = 'ContentTypeId';
+
+            const library = await sp.web.lists.getById(listId);
+            const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
+              (objects[titleField] as string).replace(/["|*|:|<|>|?|/|\\||]/g, "_") : // Replace not allowed chars in folder name
+              ''; // Empty string will be replaced by SPO with Folder Item ID
+            const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
+            const fields = await newFolder.listItemAllFields();
+            if (fields[idField]) {
+
+              // Read the ID of the just created folder or Document Set
+              const folderId = fields[idField];
+
+              // Set the content type ID for the target item
+              objects[contentTypeIdField] = contentTypeId;
+              // Update the just created folder or Document Set
+              const iur = await library.items.getById(folderId).update(objects);
+              if (onSubmitted) {
+                onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+              }
+            } else {
+              throw new Error('Unable to read the ID of the just created folder or Document Set');
+            }
           }
-        }
-        catch (error) {
-          if (onSubmitError) {
-            onSubmitError(objects, error);
+          catch (error) {
+            if (onSubmitError) {
+              onSubmitError(objects, error);
+            }
+            console.log("Error", error);
           }
-          console.log("Error", error);
         }
       }
+
       this.setState({
         isSaving: false
       });
@@ -281,28 +328,16 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       field.newValue = [];
       for (let index = 0; index < newValue.length; index++) {
         const element = newValue[index];
-        let retrivedItem = false;
-        if (field.fieldDefaultValue !== null) {
-          if (field.fieldDefaultValue.join(',').indexOf(element.text) !== -1)
-            field.fieldDefaultValue.forEach(item => {
-              if (item.split('/')[1] === element.text) {
-                retrivedItem = true;
-                field.newValue.push(item.split('/')[0]);
-              }
-            });
+        if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
+          let user: string = element.secondaryText;
+          if (user.indexOf('@') === -1) {
+            user = element.loginName;
+          }
+          const result = await sp.web.ensureUser(user);
+          field.newValue.push(result.data.Id);
         }
-        if (!retrivedItem) {
-          if (element.id === undefined || parseInt(element.id, 10).toString() === "NaN") {
-            let user: string = element.secondaryText;
-            if (user.indexOf('@') === -1) {
-              user = element.loginName;
-            }
-            const result = await sp.web.ensureUser(user);
-            field.newValue.push(result.data.Id);
-          }
-          else {
-            field.newValue.push(element.id);
-          }
+        else {
+          field.newValue.push(element.id);
         }
       }
     }
@@ -325,11 +360,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         const defaultContentType = await spList.contentTypes.select("Id", "Name").get();
         contentTypeId = defaultContentType[0].Id.StringValue;
       }
-      const listFeilds = await this.getFormFields(listId, contentTypeId, this.webURL);
+      const listFields = await this.getFormFields(listId, contentTypeId, this.webURL);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
-      const responseValue = listFeilds.value;
+      const responseValue = listFields.value;
       const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+      let defaultDayOfWeek: number = 0;
       for (let i = 0, len = responseValue.length; i < len; i++) {
         const field = responseValue[i];
 
@@ -340,6 +376,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           field.order = order;
           let hiddenName = "";
           let termSetId = "";
+          let anchorId = "";
           let lookupListId = "";
           let lookupField = "";
           const choices: IDropdownOption[] = [];
@@ -350,55 +387,48 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           let principalType = "";
           if (item !== null) {
             defaultValue = item[field.EntityPropertyName];
-          }
-          else {
+          } else {
             defaultValue = field.DefaultValue;
           }
           if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
             field.Choices.forEach(element => {
-              choices.push({ key: element, text: element });
+              choices.push({key: element, text: element});
             });
-          }
-          else if (fieldType === "Note") {
+          } else if (fieldType === "Note") {
             richText = field.RichText;
-          }
-          else if (fieldType === "Lookup") {
+          } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
 
-          }
-          else if (fieldType === "LookupMulti") {
+          } else if (fieldType === "LookupMulti") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
-          }
-          else if (fieldType === "TaxonomyFieldTypeMulti") {
+          } else if (fieldType === "TaxonomyFieldTypeMulti") {
             const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
             hiddenName = response.value;
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
               item[field.InternalName].forEach(element => {
-                selectedTags.push({ key: element.TermGuid, name: element.Label });
+                selectedTags.push({key: element.TermGuid, name: element.Label});
               });
 
               defaultValue = selectedTags;
-            }
-            else {
+            } else {
               if (defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
-                    selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
+                    selectedTags.push({key: element.split('|')[1], name: element.split('|')[0]});
                 });
 
                 defaultValue = selectedTags;
@@ -406,27 +436,25 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "TaxonomyFieldType") {
+          } else if (fieldType === "TaxonomyFieldType") {
 
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
               const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
               if (response) {
-                selectedTags.push({ key: response.TermID, name: response.Label });
+                selectedTags.push({key: response.TermID, name: response.Label});
                 defaultValue = selectedTags;
               }
-            }
-            else {
+            } else {
               if (defaultValue !== "") {
-                selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
+                selectedTags.push({key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1]});
                 defaultValue = selectedTags;
               }
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "DateTime") {
+          } else if (fieldType === "DateTime") {
             if (item !== null && item[field.InternalName])
               defaultValue = new Date(item[field.InternalName]);
             else if (defaultValue === '[today]') {
@@ -436,7 +464,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             const schemaXml = field.SchemaXml;
             const dateFormatRegEx = /\s+Format="([^"]+)"/gmi.exec(schemaXml);
             dateFormat = dateFormatRegEx && dateFormatRegEx.length ? dateFormatRegEx[1] as DateFormat : 'DateOnly';
-
+            defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
           }
           else if (fieldType === "UserMulti") {
             if (item !== null)
@@ -446,34 +474,30 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Thumbnail") {
+          } else if (fieldType === "Thumbnail") {
             if (defaultValue !== null) {
               defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
             }
-          }
-          else if (fieldType === "User") {
+          } else if (fieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
-              userEmails.push(await this._spService.getUserUPNById(parseInt(item[field.InternalName + "Id"])) + '');
+              userEmails.push(await this._spService.getUserUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
               defaultValue = userEmails;
-            }
-            else {
+            } else {
               defaultValue = [];
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Location") {
+          } else if (fieldType === "Location") {
             defaultValue = JSON.parse(defaultValue);
-          }
-          else if (fieldType === "Boolean") {
+          } else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
           }
 
           tempFields.push({
             newValue: null,
             fieldTermSetId: termSetId,
+            fieldAnchorId: anchorId,
             options: choices,
             lookupListID: lookupListId,
             lookupField: lookupField,
@@ -492,6 +516,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             Order: field.order,
             isRichText: richText,
             dateFormat: dateFormat,
+            firstDayOfWeek: defaultDayOfWeek,
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description
@@ -547,7 +572,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
       let apiUrl = '';
       if (contentTypeId !== undefined && contentTypeId !== '') {
-        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        if (contentTypeId.startsWith('0x0120')) {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and (Hidden eq false or StaticName eq 'Title') and (FromBaseType eq false or StaticName eq 'Title')`;
+        } else {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        }
       }
       else {
         apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;

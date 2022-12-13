@@ -59,6 +59,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       options,
       fieldTermSetId,
+      fieldAnchorId,
       lookupListID,
       lookupField,
       fieldType,
@@ -72,6 +73,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       isRichText,
       //bingAPIKey,
       dateFormat,
+      firstDayOfWeek,
       columnInternalName,
       principalType,
       description
@@ -221,6 +223,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             defaultSelectedItems={defaultValue}
             columnInternalName={lookupField}
             className={styles.feildDisplay}
+            enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={1}
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
@@ -302,6 +305,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onSelectDate={(newDate) => { this.onChange(newDate); }}
               disabled={disabled}
+              firstDayOfWeek={firstDayOfWeek}
             />}
           {
             dateFormat === 'DateTime' &&
@@ -311,7 +315,9 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               formatDate={(date) => { return date.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName); }}
               value={(changedValue !== null && changedValue !== "") ? changedValue : defaultValue}
               onChange={(newDate) => { this.onChange(newDate); }}
-              disabled={disabled} />
+              disabled={disabled}
+              firstDayOfWeek={firstDayOfWeek}
+            />
           }
           {descriptionEl}
           {errorTextEl}
@@ -468,6 +474,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={true}
               termsetNameOrID={fieldTermSetId}
+              anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
@@ -492,6 +499,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               allowMultipleSelections={false}
               termsetNameOrID={fieldTermSetId}
+              anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
               onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}

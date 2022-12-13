@@ -22,6 +22,7 @@ export interface IDynamicFieldProps {
   fieldDefaultValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   options?: IDropdownOption[];
   fieldTermSetId?: string;
+  fieldAnchorId?: string;
   lookupListID?: string;
   lookupField?: string;
   changedValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -29,6 +30,7 @@ export interface IDynamicFieldProps {
   Order: number;
   isRichText?: boolean;
   dateFormat?: DateFormat;
+  firstDayOfWeek: number;
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;
   description?: string;

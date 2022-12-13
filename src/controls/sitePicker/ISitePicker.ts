@@ -1,31 +1,6 @@
-import { IDropdownStyles } from 'office-ui-fabric-react';
-
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
-export interface ISite {
-  /**
-   * ID of the site
-   */
-  id?: string;
-  /**
-   * Title
-   */
-  title?: string;
-  /**
-  * Base URL
-  */
-  url?: string;
-
-  /**
-   * ID of the web
-   */
-  webId?: string;
-
-  /**
-   * ID of the hub site
-   */
-  hubSiteId?: string;
-}
+import { ISite } from '../../services/SPSitesService';
 
 export interface ISitePickerProps {
   /**
@@ -53,9 +28,9 @@ export interface ISitePickerProps {
    */
   multiSelect?: boolean;
   /**
-   * Defines what entities are available for selection: site collections, sites, hub sites.
+   * Defines what entities are available for selection: site collections, sites, hub sites, sites inside hub.
    */
-  mode?: 'site' | 'web' | 'hub';
+  mode?: 'site' | 'web' | 'hub' | 'associatedsites';
 
   /**
    * Specifies if the options should be limited by the current site collections. Taken into consideration if selectionMode is set to 'web'
@@ -114,5 +89,11 @@ export interface ISitePickerProps {
    * Applicable if mode is set to site or web.
    */
   additionalQuery?: string;
-  styles?:IDropdownStyles;
+
+  /**
+   * If provided will be used in the search for all sites in a hub.
+   * Applicable if mode is set to associatedsites.
+   * If mode is set to associatedsites and no hubsiteId is provided, the current site's hub ID will be used.
+   */
+  hubsiteId?: string;
 }
