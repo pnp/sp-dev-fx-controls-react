@@ -8,10 +8,12 @@
           "`ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)"
         ],
         "fixes": [
+          "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)"
         ]
       },
       "contributions": [
-        "[Edin Kapic](https://github.com/ekapic)"
+        "[Edin Kapic](https://github.com/ekapic)",
+        "[Harminder Singh](https://github.com/HarminderSethi)"
       ]
     },
     {
