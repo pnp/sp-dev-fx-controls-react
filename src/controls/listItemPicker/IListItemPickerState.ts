@@ -7,4 +7,5 @@ export interface IListItemPickerState {
   suggestionsHeaderText:string;
   selectedItems?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   field?: ISPField;
+  safeListId: string;
 }

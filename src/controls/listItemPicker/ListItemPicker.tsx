@@ -10,7 +10,7 @@ import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
 import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
 import { SPHelper } from '../../common/utilities/SPHelper';
-
+import { Guid } from "@microsoft/sp-core-library"
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
   private _spservice: SPservice;
@@ -27,15 +27,31 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       showError: false,
       errorMessage: "",
       suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText,
-      selectedItems: props.defaultSelectedItems || []
+      selectedItems: props.defaultSelectedItems || [],
+      safeListId: props.listId,
     };
 
     // Get SPService Factory
     this._spservice = new SPservice(this.props.context);
   }
 
-  public componentDidMount(): void {
+  private ensureLoadField(): void {
     this.loadField(this.props).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
+  }
+
+  public componentDidMount(): void {
+    // Ensure list ID if a list name is passed in listId parameter
+    if(!Guid.tryParse(this.props.listId)) {
+      this._spservice.getListId(this.props.listId)
+        .then((value) => {
+            this.setState({...this.state,
+              safeListId: value });
+            this.ensureLoadField();
+        })
+        .catch(() => { /* no-op; */ });    
+    } else {
+      this.ensureLoadField();
+    }
   }
 
   public UNSAFE_componentWillReceiveProps(nextProps: IListItemPickerProps): void {
@@ -54,8 +70,8 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     if (this.props.listId !== nextProps.listId
       || this.props.columnInternalName !== nextProps.columnInternalName
       || this.props.webUrl !== nextProps.webUrl) {
-      this.loadField(nextProps).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
-    }
+        this.ensureLoadField();
+      }
   }
 
   /**
@@ -158,15 +174,15 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Function to load List Items
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
-    const { listId, columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
+    const { columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
     const {
-      field
+      field, safeListId
     } = this.state;
     const arrayItems: { key: string; name: string }[] = [];
     const keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      const listItems = await this._spservice.getListItems(filterText, listId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
+      const listItems = await this._spservice.getListItems(filterText, safeListId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {
@@ -190,7 +206,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       field: undefined
     });
 
-    const field = await this._spservice.getField(props.listId, props.columnInternalName, props.webUrl);
+    const field = await this._spservice.getField(this.state.safeListId, props.columnInternalName, props.webUrl);
 
     this.setState({
       field
