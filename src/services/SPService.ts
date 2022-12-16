@@ -539,13 +539,13 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           const lookups = [];
            const isArray = Array.isArray(result[fieldName]);
-           //multiselect lookups return arrays
+           //multiselect lookups are arrays
            if (isArray) {
             result[fieldName].forEach(element => {
               lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
             });
            }
-           //single select lookups return objects
+           //single select lookups are objects
            else {
              const singleItem = result[fieldName];
              lookups.push({ key: singleItem.ID, name: singleItem[lookupFieldName || 'Title'] });
