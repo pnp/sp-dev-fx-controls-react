@@ -245,6 +245,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             defaultSelectedItems={defaultValue}
             columnInternalName={lookupField}
             className={styles.feildDisplay}
+            enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={100}
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
