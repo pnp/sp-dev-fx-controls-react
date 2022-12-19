@@ -29,7 +29,7 @@
     "@microsoft/mgt-spfx": "2.6.1",
     "@microsoft/sp-core-library": "1.16.0",
     "@microsoft/sp-listview-extensibility": "1.16.0",
-    "@microsoft/sp-loader": "1.16.0",
+    "@microsoft/sp-loader": "1.16.1",
     "@microsoft/sp-lodash-subset": "1.16.0",
     "@microsoft/sp-office-ui-fabric-core": "1.16.0",
     "@microsoft/sp-property-pane": "1.16.0",
