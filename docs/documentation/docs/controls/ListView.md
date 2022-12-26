@@ -27,7 +27,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
 <ListView
   items={items}
   viewFields={viewFields}
-  iconFieldName="ServerRelativeUrl"
+  iconFieldName="FileRef"
   compact={true}
   selectionMode={SelectionMode.multiple}
   selection={this._getSelection}
