@@ -1,14 +1,16 @@
 # Enhanced Theme Provider
 
 The reasons behind this control are many and concern the use of Fluent UI controls currently officially supported by SPFx, that is:
-- `Problems with Teams theme support`, when hosting a Web Part like Tab or Personal App and specifically the lack of support by this version of Fluent UI React of the high contrast theme.
-- `Lack of basic style`, such as fonts, for basic HTML elements when creating `Web Parts hosted in Teams as Tabs or personal App`.
-- Lack of basic style, such as fonts, for basic HTML elements when creating `Web Parts in "isDomainIsolated" mode`, aka the Isolated Web Parts.
 
-Therefore, the control is to be considered as a sort of `wrapper for all react and non-react controls` that you want to add to the WebPart.
+- `Problems with Teams theme support`, when hosting a web part like Tab or Personal App and specifically the lack of support by this version of Fluent UI React of the high contrast theme.
+- `Lack of basic style`, such as fonts, for basic HTML elements when creating `web parts hosted in Teams as Tabs or personal App`.
+- Lack of basic style, such as fonts, for basic HTML elements when creating `web parts in "isDomainIsolated" mode`, aka the Isolated web parts.
+
+Therefore, the control is to be considered as a sort of `wrapper for all react and non-react controls` that you want to add to the web part.
 
 The control `extends the functionality of the Fluent UI ThemeProvider control` (currently in version 7) by adding some logic thanks to the information contained in the 'context' property, that is:
-- If the Web Part is hosted inside SharePoint, the theme passed through the 'Theme' property will be used or the default one of the current site will be taken.
+
+- If the web part is hosted inside SharePoint, the theme passed through the 'Theme' property will be used or the default one of the current site will be taken.
 - If the web part is hosted within Teams, the "Theme" property will be ignored and using the "Context" property checks which theme is currently applied and adds a handler to notify when the theme is changed. This allows you to manage the change of theme in Teams in real-time, without having to reload the Tab or the Personal App.
 
 Example of use in SharePoint in a `SharePointFullPage - Isolated web parts` (note that the titles H1, H2, H3 and the paragraph are normal html tags that automatically take the font and color style from the control):
@@ -99,7 +101,7 @@ The `EnhancedThemeProvider` control can be configured with the following propert
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | WebPartContext | yes | Set the context from the SPFx Web Part. |
+| context | BaseComponentContext | yes | Sets the context from the SPFx component (a web part, an application customizer or a form customizer). |
 | as |  React.ElementType | no | A component that should be used as the root element of the ThemeProvider component. |
 | ref | React.Ref<HTMLElement> | no | Optional ref to the root element. |
 | theme | PartialTheme \| Theme | no | Defines the theme provided by the user. |
