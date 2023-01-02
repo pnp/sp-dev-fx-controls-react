@@ -1,5 +1,19 @@
 # Releases
 
+## 3.13.0
+
+### Enhancements
+
+- `ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)
+
+### Fixes
+
+- `DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Edin Kapic](https://github.com/ekapic), [Harminder Singh](https://github.com/HarminderSethi).
+
 ## 3.12.0
 
 ### Enhancements
