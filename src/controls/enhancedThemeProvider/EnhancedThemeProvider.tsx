@@ -7,9 +7,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { fluentUITeamsDarkTheme } from '../../common/fluentUIThemes/FluentUITeamsDarkTheme';
 import { fluentUITeamsDefaultTheme } from '../../common/fluentUIThemes/FluentUITeamsDefaultTheme';
 import { fluentUITeamsHighContrastTheme } from '../../common/fluentUIThemes/FluentUITeamsHighContrastTheme';
-import { IEnhancedThemeProviderProps } from './IEnhancedThemeProviderProps';
+import IEnhancedThemeProviderProps from './IEnhancedThemeProviderProps';
 import { ThemeContext, useTheme } from '@fluentui/react-theme-provider';
 import * as telemetry from '../../common/telemetry';
+import { IMicrosoftTeams, WebPartContext } from '@microsoft/sp-webpart-base';
 
 declare const window: Window & {
   __themeState__: {
@@ -48,13 +49,14 @@ const EnhancedThemeProvider = (props: IEnhancedThemeProviderProps): JSX.Element 
   }, []);
 
   useEffect(() => {
-    setIsInTeams((props.context.sdks.microsoftTeams) ? true : false);
+    setIsInTeams(props.context instanceof WebPartContext && props.context.sdks.microsoftTeams ? true : false);
   }, [props.context]);
 
   useEffect(() => {
     if (isInTeams) {
-      setTeamsThemeName(props.context.sdks.microsoftTeams?.context?.theme);
-      props.context.sdks?.microsoftTeams?.teamsJs?.registerOnThemeChangeHandler((theme: string) => {
+      const teamsInstance: IMicrosoftTeams = (props.context as WebPartContext).sdks.microsoftTeams;
+      setTeamsThemeName(teamsInstance.context?.theme);
+      teamsInstance.teamsJs?.registerOnThemeChangeHandler((theme: string) => {
         setTeamsThemeName(theme);
       });
     }
