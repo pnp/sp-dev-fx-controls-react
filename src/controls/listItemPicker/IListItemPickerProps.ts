@@ -1,3 +1,5 @@
+import { IBasePickerStyles } from 'office-ui-fabric-react/lib/Pickers';
+
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 export interface IListItemPickerProps {
@@ -32,5 +34,6 @@ export interface IListItemPickerProps {
     * Enable default suggestions. All options are displayed by default when clicking on the control
     */
    enableDefaultSuggestions?: boolean;
+   styles?: IBasePickerStyles;
 
 }

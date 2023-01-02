@@ -1,16 +1,21 @@
-import * as strings from 'ControlStrings';
-import * as React from "react";
-import SPservice from "../../services/SPService";
-import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
-import { Label } from "office-ui-fabric-react/lib/Label";
-import { getId } from 'office-ui-fabric-react/lib/Utilities';
-import { IListItemPickerProps } from "./IListItemPickerProps";
-import { IListItemPickerState } from "./IListItemPickerState";
-import * as telemetry from '../../common/telemetry';
-import isEqual from 'lodash/isEqual';
-import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
-import { SPHelper } from '../../common/utilities/SPHelper';
+import * as React from 'react';
 
+import * as strings from 'ControlStrings';
+import isEqual from 'lodash/isEqual';
+import {
+  TagPicker,
+} from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker';
+import {
+  ITag,
+} from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
+import { Label } from 'office-ui-fabric-react/lib/Label';
+import { getId } from 'office-ui-fabric-react/lib/Utilities';
+
+import * as telemetry from '../../common/telemetry';
+import { SPHelper } from '../../common/utilities/SPHelper';
+import SPservice from '../../services/SPService';
+import { IListItemPickerProps } from './IListItemPickerProps';
+import { IListItemPickerState } from './IListItemPickerState';
 
 export class ListItemPicker extends React.Component<IListItemPickerProps, IListItemPickerState> {
   private _spservice: SPservice;
@@ -77,6 +82,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
         }
         <div id={this._tagPickerId}>
           <TagPicker onResolveSuggestions={this.onFilterChanged}
+            styles={this.props.styles}
             onEmptyResolveSuggestions={(selectLists) => {
               if (this.props.enableDefaultSuggestions) {
                 return this.onFilterChanged("", selectLists);
