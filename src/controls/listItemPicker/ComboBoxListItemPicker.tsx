@@ -1,14 +1,15 @@
-import * as strings from 'ControlStrings';
 import * as React from "react";
-import { Label } from "office-ui-fabric-react/lib/Label";
-import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
+import * as strings from 'ControlStrings';
 import * as telemetry from '../../common/telemetry';
+
 import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
-import { ListItemRepository } from '../../common/dal/ListItemRepository';
-import styles from './ComboBoxListItemPicker.module.scss';
+import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { cloneDeep, isEqual } from 'lodash';
 
+import { Label } from "office-ui-fabric-react/lib/Label";
+import { ListItemRepository } from '../../common/dal/ListItemRepository';
+import styles from './ComboBoxListItemPicker.module.scss';
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
   private _listItemRepo: ListItemRepository;
@@ -138,6 +139,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     return (
       <div className={styles.comboBoxListItemPickerWrapper}>
         <ComboBox label={this.props.label}
+          styles={this.props.styles}
           options={this.state.availableOptions}
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}
