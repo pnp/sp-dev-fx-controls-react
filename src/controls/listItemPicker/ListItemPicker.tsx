@@ -48,7 +48,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
               safeListId: value });
             this.ensureLoadField();
         })
-        .catch(() => { /* no-op; */ });    
+        .catch(() => { /* no-op; */ });
     } else {
       this.ensureLoadField();
     }
@@ -93,6 +93,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
         }
         <div id={this._tagPickerId}>
           <TagPicker onResolveSuggestions={this.onFilterChanged}
+          styles={this.props.styles}
             onEmptyResolveSuggestions={(selectLists) => {
               if (this.props.enableDefaultSuggestions) {
                 return this.onFilterChanged("", selectLists);
