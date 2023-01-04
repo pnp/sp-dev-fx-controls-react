@@ -12,14 +12,16 @@
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
           "`ProgressStepsIndicator`: Fix missing image reference in Progress Steps Indicator [#1409](https://github.com/pnp/sp-dev-fx-controls-react/issues/1409)",
-          "`DynamicForm`: Dynamicform is hanging on the loading screen if the list has a single value list lookup field [#1393](https://github.com/pnp/sp-dev-fx-controls-react/issues/1393)"
+          "`DynamicForm`: Dynamicform is hanging on the loading screen if the list has a single value list lookup field [#1393](https://github.com/pnp/sp-dev-fx-controls-react/issues/1393)",
+          "`ListView`: Update ListView control docs to use a valid field for the icon [#1398](https://github.com/pnp/sp-dev-fx-controls-react/pull/1398)"
         ]
       },
       "contributions": [
         "[Edin Kapic](https://github.com/ekapic)",
         "[Harminder Singh](https://github.com/HarminderSethi)",
         "[João Mendes](https://github.com/joaojmendes)",
-        "[mgitta](https://github.com/mgitta)"
+        "[mgitta](https://github.com/mgitta)",
+        "[mikezimm](https://github.com/mikezimm)"
       ]
     },
     {
