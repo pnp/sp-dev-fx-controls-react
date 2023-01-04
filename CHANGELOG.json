@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)"
+          "`ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)",
+          "`ListItemPicker`: Add Styles property to ListItemPicker and ComboBoxListItemPicker [#1407](https://github.com/pnp/sp-dev-fx-controls-react/pull/1407)"
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)"
@@ -13,7 +14,8 @@
       },
       "contributions": [
         "[Edin Kapic](https://github.com/ekapic)",
-        "[Harminder Singh](https://github.com/HarminderSethi)"
+        "[Harminder Singh](https://github.com/HarminderSethi)",
+        "[João Mendes](https://github.com/joaojmendes)"
       ]
     },
     {
