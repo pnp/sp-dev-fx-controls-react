@@ -1,4 +1,5 @@
-import { IComboBoxOptionStyles } from "office-ui-fabric-react/lib/components/ComboBox";
+import { IComboBoxOptionStyles, IComboBoxStyles } from "office-ui-fabric-react/lib/components/ComboBox";
+
 import { IAutofillProps } from "office-ui-fabric-react/lib/components/Autofill";
 import { IKeytipProps } from "office-ui-fabric-react/lib/components/Keytip";
 import { SPHttpClient } from '@microsoft/sp-http';
@@ -30,4 +31,5 @@ export interface IComboBoxListItemPickerProps {
     onSelectedItem: (item: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
     label?: string;
     orderBy?:string;
+    styles?: IComboBoxStyles;
 }

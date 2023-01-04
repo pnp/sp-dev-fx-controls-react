@@ -41,9 +41,9 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
         .then((value) => {
             this.setState({...this.state,
               safeListId: value });
-              this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});          
+              this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
         })
-        .catch(() => { /* no-op; */ });    
+        .catch(() => { /* no-op; */ });
     } else {
       this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
     }
@@ -151,6 +151,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     return (
       <div className={styles.comboBoxListItemPickerWrapper}>
         <ComboBox label={this.props.label}
+          styles={this.props.styles}
           options={this.state.availableOptions}
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}
