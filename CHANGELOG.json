@@ -9,7 +9,8 @@
           "`ListItemPicker`: Add Styles property to ListItemPicker and ComboBoxListItemPicker [#1407](https://github.com/pnp/sp-dev-fx-controls-react/pull/1407)"
         ],
         "fixes": [
-          "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)"
+          "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
+          "`ProgressStepsIndicator`: Fix missing image reference in Progress Steps Indicator [#1409](https://github.com/pnp/sp-dev-fx-controls-react/issues/1409)"
         ]
       },
       "contributions": [
