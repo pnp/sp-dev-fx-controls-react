@@ -8,7 +8,8 @@
           "`ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)",
           "`ListItemPicker`: Add Styles property to ListItemPicker and ComboBoxListItemPicker [#1407](https://github.com/pnp/sp-dev-fx-controls-react/pull/1407)",
           "`SitePicker`: Pass `styles` property to Dropdown [#1389](https://github.com/pnp/sp-dev-fx-controls-react/pull/1389)",
-          "`FilePicker`: Site Tab - Many Document Libraries No Scrolling [#1413](https://github.com/pnp/sp-dev-fx-controls-react/pull/1413)"
+          "`FilePicker`: Site Tab - Many Document Libraries No Scrolling [#1413](https://github.com/pnp/sp-dev-fx-controls-react/pull/1413)",
+          "`DynamicForm`: Add `respectETag` option to `DynamicForm` [#1395](https://github.com/pnp/sp-dev-fx-controls-react/issues/1395)"
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
