@@ -3,10 +3,12 @@
   "version": "2.0",
   "bundles": {
     "controls-test-web-part": {
-      "components": [{
-        "entrypoint": "./lib/webparts/controlsTest/ControlsTestWebPart.js",
-        "manifest": "./src/webparts/controlsTest/ControlsTestWebPart.manifest.json"
-      }]
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/controlsTest/ControlsTestWebPart.js",
+          "manifest": "./src/webparts/controlsTest/ControlsTestWebPart.manifest.json"
+        }
+      ]
     },
     "ootb-fields-field-customizer": {
       "components": [
@@ -15,11 +17,29 @@
           "manifest": "./src/extensions/ootbFields/OotbFieldsFieldCustomizer.manifest.json"
         }
       ]
+    },
+    "controls-test-form-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/testForm/TestFormCustomizer.js",
+          "manifest": "./src/extensions/testForm/TestFormCustomizer.manifest.json"
+        }
+      ]
+    },
+    "app-controls-test-application-customizer": {
+      "components": [
+        {
+          "entrypoint": "./lib/extensions/testApp/TestApplicationCustomizer.js",
+          "manifest": "./src/extensions/testApp/TestApplicationCustomizer.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "ControlStrings": "lib/loc/{locale}.js",
-    "ControlsTestWebPartStrings": "lib/webparts/controlsTest/loc/{locale}.js"
+    "ControlsTestWebPartStrings": "lib/webparts/controlsTest/loc/{locale}.js",
+    "ControlsTestFormCustomizerStrings": "lib/extensions/testForm/loc/{locale}.js",
+    "TestApplicationCustomizerStrings": "lib/extensions/testApp/loc/{locale}.js"
   }
 }
