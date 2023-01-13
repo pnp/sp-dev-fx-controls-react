@@ -406,5 +406,9 @@ define([], () => {
     ModernAudioDecVol: "Decrease Volume",
     ModernAudioMute: "Mute",
     ProgressStepsIndicatorNoSteps: "No steps",
+    UploadFilesButtonLabel: "Add",
+    UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
+    UploadFilesUploadButtonLabel: "Upload",
+
 };
 });

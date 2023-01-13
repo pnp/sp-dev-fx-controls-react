@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  UploadFilesButtonLabel: "Add",
+  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
   "Save": "セーブ",
   "Cancel": "キャンセル",
   "SiteBreadcrumbLabel": "ウェブサイトの階層リンク",

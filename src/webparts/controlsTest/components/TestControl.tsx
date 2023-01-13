@@ -1,37 +1,39 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
 
-import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 
-import { MonacoEditor } from "../../../controls/monacoEditor";
+import {
+  UploadFiles,
+} from '../../../controls/uploadFiles/components/UploadFiles/UploadFiles';
+import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
 
 export interface ITestControlProps {
   context: WebPartContext;
+  themeVariant?: IReadonlyTheme;
 }
 
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const defaultValue  = React.useMemo(() => {
-    return (['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'));
-  } , []);
-
-  const onValueChange = React.useCallback( (newValue: string, validationErrors: string[]): void => {
-  console.log(newValue);
- } , []);
+  const { context, themeVariant } = props;
 
   return (
     <>
+    <EnhancedThemeProvider theme={themeVariant} context={context}>
       <Stack>
-        <MonacoEditor
-          value={defaultValue}
-          showMiniMap={true}
-          onValueChange={onValueChange}
-          language={"javascript"}
-          showLineNumbers={true}
+        <UploadFiles
+          context={context}
+          title="Upload Files"
+          onUploadFiles={(files) => {
+            console.log("files", files);
+          }}
+          themeVariant={themeVariant}
         />
       </Stack>
+      </EnhancedThemeProvider>
     </>
   );
 };

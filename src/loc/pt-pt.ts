@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  UploadFilesButtonLabel: "Add",
+  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
   "Save": "Gravar",
   "Cancel": "Cancelar",
   "SiteBreadcrumbLabel": "Localização atual do site",
@@ -381,5 +383,6 @@ define([], () => {
   "ModernTaxonomyPickerSuggestionInLabel": "Em",
   "ProgressStepsIndicatorNoSteps": "Nenhuma etapa definida",
 
+   UploadFilesUploadButtonLabel: "Carregar",
 };
 });
