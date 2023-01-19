@@ -156,9 +156,6 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
       currentRenderElement.innerHTML = "";
       currentRenderElement.appendChild(renderedElement);
 
-      // just for debugging pourpouse
-      // console.log(evaluationContext);
-      // *****
     } catch (cardRenderError) {
       if (props.onError) {
         props.onError(cardRenderError);
