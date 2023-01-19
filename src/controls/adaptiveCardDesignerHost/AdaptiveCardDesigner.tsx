@@ -186,6 +186,7 @@ export const AdaptiveCardDesigner = (props: IAdaptiveCardDesignerHostProps): JSX
             props.context);
 
         convertNullToEmptyString(dataObject);
+        cardDesigner.sampleData = dataObject?.$root || {};
         cardDesigner.dataStructure = FieldDefinition.deriveFrom(dataObject.$root);
     }, [isMonacoLoaded,
         props.addDefaultAdaptiveCardHostContainer,
