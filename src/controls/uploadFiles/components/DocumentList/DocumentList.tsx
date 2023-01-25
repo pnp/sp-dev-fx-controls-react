@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
@@ -17,7 +18,7 @@ import {
   ScrollbarVisibility,
 } from 'office-ui-fabric-react/lib/ScrollablePane';
 
-import { DragDropFiles } from '../../../dragDropFiles/DragDropFiles';
+import { DragDropFiles } from '../../../dragDropFiles';
 import { globalState } from '../../jotai/atoms';
 import { FileInfo } from '../File/FileInfo';
 import { FileCommandBar } from '../FileCommandBar/FileCommandBar';
@@ -31,7 +32,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
   const { documentListStyles, scollableContainerStyles, bootomContainerStyles } = useDocumentListStyles();
   const [appGlobalState, setGlobalState] = useAtom(globalState);
   const [renderFiles, setRenderFiles] = React.useState<React.ReactNode[]>([]);
-  const { selectedFiles, files, containerWidth, themeVariant } = appGlobalState;
+  const { selectedFiles, files, containerWidth } = appGlobalState;
   const currentPage = React.useRef<number>(0);
   const currentFiles = React.useRef<File[]>([]);
   const { onUploadFiles } = props;
@@ -88,7 +89,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         return { ...prevState, files: newsFiles };
       });
     },
-    [files, themeVariant]
+    [files, setGlobalState]
   );
 
   const onDelete = React.useCallback(() => {
@@ -97,7 +98,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
     setGlobalState((prevState) => {
       return { ...prevState, files: newFiles, selectedFiles: [] };
     });
-  }, [selectedFiles, files]);
+  }, [files, selectedFiles, setGlobalState]);
 
   const onUpload = React.useCallback(
     (file: File) => {
@@ -106,7 +107,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         return { ...prevState, files: newFiles };
       });
     },
-    [files]
+    [setGlobalState]
   );
 
   const onSelectAll = React.useCallback(
@@ -127,7 +128,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         });
       }
     },
-    [files]
+    [files, setGlobalState]
   );
 
   const getContainerWidth = React.useCallback(() => {
@@ -140,7 +141,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         };
       });
     }
-  }, []);
+  }, [setGlobalState]);
 
   React.useEffect(() => {
     renderFilesPerPage();
@@ -150,7 +151,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
     window.addEventListener("resize", () => {
       getContainerWidth();
     });
-  }, [files, selectedFiles, containerWidth]);
+  }, [files, selectedFiles, containerWidth, renderFilesPerPage, getContainerWidth]);
 
   getContainerWidth();
 
@@ -160,7 +161,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
         <FileCommandBar onDelete={onDelete} onSelectedAll={onSelectAll} onUpload={onUpload} />
         <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto} styles={scollableContainerStyles}>
           <div className={documentListStyles.documentList}>
-            <DragDropFiles dropEffect="upload" enable={true} onDrop={onDrop}>
+            <DragDropFiles   enable={true} onDrop={onDrop}>
               <Stack tokens={{ padding: 20 }}>
                 {renderFiles.length ? (
                   <div className={documentListStyles.filesContainerGrid}>{renderFiles}</div>
@@ -171,17 +172,18 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
             </DragDropFiles>
           </div>
         </ScrollablePane>
-        <Stack styles={bootomContainerStyles} horizontalAlign="end" tokens={{ childrenGap: 20, }}>
-        <div className={documentListStyles.separator} />
-          {selectedFiles.length > 0 && (
+        <Stack styles={bootomContainerStyles} horizontalAlign="end" tokens={{ childrenGap: 20 }}>
+          <div className={documentListStyles.separator} />
+
             <>
               <PrimaryButton
+              disabled={!selectedFiles.length }
                 iconProps={{ iconName: "upload" }}
                 text={strings.UploadFilesUploadButtonLabel}
                 onClick={() => onUploadFiles(selectedFiles)}
               />
             </>
-          )}
+
         </Stack>
       </div>
     </>

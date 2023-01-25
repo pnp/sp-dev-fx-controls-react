@@ -379,7 +379,9 @@ define([], () => {
     ModernTaxonomyPickerPanelCloseButtonText: "Fechar",
     ModernTaxonomyPickerNoResultsFound: "Nenhum resultado encontrado",
     UploadFilesButtonLabel: "Add",
+    UpLoadFilesDeleteButtonLabel: "Delete",
     UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
+    UpLoadFilesSelectAllLabel: "Select all",
     ModernTaxonomyPickerSuggestionInLabel: "Em"
 };
 });

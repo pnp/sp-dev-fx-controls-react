@@ -32,7 +32,7 @@ export const useFileStyles = () => {
 
       },
     }
-  }, [themeVariant]);
+  }, []);
 
   const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback(
     (props: ICheckboxProps) => {
@@ -95,7 +95,7 @@ export const useFileStyles = () => {
 
   const stackCheckboxStyles: IStackStyles = React.useMemo(() => {
     return { root: { position: "absolute", top: 0, right: 0, zIndex: 1, padding: 5 } };
-  }, [themeVariant]);
+  }, []);
 
   const fileNameStyles: ITextStyles = React.useMemo(() => {
     return { root: { fontWeight: FontWeights.semibold,

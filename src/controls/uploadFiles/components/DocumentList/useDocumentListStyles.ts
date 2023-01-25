@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { useAtomValue } from 'jotai/utils';
+import { useAtom } from 'jotai';
 
 import {
   IScrollablePaneStyles,
@@ -16,7 +16,7 @@ import { globalState } from '../../jotai/atoms';
 
 /* eslint-disable @typescript-eslint/no-empty-function */
 export const useDocumentListStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState,] = useAtom(globalState);
   const { themeVariant, containerWidth, pageSize, files } = appGlobalState;
 
   const containerHeight  =  React.useMemo(() => {
@@ -31,9 +31,10 @@ export const useDocumentListStyles = () => {
         root: {
           paddingLeft: 20,
           paddingRight: 20,
+          paddingBottom: 20,
         }
       }
-  }, [themeVariant]);
+  }, []);
 
   const scollableContainerStyles: Partial<IScrollablePaneStyles> = React.useMemo(() => {
     return {
