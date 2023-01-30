@@ -10,7 +10,9 @@
           "`SitePicker`: Pass `styles` property to Dropdown [#1389](https://github.com/pnp/sp-dev-fx-controls-react/pull/1389)",
           "`FilePicker`: Site Tab - Many Document Libraries No Scrolling [#1413](https://github.com/pnp/sp-dev-fx-controls-react/pull/1413)",
           "`DynamicForm`: Add `respectETag` option to `DynamicForm` [#1395](https://github.com/pnp/sp-dev-fx-controls-react/issues/1395)",
-          "`MonacoEditor`: Fixed minor typos and misleading instructions [#1415](https://github.com/pnp/sp-dev-fx-controls-react/pull/1415)"
+          "`MonacoEditor`: Fixed minor typos and misleading instructions [#1415](https://github.com/pnp/sp-dev-fx-controls-react/pull/1415)",
+          "SharePoint Framework v1.16.1 support [#1427](https://github.com/pnp/sp-dev-fx-controls-react/issues/1427)",
+          "`RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)"
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
