@@ -3,7 +3,9 @@
     {
       "version": "3.13.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`UploadFiles`: New Upload Files control [#1388](https://github.com/pnp/sp-dev-fx-controls-react/pull/1388)"
+        ],
         "enhancements": [
           "`ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)",
           "`ListItemPicker`: Add Styles property to ListItemPicker and ComboBoxListItemPicker [#1407](https://github.com/pnp/sp-dev-fx-controls-react/pull/1407)",
