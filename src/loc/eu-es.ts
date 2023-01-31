@@ -356,7 +356,9 @@ define([], () => {
     ModernTaxonomyPickerPanelCloseButtonText: "Itxi",
     ModernTaxonomyPickerNoResultsFound: "Ez da emaitzarik aurkitu",
     UploadFilesButtonLabel: "Add",
+    UpLoadFilesDeleteButtonLabel: "Delete",
     UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
+    UpLoadFilesSelectAllLabel: "Select all",
     ModernTaxonomyPickerSuggestionInLabel: "in"
   };
 });

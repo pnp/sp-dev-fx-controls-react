@@ -48,7 +48,7 @@ export const FileCommandBar: React.FunctionComponent<IFileCommandBarProps> = (
             setIsAllSelected(false);
             onDelete();
           }}
-          text="Delete"
+          text={strings.UpLoadFilesDeleteButtonLabel}
         />
       );
     },
@@ -75,9 +75,10 @@ export const FileCommandBar: React.FunctionComponent<IFileCommandBarProps> = (
 
   const commanbarSelectAllButton: IComponentAs<ICommandBarItemProps> = React.useCallback(
     (props) => {
+      const selectedAll  =  files.length > 0 && files.length === selectedFiles.length;
       return (
         <Stack horizontal verticalAlign="center" horizontalAlign="start" tokens={{ childrenGap: 15 }}>
-          {files.length > 0 ? ( <Checkbox styles={checkBoxStyles} label="Select all" checked={isAllSelected} onChange={
+          {files.length > 0 ? ( <Checkbox styles={checkBoxStyles} label={strings.UpLoadFilesSelectAllLabel} checked={selectedAll} onChange={
             (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean)=>{
               setIsAllSelected(checked);
               onSelectedAll(checked);
@@ -87,7 +88,7 @@ export const FileCommandBar: React.FunctionComponent<IFileCommandBarProps> = (
         </Stack>
       );
     },
-    [checkBoxStyles, selectedFiles]
+    [files.length, selectedFiles.length, checkBoxStyles, controlStyles.separatorVertrical, onSelectedAll]
   );
 
   React.useEffect(() => {

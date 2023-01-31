@@ -2,8 +2,8 @@ import React from 'react';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { useAtomValue } from 'jotai/utils';
-import { FontWeights } from 'office-ui-fabric-react';
 import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
+import { FontWeights } from 'office-ui-fabric-react/lib/Styling';
 import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
 
 import { globalState } from '../../jotai/atoms/globalState';

@@ -3,7 +3,9 @@ declare var define: any;
 define([], () => {
   return {
   UploadFilesButtonLabel: "Add",
+  UpLoadFilesDeleteButtonLabel: "Delete",
   UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
+  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "Taupyti",
   "Cancel": "Atšaukti",
   "SiteBreadcrumbLabel": "Svetainės navigacijos grandinė",
