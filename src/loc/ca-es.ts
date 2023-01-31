@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "Salvar",
   "Cancel": "Cancel·lar",
   "SiteBreadcrumbLabel": "Lloc web d'engruna",
@@ -382,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Suprimeix",
   "ModernTaxonomyPickerPanelCloseButtonText": "Tanca",
   "ModernTaxonomyPickerNoResultsFound": "No s'han trobat resultats",
-  "ModernTaxonomyPickerSuggestionInLabel": "En"
+  "ModernTaxonomyPickerSuggestionInLabel": "En",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

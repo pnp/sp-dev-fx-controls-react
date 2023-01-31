@@ -3,8 +3,6 @@ declare interface IControlStrings {
   UploadFilesUploadButtonLabel: string;
   UploadFilesButtonLabel: string;
   UpLoadFilesDeleteButtonLabel: string;
-  UpLoadFilesDragDropLabel: string;
-  UpLoadFilesDeleteButtonLabel: string;
   UpLoadFilesSelectAllLabel: string;
 
   ProgressStepsIndicatorNoSteps:string;
@@ -417,9 +415,6 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
-UpLoadFilesSelectAllLabel: string;
-
-
 
 }
 

@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "Speichern",
   "Cancel": "Abbrechen",
   "SiteBreadcrumbLabel": "Website Brotkrume",
@@ -383,10 +379,19 @@ define([], () => {
   "ModernTaxonomyPickerPanelCloseButtonText": "Schließen",
   "ModernTaxonomyPickerNoResultsFound": "Keine Ergebnisse gefunden",
   "ModernTaxonomyPickerSuggestionInLabel": "In",
+
   "ModernAudioPlay": "Abspielen",
   "ModernAudioPause": "Pause",
   "ModernAudioIncVol": "Lauter",
   "ModernAudioDecVol": "Leiser",
-  "ModernAudioMute": "Ton aus"
+  "ModernAudioMute": "Ton aus",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

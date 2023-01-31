@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "救",
   "Cancel": "取消",
   "SiteBreadcrumbLabel": "网站痕迹",
@@ -382,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "删除",
   "ModernTaxonomyPickerPanelCloseButtonText": "关闭",
   "ModernTaxonomyPickerNoResultsFound": "未找到结果",
-  "ModernTaxonomyPickerSuggestionInLabel": "在"
+  "ModernTaxonomyPickerSuggestionInLabel": "在",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

@@ -9,10 +9,8 @@ import {
   isEqual,
   pullAllWith,
 } from 'lodash';
-import {
-  PrimaryButton,
-  Stack,
-} from 'office-ui-fabric-react';
+import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import {
   ScrollablePane,
   ScrollbarVisibility,

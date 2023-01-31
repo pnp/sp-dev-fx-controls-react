@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "Spara",
   "Cancel": "Avbryt",
   "SiteBreadcrumbLabel": "Brödsmulemeny",
@@ -382,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Ta bort",
   "ModernTaxonomyPickerPanelCloseButtonText": "Stäng",
   "ModernTaxonomyPickerNoResultsFound": "Inga resultat hittades",
-  "ModernTaxonomyPickerSuggestionInLabel": "i"
+  "ModernTaxonomyPickerSuggestionInLabel": "i",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

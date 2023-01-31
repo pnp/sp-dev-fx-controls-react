@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "セーブ",
   "Cancel": "キャンセル",
   "SiteBreadcrumbLabel": "ウェブサイトの階層リンク",
@@ -382,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "削除",
   "ModernTaxonomyPickerPanelCloseButtonText": "閉じる",
   "ModernTaxonomyPickerNoResultsFound": "結果が見つかりませんでした",
-  "ModernTaxonomyPickerSuggestionInLabel": "インチ"
+  "ModernTaxonomyPickerSuggestionInLabel": "インチ",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

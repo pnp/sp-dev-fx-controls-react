@@ -2,10 +2,6 @@ declare var define: any;
 
 define([], () => {
   return {
-  UploadFilesButtonLabel: "Add",
-  UpLoadFilesDeleteButtonLabel: "Delete",
-  UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
-  UpLoadFilesSelectAllLabel: "Select all",
   "Save": "Gravar",
   "Cancel": "Cancelar",
   "SiteBreadcrumbLabel": "Localização atual do site",
@@ -383,8 +379,19 @@ define([], () => {
   "ModernTaxonomyPickerPanelCloseButtonText": "Fechar",
   "ModernTaxonomyPickerNoResultsFound": "Nenhum resultado encontrado",
   "ModernTaxonomyPickerSuggestionInLabel": "Em",
-  "ProgressStepsIndicatorNoSteps": "Nenhuma etapa definida",
 
-   UploadFilesUploadButtonLabel: "Carregar",
+   "ModernAudioPlay": "Play",
+   "ModernAudioPause": "Pause",
+   "ModernAudioIncVol": "Increase Volume",
+   "ModernAudioDecVol": "Decrease Volume",
+   "ModernAudioMute": "Mute",
+
+   "ProgressStepsIndicatorNoSteps": "Nenhuma etapa definida",
+
+   "UploadFilesButtonLabel": "Add",
+   "UpLoadFilesDeleteButtonLabel": "Delete",
+   "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+   "UpLoadFilesSelectAllLabel": "Select all",
+   "UploadFilesUploadButtonLabel": "Carregar",
 };
 });
