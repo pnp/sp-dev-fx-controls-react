@@ -191,7 +191,7 @@ import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
-
+import { UploadFiles } from "../../../controls/uploadFiles";
 
 // Used to render document card
 /**
@@ -2412,6 +2412,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <h3>Monaco Editor</h3>
           <TestControl context={this.props.context} />
+        </div>
+        <div>
+          <h3>Upload Files</h3>
+          <EnhancedThemeProvider theme={this.props.themeVariant} context={this.props.context}>
+            <Stack>
+              <UploadFiles
+                context={this.props.context}
+                title="Upload Files"
+                onUploadFiles={(files) => {
+                  console.log("files", files);
+                }}
+                themeVariant={this.props.themeVariant}
+              />
+            </Stack>
+          </EnhancedThemeProvider>
         </div>
 
       </div>

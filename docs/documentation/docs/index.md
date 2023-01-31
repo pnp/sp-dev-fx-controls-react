@@ -108,6 +108,7 @@ The following controls are currently available:
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
 - [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
+- [UploadFiles](./controls/UploadFiles) (Upload Files)
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 

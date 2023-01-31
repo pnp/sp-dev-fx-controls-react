@@ -379,10 +379,19 @@ define([], () => {
   "ModernTaxonomyPickerPanelCloseButtonText": "Schließen",
   "ModernTaxonomyPickerNoResultsFound": "Keine Ergebnisse gefunden",
   "ModernTaxonomyPickerSuggestionInLabel": "In",
+
   "ModernAudioPlay": "Abspielen",
   "ModernAudioPause": "Pause",
   "ModernAudioIncVol": "Lauter",
   "ModernAudioDecVol": "Leiser",
-  "ModernAudioMute": "Ton aus"
+  "ModernAudioMute": "Ton aus",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });
