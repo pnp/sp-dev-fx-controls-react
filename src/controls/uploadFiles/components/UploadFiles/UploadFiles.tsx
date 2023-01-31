@@ -5,7 +5,7 @@ import { Provider } from 'jotai';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
 import { Text } from 'office-ui-fabric-react/lib/Text';
 
-import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
+import { EnhancedThemeProvider } from '../../../enhancedThemeProvider';
 import { IUploadFilesProps } from './IUploadFilesProps';
 import { UploadFilesControl } from './UploadFilesControl';
 import { useUploadFilesStyles } from './useUploadFilesStyles';
