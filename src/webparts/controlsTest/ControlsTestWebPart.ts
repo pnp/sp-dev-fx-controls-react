@@ -1,23 +1,23 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import * as React from "react";
+import * as ReactDom from "react-dom";
 
-import * as strings from 'ControlsTestWebPartStrings';
+import * as strings from "ControlsTestWebPartStrings";
 
 import {
   IReadonlyTheme,
   ThemeChangedEventArgs,
   ThemeProvider,
-} from '@microsoft/sp-component-base';
-import { Version } from '@microsoft/sp-core-library';
+} from "@microsoft/sp-component-base";
+import { Version } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import ControlsTest from './components/ControlsTest';
-import { IControlsTestProps } from './components/IControlsTestProps';
-import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
+import ControlsTest from "./components/ControlsTest";
+import { IControlsTestProps } from "./components/IControlsTestProps";
+import { IControlsTestWebPartProps } from "./IControlsTestWebPartProps";
 
 /**
  * Web part to test the React controls
