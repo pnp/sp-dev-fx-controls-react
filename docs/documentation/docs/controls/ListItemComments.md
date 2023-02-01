@@ -35,8 +35,9 @@ import { ListItemComments } from '@pnp/spfx-controls-react/lib/ListItemComments'
                   label="ListItem Comments"
                   />
 ```
-## Use highlightedCommentId parameter to highlight the specified comment for Comment Notification Link
+## Use "highlightedCommentId" parameter to support Comment Notification Link
 SharePoint will send a comment notification if someone has been ***"@"*** in the comment. This comment notification mail contains a ***Go to comment*** button. 
+
 ![ListItemComments](../assets/ListItemComments05.png)
 
 The "Go to Comment" link is like [https://xxx.sharepoint.com/sites/xxxx/Lists/MyList/DispForm.aspx?ID=1&commentId=1&e=LURoEsg5Zki4cS4SgcIG7w&at=15&CT=1674882847351&OR=OWA-NT&CID=c3a04ee0-40b5-9591-e6a4-3fac33046a64](https://xxx.sharepoint.com/sites/xxxx/Lists/MyList/DispForm.aspx?ID=1&commentId=1&e=LURoEsg5Zki4cS4SgcIG7w&at=15&CT=1674882847351&OR=OWA-NT&CID=c3a04ee0-40b5-9591-e6a4-3fac33046a64), which contains ***commentId*** in url parameter.
@@ -55,6 +56,7 @@ You can use ***highlightedCommentId*** to specify the comment you want to highli
                   />
 ```
 
+![ListItemComments](../assets/ListItemComments06.png)
 
 ## Implementation
 
