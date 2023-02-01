@@ -7,6 +7,7 @@ import { Theme } from "spfx-uifabric-themes"; // Don't remove this import is nee
 import { CommentsList } from "./components/Comments/CommentsList";
 import { Stack } from "office-ui-fabric-react/lib/Stack";
 import { Text } from "office-ui-fabric-react/lib/Text";
+
 export interface IListItemCommentsProps {
   webUrl?: string;
   listId: string;
@@ -14,12 +15,13 @@ export interface IListItemCommentsProps {
   serviceScope: ServiceScope;
   numberCommentsPerPage?: 5 | 10 | 15 | 20;
   label?: string;
+  highlightedCommentId?:string;
 }
 const theme = window.__themeState__.theme;
 export const ListItemComments: React.FunctionComponent<IListItemCommentsProps> = (
   props: React.PropsWithChildren<IListItemCommentsProps>
 ) => {
-  const { webUrl, listId, itemId, serviceScope, numberCommentsPerPage, label } = props;
+  const { webUrl, listId, itemId, serviceScope, numberCommentsPerPage, label,highlightedCommentId } = props;
 
   if (!listId && !itemId && !serviceScope) return;
 
@@ -34,6 +36,7 @@ export const ListItemComments: React.FunctionComponent<IListItemCommentsProps> =
             theme: theme,
             serviceScope: serviceScope,
             label: label,
+            highlightedCommentId:highlightedCommentId,
             numberCommentsPerPage: numberCommentsPerPage,
           }}
         >

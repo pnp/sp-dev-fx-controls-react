@@ -9,4 +9,5 @@ export interface IAppContext {
   itemId: string;
   numberCommentsPerPage?: number;
   label?:string;
+  highlightedCommentId?:string;
 }
