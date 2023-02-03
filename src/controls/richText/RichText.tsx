@@ -5,8 +5,10 @@ import RichTextPropertyPane from './RichTextPropertyPane';
 import ReactQuill, { Quill } from 'react-quill';
 import styles from './RichText.module.scss';
 import { IRichTextProps, IRichTextState } from './RichText.types';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { Guid } from '@microsoft/sp-core-library';
+import * as telemetry from '../../common/telemetry';
+import isEqual from 'lodash/isEqual';
+import { IconButton } from 'office-ui-fabric-react/lib/Button';
 import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
 import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
@@ -14,10 +16,9 @@ import { Link } from 'office-ui-fabric-react/lib/Link';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { elementContains } from 'office-ui-fabric-react/lib/Utilities';
-import * as telemetry from '../../common/telemetry';
+import { css, elementContains } from 'office-ui-fabric-react/lib/Utilities';
 import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import isEqual from 'lodash/isEqual';
+import { Label } from 'office-ui-fabric-react/lib/Label';
 
 const TOOLBARPADDING: number = 28;
 /**
@@ -36,6 +37,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private _wrapperRef: HTMLDivElement = undefined;
   private _propertyPaneRef: RichTextPropertyPane = undefined;
   private _toolbarId = undefined;
+  private _richTextId = undefined;
 
   private ddStyleOpts = [{
     key: 0,
@@ -128,6 +130,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
     // Get a unique toolbar id
     this._toolbarId = "toolbar_" + Guid.newGuid().toString();
+
+    // Get a unique rich text id if not provided by props
+    this._richTextId = props.id ?? "richText_" + Guid.newGuid().toString();
   }
 
   /**
@@ -139,9 +144,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       document.addEventListener('click', this.handleClickOutside);
       document.addEventListener('focus', this.handleClickOutside);
 
-      const clientRect: ClientRect = this._wrapperRef.getBoundingClientRect();
-      const parentClientRect: ClientRect = this._wrapperRef.parentElement.getBoundingClientRect();
-      const toolbarTop: number = clientRect.top - parentClientRect.top - TOOLBARPADDING;
+      const domRect: DOMRect = this._wrapperRef.getBoundingClientRect();
+      const parentDomRect: DOMRect = this._wrapperRef.parentElement.getBoundingClientRect();
+      const toolbarTop: number = domRect.top - parentDomRect.top - TOOLBARPADDING;
 
       this.setState({
         wrapperTop: toolbarTop
@@ -444,11 +449,18 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const { text } = this.state;
     const { isEditMode } = this.props;
 
+    const renderLabel: JSX.Element = (
+      (this.props.onRenderLabel && this.props.onRenderLabel(this.props)) ?? this.onRenderLabel()
+    );
+
     // If we're not in edit mode, display read-only version of the html
     if (!isEditMode) {
       return (
-        <div className={`ql-editor ${styles.richtext} ${this.props.className || ''}`}
-          dangerouslySetInnerHTML={{ __html: text }} />
+        <>
+          {renderLabel}
+          <div id={this._richTextId} className={css("ql-editor", styles.richtext, this.props.className || null)}
+            dangerouslySetInnerHTML={{ __html: text }} />
+        </>
       );
     }
 
@@ -501,7 +513,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     Quill.register(sizeClass, true);
 
     return (
-      <div ref={(ref) => { this._wrapperRef = ref; }} className={`${styles.richtext && this.state.editing ? 'ql-active' : ''} ${this.props.className}`}>
+      <div ref={(ref) => { this._wrapperRef = ref; }} className={css(styles.richtext && this.state.editing ? 'ql-active' : null, this.props.className || null) || null}>
+        {renderLabel}
         <div id={this._toolbarId} style={{ top: this.state.wrapperTop }}>
           {
             showStyles && (
@@ -511,7 +524,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
                 selectedKey={this.state.formats.header || 0}
                 options={this.ddStyleOpts}
-                onChanged={this.onChangeHeading}
+                onChange={this.onChangeHeading}
                 onRenderOption={this.onRenderStyleOption}
                 onRenderTitle={this.onRenderStyleTitle}
               />
@@ -560,7 +573,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
                 selectedKey={this.state.formats.align || 'left'}
                 options={this.ddAlignOpts}
-                onChanged={this.onChangeAlign}
+                onChange={this.onChangeAlign}
                 onRenderOption={this.onRenderAlignOption}
                 onRenderTitle={this.onRenderAlignTitle}
               />
@@ -575,10 +588,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 options={this.ddListOpts}
                 // this option is not available yet
                 notifyOnReselect={true} // allows re-selecting selected item to turn it off
-                onChanged={this.onChangeList}
+                onChange={this.onChangeList}
                 onRenderOption={this.onRenderListOption}
                 onRenderTitle={this.onRenderListTitle}
-                onRenderPlaceHolder={this.onRenderListPlaceholder}
+                onRenderPlaceholder={this.onRenderListPlaceholder}
               />
             )
           }
@@ -624,6 +637,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         </div>
 
         <ReactQuill ref={this.linkQuill}
+          id={this._richTextId}
           placeholder={placeholder}
           modules={modules}
           value={text || ''} //property value causes issues, defaultValue does not
@@ -644,7 +658,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         {
           this.renderImageDialog()
         }
-
       </div>
     );
   }
@@ -666,17 +679,17 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const newValue = !this.state.formats.underline;
     this.applyFormat("underline", newValue);
   }
-  private onChangeHeading = (item: IDropdownOption): void => {
+  private onChangeHeading = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
     const newHeadingValue = item.key === 0 ? '' : item.key.toString();
     this.applyFormat("header", newHeadingValue);
   }
 
-  private onChangeAlign = (item: IDropdownOption): void => {
+  private onChangeAlign = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
     const newAlignValue = item.key === 'left' ? false : item.key.toString();
     this.applyFormat("align", newAlignValue);
   }
 
-  private onChangeList = (item: IDropdownOption): void => {
+  private onChangeList = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
     // if we're already in list mode, toggle off
     const key = item.key;
     const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'numbered' && this.state.formats.list === 'numbered') ? false : key;
@@ -976,5 +989,22 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private linkPropertyPane = (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     this._propertyPaneRef = e;
+  }
+
+  /**
+   * Renders the label above the rich text (if specified)
+   */
+  private onRenderLabel = (): JSX.Element | null => {
+    const { label } = this.props;
+
+    if (label) {
+      return (
+        <Label htmlFor={this._richTextId}>
+          {label}
+        </Label>
+      );
+    }
+
+    return null;
   }
 }

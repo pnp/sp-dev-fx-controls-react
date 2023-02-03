@@ -378,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "刪除",
   "ModernTaxonomyPickerPanelCloseButtonText": "關閉",
   "ModernTaxonomyPickerNoResultsFound": "未找到結果",
-  "ModernTaxonomyPickerSuggestionInLabel": "在"
+  "ModernTaxonomyPickerSuggestionInLabel": "在",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

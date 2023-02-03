@@ -119,8 +119,10 @@ export const ToolbarTheme = ({ globalTheme, children }: IToolbarThemeProps): JSX
     <FluentUIThemeProvider
       theme={mergeThemes(
         mainTheme,
-        teamsNextVariableAssignments,
-        getLocalTheme(globalTheme.siteVariables.theme)
+        mergeThemes(
+          teamsNextVariableAssignments,
+          getLocalTheme(globalTheme.siteVariables.theme)
+        )
       )}
       styles={{ background: "transparent" }}
     >

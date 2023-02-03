@@ -378,6 +378,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Supprimer",
   "ModernTaxonomyPickerPanelCloseButtonText": "Fermer",
   "ModernTaxonomyPickerNoResultsFound": "Aucun résultat trouvé",
-  "ModernTaxonomyPickerSuggestionInLabel": "dans"
+  "ModernTaxonomyPickerSuggestionInLabel": "dans",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });
