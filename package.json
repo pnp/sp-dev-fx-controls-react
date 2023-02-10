@@ -97,7 +97,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-react-hooks": "4.3.0",
     "gulp": "4.0.2",
-    "husky": "^6.0.0",
+    "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
     "jest-cli": "^25.5.4",
