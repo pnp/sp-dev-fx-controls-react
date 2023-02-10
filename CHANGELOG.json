@@ -15,7 +15,8 @@
           "`MonacoEditor`: Fixed minor typos and misleading instructions [#1415](https://github.com/pnp/sp-dev-fx-controls-react/pull/1415)",
           "SharePoint Framework v1.16.1 support [#1427](https://github.com/pnp/sp-dev-fx-controls-react/issues/1427)",
           "`RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)",
-          "`PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)"
+          "`PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)",
+          "Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)"
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
