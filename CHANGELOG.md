@@ -2,6 +2,10 @@
 
 ## 3.13.0
 
+### New control(s)
+
+- `UploadFiles`: New Upload Files control [#1388](https://github.com/pnp/sp-dev-fx-controls-react/pull/1388)
+
 ### Enhancements
 
 - `ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)
@@ -12,6 +16,8 @@
 - `MonacoEditor`: Fixed minor typos and misleading instructions [#1415](https://github.com/pnp/sp-dev-fx-controls-react/pull/1415)
 - SharePoint Framework v1.16.1 support [#1427](https://github.com/pnp/sp-dev-fx-controls-react/issues/1427)
 - `RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)
+- `PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)
+- Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)
 
 ### Fixes
 
@@ -24,7 +30,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm).
+Special thanks to our contributors (in alphabetical order): [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm).
 
 ## 3.12.0
 
