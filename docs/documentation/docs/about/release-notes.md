@@ -2,6 +2,10 @@
 
 ## 3.13.0
 
+### New control(s)
+
+- `UploadFiles`: New Upload Files control [#1388](https://github.com/pnp/sp-dev-fx-controls-react/pull/1388)
+
 ### Enhancements
 
 - `ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)
