@@ -49,23 +49,20 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
   }
 
   public render(): React.ReactElement<IDocumentLibraryBrowserProps> {
-    if (this.state.isLoading) {
-      return (<Spinner label={strings.Loading} />);
-    }
-    const libraries: ILibrary[] = this.state.lists;
+
+    const {lists, isLoading } = this.state;
 
     return (
       <div className={styles.documentLibraryBrowserContainer}>
-        <FocusZone>
+        { isLoading && <Spinner label='Caricamento...' /> }
           <List
             className={styles.filePickerFolderCardGrid}
-            items={libraries}
+            items={lists}
             getItemCountForPage={this._getItemCountForPage}
             getPageHeight={this._getPageHeight}
             renderedWindowsAhead={4}
             onRenderCell={this._onRenderLibraryTile}
           />
-        </FocusZone>
       </div>
     );
   }
