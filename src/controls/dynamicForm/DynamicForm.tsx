@@ -31,6 +31,9 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   private _spService: SPservice;
   private webURL = this.props.webAbsoluteUrl ? this.props.webAbsoluteUrl : this.props.context.pageContext.web.absoluteUrl;
 
+  // Item content type id (value from props if setted, otherwise from the first content type associated to the list)
+  private _contentTypeId: string;
+
   constructor(props: IDynamicFormProps) {
     super(props);
     // Initialize pnp sp
@@ -108,7 +111,6 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     const {
       listId,
       listItemId,
-      contentTypeId,
       onSubmitted,
       onBeforeSubmit,
       onSubmitError
@@ -238,8 +240,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
       }
       // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
-      else if (contentTypeId === undefined || contentTypeId === '') {
-         if (!contentTypeId.startsWith('0x0120')) {
+      else if (this._contentTypeId !== undefined || this._contentTypeId !== '' || this._contentTypeId !== null) {
+         if (!this._contentTypeId.startsWith('0x0120')) {
             // We are adding a new list item
             try {
               const iar = await sp.web.lists.getById(listId).items.add(objects);
@@ -253,7 +255,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               }
               console.log("Error", error);
             }
-        } else if (contentTypeId.startsWith('0x0120')) {
+        } else if (this._contentTypeId.startsWith('0x0120')) {
           // We are adding a folder or a Document Set
           try {
             const idField = 'ID';
@@ -272,7 +274,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               const folderId = fields[idField];
 
               // Set the content type ID for the target item
-              objects[contentTypeIdField] = contentTypeId;
+              objects[contentTypeIdField] = this._contentTypeId;
               // Update the just created folder or Document Set
               const iur = await library.items.getById(folderId).update(objects);
               if (onSubmitted) {
@@ -349,18 +351,18 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
     const { listId, listItemId, disabledFields } = this.props;
-    let contentTypeId = this.props.contentTypeId;
+    this._contentTypeId = this.props.contentTypeId;
     try {
       const spList = await sp.web.lists.getById(listId);
       let item = null;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0)
         item = await spList.items.getById(listItemId).get();
 
-      if (contentTypeId === undefined || contentTypeId === '') {
+      if (this._contentTypeId === undefined || this._contentTypeId === '' || this._contentTypeId === null) {
         const defaultContentType = await spList.contentTypes.select("Id", "Name").get();
-        contentTypeId = defaultContentType[0].Id.StringValue;
+        this._contentTypeId = defaultContentType[0].Id.StringValue;
       }
-      const listFields = await this.getFormFields(listId, contentTypeId, this.webURL);
+      const listFields = await this.getFormFields(listId, this._contentTypeId, this.webURL);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const responseValue = listFields.value;
