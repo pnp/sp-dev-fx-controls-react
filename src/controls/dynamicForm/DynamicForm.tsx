@@ -482,8 +482,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
           } else if (fieldType === "Thumbnail") {
-            if (defaultValue !== null) {
-              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+            if (defaultValue) {
+              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
             }
           } else if (fieldType === "User") {
             if (item !== null) {
