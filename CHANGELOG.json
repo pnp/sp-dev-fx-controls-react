@@ -26,7 +26,8 @@
           "`DynamicForm`: Dynamicform is hanging on the loading screen if the list has a single value list lookup field [#1393](https://github.com/pnp/sp-dev-fx-controls-react/issues/1393)",
           "`ListView`: Update ListView control docs to use a valid field for the icon [#1398](https://github.com/pnp/sp-dev-fx-controls-react/pull/1398)",
           "`Accordion`: Fixing Accordion control documentation image issue [#1408](https://github.com/pnp/sp-dev-fx-controls-react/issues/1408)",
-          "`DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)"
+          "`DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)",
+          "`FilePicker`: Fix site breadcrumb navigation [#1368](https://github.com/pnp/sp-dev-fx-controls-react/issues/1368)"
         ]
       },
       "contributions": [
@@ -34,6 +35,7 @@
         "[Brian Krainer Jacobsen](https://github.com/krainer)",
         "[Edin Kapic](https://github.com/ekapic)",
         "[Eduard Paul](https://github.com/eduardpaul)",
+        "[Fredrik Ekström](https://github.com/FredrikEkstroem)",
         "[Harminder Singh](https://github.com/HarminderSethi)",
         "[Hugo Bernier](https://github.com/hugoabernier)",
         "[João Mendes](https://github.com/joaojmendes)",
