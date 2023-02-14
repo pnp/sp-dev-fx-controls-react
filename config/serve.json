@@ -2,5 +2,64 @@
   "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
   "port": 4321,
   "initialPage": "https://enter-your-SharePoint-site/_layouts/workbench.aspx",
-  "https": true
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/SPListForm.aspx",
+      "formCustomizer": {
+        "componentId": "f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8",
+        "PageType": 8,
+        "RootFolder": "/sites/mySite/Lists/MyList",
+        "properties": {
+          "sampleText": "Value"
+        }
+      }
+    },
+    "testForm_NewForm": {
+      "pageUrl": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/SPListForm.aspx",
+      "formCustomizer": {
+        "componentId": "f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8",
+        "PageType": 8,
+        "RootFolder": "/sites/mySite/Lists/MyList",
+        "properties": {
+          "sampleText": "Value"
+        }
+      }
+    },
+    "testForm_EditForm": {
+      "pageUrl": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/SPListForm.aspx",
+      "formCustomizer": {
+        "componentId": "f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8",
+        "PageType": 6,
+        "RootFolder": "/sites/mySite/Lists/MyList",
+        "ID": 1,
+        "properties": {
+          "sampleText": "Value"
+        }
+      }
+    },
+    "testForm_ViewForm": {
+      "pageUrl": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/SPListForm.aspx",
+      "formCustomizer": {
+        "componentId": "f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8",
+        "PageType": 4,
+        "RootFolder": "/sites/mySite/Lists/MyList",
+        "ID": 1,
+        "properties": {
+          "sampleText": "Value"
+        }
+      }
+    },
+    "testApp": {
+      "pageUrl": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/SitePages/myPage.aspx",
+      "customActions": {
+        "ca9eac70-7343-4972-88d6-672d50e9cf38": {
+          "location": "ClientSideExtension.ApplicationCustomizer",
+          "properties": {
+            "testMessage": "Test message"
+          }
+        }
+      }
+    }
+  }
 }

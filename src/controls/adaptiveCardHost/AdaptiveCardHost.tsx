@@ -153,12 +153,11 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
       currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
 
       const renderedElement = currentAdaptiveCard.render();
-      currentRenderElement.innerHTML = "";
-      currentRenderElement.appendChild(renderedElement);
-
-      // just for debugging pourpouse
-      console.log(evaluationContext);
-      // *****
+      // If this isn't acceptable, we should compare the old template with the new template
+      if (renderedElement.outerHTML !== currentRenderElement.innerHTML) {
+        currentRenderElement.innerHTML = "";
+        currentRenderElement.appendChild(renderedElement);
+      }
     } catch (cardRenderError) {
       if (props.onError) {
         props.onError(cardRenderError);
