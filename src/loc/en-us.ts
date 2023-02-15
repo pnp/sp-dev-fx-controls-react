@@ -390,7 +390,8 @@ define([], () => {
     OrgAssetsLinkLabel: "Your organization",
 
     ModernTaxonomyPickerDefaultPlaceHolder: "Type term to tag",
-    ModernTaxonomyPickerTreeTitle: "Select one or more tags",
+    ModernTaxonomyPickerTreeTitleSingle: "Select a tag",
+    ModernTaxonomyPickerTreeTitleMulti: "Select one or more tags",
     ModernTaxonomyPickerAddTagButtonTooltip: "Add Tag",
     ModernTaxonomyPickerApplyButtonText: "Apply",
     ModernTaxonomyPickerCancelButtonText: "Cancel",
