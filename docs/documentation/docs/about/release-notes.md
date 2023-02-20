@@ -18,6 +18,9 @@
 - `RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)
 - `PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)
 - Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)
+- `AdaptiveCardDesignerHost`: Add Sample Data to Adaptive Card Editor [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)
+- `AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)
+- `ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)
 
 ### Fixes
 
@@ -27,10 +30,11 @@
 - `ListView`: Update ListView control docs to use a valid field for the icon [#1398](https://github.com/pnp/sp-dev-fx-controls-react/pull/1398)
 - `Accordion`: Fixing Accordion control documentation image issue [#1408](https://github.com/pnp/sp-dev-fx-controls-react/issues/1408)
 - `DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)
+- `FilePicker`: Fix site breadcrumb navigation [#1368](https://github.com/pnp/sp-dev-fx-controls-react/issues/1368)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm).
+Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.12.0
 
