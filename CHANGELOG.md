@@ -34,6 +34,7 @@
 - `DynamicForm`: Initialize changedValue with defaultValue [#1454](https://github.com/pnp/sp-dev-fx-controls-react/pull/1454)
 - `DynamicForm`: Fix image path [#1455](https://github.com/pnp/sp-dev-fx-controls-react/pull/1455)
 - `DynamicForm`: Check empty array and trasform it in set as null [#1456](https://github.com/pnp/sp-dev-fx-controls-react/pull/1456)
+- `FilePicker`: Fix site browser resize [#1457](https://github.com/pnp/sp-dev-fx-controls-react/pull/1457)
 
 ### Contributors
 
