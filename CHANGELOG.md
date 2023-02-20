@@ -22,6 +22,7 @@
 - `AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)
 - `ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)
 - `DynamicForm`: Initialize changedValue with defaultValue [#1454](https://github.com/pnp/sp-dev-fx-controls-react/pull/1454)
+- `DynamicForm`: Fix image path [#1455](https://github.com/pnp/sp-dev-fx-controls-react/pull/1455)
 
 ### Fixes
 
@@ -35,7 +36,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [wuxiaojun514](https://github.com/wuxiaojun514), [Samuele Furnari](https://github.com/SamueleFurnari).
+Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [Samuele Furnari](https://github.com/SamueleFurnari), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.12.0
 
