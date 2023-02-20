@@ -162,7 +162,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             val.newValue.forEach(element => {
               value.push(element.key);
             });
-            objects[`${columnInternalName}Id`] = { results: value };
+            objects[`${columnInternalName}Id`] = { results: value.length === 0 ? null: value };
           }
           else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
@@ -188,7 +188,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             objects[columnInternalName] = JSON.stringify(val.newValue);
           }
           else if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = { results: val.newValue };
+            objects[`${columnInternalName}Id`] = { results: val.newValue.lenght === 0 ? null: val.newValue };
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
