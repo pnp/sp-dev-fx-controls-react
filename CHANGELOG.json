@@ -33,7 +33,8 @@
           "`DynamicForm`: Fix image path [#1455](https://github.com/pnp/sp-dev-fx-controls-react/pull/1455)",
           "`DynamicForm`: Check empty array and trasform it in set as null [#1456](https://github.com/pnp/sp-dev-fx-controls-react/pull/1456)",
           "`FilePicker`: Fix site browser resize [#1457](https://github.com/pnp/sp-dev-fx-controls-react/pull/1457)",
-          "`ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)"
+          "`ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)",
+          "`DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)"
         ]
       },
       "contributions": [
@@ -42,6 +43,7 @@
         "[Edin Kapic](https://github.com/ekapic)",
         "[Eduard Paul](https://github.com/eduardpaul)",
         "[Fredrik Ekström](https://github.com/FredrikEkstroem)",
+        "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Harminder Singh](https://github.com/HarminderSethi)",
         "[Hugo Bernier](https://github.com/hugoabernier)",
         "[João Mendes](https://github.com/joaojmendes)",
