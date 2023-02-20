@@ -522,11 +522,11 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     } = this.props;
 
     this.setState({
-      changedValue: undefined
+      changedValue: ''
     });
 
     if (onChanged) {
-      onChanged(columnInternalName, undefined, undefined);
+      onChanged(columnInternalName, '', undefined);
     }
   }
 
