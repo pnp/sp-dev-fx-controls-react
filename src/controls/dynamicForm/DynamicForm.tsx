@@ -155,7 +155,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         if (val.newValue !== null && val.newValue !== undefined) {
           let value = val.newValue;
           if (fieldType === "Lookup") {
-            objects[`${columnInternalName}Id`] = value[0].key;
+            if (value && value.length > 0) {
+              objects[`${columnInternalName}Id`] = value[0].key;
+            }
+            else {
+              objects[`${columnInternalName}Id`] = null;
+            }
           }
           else if (fieldType === "LookupMulti") {
             value = [];
