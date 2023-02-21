@@ -1,5 +1,4 @@
-import { FirstWeekOfYear } from '@fluentui/react-northstar';
-import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DayOfWeek, FirstWeekOfYear } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
 import { TimeConvention, DateConvention } from './DateTimeConventions';
 import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
