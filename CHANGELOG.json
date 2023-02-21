@@ -16,7 +16,10 @@
           "SharePoint Framework v1.16.1 support [#1427](https://github.com/pnp/sp-dev-fx-controls-react/issues/1427)",
           "`RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)",
           "`PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)",
-          "Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)"
+          "Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)",
+          "`AdaptiveCardDesignerHost`: Add Sample Data to Adaptive Card Editor [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
+          "`AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
+          "`ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)"
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
@@ -24,19 +27,33 @@
           "`DynamicForm`: Dynamicform is hanging on the loading screen if the list has a single value list lookup field [#1393](https://github.com/pnp/sp-dev-fx-controls-react/issues/1393)",
           "`ListView`: Update ListView control docs to use a valid field for the icon [#1398](https://github.com/pnp/sp-dev-fx-controls-react/pull/1398)",
           "`Accordion`: Fixing Accordion control documentation image issue [#1408](https://github.com/pnp/sp-dev-fx-controls-react/issues/1408)",
-          "`DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)"
+          "`DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)",
+          "`FilePicker`: Fix site breadcrumb navigation [#1368](https://github.com/pnp/sp-dev-fx-controls-react/issues/1368)",
+          "`DynamicForm`: Initialize changedValue with defaultValue [#1454](https://github.com/pnp/sp-dev-fx-controls-react/pull/1454)",
+          "`DynamicForm`: Fix image path [#1455](https://github.com/pnp/sp-dev-fx-controls-react/pull/1455)",
+          "`DynamicForm`: Check empty array and trasform it in set as null [#1456](https://github.com/pnp/sp-dev-fx-controls-react/pull/1456)",
+          "`FilePicker`: Fix site browser resize [#1457](https://github.com/pnp/sp-dev-fx-controls-react/pull/1457)",
+          "`ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)",
+          "`DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)"
         ]
       },
       "contributions": [
+        "[araver](https://github.com/araver)",
         "[Brian Krainer Jacobsen](https://github.com/krainer)",
         "[Edin Kapic](https://github.com/ekapic)",
         "[Eduard Paul](https://github.com/eduardpaul)",
+        "[Fredrik Ekström](https://github.com/FredrikEkstroem)",
+        "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Harminder Singh](https://github.com/HarminderSethi)",
         "[Hugo Bernier](https://github.com/hugoabernier)",
         "[João Mendes](https://github.com/joaojmendes)",
         "[mgitta](https://github.com/mgitta)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
-        "[mikezimm](https://github.com/mikezimm)"
+        "[mikezimm](https://github.com/mikezimm)",
+        "[Patrik Hellgren](https://github.com/patrikhellgren)",
+        "[Samuele Furnari](https://github.com/SamueleFurnari)",
+        "[wuxiaojun514](https://github.com/wuxiaojun514)"
+
       ]
     },
     {

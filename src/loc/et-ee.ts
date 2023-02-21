@@ -371,6 +371,8 @@ define([], () => {
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Sisestage termin, mille soovite märgistada",
   "ModernTaxonomyPickerTreeTitle": "Valige silt",
+  "ModernTaxonomyPickerTreeTitleSingle": "Valige silt",
+  "ModernTaxonomyPickerTreeTitleMulti": "Valige üks või mitu silti",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Lisa silt",
   "ModernTaxonomyPickerApplyButtonText": "Kasuta",
   "ModernTaxonomyPickerCancelButtonText": "Tühista",

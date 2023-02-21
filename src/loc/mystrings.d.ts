@@ -372,7 +372,8 @@ declare interface IControlStrings {
 
   // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;
-  ModernTaxonomyPickerTreeTitle: string;
+  ModernTaxonomyPickerTreeTitleSingle: string;
+  ModernTaxonomyPickerTreeTitleMulti: string;
   ModernTaxonomyPickerAddTagButtonTooltip: string;
   ModernTaxonomyPickerApplyButtonText: string;
   ModernTaxonomyPickerCancelButtonText: string;

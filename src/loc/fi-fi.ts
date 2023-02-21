@@ -371,6 +371,8 @@ define([], () => {
   "MyTeamsMessageDontHaveTeams": "Sinulla ei ole yhtään tiimejä",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Kirjoita tagi, jonka haluat merkitä",
   "ModernTaxonomyPickerTreeTitle": "Valitse tunniste",
+  "ModernTaxonomyPickerTreeTitleSingle": "Valitse tunniste",
+  "ModernTaxonomyPickerTreeTitleMulti": "Valitse yksi tai useampi tunniste",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Lisää tunniste",
   "ModernTaxonomyPickerApplyButtonText": "Käytä",
   "ModernTaxonomyPickerCancelButtonText": "Peruuta",

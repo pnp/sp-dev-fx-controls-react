@@ -12,13 +12,14 @@ import { RenderSpinner } from "./RenderSpinner";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 import { useBoolean } from "@fluentui/react-hooks";
 import { List } from "office-ui-fabric-react/lib/List";
-import { ECommentAction } from "../..";
+import { AppContext, ECommentAction } from "../..";
 
 export interface IRenderCommentsProps { }
 
 export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () => {
+  const { highlightedCommentId } = useContext(AppContext);
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
-  const { documentCardStyles, itemContainerStyles, deleteButtonContainerStyles } = useListItemCommentsStyles();
+  const { documentCardStyles,documentCardHighlightedStyles, itemContainerStyles, deleteButtonContainerStyles } = useListItemCommentsStyles();
   const { comments, isLoading } = listItemCommentsState;
 
   const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
@@ -26,7 +27,7 @@ export const RenderComments: React.FunctionComponent<IRenderCommentsProps> = () 
   const onRenderCell = useCallback(
     (comment: IComment, index: number): JSX.Element => {
       return (
-        <DocumentCard styles={documentCardStyles} key={index}>
+        <DocumentCard styles={ highlightedCommentId && comment.id===highlightedCommentId? documentCardHighlightedStyles : documentCardStyles} key={index}>
           <Stack horizontal horizontalAlign="end" styles={deleteButtonContainerStyles}>
             <IconButton
               iconProps={{ iconName: "Delete" }}

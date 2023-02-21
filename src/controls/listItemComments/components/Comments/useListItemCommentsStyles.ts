@@ -16,6 +16,7 @@ interface returnObjectStyles {
   renderUserContainerStyles: Partial<IStackStyles>;
   documentCardStyles: Partial<IDocumentCardStyles>;
   documentCardDeleteStyles: Partial<IDocumentCardStyles>;
+  documentCardHighlightedStyles: Partial<IDocumentCardStyles>;
   documentCardUserStyles: Partial<IDocumentCardStyles>;
   configurationListClasses: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -51,6 +52,19 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
       marginBottom: 7,
       width: 322,
       backgroundColor: theme.neutralLighterAlt,
+      ":hover": {
+        borderColor: theme.themePrimary,
+        borderWidth: 1,
+      } as IStyle,
+    } as IStyle,
+  };
+
+  const documentCardHighlightedStyles: Partial<IDocumentCardStyles> = {
+    root: {
+      marginBottom: 7,
+      width: 322,
+      backgroundColor: theme.themeLighter,
+      border: "solid 3px "+theme.themePrimary,
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
@@ -121,6 +135,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     renderUserContainerStyles,
     documentCardStyles,
     documentCardDeleteStyles,
+    documentCardHighlightedStyles,
     documentCardUserStyles,
     configurationListClasses,
   };

@@ -155,14 +155,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         if (val.newValue !== null && val.newValue !== undefined) {
           let value = val.newValue;
           if (fieldType === "Lookup") {
-            objects[`${columnInternalName}Id`] = value[0].key;
+            if (value && value.length > 0) {
+              objects[`${columnInternalName}Id`] = value[0].key;
+            }
+            else {
+              objects[`${columnInternalName}Id`] = null;
+            }
           }
           else if (fieldType === "LookupMulti") {
             value = [];
             val.newValue.forEach(element => {
               value.push(element.key);
             });
-            objects[`${columnInternalName}Id`] = { results: value };
+            objects[`${columnInternalName}Id`] = { results: value.length === 0 ? null: value };
           }
           else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
@@ -188,7 +193,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             objects[columnInternalName] = JSON.stringify(val.newValue);
           }
           else if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = { results: val.newValue };
+            objects[`${columnInternalName}Id`] = { results: val.newValue.lenght === 0 ? null: val.newValue };
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
@@ -482,8 +487,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
           } else if (fieldType === "Thumbnail") {
-            if (defaultValue !== null) {
-              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+            if (defaultValue) {
+              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
             }
           } else if (fieldType === "User") {
             if (item !== null) {
