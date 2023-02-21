@@ -1,11 +1,23 @@
-import * as telemetry from '../../common/telemetry';
 import * as React from 'react';
-import { IContentTypePickerProps, IContentTypePickerState } from './IContentTypePicker';
+
+import cloneDeep from 'lodash/cloneDeep';
+import {
+  Dropdown,
+  IDropdownOption,
+  IDropdownProps,
+} from 'office-ui-fabric-react/lib/Dropdown';
+import {
+  Spinner,
+  SpinnerSize,
+} from 'office-ui-fabric-react/lib/Spinner';
+
+import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
-import cloneDeep from 'lodash/cloneDeep';
-import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import {
+  IContentTypePickerProps,
+  IContentTypePickerState,
+} from './IContentTypePicker';
 
 const EMPTY_CONTENTTYPE_KEY = 'NO_CONTENTTYPE_SELECTED';
 
@@ -165,6 +177,7 @@ export class ContentTypePicker extends React.Component<IContentTypePickerProps, 
       label,
       placeholder,
       onChange: this.onChange,
+      styles: this.props.styles
     };
 
     if (multiSelect) {
