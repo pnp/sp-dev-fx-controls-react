@@ -38,10 +38,12 @@
 - `ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)
 - `DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)
 - `FilePicker`: Fix breadcrumb nav [#1458](https://github.com/pnp/sp-dev-fx-controls-react/pull/1458)
+- `DateTimePicker`: Date picker locale [#1464](https://github.com/pnp/sp-dev-fx-controls-react/issues/1464)
+- `DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [Patrik Hellgren](https://github.com/patrikhellgren), [Samuele Furnari](https://github.com/SamueleFurnari), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [Patrik Hellgren](https://github.com/patrikhellgren), [Rico van de Ven](https://github.com/RicoNL), [Samuele Furnari](https://github.com/SamueleFurnari), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.12.0
 
