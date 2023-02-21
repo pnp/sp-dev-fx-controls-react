@@ -35,7 +35,9 @@
           "`FilePicker`: Fix site browser resize [#1457](https://github.com/pnp/sp-dev-fx-controls-react/pull/1457)",
           "`ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)",
           "`DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)",
-          "`FilePicker`: Fix breadcrumb nav [#1458](https://github.com/pnp/sp-dev-fx-controls-react/pull/1458)"
+          "`FilePicker`: Fix breadcrumb nav [#1458](https://github.com/pnp/sp-dev-fx-controls-react/pull/1458)",
+          "`DateTimePicker`: Date picker locale [#1464](https://github.com/pnp/sp-dev-fx-controls-react/issues/1464)",
+          "`DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)"
         ]
       },
       "contributions": [
@@ -52,6 +54,7 @@
         "[Michaël Maillot](https://github.com/michaelmaillot)",
         "[mikezimm](https://github.com/mikezimm)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
+        "[Rico van de Ven](https://github.com/RicoNL)",
         "[Samuele Furnari](https://github.com/SamueleFurnari)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)"
 
