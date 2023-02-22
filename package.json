@@ -23,7 +23,7 @@
     "@fluentui/react-file-type-icons": "^8.8.3",
     "@fluentui/react-hooks": "^8.2.6",
     "@fluentui/react-northstar": "0.66.0",
-    "@fluentui/react-theme-provider": "^0.18.5",
+    "@fluentui/react-theme-provider": "^0.19.16",
     "@fluentui/scheme-utilities": "^8.2.12",
     "@fluentui/theme": "^2.6.6",
     "@microsoft/decorators": "1.16.1",
