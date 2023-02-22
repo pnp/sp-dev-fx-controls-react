@@ -19,7 +19,7 @@
 .itemTile.isFile,
 .itemTile.isPhoto,
 .itemTile.isVideo {
-  background-color: $ms-color-neutralLighter;
+  background-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
 }
 
 .itemTile {
@@ -60,9 +60,9 @@
     top: 2px;
     bottom: 2px;
     border: 1px solid;
-    border-color: $ms-color-white;
-    -webkit-box-shadow: 0 0 0 2px $ms-color-neutralSecondaryAlt;
-    box-shadow: 0 0 0 2px $ms-color-neutralSecondaryAlt;
+    border-color: "[theme:white, default:#{$ms-color-white}]";
+    -webkit-box-shadow: 0 0 0 2px "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
+    box-shadow: 0 0 0 2px "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
   }
 }
 
@@ -79,13 +79,13 @@
 .itemTile.isFile .itemTileFileContainer {
   border-width: 1px;
   border-style: solid;
-  border-color: $ms-color-neutralLight;
+  border-color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
 }
 
 .itemTileFile {
   .itemTileFileContainer {
     position: absolute;
-    background-color: $ms-color-neutralLighter;
+    background-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
     left: 0;
     right: 0;
     top: 0;
@@ -143,8 +143,8 @@
   right: 0;
   min-height: 20px;
   padding: 4px 8px 8px;
-  background-color: $ms-color-white;
-  color: $ms-color-neutralPrimary;
+  background-color: "[theme:white, default:#{$ms-color-white}]";
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -152,7 +152,7 @@
   opacity: 0.95;
   border-top-width: 1px;
   border-top-style: solid;
-  border-top-color: $ms-color-neutralLight;
+  border-top-color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
   min-height: 35px;
 }
 
