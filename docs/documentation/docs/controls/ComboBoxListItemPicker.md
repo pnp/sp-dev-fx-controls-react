@@ -40,7 +40,7 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
                         columnInternalName='Title'
                         keyColumnInternalName='Id'
                         filter="Title eq 'SPFx'"
-                        defaultSelectedItems=[{Id: 2, Title:"Test"}]
+                        defaultSelectedItems={[{Id: 2, Title:"Test"}]}
                         onSelectedItem={this.onSelectedItem}
                         webUrl={this.context.pageContext.web.absoluteUrl}
                         spHttpClient={this.context.spHttpClient} />
