@@ -19,7 +19,8 @@
           "Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)",
           "`AdaptiveCardDesignerHost`: Add Sample Data to Adaptive Card Editor [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
           "`AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
-          "`ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)"
+          "`ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)",
+          "`ComboBoxListItemPicker`: Update ComboBoxListItemPicker.md [#1470](https://github.com/pnp/sp-dev-fx-controls-react/pull/1470)"
 
         ],
         "fixes": [
@@ -60,6 +61,7 @@
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Rico van de Ven](https://github.com/RicoNL)",
         "[Samuele Furnari](https://github.com/SamueleFurnari)",
+        "[sambilfinger](https://github.com/sambilfinger)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)"
 
       ]
