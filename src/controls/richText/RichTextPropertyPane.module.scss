@@ -1,14 +1,14 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 :export {
-  NeutralPrimary: $ms-color-neutralPrimary;
+  NeutralPrimary: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
 }
 
 .richTextPropertyPane {
   .formattingPaneTitle {
     background-attachment: scroll;
     background-clip: border-box;
-    background-color: $ms-color-neutralPrimaryAlt;
+    background-color: "[theme:neutralDark, default:#{$ms-color-neutralDark}]";
     background-image: none;
     background-origin: padding-box;
     background-position-x: 0%;
@@ -20,7 +20,7 @@
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
-    color: $ms-color-white;
+    color: "[theme:white, default:#{$ms-color-white}]";
     font-family: "Segoe UI Web (West European)", Segoe UI, -apple-system,
       BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
     font-size: 21px;
@@ -45,7 +45,7 @@
     margin-left: auto;
     background-color: transparent;
     border: none;
-    color: #fff;
+    color: "[theme:white, default:#{$ms-color-white}]";
     cursor: pointer;
     font-size: 20px;
     padding: 0;
@@ -72,22 +72,22 @@
   padding: 0;
 
   &:hover {
-    background-color: $ms-color-neutralLight;
-    color: $ms-color-themePrimary;
+    background-color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
+    color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
   }
 
   &:global(.is-checked) {
-    color: $ms-color-themePrimary;
+    color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
   }
 
   &:global(.is-disabled) {
-    background-color: #fff;
+    background-color: "[theme:white, default:#{$ms-color-white}]";
   }
 }
 
 .propertyPaneGroupField {
   padding-top: 4px;
-  color: #333333;
+  color: "[theme:neutralPrimaryAlt, default:#{$ms-color-neutralPrimaryAlt}]";
   word-wrap: break-word;
 }
 
@@ -95,7 +95,7 @@
   font-size: 14px;
   font-weight: 400;
   font-weight: 600;
-  color: #333333;
+  color: "[theme:neutralPrimaryAlt, default:#{$ms-color-neutralPrimaryAlt}]";
   padding-right: 0;
   // padding-left: 20px;
   text-align: left;

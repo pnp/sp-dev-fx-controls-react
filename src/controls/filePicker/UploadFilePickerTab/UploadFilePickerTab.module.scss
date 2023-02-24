@@ -14,11 +14,11 @@
 }
 
 .localTabFilename {
-  color: $ms-color-neutralPrimary;
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
 }
 
 .localTabLabel {
-  color: $ms-color-themePrimary;
+  color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
   cursor: pointer;
 }
 
