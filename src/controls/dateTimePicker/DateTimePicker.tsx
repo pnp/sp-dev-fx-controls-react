@@ -227,6 +227,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       timeConvention,
       dateConvention = DateConvention.DateTime,
       firstDayOfWeek,
+      firstWeekOfYear,
       isMonthPickerVisible = true,
       showGoToToday,
       allowTextInput = true,
@@ -234,6 +235,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       showWeekNumbers = false,
       showSeconds = false,
       formatDate,
+      parseDateFromString,
       value = this.state.day,
       strings: dateStrings = new DateTimePickerStrings(), // Defines the DatePicker control labels
       timeDisplayControlType,
@@ -322,6 +324,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
             <div className={styles.picker}>
               <DatePicker
                 formatDate={formatDate}
+                parseDateFromString={parseDateFromString}
                 disabled={disabled}
                 value={value}
                 strings={dateStrings}
@@ -329,6 +332,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 onSelectDate={this.onSelectDate}
                 allowTextInput={allowTextInput}
                 firstDayOfWeek={firstDayOfWeek}
+                firstWeekOfYear={firstWeekOfYear}
                 showGoToToday={showGoToToday}
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
                 showWeekNumbers={showWeekNumbers}

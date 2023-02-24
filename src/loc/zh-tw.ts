@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "您的組織",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "輸入您要標記的術語",
-  "ModernTaxonomyPickerTreeTitle": "選擇一個標籤",
+  "ModernTaxonomyPickerTreeTitleSingle": "選擇一個標籤",
+  "ModernTaxonomyPickerTreeTitleMulti": "選擇一個或多個標籤",
   "ModernTaxonomyPickerAddTagButtonTooltip": "添加標籤",
   "ModernTaxonomyPickerApplyButtonText": "使用",
   "ModernTaxonomyPickerCancelButtonText": "取消",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "刪除",
   "ModernTaxonomyPickerPanelCloseButtonText": "關閉",
   "ModernTaxonomyPickerNoResultsFound": "未找到結果",
-  "ModernTaxonomyPickerSuggestionInLabel": "在"
+  "ModernTaxonomyPickerSuggestionInLabel": "在",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

@@ -69,6 +69,7 @@ nav:
     - TeamPicker: 'controls/TeamPicker.md'
     - Toolbar: 'controls/Toolbar.md'
     - TreeView: 'controls/TreeView.md'
+    - UploadFiles: 'controls/UploadFiles.md'
     - VariantThemeProvider: 'controls/VariantThemeProvider.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':

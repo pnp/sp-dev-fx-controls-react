@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Vašej organizácie",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Zadajte výraz, ktorý chcete označiť",
-  "ModernTaxonomyPickerTreeTitle": "Vyberte značku",
+  "ModernTaxonomyPickerTreeTitleSingle": "Vyberte značku",
+  "ModernTaxonomyPickerTreeTitleMulti": "Vyberte jednu alebo viac značiek",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Pridať značku",
   "ModernTaxonomyPickerApplyButtonText": "Použiť",
   "ModernTaxonomyPickerCancelButtonText": "Zrušiť",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Odstrániť",
   "ModernTaxonomyPickerPanelCloseButtonText": "Zavrieť",
   "ModernTaxonomyPickerNoResultsFound": "Nenašli sa žiadne výsledky",
-  "ModernTaxonomyPickerSuggestionInLabel": "Palcov"
+  "ModernTaxonomyPickerSuggestionInLabel": "Palcov",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

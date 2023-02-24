@@ -45,3 +45,4 @@ The `DynamicForm` can be configured with the following properties:
 | returnListItemInstanceOnSubmit | boolean | no | Specifies if `onSubmitted` event should pass PnPJS list item (`IItem`) as a second parameter. Default - `true` |
 | webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
 | fieldOverrides | {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement\<IDynamicFieldProps\>}} | no | Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render. |
+| respectEtag | boolean | no | Specifies if the form should respect the ETag of the item. Default - `true` |

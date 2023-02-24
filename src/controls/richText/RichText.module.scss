@@ -94,7 +94,7 @@
   font-size: 8px;
   speak: none;
   top: 50%;
-  color: $ms-color-neutralLighterAlt;
+  color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
 }
 
 .toolbarSubmenuDisplayButton {
@@ -104,7 +104,7 @@
 :global {
   .ql-toolbar {
     background-color: transparent;
-    color: $ms-color-neutralLighterAlt;
+    color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
     border: none;
     display: none;
 
@@ -117,31 +117,31 @@
     }
 
     .ms-Button {
-      background-color: $ms-color-neutralPrimary;
-      color: $ms-color-neutralLighterAlt !important;
+      background-color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
+      color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]" !important;
 
       &:hover {
-        background-color: $ms-color-neutralSecondaryAlt;
-        color: $ms-color-neutralLighterAlt;
+        background-color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
 
       &:focus {
-        border: 1px solid $ms-color-neutralLighterAlt;
+        border: 1px solid "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
         outline: 0;
-        color: $ms-color-neutralLighterAlt;
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
 
       &:active {
-        color: $ms-color-neutralLighterAlt;
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
 
       &.is-checked {
-        background-color: $ms-color-themePrimary !important;
+        background-color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]" !important;
       }
     }
     .ms-Dropdown-title {
-      background-color: $ms-color-neutralPrimary;
-      color: $ms-color-neutralLighterAlt !important;
+      background-color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
+      color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]" !important;
       border: none;
       min-height: 34px;
       padding-bottom: 0px;
@@ -151,20 +151,21 @@
       -webkit-transition: all 0.3s;
       transition: all 0.3s;
       -webkit-transition-property: background-color, color;
+      border-radius: 0;
 
       &:hover {
-        background-color: $ms-color-neutralSecondaryAlt;
-        color: $ms-color-neutralLighterAlt;
+        background-color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
 
       &:focus {
-        border: 1px solid $ms-color-neutralLighterAlt;
+        border: 1px solid "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
         outline: 0;
-        color: $ms-color-neutralLighterAlt;
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
 
       &:active {
-        color: $ms-color-neutralLighterAlt;
+        color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
       }
     }
 
@@ -176,14 +177,15 @@
 
   .ql-snow.ql-toolbar button,
   .ql-snow .ql-toolbar button {
-    background-color: $ms-color-neutralPrimary;
-    color: $ms-color-neutralLighterAlt;
+    background-color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
+    color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
     font-size: 14px;
     min-width: 34px;
     height: 34px;
     padding-top: 4px;
     padding-left: 8px;
     padding-right: 8px;
+    border-radius: 0;
   }
 
   .ql-toolbar.ql-snow {
@@ -218,7 +220,7 @@
   .ql-active .ql-editor:hover {
     border-width: 1px;
     border-style: solid;
-    border-color: $ms-color-neutralTertiary;
+    border-color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
   }
 
   .ql-active .ql-editor:focus,
@@ -226,7 +228,7 @@
   .ql-active .ql-editor:active:hover {
     border-width: 1px;
     border-style: solid;
-    border-color: $ms-color-themePrimary;
+    border-color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
   }
 
   .ql-active .ql-toolbar {
@@ -240,7 +242,7 @@
   }
 
   .ql-snow .ql-editor, .ql-editor{
-    border: 1px solid transparent;
+    // border: 1px solid transparent;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 8px;
@@ -274,14 +276,14 @@
     p,
     ul {
       -webkit-font-smoothing: antialiased;
-      color: $ms-color-neutralPrimary;
+      color: "[theme:black, default:#{$ms-color-black}]";
       line-height: 1.3;
-      margin: 0 0 16px;
+      // margin: 0 0 16px;
       word-wrap: break-word;
     }
 
     blockquote {
-      border-bottom-color: $ms-color-neutralTertiaryAlt;
+      border-bottom-color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
       border-bottom-style: solid;
       border-bottom-width: 1px;
       border-left-style: none;
@@ -290,10 +292,10 @@
       border-right-style: none;
       border-right-width: 0;
       border-right-color: transparent;
-      border-top-color: $ms-color-neutralTertiaryAlt;
+      border-top-color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
       border-top-style: solid;
       border-top-width: 1px;
-      color: $ms-color-neutralSecondaryAlt;
+      color: "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
       font-size: 24px;
       font-style: italic;
       font-weight: 100;
@@ -372,31 +374,68 @@
 
   .ql-editor.ql-blank::before {
     font-style: normal;
-    color: $ms-color-neutralTertiary;
+    color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
     font-size: 17px;
     font-weight: 300;
     line-height: 1.3;
   }
 
+  // correct border/hover/active border, same as with other controls, no jumping
+  .quill {
+    .ql-editor {
+      border-width: 1px;
+      border-style: solid;
+      border-color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
+      &:hover {
+        border-color: "[theme:neutralDark, default:#{$ms-color-neutralDark}]";
+      }
+      &:active::after, &:active:focus::after, &:active:hover::after, &:focus::after {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        border-style: solid;
+        border-width: 2px;
+        inset: -1px;
+        border-color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
+        border-radius: 2px;
+      }
+    }
+  }
+
+  // hyperlin color on dark theme
+  .ql-editor {
+    a {
+      color: "[theme:themePrimary, default: #{$ms-color-themePrimary}]";
+      &:hover {
+        color: "[theme:themeDarker, default: #{$ms-color-themeDarker}]";
+      }
+    }
+  }
+
+  .ql-editor ol li:not(.ql-direction-rtl),
+  .ql-editor ul li:not(.ql-direction-rtl) {
+    padding-left: 0;
+  }
+
   div#DropDownStyles-list, div#DropDownAlign-list, div#DropDownLists-list {
     .ms-Dropdown-item {
-      background-color: $ms-color-neutralPrimary !important;
-      color: $ms-color-neutralLighterAlt !important;
+      background-color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]" !important;
+      color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]" !important;
       -webkit-transition: all 0.3s;
       transition: all 0.3s;
       -webkit-transition-property: background-color, color;
     }
 
     .ms-Dropdown-item:hover {
-      background-color: $ms-color-neutralSecondaryAlt !important;
-      color: $ms-color-neutralLighterAlt !important;
+      background-color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]" !important;
+      color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]" !important;
       cursor: pointer;
     }
 
     .ms-Dropdown-item.is-selected,
     .ms-Dropdown-item.is-selected:hover {
-      background-color: $ms-color-themePrimary !important;
-      color: $ms-color-neutralLighterAlt !important;
+      background-color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]" !important;
+      color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]" !important;
     }
   }
 }

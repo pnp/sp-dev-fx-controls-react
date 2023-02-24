@@ -347,7 +347,8 @@ define([], () => {
     StockImagesHeader: "Stock irudiak",
     OrgAssetsLinkLabel: "Zure erakundea",
     ModernTaxonomyPickerDefaultPlaceHolder: "Idatzi etiketatu nahi duzun terminoa",
-    ModernTaxonomyPickerTreeTitle: "Aukeratu etiketa",
+    ModernTaxonomyPickerTreeTitleSingle: "Aukeratu etiketa",
+    ModernTaxonomyPickerTreeTitleMulti: "Hautatu etiketa bat edo gehiago",
     ModernTaxonomyPickerAddTagButtonTooltip: "Gehitu etiketa",
     ModernTaxonomyPickerApplyButtonText: "Erabili",
     ModernTaxonomyPickerCancelButtonText: "Utzi",
@@ -355,6 +356,20 @@ define([], () => {
     ModernTaxonomyPickerRemoveButtonText: "Ezabatu",
     ModernTaxonomyPickerPanelCloseButtonText: "Itxi",
     ModernTaxonomyPickerNoResultsFound: "Ez da emaitzarik aurkitu",
-    ModernTaxonomyPickerSuggestionInLabel: "in"
+    ModernTaxonomyPickerSuggestionInLabel: "in",
+
+    "ModernAudioPlay": "Play",
+    "ModernAudioPause": "Pause",
+    "ModernAudioIncVol": "Increase Volume",
+    "ModernAudioDecVol": "Decrease Volume",
+    "ModernAudioMute": "Mute",
+
+    "ProgressStepsIndicatorNoSteps": "No steps",
+
+    "UploadFilesButtonLabel": "Add",
+    "UpLoadFilesDeleteButtonLabel": "Delete",
+    "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+    "UpLoadFilesSelectAllLabel": "Select all",
+    "UploadFilesUploadButtonLabel": "Upload",
   };
 });

@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Uw organisatie",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Voer een term in die u wilt taggen",
-  "ModernTaxonomyPickerTreeTitle": "Selecteer een tag",
+  "ModernTaxonomyPickerTreeTitleSingle": "Selecteer een tag",
+  "ModernTaxonomyPickerTreeTitleMulti": "Selecteer een of meer tags",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Tag toevoegen",
   "ModernTaxonomyPickerApplyButtonText": "Gebruik",
   "ModernTaxonomyPickerCancelButtonText": "Annuleren",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Verwijderen",
   "ModernTaxonomyPickerPanelCloseButtonText": "Sluiten",
   "ModernTaxonomyPickerNoResultsFound": "Geen resultaten gevonden",
-  "ModernTaxonomyPickerSuggestionInLabel": "Inch"
+  "ModernTaxonomyPickerSuggestionInLabel": "Inch",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

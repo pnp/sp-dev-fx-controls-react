@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Savo organizacijoje",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Įveskite terminą, kurį norite pažymėti",
-  "ModernTaxonomyPickerTreeTitle": "Pasirinkite žymą",
+  "ModernTaxonomyPickerTreeTitleSingle": "Pasirinkite žymą",
+  "ModernTaxonomyPickerTreeTitleMulti": "Pasirinkite vieną ar daugiau žymų",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Pridėti žymą",
   "ModernTaxonomyPickerApplyButtonText": "Naudoti",
   "ModernTaxonomyPickerCancelButtonText": "Atšaukti",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Ištrinti",
   "ModernTaxonomyPickerPanelCloseButtonText": "Uždaryti",
   "ModernTaxonomyPickerNoResultsFound": "Nerasta rezultatų",
-  "ModernTaxonomyPickerSuggestionInLabel": ""
+  "ModernTaxonomyPickerSuggestionInLabel": "",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

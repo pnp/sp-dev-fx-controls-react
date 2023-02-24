@@ -1,4 +1,7 @@
+import { IDropdownStyles } from 'office-ui-fabric-react';
+
 import { BaseComponentContext } from '@microsoft/sp-component-base';
+
 import { ISite } from '../../services/SPSitesService';
 
 export interface ISitePickerProps {
@@ -95,4 +98,6 @@ export interface ISitePickerProps {
    * If mode is set to associatedsites and no hubsiteId is provided, the current site's hub ID will be used.
    */
   hubsiteId?: string;
+  styles?: IDropdownStyles ;
 }
+export { ISite };

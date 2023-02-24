@@ -25,6 +25,7 @@ import { IControlsTestWebPartProps } from "./IControlsTestWebPartProps";
 export default class ControlsTestWebPart extends BaseClientSideWebPart<IControlsTestWebPartProps> {
   private _themeProvider: ThemeProvider;
   private _themeVariant: IReadonlyTheme | undefined;
+  private _containerWidth: number = 0;
   protected async onInit(): Promise<void> {
 
 
@@ -68,15 +69,17 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-    /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
+     /* const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
          context: this.context,
+          themeVariant: this._themeVariant,
+
        }
      ); */
 
-const element: React.ReactElement<IControlsTestProps> = React.createElement(
+ const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
     ControlsTest,
       {
@@ -98,6 +101,11 @@ const element: React.ReactElement<IControlsTestProps> = React.createElement(
 
   protected get dataVersion(): Version {
     return Version.parse('1.0');
+  }
+
+  protected onAfterResize(newWidth: number): void {
+      this._containerWidth = newWidth;
+      this.render();
   }
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {

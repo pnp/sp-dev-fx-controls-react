@@ -8,6 +8,7 @@ import { ListItemRepository } from '../../common/dal/ListItemRepository';
 import styles from './ComboBoxListItemPicker.module.scss';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { cloneDeep, isEqual } from 'lodash';
+import { Guid } from '@microsoft/sp-core-library';
 
 
 export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPickerProps, IComboBoxListItemPickerState> {
@@ -26,6 +27,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
       errorMessage: "",
       suggestionsHeaderText: !this.props.suggestionsHeaderText ? strings.ListItemPickerSelectValue : this.props.suggestionsHeaderText,
       selectedItems: this.props.defaultSelectedItems || [],
+      safeListId: this.props.listId,
     };
 
     // Get SPService Factory
@@ -34,26 +36,37 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
   }
 
   public componentDidMount(): void {
-    this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
+    if(!Guid.tryParse(this.props.listId)) {
+      this._listItemRepo.getListId(this.props.listId)
+        .then((value) => {
+            this.setState({...this.state,
+              safeListId: value });
+              this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
+        })
+        .catch(() => { /* no-op; */ });
+    } else {
+      this.loadOptions(this.props).then(() => { /* no-op; */}).catch(() => { /* no-op; */});
+    }
   }
 
   protected async loadOptions(props: IComboBoxListItemPickerProps, isInitialLoad?: boolean): Promise<void> {
     const {
       filter,
-      keyColumnInternalName,
       listId,
+      keyColumnInternalName,
       columnInternalName,
       webUrl,
       itemLimit,
       onInitialized,
       orderBy
     } = props;
+    const { safeListId } = this.state;
     const query = filter || "";
     const keyColumnName = keyColumnInternalName || "Id";
 
     if (!this._options || listId !== this.props.listId|| filter !== this.props.filter) {
       const listItems = await this._listItemRepo.getListItemsByFilterClause(query,
-        listId,
+        safeListId,
         columnInternalName,
         keyColumnInternalName,
         webUrl,
@@ -138,6 +151,7 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
     return (
       <div className={styles.comboBoxListItemPickerWrapper}>
         <ComboBox label={this.props.label}
+          styles={this.props.styles}
           options={this.state.availableOptions}
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}

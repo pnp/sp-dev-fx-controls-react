@@ -53,11 +53,13 @@ The `DateTimePicker` control can be configured with the following properties:
 | label | string | no | Property field label displayed on top. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | formatDate | function | no | Defines a formatDate function that can override the output value in Date picker. |
+| parseDateFromString | function | no | Optional method to parse the text input value to date, it is only useful when allowTextInput is set to true |
 | dateConvention | DateConvention | no | Defines the date convention to use. The default is date and time.|
 | timeConvention | TimeConvention | no | Defines the time convention to use. The default value is the 24-hour clock convention. |
 | firstDayOfWeek | DayOfWeek | no | Specify the first day of the week for your locale. |
+| firstWeekOfYear | FirstWeekOfYear | no | Defines when the first week of the year should start. |
 | key | string | no | A unique key that indicates the identity of this control |
-| onGetErrorMessage | function | no | The method is used to get the validation error message and determine whether the input value is valid or not. See [this documentation](https://dev.office.com/sharepoint/docs/spfx/web-parts/guidance/validate-web-part-property-values) to learn how to use it. |
+| onGetErrorMessage | function | no | The method is used to get the validation error message and determine whether the input value is valid or not. See [this documentation](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/guidance/validate-web-part-property-values) to learn how to use it. |
 | showGoToToday | boolean | no | Controls whether the "Go to today" link should be shown or not |
 | isMonthPickerVisible | boolean | no | Controls whether the month picker is shown beside the day picker or hidden. |
 | showMonthPickerAsOverlay | boolean | no | Show month picker on top of date picker when visible. |

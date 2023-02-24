@@ -82,7 +82,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              if(fieldOverrides && Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
+              if (fieldOverrides && Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
                 v.disabled = v.disabled || isSaving;
                 return fieldOverrides[v.columnInternalName](v);
               }
@@ -155,14 +155,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         if (val.newValue !== null && val.newValue !== undefined) {
           let value = val.newValue;
           if (fieldType === "Lookup") {
-            objects[`${columnInternalName}Id`] = value[0].key;
+            if (value && value.length > 0) {
+              objects[`${columnInternalName}Id`] = value[0].key;
+            }
+            else {
+              objects[`${columnInternalName}Id`] = null;
+            }
           }
           else if (fieldType === "LookupMulti") {
             value = [];
             val.newValue.forEach(element => {
               value.push(element.key);
             });
-            objects[`${columnInternalName}Id`] = { results: value };
+            objects[`${columnInternalName}Id`] = { results: value.length === 0 ? null: value };
           }
           else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
@@ -188,7 +193,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             objects[columnInternalName] = JSON.stringify(val.newValue);
           }
           else if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = { results: val.newValue };
+            objects[`${columnInternalName}Id`] = { results: val.newValue.lenght === 0 ? null: val.newValue };
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
@@ -222,9 +227,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       }
 
       // If we have the item ID, we simply need to update it
+      let newETag: string | undefined = undefined;
       if (listItemId) {
         try {
-          const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
+          const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects, this.state.etag);
+          newETag = iur.data['odata.etag'];
           if (onSubmitted) {
             onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
           }
@@ -238,61 +245,60 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
       }
       // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
-      else if (contentTypeId === undefined || contentTypeId === '') {
-         if (!contentTypeId.startsWith('0x0120')) {
-            // We are adding a new list item
-            try {
-              const iar = await sp.web.lists.getById(listId).items.add(objects);
-              if (onSubmitted) {
-                onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
-              }
-            }
-            catch (error) {
-              if (onSubmitError) {
-                onSubmitError(objects, error);
-              }
-              console.log("Error", error);
-            }
-        } else if (contentTypeId.startsWith('0x0120')) {
-          // We are adding a folder or a Document Set
-          try {
-            const idField = 'ID';
-            const titleField = 'Title';
-            const contentTypeIdField = 'ContentTypeId';
-
-            const library = await sp.web.lists.getById(listId);
-            const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
-              (objects[titleField] as string).replace(/["|*|:|<|>|?|/|\\||]/g, "_") : // Replace not allowed chars in folder name
-              ''; // Empty string will be replaced by SPO with Folder Item ID
-            const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
-            const fields = await newFolder.listItemAllFields();
-            if (fields[idField]) {
-
-              // Read the ID of the just created folder or Document Set
-              const folderId = fields[idField];
-
-              // Set the content type ID for the target item
-              objects[contentTypeIdField] = contentTypeId;
-              // Update the just created folder or Document Set
-              const iur = await library.items.getById(folderId).update(objects);
-              if (onSubmitted) {
-                onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
-              }
-            } else {
-              throw new Error('Unable to read the ID of the just created folder or Document Set');
-            }
+      else if (contentTypeId === undefined || contentTypeId === '' || !contentTypeId.startsWith('0x0120')) {
+        // We are adding a new list item
+        try {
+          const iar = await sp.web.lists.getById(listId).items.add(objects);
+          if (onSubmitted) {
+            onSubmitted(iar.data, this.props.returnListItemInstanceOnSubmit !== false ? iar.item : undefined);
           }
-          catch (error) {
-            if (onSubmitError) {
-              onSubmitError(objects, error);
-            }
-            console.log("Error", error);
+        }
+        catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
           }
+          console.log("Error", error);
+        }
+      } else if (contentTypeId.startsWith('0x0120')) {
+        // We are adding a folder or a Document Set
+        try {
+          const idField = 'ID';
+          const titleField = 'Title';
+          const contentTypeIdField = 'ContentTypeId';
+
+          const library = await sp.web.lists.getById(listId);
+          const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
+            (objects[titleField] as string).replace(/["|*|:|<|>|?|/|\\||]/g, "_") : // Replace not allowed chars in folder name
+            ''; // Empty string will be replaced by SPO with Folder Item ID
+          const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
+          const fields = await newFolder.listItemAllFields();
+          if (fields[idField]) {
+
+            // Read the ID of the just created folder or Document Set
+            const folderId = fields[idField];
+
+            // Set the content type ID for the target item
+            objects[contentTypeIdField] = contentTypeId;
+            // Update the just created folder or Document Set
+            const iur = await library.items.getById(folderId).update(objects);
+            if (onSubmitted) {
+              onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+            }
+          } else {
+            throw new Error('Unable to read the ID of the just created folder or Document Set');
+          }
+        }
+        catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
+          }
+          console.log("Error", error);
         }
       }
 
       this.setState({
-        isSaving: false
+        isSaving: false,
+        etag: newETag
       });
     } catch (error) {
       if (onSubmitError) {
@@ -348,13 +354,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { listId, listItemId, disabledFields } = this.props;
+    const { listId, listItemId, disabledFields, respectETag } = this.props;
     let contentTypeId = this.props.contentTypeId;
     try {
       const spList = await sp.web.lists.getById(listId);
       let item = null;
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0)
+      let etag: string | undefined = undefined;
+      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
         item = await spList.items.getById(listItemId).get();
+
+        if (respectETag !== false) {
+          etag = item['odata.etag'];
+        }
+      }
 
       if (contentTypeId === undefined || contentTypeId === '') {
         const defaultContentType = await spList.contentTypes.select("Id", "Name").get();
@@ -392,7 +404,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
             field.Choices.forEach(element => {
-              choices.push({key: element, text: element});
+              choices.push({ key: element, text: element });
             });
           } else if (fieldType === "Note") {
             richText = field.RichText;
@@ -420,7 +432,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             anchorId = field.AnchorId;
             if (item !== null) {
               item[field.InternalName].forEach(element => {
-                selectedTags.push({key: element.TermGuid, name: element.Label});
+                selectedTags.push({ key: element.TermGuid, name: element.Label });
               });
 
               defaultValue = selectedTags;
@@ -428,7 +440,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               if (defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
-                    selectedTags.push({key: element.split('|')[1], name: element.split('|')[0]});
+                    selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
                 });
 
                 defaultValue = selectedTags;
@@ -443,12 +455,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             if (item !== null) {
               const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
               if (response) {
-                selectedTags.push({key: response.TermID, name: response.Label});
+                selectedTags.push({ key: response.TermID, name: response.Label });
                 defaultValue = selectedTags;
               }
             } else {
               if (defaultValue !== "") {
-                selectedTags.push({key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1]});
+                selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
                 defaultValue = selectedTags;
               }
             }
@@ -475,8 +487,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
           } else if (fieldType === "Thumbnail") {
-            if (defaultValue !== null) {
-              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+            if (defaultValue) {
+              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
             }
           } else if (fieldType === "User") {
             if (item !== null) {
@@ -525,7 +537,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       }
 
-      this.setState({ fieldCollection: tempFields });
+      this.setState({ fieldCollection: tempFields, etag: etag });
       //return arrayItems;
     } catch (error) {
       console.log(`Error get field informations`, error);

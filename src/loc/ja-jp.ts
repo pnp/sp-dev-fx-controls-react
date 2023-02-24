@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "あなたの組織",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "タグ付けする用語を入力してください",
-  "ModernTaxonomyPickerTreeTitle": "タグを選択",
+  "ModernTaxonomyPickerTreeTitleSingle": "タグを選択",
+  "ModernTaxonomyPickerTreeTitleMulti": "つまたは複数のタグを選択します",
   "ModernTaxonomyPickerAddTagButtonTooltip": "タグを追加",
   "ModernTaxonomyPickerApplyButtonText": "使用",
   "ModernTaxonomyPickerCancelButtonText": "キャンセル",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "削除",
   "ModernTaxonomyPickerPanelCloseButtonText": "閉じる",
   "ModernTaxonomyPickerNoResultsFound": "結果が見つかりませんでした",
-  "ModernTaxonomyPickerSuggestionInLabel": "インチ"
+  "ModernTaxonomyPickerSuggestionInLabel": "インチ",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

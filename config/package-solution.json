@@ -13,7 +13,21 @@
       "termsOfUseUrl": "",
       "websiteUrl": "",
       "mpnId": "Undefined-1.13.0"
-    }
+    },
+    "features": [
+      {
+        "title": "sp-dev-fx-controls-react Feature",
+        "description": "The feature that activates elements of the sp-dev-fx-controls-react solution.",
+        "id": "d7493d69-72ce-4892-a4ae-643166acae22",
+        "version": "1.0.0.0",
+        "assets": {
+          "elementManifests": [
+            "elements.xml",
+            "ClientSideInstance.xml"
+          ]
+        }
+      }
+    ]
   },
   "paths": {
     "zippedPackage": "solution/sp-dev-fx-controls-react.sppkg"

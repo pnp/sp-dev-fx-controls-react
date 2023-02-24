@@ -370,7 +370,8 @@ define([], () => {
     "OrgAssetsLinkLabel": "Egen organisasjon",
     "MyTeamsMessageDontHaveTeams": "Du har ingen team",
     "ModernTaxonomyPickerDefaultPlaceHolder": "Skriv inn termen som skal merkes",
-    "ModernTaxonomyPickerTreeTitle": "Velg ett eller flere merker",
+    "ModernTaxonomyPickerTreeTitleSingle": "Velg et merke",
+    "ModernTaxonomyPickerTreeTitleMulti": "Velg ett eller flere merker",
     "ModernTaxonomyPickerAddTagButtonTooltip": "Legg til merke",
     "ModernTaxonomyPickerApplyButtonText": "Bruk",
     "ModernTaxonomyPickerCancelButtonText": "Avbryt",
@@ -378,6 +379,20 @@ define([], () => {
     "ModernTaxonomyPickerRemoveButtonText": "Fjern",
     "ModernTaxonomyPickerPanelCloseButtonText": "Lukk",
     "ModernTaxonomyPickerNoResultsFound": "Ingen resultater funnet",
-    "ModernTaxonomyPickerSuggestionInLabel": "i"
+    "ModernTaxonomyPickerSuggestionInLabel": "i",
+
+    "ModernAudioPlay": "Play",
+    "ModernAudioPause": "Pause",
+    "ModernAudioIncVol": "Increase Volume",
+    "ModernAudioDecVol": "Decrease Volume",
+    "ModernAudioMute": "Mute",
+
+    "ProgressStepsIndicatorNoSteps": "No steps",
+
+    "UploadFilesButtonLabel": "Add",
+    "UpLoadFilesDeleteButtonLabel": "Delete",
+    "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+    "UpLoadFilesSelectAllLabel": "Select all",
+    "UploadFilesUploadButtonLabel": "Upload",
   };
 });

@@ -1,1 +1,1 @@
-export * from './controls/EnhancedThemeProvider/index';
+export * from './controls/enhancedThemeProvider/index';

@@ -14,11 +14,11 @@
 }
 
 .localTabFilename {
-  color: $ms-color-neutralPrimary;
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
 }
 
 .localTabLabel {
-  color: $ms-color-themePrimary;
+  color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
   cursor: pointer;
 }
 
@@ -33,7 +33,7 @@
 
 .localTabDragDropFile {
   // width: 100%;
-  border: 1px black dashed;
+  border: 1px "[theme:black, default:#{$ms-color-black}]" dashed;
   text-align: center;
   padding: 75px;
 }

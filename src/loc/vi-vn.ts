@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Tổ chức của bạn",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Nhập cụm từ bạn muốn gắn thẻ",
-  "ModernTaxonomyPickerTreeTitle": "Chọn thẻ",
+  "ModernTaxonomyPickerTreeTitleSingle": "Chọn thẻ",
+  "ModernTaxonomyPickerTreeTitleMulti": "Chọn một hoặc nhiều thẻ",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Thêm thẻ",
   "ModernTaxonomyPickerApplyButtonText": "Sử dụng",
   "ModernTaxonomyPickerCancelButtonText": "Hủy",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Xóa",
   "ModernTaxonomyPickerPanelCloseButtonText": "Đóng",
   "ModernTaxonomyPickerNoResultsFound": "Không tìm thấy kết quả",
-  "ModernTaxonomyPickerSuggestionInLabel": "In"
+  "ModernTaxonomyPickerSuggestionInLabel": "In",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

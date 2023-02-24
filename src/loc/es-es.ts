@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Tu organizacion",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Introduzca un término que desee etiquetar",
-  "ModernTaxonomyPickerTreeTitle": "Seleccione una etiqueta",
+  "ModernTaxonomyPickerTreeTitleSingle": "Seleccione una etiqueta",
+  "ModernTaxonomyPickerTreeTitleMulti": "Seleccione una o más etiquetas",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Agregar etiqueta",
   "ModernTaxonomyPickerApplyButtonText": "Usar",
   "ModernTaxonomyPickerCancelButtonText": "Cancelar",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Eliminar",
   "ModernTaxonomyPickerPanelCloseButtonText": "Cerrar",
   "ModernTaxonomyPickerNoResultsFound": "No se encontraron resultados",
-  "ModernTaxonomyPickerSuggestionInLabel": "En"
+  "ModernTaxonomyPickerSuggestionInLabel": "En",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

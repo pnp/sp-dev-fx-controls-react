@@ -370,7 +370,8 @@ define([], () => {
     OrgAssetsLinkLabel: "Sua organização",
     MyTeamsMessageDontHaveTeams: "De momento não tem nenhuma equipa",
     ModernTaxonomyPickerDefaultPlaceHolder: "Digite um termo que deseja marcar",
-    ModernTaxonomyPickerTreeTitle: "Selecione um ou mais tags",
+    ModernTaxonomyPickerTreeTitleSingle: "Selecione uma etiqueta",
+    ModernTaxonomyPickerTreeTitleMulti: "Selecione um ou mais tags",
     ModernTaxonomyPickerAddTagButtonTooltip: "Adicionar tag",
     ModernTaxonomyPickerApplyButtonText: "Aplicar",
     ModernTaxonomyPickerCancelButtonText: "Cancelar",
@@ -378,7 +379,21 @@ define([], () => {
     ModernTaxonomyPickerRemoveButtonText: "Remover",
     ModernTaxonomyPickerPanelCloseButtonText: "Fechar",
     ModernTaxonomyPickerNoResultsFound: "Nenhum resultado encontrado",
-    ModernTaxonomyPickerSuggestionInLabel: "Em"
+    ModernTaxonomyPickerSuggestionInLabel: "Em",
+
+    "ModernAudioPlay": "Play",
+    "ModernAudioPause": "Pause",
+    "ModernAudioIncVol": "Increase Volume",
+    "ModernAudioDecVol": "Decrease Volume",
+    "ModernAudioMute": "Mute",
+
+    "ProgressStepsIndicatorNoSteps": "No steps",
+
+    "UploadFilesButtonLabel": "Add",
+    "UpLoadFilesDeleteButtonLabel": "Delete",
+    "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+    "UpLoadFilesSelectAllLabel": "Select all",
+    "UploadFilesUploadButtonLabel": "Upload",
 };
 });
 

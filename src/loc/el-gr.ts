@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Ο οργανισμός σας",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Εισαγάγετε έναν όρο που θέλετε να προσθέσετε ετικέτα",
-  "ModernTaxonomyPickerTreeTitle": "Επιλογή ετικέτας",
+  "ModernTaxonomyPickerTreeTitleSingle": "Επιλογή ετικέτας",
+  "ModernTaxonomyPickerTreeTitleMulti": "Επιλέξτε μία ή περισσότερες ετικέτες",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Προσθήκη ετικέτας",
   "ModernTaxonomyPickerApplyButtonText": "Χρήση",
   "ModernTaxonomyPickerCancelButtonText": "Ακύρωση",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Διαγραφή",
   "ModernTaxonomyPickerPanelCloseButtonText": "Κλείσιμο",
   "ModernTaxonomyPickerNoResultsFound": "Δεν βρέθηκαν αποτελέσματα",
-  "ModernTaxonomyPickerSuggestionInLabel": "In"
+  "ModernTaxonomyPickerSuggestionInLabel": "In",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

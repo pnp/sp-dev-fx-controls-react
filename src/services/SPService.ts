@@ -8,8 +8,8 @@ import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrd
 
 interface ICachedListItems {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    items: any[];
-    expiration: number;
+  items: any[];
+  expiration: number;
 }
 
 export default class SPService implements ISPService {
@@ -190,20 +190,37 @@ export default class SPService implements ISPService {
     }
   }
 
+  public async getListId(
+      listName: string,
+  ): Promise<string> {
+
+    const webAbsoluteUrl = this._webAbsoluteUrl
+    const apiUrl = `${webAbsoluteUrl}/_api/web/lists/getByTitle(@listName)/Id?@listName='${encodeURIComponent(listName)}'`;
+    const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+    if (data.ok) {
+      const results = await data.json();
+      if (results) {
+        return results.value;
+      }
+    }
+
+    return;
+  }
+
   /**
    * Get List Items
    */
   public async getListItems(
-      filterText: string,
-      listId: string,
-      internalColumnName: string,
-      field: ISPField | undefined,
-      keyInternalColumnName?: string,
-      webUrl?: string,
-      filterString?: string,
-      substringSearch: boolean = false,
-      orderBy?: string,
-      cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
+    filterText: string,
+    listId: string,
+    internalColumnName: string,
+    field: ISPField | undefined,
+    keyInternalColumnName?: string,
+    webUrl?: string,
+    filterString?: string,
+    substringSearch: boolean = false,
+    orderBy?: string,
+    cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
@@ -538,9 +555,18 @@ export default class SPService implements ISPService {
         const result = await data.json();
         if (result && result[fieldName]) {
           const lookups = [];
-          result[fieldName].forEach(element => {
-            lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
-          });
+           const isArray = Array.isArray(result[fieldName]);
+           //multiselect lookups are arrays
+           if (isArray) {
+            result[fieldName].forEach(element => {
+              lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
+            });
+           }
+           //single select lookups are objects
+           else {
+             const singleItem = result[fieldName];
+             lookups.push({ key: singleItem.ID, name: singleItem[lookupFieldName || 'Title'] });
+           }
           return lookups;
         }
       }
@@ -607,8 +633,8 @@ export default class SPService implements ISPService {
         const result = await data.json();
         if (result && result[fieldName]) {
           const element = result[fieldName]
-            const loginNameWithoutClaimsToken = element.Name.split("|").pop();
-            return loginNameWithoutClaimsToken + "/" + element.Title;
+          const loginNameWithoutClaimsToken = element.Name.split("|").pop();
+          return loginNameWithoutClaimsToken + "/" + element.Title;
         }
       }
 

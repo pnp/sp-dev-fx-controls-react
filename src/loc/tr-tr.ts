@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Kuruluşunuz",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Etiketlemek istediğiniz bir terim girin",
-  "ModernTaxonomyPickerTreeTitle": "Bir etiket seçin",
+  "ModernTaxonomyPickerTreeTitleSingle": "Bir etiket seçin",
+  "ModernTaxonomyPickerTreeTitleMulti": "Bir veya daha fazla etiket seçin",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Etiket Ekle",
   "ModernTaxonomyPickerApplyButtonText": "Kullan",
   "ModernTaxonomyPickerCancelButtonText": "İptal",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Sil",
   "ModernTaxonomyPickerPanelCloseButtonText": "Kapat",
   "ModernTaxonomyPickerNoResultsFound": "Sonuç bulunamadı",
-  "ModernTaxonomyPickerSuggestionInLabel": "Inç"
+  "ModernTaxonomyPickerSuggestionInLabel": "Inç",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

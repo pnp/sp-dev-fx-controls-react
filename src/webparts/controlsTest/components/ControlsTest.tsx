@@ -191,7 +191,7 @@ import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
 import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
-
+import { UploadFiles } from "../../../controls/uploadFiles";
 
 // Used to render document card
 /**
@@ -924,7 +924,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          <DynamicForm context={this.props.context} listId={"b1416fca-dc77-4198-a082-62a7657dcfa9"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+          <DynamicForm context={this.props.context} listId={"db25f5f6-5ae1-4fa0-a2f7-e093d3d463ae"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
@@ -1204,7 +1204,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           maxDate={new Date("05/01/2020")} />
 
         {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-        <RichText value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
+        <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
         <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
 
         {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
@@ -2412,6 +2412,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div>
           <h3>Monaco Editor</h3>
           <TestControl context={this.props.context} />
+        </div>
+        <div>
+          <h3>Upload Files</h3>
+          <EnhancedThemeProvider theme={this.props.themeVariant} context={this.props.context}>
+            <Stack>
+              <UploadFiles
+                context={this.props.context}
+                title="Upload Files"
+                onUploadFiles={(files) => {
+                  console.log("files", files);
+                }}
+                themeVariant={this.props.themeVariant}
+              />
+            </Stack>
+          </EnhancedThemeProvider>
         </div>
 
       </div>
