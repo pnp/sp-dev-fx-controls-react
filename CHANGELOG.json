@@ -20,6 +20,7 @@
           "`AdaptiveCardDesignerHost`: Add Sample Data to Adaptive Card Editor [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
           "`AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
           "`ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)"
+
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
@@ -37,7 +38,9 @@
           "`DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)",
           "`FilePicker`: Fix breadcrumb nav [#1458](https://github.com/pnp/sp-dev-fx-controls-react/pull/1458)",
           "`DateTimePicker`: Date picker locale [#1464](https://github.com/pnp/sp-dev-fx-controls-react/issues/1464)",
-          "`DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)"
+          "`DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)",
+          "`RichText`: Use theme colors - fix dark mode [#669](https://github.com/pnp/sp-dev-fx-controls-react/issues/669)",
+          "`FilePicker`: Use theme colors - fix dark mode [#1132](https://github.com/pnp/sp-dev-fx-controls-react/issues/1132)"
         ]
       },
       "contributions": [
@@ -53,6 +56,7 @@
         "[mgitta](https://github.com/mgitta)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
         "[mikezimm](https://github.com/mikezimm)",
+        "[Nikolay Belykh](https://github.com/nbelyh)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Rico van de Ven](https://github.com/RicoNL)",
         "[Samuele Furnari](https://github.com/SamueleFurnari)",
