@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "`DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Martin Lingstuyl](https://github.com/martinlingstuyl)"
+      ]
     },
     {
       "version": "3.13.0",
