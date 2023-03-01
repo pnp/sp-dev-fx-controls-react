@@ -426,7 +426,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               defaultValue = [];
             }
           } else if (fieldType === "TaxonomyFieldTypeMulti") {
-            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
+            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.TextField, this.webURL);
             hiddenName = response.value;
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;

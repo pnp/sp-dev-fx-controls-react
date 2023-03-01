@@ -578,10 +578,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getTaxonomyFieldInternalName(listId: string, fieldId: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getById(guid'${fieldId}')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
