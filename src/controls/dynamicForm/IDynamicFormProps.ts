@@ -17,6 +17,11 @@ export interface IDynamicFormProps {
    */
   listId: string;
   /**
+   * List item loaded handler.
+   * Allows to access list item information after it's loaded.
+   */
+  onListItemLoaded?: (listItemData: any) => Promise<void>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /**
    * Before submit handler.
    * Allows to modify the object to be submitted or cancel the submission.
    */
