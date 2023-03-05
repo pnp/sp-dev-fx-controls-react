@@ -17,7 +17,7 @@ interface ITestFormState { }
 const LOG_SOURCE: string = 'TestForm';
 
 export default class TestForm extends React.Component<ITestFormProps, ITestFormState> {
-  
+
   constructor(props: ITestFormProps) {
     super(props);
 
@@ -40,7 +40,10 @@ export default class TestForm extends React.Component<ITestFormProps, ITestFormS
         <DynamicForm
           context={this.props.context}
           listId={this.props.context.list.guid.toString()}
-          listItemId={this.props.context.itemId} />
+          listItemId={this.props.context.itemId}
+          onListItemLoaded={async (listItemData: any) => {
+            console.log(listItemData);
+          }} />
       </EnhancedThemeProvider>);
   }
 }

@@ -197,7 +197,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
-              const uploadedImage = await this.uplaodImage(additionalData);
+              const uploadedImage = await this.uploadImage(additionalData);
               objects[columnInternalName] = JSON.stringify({
                 type: 'thumbnail',
                 fileName: uploadedImage.Name,
@@ -354,7 +354,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { listId, listItemId, disabledFields, respectETag } = this.props;
+    const { listId, listItemId, disabledFields, respectETag, onListItemLoaded } = this.props;
     let contentTypeId = this.props.contentTypeId;
     try {
       const spList = await sp.web.lists.getById(listId);
@@ -362,6 +362,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       let etag: string | undefined = undefined;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
         item = await spList.items.getById(listItemId).get();
+
+        if (onListItemLoaded) {
+          await onListItemLoaded(item);
+        }
 
         if (respectETag !== false) {
           etag = item['odata.etag'];
@@ -453,7 +457,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;
             if (item !== null) {
-              const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+              const response = await this._spService.getSingleManagedMetadataLabel(listId, listItemId, field.InternalName);
               if (response) {
                 selectedTags.push({ key: response.TermID, name: response.Label });
                 defaultValue = selectedTags;
@@ -545,7 +549,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     }
   }
 
-  private uplaodImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
+  private uploadImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
     const {
       listId,
       listItemId
