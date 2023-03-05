@@ -7,6 +7,7 @@
 - `DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)
 - `ListItemAttachments`: FIX: Cannot download items when it has a ilegal character [#1484](https://github.com/pnp/sp-dev-fx-controls-react/issues/1484)
 - `FilePicker`: FIX:  recent tab empty until re-render [#1482](https://github.com/pnp/sp-dev-fx-controls-react/issues/1482)
+- `Dynamic Form`: Adds onListItemLoaded handler to DynamicForm [#1472](https://github.com/pnp/sp-dev-fx-controls-react/issues/1472)
 
 ### Contributors
 
