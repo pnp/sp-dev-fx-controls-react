@@ -441,7 +441,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
               defaultValue = selectedTags;
             } else {
-              if (defaultValue !== "") {
+              if (defaultValue !== null && defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
                     selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
