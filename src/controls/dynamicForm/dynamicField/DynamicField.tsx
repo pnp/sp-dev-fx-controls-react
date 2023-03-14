@@ -32,12 +32,12 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       spfxContext: { pageContext: this.props.context.pageContext }
     });
     this.state = {
-      changedValue: props.fieldDefaultValue
+      changedValue: props.fieldType === 'Thumbnail' ? props.fieldDefaultValue : null
     };
   }
 
   public componentDidUpdate(): void {
-    if (this.props.fieldDefaultValue === "" && this.state.changedValue === null) {
+    if ((this.props.fieldDefaultValue === "" || this.props.fieldDefaultValue === null) && this.state.changedValue === null) {
       this.setState({ changedValue: "" });
     }
   }
@@ -585,7 +585,11 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       changedValue
     } = this.state;
-    return (changedValue === undefined || changedValue === '') && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+    return (changedValue === undefined || changedValue === '' || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+  }
+
+  private isEmptyArray(value) {
+    return Array.isArray(value) && value.length === 0;
   }
 
   private MultiChoice_selection = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {

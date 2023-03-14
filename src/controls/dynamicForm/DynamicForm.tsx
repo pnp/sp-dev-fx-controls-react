@@ -104,7 +104,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   }
 
   //trigger when the user submits the form.
-  private onSubmitClick = async (): Promise<void> => {
+    private onSubmitClick = async (): Promise<void> => {
     const {
       listId,
       listItemId,
@@ -130,6 +130,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           else if (val.newValue === '') {
             val.fieldDefaultValue = '';
+            shouldBeReturnBack = true;
+          }
+          else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
+            val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
         }
