@@ -29,7 +29,7 @@ export default class SPTermStorePickerService {
    */
   constructor(private props: ITaxonomyPickerProps, private context: BaseComponentContext) {
     this.clientServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/client.svc/ProcessQuery';
-    this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + "/_vti_bin/TaxonomyInternalService.json/GetSuggestions";
+    this.suggestionServiceUrl = this.context.pageContext.web.absoluteUrl + '/_vti_bin/TaxonomyInternalService.json/GetSuggestions';
   }
 
   public async getTermLabels(termId: string): Promise<string[]> {
@@ -389,8 +389,8 @@ export default class SPTermStorePickerService {
           anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
           isSpanTermStores: false,
           isSpanTermSets: false,
-          isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging === true,
-          isIncludeDeprecated: this.props.hideDeprecatedTags === true,
+          isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging !== true,
+          isIncludeDeprecated: this.props.hideDeprecatedTags !== true,
           isAddTerms: false,
           isIncludePathData: false,
           excludeKeyword: false,

@@ -67,7 +67,8 @@ export class FilePicker extends React.Component<
     );
     this.fileSearchService = new FilesSearchService(
       props.context,
-      this.props.bingAPIKey
+      this.props.bingAPIKey,
+      this.props.webAbsoluteUrl
     );
 
     this.state = {

@@ -1,23 +1,23 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 :export {
-  ThemeColorDarker: $ms-color-themeDarker;
-  ThemeColorDark: $ms-color-themeDark;
-  ThemeColorDarkAlt: $ms-color-themeDarkAlt;
-  ThemeColorPrimary: $ms-color-themePrimary;
-  ThemeColorSecondary: $ms-color-themeSecondary;
-  ThemeColorTertiary: $ms-color-themeTertiary;
-  ThemeColorNeutralSecondary:$ms-color-neutralSecondary;
-  ThemeColorNeutralPrimaryAlt: $ms-color-neutralPrimaryAlt;
-  ThemeColorNeutralPrimary: $ms-color-neutralPrimary;
-  ThemeColorNeutralDark:$ms-color-neutralDark
+  ThemeColorDarker: "[theme:themeDarker, default:#{$ms-color-themeDarker}]";
+  ThemeColorDark: "[theme:themeDark, default:#{$ms-color-themeDark}]";
+  ThemeColorDarkAlt: "[theme:themeDarkAlt, default:#{$ms-color-themeDarkAlt}]";
+  ThemeColorPrimary: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
+  ThemeColorSecondary: "[theme:themeSecondary, default:#{$ms-color-themeSecondary}]";
+  ThemeColorTertiary: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
+  ThemeColorNeutralSecondary:"[theme:neutralSecondary, default:#{$ms-color-neutralSecondary}]";
+  ThemeColorNeutralPrimaryAlt: "[theme:neutralPrimaryAlt, default:#{$ms-color-neutralPrimaryAlt}]";
+  ThemeColorNeutralPrimary: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
+  ThemeColorNeutralDark:"[theme:neutralDark, default:#{$ms-color-neutralDark}]"
 }
 
 .colorPickerButton {
   background: 0 0;
   padding-left: 4px;
   padding-right: 12px;
-  background-color: #ffffff;
+  background-color: "[theme: white, default: #{$ms-color-white}]";
 }
 
 .previewSvg {
@@ -25,7 +25,7 @@
   height: 20px;
 
   &.border {
-    border: 1px solid #000;
+    border: 1px solid "[theme: black, default: #{$ms-color-black}]";
   }
 }
 
@@ -47,7 +47,7 @@
 .pickerCallout {
   width: 166px;
   &:global(.ms-Callout-main) {
-    background-color: rgb(255, 255, 255);
+    background-color: "[theme:white, default: #{$ms-color-white}]";
     overflow-x: hidden;
     overflow-y: auto;
     position: relative;
@@ -62,7 +62,7 @@
   }
 
   &.border {
-    border: 1px solid #000;
+    border: 1px solid "[theme:black, default: #{$ms-color-black}]";
   }
 
   &.fillDefaultColor {

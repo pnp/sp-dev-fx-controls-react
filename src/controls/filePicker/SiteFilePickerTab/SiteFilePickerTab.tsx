@@ -5,6 +5,7 @@ import { ISiteFilePickerTabState } from './ISiteFilePickerTabState';
 import { DocumentLibraryBrowser } from '../controls/DocumentLibraryBrowser/DocumentLibraryBrowser';
 import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
 import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
+import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
 import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
 import { IFile, IFolder, ILibrary } from '../../../services/FileBrowserService.types';
 import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types';
@@ -177,10 +178,14 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
         </div>
         <div className={styles.tabFiles}>
           {this.state.libraryAbsolutePath === undefined &&
-            <DocumentLibraryBrowser
-              fileBrowserService={this.props.fileBrowserService}
-              includePageLibraries={this.props.includePageLibraries}
-              onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />}
+            <div className={styles.scrollablePaneWrapper}>
+              <ScrollablePane>
+                <DocumentLibraryBrowser
+                  fileBrowserService={this.props.fileBrowserService}
+                  includePageLibraries={this.props.includePageLibraries}
+                  onOpenLibrary={(selectedLibrary: ILibrary) => this._handleOpenLibrary(selectedLibrary, true)} />
+              </ScrollablePane>
+            </div>}
           {this.state.libraryAbsolutePath !== undefined &&
             <FileBrowser
               onChange={(filePickerResults: IFilePickerResult[]) => this._handleSelectionChange(filePickerResults)}
@@ -209,7 +214,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
-    if (node.libraryData === null && node.folderData === null) {
+    if (node.libraryData == null && node.folderData == null) {
       this.setState({
         libraryAbsolutePath: undefined,
         libraryPath: undefined,
@@ -217,13 +222,13 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       });
     }
     // Check if it is folder item
-    else if (node.folderData !== null) {
+    else if (node.folderData != null) {
       this._handleOpenFolder(node.folderData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteUrl === node.key);
     }
     // Check if it is library node
-    else if (node.libraryData !== null) {
+    else if (node.libraryData != null) {
       this._handleOpenLibrary(node.libraryData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.libraryData && item.libraryData.serverRelativeUrl === node.key);

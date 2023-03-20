@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Organizația dvs.",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Introduceți un termen pe care doriți să-l etichetați",
-  "ModernTaxonomyPickerTreeTitle": "Selectați o etichetă",
+  "ModernTaxonomyPickerTreeTitleSingle": "Selectați o etichetă",
+  "ModernTaxonomyPickerTreeTitleMulti": "Selectați una sau mai multe etichete",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Adaugă etichetă",
   "ModernTaxonomyPickerApplyButtonText": "Utilizați",
   "ModernTaxonomyPickerCancelButtonText": "Anulați",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Ștergeți",
   "ModernTaxonomyPickerPanelCloseButtonText": "Închide",
   "ModernTaxonomyPickerNoResultsFound": "Nu s-au găsit rezultate",
-  "ModernTaxonomyPickerSuggestionInLabel": "In"
+  "ModernTaxonomyPickerSuggestionInLabel": "In",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

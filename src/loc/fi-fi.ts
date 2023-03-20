@@ -371,6 +371,8 @@ define([], () => {
   "MyTeamsMessageDontHaveTeams": "Sinulla ei ole yhtään tiimejä",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Kirjoita tagi, jonka haluat merkitä",
   "ModernTaxonomyPickerTreeTitle": "Valitse tunniste",
+  "ModernTaxonomyPickerTreeTitleSingle": "Valitse tunniste",
+  "ModernTaxonomyPickerTreeTitleMulti": "Valitse yksi tai useampi tunniste",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Lisää tunniste",
   "ModernTaxonomyPickerApplyButtonText": "Käytä",
   "ModernTaxonomyPickerCancelButtonText": "Peruuta",
@@ -378,6 +380,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Poista",
   "ModernTaxonomyPickerPanelCloseButtonText": "Sulje",
   "ModernTaxonomyPickerNoResultsFound": "Ei tuloksia",
-  "ModernTaxonomyPickerSuggestionInLabel": "Tuumaa"
+  "ModernTaxonomyPickerSuggestionInLabel": "Tuumaa",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Jūsu organizācija",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Ievadiet vārdu, kuru vēlaties atzīmēt",
-  "ModernTaxonomyPickerTreeTitle": "Atlasiet tagu",
+  "ModernTaxonomyPickerTreeTitleSingle": "Atlasiet tagu",
+  "ModernTaxonomyPickerTreeTitleMulti": "Atlasiet vienu vai vairākas atzīmes",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Pievienot tagu",
   "ModernTaxonomyPickerApplyButtonText": "Izmantot",
   "ModernTaxonomyPickerCancelButtonText": "Atcelt",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Dzēst",
   "ModernTaxonomyPickerPanelCloseButtonText": "Aizvērt",
   "ModernTaxonomyPickerNoResultsFound": "Rezultāti nav atrasti",
-  "ModernTaxonomyPickerSuggestionInLabel": "Collas"
+  "ModernTaxonomyPickerSuggestionInLabel": "Collas",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

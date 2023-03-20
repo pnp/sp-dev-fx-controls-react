@@ -41,17 +41,40 @@ private onTextChange = (newText: string) => {
 }
 ```
 
+- By adding `label` property, the control is better identified, especially when used in a form
+
+```TypeScript
+<RichText label="My multiline text field" value={this.props.value} />
+```
+
+It is also possible to customize the control label's rendering:
+
+```TypeScript
+const richText = (
+  <RichText id="spfxRichText" label="My multiline text field"
+            onRenderLabel={onRenderCustomLabel}
+            value={this.props.value} />
+);
+
+const onRenderCustomLabel = (rtProps: IRichTextProps): JSX.Element => {
+  return <Label htmlFor={rtProps.id}>{rtProps.label}</Label>;
+}
+```
+
 ## Implementation
 
 The RichText control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
+| id | string | no | The ID to apply to the RichText control. |
+| label | string | no | The label displayed above the RichText control. |
 | className | string | no | The custom CSS class to apply to the RichText control. |
 | isEditMode | boolean | no | `true` indicates that users will be able to edit the content of the RichText control. `false` will display the rich text as read-only. |
 | styleOptions | StyleOptions | no | Define the styles you want to show or hide for the rich text editor |
 | value | string | no | Sets the rich text to display in the RichText control. |
 | onChange | (text: string) => string | no | onChange handler for the RichText control. The function must return a `string` containing the rich text to display in the RichText control. |
+| onRenderLabel | (props: IRichTextProps) => JSX.Element | no | Custom renderer for the RichText control's label. The function must return a `JSX.Element`. |
 
 `StyleOptions` interface
 

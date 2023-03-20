@@ -81,7 +81,7 @@
   top: 2px;
   bottom: 2px;
   box-sizing: border-box;
-  border: 1px solid $ms-color-white;
+  border: 1px solid "[theme:white, default:#{$ms-color-white}]";
 }
 
 .filePickerFolderCardSizer {
@@ -92,7 +92,7 @@
   width: 100%;
   left: 0;
   top: 0;
-  color: $ms-color-white;
+  color: "[theme:white, default:#{$ms-color-white}]";
   position: absolute;
   bottom: 0;
   font-size: 12px;
@@ -104,7 +104,7 @@
   height: 100%;
   width: 100%;
   top: 0;
-  color: $ms-color-white;
+  color: "[theme:white, default:#{$ms-color-white}]";
   padding: 10px;
   position: absolute;
   bottom: 0;
@@ -116,13 +116,13 @@
   font-weight: 600;
 
   &:hover {
-    color: $ms-color-neutralLight;
+    color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
     background-color: rgba(0, 0, 0, 0.6);
   }
 
   &:active {
-    background-color: $ms-color-neutralTertiaryAlt;
-    color: $ms-color-neutralDark;
+    background-color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
+    color: "[theme:neutralDark, default:#{$ms-color-neutralDark}]";
   }
 }
 
@@ -167,15 +167,15 @@
     top: 2px;
     bottom: 2px;
     border: 1px solid;
-    border-color: $ms-color-white;
-    -webkit-box-shadow: 0 0 0 2px $ms-color-neutralSecondaryAlt;
-    box-shadow: 0 0 0 2px $ms-color-neutralSecondaryAlt;
+    border-color: "[theme:white, default:#{$ms-color-white}]";
+    -webkit-box-shadow: 0 0 0 2px "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
+    box-shadow: 0 0 0 2px "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
   }
 }
 
 .bingTileContent {
   border: 1px solid;
-  border-color: $ms-color-white;
+  border-color: "[theme:white, default:#{$ms-color-white}]";
   width: 100%;
   height: 100%;
 }
@@ -187,8 +187,8 @@
   top: 2px;
   right: 2px;
   bottom: 2px;
-  -webkit-box-shadow: 0 0 0 2px $ms-color-neutralTertiaryAlt;
-  box-shadow: 0 0 0 2px $ms-color-neutralTertiaryAlt;
+  -webkit-box-shadow: 0 0 0 2px "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
+  box-shadow: 0 0 0 2px "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
   outline: 1px solid transparent;
 }
 
@@ -213,8 +213,8 @@
   left: 0;
   right: 0;
   padding: 4px 8px 8px;
-  background-color: $ms-color-white;
-  color: $ms-color-neutralPrimary;
+  background-color: "[theme:white, default:#{$ms-color-white}]";
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
   white-space: nowrap;
   text-overflow: ellipsis;
   opacity: 0.95;

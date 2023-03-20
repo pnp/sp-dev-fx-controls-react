@@ -16,6 +16,11 @@ import styles from './DynamicForm.module.scss';
 import { IDynamicFormProps } from './IDynamicFormProps';
 import { IDynamicFormState } from './IDynamicFormState';
 
+import '@pnp/sp/lists';
+import '@pnp/sp/content-types';
+import '@pnp/sp/folders';
+import '@pnp/sp/items';
+
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
 /**
@@ -77,7 +82,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         {fieldCollection.length === 0 ? <div><ProgressIndicator label={strings.DynamicFormLoading} description={strings.DynamicFormPleaseWait} /></div> :
           <div>
             {fieldCollection.map((v, i) => {
-              if(fieldOverrides && Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
+              if (fieldOverrides && Object.prototype.hasOwnProperty.call(fieldOverrides, v.columnInternalName)) {
                 v.disabled = v.disabled || isSaving;
                 return fieldOverrides[v.columnInternalName](v);
               }
@@ -103,6 +108,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     const {
       listId,
       listItemId,
+      contentTypeId,
       onSubmitted,
       onBeforeSubmit,
       onSubmitError
@@ -149,14 +155,19 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         if (val.newValue !== null && val.newValue !== undefined) {
           let value = val.newValue;
           if (fieldType === "Lookup") {
-            objects[`${columnInternalName}Id`] = value[0].key;
+            if (value && value.length > 0) {
+              objects[`${columnInternalName}Id`] = value[0].key;
+            }
+            else {
+              objects[`${columnInternalName}Id`] = null;
+            }
           }
           else if (fieldType === "LookupMulti") {
             value = [];
             val.newValue.forEach(element => {
               value.push(element.key);
             });
-            objects[`${columnInternalName}Id`] = { results: value };
+            objects[`${columnInternalName}Id`] = { results: value.length === 0 ? null: value };
           }
           else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
@@ -182,11 +193,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             objects[columnInternalName] = JSON.stringify(val.newValue);
           }
           else if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = { results: val.newValue };
+            objects[`${columnInternalName}Id`] = { results: val.newValue.lenght === 0 ? null: val.newValue };
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
-              const uploadedImage = await this.uplaodImage(additionalData);
+              const uploadedImage = await this.uploadImage(additionalData);
               objects[columnInternalName] = JSON.stringify({
                 type: 'thumbnail',
                 fileName: uploadedImage.Name,
@@ -215,9 +226,12 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       }
 
+      // If we have the item ID, we simply need to update it
+      let newETag: string | undefined = undefined;
       if (listItemId) {
         try {
-          const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects);
+          const iur = await sp.web.lists.getById(listId).items.getById(listItemId).update(objects, this.state.etag);
+          newETag = iur.data['odata.etag'];
           if (onSubmitted) {
             onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
           }
@@ -230,7 +244,9 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
 
       }
-      else {
+      // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
+      else if (contentTypeId === undefined || contentTypeId === '' || !contentTypeId.startsWith('0x0120')) {
+        // We are adding a new list item
         try {
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
@@ -243,9 +259,46 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           console.log("Error", error);
         }
+      } else if (contentTypeId.startsWith('0x0120')) {
+        // We are adding a folder or a Document Set
+        try {
+          const idField = 'ID';
+          const titleField = 'Title';
+          const contentTypeIdField = 'ContentTypeId';
+
+          const library = await sp.web.lists.getById(listId);
+          const folderTitle = (objects[titleField] !== undefined && objects[titleField] !== '') ?
+            (objects[titleField] as string).replace(/["|*|:|<|>|?|/|\\||]/g, "_") : // Replace not allowed chars in folder name
+            ''; // Empty string will be replaced by SPO with Folder Item ID
+          const newFolder = await library.rootFolder.addSubFolderUsingPath(folderTitle);
+          const fields = await newFolder.listItemAllFields();
+          if (fields[idField]) {
+
+            // Read the ID of the just created folder or Document Set
+            const folderId = fields[idField];
+
+            // Set the content type ID for the target item
+            objects[contentTypeIdField] = contentTypeId;
+            // Update the just created folder or Document Set
+            const iur = await library.items.getById(folderId).update(objects);
+            if (onSubmitted) {
+              onSubmitted(iur.data, this.props.returnListItemInstanceOnSubmit !== false ? iur.item : undefined);
+            }
+          } else {
+            throw new Error('Unable to read the ID of the just created folder or Document Set');
+          }
+        }
+        catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
+          }
+          console.log("Error", error);
+        }
       }
+
       this.setState({
-        isSaving: false
+        isSaving: false,
+        etag: newETag
       });
     } catch (error) {
       if (onSubmitError) {
@@ -301,22 +354,32 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { listId, listItemId, disabledFields } = this.props;
+    const { listId, listItemId, disabledFields, respectETag, onListItemLoaded } = this.props;
     let contentTypeId = this.props.contentTypeId;
     try {
       const spList = await sp.web.lists.getById(listId);
       let item = null;
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0)
+      let etag: string | undefined = undefined;
+      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
         item = await spList.items.getById(listItemId).get();
+
+        if (onListItemLoaded) {
+          await onListItemLoaded(item);
+        }
+
+        if (respectETag !== false) {
+          etag = item['odata.etag'];
+        }
+      }
 
       if (contentTypeId === undefined || contentTypeId === '') {
         const defaultContentType = await spList.contentTypes.select("Id", "Name").get();
         contentTypeId = defaultContentType[0].Id.StringValue;
       }
-      const listFeilds = await this.getFormFields(listId, contentTypeId, this.webURL);
+      const listFields = await this.getFormFields(listId, contentTypeId, this.webURL);
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
-      const responseValue = listFeilds.value;
+      const responseValue = listFields.value;
       const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
       let defaultDayOfWeek: number = 0;
       for (let i = 0, len = responseValue.length; i < len; i++) {
@@ -329,6 +392,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           field.order = order;
           let hiddenName = "";
           let termSetId = "";
+          let anchorId = "";
           let lookupListId = "";
           let lookupField = "";
           const choices: IDropdownOption[] = [];
@@ -339,52 +403,45 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           let principalType = "";
           if (item !== null) {
             defaultValue = item[field.EntityPropertyName];
-          }
-          else {
+          } else {
             defaultValue = field.DefaultValue;
           }
           if (fieldType === 'Choice' || fieldType === 'MultiChoice') {
             field.Choices.forEach(element => {
               choices.push({ key: element, text: element });
             });
-          }
-          else if (fieldType === "Note") {
+          } else if (fieldType === "Note") {
             richText = field.RichText;
-          }
-          else if (fieldType === "Lookup") {
+          } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValue(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
 
-          }
-          else if (fieldType === "LookupMulti") {
+          } else if (fieldType === "LookupMulti") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
             if (item !== null) {
               defaultValue = await this._spService.getLookupValues(listId, listItemId, field.EntityPropertyName, lookupField, this.webURL);
-            }
-            else {
+            } else {
               defaultValue = [];
             }
-          }
-          else if (fieldType === "TaxonomyFieldTypeMulti") {
-            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
+          } else if (fieldType === "TaxonomyFieldTypeMulti") {
+            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.TextField, this.webURL);
             hiddenName = response.value;
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
               item[field.InternalName].forEach(element => {
                 selectedTags.push({ key: element.TermGuid, name: element.Label });
               });
 
               defaultValue = selectedTags;
-            }
-            else {
-              if (defaultValue !== "") {
+            } else {
+              if (defaultValue !== null && defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
                     selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
@@ -395,18 +452,17 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "TaxonomyFieldType") {
+          } else if (fieldType === "TaxonomyFieldType") {
 
             termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
             if (item !== null) {
-              const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+              const response = await this._spService.getSingleManagedMetadataLabel(listId, listItemId, field.InternalName);
               if (response) {
                 selectedTags.push({ key: response.TermID, name: response.Label });
                 defaultValue = selectedTags;
               }
-            }
-            else {
+            } else {
               if (defaultValue !== "") {
                 selectedTags.push({ key: defaultValue.split('|')[1], name: defaultValue.split('|')[0].split('#')[1] });
                 defaultValue = selectedTags;
@@ -414,8 +470,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             if (defaultValue === "")
               defaultValue = null;
-          }
-          else if (fieldType === "DateTime") {
+          } else if (fieldType === "DateTime") {
             if (item !== null && item[field.InternalName])
               defaultValue = new Date(item[field.InternalName]);
             else if (defaultValue === '[today]') {
@@ -435,34 +490,30 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Thumbnail") {
-            if (defaultValue !== null) {
-              defaultValue = this.webURL.split('/sites/')[0] + JSON.parse(defaultValue).serverRelativeUrl;
+          } else if (fieldType === "Thumbnail") {
+            if (defaultValue) {
+              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
             }
-          }
-          else if (fieldType === "User") {
+          } else if (fieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
               userEmails.push(await this._spService.getUserUPNFromFieldValue(listId, listItemId, field.InternalName, this.webURL) + '');
               defaultValue = userEmails;
-            }
-            else {
+            } else {
               defaultValue = [];
             }
             principalType = field.SchemaXml.split('UserSelectionMode="')[1];
             principalType = principalType.substring(0, principalType.indexOf('"'));
-          }
-          else if (fieldType === "Location") {
+          } else if (fieldType === "Location") {
             defaultValue = JSON.parse(defaultValue);
-          }
-          else if (fieldType === "Boolean") {
+          } else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
           }
 
           tempFields.push({
             newValue: null,
             fieldTermSetId: termSetId,
+            fieldAnchorId: anchorId,
             options: choices,
             lookupListID: lookupListId,
             lookupField: lookupField,
@@ -490,7 +541,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       }
 
-      this.setState({ fieldCollection: tempFields });
+      this.setState({ fieldCollection: tempFields, etag: etag });
       //return arrayItems;
     } catch (error) {
       console.log(`Error get field informations`, error);
@@ -498,7 +549,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     }
   }
 
-  private uplaodImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
+  private uploadImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
     const {
       listId,
       listItemId
@@ -537,7 +588,11 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
       let apiUrl = '';
       if (contentTypeId !== undefined && contentTypeId !== '') {
-        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        if (contentTypeId.startsWith('0x0120')) {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and (Hidden eq false or StaticName eq 'Title') and (FromBaseType eq false or StaticName eq 'Title')`;
+        } else {
+          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+        }
       }
       else {
         apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(listId)}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;

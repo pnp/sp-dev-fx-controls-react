@@ -1,11 +1,27 @@
 import * as React from 'react';
-import { ISiteBreadcrumbProps, ISiteBreadcrumbState, IWebInfo } from './ISiteBreadcrumb';
-import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
-import { SPHttpClient, HttpClientResponse } from '@microsoft/sp-http';
-import styles from './SiteBreadcrumb.module.scss';
+
 import * as strings from 'ControlStrings';
-import { Environment, EnvironmentType } from '@microsoft/sp-core-library';
+import {
+  Breadcrumb,
+  IBreadcrumbItem,
+} from 'office-ui-fabric-react/lib/Breadcrumb';
+
+import {
+  Environment,
+  EnvironmentType,
+} from '@microsoft/sp-core-library';
+import {
+  HttpClientResponse,
+  SPHttpClient,
+} from '@microsoft/sp-http';
+
 import * as telemetry from '../../common/telemetry';
+import {
+  ISiteBreadcrumbProps,
+  ISiteBreadcrumbState,
+  IWebInfo,
+} from './ISiteBreadcrumb';
+import styles from './SiteBreadcrumb.module.scss';
 
 /**
  * Site breadcrumb component
@@ -134,7 +150,9 @@ export class SiteBreadcrumb extends React.Component<ISiteBreadcrumbProps, ISiteB
         <Breadcrumb
           items={this.state.breadcrumbItems}
           ariaLabel={strings.SiteBreadcrumbLabel}
-          className={styles.breadcrumbLinks} />
+          className={styles.breadcrumbLinks}
+
+          />
       </div >
     );
   }

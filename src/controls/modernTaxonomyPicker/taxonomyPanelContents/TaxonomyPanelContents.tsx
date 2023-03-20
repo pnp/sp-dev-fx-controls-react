@@ -100,7 +100,7 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
           />
         </div>
       </div>
-      <Label className={styles.taxonomyTreeLabel}>{strings.ModernTaxonomyPickerTreeTitle}</Label>
+      <Label className={styles.taxonomyTreeLabel}>{props.allowMultipleSelections ? strings.ModernTaxonomyPickerTreeTitleMulti : strings.ModernTaxonomyPickerTreeTitleSingle}</Label>
       <TaxonomyTree
         anchorTermInfo={props.anchorTermInfo}
         languageTag={props.languageTag}

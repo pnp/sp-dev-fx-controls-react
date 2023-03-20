@@ -42,7 +42,7 @@
   padding-bottom: 0px;
   padding-left: 15px;
   height: 36px;
-  color: $ms-color-neutralPrimary;
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
   background-color: transparent;
   width: 100%;
   line-height: 36px;
@@ -73,8 +73,8 @@
   padding-bottom: 0px;
   padding-left: 15px;
   height: 36px;
-  color: $ms-color-themePrimary;
-  background-color: $ms-color-neutralLighter;
+  color: "[theme:themePrimary, default:#{$ms-color-themePrimary}]";
+  background-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
   width: 100%;
   line-height: 36px;
   text-overflow: ellipsis;
@@ -118,7 +118,7 @@
 .nav {
   position: absolute;
   height: 100%;
-  color: $ms-color-neutralLighter;
+  color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
 }
 
 [dir="ltr"] .nav {
@@ -134,13 +134,13 @@
   box-sizing: border-box;
   border-top-width: 40px;
   border-top-style: solid;
-  color: $ms-color-neutralLighter;
+  color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
 }
 
 .tabHeaderContainer {
   display: inline-block;
   width: 100%;
-  color: $ms-color-neutralLighter;
+  color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
   border-top: 40px solid;
 }
 
@@ -149,7 +149,7 @@
   padding: 22px 32px;
 }
 .breadcrumbNavItem {
-  color: $ms-color-neutralPrimary;
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
   font-size: 24px;
   font-weight: 600;
   padding: 22px 8px 20px 0;
@@ -189,7 +189,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
   width: 100%;
-  background-color: $ms-color-white;
+  background-color: "[theme:white, default:#{$ms-color-white}]";
   -ms-flex-negative: 0;
   flex-shrink: 0;
   z-index: 100;
@@ -232,7 +232,7 @@
 }
 
 .tabHeader {
-  color: $ms-color-neutralPrimary;
+  color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
   margin: 0;
   font-size: 24px;
   font-weight: 600;

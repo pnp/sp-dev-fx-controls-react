@@ -41,7 +41,7 @@
   top: 2px;
   bottom: 2px;
   box-sizing: border-box;
-  border: 1px solid $ms-color-white;
+  border: 1px solid "[theme:white, default:#{$ms-color-white}]";
 }
 
 .filePickerFolderCardSizer {
@@ -52,7 +52,7 @@
   width: 100%;
   left: 0;
   top: 0;
-  color: $ms-color-white;
+  color: "[theme:white, default:#{$ms-color-white}]";
   position: absolute;
   bottom: 0;
   font-size: 12px;
@@ -60,11 +60,11 @@
 }
 
 .filePickerFolderCardLabel {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
   height: 100%;
   width: 100%;
   top: 0;
-  color: $ms-color-white;
+  color: "[theme:black, default:#{$ms-color-black}]";
   padding: 10px;
   position: absolute;
   bottom: 0;
@@ -81,13 +81,13 @@
   }
 
   &:hover {
-    color: $ms-color-neutralLight;
-    background-color: rgba(0, 0, 0, 0.6);
+    color: "[theme:black, default:#{$ms-color-black}]";
+    background-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
   }
 
   &:active {
-    background-color: $ms-color-neutralTertiaryAlt;
-    color: $ms-color-neutralDark;
+    color: "[theme:black, default:#{$ms-color-black}]";
+    background-color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
   }
 }
 

@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Вашата организация",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Въведете термин, който искате да маркирате",
-  "ModernTaxonomyPickerTreeTitle": "Изберете маркер",
+  "ModernTaxonomyPickerTreeTitleSingle": "Изберете маркер",
+  "ModernTaxonomyPickerTreeTitleMulti": "Изберете един или повече тагове",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Добавяне на маркер",
   "ModernTaxonomyPickerApplyButtonText": "Използване",
   "ModernTaxonomyPickerCancelButtonText": "Отказ",
@@ -378,6 +379,20 @@ define([], () => {
   "ModernTaxonomyPickerRemoveButtonText": "Изтриване",
   "ModernTaxonomyPickerPanelCloseButtonText": "Затваряне",
   "ModernTaxonomyPickerNoResultsFound": "Няма намерени резултати",
-  "ModernTaxonomyPickerSuggestionInLabel": "Инча"
+  "ModernTaxonomyPickerSuggestionInLabel": "Инча",
+
+  "ModernAudioPlay": "Play",
+  "ModernAudioPause": "Pause",
+  "ModernAudioIncVol": "Increase Volume",
+  "ModernAudioDecVol": "Decrease Volume",
+  "ModernAudioMute": "Mute",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

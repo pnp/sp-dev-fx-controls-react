@@ -1,6 +1,97 @@
 # Releases
 
+## 3.14.0
+
+### Fixes
+
+- `DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)
+- `ListItemAttachments`: FIX: Cannot download items when it has a ilegal character [#1484](https://github.com/pnp/sp-dev-fx-controls-react/issues/1484)
+- `FilePicker`: FIX:  recent tab empty until re-render [#1482](https://github.com/pnp/sp-dev-fx-controls-react/issues/1482)
+- `Dynamic Form`: Adds onListItemLoaded handler to DynamicForm [#1472](https://github.com/pnp/sp-dev-fx-controls-react/issues/1472)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Sergio Villalta](https://github.com/6gal6ler6).
+
+## 3.13.0
+
+### New control(s)
+
+- `UploadFiles`: New Upload Files control [#1388](https://github.com/pnp/sp-dev-fx-controls-react/pull/1388)
+
+### Enhancements
+
+- `ListItemPicker`: use list name as well as GUID to point to list [#1355](https://github.com/pnp/sp-dev-fx-controls-react/issues/1355)
+- `ListItemPicker`: Add Styles property to ListItemPicker and ComboBoxListItemPicker [#1407](https://github.com/pnp/sp-dev-fx-controls-react/pull/1407)
+- `SitePicker`: Pass `styles` property to Dropdown [#1389](https://github.com/pnp/sp-dev-fx-controls-react/pull/1389)
+- `FilePicker`: Site Tab - Many Document Libraries No Scrolling [#1413](https://github.com/pnp/sp-dev-fx-controls-react/pull/1413)
+- `DynamicForm`: Add `respectETag` option to `DynamicForm` [#1395](https://github.com/pnp/sp-dev-fx-controls-react/issues/1395)
+- `MonacoEditor`: Fixed minor typos and misleading instructions [#1415](https://github.com/pnp/sp-dev-fx-controls-react/pull/1415)
+- SharePoint Framework v1.16.1 support [#1427](https://github.com/pnp/sp-dev-fx-controls-react/issues/1427)
+- `RichText`: `label` property is missing [#1375](https://github.com/pnp/sp-dev-fx-controls-react/issues/1375)
+- `PeoplePicker`: PeopleSearch service should also find people by userPrincipalName when group transitive membership check is used. [#1446](https://github.com/pnp/sp-dev-fx-controls-react/pull/1446)
+- Update the SPFx source project to add an extension + form customizer [#1410](https://github.com/pnp/sp-dev-fx-controls-react/issues/1410)
+- `AdaptiveCardDesignerHost`: Add Sample Data to Adaptive Card Editor [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)
+- `AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)
+- `ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)
+- `ComboBoxListItemPicker`: Update ComboBoxListItemPicker.md [#1470](https://github.com/pnp/sp-dev-fx-controls-react/pull/1470)
+
+### Fixes
+
+- `DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)
+- `ProgressStepsIndicator`: Fix missing image reference in Progress Steps Indicator [#1409](https://github.com/pnp/sp-dev-fx-controls-react/issues/1409)
+- `DynamicForm`: Dynamicform is hanging on the loading screen if the list has a single value list lookup field [#1393](https://github.com/pnp/sp-dev-fx-controls-react/issues/1393)
+- `ListView`: Update ListView control docs to use a valid field for the icon [#1398](https://github.com/pnp/sp-dev-fx-controls-react/pull/1398)
+- `Accordion`: Fixing Accordion control documentation image issue [#1408](https://github.com/pnp/sp-dev-fx-controls-react/issues/1408)
+- `DynamicForm`: Cannot read properties of undefined (reading 'startsWith') when submitting the form with `contentType={undefined]` [#1431](https://github.com/pnp/sp-dev-fx-controls-react/issues/1431)
+- `FilePicker`: Fix site breadcrumb navigation [#1368](https://github.com/pnp/sp-dev-fx-controls-react/issues/1368)
+- `DynamicForm`: Initialize changedValue with defaultValue [#1454](https://github.com/pnp/sp-dev-fx-controls-react/pull/1454)
+- `DynamicForm`: Fix image path [#1455](https://github.com/pnp/sp-dev-fx-controls-react/pull/1455)
+- `DynamicForm`: Check empty array and trasform it in set as null [#1456](https://github.com/pnp/sp-dev-fx-controls-react/pull/1456)
+- `FilePicker`: Fix site browser resize [#1457](https://github.com/pnp/sp-dev-fx-controls-react/pull/1457)
+- `ModernTaxonomyPicker` Fix - Show ModernTaxonomyPicker label in correct form [#1459](https://github.com/pnp/sp-dev-fx-controls-react/pull/1459)
+- `DynamicForm`: Update DynamicForm.tsx [#1462](https://github.com/pnp/sp-dev-fx-controls-react/pull/1462)
+- `FilePicker`: Fix breadcrumb nav [#1458](https://github.com/pnp/sp-dev-fx-controls-react/pull/1458)
+- `DateTimePicker`: Date picker locale [#1464](https://github.com/pnp/sp-dev-fx-controls-react/issues/1464)
+- `DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)
+- `RichText`: Use theme colors - fix dark mode [#669](https://github.com/pnp/sp-dev-fx-controls-react/issues/669)
+- `FilePicker`: Use theme colors - fix dark mode [#1132](https://github.com/pnp/sp-dev-fx-controls-react/issues/1132)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [araver](https://github.com/araver), [Brian Krainer Jacobsen](https://github.com/krainer), [Edin Kapic](https://github.com/ekapic), [Eduard Paul](https://github.com/eduardpaul), [Fredrik Ekström](https://github.com/FredrikEkstroem), [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [Hugo Bernier](https://github.com/hugoabernier), [João Mendes](https://github.com/joaojmendes), [mgitta](https://github.com/mgitta), [Michaël Maillot](https://github.com/michaelmaillot), [mikezimm](https://github.com/mikezimm), [Nikolay Belykh](https://github.com/nbelyh), [Patrik Hellgren](https://github.com/patrikhellgren), [Rico van de Ven](https://github.com/RicoNL), [Samuele Furnari](https://github.com/SamueleFurnari), [sambilfinger](https://github.com/sambilfinger), [wuxiaojun514](https://github.com/wuxiaojun514).
+
+## 3.12.0
+
+### Enhancements
+
+- `DynamicForm`: support cretion of document sets [#1335](https://github.com/pnp/sp-dev-fx-controls-react/pull/1335)
+- `SitePicker`: add HubId to filter to only sites within a hub [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)
+- SharePoint Framework v1.16.0 support
+
+### Fixes
+
+- `FilePicker`: panel causes SharePoint to Throttle due to infinite loop fetching files [#1325](https://github.com/pnp/sp-dev-fx-controls-react/issues/1325)
+- `ContentTypePicker`: problem importing control [#1337](https://github.com/pnp/sp-dev-fx-controls-react/issues/1337)
+- `FilePicker`: correctly request data from provided `webAbsoluteUrl` [#1340](https://github.com/pnp/sp-dev-fx-controls-react/pull/1340)
+- `ModernTaxonomyPicker`: Fix infinite loop [#1342](https://github.com/pnp/sp-dev-fx-controls-react/pull/1342)
+- `ModernTaxonomyPicker`: improve display of the term path to align with out of the box control UI [#1343](https://github.com/pnp/sp-dev-fx-controls-react/pull/1343)
+- `FolderPicker`: get folders of other site url instead of the current context/site [#1305](https://github.com/pnp/sp-dev-fx-controls-react/issues/1305)
+- `FilePicker`: browsing Site / Doclibs loops and floods SPO Service with requests and causes http 429 [#1350](https://github.com/pnp/sp-dev-fx-controls-react/issues/1350)
+- Remove invalid comma in tsconfig.json [#1341](https://github.com/pnp/sp-dev-fx-controls-react/pull/1341)
+- `TaxonomyPicker`: control allows select deprecated/untaggable terms when typing [#1093](https://github.com/pnp/sp-dev-fx-controls-react/issues/1093)
+- `SitePicker`: prevent infinite loop when fetching sites [#1346](https://github.com/pnp/sp-dev-fx-controls-react/issues/1346)
+- `DynamicForm`: `AnchorId` of `TaxonomyField` gets ignored and the whole tree is rendered [#1310](https://github.com/pnp/sp-dev-fx-controls-react/issues/1310)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Carlos Marins Jr](https://github.com/kadu-jr), [Edin Kapic](https://github.com/ekapic), [Josef Benda](https://github.com/SmarterJB), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Nizar Grindi](https://github.com/NizarGrindi), [Paolo Pialorsi](https://github.com/PaoloPia), [Patrik Hellgren](https://github.com/patrikhellgren), [Peter Paul Kirschner](https://github.com/petkir), [Victor Romanov](https://github.com/VRomanovTau).
+
 ## 3.11.0
+
+### New control(s)
+
+- `ProgressStepsIndicator`: New control that shows a progress of steps. [#1322](https://github.com/pnp/sp-dev-fx-controls-react/pull/1322)
 
 ### Enhancements
 
@@ -10,6 +101,7 @@
 - `DynamicForm`: Support for hidden fields [#1307](https://github.com/pnp/sp-dev-fx-controls-react/pull/1307/)
 - `Placeholder`: Documentation example to only display in edit mode [#1280](https://github.com/pnp/sp-dev-fx-controls-react/issues/1280)
 - `DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)
+- `DynamicForm`: FirstDayOfWeek in DatePickers from webs regional settings [#1317](https://github.com/pnp/sp-dev-fx-controls-react/issues/1317)
 
 ### Fixes
 
@@ -20,10 +112,11 @@
 - `TaxonomyPicker`: Does not show term set labels in Version 3.10.0 [#1299](https://github.com/pnp/sp-dev-fx-controls-react/issues/1299)
 - `TaxonomyPicker`: Dynamic form select term not working [#1303](https://github.com/pnp/sp-dev-fx-controls-react/issues/1303)
 - `DynamicForm`: Check if hiddenfields property is undefined [#1314](https://github.com/pnp/sp-dev-fx-controls-react/pull/1314)
+- `DynamicForm`: PeoplePicker preselects wrong user if PrincipalType allows groups [#1315](https://github.com/pnp/sp-dev-fx-controls-react/issues/1315)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Hilton Giesenow](https://github.com/HiltonGiesenow), [Jake Stanger](https://github.com/JakeStanger), [Jasey Waegebaert](https://github.com/Jwaegebaert), [João Mendes](https://github.com/joaojmendes), [Josef Benda](https://github.com/SmarterJB), [Mark Bice](https://github.com/mbice), [Paolo Pialorsi](https://github.com/PaoloPia), [Victor Romanov](https://github.com/VRomanovTau).
 
 ## 3.10.0
 

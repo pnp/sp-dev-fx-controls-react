@@ -1,6 +1,9 @@
-import { BaseComponentContext } from "@microsoft/sp-component-base";
-import { ContentTypesOrderBy } from "../../services/ISPService";
-import { ISPContentType } from "../../common/SPEntities";
+import { IDropdownStyles } from 'office-ui-fabric-react';
+
+import { BaseComponentContext } from '@microsoft/sp-component-base';
+
+import { ISPContentType } from '../../common/SPEntities';
+import { ContentTypesOrderBy } from '../../services/ISPService';
 
 export interface IContentTypePickerProps {
   /**
@@ -74,6 +77,8 @@ export interface IContentTypePickerProps {
    * Whether or not to show a blank option. Default false. Works only when multiSelect is false.
    */
   showBlankOption?: boolean;
+  /** styles prop **/
+  styles?: IDropdownStyles;
 }
 
 export interface IContentTypePickerState {

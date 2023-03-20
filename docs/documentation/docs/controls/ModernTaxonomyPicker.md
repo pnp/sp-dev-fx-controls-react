@@ -163,7 +163,7 @@ The ModernTaxonomyPicker control can be configured with the following properties
 | label | string | yes | Text displayed above the Taxonomy Picker. |
 | disabled | boolean | no | Specify if the control should be disabled. Default value is false. |
 | context | BaseComponentContext | yes | Context of the current web part or extension. |
-| initialValues | ITermInfo[] | no | Defines the terms selected by default. ITermInfo comes from PnP/PnPjs and can be imported with <br/>```import { ITermInfo } from '@pnp/sp/taxonomy';``` |
+| initialValues | ITermInfo[] | no | Defines the terms selected by default. This will only set the initial values and cannot be used to use the control in a controlled way. ITermInfo comes from PnP/PnPjs and can be imported with <br/>```import { ITermInfo } from '@pnp/sp/taxonomy';``` |
 | allowMultipleSelections | boolean | no | Defines if the user can select only one or multiple terms. Default value is false. |
 | termSetId | string | yes | The Id of the TermSet that you would like the Taxonomy Picker to select terms from. |
 | onChange | function | no |  Captures the event of when the terms in the picker has changed. |

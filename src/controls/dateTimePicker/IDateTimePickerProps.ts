@@ -1,4 +1,4 @@
-import { DayOfWeek } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DayOfWeek, FirstWeekOfYear } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
 import { TimeConvention, DateConvention } from './DateTimeConventions';
 import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
@@ -25,6 +25,10 @@ export interface IDateTimePickerProps {
    */
   formatDate?: (date: Date) => string;
   /**
+  * Optional method to parse the text input value to date, it is only useful when allowTextInput is set to true
+  */
+  parseDateFromString?: (dateStr: string) => Date;
+  /**
    * Defines the date convention to use. The default is date and time.
    */
   dateConvention?: DateConvention;
@@ -36,6 +40,10 @@ export interface IDateTimePickerProps {
    * Specify the first day of the week for your locale.
    */
   firstDayOfWeek?: DayOfWeek;
+  /**
+  * Defines when the first week of the year should start, FirstWeekOfYear.FirstDay, FirstWeekOfYear.FirstFullWeek or FirstWeekOfYear.FirstFourDayWeek are the possible values
+  */
+  firstWeekOfYear?: FirstWeekOfYear
   /**
    * An UNIQUE key indicates the identity of this control
    */

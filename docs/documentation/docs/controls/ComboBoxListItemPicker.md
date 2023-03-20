@@ -40,7 +40,7 @@ import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPic
                         columnInternalName='Title'
                         keyColumnInternalName='Id'
                         filter="Title eq 'SPFx'"
-                        defaultSelectedItems=[{Id: 2, Title:"Test"}]
+                        defaultSelectedItems={[{Id: 2, Title:"Test"}]}
                         onSelectedItem={this.onSelectedItem}
                         webUrl={this.context.pageContext.web.absoluteUrl}
                         spHttpClient={this.context.spHttpClient} />
@@ -112,7 +112,7 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | keyColumnInternalName | string | no | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
 | webUrl | string | yes | Url to web hosting list |
 | spHttpClient | RequestClient | yes | Any implementation of PnPJS RequestClient |
-| listId | string | yes | Guid of the list. |
+| listId | string | yes | Guid or title of the list. |
 | onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
 | defaultSelectedItems | any[] | no | Initial items that have already been selected and should appear in the people picker. Support objects and Ids only |

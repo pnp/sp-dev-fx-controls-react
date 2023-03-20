@@ -359,7 +359,7 @@ define([], () => {
   "DynamicFormLoading": "Laden...",
   "DynamicFormPleaseWait": "Bitte warten...",
   "DynamicFormRequiredErrorMessage": "Sie können dieses Feld nicht leer lassen.",
-  "DynamicFormTermPanelTitle": "Laufzeit auswählen",
+  "DynamicFormTermPanelTitle": "Knoten auswählen",
   "DynamicFormEnterURLPlaceholder": "Geben Sie eine URL ein",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativtext",
   "customDisplayName": "Verwenden Sie diesen Speicherort:",
@@ -370,7 +370,8 @@ define([], () => {
   "OrgAssetsLinkLabel": "Ihre Organisation",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Geben Sie einen Begriff ein, den Sie markieren möchten",
-  "ModernTaxonomyPickerTreeTitle": "Wählen Sie ein Tag aus",
+  "ModernTaxonomyPickerTreeTitleSingle": "Wählen Sie ein Tag aus",
+  "ModernTaxonomyPickerTreeTitleMulti": "Wählen Sie einen oder mehrere Tags aus",
   "ModernTaxonomyPickerAddTagButtonTooltip": "Tag hinzufügen",
   "ModernTaxonomyPickerApplyButtonText": "Verwenden",
   "ModernTaxonomyPickerCancelButtonText": "Abbrechen",
@@ -379,10 +380,19 @@ define([], () => {
   "ModernTaxonomyPickerPanelCloseButtonText": "Schließen",
   "ModernTaxonomyPickerNoResultsFound": "Keine Ergebnisse gefunden",
   "ModernTaxonomyPickerSuggestionInLabel": "In",
+
   "ModernAudioPlay": "Abspielen",
   "ModernAudioPause": "Pause",
   "ModernAudioIncVol": "Lauter",
   "ModernAudioDecVol": "Leiser",
-  "ModernAudioMute": "Ton aus"
+  "ModernAudioMute": "Ton aus",
+
+  "ProgressStepsIndicatorNoSteps": "No steps",
+
+  "UploadFilesButtonLabel": "Add",
+  "UpLoadFilesDeleteButtonLabel": "Delete",
+  "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
+  "UpLoadFilesSelectAllLabel": "Select all",
+  "UploadFilesUploadButtonLabel": "Upload",
 };
 });

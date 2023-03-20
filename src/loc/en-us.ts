@@ -390,7 +390,8 @@ define([], () => {
     OrgAssetsLinkLabel: "Your organization",
 
     ModernTaxonomyPickerDefaultPlaceHolder: "Type term to tag",
-    ModernTaxonomyPickerTreeTitle: "Select one or more tags",
+    ModernTaxonomyPickerTreeTitleSingle: "Select a tag",
+    ModernTaxonomyPickerTreeTitleMulti: "Select one or more tags",
     ModernTaxonomyPickerAddTagButtonTooltip: "Add Tag",
     ModernTaxonomyPickerApplyButtonText: "Apply",
     ModernTaxonomyPickerCancelButtonText: "Cancel",
@@ -405,6 +406,14 @@ define([], () => {
     ModernAudioIncVol: "Increase Volume",
     ModernAudioDecVol: "Decrease Volume",
     ModernAudioMute: "Mute",
+
     ProgressStepsIndicatorNoSteps: "No steps",
+
+    UploadFilesButtonLabel: "Add",
+    UpLoadFilesDeleteButtonLabel: "Delete",
+    UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
+    UpLoadFilesSelectAllLabel: "Select all",
+    UploadFilesUploadButtonLabel: "Upload",
+
 };
 });
