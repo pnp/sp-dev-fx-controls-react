@@ -4,7 +4,9 @@
       "version": "3.14.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)"
+        ],
         "fixes": [
           "`DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)",
           "`ListItemAttachments`: FIX: Cannot download items when it has a ilegal character [#1484](https://github.com/pnp/sp-dev-fx-controls-react/issues/1484)",
@@ -16,6 +18,7 @@
       },
       "contributions": [
         "[Chad Eiserloh](https://github.com/c-eiser13)",
+        "[Dan Toft](https://github.com/Tanddant)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Martin Lingstuyl](https://github.com/martinlingstuyl)",
         "[Sergio Villalta](https://github.com/6gal6ler6)",
