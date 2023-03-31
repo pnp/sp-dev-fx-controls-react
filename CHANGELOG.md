@@ -8,10 +8,12 @@
 - `ListItemAttachments`: FIX: Cannot download items when it has a ilegal character [#1484](https://github.com/pnp/sp-dev-fx-controls-react/issues/1484)
 - `FilePicker`: FIX:  recent tab empty until re-render [#1482](https://github.com/pnp/sp-dev-fx-controls-react/issues/1482)
 - `Dynamic Form`: Adds onListItemLoaded handler to DynamicForm [#1472](https://github.com/pnp/sp-dev-fx-controls-react/issues/1472)
+- `Dynamic Form`: Fix for the DynamicForm when a defaultValue is null and the code try to call the split method on it. [#1486](https://github.com/pnp/sp-dev-fx-controls-react/pull/1486)
+- `DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Sergio Villalta](https://github.com/6gal6ler6).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB).
 
 ## 3.13.0
 
