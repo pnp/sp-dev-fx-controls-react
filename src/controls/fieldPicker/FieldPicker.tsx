@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';

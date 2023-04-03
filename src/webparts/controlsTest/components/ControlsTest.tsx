@@ -192,6 +192,7 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
+import { FieldPicker } from "../../../FieldPicker";
 
 // Used to render document card
 /**
@@ -2429,6 +2430,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </EnhancedThemeProvider>
         </div>
 
+        <div>
+          <h3>Field Picker</h3>
+          <FieldPicker 
+            context={this.props.context}
+            label={'Select a field'}
+            listId={'07890a2b-10f1-47dd-a899-cc60ca461d51'}
+            onSelectionChanged={(fields) => {              
+              console.log(fields);
+            }}
+          />
+        </div>
       </div>
     );
   }
