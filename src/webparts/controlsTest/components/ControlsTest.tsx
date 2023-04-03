@@ -192,6 +192,7 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
+import { IFileInfo } from "@pnp/sp/files";
 
 // Used to render document card
 /**
@@ -746,6 +747,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
 
+  }
+
+  private _onFileClick = (file: IFileInfo): void => {
+    console.log('file click', file);
   }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
@@ -1791,6 +1796,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
             orderby='Name' //'ListItemAllFields/Created'
             orderAscending={true}
+            showFiles={true}
+            onFileClick={this._onFileClick}
           />
         </div>
 
