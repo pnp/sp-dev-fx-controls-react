@@ -1516,6 +1516,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker 
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {              
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
               <div>Icon Picker</div>
               <div>
                 <IconPicker
@@ -2428,18 +2440,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               />
             </Stack>
           </EnhancedThemeProvider>
-        </div>
-
-        <div>
-          <h3>Field Picker</h3>
-          <FieldPicker 
-            context={this.props.context}
-            label={'Select a field'}
-            listId={'07890a2b-10f1-47dd-a899-cc60ca461d51'}
-            onSelectionChanged={(fields) => {              
-              console.log(fields);
-            }}
-          />
         </div>
       </div>
     );
