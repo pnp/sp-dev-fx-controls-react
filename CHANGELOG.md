@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- SharePoint Framework v1.17.1 support
 
 ### Fixes
 
