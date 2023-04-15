@@ -5,7 +5,8 @@
       "changes": {
         "new": [],
         "enhancements": [
-          "`DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)"
+          "`DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)",
+          "SharePoint Framework v1.17.1 support"
         ],
         "fixes": [
           "`DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)",
