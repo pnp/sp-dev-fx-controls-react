@@ -528,7 +528,7 @@ export default class SPService implements ISPService {
   public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -548,7 +548,7 @@ export default class SPService implements ISPService {
   public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -578,10 +578,10 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getTaxonomyFieldInternalName(listId: string, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getTaxonomyFieldInternalName(listId: string, fieldId: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getByInternalNameOrTitle('${fieldName}_0')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/Fields/getById(guid'${fieldId}')/InternalName?@listId=guid'${encodeURIComponent(listId)}'`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -645,7 +645,7 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMtadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;

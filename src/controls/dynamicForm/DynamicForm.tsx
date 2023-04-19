@@ -104,7 +104,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
   }
 
   //trigger when the user submits the form.
-  private onSubmitClick = async (): Promise<void> => {
+    private onSubmitClick = async (): Promise<void> => {
     const {
       listId,
       listItemId,
@@ -130,6 +130,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           else if (val.newValue === '') {
             val.fieldDefaultValue = '';
+            shouldBeReturnBack = true;
+          }
+          else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
+            val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
         }
@@ -197,7 +201,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
           }
           else if (fieldType === 'Thumbnail') {
             if (additionalData) {
-              const uploadedImage = await this.uplaodImage(additionalData);
+              const uploadedImage = await this.uploadImage(additionalData);
               objects[columnInternalName] = JSON.stringify({
                 type: 'thumbnail',
                 fileName: uploadedImage.Name,
@@ -354,7 +358,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
-    const { listId, listItemId, disabledFields, respectETag } = this.props;
+    const { listId, listItemId, disabledFields, respectETag, onListItemLoaded } = this.props;
     let contentTypeId = this.props.contentTypeId;
     try {
       const spList = await sp.web.lists.getById(listId);
@@ -362,6 +366,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       let etag: string | undefined = undefined;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
         item = await spList.items.getById(listItemId).get();
+
+        if (onListItemLoaded) {
+          await onListItemLoaded(item);
+        }
 
         if (respectETag !== false) {
           etag = item['odata.etag'];
@@ -426,7 +434,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
               defaultValue = [];
             }
           } else if (fieldType === "TaxonomyFieldTypeMulti") {
-            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.InternalName, this.webURL);
+            const response = await this._spService.getTaxonomyFieldInternalName(this.props.listId, field.TextField, this.webURL);
             hiddenName = response.value;
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;
@@ -437,7 +445,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
               defaultValue = selectedTags;
             } else {
-              if (defaultValue !== "") {
+              if (defaultValue !== null && defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach(element => {
                   if (element.indexOf('|') !== -1)
                     selectedTags.push({ key: element.split('|')[1], name: element.split('|')[0] });
@@ -453,7 +461,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;
             if (item !== null) {
-              const response = await this._spService.getSingleManagedMtadataLabel(listId, listItemId, field.InternalName);
+              const response = await this._spService.getSingleManagedMetadataLabel(listId, listItemId, field.InternalName);
               if (response) {
                 selectedTags.push({ key: response.TermID, name: response.Label });
                 defaultValue = selectedTags;
@@ -545,7 +553,7 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
     }
   }
 
-  private uplaodImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
+  private uploadImage = async (file: IFilePickerResult): Promise<IUploadImageResult> => {
     const {
       listId,
       listItemId

@@ -38,6 +38,8 @@ The `DynamicForm` can be configured with the following properties:
 | contentTypeId | string | no | content type ID |
 | disabled | boolean | no | Allows form to be disabled. Default value is `false`|
 | disabledFields | string[] | no | InternalName of fields that should be disabled. Default value is `false`|
+| hiddenFields | string[] | no | InternalName of fields that should be hidden. Default value is `false`|
+| onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
 | onSubmitted | (listItemData: any, listItem?: IItem) => void | no | Method that returns listItem data JSON object and PnPJS list item instance (`IItem`). |
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
