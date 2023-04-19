@@ -751,7 +751,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   /**
  * Selected View change event
- * @param Views
+ * @param newValue
  */
   private onViewPickerChange = (newValue: string | string[]) => {
     console.log("newView:", newValue);
@@ -1531,7 +1531,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
                   placeholder={'Select list view(s)'}
                   orderBy={2}
-                  onPropertyChange={this.onViewPickerChange.bind(this)} />
+                  onViewPickerPropertyChange={this.onViewPickerChange.bind(this)} />
               </div>
 
               <div>Icon Picker</div>

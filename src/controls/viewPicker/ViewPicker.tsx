@@ -135,6 +135,9 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
             selectedKey: this.selectedKey,
             results: this.options
         });
+
+        //Callback to the parent webpart
+        this.props.onViewPickerPropertyChange(this.selectedKey);
     }
 
     /**

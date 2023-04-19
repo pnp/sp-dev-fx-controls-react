@@ -81,11 +81,11 @@ export interface IViewPickerProps {
 
 
   /**
-   * Defines a onPropertyChange function to raise when the selected value changed.
-   * Normally this function must be always defined with the 'this.onPropertyChange'
+   * Defines a change function to raise when the selected value changed.
+   * Normally this function must be always defined with the 'this.onViewPickerPropertyChange'
    * method of the web part object.
    */
-  onPropertyChange? : (newValue: string | string[]) => void;
+  onViewPickerPropertyChange : (newValue: string | string[]) => void;
   /**
     * Callback that is called before the dropdown is populated
     */
