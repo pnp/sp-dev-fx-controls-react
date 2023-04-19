@@ -1,6 +1,15 @@
 {
   "versions": [
     {
+      "version": "3.15.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": []
+      },
+      "contributions": []
+    },
+    {
       "version": "3.14.0",
       "changes": {
         "new": [],
