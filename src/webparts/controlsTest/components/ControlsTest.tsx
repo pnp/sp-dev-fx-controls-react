@@ -192,7 +192,6 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
-import { ViewPicker } from "../../../controls/viewPicker";
 
 // Used to render document card
 /**
@@ -747,14 +746,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
 
-  }
-
-  /**
- * Selected View change event
- * @param Views
- */
-  private onViewPickerChange = (newValue: string | string[]) => {
-    console.log("newView:", newValue);
   }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
@@ -1524,16 +1515,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
-
-              <div className="ms-font-m">View picker tester:
-                <ViewPicker context={this.props.context}
-                  label="Select view(s)"
-                  listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
-                  placeholder={'Select list view(s)'}
-                  orderBy={2}
-                  onPropertyChange={this.onViewPickerChange.bind(this)} />
-              </div>
-
               <div>Icon Picker</div>
               <div>
                 <IconPicker
