@@ -18,7 +18,7 @@ export class AdaptiveCardHostContainer extends HostContainer {
   private type: AdaptiveCardHostContainerType;
 
   public constructor(name: string, type: AdaptiveCardHostContainerType) {
-    super(name);
+    super(name, "");
     this.type = type;
 
     registerFluentUIElements(this.elementsRegistry);
