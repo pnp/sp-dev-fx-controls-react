@@ -4,6 +4,7 @@ import * as strings from 'ControlStrings';
 
 export const IMG_SUPPORTED_EXTENSIONS = ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg";
 
+import * as _ from '@microsoft/sp-lodash-subset';
 /**
  * Helper with general methods to simplify some routines
  */
@@ -405,3 +406,15 @@ export function dateToNumber(date: string | number | Date): number {
 
   return dateObj.getTime();
 }
+
+export const setPropertyValue = (properties: any, targetProperty: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  if (!properties) {
+    return;
+  }
+  if (targetProperty.indexOf('.') === -1) { // simple prop
+    properties[targetProperty] = value;
+  }
+  else {
+    _.set(properties, targetProperty, value);
+  }
+};
