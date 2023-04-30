@@ -66,7 +66,8 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
                type={PanelType.large}
                headerText={this.props.panelHeader}
                onOuterClick={()=>{ /* no-op; */}}
-               className={`FieldCollectionData__panel ${this.props.panelClassName || ""}`}>
+               className={`FieldCollectionData__panel ${this.props.panelClassName || ""}`}
+               { ...this.props.panelProps ?? {}} >
           {
             this.props.panelDescription && (
               <p className="FieldCollectionData__panel__description">{this.props.panelDescription}</p>

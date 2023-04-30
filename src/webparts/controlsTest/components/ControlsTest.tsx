@@ -1833,7 +1833,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
-
+            panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
