@@ -389,6 +389,10 @@ declare interface IControlStrings {
   ModernAudioIncVol: string;
   ModernAudioDecVol: string;
   ModernAudioMute: string;
+
+  //TermSetNavigationb Control
+  TermSetNavigationNoTerms: string;
+  TermSertNaviagtionErrorMessage: string;
 }
 
 declare interface IDateTimeStrings {
@@ -416,6 +420,9 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+
+
+
 
 }
 

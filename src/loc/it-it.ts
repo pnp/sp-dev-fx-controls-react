@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Salvare",
   "Cancel": "Annulla",
   "SiteBreadcrumbLabel": "Pangrattato del sito web",

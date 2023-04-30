@@ -380,6 +380,8 @@ define([], () => {
     ModernTaxonomyPickerPanelCloseButtonText: "Fechar",
     ModernTaxonomyPickerNoResultsFound: "Nenhum resultado encontrado",
     ModernTaxonomyPickerSuggestionInLabel: "Em",
+TermSertNaviagtionErrorMessage: "TermSet not found",
+TermSetNavigationNoTerms: "No terms defined",
 
     "ModernAudioPlay": "Play",
     "ModernAudioPause": "Pause",
