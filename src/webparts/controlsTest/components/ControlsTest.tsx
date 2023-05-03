@@ -192,6 +192,7 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
+import { FieldPicker } from "../../../FieldPicker";
 
 // Used to render document card
 /**
@@ -1515,6 +1516,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker 
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {              
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
               <div>Icon Picker</div>
               <div>
                 <IconPicker
@@ -2428,7 +2441,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </EnhancedThemeProvider>
         </div>
-
       </div>
     );
   }
