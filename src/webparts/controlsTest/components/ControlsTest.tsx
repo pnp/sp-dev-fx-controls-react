@@ -193,6 +193,7 @@ import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
+import { FieldPicker } from "../../../FieldPicker";
 
 // Used to render document card
 /**
@@ -1520,6 +1521,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker 
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {              
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
               <div>Icon Picker</div>
               <div>
                 <IconPicker
@@ -1840,7 +1853,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
-
+            panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
@@ -2435,7 +2448,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </EnhancedThemeProvider>
         </div>
-
       </div>
     );
   }

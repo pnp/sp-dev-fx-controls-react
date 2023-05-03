@@ -83,7 +83,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     let results: IFolder[] = [];
     try {
       const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
+      //folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
       const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
       results = foldersResult.filter(f => f.Name !== "Forms");
     } catch (error) {

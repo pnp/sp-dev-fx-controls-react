@@ -214,7 +214,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
     let { breadcrumbItems } = this.state;
     let breadcrumbClickedItemIndx = 0;
     // Site node clicked
-    if (node.libraryData == null && node.folderData == null) {
+    if (!node.libraryData && !node.folderData) {
       this.setState({
         libraryAbsolutePath: undefined,
         libraryPath: undefined,
@@ -222,13 +222,13 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
       });
     }
     // Check if it is folder item
-    else if (node.folderData != null) {
+    else if (node.folderData) {
       this._handleOpenFolder(node.folderData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.folderData && item.folderData.absoluteUrl === node.key);
     }
     // Check if it is library node
-    else if (node.libraryData != null) {
+    else if (node.libraryData) {
       this._handleOpenLibrary(node.libraryData, false);
       // select which node has been clicked
       breadcrumbClickedItemIndx = findIndex(breadcrumbItems, item => item.libraryData && item.libraryData.serverRelativeUrl === node.key);

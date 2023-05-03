@@ -41,11 +41,10 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
 
     this._selection = null;
 
-
     this.state = {
       isLoading: true,
       results: [],
-      filePickerResults: []
+      filePickerResults: [],
     };
   }
 
@@ -123,11 +122,16 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
      */
   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
     if (itemIndex === 0) {
-      this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
-      this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
-      this._rowHeight = this._columnWidth;
+      if (surfaceRect.width === 0) {
+        //surfaceRect.width is 0 on load of this component, passing some default values so it renders.
+        this._columnCount = 9;
+        this._columnWidth = 161;
+      } else {
+        this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
+        this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
+      }
+      this._rowHeight = this._columnWidth;      
     }
-
     return this._columnCount * ROWS_PER_PAGE;
   }
 
@@ -157,7 +161,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   /**
    * Renders a grid list containing results
    */
-  private _renderGridList = (): JSX.Element => {
+  private _renderGridList = (): JSX.Element => {    
     return <span className={styles.recentGridList} role="grid">
       <FocusZone>
         <SelectionZone selection={this._selection}
@@ -168,9 +172,9 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
           <List
             ref={this._linkElement}
             items={this.state.results}
-            onRenderCell={this._onRenderCell}
+            onRenderCell={this._onRenderCell}          
             getItemCountForPage={this._getItemCountForPage}
-            getPageHeight={this._getPageHeight}
+            getPageHeight={this._getPageHeight}            
             renderedWindowsAhead={4}
           />
         </SelectionZone>
