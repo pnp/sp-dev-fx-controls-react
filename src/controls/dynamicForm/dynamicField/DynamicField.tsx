@@ -585,7 +585,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       changedValue
     } = this.state;
-    return (changedValue === undefined || changedValue === '' || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+    return (changedValue === undefined || changedValue === ''|| changedValue === null || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
   }
 
   private isEmptyArray(value): boolean {
