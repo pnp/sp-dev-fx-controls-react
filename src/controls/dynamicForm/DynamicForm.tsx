@@ -15,6 +15,7 @@ import { DateFormat, FieldChangeAdditionalData, IDynamicFieldProps } from './dyn
 import styles from './DynamicForm.module.scss';
 import { IDynamicFormProps } from './IDynamicFormProps';
 import { IDynamicFormState } from './IDynamicFormState';
+import { Dialog, DialogFooter, DialogType } from 'office-ui-fabric-react/lib/Dialog';
 
 import '@pnp/sp/lists';
 import '@pnp/sp/content-types';
@@ -52,7 +53,8 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
     // Initialize state
     this.state = {
-      fieldCollection: []
+      fieldCollection: [],
+      isValidationErrorDialogOpen: false,
     };
     // Get SPService Factory
     this._spService = this.props.webAbsoluteUrl ? new SPservice(this.props.context, this.props.webAbsoluteUrl) : new SPservice(this.props.context);
@@ -99,6 +101,27 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
 
           </div>
         }
+        <Dialog
+          hidden={!this.state.isValidationErrorDialogOpen}
+          onDismiss={this.closeValidationErrorDialog}
+          dialogContentProps={{
+            type: DialogType.normal,
+            title: this.getValidationErrorTitle(),
+            showCloseButton: true
+          }}
+          modalProps={{
+            className: styles.validationErrorDialog,
+            isBlocking: true,
+            containerClassName: 'ms-dialogMainOverride'
+          }}
+        >
+          {this.getValidationErrorMessage()}
+          <DialogFooter className={styles.actions}>
+            <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
+              <DefaultButton className={styles.action} onClick={this.closeValidationErrorDialog} text={strings.CloseButton} />
+            </div>
+          </DialogFooter>
+        </Dialog>
       </div>
     );
   }
@@ -139,7 +162,10 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
         }
       });
       if (shouldBeReturnBack) {
-        this.setState({ fieldCollection: fields });
+        this.setState({
+          fieldCollection: fields,
+          isValidationErrorDialogOpen: this.props.validationErrorDialogProps !== undefined && this.props.validationErrorDialogProps.showDialogOnValidationError === true
+        });
         return;
       }
 
@@ -614,5 +640,39 @@ export class DynamicForm extends React.Component<IDynamicFormProps, IDynamicForm
       console.dir(error);
       return Promise.reject(error);
     }
+  }
+
+  private closeValidationErrorDialog = (): void => {
+    this.setState({
+      isValidationErrorDialogOpen: false
+    });
+  }
+
+  private getValidationErrorTitle = (): string => {
+    let errorTitle = strings.DynamicFormDialogValidationErrorTitle;
+    const validationDialogProps = this.props.validationErrorDialogProps;
+
+    if (validationDialogProps !== undefined
+      && validationDialogProps.customTitle !== undefined
+      && validationDialogProps.customTitle.length > 0) {
+
+      errorTitle = validationDialogProps.customTitle;
+    }
+
+    return errorTitle;
+  }
+
+  private getValidationErrorMessage = (): string => {
+    let errorMessage = strings.DynamicFormDialogValidationErrorMessage;
+    const validationDialogProps = this.props.validationErrorDialogProps;
+
+    if (validationDialogProps !== undefined
+      && validationDialogProps.customMessage !== undefined
+      && validationDialogProps.customMessage.length > 0) {
+
+      errorMessage = validationDialogProps.customMessage;
+    }
+
+    return errorMessage;
   }
 }

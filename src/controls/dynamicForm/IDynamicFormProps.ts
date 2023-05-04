@@ -2,6 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IItem } from '@pnp/sp/items';
 import React from 'react';
 import { IDynamicFieldProps } from './dynamicField';
+import { IValidationErrorDialogProps } from './IValidationErrorDialogProps';
 
 export interface IDynamicFormProps {
   /**
@@ -76,4 +77,9 @@ export interface IDynamicFormProps {
    * Specifies if ETag should be respected when updating the item. Default - true
    */
   respectETag?: boolean;
+
+  /**
+   * Specify validation error dialog properties
+   */
+  validationErrorDialogProps?: IValidationErrorDialogProps;
 }

@@ -362,6 +362,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Seleziona termine",
   "DynamicFormEnterURLPlaceholder": "Immettere un URL",
   "DynamicFormEnterDescriptionPlaceholder": "Testo alternativo",
+  "DynamicFormDialogValidationErrorTitle": "Errori di validazione",
+  "DynamicFormDialogValidationErrorMessage": "Sono presenti degli errori di validazione, si prega di correggerli prima di salvare le modifiche.",
   "customDisplayName": "Utilizzare questa posizione:",
   "ListItemCommentDIalogDeleteSubText": "Eliminare questo commento?",
   "ListItemCommentsDialogDeleteTitle": "Conferma eliminazione commento",

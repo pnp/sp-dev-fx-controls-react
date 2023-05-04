@@ -362,6 +362,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Selectați Termen",
   "DynamicFormEnterURLPlaceholder": "Introduceți o adresă URL",
   "DynamicFormEnterDescriptionPlaceholder": "Text alternativ",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Utilizați această locație:",
   "ListItemCommentDIalogDeleteSubText": "Sunteți sigur că doriți să ștergeți acest comentariu?",
   "ListItemCommentsDialogDeleteTitle": "Confirmați ștergerea comentariului",
