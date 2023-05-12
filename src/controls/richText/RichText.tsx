@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import 'react-quill/dist/quill.snow.css';
 import RichTextPropertyPane from './RichTextPropertyPane';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill, { Quill as ReactQuillInstance } from 'react-quill';
+import type { Quill } from 'quill';
 import styles from './RichText.module.scss';
 import { IRichTextProps, IRichTextState } from './RichText.types';
 import { Guid } from '@microsoft/sp-core-library';
@@ -481,12 +482,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     };
 
     // Remove fonts and set Segoe UI as the main font
-    const font = Quill.import('formats/font');
+    const font = ReactQuillInstance.import('formats/font');
     font.whitelist = ['Segoe UI'];
-    Quill.register(font, true);
+    ReactQuillInstance.register(font, true);
 
     // Set headers and add blockquote capability
-    const header = Quill.import('formats/header');
+    const header = ReactQuillInstance.import('formats/header');
     header.tagName = [
       'H1',
       'H2',
@@ -495,10 +496,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'H5',
       'H6',
       'blockquote'];
-    Quill.register(header, true);
+    ReactQuillInstance.register(header, true);
 
     // Add the SharePoint font sizes
-    const sizeClass = Quill.import('formats/size');
+    const sizeClass = ReactQuillInstance.import('formats/size');
     sizeClass.whitelist = [
       'small',
       'medium',
@@ -510,7 +511,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'xxxlarge',
       'xxlargeplus',
       'super'];
-    Quill.register(sizeClass, true);
+    ReactQuillInstance.register(sizeClass, true);
 
     return (
       <div ref={(ref) => { this._wrapperRef = ref; }} className={css(styles.richtext && this.state.editing ? 'ql-active' : null, this.props.className || null) || null}>
