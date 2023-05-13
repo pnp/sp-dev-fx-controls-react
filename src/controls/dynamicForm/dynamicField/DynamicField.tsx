@@ -116,7 +116,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <TextField
             defaultValue={defaultValue}
             placeholder={placeholder}
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
@@ -136,7 +136,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <RichText
               placeholder={placeholder}
               value={value}
-              className={styles.feildDisplay}
+              className={styles.fieldDisplay}
               onChange={(newText) => { this.onChange(newText); return newText; }}
               isEditMode={disabled} />
             {descriptionEl}
@@ -152,7 +152,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <TextField
               defaultValue={defaultValue}
               placeholder={placeholder}
-              className={styles.feildDisplay}
+              className={styles.fieldDisplay}
               multiline
               onChange={(e, newText) => { this.onChange(newText); }}
               disabled={disabled}
@@ -222,7 +222,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             listId={lookupListID}
             defaultSelectedItems={defaultValue}
             columnInternalName={lookupField}
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={1}
@@ -244,7 +244,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             listId={lookupListID}
             defaultSelectedItems={defaultValue}
             columnInternalName={lookupField}
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={100}
@@ -264,7 +264,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <TextField
             defaultValue={defaultValue}
             placeholder={placeholder}
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             type={"Number"}
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
@@ -282,7 +282,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <TextField
             defaultValue={defaultValue}
             placeholder={placeholder}
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             type={"Currency"}
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
@@ -331,7 +331,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             {labelEl}
           </div>
           <Toggle
-            className={styles.feildDisplay}
+            className={styles.fieldDisplay}
             defaultChecked={defaultValue}
             onText={strings.Yes}
             offText={strings.No}
@@ -351,7 +351,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <PeoplePicker
             placeholder={placeholder}
             defaultSelectedUsers={defaultValue}
-            peoplePickerCntrlclassName={styles.feildDisplay}
+            peoplePickerCntrlclassName={styles.fieldDisplay}
             context={context}
             personSelectionLimit={1}
             showtooltip={false}
@@ -374,7 +374,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <PeoplePicker
             placeholder={placeholder}
             defaultSelectedUsers={defaultValue}
-            peoplePickerCntrlclassName={styles.feildDisplay}
+            peoplePickerCntrlclassName={styles.fieldDisplay}
             context={context}
             personSelectionLimit={30}
             showtooltip={false}
@@ -399,14 +399,14 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             <TextField
               defaultValue={defaultValue ? defaultValue.Url : ''}
               placeholder={strings.DynamicFormEnterURLPlaceholder}
-              className={styles.feildDisplayNoPadding}
+              className={styles.fieldDisplayNoPadding}
               onChange={(e, newText) => { this.onURLChange(newText, true); }}
               disabled={disabled}
               onBlur={this.onBlur} />
             <TextField
               defaultValue={defaultValue ? defaultValue.Description : ''}
               placeholder={strings.DynamicFormEnterDescriptionPlaceholder}
-              className={styles.feildDisplayNoPadding}
+              className={styles.fieldDisplayNoPadding}
               onChange={(e, newText) => { this.onURLChange(newText, false); }}
               disabled={disabled} />
           </Stack>
@@ -433,7 +433,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             />}
             <div className={styles.thumbnailFieldButtons}>
               <FilePicker
-                buttonClassName={styles.feildDisplay}
+                buttonClassName={styles.fieldDisplay}
                 //bingAPIKey={bingAPIKey}
                 accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
                 buttonLabel={hasImage ? undefined : 'Add an image'}

@@ -46,7 +46,7 @@
 	margin-right: 8px;
 }
 
-.feildDisplayNoPadding {
+.fieldDisplayNoPadding {
   display: inline-block;
 	vertical-align: top;
 	width: 100%;
@@ -55,8 +55,8 @@
 	outline: 0;
 }
 
-.feildDisplay {
-	@extend .feildDisplayNoPadding;
+.fieldDisplay {
+	@extend .fieldDisplayNoPadding;
 	padding: 6px 0 0px 0;
 	//border: 2px solid;
   //border-color: "[theme:white, default:#ffffff]";
