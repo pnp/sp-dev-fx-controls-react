@@ -6,7 +6,8 @@
         "new": [],
         "enhancements": [
           "`FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)",
-          "`Dynamic Form`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)"
+          "`Dynamic Form`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)",
+          "`Localization`: Fixes to italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)"
         ],
         "fixes": [
           "`FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)"
