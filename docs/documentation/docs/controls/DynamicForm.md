@@ -48,3 +48,11 @@ The `DynamicForm` can be configured with the following properties:
 | webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
 | fieldOverrides | {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement\<IDynamicFieldProps\>}} | no | Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render. |
 | respectEtag | boolean | no | Specifies if the form should respect the ETag of the item. Default - `true` |
+| validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
+
+## Validation Error Dialog Properties `IValidationErrorDialogProps`
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| showDialogOnValidationError | boolean | no | Specifies if the dialog should be shown on validation error. Default - `false` |
+| customTitle | string | no | Specifies a custom title to be shown in the validation dialog. Default - empty |
+| customMessage | string | no | Specifies a custom message to be shown in the validation dialog. Default - empty |
