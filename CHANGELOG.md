@@ -2,13 +2,19 @@
 
 ## 3.15.0
 
+### Enhancements
+
+- `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
+- `Dynamic Form`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+- `Localization`: Fixes to italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
+
 ### Fixes
 
 - `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
 
 ### Contributors
 
-Special thanks to our contributor: [Andreas Omayrat](https://github.com/andreasomayrat).
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam).
 
 ## 3.14.0
 
