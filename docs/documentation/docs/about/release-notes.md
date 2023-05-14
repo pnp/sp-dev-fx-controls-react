@@ -2,13 +2,21 @@
 
 ## 3.15.0
 
+### Fixes
+
+- `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
+
+### Contributors
+
+Special thanks to our contributor: [Andreas Omayrat](https://github.com/andreasomayrat).
+
 ## 3.14.0
 
 ### Enhancements
 
-- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale [#1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
 - SharePoint Framework v1.17.1 support
-- `FieldCollectionData`: Adds panelProps property to FieldCollectionData #1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
+- `FieldCollectionData`: Adds panelProps property to FieldCollectionData [#1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
 
 ### Fixes
 
