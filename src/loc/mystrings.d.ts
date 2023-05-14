@@ -5,14 +5,14 @@ declare interface IControlStrings {
   UpLoadFilesDeleteButtonLabel: string;
   UpLoadFilesSelectAllLabel: string;
 
-  ProgressStepsIndicatorNoSteps:string;
+  ProgressStepsIndicatorNoSteps: string;
   ListItemCommentsLabel: string;
   ListItemCommentsNoCommentsLabel: string;
   ListItemCommentDIalogDeleteSubText: string;
   ListItemCommentsDialogDeleteTitle: string;
 
-  MyTeamsMessageError:string;
-  MyTeamsNoTeamsMessage:string;
+  MyTeamsMessageError: string;
+  MyTeamsNoTeamsMessage: string;
   MyTeamsLoadingMessage: string;
   MyTeamsTeamChannelPublicMessage: string;
   MyTeamsTeamChannelTypeMessage: string;
@@ -366,9 +366,11 @@ declare interface IControlStrings {
   DynamicFormTermPanelTitle: string;
   DynamicFormEnterURLPlaceholder: string;
   DynamicFormEnterDescriptionPlaceholder: string;
+  DynamicFormDialogValidationErrorTitle: string;
+  DynamicFormDialogValidationErrorMessage: string;
 
   // Location picker
-  customDisplayName:string;
+  customDisplayName: string;
 
   // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;

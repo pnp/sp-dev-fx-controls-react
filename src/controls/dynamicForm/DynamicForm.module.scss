@@ -113,3 +113,37 @@
 .thumbnailFieldButtons {
   display: flex;
 }
+
+.validationErrorDialog {
+  :global {
+    .ms-Dialog-main {
+      max-width: 540px;
+      width: 540px;
+    }
+  }
+
+  .actions {
+    position: relative;
+    width: 100%;
+    min-height: 24px;
+    line-height: 24px;
+    margin-top: 20px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    font-size: 0px;
+
+    .actionsRight {
+      text-align: right;
+      margin-right: -4px;
+      font-size: 0px;
+
+      .action {
+        margin-top: 0px;
+        margin-right: 4px;
+        margin-bottom: 0px;
+        margin-left: 4px;
+      }
+    }
+  }
+}

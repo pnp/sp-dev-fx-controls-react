@@ -362,6 +362,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Vybrať výraz",
   "DynamicFormEnterURLPlaceholder": "Zadanie adresy URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatívny text",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Použite toto umiestnenie:",
   "ListItemCommentDIalogDeleteSubText": "Naozaj chcete odstrániť tento komentár?",
   "ListItemCommentsDialogDeleteTitle": "Potvrdiť odstránenie komentára",

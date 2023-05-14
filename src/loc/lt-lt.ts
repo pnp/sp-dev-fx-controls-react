@@ -362,6 +362,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Pasirinkti terminą",
   "DynamicFormEnterURLPlaceholder": "Įveskite URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatyvus tekstas",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Naudokite šią vietą:",
   "ListItemCommentDIalogDeleteSubText": "Ar tikrai norite panaikinti šį komentarą?",
   "ListItemCommentsDialogDeleteTitle": "Patvirtinti naikinimo komentarą",

@@ -362,6 +362,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Wybierz termin",
   "DynamicFormEnterURLPlaceholder": "Wpisz adres URL",
   "DynamicFormEnterDescriptionPlaceholder": "Tekst alternatywny",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Użyj tej lokalizacji:",
   "ListItemCommentDIalogDeleteSubText": "Czy na pewno chcesz usunąć ten komentarz?",
   "ListItemCommentsDialogDeleteTitle": "Potwierdź Usuń komentarz",
