@@ -5,7 +5,8 @@
 ### Enhancements
 
 - `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
-- `Dynamic Form`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+- `DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+- `DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)
 
 ### Fixes
 
