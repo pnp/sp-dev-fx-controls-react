@@ -2,13 +2,28 @@
 
 ## 3.15.0
 
+### Enhancements
+
+- `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
+- `Dynamic Form`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+
+### Fixes
+
+- `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
+- `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
+- `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Sharepointalist](https://github.com/sharepointalist).
+
 ## 3.14.0
 
 ### Enhancements
 
-- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale [#1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
 - SharePoint Framework v1.17.1 support
-- `FieldCollectionData`: Adds panelProps property to FieldCollectionData #1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
+- `FieldCollectionData`: Adds panelProps property to FieldCollectionData [#1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
 
 ### Fixes
 

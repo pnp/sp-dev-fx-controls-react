@@ -20,7 +20,7 @@ export const useUtils = () => {
       const first = text.substring(0, length / 2);
       const last = text.substring(text.length - length / 2, text.length);
 
-      const newText = first.trimEnd() + "..." + last.trimStart();
+      const newText = first.trim() + "..." + last.trim();
       return newText;
     }
     return text;

@@ -18,7 +18,7 @@ export class AdaptiveCardHostContainer extends HostContainer {
   private type: AdaptiveCardHostContainerType;
 
   public constructor(name: string, type: AdaptiveCardHostContainerType) {
-    super(name, "");
+    super(name);
     this.type = type;
 
     registerFluentUIElements(this.elementsRegistry);
@@ -30,6 +30,10 @@ export class AdaptiveCardHostContainer extends HostContainer {
     container.className = "adaptiveCardHostContainer";
     container.appendChild(this.cardHost);
     hostElement.appendChild(container);
+  }
+
+  public getCurrentStyleSheet(): string {
+    return "";
   }
 
   public getHostConfig(): HostConfig {

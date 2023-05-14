@@ -9,6 +9,7 @@ import { NewFolder } from "../NewFolder";
 import { Breadcrumb, IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
 import * as telemetry from '../../../common/telemetry';
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { IFileInfo } from '@pnp/sp/files';
 
 
 export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolderExplorerState> {
@@ -16,6 +17,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
   private _spService: IFolderExplorerService;
   private _allLibraries: IFolder[] = [];
   private _allFolders: IFolder[] = [];
+  private _allFiles: IFileInfo[] = [];
 
   constructor(props: IFolderExplorerProps) {
     super(props);
@@ -27,6 +29,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
     this.state = {
       foldersLoading: false,
       folders: [],
+      files: [],
       selectedFolder: null,
     };
   }
@@ -65,7 +68,7 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
               {this.state.folders.map((folder) => {
                 return (
                   <div className={styles.libraryItem} key={folder.ServerRelativeUrl} onClick={() => { this._getFolders(folder).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ }); }}>
-                    <Icon iconName="FabricFolder" className={styles.folderIcon} />
+                    <Icon iconName="FabricFolder" className={styles.icon} />
                     {folder.Name}
                   </div>
                 );
@@ -78,6 +81,19 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
               siteAbsoluteUrl={siteAbsoluteUrl}
               selectedFolder={this.state.selectedFolder}
               addSubFolder={this._addSubFolder} />
+          }
+          {this.state.files.length > 0 &&
+            <div>
+              {this.state.files.map((file) => {
+                return (
+                  <div className={styles.libraryItem} key={file.ServerRelativeUrl} onClick={() => this.props.onFileClick ? this.props.onFileClick(file) : null} >
+                    <Icon iconName="FileASPX" className={styles.icon} />
+                    {file.Name}
+                  </div>
+                );
+              })
+              }
+            </div>
           }
         </div>
       </div>
@@ -169,8 +185,11 @@ export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolde
         const orderBy = this.props.orderby !== undefined ? this.props.orderby : 'Name';
         const orderAscending = this.props.orderAscending !== undefined ? this.props.orderAscending : true;
         this._allFolders = await this._spService.GetFolders(siteAbsoluteUrl, folder.ServerRelativeUrl, orderBy, orderAscending);
+        if (this.props.showFiles) {
+          this._allFiles = await this._spService.GetFiles(siteAbsoluteUrl, folder.ServerRelativeUrl, orderBy, orderAscending);
+        }
       }
-      this.setState({ folders: this._allFolders, selectedFolder: folder, foldersLoading: false });
+      this.setState({ folders: this._allFolders, files: this._allFiles, selectedFolder: folder, foldersLoading: false });
 
       // callback to parent component
       this.props.onSelect(folder);
