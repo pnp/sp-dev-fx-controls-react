@@ -364,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Vælg ord",
   "DynamicFormEnterURLPlaceholder": "Angiv en URL-adresse",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativ tekst",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Brug denne placering:",
   "ListItemCommentDIalogDeleteSubText": "Er du sikker på, at du vil slette denne kommentar?",
   "ListItemCommentsDialogDeleteTitle": "Bekræft kommentar til sletning",

@@ -364,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "选择期限",
   "DynamicFormEnterURLPlaceholder": "输入网址",
   "DynamicFormEnterDescriptionPlaceholder": "备选文本",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "使用此位置：",
   "ListItemCommentDIalogDeleteSubText": "您确定要删除此评论吗？",
   "ListItemCommentsDialogDeleteTitle": "确认删除注释",

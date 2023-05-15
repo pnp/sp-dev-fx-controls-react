@@ -364,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "用語の選択",
   "DynamicFormEnterURLPlaceholder": "URL を入力する",
   "DynamicFormEnterDescriptionPlaceholder": "代替テキスト",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "この場所を使用します。",
   "ListItemCommentDIalogDeleteSubText": "このコメントを削除しますか?",
   "ListItemCommentsDialogDeleteTitle": "コメントの削除の確認",

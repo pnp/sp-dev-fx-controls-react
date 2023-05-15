@@ -1,20 +1,28 @@
-import * as React from 'react';
-
-import { debounce } from 'lodash';
+import * as React from "react";
+import {
+  IBasePickerStyles,
+  ITag,
+} from "office-ui-fabric-react/lib/Pickers";
+import {
+  Stack,
+} from "office-ui-fabric-react/lib/Stack";
+import {
+  Text,
+} from "office-ui-fabric-react/lib/Text";
+import {
+  TextField
+} from "office-ui-fabric-react/lib/TextField";
 import {
   DefaultButton,
-  PrimaryButton,
-} from 'office-ui-fabric-react/lib/components/Button';
-import {
-  DialogFooter,
-  DialogType,
-  IDialogContentProps,
-} from 'office-ui-fabric-react/lib/components/Dialog';
+  PrimaryButton
+} from "office-ui-fabric-react/lib/components/Button";
+import { DialogType, DialogFooter, IDialogContentProps } from "office-ui-fabric-react/lib/components/Dialog";
+import { IModalProps } from "office-ui-fabric-react/lib/Modal";
 import {
   Dropdown,
-  IDropdownOption,
-} from 'office-ui-fabric-react/lib/components/Dropdown';
-import { Link } from 'office-ui-fabric-react/lib/components/Link';
+  IDropdownOption
+} from "office-ui-fabric-react/lib/components/Dropdown";
+import { Link } from "office-ui-fabric-react/lib/components/Link";
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -22,200 +30,170 @@ import {
   DocumentCardPreview,
   DocumentCardTitle,
   DocumentCardType,
-  IDocumentCardPreviewProps,
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import { IModalProps } from 'office-ui-fabric-react/lib/Modal';
-import { PanelType } from 'office-ui-fabric-react/lib/Panel';
+  IDocumentCardPreviewProps
+} from "office-ui-fabric-react/lib/DocumentCard";
+import { IIconProps } from "office-ui-fabric-react/lib/Icon";
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { ImageFit } from "office-ui-fabric-react/lib/Image";
+import { PanelType } from "office-ui-fabric-react/lib/Panel";
+import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
+import { ISize } from "office-ui-fabric-react/lib/Utilities";
 import {
-  IBasePickerStyles,
-  ITag,
-} from 'office-ui-fabric-react/lib/Pickers';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { mergeStyles } from 'office-ui-fabric-react/lib/Styling';
-import { Text } from 'office-ui-fabric-react/lib/Text';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { ISize } from 'office-ui-fabric-react/lib/Utilities';
-import {
-  DayOfWeek,
-} from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+  DayOfWeek
+} from "office-ui-fabric-react/lib/utilities/dateValues/DateValues";
 
 import {
   ExclamationCircleIcon,
   Flex,
   ScreenshareIcon,
   ShareGenericIcon,
-  Text as NorthstarText,
-} from '@fluentui/react-northstar';
-import { TermStore } from '@microsoft/microsoft-graph-types';
+  Text as NorthstarText
+} from "@fluentui/react-northstar";
 import {
   DisplayMode,
   Environment,
   EnvironmentType,
-  Guid,
-} from '@microsoft/sp-core-library';
-import { SPHttpClient } from '@microsoft/sp-http';
-import { SPPermission } from '@microsoft/sp-page-context';
+  Guid
+} from "@microsoft/sp-core-library";
 
-import { AdaptiveCardDesignerHost } from '../../../AdaptiveCardDesignerHost';
-import {
-  Action,
-  AdaptiveCardHost,
-  AdaptiveCardHostThemeType,
-  CardElement,
-  CardObjectRegistry,
-  HostCapabilities,
-} from '../../../AdaptiveCardHost';
-import { AnimatedDialog } from '../../../AnimatedDialog';
+import { SPHttpClient } from "@microsoft/sp-http";
+import { SPPermission } from "@microsoft/sp-page-context";
+
+import { Accordion } from "../../../controls/accordion";
 import {
   ChartControl,
-  ChartType,
-} from '../../../ChartControl';
+  ChartType
+} from "../../../ChartControl";
 import {
   Accordion as AccessibleAccordion,
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
-  AccordionItemPanel,
-} from '../../../controls/accessibleAccordion';
-import { Accordion } from '../../../controls/accordion';
+  AccordionItemPanel
+} from "../../../controls/accessibleAccordion";
 import {
   Carousel,
   CarouselButtonsDisplay,
   CarouselButtonsLocation,
   CarouselIndicatorsDisplay,
-  CarouselIndicatorShape,
-} from '../../../controls/carousel';
+  CarouselIndicatorShape
+} from "../../../controls/carousel";
 import {
   Dashboard,
-  WidgetSize,
-} from '../../../controls/dashboard';
+  WidgetSize
+} from "../../../controls/dashboard";
 import {
-  TimeDisplayControlType,
-} from '../../../controls/dateTimePicker/TimeDisplayControlType';
-import { DynamicForm } from '../../../controls/dynamicForm';
-import { IconPicker } from '../../../controls/iconPicker';
+  TimeDisplayControlType
+} from "../../../controls/dateTimePicker/TimeDisplayControlType";
+import { IconPicker } from "../../../controls/iconPicker";
 import {
-  ComboBoxListItemPicker,
-} from '../../../controls/listItemPicker/ComboBoxListItemPicker';
+  ComboBoxListItemPicker
+} from "../../../controls/listItemPicker/ComboBoxListItemPicker";
+import { Pagination } from "../../../controls/pagination";
+import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
 import {
-  ILocationPickerItem,
-} from '../../../controls/locationPicker/ILocationPicker';
-import {
-  LocationPicker,
-} from '../../../controls/locationPicker/LocationPicker';
-import {
-  ModernTaxonomyPicker,
-} from '../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker';
-import { MyTeams } from '../../../controls/MyTeams';
-import { Pagination } from '../../../controls/pagination';
-import { SitePicker } from '../../../controls/sitePicker/SitePicker';
-import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
-import {
-  TermActionsDisplayMode,
-} from '../../../controls/taxonomyPicker/termActions';
-import { Toolbar } from '../../../controls/toolbar';
+  TermActionsDisplayMode
+} from "../../../controls/taxonomyPicker/termActions";
+import { Toolbar } from "../../../controls/toolbar";
 import {
   ITreeItem,
   TreeItemActionsDisplayMode,
   TreeView,
-  TreeViewSelectionMode,
-} from '../../../controls/treeView';
-import { UploadFiles } from '../../../controls/uploadFiles';
-import {
-  VariantThemeProvider,
-  VariantType,
-} from '../../../controls/variantThemeProvider';
+  TreeViewSelectionMode
+} from "../../../controls/treeView";
 import {
   DateConvention,
   DateTimePicker,
-  TimeConvention,
-} from '../../../DateTimePicker';
-import { DragDropFiles } from '../../../DragDropFiles';
-import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
+  TimeConvention
+} from "../../../DateTimePicker";
 import {
   CustomCollectionFieldType,
-  FieldCollectionData,
-} from '../../../FieldCollectionData';
+  FieldCollectionData
+} from "../../../FieldCollectionData";
 import {
   FilePicker,
-  IFilePickerResult,
-} from '../../../FilePicker';
+  IFilePickerResult
+} from "../../../FilePicker";
 import {
   ApplicationType,
   FileTypeIcon,
   IconType,
-  ImageSize,
-} from '../../../FileTypeIcon';
+  ImageSize
+} from "../../../FileTypeIcon";
 import {
   FolderExplorer,
   IBreadcrumbItem,
-  IFolder,
-} from '../../../FolderExplorer';
-import { FolderPicker } from '../../../FolderPicker';
-import { GridLayout } from '../../../GridLayout';
-import { IFrameDialog } from '../../../IFrameDialog';
-import { IFramePanel } from '../../../IFramePanel';
-import { ListItemPicker } from '../../../ListItemPicker';
-import { ListPicker } from '../../../ListPicker';
+  IFolder
+} from "../../../FolderExplorer";
+import { FolderPicker } from "../../../FolderPicker";
+import { GridLayout } from "../../../GridLayout";
+import { IFrameDialog } from "../../../IFrameDialog";
+import { IFramePanel } from "../../../IFramePanel";
+import { ListItemPicker } from "../../../ListItemPicker";
+import { ListPicker } from "../../../ListPicker";
 import {
   GroupOrder,
   IGrouping,
   IViewField,
   ListView,
-  SelectionMode,
-} from '../../../ListView';
+  SelectionMode
+} from "../../../ListView";
 import {
   Map,
-  MapType,
-} from '../../../Map';
-import {
-  ModernAudio,
-  ModernAudioLabelPosition,
-} from '../../../ModernAudio';
-import {
-  SPTaxonomyService,
-  TaxonomyTree,
-} from '../../../ModernTaxonomyPicker';
+  MapType
+} from "../../../Map";
 import {
   PeoplePicker,
-  PrincipalType,
-} from '../../../PeoplePicker';
-import { Placeholder } from '../../../Placeholder';
+  PrincipalType
+} from "../../../PeoplePicker";
+import { Placeholder } from "../../../Placeholder";
 import {
   IProgressAction,
-  Progress,
-} from '../../../Progress';
-import { RichText } from '../../../RichText';
+  Progress
+} from "../../../Progress";
+import { RichText } from "../../../RichText";
 import {
   PermissionLevel,
-  SecurityTrimmedControl,
-} from '../../../SecurityTrimmedControl';
-import { ITerm } from '../../../services/ISPTermStorePickerService';
+  SecurityTrimmedControl
+} from "../../../SecurityTrimmedControl";
+import { ITerm } from "../../../services/ISPTermStorePickerService";
 import SPTermStorePickerService
-  from '../../../services/SPTermStorePickerService';
-import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
+  from "../../../services/SPTermStorePickerService";
+import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
 import {
   IPickerTerms,
   TaxonomyPicker,
-  UpdateType,
-} from '../../../TaxonomyPicker';
-import { TeamChannelPicker } from '../../../TeamChannelPicker';
-import { TeamPicker } from '../../../TeamPicker';
-import { TermSetNavigation } from '../../../TermSetNavigation';
-import { WebPartTitle } from '../../../WebPartTitle';
-import styles from './ControlsTest.module.scss';
-import {
-  ControlsTestEnhancedThemeProvider,
-  ControlsTestEnhancedThemeProviderFunctionComponent,
-} from './ControlsTestEnhancedThemeProvider';
+  UpdateType
+} from "../../../TaxonomyPicker";
+import { WebPartTitle } from "../../../WebPartTitle";
+import { AnimatedDialog } from "../../../AnimatedDialog";
+import styles from "./ControlsTest.module.scss";
 import {
   IControlsTestProps,
-  IControlsTestState,
-} from './IControlsTestProps';
-import { TestControl } from './TestControl';
+  IControlsTestState
+} from "./IControlsTestProps";
+import { MyTeams } from "../../../controls/MyTeams";
+import { TeamPicker } from "../../../TeamPicker";
+import { TeamChannelPicker } from "../../../TeamChannelPicker";
+import { DragDropFiles } from "../../../DragDropFiles";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
+import { DynamicForm } from '../../../controls/dynamicForm';
+import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
+import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
+import { debounce } from "lodash";
+import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
+import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
+import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
+import { Label } from "office-ui-fabric-react/lib/Label";
+import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
+import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
+import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
+import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
+import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
+import { TestControl } from "./TestControl";
+import { UploadFiles } from "../../../controls/uploadFiles";
+import { IFileInfo } from "@pnp/sp/files";
+import { FieldPicker } from "../../../FieldPicker";
 
 // Used to render document card
 /**
@@ -772,6 +750,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   }
 
+  private _onFileClick = (file: IFileInfo): void => {
+    console.log('file click', file);
+  }
+
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
@@ -810,16 +792,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       </DocumentCard>
     </div>;
   }
-
-
-
-  private onSelect =  (selected: TermStore.Term) => {
-    console.log(selected);
-  } ;
-
- private onSelectedTermAction =  (selected: TermStore.Term, option:string) => {
-    console.log(selected, option);
-  } ;
 
   /**
    * Renders the component
@@ -956,42 +928,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
     return (
       <div className={styles.controlsTest}>
-
-
-<Stack>
-        <TermSetNavigation
-          context={this.props.context as any}
-          themeVariant={this.props.themeVariant}
-          termSetId={"289180a0-4a8b-4f08-ae6e-ea3fb1b669e2"}
-          showContextMenu={true}
-          contextMenuItems={[
-            {
-              key: "add",
-              text: "Add",
-              iconProps: { iconName: "add" },
-            },
-            {
-              key: "adit",
-              text: "Edit",
-              iconProps: { iconName: "Edit" },
-            },
-            {
-              key: "remove",
-              text: "Remove",
-              iconProps: { iconName: "delete" },
-            },
-          ]}
-          onSelected={this.onSelect}
-          onSelectedTermAction={this.onSelectedTermAction}
-        />
-      </Stack>
-
-
-
-
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          <DynamicForm context={this.props.context} listId={"db25f5f6-5ae1-4fa0-a2f7-e093d3d463ae"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+          <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+        </div>
+        <div className="ms-font-m">
+          {/* Change the list Id and list item id before you start to test this control */}
+          {/* This DynamicForm display a dialog message when validation fails */}
+          <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{showDialogOnValidationError: true}}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
@@ -1582,6 +1526,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
               <div>Icon Picker</div>
               <div>
                 <IconPicker
@@ -1858,6 +1814,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
             orderby='Name' //'ListItemAllFields/Created'
             orderAscending={true}
+            showFiles={true}
+            onFileClick={this._onFileClick}
           />
         </div>
 
@@ -1900,7 +1858,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
-
+            panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
@@ -2478,7 +2436,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>Monaco Editor</h3>
-          <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
+          <TestControl context={this.props.context} />
         </div>
         <div>
           <h3>Upload Files</h3>
@@ -2495,7 +2453,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </EnhancedThemeProvider>
         </div>
-
       </div>
     );
   }

@@ -373,5 +373,14 @@ TermSetNavigationNoTerms: "No terms defined",
     "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
     "UpLoadFilesSelectAllLabel": "Select all",
     "UploadFilesUploadButtonLabel": "Upload",
+
+  "DynamicFormLoading": "Loading...",
+  "DynamicFormPleaseWait": "Please wait...",
+  "DynamicFormRequiredErrorMessage": "You can't leave this blank.",
+  "DynamicFormTermPanelTitle": "Select Term",
+  "DynamicFormEnterURLPlaceholder": "Enter a URL",
+  "DynamicFormEnterDescriptionPlaceholder": "Alternative text",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   };
 });

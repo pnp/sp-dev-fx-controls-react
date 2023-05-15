@@ -1,10 +1,30 @@
 # Releases
 
+## 3.15.0
+
+### Enhancements
+
+- `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
+- `DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+- `DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)
+
+### Fixes
+
+- `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
+- `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
+- `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Sharepointalist](https://github.com/sharepointalist).
+
 ## 3.14.0
 
 ### Enhancements
 
-- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale [#1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- SharePoint Framework v1.17.1 support
+- `FieldCollectionData`: Adds panelProps property to FieldCollectionData [#1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
 
 ### Fixes
 
@@ -15,10 +35,12 @@
 - `Dynamic Form`: Fix for the DynamicForm when a defaultValue is null and the code try to call the split method on it. [#1486](https://github.com/pnp/sp-dev-fx-controls-react/pull/1486)
 - `DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)
 - `FolderExplorer`: FolderExplorer doesn't explore folders with ' in the name [#1491](https://github.com/pnp/sp-dev-fx-controls-react/issues/1491)
+- `DynamicForm`: cannot display lookup value when the source field is not Title [#1511](https://github.com/pnp/sp-dev-fx-controls-react/issues/1511)
+- `FilePicker`:Features/1478 filepicker tiles view [#1521](https://github.com/pnp/sp-dev-fx-controls-react/issues/1521)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB), [Victor Romanov](https://github.com/VRomanovTau), [wuxiaojun514](https://github.com/wuxiaojun514), [Zied FEHRI](https://github.com/ziedfehri).
 
 ## 3.13.0
 

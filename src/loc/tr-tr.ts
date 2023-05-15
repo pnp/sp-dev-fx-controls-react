@@ -364,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Terim Seç",
   "DynamicFormEnterURLPlaceholder": "URL girme",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatif metin",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Bu konumu kullan:",
   "ListItemCommentDIalogDeleteSubText": "Bu yorumu silmek istediğinizden emin misiniz?",
   "ListItemCommentsDialogDeleteTitle": "Açıklamayı Sil'i Onayla",

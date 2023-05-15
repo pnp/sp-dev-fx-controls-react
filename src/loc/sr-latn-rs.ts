@@ -364,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Izaberi termin",
   "DynamicFormEnterURLPlaceholder": "Unesite URL adresu",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativni tekst",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Koristi ovu lokaciju:",
   "ListItemCommentDIalogDeleteSubText": "Želite li zaista da izbrišete ovaj komentar?",
   "ListItemCommentsDialogDeleteTitle": "Potvrda brisanja komentara",
