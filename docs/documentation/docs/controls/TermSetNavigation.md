@@ -1,6 +1,6 @@
 # TermSetNavigation
 
-This control allows you to navigatite a nd select  a Term from a TermSet.  You can also configure context menu for a term to execute specific action .
+This control allows you to navigate and select a Term from a TermSet.  You can also configure a context menu for a term to execute a specific action.
 
  
 
