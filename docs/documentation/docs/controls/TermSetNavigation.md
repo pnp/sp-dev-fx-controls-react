@@ -92,4 +92,4 @@ at least : , TermStore.Read.All, TermStore.ReadWrite.All,
 
 please use M365Cli or PnP Powershell to add these permissions.
 
-![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TermSertNavigation)
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TermSetNavigation)
