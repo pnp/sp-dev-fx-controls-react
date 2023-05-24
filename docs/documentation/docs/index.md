@@ -106,6 +106,7 @@ The following controls are currently available:
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [TeamChannelPicker](./controls/TeamChannelPicker) (Team Channel Picker)
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
+- [TermSetNavigation](./controls/TermSetNavigation) (Team Picker)
 - [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
 - [UploadFiles](./controls/UploadFiles) (Upload Files)
