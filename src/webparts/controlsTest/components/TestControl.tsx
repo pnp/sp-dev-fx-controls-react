@@ -1,35 +1,56 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Stack } from '@fluentui/react';
+import { TermStore } from '@microsoft/microsoft-graph-types';
+import { WebPartContext } from '@microsoft/sp-webpart-base';
 
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-
-import { MonacoEditor } from "../../../controls/monacoEditor";
+import { TermSetNavigation } from '../../../TermSetNavigation';
 
 export interface ITestControlProps {
   context: WebPartContext;
+  themeVariant: any;
 }
 
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const defaultValue  = React.useMemo(() => {
-    return (['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'));
-  } , []);
+  const { themeVariant, context } = props;
 
-  const onValueChange = React.useCallback( (newValue: string, validationErrors: string[]): void => {
-  console.log(newValue);
- } , []);
+  const onSelect = React.useCallback((selected: TermStore.Term) => {
+    console.log(selected);
+  }, []);
+
+  const onSelectedTermAction = React.useCallback((selected: TermStore.Term, option:string) => {
+    console.log(selected, option);
+  }, []);
 
   return (
     <>
       <Stack>
-        <MonacoEditor
-          value={defaultValue}
-          showMiniMap={true}
-          onValueChange={onValueChange}
-          language={"javascript"}
-          showLineNumbers={true}
+        <TermSetNavigation
+          context={context}
+          themeVariant={themeVariant}
+          termSetId={"289180a0-4a8b-4f08-ae6e-ea3fb1b669e2"}
+          showContextMenu={true}
+          contextMenuItems={[
+            {
+              key: "add",
+              text: "Add",
+              iconProps: { iconName: "add" },
+            },
+            {
+              key: "adit",
+              text: "Edit",
+              iconProps: { iconName: "Edit" },
+            },
+            {
+              key: "remove",
+              text: "Remove",
+              iconProps: { iconName: "delete" },
+            },
+          ]}
+          onSelected={onSelect}
+          onSelectedTermAction={onSelectedTermAction}
         />
       </Stack>
     </>

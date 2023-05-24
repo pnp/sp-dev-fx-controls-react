@@ -357,6 +357,8 @@ define([], () => {
     ModernTaxonomyPickerPanelCloseButtonText: "Itxi",
     ModernTaxonomyPickerNoResultsFound: "Ez da emaitzarik aurkitu",
     ModernTaxonomyPickerSuggestionInLabel: "in",
+TermSertNaviagtionErrorMessage: "TermSet not found",
+TermSetNavigationNoTerms: "No terms defined",
 
     "ModernAudioPlay": "Play",
     "ModernAudioPause": "Pause",

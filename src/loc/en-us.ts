@@ -410,6 +410,8 @@ define([], () => {
     ModernAudioMute: "Mute",
 
     ProgressStepsIndicatorNoSteps: "No steps",
+TermSertNaviagtionErrorMessage: "TermSet not found",
+TermSetNavigationNoTerms: "No terms defined",
 
     UploadFilesButtonLabel: "Add",
     UpLoadFilesDeleteButtonLabel: "Delete",
