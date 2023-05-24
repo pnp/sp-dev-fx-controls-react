@@ -2436,7 +2436,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>Monaco Editor</h3>
-          <TestControl context={this.props.context} />
+          <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
         <div>
           <h3>Upload Files</h3>

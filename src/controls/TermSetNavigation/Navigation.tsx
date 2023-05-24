@@ -14,7 +14,7 @@ import {
 import { Separator } from '@fluentui/react/lib/Separator';
 import { Spinner } from '@fluentui/react/lib/Spinner';
 import { Stack } from '@fluentui/react/lib/Stack';
-import { Text } from '@fluentui/react/lib/text';
+import { Text } from '@fluentui/react/lib/Text';
 import { IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { TermStore } from '@microsoft/microsoft-graph-types';
 
