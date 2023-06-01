@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fluentui/react": "7.199.1",
+    "@fluentui/react": "^7.199.1",
     "@fluentui/react-file-type-icons": "^8.8.3",
     "@fluentui/react-hooks": "^8.2.6",
     "@fluentui/react-icons": "^2.0.200",
