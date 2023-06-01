@@ -1,6 +1,6 @@
 {
   "@microsoft/generator-sharepoint": {
-    "version": "1.16.1",
+    "version": "1.17.2",
     "libraryName": "sp-dev-fx-controls-react",
     "libraryId": "92b1e52c-a5fa-490a-bcf4-76080f39442c",
     "environment": "spo",
@@ -11,7 +11,7 @@
     "nodeVersion": "16.15.0",
     "sdksVersions": {
       "@microsoft/microsoft-graph-client": "3.0.2",
-      "@microsoft/teams-js": "2.4.1"
+      "@microsoft/teams-js": "2.9.1"
     },
     "componentType": "extension",
     "extensionType": "ApplicationCustomizer"
