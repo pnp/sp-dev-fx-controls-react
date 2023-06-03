@@ -6,7 +6,7 @@ import { IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 /**
  * Enum for specifying how the views should be sorted
  */
-export enum PropertyFieldViewPickerOrderBy {
+export enum orderBy {
     Id = 1,
     Title
 }
@@ -23,13 +23,7 @@ export interface IViewPickerProps {
   className?: string;
 
   /**
-   * Custom Field will start to validate after users stop typing for `deferredValidationTime` milliseconds.
-   * Default value is 200.
-   */
-  deferredValidationTime?: number;
-
-  /**
-   * Whether the property pane field is enabled or not.
+   * Whether the view control is enabled or not.
    */
   disabled?: boolean;
 
@@ -39,12 +33,12 @@ export interface IViewPickerProps {
   filter?: string;
 
   /**
-   * Property field label displayed on top
+   * Specifies the text describing the ViewPicker
    */
-  label: string;
+  label?: string;
 
   /**
-   * The List Id of the list where you want to get the views
+   * The List Id of the list
    */
   listId?: string;
 
@@ -54,14 +48,19 @@ export interface IViewPickerProps {
   placeholder?: string;
 
   /**
-   * Specify the property on which you want to order the retrieve set of views.
+   * How to order the set of views (By ID or Title).
    */
-  orderBy?: PropertyFieldViewPickerOrderBy;
+  orderBy?: orderBy;
 
   /**
-   * Initial selected view of the control
+   * Initial selected view(s) of the control
    */
-  selectedView?: string;
+  selectedView?: string | string[];
+
+  /**
+   * Indicates if multi-choice selections is allowed. Default to false.
+   */
+  multiSelect?: boolean;
 
   /**
    * Whether or not to show a blank option. Default false.
@@ -79,22 +78,23 @@ export interface IViewPickerProps {
   webAbsoluteUrl?: string;
 
 
-
   /**
-   * Defines a change function to raise when the selected value changed.
-   * Normally this function must be always defined with the 'this.onChange'
-   * method of the web part object.
+   * Callback issued when the selected option changes.
    */
-  onChange : (newValue: string | string[]) => void;
-  /**
-    * Callback that is called before the dropdown is populated
-    */
-  onViewsRetrieved?: (views: ISPView[]) => PromiseLike<ISPView[]> | ISPView[];
-
+  onSelectionChanged?: (newValue: string | string[]) => void;
 }
 
 export interface IViewPickerState {
-    results: IDropdownOption[];
-    selectedKey?: string | string[];
-    errorMessage?: string | string[];
+  /**
+  * The results fetched to the viewPicker
+  */
+  results: IDropdownOption[];
+  /**
+  * Keys of the currently selected item(s).
+  */
+  selectedView?: string | string[];
+  /**
+  * Whether or not the viewPicker options are loading
+  */
+    loading: boolean;
 }

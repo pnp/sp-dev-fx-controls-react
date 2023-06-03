@@ -6,35 +6,30 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';
-import { SPViewPickerService } from '../../services/SPViewPickerService';
+import { SPServiceFactory } from '../../services/SPServiceFactory';
 import { IViewPickerProps, IViewPickerState } from './IViewPicker';
 import { ISPView, ISPViews } from "../../common/SPEntities";
-
+import styles from './ViewPicker.module.scss';
 
 // Empty view value
 const EMPTY_VIEW_KEY = 'NO_VIEW_SELECTED';
 
 export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerState> {
-    private options: IDropdownOption[] = [];
-    private selectedKey: string| string[] = null;
-    private latestValidateValue: string;
-    private async: Async;
-    private delayedValidate: (value: string) => void;
 
+    private selectedKey: string | string[] = null;
+    private async: Async;
+    private _selectedView: string | string[] = null;
 
     constructor(props: IViewPickerProps){
         super(props);
 
         telemetry.track('ViewPicker');
         this.state = {
-            results: this.options
+            results: [],
+            loading: false
         }
 
         this.async = new Async(this);
-        this.validate = this.validate.bind(this);
-        this.onChanged = this.onChanged.bind(this);
-        this.notifyAfterValidate = this.notifyAfterValidate.bind(this);
-        this.delayedValidate = this.async.debounce(this.validate, this.props.deferredValidationTime);
     }
 
 
@@ -43,6 +38,11 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         this.loadViews();
     }
 
+  /**
+   * componentDidUpdate lifecycle hook
+   * @param prevProps
+   * @param prevState
+   */
     public componentDidUpdate(prevProps: IViewPickerProps, _prevState: IViewPickerState): void {
         if (
             this.props.listId !== prevProps.listId || 
@@ -50,6 +50,10 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
             this.props.orderBy !== prevProps.orderBy 
             ) {
           this.loadViews();
+        }
+
+        if(prevProps.selectedView !== this.props.selectedView){
+          this.setSelectedViews();
         }
     }
     
@@ -62,103 +66,112 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         }
     }
 
-    private loadViews(): void {
+    private async loadViews(): Promise<void> {
 
-        const viewService: SPViewPickerService = new SPViewPickerService(this.props, this.props.context);
+        // Show the loading indicator and disable the dropdown
+        this.setState({ loading: true });
+
         const viewsToExclude: string[] = this.props.viewsToExclude || [];
-        this.options = [];
-        viewService.getViews().then((response: ISPViews) => {
-          // Start mapping the views that are selected
-          response.value.forEach((view: ISPView) => {
-            if (this.props.selectedView === view.Id) {
-              this.selectedKey = view.Id;
-            }
-    
-             // Make sure that the current view is NOT in the 'viewsToExclude' array
-             if (viewsToExclude.indexOf(view.Title) === -1 && viewsToExclude.indexOf(view.Id) === -1) {
-              this.options.push({
-                key: view.Id,
-                text: view.Title
-              });
-            }
+        let options: IDropdownOption[] = [];
+        const service: ISPService = SPServiceFactory.createService(this.props.context, true, 5000, this.props.webAbsoluteUrl);
+        let results = await service.getViews(
+          this.props.listId,
+          this.props.webAbsoluteUrl,
+          this.props.orderBy,
+          this.props.filter
+        );
+
+        // Start mapping the views that are selected
+        results.value.forEach((view: ISPView) => {
+          if (this.props.selectedView === view.Id) {
+            this.selectedKey = view.Id;
+          }
+           // Make sure that the current view is NOT in the 'viewsToExclude' array
+           if (viewsToExclude.indexOf(view.Title) === -1 && viewsToExclude.indexOf(view.Id) === -1) {
+            options.push({
+              key: view.Id,
+              text: view.Title
+            });
+          }
+        });
+
+        if (this.props.showBlankOption) {
+          // Provide empty option
+          options.unshift({
+            key: EMPTY_VIEW_KEY,
+            text: '',
           });
-    
+        } else{
           // Option to unselect the view
-          this.options.unshift({
+          options.unshift({
             key: EMPTY_VIEW_KEY,
             text: EMPTY_VIEW_KEY
           });
-    
-          // Update the current component state
-          this.setState({
-            results: this.options,
-            selectedKey: this.selectedKey
-          });
-        }).catch(() => { /* no-op; */ });
-    }
-
-    private onChanged(event: React.FormEvent<HTMLDivElement>,option: IDropdownOption, _index?: number): void {
-        const newValue: string = option.key as string;
-        this.delayedValidate(newValue);
-    } 
-
-    /**
-     * Validates the new custom field value
-     */
-    private validate(value: string): void {
-        this.notifyAfterValidate(this.props.selectedView, value);
-        if (this.latestValidateValue === value) {
-            return;
         }
-    }
 
-
-    /**
-     * Notifies the parent Web Part of a property value change
-     */
-    private notifyAfterValidate(oldValue: string, newValue: string): void {
-        // Check if the user wanted to unselect the view
-        const propValue = newValue === EMPTY_VIEW_KEY ? '' : newValue;
-
-        // Deselect all options
-        this.options = this.state.results.map(option => {
-        if (option.selected) {
-            option.selected = false;
-        }
-        return option;
-        });
-        // Set the current selected key
-        this.selectedKey = newValue;
-        console.log('Selected View key :'+this.selectedKey);
-        // Update the state
+        this.setSelectedViews();
+        // Update the current component state
         this.setState({
-            selectedKey: this.selectedKey,
-            results: this.options
+          loading: false,
+          results: options
         });
-
-        //Callback to the parent webpart
-        this.props.onChange(this.selectedKey);
+        
     }
 
     /**
-     * Renders the SPViewPicker controls with Office UI Fabric
+     * Set the currently selected views(s);
+     */
+    private setSelectedViews(): void {
+      this._selectedView = cloneDeep(this.props.selectedView);
+
+      this.setState({
+        selectedView: this._selectedView,
+      });
+    }
+
+
+  /**
+   * Fires when a view has been selected from the dropdown.
+   * @param option The new selection.
+   * @param index Index of the selection.
+   */
+  private onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption, index?: number): void => {
+    const { multiSelect, onSelectionChanged } = this.props;
+
+    if (multiSelect) {
+      let selectedViews = this._selectedView ? cloneDeep(this._selectedView) as string[] : [];
+
+      if (option.selected) {
+        selectedViews.push(option.key.toString());
+      }
+      else {
+        selectedViews = selectedViews.filter(view => view !== option.key);
+      }
+      this._selectedView = selectedViews;
+    }
+    else {
+      this._selectedView = option.key.toString();
+    }
+    if (onSelectionChanged) {
+      onSelectionChanged(cloneDeep(this._selectedView));
+    }
+  }
+
+   
+
+    /**
+     * Renders the ViewPicker controls with Office UI Fabric
      */
     public render(): JSX.Element {
-        const { results, selectedKey } = this.state;
-        const {className, disabled, label, placeholder, showBlankOption} = this.props;
+        const { loading, results, selectedView } = this.state;
+        const {className, disabled,multiSelect, label, placeholder} = this.props;
 
         const options : IDropdownOption[] = results.map(v => ({
             key : v.key,
             text: v.text
         }));
 
-        if (showBlankOption) {
-            // Provide empty option
-            options.unshift({
-              key: EMPTY_VIEW_KEY,
-              text: '',
-            });
-        }
+
 
         const dropdownProps: IDropdownProps = {
             className,
@@ -166,14 +179,21 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
             disabled: disabled,
             label,
             placeholder,
-            onChange: this.onChanged,
+            onChange: this.onChange,
           };
-
+        
+        if(multiSelect){
+          dropdownProps.multiSelect = true;
+          dropdownProps.selectedKeys = selectedView as string [];
+        }else {
+          dropdownProps.selectedKey = selectedView as string;
+        }
         // Renders content
         return (
-            <>
+          <div className={styles.viewPicker}>
+            {loading && <Spinner className={styles.spinner} size={SpinnerSize.xSmall}/>}
             <Dropdown {...dropdownProps} />
-          </>
+          </div>
         );
     }
 

@@ -193,6 +193,8 @@ import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
 import { ViewPicker } from "../../../controls/viewPicker";
+import {orderBy } from '../../../controls/viewPicker/IViewPicker';
+
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -623,6 +625,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   /**
+   * Selected View change event
+   * @param views
+   */
+  private onViewPickerChange = (views: string | string[]) => {
+    console.log("Views:", views);
+  }
+
+  /**
    * Deletes second item from the list
    */
   private deleteItem = () => {
@@ -748,14 +758,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   }
 
-
-  /**
- * Selected View change event
- * @param Views
- */
-  private onViewPickerChange = (newValue: string | string[]) => {
-    console.log("ViewPicker control - newView:", newValue);
-  }
 
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
@@ -1527,11 +1529,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
               <div className="ms-font-m">View picker tester:
                 <ViewPicker context={this.props.context}
-                  label="Select view(s)"
                   listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
                   placeholder={'Select list view(s)'}
-                  orderBy={2}
-                  onChange={this.onViewPickerChange.bind(this)} />
+                  orderBy={orderBy.Title}
+                  multiSelect={true}
+                  onSelectionChanged={this.onViewPickerChange} />
               </div>
 
               <div>Icon Picker</div>

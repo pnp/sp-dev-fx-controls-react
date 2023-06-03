@@ -1,4 +1,5 @@
-import { ISPContentType, ISPField, ISPLists } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPLists, ISPView, ISPViews } from "../common/SPEntities";
+import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 export enum LibsOrderBy {
     Id = 1,
@@ -63,4 +64,10 @@ export interface ISPService {
      * @param options Options used to order and filter during the API query.
      */
     getContentTypes(options?: IContentTypesOptions): Promise<ISPContentType[]>;
+
+    /**
+     *  Get the views from lists or libraries
+     * @params listId, webAbsoluteUrl, orderBy, onViewsRetrived
+     */
+    getViews(listId?: string, _webAbsoluteUrl?:string, orderBy?: orderBy, filter?: string): Promise<ISPViews>;
 }
