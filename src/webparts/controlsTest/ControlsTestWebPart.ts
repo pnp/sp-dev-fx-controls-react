@@ -87,7 +87,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         themeVariant: this._themeVariant,
         context: this.context,
         description: this.properties.description,
-        title: this.properties.title,
+        title: this.properties.title ?? "Sample title",
         displayMode: this.displayMode,
         updateProperty: (value: string) => {
           this.properties.title = value;

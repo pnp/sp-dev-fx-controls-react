@@ -8,7 +8,7 @@ import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
-import { IFileInfo, IFiles } from "@pnp/sp/files";
+import { IFileInfo } from "@pnp/sp/files";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
