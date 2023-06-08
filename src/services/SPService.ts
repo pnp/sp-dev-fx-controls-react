@@ -528,7 +528,7 @@ export default class SPService implements ISPService {
   public async getLookupValue(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})/?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {
@@ -548,7 +548,7 @@ export default class SPService implements ISPService {
   public async getLookupValues(listId: string, listItemID: number, fieldName: string, lookupFieldName: string | undefined, webUrl?: string): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
-      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/Title&$expand=${fieldName}`;
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${listItemID})?@listId=guid'${encodeURIComponent(listId)}'&$select=${fieldName}/ID,${fieldName}/${lookupFieldName || 'Title'}&$expand=${fieldName}`;
 
       const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       if (data.ok) {

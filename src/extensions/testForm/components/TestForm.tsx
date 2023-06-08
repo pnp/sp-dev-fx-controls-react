@@ -41,7 +41,7 @@ export default class TestForm extends React.Component<ITestFormProps, ITestFormS
           context={this.props.context}
           listId={this.props.context.list.guid.toString()}
           listItemId={this.props.context.itemId}
-          onListItemLoaded={async (listItemData: any) => {
+          onListItemLoaded={async (listItemData: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             console.log(listItemData);
           }} />
       </EnhancedThemeProvider>);

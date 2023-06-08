@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- SharePoint Framework v1.17.1 support
 
 ### Fixes
 
@@ -15,10 +16,11 @@
 - `Dynamic Form`: Fix for the DynamicForm when a defaultValue is null and the code try to call the split method on it. [#1486](https://github.com/pnp/sp-dev-fx-controls-react/pull/1486)
 - `DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)
 - `FolderExplorer`: FolderExplorer doesn't explore folders with ' in the name [#1491](https://github.com/pnp/sp-dev-fx-controls-react/issues/1491)
+- `DynamicForm`: cannot display lookup value when the source field is not Title [#1511](https://github.com/pnp/sp-dev-fx-controls-react/issues/1511)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB), [wuxiaojun514](https://github.com/wuxiaojun514), [Zied FEHRI](https://github.com/ziedfehri).
 
 ## 3.13.0
 
