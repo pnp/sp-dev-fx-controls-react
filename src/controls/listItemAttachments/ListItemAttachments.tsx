@@ -274,8 +274,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                     directionalHint={DirectionalHint.rightCenter}>
 
                     <DocumentCard
-                      onClickHref={!openAttachmentsInNewWindow && `${encodeURIComponent(file.ServerRelativeUrl)}?web=1`}
-                      onClick={openAttachmentsInNewWindow && (() => window.open(`${encodeURIComponent(file.ServerRelativeUrl)}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
+                      onClickHref={!openAttachmentsInNewWindow && `${(file.ServerRelativeUrl)}?web=1`} //NB - 20230607 - Fix for issue 1541
+                      onClick={openAttachmentsInNewWindow && (() => window.open(`${(file.ServerRelativeUrl)}?web=1`, "_blank"))} //NB - 20230607 - Fix for issue 1541 // JJ - 20200613 - needed to support Microsoft Teams
                       className={styles.documentCard}>
                       <DocumentCardPreview previewImages={[previewImage]} />
                       <Label className={styles.fileLabel}>{fileName}</Label>
