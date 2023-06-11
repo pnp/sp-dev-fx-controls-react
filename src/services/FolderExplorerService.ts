@@ -2,27 +2,27 @@ import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
 import { PageContext } from "@microsoft/sp-page-context";
 import { IFolderExplorerService } from "./IFolderExplorerService";
 import { IFolder } from "./IFolderExplorerService";
-import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
 import { IFileInfo, IFiles } from "@pnp/sp/files";
+import { SPFI } from "@pnp/sp";
+import { getSP } from "../common/utilities/PnPJSConfig";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
   public static readonly serviceKey: ServiceKey<IFolderExplorerService> = ServiceKey.create<IFolderExplorerService>('SPFx:SPService', FolderExplorerService);
+  private _sp: SPFI;
 
   constructor(serviceScope: ServiceScope) {
 
     serviceScope.whenFinished(() => {
 
       const pageContext = serviceScope.consume(PageContext.serviceKey);
-      sp.setup({
-        sp: {
-          baseUrl: pageContext.web.absoluteUrl
-        }
+      this._sp = getSP({
+        pageContext: pageContext
       });
     });
   }
@@ -44,7 +44,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title').get();
+      const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title')();
 
       results = libraries.map((library): IFolder => {
         return { Name: library.Title, ServerRelativeUrl: library.RootFolder.ServerRelativeUrl };
@@ -84,7 +84,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       //folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
-      const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
+      const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending)();
       results = foldersResult.filter(f => f.Name !== "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
@@ -102,7 +102,7 @@ export class FolderExplorerService implements IFolderExplorerService {
     try {
       const web = Web(webAbsoluteUrl);
       folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
-      const filesResult = await web.getFolderByServerRelativePath(folderRelativeUrl).files.select('Name', 'ServerRelativeUrl', 'UniqueId', 'Length').orderBy(orderby, orderAscending).get();
+      const filesResult = await web.getFolderByServerRelativePath(folderRelativeUrl).files.select('Name', 'ServerRelativeUrl', 'UniqueId', 'Length').orderBy(orderby, orderAscending)();
       results = filesResult;
     } catch (error) {
       console.error('Error loading files', error);

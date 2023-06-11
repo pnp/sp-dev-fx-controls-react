@@ -4,6 +4,8 @@ import { Dialog, DialogType } from 'office-ui-fabric-react/lib/Dialog';
 import { Link } from 'office-ui-fabric-react/lib/Link';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 
+import { BaseComponentContext } from '@microsoft/sp-component-base';
+
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import * as telemetry from '../../../common/telemetry';
@@ -11,7 +13,6 @@ import * as telemetry from '../../../common/telemetry';
 import styles from './FieldLookupRenderer.module.scss';
 import { IFrameDialog } from '../../iFrameDialog/IFrameDialog';
 import { SPHelper } from '../../../Utilities';
-import { IContext } from '../../../Common';
 
 /**
  * Field Lookup Renderer Props
@@ -40,7 +41,7 @@ export interface IFieldLookupRendererProps extends IFieldRendererProps {
     /**
      * Customizer context. Must be providede if fieldId is set
      */
-    context?: IContext;
+    context?: BaseComponentContext;
 }
 
 /**

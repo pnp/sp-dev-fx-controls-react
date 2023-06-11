@@ -1,14 +1,16 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { LambdaParser } from '@pnp/odata/parsers';
-import { SharePointQueryableCollection, sp } from '@pnp/sp';
+import { SPFI } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { getSP } from '../common/utilities/PnPJSConfig';
 
 export class SPTaxonomyService {
 
-  constructor(private context: BaseComponentContext) {
+  private readonly _sp: SPFI;
 
+  constructor(private context: BaseComponentContext) {
+    this._sp = getSP(context);
   }
 
   public async getTerms(termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize: number = 50): Promise<{ value: ITermInfo[], skiptoken: string }> {
@@ -27,10 +29,10 @@ export class SPTaxonomyService {
 
         let legacyChildrenUrlAndQuery = '';
         if (parentTermId && parentTermId !== Guid.empty) {
-          legacyChildrenUrlAndQuery = sp.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren').toUrl();
+          legacyChildrenUrlAndQuery = this._sp.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren').toUrl();
         }
         else {
-          legacyChildrenUrlAndQuery = sp.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren').toUrl();
+          legacyChildrenUrlAndQuery = this._sp.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren').toUrl();
         }
         let legacyChildrenQueryable = SharePointQueryableCollection(legacyChildrenUrlAndQuery).top(pageSize).usingParser(parser);
         if (hideDeprecatedTerms) {

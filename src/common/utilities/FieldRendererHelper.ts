@@ -2,11 +2,10 @@ import * as React from 'react';
 import { ISPFieldLookupValue, ITerm, IPrincipal } from '../SPEntities';
 import { FieldTextRenderer } from '../../controls/fields/fieldTextRenderer/FieldTextRenderer';
 import { FieldDateRenderer } from '../../controls/fields/fieldDateRenderer/FieldDateRenderer';
-import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
+import { FieldCustomizerContext, ListItemAccessor } from '@microsoft/sp-listview-extensibility';
 import { SPHelper } from './SPHelper';
 import { FieldTitleRenderer } from '../../controls/fields/fieldTitleRenderer/FieldTitleRenderer';
 import { SPField } from '@microsoft/sp-page-context';
-import { IContext } from '../Interfaces';
 import { GeneralHelper } from './GeneralHelper';
 import { FieldLookupRenderer } from '../../controls/fields/fieldLookupRenderer/FieldLookupRenderer';
 import { FieldUrlRenderer } from '../../controls/fields/fieldUrlRenderer/FieldUrlRenderer';
@@ -29,7 +28,7 @@ export class FieldRendererHelper {
    * @param listItem Current list item
    * @param context Customizer context
    */
-  public static getFieldRenderer(fieldValue: any, props: IFieldRendererProps, listItem: ListItemAccessor, context: IContext): Promise<JSX.Element> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public static getFieldRenderer(fieldValue: any, props: IFieldRendererProps, listItem: ListItemAccessor, context: FieldCustomizerContext): Promise<JSX.Element> { // eslint-disable-line @typescript-eslint/no-explicit-any
     return new Promise<JSX.Element>(resolve => {
       const field: SPField = context.field;
       const listId: string = context.pageContext.list.id.toString();

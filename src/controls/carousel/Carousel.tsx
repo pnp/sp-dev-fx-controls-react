@@ -10,7 +10,7 @@ import { ICarouselState } from "./ICarouselState";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "office-ui-fabric-react/lib/Spinner";
-import { isArray } from "@pnp/common";
+import { isArray } from "@pnp/core";
 import * as telemetry from '../../common/telemetry';
 import CarouselImage, { ICarouselImageProps } from "./CarouselImage";
 import { CarouselIndicatorsDisplay } from "./ICarouselProps";
