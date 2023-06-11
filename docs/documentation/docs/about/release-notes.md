@@ -2,6 +2,10 @@
 
 ## 3.15.0
 
+### New control(s)
+
+- `TermSetNavigation`: new control TermSetNavigation [#1527](https://github.com/pnp/sp-dev-fx-controls-react/pull/1527)
+
 ### Enhancements
 
 - `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
@@ -13,10 +17,11 @@
 - `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
 - `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
 - `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
+- `ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Sharepointalist](https://github.com/sharepointalist).
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sharepointalist](https://github.com/sharepointalist).
 
 ## 3.14.0
 
