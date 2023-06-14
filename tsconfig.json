@@ -21,7 +21,8 @@
       "./node_modules/@microsoft"
     ],
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "wicg-entries-api"
     ],
     "lib": [
       "es5",
