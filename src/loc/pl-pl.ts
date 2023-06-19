@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Zapisać",
   "Cancel": "Anuluj",
   "SiteBreadcrumbLabel": "Strona nawigacyjnej",
@@ -362,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Wybierz termin",
   "DynamicFormEnterURLPlaceholder": "Wpisz adres URL",
   "DynamicFormEnterDescriptionPlaceholder": "Tekst alternatywny",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Użyj tej lokalizacji:",
   "ListItemCommentDIalogDeleteSubText": "Czy na pewno chcesz usunąć ten komentarz?",
   "ListItemCommentsDialogDeleteTitle": "Potwierdź Usuń komentarz",

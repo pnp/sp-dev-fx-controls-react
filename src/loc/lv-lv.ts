@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Glābt",
   "Cancel": "Atcelt",
   "SiteBreadcrumbLabel": "Website atpakaļceļa",
@@ -362,6 +364,8 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Atlasīt terminu",
   "DynamicFormEnterURLPlaceholder": "Ievadiet URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatīvais teksts",
+  "DynamicFormDialogValidationErrorTitle": "Validation Error",
+  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
   "customDisplayName": "Izmantojiet šo atrašanās vietu:",
   "ListItemCommentDIalogDeleteSubText": "Vai tiešām vēlaties dzēst šo komentāru?",
   "ListItemCommentsDialogDeleteTitle": "Apstiprināt dzēst komentāru",

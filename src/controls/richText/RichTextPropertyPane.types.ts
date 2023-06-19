@@ -1,4 +1,4 @@
-import { Quill } from 'react-quill';
+import type { Quill } from 'quill';
 import { ISwatchColor } from './SwatchColorPickerGroup.types';
 
 export interface IRichTextPropertyPaneProps {

@@ -67,6 +67,7 @@ nav:
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - TeamChannelPicker: 'controls/TeamChannelPicker.md'
     - TeamPicker: 'controls/TeamPicker.md'
+    - TermSetNavigation: 'controls/TermSetNavigation.md'
     - Toolbar: 'controls/Toolbar.md'
     - TreeView: 'controls/TreeView.md'
     - UploadFiles: 'controls/UploadFiles.md'

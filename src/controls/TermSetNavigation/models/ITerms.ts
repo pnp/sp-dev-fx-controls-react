@@ -1,0 +1,7 @@
+import { TermStore } from '@microsoft/microsoft-graph-types';
+
+export interface ITerms {
+  '@odata.context': string;
+  value: TermStore.Term[];
+}
+

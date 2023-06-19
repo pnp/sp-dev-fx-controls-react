@@ -8,6 +8,7 @@ import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
+import { IFileInfo, IFiles } from "@pnp/sp/files";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
@@ -65,6 +66,15 @@ export class FolderExplorerService implements IFolderExplorerService {
   }
 
   /**
+ * Get files within a given library or sub folder
+ * @param webAbsoluteUrl - the url of the target site
+ * @param folderRelativeUrl - the relative url of the folder
+ */
+  public GetFiles = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFileInfo[]> => {
+    return this._getFiles(webAbsoluteUrl, folderRelativeUrl, orderby, orderAscending);
+  }
+
+  /**
    * Get folders within a given library or sub folder
    * @param webAbsoluteUrl - the url of the target site
    * @param folderRelativeUrl - the relative url of the folder
@@ -73,11 +83,29 @@ export class FolderExplorerService implements IFolderExplorerService {
     let results: IFolder[] = [];
     try {
       const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
+      //folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
       const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
       results = foldersResult.filter(f => f.Name !== "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
+    }
+    return results;
+  }
+
+  /**
+   * Get files within a given library or sub folder
+   * @param webAbsoluteUrl - the url of the target site
+   * @param folderRelativeUrl - the relative url of the folder
+   */
+  private _getFiles = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFileInfo[]> => {
+    let results: IFileInfo[] = [];
+    try {
+      const web = Web(webAbsoluteUrl);
+      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
+      const filesResult = await web.getFolderByServerRelativePath(folderRelativeUrl).files.select('Name', 'ServerRelativeUrl', 'UniqueId', 'Length').orderBy(orderby, orderAscending).get();
+      results = filesResult;
+    } catch (error) {
+      console.error('Error loading files', error);
     }
     return results;
   }

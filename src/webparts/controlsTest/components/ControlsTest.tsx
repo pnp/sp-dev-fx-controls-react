@@ -192,6 +192,8 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
+import { IFileInfo } from "@pnp/sp/files";
+import { FieldPicker } from "../../../FieldPicker";
 
 // Used to render document card
 /**
@@ -748,6 +750,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   }
 
+  private _onFileClick = (file: IFileInfo): void => {
+    console.log('file click', file);
+  }
+
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
@@ -924,7 +930,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <div className={styles.controlsTest}>
         <div className="ms-font-m">
           {/* Change the list Id and list item id before you start to test this control */}
-          <DynamicForm context={this.props.context} listId={"db25f5f6-5ae1-4fa0-a2f7-e093d3d463ae"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+          <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+        </div>
+        <div className="ms-font-m">
+          {/* Change the list Id and list item id before you start to test this control */}
+          {/* This DynamicForm display a dialog message when validation fails */}
+          <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{showDialogOnValidationError: true}}></DynamicForm>
         </div>
         <WebPartTitle displayMode={this.props.displayMode}
           title={this.props.title}
@@ -1515,6 +1526,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onSelectedItem={this.listItemPickerDataSelected} />
 
               </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
               <div>Icon Picker</div>
               <div>
                 <IconPicker
@@ -1791,6 +1814,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
             orderby='Name' //'ListItemAllFields/Created'
             orderAscending={true}
+            showFiles={true}
+            onFileClick={this._onFileClick}
           />
         </div>
 
@@ -1833,7 +1858,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
-
+            panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
@@ -2411,7 +2436,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         <div>
           <h3>Monaco Editor</h3>
-          <TestControl context={this.props.context} />
+          <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
         <div>
           <h3>Upload Files</h3>
@@ -2428,7 +2453,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </EnhancedThemeProvider>
         </div>
-
       </div>
     );
   }

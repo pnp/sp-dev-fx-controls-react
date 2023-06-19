@@ -5,14 +5,14 @@ declare interface IControlStrings {
   UpLoadFilesDeleteButtonLabel: string;
   UpLoadFilesSelectAllLabel: string;
 
-  ProgressStepsIndicatorNoSteps:string;
+  ProgressStepsIndicatorNoSteps: string;
   ListItemCommentsLabel: string;
   ListItemCommentsNoCommentsLabel: string;
   ListItemCommentDIalogDeleteSubText: string;
   ListItemCommentsDialogDeleteTitle: string;
 
-  MyTeamsMessageError:string;
-  MyTeamsNoTeamsMessage:string;
+  MyTeamsMessageError: string;
+  MyTeamsNoTeamsMessage: string;
   MyTeamsLoadingMessage: string;
   MyTeamsTeamChannelPublicMessage: string;
   MyTeamsTeamChannelTypeMessage: string;
@@ -366,9 +366,11 @@ declare interface IControlStrings {
   DynamicFormTermPanelTitle: string;
   DynamicFormEnterURLPlaceholder: string;
   DynamicFormEnterDescriptionPlaceholder: string;
+  DynamicFormDialogValidationErrorTitle: string;
+  DynamicFormDialogValidationErrorMessage: string;
 
   // Location picker
-  customDisplayName:string;
+  customDisplayName: string;
 
   // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;
@@ -389,6 +391,10 @@ declare interface IControlStrings {
   ModernAudioIncVol: string;
   ModernAudioDecVol: string;
   ModernAudioMute: string;
+
+  //TermSetNavigationb Control
+  TermSetNavigationNoTerms: string;
+  TermSertNaviagtionErrorMessage: string;
 }
 
 declare interface IDateTimeStrings {
@@ -416,6 +422,9 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+
+
+
 
 }
 
