@@ -17,12 +17,14 @@
           "`Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)",
           "`Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)",
           "`ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)",
-          "`fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)"
+          "`fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)",
+          "`FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)"
         ]
       },
       "contributions": [
         "[Andreas Omayrat](https://github.com/andreasomayrat)",
         "[Ayoub](https://github.com/ayoubqrt)",
+        "[Desislav](https://github.com/DMichev)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Sharepointalist](https://github.com/sharepointalist)"
