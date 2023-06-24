@@ -212,6 +212,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'Lookup':
+        const lookupValue = this.props.newValue ? this.props.newValue : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={"Switch"} />
@@ -220,7 +221,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <ListItemPicker
             disabled={disabled}
             listId={lookupListID}
-            defaultSelectedItems={defaultValue}
+            defaultSelectedItems={lookupValue}
             columnInternalName={lookupField}
             className={styles.fieldDisplay}
             enableDefaultSuggestions={true}
@@ -234,6 +235,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'LookupMulti':
+        const lookupMultiValue = this.props.newValue ? this.props.newValue : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={"Switch"} />
@@ -242,7 +244,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <ListItemPicker
             disabled={disabled}
             listId={lookupListID}
-            defaultSelectedItems={defaultValue}
+            defaultSelectedItems={lookupMultiValue}
             columnInternalName={lookupField}
             className={styles.fieldDisplay}
             enableDefaultSuggestions={true}
@@ -596,27 +598,30 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       changedValue
     } = this.state;
+
     try {
-      let seletedItemArr;
+      let selectedItemArr;
       if (changedValue === null && this.props.fieldDefaultValue !== null) {
-        seletedItemArr = [];
+        selectedItemArr = [];
         this.props.fieldDefaultValue.forEach(element => {
-          seletedItemArr.push(element);
+          selectedItemArr.push(element);
         });
       }
       else
-        seletedItemArr = !changedValue ? [] : changedValue;
+        selectedItemArr = !changedValue ? [] : changedValue;
+
       if (item.selected) {
-        seletedItemArr.push(item.key);
+        selectedItemArr.push(item.key);
       }
       else {
-        const i = seletedItemArr.indexOf(item.key);
+        const i = selectedItemArr.indexOf(item.key);
         if (i >= 0) {
-          seletedItemArr.splice(i, 1);
+          selectedItemArr.splice(i, 1);
         }
       }
-      this.setState({ changedValue: seletedItemArr });
-      this.props.onChanged(this.props.columnInternalName, seletedItemArr);
+
+      this.setState({ changedValue: selectedItemArr });
+      this.props.onChanged(this.props.columnInternalName, selectedItemArr);
     } catch (error) {
       console.log(`Error MultiChoice_selection`, error);
     }
