@@ -21,6 +21,7 @@
 - `fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)
 - `FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)
 - `DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)
+- `DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)
 
 ### Contributors
 
