@@ -138,7 +138,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               value={value}
               className={styles.fieldDisplay}
               onChange={(newText) => { this.onChange(newText); return newText; }}
-              isEditMode={disabled} />
+              isEditMode={!disabled}/>
             {descriptionEl}
             {errorTextEl}
           </div>;
