@@ -740,7 +740,7 @@ export default class SPService implements ISPService {
   /**
    * Gets the collection of view for a selected list
    */
-  public async getViews(listId?: string, _orderBy?: orderBy, filter?: string): Promise<ISPViews> {
+  public async getViews(listId?: string, orderby?: orderBy, filter?: string): Promise<ISPViews> {
     if (listId === undefined || listId === "") {
       return this.getEmptyViews();
     }
@@ -749,9 +749,9 @@ export default class SPService implements ISPService {
     let queryUrl: string = `${this._webAbsoluteUrl}/_api/lists(guid'${listId}')/Views?$select=Title,Id`;
 
     // Check if the orderBy property is provided
-    if (_orderBy !== null) {
+    if (orderby !== null) {
       queryUrl += '&$orderby=';
-      switch (_orderBy) {
+      switch (orderby) {
         case orderBy.Id:
           queryUrl += 'Id';
           break;
