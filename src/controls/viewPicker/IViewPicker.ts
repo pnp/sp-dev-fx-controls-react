@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { ISPView } from "../../../src/common/SPEntities";
+import { ISPView } from '../../../src/common/SPEntities';
 import { IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
 
@@ -93,8 +93,4 @@ export interface IViewPickerState {
   * Keys of the currently selected item(s).
   */
   selectedView?: string | string[];
-  /**
-  * Whether or not the viewPicker options are loading
-  */
-    loading: boolean;
 }

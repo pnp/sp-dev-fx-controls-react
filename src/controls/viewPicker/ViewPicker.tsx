@@ -25,8 +25,7 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
 
         telemetry.track('ViewPicker');
         this.state = {
-            results: [],
-            loading: false
+            results: []
         }
 
         this.async = new Async(this);
@@ -68,15 +67,12 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
 
     private async loadViews(): Promise<void> {
 
-        // Show the loading indicator and disable the dropdown
-        this.setState({ loading: true });
 
         const viewsToExclude: string[] = this.props.viewsToExclude || [];
         let options: IDropdownOption[] = [];
         const service: ISPService = SPServiceFactory.createService(this.props.context, true, 5000, this.props.webAbsoluteUrl);
         let results = await service.getViews(
           this.props.listId,
-          this.props.webAbsoluteUrl,
           this.props.orderBy,
           this.props.filter
         );
@@ -112,7 +108,6 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         this.setSelectedViews();
         // Update the current component state
         this.setState({
-          loading: false,
           results: options
         });
         
@@ -163,7 +158,7 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
      * Renders the ViewPicker controls with Office UI Fabric
      */
     public render(): JSX.Element {
-        const { loading, results, selectedView } = this.state;
+        const { results, selectedView } = this.state;
         const {className, disabled,multiSelect, label, placeholder} = this.props;
 
         const options : IDropdownOption[] = results.map(v => ({
@@ -191,7 +186,6 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         // Renders content
         return (
           <div className={styles.viewPicker}>
-            {loading && <Spinner className={styles.spinner} size={SpinnerSize.xSmall}/>}
             <Dropdown {...dropdownProps} />
           </div>
         );

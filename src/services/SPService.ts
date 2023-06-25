@@ -740,15 +740,13 @@ export default class SPService implements ISPService {
   /**
    * Gets the collection of view for a selected list
    */
-  public async getViews(listId?: string, _webAbsoluteUrl?:string, _orderBy?: orderBy, filter?: string): Promise<ISPViews> {
+  public async getViews(listId?: string, _orderBy?: orderBy, filter?: string): Promise<ISPViews> {
     if (listId === undefined || listId === "") {
       return this.getEmptyViews();
     }
 
-    const webAbsoluteUrl = _webAbsoluteUrl ? _webAbsoluteUrl : this._context.pageContext.web.absoluteUrl;
-
     // If the running environment is SharePoint, request the lists REST service
-    let queryUrl: string = `${webAbsoluteUrl}/_api/lists(guid'${listId}')/Views?$select=Title,Id`;
+    let queryUrl: string = `${this._webAbsoluteUrl}/_api/lists(guid'${listId}')/Views?$select=Title,Id`;
 
     // Check if the orderBy property is provided
     if (_orderBy !== null) {

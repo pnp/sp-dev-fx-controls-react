@@ -4,7 +4,6 @@ import * as strings from 'ControlStrings';
 
 export const IMG_SUPPORTED_EXTENSIONS = ".gif,.jpg,.jpeg,.bmp,.dib,.tif,.tiff,.ico,.png,.jxr,.svg";
 
-import * as _ from '@microsoft/sp-lodash-subset';
 /**
  * Helper with general methods to simplify some routines
  */

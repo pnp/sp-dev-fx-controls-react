@@ -22,7 +22,7 @@ export default class SPServiceMock implements ISPService {
   public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
     return;
   }
-  public getViews(listId?: string, _webAbsoluteUrl?:string, orderBy?: orderBy, filter?: string) : Promise<ISPViews> {
+  public getViews(listId?: string, orderBy?: orderBy, filter?: string) : Promise<ISPViews> {
     return;
   }
 

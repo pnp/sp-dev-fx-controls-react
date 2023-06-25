@@ -67,7 +67,7 @@ export interface ISPService {
 
     /**
      *  Get the views from lists or libraries
-     * @params listId, webAbsoluteUrl, orderBy, onViewsRetrived
+     * @params listId, orderBy, onViewsRetrived
      */
-    getViews(listId?: string, _webAbsoluteUrl?:string, orderBy?: orderBy, filter?: string): Promise<ISPViews>;
+    getViews(listId?: string, orderBy?: orderBy, filter?: string): Promise<ISPViews>;
 }
