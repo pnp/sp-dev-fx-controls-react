@@ -2,9 +2,10 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
-import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPView, ISPViews } from "../common/SPEntities";
 import { SPHelper, urlCombine } from "../common/utilities";
 import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrderBy } from "./ISPService";
+import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 interface ICachedListItems {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -733,6 +734,55 @@ export default class SPService implements ISPService {
       }
 
       return substringSearch ? fieldValue.indexOf(lowercasedFilterText) > -1 : fieldValue.startsWith(lowercasedFilterText);
+    });
+  }
+
+  /**
+   * Gets the collection of view for a selected list
+   */
+  public async getViews(listId?: string, orderby?: orderBy, filter?: string): Promise<ISPViews> {
+    if (listId === undefined || listId === "") {
+      return this.getEmptyViews();
+    }
+
+    // If the running environment is SharePoint, request the lists REST service
+    let queryUrl: string = `${this._webAbsoluteUrl}/_api/lists(guid'${listId}')/Views?$select=Title,Id`;
+
+    // Check if the orderBy property is provided
+    if (orderby !== null) {
+      queryUrl += '&$orderby=';
+      switch (orderby) {
+        case orderBy.Id:
+          queryUrl += 'Id';
+          break;
+        case orderBy.Title:
+          queryUrl += 'Title';
+          break;
+      }
+
+      // Adds an OData Filter to the list
+      if (filter) {
+        queryUrl += `&$filter=${encodeURIComponent(filter)}`;
+      }
+
+      const response = await this._context.spHttpClient.get(queryUrl, SPHttpClient.configurations.v1);
+      const views = (await response.json()) as ISPViews;
+
+      return views;
+    }
+  }
+
+  /**
+   * Returns an empty view for when a list isn't selected
+   */
+  private getEmptyViews(): Promise<ISPViews> {
+    return new Promise<ISPViews>((resolve) => {
+      const listData: ISPViews = {
+        value: [
+        ]
+      };
+
+      resolve(listData);
     });
   }
 }
