@@ -18,7 +18,6 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
 
     private selectedKey: string | string[] = null;
     private async: Async;
-    private _selectedView: string | string[] = null;
 
     constructor(props: IViewPickerProps){
         super(props);
@@ -30,7 +29,6 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
 
         this.async = new Async(this);
     }
-
 
     public componentDidMount(): void {
         // Start retrieving the list views
@@ -117,10 +115,10 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
      * Set the currently selected views(s);
      */
     private setSelectedViews(): void {
-      this._selectedView = cloneDeep(this.props.selectedView);
+      let _selectedView = cloneDeep(this.props.selectedView);
 
       this.setState({
-        selectedView: this._selectedView,
+        selectedView:_selectedView
       });
     }
 
@@ -132,9 +130,9 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
    */
   private onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption, index?: number): void => {
     const { multiSelect, onSelectionChanged } = this.props;
-
+    let selectedViews : string | string[] = null;
     if (multiSelect) {
-      let selectedViews = this._selectedView ? cloneDeep(this._selectedView) as string[] : [];
+      selectedViews = this.state.selectedView ? cloneDeep(this.state.selectedView) as string[] : [];
 
       if (option.selected) {
         selectedViews.push(option.key.toString());
@@ -142,13 +140,17 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
       else {
         selectedViews = selectedViews.filter(view => view !== option.key);
       }
-      this._selectedView = selectedViews;
+      this.setState({
+        selectedView:selectedViews
+      });
     }
     else {
-      this._selectedView = option.key.toString();
+      this.setState({
+        selectedView:option.key.toString()
+      });
     }
     if (onSelectionChanged) {
-      onSelectionChanged(cloneDeep(this._selectedView));
+      onSelectionChanged(cloneDeep(selectedViews));
     }
   }
 
