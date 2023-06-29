@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Alternatyvus tekstas",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "Naudokite šią vietą:",
   "ListItemCommentDIalogDeleteSubText": "Ar tikrai norite panaikinti šį komentarą?",
   "ListItemCommentsDialogDeleteTitle": "Patvirtinti naikinimo komentarą",

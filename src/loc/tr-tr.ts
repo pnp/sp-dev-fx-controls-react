@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Alternatif metin",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "Bu konumu kullan:",
   "ListItemCommentDIalogDeleteSubText": "Bu yorumu silmek istediğinizden emin misiniz?",
   "ListItemCommentsDialogDeleteTitle": "Açıklamayı Sil'i Onayla",

@@ -95,6 +95,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
     const labelEl = <label className={(required) ? styles.fieldRequired + ' ' + styles.fieldLabel : styles.fieldLabel}>{labelText}</label>;
     const errorText = this.getRequiredErrorText();
+    const errorTextforNumber = this.getnumberErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
     const descriptionEl = <text className={styles.fieldDescription}>{description}</text>;
     const hasImage = !!changedValue;
@@ -271,7 +272,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText} />
+            errorMessage={errorTextforNumber} />
           {descriptionEl}
         </div>;
 
@@ -588,6 +589,27 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       changedValue
     } = this.state;
     return (changedValue === undefined || changedValue === ''|| changedValue === null || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+  }
+
+  private getnumberErrorText = (): string => {
+    const {
+      changedValue
+    } = this.state;
+    const{
+      maximumValue,
+      minimumValue,
+      showAsPercentage
+    } = this.props;
+
+    if((changedValue === undefined || changedValue === ''|| changedValue === null || this.isEmptyArray(changedValue)) && this.props.required){
+      return strings.DynamicFormRequiredErrorMessage;
+    } else if((changedValue < minimumValue) || (changedValue > maximumValue)){
+      if(!showAsPercentage){
+        return strings.DynamicFormNumberErrorMessage
+                .replace('{0}', minimumValue.toString())
+                .replace('{1}', maximumValue.toString());
+      }
+    }
   }
 
   private isEmptyArray(value): boolean {

@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "備選文字",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "使用此位置：",
   "ListItemCommentDIalogDeleteSubText": "您確定要刪除此評論嗎？",
   "ListItemCommentsDialogDeleteTitle": "確認刪除註釋",

@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Alternatīvais teksts",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "Izmantojiet šo atrašanās vietu:",
   "ListItemCommentDIalogDeleteSubText": "Vai tiešām vēlaties dzēst šo komentāru?",
   "ListItemCommentsDialogDeleteTitle": "Apstiprināt dzēst komentāru",
