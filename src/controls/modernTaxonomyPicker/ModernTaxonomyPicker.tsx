@@ -80,9 +80,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     taxonomyService.getTermStoreInfo()
       .then((termStoreInfo) => {
         setCurrentTermStoreInfo(termStoreInfo);
-        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
+        const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' && termStoreInfo.languageTags.includes(props.context.pageContext.cultureInfo.currentUICultureName) ?
           props.context.pageContext.cultureInfo.currentUICultureName :
-          currentTermStoreInfo.defaultLanguageTag;
+          termStoreInfo.defaultLanguageTag;
         setCurrentLanguageTag(languageTag);
         setSelectedOptions(Array.isArray(props.initialValues) ?
           props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
