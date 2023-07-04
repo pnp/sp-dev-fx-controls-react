@@ -366,7 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Εναλλακτικό κείμενο",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
-  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
+  "DynamicFormNumberErrorMessage": "Η τιμή αυτού του πεδίου πρέπει να είναι μεταξύ {0} και {1}.",
   "customDisplayName": "Χρησιμοποιήστε αυτήν τη θέση:",
   "ListItemCommentDIalogDeleteSubText": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σχόλιο;",
   "ListItemCommentsDialogDeleteTitle": "Επιβεβαίωση διαγραφής σχολίου",
