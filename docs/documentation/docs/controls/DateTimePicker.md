@@ -72,6 +72,7 @@ The `DateTimePicker` control can be configured with the following properties:
 | timeDisplayControlType | TimeDisplayControlType | no | Specifies what type of control to use when rendering time part. |
 | showLabels | boolean | no | Specifies if labels in front of date and time parts should be rendered. |
 | placeholder | string | no | Placeholder text for the DatePicker. |
+| initialPickerDate | Date | no | The initially highlighted date in the calendar picker
 | maxDate | Date | no | The maximum allowable date. |
 | minDate | Date | no | The minimum allowable date. |
 | minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdow` |
