@@ -646,7 +646,7 @@ export default class SPService implements ISPService {
         }
       }
 
-      return null;
+      return [];
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);

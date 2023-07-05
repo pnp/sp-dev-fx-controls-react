@@ -260,7 +260,7 @@ export class DynamicForm extends React.Component<
               .map((term) => `-1#;${term.name}|${term.key};`)
               .join("#");
           } else if (fieldType === "User") {
-            objects[`${columnInternalName}Id`] = val.newValue;
+            objects[`${columnInternalName}Id`] = val.newValue.length === 0 ? null : val.newValue;
           } else if (fieldType === "Choice") {
             objects[columnInternalName] = val.newValue.key;
           } else if (fieldType === "MultiChoice") {
@@ -269,7 +269,7 @@ export class DynamicForm extends React.Component<
             objects[columnInternalName] = JSON.stringify(val.newValue);
           } else if (fieldType === "UserMulti") {
             objects[`${columnInternalName}Id`] = {
-              results: val.newValue.lenght === 0 ? null : val.newValue,
+              results: val.newValue.length === 0 ? null : val.newValue,
             };
           } else if (fieldType === "Thumbnail") {
             if (additionalData) {
