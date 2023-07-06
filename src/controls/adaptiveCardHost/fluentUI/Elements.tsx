@@ -637,7 +637,7 @@ export class FluentUITextInput extends Input {
 
   public get value(): string | undefined {
     if (this.renderedInputControlElement) {
-      return this.refControl.value;
+      return this.refControl?.value;
     }
     else {
       return undefined;
@@ -742,7 +742,7 @@ export class FluentUITimeInput extends Input {
 
   public get value(): string | undefined {
     if (this.renderedInputControlElement) {
-      return this.refControl.value;
+      return this.refControl?.value;
     }
     else {
       return undefined;
