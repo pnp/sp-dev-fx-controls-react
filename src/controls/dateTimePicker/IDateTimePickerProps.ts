@@ -124,9 +124,13 @@ export interface IDateTimePickerProps {
   placeholder?: string;
 
   /**
+   * The initial selected date
+   */
+  initialPickerDate?: Date;
+
+  /**
    * The minimum allowable date for the DatePicker
    */
-
   minDate?: Date;
 
   /**
