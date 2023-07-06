@@ -11,8 +11,8 @@
           "`DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)",
           "`DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)",
           "`DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)",
-          "`ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)"
-
+          "`ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)",
+          "`AdaptiveCardHost`: Add null check for adaptive card elements [#1574](https://github.com/pnp/sp-dev-fx-controls-react/pull/1574)"
         ],
         "fixes": [
           "`FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)",
@@ -34,6 +34,7 @@
         "[Desislav](https://github.com/DMichev)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
+        "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Rico van de Ven](https://github.com/RicoNL)",
         "[Sharepointalist](https://github.com/sharepointalist)",
         "[Zhephyr](https://github.com/Zhephyr54)"
