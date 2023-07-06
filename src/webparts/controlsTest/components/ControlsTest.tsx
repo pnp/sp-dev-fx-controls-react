@@ -198,6 +198,7 @@ import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
 import { Toggle } from "office-ui-fabric-react";
 
+import { ViewPicker } from "../../../controls/viewPicker";
 // Used to render document card
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
@@ -672,6 +673,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.setState({
       selectedList: typeof lists === "string" ? lists : lists.pop()
     });
+  }
+
+  /**
+   * Selected View change event
+   * @param views
+   */
+  private onViewPickerChange = (views: string | string[]) => {
+    console.log("Views:", views);
   }
 
   /**
@@ -1327,6 +1336,429 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                         updateActionType: UpdateType.disableTerm,
                         value: true
                       };
+                applyToTerm: (term: ITerm) => true
+              }],
+              termActionsDisplayMode: TermActionsDisplayMode.buttons,
+              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+            }} />
+
+          <DefaultButton text="Add" onClick={() => {
+            this.setState({
+              initialValues: [{
+                key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                name: "HR",
+                path: "HR",
+                termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+              }],
+              errorMessage: ""
+            });
+          }} />
+        </div>
+
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
+        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
+        <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+        <DateTimePicker
+          label="DateTime Picker date only"
+          showLabels={false}
+          dateConvention={DateConvention.Date}
+          value={new Date()}
+          onChange={(value) => console.log("DateTimePicker value:", value)}
+          minDate={new Date("05/01/2019")}
+          maxDate={new Date("05/01/2020")} />
+
+        {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
+        <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
+        <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
+
+        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
+          itemId={1}
+          context={this.props.context}
+          disabled={false} /> */}
+
+        <Placeholder iconName='Edit'
+          iconText='Configure your web part'
+          description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
+          buttonLabel='Configure'
+          hideButton={this.props.displayMode === DisplayMode.Read}
+          onConfigure={this._onConfigure}
+          theme={this.props.themeVariant} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker custom styles"
+          styles={this.pickerStylesSingle}
+          personSelectionLimit={5}
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+
+          onChange={this._getPeoplePickerItems} />
+
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (Group not found)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          groupName="Team Site Visitors 123"
+          ensureUser={true}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          onChange={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (search for group)"
+          groupName="Team Site Visitors"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          onChange={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (pre-set global users)"
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          onChange={this._getPeoplePickerItems}
+          personSelectionLimit={2}
+          ensureUser={true} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (pre-set local users)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+          onChange={this._getPeoplePickerItems} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (tenant scoped)"
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          required={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          onChange={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200}
+          placeholder={'Select a SharePoint principal (User or Group)'}
+          onGetErrorMessage={async (items: any[]) => {
+            if (!items || items.length < 2) {
+              return 'error';
+            }
+            return '';
+          }} />
+
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (local scoped)"
+          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+          personSelectionLimit={5}
+          // groupName={"Team Site Owners"}
+          showtooltip={true}
+          required={true}
+          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+          //defaultSelectedUsers={this.state.authorEmails}
+          onChange={this._getPeoplePickerItems}
+          showHiddenInUI={false}
+          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+          suggestionsLimit={2}
+          resolveDelay={200} />
+
+        <PeoplePicker context={this.props.context}
+          titleText="People Picker (disabled)"
+          disabled={true}
+          showtooltip={true}
+          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
+
+        <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - default time = 12h)"
+          dateConvention={DateConvention.DateTime}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 12h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours12}
+          showSeconds={false}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (date and time - 24h)"
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          showSeconds={true}
+        />
+
+        <DateTimePicker
+          label="DateTime Picker (Controlled)"
+          formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
+          dateConvention={DateConvention.DateTime}
+          timeConvention={TimeConvention.Hours24}
+          firstDayOfWeek={DayOfWeek.Monday}
+          value={this.state.dateTimeValue}
+          onChange={this._onDateTimePickerChange}
+          isMonthPickerVisible={false}
+          showMonthPickerAsOverlay={true}
+          showWeekNumbers={true}
+          showSeconds={true}
+          timeDisplayControlType={TimeDisplayControlType.Dropdown}
+        />
+        <PrimaryButton text={'Clear Date'} onClick={() => {
+
+          this.setState({
+            dateTimeValue: undefined
+          });
+        }} />
+
+        <DateTimePicker
+          label="DateTime Picker (date only)"
+          dateConvention={DateConvention.Date}
+        />
+
+        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+        <br></br>
+        <b>Drag and Drop Files</b>
+        <DragDropFiles
+          dropEffect="copy"
+          enable={true}
+          onDrop={this._getDropFiles}
+          iconName="Upload"
+          labelMessage="My custom upload File"
+        >
+          <Placeholder iconName='BulkUpload'
+            iconText='Drag files or folder with files here...'
+            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure} />
+        </DragDropFiles>
+        <br></br>
+
+        <ListView items={this.state.items}
+          viewFields={viewFields}
+          iconFieldName='ServerRelativeUrl'
+          groupByFields={groupByFields}
+          compact={true}
+          selectionMode={SelectionMode.single}
+          selection={this._getSelection}
+          showFilter={true}
+          dragDropFiles={true}
+          onDrop={this._getDropFiles}
+          stickyHeader={true}
+          className={styles.listViewWrapper}
+        // defaultFilter="Team"
+        />
+
+        <ChartControl type={ChartType.Bar}
+          data={{
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }} />
+
+        <Map titleText="New map control"
+          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+          enableSearch={true}
+          mapType={MapType.normal}
+          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+        //  zoom={15}
+        //mapType={MapType.cycle}
+        //width="50"
+        //height={150}
+        //loadingMessage="Loading maps"
+        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
+        />
+
+        <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
+
+        <div className={styles.container}>
+          <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
+            <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
+              <span className="ms-font-xl">Controls testing</span>
+
+              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
+                <p>You have permissions to view list items.</p>
+              </SecurityTrimmedControl>
+
+              <p className="ms-font-l">
+                File type icon control
+              </p>
+              <div className="ms-font-m">
+                Font icons:&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
+                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.doc" />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />&nbsp;
+                <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
+              </div>
+              <div className="ms-font-m">
+                Image icons:&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
+                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
+                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
+              </div>
+              <div className="ms-font-m">Icon size tester:
+                <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
+                <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+              </div>
+
+
+              <div className="ms-font-m">Site picker tester:
+                <SitePicker
+                  context={this.props.context}
+                  label={'select sites'}
+                  mode={'site'}
+                  allowSearch={true}
+                  multiSelect={false}
+                  onChange={(sites) => { console.log(sites); }}
+                  placeholder={'Select sites'}
+                  searchPlaceholder={'Filter sites'} />
+              </div>
+
+              <div className="ms-font-m">List picker tester:
+                <ListPicker context={this.props.context}
+                  label="Select your list(s)"
+                  placeholder="Select your list(s)"
+                  baseTemplate={100}
+                  includeHidden={false}
+                  multiSelect={true}
+                  contentTypeId="0x01"
+                  // filter="Title eq 'Test List'"
+                  onSelectionChanged={this.onListPickerChange} />
+              </div>
+
+              <div className="ms-font-m">List Item picker list data tester:
+
+                <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
+                  columnInternalName="DateAndTime"
+                  keyColumnInternalName="Id"
+                  // filter={"Title eq 'SPFx'"}
+                  orderBy={'Title desc'}
+                  itemLimit={5}
+                  context={this.props.context}
+                  placeholder={'Select list items'}
+                  onSelectedItem={this.listItemPickerDataSelected} />
+
+              </div>
+
+              <div className="ms-font-m">Field picker tester:
+                <FieldPicker
+                  context={this.props.context}
+                  label={'Select a field'}
+                  listId={this.state.selectedList}
+                  onSelectionChanged={(fields) => {
+                    console.log(fields);
+                  }}
+                />
+              </div>
+
+              <div className="ms-font-m">View picker tester:
+                <ViewPicker context={this.props.context}
+                  label="Select view(s)"
+                  listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
+                  placeholder={'Select list view(s)'}
+                  orderBy={2}
+                  onSelectionChanged={this.onViewPickerChange} />
+              </div>
+
+              <div>Icon Picker</div>
+              <div>
+                <IconPicker
+                  renderOption="panel"
+                  onSave={(value) => { console.log(value); }}
+                  currentIcon={'Warning'}
+                  buttonLabel="Icon Picker">
+                </IconPicker>
+              </div>
+
+              <div className="ms-font-m">ComboBoxListItemPicker:
+
+                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
+                  columnInternalName='Title'
+                  keyColumnInternalName='Id'
+                  orderBy='Title desc'
+                  multiSelect={true}
+                  onSelectedItem={(data) => {
+                    console.log(`Item(s):`, data);
+                  }}
+                  defaultSelectedItems={this.state.comboBoxListItemPickerIds}
+                  webUrl={this.props.context.pageContext.web.absoluteUrl}
+                  spHttpClient={this.props.context.spHttpClient} />
+
+                <PrimaryButton text="Change List" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+                  });
+                }} />
+                <PrimaryButton text="Change default items" onClick={() => {
+                  this.setState({
+                    comboBoxListItemPickerIds: [{ Id: 2, Title: '222' }]
+                  });
+                }} />
+
+              </div>
+
+              <div className="ms-font-m">iframe dialog tester:
+                <PrimaryButton
+                  text="Open iframe Dialog"
+                  onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
+                <IFrameDialog
+                  url={iframeUrl}
+                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  hidden={!this.state.iFrameDialogOpened}
+                  onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
+                  modalProps={{
+                    isBlocking: true,
+                    styles: {
+                      root: {
+                        backgroundColor: '#00ff00'
+                      },
+                      main: {
+                        backgroundColor: '#ff0000'
+                      }
                     }
                     return {
                       updateActionType: UpdateType.hideTerm,
