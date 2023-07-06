@@ -10,7 +10,8 @@
           "`FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)",
           "`DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)",
           "`DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)",
-          "`DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)"
+          "`DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)",
+          "`ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)"
 
         ],
         "fixes": [
@@ -34,7 +35,8 @@
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Rico van de Ven](https://github.com/RicoNL)",
-        "[Sharepointalist](https://github.com/sharepointalist)"
+        "[Sharepointalist](https://github.com/sharepointalist)",
+        "[Zhephyr](https://github.com/Zhephyr54)"
       ]
     },
     {
