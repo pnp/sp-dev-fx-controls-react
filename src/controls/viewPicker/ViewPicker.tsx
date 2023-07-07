@@ -140,15 +140,16 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
       else {
         selectedViews = selectedViews.filter(view => view !== option.key);
       }
-      this.setState({
-        selectedView:selectedViews
-      });
+
     }
     else {
-      this.setState({
-        selectedView:option.key.toString()
-      });
+      selectedViews = option.key.toString();
     }
+
+    this.setState({
+      selectedView:selectedViews
+    });
+
     if (onSelectionChanged) {
       onSelectionChanged(cloneDeep(selectedViews));
     }
