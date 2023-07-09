@@ -207,9 +207,9 @@ export class DynamicForm extends React.Component<
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
-        } else if(val.fieldType === "Number"){
-          if(!val.showAsPercentage){
-            if((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)){
+        } else if (val.fieldType === "Number") {
+          if (!val.showAsPercentage) {
+            if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
               shouldBeReturnBack = true;
             }
           }
@@ -364,9 +364,9 @@ export class DynamicForm extends React.Component<
           const folderTitle =
             objects[titleField] !== undefined && objects[titleField] !== ""
               ? (objects[titleField] as string).replace(
-                  /["|*|:|<|>|?|/|\\||]/g,
-                  "_"
-                ) // Replace not allowed chars in folder name
+                /["|*|:|<|>|?|/|\\||]/g,
+                "_"
+              ) // Replace not allowed chars in folder name
               : ""; // Empty string will be replaced by SPO with Folder Item ID
           const newFolder = await library.rootFolder.addSubFolderUsingPath(
             folderTitle
@@ -715,9 +715,9 @@ export class DynamicForm extends React.Component<
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description,
-            maximumValue:field.MaximumValue,
-            minimumValue:field.MinimumValue,
-            showAsPercentage:field.ShowAsPercentage
+            maximumValue: field.MaximumValue,
+            minimumValue: field.MinimumValue,
+            showAsPercentage: field.ShowAsPercentage
           });
           tempFields.sort((a, b) => a.Order - b.Order);
         }
