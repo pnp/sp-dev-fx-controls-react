@@ -25,8 +25,9 @@
           "`DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)",
           "`DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)",
           "`ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)",
-          "`PeoplePicker`:  Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)",
-          "`DynamicForm`:  Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)"
+          "`PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)",
+          "`DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)",
+          "`DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)"
         ]
       },
       "contributions": [
