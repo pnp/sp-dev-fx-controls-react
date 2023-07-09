@@ -368,6 +368,7 @@ declare interface IControlStrings {
   DynamicFormEnterDescriptionPlaceholder: string;
   DynamicFormDialogValidationErrorTitle: string;
   DynamicFormDialogValidationErrorMessage: string;
+  DynamicFormNumberErrorMessage: string;
 
   // Location picker
   customDisplayName: string;

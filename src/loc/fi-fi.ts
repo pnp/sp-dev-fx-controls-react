@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Vaihtoehtoinen teksti",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "Tämän kentän arvon on oltava välillä {0} - {1}.",
   "customDisplayName": "Käytä tätä sijaintia:",
   "ListItemCommentDIalogDeleteSubText": "Haluatko varmasti poistaa tämän kommentin?",
   "ListItemCommentsDialogDeleteTitle": "Vahvista poista kommentti",

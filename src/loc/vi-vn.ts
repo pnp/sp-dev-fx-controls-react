@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Văn bản thay thế",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "Sử dụng vị trí này:",
   "ListItemCommentDIalogDeleteSubText": "Bạn có chắc chắn rằng bạn muốn xóa bình luận này không?",
   "ListItemCommentsDialogDeleteTitle": "Xác nhận Xóa Chú thích",

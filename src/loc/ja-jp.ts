@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "代替テキスト",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "この場所を使用します。",
   "ListItemCommentDIalogDeleteSubText": "このコメントを削除しますか?",
   "ListItemCommentsDialogDeleteTitle": "コメントの削除の確認",

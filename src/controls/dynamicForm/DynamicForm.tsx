@@ -207,6 +207,12 @@ export class DynamicForm extends React.Component<
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
+        } else if(val.fieldType === "Number"){
+          if(!val.showAsPercentage){
+            if((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)){
+              shouldBeReturnBack = true;
+            }
+          }
         }
       });
       if (shouldBeReturnBack) {
@@ -709,6 +715,9 @@ export class DynamicForm extends React.Component<
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description,
+            maximumValue:field.MaximumValue,
+            minimumValue:field.MinimumValue,
+            showAsPercentage:field.ShowAsPercentage
           });
           tempFields.sort((a, b) => a.Order - b.Order);
         }

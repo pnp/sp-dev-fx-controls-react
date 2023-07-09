@@ -34,4 +34,7 @@ export interface IDynamicFieldProps {
   additionalData?: FieldChangeAdditionalData;
   principalType?:string;
   description?: string;
+  maximumValue?: number;
+  minimumValue?: number;
+  showAsPercentage?: boolean;
 }

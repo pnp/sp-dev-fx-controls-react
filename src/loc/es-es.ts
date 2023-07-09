@@ -366,6 +366,7 @@ define([], () => {
   "DynamicFormEnterDescriptionPlaceholder": "Texto alternativo",
   "DynamicFormDialogValidationErrorTitle": "Validation Error",
   "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormNumberErrorMessage": "The value of this field must be between {0} and {1}.",
   "customDisplayName": "Utilice esta ubicación:",
   "ListItemCommentDIalogDeleteSubText": "¿Está seguro de que desea eliminar este comentario?",
   "ListItemCommentsDialogDeleteTitle": "Confirmar comentario de eliminación",
