@@ -32,7 +32,7 @@ export interface IDynamicFieldProps {
   dateFormat?: DateFormat;
   firstDayOfWeek: number;
   additionalData?: FieldChangeAdditionalData;
-  principalType?:string;
+  principalType?: string;
   description?: string;
   maximumValue?: number;
   minimumValue?: number;

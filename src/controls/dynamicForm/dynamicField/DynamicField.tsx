@@ -95,7 +95,6 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
     const labelEl = <label className={(required) ? styles.fieldRequired + ' ' + styles.fieldLabel : styles.fieldLabel}>{labelText}</label>;
     const errorText = this.getRequiredErrorText();
-    const errorTextforNumber = this.getNumberErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
     const descriptionEl = <text className={styles.fieldDescription}>{description}</text>;
     const hasImage = !!changedValue;
@@ -213,6 +212,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'Lookup':
+        //eslint-disable-next-line no-case-declarations
         const lookupValue = this.props.newValue ? this.props.newValue : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
@@ -236,6 +236,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'LookupMulti':
+        //eslint-disable-next-line no-case-declarations
         const lookupMultiValue = this.props.newValue ? this.props.newValue : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
@@ -259,6 +260,9 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         </div>;
 
       case 'Number':
+        //eslint-disable-next-line no-case-declarations
+        const customNumberErrorMessage = this.getNumberErrorText();
+
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={"NumberField"} />
@@ -272,7 +276,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorTextforNumber} />
+            errorMessage={customNumberErrorMessage} />
           {descriptionEl}
         </div>;
 
@@ -601,17 +605,34 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       showAsPercentage
     } = this.props;
 
-    let errorText: string | null = null;
+    if ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required) {
+      return strings.DynamicFormRequiredErrorMessage;
+    }
 
-    errorText = this.getRequiredErrorText();
-    if (!errorText && (changedValue < minimumValue) || (changedValue > maximumValue)) {
-      if (!showAsPercentage) {
-        errorText = strings.DynamicFormNumberErrorMessage
-          .replace('{0}', minimumValue.toString())
-          .replace('{1}', maximumValue.toString());
+    let minValue = minimumValue !== undefined && minimumValue !== -(Number.MAX_VALUE) ? minimumValue : undefined;
+    let maxValue = maximumValue !== undefined && maximumValue !== Number.MAX_VALUE ? maximumValue : undefined;
+
+    if (showAsPercentage === true) {
+      // In case of percentage we need to convert the min and max values to a percentage value
+      minValue = minValue !== undefined ? minValue * 100 : undefined;
+      maxValue = maxValue !== undefined ? maxValue * 100 : undefined;
+    }
+
+    if (changedValue !== undefined && changedValue !== null && changedValue.length > 0) {
+      if (minValue !== undefined && maxValue !== undefined && (changedValue < minValue || changedValue > maxValue)) {
+        return strings.DynamicFormNumberValueMustBeBetween.replace('{0}', minValue.toString()).replace('{1}', maxValue.toString());
+      }
+      else {
+        if (minValue !== undefined && changedValue < minValue) {
+          return strings.DynamicFormNumberValueMustBeGreaterThan.replace('{0}', minValue.toString());
+        }
+        else if (maxValue !== undefined && changedValue > maxValue) {
+          return strings.DynamicFormNumberValueMustBeLowerThan.replace('{0}', maxValue.toString());
+        }
       }
     }
-    return errorText;
+
+    return null;
   }
 
   private isEmptyArray(value): boolean {
