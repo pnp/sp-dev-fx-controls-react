@@ -1090,12 +1090,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div id="DynamicFormDiv" className={styles.container} hidden={!isDynamicFormDivVisible}>
           <div className="ms-font-m">
             {/* Change the list Id and list item id before you start to test this control */}
-            <DynamicForm context={this.props.context} listId={"F2AECDE9-2D98-49F2-99ED-B0A3EB107141"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
           </div>
           <div className="ms-font-m">
             {/* Change the list Id and list item id before you start to test this control */}
             {/* This DynamicForm display a dialog message when validation fails */}
-            <DynamicForm context={this.props.context} listId={"F2AECDE9-2D98-49F2-99ED-B0A3EB107141"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
+            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
           </div>
         </div>
         <div id="TeamsDiv" className={styles.container} hidden={!isTeamsDivVisible}>
