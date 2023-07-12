@@ -48,13 +48,23 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
   }
 
   public render(): JSX.Element {
+    const _element: JSX.Element = this.getElement()
     return (
+      _element
+    );
+  }
+
+  private getElement(): JSX.Element {
+    const _element: JSX.Element = typeof this.props.usePanel === "boolean" && this.props.usePanel === false 
+      ? 
+      <CollectionDataViewer {...this.props} fOnSave={this.onSave} fOnClose={this.closePanel} /> 
+      : 
       <div>
         <Label>{this.props.label}</Label>
 
         <DefaultButton text={this.props.manageBtnLabel}
-                       onClick={this.openPanel}
-                       disabled={this.props.fields.length === 0 || this.props.disabled} />
+                      onClick={this.openPanel}
+                      disabled={this.props.fields.length === 0 || this.props.disabled} />
 
         {
           (!this.props.fields || this.props.fields.length === 0) && //<FieldErrorMessage errorMessage={strings.CollectionDataEmptyFields} />
@@ -62,12 +72,12 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
         }
 
         <Panel isOpen={this.state.panelOpen}
-               onDismiss={this.closePanel}
-               type={PanelType.large}
-               headerText={this.props.panelHeader}
-               onOuterClick={()=>{ /* no-op; */}}
-               className={`FieldCollectionData__panel ${this.props.panelClassName || ""}`}
-               { ...this.props.panelProps ?? {}} >
+              onDismiss={this.closePanel}
+              type={PanelType.large}
+              headerText={this.props.panelHeader}
+              onOuterClick={()=>{ /* no-op; */}}
+              className={`FieldCollectionData__panel ${this.props.panelClassName || ""}`}
+              { ...this.props.panelProps ?? {}} >
           {
             this.props.panelDescription && (
               <p className="FieldCollectionData__panel__description">{this.props.panelDescription}</p>
@@ -77,6 +87,7 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
           <CollectionDataViewer {...this.props} fOnSave={this.onSave} fOnClose={this.closePanel} />
         </Panel>
       </div>
-    );
+
+  return _element;
   }
 }
