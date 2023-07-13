@@ -27,7 +27,8 @@
           "`ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)",
           "`PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)",
           "`DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)",
-          "`DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)"
+          "`DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)",
+          "`DynamicForm`: controls are shown with error messages even if the values are assigned [#1133](https://github.com/pnp/sp-dev-fx-controls-react/issues/1586)"
         ]
       },
       "contributions": [
@@ -35,11 +36,13 @@
         "[Ayoub](https://github.com/ayoubqrt)",
         "[Desislav](https://github.com/DMichev)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
+        "[João Mendes](https://github.com/joaojmendes)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Rico van de Ven](https://github.com/RicoNL)",
         "[Sharepointalist](https://github.com/sharepointalist)",
         "[Zhephyr](https://github.com/Zhephyr54)"
+
       ]
     },
     {
@@ -118,6 +121,7 @@
           "`DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)",
           "`RichText`: Use theme colors - fix dark mode [#669](https://github.com/pnp/sp-dev-fx-controls-react/issues/669)",
           "`FilePicker`: Use theme colors - fix dark mode [#1132](https://github.com/pnp/sp-dev-fx-controls-react/issues/1132)"
+
         ]
       },
       "contributions": [
