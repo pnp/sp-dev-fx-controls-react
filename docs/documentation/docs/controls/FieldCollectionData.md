@@ -106,8 +106,8 @@ The `FieldCollectionData` control can be configured with the following propertie
 | itemsPerPage | number | no | Allows you to specify the amount of items displayed per page. Paging control is added automatically. | |
 | executeFiltering | (searchFilter: string, item: any) => boolean | no | Allows you to show Search Box and specify own filtering logic. | |
 | panelProps | IPanelProps | no | Allows you to pass in props of the panel such as type and customWidth to control the underlying panel. | |
-| context | WebpartContext | no | Needed if **peoplepicker** field type is used | |
-| usePanel | boolean | no | Specify if you want the control to opened in a panel or directly on the page | true | 
+| context | BaseComponentContext | no | Needed if **peoplepicker** field type is used | |
+| usePanel | boolean | no | Specify if you want the control to opened in a panel or directly on the page (only useful within webpart) | true | 
 | noDataMessage | string | no | Specify the message when no items are added to the collection ||
 
 Interface `ICustomCollectionField`
@@ -128,7 +128,7 @@ Interface `ICustomCollectionField`
 | onCustomRender | (field: ICustomCollectionField, value: any, onUpdate: (fieldId: string, value: any) => void, item: any, itemUniqueId: string, onCustomFieldValidation: (fieldId: string, errorMessage: string) => void) => JSX.Element | no | This property is only required if you are using the `custom` field type and it can be used to specify the custom rendering of your control in the collection data. |
 | multiSelect | boolean| no | Specifies multiple options can be selected (**combobox**) or mutliple users can be selected (**peoplepicker**) |
 | allowFreeform | boolean | no | Specifies that own options can be entered. Only for **combobox** field type |
-| minimumUsers| number | no | Specifies the minimum number of users to has to be entered for **peoplepicker** field type |
+| minimumUsers| number | no | Specifies the minimum number of users to be entered for **peoplepicker** field type |
 | minimumUsersMessage| string | no | Specifies the message to be displayed if minimumUsers are not entered for **peoplepicker** field type |
 | maximumUsers | number | no | Specifies the maximum number of users to be entered for **peoplepicker** field type |
 
