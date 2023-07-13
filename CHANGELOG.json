@@ -13,7 +13,8 @@
           "`DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)",
           "`ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)",
           "`AdaptiveCardHost`: Add null check for adaptive card elements [#1574](https://github.com/pnp/sp-dev-fx-controls-react/pull/1574)",
-          "`ControlsTestWebPart`: Updated the ControlsTestWebPart to show the controls filtered by control type [#1547](https://github.com/pnp/sp-dev-fx-controls-react/pull/1547)"
+          "`ControlsTestWebPart`: Updated the ControlsTestWebPart to show the controls filtered by control type [#1547](https://github.com/pnp/sp-dev-fx-controls-react/pull/1547)",
+          "`fast-serve`: Fast-serve updated to the latest version and serve warnings fixed [#1589](https://github.com/pnp/sp-dev-fx-controls-react/pull/1589)"
         ],
         "fixes": [
           "`FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)",
@@ -40,6 +41,7 @@
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Patrik Hellgren](https://github.com/patrikhellgren)",
         "[Rico van de Ven](https://github.com/RicoNL)",
+        "[Sergei Sergeev](https://github.com/s-KaiNet)",
         "[Sharepointalist](https://github.com/sharepointalist)",
         "[Zhephyr](https://github.com/Zhephyr54)"
 
