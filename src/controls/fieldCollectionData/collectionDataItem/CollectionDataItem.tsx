@@ -579,6 +579,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         return <TextField placeholder={field.placeholder || field.title}
           className={styles.collectionDataField}
           value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
           disabled={disableFieldOnEdit}
           onChange={(e, value) => this.onValueChanged(field.id, value)}
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
