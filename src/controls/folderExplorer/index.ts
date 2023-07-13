@@ -1,2 +1,2 @@
 export * from "./FolderExplorer/index";
-export {IFolder} from "../../services/IFolderExplorerService";
+export type { IFolder } from "../../services/IFolderExplorerService";
