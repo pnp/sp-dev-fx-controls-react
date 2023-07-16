@@ -2,7 +2,8 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
 import { SPFI } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { JSONParse } from '@pnp/queryable';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo, ITerms } from '@pnp/sp/taxonomy';
 import { getSP } from '../common/utilities/PnPJSConfig';
 
 export class SPTaxonomyService {
@@ -14,38 +15,37 @@ export class SPTaxonomyService {
   }
 
   public async getTerms(termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize: number = 50): Promise<{ value: ITermInfo[], skiptoken: string }> {
-      try {
-        const parser = new LambdaParser(async (r: Response) => {
-          const json = await r.json();
-          let newSkiptoken='';
-          if(json['@odata.nextLink']) {
-            const urlParams = new URLSearchParams(json['@odata.nextLink'].split('?')[1]);
-            if(urlParams.has('$skiptoken')) {
-              newSkiptoken = urlParams.get('$skiptoken');
-            }
-          }
-          return { value: json.value, skiptoken: newSkiptoken };
-        });
-
-        let legacyChildrenUrlAndQuery = '';
-        if (parentTermId && parentTermId !== Guid.empty) {
-          legacyChildrenUrlAndQuery = this._sp.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren').toUrl();
-        }
-        else {
-          legacyChildrenUrlAndQuery = this._sp.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren').toUrl();
-        }
-        let legacyChildrenQueryable = SharePointQueryableCollection(legacyChildrenUrlAndQuery).top(pageSize).usingParser(parser);
-        if (hideDeprecatedTerms) {
-          legacyChildrenQueryable = legacyChildrenQueryable.filter('isDeprecated eq false');
-        }
-        if (skiptoken && skiptoken !== '') {
-          legacyChildrenQueryable.query.set('$skiptoken', skiptoken);
-        }
-        const termsResult = await legacyChildrenQueryable() as {value: ITermInfo[], skiptoken: string};
-        return termsResult;
-      } catch (error) {
-        return { value: [], skiptoken: '' };
+    const localSpfi = this._sp.using(JSONParse());
+    try {
+      let legacyChildrenTerms: ITerms;
+      if (parentTermId && parentTermId !== Guid.empty) {
+        legacyChildrenTerms = (localSpfi.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren') as unknown as ITerms);
       }
+      else {
+        legacyChildrenTerms = (localSpfi.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren') as unknown as ITerms);
+      }
+      legacyChildrenTerms = legacyChildrenTerms.top(pageSize);
+      if (hideDeprecatedTerms) {
+        legacyChildrenTerms = legacyChildrenTerms.filter('isDeprecated eq false');
+      }
+      if (skiptoken && skiptoken !== '') {
+        legacyChildrenTerms.query.set('$skiptoken', skiptoken);
+      }
+
+      // type manipulations as we're getting plain JSON here
+      const termsJsonResult = await legacyChildrenTerms() as { '@odata.nextLink': string | undefined, value: ITermInfo[] };
+      let newSkiptoken = '';
+      if (termsJsonResult['@odata.nextLink']) {
+        const urlParams = new URLSearchParams(termsJsonResult['@odata.nextLink'].split('?')[1]);
+        if (urlParams.has('$skiptoken')) {
+          newSkiptoken = urlParams.get('$skiptoken');
+        }
+      }
+
+      return { value: termsJsonResult.value as ITermInfo[], skiptoken: newSkiptoken };
+    } catch (error) {
+      return { value: [], skiptoken: '' };
+    }
   }
 
   public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo> {
@@ -53,7 +53,7 @@ export class SPTaxonomyService {
       return undefined;
     }
     try {
-      const termInfo = await sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString()).expand("parent")();
+      const termInfo = await this._sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString()).expand("parent")();
       return termInfo;
     } catch (error) {
       return undefined;
@@ -69,21 +69,20 @@ export class SPTaxonomyService {
         `stringMatchId='${stringMatchId}'`
       ];
 
-      if(parentTermId !== Guid.empty) {
+      if (parentTermId !== Guid.empty) {
         query.push(`parentTermId='${parentTermId}'`);
       }
 
-      const searchTermUrl = sp.termStore.concat(`/searchTerm(${query.join(',')})`).toUrl();
-      const searchTermQuery = SharePointQueryableCollection(searchTermUrl).top(pageSize);
+      const searchTermQuery = (this._sp.termStore.concat(`/searchTerm(${query.join(',')})`) as unknown as ITerms).top(pageSize);
       let filteredTerms: ITermInfo[] = await searchTermQuery();
 
-      if(allowSelectingChildren === false) {
+      if (allowSelectingChildren === false) {
         const hasParentId = parentTermId !== Guid.empty;
 
-        const set = sp.termStore.sets.getById(termSetId.toString());
+        const set = this._sp.termStore.sets.getById(termSetId.toString());
         const collection = hasParentId ? set.terms.getById(parentTermId.toString()).children : set.children;
 
-        const childrenIds = await collection.select("id").get().then(children => children.map(c => c.id));
+        const childrenIds = await collection.select("id")().then(children => children.map(c => c.id));
         filteredTerms = filteredTerms.filter(term => childrenIds.includes(term.id));
       }
 
@@ -94,12 +93,12 @@ export class SPTaxonomyService {
   }
 
   public async getTermSetInfo(termSetId: Guid): Promise<ITermSetInfo | undefined> {
-    const tsInfo = await sp.termStore.sets.getById(termSetId.toString()).get();
+    const tsInfo = await this._sp.termStore.sets.getById(termSetId.toString())();
     return tsInfo;
   }
 
   public async getTermStoreInfo(): Promise<ITermStoreInfo | undefined> {
-    const termStoreInfo = await sp.termStore();
+    const termStoreInfo = await this._sp.termStore();
     return termStoreInfo;
   }
 }

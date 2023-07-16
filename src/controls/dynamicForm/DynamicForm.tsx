@@ -31,7 +31,7 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
-import { SPFI, spfi } from "@pnp/sp";
+import { SPFI } from "@pnp/sp";
 import { getSP } from "../../common/utilities/PnPJSConfig";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
@@ -406,7 +406,7 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
-    newValue: any,
+    newValue: any, // eslint-disable-line @typescript-eslint/no-explicit-any
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
     // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -765,8 +765,8 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
-    // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const { context } = this.props;
       const webAbsoluteUrl = !webUrl ? this._webURL : webUrl;

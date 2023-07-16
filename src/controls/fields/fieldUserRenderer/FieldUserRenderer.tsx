@@ -23,7 +23,6 @@ import {
 import { IFieldRendererProps } from "../fieldCommon/IFieldRendererProps";
 
 import styles from "./FieldUserRenderer.module.scss";
-import { IContext } from "../../../common/Interfaces";
 import { GeneralHelper } from "../../../common/utilities/GeneralHelper";
 import FieldUserHoverCard, {
   IFieldUserHoverCardProps,

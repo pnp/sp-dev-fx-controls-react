@@ -7,7 +7,7 @@ import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
-import { IFileInfo, IFiles } from "@pnp/sp/files";
+import { IFileInfo } from "@pnp/sp/files";
 import { SPFI } from "@pnp/sp";
 import { getSP } from "../common/utilities/PnPJSConfig";
 
