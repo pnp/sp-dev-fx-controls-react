@@ -610,7 +610,11 @@ export default class SPService implements ISPService {
           const emails = [];
           result[fieldName].forEach(element => {
             const loginNameWithoutClaimsToken = element.Name.split("|").pop();
-            emails.push(loginNameWithoutClaimsToken + "/" + element.Title);
+            if(!loginNameWithoutClaimsToken.toLowerCase().includes('null')){
+              if(!element.Title.toLowerCase().includes('null')){
+                emails.push(loginNameWithoutClaimsToken + "/" + element.Title);
+              }
+            }
           });
           return emails;
         }
@@ -634,11 +638,15 @@ export default class SPService implements ISPService {
         if (result && result[fieldName]) {
           const element = result[fieldName]
           const loginNameWithoutClaimsToken = element.Name.split("|").pop();
-          return loginNameWithoutClaimsToken + "/" + element.Title;
+          if(!loginNameWithoutClaimsToken.toLowerCase().includes('null')){
+            if(!element.Title.toLowerCase().includes('null')){
+              return loginNameWithoutClaimsToken + "/" + element.Title;
+            }
+          }
         }
       }
 
-      return null;
+      return [];
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);

@@ -199,6 +199,10 @@ export class DynamicForm extends React.Component<
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
+        } else if (val.fieldType === "Number") {
+          if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
+            shouldBeReturnBack = true;
+          }
         }
       });
       if (shouldBeReturnBack) {
@@ -252,7 +256,7 @@ export class DynamicForm extends React.Component<
               .map((term) => `-1#;${term.name}|${term.key};`)
               .join("#");
           } else if (fieldType === "User") {
-            objects[`${columnInternalName}Id`] = val.newValue;
+            objects[`${columnInternalName}Id`] = val.newValue.length === 0 ? null : val.newValue;
           } else if (fieldType === "Choice") {
             objects[columnInternalName] = val.newValue.key;
           } else if (fieldType === "MultiChoice") {
@@ -261,7 +265,7 @@ export class DynamicForm extends React.Component<
             objects[columnInternalName] = JSON.stringify(val.newValue);
           } else if (fieldType === "UserMulti") {
             objects[`${columnInternalName}Id`] = {
-              results: val.newValue.lenght === 0 ? null : val.newValue,
+              results: val.newValue.length === 0 ? null : val.newValue,
             };
           } else if (fieldType === "Thumbnail") {
             if (additionalData) {
@@ -350,9 +354,9 @@ export class DynamicForm extends React.Component<
           const folderTitle =
             objects[titleField] !== undefined && objects[titleField] !== ""
               ? (objects[titleField] as string).replace(
-                  /["|*|:|<|>|?|/|\\||]/g,
-                  "_"
-                ) // Replace not allowed chars in folder name
+                /["|*|:|<|>|?|/|\\||]/g,
+                "_"
+              ) // Replace not allowed chars in folder name
               : ""; // Empty string will be replaced by SPO with Folder Item ID
           const newFolder = await library.rootFolder.addSubFolderUsingPath(
             folderTitle
@@ -512,6 +516,9 @@ export class DynamicForm extends React.Component<
           let richText = false;
           let dateFormat: DateFormat | undefined;
           let principalType = "";
+          let minValue: number | undefined;
+          let maxValue: number | undefined;
+          let showAsPercentage: boolean | undefined;
           if (item !== null) {
             defaultValue = item[field.EntityPropertyName];
           } else {
@@ -523,6 +530,10 @@ export class DynamicForm extends React.Component<
             });
           } else if (fieldType === "Note") {
             richText = field.RichText;
+          } else if (fieldType === "Number") {
+            minValue = field.MinimumValue;
+            maxValue = field.MaximumValue;
+            showAsPercentage = field.ShowAsPercentage;
           } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
@@ -700,6 +711,9 @@ export class DynamicForm extends React.Component<
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description,
+            minimumValue: minValue,
+            maximumValue: maxValue,
+            showAsPercentage: showAsPercentage,
           });
           tempFields.sort((a, b) => a.Order - b.Order);
         }

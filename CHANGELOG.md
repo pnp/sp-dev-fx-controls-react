@@ -11,6 +11,10 @@
 - `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
 - `DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
 - `DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)
+- `DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)
+- `ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)
+- `AdaptiveCardHost`: Add null check for adaptive card elements [#1574](https://github.com/pnp/sp-dev-fx-controls-react/pull/1574)
+- `ControlsTestWebPart`: Updated the ControlsTestWebPart to show the controls filtered by control type [#1547](https://github.com/pnp/sp-dev-fx-controls-react/pull/1547)
 
 ### Fixes
 
@@ -18,10 +22,18 @@
 - `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
 - `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
 - `ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
+- `fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)
+- `FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)
+- `DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)
+- `DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)
+- `ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)
+- `PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)
+- `DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)
+- `DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sharepointalist](https://github.com/sharepointalist).
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Desislav](https://github.com/DMichev), [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/patrikhellgren), [Rico van de Ven](https://github.com/RicoNL), [Sharepointalist](https://github.com/sharepointalist), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 3.14.0
 
