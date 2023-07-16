@@ -576,7 +576,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.setState({
       items: items.value ? items.value : [],
       termStoreInfo: await this.spTaxonomyService.getTermStoreInfo(),
-      termSetInfo: await this.spTaxonomyService.getTermSetInfo(Guid.parse("4bc86596-7caf-4e70-80c9-d9769e448988")),
+      termSetInfo: await this.spTaxonomyService.getTermSetInfo(Guid.parse("8ea5ac06-fd7c-4269-8d0d-02f541df8eb9")),
     });
 
     // // Get Authors in the SharePoint Document library -- For People Picker Testing
@@ -1260,8 +1260,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <TaxonomyPicker
               initialValues={this.state.initialValues}
               allowMultipleSelections={true}
-              termsetNameOrID="41dec50a-3e09-4b3f-842a-7224cffc74c0"
-              anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
+              termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
+              // anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
               // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
               // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
               // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
@@ -2231,7 +2231,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div id="ModernTaxonomyPickerDiv" className={styles.container} hidden={!isModernTaxonomyPickerDivVisible}>
           <ModernTaxonomyPicker
             allowMultipleSelections={true}
-            termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
+            termSetId={"8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"}
             panelTitle="Panel title"
             label={"Modern Taxonomy Picker"}
             context={this.props.context}
