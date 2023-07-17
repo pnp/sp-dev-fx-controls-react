@@ -1,6 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { SPFI } from '@pnp/sp';
+import { ISPCollection, ISPFXContext, SPCollection, SPFI, SPFx, spfi } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { JSONParse } from '@pnp/queryable';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo, ITerms } from '@pnp/sp/taxonomy';
@@ -14,15 +14,17 @@ export class SPTaxonomyService {
     this._sp = getSP(context);
   }
 
-  public async getTerms(termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize: number = 50): Promise<{ value: ITermInfo[], skiptoken: string }> {
+  public getTerms = async (termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize: number = 50): Promise<{ value: ITermInfo[], skiptoken: string }> => {
+
+    // we need to use local sp context to provide JSONParse behavior
     const localSpfi = this._sp.using(JSONParse());
     try {
-      let legacyChildrenTerms: ITerms;
+      let legacyChildrenTerms: ISPCollection;
       if (parentTermId && parentTermId !== Guid.empty) {
-        legacyChildrenTerms = (localSpfi.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren') as unknown as ITerms);
+        legacyChildrenTerms = SPCollection(localSpfi.termStore.sets.getById(termSetId.toString()).terms.getById(parentTermId.toString()).concat('/getLegacyChildren'));
       }
       else {
-        legacyChildrenTerms = (localSpfi.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren') as unknown as ITerms);
+        legacyChildrenTerms = SPCollection(localSpfi.termStore.sets.getById(termSetId.toString()).concat('/getLegacyChildren'));
       }
       legacyChildrenTerms = legacyChildrenTerms.top(pageSize);
       if (hideDeprecatedTerms) {
@@ -44,11 +46,12 @@ export class SPTaxonomyService {
 
       return { value: termsJsonResult.value as ITermInfo[], skiptoken: newSkiptoken };
     } catch (error) {
+      console.error(`SPTaxonomyService.getTerms:`, error);
       return { value: [], skiptoken: '' };
     }
   }
 
-  public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo> {
+  public getTermById = async (termSetId: Guid, termId: Guid): Promise<ITermInfo> => {
     if (termId === Guid.empty) {
       return undefined;
     }
@@ -56,11 +59,20 @@ export class SPTaxonomyService {
       const termInfo = await this._sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString()).expand("parent")();
       return termInfo;
     } catch (error) {
+      console.error(`SPTaxonomyService.getTermById:`, error);
       return undefined;
     }
   }
 
-  public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, allowSelectingChildren = true, stringMatchId: string = '0', pageSize: number = 50): Promise<ITermInfo[]> {
+  public searchTerm = async (
+    termSetId: Guid,
+    label: string,
+    languageTag: string,
+    parentTermId?: Guid,
+    allowSelectingChildren = true,
+    stringMatchId: string = '0',
+    pageSize: number = 50
+  ): Promise<ITermInfo[]> => {
     try {
       const query = [
         `label='${label}'`,
@@ -73,7 +85,7 @@ export class SPTaxonomyService {
         query.push(`parentTermId='${parentTermId}'`);
       }
 
-      const searchTermQuery = (this._sp.termStore.concat(`/searchTerm(${query.join(',')})`) as unknown as ITerms).top(pageSize);
+      const searchTermQuery = SPCollection(this._sp.termStore.concat(`/searchTerm(${query.join(',')})`)).top(pageSize);
       let filteredTerms: ITermInfo[] = await searchTermQuery();
 
       if (allowSelectingChildren === false) {
@@ -88,16 +100,17 @@ export class SPTaxonomyService {
 
       return filteredTerms;
     } catch (error) {
+      console.error(`SPTaxonomyService.searchTerm:`, error);
       return [];
     }
   }
 
-  public async getTermSetInfo(termSetId: Guid): Promise<ITermSetInfo | undefined> {
+  public getTermSetInfo = async (termSetId: Guid): Promise<ITermSetInfo | undefined> => {
     const tsInfo = await this._sp.termStore.sets.getById(termSetId.toString())();
     return tsInfo;
   }
 
-  public async getTermStoreInfo(): Promise<ITermStoreInfo | undefined> {
+  public getTermStoreInfo = async (): Promise<ITermStoreInfo | undefined> => {
     const termStoreInfo = await this._sp.termStore();
     return termStoreInfo;
   }
