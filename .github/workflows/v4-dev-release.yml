@@ -1,8 +1,8 @@
-name: BETA Release
+name: V4 DEV Release
 on:
   push:
     branches:
-      - dev
+      - v4-dev
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       run: npm i
 
     - name: Update the package version
-      if: github.ref == 'refs/heads/dev'
+      if: github.ref == 'refs/heads/v4-dev'
       run: node scripts/update-package-version.js $GITHUB_RUN_ID
 
     - name: Update version number for telemetry
@@ -30,8 +30,8 @@ jobs:
     - name: Run build
       run: npm run build
 
-    - name: Publish beta release
-      run: npm publish --tag next --access public
-      if: github.ref == 'refs/heads/dev'
+    - name: Publish v4 dev release
+      run: npm publish --tag v4 --access public
+      if: github.ref == 'refs/heads/v4-dev'
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
