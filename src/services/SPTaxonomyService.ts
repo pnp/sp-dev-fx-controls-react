@@ -1,6 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { ISPCollection, ISPFXContext, SPCollection, SPFI, SPFx, spfi } from '@pnp/sp';
+import { ISPCollection, SPCollection, SPFI } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { JSONParse } from '@pnp/queryable';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo, ITerms } from '@pnp/sp/taxonomy';
