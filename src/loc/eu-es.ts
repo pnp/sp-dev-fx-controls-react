@@ -357,6 +357,8 @@ define([], () => {
     ModernTaxonomyPickerPanelCloseButtonText: "Itxi",
     ModernTaxonomyPickerNoResultsFound: "Ez da emaitzarik aurkitu",
     ModernTaxonomyPickerSuggestionInLabel: "in",
+TermSertNaviagtionErrorMessage: "TermSet not found",
+TermSetNavigationNoTerms: "No terms defined",
 
     "ModernAudioPlay": "Play",
     "ModernAudioPause": "Pause",
@@ -371,5 +373,17 @@ define([], () => {
     "UpLoadFilesDragDropLabel": "Drag and Drop files or select Add File button",
     "UpLoadFilesSelectAllLabel": "Select all",
     "UploadFilesUploadButtonLabel": "Upload",
+
+  "DynamicFormLoading": "Loading...",
+  "DynamicFormPleaseWait": "Please wait...",
+  "DynamicFormRequiredErrorMessage": "You can't leave this blank.",
+  "DynamicFormTermPanelTitle": "Select Term",
+  "DynamicFormEnterURLPlaceholder": "Enter a URL",
+  "DynamicFormEnterDescriptionPlaceholder": "Alternative text",
+  "DynamicFormDialogValidationErrorTitle": "Balioztatze-errorea",
+  "DynamicFormDialogValidationErrorMessage": "Balidazio-erroreak daude, konpondu aurretik, mesedez.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Balioak {0} baino handiagoa izan behar du",
+  "DynamicFormNumberValueMustBeBetween": "Balioak {0} eta {1} artean egon behar du",
+  "DynamicFormNumberValueMustBeLowerThan": "Balioak {0} baino txikiagoa izan behar du",
   };
 });

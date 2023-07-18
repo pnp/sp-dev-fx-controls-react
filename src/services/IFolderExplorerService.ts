@@ -1,3 +1,5 @@
+import { IFileInfo } from "@pnp/sp/files";
+
 export interface IFolder {
   /**
    * Folder name
@@ -25,6 +27,13 @@ export interface IFolderExplorerService {
   * @param folderRelativeUrl - the relative url of the folder
   */
   GetFolders(webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFolder[]>;
+  
+  /**
+  * Get files within a given library or sub folder
+  * @param webAbsoluteUrl - the url of the target site
+  * @param folderRelativeUrl - the relative url of the folder
+  */
+  GetFiles(webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFileInfo[]>;
 
   /**
   * Create a new folder

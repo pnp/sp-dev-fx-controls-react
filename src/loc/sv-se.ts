@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Spara",
   "Cancel": "Avbryt",
   "SiteBreadcrumbLabel": "Brödsmulemeny",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Välj term",
   "DynamicFormEnterURLPlaceholder": "Ange en webbadress",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativ text",
+  "DynamicFormDialogValidationErrorTitle": "Valideringsfel",
+  "DynamicFormDialogValidationErrorMessage": "Det finns valideringsfel, åtgärda dem innan du sparar.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Värdet måste vara större än {0}",
+  "DynamicFormNumberValueMustBeBetween": "Värdet måste vara mellan {0} och {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Värdet måste vara lägre än {0}",
   "customDisplayName": "Använd den här platsen:",
   "ListItemCommentDIalogDeleteSubText": "Vill du ta bort den här kommentaren?",
   "ListItemCommentsDialogDeleteTitle": "Bekräfta ta bort kommentar",

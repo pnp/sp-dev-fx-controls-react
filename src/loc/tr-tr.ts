@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Kurtarmak",
   "Cancel": "İptal",
   "SiteBreadcrumbLabel": "Web sitesi kırıntısı",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Terim Seç",
   "DynamicFormEnterURLPlaceholder": "URL girme",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatif metin",
+  "DynamicFormDialogValidationErrorTitle": "Doğrulama Hatası",
+  "DynamicFormDialogValidationErrorMessage": "Doğrulama hataları var, lütfen kaydetmeden önce düzeltin.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Değer, {0} değerinden büyük olmalıdır",
+  "DynamicFormNumberValueMustBeBetween": "Değer, {0} ile {1} arasında olmalıdır",
+  "DynamicFormNumberValueMustBeLowerThan": "Değer, {0} değerinden düşük olmalıdır",
   "customDisplayName": "Bu konumu kullan:",
   "ListItemCommentDIalogDeleteSubText": "Bu yorumu silmek istediğinizden emin misiniz?",
   "ListItemCommentsDialogDeleteTitle": "Açıklamayı Sil'i Onayla",

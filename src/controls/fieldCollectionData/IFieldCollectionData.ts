@@ -1,4 +1,5 @@
 import { ICustomCollectionField } from "./ICustomCollectionField";
+import { IPanelProps } from "office-ui-fabric-react";
 
 export interface IFieldCollectionDataProps {
   /**
@@ -70,8 +71,12 @@ export interface IFieldCollectionDataProps {
    */
   itemsPerPage?: number;
   /**
-   * Allows you to show Search Box and specify own filtering logic.
+   * Allow overriding panel props such as size, type, layerProps, etc.
    */
+  panelProps?: IPanelProps;
+  /**
+   * Allows you to show Search Box and specify own filtering logic.
+   */  
   executeFiltering?: (searchFilter: string, item: any) => boolean; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   onChanged: (value: any[]) => void; // eslint-disable-line @typescript-eslint/no-explicit-any

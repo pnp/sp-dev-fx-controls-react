@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Sauvegarder",
   "Cancel": "Annuler",
   "SiteBreadcrumbLabel": "Fil d'Ariane",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Sélectionner un terme",
   "DynamicFormEnterURLPlaceholder": "Entrez une URL",
   "DynamicFormEnterDescriptionPlaceholder": "Texte alternatif",
+  "DynamicFormDialogValidationErrorTitle": "Erreur de validation",
+  "DynamicFormDialogValidationErrorMessage": "Il y a des erreurs de validation, veuillez les corriger avant d'enregistrer.",
+  "DynamicFormNumberValueMustBeGreaterThan": "La valeur doit être supérieure à {0}",
+  "DynamicFormNumberValueMustBeBetween": "La valeur doit être comprise entre {0} et {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "La valeur doit être inférieure à {0}",
   "customDisplayName": "Utilisez cet emplacement :",
   "ListItemCommentDIalogDeleteSubText": "Êtes-vous sûr de vouloir supprimer ce commentaire ?",
   "ListItemCommentsDialogDeleteTitle": "Confirmer la suppression du commentaire",

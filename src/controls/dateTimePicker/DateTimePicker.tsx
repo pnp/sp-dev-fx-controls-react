@@ -241,6 +241,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       timeDisplayControlType,
       placeholder,
       showLabels,
+      initialPickerDate,
       minDate,
       maxDate,
       minutesIncrementStep,
@@ -337,6 +338,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 showMonthPickerAsOverlay={showMonthPickerAsOverlay}
                 showWeekNumbers={showWeekNumbers}
                 placeholder={placeholder}
+                initialPickerDate={initialPickerDate}
                 minDate={minDate}
                 maxDate={maxDate}
                 textField={{

@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Zachrániť",
   "Cancel": "Zrušiť",
   "SiteBreadcrumbLabel": "Menu",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Vybrať výraz",
   "DynamicFormEnterURLPlaceholder": "Zadanie adresy URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatívny text",
+  "DynamicFormDialogValidationErrorTitle": "Chyba overenia",
+  "DynamicFormDialogValidationErrorMessage": "Vyskytli sa chyby overenia, pred uložením ich opravte.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Hodnota musí byť väčšia ako {0}",
+  "DynamicFormNumberValueMustBeBetween": "Hodnota musí byť medzi {0} a {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Hodnota musí byť nižšia ako {0}",
   "customDisplayName": "Použite toto umiestnenie:",
   "ListItemCommentDIalogDeleteSubText": "Naozaj chcete odstrániť tento komentár?",
   "ListItemCommentsDialogDeleteTitle": "Potvrdiť odstránenie komentára",

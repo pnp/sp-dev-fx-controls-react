@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Taupyti",
   "Cancel": "Atšaukti",
   "SiteBreadcrumbLabel": "Svetainės navigacijos grandinė",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Pasirinkti terminą",
   "DynamicFormEnterURLPlaceholder": "Įveskite URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternatyvus tekstas",
+  "DynamicFormDialogValidationErrorTitle": "Patvirtinimo klaida",
+  "DynamicFormDialogValidationErrorMessage": "Yra patvirtinimo klaidų, ištaisykite jas prieš išsaugodami.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Reikšmė turi būti didesnė nei {0}",
+  "DynamicFormNumberValueMustBeBetween": "Reikšmė turi būti nuo {0} iki {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Vertė turi būti mažesnė nei {0}",
   "customDisplayName": "Naudokite šią vietą:",
   "ListItemCommentDIalogDeleteSubText": "Ar tikrai norite panaikinti šį komentarą?",
   "ListItemCommentsDialogDeleteTitle": "Patvirtinti naikinimo komentarą",

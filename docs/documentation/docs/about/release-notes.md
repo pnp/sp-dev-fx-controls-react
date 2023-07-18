@@ -1,11 +1,50 @@
 # Releases
 
+## 3.15.0
+
+### New control(s)
+
+- `TermSetNavigation`: new control TermSetNavigation [#1527](https://github.com/pnp/sp-dev-fx-controls-react/pull/1527)
+
+### Enhancements
+
+- `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
+- `DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
+- `DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)
+- `DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)
+- `ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)
+- `AdaptiveCardHost`: Add null check for adaptive card elements [#1574](https://github.com/pnp/sp-dev-fx-controls-react/pull/1574)
+- `ControlsTestWebPart`: Updated the ControlsTestWebPart to show the controls filtered by control type [#1547](https://github.com/pnp/sp-dev-fx-controls-react/pull/1547)
+- `fast-serve`: Fast-serve updated to the latest version and serve warnings fixed [#1589](https://github.com/pnp/sp-dev-fx-controls-react/pull/1589)
+- `DynamicForm`: DynamicForm Number min max [#1585](https://github.com/pnp/sp-dev-fx-controls-react/pull/1585)
+
+### Fixes
+
+- `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
+- `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
+- `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
+- `ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
+- `fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)
+- `FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)
+- `DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)
+- `DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)
+- `ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)
+- `PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)
+- `DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)
+- `DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)
+- `DynamicForm`: controls are shown with error messages even if the values are assigned [#1133](https://github.com/pnp/sp-dev-fx-controls-react/issues/1586)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Desislav](https://github.com/DMichev), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/patrikhellgren), [Rico van de Ven](https://github.com/RicoNL), [Sergei Sergeev](https://github.com/s-KaiNet), [Sharepointalist](https://github.com/sharepointalist), [Zhephyr](https://github.com/Zhephyr54).
+
 ## 3.14.0
 
 ### Enhancements
 
-- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale #1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
+- `DateTimePicker`: Fixed DateTimePicker strings in Danish Locale [#1498](https://github.com/pnp/sp-dev-fx-controls-react/pull/1489)
 - SharePoint Framework v1.17.1 support
+- `FieldCollectionData`: Adds panelProps property to FieldCollectionData [#1525](https://github.com/pnp/sp-dev-fx-controls-react/pull/1525)
 
 ### Fixes
 
@@ -17,10 +56,11 @@
 - `DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)
 - `FolderExplorer`: FolderExplorer doesn't explore folders with ' in the name [#1491](https://github.com/pnp/sp-dev-fx-controls-react/issues/1491)
 - `DynamicForm`: cannot display lookup value when the source field is not Title [#1511](https://github.com/pnp/sp-dev-fx-controls-react/issues/1511)
+- `FilePicker`:Features/1478 filepicker tiles view [#1521](https://github.com/pnp/sp-dev-fx-controls-react/issues/1521)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB), [wuxiaojun514](https://github.com/wuxiaojun514), [Zied FEHRI](https://github.com/ziedfehri).
+Special thanks to our contributors (in alphabetical order): [Chad Eiserloh](https://github.com/c-eiser13), [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergio Villalta](https://github.com/6gal6ler6), [Josef Benda](https://github.com/SmarterJB), [Victor Romanov](https://github.com/VRomanovTau), [wuxiaojun514](https://github.com/wuxiaojun514), [Zied FEHRI](https://github.com/ziedfehri).
 
 ## 3.13.0
 

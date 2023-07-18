@@ -382,6 +382,11 @@ define([], () => {
     DynamicFormTermPanelTitle: "Select Term",
     DynamicFormEnterURLPlaceholder: "Enter a URL",
     DynamicFormEnterDescriptionPlaceholder: "Alternative text",
+    DynamicFormDialogValidationErrorTitle: "Validation Error",
+    DynamicFormDialogValidationErrorMessage: "There are validation errors, please fix them before saving.",
+    DynamicFormNumberValueMustBeGreaterThan: "Value must be greater than {0}",
+    DynamicFormNumberValueMustBeBetween: "Value must be between {0} and {1}",
+    DynamicFormNumberValueMustBeLowerThan: "Value must be lower than {0}",
     customDisplayName: "Use this location:",
     ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
@@ -408,6 +413,8 @@ define([], () => {
     ModernAudioMute: "Mute",
 
     ProgressStepsIndicatorNoSteps: "No steps",
+TermSertNaviagtionErrorMessage: "TermSet not found",
+TermSetNavigationNoTerms: "No terms defined",
 
     UploadFilesButtonLabel: "Add",
     UpLoadFilesDeleteButtonLabel: "Delete",

@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Σώζω",
   "Cancel": "Ακυρώνω",
   "SiteBreadcrumbLabel": "Περιήγηση σε ιστότοπους",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Επιλογή όρου",
   "DynamicFormEnterURLPlaceholder": "Εισαγωγή διεύθυνσης URL",
   "DynamicFormEnterDescriptionPlaceholder": "Εναλλακτικό κείμενο",
+  "DynamicFormDialogValidationErrorTitle": "Σφάλμα επικύρωσης",
+  "DynamicFormDialogValidationErrorMessage": "Υπάρχουν σφάλματα επικύρωσης, διορθώστε τα πριν την αποθήκευση.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Η τιμή πρέπει να είναι μεγαλύτερη από {0}",
+  "DynamicFormNumberValueMustBeBetween": "Η τιμή πρέπει να είναι μεταξύ {0} και {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Η τιμή πρέπει να είναι μικρότερη από {0}",
   "customDisplayName": "Χρησιμοποιήστε αυτήν τη θέση:",
   "ListItemCommentDIalogDeleteSubText": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σχόλιο;",
   "ListItemCommentsDialogDeleteTitle": "Επιβεβαίωση διαγραφής σχολίου",

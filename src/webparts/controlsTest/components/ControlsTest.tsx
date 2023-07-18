@@ -169,9 +169,11 @@ import { WebPartTitle } from "../../../WebPartTitle";
 import { AnimatedDialog } from "../../../AnimatedDialog";
 import styles from "./ControlsTest.module.scss";
 import {
-  IControlsTestProps,
-  IControlsTestState
+  IControlsTestProps
 } from "./IControlsTestProps";
+import {
+  IControlsTestState
+} from "./IControlsTestState";
 import { MyTeams } from "../../../controls/MyTeams";
 import { TeamPicker } from "../../../TeamPicker";
 import { TeamChannelPicker } from "../../../TeamChannelPicker";
@@ -192,6 +194,9 @@ import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
 import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
 import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
+import { IFileInfo } from "@pnp/sp/files";
+import { FieldPicker } from "../../../FieldPicker";
+import { Toggle } from "office-ui-fabric-react";
 
 // Used to render document card
 /**
@@ -505,6 +510,53 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       termStoreInfo: null,
       termSetInfo: null,
       testTerms: [],
+      isWebPartTitleDivVisible: false,
+      isDynamicFormDivVisible: false,
+      isTeamsDivVisible: false,
+      isAccessibleAccordionDivVisible: false,
+      isTaxonomyPickerDivVisible: false,
+      isDateTimePickerDivVisible: false,
+      isRichTextDivVisible: false,
+      isPlaceholderDivVisible: false,
+      isPeoplePickerDivVisible: false,
+      isDragDropFilesDivVisible: false,
+      isListViewDivVisible: false,
+      isChartControlDivVisible: false,
+      isMapDivVisible: false,
+      isModernAudioDivVisible: false,
+      isFileTypeIconDivVisible: false,
+      isSecurityTrimmedControlDivVisible: false,
+      isSitePickerDivVisible: false,
+      isListPickerDivVisible: false,
+      isFieldPickerDivVisible: false,
+      isIconPickerDivVisible: false,
+      isComboBoxListItemPickerDivVisible: false,
+      isIFrameDialogDivVisible: false,
+      isIFramePanelDivVisible: false,
+      isFolderPickerDivVisible: false,
+      isCarouselDivVisible: false,
+      isSiteBreadcrumbDivVisible: false,
+      isFilePickerDivVisible: false,
+      isProgressDivVisible: false,
+      isGridLayoutDivVisible: false,
+      isFolderExplorerDivVisible: false,
+      isTreeViewDivVisible: false,
+      isPaginationDivVisible: false,
+      isFieldCollectionDataDivVisible: false,
+      isDashboardDivVisible: false,
+      isToolbarDivVisible: false,
+      isAnimatedDialogDivVisible: false,
+      isLocationPickerDivVisible: false,
+      isModernTaxonomyPickerDivVisible: false,
+      isAdaptiveCardHostDivVisible: false,
+      isVariantThemeProviderDivVisible: false,
+      isEnhancedThemeProviderDivVisible: false,
+      isAdaptiveCardDesignerHostDivVisible: false,
+      isTaxonomyTreeDivVisible: false,
+      isTestControlDivVisible: false,
+      isUploadFilesDivVisible: false,
+      toggleAll: false,
+      showAllFilters: false
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -748,6 +800,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   }
 
+  private _onFileClick = (file: IFileInfo): void => {
+    console.log('file click', file);
+  }
+
   private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
@@ -791,6 +847,56 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Renders the component
    */
   public render(): React.ReactElement<IControlsTestProps> {
+    const {
+      toggleAll,
+      showAllFilters,
+      isWebPartTitleDivVisible,
+      isDynamicFormDivVisible,
+      isTeamsDivVisible,
+      isAccessibleAccordionDivVisible,
+      isTaxonomyPickerDivVisible,
+      isDateTimePickerDivVisible,
+      isRichTextDivVisible,
+      isPlaceholderDivVisible,
+      isPeoplePickerDivVisible,
+      isDragDropFilesDivVisible,
+      isListViewDivVisible,
+      isChartControlDivVisible,
+      isMapDivVisible,
+      isModernAudioDivVisible,
+      isFileTypeIconDivVisible,
+      isSecurityTrimmedControlDivVisible,
+      isSitePickerDivVisible,
+      isListPickerDivVisible,
+      isFieldPickerDivVisible,
+      isIconPickerDivVisible,
+      isComboBoxListItemPickerDivVisible,
+      isIFrameDialogDivVisible,
+      isIFramePanelDivVisible,
+      isFolderPickerDivVisible,
+      isCarouselDivVisible,
+      isSiteBreadcrumbDivVisible,
+      isFilePickerDivVisible,
+      isProgressDivVisible,
+      isGridLayoutDivVisible,
+      isFolderExplorerDivVisible,
+      isTreeViewDivVisible,
+      isPaginationDivVisible,
+      isFieldCollectionDataDivVisible,
+      isDashboardDivVisible,
+      isToolbarDivVisible,
+      isAnimatedDialogDivVisible,
+      isLocationPickerDivVisible,
+      isModernTaxonomyPickerDivVisible,
+      isAdaptiveCardHostDivVisible,
+      isVariantThemeProviderDivVisible,
+      isEnhancedThemeProviderDivVisible,
+      isAdaptiveCardDesignerHostDivVisible,
+      isTaxonomyTreeDivVisible,
+      isTestControlDivVisible,
+      isUploadFilesDivVisible,
+    } = this.state;
+
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
       {
@@ -809,8 +915,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         selected: ImageSize.large === this.state.imgSize
       }
     ];
-
-
 
     // Specify the fields that need to be viewed in the listview
     const viewFields: IViewField[] = [
@@ -919,838 +1023,917 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       return new Promise((resolve, reject) => setTimeout(resolve, ms));
     };
 
-
     return (
       <div className={styles.controlsTest}>
-        <div className="ms-font-m">
-          {/* Change the list Id and list item id before you start to test this control */}
-          <DynamicForm context={this.props.context} listId={"db25f5f6-5ae1-4fa0-a2f7-e093d3d463ae"} listItemId={1} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+        <div className={styles.container}>
+          <h3>Choose which controls to display</h3>
+          <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
+            <Toggle label="Toggle all" checked={toggleAll} onChange={this._toggleAllFilters} className={styles.toggleFilter} />
+            <Toggle label="Show filters" checked={showAllFilters} onChange={(event, checked) => { this.setState({ showAllFilters: checked })}} className={styles.toggleFilter} />
+          </div>
+          <div className={`${styles.row} ${styles.controlFiltersContainer}`} hidden={!showAllFilters}>
+            <Toggle label="AccessibleAccordion" checked={isAccessibleAccordionDivVisible} onChange={(event, checked) => { this.setState({ isAccessibleAccordionDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="AdaptiveCardDesignerHost" checked={isAdaptiveCardDesignerHostDivVisible} onChange={(event, checked) => { this.setState({ isAdaptiveCardDesignerHostDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="AdaptiveCardHost" checked={isAdaptiveCardHostDivVisible} onChange={(event, checked) => { this.setState({ isAdaptiveCardHostDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="AnimatedDialog" checked={isAnimatedDialogDivVisible} onChange={(event, checked) => { this.setState({ isAnimatedDialogDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Carousel" checked={isCarouselDivVisible} onChange={(event, checked) => { this.setState({ isCarouselDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ChartControl" checked={isChartControlDivVisible} onChange={(event, checked) => { this.setState({ isChartControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ComboBoxListItemPicker" checked={isComboBoxListItemPickerDivVisible} onChange={(event, checked) => { this.setState({ isComboBoxListItemPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Dashboard" checked={isDashboardDivVisible} onChange={(event, checked) => { this.setState({ isDashboardDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="DateTimePicker" checked={isDateTimePickerDivVisible} onChange={(event, checked) => { this.setState({ isDateTimePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="DragDropFiles" checked={isDragDropFilesDivVisible} onChange={(event, checked) => { this.setState({ isDragDropFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="DynamicForm" checked={isDynamicFormDivVisible} onChange={(event, checked) => { this.setState({ isDynamicFormDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="EnhancedThemeProvider" checked={isEnhancedThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isEnhancedThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FieldCollectionData" checked={isFieldCollectionDataDivVisible} onChange={(event, checked) => { this.setState({ isFieldCollectionDataDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FieldPicker" checked={isFieldPickerDivVisible} onChange={(event, checked) => { this.setState({ isFieldPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FilePicker" checked={isFilePickerDivVisible} onChange={(event, checked) => { this.setState({ isFilePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FileTypeIcon" checked={isFileTypeIconDivVisible} onChange={(event, checked) => { this.setState({ isFileTypeIconDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FolderExplorer" checked={isFolderExplorerDivVisible} onChange={(event, checked) => { this.setState({ isFolderExplorerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="FolderPicker" checked={isFolderPickerDivVisible} onChange={(event, checked) => { this.setState({ isFolderPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="GridLayout" checked={isGridLayoutDivVisible} onChange={(event, checked) => { this.setState({ isGridLayoutDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="IconPicker" checked={isIconPickerDivVisible} onChange={(event, checked) => { this.setState({ isIconPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="IFrameDialog" checked={isIFrameDialogDivVisible} onChange={(event, checked) => { this.setState({ isIFrameDialogDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="IFramePanel" checked={isIFramePanelDivVisible} onChange={(event, checked) => { this.setState({ isIFramePanelDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ListPicker" checked={isListPickerDivVisible} onChange={(event, checked) => { this.setState({ isListPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ListView" checked={isListViewDivVisible} onChange={(event, checked) => { this.setState({ isListViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="LocationPicker" checked={isLocationPickerDivVisible} onChange={(event, checked) => { this.setState({ isLocationPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Map" checked={isMapDivVisible} onChange={(event, checked) => { this.setState({ isMapDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ModernAudio" checked={isModernAudioDivVisible} onChange={(event, checked) => { this.setState({ isModernAudioDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ModernTaxonomyPicker" checked={isModernTaxonomyPickerDivVisible} onChange={(event, checked) => { this.setState({ isModernTaxonomyPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Pagination" checked={isPaginationDivVisible} onChange={(event, checked) => { this.setState({ isPaginationDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="PeoplePicker" checked={isPeoplePickerDivVisible} onChange={(event, checked) => { this.setState({ isPeoplePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Placeholder" checked={isPlaceholderDivVisible} onChange={(event, checked) => { this.setState({ isPlaceholderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Progress" checked={isProgressDivVisible} onChange={(event, checked) => { this.setState({ isProgressDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="RichText" checked={isRichTextDivVisible} onChange={(event, checked) => { this.setState({ isRichTextDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="SecurityTrimmedControl" checked={isSecurityTrimmedControlDivVisible} onChange={(event, checked) => { this.setState({ isSecurityTrimmedControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="SiteBreadcrumb" checked={isSiteBreadcrumbDivVisible} onChange={(event, checked) => { this.setState({ isSiteBreadcrumbDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="SitePicker" checked={isSitePickerDivVisible} onChange={(event, checked) => { this.setState({ isSitePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="TaxonomyPicker" checked={isTaxonomyPickerDivVisible} onChange={(event, checked) => { this.setState({ isTaxonomyPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="TaxonomyTree" checked={isTaxonomyTreeDivVisible} onChange={(event, checked) => { this.setState({ isTaxonomyTreeDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Teams" checked={isTeamsDivVisible} onChange={(event, checked) => { this.setState({ isTeamsDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="TestControl" checked={isTestControlDivVisible} onChange={(event, checked) => { this.setState({ isTestControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="Toolbar" checked={isToolbarDivVisible} onChange={(event, checked) => { this.setState({ isToolbarDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="TreeView" checked={isTreeViewDivVisible} onChange={(event, checked) => { this.setState({ isTreeViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="UploadFiles" checked={isUploadFilesDivVisible} onChange={(event, checked) => { this.setState({ isUploadFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="VariantThemeProvider" checked={isVariantThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isVariantThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="WebPartTitle" checked={isWebPartTitleDivVisible} onChange={(event, checked) => { this.setState({ isWebPartTitleDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+          </div>
         </div>
-        <WebPartTitle displayMode={this.props.displayMode}
-          title={this.props.title}
-          updateProperty={this.props.updateProperty}
-          moreLink={
-            <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
-          } />
+        <div id="WebPartTitleDiv" className={styles.container} hidden={!isWebPartTitleDivVisible}>
+          <WebPartTitle displayMode={this.props.displayMode}
+            title={this.props.title}
+            updateProperty={this.props.updateProperty}
+            moreLink={
+              <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
+            } />
+        </div>
+        <div id="DynamicFormDiv" className={styles.container} hidden={!isDynamicFormDivVisible}>
+          <div className="ms-font-m">
+            {/* Change the list Id and list item id before you start to test this control */}
+            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+          </div>
+          <div className="ms-font-m">
+            {/* Change the list Id and list item id before you start to test this control */}
+            {/* This DynamicForm display a dialog message when validation fails */}
+            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
+          </div>
+        </div>
+        <div id="TeamsDiv" className={styles.container} hidden={!isTeamsDivVisible}>
+          <Stack styles={{ root: { marginBottom: 200 } }}>
+            <MyTeams
+              title="My Teams"
+              webPartContext={this.props.context}
+              themeVariant={this.props.themeVariant}
+              enablePersonCardInteraction={true}
+              onSelectedChannel={this.onSelectedChannel}
+            />
+          </Stack>
+          <Stack
+            styles={{ root: { margin: "10px 10px 100px 10px" } }}
+            tokens={{ childrenGap: 10 }}
+          >
+            <TeamPicker
+              label="Select Team"
+              themeVariant={this.props.themeVariant}
+              selectedTeams={this.state.selectedTeam}
+              appcontext={this.props.context}
+              itemLimit={1}
+              onSelectedTeams={(tagList: ITag[]) => {
+                this.setState({ selectedTeamChannels: [] });
+                this.setState({ selectedTeam: tagList });
+                console.log(tagList);
+              }}
+            />
+            {this.state?.selectedTeam && this.state?.selectedTeam.length > 0 && (
+              <>
+                <TeamChannelPicker
+                  label="Select Team Channel"
+                  themeVariant={this.props.themeVariant}
+                  selectedChannels={this.state.selectedTeamChannels}
+                  teamId={this.state.selectedTeam[0].key}
+                  appcontext={this.props.context}
+                  onSelectedChannels={(tagList: ITag[]) => {
+                    this.setState({ selectedTeamChannels: tagList });
+                    console.log(tagList);
+                  }}
+                />
+              </>
+            )}
+          </Stack>
+        </div>
+        <div id="accessibleAccordionDiv" className={styles.container} hidden={!isAccessibleAccordionDivVisible}>
+          <AccessibleAccordion allowZeroExpanded theme={this.props.themeVariant}>
+            <AccordionItem key={"Headding 1"}>
+              <AccordionItemHeading>
+                <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <div style={{ margin: 20 }}>
+                  <h2>Content Heading 1</h2>
+                  <Text variant={"mediumPlus"}>Text sample  </Text>
 
-        <Stack styles={{ root: { marginBottom: 200 } }}>
-          <MyTeams
-            title="My Teams"
-            webPartContext={this.props.context}
-            themeVariant={this.props.themeVariant}
-            enablePersonCardInteraction={true}
-            onSelectedChannel={this.onSelectedChannel}
-          />
-        </Stack>
-        <Stack
-          styles={{ root: { margin: "10px 10px 100px 10px" } }}
-          tokens={{ childrenGap: 10 }}
-        >
-          <TeamPicker
-            label="Select Team"
-            themeVariant={this.props.themeVariant}
-            selectedTeams={this.state.selectedTeam}
-            appcontext={this.props.context}
-            itemLimit={1}
-            onSelectedTeams={(tagList: ITag[]) => {
-              this.setState({ selectedTeamChannels: [] });
-              this.setState({ selectedTeam: tagList });
-              console.log(tagList);
-            }}
-          />
-          {this.state?.selectedTeam && this.state?.selectedTeam.length > 0 && (
-            <>
-              <TeamChannelPicker
-                label="Select Team Channel"
-                themeVariant={this.props.themeVariant}
-                selectedChannels={this.state.selectedTeamChannels}
-                teamId={this.state.selectedTeam[0].key}
-                appcontext={this.props.context}
-                onSelectedChannels={(tagList: ITag[]) => {
-                  this.setState({ selectedTeamChannels: tagList });
-                  console.log(tagList);
-                }}
-              />
-            </>
-          )}
-        </Stack>
+                </div>
+              </AccordionItemPanel>
+            </AccordionItem>
+            <AccordionItem key={"Headding 2"}>
+              <AccordionItemHeading>
+                <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <div style={{ margin: 20 }}>
+                  <h2>Content Heading 2</h2>
+                  <Text variant={"mediumPlus"}>Text </Text>
+                  <TextField></TextField>
+                </div>
+              </AccordionItemPanel>
+            </AccordionItem>
+          </AccessibleAccordion>
 
-
-        <AccessibleAccordion allowZeroExpanded theme={this.props.themeVariant}>
-          <AccordionItem key={"Headding 1"}>
-            <AccordionItemHeading>
-              <AccordionItemButton>{"Accordion Item Heading 1"}</AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel>
-              <div style={{ margin: 20 }}>
-                <h2>Content Heading 1</h2>
-                <Text variant={"mediumPlus"}>Text sample  </Text>
-
-              </div>
-            </AccordionItemPanel>
-          </AccordionItem>
-          <AccordionItem key={"Headding 2"}>
-            <AccordionItemHeading>
-              <AccordionItemButton>Accordion Item Heading 2</AccordionItemButton>
-            </AccordionItemHeading>
-            <AccordionItemPanel>
-              <div style={{ margin: 20 }}>
-                <h2>Content Heading 2</h2>
-                <Text variant={"mediumPlus"}>Text </Text>
-                <TextField></TextField>
-              </div>
-            </AccordionItemPanel>
-          </AccordionItem>
-        </AccessibleAccordion>
-
-
-
-        {
-          sampleItems.map((item, index) => (
-            <Accordion title={item.Question} defaultCollapsed={false} className={"itemCell"} key={index}>
-              <div className={"itemContent"}>
-                <div className={"itemResponse"}>{item.Reponse}</div>
-                <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
-              </div>
-            </Accordion>
-          ))
-        }
-
-        <div className="ms-font-m">Services tester:
-          <TaxonomyPicker
-            allowMultipleSelections={true}
-            selectChildrenIfParentSelected={true}
-            //termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
-            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
-            initialValues={[{
-              key: "c05250ff-80e7-41e6-bfb3-db2db62d63d3",
-              name: "Business",
-              path: "Business",
-              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
-              termSetName: "Trip Types"
-            }, {
-              key: "a05250ff-80e7-41e6-bfb3-db2db62d63d3",
-              name: "BBusiness",
-              path: "BBusiness",
-              termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
-              termSetName: "Trip Types"
-            }]}
-            validateOnLoad={true}
-            panelTitle="Select Sorted Term"
-            label="Service Picker with custom actions"
-            context={this.props.context}
-            onChange={this.onServicePickerChange}
-            isTermSetSelectable={true}
-            termActions={{
-              actions: [{
-                title: "Get term labels",
-                iconName: "LocaleLanguage",
-                id: "test",
-                invokeActionOnRender: true,
-                hidden: true,
-                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                  // const labels = await taxService.getTermLabels(term.Id);
-                  // if (labels) {
-                  //   let termLabel: string = labels.join(" ; ");
-                  //   const updateAction = {
-                  //     updateActionType: UpdateType.updateTermLabel,
-                  //     value: `${termLabel} (updated)`
-                  //   };
-                  //   return updateAction;
-                  // }
-                  const updateAction = {
-                    updateActionType: UpdateType.updateTermLabel,
-                    value: `${term.Name} (updated)`
-                  };
-                  return updateAction;
+          {
+            sampleItems.map((item, index) => (
+              <Accordion title={item.Question} defaultCollapsed={false} className={"itemCell"} key={index}>
+                <div className={"itemContent"}>
+                  <div className={"itemResponse"}>{item.Reponse}</div>
+                  <div className={"itemIndex"}>{`Langue :  ${item.Langue.Nom}`}</div>
+                </div>
+              </Accordion>
+            ))
+          }
+        </div>
+        <div id="TaxonomyPickerDiv" className={styles.container} hidden={!isTaxonomyPickerDivVisible}>
+          <div className="ms-font-m">Services tester:
+            <TaxonomyPicker
+              allowMultipleSelections={true}
+              selectChildrenIfParentSelected={true}
+              //termsetNameOrID="61837936-29c5-46de-982c-d1adb6664b32" // id to termset that has a custom sort
+              termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9"
+              initialValues={[{
+                key: "c05250ff-80e7-41e6-bfb3-db2db62d63d3",
+                name: "Business",
+                path: "Business",
+                termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+                termSetName: "Trip Types"
+              }, {
+                key: "a05250ff-80e7-41e6-bfb3-db2db62d63d3",
+                name: "BBusiness",
+                path: "BBusiness",
+                termSet: "8ea5ac06-fd7c-4269-8d0d-02f541df8eb9",
+                termSetName: "Trip Types"
+              }]}
+              validateOnLoad={true}
+              panelTitle="Select Sorted Term"
+              label="Service Picker with custom actions"
+              context={this.props.context}
+              onChange={this.onServicePickerChange}
+              isTermSetSelectable={true}
+              termActions={{
+                actions: [{
+                  title: "Get term labels",
+                  iconName: "LocaleLanguage",
+                  id: "test",
+                  invokeActionOnRender: true,
+                  hidden: true,
+                  actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                    // const labels = await taxService.getTermLabels(term.Id);
+                    // if (labels) {
+                    //   let termLabel: string = labels.join(" ; ");
+                    //   const updateAction = {
+                    //     updateActionType: UpdateType.updateTermLabel,
+                    //     value: `${termLabel} (updated)`
+                    //   };
+                    //   return updateAction;
+                    // }
+                    const updateAction = {
+                      updateActionType: UpdateType.updateTermLabel,
+                      value: `${term.Name} (updated)`
+                    };
+                    return updateAction;
+                  },
+                  applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
                 },
-                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "about us")
-              },
-                // new TermLabelAction("Get Labels")
-              ],
-              termActionsDisplayMode: TermActionsDisplayMode.buttons,
-              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon,
-            }}
-            onPanelSelectionChange={(prev, next) => {
-              console.log(prev);
-              console.log(next);
-            }}
-          />
+                  // new TermLabelAction("Get Labels")
+                ],
+                termActionsDisplayMode: TermActionsDisplayMode.buttons,
+                termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon,
+              }}
+              onPanelSelectionChange={(prev, next) => {
+                console.log(prev);
+                console.log(next);
+              }}
+            />
 
-          <TaxonomyPicker
-            allowMultipleSelections={true}
-            termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9" // id to termset that has a default sort
-            panelTitle="Select Default Sorted Term"
-            label="Service Picker"
-            context={this.props.context}
-            onChange={this.onServicePickerChange}
-            isTermSetSelectable={false}
-            placeholder="Select service"
-            // validateInput={true}   /* Uncomment this to enable validation of input text */
-            required={true}
-            errorMessage='this field is required'
-            onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
-          />
+            <TaxonomyPicker
+              allowMultipleSelections={true}
+              termsetNameOrID="8ea5ac06-fd7c-4269-8d0d-02f541df8eb9" // id to termset that has a default sort
+              panelTitle="Select Default Sorted Term"
+              label="Service Picker"
+              context={this.props.context}
+              onChange={this.onServicePickerChange}
+              isTermSetSelectable={false}
+              placeholder="Select service"
+              // validateInput={true}   /* Uncomment this to enable validation of input text */
+              required={true}
+              errorMessage='this field is required'
+              onGetErrorMessage={(value) => { return 'comment errorMessage to see this one'; }}
+            />
 
-          <TaxonomyPicker
-            initialValues={this.state.initialValues}
-            allowMultipleSelections={true}
-            termsetNameOrID="41dec50a-3e09-4b3f-842a-7224cffc74c0"
-            anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
-            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-            // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-            // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
-            // disableChildrenOfDisabledParents={true}
-            panelTitle="Select Term"
-            label="Taxonomy Picker"
-            context={this.props.context}
-            onChange={this._onTaxPickerChange}
-            isTermSetSelectable={false}
-            hideDeprecatedTags={true}
-            hideTagsNotAvailableForTagging={true}
-            errorMessage={this.state.errorMessage}
-            termActions={{
-              actions: [{
-                title: "Get term labels",
-                iconName: "LocaleLanguage",
-                id: "test",
-                invokeActionOnRender: true,
-                hidden: true,
-                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                  console.log(term.Name, term.TermsCount);
-                  return {
-                    updateActionType: UpdateType.updateTermLabel,
-                    value: `${term.Name} (updated)`
-                  };
+            <TaxonomyPicker
+              initialValues={this.state.initialValues}
+              allowMultipleSelections={true}
+              termsetNameOrID="41dec50a-3e09-4b3f-842a-7224cffc74c0"
+              anchorId="436a6154-9691-4925-baa5-4c9bb9212cbf"
+              // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+              // disabledTermIds={["943fd9f0-3d7c-415c-9192-93c0e54573fb", "73d18756-20af-41de-808c-2a1e21851e44", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+              // disabledTermIds={["cd6f6d3c-672d-4244-9320-c1e64cc0626f", "0e415292-cce5-44ac-87c7-ef99dd1f01f4"]}
+              // disableChildrenOfDisabledParents={true}
+              panelTitle="Select Term"
+              label="Taxonomy Picker"
+              context={this.props.context}
+              onChange={this._onTaxPickerChange}
+              isTermSetSelectable={false}
+              hideDeprecatedTags={true}
+              hideTagsNotAvailableForTagging={true}
+              errorMessage={this.state.errorMessage}
+              termActions={{
+                actions: [{
+                  title: "Get term labels",
+                  iconName: "LocaleLanguage",
+                  id: "test",
+                  invokeActionOnRender: true,
+                  hidden: true,
+                  actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                    console.log(term.Name, term.TermsCount);
+                    return {
+                      updateActionType: UpdateType.updateTermLabel,
+                      value: `${term.Name} (updated)`
+                    };
+                  },
+                  applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
                 },
-                applyToTerm: (term: ITerm) => (term && term.Name && term.Name === "internal")
-              },
-              {
-                title: "Hide term",
-                id: "hideTerm",
-                invokeActionOnRender: true,
-                hidden: true,
-                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                  return {
-                    updateActionType: UpdateType.hideTerm,
-                    value: true
-                  };
+                {
+                  title: "Hide term",
+                  id: "hideTerm",
+                  invokeActionOnRender: true,
+                  hidden: true,
+                  actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                    return {
+                      updateActionType: UpdateType.hideTerm,
+                      value: true
+                    };
+                  },
+                  applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
                 },
-                applyToTerm: (term: ITerm) => (term && term.Name && (term.Name.toLowerCase() === "help desk" || term.Name.toLowerCase() === "multi-column valo site page"))
-              },
-              {
-                title: "Disable term",
-                id: "disableTerm",
-                invokeActionOnRender: true,
-                hidden: true,
-                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                  return {
-                    updateActionType: UpdateType.disableTerm,
-                    value: true
-                  };
-                },
-                applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
-              },
-              {
-                title: "Disable or hide term",
-                id: "disableOrHideTerm",
-                invokeActionOnRender: true,
-                hidden: true,
-                actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
-                  if (term.TermsCount > 0) {
+                {
+                  title: "Disable term",
+                  id: "disableTerm",
+                  invokeActionOnRender: true,
+                  hidden: true,
+                  actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
                     return {
                       updateActionType: UpdateType.disableTerm,
                       value: true
                     };
-                  }
-                  return {
-                    updateActionType: UpdateType.hideTerm,
-                    value: true
-                  };
+                  },
+                  applyToTerm: (term: ITerm) => (term && term.Name && term.Name.toLowerCase() === "secured")
                 },
-                applyToTerm: (term: ITerm) => true
-              }],
-              termActionsDisplayMode: TermActionsDisplayMode.buttons,
-              termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
-            }} />
-
-          <DefaultButton text="Add" onClick={() => {
-            this.setState({
-              initialValues: [{
-                key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
-                name: "HR",
-                path: "HR",
-                termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
-              }],
-              errorMessage: ""
-            });
-          }} />
-        </div>
-
-
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
-        <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
-        <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
-        <DateTimePicker
-          label="DateTime Picker date only"
-          showLabels={false}
-          dateConvention={DateConvention.Date}
-          value={new Date()}
-          onChange={(value) => console.log("DateTimePicker value:", value)}
-          minDate={new Date("05/01/2019")}
-          maxDate={new Date("05/01/2020")} />
-
-        {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-        <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
-        <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
-
-        {/* <ListItemAttachments listId='0ffa51d7-4ad1-4f04-8cfe-98209905d6da'
-          itemId={1}
-          context={this.props.context}
-          disabled={false} /> */}
-
-        <Placeholder iconName='Edit'
-          iconText='Configure your web part'
-          description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
-          buttonLabel='Configure'
-          hideButton={this.props.displayMode === DisplayMode.Read}
-          onConfigure={this._onConfigure}
-          theme={this.props.themeVariant} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker custom styles"
-          styles={this.pickerStylesSingle}
-          personSelectionLimit={5}
-          ensureUser={true}
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-
-          onChange={this._getPeoplePickerItems} />
-
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (Group not found)"
-          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-          groupName="Team Site Visitors 123"
-          ensureUser={true}
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          onChange={this._getPeoplePickerItems} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (search for group)"
-          groupName="Team Site Visitors"
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          onChange={this._getPeoplePickerItems} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (pre-set global users)"
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          onChange={this._getPeoplePickerItems}
-          personSelectionLimit={2}
-          ensureUser={true} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (pre-set local users)"
-          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-          onChange={this._getPeoplePickerItems} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (tenant scoped)"
-          personSelectionLimit={5}
-          // groupName={"Team Site Owners"}
-          showtooltip={true}
-          required={true}
-          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-          //defaultSelectedUsers={this.state.authorEmails}
-          onChange={this._getPeoplePickerItems}
-          showHiddenInUI={false}
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          suggestionsLimit={2}
-          resolveDelay={200}
-          placeholder={'Select a SharePoint principal (User or Group)'}
-          onGetErrorMessage={async (items: any[]) => {
-            if (!items || items.length < 2) {
-              return 'error';
-            }
-            return '';
-          }} />
-
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (local scoped)"
-          webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
-          personSelectionLimit={5}
-          // groupName={"Team Site Owners"}
-          showtooltip={true}
-          required={true}
-          //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
-          //defaultSelectedUsers={this.state.authorEmails}
-          onChange={this._getPeoplePickerItems}
-          showHiddenInUI={false}
-          principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-          suggestionsLimit={2}
-          resolveDelay={200} />
-
-        <PeoplePicker context={this.props.context}
-          titleText="People Picker (disabled)"
-          disabled={true}
-          showtooltip={true}
-          defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
-
-        <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
-
-        <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
-
-        <DateTimePicker
-          label="DateTime Picker (date and time - default time = 12h)"
-          dateConvention={DateConvention.DateTime}
-          showSeconds={true}
-        />
-
-        <DateTimePicker
-          label="DateTime Picker (date and time - 12h)"
-          dateConvention={DateConvention.DateTime}
-          timeConvention={TimeConvention.Hours12}
-          showSeconds={false}
-        />
-
-        <DateTimePicker
-          label="DateTime Picker (date and time - 24h)"
-          dateConvention={DateConvention.DateTime}
-          timeConvention={TimeConvention.Hours24}
-          firstDayOfWeek={DayOfWeek.Monday}
-          showSeconds={true}
-        />
-
-        <DateTimePicker
-          label="DateTime Picker (Controlled)"
-          formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
-          dateConvention={DateConvention.DateTime}
-          timeConvention={TimeConvention.Hours24}
-          firstDayOfWeek={DayOfWeek.Monday}
-          value={this.state.dateTimeValue}
-          onChange={this._onDateTimePickerChange}
-          isMonthPickerVisible={false}
-          showMonthPickerAsOverlay={true}
-          showWeekNumbers={true}
-          showSeconds={true}
-          timeDisplayControlType={TimeDisplayControlType.Dropdown}
-        />
-        <PrimaryButton text={'Clear Date'} onClick={() => {
-
-          this.setState({
-            dateTimeValue: undefined
-          });
-        }} />
-
-        <DateTimePicker
-          label="DateTime Picker (date only)"
-          dateConvention={DateConvention.Date}
-        />
-
-        <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
-
-        <br></br>
-        <b>Drag and Drop Files</b>
-        <DragDropFiles
-          dropEffect="copy"
-          enable={true}
-          onDrop={this._getDropFiles}
-          iconName="Upload"
-          labelMessage="My custom upload File"
-        >
-          <Placeholder iconName='BulkUpload'
-            iconText='Drag files or folder with files here...'
-            description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
-            buttonLabel='Configure'
-            hideButton={this.props.displayMode === DisplayMode.Read}
-            onConfigure={this._onConfigure} />
-        </DragDropFiles>
-        <br></br>
-
-        <ListView items={this.state.items}
-          viewFields={viewFields}
-          iconFieldName='ServerRelativeUrl'
-          groupByFields={groupByFields}
-          compact={true}
-          selectionMode={SelectionMode.single}
-          selection={this._getSelection}
-          showFilter={true}
-          dragDropFiles={true}
-          onDrop={this._getDropFiles}
-          stickyHeader={true}
-          className={styles.listViewWrapper}
-        // defaultFilter="Team"
-        />
-
-        <ChartControl type={ChartType.Bar}
-          data={{
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
-            }]
-          }}
-          options={{
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }} />
-
-        <Map titleText="New map control"
-          coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
-          enableSearch={true}
-          mapType={MapType.normal}
-          onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
-        //  zoom={15}
-        //mapType={MapType.cycle}
-        //width="50"
-        //height={150}
-        //loadingMessage="Loading maps"
-        //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
-        />
-
-        <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
-
-        <div className={styles.container}>
-          <div className={`ms-Grid-row ms-bgColor-neutralLight ms-fontColor-neutralDark ${styles.row}`}>
-            <div className="ms-Grid-col ms-lg10 ms-xl8 ms-xlPush2 ms-lgPush1">
-              <span className="ms-font-xl">Controls testing</span>
-
-              <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
-                <p>You have permissions to view list items.</p>
-              </SecurityTrimmedControl>
-
-              <p className="ms-font-l">
-                File type icon control
-              </p>
-              <div className="ms-font-m">
-                Font icons:&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
-                <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.doc" />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />&nbsp;
-                <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
-              </div>
-              <div className="ms-font-m">
-                Image icons:&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" /> &nbsp;
-                <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />&nbsp;
-                <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />&nbsp;
-                <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
-              </div>
-              <div className="ms-font-m">Icon size tester:
-                <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
-                <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
-              </div>
-
-
-              <div className="ms-font-m">Site picker tester:
-                <SitePicker
-                  context={this.props.context}
-                  label={'select sites'}
-                  mode={'site'}
-                  allowSearch={true}
-                  multiSelect={false}
-                  onChange={(sites) => { console.log(sites); }}
-                  placeholder={'Select sites'}
-                  searchPlaceholder={'Filter sites'} />
-              </div>
-
-              <div className="ms-font-m">List picker tester:
-                <ListPicker context={this.props.context}
-                  label="Select your list(s)"
-                  placeholder="Select your list(s)"
-                  baseTemplate={100}
-                  includeHidden={false}
-                  multiSelect={true}
-                  contentTypeId="0x01"
-                  // filter="Title eq 'Test List'"
-                  onSelectionChanged={this.onListPickerChange} />
-              </div>
-
-              <div className="ms-font-m">List Item picker list data tester:
-
-                <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
-                  columnInternalName="DateAndTime"
-                  keyColumnInternalName="Id"
-                  // filter={"Title eq 'SPFx'"}
-                  orderBy={'Title desc'}
-                  itemLimit={5}
-                  context={this.props.context}
-                  placeholder={'Select list items'}
-                  onSelectedItem={this.listItemPickerDataSelected} />
-
-              </div>
-              <div>Icon Picker</div>
-              <div>
-                <IconPicker
-                  renderOption="panel"
-                  onSave={(value) => { console.log(value); }}
-                  currentIcon={'Warning'}
-                  buttonLabel="Icon Picker">
-                </IconPicker>
-              </div>
-
-              <div className="ms-font-m">ComboBoxListItemPicker:
-
-                <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
-                  columnInternalName='Title'
-                  keyColumnInternalName='Id'
-                  orderBy='Title desc'
-                  multiSelect={true}
-                  onSelectedItem={(data) => {
-                    console.log(`Item(s):`, data);
-                  }}
-                  defaultSelectedItems={this.state.comboBoxListItemPickerIds}
-                  webUrl={this.props.context.pageContext.web.absoluteUrl}
-                  spHttpClient={this.props.context.spHttpClient} />
-
-                <PrimaryButton text="Change List" onClick={() => {
-                  this.setState({
-                    comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
-                  });
-                }} />
-                <PrimaryButton text="Change default items" onClick={() => {
-                  this.setState({
-                    comboBoxListItemPickerIds: [{ Id: 2, Title: '222' }]
-                  });
-                }} />
-
-              </div>
-
-              <div className="ms-font-m">iframe dialog tester:
-                <PrimaryButton
-                  text="Open iframe Dialog"
-                  onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
-                <IFrameDialog
-                  url={iframeUrl}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                  hidden={!this.state.iFrameDialogOpened}
-                  onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
-                  modalProps={{
-                    isBlocking: true,
-                    styles: {
-                      root: {
-                        backgroundColor: '#00ff00'
-                      },
-                      main: {
-                        backgroundColor: '#ff0000'
-                      }
+                {
+                  title: "Disable or hide term",
+                  id: "disableOrHideTerm",
+                  invokeActionOnRender: true,
+                  hidden: true,
+                  actionCallback: async (taxService: SPTermStorePickerService, term: ITerm) => {
+                    if (term.TermsCount > 0) {
+                      return {
+                        updateActionType: UpdateType.disableTerm,
+                        value: true
+                      };
                     }
-                  }}
-                  dialogContentProps={{
-                    type: DialogType.close,
-                    showCloseButton: true
-                  }}
-                  width={'570px'}
-                  height={'315px'} />
-              </div>
-              <div className="ms-font-m">iframe Panel tester:
-                <PrimaryButton
-                  text="Open iframe Panel"
-                  onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
-                <IFramePanel
-                  url={iframeUrl}
-                  type={PanelType.medium}
-                  //  height="300px"
-                  headerText="iframe panel title"
-                  closeButtonAriaLabel="Close"
-                  isOpen={this.state.iFramePanelOpened}
-                  onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
-                />
-              </div>
-              <div>
-                <FolderPicker context={this.props.context}
-                  rootFolder={{
-                    Name: 'Documents',
-                    ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
-                  }}
-                  onSelect={this._onFolderSelect}
-                  label='Folder Picker'
-                  required={true}
-                  canCreateFolders={true}
-                ></FolderPicker>
-              </div>
-            </div>
+                    return {
+                      updateActionType: UpdateType.hideTerm,
+                      value: true
+                    };
+                  },
+                  applyToTerm: (term: ITerm) => true
+                }],
+                termActionsDisplayMode: TermActionsDisplayMode.buttons,
+                termActionsDisplayStyle: TermActionsDisplayStyle.textAndIcon
+              }} />
+
+            <DefaultButton text="Add" onClick={() => {
+              this.setState({
+                initialValues: [{
+                  key: "ab703558-2546-4b23-b8b8-2bcb2c0086f5",
+                  name: "HR",
+                  path: "HR",
+                  termSet: "b3e9b754-2593-4ae6-abc2-35345402e186"
+                }],
+                errorMessage: ""
+              });
+            }} />
           </div>
         </div>
+        <div id="DateTimePickerDiv" className={styles.container} hidden={!isDateTimePickerDivVisible}>
+          <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
+          <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
+          <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
+          <DateTimePicker label="DateTime Picker no seconds" value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+          <DateTimePicker label="DateTime Picker (unspecified = date and time)" timeConvention={TimeConvention.Hours24} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+          <DateTimePicker label="DateTime Picker dropdown" showSeconds={true} timeDisplayControlType={TimeDisplayControlType.Dropdown} value={new Date()} onChange={(value) => console.log("DateTimePicker value:", value)} />
+          <DateTimePicker
+            label="DateTime Picker date only"
+            showLabels={false}
+            dateConvention={DateConvention.Date}
+            value={new Date()}
+            onChange={(value) => console.log("DateTimePicker value:", value)}
+            minDate={new Date("05/01/2019")}
+            maxDate={new Date("05/01/2020")} />
+          <DateTimePicker label="DateTime Picker (unspecified = date and time)" />
 
-        <div>
-          <h3>Carousel with fixed elements:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.top}
-            buttonsDisplay={CarouselButtonsDisplay.block}
+          <DateTimePicker label="DateTime Picker (unspecified = date and time, no seconds)" />
 
-            contentContainerStyles={styles.carouselContent}
-            containerButtonsStyles={styles.carouselButtonsContainer}
-
-            isInfinite={true}
-
-            element={this.carouselElements}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+          <DateTimePicker
+            label="DateTime Picker (date and time - default time = 12h)"
+            dateConvention={DateConvention.DateTime}
+            showSeconds={true}
           />
+
+          <DateTimePicker
+            label="DateTime Picker (date and time - 12h)"
+            dateConvention={DateConvention.DateTime}
+            timeConvention={TimeConvention.Hours12}
+            showSeconds={false}
+          />
+
+          <DateTimePicker
+            label="DateTime Picker (date and time - 24h)"
+            dateConvention={DateConvention.DateTime}
+            timeConvention={TimeConvention.Hours24}
+            firstDayOfWeek={DayOfWeek.Monday}
+            showSeconds={true}
+          />
+
+          <DateTimePicker
+            label="DateTime Picker (Controlled)"
+            formatDate={d => `${d.getFullYear()} - ${d.getMonth() + 1} - ${d.getDate()}`}
+            dateConvention={DateConvention.DateTime}
+            timeConvention={TimeConvention.Hours24}
+            firstDayOfWeek={DayOfWeek.Monday}
+            value={this.state.dateTimeValue}
+            onChange={this._onDateTimePickerChange}
+            isMonthPickerVisible={false}
+            showMonthPickerAsOverlay={true}
+            showWeekNumbers={true}
+            showSeconds={true}
+            timeDisplayControlType={TimeDisplayControlType.Dropdown}
+          />
+          <PrimaryButton text={'Clear Date'} onClick={() => {
+
+            this.setState({
+              dateTimeValue: undefined
+            });
+          }} />
+
+          <DateTimePicker
+            label="DateTime Picker (date only)"
+            dateConvention={DateConvention.Date}
+          />
+
+          <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
         </div>
+        <div id="RichTextDiv" className={styles.container} hidden={!isRichTextDivVisible}>
+          {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
+          <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
+          <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
+        </div>
+        <div id="PlaceholderDiv" className={styles.container} hidden={!isPlaceholderDivVisible}>
+          <Placeholder iconName='Edit'
+            iconText='Configure your web part'
+            description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
+            buttonLabel='Configure'
+            hideButton={this.props.displayMode === DisplayMode.Read}
+            onConfigure={this._onConfigure}
+            theme={this.props.themeVariant} />
+        </div>
+        <div id="PeoplePickerDiv" className={styles.container} hidden={!isPeoplePickerDivVisible}>
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker custom styles"
+            styles={this.pickerStylesSingle}
+            personSelectionLimit={5}
+            ensureUser={true}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
 
-        <div>
-          <h3>Carousel with CarouselImage elements:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.center}
-            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+            onChange={this._getPeoplePickerItems} />
 
-            contentContainerStyles={styles.carouselImageContent}
-            //containerButtonsStyles={styles.carouselButtonsContainer}
 
-            isInfinite={true}
-            indicatorShape={CarouselIndicatorShape.circle}
-            indicatorsDisplay={CarouselIndicatorsDisplay.block}
-            pauseOnHover={true}
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (Group not found)"
+            webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+            groupName="Team Site Visitors 123"
+            ensureUser={true}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+            onChange={this._getPeoplePickerItems} />
 
-            element={[
-              {
-                imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
-                title: 'Colosseum',
-                description: 'This is Colosseum',
-                url: 'https://en.wikipedia.org/wiki/Colosseum',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
-              },
-              {
-                imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
-                title: 'Stonehenge',
-                description: 'This is Stonehendle',
-                url: 'https://en.wikipedia.org/wiki/Stonehenge',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
-              },
-              {
-                imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
-                title: 'Pyramids of Giza',
-                description: 'This are Pyramids of Giza (Egypt)',
-                url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
-                showDetailsOnHover: true,
-                imageFit: ImageFit.cover
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (search for group)"
+            groupName="Team Site Visitors"
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+            onChange={this._getPeoplePickerItems} />
+
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (pre-set global users)"
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+            onChange={this._getPeoplePickerItems}
+            personSelectionLimit={2}
+            ensureUser={true} />
+
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (pre-set local users)"
+            webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
+            onChange={this._getPeoplePickerItems} />
+
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (tenant scoped)"
+            personSelectionLimit={5}
+            // groupName={"Team Site Owners"}
+            showtooltip={true}
+            required={true}
+            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={this.state.authorEmails}
+            onChange={this._getPeoplePickerItems}
+            showHiddenInUI={false}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            suggestionsLimit={2}
+            resolveDelay={200}
+            placeholder={'Select a SharePoint principal (User or Group)'}
+            onGetErrorMessage={async (items: any[]) => {
+              if (!items || items.length < 2) {
+                return 'error';
               }
-            ]}
-            onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
-            onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
-            rootStyles={mergeStyles({
-              backgroundColor: '#C3C3C3'
-            })}
+              return '';
+            }} />
+
+
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (local scoped)"
+            webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
+            personSelectionLimit={5}
+            // groupName={"Team Site Owners"}
+            showtooltip={true}
+            required={true}
+            //defaultSelectedUsers={["tenantUser@domain.onmicrosoft.com", "test@user.com"]}
+            //defaultSelectedUsers={this.state.authorEmails}
+            onChange={this._getPeoplePickerItems}
+            showHiddenInUI={false}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            suggestionsLimit={2}
+            resolveDelay={200} />
+
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker (disabled)"
+            disabled={true}
+            showtooltip={true}
+            defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
+        </div>
+        <div id="DragDropFilesDiv" className={styles.container} hidden={!isDragDropFilesDivVisible}>
+          <b>Drag and Drop Files</b>
+          <DragDropFiles
+            dropEffect="copy"
+            enable={true}
+            onDrop={this._getDropFiles}
+            iconName="Upload"
+            labelMessage="My custom upload File"
+          >
+            <Placeholder iconName='BulkUpload'
+              iconText='Drag files or folder with files here...'
+              description={defaultClassNames => <span className={defaultClassNames}>Drag files or folder with files here...</span>}
+              buttonLabel='Configure'
+              hideButton={this.props.displayMode === DisplayMode.Read}
+              onConfigure={this._onConfigure} />
+          </DragDropFiles>
+        </div>
+        <div id="ListViewDiv" className={styles.container} hidden={!isListViewDivVisible}>
+          <ListView items={this.state.items}
+            viewFields={viewFields}
+            iconFieldName='ServerRelativeUrl'
+            groupByFields={groupByFields}
+            compact={true}
+            selectionMode={SelectionMode.single}
+            selection={this._getSelection}
+            showFilter={true}
+            dragDropFiles={true}
+            onDrop={this._getDropFiles}
+            stickyHeader={true}
+            className={styles.listViewWrapper}
+          // defaultFilter="Team"
           />
         </div>
-
-        <div>
-          <h3>Carousel with triggerPageElement:</h3>
-          <Carousel
-            buttonsLocation={CarouselButtonsLocation.bottom}
-            buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
-
-            contentContainerStyles={styles.carouselContent}
-
-            canMoveNext={this.state.canMoveNext}
-            canMovePrev={this.state.canMovePrev}
-            triggerPageEvent={this.triggerNextElement}
-            element={this.state.currentCarouselElement}
+        <div id="ChartControlDiv" className={styles.container} hidden={!isChartControlDivVisible}>
+          <ChartControl type={ChartType.Bar}
+            data={{
+              labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+              datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+              }]
+            }}
+            options={{
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }} />
+        </div>
+        <div id="MapDiv" className={styles.container} hidden={!isMapDivVisible}>
+          <Map titleText="New map control"
+            coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
+            enableSearch={true}
+            mapType={MapType.normal}
+            onUpdateCoordinates={(coordinates) => console.log("Updated location:", coordinates)}
+          //  zoom={15}
+          //mapType={MapType.cycle}
+          //width="50"
+          //height={150}
+          //loadingMessage="Loading maps"
+          //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
           />
         </div>
-
-        <div className={styles.siteBreadcrumb}>
-          <SiteBreadcrumb context={this.props.context} />
+        <div id="ModernAudioDiv" className={styles.container} hidden={!isModernAudioDivVisible}>
+          <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
         </div>
+        <div id="FileTypeIconDiv" className={styles.container} hidden={!isFileTypeIconDivVisible}>
+          <p className="ms-font-l">
+            File type icon control
+          </p>
+          <div className="ms-font-m">
+            Font icons:
+            <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.docx" />
+            <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.unknown" />
+            <FileTypeIcon type={IconType.font} path="https://contoso.sharepoint.com/documents/filename.doc" />
+            <FileTypeIcon type={IconType.font} application={ApplicationType.HTML} />
+            <FileTypeIcon type={IconType.font} application={ApplicationType.Mail} />
+            <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
+          </div>
+          <div className="ms-font-m">
+            Image icons:
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" />
+            <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />
+            <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
+          </div>
+          <div className="ms-font-m">Icon size tester:
+            <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
+            <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
+            <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.PDF} />
+            <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
+          </div>
+        </div>
+        <div id="SecurityTrimmedControlDiv" className={styles.container} hidden={!isSecurityTrimmedControlDivVisible}>
+          <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
+            <p>You have permissions to view list items.</p>
+          </SecurityTrimmedControl>
+        </div>
+        <div id="SitePickerDiv" className={styles.container} hidden={!isSitePickerDivVisible}>
+          <div className="ms-font-m">Site picker tester:
+            <SitePicker
+              context={this.props.context}
+              label={'select sites'}
+              mode={'site'}
+              allowSearch={true}
+              multiSelect={false}
+              onChange={(sites) => { console.log(sites); }}
+              placeholder={'Select sites'}
+              searchPlaceholder={'Filter sites'} />
+          </div>
+        </div>
+        <div id="ListPickerDiv" className={styles.container} hidden={!isListPickerDivVisible}>
+          <div className="ms-font-m">List picker tester:
+            <ListPicker context={this.props.context}
+              label="Select your list(s)"
+              placeholder="Select your list(s)"
+              baseTemplate={100}
+              includeHidden={false}
+              multiSelect={true}
+              contentTypeId="0x01"
+              // filter="Title eq 'Test List'"
+              onSelectionChanged={this.onListPickerChange} />
+          </div>
+          <div className="ms-font-m">List Item picker list data tester:
 
-        <div>
-          <h3>File Picker</h3>
-          <TextField
-            label="Default SiteFileTab Folder"
-            onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
-            styles={{ root: { marginBottom: 10 } }}
-          />
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            //webAbsoluteUrl="https://023xn.sharepoint.com/sites/test1"
-            //defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
-            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Add File"
-            buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
-            onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
-            context={this.props.context}
-            hideRecentTab={false}
-            includePageLibraries={true}
-            checkIfFileExists={false}
-          />
-          {
-            this.state.filePickerResult &&
-            <div>
+            <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
+              columnInternalName="DateAndTime"
+              keyColumnInternalName="Id"
+              // filter={"Title eq 'SPFx'"}
+              orderBy={'Title desc'}
+              itemLimit={5}
+              context={this.props.context}
+              placeholder={'Select list items'}
+              onSelectedItem={this.listItemPickerDataSelected} />
+
+          </div>
+        </div>
+        <div id="FieldPickerDiv" className={styles.container} hidden={!isFieldPickerDivVisible}>
+          <div className="ms-font-m">Field picker tester:
+            <FieldPicker
+              context={this.props.context}
+              label={'Select a field'}
+              listId={this.state.selectedList}
+              onSelectionChanged={(fields) => {
+                console.log(fields);
+              }}
+            />
+          </div>
+        </div>
+        <div id="IconPickerDiv" className={styles.container} hidden={!isIconPickerDivVisible}>
+          <div>Icon Picker</div>
+          <div>
+            <IconPicker
+              renderOption="panel"
+              onSave={(value) => { console.log(value); }}
+              currentIcon={'Warning'}
+              buttonLabel="Icon Picker">
+            </IconPicker>
+          </div>
+          <IconPicker buttonLabel={'Icon'}
+            onChange={(iconName: string) => { console.log(iconName); }}
+            onCancel={() => { console.log("Panel closed"); }}
+            onSave={(iconName: string) => { console.log(iconName); }} />
+        </div>
+        <div id="ComboBoxListItemPickerDiv" className={styles.container} hidden={!isComboBoxListItemPickerDivVisible}>
+          <div className="ms-font-m">ComboBoxListItemPicker:
+
+            <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
+              columnInternalName='Title'
+              keyColumnInternalName='Id'
+              orderBy='Title desc'
+              multiSelect={true}
+              onSelectedItem={(data) => {
+                console.log(`Item(s):`, data);
+              }}
+              defaultSelectedItems={this.state.comboBoxListItemPickerIds}
+              webUrl={this.props.context.pageContext.web.absoluteUrl}
+              spHttpClient={this.props.context.spHttpClient} />
+
+            <PrimaryButton text="Change List" onClick={() => {
+              this.setState({
+                comboBoxListItemPickerListId: '71210430-8436-4962-a14d-5525475abd6b'
+              });
+            }} />
+            <PrimaryButton text="Change default items" onClick={() => {
+              this.setState({
+                comboBoxListItemPickerIds: [{ Id: 2, Title: '222' }]
+              });
+            }} />
+
+          </div>
+        </div>
+        <div id="IFrameDialogDiv" className={styles.container} hidden={!isIFrameDialogDivVisible}>
+          <div className="ms-font-m">iframe dialog tester:
+            <PrimaryButton
+              text="Open iframe Dialog"
+              onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
+            <IFrameDialog
+              url={iframeUrl}
+              iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+              hidden={!this.state.iFrameDialogOpened}
+              onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
+              modalProps={{
+                isBlocking: true,
+                styles: {
+                  root: {
+                    backgroundColor: '#00ff00'
+                  },
+                  main: {
+                    backgroundColor: '#ff0000'
+                  }
+                }
+              }}
+              dialogContentProps={{
+                type: DialogType.close,
+                showCloseButton: true
+              }}
+              width={'570px'}
+              height={'315px'} />
+          </div>
+        </div>
+        <div id="IFramePanelDiv" className={styles.container} hidden={!isIFramePanelDivVisible}>
+          <div className="ms-font-m">iframe Panel tester:
+            <PrimaryButton
+              text="Open iframe Panel"
+              onClick={() => { this.setState({ iFramePanelOpened: true }); }} />
+            <IFramePanel
+              url={iframeUrl}
+              type={PanelType.medium}
+              //  height="300px"
+              headerText="iframe panel title"
+              closeButtonAriaLabel="Close"
+              isOpen={this.state.iFramePanelOpened}
+              onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
+              iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+            />
+          </div>
+        </div>
+        <div id="FolderPickerDiv" className={styles.container} hidden={!isFolderPickerDivVisible}>
+          <FolderPicker context={this.props.context}
+            rootFolder={{
+              Name: 'Documents',
+              ServerRelativeUrl: `${this.props.context.pageContext.web.serverRelativeUrl === '/' ? '' : this.props.context.pageContext.web.serverRelativeUrl}/Shared Documents`
+            }}
+            onSelect={this._onFolderSelect}
+            label='Folder Picker'
+            required={true}
+            canCreateFolders={true}
+          ></FolderPicker>
+        </div>
+        <div id="CarouselDiv" className={styles.container} hidden={!isCarouselDivVisible}>
+          <div>
+            <h3>Carousel with fixed elements:</h3>
+            <Carousel
+              buttonsLocation={CarouselButtonsLocation.top}
+              buttonsDisplay={CarouselButtonsDisplay.block}
+
+              contentContainerStyles={styles.carouselContent}
+              containerButtonsStyles={styles.carouselButtonsContainer}
+
+              isInfinite={true}
+
+              element={this.carouselElements}
+              onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+              onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+            />
+          </div>
+          <div>
+            <h3>Carousel with CarouselImage elements:</h3>
+            <Carousel
+              buttonsLocation={CarouselButtonsLocation.center}
+              buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+              contentContainerStyles={styles.carouselImageContent}
+              //containerButtonsStyles={styles.carouselButtonsContainer}
+
+              isInfinite={true}
+              indicatorShape={CarouselIndicatorShape.circle}
+              indicatorsDisplay={CarouselIndicatorsDisplay.block}
+              pauseOnHover={true}
+
+              element={[
+                {
+                  imageSrc: 'https://images.unsplash.com/photo-1588614959060-4d144f28b207?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3078&q=80',
+                  title: 'Colosseum',
+                  description: 'This is Colosseum',
+                  url: 'https://en.wikipedia.org/wiki/Colosseum',
+                  showDetailsOnHover: true,
+                  imageFit: ImageFit.cover
+                },
+                {
+                  imageSrc: 'https://www.telegraph.co.uk/content/dam/science/2018/06/20/stonehenge-2326750_1920_trans%2B%2BZgEkZX3M936N5BQK4Va8RWtT0gK_6EfZT336f62EI5U.jpg',
+                  title: 'Stonehenge',
+                  description: 'This is Stonehendle',
+                  url: 'https://en.wikipedia.org/wiki/Stonehenge',
+                  showDetailsOnHover: true,
+                  imageFit: ImageFit.cover
+                },
+                {
+                  imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/2560px-All_Gizah_Pyramids.jpg',
+                  title: 'Pyramids of Giza',
+                  description: 'This are Pyramids of Giza (Egypt)',
+                  url: 'https://en.wikipedia.org/wiki/Egyptian_pyramids',
+                  showDetailsOnHover: true,
+                  imageFit: ImageFit.cover
+                }
+              ]}
+              onMoveNextClicked={(index: number) => { console.log(`Next button clicked: ${index}`); }}
+              onMovePrevClicked={(index: number) => { console.log(`Prev button clicked: ${index}`); }}
+              rootStyles={mergeStyles({
+                backgroundColor: '#C3C3C3'
+              })}
+            />
+          </div>
+          <div>
+            <h3>Carousel with triggerPageElement:</h3>
+            <Carousel
+              buttonsLocation={CarouselButtonsLocation.bottom}
+              buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}
+
+              contentContainerStyles={styles.carouselContent}
+
+              canMoveNext={this.state.canMoveNext}
+              canMovePrev={this.state.canMovePrev}
+              triggerPageEvent={this.triggerNextElement}
+              element={this.state.currentCarouselElement}
+            />
+          </div>
+        </div>
+        <div id="SiteBreadcrumbDiv" className={styles.container} hidden={!isSiteBreadcrumbDivVisible}>
+          <div className={styles.siteBreadcrumb}>
+            <SiteBreadcrumb context={this.props.context} />
+          </div>
+        </div>
+        <div id="FilePickerDiv" className={styles.container} hidden={!isFilePickerDivVisible}>
+
+          <div>
+            <h3>File Picker</h3>
+            <TextField
+              label="Default SiteFileTab Folder"
+              onChange={debounce((ev, newVal) => { this.setState({ filePickerDefaultFolderAbsolutePath: newVal }); }, 500)}
+              styles={{ root: { marginBottom: 10 } }}
+            />
+            <FilePicker
+              bingAPIKey="<BING API KEY>"
+              //webAbsoluteUrl="https://023xn.sharepoint.com/sites/test1"
+              //defaultFolderAbsolutePath={"https://aterentiev.sharepoint.com/sites/SPFxinTeamsDemo/Shared%20Documents/General"}
+              //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+              buttonLabel="Add File"
+              buttonIconProps={{ iconName: 'Add', styles: { root: { fontSize: 42 } } }}
+              onSave={this._onFilePickerSave}
+              onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
+              context={this.props.context}
+              hideRecentTab={false}
+              includePageLibraries={true}
+              checkIfFileExists={false}
+            />
+            {
+              this.state.filePickerResult &&
               <div>
-                FileName: {this.state.filePickerResult[0].fileName}
+                <div>
+                  FileName: {this.state.filePickerResult[0].fileName}
+                </div>
+                <div>
+                  File size: {this.state.filePickerResult[0].fileSize}
+                </div>
               </div>
-              <div>
-                File size: {this.state.filePickerResult[0].fileSize}
-              </div>
-            </div>
-          }
-        </div>
+            }
+          </div>
 
-        <div>
-          <h3>File Picker with target folder browser</h3>
-          <FilePicker
-            bingAPIKey="<BING API KEY>"
-            //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
-            buttonLabel="Upload image"
-            buttonIcon="FileImage"
-            onSave={this._onFilePickerSave}
-            onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
-            context={this.props.context}
-            hideRecentTab={false}
-            renderCustomUploadTabContent={() => (
-              <FolderExplorer context={this.props.context}
-                rootFolder={this.rootFolder}
-                defaultFolder={this.rootFolder}
-                onSelect={this._onFolderSelect}
-                canCreateFolders={true}
-              />)}
-          />
+          <div>
+            <h3>File Picker with target folder browser</h3>
+            <FilePicker
+              bingAPIKey="<BING API KEY>"
+              //accepts={[".gif", ".jpg", ".jpeg", ".bmp", ".dib", ".tif", ".tiff", ".ico", ".png", ".jxr", ".svg"]}
+              buttonLabel="Upload image"
+              buttonIcon="FileImage"
+              onSave={this._onFilePickerSave}
+              onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
+              context={this.props.context}
+              hideRecentTab={false}
+              renderCustomUploadTabContent={() => (
+                <FolderExplorer context={this.props.context}
+                  rootFolder={this.rootFolder}
+                  defaultFolder={this.rootFolder}
+                  onSelect={this._onFolderSelect}
+                  canCreateFolders={true}
+                />)}
+            />
+          </div>
+          <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
         </div>
-
-        <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
-        <div>
+        <div id="ProgressDiv" className={styles.container} hidden={!isProgressDivVisible}>
           <Progress title={'Progress Test'}
             showOverallProgress={true}
             showIndeterminateOverallProgress={false}
@@ -1763,20 +1946,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
-
-        <div className="ms-font-l">Grid Layout</div>
-        <GridLayout
-          ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
-          items={sampleGridData}
-          onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
-        />
-
-        <IconPicker buttonLabel={'Icon'}
-          onChange={(iconName: string) => { console.log(iconName); }}
-          onCancel={() => { console.log("Panel closed"); }}
-          onSave={(iconName: string) => { console.log(iconName); }} />
-
-        <div>
+        <div id="GridLayoutDiv" className={styles.container} hidden={!isGridLayoutDivVisible}>
+          <div className="ms-font-l">Grid Layout</div>
+          <GridLayout
+            ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
+            items={sampleGridData}
+            onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
+          />
+        </div>
+        <div id="FolderExplorerDiv" className={styles.container} hidden={!isFolderExplorerDivVisible}>
           <FolderExplorer
             context={this.props.context}
             rootFolder={{
@@ -1791,10 +1969,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
             orderby='Name' //'ListItemAllFields/Created'
             orderAscending={true}
+            showFiles={true}
+            onFileClick={this._onFileClick}
           />
         </div>
-
-        <div>
+        <div id="TreeViewDiv" className={styles.container} hidden={!isTreeViewDivVisible}>
           <h3>Tree View</h3>
           <TreeView items={this.treeitems}
             defaultExpanded={false}
@@ -1810,10 +1989,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           // onRenderItem={this.renderCustomTreeItem}
           />
           <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
-
         </div>
-
-        <div>
+        <div id="PaginationDiv" className={styles.container} hidden={!isPaginationDivVisible}>
           <Pagination
             currentPage={3}
             onChange={(page) => (this._getPage(page))}
@@ -1824,8 +2001,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           //limiterIcon={"NumberedListText"}
           />
         </div>
-
-        <div>
+        <div id="FieldCollectionDataDiv" className={styles.container} hidden={!isFieldCollectionDataDivVisible}>
           <FieldCollectionData
             key={"FieldCollectionData"}
             label={"Fields Collection"}
@@ -1833,7 +2009,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
-
+            panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
             fields={[
               { id: "Field1", title: "String field", type: CustomCollectionFieldType.string, required: true },
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
@@ -1843,131 +2019,134 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             value={this.getRandomCollectionFieldData()}
           />
         </div>
-        <Dashboard
-          widgets={[{
-            title: "Card 1",
-            desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
-            widgetActionGroup: calloutItemsExample,
-            size: WidgetSize.Triple,
-            body: [
-              {
-                id: "t1",
-                title: "Tab 1",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #1
-                    </NorthstarText>
-                  </Flex>
-                ),
-              },
-              {
-                id: "t2",
-                title: "Tab 2",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #2
-                    </NorthstarText>
-                  </Flex>
-                ),
-              },
-              {
-                id: "t3",
-                title: "Tab 3",
-                content: (
-                  <Flex
-                    vAlign="center"
-                    hAlign="center"
-                    styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
-                  >
-                    <NorthstarText size="large" weight="semibold">
-                      Content #3
-                    </NorthstarText>
-                  </Flex>
-                ),
-              },
-            ],
-            link: linkExample,
-          },
-          {
-            title: "Card 2",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 3",
-            size: WidgetSize.Double,
-            link: linkExample,
-          },
-          {
-            title: "Card 4",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 5",
-            size: WidgetSize.Single,
-            link: linkExample,
-          },
-          {
-            title: "Card 6",
-            size: WidgetSize.Single,
-            link: linkExample,
-          }]} />
-
-        <h3>Uncontrolled toolbar</h3>
-        <Toolbar actionGroups={{
-          'group1': {
-            'action1': {
-              title: 'Edit',
-              iconName: 'Edit',
-              onClick: () => { console.log('Edit action click'); }
+        <div id="DashboardDiv" className={styles.container} hidden={!isDashboardDivVisible}>
+          <Dashboard
+            widgets={[{
+              title: "Card 1",
+              desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
+              widgetActionGroup: calloutItemsExample,
+              size: WidgetSize.Triple,
+              body: [
+                {
+                  id: "t1",
+                  title: "Tab 1",
+                  content: (
+                    <Flex
+                      vAlign="center"
+                      hAlign="center"
+                      styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                    >
+                      <NorthstarText size="large" weight="semibold">
+                        Content #1
+                      </NorthstarText>
+                    </Flex>
+                  ),
+                },
+                {
+                  id: "t2",
+                  title: "Tab 2",
+                  content: (
+                    <Flex
+                      vAlign="center"
+                      hAlign="center"
+                      styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                    >
+                      <NorthstarText size="large" weight="semibold">
+                        Content #2
+                      </NorthstarText>
+                    </Flex>
+                  ),
+                },
+                {
+                  id: "t3",
+                  title: "Tab 3",
+                  content: (
+                    <Flex
+                      vAlign="center"
+                      hAlign="center"
+                      styles={{ height: "100%", border: "1px dashed rgb(179, 176, 173)" }}
+                    >
+                      <NorthstarText size="large" weight="semibold">
+                        Content #3
+                      </NorthstarText>
+                    </Flex>
+                  ),
+                },
+              ],
+              link: linkExample,
             },
-            'action2': {
-              title: 'New',
-              iconName: 'Add',
-              onClick: () => { console.log('New action click'); }
-            }
-          }
-        }}
-          filters={toolbarFilters}
-          onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
-        />
-
-        <div>
-          <h3>Controlled toolbar</h3>
-          <Toolbar actionGroups={{
-            'group1': {
-              'action1': {
-                title: 'Edit',
-                iconName: 'Edit',
-                onClick: () => { console.log('Edit action click'); }
-              },
-              'action2': {
-                title: 'New',
-                iconName: 'Add',
-                onClick: () => { console.log('New action click'); }
-              }
-            }
-          }}
-            filters={toolbarFilters}
-            selectedFilterIds={this.state.selectedFilters}
-            onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
+            {
+              title: "Card 2",
+              size: WidgetSize.Single,
+              link: linkExample,
+            },
+            {
+              title: "Card 3",
+              size: WidgetSize.Double,
+              link: linkExample,
+            },
+            {
+              title: "Card 4",
+              size: WidgetSize.Single,
+              link: linkExample,
+            },
+            {
+              title: "Card 5",
+              size: WidgetSize.Single,
+              link: linkExample,
+            },
+            {
+              title: "Card 6",
+              size: WidgetSize.Single,
+              link: linkExample,
+            }]} />
         </div>
-        <div>Selected filter IDs: {this.state.selectedFilters.join(", ")}</div>
-        <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
-        <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
-
-        <div>
+        <div id="ToolbarDiv" className={styles.container} hidden={!isToolbarDivVisible}>
+          <div>
+            <h3>Uncontrolled toolbar</h3>
+            <Toolbar actionGroups={{
+              'group1': {
+                'action1': {
+                  title: 'Edit',
+                  iconName: 'Edit',
+                  onClick: () => { console.log('Edit action click'); }
+                },
+                'action2': {
+                  title: 'New',
+                  iconName: 'Add',
+                  onClick: () => { console.log('New action click'); }
+                }
+              }
+            }}
+              filters={toolbarFilters}
+              onSelectedFiltersChange={this.onToolbarSelectedFiltersChange}
+            />
+          </div>
+          <div>
+            <h3>Controlled toolbar</h3>
+            <Toolbar actionGroups={{
+              'group1': {
+                'action1': {
+                  title: 'Edit',
+                  iconName: 'Edit',
+                  onClick: () => { console.log('Edit action click'); }
+                },
+                'action2': {
+                  title: 'New',
+                  iconName: 'Add',
+                  onClick: () => { console.log('New action click'); }
+                }
+              }
+            }}
+              filters={toolbarFilters}
+              selectedFilterIds={this.state.selectedFilters}
+              onSelectedFiltersChange={this.onToolbarSelectedFiltersChange} />
+          </div>
+          <div>Selected filter IDs: {this.state.selectedFilters.join(", ")}</div>
+          <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
+          <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
+        </div>
+        <div id="AnimatedDialogDiv" className={styles.container} hidden={!isAnimatedDialogDivVisible}>
           <h3>Animated Dialogs</h3>
 
           {/* Multiple elements added only for demo - can be controlled with fewer elements */}
@@ -2045,9 +2224,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               </PrimaryButton>
             </div>
           </AnimatedDialog>
-
+        </div>
+        <div id="LocationPickerDiv" className={styles.container} hidden={!isLocationPickerDivVisible}>
           <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
-
+        </div>
+        <div id="ModernTaxonomyPickerDiv" className={styles.container} hidden={!isModernTaxonomyPickerDivVisible}>
           <ModernTaxonomyPicker
             allowMultipleSelections={true}
             termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
@@ -2059,8 +2240,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             customPanelWidth={400}
           />
         </div>
-
-        <div>
+        <div id="AdaptiveCardHostDiv" className={styles.container} hidden={!isAdaptiveCardHostDivVisible}>
           <h3>Adaptive Card Host</h3>
           <AdaptiveCardHost
             card={{
@@ -2322,8 +2502,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             context={this.props.context}
           />
         </div>
-
-        <div>
+        <div id="VariantThemeProviderDiv" className={styles.container} hidden={!isVariantThemeProviderDivVisible}>
           <h3>Variant Theme Provider</h3>
           <VariantThemeProvider variantType={VariantType.Strong}>
             <Stack tokens={{ childrenGap: 5, padding: 5 }}>
@@ -2334,16 +2513,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </VariantThemeProvider>
         </div>
-
-        <div>
+        <div id="EnhancedThemeProviderDiv" className={styles.container} hidden={!isEnhancedThemeProviderDivVisible}>
           <h3>Enhanced Theme Provider</h3>
           <EnhancedThemeProvider applyTo="element" context={this.props.context} theme={this.props.themeVariant}>
             <ControlsTestEnhancedThemeProviderFunctionComponent />
             <ControlsTestEnhancedThemeProvider />
           </EnhancedThemeProvider>
         </div>
-
-        <div>
+        <div id="AdaptiveCardDesignerHostDiv" className={styles.container} hidden={!isAdaptiveCardDesignerHostDivVisible}>
           <h3>Adaptive Card Designer Host</h3>
           <AdaptiveCardDesignerHost
             headerText={`Adaptive Card Designer`}
@@ -2390,8 +2567,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }]}
           />
         </div>
-
-        <div>
+        <div id="TaxonomyTreeDiv" className={styles.container} hidden={!isTaxonomyTreeDivVisible}>
           <h3>Modern Taxonomy Tree</h3>
           {this.state.termStoreInfo && (
             <TaxonomyTree
@@ -2408,12 +2584,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           )}
         </div>
-
-        <div>
+        <div id="TestControlDiv" className={styles.container} hidden={!isTestControlDivVisible}>
           <h3>Monaco Editor</h3>
-          <TestControl context={this.props.context} />
+          <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
-        <div>
+        <div id="UploadFilesDiv" className={styles.container} hidden={!isUploadFilesDivVisible}>
           <h3>Upload Files</h3>
           <EnhancedThemeProvider theme={this.props.themeVariant} context={this.props.context}>
             <Stack>
@@ -2428,7 +2603,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </EnhancedThemeProvider>
         </div>
-
       </div>
     );
   }
@@ -2468,4 +2642,55 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   // private _onFolderSelect = (folder: IFolder): void => {
   //   console.log('selected folder', folder);
   // }
+
+  private _toggleAllFilters = (event: React.MouseEvent<HTMLElement, MouseEvent>, checked?: boolean): void => {
+    this.setState({
+      toggleAll: checked,
+      isWebPartTitleDivVisible: checked,
+      isDynamicFormDivVisible: checked,
+      isTeamsDivVisible: checked,
+      isAccessibleAccordionDivVisible: checked,
+      isTaxonomyPickerDivVisible: checked,
+      isDateTimePickerDivVisible: checked,
+      isRichTextDivVisible: checked,
+      isPlaceholderDivVisible: checked,
+      isPeoplePickerDivVisible: checked,
+      isDragDropFilesDivVisible: checked,
+      isListViewDivVisible: checked,
+      isChartControlDivVisible: checked,
+      isMapDivVisible: checked,
+      isModernAudioDivVisible: checked,
+      isFileTypeIconDivVisible: checked,
+      isSecurityTrimmedControlDivVisible: checked,
+      isSitePickerDivVisible: checked,
+      isListPickerDivVisible: checked,
+      isFieldPickerDivVisible: checked,
+      isIconPickerDivVisible: checked,
+      isComboBoxListItemPickerDivVisible: checked,
+      isIFrameDialogDivVisible: checked,
+      isIFramePanelDivVisible: checked,
+      isFolderPickerDivVisible: checked,
+      isCarouselDivVisible: checked,
+      isSiteBreadcrumbDivVisible: checked,
+      isFilePickerDivVisible: checked,
+      isProgressDivVisible: checked,
+      isGridLayoutDivVisible: checked,
+      isFolderExplorerDivVisible: checked,
+      isTreeViewDivVisible: checked,
+      isPaginationDivVisible: checked,
+      isFieldCollectionDataDivVisible: checked,
+      isDashboardDivVisible: checked,
+      isToolbarDivVisible: checked,
+      isAnimatedDialogDivVisible: checked,
+      isLocationPickerDivVisible: checked,
+      isModernTaxonomyPickerDivVisible: checked,
+      isAdaptiveCardHostDivVisible: checked,
+      isVariantThemeProviderDivVisible: checked,
+      isEnhancedThemeProviderDivVisible: checked,
+      isAdaptiveCardDesignerHostDivVisible: checked,
+      isTaxonomyTreeDivVisible: checked,
+      isTestControlDivVisible: checked,
+      isUploadFilesDivVisible: checked
+    });
+  }
 }

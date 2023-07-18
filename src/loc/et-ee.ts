@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Salvestama",
   "Cancel": "Tühistama",
   "SiteBreadcrumbLabel": "Veebilehe laius",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Vali termin",
   "DynamicFormEnterURLPlaceholder": "Sisestage URL",
   "DynamicFormEnterDescriptionPlaceholder": "Asetekst",
+  "DynamicFormDialogValidationErrorTitle": "Valideerimisviga",
+  "DynamicFormDialogValidationErrorMessage": "Valideerimisel on vigu, parandage need enne salvestamist.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Väärtus peab olema suurem kui {0}",
+  "DynamicFormNumberValueMustBeBetween": "Väärtus peab olema vahemikus {0} kuni {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Väärtus peab olema väiksem kui {0}",
   "customDisplayName": "Kasuta seda asukohta:",
   "ListItemCommentDIalogDeleteSubText": "Kas soovite kindlasti selle kommentaari kustutada?",
   "ListItemCommentsDialogDeleteTitle": "Kommentaari kustutamise kinnitamine",

@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Tallenna",
   "Cancel": "Peruuta",
   "SiteBreadcrumbLabel": "Sivuston navigointi polku",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Valitse termi",
   "DynamicFormEnterURLPlaceholder": "URL-osoitteen syöttäminen",
   "DynamicFormEnterDescriptionPlaceholder": "Vaihtoehtoinen teksti",
+  "DynamicFormDialogValidationErrorTitle": "Vahvistusvirhe",
+  "DynamicFormDialogValidationErrorMessage": "Vahvistusvirheitä on, korjaa ne ennen tallentamista.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Arvon on oltava suurempi kuin {0}",
+  "DynamicFormNumberValueMustBeBetween": "Tämän kentän arvon on oltava välillä {0} - {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Arvon on oltava pienempi kuin {0}",
   "customDisplayName": "Käytä tätä sijaintia:",
   "ListItemCommentDIalogDeleteSubText": "Haluatko varmasti poistaa tämän kommentin?",
   "ListItemCommentsDialogDeleteTitle": "Vahvista poista kommentti",

@@ -8,6 +8,7 @@ import { IRenderFunction, IRectangle, css } from 'office-ui-fabric-react/lib/Uti
 import { FolderTile } from '../FolderTile';
 import { DocumentTile } from '../DocumentTile';
 import { ITilesListProps } from './ITilesListProps';
+import { findIndex } from '@microsoft/sp-lodash-subset';
 
 /**
  * Rows per page
@@ -52,8 +53,14 @@ export class TilesList extends React.Component<ITilesListProps> {
   }
 
   public componentDidUpdate(prevProps: ITilesListProps): void {
-    if (this.props.filePickerResults !== prevProps.filePickerResults) {
+    if ((this.props.filePickerResults !== prevProps.filePickerResults) || (this._pageWidth === -1)) {
       this._listElem.forceUpdate();
+    }
+  }
+
+  public componentDidMount(): void {
+    if (this._pageWidth === -1) {
+      this.forceUpdate();
     }
   }
 
@@ -94,10 +101,17 @@ export class TilesList extends React.Component<ITilesListProps> {
     */
   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
     if (itemIndex === 0) {
-      this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
-      this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
+      if (surfaceRect.width === 0) {
+        //surfaceRect.width is 0 on load of this component, so it won't render properly.
+        //setting _pageWidth to -1 will re-render the entire component so surfaceRect.width will be returned correctly
+        this._pageWidth = -1;
+      } else {
+        this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
+        this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
+        this._pageWidth = surfaceRect.width;
+      }
+
       this._rowHeight = this._columnWidth;
-      this._pageWidth = surfaceRect.width;
     }
 
     // Get the list of items
@@ -165,15 +179,17 @@ export class TilesList extends React.Component<ITilesListProps> {
       this.props.onNextPageDataRequest();
       return null;
     }
-    const isSelected: boolean = this.props.filePickerResults.filter(x => x.fileAbsoluteUrl === item.absoluteUrl).length > 0;
-
+    //If List component have more than 1 page, it starts to index items from 0,
+    //but for Selection index should be unique
+    const itemIndex = findIndex(this.props.items, item);
+    const isSelected: boolean = this.props.filePickerResults?.filter(x => x.fileAbsoluteUrl === item.absoluteUrl).length > 0;
     // I know this is a lot of divs and spans inside of each other, but my
     // goal was to mimic the HTML and style of the out-of-the-box file picker
     // to the best of my ability.
     return (
       <div
         className={styles.listCell}
-        data-item-index={index}
+        data-item-index={itemIndex}
         style={{
           flexBasis: this._columnWidth,
           maxWidth: this._columnWidth,
@@ -194,7 +210,7 @@ export class TilesList extends React.Component<ITilesListProps> {
               item.isFolder ?
                 <FolderTile
                   item={item}
-                  index={index}
+                  index={itemIndex}
                   isSelected={isSelected}
                   pageWidth={this._pageWidth}
                   tileDimensions={{
@@ -207,7 +223,7 @@ export class TilesList extends React.Component<ITilesListProps> {
                 <DocumentTile
                   fileBroserService={this.props.fileBrowserService}
                   item={item}
-                  index={index}
+                  index={itemIndex}
                   isSelected={isSelected}
                   pageWidth={this._pageWidth}
                   tileDimensions={{

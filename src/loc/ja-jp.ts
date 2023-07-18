@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "セーブ",
   "Cancel": "キャンセル",
   "SiteBreadcrumbLabel": "ウェブサイトの階層リンク",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "用語の選択",
   "DynamicFormEnterURLPlaceholder": "URL を入力する",
   "DynamicFormEnterDescriptionPlaceholder": "代替テキスト",
+  "DynamicFormDialogValidationErrorTitle": "検証エラー",
+  "DynamicFormDialogValidationErrorMessage": "検証エラーがあります。保存する前に修正してください。",
+  "DynamicFormNumberValueMustBeGreaterThan": "値は {0} より大きくなければなりません",
+  "DynamicFormNumberValueMustBeBetween": "値は {0} から {1} の間である必要があります",
+  "DynamicFormNumberValueMustBeLowerThan": "値は {0} より小さい必要があります",
   "customDisplayName": "この場所を使用します。",
   "ListItemCommentDIalogDeleteSubText": "このコメントを削除しますか?",
   "ListItemCommentsDialogDeleteTitle": "コメントの削除の確認",

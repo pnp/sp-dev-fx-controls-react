@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "救",
   "Cancel": "取消",
   "SiteBreadcrumbLabel": "网站痕迹",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "选择期限",
   "DynamicFormEnterURLPlaceholder": "输入网址",
   "DynamicFormEnterDescriptionPlaceholder": "备选文本",
+  "DynamicFormDialogValidationErrorTitle": "验证错误",
+  "DynamicFormDialogValidationErrorMessage": "存在验证错误，请在保存之前修复它们。",
+  "DynamicFormNumberValueMustBeGreaterThan": "值必须大于 {0}",
+  "DynamicFormNumberValueMustBeBetween": "值必须介于 {0} 和 {1} 之间",
+  "DynamicFormNumberValueMustBeLowerThan": "值必须小于 {0}",
   "customDisplayName": "使用此位置：",
   "ListItemCommentDIalogDeleteSubText": "您确定要删除此评论吗？",
   "ListItemCommentsDialogDeleteTitle": "确认删除注释",

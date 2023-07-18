@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Speichern",
   "Cancel": "Abbrechen",
   "SiteBreadcrumbLabel": "Website Brotkrume",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Knoten auswählen",
   "DynamicFormEnterURLPlaceholder": "Geben Sie eine URL ein",
   "DynamicFormEnterDescriptionPlaceholder": "Alternativtext",
+  "DynamicFormDialogValidationErrorTitle": "Validierungsfehler",
+  "DynamicFormDialogValidationErrorMessage": "Es liegen Validierungsfehler vor. Bitte beheben Sie diese vor dem Speichern.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Der Wert muss größer als {0} sein.",
+  "DynamicFormNumberValueMustBeBetween": "Der Wert muss zwischen {0} und {1} liegen.",
+  "DynamicFormNumberValueMustBeLowerThan": "Der Wert muss niedriger als {0} sein.",
   "customDisplayName": "Verwenden Sie diesen Speicherort:",
   "ListItemCommentDIalogDeleteSubText": "Sind Sie sicher, dass Sie diesen Kommentar löschen möchten?",
   "ListItemCommentsDialogDeleteTitle": "Kommentar löschen bestätigen",

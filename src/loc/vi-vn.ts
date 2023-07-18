@@ -2,6 +2,8 @@ declare var define: any;
 
 define([], () => {
   return {
+  TermSertNaviagtionErrorMessage: "TermSet not found",
+  TermSetNavigationNoTerms: "No terms defined",
   "Save": "Cứu",
   "Cancel": "Hủy",
   "SiteBreadcrumbLabel": "Trang web mẩu bánh mì",
@@ -362,6 +364,11 @@ define([], () => {
   "DynamicFormTermPanelTitle": "Chọn Thuật ngữ",
   "DynamicFormEnterURLPlaceholder": "Nhập URL",
   "DynamicFormEnterDescriptionPlaceholder": "Văn bản thay thế",
+  "DynamicFormDialogValidationErrorTitle": "Lỗi xác nhận",
+  "DynamicFormDialogValidationErrorMessage": "Có lỗi xác thực, vui lòng sửa chúng trước khi lưu.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Giá trị phải lớn hơn {0}",
+  "DynamicFormNumberValueMustBeBetween": "Giá trị phải nằm trong khoảng từ {0} đến {1}",
+  "DynamicFormNumberValueMustBeLowerThan": "Giá trị phải thấp hơn {0}",
   "customDisplayName": "Sử dụng vị trí này:",
   "ListItemCommentDIalogDeleteSubText": "Bạn có chắc chắn rằng bạn muốn xóa bình luận này không?",
   "ListItemCommentsDialogDeleteTitle": "Xác nhận Xóa Chú thích",

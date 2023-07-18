@@ -96,7 +96,7 @@ The `PrincipalType` enum can be used to specify the types of information you wan
 | SharePointGroup | 8 |
 
 
- ## MSGraph Permissions required
+## MSGraph Permissions required
 
 This control requires the following scopes if groupId is of type String:
 
