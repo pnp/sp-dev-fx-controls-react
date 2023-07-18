@@ -31,7 +31,7 @@ jobs:
       run: npm run build
 
     - name: Publish v4 dev release
-      run: npm publish --tag v4 --access public
+      run: npm publish --tag beta4 --access public
       if: github.ref == 'refs/heads/v4-dev'
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
