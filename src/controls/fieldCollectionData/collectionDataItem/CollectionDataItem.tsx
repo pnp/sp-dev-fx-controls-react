@@ -12,7 +12,6 @@ import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components
 import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/components/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
-import { CollectionNumberField } from '../collectionNumberField';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
 
@@ -362,9 +361,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           onRenderOption={field.onRenderOption}
           className="PropertyFieldCollectionData__panel__dropdown-field" />;
       case CustomCollectionFieldType.number:
-        return (
-          <CollectionNumberField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
-        );
+        return <TextField placeholder={field.placeholder || field.title}
+          className={styles.collectionDataField}
+          value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          type='number'
+          onChange={(e, value) => this.onValueChanged(field.id, value)}
+          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
+          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
+          inputClassName="PropertyFieldCollectionData__panel__number-field" />;
       case CustomCollectionFieldType.fabricIcon:
         return (
           <CollectionIconField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
