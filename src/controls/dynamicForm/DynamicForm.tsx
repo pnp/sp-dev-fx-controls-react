@@ -206,11 +206,14 @@ export class DynamicForm extends React.Component<
           } else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
+          } else if(val.fieldType === "Number"){
+            shouldBeReturnBack = this.validateNumberOnSubmit(val);
+          } 
+        } else if(val.fieldType === "Number"){
+          if(val.newValue === null){
+            val.newValue = val.fieldDefaultValue;
           }
-        } else if (val.fieldType === "Number") {
-          if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
-            shouldBeReturnBack = true;
-          }
+          shouldBeReturnBack = this.validateNumberOnSubmit(val);
         }
       });
       if (shouldBeReturnBack) {
@@ -840,4 +843,20 @@ export class DynamicForm extends React.Component<
 
     return errorMessage;
   };
+
+  private validateNumberOnSubmit = (val:IDynamicFieldProps): boolean => {
+    let shouldBeReturnBack = false;
+    if (val.fieldType === "Number" && val.showAsPercentage) {
+      let minValue = val.minimumValue !== undefined ? val.minimumValue * 100 : undefined;
+      let maxValue = val.maximumValue !== undefined ? val.maximumValue * 100 : undefined;
+      if ((val.newValue < minValue) || (val.newValue > maxValue)) {
+        shouldBeReturnBack = true;
+      }
+    } else if(val.fieldType === "Number" && !val.showAsPercentage){
+      if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
+        shouldBeReturnBack = true;
+      }
+    }
+    return shouldBeReturnBack;
+  }
 }
