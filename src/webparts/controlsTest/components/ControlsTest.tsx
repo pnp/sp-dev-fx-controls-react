@@ -2006,7 +2006,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             key={"FieldCollectionData"}
             label={"Fields Collection"}
             itemsPerPage={3}
-            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
+            manageBtnLabel={"Manage"}
+            onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
             panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
@@ -2015,6 +2016,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+              { id: "Field5", title: "Date field", type: CustomCollectionFieldType.date, placeholder: "Select a date" }
             ]}
             value={this.getRandomCollectionFieldData()}
           />
@@ -2610,7 +2612,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private getRandomCollectionFieldData = () => {
     let result = [];
     for (let i = 1; i < 16; i++) {
-      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+      const sampleDate = new Date();
+      sampleDate.setDate(sampleDate.getDate() + i);
+      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true, "Field5": sampleDate });
     }
     return result;
   }

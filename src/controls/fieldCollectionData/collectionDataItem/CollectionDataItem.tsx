@@ -14,6 +14,7 @@ import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
+import { DatePicker } from 'office-ui-fabric-react';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
   private emptyItem: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -385,6 +386,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
           onGetErrorMessage={async (value: string) => this.urlFieldValidation(field, value, item)}
           inputClassName="PropertyFieldCollectionData__panel__url-field" />;
+      case CustomCollectionFieldType.date:
+        return <DatePicker
+          className={styles.collectionDataField}
+          placeholder={field.placeholder || field.title}
+          isRequired={field.required}
+          disabled={disableFieldOnEdit}
+          value={item[field.id] ? new Date(item[field.id]) : undefined}
+          onSelectDate={(date) => { this.onValueChanged(field.id, date) }}
+          formatDate={(date) => { return date ? date?.toLocaleDateString() : ""; }}
+          />;
       case CustomCollectionFieldType.custom:
         if (field.onCustomRender) {
           return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);

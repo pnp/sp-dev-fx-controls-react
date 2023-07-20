@@ -74,5 +74,6 @@ export enum CustomCollectionFieldType {
   dropdown,
   fabricIcon,
   url,
+  date,
   custom
 }
