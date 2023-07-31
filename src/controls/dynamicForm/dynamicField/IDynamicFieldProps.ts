@@ -11,6 +11,7 @@ export interface IDynamicFieldProps {
   listId: string;
   listItemId?: number;
   columnInternalName: string;
+  cultureName?: string;
   label?: string;
   placeholder?: string;
   onChanged?: (columnInternalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => void; // eslint-disable-line @typescript-eslint/no-explicit-any

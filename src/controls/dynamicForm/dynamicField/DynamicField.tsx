@@ -22,6 +22,7 @@ import { IPickerTerms, TaxonomyPicker } from '../../taxonomyPicker';
 import styles from '../DynamicForm.module.scss';
 import { IDynamicFieldProps } from './IDynamicFieldProps';
 import { IDynamicFieldState } from './IDynamicFieldState';
+import CurrencyMap from "../CurrencyMap";
 
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
@@ -76,7 +77,9 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       firstDayOfWeek,
       columnInternalName,
       principalType,
-      description
+      description,
+      maximumValue,
+      minimumValue
     } = this.props;
 
     const {
@@ -259,8 +262,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           {errorTextEl}
         </div>;
 
-      case 'Number':
-        //eslint-disable-next-line no-case-declarations
+      case 'Number': {
         const customNumberErrorMessage = this.getNumberErrorText();
 
         return <div>
@@ -276,11 +278,15 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={customNumberErrorMessage} />
+            errorMessage={customNumberErrorMessage} 
+            min={minimumValue} 
+            max={maximumValue} />
           {descriptionEl}
         </div>;
+      }
+      case 'Currency': {
+        const customNumberErrorMessage = this.getNumberErrorText();
 
-      case 'Currency':
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={"AllCurrency"} />
@@ -294,10 +300,12 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText} />
+            errorMessage={customNumberErrorMessage} 
+            min={minimumValue} 
+            max={maximumValue} />
           {descriptionEl}
         </div>;
-
+      }
       case 'DateTime':
         return <div className={styles.fieldContainer}>
           <div className={styles.titleContainer}>
@@ -600,6 +608,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       changedValue
     } = this.state;
     const {
+      cultureName,
+      fieldType,
       maximumValue,
       minimumValue,
       showAsPercentage
@@ -618,16 +628,25 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       maxValue = maxValue !== undefined ? maxValue * 100 : undefined;
     }
 
+    let minValueCur: string, maxValueCur: string;
+    if (fieldType === "Currency" && cultureName) {
+      const countryCode = cultureName.split('-')?.[1];
+      if (minValue) minValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: CurrencyMap[countryCode] }).format(minValue);
+      if (maxValue) maxValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: CurrencyMap[countryCode] }).format(maxValue);
+    }
+
     if (changedValue !== undefined && changedValue !== null && changedValue.length > 0) {
-      if (minValue !== undefined && maxValue !== undefined && (changedValue < minValue || changedValue > maxValue)) {
-        return strings.DynamicFormNumberValueMustBeBetween.replace('{0}', minValue.toString()).replace('{1}', maxValue.toString());
+      const numericValue = Number(changedValue);
+      if (isNaN(numericValue)) return strings.ProvidedValueIsInvalid;
+      if (minValue !== undefined && maxValue !== undefined && (numericValue < minValue || numericValue > maxValue)) {
+        return strings.DynamicFormNumberValueMustBeBetween.replace('{0}', minValueCur ?? minValue.toString()).replace('{1}', maxValueCur ?? maxValue.toString());
       }
       else {
-        if (minValue !== undefined && changedValue < minValue) {
-          return strings.DynamicFormNumberValueMustBeGreaterThan.replace('{0}', minValue.toString());
+        if (minValue !== undefined && numericValue < minValue) {
+          return strings.DynamicFormNumberValueMustBeGreaterThan.replace('{0}', minValueCur ?? minValue.toString());
         }
-        else if (maxValue !== undefined && changedValue > maxValue) {
-          return strings.DynamicFormNumberValueMustBeLowerThan.replace('{0}', maxValue.toString());
+        else if (maxValue !== undefined && numericValue > maxValue) {
+          return strings.DynamicFormNumberValueMustBeLowerThan.replace('{0}', maxValueCur ?? maxValue.toString());
         }
       }
     }
