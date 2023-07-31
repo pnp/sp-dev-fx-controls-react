@@ -209,6 +209,7 @@ export class DynamicForm extends React.Component<
           }
         } 
         if (val.fieldType === "Number") {
+          if (val.showAsPercentage) val.newValue /= 100;
           if (this.isEmptyNumOrString(val.newValue) && (val.minimumValue != null || val.maximumValue != null)) {
             val.newValue = val.fieldDefaultValue = null; 
           }
