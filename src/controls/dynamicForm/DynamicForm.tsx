@@ -597,8 +597,8 @@ export class DynamicForm extends React.Component<
             hiddenName = response.value;
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;
-            if (item !== null) {
-              item[field.InternalName].forEach((element) => {
+            if (item !== null && item[field.InternalName] !== null && item[field.InternalName].results !== null) {
+              item[field.InternalName].results.forEach((element) => {
                 selectedTags.push({
                   key: element.TermGuid,
                   name: element.Label,
