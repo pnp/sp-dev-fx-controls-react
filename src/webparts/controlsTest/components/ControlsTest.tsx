@@ -1478,7 +1478,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           <PeoplePicker context={this.props.context}
             titleText="People Picker (tenant scoped)"
-            personSelectionLimit={5}
+            personSelectionLimit={10}
             // groupName={"Team Site Owners"}
             showtooltip={true}
             required={true}
@@ -1487,7 +1487,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onChange={this._getPeoplePickerItems}
             showHiddenInUI={false}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-            suggestionsLimit={2}
+            suggestionsLimit={5}
             resolveDelay={200}
             placeholder={'Select a SharePoint principal (User or Group)'}
             onGetErrorMessage={async (items: any[]) => {
