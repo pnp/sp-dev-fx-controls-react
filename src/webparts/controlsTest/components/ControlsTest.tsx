@@ -53,7 +53,8 @@ import {
   DisplayMode,
   Environment,
   EnvironmentType,
-  Guid
+  Guid,
+  ServiceScope
 } from "@microsoft/sp-core-library";
 
 import { SPHttpClient } from "@microsoft/sp-http";
@@ -197,6 +198,7 @@ import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
 import { Toggle } from "office-ui-fabric-react";
+import { ListItemComments } from "../../../ListItemComments";
 
 // Used to render document card
 /**
@@ -287,7 +289,7 @@ const toolbarFilters = [{
 export default class ControlsTest extends React.Component<IControlsTestProps, IControlsTestState> {
   private taxService: SPTermStorePickerService = null;
   private spTaxonomyService = new SPTaxonomyService(this.props.context);
-
+  private serviceScope : ServiceScope;
   private richTextValue: string = null;
   private theme = window["__themeState__"].theme;
   private pickerStylesSingle: Partial<IBasePickerStyles> = {
@@ -528,6 +530,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isSecurityTrimmedControlDivVisible: false,
       isSitePickerDivVisible: false,
       isListPickerDivVisible: false,
+      isListItemCommentsDivVisible: false,
       isFieldPickerDivVisible: false,
       isIconPickerDivVisible: false,
       isComboBoxListItemPickerDivVisible: false,
@@ -868,6 +871,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isSecurityTrimmedControlDivVisible,
       isSitePickerDivVisible,
       isListPickerDivVisible,
+      isListItemCommentsDivVisible,
       isFieldPickerDivVisible,
       isIconPickerDivVisible,
       isComboBoxListItemPickerDivVisible,
@@ -1056,6 +1060,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Toggle label="IFramePanel" checked={isIFramePanelDivVisible} onChange={(event, checked) => { this.setState({ isIFramePanelDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="ListPicker" checked={isListPickerDivVisible} onChange={(event, checked) => { this.setState({ isListPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="ListView" checked={isListViewDivVisible} onChange={(event, checked) => { this.setState({ isListViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ListItemComments" checked={isListItemCommentsDivVisible} onChange={(event, checked) => { this.setState({ isListItemCommentsDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="LocationPicker" checked={isLocationPickerDivVisible} onChange={(event, checked) => { this.setState({ isLocationPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="Map" checked={isMapDivVisible} onChange={(event, checked) => { this.setState({ isMapDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="ModernAudio" checked={isModernAudioDivVisible} onChange={(event, checked) => { this.setState({ isModernAudioDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
@@ -1676,6 +1681,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               placeholder={'Select list items'}
               onSelectedItem={this.listItemPickerDataSelected} />
 
+          </div>
+        </div>
+        <div id="ListItemCommentsDiv" className={styles.container} hidden={!isListItemCommentsDivVisible}>
+          <div className="ms-font-m">List Item Comments Tester
+            <ListItemComments webUrl='https://contoso.sharepoint.com/sites/ThePerspective'
+              listId='6f151a33-a7af-4fae-b8c4-f2f04cbc690f'
+              itemId={"1"}
+              serviceScope={this.props.context.serviceScope}
+              numberCommentsPerPage={10}
+              label="ListItem Comments"
+            />
           </div>
         </div>
         <div id="FieldPickerDiv" className={styles.container} hidden={!isFieldPickerDivVisible}>
