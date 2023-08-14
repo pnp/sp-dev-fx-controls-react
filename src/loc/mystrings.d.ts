@@ -371,6 +371,9 @@ declare interface IControlStrings {
   DynamicFormNumberValueMustBeGreaterThan: string;
   DynamicFormNumberValueMustBeBetween: string;
   DynamicFormNumberValueMustBeLowerThan: string;
+  DynamicFormChooseFileLabel: string;
+  DynamicFormChooseFileButtonText: string;
+  DynamicFormRequiredFileMessage: string;
 
   // Location picker
   customDisplayName: string;

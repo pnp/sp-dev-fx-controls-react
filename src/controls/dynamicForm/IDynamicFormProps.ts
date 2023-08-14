@@ -82,4 +82,15 @@ export interface IDynamicFormProps {
    * Specify validation error dialog properties
    */
   validationErrorDialogProps?: IValidationErrorDialogProps;
+
+  /**
+   * Specify if the form should support the creation of a new list item with a file. Default - false
+   */
+  enableFileSelection?: boolean;
+
+  /**
+   * Specify the supported file extensions for the file picker. Default - "docx", "doc", "pptx", "ppt", "xlsx", "xls", "pdf"
+   * Only used when enableFileSelection is true
+   */
+  supportedFileExtensions?: string[];
 }
