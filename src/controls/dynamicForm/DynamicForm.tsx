@@ -287,7 +287,8 @@ export class DynamicForm extends React.Component<
             } else {
               objects[columnInternalName] = null;
             }
-          } else {
+          }
+          else {
             objects[columnInternalName] = val.newValue;
           }
         }
@@ -332,10 +333,14 @@ export class DynamicForm extends React.Component<
       else if (
         contentTypeId === undefined ||
         contentTypeId === "" ||
-        !contentTypeId.startsWith("0x0120")
+        !contentTypeId.startsWith("0x0120")||
+        contentTypeId.startsWith("0x01")
       ) {
         // We are adding a new list item
         try {
+          const contentTypeIdField = "ContentTypeId";
+          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(
@@ -351,7 +356,8 @@ export class DynamicForm extends React.Component<
           }
           console.log("Error", error);
         }
-      } else if (contentTypeId.startsWith("0x0120")) {
+      }
+      else if (contentTypeId.startsWith("0x0120")) {
         // We are adding a folder or a Document Set
         try {
           const idField = "ID";
