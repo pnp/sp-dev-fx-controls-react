@@ -110,7 +110,9 @@ export class DynamicForm extends React.Component<
           </div>
         ) : (
           <div>
-            {this.props.enableFileSelection === true && this.renderFileSelectionControl()}
+            {this.props.enableFileSelection === true &&
+              this.props.listItemId === undefined &&
+              this.renderFileSelectionControl()}
             {fieldCollection.map((v, i) => {
               if (
                 fieldOverrides &&
