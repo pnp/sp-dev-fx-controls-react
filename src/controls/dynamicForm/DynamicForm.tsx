@@ -463,7 +463,7 @@ export class DynamicForm extends React.Component<
           ) // Replace not allowed chars in folder name
           : ""; // Empty string will be replaced by SPO with Folder Item ID
 
-      const fileCreatedResult = await library.rootFolder.files.add(itemTitle, selectedFile.downloadFileContent(), true);
+      const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
       const fields = await fileCreatedResult.file.listItemAllFields();
 
       if (fields[idField]) {
