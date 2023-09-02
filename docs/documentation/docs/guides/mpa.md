@@ -25,7 +25,7 @@ As this project embeds a SPFx solution, you have the ability to test all the con
 
 #### SPFx web part
 
-The web part is called *ControlsTest* and is available for both SharePoint Online and Teams. To test it on SharePoint, go to the workbench page (<https://[SHAREPOINT_SITE].sharepoint.com/_layouts/15/workbench.aspx>) and add the web part.
+The web part is called *ControlsTest* and is available for both SharePoint Online and Teams. To test it on SharePoint, go to the workbench page [https://[SHAREPOINT_SITE].sharepoint.com/_layouts/15/workbench.aspx](https://SHAREPOINT_SITE.sharepoint.com/_layouts/15/workbench.aspx) and add the web part.
 
 To test it on Teams, once the project deployed on the tenant accordingly, add the web part as a Tab (from a team for example).
 
@@ -35,7 +35,7 @@ To update the host component, open the *ControlsTest* React component located in
 
 This extension is called *TestApplicationCustomizer*. To test it, go to the following URL (after updating the parameters):
 
-<https://[SHAREPOINT_SITE].sharepoint.com?loadSPFX=true&debugManifestsFile=https://localhost:4321/temp/manifests.js&customActions={"ca9eac70-7343-4972-88d6-672d50e9cf38":{"location":"ClientSideExtension.ApplicationCustomizer"}}>
+[https://[SHAREPOINT_SITE].sharepoint.com?loadSPFX=true&debugManifestsFile=https://localhost:4321/temp/manifests.js&customActions={"ca9eac70-7343-4972-88d6-672d50e9cf38":{"location":"ClientSideExtension.ApplicationCustomizer"}}](https://SHAREPOINT_SITE.sharepoint.com?loadSPFX=true&debugManifestsFile=https://localhost:4321/temp/manifests.js&customActions={"ca9eac70-7343-4972-88d6-672d50e9cf38":{"location":"ClientSideExtension.ApplicationCustomizer"}})
 
 To update the host component, open the *TestApp* React component located in the following project's relative path: *src\extensions\testApp\TestApp.tsx*.
 
@@ -48,7 +48,7 @@ This extension is called *TestForm*. To test it, you have to configure it first:
 
 Then go to the following URL (after updating the parameters):
 
-<https://[SHAREPOINT_SITE].sharepoint.com/_layouts/15/SPListForm.aspx?debugManifestsFile=https://localhost:4321/temp/manifests.js&loadSPFX=true&componentId=f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8&PageType=8&RootFolder=[OPTIONAL_SERVER_RELATIVE_URL]/Lists/[LIST_NAME]>
+[https://[SHAREPOINT_SITE].sharepoint.com/_layouts/15/SPListForm.aspx?debugManifestsFile=https://localhost:4321/temp/manifests.js&loadSPFX=true&componentId=f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8&PageType=8&RootFolder=[OPTIONAL_SERVER_RELATIVE_URL]/Lists/[LIST_NAME]](https://SHAREPOINT_SITE.sharepoint.com/_layouts/15/SPListForm.aspx?debugManifestsFile=https://localhost:4321/temp/manifests.js&loadSPFX=true&componentId=f9c6b930-8d5d-4550-bfd9-ed5f6ca443a8&PageType=8&RootFolder=OPTIONAL_SERVER_RELATIVE_URL/Lists/LIST_NAME)
 
 To update the host component, open the *TestForm* React component located in the following project's relative path: *src\extensions\testForm\components\TestForm.tsx*.
 
