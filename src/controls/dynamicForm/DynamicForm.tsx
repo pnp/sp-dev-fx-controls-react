@@ -1,6 +1,5 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import { SPHttpClient } from "@microsoft/sp-http";
-import { sp } from "@pnp/sp/presets/all";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -32,6 +31,8 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
+import { SPFI } from "@pnp/sp";
+import { getSP } from "../../common/utilities/PnPJSConfig";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -43,27 +44,18 @@ export class DynamicForm extends React.Component<
   IDynamicFormState
 > {
   private _spService: SPservice;
-  private webURL = this.props.webAbsoluteUrl
+  private _webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
+  private readonly _sp: SPFI;
 
   constructor(props: IDynamicFormProps) {
     super(props);
     // Initialize pnp sp
-
     if (this.props.webAbsoluteUrl) {
-      sp.setup({
-        sp: {
-          headers: {
-            Accept: "application/json;odata=verbose",
-          },
-          baseUrl: this.props.webAbsoluteUrl,
-        },
-      });
+      this._sp = getSP(this.props.context, this.props.webAbsoluteUrl);
     } else {
-      sp.setup({
-        spfxContext: { pageContext: this.props.context.pageContext },
-      });
+      this._sp = getSP(this.props.context);
     }
 
     // Initialize state
@@ -308,7 +300,7 @@ export class DynamicForm extends React.Component<
       let newETag: string | undefined = undefined;
       if (listItemId) {
         try {
-          const iur = await sp.web.lists
+          const iur = await this._sp.web.lists
             .getById(listId)
             .items.getById(listItemId)
             .update(objects, this.state.etag);
@@ -336,7 +328,7 @@ export class DynamicForm extends React.Component<
       ) {
         // We are adding a new list item
         try {
-          const iar = await sp.web.lists.getById(listId).items.add(objects);
+          const iar = await this._sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(
               iar.data,
@@ -358,7 +350,7 @@ export class DynamicForm extends React.Component<
           const titleField = "Title";
           const contentTypeIdField = "ContentTypeId";
 
-          const library = await sp.web.lists.getById(listId);
+          const library = await this._sp.web.lists.getById(listId);
           const folderTitle =
             objects[titleField] !== undefined && objects[titleField] !== ""
               ? (objects[titleField] as string).replace(
@@ -414,7 +406,7 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
-    newValue: any,
+    newValue: any, // eslint-disable-line @typescript-eslint/no-explicit-any
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
     // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -434,7 +426,7 @@ export class DynamicForm extends React.Component<
         if (user.indexOf("@") === -1) {
           user = newValue[0].loginName;
         }
-        const result = await sp.web.ensureUser(user);
+        const result = await this._sp.web.ensureUser(user);
         field.newValue = result.data.Id; // eslint-disable-line require-atomic-updates
       } else {
         field.newValue = newValue[0].id;
@@ -451,7 +443,7 @@ export class DynamicForm extends React.Component<
           if (user.indexOf("@") === -1) {
             user = element.loginName;
           }
-          const result = await sp.web.ensureUser(user);
+          const result = await this._sp.web.ensureUser(user);
           field.newValue.push(result.data.Id);
         } else {
           field.newValue.push(element.id);
@@ -474,11 +466,11 @@ export class DynamicForm extends React.Component<
     } = this.props;
     let contentTypeId = this.props.contentTypeId;
     try {
-      const spList = await sp.web.lists.getById(listId);
+      const spList = await this._sp.web.lists.getById(listId);
       let item = null;
       let etag: string | undefined = undefined;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
-        item = await spList.items.getById(listItemId).get();
+        item = await spList.items.getById(listItemId)();
 
         if (onListItemLoaded) {
           await onListItemLoaded(item);
@@ -491,14 +483,13 @@ export class DynamicForm extends React.Component<
 
       if (contentTypeId === undefined || contentTypeId === "") {
         const defaultContentType = await spList.contentTypes
-          .select("Id", "Name")
-          .get();
+          .select("Id", "Name")();
         contentTypeId = defaultContentType[0].Id.StringValue;
       }
       const listFields = await this.getFormFields(
         listId,
         contentTypeId,
-        this.webURL
+        this._webURL
       );
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
@@ -552,7 +543,7 @@ export class DynamicForm extends React.Component<
                 listItemId,
                 field.EntityPropertyName,
                 lookupField,
-                this.webURL
+                this._webURL
               );
             } else {
               defaultValue = [];
@@ -566,7 +557,7 @@ export class DynamicForm extends React.Component<
                 listItemId,
                 field.EntityPropertyName,
                 lookupField,
-                this.webURL
+                this._webURL
               );
             } else {
               defaultValue = [];
@@ -575,7 +566,7 @@ export class DynamicForm extends React.Component<
             const response = await this._spService.getTaxonomyFieldInternalName(
               this.props.listId,
               field.TextField,
-              this.webURL
+              this._webURL
             );
             hiddenName = response.value;
             termSetId = field.TermSetId;
@@ -651,7 +642,7 @@ export class DynamicForm extends React.Component<
                 listId,
                 listItemId,
                 field.InternalName,
-                this.webURL
+                this._webURL
               );
             else {
               defaultValue = [];
@@ -673,7 +664,7 @@ export class DynamicForm extends React.Component<
                   listId,
                   listItemId,
                   field.InternalName,
-                  this.webURL
+                  this._webURL
                 )) + ""
               );
               defaultValue = userEmails;
@@ -774,11 +765,11 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
-    // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const { context } = this.props;
-      const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
+      const webAbsoluteUrl = !webUrl ? this._webURL : webUrl;
       let apiUrl = "";
       if (contentTypeId !== undefined && contentTypeId !== "") {
         if (contentTypeId.startsWith("0x0120")) {

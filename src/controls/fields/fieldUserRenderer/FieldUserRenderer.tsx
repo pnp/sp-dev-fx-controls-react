@@ -1,25 +1,36 @@
-import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import clone from 'lodash/clone';
-import { IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
-import { DirectionalHint } from 'office-ui-fabric-react/lib/common/DirectionalHint';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { IconButton, Button, ButtonType } from 'office-ui-fabric-react/lib/Button';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import * as React from "react";
+import { css } from "office-ui-fabric-react/lib/Utilities";
+import clone from "lodash/clone";
+import { IExpandingCardProps } from "office-ui-fabric-react/lib/HoverCard";
+import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
+import { Persona, PersonaSize } from "office-ui-fabric-react/lib/Persona";
+import {
+  IconButton,
+  Button,
+  ButtonType,
+} from "office-ui-fabric-react/lib/Button";
+import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
+import { Link } from "office-ui-fabric-react/lib/Link";
+import { Icon } from "office-ui-fabric-react/lib/Icon";
 
-import { IPrincipal, IUserProfileProperties, IODataKeyValuePair } from '../../../common/SPEntities';
-import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
+import { BaseComponentContext } from "@microsoft/sp-component-base";
 
-import styles from './FieldUserRenderer.module.scss';
-import { IContext } from '../../../common/Interfaces';
-import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
-import FieldUserHoverCard, { IFieldUserHoverCardProps } from './FieldUserHoverCard';
-import * as telemetry from '../../../common/telemetry';
+import {
+  IPrincipal,
+  IUserProfileProperties,
+  IODataKeyValuePair,
+} from "../../../common/SPEntities";
+import { IFieldRendererProps } from "../fieldCommon/IFieldRendererProps";
 
-import * as strings from 'ControlStrings';
-import { SPHelper } from '../../../common/utilities';
+import styles from "./FieldUserRenderer.module.scss";
+import { GeneralHelper } from "../../../common/utilities/GeneralHelper";
+import FieldUserHoverCard, {
+  IFieldUserHoverCardProps,
+} from "./FieldUserHoverCard";
+import * as telemetry from "../../../common/telemetry";
+
+import * as strings from "ControlStrings";
+import { SPHelper } from "../../../common/utilities";
 
 export interface IFieldUserRendererProps extends IFieldRendererProps {
   /**
@@ -29,7 +40,7 @@ export interface IFieldUserRendererProps extends IFieldRendererProps {
   /**
    * Customizer context
    */
-  context: IContext;
+  context: BaseComponentContext;
 }
 
 /**
@@ -91,41 +102,58 @@ export interface IFieldUserRendererState {
  * Used for:
  *   - People and Groups
  */
-export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, IFieldUserRendererState> {
-
+export class FieldUserRenderer extends React.Component<
+  IFieldUserRendererProps,
+  IFieldUserRendererState
+> {
   // cached user profiles
   private _loadedUserProfiles: { [id: string]: IUserProfileProperties } = {};
   private _userUrlTemplate: string;
   private _userImageUrl: string;
 
-
-  public constructor(props: IFieldUserRendererProps, state: IFieldUserRendererState) {
+  public constructor(
+    props: IFieldUserRendererProps,
+    state: IFieldUserRendererState
+  ) {
     super(props, state);
 
-    telemetry.track('FieldUserRenderer', {});
+    telemetry.track("FieldUserRenderer", {});
 
-    this._userImageUrl = `${GeneralHelper.trimSlash(props.context.pageContext.web.absoluteUrl)}/_layouts/15/userphoto.aspx?size=L&accountname={0}`;
+    this._userImageUrl = `${GeneralHelper.trimSlash(
+      props.context.pageContext.web.absoluteUrl
+    )}/_layouts/15/userphoto.aspx?size=L&accountname={0}`;
 
-    const users: IFieldUser[] = props.users ? props.users.map(user => {
-      return this._getUserFromPrincipalAndProps(user, {});
-    }) : [];
+    const users: IFieldUser[] = props.users
+      ? props.users.map((user) => {
+          return this._getUserFromPrincipalAndProps(user, {});
+        })
+      : [];
 
     this.state = {
-      users: users
+      users: users,
     };
   }
 
-  public UNSAFE_componentWillReceiveProps(nextProps: IFieldUserRendererProps): void {
-    const currentPrincipals = this.props.users ? this.props.users.map(u => u.id) : [];
-    const newPrincipals = nextProps.users ? nextProps.users.map(u => u.id) : [];
+  public UNSAFE_componentWillReceiveProps(
+    nextProps: IFieldUserRendererProps
+  ): void {
+    const currentPrincipals = this.props.users
+      ? this.props.users.map((u) => u.id)
+      : [];
+    const newPrincipals = nextProps.users
+      ? nextProps.users.map((u) => u.id)
+      : [];
 
-    if (currentPrincipals.length !== newPrincipals.length
-      || currentPrincipals.filter(cp => newPrincipals.indexOf(cp) === -1).length
-      || newPrincipals.filter(np => currentPrincipals.indexOf(np) === -1).length) {
+    if (
+      currentPrincipals.length !== newPrincipals.length ||
+      currentPrincipals.filter((cp) => newPrincipals.indexOf(cp) === -1)
+        .length ||
+      newPrincipals.filter((np) => currentPrincipals.indexOf(np) === -1).length
+    ) {
       this.setState({
-        users: nextProps.users.map(user => {
+        users: nextProps.users.map((user) => {
           return this._getUserFromPrincipalAndProps(user, {});
-        })
+        }),
       });
     }
   }
@@ -133,21 +161,29 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
   public render(): JSX.Element {
     const userEls: JSX.Element[] = this.state.users.map((user, index) => {
       const expandingCardProps: IExpandingCardProps = {
-        onRenderCompactCard: (user.email ? this._onRenderCompactCard.bind(this, index) : null),
-        onRenderExpandedCard: (user.email ? this._onRenderExpandedCard.bind(this) : null),
+        onRenderCompactCard: user.email
+          ? this._onRenderCompactCard.bind(this, index)
+          : null,
+        onRenderExpandedCard: user.email
+          ? this._onRenderExpandedCard.bind(this)
+          : null,
         renderData: user,
         directionalHint: DirectionalHint.bottomLeftEdge,
         gapSpace: 1,
-        expandedCardHeight: 150
+        expandedCardHeight: 150,
       };
       const hoverCardProps: IFieldUserHoverCardProps = {
         expandingCardProps: expandingCardProps,
         displayName: user.displayName,
-        cssProps: this.props.cssProps
+        cssProps: this.props.cssProps,
       };
       return <FieldUserHoverCard key={user.id} {...hoverCardProps} />;
     });
-    return <div style={this.props.cssProps} className={css(this.props.className)}>{userEls}</div>;
+    return (
+      <div style={this.props.cssProps} className={css(this.props.className)}>
+        {userEls}
+      </div>
+    );
   }
 
   /**
@@ -156,30 +192,58 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
    * @param user IUser
    */
   private _onRenderCompactCard(index: number, user: IFieldUser): JSX.Element {
-    this._requestUserProfile(user, index).then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
+    this._requestUserProfile(user, index)
+      .then(() => {
+        /* no-op; */
+      })
+      .catch(() => {
+        /* no-op; */
+      });
     const sip: string = user.sip || user.email;
     let actionsEl: JSX.Element;
     if (user.currentUser) {
-      actionsEl = <div className={styles.actions}>
-        <Button buttonType={ButtonType.command} iconProps={{ iconName: 'Edit' }} href={user.userUrl} target={'_blank'}>{strings.UpdateProfile}</Button>
-      </div>;
-    }
-    else {
-      actionsEl = <div className={styles.actions}>
-        <IconButton iconProps={{ iconName: 'Mail' }} title={strings.SendEmailTo.replace('{0}', user.email)} href={`mailto:${user.email}`} />
-        <IconButton iconProps={{ iconName: 'Chat' }} title={strings.StartChatWith.replace('{0}', sip)} href={`sip:${sip}`} className={styles.chat} />
-      </div>;
+      actionsEl = (
+        <div className={styles.actions}>
+          <Button
+            buttonType={ButtonType.command}
+            iconProps={{ iconName: "Edit" }}
+            href={user.userUrl}
+            target={"_blank"}
+          >
+            {strings.UpdateProfile}
+          </Button>
+        </div>
+      );
+    } else {
+      actionsEl = (
+        <div className={styles.actions}>
+          <IconButton
+            iconProps={{ iconName: "Mail" }}
+            title={strings.SendEmailTo.replace("{0}", user.email)}
+            href={`mailto:${user.email}`}
+          />
+          <IconButton
+            iconProps={{ iconName: "Chat" }}
+            title={strings.StartChatWith.replace("{0}", sip)}
+            href={`sip:${sip}`}
+            className={styles.chat}
+          />
+        </div>
+      );
     }
 
-    return <div className={styles.main}>
-      <Persona
-        imageUrl={user.imageUrl}
-        primaryText={user.displayName}
-        secondaryText={user.department}
-        tertiaryText={user.jobTitle}
-        size={PersonaSize.large} />
-      {actionsEl}
-    </div>;
+    return (
+      <div className={styles.main}>
+        <Persona
+          imageUrl={user.imageUrl}
+          primaryText={user.displayName}
+          secondaryText={user.department}
+          tertiaryText={user.jobTitle}
+          size={PersonaSize.large}
+        />
+        {actionsEl}
+      </div>
+    );
   }
 
   /**
@@ -188,29 +252,54 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
    */
   private _onRenderExpandedCard(user: IFieldUser): JSX.Element {
     if (this._loadedUserProfiles[user.id]) {
-      return <ul className={styles.sections}>
-        <li className={styles.section}>
-          <div className={styles.header}>{strings.Contact} <Icon iconName="ChevronRight" className={styles.chevron} /></div>
-          <div className={styles.contactItem}>
-            <Icon iconName={'Mail'} />
-            <Link className={styles.content} title={user.email} href={`mailto:${user.email}`} target={'_self'}>{user.email}</Link>
-          </div>
-          {user.workPhone &&
-            <div className={styles.contactItem}>
-              <Icon iconName={'Phone'} />
-              <Link className={styles.content} title={user.workPhone} href={`tel:${user.workPhone}`} target={'_self'}>{user.workPhone}</Link>
+      return (
+        <ul className={styles.sections}>
+          <li className={styles.section}>
+            <div className={styles.header}>
+              {strings.Contact}{" "}
+              <Icon iconName="ChevronRight" className={styles.chevron} />
             </div>
-          }
-          {user.cellPhone &&
             <div className={styles.contactItem}>
-              <Icon iconName={'Phone'} />
-              <Link className={styles.content} title={user.cellPhone} href={`tel:${user.cellPhone}`} target={'_self'}>{user.cellPhone}</Link>
+              <Icon iconName={"Mail"} />
+              <Link
+                className={styles.content}
+                title={user.email}
+                href={`mailto:${user.email}`}
+                target={"_self"}
+              >
+                {user.email}
+              </Link>
             </div>
-          }
-        </li>
-      </ul>;
-    }
-    else {
+            {user.workPhone && (
+              <div className={styles.contactItem}>
+                <Icon iconName={"Phone"} />
+                <Link
+                  className={styles.content}
+                  title={user.workPhone}
+                  href={`tel:${user.workPhone}`}
+                  target={"_self"}
+                >
+                  {user.workPhone}
+                </Link>
+              </div>
+            )}
+            {user.cellPhone && (
+              <div className={styles.contactItem}>
+                <Icon iconName={"Phone"} />
+                <Link
+                  className={styles.content}
+                  title={user.cellPhone}
+                  href={`tel:${user.cellPhone}`}
+                  target={"_self"}
+                >
+                  {user.cellPhone}
+                </Link>
+              </div>
+            )}
+          </li>
+        </ul>
+      );
+    } else {
       return <Spinner size={SpinnerSize.large} />;
     }
   }
@@ -220,24 +309,35 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
    * @param principal IPrincipal
    * @param userProfileProperties IUserProfileProperties
    */
-  private _getUserFromPrincipalAndProps(principal: IPrincipal, userProfileProperties: IUserProfileProperties): IFieldUser {
-    let imageUrl: string = userProfileProperties.pictureUrl || principal.picture;
-    const mthumbStr = 'MThumb.jpg';
-    if (imageUrl && imageUrl.indexOf(mthumbStr) === imageUrl.length - mthumbStr.length) {
-      imageUrl = '';
+  private _getUserFromPrincipalAndProps(
+    principal: IPrincipal,
+    userProfileProperties: IUserProfileProperties
+  ): IFieldUser {
+    let imageUrl: string =
+      userProfileProperties.pictureUrl || principal.picture;
+    const mthumbStr = "MThumb.jpg";
+    if (
+      imageUrl &&
+      imageUrl.indexOf(mthumbStr) === imageUrl.length - mthumbStr.length
+    ) {
+      imageUrl = "";
     }
     return {
       displayName: userProfileProperties.displayName || principal.title,
       jobTitle: userProfileProperties.jobTitle || principal.jobTitle,
       department: userProfileProperties.department || principal.department,
       id: principal.id,
-      imageUrl: imageUrl ? this._userImageUrl.replace('{0}', principal.email) : imageUrl,
+      imageUrl: imageUrl
+        ? this._userImageUrl.replace("{0}", principal.email)
+        : imageUrl,
       email: userProfileProperties.email || principal.email,
       sip: userProfileProperties.sip || principal.sip,
       workPhone: userProfileProperties.workPhone,
       cellPhone: userProfileProperties.cellPhone,
-      userUrl: this._getUserUrlTemplate().replace('{0}', principal.email), //userProfileProperties.userUrl
-      currentUser: principal.id === this.props.context.pageContext.legacyPageContext.userId
+      userUrl: this._getUserUrlTemplate().replace("{0}", principal.email), //userProfileProperties.userUrl
+      currentUser:
+        principal.id ===
+        this.props.context.pageContext.legacyPageContext.userId,
     };
   }
 
@@ -246,7 +346,9 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
    */
   private _getUserUrlTemplate(): string {
     if (!this._userUrlTemplate) {
-      this._userUrlTemplate = `${location.protocol}//${location.hostname.split('.sharepoint.com')[0]}-my.sharepoint.com/person.aspx?user={0}&v=editprofile`;
+      this._userUrlTemplate = `${location.protocol}//${
+        location.hostname.split(".sharepoint.com")[0]
+      }-my.sharepoint.com/person.aspx?user={0}&v=editprofile`;
     }
 
     return this._userUrlTemplate;
@@ -255,44 +357,53 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
   /**
    * Requests User Profile Properties
    */
-  private async _requestUserProfile(user: IFieldUser, index: number): Promise<void> {
+  private async _requestUserProfile(
+    user: IFieldUser,
+    index: number
+  ): Promise<void> {
     if (this._loadedUserProfiles[user.id]) {
       return; // we've already have the profile info
     }
 
-    const context: IContext = this.props.context;
+    const { context } = this.props;
 
     const siteUser = await SPHelper.getUserById(parseInt(user.id), context);
 
     const value = await SPHelper.getUserProperties(siteUser.LoginName, context);
 
-    const mthumbStr = 'MThumb.jpg';
+    const mthumbStr = "MThumb.jpg";
     const userProfileProps: IUserProfileProperties = {
       displayName: value.DisplayName,
       email: value.Email,
       jobTitle: value.Title,
       userUrl: value.UserUrl,
-      pictureUrl: value.PictureUrl && value.PictureUrl.toString().indexOf(mthumbStr) === value.PictureUrl.toString().length - mthumbStr.length ? '' : value.PictureUrl //this._userImageUrl.replace('{0}', user.email)
+      pictureUrl:
+        value.PictureUrl &&
+        value.PictureUrl.toString().indexOf(mthumbStr) ===
+          value.PictureUrl.toString().length - mthumbStr.length
+          ? ""
+          : value.PictureUrl, //this._userImageUrl.replace('{0}', user.email)
     };
 
-    const props: IODataKeyValuePair[] = value.UserProfileProperties as IODataKeyValuePair[];
+    const props: IODataKeyValuePair[] =
+      value.UserProfileProperties as IODataKeyValuePair[];
     let foundPropsCount: number = 0;
     for (let i = 0, len = props.length; i < len; i++) {
       const prop: IODataKeyValuePair = props[i];
       switch (prop.Key) {
-        case 'WorkPhone':
+        case "WorkPhone":
           userProfileProps.workPhone = prop.Value;
           foundPropsCount++;
           break;
-        case 'Department':
+        case "Department":
           userProfileProps.department = prop.Value;
           foundPropsCount++;
           break;
-        case 'SPS-SipAddress':
+        case "SPS-SipAddress":
           userProfileProps.sip = prop.Value;
           foundPropsCount++;
           break;
-        case 'CellPhone':
+        case "CellPhone":
           userProfileProps.cellPhone = prop.Value;
           foundPropsCount++;
           break;
@@ -304,12 +415,19 @@ export class FieldUserRenderer extends React.Component<IFieldUserRendererProps, 
     }
 
     this._loadedUserProfiles[user.id] = userProfileProps;
-    this.setState((prevState: IFieldUserRendererState, componentProps: IFieldUserRendererProps) => {
-      const newUsers = clone<IFieldUser[]>(prevState.users);
-      newUsers[index] = this._getUserFromPrincipalAndProps(this.props.users[index], userProfileProps);
+    this.setState(
+      (
+        prevState: IFieldUserRendererState,
+        componentProps: IFieldUserRendererProps
+      ) => {
+        const newUsers = clone<IFieldUser[]>(prevState.users);
+        newUsers[index] = this._getUserFromPrincipalAndProps(
+          this.props.users[index],
+          userProfileProps
+        );
 
-      return { users: newUsers };
-
-    });
+        return { users: newUsers };
+      }
+    );
   }
 }

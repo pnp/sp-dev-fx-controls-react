@@ -1,13 +1,14 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { findIndex } from "@microsoft/sp-lodash-subset";
-import { sp } from '@pnp/sp';
 import "@pnp/sp/site-users/web";
 import "@pnp/sp/sputilities";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import { IUserInfo } from "../controls/peoplepicker/IUsers";
 import { IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
+import { SPFI } from '@pnp/sp';
+import { getSP } from '../common/utilities/PnPJSConfig';
 
 /**
  * Service implementation to search people in SharePoint
@@ -15,6 +16,8 @@ import { IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
 export default class SPPeopleSearchService {
   private cachedPersonas: { [property: string]: IUserInfo[] };
   private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
+
+  private readonly _sp: SPFI;
 
   /**
    * Service constructor
@@ -24,7 +27,7 @@ export default class SPPeopleSearchService {
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
     // Setup PnPjs
-    sp.setup({ pageContext: this.context.pageContext });
+    this._sp = getSP(this.context);
   }
 
   /**
@@ -143,14 +146,14 @@ export default class SPPeopleSearchService {
 
           // Get user loginName from user email
           const _users = [];
-          const batch = Web(this.context.pageContext.web.absoluteUrl).createBatch();
+          const [batch, execute] = Web(this.context.pageContext.web.absoluteUrl).batched();
           for (const value of graphUserResponse.value) {
-            sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data)).catch(() => {
+            batch.ensureUser(value.userPrincipalName).then(u => _users.push(u.data)).catch(() => {
               // no-op
             });
           }
 
-          await batch.execute();
+          await execute();
 
           const userResult: IPeoplePickerUserItem[] = [];
           for (const user of _users) {

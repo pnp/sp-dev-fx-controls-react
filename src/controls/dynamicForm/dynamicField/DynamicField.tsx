@@ -1,6 +1,3 @@
-import '@pnp/sp/folders';
-import { sp } from '@pnp/sp/presets/all';
-import '@pnp/sp/webs';
 import * as strings from 'ControlStrings';
 import { ActionButton } from 'office-ui-fabric-react/lib/Button';
 import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/components/Dropdown';
@@ -25,12 +22,8 @@ import { IDynamicFieldState } from './IDynamicFieldState';
 
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
-
   constructor(props: IDynamicFieldProps) {
     super(props);
-    sp.setup({
-      spfxContext: { pageContext: this.props.context.pageContext }
-    });
     this.state = {
       changedValue: props.fieldDefaultValue !== undefined || props.fieldDefaultValue !== '' || props.fieldDefaultValue !== null || !this.isEmptyArray(props.fieldDefaultValue) ? props.fieldDefaultValue : null
     };

@@ -1,4 +1,5 @@
 import { SPHttpClient } from '@microsoft/sp-http';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { PageContext, SPField } from '@microsoft/sp-page-context';
 import { ListViewAccessor } from "@microsoft/sp-listview-extensibility";
 import { ISPField } from './SPEntities';
@@ -26,7 +27,7 @@ export interface IFields {
  * Parent of all props interfaces that needs context
  */
 export interface IProps {
-    context: IContext;
+    context: BaseComponentContext;
 }
 
 export interface IHubSiteData {

@@ -2,7 +2,7 @@ import { Log } from '@microsoft/sp-core-library';
 import * as React from 'react';
 
 import styles from './OotbFields.module.scss';
-import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
+import { FieldCustomizerContext, ListItemAccessor } from '@microsoft/sp-listview-extensibility';
 import { FieldRendererHelper } from '../../../../common/utilities/FieldRendererHelper';
 import { IProps } from '../../../../common/Interfaces';
 import { IFieldRendererProps } from '../../../../controls/fields/fieldCommon/IFieldRendererProps';
@@ -34,7 +34,7 @@ export default class OotbFields extends React.Component<IOotbFieldsProps, IOotbF
     FieldRendererHelper.getFieldRenderer(this.props.value, {
       className: this.props.className,
       cssProps: this.props.cssProps
-    }, this.props.listItem, this.props.context).then(fieldRenderer => {
+    }, this.props.listItem, this.props.context as FieldCustomizerContext).then(fieldRenderer => {
       this.setState({
         fieldRenderer: fieldRenderer
       });
