@@ -3,7 +3,7 @@ import { Guid } from '@microsoft/sp-core-library';
 import { ISPCollection, SPCollection, SPFI } from '@pnp/sp';
 import '@pnp/sp/taxonomy';
 import { JSONParse } from '@pnp/queryable';
-import { ITermInfo, ITermSetInfo, ITermStoreInfo, ITerms } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 import { getSP } from '../common/utilities/PnPJSConfig';
 
 export class SPTaxonomyService {
