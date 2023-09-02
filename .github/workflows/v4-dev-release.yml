@@ -1,0 +1,37 @@
+name: V4 DEV Release
+on:
+  push:
+    branches:
+      - v4-dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install npm dependencies
+      run: npm i
+
+    - name: Update the package version
+      if: github.ref == 'refs/heads/v4-dev'
+      run: node scripts/update-package-version.js $GITHUB_RUN_ID
+
+    - name: Update version number for telemetry
+      run: npm run versionUpdater
+
+    - name: Create/update the missing localization keys
+      run: npm run localization
+
+    - name: Run build
+      run: npm run build
+
+    - name: Publish v4 dev release
+      run: npm publish --tag beta4 --access public
+      if: github.ref == 'refs/heads/v4-dev'
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
