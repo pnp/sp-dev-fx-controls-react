@@ -197,6 +197,7 @@ import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
 import { Toggle } from "office-ui-fabric-react";
+import { ViewPicker } from "../../../controls/viewPicker";
 
 // Used to render document card
 /**
@@ -556,7 +557,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isTestControlDivVisible: false,
       isUploadFilesDivVisible: false,
       toggleAll: false,
-      showAllFilters: false
+      showAllFilters: false, 
+      isViewPickerDivVisible: false
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -672,6 +674,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.setState({
       selectedList: typeof lists === "string" ? lists : lists.pop()
     });
+  }
+
+  /**
+   * Selected View change event
+   * @param views
+   */
+  private onViewPickerChange = (views: string | string[]) => {
+    console.log("Views:", views);
   }
 
   /**
@@ -895,6 +905,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isTaxonomyTreeDivVisible,
       isTestControlDivVisible,
       isUploadFilesDivVisible,
+      isViewPickerDivVisible
     } = this.state;
 
     // Size options for the icon size dropdown
@@ -1076,6 +1087,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Toggle label="TreeView" checked={isTreeViewDivVisible} onChange={(event, checked) => { this.setState({ isTreeViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="UploadFiles" checked={isUploadFilesDivVisible} onChange={(event, checked) => { this.setState({ isUploadFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="VariantThemeProvider" checked={isVariantThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isVariantThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ViewPicker" checked={isViewPickerDivVisible} onChange={(event, checked) => { this.setState({ isViewPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="WebPartTitle" checked={isWebPartTitleDivVisible} onChange={(event, checked) => { this.setState({ isWebPartTitleDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
           </div>
         </div>
@@ -1678,6 +1690,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           </div>
         </div>
+
+        <div id="ViewPickerDiv" className={styles.container} hidden={!isViewPickerDivVisible}>
+          <div className="ms-font-m">View picker tester:
+                <ViewPicker context={this.props.context}
+                  label="Select view(s)"
+                  listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
+                  placeholder={'Select list view(s)'}
+                  orderBy={1}
+                  multiSelect={true}
+                  onSelectionChanged={this.onViewPickerChange} />
+          </div>
+        </div>
+
         <div id="FieldPickerDiv" className={styles.container} hidden={!isFieldPickerDivVisible}>
           <div className="ms-font-m">Field picker tester:
             <FieldPicker
@@ -2690,7 +2715,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isAdaptiveCardDesignerHostDivVisible: checked,
       isTaxonomyTreeDivVisible: checked,
       isTestControlDivVisible: checked,
-      isUploadFilesDivVisible: checked
+      isUploadFilesDivVisible: checked,
+      isViewPickerDivVisible: checked
     });
   }
 }
