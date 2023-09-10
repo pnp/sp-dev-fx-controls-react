@@ -8,9 +8,11 @@
         "enhancements": [
         ],
         "fixes": [
+          "`AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)"
         ]
       },
       "contributions": [
+        "[Nils Andresen](https://github.com/nils-a)"
       ]
     },
     {
