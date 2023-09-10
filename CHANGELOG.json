@@ -4,6 +4,7 @@
       "version": "3.16.0",
       "changes": {
         "new": [
+          "`ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)"
         ],
         "enhancements": [
         ],
@@ -12,7 +13,8 @@
         ]
       },
       "contributions": [
-        "[Nils Andresen](https://github.com/nils-a)"
+        "[Nils Andresen](https://github.com/nils-a)",
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
       ]
     },
     {
