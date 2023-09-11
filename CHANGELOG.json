@@ -10,7 +10,8 @@
         ],
         "fixes": [
           "`AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)",
-          "`DynamicForm`: fix issue with MultiChoice field [#1510](https://github.com/pnp/sp-dev-fx-controls-react/issues/1510)"
+          "`DynamicForm`: fix issue with MultiChoice field [#1510](https://github.com/pnp/sp-dev-fx-controls-react/issues/1510)",
+          "`Localization`: Update dutch translations [#1635](https://github.com/pnp/sp-dev-fx-controls-react/issues/1635)"
         ]
       },
       "contributions": [
