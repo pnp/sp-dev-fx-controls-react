@@ -7,6 +7,7 @@
           "`ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)"
         ],
         "enhancements": [
+          "`FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)"
         ],
         "fixes": [
           "`AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)",
@@ -17,7 +18,8 @@
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Nils Andresen](https://github.com/nils-a)",
-        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
+        "[Rico van de Ven](https://github.com/RicoNL)"
       ]
     },
     {
