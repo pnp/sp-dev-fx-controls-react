@@ -1,3 +1,4 @@
+import { BaseComponentContext } from "@microsoft/sp-component-base"
 import { ICustomCollectionField } from "../ICustomCollectionField";
 
 export interface ICollectionDataItemProps {
@@ -7,6 +8,7 @@ export interface ICollectionDataItemProps {
   sortingEnabled?: boolean;
   totalItems?: number;
   disableItemDeletion?: boolean;
+  context?: BaseComponentContext;
 
   /* eslint-disable @typescript-eslint/no-explicit-any */
   fAddItem?: (item: any) => void;
