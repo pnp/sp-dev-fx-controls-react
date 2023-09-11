@@ -294,7 +294,7 @@ define([], () => {
     "SharingField": "Delen",
     "SharingPrivate": "Privé",
     "SharingShared": "Gedeelde",
-    "SiteLinkLabel": "Ligging",
+    "SiteLinkLabel": "Site",
     "SizeOptionAll": "Alle",
     "SizeOptionExtraLarge": "Extra grote",
     "SizeOptionLarge": "Grote",
