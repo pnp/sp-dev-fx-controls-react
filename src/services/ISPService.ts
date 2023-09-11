@@ -1,4 +1,4 @@
-import { ISPContentType, ISPField, ISPLists, ISPView, ISPViews } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPLists, ISPViews } from "../common/SPEntities";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 export enum LibsOrderBy {

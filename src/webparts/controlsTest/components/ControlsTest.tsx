@@ -556,9 +556,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isTaxonomyTreeDivVisible: false,
       isTestControlDivVisible: false,
       isUploadFilesDivVisible: false,
+      isViewPickerDivVisible: false,
       toggleAll: false,
-      showAllFilters: false, 
-      isViewPickerDivVisible: false
+      showAllFilters: false,
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);

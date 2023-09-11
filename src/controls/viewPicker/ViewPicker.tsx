@@ -2,13 +2,11 @@ import * as React from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
 import { Async } from 'office-ui-fabric-react/lib/Utilities';
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';
 import { IViewPickerProps, IViewPickerState } from './IViewPicker';
-import { ISPView, ISPViews } from "../../common/SPEntities";
+import { ISPView } from "../../common/SPEntities";
 import styles from './ViewPicker.module.scss';
 
 // Empty view value
@@ -30,9 +28,9 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         this.async = new Async(this);
     }
 
-    public componentDidMount(): void {
+    public async componentDidMount(): Promise<void> {
         // Start retrieving the list views
-        this.loadViews();
+        await this.loadViews();
     }
 
   /**
@@ -40,20 +38,20 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
    * @param prevProps
    * @param prevState
    */
-    public componentDidUpdate(prevProps: IViewPickerProps, _prevState: IViewPickerState): void {
+    public async componentDidUpdate(prevProps: IViewPickerProps, _prevState: IViewPickerState): Promise<void> {
         if (
-            this.props.listId !== prevProps.listId || 
+            this.props.listId !== prevProps.listId ||
             this.props.webAbsoluteUrl !== prevProps.webAbsoluteUrl ||
-            this.props.orderBy !== prevProps.orderBy 
+            this.props.orderBy !== prevProps.orderBy
             ) {
-          this.loadViews();
+          await this.loadViews();
         }
 
         if(prevProps.selectedView !== this.props.selectedView){
           this.setSelectedViews();
         }
     }
-    
+
     /**
      * Called when the component will unmount
     */
@@ -67,9 +65,9 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
 
 
         const viewsToExclude: string[] = this.props.viewsToExclude || [];
-        let options: IDropdownOption[] = [];
+        const options: IDropdownOption[] = [];
         const service: ISPService = SPServiceFactory.createService(this.props.context, true, 5000, this.props.webAbsoluteUrl);
-        let results = await service.getViews(
+        const results = await service.getViews(
           this.props.listId,
           this.props.orderBy,
           this.props.filter
@@ -108,14 +106,14 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
         this.setState({
           results: options
         });
-        
+
     }
 
     /**
      * Set the currently selected views(s);
      */
     private setSelectedViews(): void {
-      let _selectedView = cloneDeep(this.props.selectedView);
+      const _selectedView = cloneDeep(this.props.selectedView);
 
       this.setState({
         selectedView:_selectedView
@@ -155,7 +153,7 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
     }
   }
 
-   
+
 
     /**
      * Renders the ViewPicker controls with Office UI Fabric
@@ -179,7 +177,7 @@ export class ViewPicker extends React.Component<IViewPickerProps, IViewPickerSta
             placeholder,
             onChange: this.onChange,
           };
-        
+
         if(multiSelect){
           dropdownProps.multiSelect = true;
           dropdownProps.selectedKeys = selectedView as string [];

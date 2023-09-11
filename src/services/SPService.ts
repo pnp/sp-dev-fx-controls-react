@@ -2,7 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
-import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPView, ISPViews } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPViews } from "../common/SPEntities";
 import { SPHelper, urlCombine } from "../common/utilities";
 import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrderBy } from "./ISPService";
 import {orderBy } from '../controls/viewPicker/IViewPicker';

@@ -1,5 +1,4 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { ISPView } from '../../../src/common/SPEntities';
 import { IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
 
 
