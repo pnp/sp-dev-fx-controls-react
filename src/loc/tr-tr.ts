@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Alanlar koleksiyonu boş!",
   "InvalidUrlError": "Sağlanan URL geçerli değil",
   "CollectionDataSearch": "Aramak",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "ekiplerinizi yükleme",
   "MyTeamsMessageError": "Ekiplerinizi yüklerken bir şeyler ters gitti, lütfen daha sonra deneyin veya tarayıcıyı yenileyin",
   "MyTeamsNoTeamsMessage": "Hiç takımın yok.",

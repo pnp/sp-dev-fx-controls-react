@@ -342,6 +342,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "La raccolta dei campi è vuota!",
   "InvalidUrlError": "L'URL fornito non è valido",
   "CollectionDataSearch": "Ricerca",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "caricamento dei team",
   "MyTeamsMessageError": "Qualcosa è andato storto durante il caricamento dei team, provare più tardi o aggiornare il browser",
   "MyTeamsNoTeamsMessage": "Non hai team",

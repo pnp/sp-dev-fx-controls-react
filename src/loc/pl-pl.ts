@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Kolekcja Fields jest pusta!",
   "InvalidUrlError": "Podany adres URL jest nieprawidłowy",
   "CollectionDataSearch": "Szukać",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "ładowanie zespołów",
   "MyTeamsMessageError": "Coś poszło nie tak podczas ładowania zespołów, spróbuj później lub odśwież przeglądarkę",
   "MyTeamsNoTeamsMessage": "Nie masz żadnych zespołów",

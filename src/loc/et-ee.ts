@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Väljade kollektsioon on tühi!",
   "InvalidUrlError": "Esitatud URL ei sobi",
   "CollectionDataSearch": "Otsing",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "meeskondade laadimine",
   "MyTeamsMessageError": "Midagi läks meeskondade laadimisel valesti, proovige hiljem või värskendage brauserit",
   "MyTeamsNoTeamsMessage": "Sul pole meeskondi.",

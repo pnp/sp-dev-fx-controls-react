@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Kenttien kokoelma on tyhjä!",
   "InvalidUrlError": "Annettu URL-osoite ei kelpaa",
   "CollectionDataSearch": "Etsiä",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "Tiimien lataaminen",
   "MyTeamsMessageError": "Jokin meni vikaan ladattaessa tiimejäsi, kokeile myöhemmin tai päivitä selain",
   "MyTeamsNoTeamsMessage": "Sinulla ei ole yhtään tiimiä.",

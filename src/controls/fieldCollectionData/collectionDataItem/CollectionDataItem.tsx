@@ -351,7 +351,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       validation = await field.onGetErrorMessage(value, this.props.index, item);
       isValid = validation === "";
     } else if (typeof field.minimumUsers === "number" && value.length < field.minimumUsers) {
-        validation = typeof field.minimumUsersMessage === "string" ? field.minimumUsersMessage : `Minimum users to be selectd is ${field.minimumUsers}`
+        validation = typeof field.minimumUsersMessage === "string" ? field.minimumUsersMessage : strings.CollectionDataMinimumUsersDefaultMessage.replace("{0}", field.minimumUsers.toString());
     }
 
     // Store the field validation

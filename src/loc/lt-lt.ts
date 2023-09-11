@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Laukų rinkinys tuščias!",
   "InvalidUrlError": "Pateiktas URL neleistinas",
   "CollectionDataSearch": "Ieškoti",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "komandų įkėlimas",
   "MyTeamsMessageError": "Įkeliant komandas kažkas negerai, bandykite vėliau arba atnaujinkite naršyklę",
   "MyTeamsNoTeamsMessage": "Jūs neturite jokių komandų",
