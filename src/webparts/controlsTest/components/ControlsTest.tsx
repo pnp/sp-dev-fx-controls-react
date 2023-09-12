@@ -2040,8 +2040,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+              { 
+                id: "Field5", title: "People picker", type: CustomCollectionFieldType.peoplepicker, required: true,
+                minimumUsers: 2, minimumUsersMessage: "2 Users is the minimum", maximumUsers: 3, 
+              },
+              {
+                id: "Field6", title: "Combo Single", type: CustomCollectionFieldType.combobox, required: true,
+                multiSelect: false, options: [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}, {key: "choice 3", text: "choice 3"}]
+              },
+              {
+                id: "Field7", title: "Combo Multi", type: CustomCollectionFieldType.combobox,
+                allowFreeform: true, multiSelect: true, options: [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}, {key: "choice 3", text: "choice 3"}]
+              },              
+              
             ]}
             value={this.getRandomCollectionFieldData()}
+
+            // value = {null}
+            context={this.props.context as any} //error when this is omitted and people picker is used
+            usePanel={true}
+            noDataMessage="No data is selected" //overrides the default message
           />
         </div>
         <div id="DashboardDiv" className={styles.container} hidden={!isDashboardDivVisible}>
@@ -2635,7 +2653,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private getRandomCollectionFieldData = () => {
     let result = [];
     for (let i = 1; i < 16; i++) {
-      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+      result.push({ 
+          "Field1": `String${i}`, 
+          "Field2": i, 
+          "Field3": "https://pnp.github.io/", 
+          "Field4": true,  
+          "Field5": null,
+          "Field6": {key: "choice 1", text: "choice 1"},
+          "Field7": [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}]
+        });
     }
     return result;
   }
