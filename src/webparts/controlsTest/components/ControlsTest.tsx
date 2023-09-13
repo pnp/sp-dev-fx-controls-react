@@ -199,6 +199,8 @@ import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
 import { Toggle } from "office-ui-fabric-react";
 import { ListItemComments } from "../../../ListItemComments";
+import { ViewPicker } from "../../../controls/viewPicker";
+
 
 // Used to render document card
 /**
@@ -558,8 +560,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isTaxonomyTreeDivVisible: false,
       isTestControlDivVisible: false,
       isUploadFilesDivVisible: false,
+      isViewPickerDivVisible: false,
       toggleAll: false,
-      showAllFilters: false
+      showAllFilters: false,
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -675,6 +678,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     this.setState({
       selectedList: typeof lists === "string" ? lists : lists.pop()
     });
+  }
+
+  /**
+   * Selected View change event
+   * @param views
+   */
+  private onViewPickerChange = (views: string | string[]) => {
+    console.log("Views:", views);
   }
 
   /**
@@ -899,6 +910,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isTaxonomyTreeDivVisible,
       isTestControlDivVisible,
       isUploadFilesDivVisible,
+      isViewPickerDivVisible
     } = this.state;
 
     // Size options for the icon size dropdown
@@ -1081,6 +1093,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <Toggle label="TreeView" checked={isTreeViewDivVisible} onChange={(event, checked) => { this.setState({ isTreeViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="UploadFiles" checked={isUploadFilesDivVisible} onChange={(event, checked) => { this.setState({ isUploadFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="VariantThemeProvider" checked={isVariantThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isVariantThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <Toggle label="ViewPicker" checked={isViewPickerDivVisible} onChange={(event, checked) => { this.setState({ isViewPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
             <Toggle label="WebPartTitle" checked={isWebPartTitleDivVisible} onChange={(event, checked) => { this.setState({ isWebPartTitleDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
           </div>
         </div>
@@ -1683,6 +1696,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           </div>
         </div>
+
         <div id="ListItemCommentsDiv" className={styles.container} hidden={!isListItemCommentsDivVisible}>
           <div className="ms-font-m">List Item Comments Tester
             <ListItemComments webUrl='https://contoso.sharepoint.com/sites/ThePerspective'
@@ -1694,6 +1708,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
         </div>
+
+        <div id="ViewPickerDiv" className={styles.container} hidden={!isViewPickerDivVisible}>
+          <div className="ms-font-m">View picker tester:
+                <ViewPicker context={this.props.context}
+                  label="Select view(s)"
+                  listId={"9f3908cd-1e88-4ab3-ac42-08efbbd64ec9"}
+                  placeholder={'Select list view(s)'}
+                  orderBy={1}
+                  multiSelect={true}
+                  onSelectionChanged={this.onViewPickerChange} />
+          </div>
+        </div>
+
         <div id="FieldPickerDiv" className={styles.container} hidden={!isFieldPickerDivVisible}>
           <div className="ms-font-m">Field picker tester:
             <FieldPicker
@@ -2031,8 +2058,26 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
+              { 
+                id: "Field5", title: "People picker", type: CustomCollectionFieldType.peoplepicker, required: true,
+                minimumUsers: 2, minimumUsersMessage: "2 Users is the minimum", maximumUsers: 3, 
+              },
+              {
+                id: "Field6", title: "Combo Single", type: CustomCollectionFieldType.combobox, required: true,
+                multiSelect: false, options: [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}, {key: "choice 3", text: "choice 3"}]
+              },
+              {
+                id: "Field7", title: "Combo Multi", type: CustomCollectionFieldType.combobox,
+                allowFreeform: true, multiSelect: true, options: [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}, {key: "choice 3", text: "choice 3"}]
+              },              
+              
             ]}
             value={this.getRandomCollectionFieldData()}
+
+            // value = {null}
+            context={this.props.context as any} //error when this is omitted and people picker is used
+            usePanel={true}
+            noDataMessage="No data is selected" //overrides the default message
           />
         </div>
         <div id="DashboardDiv" className={styles.container} hidden={!isDashboardDivVisible}>
@@ -2626,7 +2671,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private getRandomCollectionFieldData = () => {
     let result = [];
     for (let i = 1; i < 16; i++) {
-      result.push({ "Field1": `String${i}`, "Field2": i, "Field3": "https://pnp.github.io/", "Field4": true });
+      result.push({ 
+          "Field1": `String${i}`, 
+          "Field2": i, 
+          "Field3": "https://pnp.github.io/", 
+          "Field4": true,  
+          "Field5": null,
+          "Field6": {key: "choice 1", text: "choice 1"},
+          "Field7": [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}]
+        });
     }
     return result;
   }
@@ -2706,7 +2759,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       isAdaptiveCardDesignerHostDivVisible: checked,
       isTaxonomyTreeDivVisible: checked,
       isTestControlDivVisible: checked,
-      isUploadFilesDivVisible: checked
+      isUploadFilesDivVisible: checked,
+      isViewPickerDivVisible: checked
     });
   }
 }

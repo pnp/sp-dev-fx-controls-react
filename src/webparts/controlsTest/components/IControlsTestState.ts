@@ -90,4 +90,5 @@ export interface IControlsTestState {
   isUploadFilesDivVisible: boolean;
   toggleAll: boolean;
   showAllFilters: boolean;
+  isViewPickerDivVisible: boolean;
 }

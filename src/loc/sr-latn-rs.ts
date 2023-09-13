@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Kolekcija polja je prazna!",
   "InvalidUrlError": "Navedena URL adresa nije važeća",
   "CollectionDataSearch": "Pretrage",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "učitavanje vaših timova",
   "MyTeamsMessageError": "Ako je nešto pošlo naopako prilikom učitavanja vaših timova, pokušajte kasnije ili osvežite pregledač",
   "MyTeamsNoTeamsMessage": "Nemaš timove",
