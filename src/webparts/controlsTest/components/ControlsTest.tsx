@@ -2043,7 +2043,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             key={"FieldCollectionData"}
             label={"Fields Collection"}
             itemsPerPage={3}
-            manageBtnLabel={"Manage"} onChanged={(value) => { console.log(value); }}
+            manageBtnLabel={"Manage"}
+            onChanged={(value) => { console.log(value); }}
             panelHeader={"Manage values"}
             enableSorting={true}
             panelProps={{ type: PanelType.custom, customWidth: "98vw" }}
@@ -2052,9 +2053,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               { id: "Field2", title: "Number field", type: CustomCollectionFieldType.number },
               { id: "Field3", title: "URL field", type: CustomCollectionFieldType.url },
               { id: "Field4", title: "Boolean field", type: CustomCollectionFieldType.boolean },
-              { 
+              {
                 id: "Field5", title: "People picker", type: CustomCollectionFieldType.peoplepicker, required: true,
-                minimumUsers: 2, minimumUsersMessage: "2 Users is the minimum", maximumUsers: 3, 
+                minimumUsers: 2, minimumUsersMessage: "2 Users is the minimum", maximumUsers: 3,
               },
               {
                 id: "Field6", title: "Combo Single", type: CustomCollectionFieldType.combobox, required: true,
@@ -2063,8 +2064,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               {
                 id: "Field7", title: "Combo Multi", type: CustomCollectionFieldType.combobox,
                 allowFreeform: true, multiSelect: true, options: [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}, {key: "choice 3", text: "choice 3"}]
-              },              
-              
+              },
+              { id: "Field8", title: "Date field", type: CustomCollectionFieldType.date, placeholder: "Select a date" }
             ]}
             value={this.getRandomCollectionFieldData()}
 
@@ -2665,14 +2666,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private getRandomCollectionFieldData = () => {
     let result = [];
     for (let i = 1; i < 16; i++) {
-      result.push({ 
-          "Field1": `String${i}`, 
-          "Field2": i, 
-          "Field3": "https://pnp.github.io/", 
-          "Field4": true,  
+
+      const sampleDate = new Date();
+      sampleDate.setDate(sampleDate.getDate() + i);
+
+      result.push({
+          "Field1": `String${i}`,
+          "Field2": i,
+          "Field3": "https://pnp.github.io/",
+          "Field4": true,
           "Field5": null,
           "Field6": {key: "choice 1", text: "choice 1"},
-          "Field7": [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}]
+          "Field7": [{key: "choice 1", text: "choice 1"}, {key: "choice 2", text: "choice 2"}],
+          "Field8": sampleDate
         });
     }
     return result;
