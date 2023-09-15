@@ -255,8 +255,8 @@ export class DynamicForm extends React.Component<
           } else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
               __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-              Label: value[0].name,
-              TermGuid: value[0].key,
+              Label: value[0]?.name ?? "",
+              TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
               WssId: "-1",
             };
           } else if (fieldType === "TaxonomyFieldTypeMulti") {
@@ -414,6 +414,7 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
@@ -774,6 +775,7 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
     // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
