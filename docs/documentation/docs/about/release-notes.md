@@ -9,6 +9,7 @@
 ### Enhancements
 
 - `FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)
+- `FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)
 
 ### Fixes
 
@@ -16,10 +17,12 @@
 - `DynamicForm`: fix issue with MultiChoice field [#1510](https://github.com/pnp/sp-dev-fx-controls-react/issues/1510)
 - `Localization`: Update dutch translations [#1635](https://github.com/pnp/sp-dev-fx-controls-react/issues/1635)
 - `TaxonomyPicker`: suggested item contains double termset name [#1597](https://github.com/pnp/sp-dev-fx-controls-react/issues/1597)
+- `DynamicForm`: DynamicForm does not properly handle NULL default values for Taxonomy fields [#1267](https://github.com/pnp/sp-dev-fx-controls-react/issues/1267)
+- `DynamicForm`: DynamicForm errors when submitting blank Taxonomy field values [#1268](https://github.com/pnp/sp-dev-fx-controls-react/issues/1268)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.15.0
 
