@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Zbierka polí je prázdna!",
   "InvalidUrlError": "Zadaná adresa URL nie je platná",
   "CollectionDataSearch": "Hľadať",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "načítanie tímov",
   "MyTeamsMessageError": "Pri načítavaní tímov sa niečo pokazilo, skúste to neskôr alebo obnovte prehliadač",
   "MyTeamsNoTeamsMessage": "Nemáte žiadne tímy.",
