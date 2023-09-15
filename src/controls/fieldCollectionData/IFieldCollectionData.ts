@@ -1,3 +1,4 @@
+import { BaseComponentContext } from "@microsoft/sp-component-base";
 import { ICustomCollectionField } from "./ICustomCollectionField";
 import { IPanelProps } from "office-ui-fabric-react";
 
@@ -80,6 +81,19 @@ export interface IFieldCollectionDataProps {
   executeFiltering?: (searchFilter: string, item: any) => boolean; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   onChanged: (value: any[]) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /**
+   * Used for CustomCollectionFieldType peoplepicker 
+   */
+  context?: BaseComponentContext;
+  /**
+   * Show the collectionDataViewer inside the panel, defaults to true 
+   */
+  usePanel?: boolean;
+  /**
+   * The message when no data is added
+   */
+  noDataMessage?: string;
+
 }
 
 export interface IFieldCollectionDataState {
