@@ -16,7 +16,7 @@ import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
-import { DatePicker } from 'office-ui-fabric-reac/lib/DatePicker';
+import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
