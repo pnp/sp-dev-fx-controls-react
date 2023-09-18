@@ -3,7 +3,7 @@ import * as strings from 'ControlStrings';
 import 'react-quill/dist/quill.snow.css';
 import RichTextPropertyPane from './RichTextPropertyPane';
 import ReactQuill, { Quill as ReactQuillInstance } from 'react-quill';
-import type { Quill } from 'quill';
+import { Quill } from 'quill';
 import styles from './RichText.module.scss';
 import { IRichTextProps, IRichTextState } from './RichText.types';
 import { Guid } from '@microsoft/sp-core-library';
@@ -89,6 +89,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     text: strings.ListNumbered,
     data: { icon: 'NumberedList' }
   }];
+  private ddLinkTargetOpts = [{
+    key: '_self',
+    id: 'same',
+    text: strings.SameTab
+  }, {
+    key: '_blank',
+    id: 'new',
+    text: strings.NewTab
+  }];
 
   /**
    * Sets default properties
@@ -126,6 +135,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       insertImageUrl: undefined,
       selectedText: undefined,
       selectedUrl: undefined,
+      dropdownLinkTarget: '_self',
       wrapperTop: 0
     };
 
@@ -208,6 +218,26 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       });
     }
   }
+
+  // static getDerivedStateFromProps(nextProps: IRichTextProps, nextState: IRichTextState) {
+
+  //   if (!isEqual(nextProps.value, nextState.text)) {
+  //     nextProps.value = nextProps.value;
+  //     return {
+  //       text: nextState.text
+  //     }
+  //   }
+  //   return null;
+  // }
+
+  // public UNSAFE_componentWillReceiveProps(nextProps: IRichTextProps): void {
+  //   if (nextProps.value !== this.state.text) {
+  //     nextProps.value = this.getEditor().root.innerHTML;
+  //     this.setState({
+  //       text: this.getEditor().root.innerHTML
+  //     });
+  //   }
+  // }
 
   /**
    * Returns a handle to the Quill editor
@@ -394,6 +424,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
             }
           }} />
 
+        <Dropdown
+          id="DropDownLinkTarget"
+          label='Open link in'
+          onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
+          selectedKey={this.state.dropdownLinkTarget || '_self'}
+          options={this.ddLinkTargetOpts}
+          onChange={this.onChangeLinkTarget}
+        />
+
         <DialogFooter className={styles.actions}>
           <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
             {
@@ -513,6 +552,17 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'super'];
     ReactQuillInstance.register(sizeClass, true);
 
+    const CusLink = ReactQuillInstance.import('formats/link');
+    class TLink extends CusLink {
+      static create(value) {
+        const node = super.create(value);
+        node.setAttribute('href',value.href);
+        node.setAttribute('target',value.target);
+        return node;
+      }
+    }
+
+    ReactQuillInstance.register(TLink, true);
     return (
       <div ref={(ref) => { this._wrapperRef = ref; }} className={css(styles.richtext && this.state.editing ? 'ql-active' : null, this.props.className || null) || null}>
         {renderLabel}
@@ -690,6 +740,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     this.applyFormat("align", newAlignValue);
   }
 
+  private onChangeLinkTarget = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
+    this.applyFormat("target", item.key);
+    this.setState({
+      dropdownLinkTarget: item.key.toString()
+    })
+  }
+
   private onChangeList = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
     // if we're already in list mode, toggle off
     const key = item.key;
@@ -724,6 +781,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       hideDialog: false,
       insertUrlText: linkText,
       insertUrl: this.state.selectedUrl,
+      dropdownLinkTarget: this.state.dropdownLinkTarget,
       selectedRange: range
     });
   }
@@ -790,10 +848,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (cursorPosition > -1) {
       const textToInsert: string = (this.state.insertUrlText !== undefined && this.state.insertUrlText !== "") ? this.state.insertUrlText : this.state.insertUrl;
       const urlToInsert: string = this.state.insertUrl;
+      const targetToInsert: string = this.state.dropdownLinkTarget;
       quill.insertText(cursorPosition, textToInsert);
       quill.setSelection(cursorPosition, textToInsert.length);
-      quill.formatText(cursorPosition, textToInsert.length, 'link', urlToInsert);
+      quill.formatText(cursorPosition, textToInsert.length, 'link', {
+        href: urlToInsert,
+        target: targetToInsert,
+      });
     }
+
 
     this.setState({
       hideDialog: true,
@@ -876,10 +939,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
         // Get the currently selected url
         const selectedUrl = formats.link ? formats.link : undefined;
+        //const selectedTarget = formats.target ? formats.target : "_self";
+
 
         this.setState({
           selectedText: selectedText,
           selectedUrl: selectedUrl,
+          //dropdownLinkTarget: selectedTarget,
           formats: formats
         });
 
@@ -1001,6 +1067,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (label) {
       return (
         <Label htmlFor={this._richTextId}>
+
           {label}
         </Label>
       );

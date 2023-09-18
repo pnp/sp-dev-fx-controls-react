@@ -178,4 +178,6 @@ export interface IRichTextState {
   text: string;
 
   wrapperTop: number;
+
+  dropdownLinkTarget: string;
 }
