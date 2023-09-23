@@ -97,5 +97,6 @@ export enum CustomCollectionFieldType {
   peoplepicker,
   fabricIcon,
   url,
+  date,
   custom
 }

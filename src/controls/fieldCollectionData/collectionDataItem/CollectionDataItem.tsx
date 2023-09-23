@@ -14,9 +14,9 @@ import { PeoplePicker, PrincipalType } from "../../peoplepicker";
 import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/components/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
-import { CollectionNumberField } from '../collectionNumberField';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
+import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
 import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
@@ -487,9 +487,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           onRenderOption={field.onRenderOption}
           className="PropertyFieldCollectionData__panel__dropdown-field" />;
       case CustomCollectionFieldType.number:
-        return (
-          <CollectionNumberField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
-        );
+        return <TextField placeholder={field.placeholder || field.title}
+          className={styles.collectionDataField}
+          value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          type='number'
+          onChange={(e, value) => this.onValueChanged(field.id, value)}
+          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
+          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
+          inputClassName="PropertyFieldCollectionData__panel__number-field" />;
       case CustomCollectionFieldType.fabricIcon:
         return (
           <CollectionIconField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
@@ -504,6 +511,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
           onGetErrorMessage={async (value: string) => this.urlFieldValidation(field, value, item)}
           inputClassName="PropertyFieldCollectionData__panel__url-field" />;
+      case CustomCollectionFieldType.date:
+        return <DatePicker
+          className={styles.collectionDataField}
+          placeholder={field.placeholder || field.title}
+          isRequired={field.required}
+          disabled={disableFieldOnEdit}
+          value={item[field.id] ? new Date(item[field.id]) : undefined}
+          onSelectDate={(date) => { this.onValueChanged(field.id, date) }}
+          formatDate={(date) => { return date ? date?.toLocaleDateString() : ""; }}
+          />;
       case CustomCollectionFieldType.custom:
         if (field.onCustomRender) {
           return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);
