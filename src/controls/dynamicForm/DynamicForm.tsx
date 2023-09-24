@@ -847,8 +847,8 @@ export class DynamicForm extends React.Component<
   private validateNumberOnSubmit = (val:IDynamicFieldProps): boolean => {
     let shouldBeReturnBack = false;
     if (val.fieldType === "Number" && val.showAsPercentage) {
-      let minValue = val.minimumValue !== undefined ? val.minimumValue * 100 : undefined;
-      let maxValue = val.maximumValue !== undefined ? val.maximumValue * 100 : undefined;
+      const minValue = val.minimumValue !== undefined ? val.minimumValue * 100 : undefined;
+      const maxValue = val.maximumValue !== undefined ? val.maximumValue * 100 : undefined;
       if ((val.newValue < minValue) || (val.newValue > maxValue)) {
         shouldBeReturnBack = true;
       }
