@@ -84,7 +84,8 @@ export interface IDynamicFormProps {
   validationErrorDialogProps?: IValidationErrorDialogProps;
 
   /**
-   * Specify if the form should support the creation of a new list item with a file. Default - false
+   * Specify if the form should support the creation of a new list item in a document library attaching a file to it.
+   * Default - false
    */
   enableFileSelection?: boolean;
 
