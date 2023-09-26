@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useAtomValue } from 'jotai/utils';
+import { useAtom } from 'jotai';
 import { IIconStyles } from 'office-ui-fabric-react/lib/Icon';
 import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 import {
@@ -12,7 +12,7 @@ import {
 import { globalState } from '../../jotai/atoms';
 
 export const useNoDocumentsStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState] = useAtom(globalState);
   const { themeVariant  } = appGlobalState;
 
 

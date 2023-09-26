@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "La col·lecció camps és buida!",
   "InvalidUrlError": "L'adreça URL proporcionada no és vàlida",
   "CollectionDataSearch": "Buscar",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "Carregant els teus equips",
   "MyTeamsMessageError": "Alguna cosa ha fallat en carregar els vostres equips, proveu-ho més tard o actualitzeu el navegador",
   "MyTeamsNoTeamsMessage": "No hi ha equips",

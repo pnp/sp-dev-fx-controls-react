@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Fields kollektionen er tom!",
   "InvalidUrlError": "Den angivne URL-adresse er ugyldig",
   "CollectionDataSearch": "Søge",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "indlæse dine teams",
   "MyTeamsMessageError": "Noget gik galt, mens du indlæser dine teams, kan du prøve senere eller opdatere browser",
   "MyTeamsNoTeamsMessage": "Du har ingen hold.",

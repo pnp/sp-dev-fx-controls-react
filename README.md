@@ -15,7 +15,6 @@ Please use following logic on submitting your questions or issues to right locat
 * You have general question or challenge with SPFx - use [sp-dev-docs repository issue list](https://github.com/sharepoint/sp-dev-docs/issues).
 * You have issue on specific controls in this package - use [issue list in this repository](https://github.com/pnp/sp-dev-fx-controls-react/issues).
 
-
 ## Contributing
 
 We'd love your help! If you have ideas for new features or feedback, let us know by creating an issue in the [issues list](https://github.com/pnp/sp-dev-fx-controls-react/issues). Before you submit a PR with your improvements, please review our [project guides](https://pnp.github.io/sp-dev-fx-controls-react/guides).

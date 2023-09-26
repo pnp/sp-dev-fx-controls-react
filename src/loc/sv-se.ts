@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Fältsamlingen är tom!",
   "InvalidUrlError": "Den angivna webbadressen är inte giltig",
   "CollectionDataSearch": "Sök",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "Läser in dina team",
   "MyTeamsMessageError": "Något gick fel när dina teams lästes in, försök senare eller uppdatera webbläsaren",
   "MyTeamsNoTeamsMessage": "Du har inga team.",

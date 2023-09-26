@@ -356,6 +356,7 @@ declare interface IControlStrings {
   CollectionDataItemMissingFields: string;
   InvalidUrlError: string;
   CollectionDataSearch: string;
+  CollectionDataMinimumUsersDefaultMessage: string
 
   ViewMore: string;
 

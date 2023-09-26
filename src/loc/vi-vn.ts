@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Bộ sưu tập trường trống!",
   "InvalidUrlError": "URL được cung cấp không hợp lệ",
   "CollectionDataSearch": "Tìm kiếm",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "tải nhóm của bạn",
   "MyTeamsMessageError": "Có gì đó không ổn trong khi tải nhóm của bạn, vui lòng thử sau hoặc làm mới trình duyệt",
   "MyTeamsNoTeamsMessage": "Bạn không có bất kỳ đội nào",

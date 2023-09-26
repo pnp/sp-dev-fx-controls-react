@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "フィールドコレクションが空です!",
   "InvalidUrlError": "指定された URL は無効です",
   "CollectionDataSearch": "捜索",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "チームの読み込み",
   "MyTeamsMessageError": "あなたのチームをロード中に何かが間違っていた、後で試すか、ブラウザをリフレッシュしてください",
   "MyTeamsNoTeamsMessage": "あなたはチームを持っていません",

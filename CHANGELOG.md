@@ -1,5 +1,34 @@
 # Releases
 
+## 3.16.0
+
+### New control(s)
+
+- `ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)
+
+### Enhancements
+
+- `FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)
+- `FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)
+- `ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)
+- `FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)
+
+### Fixes
+
+- `AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)
+- `DynamicForm`: fix issue with MultiChoice field [#1510](https://github.com/pnp/sp-dev-fx-controls-react/issues/1510)
+- `Localization`: Update dutch translations [#1635](https://github.com/pnp/sp-dev-fx-controls-react/issues/1635)
+- `TaxonomyPicker`: suggested item contains double termset name [#1597](https://github.com/pnp/sp-dev-fx-controls-react/issues/1597)
+- `DynamicForm`: DynamicForm does not properly handle NULL default values for Taxonomy fields [#1267](https://github.com/pnp/sp-dev-fx-controls-react/issues/1267)
+- `DynamicForm`: New items are always created with the default content type if the list has multiple content types [#1626](https://github.com/pnp/sp-dev-fx-controls-react/pull/1626)
+- `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
+- `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
+- `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514).
+
 ## 3.15.0
 
 ### New control(s)

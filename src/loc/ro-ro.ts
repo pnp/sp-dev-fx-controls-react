@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Colecția de câmpuri este goală!",
   "InvalidUrlError": "ADRESA URL furnizată nu este validă",
   "CollectionDataSearch": "Căutare",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "încărcarea echipelor",
   "MyTeamsMessageError": "Ceva nu a mers bine în timp ce vă încărcați echipele, încercați mai târziu sau reîmprospătați browserul",
   "MyTeamsNoTeamsMessage": "Nu ai echipe",
