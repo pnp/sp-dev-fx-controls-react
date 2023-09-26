@@ -437,17 +437,15 @@ export class DynamicForm extends React.Component<
     }
   };
 
-  private addFileToLibrary = async (objects: {}) => {
+  private addFileToLibrary = async (objects: {}): Promise<void> => {
     const {
       selectedFile
     } = this.state;
 
     const {
       listId,
-      listItemId,
       contentTypeId,
       onSubmitted,
-      onBeforeSubmit,
       onSubmitError,
       returnListItemInstanceOnSubmit
     } = this.props;
