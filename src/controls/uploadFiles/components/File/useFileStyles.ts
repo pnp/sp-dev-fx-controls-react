@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useAtomValue } from 'jotai/utils';
+import { useAtom } from 'jotai';
 import {
   ICheckboxProps,
   ICheckboxStyles,
@@ -22,7 +22,7 @@ import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
 import { globalState } from '../../jotai/atoms';
 
 export const useFileStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState] = useAtom(globalState);
   const { themeVariant } = appGlobalState;
 
 

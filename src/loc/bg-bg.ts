@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Колекцията полета е празна!",
   "InvalidUrlError": "Предоставеният URL адрес не е валиден",
   "CollectionDataSearch": "Търсене",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "зареждане на вашите екипи",
   "MyTeamsMessageError": "Нещо се обърка, докато зареждате екипите си, моля, опитайте по-късно или опреснете браузъра",
   "MyTeamsNoTeamsMessage": "Нямаш отбори",

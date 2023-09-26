@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "字段集合是空的！",
   "InvalidUrlError": "提供的 URL 无效",
   "CollectionDataSearch": "搜索",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "加载您的团队",
   "MyTeamsMessageError": "加载团队时出了问题，请稍后尝试或刷新浏览器",
   "MyTeamsNoTeamsMessage": "你没有任何团队",

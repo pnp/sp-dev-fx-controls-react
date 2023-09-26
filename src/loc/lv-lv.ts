@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Lauku kolekcija ir tukša!",
   "InvalidUrlError": "Sniegtais URL nav derīgs",
   "CollectionDataSearch": "Meklēt",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "darba grupu ielāde",
   "MyTeamsMessageError": "Ielādējot darba grupas, radās kļūda, lūdzu, mēģiniet vēlāk vai atsvaidziniet pārlūkprogrammu",
   "MyTeamsNoTeamsMessage": "Jums nav nevienas komandas",
