@@ -9,7 +9,8 @@
         "enhancements": [
           "`FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)",
           "`FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)",
-          "`ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)"
+          "`ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)",
+          "`FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)"
         ],
         "fixes": [
           "`AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)",
@@ -29,6 +30,7 @@
         "[Nils Andresen](https://github.com/nils-a)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Rico van de Ven](https://github.com/RicoNL)",
+        "[Steve Beaugé](https://github.com/stevebeauge)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)"
       ]
     },
