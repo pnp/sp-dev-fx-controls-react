@@ -1,4 +1,4 @@
-import { ISPService, ILibsOptions, IFieldsOptions, IContentTypesOptions } from "./ISPService";
+import { ISPService, ILibsOptions, IFieldsOptions, IContentTypesOptions, IRenderListDataAsStreamClientFormResult } from "./ISPService";
 import { ISPContentType, ISPField, ISPLists } from "../common/SPEntities";
 
 export default class SPServiceMock implements ISPService {
@@ -8,6 +8,12 @@ export default class SPServiceMock implements ISPService {
   constructor(includeDelay?: boolean, delayTimeout?: number) {
     this._includeDelay = includeDelay;
     this._delayTimeout = delayTimeout || 500;
+  }
+  getListFormRenderInfo(listId: string): Promise<IRenderListDataAsStreamClientFormResult> {
+    throw new Error("Method not implemented.");
+  }
+  getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]> {
+    throw new Error("Method not implemented.");
   }
   public getFields(options?: IFieldsOptions): Promise<ISPField[]> {
     throw new Error("Method not implemented.");

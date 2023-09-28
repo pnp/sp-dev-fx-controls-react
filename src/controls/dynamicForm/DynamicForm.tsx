@@ -1,6 +1,6 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import { SPHttpClient } from "@microsoft/sp-http";
-import { sp } from "@pnp/sp/presets/all";
+import { IRenderListDataAsStreamResult, sp } from "@pnp/sp/presets/all";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -10,7 +10,7 @@ import { IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown"
 import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
-import { IUploadImageResult } from "../../common/SPEntities";
+import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import SPservice from "../../services/SPService";
 import { IFilePickerResult } from "../filePicker";
 import { DynamicField } from "./dynamicField";
@@ -69,6 +69,8 @@ export class DynamicForm extends React.Component<
     // Initialize state
     this.state = {
       fieldCollection: [],
+      validationFormulas: {},
+      clientValidationFormulas: {},
       isValidationErrorDialogOpen: false,
     };
     // Get SPService Factory
@@ -81,7 +83,7 @@ export class DynamicForm extends React.Component<
    * Lifecycle hook when component is mounted
    */
   public componentDidMount(): void {
-    this.getFieldInformations()
+    this.getListInformation()
       .then(() => {
         /* no-op; */
       })
@@ -462,6 +464,277 @@ export class DynamicForm extends React.Component<
       fieldCollection: fieldCol,
     });
   };
+
+  private getListInformation = async(): Promise<void> => {
+    const {
+      listId,
+      listItemId,
+      disabledFields,
+      respectETag,
+      onListItemLoaded,
+    } = this.props;
+    let contentTypeId = this.props.contentTypeId;
+    let contentTypeName: string;
+    try {
+      const listInfo = await this._spService.getListFormRenderInfo(listId);
+      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId);
+
+      const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
+      const validationFormulas: Record<string, Pick<ISPField,"ValidationFormula"|"ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
+        if (!prev[cur.InternalName] && cur.ValidationFormula) {
+          prev[cur.InternalName] = {
+            ValidationFormula: cur.ValidationFormula,
+            ValidationMessage: cur.ValidationMessage,
+          };
+        }
+        return prev;
+      }, {});
+
+      const spList = sp.web.lists.getById(listId);
+      let item = null;
+      let etag: string | undefined = undefined;
+      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
+        item = await spList.items.getById(listItemId).get();
+
+        if (onListItemLoaded) {
+          await onListItemLoaded(item);
+        }
+
+        if (respectETag !== false) {
+          etag = item["odata.etag"];
+        }
+      }
+
+      if (contentTypeId === undefined || contentTypeId === "") {
+        contentTypeId = Object.keys(listInfo.ContentTypeIdToNameMap)[0];
+      }
+      contentTypeName = listInfo.ContentTypeIdToNameMap[contentTypeId];
+
+      const clientValidationFormulas = listInfo.ClientForms.Edit[contentTypeName].reduce((prev, cur) => {
+        if (cur.ClientValidationFormula) {
+          prev[cur.InternalName] = {
+            ValidationFormula: cur.ClientValidationFormula,
+            ValidationMessage: cur.ClientValidationMessage,
+          };
+        }
+        return prev;
+      }, {} as Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>);
+
+      const tempFields: IDynamicFieldProps[] = [];
+      let order: number = 0;
+      const hiddenFields =
+        this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+      let defaultDayOfWeek: number = 0;
+
+      for (let i = 0, len = listInfo.ClientForms.Edit[contentTypeName].length; i < len; i++) {
+        const field = listInfo.ClientForms.Edit[contentTypeName][i];
+
+        // Handle only fields that are not marked as hidden
+        if (hiddenFields.indexOf(field.InternalName) < 0) {
+          order++;
+          let hiddenName = "";
+          let termSetId = "";
+          let anchorId = "";
+          let lookupListId = "";
+          let lookupField = "";
+          const choices: IDropdownOption[] = [];
+          let defaultValue = null;
+          const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+          let richText = false;
+          let dateFormat: DateFormat | undefined;
+          let principalType = "";
+          let minValue: number | undefined;
+          let maxValue: number | undefined;
+          let showAsPercentage: boolean | undefined;
+          if (item !== null) {
+            defaultValue = item[field.InternalName];
+          } else {
+            defaultValue = field.DefaultValue;
+          }
+
+          if (field.FieldType === "Choice" || field.FieldType === "MultiChoice") {
+            field.Choices.forEach((element) => {
+              choices.push({ key: element, text: element });
+            });
+          } else if (field.FieldType === "Note") {
+            richText = field.RichText;
+          } else if (field.FieldType === "Number" || field.FieldType === "Currency") {
+            const numberField = numberFields.find(f => f.InternalName === field.InternalName);
+            if (numberField) {
+              minValue = numberField.MinimumValue;
+              maxValue = numberField.MaximumValue;
+            }
+            showAsPercentage = field.ShowAsPercentage;
+          } else if (field.FieldType === "Lookup" || field.FieldType === "MultiLookup") {
+            lookupListId = field.LookupListId;
+            lookupField = field.LookupFieldName;
+            if (item !== null) {
+              defaultValue = await this._spService.getLookupValues(
+                listId,
+                listItemId,
+                field.InternalName,
+                lookupField,
+                this.webURL
+              );
+            } else {
+              defaultValue = [];
+            }
+          } else if (field.FieldType === "TaxonomyFieldTypeMulti") {
+            hiddenName = field.HiddenListInternalName;
+            termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
+            if (item !== null) {
+              item[field.InternalName].forEach((element) => {
+                selectedTags.push({
+                  key: element.TermGuid,
+                  name: element.Label,
+                });
+              });
+
+              defaultValue = selectedTags;
+            } else {
+              if (defaultValue !== null && defaultValue !== "") {
+                defaultValue.split(/#|;/).forEach((element) => {
+                  if (element.indexOf("|") !== -1)
+                    selectedTags.push({
+                      key: element.split("|")[1],
+                      name: element.split("|")[0],
+                    });
+                });
+
+                defaultValue = selectedTags;
+              }
+            }
+            if (defaultValue === "") defaultValue = null;
+          } else if (field.FieldType === "TaxonomyFieldType") {
+            termSetId = field.TermSetId;
+            anchorId = field.AnchorId;
+            if (item !== null) {
+              const response =
+                await this._spService.getSingleManagedMetadataLabel(
+                  listId,
+                  listItemId,
+                  field.InternalName
+                );
+              if (response) {
+                selectedTags.push({
+                  key: response.TermID,
+                  name: response.Label,
+                });
+                defaultValue = selectedTags;
+              }
+            } else {
+              if (defaultValue !== "") {
+                selectedTags.push({
+                  key: defaultValue.split("|")[1],
+                  name: defaultValue.split("|")[0].split("#")[1],
+                });
+                defaultValue = selectedTags;
+              }
+            }
+            if (defaultValue === "") defaultValue = null;
+          } else if (field.FieldType === "DateTime") {
+            if (item !== null && item[field.InternalName]) {
+              defaultValue = new Date(item[field.InternalName]);
+            } else if (defaultValue === "[today]") {
+              defaultValue = new Date();
+            }
+
+            dateFormat = field.DateFormat || "DateOnly";
+            defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
+          } else if (field.FieldType === "UserMulti") {
+            if (item !== null) {
+              defaultValue = this._spService.getUsersUPNFromFieldValue(
+                listId,
+                listItemId,
+                field.InternalName,
+                this.webURL
+              );
+            } else {
+              defaultValue = [];
+            }
+            principalType = field.PrincipalAccountType;
+          } else if (field.FieldType === "Thumbnail") {
+            if (defaultValue) {
+              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
+            }
+          } else if (field.FieldType === "User") {
+            if (item !== null) {
+              const userEmails: string[] = [];
+              userEmails.push(
+                (await this._spService.getUserUPNFromFieldValue(
+                  listId,
+                  listItemId,
+                  field.InternalName,
+                  this.webURL
+                )) + ""
+              );
+              defaultValue = userEmails;
+            } else {
+              defaultValue = [];
+            }
+            principalType = field.PrincipalAccountType;
+          } else if (field.FieldType === "Location") {
+            defaultValue = JSON.parse(defaultValue);
+          } else if (field.FieldType === "Boolean") {
+            defaultValue = Boolean(Number(defaultValue));
+          }
+
+          tempFields.push({
+            newValue: null,
+            fieldTermSetId: termSetId,
+            fieldAnchorId: anchorId,
+            options: choices,
+            lookupListID: lookupListId,
+            lookupField: lookupField,
+            changedValue: defaultValue,
+            fieldType: field.FieldType,
+            fieldTitle: field.Title,
+            fieldDefaultValue: defaultValue,
+            context: this.props.context,
+            disabled:
+              this.props.disabled ||
+              (disabledFields &&
+                disabledFields.indexOf(field.InternalName) > -1),
+            listId: this.props.listId,
+            columnInternalName: field.InternalName,
+            label: field.Title,
+            onChanged: this.onChange,
+            required: field.Required,
+            hiddenFieldName: hiddenName,
+            Order: order,
+            isRichText: richText,
+            dateFormat: dateFormat,
+            firstDayOfWeek: defaultDayOfWeek,
+            listItemId: listItemId,
+            principalType: principalType,
+            description: field.Description,
+            minimumValue: minValue,
+            maximumValue: maxValue,
+            showAsPercentage: showAsPercentage,
+          });
+
+          // This may not be necessary now using RenderListDataAsStream
+          tempFields.sort((a, b) => a.Order - b.Order);
+          }
+      }
+
+      // Do formatting and validation parsing here
+      console.log('Validation Formulas', validationFormulas);
+      console.log('Client Side Validation Formulas', clientValidationFormulas);
+      
+      this.setState({ 
+        clientValidationFormulas,
+        fieldCollection: tempFields, 
+        validationFormulas,
+        etag 
+      });
+      
+    } catch (error) {
+      console.log(`Error get field informations`, error);
+      return null;
+    }
+  }
 
   //getting all the fields information as part of get ready process
   private getFieldInformations = async (): Promise<void> => {
