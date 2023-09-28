@@ -1155,7 +1155,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {/* Change the list Id and list item id before you start to test this control */}
             <DynamicForm
               context={this.props.context}
-              listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"}
+              listId={"aa553012-2109-4431-ad7f-a57a32800dc2"}
               listItemId={3}
               onCancelled={() => { console.log('Cancelled'); }}
               onSubmitted={async (_listItemData, listItem) => { const itemdata = await listItem.get(); console.log(itemdata["ID"]); }}>
@@ -1166,7 +1166,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {/* This DynamicForm display a dialog message when validation fails */}
             <DynamicForm
               context={this.props.context}
-              listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"}
+              listId={"aa553012-2109-4431-ad7f-a57a32800dc2"}
               listItemId={3}
               onCancelled={() => { console.log('Cancelled'); }}
               onSubmitted={async (_listItemData, listItem) => { const itemdata = await listItem.get(); console.log(itemdata["ID"]); }}
