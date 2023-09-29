@@ -509,54 +509,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedFilters: ["filter1"],
       termStoreInfo: null,
       termSetInfo: null,
-      testTerms: [],
-      isWebPartTitleDivVisible: false,
-      isDynamicFormDivVisible: false,
-      isTeamsDivVisible: false,
-      isAccessibleAccordionDivVisible: false,
-      isTaxonomyPickerDivVisible: false,
-      isDateTimePickerDivVisible: false,
-      isRichTextDivVisible: false,
-      isPlaceholderDivVisible: false,
-      isPeoplePickerDivVisible: false,
-      isDragDropFilesDivVisible: false,
-      isListViewDivVisible: false,
-      isChartControlDivVisible: false,
-      isMapDivVisible: false,
-      isModernAudioDivVisible: false,
-      isFileTypeIconDivVisible: false,
-      isSecurityTrimmedControlDivVisible: false,
-      isSitePickerDivVisible: false,
-      isListPickerDivVisible: false,
-      isFieldPickerDivVisible: false,
-      isIconPickerDivVisible: false,
-      isComboBoxListItemPickerDivVisible: false,
-      isIFrameDialogDivVisible: false,
-      isIFramePanelDivVisible: false,
-      isFolderPickerDivVisible: false,
-      isCarouselDivVisible: false,
-      isSiteBreadcrumbDivVisible: false,
-      isFilePickerDivVisible: false,
-      isProgressDivVisible: false,
-      isGridLayoutDivVisible: false,
-      isFolderExplorerDivVisible: false,
-      isTreeViewDivVisible: false,
-      isPaginationDivVisible: false,
-      isFieldCollectionDataDivVisible: false,
-      isDashboardDivVisible: false,
-      isToolbarDivVisible: false,
-      isAnimatedDialogDivVisible: false,
-      isLocationPickerDivVisible: false,
-      isModernTaxonomyPickerDivVisible: false,
-      isAdaptiveCardHostDivVisible: false,
-      isVariantThemeProviderDivVisible: false,
-      isEnhancedThemeProviderDivVisible: false,
-      isAdaptiveCardDesignerHostDivVisible: false,
-      isTaxonomyTreeDivVisible: false,
-      isTestControlDivVisible: false,
-      isUploadFilesDivVisible: false,
-      toggleAll: false,
-      showAllFilters: false
+      testTerms: []
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -847,55 +800,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Renders the component
    */
   public render(): React.ReactElement<IControlsTestProps> {
-    const {
-      toggleAll,
-      showAllFilters,
-      isWebPartTitleDivVisible,
-      isDynamicFormDivVisible,
-      isTeamsDivVisible,
-      isAccessibleAccordionDivVisible,
-      isTaxonomyPickerDivVisible,
-      isDateTimePickerDivVisible,
-      isRichTextDivVisible,
-      isPlaceholderDivVisible,
-      isPeoplePickerDivVisible,
-      isDragDropFilesDivVisible,
-      isListViewDivVisible,
-      isChartControlDivVisible,
-      isMapDivVisible,
-      isModernAudioDivVisible,
-      isFileTypeIconDivVisible,
-      isSecurityTrimmedControlDivVisible,
-      isSitePickerDivVisible,
-      isListPickerDivVisible,
-      isFieldPickerDivVisible,
-      isIconPickerDivVisible,
-      isComboBoxListItemPickerDivVisible,
-      isIFrameDialogDivVisible,
-      isIFramePanelDivVisible,
-      isFolderPickerDivVisible,
-      isCarouselDivVisible,
-      isSiteBreadcrumbDivVisible,
-      isFilePickerDivVisible,
-      isProgressDivVisible,
-      isGridLayoutDivVisible,
-      isFolderExplorerDivVisible,
-      isTreeViewDivVisible,
-      isPaginationDivVisible,
-      isFieldCollectionDataDivVisible,
-      isDashboardDivVisible,
-      isToolbarDivVisible,
-      isAnimatedDialogDivVisible,
-      isLocationPickerDivVisible,
-      isModernTaxonomyPickerDivVisible,
-      isAdaptiveCardHostDivVisible,
-      isVariantThemeProviderDivVisible,
-      isEnhancedThemeProviderDivVisible,
-      isAdaptiveCardDesignerHostDivVisible,
-      isTaxonomyTreeDivVisible,
-      isTestControlDivVisible,
-      isUploadFilesDivVisible,
-    } = this.state;
+    const { controlVisibility } = this.props;
 
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
@@ -1028,58 +933,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         <div className={styles.container}>
           <h3>Choose which controls to display</h3>
           <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
-            <Toggle label="Toggle all" checked={toggleAll} onChange={this._toggleAllFilters} className={styles.toggleFilter} />
-            <Toggle label="Show filters" checked={showAllFilters} onChange={(event, checked) => { this.setState({ showAllFilters: checked })}} className={styles.toggleFilter} />
-          </div>
-          <div className={`${styles.row} ${styles.controlFiltersContainer}`} hidden={!showAllFilters}>
-            <Toggle label="AccessibleAccordion" checked={isAccessibleAccordionDivVisible} onChange={(event, checked) => { this.setState({ isAccessibleAccordionDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="AdaptiveCardDesignerHost" checked={isAdaptiveCardDesignerHostDivVisible} onChange={(event, checked) => { this.setState({ isAdaptiveCardDesignerHostDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="AdaptiveCardHost" checked={isAdaptiveCardHostDivVisible} onChange={(event, checked) => { this.setState({ isAdaptiveCardHostDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="AnimatedDialog" checked={isAnimatedDialogDivVisible} onChange={(event, checked) => { this.setState({ isAnimatedDialogDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Carousel" checked={isCarouselDivVisible} onChange={(event, checked) => { this.setState({ isCarouselDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ChartControl" checked={isChartControlDivVisible} onChange={(event, checked) => { this.setState({ isChartControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ComboBoxListItemPicker" checked={isComboBoxListItemPickerDivVisible} onChange={(event, checked) => { this.setState({ isComboBoxListItemPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Dashboard" checked={isDashboardDivVisible} onChange={(event, checked) => { this.setState({ isDashboardDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="DateTimePicker" checked={isDateTimePickerDivVisible} onChange={(event, checked) => { this.setState({ isDateTimePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="DragDropFiles" checked={isDragDropFilesDivVisible} onChange={(event, checked) => { this.setState({ isDragDropFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="DynamicForm" checked={isDynamicFormDivVisible} onChange={(event, checked) => { this.setState({ isDynamicFormDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="EnhancedThemeProvider" checked={isEnhancedThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isEnhancedThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FieldCollectionData" checked={isFieldCollectionDataDivVisible} onChange={(event, checked) => { this.setState({ isFieldCollectionDataDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FieldPicker" checked={isFieldPickerDivVisible} onChange={(event, checked) => { this.setState({ isFieldPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FilePicker" checked={isFilePickerDivVisible} onChange={(event, checked) => { this.setState({ isFilePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FileTypeIcon" checked={isFileTypeIconDivVisible} onChange={(event, checked) => { this.setState({ isFileTypeIconDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FolderExplorer" checked={isFolderExplorerDivVisible} onChange={(event, checked) => { this.setState({ isFolderExplorerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="FolderPicker" checked={isFolderPickerDivVisible} onChange={(event, checked) => { this.setState({ isFolderPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="GridLayout" checked={isGridLayoutDivVisible} onChange={(event, checked) => { this.setState({ isGridLayoutDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="IconPicker" checked={isIconPickerDivVisible} onChange={(event, checked) => { this.setState({ isIconPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="IFrameDialog" checked={isIFrameDialogDivVisible} onChange={(event, checked) => { this.setState({ isIFrameDialogDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="IFramePanel" checked={isIFramePanelDivVisible} onChange={(event, checked) => { this.setState({ isIFramePanelDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ListPicker" checked={isListPickerDivVisible} onChange={(event, checked) => { this.setState({ isListPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ListView" checked={isListViewDivVisible} onChange={(event, checked) => { this.setState({ isListViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="LocationPicker" checked={isLocationPickerDivVisible} onChange={(event, checked) => { this.setState({ isLocationPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Map" checked={isMapDivVisible} onChange={(event, checked) => { this.setState({ isMapDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ModernAudio" checked={isModernAudioDivVisible} onChange={(event, checked) => { this.setState({ isModernAudioDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="ModernTaxonomyPicker" checked={isModernTaxonomyPickerDivVisible} onChange={(event, checked) => { this.setState({ isModernTaxonomyPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Pagination" checked={isPaginationDivVisible} onChange={(event, checked) => { this.setState({ isPaginationDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="PeoplePicker" checked={isPeoplePickerDivVisible} onChange={(event, checked) => { this.setState({ isPeoplePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Placeholder" checked={isPlaceholderDivVisible} onChange={(event, checked) => { this.setState({ isPlaceholderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Progress" checked={isProgressDivVisible} onChange={(event, checked) => { this.setState({ isProgressDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="RichText" checked={isRichTextDivVisible} onChange={(event, checked) => { this.setState({ isRichTextDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="SecurityTrimmedControl" checked={isSecurityTrimmedControlDivVisible} onChange={(event, checked) => { this.setState({ isSecurityTrimmedControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="SiteBreadcrumb" checked={isSiteBreadcrumbDivVisible} onChange={(event, checked) => { this.setState({ isSiteBreadcrumbDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="SitePicker" checked={isSitePickerDivVisible} onChange={(event, checked) => { this.setState({ isSitePickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="TaxonomyPicker" checked={isTaxonomyPickerDivVisible} onChange={(event, checked) => { this.setState({ isTaxonomyPickerDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="TaxonomyTree" checked={isTaxonomyTreeDivVisible} onChange={(event, checked) => { this.setState({ isTaxonomyTreeDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Teams" checked={isTeamsDivVisible} onChange={(event, checked) => { this.setState({ isTeamsDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="TestControl" checked={isTestControlDivVisible} onChange={(event, checked) => { this.setState({ isTestControlDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="Toolbar" checked={isToolbarDivVisible} onChange={(event, checked) => { this.setState({ isToolbarDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="TreeView" checked={isTreeViewDivVisible} onChange={(event, checked) => { this.setState({ isTreeViewDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="UploadFiles" checked={isUploadFilesDivVisible} onChange={(event, checked) => { this.setState({ isUploadFilesDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="VariantThemeProvider" checked={isVariantThemeProviderDivVisible} onChange={(event, checked) => { this.setState({ isVariantThemeProviderDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
-            <Toggle label="WebPartTitle" checked={isWebPartTitleDivVisible} onChange={(event, checked) => { this.setState({ isWebPartTitleDivVisible: checked, toggleAll: false }); }} className={styles.toggleFilter}/>
+            <PrimaryButton text="Open Web Part Settings" iconProps={{ iconName: 'Settings' }} onClick={this.props.onOpenPropertyPane} />
           </div>
         </div>
-        <div id="WebPartTitleDiv" className={styles.container} hidden={!isWebPartTitleDivVisible}>
+        <div id="WebPartTitleDiv" className={styles.container} hidden={!controlVisibility.WebPartTitle}>
           <WebPartTitle displayMode={this.props.displayMode}
             title={this.props.title}
             updateProperty={this.props.updateProperty}
@@ -1087,18 +944,18 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <Link href="https://pnp.github.io/sp-dev-fx-controls-react/">See all</Link>
             } />
         </div>
-        <div id="DynamicFormDiv" className={styles.container} hidden={!isDynamicFormDivVisible}>
+        <div id="DynamicFormDiv" className={styles.container} hidden={!controlVisibility.DynamicForm}>
           <div className="ms-font-m">
             {/* Change the list Id and list item id before you start to test this control */}
-            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
+            <DynamicForm key={this.props.dynamicFormListId} context={this.props.context} listId={this.props.dynamicFormListId || "8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
           </div>
           <div className="ms-font-m">
             {/* Change the list Id and list item id before you start to test this control */}
             {/* This DynamicForm display a dialog message when validation fails */}
-            <DynamicForm context={this.props.context} listId={"8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
+            <DynamicForm key={this.props.dynamicFormListId} context={this.props.context} listId={this.props.dynamicFormListId || "8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
           </div>
         </div>
-        <div id="TeamsDiv" className={styles.container} hidden={!isTeamsDivVisible}>
+        <div id="TeamsDiv" className={styles.container} hidden={!controlVisibility.Teams}>
           <Stack styles={{ root: { marginBottom: 200 } }}>
             <MyTeams
               title="My Teams"
@@ -1141,7 +998,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             )}
           </Stack>
         </div>
-        <div id="accessibleAccordionDiv" className={styles.container} hidden={!isAccessibleAccordionDivVisible}>
+        <div id="accessibleAccordionDiv" className={styles.container} hidden={!controlVisibility.accessibleAccordion}>
           <AccessibleAccordion allowZeroExpanded theme={this.props.themeVariant}>
             <AccordionItem key={"Headding 1"}>
               <AccordionItemHeading>
@@ -1180,7 +1037,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             ))
           }
         </div>
-        <div id="TaxonomyPickerDiv" className={styles.container} hidden={!isTaxonomyPickerDivVisible}>
+        <div id="TaxonomyPickerDiv" className={styles.container} hidden={!controlVisibility.TaxonomyPicker}>
           <div className="ms-font-m">Services tester:
             <TaxonomyPicker
               allowMultipleSelections={true}
@@ -1352,7 +1209,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }} />
           </div>
         </div>
-        <div id="DateTimePickerDiv" className={styles.container} hidden={!isDateTimePickerDivVisible}>
+        <div id="DateTimePickerDiv" className={styles.container} hidden={!controlVisibility.DateTimePicker}>
           <DateTimePicker label="DateTime Picker (unspecified = date and time)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" />
           <DateTimePicker label="DateTime Picker 12-hour clock" showSeconds={true} onChange={(value) => console.log("DateTimePicker value:", value)} timeDisplayControlType={TimeDisplayControlType.Dropdown} minutesIncrementStep={15} />
           <DateTimePicker label="DateTime Picker 24-hour clock" showSeconds={true} timeConvention={TimeConvention.Hours24} onChange={(value) => console.log("DateTimePicker value:", value)} />
@@ -1420,12 +1277,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
         </div>
-        <div id="RichTextDiv" className={styles.container} hidden={!isRichTextDivVisible}>
+        <div id="RichTextDiv" className={styles.container} hidden={!controlVisibility.RichText}>
           {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
           <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
           <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
         </div>
-        <div id="PlaceholderDiv" className={styles.container} hidden={!isPlaceholderDivVisible}>
+        <div id="PlaceholderDiv" className={styles.container} hidden={!controlVisibility.Placeholder}>
           <Placeholder iconName='Edit'
             iconText='Configure your web part'
             description={defaultClassNames => <span className={defaultClassNames}>Please configure the web part.</span>}
@@ -1434,7 +1291,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onConfigure={this._onConfigure}
             theme={this.props.themeVariant} />
         </div>
-        <div id="PeoplePickerDiv" className={styles.container} hidden={!isPeoplePickerDivVisible}>
+        <div id="PeoplePickerDiv" className={styles.container} hidden={!controlVisibility.PeoplePicker}>
           <PeoplePicker context={this.props.context}
             titleText="People Picker custom styles"
             styles={this.pickerStylesSingle}
@@ -1519,7 +1376,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             showtooltip={true}
             defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
         </div>
-        <div id="DragDropFilesDiv" className={styles.container} hidden={!isDragDropFilesDivVisible}>
+        <div id="DragDropFilesDiv" className={styles.container} hidden={!controlVisibility.DragDropFiles}>
           <b>Drag and Drop Files</b>
           <DragDropFiles
             dropEffect="copy"
@@ -1536,7 +1393,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               onConfigure={this._onConfigure} />
           </DragDropFiles>
         </div>
-        <div id="ListViewDiv" className={styles.container} hidden={!isListViewDivVisible}>
+        <div id="ListViewDiv" className={styles.container} hidden={!controlVisibility.ListView}>
           <ListView items={this.state.items}
             viewFields={viewFields}
             iconFieldName='ServerRelativeUrl'
@@ -1552,7 +1409,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           // defaultFilter="Team"
           />
         </div>
-        <div id="ChartControlDiv" className={styles.container} hidden={!isChartControlDivVisible}>
+        <div id="ChartControlDiv" className={styles.container} hidden={!controlVisibility.ChartControl}>
           <ChartControl type={ChartType.Bar}
             data={{
               labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -1588,7 +1445,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               }
             }} />
         </div>
-        <div id="MapDiv" className={styles.container} hidden={!isMapDivVisible}>
+        <div id="MapDiv" className={styles.container} hidden={!controlVisibility.Map}>
           <Map titleText="New map control"
             coordinates={{ latitude: 51.507351, longitude: -0.127758 }}
             enableSearch={true}
@@ -1602,10 +1459,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           //errorMessage="Hmmm, we do not have maps for Mars yet. Working on it..."
           />
         </div>
-        <div id="ModernAudioDiv" className={styles.container} hidden={!isModernAudioDivVisible}>
+        <div id="ModernAudioDiv" className={styles.container} hidden={!controlVisibility.ModernAudio}>
           <ModernAudio audioUrl='https://www.winhistory.de/more/winstart/mp3/vista.mp3' label="Audio Control" labelPosition={ModernAudioLabelPosition.BottomCenter} />
         </div>
-        <div id="FileTypeIconDiv" className={styles.container} hidden={!isFileTypeIconDivVisible}>
+        <div id="FileTypeIconDiv" className={styles.container} hidden={!controlVisibility.FileTypeIcon}>
           <p className="ms-font-l">
             File type icon control
           </p>
@@ -1634,12 +1491,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <FileTypeIcon type={IconType.image} size={this.state.imgSize} />
           </div>
         </div>
-        <div id="SecurityTrimmedControlDiv" className={styles.container} hidden={!isSecurityTrimmedControlDivVisible}>
+        <div id="SecurityTrimmedControlDiv" className={styles.container} hidden={!controlVisibility.SecurityTrimmedControl}>
           <SecurityTrimmedControl context={this.props.context} level={PermissionLevel.currentWeb} permissions={[SPPermission.viewListItems]} className={"TestingClass"} noPermissionsControl={<p>You do not have permissions.</p>}>
             <p>You have permissions to view list items.</p>
           </SecurityTrimmedControl>
         </div>
-        <div id="SitePickerDiv" className={styles.container} hidden={!isSitePickerDivVisible}>
+        <div id="SitePickerDiv" className={styles.container} hidden={!controlVisibility.SitePicker}>
           <div className="ms-font-m">Site picker tester:
             <SitePicker
               context={this.props.context}
@@ -1652,7 +1509,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               searchPlaceholder={'Filter sites'} />
           </div>
         </div>
-        <div id="ListPickerDiv" className={styles.container} hidden={!isListPickerDivVisible}>
+        <div id="ListPickerDiv" className={styles.container} hidden={!controlVisibility.ListPicker}>
           <div className="ms-font-m">List picker tester:
             <ListPicker context={this.props.context}
               label="Select your list(s)"
@@ -1678,7 +1535,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           </div>
         </div>
-        <div id="FieldPickerDiv" className={styles.container} hidden={!isFieldPickerDivVisible}>
+        <div id="FieldPickerDiv" className={styles.container} hidden={!controlVisibility.FieldPicker}>
           <div className="ms-font-m">Field picker tester:
             <FieldPicker
               context={this.props.context}
@@ -1690,7 +1547,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
         </div>
-        <div id="IconPickerDiv" className={styles.container} hidden={!isIconPickerDivVisible}>
+        <div id="IconPickerDiv" className={styles.container} hidden={!controlVisibility.IconPicker}>
           <div>Icon Picker</div>
           <div>
             <IconPicker
@@ -1705,7 +1562,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onCancel={() => { console.log("Panel closed"); }}
             onSave={(iconName: string) => { console.log(iconName); }} />
         </div>
-        <div id="ComboBoxListItemPickerDiv" className={styles.container} hidden={!isComboBoxListItemPickerDivVisible}>
+        <div id="ComboBoxListItemPickerDiv" className={styles.container} hidden={!controlVisibility.ComboBoxListItemPicker}>
           <div className="ms-font-m">ComboBoxListItemPicker:
 
             <ComboBoxListItemPicker listId={this.state.comboBoxListItemPickerListId}
@@ -1733,7 +1590,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
           </div>
         </div>
-        <div id="IFrameDialogDiv" className={styles.container} hidden={!isIFrameDialogDivVisible}>
+        <div id="IFrameDialogDiv" className={styles.container} hidden={!controlVisibility.IFrameDialog}>
           <div className="ms-font-m">iframe dialog tester:
             <PrimaryButton
               text="Open iframe Dialog"
@@ -1762,7 +1619,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               height={'315px'} />
           </div>
         </div>
-        <div id="IFramePanelDiv" className={styles.container} hidden={!isIFramePanelDivVisible}>
+        <div id="IFramePanelDiv" className={styles.container} hidden={!controlVisibility.IFramePanel}>
           <div className="ms-font-m">iframe Panel tester:
             <PrimaryButton
               text="Open iframe Panel"
@@ -1779,7 +1636,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
         </div>
-        <div id="FolderPickerDiv" className={styles.container} hidden={!isFolderPickerDivVisible}>
+        <div id="FolderPickerDiv" className={styles.container} hidden={!controlVisibility.FolderPicker}>
           <FolderPicker context={this.props.context}
             rootFolder={{
               Name: 'Documents',
@@ -1791,7 +1648,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             canCreateFolders={true}
           ></FolderPicker>
         </div>
-        <div id="CarouselDiv" className={styles.container} hidden={!isCarouselDivVisible}>
+        <div id="CarouselDiv" className={styles.container} hidden={!controlVisibility.Carousel}>
           <div>
             <h3>Carousel with fixed elements:</h3>
             <Carousel
@@ -1870,12 +1727,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           </div>
         </div>
-        <div id="SiteBreadcrumbDiv" className={styles.container} hidden={!isSiteBreadcrumbDivVisible}>
+        <div id="SiteBreadcrumbDiv" className={styles.container} hidden={!controlVisibility.SiteBreadcrumb}>
           <div className={styles.siteBreadcrumb}>
             <SiteBreadcrumb context={this.props.context} />
           </div>
         </div>
-        <div id="FilePickerDiv" className={styles.container} hidden={!isFilePickerDivVisible}>
+        <div id="FilePickerDiv" className={styles.container} hidden={!controlVisibility.FilePicker}>
 
           <div>
             <h3>File Picker</h3>
@@ -1933,7 +1790,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </div>
           <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
         </div>
-        <div id="ProgressDiv" className={styles.container} hidden={!isProgressDivVisible}>
+        <div id="ProgressDiv" className={styles.container} hidden={!controlVisibility.Progress}>
           <Progress title={'Progress Test'}
             showOverallProgress={true}
             showIndeterminateOverallProgress={false}
@@ -1946,7 +1803,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             inProgressIconName={'ChromeBackMirrored'} />
           <PrimaryButton text={'Start Progress'} onClick={this._startProgress} />
         </div>
-        <div id="GridLayoutDiv" className={styles.container} hidden={!isGridLayoutDivVisible}>
+        <div id="GridLayoutDiv" className={styles.container} hidden={!controlVisibility.GridLayout}>
           <div className="ms-font-l">Grid Layout</div>
           <GridLayout
             ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
@@ -1954,7 +1811,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
           />
         </div>
-        <div id="FolderExplorerDiv" className={styles.container} hidden={!isFolderExplorerDivVisible}>
+        <div id="FolderExplorerDiv" className={styles.container} hidden={!controlVisibility.FolderExplorer}>
           <FolderExplorer
             context={this.props.context}
             rootFolder={{
@@ -1973,7 +1830,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onFileClick={this._onFileClick}
           />
         </div>
-        <div id="TreeViewDiv" className={styles.container} hidden={!isTreeViewDivVisible}>
+        <div id="TreeViewDiv" className={styles.container} hidden={!controlVisibility.TreeView}>
           <h3>Tree View</h3>
           <TreeView items={this.treeitems}
             defaultExpanded={false}
@@ -1990,7 +1847,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
           <PrimaryButton onClick={() => { this.setState({ treeViewSelectedKeys: [] }); }}>Clear selection</PrimaryButton>
         </div>
-        <div id="PaginationDiv" className={styles.container} hidden={!isPaginationDivVisible}>
+        <div id="PaginationDiv" className={styles.container} hidden={!controlVisibility.Pagination}>
           <Pagination
             currentPage={3}
             onChange={(page) => (this._getPage(page))}
@@ -2001,7 +1858,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           //limiterIcon={"NumberedListText"}
           />
         </div>
-        <div id="FieldCollectionDataDiv" className={styles.container} hidden={!isFieldCollectionDataDivVisible}>
+        <div id="FieldCollectionDataDiv" className={styles.container} hidden={!controlVisibility.FieldCollectionData}>
           <FieldCollectionData
             key={"FieldCollectionData"}
             label={"Fields Collection"}
@@ -2019,7 +1876,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             value={this.getRandomCollectionFieldData()}
           />
         </div>
-        <div id="DashboardDiv" className={styles.container} hidden={!isDashboardDivVisible}>
+        <div id="DashboardDiv" className={styles.container} hidden={!controlVisibility.Dashboard}>
           <Dashboard
             widgets={[{
               title: "Card 1",
@@ -2101,7 +1958,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               link: linkExample,
             }]} />
         </div>
-        <div id="ToolbarDiv" className={styles.container} hidden={!isToolbarDivVisible}>
+        <div id="ToolbarDiv" className={styles.container} hidden={!controlVisibility.Toolbar}>
           <div>
             <h3>Uncontrolled toolbar</h3>
             <Toolbar actionGroups={{
@@ -2146,7 +2003,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <PrimaryButton text='Toggle filter1' onClick={() => this.toggleToolbarFilter("filter1")} />
           <PrimaryButton text='Toggle filter2' onClick={() => this.toggleToolbarFilter("filter2")} />
         </div>
-        <div id="AnimatedDialogDiv" className={styles.container} hidden={!isAnimatedDialogDivVisible}>
+        <div id="AnimatedDialogDiv" className={styles.container} hidden={!controlVisibility.animatedDialog}>
           <h3>Animated Dialogs</h3>
 
           {/* Multiple elements added only for demo - can be controlled with fewer elements */}
@@ -2225,10 +2082,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </div>
           </AnimatedDialog>
         </div>
-        <div id="LocationPickerDiv" className={styles.container} hidden={!isLocationPickerDivVisible}>
+        <div id="LocationPickerDiv" className={styles.container} hidden={!controlVisibility.LocationPicker}>
           <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
         </div>
-        <div id="ModernTaxonomyPickerDiv" className={styles.container} hidden={!isModernTaxonomyPickerDivVisible}>
+        <div id="ModernTaxonomyPickerDiv" className={styles.container} hidden={!controlVisibility.ModernTaxonomyPicker}>
           <ModernTaxonomyPicker
             allowMultipleSelections={true}
             termSetId={"7b84b0b6-50b8-4d26-8098-029eba42fe8a"}
@@ -2240,7 +2097,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             customPanelWidth={400}
           />
         </div>
-        <div id="AdaptiveCardHostDiv" className={styles.container} hidden={!isAdaptiveCardHostDivVisible}>
+        <div id="AdaptiveCardHostDiv" className={styles.container} hidden={!controlVisibility.adaptiveCardHost}>
           <h3>Adaptive Card Host</h3>
           <AdaptiveCardHost
             card={{
@@ -2502,7 +2359,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             context={this.props.context}
           />
         </div>
-        <div id="VariantThemeProviderDiv" className={styles.container} hidden={!isVariantThemeProviderDivVisible}>
+        <div id="VariantThemeProviderDiv" className={styles.container} hidden={!controlVisibility.VariantThemeProvider}>
           <h3>Variant Theme Provider</h3>
           <VariantThemeProvider variantType={VariantType.Strong}>
             <Stack tokens={{ childrenGap: 5, padding: 5 }}>
@@ -2513,14 +2370,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             </Stack>
           </VariantThemeProvider>
         </div>
-        <div id="EnhancedThemeProviderDiv" className={styles.container} hidden={!isEnhancedThemeProviderDivVisible}>
+        <div id="EnhancedThemeProviderDiv" className={styles.container} hidden={!controlVisibility.EnhancedThemeProvider}>
           <h3>Enhanced Theme Provider</h3>
           <EnhancedThemeProvider applyTo="element" context={this.props.context} theme={this.props.themeVariant}>
             <ControlsTestEnhancedThemeProviderFunctionComponent />
             <ControlsTestEnhancedThemeProvider />
           </EnhancedThemeProvider>
         </div>
-        <div id="AdaptiveCardDesignerHostDiv" className={styles.container} hidden={!isAdaptiveCardDesignerHostDivVisible}>
+        <div id="AdaptiveCardDesignerHostDiv" className={styles.container} hidden={!controlVisibility.adaptiveCardDesignerHost}>
           <h3>Adaptive Card Designer Host</h3>
           <AdaptiveCardDesignerHost
             headerText={`Adaptive Card Designer`}
@@ -2567,7 +2424,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }]}
           />
         </div>
-        <div id="TaxonomyTreeDiv" className={styles.container} hidden={!isTaxonomyTreeDivVisible}>
+        <div id="TaxonomyTreeDiv" className={styles.container} hidden={!controlVisibility.TaxonomyTree}>
           <h3>Modern Taxonomy Tree</h3>
           {this.state.termStoreInfo && (
             <TaxonomyTree
@@ -2584,11 +2441,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             />
           )}
         </div>
-        <div id="TestControlDiv" className={styles.container} hidden={!isTestControlDivVisible}>
+        <div id="TestControlDiv" className={styles.container} hidden={!controlVisibility.TestControl}>
           <h3>Monaco Editor</h3>
           <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
-        <div id="UploadFilesDiv" className={styles.container} hidden={!isUploadFilesDivVisible}>
+        <div id="UploadFilesDiv" className={styles.container} hidden={!controlVisibility.UploadFiles}>
           <h3>Upload Files</h3>
           <EnhancedThemeProvider theme={this.props.themeVariant} context={this.props.context}>
             <Stack>
@@ -2641,56 +2498,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   // private _onFolderSelect = (folder: IFolder): void => {
   //   console.log('selected folder', folder);
-  // }
-
-  private _toggleAllFilters = (event: React.MouseEvent<HTMLElement, MouseEvent>, checked?: boolean): void => {
-    this.setState({
-      toggleAll: checked,
-      isWebPartTitleDivVisible: checked,
-      isDynamicFormDivVisible: checked,
-      isTeamsDivVisible: checked,
-      isAccessibleAccordionDivVisible: checked,
-      isTaxonomyPickerDivVisible: checked,
-      isDateTimePickerDivVisible: checked,
-      isRichTextDivVisible: checked,
-      isPlaceholderDivVisible: checked,
-      isPeoplePickerDivVisible: checked,
-      isDragDropFilesDivVisible: checked,
-      isListViewDivVisible: checked,
-      isChartControlDivVisible: checked,
-      isMapDivVisible: checked,
-      isModernAudioDivVisible: checked,
-      isFileTypeIconDivVisible: checked,
-      isSecurityTrimmedControlDivVisible: checked,
-      isSitePickerDivVisible: checked,
-      isListPickerDivVisible: checked,
-      isFieldPickerDivVisible: checked,
-      isIconPickerDivVisible: checked,
-      isComboBoxListItemPickerDivVisible: checked,
-      isIFrameDialogDivVisible: checked,
-      isIFramePanelDivVisible: checked,
-      isFolderPickerDivVisible: checked,
-      isCarouselDivVisible: checked,
-      isSiteBreadcrumbDivVisible: checked,
-      isFilePickerDivVisible: checked,
-      isProgressDivVisible: checked,
-      isGridLayoutDivVisible: checked,
-      isFolderExplorerDivVisible: checked,
-      isTreeViewDivVisible: checked,
-      isPaginationDivVisible: checked,
-      isFieldCollectionDataDivVisible: checked,
-      isDashboardDivVisible: checked,
-      isToolbarDivVisible: checked,
-      isAnimatedDialogDivVisible: checked,
-      isLocationPickerDivVisible: checked,
-      isModernTaxonomyPickerDivVisible: checked,
-      isAdaptiveCardHostDivVisible: checked,
-      isVariantThemeProviderDivVisible: checked,
-      isEnhancedThemeProviderDivVisible: checked,
-      isAdaptiveCardDesignerHostDivVisible: checked,
-      isTaxonomyTreeDivVisible: checked,
-      isTestControlDivVisible: checked,
-      isUploadFilesDivVisible: checked
-    });
-  }
+  // 
 }

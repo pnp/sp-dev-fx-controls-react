@@ -17,7 +17,9 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
-import { IControlsTestWebPartProps } from './IControlsTestWebPartProps';
+import { ControlVisibility, IControlsTestWebPartProps } from './IControlsTestWebPartProps';
+import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
+import { PropertyPaneControlToggles } from './propertyPane/PropertyPaneControlToggles';
 
 /**
  * Web part to test the React controls
@@ -86,13 +88,21 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
 
         themeVariant: this._themeVariant,
         context: this.context,
+        controlVisibility: this.properties.controlVisibility,
         description: this.properties.description,
         title: this.properties.title ?? "Sample title",
         displayMode: this.displayMode,
+        dynamicFormListId: this.properties.dynamicFormListId,
+        onOpenPropertyPane: () => {
+          this.context.propertyPane.open();
+        },
         updateProperty: (value: string) => {
           this.properties.title = value;
+          if (this.context.propertyPane.isPropertyPaneOpen()) {
+            this.context.propertyPane.refresh();
+          }
         },
-        totalPages: this.properties.totalPages
+        totalPages: this.properties.paginationTotalPages
       }
     );
 
@@ -117,13 +127,38 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: strings.ControlSettingsGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('title', {
+                  label: 'Web Part Title',
                 }),
-                PropertyPaneTextField('totalPages', {
+                PropertyPaneTextField('paginationTotalPages', {
                   label: 'Total pages in pagination'
+                }),
+                new PropertyPaneListPicker('dynamicFormListId', {
+                  label: 'List for Dynamic Form',
+                  wpContext: this.context,
+                  selectedKey: this.properties.dynamicFormListId,
+                  disabled: false,
+                  onPropertyChange: (propertyPath: string, newValue: string) => {
+                    this.properties.dynamicFormListId = newValue;
+                    this.render();
+                    this.context.propertyPane.refresh();
+                  }
+                })
+              ]
+            },
+            {
+              groupName: strings.ControlsGroupName,
+              groupFields: [
+                new PropertyPaneControlToggles('controlVisibility', {
+                  controlVisibility: this.properties.controlVisibility,
+                  label: 'Toggle controls',
+                  onPropertyChange: (newValue: ControlVisibility) => {
+                    this.properties.controlVisibility = newValue;
+                    this.render();
+                    this.context.propertyPane.refresh();
+                  }
                 })
               ]
             }
