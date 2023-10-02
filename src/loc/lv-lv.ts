@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "2. izdevumu kategorija",
   "HeaderH4": "3. izdevumu kategorija",
   "HeaderBlockQuote": "Izvilkuma citāts",
+  "SameTab": "Tā pati cilne",
+  "NewTab": "Jauna cilne",
   "AlignLeft": "Līdzināt pa kreisi",
   "AlignCenter": "Centrs",
   "AlignRight": "Līdzināt pa labi",

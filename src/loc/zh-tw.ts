@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "標題 2",
   "HeaderH4": "標題 3",
   "HeaderBlockQuote": "拉引號",
+  "SameTab": "相同選項卡",
+  "NewTab": "新標籤",
   "AlignLeft": "向左對齊",
   "AlignCenter": "中心",
   "AlignRight": "向右對齊",

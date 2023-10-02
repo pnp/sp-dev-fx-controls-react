@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "2 antraštė",
   "HeaderH4": "3 antraštė",
   "HeaderBlockQuote": "Dėmesį atkreipianti citata",
+  "SameTab": "同じタブ",
+  "NewTab": "新しいタブ",
   "AlignLeft": "Lygiuoti kairėje",
   "AlignCenter": "Centre",
   "AlignRight": "Lygiuoti dešinėje",

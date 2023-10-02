@@ -83,6 +83,8 @@ define([], () => {
     "HeaderH3": "Overskrift 2",
     "HeaderH4": "Overskrift 3",
     "HeaderBlockQuote": "Sitat",
+    "SameTab": "Samme fane",
+    "NewTab": "Ny fane",
     "AlignLeft": "Juster venstre",
     "AlignCenter": "Midtstill",
     "AlignRight": "Juster høyre",

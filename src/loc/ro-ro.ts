@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Titlu 2",
   "HeaderH4": "Rubrica 3",
   "HeaderBlockQuote": "Trage citat",
+  "SameTab": "Aceeași filă",
+  "NewTab": "Filă nouă",
   "AlignLeft": "Aliniere la stânga",
   "AlignCenter": "Centrul",
   "AlignRight": "Aliniere la dreapta",

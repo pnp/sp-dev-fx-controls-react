@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "見出し 2",
   "HeaderH4": "見出し 3",
   "HeaderBlockQuote": "引用のプル",
+  "SameTab": "同じタブ",
+  "NewTab": "新しいタブ",
   "AlignLeft": "左揃え",
   "AlignCenter": "中央揃え",
   "AlignRight": "右揃え",

@@ -81,6 +81,8 @@ define([], () => {
     HeaderH3: "Título 2",
     HeaderH4: "Título 3",
     HeaderBlockQuote: "Puxar citação",
+    SameTab: "Mesma guia",
+    NewTab: "Nova aba",
     AlignLeft: "Alinhar à esquerda",
     AlignCenter: "Centro",
     AlignRight: "Alinhar à direita",

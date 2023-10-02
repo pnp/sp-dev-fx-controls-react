@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Функция 2",
   "HeaderH4": "Функция 3",
   "HeaderBlockQuote": "Изтегли цитат",
+  "SameTab": "Същият раздел",
+  "NewTab": "Нов прозорец",
   "AlignLeft": "Подравни отляво",
   "AlignCenter": "Център",
   "AlignRight": "Подравни отдясно",

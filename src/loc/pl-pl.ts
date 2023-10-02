@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Dział 2",
   "HeaderH4": "Dział 3",
   "HeaderBlockQuote": "Wyciągnij ofertę",
+  "SameTab": "Ta sama zakładka",
+  "NewTab": "Nowa karta",
   "AlignLeft": "Wyrównaj do lewej",
   "AlignCenter": "Centrum",
   "AlignRight": "Wyrównaj do prawej",

@@ -87,6 +87,8 @@ define([], () => {
     HeaderH3: "Heading 2",
     HeaderH4: "Heading 3",
     HeaderBlockQuote: "Pull quote",
+    SameTab: "Fitxa bera",
+    NewTab: "Fitxa berria",
     AlignLeft: "Align left",
     AlignCenter: "Center",
     AlignRight: "Align right",

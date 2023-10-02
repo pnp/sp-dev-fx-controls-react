@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Τομέας 2",
   "HeaderH4": "Τομέας 3",
   "HeaderBlockQuote": "Ελκυστική φράση",
+  "SameTab": "Ίδια καρτέλα",
+  "NewTab": "Νέα καρτέλα",
   "AlignLeft": "Στοίχιση αριστερά",
   "AlignCenter": "Κέντρο",
   "AlignRight": "Στοίχιση δεξιά",

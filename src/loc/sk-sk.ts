@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Nadpis 2",
   "HeaderH4": "Nadpis 3",
   "HeaderBlockQuote": "Citácia",
+  "SameTab": "Rovnaká karta",
+  "NewTab": "Nová karta",
   "AlignLeft": "Zarovnať doľava",
   "AlignCenter": "Zarovnať do stredu",
   "AlignRight": "Zarovnať doprava",
