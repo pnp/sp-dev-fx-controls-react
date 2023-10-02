@@ -770,9 +770,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     });
   }
 
+  /**
+   *  Get target value on text selection
+   */
   private calculateLinkTargetBasedOnSelectedText = (selectedText: string): string => {
     if (selectedText.includes('_blank')) {
-      return '_blank'; // Open in a new tab for links containing "example"
+      return '_blank'; // Open in a new tab for links containing "_blank"
     } else {
       return '_self'; // Open in the same tab for other links
     }
@@ -931,9 +934,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         const formats = quill.getFormat(range);
 
         // Get the currently selected url
-        const selectedUrl = formats.link ? formats.link : undefined;
-        //const selectedTarget = formats.target ? formats.target : "_self";
-
+        const selectedUrl = formats.link ? formats.link : undefined;        
 
         this.setState({
           selectedText: selectedText,
