@@ -97,6 +97,19 @@
   color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
 }
 
+.toolbarSubmenuCaretLT {
+  display: inline-block;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8px;
+  speak: none;
+  top: 50%;
+  color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
+}
+
+
 .toolbarSubmenuDisplayButton {
   width: 100%;
 }

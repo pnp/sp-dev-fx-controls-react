@@ -407,7 +407,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         <Dropdown
           id="DropDownLinkTarget"
           label='Open link in'
-          onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
+          onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaretLT} iconName="CaretDownSolid8" />}
           selectedKey={this.state.dropdownLinkTarget || '_self'}
           options={this.ddLinkTargetOpts}
           onChange={this.onChangeLinkTarget}
@@ -741,7 +741,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const range = quill.getSelection();
 
     let linkText = this.state.selectedText;
-    let dropdownLinkTarget = '';
+    let dropdownLinkTarget = '_self';
     if (this.state.selectedUrl !== undefined && this.state.selectedText === "") {
       const { text } = this.state;
       const urlStartIndex = text.indexOf(this.state.selectedUrl);
