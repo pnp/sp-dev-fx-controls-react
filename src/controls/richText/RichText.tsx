@@ -219,26 +219,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     }
   }
 
-  // static getDerivedStateFromProps(nextProps: IRichTextProps, nextState: IRichTextState) {
-
-  //   if (!isEqual(nextProps.value, nextState.text)) {
-  //     nextProps.value = nextProps.value;
-  //     return {
-  //       text: nextState.text
-  //     }
-  //   }
-  //   return null;
-  // }
-
-  // public UNSAFE_componentWillReceiveProps(nextProps: IRichTextProps): void {
-  //   if (nextProps.value !== this.state.text) {
-  //     nextProps.value = this.getEditor().root.innerHTML;
-  //     this.setState({
-  //       text: this.getEditor().root.innerHTML
-  //     });
-  //   }
-  // }
-
   /**
    * Returns a handle to the Quill editor
    */
@@ -556,8 +536,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     class TLink extends CusLink {
       static create(value) {
         const node = super.create(value);
-        node.setAttribute('href',value.href);
-        node.setAttribute('target',value.target);
+        node.setAttribute('href', value.href);
+        node.setAttribute('target', value.target);
         return node;
       }
     }
@@ -741,7 +721,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   }
 
   private onChangeLinkTarget = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
-    this.applyFormat("target", item.key);
     this.setState({
       dropdownLinkTarget: item.key.toString()
     })
@@ -762,6 +741,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const range = quill.getSelection();
 
     let linkText = this.state.selectedText;
+    let dropdownLinkTarget = '';
     if (this.state.selectedUrl !== undefined && this.state.selectedText === "") {
       const { text } = this.state;
       const urlStartIndex = text.indexOf(this.state.selectedUrl);
@@ -775,15 +755,27 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       const linkStart = editorText.indexOf(linkText);
       range.index = linkStart;
       range.length = linkText.length;
+
+      dropdownLinkTarget = this.calculateLinkTargetBasedOnSelectedText(text.substring(urlStartIndex, endTextIndex));
     }
+
+
 
     this.setState({
       hideDialog: false,
       insertUrlText: linkText,
       insertUrl: this.state.selectedUrl,
-      dropdownLinkTarget: this.state.dropdownLinkTarget,
+      dropdownLinkTarget: dropdownLinkTarget,
       selectedRange: range
     });
+  }
+
+  private calculateLinkTargetBasedOnSelectedText = (selectedText: string): string => {
+    if (selectedText.includes('_blank')) {
+      return '_blank'; // Open in a new tab for links containing "example"
+    } else {
+      return '_self'; // Open in the same tab for other links
+    }
   }
 
   /**
@@ -861,7 +853,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     this.setState({
       hideDialog: true,
       insertUrl: undefined,
-      insertUrlText: undefined
+      insertUrlText: undefined,
+      dropdownLinkTarget: '_self'
     });
   }
 
