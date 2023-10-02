@@ -934,12 +934,11 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         const formats = quill.getFormat(range);
 
         // Get the currently selected url
-        const selectedUrl = formats.link ? formats.link : undefined;        
+        const selectedUrl = formats.link ? formats.link : undefined;    
 
         this.setState({
           selectedText: selectedText,
           selectedUrl: selectedUrl,
-          //dropdownLinkTarget: selectedTarget,
           formats: formats
         });
 
