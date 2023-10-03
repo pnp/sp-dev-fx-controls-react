@@ -33,6 +33,7 @@ import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { sp } from "@pnp/sp";
+import { ICustomFormatting, ICustomFormattingBodySection } from "./ICustomFormatting";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -102,9 +103,17 @@ export class DynamicForm extends React.Component<
    * Default React component render method
    */
   public render(): JSX.Element {
-    const { fieldCollection, hiddenByFormula, isSaving, validationErrors } = this.state;
+    const { customFormatting, fieldCollection, isSaving } = this.state;
 
-    const fieldOverrides = this.props.fieldOverrides;
+    const bodySections = customFormatting?.body || [];
+    if (bodySections.length > 0) {
+      const specifiedFields: string[] = bodySections.reduce((prev, cur) => {
+        prev.push(...cur.fields);
+        return prev;
+      }, []);
+      const omittedFields = fieldCollection.filter(f => !specifiedFields.includes(f.columnInternalName)).map(f => f.columnInternalName);
+      bodySections[bodySections.length - 1].fields.push(...omittedFields);
+    }
 
     return (
       <div>
@@ -117,33 +126,20 @@ export class DynamicForm extends React.Component<
           </div>
         ) : (
           <div>
-            {fieldCollection.map((v, i) => {
-              if (hiddenByFormula.find(h => h === v.columnInternalName)) {
-                return null;
-              }
-              let validationErrorMessage: string = "";
-              if (validationErrors[v.columnInternalName]) {
-                validationErrorMessage = validationErrors[v.columnInternalName];
-              }
-              if (
-                fieldOverrides &&
-                Object.prototype.hasOwnProperty.call(
-                  fieldOverrides,
-                  v.columnInternalName
-                )
-              ) {
-                v.disabled = v.disabled || isSaving;
-                return fieldOverrides[v.columnInternalName](v);
-              }
-              return (
-                <DynamicField
-                  key={v.columnInternalName}
-                  {...v}
-                  disabled={v.disabled || isSaving}
-                  validationErrorMessage={validationErrorMessage}
-                />
-              );
-            })}
+            {bodySections.length > 0 && bodySections.map((section, i) => (
+              <>
+                <h2 className={styles.sectionTitle}>{section.displayname}</h2>
+                <div className={styles.sectionFormFields}>
+                  {section.fields.map((f, i) => (
+                    <div key={f} className={styles.sectionFormField}>
+                      { this.renderField(fieldCollection.find(fc => fc.columnInternalName === f) as IDynamicFieldProps)}
+                    </div>
+                  ))}
+                </div>
+                { i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
+              </>
+            ))}
+            {bodySections.length === 0 && fieldCollection.map((f, i) => this.renderField(f))}
             {!this.props.disabled && (
               <Stack className={styles.buttons} horizontal tokens={stackTokens}>
                 <PrimaryButton
@@ -186,6 +182,36 @@ export class DynamicForm extends React.Component<
           </DialogFooter>
         </Dialog>
       </div>
+    );
+  }
+
+  private renderField = (field: IDynamicFieldProps): JSX.Element => {
+    const { fieldOverrides } = this.props;
+    const { hiddenByFormula, isSaving, validationErrors } = this.state;
+    if (hiddenByFormula.find(h => h === field.columnInternalName)) {
+      return null;
+    }
+    let validationErrorMessage: string = "";
+    if (validationErrors[field.columnInternalName]) {
+      validationErrorMessage = validationErrors[field.columnInternalName];
+    }
+    if (
+      fieldOverrides &&
+      Object.prototype.hasOwnProperty.call(
+        fieldOverrides,
+        field.columnInternalName
+      )
+    ) {
+      field.disabled = field.disabled || isSaving;
+      return fieldOverrides[field.columnInternalName](field);
+    }
+    return (
+      <DynamicField
+        key={field.columnInternalName}
+        {...field}
+        disabled={field.disabled || isSaving}
+        validationErrorMessage={validationErrorMessage}
+      />
     );
   }
 
@@ -570,10 +596,16 @@ export class DynamicForm extends React.Component<
     let contentTypeId = this.props.contentTypeId;
     let contentTypeName: string;
     try {
+      
+      // Fetch form rendering information from SharePoint
       const listInfo = await this._spService.getListFormRenderInfo(listId);
+      
+      // Fetch additional information about fields from SharePoint
+      // (Number fields for min and max values, and fields with validation)
       const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId);
-
       const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
+
+      // Build a dictionary of validation formulas and messages
       const validationFormulas: Record<string, Pick<ISPField,"ValidationFormula"|"ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
         if (!prev[cur.InternalName] && cur.ValidationFormula) {
           prev[cur.InternalName] = {
@@ -584,6 +616,33 @@ export class DynamicForm extends React.Component<
         return prev;
       }, {});
 
+      // If no content type ID is provided, use the default (first one in the list)
+      if (contentTypeId === undefined || contentTypeId === "") {
+        contentTypeId = Object.keys(listInfo.ContentTypeIdToNameMap)[0];
+      }
+      contentTypeName = listInfo.ContentTypeIdToNameMap[contentTypeId];
+
+      // Build a dictionary of client validation formulas and messages
+      // These are formulas that are added in Edit Form > Edit Columns > Edit Conditional Formula
+      // They are evaluated on the client side, and determine whether a field should be hidden or shown
+      const clientValidationFormulas = listInfo.ClientForms.Edit[contentTypeName].reduce((prev, cur) => {
+        if (cur.ClientValidationFormula) {
+          prev[cur.InternalName] = {
+            ValidationFormula: cur.ClientValidationFormula,
+            ValidationMessage: cur.ClientValidationMessage,
+          };
+        }
+        return prev;
+      }, {} as Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>);
+
+      // Custom Formatting
+      let bodySections: ICustomFormattingBodySection[];
+      if (listInfo.ClientFormCustomFormatter && listInfo.ClientFormCustomFormatter[contentTypeId]) {
+        const customFormatInfo = JSON.parse(listInfo.ClientFormCustomFormatter[contentTypeId]) as ICustomFormatting;
+        bodySections = customFormatInfo.bodyJSONFormatter.sections;
+      }
+
+      // Load SharePoint list item
       const spList = sp.web.lists.getById(listId);
       let item = null;
       let etag: string | undefined = undefined;
@@ -599,21 +658,7 @@ export class DynamicForm extends React.Component<
         }
       }
 
-      if (contentTypeId === undefined || contentTypeId === "") {
-        contentTypeId = Object.keys(listInfo.ContentTypeIdToNameMap)[0];
-      }
-      contentTypeName = listInfo.ContentTypeIdToNameMap[contentTypeId];
-
-      const clientValidationFormulas = listInfo.ClientForms.Edit[contentTypeName].reduce((prev, cur) => {
-        if (cur.ClientValidationFormula) {
-          prev[cur.InternalName] = {
-            ValidationFormula: cur.ClientValidationFormula,
-            ValidationMessage: cur.ClientValidationMessage,
-          };
-        }
-        return prev;
-      }, {} as Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>);
-
+      // Build the field collection
       const tempFields: IDynamicFieldProps[] = [];
       let order: number = 0;
       const hiddenFields =
@@ -817,7 +862,10 @@ export class DynamicForm extends React.Component<
         clientValidationFormulas,
         fieldCollection: tempFields, 
         validationFormulas,
-        etag 
+        etag,
+        customFormatting: {
+          body: bodySections,
+        }
       }, () => this.performValidation(true));
       
     } catch (error) {
