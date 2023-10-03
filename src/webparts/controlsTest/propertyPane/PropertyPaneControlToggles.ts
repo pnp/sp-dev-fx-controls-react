@@ -6,7 +6,7 @@ import {
 } from '@microsoft/sp-property-pane';
 import { IPropertyPaneCustomFieldProps } from '@microsoft/sp-property-pane';
 import { ControlToggles, IControlTogglesProps } from './controls/ControlToggles';
-import { ControlVisibility, ValidControls } from '../IControlsTestWebPartProps';
+import { ControlVisibility } from '../IControlsTestWebPartProps';
 
 export interface IPropertyPaneControlTogglesProps {
     label: string;

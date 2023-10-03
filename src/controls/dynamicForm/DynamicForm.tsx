@@ -1,6 +1,5 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import { SPHttpClient } from "@microsoft/sp-http";
-import { IRenderListDataAsStreamResult, sp } from "@pnp/sp/presets/all";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -11,6 +10,7 @@ import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator"
 import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
 import * as React from "react";
 import { ISPField, IUploadImageResult } from "../../common/SPEntities";
+import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import SPservice from "../../services/SPService";
 import { IFilePickerResult } from "../filePicker";
 import { DynamicField } from "./dynamicField";
@@ -32,6 +32,7 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
+import { sp } from "@pnp/sp";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -43,6 +44,7 @@ export class DynamicForm extends React.Component<
   IDynamicFormState
 > {
   private _spService: SPservice;
+  private _formulaEvaluation: FormulaEvaluation;
   private webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
@@ -71,12 +73,16 @@ export class DynamicForm extends React.Component<
       fieldCollection: [],
       validationFormulas: {},
       clientValidationFormulas: {},
+      validationErrors: {},
+      hiddenByFormula: [],
       isValidationErrorDialogOpen: false,
     };
     // Get SPService Factory
     this._spService = this.props.webAbsoluteUrl
       ? new SPservice(this.props.context, this.props.webAbsoluteUrl)
       : new SPservice(this.props.context);
+    // Formula Validation util
+    this._formulaEvaluation = new FormulaEvaluation(this.props.context);
   }
 
   /**
@@ -96,7 +102,7 @@ export class DynamicForm extends React.Component<
    * Default React component render method
    */
   public render(): JSX.Element {
-    const { fieldCollection, isSaving } = this.state;
+    const { fieldCollection, hiddenByFormula, isSaving, validationErrors } = this.state;
 
     const fieldOverrides = this.props.fieldOverrides;
 
@@ -112,6 +118,13 @@ export class DynamicForm extends React.Component<
         ) : (
           <div>
             {fieldCollection.map((v, i) => {
+              if (hiddenByFormula.find(h => h === v.columnInternalName)) {
+                return null;
+              }
+              let validationErrorMessage: string = "";
+              if (validationErrors[v.columnInternalName]) {
+                validationErrorMessage = validationErrors[v.columnInternalName];
+              }
               if (
                 fieldOverrides &&
                 Object.prototype.hasOwnProperty.call(
@@ -127,6 +140,7 @@ export class DynamicForm extends React.Component<
                   key={v.columnInternalName}
                   {...v}
                   disabled={v.disabled || isSaving}
+                  validationErrorMessage={validationErrorMessage}
                 />
               );
             })}
@@ -215,12 +229,17 @@ export class DynamicForm extends React.Component<
           }
         }
       });
+      const validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true) as Record<string,string>;
+      if (Object.keys(validationErrors).length > 0) {
+        shouldBeReturnBack = true;
+      }
       if (shouldBeReturnBack) {
         this.setState({
           fieldCollection: fields,
           isValidationErrorDialogOpen:
             this.props.validationErrorDialogProps
               ?.showDialogOnValidationError === true,
+          validationErrors
         });
         return;
       }
@@ -416,11 +435,10 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
-    // eslint-disable-line @typescript-eslint/no-explicit-any
-    // try {
     const fieldCol = (this.state.fieldCollection || []).slice();
     const field = fieldCol.filter((element, i) => {
       return element.columnInternalName === internalName;
@@ -462,8 +480,84 @@ export class DynamicForm extends React.Component<
     }
     this.setState({
       fieldCollection: fieldCol,
-    });
+    }, this.performValidation);
   };
+
+  /** Validation callback, used when form first loads (getListInformation) and following onChange */
+  private performValidation = async (skipFieldValueValidation?: boolean): Promise<void> => {
+    const hiddenByFormula = await this.evaluateColumnVisibilityFormulas();
+    let validationErrors = {...this.state.validationErrors};
+    if (!skipFieldValueValidation) validationErrors = await this.evaluateFieldValueFormulas();
+    this.setState({ hiddenByFormula, validationErrors });
+  }
+
+  /** Determines visibility of fields that have show/hide formulas set in Edit Form > Edit Columns > Edit Conditional Formula */
+  private evaluateColumnVisibilityFormulas = async(): Promise<string[]> => {
+    return await this.evaluateFormulas(this.state.clientValidationFormulas, false) as string[];
+  }
+
+  /** Evaluates field validation formulas set in column settings and returns a Record of error messages */
+  private evaluateFieldValueFormulas = async(): Promise<Record<string,string>> => {
+    return await this.evaluateFormulas(this.state.validationFormulas, true, true) as Record<string,string>;
+  }
+
+  /**
+   * Evaluates formulas and returns a Record of error messages or an array of column names that have failed validation
+   * @param formulas A Record / dictionary-like object, where key is internal column name and value is an object with ValidationFormula and ValidationMessage properties
+   * @param returnMessages Determines whether a Record of error messages is returned or an array of column names that have failed validation
+   * @param requireValue Set to true if the formula should only be evaluated when the field has a value
+   * @returns 
+   */
+  private evaluateFormulas = async(
+    formulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>,
+    returnMessages = true,
+    requireValue: boolean = false
+  ): Promise<string[]|Record<string,string>> => {
+    const { fieldCollection } = this.state;
+    const results: Record<string, string> = {};
+    for (let i = 0; i < Object.keys(formulas).length; i++) {
+      const fieldName = Object.keys(formulas)[i];
+      if (formulas[fieldName]) {
+        const field = fieldCollection.find(f => f.columnInternalName === fieldName);
+        if (!field) continue;
+        const formula = formulas[fieldName].ValidationFormula;
+        const message = formulas[fieldName].ValidationMessage;
+        if (!formula) continue;
+        const context = this.getFormValues();
+        if (requireValue && !context[fieldName]) continue;
+        const result = await this._formulaEvaluation.evaluate(formula, context);
+        if (Boolean(result) !== true) {
+          results[fieldName] = message;
+        }
+      }
+    }
+    if (!returnMessages) { return Object.keys(results); }
+    return results;
+  }
+
+  private getFormValues = (): Record<string,unknown> => {
+    const { fieldCollection } = this.state;
+    return fieldCollection.reduce((prev, cur) => {
+      let value: unknown;
+      switch(cur.fieldType) {
+        case "Lookup":
+        case "Choice":
+        case "TaxonomyFieldType":
+          value = cur.newValue?.key;
+          break;
+        case "LookupMulti":
+        case "MultiChoice":
+        case "TaxonomyFieldTypeMulti":
+          value = cur.newValue?.map((v) => v.key);
+          break;
+        default:
+          value = cur.newValue;
+          break;
+      }
+      prev[cur.columnInternalName] = value;
+      return prev;
+    }, {} as Record<string, unknown>);
+  }
 
   private getListInformation = async(): Promise<void> => {
     const {
@@ -718,17 +812,13 @@ export class DynamicForm extends React.Component<
           tempFields.sort((a, b) => a.Order - b.Order);
           }
       }
-
-      // Do formatting and validation parsing here
-      console.log('Validation Formulas', validationFormulas);
-      console.log('Client Side Validation Formulas', clientValidationFormulas);
       
       this.setState({ 
         clientValidationFormulas,
         fieldCollection: tempFields, 
         validationFormulas,
         etag 
-      });
+      }, () => this.performValidation(true));
       
     } catch (error) {
       console.log(`Error get field informations`, error);
@@ -1047,8 +1137,8 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
-  ): Promise<any> => {
-    // eslint-disable-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ): Promise<any> => {
     try {
       const { context } = this.props;
       const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;

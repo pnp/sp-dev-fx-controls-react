@@ -130,7 +130,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
               groupName: strings.ControlSettingsGroupName,
               groupFields: [
                 PropertyPaneTextField('title', {
-                  label: 'Web Part Title',
+                  label: 'Web Part Title'
                 }),
                 PropertyPaneTextField('paginationTotalPages', {
                   label: 'Total pages in pagination'

@@ -37,4 +37,5 @@ export interface IDynamicFieldProps {
   maximumValue?: number;
   minimumValue?: number;
   showAsPercentage?: boolean;
+  validationErrorMessage?: string;
 }

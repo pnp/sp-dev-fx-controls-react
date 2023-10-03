@@ -94,7 +94,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
 
     const labelEl = <label className={(required) ? styles.fieldRequired + ' ' + styles.fieldLabel : styles.fieldLabel}>{labelText}</label>;
-    const errorText = this.getRequiredErrorText();
+    const errorText = this.props.validationErrorMessage || this.getRequiredErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
     const descriptionEl = <text className={styles.fieldDescription}>{description}</text>;
     const hasImage = !!changedValue;
@@ -276,7 +276,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={customNumberErrorMessage} />
+            errorMessage={errorText || customNumberErrorMessage} />
           {descriptionEl}
         </div>;
 
