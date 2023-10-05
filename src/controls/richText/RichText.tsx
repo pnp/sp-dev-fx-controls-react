@@ -377,7 +377,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           containerClassName: 'ms-dialogMainOverride'
         }}>
         <TextField label={strings.AddressFieldLabel}
-          value={this.state.insertUrl !== undefined ? this.state.insertUrl : "https://"}
+          placeholder="https://"
+          value={this.state.insertUrl !== undefined ? this.state.insertUrl : ""}
           onChange={(e, newValue?: string) => {
             this.setState({
               insertUrl: newValue
