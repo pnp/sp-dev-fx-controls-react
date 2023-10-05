@@ -50,6 +50,19 @@ private _onFolderSelect = (folder: IFolder): void => {
 }
 ```
 
+- If you want to pick a folder outside the current site collection (not the one targeted by the SPFx context), you have to specify which site collection owns the folder. You can do this by setting the `siteAbsoluteUrl` property to the URL of the site collection that owns the folder.
+
+```TypeScript
+<FolderPicker context={this.props.context}
+                label='Folder Picker'
+                rootFolder={{
+                  Name: 'Documents',
+                  ServerRelativeUrl: '/sites/anotherSite/Shared Documents'
+                }}
+                siteAbsoluteUrl="https://contoso.sharepoint.com/sites/anotherSite"             
+                onSelect={this._onFolderSelect} />
+```
+
 ## Implementation
 
 The `FolderPicker` control can be configured with the following properties:
@@ -59,6 +72,7 @@ The `FolderPicker` control can be configured with the following properties:
 | context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | label | string | yes | The label for the control. |
 | rootFolder | IFolder | yes | The lowest level folder that can be explored. This can be the root folder of a library. |
+| siteAbsoluteUrl | string | no | The absolute url of the target site. Only required if rootFolder does not belongs to the current site |
 | defaultFolder | IFolder | no | The default folder to be selected or explored. |
 | required | boolean | no | Is selection required. |
 | disabled | boolean | no | Is the control disabled. |

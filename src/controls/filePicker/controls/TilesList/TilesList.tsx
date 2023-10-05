@@ -53,8 +53,14 @@ export class TilesList extends React.Component<ITilesListProps> {
   }
 
   public componentDidUpdate(prevProps: ITilesListProps): void {
-    if (this.props.filePickerResults !== prevProps.filePickerResults) {
+    if ((this.props.filePickerResults !== prevProps.filePickerResults) || (this._pageWidth === -1)) {
       this._listElem.forceUpdate();
+    }
+  }
+
+  public componentDidMount(): void {
+    if (this._pageWidth === -1) {
+      this.forceUpdate();
     }
   }
 
@@ -96,10 +102,9 @@ export class TilesList extends React.Component<ITilesListProps> {
   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
     if (itemIndex === 0) {
       if (surfaceRect.width === 0) {
-        //surfaceRect.width is 0 on load of this component, passing some default values so it renders.
-        this._columnCount = 5;
-        this._columnWidth = 232;
-        this._pageWidth = 232;
+        //surfaceRect.width is 0 on load of this component, so it won't render properly.
+        //setting _pageWidth to -1 will re-render the entire component so surfaceRect.width will be returned correctly
+        this._pageWidth = -1;
       } else {
         this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
         this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);

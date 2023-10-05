@@ -206,7 +206,14 @@ export class DynamicForm extends React.Component<
           } else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
+          } else if(val.fieldType === "Number"){
+            shouldBeReturnBack = this.validateNumberOnSubmit(val);
+          } 
+        } else if(val.fieldType === "Number"){
+          if(val.newValue === null){
+            val.newValue = val.fieldDefaultValue;
           }
+          shouldBeReturnBack = this.validateNumberOnSubmit(val);
         }
       });
       if (shouldBeReturnBack) {
@@ -251,8 +258,8 @@ export class DynamicForm extends React.Component<
           } else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
               __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-              Label: value[0].name,
-              TermGuid: value[0].key,
+              Label: value[0]?.name ?? "",
+              TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
               WssId: "-1",
             };
           } else if (fieldType === "TaxonomyFieldTypeMulti") {
@@ -260,7 +267,7 @@ export class DynamicForm extends React.Component<
               .map((term) => `-1#;${term.name}|${term.key};`)
               .join("#");
           } else if (fieldType === "User") {
-            objects[`${columnInternalName}Id`] = val.newValue;
+            objects[`${columnInternalName}Id`] = val.newValue.length === 0 ? null : val.newValue;
           } else if (fieldType === "Choice") {
             objects[columnInternalName] = val.newValue.key;
           } else if (fieldType === "MultiChoice") {
@@ -269,7 +276,7 @@ export class DynamicForm extends React.Component<
             objects[columnInternalName] = JSON.stringify(val.newValue);
           } else if (fieldType === "UserMulti") {
             objects[`${columnInternalName}Id`] = {
-              results: val.newValue.lenght === 0 ? null : val.newValue,
+              results: val.newValue.length === 0 ? null : val.newValue,
             };
           } else if (fieldType === "Thumbnail") {
             if (additionalData) {
@@ -283,7 +290,8 @@ export class DynamicForm extends React.Component<
             } else {
               objects[columnInternalName] = null;
             }
-          } else {
+          }
+          else {
             objects[columnInternalName] = val.newValue;
           }
         }
@@ -328,10 +336,14 @@ export class DynamicForm extends React.Component<
       else if (
         contentTypeId === undefined ||
         contentTypeId === "" ||
-        !contentTypeId.startsWith("0x0120")
+        !contentTypeId.startsWith("0x0120")||
+        contentTypeId.startsWith("0x01")
       ) {
         // We are adding a new list item
         try {
+          const contentTypeIdField = "ContentTypeId";
+          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(
@@ -347,7 +359,8 @@ export class DynamicForm extends React.Component<
           }
           console.log("Error", error);
         }
-      } else if (contentTypeId.startsWith("0x0120")) {
+      }
+      else if (contentTypeId.startsWith("0x0120")) {
         // We are adding a folder or a Document Set
         try {
           const idField = "ID";
@@ -358,9 +371,9 @@ export class DynamicForm extends React.Component<
           const folderTitle =
             objects[titleField] !== undefined && objects[titleField] !== ""
               ? (objects[titleField] as string).replace(
-                  /["|*|:|<|>|?|/|\\||]/g,
-                  "_"
-                ) // Replace not allowed chars in folder name
+                /["|*|:|<|>|?|/|\\||]/g,
+                "_"
+              ) // Replace not allowed chars in folder name
               : ""; // Empty string will be replaced by SPO with Folder Item ID
           const newFolder = await library.rootFolder.addSubFolderUsingPath(
             folderTitle
@@ -410,6 +423,7 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
@@ -521,6 +535,9 @@ export class DynamicForm extends React.Component<
           let richText = false;
           let dateFormat: DateFormat | undefined;
           let principalType = "";
+          let minValue: number | undefined;
+          let maxValue: number | undefined;
+          let showAsPercentage: boolean | undefined;
           if (item !== null) {
             defaultValue = item[field.EntityPropertyName];
           } else {
@@ -532,6 +549,10 @@ export class DynamicForm extends React.Component<
             });
           } else if (fieldType === "Note") {
             richText = field.RichText;
+          } else if (fieldType === "Number") {
+            minValue = field.MinimumValue;
+            maxValue = field.MaximumValue;
+            showAsPercentage = field.ShowAsPercentage;
           } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
@@ -709,6 +730,9 @@ export class DynamicForm extends React.Component<
             listItemId: listItemId,
             principalType: principalType,
             description: field.Description,
+            minimumValue: minValue,
+            maximumValue: maxValue,
+            showAsPercentage: showAsPercentage,
           });
           tempFields.sort((a, b) => a.Order - b.Order);
         }
@@ -760,6 +784,7 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
     // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
@@ -826,4 +851,20 @@ export class DynamicForm extends React.Component<
 
     return errorMessage;
   };
+
+  private validateNumberOnSubmit = (val:IDynamicFieldProps): boolean => {
+    let shouldBeReturnBack = false;
+    if (val.fieldType === "Number" && val.showAsPercentage) {
+      const minValue = val.minimumValue !== undefined ? val.minimumValue * 100 : undefined;
+      const maxValue = val.maximumValue !== undefined ? val.maximumValue * 100 : undefined;
+      if ((val.newValue < minValue) || (val.newValue > maxValue)) {
+        shouldBeReturnBack = true;
+      }
+    } else if(val.fieldType === "Number" && !val.showAsPercentage){
+      if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
+        shouldBeReturnBack = true;
+      }
+    }
+    return shouldBeReturnBack;
+  }
 }

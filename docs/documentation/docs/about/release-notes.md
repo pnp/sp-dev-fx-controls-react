@@ -1,22 +1,71 @@
 # Releases
 
+## 3.16.0
+
+### New control(s)
+
+- `ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)
+
+### Enhancements
+
+- `FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)
+- `FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)
+- `ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)
+- `FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)
+
+### Fixes
+
+- `AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)
+- `DynamicForm`: fix issue with MultiChoice field [#1510](https://github.com/pnp/sp-dev-fx-controls-react/issues/1510)
+- `Localization`: Update dutch translations [#1635](https://github.com/pnp/sp-dev-fx-controls-react/issues/1635)
+- `TaxonomyPicker`: suggested item contains double termset name [#1597](https://github.com/pnp/sp-dev-fx-controls-react/issues/1597)
+- `DynamicForm`: DynamicForm does not properly handle NULL default values for Taxonomy fields [#1267](https://github.com/pnp/sp-dev-fx-controls-react/issues/1267)
+- `DynamicForm`: New items are always created with the default content type if the list has multiple content types [#1626](https://github.com/pnp/sp-dev-fx-controls-react/pull/1626)
+- `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
+- `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
+- `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514).
+
 ## 3.15.0
+
+### New control(s)
+
+- `TermSetNavigation`: new control TermSetNavigation [#1527](https://github.com/pnp/sp-dev-fx-controls-react/pull/1527)
 
 ### Enhancements
 
 - `FolderExplorer`: show files on folder explorer control [#1502](https://github.com/pnp/sp-dev-fx-controls-react/pull/1502)
 - `DynamicForm`: Fixed typo in property name [#1529](https://github.com/pnp/sp-dev-fx-controls-react/pull/1529)
 - `DynamicForm`: validation error dialog added [#1531](https://github.com/pnp/sp-dev-fx-controls-react/pull/1531/)
+- `DateTimePicker`: Add new property initialPickerDate [#1581](https://github.com/pnp/sp-dev-fx-controls-react/pull/1581)
+- `ModernTaxonomyPicker`: can't find term when UI is in language not supported by term store [#1573](https://github.com/pnp/sp-dev-fx-controls-react/issues/1573)
+- `AdaptiveCardHost`: Add null check for adaptive card elements [#1574](https://github.com/pnp/sp-dev-fx-controls-react/pull/1574)
+- `ControlsTestWebPart`: Updated the ControlsTestWebPart to show the controls filtered by control type [#1547](https://github.com/pnp/sp-dev-fx-controls-react/pull/1547)
+- `fast-serve`: Fast-serve updated to the latest version and serve warnings fixed [#1589](https://github.com/pnp/sp-dev-fx-controls-react/pull/1589)
+- `DynamicForm`: DynamicForm Number min max [#1585](https://github.com/pnp/sp-dev-fx-controls-react/pull/1585)
 
 ### Fixes
 
 - `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
 - `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
 - `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
+- `ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
+- `fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)
+- `FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)
+- `DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)
+- `DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)
+- `ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)
+- `PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)
+- `DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)
+- `DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)
+- `DynamicForm`: controls are shown with error messages even if the values are assigned [#1133](https://github.com/pnp/sp-dev-fx-controls-react/issues/1586)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Guido Zambarda](https://github.com/GuidoZam), [Sharepointalist](https://github.com/sharepointalist).
+Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](https://github.com/andreasomayrat), [Ayoub](https://github.com/ayoubqrt), [Desislav](https://github.com/DMichev), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/patrikhellgren), [Rico van de Ven](https://github.com/RicoNL), [Sergei Sergeev](https://github.com/s-KaiNet), [Sharepointalist](https://github.com/sharepointalist), [Zhephyr](https://github.com/Zhephyr54).
 
 ## 3.14.0
 

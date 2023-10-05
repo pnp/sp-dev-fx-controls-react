@@ -96,7 +96,7 @@ The `FieldCollectionData` control can be configured with the following propertie
 | saveAndAddBtnLabel | string | yes | Label of the save and add button. | |
 | cancelBtnLabel | string | yes | Label of the cancel button. | |
 | fields | ICustomCollectionField[] | yes | The fields to be used for the list of collection data. | |
-| value | string | yes | The collection data value. | |
+| value | any[] | yes | The collection data value. | |
 | enableSorting | boolean | no | Specify if you want to be able to sort the items in the collection. | false |
 | disabled | boolean | no | Specify if the control is disabled. | false |
 | disableItemCreation | boolean | no | Allows you to specify if user can create new items. | false |
@@ -106,6 +106,9 @@ The `FieldCollectionData` control can be configured with the following propertie
 | itemsPerPage | number | no | Allows you to specify the amount of items displayed per page. Paging control is added automatically. | |
 | executeFiltering | (searchFilter: string, item: any) => boolean | no | Allows you to show Search Box and specify own filtering logic. | |
 | panelProps | IPanelProps | no | Allows you to pass in props of the panel such as type and customWidth to control the underlying panel. | |
+| context | BaseComponentContext | no | Needed if **peoplepicker** field type is used | |
+| usePanel | boolean | no | Specify if you want the control to opened in a panel or directly on the page (only useful within webpart) | true | 
+| noDataMessage | string | no | Specify the message when no items are added to the collection ||
 
 Interface `ICustomCollectionField`
 
@@ -116,13 +119,18 @@ Interface `ICustomCollectionField`
 | type | CustomCollectionFieldType | yes | Specifies the type of field to render. |
 | disableEdit | boolean | no | Allows you to specify if a field is disabled for editing. |
 | required | boolean | no | Specify if the field is required. |
-| options | [IDropdownOption[]](https://developer.microsoft.com/en-us/fabric#/components/dropdown) | no | Dropdown options. Only necessary when dropdown type is used. |
+| options | [IDropdownOption[]](https://developer.microsoft.com/en-us/fabric#/components/dropdown) [IComboboxOption[]](https://developer.microsoft.com/en-us/fluentui#/controls/web/combobox) | no | Dropdown options. Only necessary when dropdown or combobox type is used. |
 | onRenderOption | IRenderFunction<ISelectableOption> | no | Dropdown custom options render method. Only for the **dropdown** field type. |
 | placeholder | string | no | Placehoder text which will be used for the input field. If not provided the input title will be used. |
 | defaultValue | any | no | Specify a default value for the input field. |
 | deferredValidationTime | number | no | Field will start to validate after users stop typing for `deferredValidationTime` milliseconds. Default: 200ms. |
 | onGetErrorMessage | (value: any, index: number, crntItem: any): string \| Promise<string> | no | The method is used to get the validation error message and determine whether the input value is valid or not. It provides you the current row index and the item you are currently editing. |
 | onCustomRender | (field: ICustomCollectionField, value: any, onUpdate: (fieldId: string, value: any) => void, item: any, itemUniqueId: string, onCustomFieldValidation: (fieldId: string, errorMessage: string) => void) => JSX.Element | no | This property is only required if you are using the `custom` field type and it can be used to specify the custom rendering of your control in the collection data. |
+| multiSelect | boolean| no | Specifies multiple options can be selected (**combobox**) or mutliple users can be selected (**peoplepicker**) |
+| allowFreeform | boolean | no | Specifies that own options can be entered. Only for **combobox** field type |
+| minimumUsers| number | no | Specifies the minimum number of users to be entered for **peoplepicker** field type |
+| minimumUsersMessage| string | no | Specifies the message to be displayed if minimumUsers are not entered for **peoplepicker** field type |
+| maximumUsers | number | no | Specifies the maximum number of users to be entered for **peoplepicker** field type |
 
 Enum `CustomCollectionFieldType`
 
@@ -132,8 +140,10 @@ Enum `CustomCollectionFieldType`
 | number | Number field |
 | boolean | Checkbox |
 | dropdown | Dropdown field. You will have to specify the `options` property when using this field type |
+| combobox | Combobox field. You wil have to specify the `options` property, optional specify `allowFreeform` and `multiSelect` |
 | fabricIcon | Name of the [Office UI Fabric icon](https://developer.microsoft.com/en-us/fabric#/styles/icons) |
 | url | URL field |
+| peoplepicker | Peoplepicker control |
 | custom | This gives you control over the whole field rendering. Be sure to provide the `onCustomRender` method to render your control in the collection data. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-property-controls/wiki/FieldCollectionData)

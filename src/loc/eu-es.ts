@@ -380,7 +380,10 @@ TermSetNavigationNoTerms: "No terms defined",
   "DynamicFormTermPanelTitle": "Select Term",
   "DynamicFormEnterURLPlaceholder": "Enter a URL",
   "DynamicFormEnterDescriptionPlaceholder": "Alternative text",
-  "DynamicFormDialogValidationErrorTitle": "Validation Error",
-  "DynamicFormDialogValidationErrorMessage": "There are validation errors, please fix them before saving.",
+  "DynamicFormDialogValidationErrorTitle": "Balioztatze-errorea",
+  "DynamicFormDialogValidationErrorMessage": "Balidazio-erroreak daude, konpondu aurretik, mesedez.",
+  "DynamicFormNumberValueMustBeGreaterThan": "Balioak {0} baino handiagoa izan behar du",
+  "DynamicFormNumberValueMustBeBetween": "Balioak {0} eta {1} artean egon behar du",
+  "DynamicFormNumberValueMustBeLowerThan": "Balioak {0} baino txikiagoa izan behar du",
   };
 });
