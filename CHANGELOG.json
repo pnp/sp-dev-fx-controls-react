@@ -10,7 +10,8 @@
           "`FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)",
           "`FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)",
           "`ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)",
-          "`FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)"
+          "`FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)",
+          "`RichText`: Add https:// as placeholder instead of textbox value when adding url [#1651](https://github.com/pnp/sp-dev-fx-controls-react/pull/1656)"
         ],
         "fixes": [
           "`AccessibleAccordion`: fix typo in documentation [#1634](https://github.com/pnp/sp-dev-fx-controls-react/pull/1634)",
@@ -26,6 +27,7 @@
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
+        "[Joakim](https://github.com/daenur76)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
         "[Nils Andresen](https://github.com/nils-a)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
