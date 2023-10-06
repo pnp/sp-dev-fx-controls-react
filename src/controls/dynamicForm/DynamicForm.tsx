@@ -210,7 +210,7 @@ export class DynamicForm extends React.Component<
         } 
         if (val.fieldType === "Number") {
           if (val.showAsPercentage) val.newValue /= 100;
-          if (this.isEmptyNumOrString(val.newValue) && (val.minimumValue != null || val.maximumValue != null)) {
+          if (this.isEmptyNumOrString(val.newValue) && (val.minimumValue !== null || val.maximumValue !== null)) {
             val.newValue = val.fieldDefaultValue = null; 
           }
           if (!this.isEmptyNumOrString(val.newValue) && (isNaN(Number(val.newValue)) || (val.newValue < val.minimumValue) || (val.newValue > val.maximumValue))) {
@@ -345,7 +345,7 @@ export class DynamicForm extends React.Component<
         try {
           const contentTypeIdField = "ContentTypeId";
           //check if item contenttype is passed, then update the object with content type id, else, pass the object 
-          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
+          if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(
@@ -871,8 +871,8 @@ export class DynamicForm extends React.Component<
     return errorMessage;
   };
 
-  private isEmptyNumOrString(value: string | number) {
-    if (value == null) return true;
+  private isEmptyNumOrString(value: string | number): boolean {
+    if (value === null) return true;
     if ((value?.toString().trim().length || 0) === 0) return true;
   }
 }

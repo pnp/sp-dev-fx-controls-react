@@ -146,7 +146,7 @@ import {
 import {
   PeoplePicker,
   PrincipalType
-} from "../../../PeoplePicker";
+} from "../../../controls/peoplepicker";
 import { Placeholder } from "../../../Placeholder";
 import {
   IProgressAction,
