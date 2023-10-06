@@ -1851,7 +1851,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <Pagination
             currentPage={3}
             onChange={(page) => (this._getPage(page))}
-            totalPages={this.props.totalPages || 13}
+            totalPages={this.props.paginationTotalPages || 13}
           //limiter={3}
           // hideFirstPageJump
           //hideLastPageJump

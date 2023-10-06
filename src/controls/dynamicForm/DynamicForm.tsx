@@ -1,5 +1,4 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
-import { SPHttpClient } from "@microsoft/sp-http";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -33,7 +32,10 @@ import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { sp } from "@pnp/sp";
-import { ICustomFormatting, ICustomFormattingBodySection } from "./ICustomFormatting";
+import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
+import { cloneDeep } from "lodash";
+import { IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
+import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -46,14 +48,16 @@ export class DynamicForm extends React.Component<
 > {
   private _spService: SPservice;
   private _formulaEvaluation: FormulaEvaluation;
+  private _customFormatter: CustomFormattingHelper;
+
   private webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
 
   constructor(props: IDynamicFormProps) {
     super(props);
-    // Initialize pnp sp
 
+    // Initialize pnp sp
     if (this.props.webAbsoluteUrl) {
       sp.setup({
         sp: {
@@ -78,12 +82,17 @@ export class DynamicForm extends React.Component<
       hiddenByFormula: [],
       isValidationErrorDialogOpen: false,
     };
+
     // Get SPService Factory
     this._spService = this.props.webAbsoluteUrl
       ? new SPservice(this.props.context, this.props.webAbsoluteUrl)
       : new SPservice(this.props.context);
-    // Formula Validation util
-    this._formulaEvaluation = new FormulaEvaluation(this.props.context);
+
+    // Setup Formula Validation utils
+    this._formulaEvaluation = new FormulaEvaluation(this.props.context, this.props.webAbsoluteUrl);
+
+    // Setup Custom Formatting utils
+    this._customFormatter = new CustomFormattingHelper(this._formulaEvaluation);
   }
 
   /**
@@ -94,8 +103,9 @@ export class DynamicForm extends React.Component<
       .then(() => {
         /* no-op; */
       })
-      .catch(() => {
+      .catch((err) => {
         /* no-op; */
+        console.error(err);
       });
   }
 
@@ -105,6 +115,13 @@ export class DynamicForm extends React.Component<
   public render(): JSX.Element {
     const { customFormatting, fieldCollection, isSaving } = this.state;
 
+    // Custom Formatting - Header
+    let headerContent: JSX.Element;
+    if (customFormatting?.header) {
+      headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true);
+    }
+
+    // Custom Formatting - Body
     const bodySections = customFormatting?.body || [];
     if (bodySections.length > 0) {
       const specifiedFields: string[] = bodySections.reduce((prev, cur) => {
@@ -113,6 +130,12 @@ export class DynamicForm extends React.Component<
       }, []);
       const omittedFields = fieldCollection.filter(f => !specifiedFields.includes(f.columnInternalName)).map(f => f.columnInternalName);
       bodySections[bodySections.length - 1].fields.push(...omittedFields);
+    }
+
+    // Custom Formatting - Footer
+    let footerContent: JSX.Element;
+    if (customFormatting?.footer) {
+      footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true);
     }
 
     return (
@@ -126,20 +149,22 @@ export class DynamicForm extends React.Component<
           </div>
         ) : (
           <div>
+            {headerContent}
             {bodySections.length > 0 && bodySections.map((section, i) => (
               <>
                 <h2 className={styles.sectionTitle}>{section.displayname}</h2>
                 <div className={styles.sectionFormFields}>
                   {section.fields.map((f, i) => (
                     <div key={f} className={styles.sectionFormField}>
-                      { this.renderField(fieldCollection.find(fc => fc.columnInternalName === f) as IDynamicFieldProps)}
+                      {this.renderField(fieldCollection.find(fc => fc.columnInternalName === f) as IDynamicFieldProps)}
                     </div>
                   ))}
                 </div>
-                { i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
+                {i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
               </>
             ))}
             {bodySections.length === 0 && fieldCollection.map((f, i) => this.renderField(f))}
+            {footerContent}
             {!this.props.disabled && (
               <Stack className={styles.buttons} horizontal tokens={stackTokens}>
                 <PrimaryButton
@@ -188,13 +213,19 @@ export class DynamicForm extends React.Component<
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
     const { hiddenByFormula, isSaving, validationErrors } = this.state;
+
+    // If the field is hidden by a formula, don't render it
     if (hiddenByFormula.find(h => h === field.columnInternalName)) {
       return null;
     }
+
+    // If validation error, show error message
     let validationErrorMessage: string = "";
     if (validationErrors[field.columnInternalName]) {
       validationErrorMessage = validationErrors[field.columnInternalName];
     }
+
+    // If field override is provided, use it instead of the DynamicField component
     if (
       fieldOverrides &&
       Object.prototype.hasOwnProperty.call(
@@ -205,6 +236,8 @@ export class DynamicForm extends React.Component<
       field.disabled = field.disabled || isSaving;
       return fieldOverrides[field.columnInternalName](field);
     }
+
+    // Default render
     return (
       <DynamicField
         key={field.columnInternalName}
@@ -215,7 +248,7 @@ export class DynamicForm extends React.Component<
     );
   }
 
-  //trigger when the user submits the form.
+  /** Triggered when the user submits the form. */
   private onSubmitClick = async (): Promise<void> => {
     const {
       listId,
@@ -227,38 +260,51 @@ export class DynamicForm extends React.Component<
     } = this.props;
 
     try {
+
+      /** Set to true to cancel form submission */
       let shouldBeReturnBack = false;
+
       const fields = (this.state.fieldCollection || []).slice();
-      fields.forEach((val) => {
-        if (val.required) {
-          if (val.newValue === null) {
+      fields.forEach((field) => {
+
+        // When a field is required and has no value
+        if (field.required) {
+          if (field.newValue === null) {
             if (
-              val.fieldDefaultValue === null ||
-              val.fieldDefaultValue === "" ||
-              val.fieldDefaultValue.length === 0 ||
-              val.fieldDefaultValue === undefined
+              field.defaultValue === null ||
+              field.defaultValue === "" ||
+              field.defaultValue.length === 0 ||
+              field.defaultValue === undefined
             ) {
-              if (val.fieldType === "DateTime") val.fieldDefaultValue = null;
-              else val.fieldDefaultValue = "";
+              if (field.fieldType === "DateTime") field.defaultValue = null;
+              else field.defaultValue = "";
               shouldBeReturnBack = true;
             }
-          } else if (val.newValue === "") {
-            val.fieldDefaultValue = "";
+          } else if (field.newValue === "") {
+            field.defaultValue = "";
             shouldBeReturnBack = true;
-          } else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
-            val.fieldDefaultValue = null;
-            shouldBeReturnBack = true;
-          }
-        } else if (val.fieldType === "Number") {
-          if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
+          } else if (Array.isArray(field.newValue) && field.newValue.length === 0) {
+            field.defaultValue = null;
             shouldBeReturnBack = true;
           }
         }
+
+        // Check min and max values for number fields
+        if (field.fieldType === "Number") {
+          if ((field.newValue < field.minimumValue) || (field.newValue > field.maximumValue)) {
+            shouldBeReturnBack = true;
+          }
+        }
+
       });
-      const validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true) as Record<string,string>;
+
+      // Perform validation
+      const validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true) as Record<string, string>;
       if (Object.keys(validationErrors).length > 0) {
         shouldBeReturnBack = true;
       }
+
+      // If validation failed, return without saving
       if (shouldBeReturnBack) {
         this.setState({
           fieldCollection: fields,
@@ -274,55 +320,85 @@ export class DynamicForm extends React.Component<
         isSaving: true,
       });
 
+      /** Item values for save / update */
       const objects = {};
+
       for (let i = 0, len = fields.length; i < len; i++) {
-        const val = fields[i];
+        const field = fields[i];
         const {
           fieldType,
           additionalData,
           columnInternalName,
           hiddenFieldName,
-        } = val;
-        if (val.newValue !== null && val.newValue !== undefined) {
-          let value = val.newValue;
+        } = field;
+        if (field.newValue !== null && field.newValue !== undefined) {
+
+          let value = field.newValue;
+          if (["Lookup", "LookupMulti", "User", "UserMulti"].indexOf(fieldType) < 0) {
+            objects[columnInternalName] = value;
+          }
+
+          // Choice fields
+
+          if (fieldType === "Choice") {
+            objects[columnInternalName] = field.newValue.key;
+          }
+          if (fieldType === "MultiChoice") {
+            objects[columnInternalName] = { results: field.newValue };
+          }
+
+          // Lookup fields
+
           if (fieldType === "Lookup") {
             if (value && value.length > 0) {
               objects[`${columnInternalName}Id`] = value[0].key;
             } else {
               objects[`${columnInternalName}Id`] = null;
             }
-          } else if (fieldType === "LookupMulti") {
+          }
+          if (fieldType === "LookupMulti") {
             value = [];
-            val.newValue.forEach((element) => {
+            field.newValue.forEach((element) => {
               value.push(element.key);
             });
             objects[`${columnInternalName}Id`] = {
               results: value.length === 0 ? null : value,
             };
-          } else if (fieldType === "TaxonomyFieldType") {
+          }
+
+          // User fields
+
+          if (fieldType === "User") {
+            objects[`${columnInternalName}Id`] = field.newValue.length === 0 ? null : field.newValue;
+          }
+          if (fieldType === "UserMulti") {
+            objects[`${columnInternalName}Id`] = {
+              results: field.newValue.length === 0 ? null : field.newValue,
+            };
+          }
+
+          // Taxonomy / Managed Metadata fields
+
+          if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
               __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
               Label: value[0].name,
               TermGuid: value[0].key,
               WssId: "-1",
             };
-          } else if (fieldType === "TaxonomyFieldTypeMulti") {
-            objects[hiddenFieldName] = val.newValue
+          }
+          if (fieldType === "TaxonomyFieldTypeMulti") {
+            objects[hiddenFieldName] = field.newValue
               .map((term) => `-1#;${term.name}|${term.key};`)
               .join("#");
-          } else if (fieldType === "User") {
-            objects[`${columnInternalName}Id`] = val.newValue.length === 0 ? null : val.newValue;
-          } else if (fieldType === "Choice") {
-            objects[columnInternalName] = val.newValue.key;
-          } else if (fieldType === "MultiChoice") {
-            objects[columnInternalName] = { results: val.newValue };
-          } else if (fieldType === "Location") {
-            objects[columnInternalName] = JSON.stringify(val.newValue);
-          } else if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = {
-              results: val.newValue.length === 0 ? null : val.newValue,
-            };
-          } else if (fieldType === "Thumbnail") {
+          }
+
+          // Other fields
+
+          if (fieldType === "Location") {
+            objects[columnInternalName] = JSON.stringify(field.newValue);
+          }
+          if (fieldType === "Thumbnail") {
             if (additionalData) {
               const uploadedImage = await this.uploadImage(additionalData);
               objects[columnInternalName] = JSON.stringify({
@@ -334,9 +410,7 @@ export class DynamicForm extends React.Component<
             } else {
               objects[columnInternalName] = null;
             }
-          } else {
-            objects[columnInternalName] = val.newValue;
-          }
+          } 
         }
       }
 
@@ -375,6 +449,7 @@ export class DynamicForm extends React.Component<
           console.log("Error", error);
         }
       }
+
       // Otherwise, depending on the content type ID of the item, if any, we need to behave accordingly
       else if (
         contentTypeId === undefined ||
@@ -458,19 +533,44 @@ export class DynamicForm extends React.Component<
     }
   };
 
-  // trigger when the user change any value in the form
+  /**
+   * Triggered when the user makes any field value change in the form
+   */
   private onChange = async (
     internalName: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
-    const fieldCol = (this.state.fieldCollection || []).slice();
+
+    const fieldCol = cloneDeep(this.state.fieldCollection || []);
     const field = fieldCol.filter((element, i) => {
       return element.columnInternalName === internalName;
     })[0];
+
+    // Init new value(s)
     field.newValue = newValue;
+    field.stringValue = newValue.toString();
     field.additionalData = additionalData;
+    field.subPropertyValues = {};
+
+    // Store string values for various field types
+
+    if (field.fieldType === "Choice") {
+      field.stringValue = newValue.text;
+    }
+    if (field.fieldType === "MultiChoice") {
+      field.stringValue = newValue.join(';#');
+    }
+    if (field.fieldType === "Lookup" || field.fieldType === "LookupMulti") {
+      field.stringValue = newValue.map(nv => nv.key + ';#' + nv.name).join(';#');
+    }
+    if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
+      field.stringValue = newValue.map(nv => nv.name).join(';');
+    }
+
+    // Capture additional property data for User fields
+
     if (field.fieldType === "User" && newValue.length !== 0) {
       if (
         newValue[0].id === undefined ||
@@ -482,11 +582,19 @@ export class DynamicForm extends React.Component<
         }
         const result = await sp.web.ensureUser(user);
         field.newValue = result.data.Id; // eslint-disable-line require-atomic-updates
+        field.stringValue = user;
+        field.subPropertyValues = {
+          id: result.data.Id,
+          title: result.data.Title,
+          email: result.data.Email,
+        };
       } else {
         field.newValue = newValue[0].id;
       }
-    } else if (field.fieldType === "UserMulti" && newValue.length !== 0) {
+    }
+    if (field.fieldType === "UserMulti" && newValue.length !== 0) {
       field.newValue = [];
+      const emails: string[] = [];
       for (let index = 0; index < newValue.length; index++) {
         const element = newValue[index];
         if (
@@ -499,32 +607,35 @@ export class DynamicForm extends React.Component<
           }
           const result = await sp.web.ensureUser(user);
           field.newValue.push(result.data.Id);
+          emails.push(user);
         } else {
           field.newValue.push(element.id);
         }
       }
+      field.stringValue = emails.join(";");
     }
+
     this.setState({
       fieldCollection: fieldCol,
     }, this.performValidation);
   };
 
   /** Validation callback, used when form first loads (getListInformation) and following onChange */
-  private performValidation = async (skipFieldValueValidation?: boolean): Promise<void> => {
-    const hiddenByFormula = await this.evaluateColumnVisibilityFormulas();
-    let validationErrors = {...this.state.validationErrors};
-    if (!skipFieldValueValidation) validationErrors = await this.evaluateFieldValueFormulas();
+  private performValidation = (skipFieldValueValidation?: boolean): void => {
+    const hiddenByFormula = this.evaluateColumnVisibilityFormulas();
+    let validationErrors = { ...this.state.validationErrors };
+    if (!skipFieldValueValidation) validationErrors = this.evaluateFieldValueFormulas();
     this.setState({ hiddenByFormula, validationErrors });
   }
 
   /** Determines visibility of fields that have show/hide formulas set in Edit Form > Edit Columns > Edit Conditional Formula */
-  private evaluateColumnVisibilityFormulas = async(): Promise<string[]> => {
-    return await this.evaluateFormulas(this.state.clientValidationFormulas, false) as string[];
+  private evaluateColumnVisibilityFormulas = (): string[] => {
+    return this.evaluateFormulas(this.state.clientValidationFormulas, false) as string[];
   }
 
   /** Evaluates field validation formulas set in column settings and returns a Record of error messages */
-  private evaluateFieldValueFormulas = async(): Promise<Record<string,string>> => {
-    return await this.evaluateFormulas(this.state.validationFormulas, true, true) as Record<string,string>;
+  private evaluateFieldValueFormulas = (): Record<string, string> => {
+    return this.evaluateFormulas(this.state.validationFormulas, true, true) as Record<string, string>;
   }
 
   /**
@@ -534,11 +645,11 @@ export class DynamicForm extends React.Component<
    * @param requireValue Set to true if the formula should only be evaluated when the field has a value
    * @returns 
    */
-  private evaluateFormulas = async(
+  private evaluateFormulas = (
     formulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>,
     returnMessages = true,
     requireValue: boolean = false
-  ): Promise<string[]|Record<string,string>> => {
+  ): string[] | Record<string, string> => {
     const { fieldCollection } = this.state;
     const results: Record<string, string> = {};
     for (let i = 0; i < Object.keys(formulas).length; i++) {
@@ -549,9 +660,9 @@ export class DynamicForm extends React.Component<
         const formula = formulas[fieldName].ValidationFormula;
         const message = formulas[fieldName].ValidationMessage;
         if (!formula) continue;
-        const context = this.getFormValues();
+        const context = this.getFormValuesForValidation();
         if (requireValue && !context[fieldName]) continue;
-        const result = await this._formulaEvaluation.evaluate(formula, context);
+        const result = this._formulaEvaluation.evaluate(formula, context);
         if (Boolean(result) !== true) {
           results[fieldName] = message;
         }
@@ -561,31 +672,55 @@ export class DynamicForm extends React.Component<
     return results;
   }
 
-  private getFormValues = (): Record<string,unknown> => {
-    const { fieldCollection } = this.state;
+  /**
+   * Used for validation. Returns a Record of field values, where key is internal column name and value is the field value. 
+   * Expands certain properties and stores many of them as primitives (strings, numbers or bools) so the expression evaluator
+   * can process them. For example: a User column named Person will have values stored as Person, Person.email, Person.title etc.
+   * This is so the expression evaluator can process expressions like '=[$Person.title] == "Contoso Employee 1138"' 
+   * @param fieldCollection Optional. Could be used to compare field values in state with previous state.
+   * @returns 
+   */
+  private getFormValuesForValidation = (fieldCollection?: IDynamicFieldProps[]): Record<string, unknown> => {
+    const { fieldCollection: fieldColFromState } = this.state;
+    if (!fieldCollection) fieldCollection = fieldColFromState;
     return fieldCollection.reduce((prev, cur) => {
       let value: unknown;
-      switch(cur.fieldType) {
+      switch (cur.fieldType) {
         case "Lookup":
         case "Choice":
         case "TaxonomyFieldType":
-          value = cur.newValue?.key;
-          break;
         case "LookupMulti":
         case "MultiChoice":
         case "TaxonomyFieldTypeMulti":
-          value = cur.newValue?.map((v) => v.key);
+        case "User":
+        case "UserMulti":
+          value = cur.stringValue;
+          break;
+        case "Currency":
+        case "Number":
+          if (cur.newValue !== null) value = Number(cur.newValue);
+          break;
+        case "URL":
+          value = cur.newValue ? cur.newValue.Url : null;
           break;
         default:
           value = cur.newValue;
           break;
       }
       prev[cur.columnInternalName] = value;
+      if (cur.subPropertyValues) {
+        Object.keys(cur.subPropertyValues).forEach((key) => {
+          prev[`${cur.columnInternalName}.${key}`] = cur.subPropertyValues[key];
+        });
+      }
       return prev;
     }, {} as Record<string, unknown>);
   }
 
-  private getListInformation = async(): Promise<void> => {
+  /**
+   * Invoked when component first mounts, loads information about the SharePoint list, fields and list item
+   */
+  private getListInformation = async (): Promise<void> => {
     const {
       listId,
       listItemId,
@@ -594,19 +729,19 @@ export class DynamicForm extends React.Component<
       onListItemLoaded,
     } = this.props;
     let contentTypeId = this.props.contentTypeId;
-    let contentTypeName: string;
-    try {
-      
+    // let contentTypeName: string;
+    // try {
+
       // Fetch form rendering information from SharePoint
       const listInfo = await this._spService.getListFormRenderInfo(listId);
-      
+
       // Fetch additional information about fields from SharePoint
       // (Number fields for min and max values, and fields with validation)
       const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId);
       const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
-      const validationFormulas: Record<string, Pick<ISPField,"ValidationFormula"|"ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
+      const validationFormulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
         if (!prev[cur.InternalName] && cur.ValidationFormula) {
           prev[cur.InternalName] = {
             ValidationFormula: cur.ValidationFormula,
@@ -620,7 +755,7 @@ export class DynamicForm extends React.Component<
       if (contentTypeId === undefined || contentTypeId === "") {
         contentTypeId = Object.keys(listInfo.ContentTypeIdToNameMap)[0];
       }
-      contentTypeName = listInfo.ContentTypeIdToNameMap[contentTypeId];
+      const contentTypeName: string = listInfo.ContentTypeIdToNameMap[contentTypeId];
 
       // Build a dictionary of client validation formulas and messages
       // These are formulas that are added in Edit Form > Edit Columns > Edit Conditional Formula
@@ -636,10 +771,13 @@ export class DynamicForm extends React.Component<
       }, {} as Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>);
 
       // Custom Formatting
+      let headerJSON: ICustomFormattingNode, footerJSON: ICustomFormattingNode;
       let bodySections: ICustomFormattingBodySection[];
       if (listInfo.ClientFormCustomFormatter && listInfo.ClientFormCustomFormatter[contentTypeId]) {
         const customFormatInfo = JSON.parse(listInfo.ClientFormCustomFormatter[contentTypeId]) as ICustomFormatting;
         bodySections = customFormatInfo.bodyJSONFormatter.sections;
+        headerJSON = customFormatInfo.headerJSONFormatter;
+        footerJSON = customFormatInfo.footerJSONFormatter;
       }
 
       // Load SharePoint list item
@@ -659,493 +797,293 @@ export class DynamicForm extends React.Component<
       }
 
       // Build the field collection
-      const tempFields: IDynamicFieldProps[] = [];
-      let order: number = 0;
-      const hiddenFields =
-        this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
-      let defaultDayOfWeek: number = 0;
+      const tempFields: IDynamicFieldProps[] = await this.buildFieldCollection(
+        listInfo,
+        contentTypeName,
+        item,
+        numberFields,
+        listId,
+        listItemId,
+        disabledFields
+      );
 
-      for (let i = 0, len = listInfo.ClientForms.Edit[contentTypeName].length; i < len; i++) {
-        const field = listInfo.ClientForms.Edit[contentTypeName][i];
-
-        // Handle only fields that are not marked as hidden
-        if (hiddenFields.indexOf(field.InternalName) < 0) {
-          order++;
-          let hiddenName = "";
-          let termSetId = "";
-          let anchorId = "";
-          let lookupListId = "";
-          let lookupField = "";
-          const choices: IDropdownOption[] = [];
-          let defaultValue = null;
-          const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-          let richText = false;
-          let dateFormat: DateFormat | undefined;
-          let principalType = "";
-          let minValue: number | undefined;
-          let maxValue: number | undefined;
-          let showAsPercentage: boolean | undefined;
-          if (item !== null) {
-            defaultValue = item[field.InternalName];
-          } else {
-            defaultValue = field.DefaultValue;
-          }
-
-          if (field.FieldType === "Choice" || field.FieldType === "MultiChoice") {
-            field.Choices.forEach((element) => {
-              choices.push({ key: element, text: element });
-            });
-          } else if (field.FieldType === "Note") {
-            richText = field.RichText;
-          } else if (field.FieldType === "Number" || field.FieldType === "Currency") {
-            const numberField = numberFields.find(f => f.InternalName === field.InternalName);
-            if (numberField) {
-              minValue = numberField.MinimumValue;
-              maxValue = numberField.MaximumValue;
-            }
-            showAsPercentage = field.ShowAsPercentage;
-          } else if (field.FieldType === "Lookup" || field.FieldType === "MultiLookup") {
-            lookupListId = field.LookupListId;
-            lookupField = field.LookupFieldName;
-            if (item !== null) {
-              defaultValue = await this._spService.getLookupValues(
-                listId,
-                listItemId,
-                field.InternalName,
-                lookupField,
-                this.webURL
-              );
-            } else {
-              defaultValue = [];
-            }
-          } else if (field.FieldType === "TaxonomyFieldTypeMulti") {
-            hiddenName = field.HiddenListInternalName;
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              item[field.InternalName].forEach((element) => {
-                selectedTags.push({
-                  key: element.TermGuid,
-                  name: element.Label,
-                });
-              });
-
-              defaultValue = selectedTags;
-            } else {
-              if (defaultValue !== null && defaultValue !== "") {
-                defaultValue.split(/#|;/).forEach((element) => {
-                  if (element.indexOf("|") !== -1)
-                    selectedTags.push({
-                      key: element.split("|")[1],
-                      name: element.split("|")[0],
-                    });
-                });
-
-                defaultValue = selectedTags;
-              }
-            }
-            if (defaultValue === "") defaultValue = null;
-          } else if (field.FieldType === "TaxonomyFieldType") {
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              const response =
-                await this._spService.getSingleManagedMetadataLabel(
-                  listId,
-                  listItemId,
-                  field.InternalName
-                );
-              if (response) {
-                selectedTags.push({
-                  key: response.TermID,
-                  name: response.Label,
-                });
-                defaultValue = selectedTags;
-              }
-            } else {
-              if (defaultValue !== "") {
-                selectedTags.push({
-                  key: defaultValue.split("|")[1],
-                  name: defaultValue.split("|")[0].split("#")[1],
-                });
-                defaultValue = selectedTags;
-              }
-            }
-            if (defaultValue === "") defaultValue = null;
-          } else if (field.FieldType === "DateTime") {
-            if (item !== null && item[field.InternalName]) {
-              defaultValue = new Date(item[field.InternalName]);
-            } else if (defaultValue === "[today]") {
-              defaultValue = new Date();
-            }
-
-            dateFormat = field.DateFormat || "DateOnly";
-            defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
-          } else if (field.FieldType === "UserMulti") {
-            if (item !== null) {
-              defaultValue = this._spService.getUsersUPNFromFieldValue(
-                listId,
-                listItemId,
-                field.InternalName,
-                this.webURL
-              );
-            } else {
-              defaultValue = [];
-            }
-            principalType = field.PrincipalAccountType;
-          } else if (field.FieldType === "Thumbnail") {
-            if (defaultValue) {
-              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
-            }
-          } else if (field.FieldType === "User") {
-            if (item !== null) {
-              const userEmails: string[] = [];
-              userEmails.push(
-                (await this._spService.getUserUPNFromFieldValue(
-                  listId,
-                  listItemId,
-                  field.InternalName,
-                  this.webURL
-                )) + ""
-              );
-              defaultValue = userEmails;
-            } else {
-              defaultValue = [];
-            }
-            principalType = field.PrincipalAccountType;
-          } else if (field.FieldType === "Location") {
-            defaultValue = JSON.parse(defaultValue);
-          } else if (field.FieldType === "Boolean") {
-            defaultValue = Boolean(Number(defaultValue));
-          }
-
-          tempFields.push({
-            newValue: null,
-            fieldTermSetId: termSetId,
-            fieldAnchorId: anchorId,
-            options: choices,
-            lookupListID: lookupListId,
-            lookupField: lookupField,
-            changedValue: defaultValue,
-            fieldType: field.FieldType,
-            fieldTitle: field.Title,
-            fieldDefaultValue: defaultValue,
-            context: this.props.context,
-            disabled:
-              this.props.disabled ||
-              (disabledFields &&
-                disabledFields.indexOf(field.InternalName) > -1),
-            listId: this.props.listId,
-            columnInternalName: field.InternalName,
-            label: field.Title,
-            onChanged: this.onChange,
-            required: field.Required,
-            hiddenFieldName: hiddenName,
-            Order: order,
-            isRichText: richText,
-            dateFormat: dateFormat,
-            firstDayOfWeek: defaultDayOfWeek,
-            listItemId: listItemId,
-            principalType: principalType,
-            description: field.Description,
-            minimumValue: minValue,
-            maximumValue: maxValue,
-            showAsPercentage: showAsPercentage,
-          });
-
-          // This may not be necessary now using RenderListDataAsStream
-          tempFields.sort((a, b) => a.Order - b.Order);
-          }
-      }
-      
-      this.setState({ 
+      this.setState({
         clientValidationFormulas,
-        fieldCollection: tempFields, 
+        fieldCollection: tempFields,
         validationFormulas,
         etag,
         customFormatting: {
+          header: headerJSON,
           body: bodySections,
+          footer: footerJSON
         }
       }, () => this.performValidation(true));
-      
-    } catch (error) {
-      console.log(`Error get field informations`, error);
-      return null;
-    }
+
+    // } catch (error) {
+    //   console.log(`Error get field informations`, error);
+    //   return null;
+    // }
   }
 
-  //getting all the fields information as part of get ready process
-  private getFieldInformations = async (): Promise<void> => {
-    const {
-      listId,
-      listItemId,
-      disabledFields,
-      respectETag,
-      onListItemLoaded,
-    } = this.props;
-    let contentTypeId = this.props.contentTypeId;
-    try {
-      const spList = await sp.web.lists.getById(listId);
-      let item = null;
-      let etag: string | undefined = undefined;
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
-        item = await spList.items.getById(listItemId).get();
+  /**
+   * Builds a collection of fields to be rendered in the form
+   * @param listInfo Data returned by RenderListDataAsStream with RenderOptions = 64 (ClientFormSchema)
+   * @param contentTypeName SharePoint List Content Type
+   * @param item SharePoint List Item
+   * @param numberFields Additional information about Number fields (min and max values)
+   * @param listId SharePoint List ID
+   * @param listItemId SharePoint List Item ID
+   * @param disabledFields Fields that should be disabled due to configuration
+   * @returns 
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[]): Promise<IDynamicFieldProps[]> {
+    const tempFields: IDynamicFieldProps[] = [];
+    let order: number = 0;
+    const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+    let defaultDayOfWeek: number = 0;
 
-        if (onListItemLoaded) {
-          await onListItemLoaded(item);
+    for (let i = 0, len = listInfo.ClientForms.Edit[contentTypeName].length; i < len; i++) {
+      const field = listInfo.ClientForms.Edit[contentTypeName][i];
+
+      // Process fields that are not marked as hidden
+      if (hiddenFields.indexOf(field.InternalName) < 0) {
+        order++;
+        let hiddenName = "";
+        let termSetId = "";
+        let anchorId = "";
+        let lookupListId = "";
+        let lookupField = "";
+        const choices: IDropdownOption[] = [];
+        let defaultValue = null;
+        let value = undefined;
+        let stringValue = null;
+        let richText = false;
+        let dateFormat: DateFormat | undefined;
+        let principalType = "";
+        let minValue: number | undefined;
+        let maxValue: number | undefined;
+        let showAsPercentage: boolean | undefined;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const selectedTags: any = [];
+
+        // If a SharePoint Item was loaded, get the field value from it
+        if (item !== null && item[field.InternalName]) {
+          value = item[field.InternalName];
+          stringValue = value.toString();
+        } else {
+          defaultValue = field.DefaultValue;
         }
 
-        if (respectETag !== false) {
-          etag = item["odata.etag"];
+        // Store choices for Choice fields
+        if (field.FieldType === "Choice") {
+          field.Choices.forEach((element) => {
+            choices.push({ key: element, text: element });
+          });
         }
-      }
+        if (field.FieldType === "MultiChoice") {
+          field.MultiChoices.forEach((element) => {
+            choices.push({ key: element, text: element });
+          });
+        }
 
-      if (contentTypeId === undefined || contentTypeId === "") {
-        const defaultContentType = await spList.contentTypes
-          .select("Id", "Name")
-          .get();
-        contentTypeId = defaultContentType[0].Id.StringValue;
-      }
-      const listFields = await this.getFormFields(
-        listId,
-        contentTypeId,
-        this.webURL
-      );
-      const tempFields: IDynamicFieldProps[] = [];
-      let order: number = 0;
-      const responseValue = listFields.value;
-      const hiddenFields =
-        this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
-      let defaultDayOfWeek: number = 0;
-      for (let i = 0, len = responseValue.length; i < len; i++) {
-        const field = responseValue[i];
-
-        // Handle only fields that are not marked as hidden
-        if (hiddenFields.indexOf(field.EntityPropertyName) < 0) {
-          order++;
-          const fieldType = field.TypeAsString;
-          field.order = order;
-          let hiddenName = "";
-          let termSetId = "";
-          let anchorId = "";
-          let lookupListId = "";
-          let lookupField = "";
-          const choices: IDropdownOption[] = [];
-          let defaultValue = null;
-          const selectedTags: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-          let richText = false;
-          let dateFormat: DateFormat | undefined;
-          let principalType = "";
-          let minValue: number | undefined;
-          let maxValue: number | undefined;
-          let showAsPercentage: boolean | undefined;
-          if (item !== null) {
-            defaultValue = item[field.EntityPropertyName];
-          } else {
-            defaultValue = field.DefaultValue;
+        // Setup Note, Number and Currency fields
+        if (field.FieldType === "Note") {
+          richText = field.RichText;
+        }
+        if (field.FieldType === "Number" || field.FieldType === "Currency") {
+          const numberField = numberFields.find(f => f.InternalName === field.InternalName);
+          if (numberField) {
+            minValue = numberField.MinimumValue;
+            maxValue = numberField.MaximumValue;
           }
-          if (fieldType === "Choice" || fieldType === "MultiChoice") {
-            field.Choices.forEach((element) => {
-              choices.push({ key: element, text: element });
-            });
-          } else if (fieldType === "Note") {
-            richText = field.RichText;
-          } else if (fieldType === "Number") {
-            minValue = field.MinimumValue;
-            maxValue = field.MaximumValue;
-            showAsPercentage = field.ShowAsPercentage;
-          } else if (fieldType === "Lookup") {
-            lookupListId = field.LookupList;
-            lookupField = field.LookupField;
-            if (item !== null) {
-              defaultValue = await this._spService.getLookupValue(
-                listId,
-                listItemId,
-                field.EntityPropertyName,
-                lookupField,
-                this.webURL
-              );
-            } else {
-              defaultValue = [];
-            }
-          } else if (fieldType === "LookupMulti") {
-            lookupListId = field.LookupList;
-            lookupField = field.LookupField;
-            if (item !== null) {
-              defaultValue = await this._spService.getLookupValues(
-                listId,
-                listItemId,
-                field.EntityPropertyName,
-                lookupField,
-                this.webURL
-              );
-            } else {
-              defaultValue = [];
-            }
-          } else if (fieldType === "TaxonomyFieldTypeMulti") {
-            const response = await this._spService.getTaxonomyFieldInternalName(
-              this.props.listId,
-              field.TextField,
+          showAsPercentage = field.ShowAsPercentage;
+        }
+
+        // Setup Lookup fields
+        if (field.FieldType === "Lookup" || field.FieldType === "LookupMulti") {
+          lookupListId = field.LookupListId;
+          lookupField = field.LookupFieldName;
+          if (item !== null) {
+            value = await this._spService.getLookupValues(
+              listId,
+              listItemId,
+              field.InternalName,
+              lookupField,
               this.webURL
             );
-            hiddenName = response.value;
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              item[field.InternalName].forEach((element) => {
-                selectedTags.push({
-                  key: element.TermGuid,
-                  name: element.Label,
-                });
-              });
+            stringValue = value.map(dv => dv.key + ';#' + dv.name).join(';#');
+          } else {
+            value = [];
+          }
+        }
 
-              defaultValue = selectedTags;
-            } else {
-              if (defaultValue !== null && defaultValue !== "") {
-                defaultValue.split(/#|;/).forEach((element) => {
-                  if (element.indexOf("|") !== -1)
-                    selectedTags.push({
-                      key: element.split("|")[1],
-                      name: element.split("|")[0],
-                    });
-                });
-
-                defaultValue = selectedTags;
-              }
-            }
-            if (defaultValue === "") defaultValue = null;
-          } else if (fieldType === "TaxonomyFieldType") {
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              const response =
-                await this._spService.getSingleManagedMetadataLabel(
-                  listId,
-                  listItemId,
-                  field.InternalName
-                );
-              if (response) {
-                selectedTags.push({
-                  key: response.TermID,
-                  name: response.Label,
-                });
-                defaultValue = selectedTags;
-              }
-            } else {
-              if (defaultValue !== "") {
-                selectedTags.push({
-                  key: defaultValue.split("|")[1],
-                  name: defaultValue.split("|")[0].split("#")[1],
-                });
-                defaultValue = selectedTags;
-              }
-            }
-            if (defaultValue === "") defaultValue = null;
-          } else if (fieldType === "DateTime") {
-            if (item !== null && item[field.InternalName])
-              defaultValue = new Date(item[field.InternalName]);
-            else if (defaultValue === "[today]") {
-              defaultValue = new Date();
-            }
-
-            const schemaXml = field.SchemaXml;
-            const dateFormatRegEx = /\s+Format="([^"]+)"/gim.exec(schemaXml);
-            dateFormat =
-              dateFormatRegEx && dateFormatRegEx.length
-                ? (dateFormatRegEx[1] as DateFormat)
-                : "DateOnly";
-            defaultDayOfWeek = (await this._spService.getRegionalWebSettings())
-              .FirstDayOfWeek;
-          } else if (fieldType === "UserMulti") {
-            if (item !== null)
-              defaultValue = await this._spService.getUsersUPNFromFieldValue(
+        // Setup User fields
+        if (field.FieldType === "User") {
+          if (item !== null) {
+            const userEmails: string[] = [];
+            userEmails.push(
+              (await this._spService.getUserUPNFromFieldValue(
                 listId,
                 listItemId,
                 field.InternalName,
                 this.webURL
-              );
-            else {
-              defaultValue = [];
-            }
-            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-            principalType = principalType.substring(
-              0,
-              principalType.indexOf('"')
+              )) + ""
             );
-          } else if (fieldType === "Thumbnail") {
-            if (defaultValue) {
-              defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
-            }
-          } else if (fieldType === "User") {
-            if (item !== null) {
-              const userEmails: string[] = [];
-              userEmails.push(
-                (await this._spService.getUserUPNFromFieldValue(
-                  listId,
-                  listItemId,
-                  field.InternalName,
-                  this.webURL
-                )) + ""
-              );
-              defaultValue = userEmails;
-            } else {
-              defaultValue = [];
-            }
-            principalType = field.SchemaXml.split('UserSelectionMode="')[1];
-            principalType = principalType.substring(
-              0,
-              principalType.indexOf('"')
+            value = userEmails;
+            stringValue = userEmails.map(dv => dv.split('/').pop()).join(';');
+          } else {
+            value = [];
+          }
+          principalType = field.PrincipalAccountType;
+        }
+        if (field.FieldType === "UserMulti") {
+          if (item !== null) {
+            value = this._spService.getUsersUPNFromFieldValue(
+              listId,
+              listItemId,
+              field.InternalName,
+              this.webURL
             );
-          } else if (fieldType === "Location") {
-            defaultValue = JSON.parse(defaultValue);
-          } else if (fieldType === "Boolean") {
-            defaultValue = Boolean(Number(defaultValue));
+            stringValue = value.map(dv => dv.split('/').pop()).join(';');
+          } else {
+            value = [];
+          }
+          principalType = field.PrincipalAccountType;
+        }
+
+        // Setup Taxonomy / Metadata fields
+        if (field.FieldType === "TaxonomyFieldType") {
+          termSetId = field.TermSetId;
+          anchorId = field.AnchorId;
+          if (item !== null) {
+            const response = await this._spService.getSingleManagedMetadataLabel(
+              listId,
+              listItemId,
+              field.InternalName
+            );
+            if (response) {
+              selectedTags.push({
+                key: response.TermID,
+                name: response.Label,
+              });
+              value = selectedTags;
+              stringValue = selectedTags.map(dv => dv.key + ';#' + dv.name).join(';#');
+            }
+          } else {
+            if (defaultValue !== "") {
+              selectedTags.push({
+                key: defaultValue.split("|")[1],
+                name: defaultValue.split("|")[0].split("#")[1],
+              });
+              value = selectedTags;
+            }
+          }
+          if (defaultValue === "") defaultValue = null;
+        }
+        if (field.FieldType === "TaxonomyFieldTypeMulti") {
+          hiddenName = field.HiddenListInternalName;
+          termSetId = field.TermSetId;
+          anchorId = field.AnchorId;
+          if (item !== null) {
+            item[field.InternalName].forEach((element) => {
+              selectedTags.push({
+                key: element.TermGuid,
+                name: element.Label,
+              });
+            });
+
+            defaultValue = selectedTags;
+          } else {
+            if (defaultValue !== null && defaultValue !== "") {
+              defaultValue.split(/#|;/).forEach((element) => {
+                if (element.indexOf("|") !== -1)
+                  selectedTags.push({
+                    key: element.split("|")[1],
+                    name: element.split("|")[0],
+                  });
+              });
+
+              value = selectedTags;
+              stringValue = selectedTags.map(dv => dv.key + ';#' + dv.name).join(';#');
+            }
+          }
+          if (defaultValue === "") defaultValue = null;
+        }
+
+        // Setup DateTime fields
+        if (field.FieldType === "DateTime") {
+          if (item !== null && item[field.InternalName]) {
+            value = new Date(item[field.InternalName]);
+            stringValue = value.toISOString();
+          } else if (defaultValue === "[today]") {
+            defaultValue = new Date();
+          } else if (defaultValue) {
+            defaultValue = new Date(defaultValue);
           }
 
-          tempFields.push({
-            newValue: null,
-            fieldTermSetId: termSetId,
-            fieldAnchorId: anchorId,
-            options: choices,
-            lookupListID: lookupListId,
-            lookupField: lookupField,
-            changedValue: defaultValue,
-            fieldType: field.TypeAsString,
-            fieldTitle: field.Title,
-            fieldDefaultValue: defaultValue,
-            context: this.props.context,
-            disabled:
-              this.props.disabled ||
-              (disabledFields &&
-                disabledFields.indexOf(field.InternalName) > -1),
-            listId: this.props.listId,
-            columnInternalName: field.EntityPropertyName,
-            label: field.Title,
-            onChanged: this.onChange,
-            required: field.Required,
-            hiddenFieldName: hiddenName,
-            Order: field.order,
-            isRichText: richText,
-            dateFormat: dateFormat,
-            firstDayOfWeek: defaultDayOfWeek,
-            listItemId: listItemId,
-            principalType: principalType,
-            description: field.Description,
-            minimumValue: minValue,
-            maximumValue: maxValue,
-            showAsPercentage: showAsPercentage,
-          });
-          tempFields.sort((a, b) => a.Order - b.Order);
+          dateFormat = field.DateFormat || "DateOnly";
+          defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
         }
-      }
 
-      this.setState({ fieldCollection: tempFields, etag: etag });
-      //return arrayItems;
-    } catch (error) {
-      console.log(`Error get field informations`, error);
-      return null;
+        // Setup Thumbnail, Location and Boolean fields
+        if (field.FieldType === "Thumbnail") {
+          if (defaultValue) {
+            defaultValue = JSON.parse(defaultValue).serverRelativeUrl;
+          }
+          if (value) {
+            value = JSON.parse(value).serverRelativeUrl;
+          }
+        }
+        if (field.FieldType === "Location") {
+          if (defaultValue) defaultValue = JSON.parse(defaultValue);
+          if (value) value = JSON.parse(value);
+        }
+        if (field.FieldType === "Boolean") {
+          if (defaultValue !== undefined && defaultValue !== null) defaultValue = Boolean(Number(defaultValue));
+          if (value !== undefined && value !== null) value = Boolean(Number(value));
+        }
+
+        tempFields.push({
+          newValue: null,
+          stringValue,
+          fieldTermSetId: termSetId,
+          fieldAnchorId: anchorId,
+          options: choices,
+          lookupListID: lookupListId,
+          lookupField: lookupField,
+          // changedValue: defaultValue,
+          fieldType: field.FieldType,
+          // fieldTitle: field.Title,
+          defaultValue: defaultValue,
+          context: this.props.context,
+          disabled: this.props.disabled ||
+            (disabledFields &&
+              disabledFields.indexOf(field.InternalName) > -1),
+          // listId: this.props.listId,
+          columnInternalName: field.InternalName,
+          label: field.Title,
+          onChanged: this.onChange,
+          required: field.Required,
+          hiddenFieldName: hiddenName,
+          Order: order,
+          isRichText: richText,
+          dateFormat: dateFormat,
+          firstDayOfWeek: defaultDayOfWeek,
+          listItemId: listItemId,
+          principalType: principalType,
+          description: field.Description,
+          minimumValue: minValue,
+          maximumValue: maxValue,
+          showAsPercentage: showAsPercentage,
+        });
+
+        // This may not be necessary now using RenderListDataAsStream
+        tempFields.sort((a, b) => a.Order - b.Order);
+      }
     }
-  };
+    return tempFields;
+  }
 
   private uploadImage = async (
     file: IFilePickerResult
@@ -1181,49 +1119,6 @@ export class DynamicForm extends React.Component<
     });
   };
 
-  private getFormFields = async (
-    listId: string,
-    contentTypeId: string | undefined,
-    webUrl?: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ): Promise<any> => {
-    try {
-      const { context } = this.props;
-      const webAbsoluteUrl = !webUrl ? this.webURL : webUrl;
-      let apiUrl = "";
-      if (contentTypeId !== undefined && contentTypeId !== "") {
-        if (contentTypeId.startsWith("0x0120")) {
-          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(
-            listId
-          )}'&$filter=ReadOnlyField eq false and (Hidden eq false or StaticName eq 'Title') and (FromBaseType eq false or StaticName eq 'Title')`;
-        } else {
-          apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(
-            listId
-          )}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
-        }
-      } else {
-        apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(
-          listId
-        )}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
-      }
-      const data = await context.spHttpClient.get(
-        apiUrl,
-        SPHttpClient.configurations.v1
-      );
-      if (data.ok) {
-        const results = await data.json();
-        if (results) {
-          return results;
-        }
-      }
-
-      return null;
-    } catch (error) {
-      console.dir(error);
-      return Promise.reject(error);
-    }
-  };
-
   private closeValidationErrorDialog = (): void => {
     this.setState({
       isValidationErrorDialogOpen: false,
@@ -1251,4 +1146,6 @@ export class DynamicForm extends React.Component<
 
     return errorMessage;
   };
+
+
 }

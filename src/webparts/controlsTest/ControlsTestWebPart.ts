@@ -102,7 +102,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
             this.context.propertyPane.refresh();
           }
         },
-        totalPages: this.properties.paginationTotalPages
+        paginationTotalPages: this.properties.paginationTotalPages
       }
     );
 

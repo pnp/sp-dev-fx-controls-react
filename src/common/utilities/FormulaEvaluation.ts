@@ -4,16 +4,18 @@ import { IContext } from "../Interfaces";
 import { ASTNode, ArrayLiteralNode, Token, TokenType, ValidFuncNames } from "./FormulaEvaluation.types";
 
 export class FormulaEvaluation {
-    constructor(context: IContext) {
+    private webUrl: string;
+    constructor(context: IContext, webUrlOverride?: string) {
         sp.setup({ pageContext: context.pageContext });
+        this.webUrl = webUrlOverride || context.pageContext.web.absoluteUrl;
     }
 
     /** Evaluates a formula expression and returns the result, with optional context object for variables */
-    public async evaluate(expression: string, context: { [key: string]: any } = {}): Promise<any> {
+    public evaluate(expression: string, context: { [key: string]: any } = {}): any {
         const tokens: Token[] = this._tokenize(expression, context);
         const postfix: Token[] = this._shuntingYard(tokens);
         const ast: ASTNode = this._buildAST(postfix);
-        return await this._evaluateAST(ast, context);
+        return this.evaluateASTNode(ast, context);
     }
 
     /** Tokenizes an expression into a list of tokens (primatives, operators, variables, function names, arrays etc) */
@@ -21,8 +23,8 @@ export class FormulaEvaluation {
         // Each pattern captures a different token type
         // and are matched in order
         const patterns: [RegExp, TokenType][] = [
-            [/^\[\$?[a-zA-Z_][a-zA-Z_0-9]*\]/, "VARIABLE"],     // [$variable]
-            [/^@[a-zA-Z_][a-zA-Z_0-9]*/, "VARIABLE"],           // @variable
+            [/^\[\$?[a-zA-Z_][a-zA-Z_0-9.]*\]/, "VARIABLE"],     // [$variable]
+            [/^@[a-zA-Z_][a-zA-Z_0-9.]*/, "VARIABLE"],           // @variable
             [/^[0-9]+(?:\.[0-9]+)?/, "NUMBER"],                 // Numeric literals
             [/^"([^"]*)"/, "STRING"],                           // Match double-quoted strings
             [/^'([^']*)'/, "STRING"],                           // Match single-quoted strings
@@ -285,14 +287,17 @@ export class FormulaEvaluation {
         return stack[0] as ASTNode;
     }
 
-    private async _evaluateAST(node: ASTNode | ArrayLiteralNode | string | number, context: { [key: string]: any }): Promise<any> {
+    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | string | number, context: { [key: string]: any }): any {
 
         if (!node) return 0;
 
+        if (typeof node === "object" && !(Object.prototype.hasOwnProperty.call(node, 'type') && Object.prototype.hasOwnProperty.call(node, 'value'))) {
+            return node;
+        }
+
         // Each element in an array literal is evaluated recursively
         if (node instanceof ArrayLiteralNode) {
-            const evaluatedElementsPromises = (node as ArrayLiteralNode).elements.map(element => this._evaluateAST(element, context));
-            const evaluatedElements = await Promise.all(evaluatedElementsPromises);
+            const evaluatedElements = (node as ArrayLiteralNode).elements.map(element => this.evaluateASTNode(element, context));
             return evaluatedElements;
         }
 
@@ -322,14 +327,14 @@ export class FormulaEvaluation {
 
         // VARIABLE nodes are looked up in the context object and returned
         if (node.type === "VARIABLE") {
-            return context[(node.value as string).replace(/^[[@]?\$?([a-zA-Z_][a-zA-Z_0-9]*)\]?/, '$1')] ?? null;
+            return context[(node.value as string).replace(/^[[@]?\$?([a-zA-Z_][a-zA-Z_0-9.]*)\]?/, '$1')] ?? null;
         }
 
         // OPERATOR nodes have their OPERANDS evaluated recursively, with the operator applied to the results
         if (node.type === "OPERATOR" && ["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|"].includes(node.value as string) && node.operands) {
 
-            const leftValue = await this._evaluateAST(node.operands[0], context);
-            const rightValue = await this._evaluateAST(node.operands[1], context);
+            const leftValue = this.evaluateASTNode(node.operands[0], context);
+            const rightValue = this.evaluateASTNode(node.operands[1], context);
 
             if (typeof leftValue === "string" || typeof rightValue === "string") {
                 // Throw an error if the operator is not valid for strings
@@ -338,7 +343,7 @@ export class FormulaEvaluation {
                 }
                 // Concatenate strings if either operand is a string
                 if (node.value === "+") {
-                    return leftValue.toString() + rightValue.toString();
+                    return (leftValue || "").toString() + (rightValue || "").toString();
                 }
             }
 
@@ -364,8 +369,7 @@ export class FormulaEvaluation {
         // Evaluation of function nodes is handled here:
 
         if (node.type === "FUNCTION" && node.operands) {
-            const funcArgsPromises = node.operands.map(arg => this._evaluateAST(arg, context));
-            const funcArgs = await Promise.all(funcArgsPromises);
+            const funcArgs = node.operands.map(arg => this.evaluateASTNode(arg, context));
 
             switch (node.value) {
 
@@ -543,7 +547,7 @@ export class FormulaEvaluation {
                 }
                 case 'getThumbnailImage': {
                     const imageUrl = funcArgs[0];
-                    const thumbnailImage = await this._getSharePointThumbnailUrl(imageUrl);
+                    const thumbnailImage = this._getSharePointThumbnailUrl(imageUrl);
                     return thumbnailImage;
                 }
 
@@ -570,7 +574,7 @@ export class FormulaEvaluation {
                     }
                     else {
                         // treat as char Array
-                        const value = await this._evaluateAST(array, context);
+                        const value = this.evaluateASTNode(array, context);
                         return value.toString().length;
                     }
                 }
@@ -602,9 +606,8 @@ export class FormulaEvaluation {
         const [filenameNoExt, ext] = filename.split('.');
         return `${url}/_t/${filenameNoExt}_${ext}.jpg`;
     }
-    private async _getUserImageUrl(userEmail: string): Promise<string> {
-        const user = await sp.web.ensureUser(userEmail);
-        return (user.data as any).PictureUrl || '';
+    private _getUserImageUrl(userEmail: string): string {
+        return `${this.webUrl}/_layouts/15/userphoto.aspx?size=L&username=${userEmail}`
     }
 }
 

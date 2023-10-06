@@ -58,7 +58,7 @@ export enum IMEMode {
   Active  = 2, 
   Disabled = 3
 }
-export type ClientFormFieldInfoFieldType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "MultiChoice" | "User" | "UserMulti" | "Note" | "DateTime" | "URL" | "Lookup" | "MultiLookup" | "Hyperlink" | "Thumbnail" | "Currency" | "Location" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti";
+export type ClientFormFieldInfoFieldType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "MultiChoice" | "User" | "UserMulti" | "Note" | "DateTime" | "URL" | "Lookup" | "LookupMulti" | "Hyperlink" | "Thumbnail" | "Currency" | "Location" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti";
 export type ClientFormFieldInfoType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "User" | "Note" | "DateTime" | "URL" | "Lookup" | "URL" | "Thumbnail" | "Currency" | "Location";
 export interface IClientFormBaseInfo {
   Id: string;
@@ -155,7 +155,7 @@ export interface IClientFormDateFieldInfo extends IClientFormBaseInfo {
   TimeFormat: string;
 }
 export interface IClientFormBaseLookupFieldInfo extends IClientFormBaseInfo {
-  FieldType: "User" | "UserMulti" | "Lookup" | "MultiLookup" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti";
+  FieldType: "User" | "UserMulti" | "Lookup" | "LookupMulti" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti";
   Type: "User" | "Lookup";
   DependentLookup: boolean;
   AllowMultipleValues: boolean;
@@ -204,7 +204,7 @@ export interface IClientFormUserFieldInfo extends IClientFormBaseLookupFieldInfo
   UserDisplayOptions: string;
 }
 export interface IClientFormLookupFieldInfo extends IClientFormBaseLookupFieldInfo {
-  FieldType: "Lookup" | "MultiLookup";
+  FieldType: "Lookup" | "LookupMulti";
   Type: "Lookup";
   BaseDisplayFormUrl: string;
   Throttled: boolean;

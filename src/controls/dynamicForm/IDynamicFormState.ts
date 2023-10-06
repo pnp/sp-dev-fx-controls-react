@@ -1,6 +1,6 @@
 
 import { ISPField } from '../../common/SPEntities';
-import { ICustomFormattingBodySection } from './ICustomFormatting';
+import { ICustomFormattingBodySection, ICustomFormattingNode } from '../../common/utilities/ICustomFormatting';
 import { IDynamicFieldProps } from './dynamicField/IDynamicFieldProps';
 export interface IDynamicFormState {
   fieldCollection: IDynamicFieldProps[];
@@ -13,8 +13,12 @@ export interface IDynamicFormState {
   /** Populated by evaluation of List Column Setting validation. Key is internal field name, value is the configured error message. */
   validationErrors: Record<string, string>;
   customFormatting?: {
+    header: ICustomFormattingNode;
     body: ICustomFormattingBodySection[];
+    footer: ICustomFormattingNode;
   }
+  headerContent?: JSX.Element;
+  footerContent?: JSX.Element;
   isSaving?: boolean;
   etag?: string;
   isValidationErrorDialogOpen: boolean;

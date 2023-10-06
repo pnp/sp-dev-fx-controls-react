@@ -190,3 +190,11 @@ h2.sectionTitle {
     border-right-width: 0;
     clear: both;
 }
+
+:global {
+	.sp-field-customFormatter {
+		min-height: inherit;
+		display: flex;
+		align-items: center;
+	}
+}
