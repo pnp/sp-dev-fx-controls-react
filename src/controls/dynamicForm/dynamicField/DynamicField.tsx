@@ -22,6 +22,7 @@ import { IPickerTerms, TaxonomyPicker } from '../../taxonomyPicker';
 import styles from '../DynamicForm.module.scss';
 import { IDynamicFieldProps } from './IDynamicFieldProps';
 import { IDynamicFieldState } from './IDynamicFieldState';
+import { isArray } from 'lodash';
 import CurrencyMap from "../CurrencyMap";
 
 
@@ -665,14 +666,16 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
     try {
       let selectedItemArr;
+
       if (changedValue === null && this.props.fieldDefaultValue !== null) {
         selectedItemArr = [];
         this.props.fieldDefaultValue.forEach(element => {
           selectedItemArr.push(element);
         });
       }
-      else
-        selectedItemArr = !changedValue ? [] : changedValue;
+      else {
+        selectedItemArr = !changedValue ? [] : isArray(changedValue) ? changedValue : [ changedValue ];
+      }
 
       if (item.selected) {
         selectedItemArr.push(item.key);

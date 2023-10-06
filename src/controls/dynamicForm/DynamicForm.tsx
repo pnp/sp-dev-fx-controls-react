@@ -260,8 +260,8 @@ export class DynamicForm extends React.Component<
           } else if (fieldType === "TaxonomyFieldType") {
             objects[columnInternalName] = {
               __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-              Label: value[0].name,
-              TermGuid: value[0].key,
+              Label: value[0]?.name ?? "",
+              TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
               WssId: "-1",
             };
           } else if (fieldType === "TaxonomyFieldTypeMulti") {
@@ -292,7 +292,8 @@ export class DynamicForm extends React.Component<
             } else {
               objects[columnInternalName] = null;
             }
-          } else {
+          }
+          else {
             objects[columnInternalName] = val.newValue;
           }
         }
@@ -337,10 +338,14 @@ export class DynamicForm extends React.Component<
       else if (
         contentTypeId === undefined ||
         contentTypeId === "" ||
-        !contentTypeId.startsWith("0x0120")
+        !contentTypeId.startsWith("0x0120")||
+        contentTypeId.startsWith("0x01")
       ) {
         // We are adding a new list item
         try {
+          const contentTypeIdField = "ContentTypeId";
+          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(
@@ -356,7 +361,8 @@ export class DynamicForm extends React.Component<
           }
           console.log("Error", error);
         }
-      } else if (contentTypeId.startsWith("0x0120")) {
+      }
+      else if (contentTypeId.startsWith("0x0120")) {
         // We are adding a folder or a Document Set
         try {
           const idField = "ID";
@@ -419,6 +425,7 @@ export class DynamicForm extends React.Component<
   // trigger when the user change any value in the form
   private onChange = async (
     internalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
     additionalData?: FieldChangeAdditionalData
   ): Promise<void> => {
@@ -796,6 +803,7 @@ export class DynamicForm extends React.Component<
     listId: string,
     contentTypeId: string | undefined,
     webUrl?: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
     // eslint-disable-line @typescript-eslint/no-explicit-any
     try {

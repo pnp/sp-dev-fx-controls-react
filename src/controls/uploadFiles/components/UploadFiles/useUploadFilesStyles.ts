@@ -1,7 +1,7 @@
 import React from 'react';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { useAtomValue } from 'jotai/utils';
+import { useAtom } from 'jotai';
 import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
 import { FontWeights } from 'office-ui-fabric-react/lib/Styling';
 import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
@@ -9,7 +9,7 @@ import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
 import { globalState } from '../../jotai/atoms/globalState';
 
 export const useUploadFilesStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState] = useAtom(globalState);
   const { themeVariant } = appGlobalState;
 
   const titleStyles: ITextStyles = React.useMemo(() => {

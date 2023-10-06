@@ -9,12 +9,15 @@ import { Checkbox } from 'office-ui-fabric-react/lib/components/Checkbox';
 import * as strings from 'ControlStrings';
 import { CustomCollectionFieldType, ICustomCollectionField } from '../ICustomCollectionField';
 import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
+import { ComboBox, IComboBoxOption } from 'office-ui-fabric-react/lib/components/ComboBox';
+import { PeoplePicker, PrincipalType } from "../../peoplepicker";
 import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/components/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
-import { CollectionNumberField } from '../collectionNumberField';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
+import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
+import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
   private emptyItem: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -54,6 +57,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
    * Update the item value on the field change
    */
   private onValueChanged = (fieldId: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    
     this.setState((prevState: ICollectionDataItemState): ICollectionDataItemState => {
       const { crntItem } = prevState;
       // Update the changed field
@@ -63,6 +67,84 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
 
       // Store this in the current state
       return { crntItem };
+    });
+  }
+
+  private onValueChangedComboBoxSingle = (fieldId: string, option: IComboBoxOption, value: string): void => {
+    let _selectedOption: IComboBoxOption = null;
+    if (typeof option === "undefined" && typeof value !== "undefined" && value.length === 0) {
+      _selectedOption = null;
+    } else if (typeof option === "undefined" && value.length > 0) {
+      _selectedOption = {
+        key: value,
+        text: value
+      };      
+    } else {
+      _selectedOption = option;
+    }
+
+    this.setState((prevState: ICollectionDataItemState): ICollectionDataItemState => {
+      const { crntItem } = prevState;
+
+      // Update the changed field
+      crntItem[fieldId] = _selectedOption;
+
+      this.doAllFieldChecks();
+
+      // Store this in the current state
+      
+      return {crntItem};
+    });
+
+  }
+
+  private onValueChangedComboBoxMulti = (fieldId: string, option: IComboBoxOption, value: string): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+
+    let _selectedOption: IComboBoxOption = null;
+    let _selected: IComboBoxOption[] = [];
+
+    this.setState((prevState: ICollectionDataItemState): ICollectionDataItemState => {
+      const { crntItem } = prevState;
+      _selected = crntItem[fieldId];
+
+      if (typeof option === "undefined") {
+        // freeform
+        _selectedOption = {
+          key: value,
+          text: value,
+          selected: true
+        };
+      } else {
+        // selected option
+        _selectedOption = {
+          key: option.key,
+          text: option.text,
+          selected: option.selected
+        };
+      }
+
+      if (_selected === null ) {
+        _selected = [];
+      }
+
+      if (_selectedOption.selected === true) {
+        //add to selection
+        _selected.push(_selectedOption);
+      } else {
+        //remove from selection
+        _selected = _selected.filter(x => x.key !== _selectedOption.key);
+      }
+
+      // Update the changed field
+      if (_selected.length === 0) {
+        _selected = null;
+      }
+
+      crntItem[fieldId] = _selected;
+
+      this.doAllFieldChecks();
+
+      return { crntItem};
     });
   }
 
@@ -94,13 +176,15 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
    */
   private checkAllRequiredFieldsValid(item: any): boolean { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Get all the required fields
-    const requiredFields = this.props.fields.filter(f => f.required);
+    const requiredFields: ICustomCollectionField[] = this.props.fields.filter(f => f.required);
+
     // Check all the required field values
     for (const field of requiredFields) {
       if (typeof item[field.id] === "undefined" || item[field.id] === null || item[field.id] === "") {
         return false;
       }
     }
+
     return true;
   }
 
@@ -156,6 +240,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         this.setState({
           crntItem: { ...emptyItem }
         });
+
       }
     }
   }
@@ -256,6 +341,42 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     return validation;
   }
 
+  private peoplepickerValidation = async (field: ICustomCollectionField, value: IPersonaProps[], item: any): Promise<string> => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    let isValid: boolean = true;
+    let validation: string = "";
+
+    // Check if custom validation is configured
+    if (field.onGetErrorMessage) {
+      // Using the custom validation
+      validation = await field.onGetErrorMessage(value, this.props.index, item);
+      isValid = validation === "";
+    } else if (typeof field.minimumUsers === "number" && value.length < field.minimumUsers) {
+        validation = typeof field.minimumUsersMessage === "string" ? field.minimumUsersMessage : strings.CollectionDataMinimumUsersDefaultMessage.replace("{0}", field.minimumUsers.toString());
+    }
+
+    // Store the field validation
+    this.validation[field.id] = isValid;
+    // Add message for the error callout
+    this.errorCalloutHandler(field.id, validation);
+    this.doAllFieldChecks();
+    // Return empty the error message if needed
+
+    return ""; 
+  }
+
+  private comboboxValidation = (field: ICustomCollectionField, selected: string[] | string): void => {
+    let isValid = true;
+    let validation = "";
+
+    if (field.required && (selected === null || selected.length === 0) ) {
+      isValid = false;
+    }
+
+    // Store the field validation
+    this.validation[field.id] = isValid;
+    this.errorCalloutHandler(field.id, validation);
+  }
+
   /**
    * Error callout message handler
    *
@@ -345,6 +466,10 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
    */
   private renderField(field: ICustomCollectionField, item: any): JSX.Element { // eslint-disable-line @typescript-eslint/no-explicit-any
     const disableFieldOnEdit: boolean = field.disableEdit && !!this.props.fUpdateItem;
+    const _selectedComboBoxKeys: string[] = [];
+    let _selectedComboBoxKey: string = null;
+    let _comboBoxOptions: IComboBoxOption[] = null;
+    let _selectedUsers: string[] = null;
 
     switch (field.type) {
       case CustomCollectionFieldType.boolean:
@@ -362,9 +487,16 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           onRenderOption={field.onRenderOption}
           className="PropertyFieldCollectionData__panel__dropdown-field" />;
       case CustomCollectionFieldType.number:
-        return (
-          <CollectionNumberField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
-        );
+        return <TextField placeholder={field.placeholder || field.title}
+          className={styles.collectionDataField}
+          value={item[field.id] ? item[field.id] : ""}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          type='number'
+          onChange={(e, value) => this.onValueChanged(field.id, value)}
+          deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
+          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
+          inputClassName="PropertyFieldCollectionData__panel__number-field" />;
       case CustomCollectionFieldType.fabricIcon:
         return (
           <CollectionIconField field={field} item={item} disableEdit={disableFieldOnEdit} fOnValueChange={this.onValueChanged} fValidation={this.fieldValidation} />
@@ -379,11 +511,86 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
           onGetErrorMessage={async (value: string) => this.urlFieldValidation(field, value, item)}
           inputClassName="PropertyFieldCollectionData__panel__url-field" />;
+      case CustomCollectionFieldType.date:
+        return <DatePicker
+          className={styles.collectionDataField}
+          placeholder={field.placeholder || field.title}
+          isRequired={field.required}
+          disabled={disableFieldOnEdit}
+          value={item[field.id] ? new Date(item[field.id]) : undefined}
+          onSelectDate={(date) => { this.onValueChanged(field.id, date) }}
+          formatDate={(date) => { return date ? date?.toLocaleDateString() : ""; }}
+          />;
       case CustomCollectionFieldType.custom:
         if (field.onCustomRender) {
           return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);
         }
         return null;
+      case CustomCollectionFieldType.combobox:
+        _comboBoxOptions = field.options;
+
+        if (field.multiSelect) {
+          // multivalue
+
+          if (item[field.id] !== null) {
+            for (let i: number = 0; i < item[field.id].length; i++) {
+              _selectedComboBoxKeys.push(item[field.id][i].key);
+              
+              // if selected option is not in list (anymore), add it to choices
+              if (typeof _comboBoxOptions.find(value => value.key === item[field.id][i].key) === "undefined" ) {
+                _comboBoxOptions.push(item[field.id][i]);
+              }
+            }
+          }
+
+        } else {
+          // single value
+          if (item[field.id] !== null) {
+            _selectedComboBoxKey = item[field.id].key;
+
+            if (typeof _comboBoxOptions.find(value => value.key === item[field.id].key) === "undefined" ) {
+              _comboBoxOptions.push(item[field.id]);
+            }
+
+          }
+          
+        }
+
+        return <ComboBox 
+          onFocus={() => this.comboboxValidation(field, field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey)}
+          onBlur={() => this.comboboxValidation(field, field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey)}
+          multiSelect={field.multiSelect}
+          allowFreeform={field.allowFreeform} 
+          placeholder={field.placeholder}
+          options={_comboBoxOptions}
+          selectedKey= { field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey}
+          required={field.required}
+          disabled={disableFieldOnEdit}
+          onChange={async (event, option, index, value) =>{ 
+            field.multiSelect ? this.onValueChangedComboBoxMulti(field.id, option, value) : this.onValueChangedComboBoxSingle(field.id, option, value)
+          } }
+          
+        />;
+      case CustomCollectionFieldType.peoplepicker: 
+      _selectedUsers = item[field.id] !== null ? item[field.id]: [] ;
+
+        return <PeoplePicker 
+          peoplePickerCntrlclassName = {styles.peoplePicker}
+          context = {this.props.context}
+          personSelectionLimit={typeof field.maximumUsers === "number" ? field.maximumUsers : typeof field.multiSelect === "boolean" && field.multiSelect === false ? 1 : 99}
+          principalTypes={[PrincipalType.User]}
+          ensureUser={true}
+          placeholder={field.placeholder || field.title}
+          required={field.required}
+          onChange={(items: IPersonaProps[]) => {
+              const _selected: string[] = items.length === 0 ? null : items.map(({secondaryText}) => secondaryText); 
+              this.onValueChanged(field.id, _selected)
+            } 
+          }
+          onGetErrorMessage={async (items: IPersonaProps[]) => await this.peoplepickerValidation(field, items, item)}
+
+          defaultSelectedUsers={_selectedUsers}
+        />;
       case CustomCollectionFieldType.string:
       default:
         return <TextField placeholder={field.placeholder || field.title}
@@ -393,7 +600,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           disabled={disableFieldOnEdit}
           onChange={(e, value) => this.onValueChanged(field.id, value)}
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
-          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
+          onGetErrorMessage={async (value: string) =>  await this.fieldValidation(field, value) }
           inputClassName="PropertyFieldCollectionData__panel__string-field" />;
     }
   }
@@ -425,6 +632,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       // Assign default value or null to the emptyItem
       emptyItem[field.id] = field.defaultValue || null;
     }
+
     return emptyItem;
   }
 
@@ -444,7 +652,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         {
           (this.props.sortingEnabled && this.props.totalItems) && (
             <span className={`PropertyFieldCollectionData__panel__sorting-field ${styles.tableCell}`}>
-              <Dropdown options={opts} selectedKey={this.props.index + 1} onChanged={(opt) => this.props.fOnSorting(this.props.index, opt.key as number)} />
+              <Dropdown options={opts} selectedKey={this.props.index + 1} onChange={(event, opt) => this.props.fOnSorting(this.props.index, opt.key as number)} />
             </span>
           )
         }

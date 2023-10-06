@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Коллекция полей пуста!",
   "InvalidUrlError": "Недопустимый указанный URL-адрес",
   "CollectionDataSearch": "Искать",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "загрузка команд",
   "MyTeamsMessageError": "Что-то пошло не так при загрузке ваших команд, пожалуйста, попробуйте позже или обновите браузер",
   "MyTeamsNoTeamsMessage": "У вас нет команд",

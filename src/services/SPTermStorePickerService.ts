@@ -534,7 +534,7 @@ export default class SPTermStorePickerService {
     if (term.Paths && term.Paths.length > 0) {
       const fullPath = term.Paths[0].replace(/^\[/, "").replace(/\]$/, "");
       const fullPathParts = fullPath.split(":");
-      path = fullPathParts.join(";") + ";" + term.DefaultLabel;
+      path = fullPathParts.slice(1).join(";") + ";" + term.DefaultLabel;
       termSetName = fullPathParts[0];
     }
     return {

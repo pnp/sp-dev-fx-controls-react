@@ -30,11 +30,13 @@ Here is an example of the control in action inside a Web Part:
 * Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
   
 * In your component file, import the `AdaptiveCardDesignerHost` control as follows:
+
 ```Typescript  
 import { AdaptiveCardDesignerHost, HostContainer, BindingPreviewMode, Versions } from "@pnp/spfx-controls-react/lib/AdaptiveCardDesignerHost";
 ```
 
 - Example on use the `AdaptiveCardDesignerHost` control with only required properties:
+
 ```Typescript
 <AdaptiveCardDesignerHost
   headerText="Adaptive Card Designer"
@@ -45,6 +47,7 @@ import { AdaptiveCardDesignerHost, HostContainer, BindingPreviewMode, Versions }
 ```
 
 - Example on use the `AdaptiveCardDesignerHost` control with all properties:
+
 ```Typescript
 <AdaptiveCardDesignerHost
   headerText="Adaptive Card Designer"
@@ -72,6 +75,7 @@ import { AdaptiveCardDesignerHost, HostContainer, BindingPreviewMode, Versions }
   snippets={snippets}
 />
 ```
+
 ## Implementation
 
 The `AdaptiveCardDesignerHost` control can be configured with the following properties:
