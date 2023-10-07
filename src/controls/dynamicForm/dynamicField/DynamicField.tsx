@@ -176,7 +176,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             {...dropdownOptions}
             defaultSelectedKey={valueToDisplay ? undefined : defaultValue}
             selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
-            onChange={(e, option) => { this.onChange(option); }}
+            onChange={(e, option) => { this.onChange(option, true); }}
             onBlur={this.onBlur}
             errorMessage={errorText} />
           {descriptionEl}
@@ -209,7 +209,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             context={context}
             disabled={disabled}
             placeholder={placeholder}
-            onChange={(newValue) => { this.onChange(newValue); }}
+            onChange={(newValue) => { this.onChange(newValue, true); }}
             defaultValue={valueToDisplay !== undefined ? valueToDisplay : defaultValue}
             errorMessage={errorText}
           />
@@ -233,7 +233,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={1}
-            onSelectedItem={(newValue) => { this.onChange(newValue); }}
+            onSelectedItem={(newValue) => { this.onChange(newValue, true); }}
             context={context}
           />
           {descriptionEl}
@@ -257,7 +257,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             enableDefaultSuggestions={true}
             keyColumnInternalName='Id'
             itemLimit={100}
-            onSelectedItem={(newValue) => { this.onChange(newValue); }}
+            onSelectedItem={(newValue) => { this.onChange(newValue, true); }}
             context={context}
           />
           {descriptionEl}
@@ -318,7 +318,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               className={styles.pickersContainer}
               formatDate={(date) => { return date.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName); }}
               value={valueToDisplay !== undefined ? valueToDisplay : defaultValue}
-              onSelectDate={(newDate) => { this.onChange(newDate); }}
+              onSelectDate={(newDate) => { this.onChange(newDate, true); }}
               disabled={disabled}
               firstDayOfWeek={firstDayOfWeek}
             />}
@@ -329,7 +329,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               placeholder={placeholder}
               formatDate={(date) => { return date.toLocaleDateString(context.pageContext.cultureInfo.currentCultureName); }}
               value={valueToDisplay !== undefined ? valueToDisplay : defaultValue}
-              onChange={(newDate) => { this.onChange(newDate); }}
+              onChange={(newDate) => { this.onChange(newDate, true); }}
               disabled={disabled}
               firstDayOfWeek={firstDayOfWeek}
             />
@@ -350,7 +350,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             checked={valueToDisplay}
             onText={strings.Yes}
             offText={strings.No}
-            onChange={(e, checkedvalue) => { this.onChange(checkedvalue); }}
+            onChange={(e, checkedvalue) => { this.onChange(checkedvalue, true); }}
             disabled={disabled}
           />
           {descriptionEl}
@@ -374,7 +374,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             showHiddenInUI={false}
             principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
             resolveDelay={1000}
-            onChange={(items) => { this.onChange(items); }}
+            onChange={(items) => { this.onChange(items, true); }}
             disabled={disabled}
           />
           {descriptionEl}
@@ -398,7 +398,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             showHiddenInUI={false}
             principalTypes={principalType === 'PeopleOnly' ? [PrincipalType.User] : [PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.DistributionList, PrincipalType.SecurityGroup]}
             resolveDelay={1000}
-            onChange={(items) => { this.onChange(items); }}
+            onChange={(items) => { this.onChange(items, true); }}
             disabled={disabled}
           />
           {descriptionEl}
@@ -498,7 +498,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
-              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
+              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue, true); }}
               isTermSetSelectable={false}
             />
           </div>
@@ -523,7 +523,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
               anchorId={fieldAnchorId}
               panelTitle={strings.DynamicFormTermPanelTitle}
               context={context}
-              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue); }}
+              onChange={(newValue?: IPickerTerms) => { this.onChange(newValue, true); }}
               isTermSetSelectable={false} />
           </div>
           {descriptionEl}
@@ -577,18 +577,18 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     });
 
     if (onChanged) {
-      onChanged(columnInternalName, currValue);
+      onChanged(columnInternalName, currValue, false);
     }
   }
 
-  private onChange = (value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  private onChange = (value: any, callValidation = false): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const {
       onChanged,
       columnInternalName
     } = this.props;
 
     if (onChanged) {
-      onChanged(columnInternalName, value);
+      onChanged(columnInternalName, value, callValidation);
     }
     this.setState({
       changedValue: value
@@ -599,6 +599,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     if (this.state.changedValue === null && this.props.defaultValue === "") {
       this.setState({ changedValue: "" });
     }
+    this.props.onChanged(this.props.columnInternalName, this.state.changedValue, true);
   }
 
   private getRequiredErrorText = (): string => {
@@ -683,7 +684,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       }
 
       this.setState({ changedValue: selectedItemArr });
-      this.props.onChanged(this.props.columnInternalName, selectedItemArr);
+      this.props.onChanged(this.props.columnInternalName, selectedItemArr, true);
     } catch (error) {
       console.log(`Error MultiChoice_selection`, error);
     }
@@ -713,7 +714,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         changedValue: newValue
       });
       if (onChanged) {
-        onChanged(columnInternalName, newValue, file);
+        onChanged(columnInternalName, newValue, true, file);
       }
     }
     catch (error) {

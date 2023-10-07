@@ -39,7 +39,7 @@ export class FormulaEvaluation {
             [new RegExp(`^(${ValidFuncNames.join('|')})\\(`), "FUNCTION"], // Functions or other words
             [/^(true|false)/, "BOOLEAN"],                       // Boolean literals
             [/^\w+/, "WORD"],                                   // Other words, checked against valid variables
-            [/^&&|^\|\||^==/, "OPERATOR"],                        // Operators and special characters (match double first)
+            [/^&&|^\|\||^==|^<>/, "OPERATOR"],                        // Operators and special characters (match double first)
             [/^[+\-*/<>=%!&|?:,()[\]]/, "OPERATOR"],           // Operators and special characters
         ];
 
@@ -113,6 +113,7 @@ export class FormulaEvaluation {
                 "<": { precedence: 3, associativity: "left" },
                 "==": { precedence: 3, associativity: "left" },
                 "!=": { precedence: 3, associativity: "left" },
+                "<>": { precedence: 3, associativity: "left" },
                 ">=": { precedence: 3, associativity: "left" },
                 "<=": { precedence: 3, associativity: "left" },
                 "&&": { precedence: 2, associativity: "left" },
@@ -256,7 +257,7 @@ export class FormulaEvaluation {
                 stack.push({ type: operand.type, value: -numericValue });
             } else if (token.type === "OPERATOR") {
                 // Operators have two operands, we pop them from the stack and push an object representing the operation
-                if (["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|", "?", ":"].includes(token.value as string)) {
+                if (["+", "-", "*", "/", "==", "!=", "<>", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|", "?", ":"].includes(token.value as string)) {
                     if (token.value === "?") {
                         // Ternary operator has three operands, and left and right operators should be top of stack
                         const colonOperator = stack.pop() as ASTNode;
@@ -338,7 +339,7 @@ export class FormulaEvaluation {
         }
 
         // OPERATOR nodes have their OPERANDS evaluated recursively, with the operator applied to the results
-        if (node.type === "OPERATOR" && ["+", "-", "*", "/", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|"].includes(node.value as string) && node.operands) {
+        if (node.type === "OPERATOR" && ["+", "-", "*", "/", "==", "!=", "<>", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|"].includes(node.value as string) && node.operands) {
 
             const leftValue = this.evaluateASTNode(node.operands[0], context);
             const rightValue = this.evaluateASTNode(node.operands[1], context);
@@ -361,6 +362,7 @@ export class FormulaEvaluation {
                 case "/": return leftValue / rightValue;
                 case "==": return leftValue === rightValue ? 1 : 0;
                 case "!=": return leftValue !== rightValue ? 1 : 0;
+                case "<>": return leftValue !== rightValue ? 1 : 0;
                 case ">": return leftValue > rightValue ? 1 : 0;
                 case "<": return leftValue < rightValue ? 1 : 0;
                 case ">=": return leftValue >= rightValue ? 1 : 0;

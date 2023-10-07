@@ -113,18 +113,24 @@ export class DynamicForm extends React.Component<
 
   public componentDidUpdate(prevProps: IDynamicFormProps, prevState: IDynamicFormState): void {
     if (!isEqual(prevProps, this.props)) {
+      // Props have changed due to parent component or workbench config, reset state
       this.setState({
         infoErrorMessages: [], // Reset info/error messages
         validationErrors: {} // Reset validation errors
       }, () => {
-        this.getListInformation()
-          .then(() => {
-            /* no-op; */
-          })
-          .catch((err) => {
-            /* no-op; */
-            console.error(err);
-          });
+        // If listId or listItemId have changed, reload list information
+        if (prevProps.listId !== this.props.listId || prevProps.listItemId !== this.props.listItemId) {
+          this.getListInformation()
+            .then(() => {
+              /* no-op; */
+            })
+            .catch((err) => {
+              /* no-op; */
+              console.error(err);
+            });
+        } else {
+          this.performValidation();
+        }
       });
     }
   }
@@ -327,7 +333,7 @@ export class DynamicForm extends React.Component<
         }
 
         // Check min and max values for number fields
-        if (field.fieldType === "Number") {
+        if (field.fieldType === "Number" && field.newValue !== undefined) {
           if ((field.newValue < field.minimumValue) || (field.newValue > field.maximumValue)) {
             shouldBeReturnBack = true;
           }
@@ -336,9 +342,13 @@ export class DynamicForm extends React.Component<
       });
 
       // Perform validation
-      const validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true) as Record<string, string>;
-      if (Object.keys(validationErrors).length > 0) {
-        shouldBeReturnBack = true;
+      const validationDisabled = this.props.useFieldValidation === false;
+      let validationErrors: Record<string, string> = {};
+      if (!validationDisabled) {
+        validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true, true, this.state.hiddenByFormula) as Record<string, string>;
+        if (Object.keys(validationErrors).length > 0) {
+          shouldBeReturnBack = true;
+        }
       }
 
       // If validation failed, return without saving
@@ -462,6 +472,8 @@ export class DynamicForm extends React.Component<
         }
       }
 
+      let apiError: string;
+
       // If we have the item ID, we simply need to update it
       let newETag: string | undefined = undefined;
       if (listItemId) {
@@ -480,6 +492,7 @@ export class DynamicForm extends React.Component<
             );
           }
         } catch (error) {
+          apiError = error.message;
           if (onSubmitError) {
             onSubmitError(objects, error);
           }
@@ -505,6 +518,7 @@ export class DynamicForm extends React.Component<
             );
           }
         } catch (error) {
+          apiError = error.message;
           if (onSubmitError) {
             onSubmitError(objects, error);
           }
@@ -551,6 +565,7 @@ export class DynamicForm extends React.Component<
             );
           }
         } catch (error) {
+          apiError = error.message;
           if (onSubmitError) {
             onSubmitError(objects, error);
           }
@@ -561,6 +576,7 @@ export class DynamicForm extends React.Component<
       this.setState({
         isSaving: false,
         etag: newETag,
+        infoErrorMessages: apiError ? [{ type: MessageBarType.error, message: apiError }] : [],
       });
     } catch (error) {
       if (onSubmitError) {
@@ -577,7 +593,8 @@ export class DynamicForm extends React.Component<
     internalName: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     newValue: any,
-    additionalData?: FieldChangeAdditionalData
+    validate: boolean,
+    additionalData?: FieldChangeAdditionalData,
   ): Promise<void> => {
 
     const fieldCol = cloneDeep(this.state.fieldCollection || []);
@@ -652,20 +669,33 @@ export class DynamicForm extends React.Component<
       field.stringValue = emails.join(";");
     }
 
+    const validationErrors = {...this.state.validationErrors};
+    if (validationErrors[field.columnInternalName]) delete validationErrors[field.columnInternalName];
+
     this.setState({
       fieldCollection: fieldCol,
-    }, this.performValidation);
+      validationErrors
+    }, () => {
+      if (validate) this.performValidation(); 
+    });
   };
 
   /** Validation callback, used when form first loads (getListInformation) and following onChange */
   private performValidation = (skipFieldValueValidation?: boolean): void => {
     const { useClientSideValidation, useFieldValidation } = this.props;
-    const clientSideValidationDisabled = useClientSideValidation === false;
-    const fieldValidationDisabled = useFieldValidation === false;
-    const hiddenByFormula: string[] = !clientSideValidationDisabled ? this.evaluateColumnVisibilityFormulas() : [];
-    let validationErrors = { ...this.state.validationErrors };
-    if (!skipFieldValueValidation && !fieldValidationDisabled) validationErrors = this.evaluateFieldValueFormulas();
-    this.setState({ hiddenByFormula, validationErrors });
+    const { clientValidationFormulas, validationFormulas } = this.state;
+    if (Object.keys(clientValidationFormulas).length || Object.keys(validationFormulas).length) {
+      this.setState({
+        isSaving: true, // Disable save btn and fields while validation in progress
+      }, () => {
+        const clientSideValidationDisabled = useClientSideValidation === false;
+        const fieldValidationDisabled = useFieldValidation === false;
+        const hiddenByFormula: string[] = !clientSideValidationDisabled ? this.evaluateColumnVisibilityFormulas() : [];
+        let validationErrors = { ...this.state.validationErrors };
+        if (!skipFieldValueValidation && !fieldValidationDisabled) validationErrors = this.evaluateFieldValueFormulas(hiddenByFormula);
+        this.setState({ hiddenByFormula, isSaving: false, validationErrors });
+      });
+    }
   }
 
   /** Determines visibility of fields that have show/hide formulas set in Edit Form > Edit Columns > Edit Conditional Formula */
@@ -674,8 +704,8 @@ export class DynamicForm extends React.Component<
   }
 
   /** Evaluates field validation formulas set in column settings and returns a Record of error messages */
-  private evaluateFieldValueFormulas = (): Record<string, string> => {
-    return this.evaluateFormulas(this.state.validationFormulas, true, true) as Record<string, string>;
+  private evaluateFieldValueFormulas = (hiddenFields: string[]): Record<string, string> => {
+    return this.evaluateFormulas(this.state.validationFormulas, true, true, hiddenFields) as Record<string, string>;
   }
 
   /**
@@ -688,7 +718,8 @@ export class DynamicForm extends React.Component<
   private evaluateFormulas = (
     formulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">>,
     returnMessages = true,
-    requireValue: boolean = false
+    requireValue: boolean = false,
+    ignoreFields: string[] = []
   ): string[] | Record<string, string> => {
     const { fieldCollection } = this.state;
     const results: Record<string, string> = {};
@@ -697,6 +728,7 @@ export class DynamicForm extends React.Component<
       if (formulas[fieldName]) {
         const field = fieldCollection.find(f => f.columnInternalName === fieldName);
         if (!field) continue;
+        if (ignoreFields.indexOf(fieldName) > -1) continue; // Skip fields that are being ignored (e.g. hidden by formula)
         const formula = formulas[fieldName].ValidationFormula;
         const message = formulas[fieldName].ValidationMessage;
         if (!formula) continue;
