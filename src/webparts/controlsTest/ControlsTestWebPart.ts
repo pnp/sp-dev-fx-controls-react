@@ -11,7 +11,8 @@ import {
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField,
+  PropertyPaneTextField, 
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -93,6 +94,11 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         title: this.properties.title ?? "Sample title",
         displayMode: this.displayMode,
         dynamicFormListId: this.properties.dynamicFormListId,
+        dynamicFormListItemId: this.properties.dynamicFormListItemId,
+        dynamicFormErrorDialogEnabled: this.properties.dynamicFormErrorDialogEnabled,
+        dynamicFormCustomFormattingEnabled: this.properties.dynamicFormCustomFormattingEnabled,
+        dynamicFormClientSideValidationEnabled: this.properties.dynamicFormClientSideValidationEnabled,
+        dynamicFormFieldValidationEnabled: this.properties.dynamicFormFieldValidationEnabled,
         onOpenPropertyPane: () => {
           this.context.propertyPane.open();
         },
@@ -145,7 +151,22 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
                     this.render();
                     this.context.propertyPane.refresh();
                   }
-                })
+                }),
+                PropertyPaneTextField('dynamicFormListItemId', {
+                  label: 'List Item ID for Dynamic Form'
+                }),
+                PropertyPaneToggle('dynamicFormErrorDialogEnabled', {
+                  label: 'Dynamic Form Error Dialog'
+                }),
+                PropertyPaneToggle('dynamicFormCustomFormattingEnabled', {
+                  label: 'Dynamic Form Custom Formatting'
+                }),
+                PropertyPaneToggle('dynamicFormClientSideValidationEnabled', {
+                  label: 'Dynamic Form Client Side Show/Hide Validation'
+                }),
+                PropertyPaneToggle('dynamicFormFieldValidationEnabled', {
+                  label: 'Dynamic Form Field Validation'
+                }),
               ]
             },
             {

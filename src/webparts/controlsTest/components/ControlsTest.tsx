@@ -802,6 +802,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   public render(): React.ReactElement<IControlsTestProps> {
     const { controlVisibility } = this.props;
 
+    let dynamicFormListItemId:number;
+    if (!isNaN(Number(this.props.dynamicFormListItemId))) {
+      dynamicFormListItemId = Number(this.props.dynamicFormListItemId);
+    }
+
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
       {
@@ -931,7 +936,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return (
       <div className={styles.controlsTest}>
         <div className={styles.container}>
-          <h3>Choose which controls to display</h3>
+          <h3 className={styles.instruction}>Choose which controls to display</h3>
           <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
             <PrimaryButton text="Open Web Part Settings" iconProps={{ iconName: 'Settings' }} onClick={this.props.onOpenPropertyPane} />
           </div>
@@ -946,13 +951,19 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
         <div id="DynamicFormDiv" className={styles.container} hidden={!controlVisibility.DynamicForm}>
           <div className="ms-font-m">
-            {/* Change the list Id and list item id before you start to test this control */}
-            <DynamicForm key={this.props.dynamicFormListId} context={this.props.context} listId={this.props.dynamicFormListId || "8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }}></DynamicForm>
-          </div>
-          <div className="ms-font-m">
-            {/* Change the list Id and list item id before you start to test this control */}
-            {/* This DynamicForm display a dialog message when validation fails */}
-            <DynamicForm key={this.props.dynamicFormListId} context={this.props.context} listId={this.props.dynamicFormListId || "8d26295d-c532-47c6-a2c5-d6e79c2ef523"} onCancelled={() => { console.log('Cancelled'); }} onSubmitted={async (listItem) => { let itemdata = await listItem.get(); console.log(itemdata["ID"]); }} validationErrorDialogProps={{ showDialogOnValidationError: true }}></DynamicForm>
+            <DynamicForm 
+              key={this.props.dynamicFormListId} 
+              context={this.props.context} 
+              listId={this.props.dynamicFormListId} 
+              listItemId={dynamicFormListItemId} 
+              validationErrorDialogProps={this.props.dynamicFormErrorDialogEnabled ? { showDialogOnValidationError: true } : undefined}
+              returnListItemInstanceOnSubmit={true}
+              onCancelled={() => { console.log('Cancelled'); }} 
+              onSubmitted={async (data, item) => { let itemdata = await item.get(); console.log('Saved item', itemdata)}}
+              useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
+              useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
+              useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
+            />
           </div>
         </div>
         <div id="TeamsDiv" className={styles.container} hidden={!controlVisibility.Teams}>

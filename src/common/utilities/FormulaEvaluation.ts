@@ -5,21 +5,28 @@ import { ASTNode, ArrayLiteralNode, Token, TokenType, ValidFuncNames } from "./F
 
 export class FormulaEvaluation {
     private webUrl: string;
-    constructor(context: IContext, webUrlOverride?: string) {
-        sp.setup({ pageContext: context.pageContext });
-        this.webUrl = webUrlOverride || context.pageContext.web.absoluteUrl;
+    private _meEmail: string;
+    
+    constructor(context?: IContext, webUrlOverride?: string) {
+        if (context) {
+            sp.setup({ pageContext: context.pageContext });
+            this._meEmail = context.pageContext.user.email;
+        }
+        this.webUrl = webUrlOverride || context?.pageContext.web.absoluteUrl || '';
     }
 
     /** Evaluates a formula expression and returns the result, with optional context object for variables */
     public evaluate(expression: string, context: { [key: string]: any } = {}): any {
-        const tokens: Token[] = this._tokenize(expression, context);
-        const postfix: Token[] = this._shuntingYard(tokens);
-        const ast: ASTNode = this._buildAST(postfix);
+        context['me'] = this._meEmail;
+        context['today'] = new Date();
+        const tokens: Token[] = this.tokenize(expression, context);
+        const postfix: Token[] = this.shuntingYard(tokens);
+        const ast: ASTNode = this.buildAST(postfix);
         return this.evaluateASTNode(ast, context);
     }
 
     /** Tokenizes an expression into a list of tokens (primatives, operators, variables, function names, arrays etc) */
-    private _tokenize(expression: string, context: { [key: string]: any }): Token[] {
+    public tokenize(expression: string, context: { [key: string]: any } = {}): Token[] {
         // Each pattern captures a different token type
         // and are matched in order
         const patterns: [RegExp, TokenType][] = [
@@ -89,7 +96,7 @@ export class FormulaEvaluation {
         return tokens;
     }
 
-    private _shuntingYard(tokens: Token[]): Token[] {
+    public shuntingYard(tokens: Token[]): Token[] {
 
         /** Returns a precedence value for a token or operator */
         function getPrecedence(op: string): { precedence: number, associativity: "left" | "right" } {
@@ -234,7 +241,7 @@ export class FormulaEvaluation {
         }
     }
 
-    private _buildAST(postfixTokens: Token[]): ASTNode {
+    public buildAST(postfixTokens: Token[]): ASTNode {
 
         // Tokens are arranged on a stack/array of node objects 
         const stack: (Token | ASTNode | ArrayLiteralNode)[] = [];
@@ -287,7 +294,7 @@ export class FormulaEvaluation {
         return stack[0] as ASTNode;
     }
 
-    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | string | number, context: { [key: string]: any }): any {
+    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | string | number, context: { [key: string]: any } = {}): any {
 
         if (!node) return 0;
 
@@ -430,17 +437,17 @@ export class FormulaEvaluation {
                     return arrayToJoin.join(separator);
                 }
                 case 'substring': {
-                    const mainStrSubstring = funcArgs[0];
-                    const start = funcArgs[1];
-                    const end = funcArgs[2];
+                    const mainStrSubstring = funcArgs[0] || '';
+                    const start = funcArgs[1] || 0;
+                    const end = funcArgs[2] || mainStrSubstring.length;
                     return mainStrSubstring.substr(start, end);
                 }
                 case 'toUpperCase': {
-                    const strToUpper = funcArgs[0];
+                    const strToUpper = funcArgs[0] || '';
                     return strToUpper.toUpperCase();
                 }
                 case 'toLowerCase': {
-                    const strToLower = funcArgs[0];
+                    const strToLower = funcArgs[0] || '';
                     return strToLower.toLowerCase();
                 }
                 case 'startsWith': {
@@ -600,14 +607,32 @@ export class FormulaEvaluation {
 
         return 0;  // Default fallback
     }
+
+    public validate(expression: string): boolean {
+        const validFunctionRegex = `(${ValidFuncNames.map(fn => `${fn}\\(`).join('|')})`;
+        const pattern = new RegExp(`^(?:@\\w+|\\[\\$?[\\w+.]\\]|\\d+(?:\\.\\d+)?|"(?:[^"]*)"|'(?:[^']*)'|${validFunctionRegex}|[+\\-*/<>=%!&|?:,()\\[\\]]|\\?|:)`);
+    
+        /* Explanation -
+        /@\\w+/ matches variables specified by the form @variableName.
+        /\\[\\$?\\w+\\/] matches variables specified by the forms [variableName] and [$variableName].
+        /\\d+(?:\\.\\d+)?/ matches numbers, including decimal numbers.
+        /"(?:[^"]*)"/ and /'(?:[^']*)'/ match string literals in double and single quotes, respectively.
+        /${validFunctionRegex}/ matches valid function names.
+        /\\?/ matches the ternary operator ?.
+        /:/ matches the colon :.
+        /[+\\-*///<>=%!&|?:,()\\[\\]]/ matches operators.
+        
+        return pattern.test(expression);
+    }
+
     private _getSharePointThumbnailUrl(imageUrl: string): string {
         const filename = imageUrl.split('/').pop();
         const url = imageUrl.replace(filename, '');
         const [filenameNoExt, ext] = filename.split('.');
-        return `${url}/_t/${filenameNoExt}_${ext}.jpg`;
+        return `${url}_t/${filenameNoExt}_${ext}.jpg`;
     }
     private _getUserImageUrl(userEmail: string): string {
-        return `${this.webUrl}/_layouts/15/userphoto.aspx?size=L&username=${userEmail}`
+        return `${this.webUrl}/_layouts/15/userphoto.aspx?size=L&accountname=${userEmail}`
     }
 }
 

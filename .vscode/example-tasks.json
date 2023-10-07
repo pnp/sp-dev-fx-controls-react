@@ -1,0 +1,30 @@
+{
+	/**
+     * Populate and rename this file to launch.json to configure debugging
+     */
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "serve",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": "."
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Starting 'bundle'",
+					"endsPattern": "\\[\\sFinished\\s\\]"
+				}
+			},
+			"label": "npm: serve",
+			"detail": "gulp bundle --custom-serve --max_old_space_size=4096 && fast-serve",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+	]
+}

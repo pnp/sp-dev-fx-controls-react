@@ -24,5 +24,10 @@ export interface IControlsTestWebPartProps {
   description: string;
   paginationTotalPages: number;
   dynamicFormListId: string;
+  dynamicFormListItemId: string;
+  dynamicFormErrorDialogEnabled: boolean;
+  dynamicFormCustomFormattingEnabled: boolean;
+  dynamicFormClientSideValidationEnabled: boolean;
+  dynamicFormFieldValidationEnabled: boolean;
   controlVisibility: ControlVisibility
 }

@@ -4,6 +4,7 @@ import {
   DefaultButton,
   PrimaryButton,
 } from "office-ui-fabric-react/lib/Button";
+import { MessageBar, MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
 import { IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
 import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
@@ -33,7 +34,7 @@ import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { sp } from "@pnp/sp";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEqual } from "lodash";
 import { IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 
@@ -75,6 +76,7 @@ export class DynamicForm extends React.Component<
 
     // Initialize state
     this.state = {
+      infoErrorMessages: [],
       fieldCollection: [],
       validationFormulas: {},
       clientValidationFormulas: {},
@@ -109,37 +111,63 @@ export class DynamicForm extends React.Component<
       });
   }
 
+  public componentDidUpdate(prevProps: IDynamicFormProps, prevState: IDynamicFormState): void {
+    if (!isEqual(prevProps, this.props)) {
+      this.setState({
+        infoErrorMessages: [], // Reset info/error messages
+        validationErrors: {} // Reset validation errors
+      }, () => {
+        this.getListInformation()
+          .then(() => {
+            /* no-op; */
+          })
+          .catch((err) => {
+            /* no-op; */
+            console.error(err);
+          });
+      });
+    }
+  }
+
   /**
    * Default React component render method
    */
   public render(): JSX.Element {
-    const { customFormatting, fieldCollection, isSaving } = this.state;
+    const { customFormatting, fieldCollection, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
+    
+    const customFormattingDisabled = this.props.useCustomFormatting === false;
 
     // Custom Formatting - Header
     let headerContent: JSX.Element;
-    if (customFormatting?.header) {
+    if (!customFormattingDisabled && customFormatting?.header) {
       headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true);
     }
 
     // Custom Formatting - Body
-    const bodySections = customFormatting?.body || [];
-    if (bodySections.length > 0) {
-      const specifiedFields: string[] = bodySections.reduce((prev, cur) => {
-        prev.push(...cur.fields);
-        return prev;
-      }, []);
-      const omittedFields = fieldCollection.filter(f => !specifiedFields.includes(f.columnInternalName)).map(f => f.columnInternalName);
-      bodySections[bodySections.length - 1].fields.push(...omittedFields);
+    const bodySections: ICustomFormattingBodySection[] = [];
+    if (!customFormattingDisabled && customFormatting?.body) {
+      bodySections.push(...customFormatting.body.slice());
+      if (bodySections.length > 0) {
+        const specifiedFields: string[] = bodySections.reduce((prev, cur) => {
+          prev.push(...cur.fields);
+          return prev;
+        }, []);
+        const omittedFields = fieldCollection.filter(f => !specifiedFields.includes(f.label)).map(f => f.label);
+        bodySections[bodySections.length - 1].fields.push(...omittedFields);
+      }
     }
 
     // Custom Formatting - Footer
     let footerContent: JSX.Element;
-    if (customFormatting?.footer) {
+    if (!customFormattingDisabled && customFormatting?.footer) {
       footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true);
     }
 
     return (
       <div>
+        {infoErrorMessages.map((ie, i) => (
+          <MessageBar key={i} messageBarType={ie.type}>{ie.message}</MessageBar>
+        ))}
         {fieldCollection.length === 0 ? (
           <div>
             <ProgressIndicator
@@ -150,20 +178,22 @@ export class DynamicForm extends React.Component<
         ) : (
           <div>
             {headerContent}
-            {bodySections.length > 0 && bodySections.map((section, i) => (
+            {(bodySections.length > 0 && !customFormattingDisabled) && bodySections
+              .filter(bs => bs.fields.filter(bsf => hiddenByFormula.indexOf(bsf) < 0).length > 0)
+              .map((section, i) => (
               <>
                 <h2 className={styles.sectionTitle}>{section.displayname}</h2>
                 <div className={styles.sectionFormFields}>
                   {section.fields.map((f, i) => (
                     <div key={f} className={styles.sectionFormField}>
-                      {this.renderField(fieldCollection.find(fc => fc.columnInternalName === f) as IDynamicFieldProps)}
+                      {this.renderField(fieldCollection.find(fc => fc.label === f) as IDynamicFieldProps)}
                     </div>
                   ))}
                 </div>
                 {i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
               </>
             ))}
-            {bodySections.length === 0 && fieldCollection.map((f, i) => this.renderField(f))}
+            {(bodySections.length === 0 || customFormattingDisabled) && fieldCollection.map((f, i) => this.renderField(f))}
             {footerContent}
             {!this.props.disabled && (
               <Stack className={styles.buttons} horizontal tokens={stackTokens}>
@@ -246,6 +276,13 @@ export class DynamicForm extends React.Component<
         validationErrorMessage={validationErrorMessage}
       />
     );
+  }
+
+  private updateFormMessages(type: MessageBarType, message: string): void { 
+    const { infoErrorMessages } = this.state;
+    const newMessages = infoErrorMessages.slice();
+    newMessages.push({ type, message });
+    this.setState({ infoErrorMessages: newMessages });
   }
 
   /** Triggered when the user submits the form. */
@@ -622,9 +659,12 @@ export class DynamicForm extends React.Component<
 
   /** Validation callback, used when form first loads (getListInformation) and following onChange */
   private performValidation = (skipFieldValueValidation?: boolean): void => {
-    const hiddenByFormula = this.evaluateColumnVisibilityFormulas();
+    const { useClientSideValidation, useFieldValidation } = this.props;
+    const clientSideValidationDisabled = useClientSideValidation === false;
+    const fieldValidationDisabled = useFieldValidation === false;
+    const hiddenByFormula: string[] = !clientSideValidationDisabled ? this.evaluateColumnVisibilityFormulas() : [];
     let validationErrors = { ...this.state.validationErrors };
-    if (!skipFieldValueValidation) validationErrors = this.evaluateFieldValueFormulas();
+    if (!skipFieldValueValidation && !fieldValidationDisabled) validationErrors = this.evaluateFieldValueFormulas();
     this.setState({ hiddenByFormula, validationErrors });
   }
 
@@ -684,7 +724,7 @@ export class DynamicForm extends React.Component<
     const { fieldCollection: fieldColFromState } = this.state;
     if (!fieldCollection) fieldCollection = fieldColFromState;
     return fieldCollection.reduce((prev, cur) => {
-      let value: unknown;
+      let value: unknown = cur.value;
       switch (cur.fieldType) {
         case "Lookup":
         case "Choice":
@@ -698,13 +738,16 @@ export class DynamicForm extends React.Component<
           break;
         case "Currency":
         case "Number":
-          if (cur.newValue !== null) value = Number(cur.newValue);
+          if (cur.value !== undefined && cur.value !== null) value = Number(cur.value);
+          if (cur.newValue !== undefined && cur.newValue !== null) value = Number(cur.newValue);
           break;
         case "URL":
+          if (cur.value !== undefined && cur.value !== null) value = cur.value.Url;
+          if (cur.newValue !== undefined && cur.newValue !== null) value = cur.newValue.Url;
           value = cur.newValue ? cur.newValue.Url : null;
           break;
         default:
-          value = cur.newValue;
+          value = cur.newValue || cur.value;
           break;
       }
       prev[cur.columnInternalName] = value;
@@ -729,8 +772,8 @@ export class DynamicForm extends React.Component<
       onListItemLoaded,
     } = this.props;
     let contentTypeId = this.props.contentTypeId;
-    // let contentTypeName: string;
-    // try {
+    
+    try {
 
       // Fetch form rendering information from SharePoint
       const listInfo = await this._spService.getListFormRenderInfo(listId);
@@ -785,7 +828,7 @@ export class DynamicForm extends React.Component<
       let item = null;
       let etag: string | undefined = undefined;
       if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
-        item = await spList.items.getById(listItemId).get();
+        item = await spList.items.getById(listItemId).get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
 
         if (onListItemLoaded) {
           await onListItemLoaded(item);
@@ -819,10 +862,11 @@ export class DynamicForm extends React.Component<
         }
       }, () => this.performValidation(true));
 
-    // } catch (error) {
-    //   console.log(`Error get field informations`, error);
-    //   return null;
-    // }
+    } catch (error) {
+      this.updateFormMessages(MessageBarType.error, 'An error occurred while loading: ' + error.message);
+      console.error(`An error occurred while loading DynamicForm`, error);
+      return null;
+    }
   }
 
   /**
@@ -858,6 +902,7 @@ export class DynamicForm extends React.Component<
         let defaultValue = null;
         let value = undefined;
         let stringValue = null;
+        const subPropertyValues: Record<string, unknown> = {};
         let richText = false;
         let dateFormat: DateFormat | undefined;
         let principalType = "";
@@ -912,7 +957,12 @@ export class DynamicForm extends React.Component<
               lookupField,
               this.webURL
             );
-            stringValue = value.map(dv => dv.key + ';#' + dv.name).join(';#');
+            stringValue = value?.map(dv => dv.key + ';#' + dv.name).join(';#');
+            if (item[field.InternalName + "Id"]) {
+              subPropertyValues.id = item[field.InternalName + "Id"];
+              subPropertyValues.lookupId = subPropertyValues.id;
+            }
+            subPropertyValues.lookupValue = value?.map(dv => dv.name);
           } else {
             value = [];
           }
@@ -931,7 +981,12 @@ export class DynamicForm extends React.Component<
               )) + ""
             );
             value = userEmails;
-            stringValue = userEmails.map(dv => dv.split('/').pop()).join(';');
+            stringValue = userEmails?.map(dv => dv.split('/').shift()).join(';');
+            if (item[field.InternalName + "Id"]) {
+              subPropertyValues.id = item[field.InternalName + "Id"];
+            }
+            subPropertyValues.title = userEmails?.map(dv => dv.split('/').pop())[0];
+            subPropertyValues.email = userEmails[0];
           } else {
             value = [];
           }
@@ -939,13 +994,13 @@ export class DynamicForm extends React.Component<
         }
         if (field.FieldType === "UserMulti") {
           if (item !== null) {
-            value = this._spService.getUsersUPNFromFieldValue(
+            value = await this._spService.getUsersUPNFromFieldValue(
               listId,
               listItemId,
               field.InternalName,
               this.webURL
             );
-            stringValue = value.map(dv => dv.split('/').pop()).join(';');
+            stringValue = value?.map(dv => dv.split('/').pop()).join(';');
           } else {
             value = [];
           }
@@ -968,7 +1023,7 @@ export class DynamicForm extends React.Component<
                 name: response.Label,
               });
               value = selectedTags;
-              stringValue = selectedTags.map(dv => dv.key + ';#' + dv.name).join(';#');
+              stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
             }
           } else {
             if (defaultValue !== "") {
@@ -1005,7 +1060,7 @@ export class DynamicForm extends React.Component<
               });
 
               value = selectedTags;
-              stringValue = selectedTags.map(dv => dv.key + ';#' + dv.name).join(';#');
+              stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
             }
           }
           if (defaultValue === "") defaultValue = null;
@@ -1045,8 +1100,10 @@ export class DynamicForm extends React.Component<
         }
 
         tempFields.push({
-          newValue: null,
+          value,
+          newValue: undefined,
           stringValue,
+          subPropertyValues,
           fieldTermSetId: termSetId,
           fieldAnchorId: anchorId,
           options: choices,

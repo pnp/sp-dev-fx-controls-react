@@ -175,7 +175,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           <Dropdown
             {...dropdownOptions}
             defaultSelectedKey={valueToDisplay ? undefined : defaultValue}
-            selectedKey={valueToDisplay?.key}
+            selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
             onChange={(e, option) => { this.onChange(option); }}
             onBlur={this.onBlur}
             errorMessage={errorText} />

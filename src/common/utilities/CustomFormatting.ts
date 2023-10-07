@@ -57,48 +57,53 @@ export default class CustomFormattingHelper {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public renderCustomFormatContent = (node: ICustomFormattingNode, context: any, rootEl: boolean = false): any => {
-        if (typeof node === "string" || typeof node === "number") return node;
-        // txtContent
-        let textContent: JSX.Element | string | undefined;
-        if (node.txtContent) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            textContent = this.evaluateCustomFormatContent(node.txtContent, context) as any;
-        }
-        // style 
-        const styleProperties = {} as React.CSSProperties;
-        if (node.style) {
-            for (const styleAttribute in node.style) {
-                if (node.style[styleAttribute]) {
-                    styleProperties[styleAttribute] = this.evaluateCustomFormatContent(node.style[styleAttribute], context) as string;
-                }
+        try {
+            if (typeof node === "string" || typeof node === "number") return node;
+            // txtContent
+            let textContent: JSX.Element | string | undefined;
+            if (node.txtContent) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                textContent = this.evaluateCustomFormatContent(node.txtContent, context) as any;
             }
-        }
-        // attributes
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const attributes = {} as any;
-        if (node.attributes) {
-            for (const attribute in node.attributes) {
-                if (node.attributes[attribute]) {
-                    let attributeName = attribute;
-                    if (attributeName === "class") attributeName = "className";
-                    attributes[attributeName] = this.evaluateCustomFormatContent(node.attributes[attribute], context) as string;
-                    if (attributeName === "className" && rootEl) {
-                        attributes[attributeName] = `${attributes[attributeName]} sp-field-customFormatter`;
+            // style 
+            const styleProperties = {} as React.CSSProperties;
+            if (node.style) {
+                for (const styleAttribute in node.style) {
+                    if (node.style[styleAttribute]) {
+                        styleProperties[styleAttribute] = this.evaluateCustomFormatContent(node.style[styleAttribute], context) as string;
                     }
                 }
             }
+            // attributes
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const attributes = {} as any;
+            if (node.attributes) {
+                for (const attribute in node.attributes) {
+                    if (node.attributes[attribute]) {
+                        let attributeName = attribute;
+                        if (attributeName === "class") attributeName = "className";
+                        attributes[attributeName] = this.evaluateCustomFormatContent(node.attributes[attribute], context) as string;
+                        if (attributeName === "className" && rootEl) {
+                            attributes[attributeName] = `${attributes[attributeName]} sp-field-customFormatter`;
+                        }
+                    }
+                }
+            }
+            // children 
+            let children: (JSX.Element | string | number | boolean | undefined)[] = [];
+            if (attributes.iconName) {
+                const icon = React.createElement(Icon, { iconName: attributes.iconName });
+                children.push(icon);
+            }
+            if (node.children) {
+                children = node.children.map(c => this.evaluateCustomFormatContent(c, context));
+            }
+            // render
+            const el = React.createElement(node.elmType, { style: styleProperties, ...attributes }, textContent, ...children);
+            return el;
+        } catch (error) {
+            console.error('Unable to render custom formatted content', error);
+            return null;
         }
-        // children 
-        let children: (JSX.Element | string | number | boolean | undefined)[] = [];
-        if (attributes.iconName) {
-            const icon = React.createElement(Icon, { iconName: attributes.iconName });
-            children.push(icon);
-        }
-        if (node.children) {
-            children = node.children.map(c => this.evaluateCustomFormatContent(c, context));
-        }
-        // render
-        const el = React.createElement(node.elmType, { style: styleProperties, ...attributes }, textContent, ...children);
-        return el;
     }
 }

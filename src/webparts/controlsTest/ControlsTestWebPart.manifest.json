@@ -26,6 +26,9 @@
       "officeFabricIconFontName": "Share",
       "properties": {
         "description": "Controls Test",
+        "dynamicFormCustomFormattingEnabled": true,
+        "dynamicFormClientSideValidationEnabled": true,
+        "dynamicFormFieldValidationEnabled" : true,
         "controlVisibility": {
           "all": false,
           "accessibleAccordion": false,

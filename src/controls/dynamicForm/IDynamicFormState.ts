@@ -1,8 +1,14 @@
 
 import { ISPField } from '../../common/SPEntities';
+import { MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import { ICustomFormattingBodySection, ICustomFormattingNode } from '../../common/utilities/ICustomFormatting';
 import { IDynamicFieldProps } from './dynamicField/IDynamicFieldProps';
 export interface IDynamicFormState {
+  infoErrorMessages: {
+    type: MessageBarType;
+    message: string;
+  }[];
+  /** Form and List Item data */
   fieldCollection: IDynamicFieldProps[];
   /** Validation Formulas set in List Column settings */
   validationFormulas: Record<string, Pick<ISPField, 'ValidationFormula' | 'ValidationMessage'>>;
