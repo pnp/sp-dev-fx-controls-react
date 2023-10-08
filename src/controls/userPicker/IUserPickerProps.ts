@@ -16,7 +16,7 @@ export interface IUserPickerProps {
   onRemoveSelectedUser?: (user: IUserInfo) => void;
   placeholder?: string;
   defaultSelectdUsers?: IUserInfo[];
-  theme: IReadonlyTheme | undefined;
+  theme?: IReadonlyTheme | undefined;
   context: BaseComponentContext;
   secondaryTextPropertyName?: "jobTitle" | "department" | "mail" | "officeLocation" | "mobilePhone" | "businessPhones" | "userPrincipalName"  ;
 }
