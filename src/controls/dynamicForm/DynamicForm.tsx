@@ -872,7 +872,6 @@ export class DynamicForm extends React.Component<
   };
 
   private isEmptyNumOrString(value: string | number): boolean {
-    if (value === null) return true;
     if ((value?.toString().trim().length || 0) === 0) return true;
   }
 }
