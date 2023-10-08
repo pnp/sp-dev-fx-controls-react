@@ -1,10 +1,6 @@
-import { Theme } from '@fluentui/react';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
-
+import { IUserPickerProps } from '../IUserPickerProps';
 import { IUserInfo } from './IUserInfo';
 
-export interface IGlobalState  {
-     context: BaseComponentContext
-     theme: Theme | undefined
+export interface IGlobalState extends IUserPickerProps{
      selectedUsers: IUserInfo[];
 }

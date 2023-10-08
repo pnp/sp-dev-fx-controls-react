@@ -1,58 +1,79 @@
 import * as React from 'react';
 
-import { Stack } from '@fluentui/react';
-import { TermStore } from '@microsoft/microsoft-graph-types';
+import {
+  Body1,
+  makeStyles,
+  shorthands,
+  tokens,
+} from '@fluentui/react-components';
+import { Person20Filled } from '@fluentui/react-icons';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 
-import { TermSetNavigation } from '../../../TermSetNavigation';
+import { UserPicker } from '../../../controls/userPicker';
+import { IUserInfo } from '../../../controls/userPicker/models/IUserInfo';
 
 export interface ITestControlProps {
   context: WebPartContext;
   themeVariant: any;
 }
 
+const useTestControlStyles =  makeStyles({
+
+  attributeContainer: {
+    width: "100%",
+    marginTop: "20px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    ...shorthands.gap('10px')
+  },
+
+  attributeHader: {
+    marginTop: "10px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "start",
+    alignItems: "center",
+    width: "100%",
+    ...shorthands.gap("10px"),
+  },
+  });
+
+
+
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
   const { themeVariant, context } = props;
+  const styles = useTestControlStyles();
 
-  const onSelect = React.useCallback((selected: TermStore.Term) => {
-    console.log(selected);
+  const onSelectedUsers = React.useCallback((users: IUserInfo[]) => {
+    console.log(users);
+
+  }, []);
+  const onRemovedUser = React.useCallback((user: IUserInfo) => {
+    console.log(user);
   }, []);
 
-  const onSelectedTermAction = React.useCallback((selected: TermStore.Term, option:string) => {
-    console.log(selected, option);
-  }, []);
+
 
   return (
     <>
-      <Stack>
-        <TermSetNavigation
-          context={context}
-          themeVariant={themeVariant}
-          termSetId={"289180a0-4a8b-4f08-ae6e-ea3fb1b669e2"}
-          showContextMenu={true}
-          contextMenuItems={[
-            {
-              key: "add",
-              text: "Add",
-              iconProps: { iconName: "add" },
-            },
-            {
-              key: "adit",
-              text: "Edit",
-              iconProps: { iconName: "Edit" },
-            },
-            {
-              key: "remove",
-              text: "Remove",
-              iconProps: { iconName: "delete" },
-            },
-          ]}
-          onSelected={onSelect}
-          onSelectedTermAction={onSelectedTermAction}
-        />
-      </Stack>
+      <UserPicker
+        context={context}
+        secondaryTextPropertyName="mail"
+        theme={themeVariant as any}
+        label={
+          <div className={styles.attributeHader}>
+            <Person20Filled color={tokens.colorBrandForeground1} />
+            <Body1>Select User</Body1>
+          </div>
+        }
+        placeholder={"Search User"}
+        onSelectedUsers={onSelectedUsers}
+        onRemoveSelectedUser={onRemovedUser}
+      />
     </>
   );
 };

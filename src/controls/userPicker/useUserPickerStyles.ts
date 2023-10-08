@@ -4,7 +4,7 @@ import {
   tokens,
 } from '@fluentui/react-components';
 
-export const useSelectUserStyles = makeStyles({
+export const useUserPickerStyles = makeStyles({
   container: {
     display: "flex",
     flexDirection: "row",

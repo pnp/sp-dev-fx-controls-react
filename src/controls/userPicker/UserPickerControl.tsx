@@ -9,6 +9,7 @@ import { useAtom } from 'jotai';
 import {
   Field,
   Input,
+  InputOnChangeData,
   PositioningImperativeRef,
 } from '@fluentui/react-components';
 
@@ -16,38 +17,52 @@ import { globalState } from './atoms/globalState';
 import { IUserPickerProps } from './IUserPickerProps';
 import { PopUpMenu } from './PopUpMenu';
 import { User } from './User';
-import { useSelectUserStyles } from './useSelectuserStyles';
+import { useUserPickerStyles } from './useUserPickerStyles';
 
 export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (props: IUserPickerProps) => {
-  const { userSelectionLimit, label, required, validationMessage, messageType, onSelectedUsers, onRemoveSelectedUser, defaultSelectdUsers } = props;
+  const {
+    userSelectionLimit,
+    label,
+    required,
+    validationMessage,
+    messageType,
+    onSelectedUsers,
+    onRemoveSelectedUser,
+    defaultSelectdUsers,
+    placeholder,
+    secondaryTextPropertyName,
+  } = props;
   const buttonRef = React.useRef<HTMLInputElement>(null);
   const positioningRef = React.useRef<PositioningImperativeRef>(null);
   const [open, setOpen] = React.useState(false);
   const [appGlobalState, setAppGlobalState] = useAtom(globalState);
-  const {  selectedUsers } = appGlobalState;
+  const { selectedUsers } = appGlobalState;
   const [searchUser, setSearchUser] = React.useState<string>("");
   const containerRef = React.useRef<HTMLDivElement>(null);
   /*  const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void; */
 
-  const styles = useSelectUserStyles();
+  const styles = useUserPickerStyles();
   console.log(styles);
+
+  React.useEffect(() => {
+    setAppGlobalState({ ...appGlobalState, ...props });
+  }, [props]);
 
   React.useEffect(() => {
     if (buttonRef.current) {
       positioningRef.current?.setTarget(buttonRef.current);
     }
-
   }, [buttonRef, positioningRef]);
 
- React.useEffect(() => {
+  React.useEffect(() => {
     if (defaultSelectdUsers) {
       setAppGlobalState({ ...appGlobalState, selectedUsers: defaultSelectdUsers });
     }
- }, []);
+  }, []);
 
   const hasSelectedUsers = React.useMemo(() => {
-    if (selectedUsers.length > 0){
-     if ( onSelectedUsers) onSelectedUsers(selectedUsers);
+    if (selectedUsers.length > 0) {
+      if (onSelectedUsers) onSelectedUsers(selectedUsers);
       return true;
     }
   }, [selectedUsers]);
@@ -68,14 +83,13 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
   );
 
   const RenderSelectedUsers = React.useCallback((): JSX.Element => {
-
     return (
       <>
         {selectedUsers.map((user) => {
           return (
             <>
               <div className={styles.userItem} key={user.mail}>
-                <User userId={user.mail ?? ""} onRemove={onRemove} />
+                <User userId={user.mail ?? ""} onRemove={onRemove} secondaryTextPropertyName={secondaryTextPropertyName}/>
               </div>
             </>
           );
@@ -86,59 +100,58 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
 
   return (
     <>
-    <div style={{width: '100%'}} ref={containerRef}>
-      <Field
-        label={label}
-        required={required ?? false}
-        validationMessage={validationMessage ?? undefined}
-        validationState={messageType}
-      >
-        <div className={styles.selectUserMainContainer}>
-          {hasSelectedUsers ? (
-
-            <div className={styles.selectedUserContainer}>
-              <RenderSelectedUsers />
-            </div>
-          ) : null}
-          {showInput ? (
-            <div className={styles.inputContainer}>
-              <Input
-                value={searchUser}
-                appearance="underline"
-                style={{ borderWidth: 0, width: "100%" }}
-                ref={buttonRef}
-                type="text"
-                placeholder="enter user name"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  console.log(event.target.value);
-
-                  if (event.target.value.length === 0) {
-                    setSearchUser("");
-                    setOpen(false);
-                  } else {
-                    setSearchUser(event.target.value);
-                    if (event.target.value.length >= 2) {
-                      setOpen(true);
-                      buttonRef.current?.focus();
+      <div style={{ width: "100%" }} ref={containerRef}>
+        <Field
+          label={label}
+          required={required ?? false}
+          validationMessage={validationMessage ?? undefined}
+          validationState={messageType}
+        >
+          <div className={styles.selectUserMainContainer}>
+            {hasSelectedUsers ? (
+              <div className={styles.selectedUserContainer}>
+                <RenderSelectedUsers />
+              </div>
+            ) : null}
+            {showInput ? (
+              <div className={styles.inputContainer}>
+                <Input
+                  value={searchUser}
+                  appearance="underline"
+                  style={{ borderWidth: 0, width: "100%" }}
+                  ref={buttonRef}
+                  type="text"
+                  placeholder={placeholder ?? "Search User"}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+                    setSearchUser(data.value);
+                    if (data.value.length === 0) {
+                      setSearchUser("");
+                      setOpen(false);
+                    } else {
+                      if (data.value.length >= 2) {
+                        setOpen(true);
+                      } else {
+                        setOpen(false);
+                      }
                     }
-                  }
-                }}
-              />
-              {open ? (
-                <PopUpMenu
-                 target={containerRef}
-                  searchValue={searchUser}
-                  isOpen={open}
-                  onDismiss={(open: boolean) => {
-                    setOpen(false);
-                    setSearchUser("");
                   }}
                 />
-              ) : null}
-            </div>
-          ) : null}
-        </div>
-      </Field>
+                {open ? (
+                  <PopUpMenu
+                    secondaryTextPropertyName={secondaryTextPropertyName}
+                    target={containerRef}
+                    searchValue={searchUser}
+                    isOpen={open}
+                    onDismiss={(open: boolean) => {
+                      setOpen(false);
+                      setSearchUser("");
+                    }}
+                  />
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        </Field>
       </div>
     </>
   );

@@ -13,11 +13,11 @@ import {
   PresenceBadgeStatus,
 } from '@fluentui/react-components';
 import { Presence } from '@microsoft/microsoft-graph-types';
-import { LivePersona } from '@pnp/spfx-controls-react/lib/LivePersona';
 
-import { globalState } from '../../atoms/globalState';
-import { useGraphUserAPI } from '../../hooks/useGraphUserAPI';
-import { IUserInfo } from '../../models/IUserInfo';
+import { LivePersona } from '../../LivePersona';
+import { globalState } from '../atoms/globalState';
+import { useGraphUserAPI } from '../hooks/useGraphUserAPI';
+import { IUserInfo } from '../models/IUserInfo';
 import { useUserCardStyles } from './useUserCardStyles';
 
 /* import { MgtTemplateProps, Person } from "@microsoft/mgt-react";
@@ -27,18 +27,40 @@ export interface IuserCardProps {
   showOverCard?: boolean;
   onSelected?: (user: IUserInfo) => void;
   className?: string;
+  secondaryTextPropertyName?: "jobTitle" | "department" | "mail" | "officeLocation" | "mobilePhone" | "businessPhones" | "userPrincipalName"  ;
 }
 
 export const UserCard: React.FunctionComponent<IuserCardProps> = (props: React.PropsWithChildren<IuserCardProps>) => {
   const [appGlobalState] = useAtom(globalState);
   const { context } = appGlobalState;
 
-  const { userId, showOverCard, onSelected, className } = props;
+  const { userId, showOverCard, onSelected, className, secondaryTextPropertyName} = props;
   const { getUserById, getUserPresence } = useGraphUserAPI(context);
   const [user, setUser] = React.useState<IUserInfo>();
    const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const styles = useUserCardStyles();
+
+  const getSecondaryText = React.useCallback((user: IUserInfo) => {
+    switch (secondaryTextPropertyName) {
+      case "jobTitle":
+        return user?.jobTitle;
+      case "department":
+        return user?.department;
+      case "mail":
+        return user?.mail;
+      case "officeLocation":
+        return user?.officeLocation;
+      case "mobilePhone":
+        return user?.mobilePhone;
+      case "businessPhones":
+        return user?.businessPhones?.join(",");
+      case "userPrincipalName":
+        return user?.userPrincipalName;
+      default:
+        return "";
+    }
+  }, [ user?.jobTitle, user?.department, user?.mail, user?.officeLocation, user?.mobilePhone, user?.businessPhones, user?.userPrincipalName]);
 
   const availability: PresenceBadgeStatus = React.useMemo(() => {
     const { presence } = user || {};
@@ -103,7 +125,7 @@ export const UserCard: React.FunctionComponent<IuserCardProps> = (props: React.P
               <div className={styles.root}>
                 <Persona
                   name={user?.displayName ?? "No Name"}
-                  secondaryText={user?.jobTitle ?? "No Job Title"}
+                  secondaryText={getSecondaryText(user as IUserInfo) }
                   presence={{ status: availability }}
                   avatar={{
                     image: {

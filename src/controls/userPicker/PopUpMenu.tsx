@@ -7,18 +7,20 @@ import { pullAllBy } from 'lodash';
 import { Card } from '@fluentui/react-components';
 import { User as IUser } from '@microsoft/microsoft-graph-types';
 
-import { globalState } from '../../atoms/globalState';
-import { useGraphUserAPI } from '../../hooks/useGraphUserAPI';
-import { useOnClickOutside } from '../../hooks/useOnClickOutside';
-import { IUserInfo } from '../../models/IUserInfo';
-import { UserCard } from '../userCard/UserCard';
-import { useSelectUserStyles } from './useSelectuserStyles';
+import { globalState } from './atoms/globalState';
+import { useGraphUserAPI } from './hooks/useGraphUserAPI';
+import { useOnClickOutside } from './hooks/useOnClickOutside';
+import { IUserInfo } from './models/IUserInfo';
+import { NoUser } from './userCard/NoUser';
+import { UserCard } from './userCard/UserCard';
+import { useUserPickerStyles } from './useUserPickerStyles';
 
 interface IPopUpMenuProps {
   isOpen: boolean;
   searchValue: string;
   onDismiss: (open?: boolean) => void;
   target: React.RefObject<HTMLDivElement>;
+  secondaryTextPropertyName?: "jobTitle" | "department" | "mail" | "officeLocation" | "mobilePhone" | "businessPhones" | "userPrincipalName";
 }
 
 export const PopUpMenu = (props: IPopUpMenuProps): JSX.Element => {
@@ -27,10 +29,9 @@ export const PopUpMenu = (props: IPopUpMenuProps): JSX.Element => {
   const { context, selectedUsers } = appGlobalState;
   const [renderUsers, setRenderUsers] = React.useState<JSX.Element[]>([]);
   const { getUserByName } = useGraphUserAPI(context);
-  const styles = useSelectUserStyles();
+  const styles = useUserPickerStyles();
 
   useOnClickOutside(true, target, () => onDismiss(false));
-
 
   const onSelected = React.useCallback((user: IUserInfo) => {
     console.log(user);
@@ -39,6 +40,7 @@ export const PopUpMenu = (props: IPopUpMenuProps): JSX.Element => {
   }, []);
 
   React.useEffect(() => {
+    if (searchValue.length < 2) return;
     setTimeout(async () => {
       setRenderUsers([]);
       const users: IUser[] = (await getUserByName(searchValue)) ?? [];
@@ -53,7 +55,15 @@ export const PopUpMenu = (props: IPopUpMenuProps): JSX.Element => {
               showOverCard={false}
               onSelected={onSelected}
               className={styles.userCardStyles}
+              secondaryTextPropertyName={props.secondaryTextPropertyName}
             />
+          </>
+        );
+      }
+      if (usersToRender.length === 0) {
+        usersToRender.push(
+          <>
+            <NoUser />
           </>
         );
       }

@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  BaseComponentContext,
+  IReadonlyTheme,
+} from '@microsoft/sp-component-base';
+
 import { IUserInfo } from './models/IUserInfo';
 
 export interface IUserPickerProps {
@@ -10,4 +16,7 @@ export interface IUserPickerProps {
   onRemoveSelectedUser?: (user: IUserInfo) => void;
   placeholder?: string;
   defaultSelectdUsers?: IUserInfo[];
+  theme: IReadonlyTheme | undefined;
+  context: BaseComponentContext;
+  secondaryTextPropertyName?: "jobTitle" | "department" | "mail" | "officeLocation" | "mobilePhone" | "businessPhones" | "userPrincipalName"  ;
 }
