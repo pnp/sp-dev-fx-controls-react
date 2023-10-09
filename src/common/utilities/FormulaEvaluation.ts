@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IContext } from "../Interfaces";
 import { ASTNode, ArrayLiteralNode, ArrayNodeValue, Context, Token, TokenType, ValidFuncNames } from "./FormulaEvaluation.types";
 
@@ -31,7 +30,7 @@ export class FormulaEvaluation {
     }
 
     /** Evaluates a formula expression and returns the result, with optional context object for variables */
-    public evaluate(expression: string, context: Context = {}): any {
+    public evaluate(expression: string, context: Context = {}): boolean | string | number | ArrayNodeValue | object {
         context.me = this._meEmail;
         context.today = new Date();
         const tokens: Token[] = this.tokenize(expression, context);
@@ -240,7 +239,8 @@ export class FormulaEvaluation {
         return stack[0] as ASTNode;
     }
 
-    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | ArrayNodeValue | string | number, context: Context = {}): any {
+    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | ArrayNodeValue | string | number, context: Context = {}): 
+        boolean | number | string | ArrayNodeValue | object {
 
         if (!node) return 0;
 
@@ -293,25 +293,11 @@ export class FormulaEvaluation {
         // OPERATOR nodes have their OPERANDS evaluated recursively, with the operator applied to the results
         if (node.type === "OPERATOR" && operatorTypes.includes(node.value as string) && node.operands) {
 
-            const leftValue = this.evaluateASTNode(node.operands[0], context);
-            const rightValue = this.evaluateASTNode(node.operands[1], context);
+            const leftValue = this.evaluateASTNode(node.operands[0], context) as string | number;
+            const rightValue = this.evaluateASTNode(node.operands[1], context) as string | number;
 
-            if (typeof leftValue === "string" || typeof rightValue === "string") {
-                // Throw an error if the operator is not valid for strings
-                if (["-", "*", "/"].includes(node.value as string)) {
-                    throw new Error(`Invalid operation ${node.value} with string operand.`);
-                }
-                // Concatenate strings if either operand is a string
-                if (node.value === "+") {
-                    return (leftValue || "").toString() + (rightValue || "").toString();
-                }
-            }
-
+            // These operators are valid for both string and number operands
             switch (node.value) {
-                case "+": return leftValue + rightValue;
-                case "-": return leftValue - rightValue;
-                case "*": return leftValue * rightValue;
-                case "/": return leftValue / rightValue;
                 case "==": return leftValue === rightValue ? 1 : 0;
                 case "!=": return leftValue !== rightValue ? 1 : 0;
                 case "<>": return leftValue !== rightValue ? 1 : 0;
@@ -321,6 +307,26 @@ export class FormulaEvaluation {
                 case "<=": return leftValue <= rightValue ? 1 : 0;
                 case "&&": return (leftValue !== 0 && rightValue !== 0) ? 1 : 0;
                 case "||": return (leftValue !== 0 || rightValue !== 0) ? 1 : 0;
+            }
+
+            if (typeof leftValue === "string" || typeof rightValue === "string") {
+                // Concatenate strings if either operand is a string
+                if (node.value === "+") {
+                    const concatString: string = (leftValue || "").toString() + (rightValue || "").toString();
+                    return concatString;
+                } else {
+                    // Throw an error if the operator is not valid for strings
+                    throw new Error(`Invalid operation ${node.value} with string operand.`);
+                }
+            }
+
+            // Both operands will be numbers at this point
+            switch (node.value) {
+                case "+": return leftValue + rightValue;
+                case "-": return leftValue - rightValue;
+                case "*": return leftValue * rightValue;
+                case "/": return leftValue / rightValue;
+                
                 case "%": return leftValue % rightValue;
                 case "&": return leftValue & rightValue;
                 case "|": return leftValue | rightValue;
@@ -330,7 +336,10 @@ export class FormulaEvaluation {
         // Evaluation of function nodes is handled here:
 
         if (node.type === "FUNCTION" && node.operands) {
-            const funcArgs = node.operands.map(arg => this.evaluateASTNode(arg, context));
+
+            // Evaluate operands recursively - casting to any here to allow for any type of operand
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const funcArgs = node.operands.map(arg => this.evaluateASTNode(arg, context)) as any[];
 
             switch (node.value) {
 

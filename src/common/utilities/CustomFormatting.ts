@@ -4,6 +4,8 @@ import { FormulaEvaluation } from "./FormulaEvaluation";
 import { ASTNode, Context } from "./FormulaEvaluation.types";
 import { ICustomFormattingExpressionNode, ICustomFormattingNode } from "./ICustomFormatting";
 
+type CustomFormatResult = string | number | boolean | JSX.Element | ICustomFormattingNode;
+
 /**
  * A class that provides helper methods for custom formatting
  * See: https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/formatting-syntax-reference
@@ -47,7 +49,7 @@ export default class CustomFormattingHelper {
      * @param context A context object containing values / variables to be used in the evaluation
      * @returns 
      */
-    private evaluateCustomFormatContent = (content: ICustomFormattingExpressionNode | ICustomFormattingNode | string | number | boolean, context: Context): JSX.Element | string | number | boolean => {
+    private evaluateCustomFormatContent = (content: ICustomFormattingExpressionNode | ICustomFormattingNode | string | number | boolean, context: Context): CustomFormatResult => {
         
         // If content is a string or number, it is a literal value and should be returned as-is
         if ((typeof content === "string" && content.charAt(0) !== "=") || typeof content === "number") return content;
@@ -55,7 +57,7 @@ export default class CustomFormattingHelper {
         // If content is a string beginning with '=' it is a formula/expression, and should be evaluated
         if (typeof content === "string" && content.charAt(0) === "=") {
             const result = this._formulaEvaluator.evaluate(content.substring(1), context);
-            return result;
+            return result as CustomFormatResult;
         }
         
         // If content is an object, it is either further custom formatting described by an ICustomFormattingNode,
@@ -74,9 +76,9 @@ export default class CustomFormattingHelper {
                 const astNode = this.convertCustomFormatExpressionNodes(content as ICustomFormattingExpressionNode);
                 const result = this._formulaEvaluator.evaluateASTNode(astNode, context);
                 if (typeof result === "object" && Object.prototype.hasOwnProperty.call(result, "elmType")) {
-                    return this.renderCustomFormatContent(result, context);
+                    return this.renderCustomFormatContent(result as ICustomFormattingNode, context);
                 }
-                return result;
+                return result as CustomFormatResult;
     
             }
         } 
@@ -94,7 +96,7 @@ export default class CustomFormattingHelper {
             
             // Custom formatting nodes / elements may have a txtContent property, which represents the inner
             // content of a HTML element. This can be a string literal, or another expression to be evaluated:
-            let textContent: JSX.Element | string | number | boolean | undefined;
+            let textContent: CustomFormatResult | undefined;
             if (node.txtContent) {
                 textContent = this.evaluateCustomFormatContent(node.txtContent, context);
             }
@@ -135,7 +137,7 @@ export default class CustomFormattingHelper {
             }
             
             // Custom formatting nodes / elements may have children. These are likely to be further custom formatting
-            let children: (JSX.Element | string | number | boolean | undefined)[] = [];
+            let children: (CustomFormatResult)[] = [];
             
             // If the node has an iconName property, we'll render an Icon component as the first child.
             // SharePoint uses CSS to apply the icon in a ::before rule, but we can't count on the global selector for iconName
