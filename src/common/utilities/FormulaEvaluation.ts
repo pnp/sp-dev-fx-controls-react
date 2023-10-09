@@ -1,7 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { sp } from "@pnp/sp";
 import { IContext } from "../Interfaces";
-import { ASTNode, ArrayLiteralNode, Token, TokenType, ValidFuncNames } from "./FormulaEvaluation.types";
+import { ASTNode, ArrayLiteralNode, ArrayNodeValue, Context, Token, TokenType, ValidFuncNames } from "./FormulaEvaluation.types";
+
+const operatorTypes = ["+", "-", "*", "/", "==", "!=", "<>", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|", "?", ":"];
+
+/** Each token pattern matches a particular token type. The tokenizer looks for matches in this order. */
+const patterns: [RegExp, TokenType][] = [
+    [/^\[\$?[a-zA-Z_][a-zA-Z_0-9.]*\]/, "VARIABLE"],     // [$variable]
+    [/^@[a-zA-Z_][a-zA-Z_0-9.]*/, "VARIABLE"],           // @variable
+    [/^[0-9]+(?:\.[0-9]+)?/, "NUMBER"],                 // Numeric literals
+    [/^"([^"]*)"/, "STRING"],                           // Match double-quoted strings
+    [/^'([^']*)'/, "STRING"],                           // Match single-quoted strings
+    [/^\[[^\]]*\]/, "ARRAY"],                           // Array literals
+    [new RegExp(`^(${ValidFuncNames.join('|')})\\(`), "FUNCTION"], // Functions or other words
+    [/^(true|false)/, "BOOLEAN"],                       // Boolean literals
+    [/^\w+/, "WORD"],                                   // Other words, checked against valid variables
+    [/^&&|^\|\||^==|^<>/, "OPERATOR"],                        // Operators and special characters (match double first)
+    [/^[+\-*/<>=%!&|?:,()[\]]/, "OPERATOR"],           // Operators and special characters
+];
 
 export class FormulaEvaluation {
     private webUrl: string;
@@ -9,16 +25,15 @@ export class FormulaEvaluation {
     
     constructor(context?: IContext, webUrlOverride?: string) {
         if (context) {
-            sp.setup({ pageContext: context.pageContext });
             this._meEmail = context.pageContext.user.email;
         }
         this.webUrl = webUrlOverride || context?.pageContext.web.absoluteUrl || '';
     }
 
     /** Evaluates a formula expression and returns the result, with optional context object for variables */
-    public evaluate(expression: string, context: { [key: string]: any } = {}): any {
-        context['me'] = this._meEmail;
-        context['today'] = new Date();
+    public evaluate(expression: string, context: Context = {}): any {
+        context.me = this._meEmail;
+        context.today = new Date();
         const tokens: Token[] = this.tokenize(expression, context);
         const postfix: Token[] = this.shuntingYard(tokens);
         const ast: ASTNode = this.buildAST(postfix);
@@ -26,22 +41,7 @@ export class FormulaEvaluation {
     }
 
     /** Tokenizes an expression into a list of tokens (primatives, operators, variables, function names, arrays etc) */
-    public tokenize(expression: string, context: { [key: string]: any } = {}): Token[] {
-        // Each pattern captures a different token type
-        // and are matched in order
-        const patterns: [RegExp, TokenType][] = [
-            [/^\[\$?[a-zA-Z_][a-zA-Z_0-9.]*\]/, "VARIABLE"],     // [$variable]
-            [/^@[a-zA-Z_][a-zA-Z_0-9.]*/, "VARIABLE"],           // @variable
-            [/^[0-9]+(?:\.[0-9]+)?/, "NUMBER"],                 // Numeric literals
-            [/^"([^"]*)"/, "STRING"],                           // Match double-quoted strings
-            [/^'([^']*)'/, "STRING"],                           // Match single-quoted strings
-            [/^\[[^\]]*\]/, "ARRAY"],                           // Array literals
-            [new RegExp(`^(${ValidFuncNames.join('|')})\\(`), "FUNCTION"], // Functions or other words
-            [/^(true|false)/, "BOOLEAN"],                       // Boolean literals
-            [/^\w+/, "WORD"],                                   // Other words, checked against valid variables
-            [/^&&|^\|\||^==|^<>/, "OPERATOR"],                        // Operators and special characters (match double first)
-            [/^[+\-*/<>=%!&|?:,()[\]]/, "OPERATOR"],           // Operators and special characters
-        ];
+    public tokenize(expression: string, context: Context = {}): Token[] {
 
         const tokens: Token[] = [];
         let i = 0;
@@ -98,34 +98,6 @@ export class FormulaEvaluation {
 
     public shuntingYard(tokens: Token[]): Token[] {
 
-        /** Returns a precedence value for a token or operator */
-        function getPrecedence(op: string): { precedence: number, associativity: "left" | "right" } {
-            // If the operator is a valid function name, return a high precedence value
-            if (ValidFuncNames.indexOf(op) >= 0) return { precedence: 7, associativity: "left" };
-            // Otherwise, return the precedence value for the operator
-            const precedence: { [key: string]: { precedence: number, associativity: "left" | "right" } } = {
-                "+": { precedence: 4, associativity: "left" },
-                "-": { precedence: 4, associativity: "left" },
-                "*": { precedence: 5, associativity: "left" },
-                "/": { precedence: 5, associativity: "left" },
-                "%": { precedence: 5, associativity: "left" },
-                ">": { precedence: 3, associativity: "left" },
-                "<": { precedence: 3, associativity: "left" },
-                "==": { precedence: 3, associativity: "left" },
-                "!=": { precedence: 3, associativity: "left" },
-                "<>": { precedence: 3, associativity: "left" },
-                ">=": { precedence: 3, associativity: "left" },
-                "<=": { precedence: 3, associativity: "left" },
-                "&&": { precedence: 2, associativity: "left" },
-                "||": { precedence: 1, associativity: "left" },
-                "?": { precedence: 6, associativity: "left" },
-                ":": { precedence: 6, associativity: "left" },
-                //"(": { precedence: 0, associativity: "left" },
-                ",": { precedence: 0, associativity: "left" },
-            };
-            return precedence[op] ?? { precedence: 8, associativity: "left" };
-        }
-
         /** Stores re-ordered tokens to be returned by this algorithm / method */
         const output: Token[][] = [[]];
 
@@ -178,11 +150,11 @@ export class FormulaEvaluation {
                     stack[parenDepth].push(token);
                 } else {
                     // When an operator is found, items are popped from stack to output until an operator with lower precedence is found
-                    const currentTokenPrecedence = getPrecedence(token.value.toString());
+                    const currentTokenPrecedence = this.getPrecedence(token.value.toString());
 
                     while (stack[parenDepth].length > 0) {
                         const topStackIsOperator = stack[parenDepth][stack[parenDepth].length - 1].type === "OPERATOR" || stack[parenDepth][stack[parenDepth].length - 1].type === "UNARY_MINUS";
-                        const topStackPrecedence = getPrecedence(stack[parenDepth][stack[parenDepth].length - 1].value.toString());
+                        const topStackPrecedence = this.getPrecedence(stack[parenDepth][stack[parenDepth].length - 1].value.toString());
 
                         if (stack[parenDepth][stack[parenDepth].length - 1].value === "(") break;
                         if (topStackIsOperator && (
@@ -215,33 +187,6 @@ export class FormulaEvaluation {
         return finalOutput;
     }
 
-    private _getFnArity(fnName: string): number {
-        switch (fnName) {
-            case "if":
-            case "substring":
-            case "replace":
-            case "replaceAll":
-            case "padStart":
-            case "padEnd":
-            case "ternary":
-                return 3;
-            case "pow":
-            case "indexOf":
-            case "lastIndexOf":
-            case "join":
-            case "startsWith":
-            case "endsWith":
-            case "split":
-            case "addDays":
-            case "addMinutes":
-            case "appendTo":
-            case "removeFrom":
-                return 2;
-            default:
-                return 1;
-        }
-    }
-
     public buildAST(postfixTokens: Token[]): ASTNode {
 
         // Tokens are arranged on a stack/array of node objects 
@@ -257,7 +202,7 @@ export class FormulaEvaluation {
                 stack.push({ type: operand.type, value: -numericValue });
             } else if (token.type === "OPERATOR") {
                 // Operators have two operands, we pop them from the stack and push an object representing the operation
-                if (["+", "-", "*", "/", "==", "!=", "<>", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|", "?", ":"].includes(token.value as string)) {
+                if (operatorTypes.includes(token.value as string)) {
                     if (token.value === "?") {
                         // Ternary operator has three operands, and left and right operators should be top of stack
                         const colonOperator = stack.pop() as ASTNode;
@@ -295,18 +240,25 @@ export class FormulaEvaluation {
         return stack[0] as ASTNode;
     }
 
-    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | string | number, context: { [key: string]: any } = {}): any {
+    public evaluateASTNode(node: ASTNode | ArrayLiteralNode | ArrayNodeValue | string | number, context: Context = {}): any {
 
         if (!node) return 0;
 
+        // If node is an object with a type and value property, it is an ASTNode and should be evaluated recursively
+        // otherwise it may actually be an object value that we need to return (as is the case with custom formatting)
         if (typeof node === "object" && !(Object.prototype.hasOwnProperty.call(node, 'type') && Object.prototype.hasOwnProperty.call(node, 'value'))) {
             return node;
         }
 
-        // Each element in an array literal is evaluated recursively
+        // Each element in an ArrayLiteralNode is evaluated recursively
         if (node instanceof ArrayLiteralNode) {
             const evaluatedElements = (node as ArrayLiteralNode).elements.map(element => this.evaluateASTNode(element, context));
             return evaluatedElements;
+        }
+
+        // If node is an actual array, it has likely already been transformed above
+        if (Array.isArray(node)) {
+            return node;
         }
 
         // Number and string literals are returned as-is
@@ -339,7 +291,7 @@ export class FormulaEvaluation {
         }
 
         // OPERATOR nodes have their OPERANDS evaluated recursively, with the operator applied to the results
-        if (node.type === "OPERATOR" && ["+", "-", "*", "/", "==", "!=", "<>", ">", "<", ">=", "<=", "&&", "||", "%", "&", "|"].includes(node.value as string) && node.operands) {
+        if (node.type === "OPERATOR" && operatorTypes.includes(node.value as string) && node.operands) {
 
             const leftValue = this.evaluateASTNode(node.operands[0], context);
             const rightValue = this.evaluateASTNode(node.operands[1], context);
@@ -625,6 +577,63 @@ export class FormulaEvaluation {
         /[+\\-*///<>=%!&|?:,()\\[\\]]/ matches operators.
         
         return pattern.test(expression);
+    }
+
+    /** Returns a precedence value for a token or operator */
+    private getPrecedence(op: string): { precedence: number, associativity: "left" | "right" } {
+        
+        // If the operator is a valid function name, return a high precedence value
+        if (ValidFuncNames.indexOf(op) >= 0) return { precedence: 7, associativity: "left" };
+        
+        // Otherwise, return the precedence value for the operator
+        const precedence: { [key: string]: { precedence: number, associativity: "left" | "right" } } = {
+            "+": { precedence: 4, associativity: "left" },
+            "-": { precedence: 4, associativity: "left" },
+            "*": { precedence: 5, associativity: "left" },
+            "/": { precedence: 5, associativity: "left" },
+            "%": { precedence: 5, associativity: "left" },
+            ">": { precedence: 3, associativity: "left" },
+            "<": { precedence: 3, associativity: "left" },
+            "==": { precedence: 3, associativity: "left" },
+            "!=": { precedence: 3, associativity: "left" },
+            "<>": { precedence: 3, associativity: "left" },
+            ">=": { precedence: 3, associativity: "left" },
+            "<=": { precedence: 3, associativity: "left" },
+            "&&": { precedence: 2, associativity: "left" },
+            "||": { precedence: 1, associativity: "left" },
+            "?": { precedence: 6, associativity: "left" },
+            ":": { precedence: 6, associativity: "left" },
+            ",": { precedence: 0, associativity: "left" },
+        };
+
+        return precedence[op] ?? { precedence: 8, associativity: "left" };
+    }
+
+    private _getFnArity(fnName: string): number {
+        switch (fnName) {
+            case "if":
+            case "substring":
+            case "replace":
+            case "replaceAll":
+            case "padStart":
+            case "padEnd":
+            case "ternary":
+                return 3;
+            case "pow":
+            case "indexOf":
+            case "lastIndexOf":
+            case "join":
+            case "startsWith":
+            case "endsWith":
+            case "split":
+            case "addDays":
+            case "addMinutes":
+            case "appendTo":
+            case "removeFrom":
+                return 2;
+            default:
+                return 1;
+        }
     }
 
     private _getSharePointThumbnailUrl(imageUrl: string): string {

@@ -37,6 +37,7 @@ import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode 
 import { cloneDeep, isEqual } from "lodash";
 import { IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
+import { Context } from "../../common/utilities/FormulaEvaluation.types";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -146,7 +147,7 @@ export class DynamicForm extends React.Component<
     // Custom Formatting - Header
     let headerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.header) {
-      headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true);
+      headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true) as JSX.Element;
     }
 
     // Custom Formatting - Body
@@ -166,7 +167,7 @@ export class DynamicForm extends React.Component<
     // Custom Formatting - Footer
     let footerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.footer) {
-      footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true);
+      footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true) as JSX.Element;
     }
 
     return (
@@ -752,11 +753,11 @@ export class DynamicForm extends React.Component<
    * @param fieldCollection Optional. Could be used to compare field values in state with previous state.
    * @returns 
    */
-  private getFormValuesForValidation = (fieldCollection?: IDynamicFieldProps[]): Record<string, unknown> => {
+  private getFormValuesForValidation = (fieldCollection?: IDynamicFieldProps[]): Context => {
     const { fieldCollection: fieldColFromState } = this.state;
     if (!fieldCollection) fieldCollection = fieldColFromState;
     return fieldCollection.reduce((prev, cur) => {
-      let value: unknown = cur.value;
+      let value: boolean | number | object | string | undefined = cur.value;
       switch (cur.fieldType) {
         case "Lookup":
         case "Choice":
@@ -789,7 +790,7 @@ export class DynamicForm extends React.Component<
         });
       }
       return prev;
-    }, {} as Record<string, unknown>);
+    }, {} as Context);
   }
 
   /**

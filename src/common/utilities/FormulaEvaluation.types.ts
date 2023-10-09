@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type TokenType = "FUNCTION" | "STRING" | "NUMBER" | "UNARY_MINUS" | "BOOLEAN" | "WORD" | "OPERATOR" | "ARRAY" | "VARIABLE";
 
 export class Token {
@@ -15,16 +14,17 @@ export class Token {
     }
 }
 
+export type ArrayNodeValue = (string | number | ArrayNodeValue)[];
 export class ArrayLiteralNode {
-    elements: (string | number | ArrayLiteralNode)[];
+    elements: ArrayNodeValue;
 
-    constructor(elements: (string | number | ArrayLiteralNode)[]) {
+    constructor(elements: ArrayNodeValue) {
         this.elements = elements; // Store array elements
     }
 
-    evaluate(): any {
+    evaluate(): ArrayNodeValue {
         // Evaluate array elements and return the array
-        const evaluatedElements: any = this.elements.map((element) => {
+        const evaluatedElements = this.elements.map((element) => {
             if (element instanceof ArrayLiteralNode) {
                 return element.evaluate();
             } else {
@@ -51,7 +51,7 @@ export type ASTNode = {
     operands?: (ASTNode | ArrayLiteralNode)[];
 };
 
-export type Context = { [key: string]: any };
+export type Context = { [key: string]: boolean | number | object | string | undefined };
 
 export const ValidFuncNames = [
     "if",

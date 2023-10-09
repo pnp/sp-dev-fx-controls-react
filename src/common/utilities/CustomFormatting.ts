@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Icon } from "office-ui-fabric-react";
 import { FormulaEvaluation } from "./FormulaEvaluation";
-import { ASTNode } from "./FormulaEvaluation.types";
+import { ASTNode, Context } from "./FormulaEvaluation.types";
 import { ICustomFormattingExpressionNode, ICustomFormattingNode } from "./ICustomFormatting";
 
 /**
@@ -13,13 +13,18 @@ export default class CustomFormattingHelper {
     private _formulaEvaluator: FormulaEvaluation;
 
     /**
-     * 
+     * Custom Formatting Helper / Renderer
      * @param formulaEvaluator An instance of FormulaEvaluation used for evaluating expressions in custom formatting
      */
     constructor(formulaEvaluator: FormulaEvaluation) {
         this._formulaEvaluator = formulaEvaluator;
     }
 
+    /**
+     * The Formula Evaluator expects an ASTNode to be passed to it for evaluation. This method converts expressions
+     * described by the interface ICustomFormattingExpressionNode to ASTNodes.
+     * @param node An ICustomFormattingExpressionNode to be converted to an ASTNode
+     */
     private convertCustomFormatExpressionNodes = (node: ICustomFormattingExpressionNode | string | number | boolean): ASTNode => {
         if (typeof node !== "object") {
             switch (typeof node) {
@@ -36,37 +41,68 @@ export default class CustomFormattingHelper {
         return { type: "operator", value: operator, operands };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private evaluateCustomFormatContent = (content: ICustomFormattingExpressionNode | ICustomFormattingNode | string | number | boolean, context: any): string | number | boolean => {
+    /**
+     * Given a single custom formatting expression, node or element, this method evaluates the expression and returns the result
+     * @param content An object, expression or literal value to be evaluated
+     * @param context A context object containing values / variables to be used in the evaluation
+     * @returns 
+     */
+    private evaluateCustomFormatContent = (content: ICustomFormattingExpressionNode | ICustomFormattingNode | string | number | boolean, context: Context): JSX.Element | string | number | boolean => {
+        
+        // If content is a string or number, it is a literal value and should be returned as-is
         if ((typeof content === "string" && content.charAt(0) !== "=") || typeof content === "number") return content;
+        
+        // If content is a string beginning with '=' it is a formula/expression, and should be evaluated
         if (typeof content === "string" && content.charAt(0) === "=") {
             const result = this._formulaEvaluator.evaluate(content.substring(1), context);
             return result;
         }
-        if (typeof content === "object" && (Object.prototype.hasOwnProperty.call(content, "elmType"))) {
-            return this.renderCustomFormatContent(content as ICustomFormattingNode, context);
-        } else if (typeof content === "object" && (Object.prototype.hasOwnProperty.call(content, "operator"))) {
-            const astNode = this.convertCustomFormatExpressionNodes(content as ICustomFormattingExpressionNode);
-            const result = this._formulaEvaluator.evaluateASTNode(astNode, context);
-            if (typeof result === "object" && Object.prototype.hasOwnProperty.call(result, "elmType")) {
-                return this.renderCustomFormatContent(result, context);
+        
+        // If content is an object, it is either further custom formatting described by an ICustomFormattingNode,
+        // or an expression to be evaluated - as described by an ICustomFormattingExpressionNode
+
+        if (typeof content === "object") {
+
+            if (Object.prototype.hasOwnProperty.call(content, "elmType")) {
+                
+                // Custom Formatting Content
+                return this.renderCustomFormatContent(content as ICustomFormattingNode, context);
+    
+            } else if (Object.prototype.hasOwnProperty.call(content, "operator")) {
+                
+                // Expression to be evaluated
+                const astNode = this.convertCustomFormatExpressionNodes(content as ICustomFormattingExpressionNode);
+                const result = this._formulaEvaluator.evaluateASTNode(astNode, context);
+                if (typeof result === "object" && Object.prototype.hasOwnProperty.call(result, "elmType")) {
+                    return this.renderCustomFormatContent(result, context);
+                }
+                return result;
+    
             }
-            return result;
-        }
+        } 
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public renderCustomFormatContent = (node: ICustomFormattingNode, context: any, rootEl: boolean = false): any => {
+    public renderCustomFormatContent = (node: ICustomFormattingNode, context: Context, rootEl: boolean = false): JSX.Element | string | number => {
+
+        // We don't want attempts to render custom format content to kill the component or web part, 
+        // so we wrap the entire method in a try/catch block, log errors and return null if an error occurs
         try {
+
+            // If node is a string or number, it is a literal value and should be returned as-is
             if (typeof node === "string" || typeof node === "number") return node;
-            // txtContent
-            let textContent: JSX.Element | string | undefined;
+            
+            // Custom formatting nodes / elements may have a txtContent property, which represents the inner
+            // content of a HTML element. This can be a string literal, or another expression to be evaluated:
+            let textContent: JSX.Element | string | number | boolean | undefined;
             if (node.txtContent) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                textContent = this.evaluateCustomFormatContent(node.txtContent, context) as any;
+                textContent = this.evaluateCustomFormatContent(node.txtContent, context);
             }
-            // style 
-            const styleProperties = {} as React.CSSProperties;
+
+            // Custom formatting nodes / elements may have a style property, which contains the style rules
+            // to be applied to the resulting HTML element. Rule values can be string literals or another expression
+            // to be evaluated:
+            const styleProperties: React.CSSProperties = {};
             if (node.style) {
                 for (const styleAttribute in node.style) {
                     if (node.style[styleAttribute]) {
@@ -74,31 +110,47 @@ export default class CustomFormattingHelper {
                     }
                 }
             }
-            // attributes
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const attributes = {} as any;
+
+            // Custom formatting nodes / elements may have an attributes property, which represents the HTML attributes
+            // to be applied to the resulting HTML element. Attribute values can be string literals or another expression
+            // to be evaluated:
+            const attributes = {} as Record<string, string>;
             if (node.attributes) {
                 for (const attribute in node.attributes) {
                     if (node.attributes[attribute]) {
                         let attributeName = attribute;
+
+                        // Because we're using React to render the HTML content, we need to rename the 'class' attribute
                         if (attributeName === "class") attributeName = "className";
+
+                        // Evaluation
                         attributes[attributeName] = this.evaluateCustomFormatContent(node.attributes[attribute], context) as string;
+
+                        // Add the 'sp-field-customFormatter' class to the root element
                         if (attributeName === "className" && rootEl) {
                             attributes[attributeName] = `${attributes[attributeName]} sp-field-customFormatter`;
                         }
                     }
                 }
             }
-            // children 
+            
+            // Custom formatting nodes / elements may have children. These are likely to be further custom formatting
             let children: (JSX.Element | string | number | boolean | undefined)[] = [];
+            
+            // If the node has an iconName property, we'll render an Icon component as the first child.
+            // SharePoint uses CSS to apply the icon in a ::before rule, but we can't count on the global selector for iconName
+            // being present on the page, so we'll add it as a child instead:
             if (attributes.iconName) {
                 const icon = React.createElement(Icon, { iconName: attributes.iconName });
                 children.push(icon);
             }
+
+            // Each child object is evaluated recursively and added to the children array
             if (node.children) {
                 children = node.children.map(c => this.evaluateCustomFormatContent(c, context));
             }
-            // render
+            
+            // The resulting HTML element is returned to the callee using React.createElement
             const el = React.createElement(node.elmType, { style: styleProperties, ...attributes }, textContent, ...children);
             return el;
         } catch (error) {
