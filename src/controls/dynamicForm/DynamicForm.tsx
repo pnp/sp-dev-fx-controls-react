@@ -511,8 +511,8 @@ export class DynamicForm extends React.Component<
         // We are adding a new list item
         try {
           const contentTypeIdField = "ContentTypeId";
-          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
-          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
+          // check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
             onSubmitted(

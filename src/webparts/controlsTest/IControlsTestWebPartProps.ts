@@ -6,7 +6,8 @@ export type ValidControls = "all" |
   "FieldCollectionData" | "FieldPicker" | "FilePicker" | 
   "FileTypeIcon" | "FolderExplorer" | "FolderPicker" |
   "GridLayout" | "IconPicker" | "IFrameDialog" |
-  "IFramePanel" | "ListPicker" | "ListView" |
+  "IFramePanel" | "ListPicker" | "ListItemPicker" |
+  "ListItemComments" | "ViewPicker" | "ListView" |
   "LocationPicker" | "Map" | "ModernAudio" |
   "ModernTaxonomyPicker" | "Pagination" | "PeoplePicker" |
   "Placeholder" | "Progress" | "RichText" |

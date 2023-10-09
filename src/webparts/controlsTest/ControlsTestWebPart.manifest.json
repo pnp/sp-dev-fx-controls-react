@@ -53,6 +53,8 @@
           "IconPicker": false,
           "IFrameDialog": false,
           "IFramePanel": false,
+          "ListItemComments": false,
+          "ListItemPicker": false,
           "ListPicker": false,
           "ListView": false,
           "LocationPicker": false,
@@ -75,6 +77,7 @@
           "TreeView": false,
           "UploadFiles": false,
           "VariantThemeProvider": false,
+          "ViewPicker": false,
           "WebPartTitle": false
         }
       }

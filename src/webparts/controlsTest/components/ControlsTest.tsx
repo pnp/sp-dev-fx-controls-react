@@ -146,7 +146,7 @@ import {
 import {
   PeoplePicker,
   PrincipalType
-} from "../../../PeoplePicker";
+} from "../../../controls/peoplepicker";
 import { Placeholder } from "../../../Placeholder";
 import {
   IProgressAction,
@@ -1544,6 +1544,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               // filter="Title eq 'Test List'"
               onSelectionChanged={this.onListPickerChange} />
           </div>
+        </div>
+        <div id="ListItemPickerDiv" className={styles.container} hidden={!controlVisibility.ListItemPicker}>
           <div className="ms-font-m">List Item picker list data tester:
 
             <ListItemPicker listId={'b1416fca-dc77-4198-a082-62a7657dcfa9'}
@@ -1559,7 +1561,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </div>
         </div>
 
-        <div id="ListItemCommentsDiv" className={styles.container} hidden={!isListItemCommentsDivVisible}>
+        <div id="ListItemCommentsDiv" className={styles.container} hidden={!controlVisibility.ListItemComments}>
           <div className="ms-font-m">List Item Comments Tester
             <ListItemComments webUrl='https://contoso.sharepoint.com/sites/ThePerspective'
               listId='6f151a33-a7af-4fae-b8c4-f2f04cbc690f'
@@ -1571,7 +1573,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           </div>
         </div>
 
-        <div id="ViewPickerDiv" className={styles.container} hidden={!isViewPickerDivVisible}>
+        <div id="ViewPickerDiv" className={styles.container} hidden={!controlVisibility.ViewPicker}>
           <div className="ms-font-m">View picker tester:
                 <ViewPicker context={this.props.context}
                   label="Select view(s)"
