@@ -1,4 +1,5 @@
 
+import { IInstalledLanguageInfo } from '@pnp/sp/regional-settings';
 import { ISPField } from '../../common/SPEntities';
 import { MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
 import { ICustomFormattingBodySection, ICustomFormattingNode } from '../../common/utilities/ICustomFormatting';
@@ -10,6 +11,7 @@ export interface IDynamicFormState {
   }[];
   /** Form and List Item data */
   fieldCollection: IDynamicFieldProps[];
+  installedLanguages?: IInstalledLanguageInfo[];
   /** Validation Formulas set in List Column settings */
   validationFormulas: Record<string, Pick<ISPField, 'ValidationFormula' | 'ValidationMessage'>>;
   /** Field Show / Hide Validation Formulas, set in Edit Form > Edit Columns > Edit Conditional Formula */

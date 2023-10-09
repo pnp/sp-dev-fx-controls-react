@@ -1,4 +1,6 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
+import { SPHttpClient } from "@microsoft/sp-http";
+import { IInstalledLanguageInfo, sp } from "@pnp/sp/presets/all";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -887,6 +889,12 @@ export class DynamicForm extends React.Component<
         listItemId,
         disabledFields
       );
+
+      // Get installed languages for Currency fields
+      let installedLanguages: IInstalledLanguageInfo[];
+      if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
+        installedLanguages = await sp.web.regionalSettings.getInstalledLanguages();        
+      }
 
       this.setState({
         clientValidationFormulas,

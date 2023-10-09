@@ -10,6 +10,7 @@ export interface IDynamicFieldProps {
   
   /** Internal column name */
   columnInternalName: string;
+  cultureName?: string;
   
   /** SharePoint Field Type */
   fieldType: string;
