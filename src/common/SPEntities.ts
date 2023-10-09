@@ -210,3 +210,15 @@ export interface IUploadImageResult {
   ServerRelativeUrl: string;
   UniqueId: string;
 }
+
+export interface ISPView {
+    Id: string;
+    Title: string;
+}
+
+  /**
+ * Defines a collection of SharePoint list views
+ */
+export interface ISPViews {
+    value: ISPView[];
+}

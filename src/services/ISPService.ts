@@ -1,4 +1,5 @@
-import { ISPContentType, ISPField, ISPLists } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPLists, ISPViews } from "../common/SPEntities";
+import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 export enum LibsOrderBy {
     Id = 1,
@@ -265,4 +266,10 @@ export interface ISPService {
      * Captures information not returned by RenderListDataAsStream with RenderOptions = 64
      */
     getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]>;
+
+    /**
+     *  Get the views from lists or libraries
+     * @params listId, orderBy, onViewsRetrived
+     */
+    getViews(listId?: string, orderBy?: orderBy, filter?: string): Promise<ISPViews>;
 }

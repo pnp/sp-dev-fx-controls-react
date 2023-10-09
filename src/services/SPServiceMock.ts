@@ -1,5 +1,6 @@
 import { ISPService, ILibsOptions, IFieldsOptions, IContentTypesOptions, IRenderListDataAsStreamClientFormResult } from "./ISPService";
-import { ISPContentType, ISPField, ISPLists } from "../common/SPEntities";
+import { ISPContentType, ISPField, ISPLists, ISPViews } from "../common/SPEntities";
+import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 export default class SPServiceMock implements ISPService {
   private _includeDelay?: boolean;
@@ -9,10 +10,10 @@ export default class SPServiceMock implements ISPService {
     this._includeDelay = includeDelay;
     this._delayTimeout = delayTimeout || 500;
   }
-  getListFormRenderInfo(listId: string): Promise<IRenderListDataAsStreamClientFormResult> {
+  public getListFormRenderInfo(listId: string): Promise<IRenderListDataAsStreamClientFormResult> {
     throw new Error("Method not implemented.");
   }
-  getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]> {
+  public getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]> {
     throw new Error("Method not implemented.");
   }
   public getFields(options?: IFieldsOptions): Promise<ISPField[]> {
@@ -25,6 +26,9 @@ export default class SPServiceMock implements ISPService {
     throw new Error("Method not implemented.");
   }
   public getField = async (listId: string, internalColumnName: string, webUrl?: string): Promise<ISPField | undefined> => {
+    return;
+  }
+  public getViews(listId?: string, orderBy?: orderBy, filter?: string) : Promise<ISPViews> {
     return;
   }
 

@@ -61,7 +61,7 @@ telemetry.optOut();
 
 The following controls are currently available:
 
-- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
+- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccordion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
 - [AdaptiveCardHost](./controls/AdaptiveCardHost.md) (Control to render Adaptive Cards)
 - [AdaptiveCardDesignerHost](./controls/AdaptiveCardDesignerHost.md) (Control to render Adaptive Cards Designer)

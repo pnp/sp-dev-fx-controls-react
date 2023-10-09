@@ -22,6 +22,7 @@ import { IPickerTerms, TaxonomyPicker } from '../../taxonomyPicker';
 import styles from '../DynamicForm.module.scss';
 import { IDynamicFieldProps } from './IDynamicFieldProps';
 import { IDynamicFieldState } from './IDynamicFieldState';
+import { isArray } from 'lodash';
 
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
