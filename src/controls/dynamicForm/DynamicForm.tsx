@@ -1,45 +1,47 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
-import { SPHttpClient } from "@microsoft/sp-http";
-import { IInstalledLanguageInfo, sp } from "@pnp/sp/presets/all";
+import * as React from "react";
 import * as strings from "ControlStrings";
+import styles from "./DynamicForm.module.scss";
+
+// Controls
 import {
   DefaultButton,
   PrimaryButton,
 } from "office-ui-fabric-react/lib/Button";
-import { MessageBar, MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
+import {
+  Dialog,
+  DialogFooter,
+  DialogType,
+} from "office-ui-fabric-react/lib/Dialog";
 import { IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
+import { MessageBar, MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
 import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
-import * as React from "react";
-import { ISPField, IUploadImageResult } from "../../common/SPEntities";
-import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
-import SPservice from "../../services/SPService";
-import { IFilePickerResult } from "../filePicker";
 import { DynamicField } from "./dynamicField";
 import {
   DateFormat,
   FieldChangeAdditionalData,
   IDynamicFieldProps,
 } from "./dynamicField/IDynamicFieldProps";
-import styles from "./DynamicForm.module.scss";
+import { IFilePickerResult } from "../filePicker";
 import { IDynamicFormProps } from "./IDynamicFormProps";
 import { IDynamicFormState } from "./IDynamicFormState";
-import {
-  Dialog,
-  DialogFooter,
-  DialogType,
-} from "office-ui-fabric-react/lib/Dialog";
 
+// pnp/sp, helpers / utils
+import { sp } from "@pnp/sp";
 import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
-import { sp } from "@pnp/sp";
-import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
+import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
+import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
+import SPservice from "../../services/SPService";
 import { IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
-import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
+import { ISPField, IUploadImageResult } from "../../common/SPEntities";
+import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
+import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -898,14 +900,15 @@ export class DynamicForm extends React.Component<
 
       this.setState({
         clientValidationFormulas,
-        fieldCollection: tempFields,
-        validationFormulas,
-        etag,
         customFormatting: {
           header: headerJSON,
           body: bodySections,
           footer: footerJSON
-        }
+        },
+        etag,
+        fieldCollection: tempFields,
+        installedLanguages,
+        validationFormulas
       }, () => this.performValidation(true));
 
     } catch (error) {
@@ -952,6 +955,7 @@ export class DynamicForm extends React.Component<
         let richText = false;
         let dateFormat: DateFormat | undefined;
         let principalType = "";
+        let cultureName: string;
         let minValue: number | undefined;
         let maxValue: number | undefined;
         let showAsPercentage: boolean | undefined;
@@ -989,6 +993,9 @@ export class DynamicForm extends React.Component<
             maxValue = numberField.MaximumValue;
           }
           showAsPercentage = field.ShowAsPercentage;
+          if (field.FieldType === "Currency") {
+            cultureName = this.cultureNameLookup(numberField.CurrencyLocaleId);
+          }
         }
 
         // Setup Lookup fields
@@ -1150,6 +1157,7 @@ export class DynamicForm extends React.Component<
           newValue: undefined,
           stringValue,
           subPropertyValues,
+          cultureName,
           fieldTermSetId: termSetId,
           fieldAnchorId: anchorId,
           options: choices,
@@ -1186,6 +1194,12 @@ export class DynamicForm extends React.Component<
       }
     }
     return tempFields;
+  }
+
+  private cultureNameLookup(lcid: number): string {
+    const pageCulture = this.props.context.pageContext.cultureInfo.currentCultureName;
+    if (!lcid) return pageCulture;
+    return this.state.installedLanguages?.find(lang => lang.Lcid === lcid).DisplayName ?? pageCulture;
   }
 
   private uploadImage = async (

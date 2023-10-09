@@ -60,6 +60,7 @@ export interface ISPField {
     ValidationMessage?: string;
     MinimumValue?: number;
     MaximumValue?: number;
+    CurrencyLocaleId?: number;
 }
 
 /**
