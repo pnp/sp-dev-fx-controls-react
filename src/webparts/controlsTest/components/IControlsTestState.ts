@@ -60,6 +60,7 @@ export interface IControlsTestState {
   isSecurityTrimmedControlDivVisible: boolean;
   isSitePickerDivVisible: boolean;
   isListPickerDivVisible: boolean;
+  isListItemCommentsDivVisible: boolean;
   isFieldPickerDivVisible: boolean;
   isIconPickerDivVisible: boolean;
   isComboBoxListItemPickerDivVisible: boolean;
