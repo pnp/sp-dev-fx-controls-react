@@ -5,11 +5,11 @@ This control allows you to select an emoji from emoji bar or select from picker.
 
 **HoverReactionsBar**
 
-![termsetNavigation](../assets/hoverReactions3Bar.png)
+![hoverReactions3Bar](../assets/hoverReactions3Bar.png)
 
-![termsetNavigation](../assets/hoverReactionsBar2.png)
+![hoverReactionsBar2](../assets/hoverReactionsBar2.png)
 
-![termsetNavigation](../assets/hoverReactionsBar1.png)
+![hoverReactionsBar1](../assets/hoverReactionsBar1.png)
 
 
 ## How to use this control in your solutions
@@ -25,16 +25,16 @@ import { HoverReactionsBar } from '@pnp/spfx-controls-react/lib/HoverReactionsBa
 
 ```TypeScript
 <HoverReactionsBar
-            isOpen={isOpenHoverReactionBar}
-            onSelect={onSelectEmoji}
-            onDismiss={(): void => {
-              setIsOpenHoverReactionBar(false);
-            }}
-            target={divRefAddReaction.current as HTMLDivElement}
-          />
+  isOpen={isOpenHoverReactionBar}
+  onSelect={onSelectEmoji}
+  onDismiss={(): void => {
+    setIsOpenHoverReactionBar(false);
+  }}
+  target={divRefAddReaction.current as HTMLDivElement}
+/>
 ```
 
-- With the `onSelected` property you can get the selcted term:
+- With the `onSelect` property you can get the selected emoji:
 
 ```typescript
    const onSelectEmoji = React.useCallback(async (emoji: string, emojiInfo: IEmojiInfo) => {
@@ -62,5 +62,6 @@ The HoverReactionsBar control can be configured with the following properties:
 | top4Reactions |  string[] | no |  name of emojis to show on the bar  |
 | target | HTMLDivElement | yes | container of controls who fire the HoverReactionsBar |
 | onDismis | onDismiss: () => void; | yes | function to call to dismiss HoverReactionsBar|
+| themeV8 | Theme | No | Set Fluent UI Theme|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/HoverReactionsBar)
