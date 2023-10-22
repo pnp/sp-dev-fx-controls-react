@@ -112,6 +112,8 @@ export class DynamicForm extends React.Component<
           <div>
             {this.props.enableFileSelection === true &&
               this.props.listItemId === undefined &&
+              this.props.contentTypeId !== undefined &&
+              this.props.contentTypeId.startsWith("0x0101") &&
               this.renderFileSelectionControl()}
             {fieldCollection.map((v, i) => {
               if (
@@ -215,7 +217,7 @@ export class DynamicForm extends React.Component<
             shouldBeReturnBack = true;
           } else if(val.fieldType === "Number"){
             shouldBeReturnBack = this.validateNumberOnSubmit(val);
-          } 
+          }
         } else if(val.fieldType === "Number"){
           if(val.newValue === null){
             val.newValue = val.fieldDefaultValue;
@@ -364,7 +366,7 @@ export class DynamicForm extends React.Component<
           // We are adding a new list item
           try {
            const contentTypeIdField = "ContentTypeId";
-          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          //check if item contenttype is passed, then update the object with content type id, else, pass the object
           contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
@@ -1005,6 +1007,7 @@ export class DynamicForm extends React.Component<
       default:
         return 'Document';
     }
+  }
 
   private validateNumberOnSubmit = (val:IDynamicFieldProps): boolean => {
     let shouldBeReturnBack = false;
