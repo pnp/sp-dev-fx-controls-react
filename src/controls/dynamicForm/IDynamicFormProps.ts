@@ -85,6 +85,7 @@ export interface IDynamicFormProps {
 
   /**
    * Specify if the form should support the creation of a new list item in a document library attaching a file to it.
+   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document.
    * Default - false
    */
   enableFileSelection?: boolean;
