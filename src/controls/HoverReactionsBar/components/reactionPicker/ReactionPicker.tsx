@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-expressions */
 import * as React from 'react';
 
+import strings from 'ControlStrings';
+
 import {
   Card,
   Input,
@@ -17,8 +19,8 @@ import { ReactionGroups } from './ReactionGroups';
 import { RenderEmoji } from './RenderEmoji';
 import { useReactionPickerStyles } from './useReactionPickerStyle';
 
-const PICKER_WIDTH = 350; //  450 height of picker + 50 from overtoolbar
-const PICKER_HEIGHT = 420; //  450 height of picker + 50 from overtoolbar
+const PICKER_WIDTH = 350;
+const PICKER_HEIGHT = 420;
 
 export interface IReactionProps {
   onSelect: (emoji: string | undefined, emojiInfo?: IEmojiInfo) => void;
@@ -91,7 +93,7 @@ export const ReactionPicker: React.FunctionComponent<IReactionProps> = (
     const countainerBounds = target?.getBoundingClientRect() as DOMRect;
     let pickerTopPosition = 0;
     let pickerLeftPosition = 0;
-    // test if list of mentiosn can be displayed in full
+
     if (countainerBounds?.top + PICKER_HEIGHT > window.innerHeight) {
       pickerTopPosition = countainerBounds.top - PICKER_HEIGHT - 10;
       if (pickerTopPosition < 0) {
@@ -169,7 +171,7 @@ export const ReactionPicker: React.FunctionComponent<IReactionProps> = (
         <div className={styles.cardContent}>
           <Input
             value={searchValue}
-            placeholder="Search Emoji"
+            placeholder={strings.HoverReactionBarSearchEmojiPlaceholder }
             onChange={(ev, data) => {
               setSearchValue(data?.value || "");
               !ev.currentTarget?.value ? loadEmoji(selectedGroup) : searchEmoji(ev.currentTarget.value);

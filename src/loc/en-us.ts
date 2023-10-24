@@ -423,5 +423,7 @@ TermSetNavigationNoTerms: "No terms defined",
     UpLoadFilesSelectAllLabel: "Select all",
     UploadFilesUploadButtonLabel: "Upload",
 
+    HoverReactionBarSearchEmojiPlaceholder: "Search emoji",
+
 };
 });
