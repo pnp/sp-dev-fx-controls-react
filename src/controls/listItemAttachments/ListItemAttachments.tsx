@@ -76,12 +76,14 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
   public async uploadAttachments(itemId: number): Promise<void> {
     if (this.state.filesToUpload) {
-      await Promise.all(this.state.filesToUpload.map(file => this._spservice.addAttachment(
-        this.props.listId,
-        itemId,
-        file.name,
-        file,
-        this.props.webUrl)));
+      for (const file of this.state.filesToUpload) {
+        await this._spservice.addAttachment(
+          this.props.listId,
+          itemId,
+          file.name,
+          file,
+          this.props.webUrl);
+      }
     }
     return new Promise<void>((resolve, reject) => {
       this.setState({
