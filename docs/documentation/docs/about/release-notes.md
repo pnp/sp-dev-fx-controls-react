@@ -27,10 +27,11 @@
 - `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
 - `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
 - `DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)
+- `ListItemAttachments`: Inconsistent file handling [#1644](https://github.com/pnp/sp-dev-fx-controls-react/issues/1644)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Dan Toft](https://github.com/Tanddant), [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tom G](https://github.com/t0mgerman).
 
 ## 3.15.0
 
