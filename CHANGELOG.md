@@ -14,6 +14,7 @@
 - `FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)
 - `RichText`: Add https:// as placeholder instead of textbox value when adding url [#1651](https://github.com/pnp/sp-dev-fx-controls-react/pull/1656)
 - Fix package.json to remove phantom dependencies issues [#1660](https://github.com/pnp/sp-dev-fx-controls-react/issues/1660)
+- `PeoplePicker`: new property to starting the search after n characters [#374](https://github.com/pnp/sp-dev-fx-controls-react/issues/374)
 
 ### Fixes
 
