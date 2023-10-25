@@ -20,12 +20,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
   private groupId: number | string | (string | number)[];
+  private searchTextCount: number;
 
   constructor(props: IPeoplePickerProps) {
     super(props);
 
     this.peopleSearchService = new SPPeopleSearchService(props.context);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
+    this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 
     telemetry.track('ReactPeoplePicker', {
       groupName: !!props.groupName,
@@ -135,7 +137,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * A search field change occured
    */
   private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> => {
-    if (searchText.length > 2) {
+    if (searchText.length > this.searchTextCount) {
       const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser, this.props.allowUnvalidated);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;

@@ -1510,6 +1510,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <PeoplePicker context={this.props.context}
             titleText="People Picker (tenant scoped)"
             personSelectionLimit={10}
+            searchTextLimit={5} //New property : Specifies the minimum character count needed to begin retrieving search results. (default : 2)
             // groupName={"Team Site Owners"}
             showtooltip={true}
             required={true}
