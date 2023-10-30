@@ -62,7 +62,7 @@ define([], () => {
   "ListItemAttachmentserrorLoadAttachments": "Erreur lors du chargement de la pièce jointe, cause : {0}",
   "ListItemAttachmentsconfirmDelete": "Voulez-vous vraiment envoyer la pièce jointe {0} à la Corbeille du site ?",
   "ListItemAttachmentsdialogTitle": "Pièce jointe",
-  "ListItemAttachmentsdialogOKbuttonLabel": "D’ACCORD",
+  "ListItemAttachmentsdialogOKbuttonLabel": "Ok",
   "ListItemAttachmentsdialogCancelButtonLabel": "Annuler",
   "ListItemAttachmentsdialogOKbuttonLabelOnDelete": "Supprimer",
   "ListItemAttachmentsuploadAttachmentDialogTitle": "Ajouter une pièce jointe",
