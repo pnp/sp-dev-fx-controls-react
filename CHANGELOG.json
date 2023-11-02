@@ -4,7 +4,8 @@
       "version": "3.16.0",
       "changes": {
         "new": [
-          "`ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)"
+          "`ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)",
+          "`HoverReactionsBar`: new control HoverReactionsBar [#1652](https://github.com/pnp/sp-dev-fx-controls-react/pull/1652)"
         ],
         "enhancements": [
           "`FieldCollectionData`: render on page instead of panel and added combobox and peoplepicker controls [#1588](https://github.com/pnp/sp-dev-fx-controls-react/pull/1588)",
