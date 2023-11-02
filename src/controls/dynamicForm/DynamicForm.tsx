@@ -236,7 +236,7 @@ export class DynamicForm extends React.Component<
         return;
       }
 
-      if (enableFileSelection === true && this.state.selectedFile === undefined) {
+      if (enableFileSelection === true && this.state.selectedFile === undefined && this.props.listItemId === undefined)) {
         this.setState({
           missingSelectedFile: true,
           isValidationErrorDialogOpen:
