@@ -22,9 +22,11 @@
   "dependencies": {
     "@fluentui/merge-styles": "8.5.12",
     "@fluentui/react": "^7.199.1",
+    "@fluentui/react-components": "^9.32.1",
     "@fluentui/react-file-type-icons": "^8.8.3",
     "@fluentui/react-hooks": "^8.2.6",
     "@fluentui/react-icons": "^2.0.200",
+    "@fluentui/react-migration-v8-v9": "^9.4.17",
     "@fluentui/react-icons-northstar": "0.66.5",
     "@fluentui/react-northstar": "0.66.0",
     "@fluentui/react-theme-provider": "^0.19.16",
@@ -82,6 +84,7 @@
     "swiper": "^8.2.6"
   },
   "devDependencies": {
+    "@iconify/react": "^4.1.1",
     "@microsoft/eslint-config-spfx": "1.17.3",
     "@microsoft/eslint-plugin-spfx": "1.17.3",
     "@microsoft/microsoft-graph-types": "^2.1.0",
