@@ -267,6 +267,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
             this.state.attachments.map(file => {
               const fileName = file.FileName;
               const previewImage = this.previewImages[fileName];
+              const clickDisabled = !this.state.itemId;
               return (
                 <div key={fileName} className={styles.documentCardWrapper}>
                   <TooltipHost
@@ -276,8 +277,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                     directionalHint={DirectionalHint.rightCenter}>
 
                     <DocumentCard
-                      onClickHref={!openAttachmentsInNewWindow && `${file.ServerRelativeUrl}?web=1`}
-                      onClick={openAttachmentsInNewWindow && (() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
+                      onClickHref={!clickDisabled && !openAttachmentsInNewWindow && `${file.ServerRelativeUrl}?web=1`}
+                      onClick={!clickDisabled && openAttachmentsInNewWindow && (() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
                       className={styles.documentCard}>
                       <DocumentCardPreview previewImages={[previewImage]} />
                       <Label className={styles.fileLabel}>{fileName}</Label>
