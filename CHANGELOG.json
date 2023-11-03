@@ -28,11 +28,14 @@
           "`DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)",
           "`DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)",
           "`ListItemAttachments`: Inconsistent file handling [#1644](https://github.com/pnp/sp-dev-fx-controls-react/issues/1644)",
-          "`Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)"
+          "`Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)",
+          "`ListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)",
+          "`ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)"
         ]
       },
       "contributions": [
         "[Dan Toft](https://github.com/Tanddant)",
+        "[Gerke van Garderen](https://github.com/gerkevgarderen)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Joakim](https://github.com/daenur76)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
