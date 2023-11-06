@@ -236,7 +236,7 @@ export class DynamicForm extends React.Component<
         return;
       }
 
-      if (enableFileSelection === true && this.state.selectedFile === undefined && this.props.listItemId === undefined)) {
+      if (enableFileSelection === true && this.state.selectedFile === undefined && this.props.listItemId === undefined) {
         this.setState({
           missingSelectedFile: true,
           isValidationErrorDialogOpen:
@@ -356,8 +356,8 @@ export class DynamicForm extends React.Component<
       else if (
         contentTypeId === undefined ||
         contentTypeId === "" ||
-        !contentTypeId.startsWith("0x0120")||
-        contentTypeId.startsWith("0x01")
+        (!contentTypeId.startsWith("0x0120") &&
+        contentTypeId.startsWith("0x01"))
       ) {
         if (contentTypeId === undefined || enableFileSelection === true) {
           await this.addFileToLibrary(objects);
@@ -365,18 +365,18 @@ export class DynamicForm extends React.Component<
         else {
           // We are adding a new list item
           try {
-           const contentTypeIdField = "ContentTypeId";
-          //check if item contenttype is passed, then update the object with content type id, else, pass the object
-          contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
-          const iar = await sp.web.lists.getById(listId).items.add(objects);
-          if (onSubmitted) {
-            onSubmitted(
-              iar.data,
-              returnListItemInstanceOnSubmit !== false
-                ? iar.item
-                : undefined
-            );
-          }
+            const contentTypeIdField = "ContentTypeId";
+            //check if item contenttype is passed, then update the object with content type id, else, pass the object
+            contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
+            const iar = await sp.web.lists.getById(listId).items.add(objects);
+            if (onSubmitted) {
+              onSubmitted(
+                iar.data,
+                returnListItemInstanceOnSubmit !== false
+                  ? iar.item
+                  : undefined
+              );
+            }
           } catch (error) {
             if (onSubmitError) {
               onSubmitError(objects, error);
