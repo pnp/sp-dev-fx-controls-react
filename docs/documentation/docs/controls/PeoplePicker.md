@@ -38,6 +38,7 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     showtooltip={true}
     required={true}
     disabled={true}
+    searchTextLimit={5}
     onChange={this._getPeoplePickerItems}
     showHiddenInUI={false}
     principalTypes={[PrincipalType.User]}
@@ -83,6 +84,7 @@ The People picker control can be configured with the following properties:
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
 | placeholder | string | no | Short text hint to display in empty picker |
 | styles | Partial<IBasePickerStyles> | no | Styles to apply on control |
+| searchTextLimit | number | no | Specifies the minimum character count needed to begin retrieving search results. | 2 |
 
 Enum `PrincipalType`
 

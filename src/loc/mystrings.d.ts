@@ -402,6 +402,8 @@ declare interface IControlStrings {
   //TermSetNavigationb Control
   TermSetNavigationNoTerms: string;
   TermSertNaviagtionErrorMessage: string;
+
+  HoverReactionBarSearchEmojiPlaceholder: string;
 }
 
 declare interface IDateTimeStrings {

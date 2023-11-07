@@ -38,6 +38,10 @@ export interface IPeoplePickerProps {
    */
   suggestionsLimit?: number;
   /**
+   * Specifies the minimum character count needed to begin retrieving search results. (default : 2)
+   */
+  searchTextLimit?: number;
+  /**
    * Specify the user / group types to retrieve
    */
   resolveDelay?: number;

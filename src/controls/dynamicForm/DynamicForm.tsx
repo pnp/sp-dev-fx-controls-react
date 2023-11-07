@@ -1,6 +1,6 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import { SPHttpClient } from "@microsoft/sp-http";
-import { sp } from "@pnp/sp/presets/all";
+import { IInstalledLanguageInfo, sp } from "@pnp/sp/presets/all";
 import * as strings from "ControlStrings";
 import {
   DefaultButton,
@@ -215,14 +215,16 @@ export class DynamicForm extends React.Component<
           } else if (Array.isArray(val.newValue) && val.newValue.length === 0) {
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
-          } else if(val.fieldType === "Number"){
-            shouldBeReturnBack = this.validateNumberOnSubmit(val);
           }
-        } else if(val.fieldType === "Number"){
-          if(val.newValue === null){
-            val.newValue = val.fieldDefaultValue;
+        }
+        if (val.fieldType === "Number") {
+          if (val.showAsPercentage) val.newValue /= 100;
+          if (this.isEmptyNumOrString(val.newValue) && (val.minimumValue !== null || val.maximumValue !== null)) {
+            val.newValue = val.fieldDefaultValue = null;
           }
-          shouldBeReturnBack = this.validateNumberOnSubmit(val);
+          if (!this.isEmptyNumOrString(val.newValue) && (isNaN(Number(val.newValue)) || (val.newValue < val.minimumValue) || (val.newValue > val.maximumValue))) {
+            shouldBeReturnBack = true;
+          }
         }
       });
 
@@ -367,12 +369,12 @@ export class DynamicForm extends React.Component<
           try {
             const contentTypeIdField = "ContentTypeId";
             //check if item contenttype is passed, then update the object with content type id, else, pass the object
-            contentTypeId !== undefined && contentTypeId.startsWith("0x01") ? objects[contentTypeIdField] = contentTypeId : objects;
+            if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
             const iar = await sp.web.lists.getById(listId).items.add(objects);
             if (onSubmitted) {
               onSubmitted(
                 iar.data,
-                returnListItemInstanceOnSubmit !== false
+                this.props.returnListItemInstanceOnSubmit !== false
                   ? iar.item
                   : undefined
               );
@@ -610,6 +612,7 @@ export class DynamicForm extends React.Component<
           order++;
           const fieldType = field.TypeAsString;
           field.order = order;
+          let cultureName: string;
           let hiddenName = "";
           let termSetId = "";
           let anchorId = "";
@@ -635,10 +638,14 @@ export class DynamicForm extends React.Component<
             });
           } else if (fieldType === "Note") {
             richText = field.RichText;
-          } else if (fieldType === "Number") {
+          } else if (fieldType === "Number" || fieldType === "Currency") {
             minValue = field.MinimumValue;
             maxValue = field.MaximumValue;
-            showAsPercentage = field.ShowAsPercentage;
+            if (fieldType === "Number") {
+              showAsPercentage = field.ShowAsPercentage;
+            } else {
+              cultureName = this.cultureNameLookup(field.CurrencyLocaleId);
+            }
           } else if (fieldType === "Lookup") {
             lookupListId = field.LookupList;
             lookupField = field.LookupField;
@@ -794,6 +801,7 @@ export class DynamicForm extends React.Component<
             options: choices,
             lookupListID: lookupListId,
             lookupField: lookupField,
+            cultureName,
             changedValue: defaultValue,
             fieldType: field.TypeAsString,
             fieldTitle: field.Title,
@@ -818,19 +826,30 @@ export class DynamicForm extends React.Component<
             description: field.Description,
             minimumValue: minValue,
             maximumValue: maxValue,
-            showAsPercentage: showAsPercentage,
+            showAsPercentage: showAsPercentage
           });
           tempFields.sort((a, b) => a.Order - b.Order);
         }
       }
 
-      this.setState({ fieldCollection: tempFields, etag: etag });
+      let installedLanguages: IInstalledLanguageInfo[];
+      if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
+        installedLanguages = await sp.web.regionalSettings.getInstalledLanguages();
+      }
+
+      this.setState({ fieldCollection: tempFields, installedLanguages, etag });
       //return arrayItems;
     } catch (error) {
       console.log(`Error get field informations`, error);
       return null;
     }
   };
+
+  private cultureNameLookup(lcid: number): string {
+    const pageCulture = this.props.context.pageContext.cultureInfo.currentCultureName;
+    if (!lcid) return pageCulture;
+    return this.state.installedLanguages?.find(lang => lang.Lcid === lcid).DisplayName ?? pageCulture;
+  }
 
   private uploadImage = async (
     file: IFilePickerResult
@@ -1009,19 +1028,7 @@ export class DynamicForm extends React.Component<
     }
   }
 
-  private validateNumberOnSubmit = (val:IDynamicFieldProps): boolean => {
-    let shouldBeReturnBack = false;
-    if (val.fieldType === "Number" && val.showAsPercentage) {
-      const minValue = val.minimumValue !== undefined ? val.minimumValue * 100 : undefined;
-      const maxValue = val.maximumValue !== undefined ? val.maximumValue * 100 : undefined;
-      if ((val.newValue < minValue) || (val.newValue > maxValue)) {
-        shouldBeReturnBack = true;
-      }
-    } else if(val.fieldType === "Number" && !val.showAsPercentage){
-      if ((val.newValue < val.minimumValue) || (val.newValue > val.maximumValue)) {
-        shouldBeReturnBack = true;
-      }
-    }
-    return shouldBeReturnBack;
+  private isEmptyNumOrString(value: string | number): boolean {
+    if ((value?.toString().trim().length || 0) === 0) return true;
   }
 }

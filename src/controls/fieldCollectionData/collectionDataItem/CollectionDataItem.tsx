@@ -366,7 +366,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
 
   private comboboxValidation = (field: ICustomCollectionField, selected: string[] | string): void => {
     let isValid = true;
-    let validation = "";
+    const validation = "";
 
     if (field.required && (selected === null || selected.length === 0) ) {
       isValid = false;
@@ -567,7 +567,11 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           required={field.required}
           disabled={disableFieldOnEdit}
           onChange={async (event, option, index, value) =>{ 
-            field.multiSelect ? this.onValueChangedComboBoxMulti(field.id, option, value) : this.onValueChangedComboBoxSingle(field.id, option, value)
+            if (field.multiSelect) {
+              this.onValueChangedComboBoxMulti(field.id, option, value);
+            } else {
+              this.onValueChangedComboBoxSingle(field.id, option, value);
+            }
           } }
           
         />;
