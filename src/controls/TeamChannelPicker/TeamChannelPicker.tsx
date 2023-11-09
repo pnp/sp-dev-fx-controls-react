@@ -6,21 +6,21 @@ import {
   IBasePickerSuggestionsProps,
   IPickerItemProps,
   ISuggestionItemProps,
-} from "office-ui-fabric-react/lib/Pickers";
+} from "@fluentui/react/lib/Pickers";
 import { useTeams } from "../../hooks";
 import { ITeamChannel } from "../../common/model/ITeamChannel";
 import { ITeamChannelPickerProps } from "./ITeamChannelPickerProps";
-import { IconButton } from "office-ui-fabric-react/lib/Button";
-import { Text } from "office-ui-fabric-react/lib/Text";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
-import { FontIcon } from "office-ui-fabric-react/lib/Icon";
-import { Label } from "office-ui-fabric-react/lib/Label";
+import { IconButton } from "@fluentui/react/lib/Button";
+import { Text } from "@fluentui/react/lib/Text";
+import { Stack } from "@fluentui/react/lib/Stack";
+import { FontIcon } from "@fluentui/react/lib/Icon";
+import { Label } from "@fluentui/react/lib/Label";
 import { ITeamChannelPickerState } from "./ITeamChannelPickerState";
 import { useTeamChannelPickerStyles } from "./TeamChannelPickerStyles";
 import { EMembershipType } from "./EMembersipType";
 import pullAllBy from "lodash/pullAllBy";
 import find from "lodash/find";
-import { Customizer } from "office-ui-fabric-react/lib/Utilities";
+import { Customizer } from "@fluentui/react/lib/Utilities";
 import strings from "ControlStrings";
 const theme = window.__themeState__.theme;
 

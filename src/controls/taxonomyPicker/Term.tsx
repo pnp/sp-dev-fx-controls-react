@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import { ITermProps, ITermState } from './ITaxonomyPicker';
 
 import styles from './TaxonomyPicker.module.scss';

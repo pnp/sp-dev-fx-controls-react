@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { Dialog, DialogType } from 'office-ui-fabric-react/lib/Dialog';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { css } from '@fluentui/react/lib/Utilities';
+import { Dialog, DialogType } from '@fluentui/react/lib/Dialog';
+import { Link } from '@fluentui/react/lib/Link';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 
 import { ISPFieldLookupValue } from "../../../common/SPEntities";
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';

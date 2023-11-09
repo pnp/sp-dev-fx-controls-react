@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ISuggestionItemProps } from 'office-ui-fabric-react/lib/Pickers';
+import { ISuggestionItemProps } from '@fluentui/react/lib/Pickers';
 import styles from './TermItemSuggestions.module.scss';
 import * as strings from 'ControlStrings';
 import { Guid } from '@microsoft/sp-core-library';

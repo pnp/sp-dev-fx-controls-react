@@ -1,8 +1,8 @@
 // Joao Mendes November 2018, SPFx reusable Control ListItemAttachments
 import * as React from 'react';
-import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Label } from "office-ui-fabric-react/lib/Label";
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Label } from "@fluentui/react/lib/Label";
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
 import { UploadAttachment } from './UploadAttachment';
@@ -12,13 +12,13 @@ import {
   DocumentCardActions,
   DocumentCardPreview,
   IDocumentCardPreviewImage
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+} from '@fluentui/react/lib/DocumentCard';
+import { ImageFit } from '@fluentui/react/lib/Image';
 import { IListItemAttachmentsProps } from './IListItemAttachmentsProps';
 import { IListItemAttachmentsState } from './IListItemAttachmentsState';
 import SPservice from "../../services/SPService";
-import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { TooltipHost, DirectionalHint } from '@fluentui/react/lib/Tooltip';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";
 import * as telemetry from '../../common/telemetry';

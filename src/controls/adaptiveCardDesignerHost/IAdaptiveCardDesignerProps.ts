@@ -1,4 +1,4 @@
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { HostContainer } from 'adaptivecards-designer/lib/containers';
 import { BindingPreviewMode } from 'adaptivecards-designer/lib/card-designer-surface';

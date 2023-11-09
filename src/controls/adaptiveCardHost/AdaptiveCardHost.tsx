@@ -2,8 +2,8 @@ import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
 import { Action, AdaptiveCard, CardElement, CardObjectRegistry, ExecuteAction, GlobalRegistry, OpenUrlAction, SerializationContext, SubmitAction } from 'adaptivecards';
 import { Template } from 'adaptivecards-templating';
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
-import { CustomizerContext } from 'office-ui-fabric-react/lib/Utilities';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
+import { CustomizerContext } from '@fluentui/react/lib/Utilities';
 import * as React from 'react';
 import {
   useCallback,

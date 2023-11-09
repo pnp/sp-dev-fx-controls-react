@@ -1,5 +1,5 @@
 
-import { IconButton } from "office-ui-fabric-react/lib/Button";
+import { IconButton } from "@fluentui/react/lib/Button";
 import { initializeIcons } from '@uifabric/icons';
 initializeIcons();
 
@@ -9,7 +9,7 @@ import { ICarouselProps, CarouselButtonsDisplay, CarouselButtonsLocation, Carous
 import { ICarouselState } from "./ICarouselState";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
-import { Spinner } from "office-ui-fabric-react/lib/Spinner";
+import { Spinner } from "@fluentui/react/lib/Spinner";
 import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
 import CarouselImage, { ICarouselImageProps } from "./CarouselImage";

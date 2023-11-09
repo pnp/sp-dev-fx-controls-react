@@ -5,10 +5,10 @@ import * as strings from "ControlStrings";
 import {
   DefaultButton,
   PrimaryButton,
-} from "office-ui-fabric-react/lib/Button";
-import { IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
-import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
-import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
+} from "@fluentui/react/lib/Button";
+import { IDropdownOption } from "@fluentui/react/lib/components/Dropdown";
+import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
+import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { IUploadImageResult } from "../../common/SPEntities";
 import SPservice from "../../services/SPService";
@@ -26,7 +26,7 @@ import {
   Dialog,
   DialogFooter,
   DialogType,
-} from "office-ui-fabric-react/lib/Dialog";
+} from "@fluentui/react/lib/Dialog";
 
 import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
@@ -207,11 +207,11 @@ export class DynamicForm extends React.Component<
             val.fieldDefaultValue = null;
             shouldBeReturnBack = true;
           }
-        } 
+        }
         if (val.fieldType === "Number") {
           if (val.showAsPercentage) val.newValue /= 100;
           if (this.isEmptyNumOrString(val.newValue) && (val.minimumValue !== null || val.maximumValue !== null)) {
-            val.newValue = val.fieldDefaultValue = null; 
+            val.newValue = val.fieldDefaultValue = null;
           }
           if (!this.isEmptyNumOrString(val.newValue) && (isNaN(Number(val.newValue)) || (val.newValue < val.minimumValue) || (val.newValue > val.maximumValue))) {
             shouldBeReturnBack = true;
@@ -344,7 +344,7 @@ export class DynamicForm extends React.Component<
         // We are adding a new list item
         try {
           const contentTypeIdField = "ContentTypeId";
-          //check if item contenttype is passed, then update the object with content type id, else, pass the object 
+          //check if item contenttype is passed, then update the object with content type id, else, pass the object
           if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
           const iar = await sp.web.lists.getById(listId).items.add(objects);
           if (onSubmitted) {
@@ -706,8 +706,8 @@ export class DynamicForm extends React.Component<
             defaultValue = JSON.parse(defaultValue);
           } else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
-          } 
-          
+          }
+
           tempFields.push({
             newValue: null,
             fieldTermSetId: termSetId,
@@ -748,7 +748,7 @@ export class DynamicForm extends React.Component<
 
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
-        installedLanguages = await sp.web.regionalSettings.getInstalledLanguages();        
+        installedLanguages = await sp.web.regionalSettings.getInstalledLanguages();
       }
 
       this.setState({ fieldCollection: tempFields, installedLanguages, etag });

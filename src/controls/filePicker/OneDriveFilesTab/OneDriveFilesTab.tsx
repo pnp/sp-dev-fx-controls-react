@@ -4,10 +4,10 @@ import { IOneDriveFilesTabState } from './IOneDriveFilesTabState';
 import { IFile } from '../../../services/FileBrowserService.types';
 import { OneDriveFilesBreadcrumbItem } from './OneDriveFilesTab.types';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-import { Breadcrumb, IBreadcrumbItem } from 'office-ui-fabric-react/lib/Breadcrumb';
+import { Breadcrumb, IBreadcrumbItem } from '@fluentui/react/lib/Breadcrumb';
 import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Link } from 'office-ui-fabric-react/lib/Link';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Link } from '@fluentui/react/lib/Link';
 import { IFilePickerResult } from '../FilePicker.types';
 
 import styles from './OneDriveFilesTab.module.scss';

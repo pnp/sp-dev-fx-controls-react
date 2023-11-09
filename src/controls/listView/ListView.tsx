@@ -1,12 +1,12 @@
 import * as React from 'react';
 
-import { ScrollablePane, ScrollbarVisibility } from 'office-ui-fabric-react/lib/ScrollablePane';
-import { Sticky, StickyPositionType } from 'office-ui-fabric-react/lib/Sticky';
-import { IRenderFunction } from 'office-ui-fabric-react/lib/Utilities';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from 'office-ui-fabric-react/lib/DetailsList';
+import { ScrollablePane, ScrollbarVisibility } from '@fluentui/react/lib/ScrollablePane';
+import { Sticky, StickyPositionType } from '@fluentui/react/lib/Sticky';
+import { IRenderFunction } from '@fluentui/react/lib/Utilities';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from '@fluentui/react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps } from 'office-ui-fabric-react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps } from '@fluentui/react/lib/components/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
@@ -17,7 +17,7 @@ import { DragDropFiles } from "../dragDropFiles";
 import filter from 'lodash/filter';
 import omit from 'lodash/omit';
 import functions from 'lodash/functions';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
 const classNames = mergeStyleSets({

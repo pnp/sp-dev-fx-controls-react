@@ -1,12 +1,12 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
-import { Label } from "office-ui-fabric-react/lib/Label";
+import { Label } from "@fluentui/react/lib/Label";
 import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
 import * as telemetry from '../../common/telemetry';
-import { ComboBox, IComboBoxOption } from "office-ui-fabric-react/lib/ComboBox";
+import { ComboBox, IComboBoxOption } from "@fluentui/react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
 import styles from './ComboBoxListItemPicker.module.scss';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { cloneDeep, isEqual } from 'lodash';
 import { Guid } from '@microsoft/sp-core-library';
 

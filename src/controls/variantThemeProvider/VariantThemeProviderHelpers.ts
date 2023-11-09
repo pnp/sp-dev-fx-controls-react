@@ -1,7 +1,7 @@
 import { getNeutralVariant, getSoftVariant, getStrongVariant } from "@fluentui/scheme-utilities/lib/variants";
-import { getColorFromString, isDark } from "office-ui-fabric-react/lib/Color";
-import { createTheme, getTheme, IPartialTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
-import { BaseSlots, ThemeGenerator, themeRulesStandardCreator } from "office-ui-fabric-react/lib/ThemeGenerator";
+import { getColorFromString, isDark } from "@fluentui/react/lib/Color";
+import { createTheme, getTheme, IPartialTheme, ITheme } from "@fluentui/react/lib/Styling";
+import { BaseSlots, ThemeGenerator, themeRulesStandardCreator } from "@fluentui/react/lib/ThemeGenerator";
 import { VariantType } from "./VariantThemeProviderProps";
 
 export const generateThemeVariant = (theme: IPartialTheme | ITheme, themeType: VariantType): IPartialTheme | ITheme => {

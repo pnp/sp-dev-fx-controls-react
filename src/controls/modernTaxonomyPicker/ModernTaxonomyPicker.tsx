@@ -10,24 +10,24 @@ import { useId } from '@uifabric/react-hooks';
 import * as strings from 'ControlStrings';
 import {
   DefaultButton, IButtonStyles, IconButton, PrimaryButton
-} from 'office-ui-fabric-react/lib/Button';
-import { IIconProps } from 'office-ui-fabric-react/lib/components/Icon';
-import { Label } from 'office-ui-fabric-react/lib/Label';
+} from '@fluentui/react/lib/Button';
+import { IIconProps } from '@fluentui/react/lib/components/Icon';
+import { Label } from '@fluentui/react/lib/Label';
 import {
   Panel,
   PanelType
-} from 'office-ui-fabric-react/lib/Panel';
+} from '@fluentui/react/lib/Panel';
 import {
   IBasePickerStyleProps,
   IBasePickerStyles,
   ISuggestionItemProps
-} from 'office-ui-fabric-react/lib/Pickers';
+} from '@fluentui/react/lib/Pickers';
 import {
   IStackTokens,
   Stack
-} from 'office-ui-fabric-react/lib/Stack';
-import { ITooltipHostStyles, TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/Stack';
+import { ITooltipHostStyles, TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';

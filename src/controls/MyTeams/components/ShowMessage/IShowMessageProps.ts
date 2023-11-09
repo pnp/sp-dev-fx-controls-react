@@ -1,4 +1,4 @@
-import { IMessageBarProps } from "office-ui-fabric-react/lib/MessageBar";
+import { IMessageBarProps } from "@fluentui/react/lib/MessageBar";
 
 export interface IShowMessageProps extends IMessageBarProps {
     isShow:boolean;

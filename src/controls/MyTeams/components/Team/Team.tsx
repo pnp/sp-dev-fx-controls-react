@@ -3,21 +3,21 @@ import { ITeamProps } from "./ITeamProps";
 import { PersonCardInteraction } from "@microsoft/mgt-spfx";
 import { People } from "@microsoft/mgt-react/dist/es6/spfx";
 import { getMyTeamsStyles } from "../../MyTeamsStyles";
-import { CommandButton } from "office-ui-fabric-react/lib/Button";
-import { FontIcon } from "office-ui-fabric-react/lib/Icon";
-import { Text } from "office-ui-fabric-react/lib/Text";
-import { Stack, StackItem } from "office-ui-fabric-react/lib/Stack";
+import { CommandButton } from "@fluentui/react/lib/Button";
+import { FontIcon } from "@fluentui/react/lib/Icon";
+import { Text } from "@fluentui/react/lib/Text";
+import { Stack, StackItem } from "@fluentui/react/lib/Stack";
 import {
   IContextualMenuItem,
   IContextualMenuItemProps,
   ContextualMenuItemType,
-} from "office-ui-fabric-react/lib/ContextualMenu";
+} from "@fluentui/react/lib/ContextualMenu";
 
 import { useTeams } from "../../../../hooks";
 import { ITeamMenber } from "../../../../common/model/ITeamMember";
 import { EMembershipType } from "../../../../common/model/EMembershipType";
 import { IShowMessageProps, ShowMessage } from "../ShowMessage";
-import { MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
+import { MessageBarType } from "@fluentui/react/lib/MessageBar";
 import strings from "ControlStrings";
 import { ITeamState } from "./ITeamState";
 import { teamsReducer } from "./TeamReducer";

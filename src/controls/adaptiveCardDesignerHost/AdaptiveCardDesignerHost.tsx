@@ -1,8 +1,8 @@
-import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
-import { ThemeProvider } from "office-ui-fabric-react/lib/Foundation";
-import { IPanelStyleProps, IPanelStyles, Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
-import { getTheme } from "office-ui-fabric-react/lib/Styling";
+import { IStyleFunctionOrObject } from "@fluentui/react/lib/Utilities";
+import { DefaultButton } from "@fluentui/react/lib/Button";
+import { ThemeProvider } from "@fluentui/react/lib/Foundation";
+import { IPanelStyleProps, IPanelStyles, Panel, PanelType } from "@fluentui/react/lib/Panel";
+import { getTheme } from "@fluentui/react/lib/Styling";
 import * as React from 'react';
 import { useState } from 'react';
 import { AdaptiveCardDesigner } from "./AdaptiveCardDesigner";

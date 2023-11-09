@@ -1,6 +1,6 @@
 import { ITreeItem } from './ITreeItem';
-import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import { ITheme } from '@fluentui/react/lib/Styling';
 
 /**
  * Specifies the display mode of the tree item action.
