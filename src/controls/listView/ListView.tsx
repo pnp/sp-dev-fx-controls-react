@@ -572,17 +572,40 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       return null;
     }
 
+    const headerProps = { 
+      ...props,
+      className: this.props.headerClassName,
+      styles: {
+        root: { 
+          lineHeight: "normal",
+          minHeight: '17px',
+          '.ms-DetailsHeader-cell': {
+            whiteSpace: 'normal',
+            lineHeight: 'normal',
+            height: '100%',
+          },
+          '.ms-DetailsHeader-cellTitle': {
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexWrap: 'nowrap',
+            justifyContent: 'flex-start',
+          },
+          ...props.styles,
+        },
+      },
+    }
+
     if (this.props.stickyHeader) {
       return (
         <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
-          {defaultRender({
-            ...props,
-          })}
+          {defaultRender(headerProps)}
         </Sticky>
       );
     }
 
-    return defaultRender(props);
+    return defaultRender(headerProps)
   }
   /**
    * Default React component render method

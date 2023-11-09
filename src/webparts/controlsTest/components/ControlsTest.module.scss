@@ -98,6 +98,12 @@ $themePrimary: '[theme:themePrimary, default:#0078d7]';
   .listViewWrapper {
     height: 200px;
   }
+
+  .listViewHeader { 
+    padding-top: 1px;
+    padding-bottom: 1px;
+    height: 25px;
+  }
 }
 
 .dialogContainer {

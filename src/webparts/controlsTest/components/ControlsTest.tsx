@@ -1549,6 +1549,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             onDrop={this._getDropFiles}
             stickyHeader={true}
             className={styles.listViewWrapper}
+            headerClassName={styles.listViewHeader}
           // defaultFilter="Team"
           />
         </div>

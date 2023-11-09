@@ -80,6 +80,11 @@ export interface IListViewProps {
    */
   listClassName?: string;
   /**
+   * Class name to apply additional styles on list view header
+   * (min-height 17px)
+   */
+  headerClassName?: string;
+  /**
    * Custom sorting function.
    * @returns sorted collection of items
    */
