@@ -5,11 +5,11 @@ import {
   Dropdown,
   IDropdownOption,
   IDropdownProps,
-} from 'office-ui-fabric-react/lib/Dropdown';
+} from '@fluentui/react/lib/Dropdown';
 import {
   Spinner,
   SpinnerSize,
-} from 'office-ui-fabric-react/lib/Spinner';
+} from '@fluentui/react/lib/Spinner';
 
 import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';

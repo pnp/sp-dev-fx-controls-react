@@ -2,9 +2,9 @@
 import { Action, ActionButtonState, ExecuteAction, OpenUrlAction, ShowCardAction, SubmitAction, ToggleVisibilityAction } from "adaptivecards/lib/card-elements";
 import { ActionIconPlacement } from "adaptivecards/lib/enums";
 import { CardObjectRegistry } from "adaptivecards/lib/registry";
-import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from "office-ui-fabric-react/lib/Button";
-import { initializeIcons } from "office-ui-fabric-react/lib/Icons";
-import { createTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from "@fluentui/react/lib/Button";
+import { initializeIcons } from "@fluentui/react/lib/Icons";
+import { createTheme, ITheme } from "@fluentui/react/lib/Styling";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDefaultTheme";

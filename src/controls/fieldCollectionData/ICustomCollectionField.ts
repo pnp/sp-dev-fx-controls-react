@@ -1,7 +1,7 @@
-import { IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { IRenderFunction } from '@uifabric/utilities/lib/IRenderFunction';
-import { ISelectableOption } from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
-import { IComboBoxOption } from 'office-ui-fabric-react';
+import { ISelectableOption } from '@fluentui/react/lib/utilities/selectableOption/SelectableOption.types';
+import { IComboBoxOption } from '@fluentui/react/lib/ComboBox';
 
 export interface ICustomCollectionField {
   /**

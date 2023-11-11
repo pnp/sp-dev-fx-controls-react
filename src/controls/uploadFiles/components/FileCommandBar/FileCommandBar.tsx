@@ -5,14 +5,14 @@ import * as React from 'react';
 
 import strings from 'ControlStrings';
 import { useAtom } from 'jotai';
-import { ActionButton } from 'office-ui-fabric-react/lib/Button';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
+import { ActionButton } from '@fluentui/react/lib/Button';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import {
   CommandBar,
   ICommandBarItemProps,
-} from 'office-ui-fabric-react/lib/CommandBar';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { IComponentAs } from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/CommandBar';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { IComponentAs } from '@fluentui/react/lib/Utilities';
 
 import { globalState } from '../../jotai/atoms';
 import { UploadButton } from '../UploadButton/UploadButton';

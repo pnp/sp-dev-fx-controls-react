@@ -1,8 +1,8 @@
-import { Spinner } from "office-ui-fabric-react/lib/Spinner";
+import { Spinner } from "@fluentui/react/lib/Spinner";
 import { Guid } from "@microsoft/sp-core-library";
-import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
-import { SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { DocumentCard, DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
+import { SpinnerSize } from "@fluentui/react/lib/Spinner";
+import { Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { useContext } from "react";
 import { ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";

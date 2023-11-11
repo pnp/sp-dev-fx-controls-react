@@ -1,4 +1,4 @@
-import { Theme } from 'office-ui-fabric-react';
+import { Theme } from '@fluentui/react';
 
 import { IEmojiInfo } from './models/IFluentEmoji';
 

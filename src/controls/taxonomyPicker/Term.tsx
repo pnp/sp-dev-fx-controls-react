@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import { ITermProps, ITermState } from './ITaxonomyPicker';
 
 import styles from './TaxonomyPicker.module.scss';
 import TermActionsControl from './termActions/TermActionsControl';
 import { UpdateAction, UpdateType } from './termActions';
+import { IStyle } from '@fluentui/react';
 
 
 /**
@@ -104,7 +105,7 @@ export default class Term extends React.Component<ITermProps, ITermState> {
     const styleProps: React.CSSProperties = {
       marginLeft: `${(this.props.term.PathDepth * 30)}px`
     };
-    const checkBoxStyle: React.CSSProperties = {
+    const checkBoxStyle: IStyle = {
       display: "inline-flex"
     };
 
@@ -118,7 +119,9 @@ export default class Term extends React.Component<ITermProps, ITermState> {
           <div>
             <Checkbox
               checked={this.state.selected}
-              style={checkBoxStyle}
+              styles={{
+                checkbox: checkBoxStyle
+              }}
               disabled={this.props.term.IsDeprecated || !this.props.term.IsAvailableForTagging || this.props.disabled || this.state.disabled}
               className={this.getClassName()}
               label={this.state.termLabel}

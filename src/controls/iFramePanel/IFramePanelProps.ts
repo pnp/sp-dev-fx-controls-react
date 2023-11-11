@@ -1,4 +1,4 @@
-import { IPanelProps } from "office-ui-fabric-react/lib/Panel";
+import { IPanelProps } from "@fluentui/react/lib/Panel";
 
 export interface IIFramePanelProps extends IPanelProps {
   /**

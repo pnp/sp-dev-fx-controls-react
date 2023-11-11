@@ -5,7 +5,7 @@ import {
   teamsDarkTheme,
   teamsHighContrastTheme
 } from "@fluentui/react-northstar";
-import { createTheme, getTheme, IPalette, IPartialTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { createTheme, getTheme, IPalette, IPartialTheme, ITheme } from "@fluentui/react/lib/Styling";
 
 import { ComponentVariablesObject } from "@fluentui/styles";
 import { getVariant, VariantThemeType } from "@fluentui/scheme-utilities";

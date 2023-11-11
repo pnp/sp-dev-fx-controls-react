@@ -4,7 +4,7 @@ import * as strings from 'ControlStrings';
 import {
   Breadcrumb,
   IBreadcrumbItem,
-} from 'office-ui-fabric-react/lib/Breadcrumb';
+} from '@fluentui/react/lib/Breadcrumb';
 
 import {
   Environment,

@@ -1,5 +1,5 @@
-import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
-import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
+import { CommandBarButton } from '@fluentui/react/lib/Button';
+import { IIconProps } from '@fluentui/react/lib/Icon';
 import * as React from 'react';
 import { IConcreteTreeItemActionProps, ITreeItemAction } from './ITreeItemActions';
 import styles from './TreeView.module.scss';

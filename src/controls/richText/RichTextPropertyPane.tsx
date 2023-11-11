@@ -3,10 +3,10 @@ import * as strings from 'ControlStrings';
 import styles from './RichTextPropertyPane.module.scss';
 import RteColorPicker from './RteColorPicker';
 import { IRichTextPropertyPaneProps, IRichTextPropertyPaneState } from './RichTextPropertyPane.types';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 import { RangeStatic } from 'quill';
 

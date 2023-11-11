@@ -1,7 +1,7 @@
 import * as React from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import { Dropdown, IDropdownOption, IDropdownProps } from 'office-ui-fabric-react/lib/Dropdown';
-import { Async } from 'office-ui-fabric-react/lib/Utilities';
+import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
+import { Async } from '@fluentui/react/lib/Utilities';
 import * as telemetry from '../../common/telemetry';
 import { ISPService } from '../../services/ISPService';
 import { SPServiceFactory } from '../../services/SPServiceFactory';

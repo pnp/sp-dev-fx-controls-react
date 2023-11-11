@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css, ICssInput } from 'office-ui-fabric-react/lib/Utilities';
+import { css, ICssInput } from '@fluentui/react/lib/Utilities';
 
 import styles from './FieldTextRenderer.module.scss';
 
