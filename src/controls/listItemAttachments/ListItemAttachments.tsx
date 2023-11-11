@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
 import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
 import { Label } from "@fluentui/react/lib/Label";
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
@@ -17,7 +18,7 @@ import { ImageFit } from '@fluentui/react/lib/Image';
 import { IListItemAttachmentsProps } from './IListItemAttachmentsProps';
 import { IListItemAttachmentsState } from './IListItemAttachmentsState';
 import SPservice from "../../services/SPService";
-import { TooltipHost, DirectionalHint } from '@fluentui/react/lib/Tooltip';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";

@@ -38,9 +38,6 @@ import { ImageFit } from "@fluentui/react/lib/Image";
 import { PanelType } from "@fluentui/react/lib/Panel";
 import { mergeStyles } from "@fluentui/react/lib/Styling";
 import { ISize } from "@fluentui/react/lib/Utilities";
-import {
-  DayOfWeek
-} from "@fluentui/react/lib/utilities/dateValues/DateValues";
 
 import {
   ExclamationCircleIcon,
@@ -49,6 +46,7 @@ import {
   ShareGenericIcon,
   Text as NorthstarText
 } from "@fluentui/react-northstar";
+import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
 import {
   DisplayMode,
   Environment,
@@ -197,9 +195,10 @@ import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
-import { Toggle } from "office-ui-fabric-react";
+import { Toggle } from "@fluentui/react";
 import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
+
 
 
 // Used to render document card

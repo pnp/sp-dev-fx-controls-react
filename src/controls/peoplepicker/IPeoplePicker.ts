@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IBasePickerStyles } from "office-ui-fabric-react";
+import { IBasePickerStyles } from "@fluentui/react";
 import { DirectionalHint } from "@fluentui/react/lib/common/DirectionalHint";
 import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";

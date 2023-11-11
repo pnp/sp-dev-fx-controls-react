@@ -220,7 +220,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       const autoFill = picker?.['input']?.current as Autofill; // eslint-disable-line dot-notation
       if (autoFill) {
         autoFill['_value'] = ''; // eslint-disable-line dot-notation
-        autoFill.setState({ displayValue: '' });
+        autoFill.setState({ inputValue: '' });
       } else {
         throw new Error(`TermPicker.TermBasePicker.render.clearDisplayValue no autoFill to reset displayValue`);
       }

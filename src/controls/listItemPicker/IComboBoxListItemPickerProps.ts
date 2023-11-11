@@ -10,6 +10,9 @@ export interface IComboBoxListItemPickerProps {
     autofill?: IAutofillProps;
     comboBoxOptionStyles?: Partial<IComboBoxOptionStyles>;
     allowFreeform?: boolean;
+    /**
+     * @deprecated
+     */
     keytipProps?: IKeytipProps;
     multiSelect?: boolean;
     onMenuDismiss?: () => void;

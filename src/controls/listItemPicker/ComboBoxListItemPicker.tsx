@@ -1,7 +1,8 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
 import { Label } from "@fluentui/react/lib/Label";
-import { IComboBoxListItemPickerProps, IComboBoxListItemPickerState } from ".";
+import { IComboBoxListItemPickerProps } from "./IComboBoxListItemPickerProps";
+import { IComboBoxListItemPickerState } from "./IComboBoxListItemPickerState";
 import * as telemetry from '../../common/telemetry';
 import { ComboBox, IComboBoxOption } from "@fluentui/react/lib/ComboBox";
 import { ListItemRepository } from '../../common/dal/ListItemRepository';
@@ -156,7 +157,6 @@ export class ComboBoxListItemPicker extends React.Component<IComboBoxListItemPic
           autoComplete={this.props.autoComplete}
           comboBoxOptionStyles={this.props.comboBoxOptionStyles}
           allowFreeform={this.props.allowFreeform}
-          keytipProps={this.props.keytipProps}
           onMenuDismissed={this.props.onMenuDismiss}
           onMenuOpen={this.props.onMenuOpen}
           text={this.props.text}
