@@ -659,6 +659,7 @@ export function TaxonomyTree(
           className={styles.taxonomyItemFocusZone}
         >
           <ChoiceGroup
+            key={new Date().getTime()}
             options={options}
             selectedKey={
               props.selection && props.selection.getSelection()[0]?.id
