@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { css, ISerializableObject } from 'office-ui-fabric-react/lib/Utilities';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { css, ISerializableObject } from '@fluentui/react/lib/Utilities';
+import { Icon } from '@fluentui/react/lib/Icon';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FileTypeIcon, IconType } from '../../fileTypeIcon';
 import * as telemetry from '../../../common/telemetry';

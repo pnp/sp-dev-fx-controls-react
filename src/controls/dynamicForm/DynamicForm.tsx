@@ -5,10 +5,10 @@ import * as strings from "ControlStrings";
 import {
   DefaultButton,
   PrimaryButton,
-} from "office-ui-fabric-react/lib/Button";
-import { IDropdownOption } from "office-ui-fabric-react/lib/components/Dropdown";
-import { ProgressIndicator } from "office-ui-fabric-react/lib/ProgressIndicator";
-import { IStackTokens, Stack } from "office-ui-fabric-react/lib/Stack";
+} from "@fluentui/react/lib/Button";
+import { IDropdownOption } from "@fluentui/react/lib/components/Dropdown";
+import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
+import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { IUploadImageResult } from "../../common/SPEntities";
 import SPservice from "../../services/SPService";
@@ -26,7 +26,7 @@ import {
   Dialog,
   DialogFooter,
   DialogType,
-} from "office-ui-fabric-react/lib/Dialog";
+} from "@fluentui/react/lib/Dialog";
 import { Icon } from 'office-ui-fabric-react';
 
 import "@pnp/sp/lists";

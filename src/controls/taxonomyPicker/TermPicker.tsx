@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { BasePicker, IBasePickerProps, IInputProps, IPickerItemProps } from 'office-ui-fabric-react/lib/Pickers';
+import { BasePicker, IBasePickerProps, IInputProps, IPickerItemProps } from '@fluentui/react/lib/Pickers';
 import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
 import { ITaxonomyPickerProps } from './ITaxonomyPicker';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import * as strings from 'ControlStrings';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { Icon } from '@fluentui/react/lib/Icon';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
-import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
+import { Autofill } from '@fluentui/react/lib/components/Autofill/Autofill';
 import { LegacyRef, KeyboardEvent } from 'react';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>
@@ -154,8 +154,8 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
             if (disableChildrenOfDisabledParents) {
               // Check if terms were already retrieved
               if (!this.allTerms) {
-                this.allTerms = await this.termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID, 
-                  this.props.termPickerHostProps.hideDeprecatedTags, 
+                this.allTerms = await this.termsService.getAllTerms(this.props.termPickerHostProps.termsetNameOrID,
+                  this.props.termPickerHostProps.hideDeprecatedTags,
                   this.props.termPickerHostProps.hideTagsNotAvailableForTagging);
               }
 
@@ -220,7 +220,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       const autoFill = picker?.['input']?.current as Autofill; // eslint-disable-line dot-notation
       if (autoFill) {
         autoFill['_value'] = ''; // eslint-disable-line dot-notation
-        autoFill.setState({ displayValue: '' });
+        autoFill.setState({ inputValue: '' });
       } else {
         throw new Error(`TermPicker.TermBasePicker.render.clearDisplayValue no autoFill to reset displayValue`);
       }

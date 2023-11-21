@@ -1,4 +1,4 @@
-import { IContextualMenuProps } from "office-ui-fabric-react/lib/ContextualMenu";
+import { IContextualMenuProps } from "@fluentui/react/lib/ContextualMenu";
 import { IShowMessageProps } from "../ShowMessage";
 export interface ITeamState {
   teamMembers: string[];

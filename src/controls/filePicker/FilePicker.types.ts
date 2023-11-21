@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
+import { IBreadcrumbItem } from "@fluentui/react/lib/Breadcrumb";
 import { IFolder, ILibrary } from "../../services/FileBrowserService.types";
 
 export interface FilePickerBreadcrumbItem extends IBreadcrumbItem {

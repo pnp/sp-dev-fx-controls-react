@@ -1,8 +1,8 @@
-import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
-import { DefaultButton } from "office-ui-fabric-react/lib/Button";
-import { ThemeProvider } from "office-ui-fabric-react/lib/Foundation";
-import { IPanelStyleProps, IPanelStyles, Panel, PanelType } from "office-ui-fabric-react/lib/Panel";
-import { getTheme } from "office-ui-fabric-react/lib/Styling";
+import { IStyleFunctionOrObject } from "@fluentui/react/lib/Utilities";
+import { DefaultButton } from "@fluentui/react/lib/Button";
+import { IPanelStyleProps, IPanelStyles, Panel, PanelType } from "@fluentui/react/lib/Panel";
+import { getTheme } from "@fluentui/react/lib/Styling";
+import { ThemeProvider } from "@fluentui/react/lib/Theme";
 import * as React from 'react';
 import { useState } from 'react';
 import { AdaptiveCardDesigner } from "./AdaptiveCardDesigner";
@@ -37,7 +37,7 @@ export const AdaptiveCardDesignerHost = (props: IAdaptiveCardDesignerHostProps):
                     type={PanelType.smallFluid}
                     hasCloseButton={true}
                     onDismiss={(ev) => {
-                        const srcElement = ev.nativeEvent.target as Element | null;
+                        const srcElement = (ev as React.SyntheticEvent).nativeEvent.target as Element | null;
                         if (srcElement && srcElement.className.indexOf('ms-Overlay') !== -1) {
                             ev.preventDefault();
                         } else {

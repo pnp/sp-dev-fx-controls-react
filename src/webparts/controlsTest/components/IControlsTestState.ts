@@ -1,7 +1,7 @@
 import { ImageSize } from "../../../FileTypeIcon";
 import { IProgressAction } from "../../../Progress";
 import { IFilePickerResult } from "../../../FilePicker";
-import { ITag } from "office-ui-fabric-react";
+import { ITag } from "@fluentui/react";
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
 
 export interface IControlsTestState {

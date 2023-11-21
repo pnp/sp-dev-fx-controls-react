@@ -1,16 +1,16 @@
 import * as React from 'react';
 
 import { format } from 'date-fns';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import {
   DocumentCard,
   DocumentCardDetails,
   DocumentCardImage,
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { IIconProps } from 'office-ui-fabric-react/lib/Icon';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { Text } from 'office-ui-fabric-react/lib/Text';
+} from '@fluentui/react/lib/DocumentCard';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import { ImageFit } from '@fluentui/react/lib/Image';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { Text } from '@fluentui/react/lib/Text';
 
 import {
   getFileTypeIconProps,

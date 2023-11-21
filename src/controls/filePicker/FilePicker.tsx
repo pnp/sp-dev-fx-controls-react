@@ -1,22 +1,22 @@
 import * as React from "react";
 
 import * as strings from "ControlStrings";
-import { IIconProps } from "office-ui-fabric-react/lib/Icon";
+import { IIconProps } from "@fluentui/react/lib/Icon";
 import {
   ActionButton,
   PrimaryButton
-} from "office-ui-fabric-react/lib/components/Button";
-import { Label } from "office-ui-fabric-react/lib/components/Label";
+} from "@fluentui/react/lib/components/Button";
+import { Label } from "@fluentui/react/lib/components/Label";
 import {
   Panel,
   PanelType
-} from "office-ui-fabric-react/lib/components/Panel";
+} from "@fluentui/react/lib/components/Panel";
 import {
   INavLink,
   INavLinkGroup,
   Nav
-} from "office-ui-fabric-react/lib/Nav";
-import { css } from "office-ui-fabric-react/lib/Utilities";
+} from "@fluentui/react/lib/Nav";
+import { css } from "@fluentui/react/lib/Utilities";
 
 import * as telemetry from "../../common/telemetry";
 import { FileBrowserService } from "../../services/FileBrowserService";

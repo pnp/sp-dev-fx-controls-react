@@ -33,10 +33,11 @@
 - `Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)
 - `ListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
 - `ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
+- `ListItemAttachments`: Fix click behavior in ListItemAttachments component [#1692](https://github.com/pnp/sp-dev-fx-controls-react/pull/1692)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Dan Toft](https://github.com/Tanddant), [Gerke van Garderen](https://github.com/gerkevgarderen), [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tetsuya Kawahara](https://github.com/tecchan1107), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Dan Toft](https://github.com/Tanddant), [Gerke van Garderen](https://github.com/gerkevgarderen), [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tetsuya Kawahara](https://github.com/tecchan1107), [Tom G](https://github.com/t0mgerman), [Yannik Reiter](https://github.com/yannikreiter-maxworx).
 
 ## 3.15.0
 

@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import { INavLink } from 'office-ui-fabric-react';
+import { INavLink } from '@fluentui/react';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { TermStore } from '@microsoft/microsoft-graph-types';

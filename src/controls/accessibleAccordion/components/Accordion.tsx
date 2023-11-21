@@ -4,7 +4,7 @@ import * as React from "react";
 import { DivAttributes } from "../helpers/types";
 import { Provider } from "./AccordionContext";
 import { UUID } from "./ItemContext";
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 import { getFluentUIThemeOrDefault } from "../../../common/utilities/ThemeUtility";
 import { useTheme } from "@fluentui/react-theme-provider/lib/useTheme";
 import { useEffect, useRef } from "react";

@@ -30,7 +30,8 @@
           "`ListItemAttachments`: Inconsistent file handling [#1644](https://github.com/pnp/sp-dev-fx-controls-react/issues/1644)",
           "`Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)",
           "`ListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)",
-          "`ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)"
+          "`ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)",
+          "`ListItemAttachments`: Fix click behavior in ListItemAttachments component [#1692](https://github.com/pnp/sp-dev-fx-controls-react/pull/1692)"
         ]
       },
       "contributions": [
@@ -45,7 +46,8 @@
         "[Steve Beaugé](https://github.com/stevebeauge)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)",
         "[Tetsuya Kawahara](https://github.com/tecchan1107)",
-        "[Tom G](https://github.com/t0mgerman)"
+        "[Tom G](https://github.com/t0mgerman)",
+        "[Yannik Reiter](https://github.com/yannikreiter-maxworx)"
       ]
     },
     {

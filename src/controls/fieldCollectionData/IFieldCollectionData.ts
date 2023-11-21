@@ -1,6 +1,6 @@
 import { BaseComponentContext } from "@microsoft/sp-component-base";
 import { ICustomCollectionField } from "./ICustomCollectionField";
-import { IPanelProps } from "office-ui-fabric-react";
+import { IPanelProps } from "@fluentui/react";
 
 export interface IFieldCollectionDataProps {
   /**
