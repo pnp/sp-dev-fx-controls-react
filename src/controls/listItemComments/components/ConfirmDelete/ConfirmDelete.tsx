@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useContext } from "react";
 import { ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
-import { Dialog, DialogType, DialogFooter } from "office-ui-fabric-react/lib/Dialog";
-import { PrimaryButton, DefaultButton } from "office-ui-fabric-react/lib/Button";
+import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
+import { PrimaryButton, DefaultButton } from "@fluentui/react/lib/Button";
 import { CommentItem } from "../Comments/CommentItem";
-import { DocumentCard } from "office-ui-fabric-react/lib/components/DocumentCard";
-import { DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { DocumentCard } from "@fluentui/react/lib/components/DocumentCard";
+import { DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
+import { Stack } from "@fluentui/react/lib/Stack";
 import { useListItemCommentsStyles } from "../Comments/useListItemCommentsStyles";
-import { IDialogContentStyles } from "office-ui-fabric-react/lib/Dialog";
+import { IDialogContentStyles } from "@fluentui/react/lib/Dialog";
 import strings from "ControlStrings";
 export interface IConfirmDeleteProps {
   hideDialog: boolean;

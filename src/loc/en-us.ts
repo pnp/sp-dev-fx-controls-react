@@ -359,6 +359,7 @@ define([], () => {
     CollectionDataItemMissingFields: "Fields collection is empty!",
     InvalidUrlError: "The provided URL is not valid",
     CollectionDataSearch: "Search",
+    CollectionDataMinimumUsersDefaultMessage: "Minimum number of users to be selected is {0}",
     MyTeamsLoadingMessage: "loading your teams",
     MyTeamsMessageError: "Something went wrong while loading your teams, please try later or refresh browser",
 
@@ -421,6 +422,8 @@ TermSetNavigationNoTerms: "No terms defined",
     UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
     UpLoadFilesSelectAllLabel: "Select all",
     UploadFilesUploadButtonLabel: "Upload",
+
+    HoverReactionBarSearchEmojiPlaceholder: "Search emoji",
 
 };
 });

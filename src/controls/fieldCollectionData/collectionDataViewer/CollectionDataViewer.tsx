@@ -3,12 +3,12 @@ import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataViewerProps } from './ICollectionDataViewerProps';
 import { ICollectionDataViewerState } from './ICollectionDataViewerState';
 import { CollectionDataItem } from '../collectionDataItem';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { Icon } from '@fluentui/react/lib/components/Icon';
 import * as strings from 'ControlStrings';
 import { cloneDeep, sortBy, isEmpty, findIndex } from '@microsoft/sp-lodash-subset';
 import { Pagination } from '../../pagination';
-import { SearchBox } from 'office-ui-fabric-react/lib/components/SearchBox';
+import { SearchBox } from '@fluentui/react/lib/components/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
 export class CollectionDataViewer extends React.Component<ICollectionDataViewerProps, ICollectionDataViewerState> {
@@ -63,6 +63,11 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
         inCreationItem: null,
         currentPage
       };
+    }, () => {
+      // if panel is not used save directly
+      if (typeof this.props.usePanel === "boolean" && this.props.usePanel === false) {
+        this.props.fOnSave(this.state.crntItems);
+      }
     });
   }
 
@@ -78,6 +83,11 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
         crntItems,
         currentPage: prevState.currentPage
       };
+    }, () => {
+      // if panel is not used save directly
+      if (typeof this.props.usePanel === "boolean" && this.props.usePanel === false) {
+        this.props.fOnSave(this.state.crntItems);
+      }
     });
   }
 
@@ -99,6 +109,11 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
         crntItems: sortBy(crntItems, this.SORT_IDX),
         currentPage
       };
+    }, () => {
+      // if panel is not used save directly
+      if (typeof this.props.usePanel === "boolean" && this.props.usePanel === false) {
+        this.props.fOnSave(this.state.crntItems);
+      }
     });
   }
 
@@ -273,6 +288,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
 
   private getCollectionDataItem = (item: any, idx: number, allItems: any[]): JSX.Element => { // eslint-disable-line @typescript-eslint/no-explicit-any
     return <CollectionDataItem
+    context={this.props.context}
       key={item.uniqueId}
       fields={this.props.fields}
       index={idx}
@@ -365,6 +381,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
           {
             !this.props.disableItemCreation && (
               <CollectionDataItem fields={this.props.fields}
+                context={this.props.context}
                 index={null}
                 item={null}
                 sortingEnabled={this.props.enableSorting}
@@ -385,15 +402,20 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
 
         {
           (!this.state.crntItems || this.state.crntItems.length === 0) && (
-            <p className={`FieldCollectionData__panel__no-collection-data ${styles.noCollectionData}`}>{strings.CollectionDataEmptyValue}</p>
+            <p className={`FieldCollectionData__panel__no-collection-data ${styles.noCollectionData}`}>{typeof this.props.noDataMessage === "string" ? this.props.noDataMessage : strings.CollectionDataEmptyValue}</p>
           )
         }
 
-        <div className={`FieldCollectionData__panel__actions ${styles.panelActions}`}>
-          {this.state.inCreationItem && <PrimaryButton text={this.props.saveAndAddBtnLabel || strings.CollectionSaveAndAddButtonLabel} onClick={this.addAndSave} disabled={!this.allItemsValid()} className="FieldCollectionData__panel__action__add" />}
-          {!this.state.inCreationItem && <PrimaryButton text={this.props.saveBtnLabel || strings.SaveButtonLabel} onClick={this.onSave} disabled={!this.allItemsValid()} className="FieldCollectionData__panel__action__save" />}
-          <DefaultButton text={this.props.cancelBtnLabel || strings.CancelButtonLabel} onClick={this.onCancel} className="FieldCollectionData__panel__action__cancel" />
-        </div>
+        {
+          // Only display the save and cancel buttons when Panel is used
+          (typeof this.props.usePanel !== "boolean" || this.props.usePanel !== false) && (
+            <div className={`FieldCollectionData__panel__actions ${styles.panelActions}`}>
+              {this.state.inCreationItem && <PrimaryButton text={this.props.saveAndAddBtnLabel || strings.CollectionSaveAndAddButtonLabel} onClick={this.addAndSave} disabled={!this.allItemsValid()} className="FieldCollectionData__panel__action__add" />}
+              {!this.state.inCreationItem && <PrimaryButton text={this.props.saveBtnLabel || strings.SaveButtonLabel} onClick={this.onSave} disabled={!this.allItemsValid()} className="FieldCollectionData__panel__action__save" />}
+              <DefaultButton text={this.props.cancelBtnLabel || strings.CancelButtonLabel} onClick={this.onCancel} className="FieldCollectionData__panel__action__cancel" />
+            </div>
+          )
+        }
       </div>
     );
   }

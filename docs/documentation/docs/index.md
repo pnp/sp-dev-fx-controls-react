@@ -61,7 +61,7 @@ telemetry.optOut();
 
 The following controls are currently available:
 
-- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccourdion`-based implementation)
+- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccordion`-based implementation)
 - [Accordion](./controls/Accordion) (Control to render an accordion)
 - [AdaptiveCardHost](./controls/AdaptiveCardHost.md) (Control to render Adaptive Cards)
 - [AdaptiveCardDesignerHost](./controls/AdaptiveCardDesignerHost.md) (Control to render Adaptive Cards Designer)
@@ -82,6 +82,7 @@ The following controls are currently available:
 - [FolderExplorer](./controls/FolderExplorer) (Control that allows to browse the folders and sub-folders from a root folder)
 - [FolderPicker](./controls/FolderPicker) (Control that allows to browse and select a folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
+- [HoverReactionsBar](./controls/HoverReactionsBar) (control that allows you to select an emoji from emoji bar or select from picker)
 - [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [IFramePanel](./controls/IFramePanel) (renders a Panel with an iframe as a content)

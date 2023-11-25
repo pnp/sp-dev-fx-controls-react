@@ -3,16 +3,16 @@
 import {
   ILabelStyles,
 
-} from 'office-ui-fabric-react/lib/Label';
+} from '@fluentui/react/lib/Label';
 import {
   IStackStyles,
 
-} from 'office-ui-fabric-react/lib/Stack';
+} from '@fluentui/react/lib/Stack';
 
 import {
   IStyle, mergeStyleSets,
 
-} from 'office-ui-fabric-react/lib/Styling';
+} from '@fluentui/react/lib/Styling';
 
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 

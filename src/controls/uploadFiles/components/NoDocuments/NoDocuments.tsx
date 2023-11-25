@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import strings from 'ControlStrings';
-import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { Text } from 'office-ui-fabric-react/lib/Text';
+import { FontIcon } from '@fluentui/react/lib/Icon';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { Text } from '@fluentui/react/lib/Text';
 
 import { useNoDocumentsStyles } from './useNoDocumentsStyles';
 

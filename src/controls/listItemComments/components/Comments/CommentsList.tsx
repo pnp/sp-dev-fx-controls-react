@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext, useEffect, useRef } from "react";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Stack } from "@fluentui/react/lib/Stack";
 import { useSpAPI } from "../../hooks";
 import { EListItemCommentsStateTypes, ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
@@ -9,7 +9,7 @@ import { getScrollPosition } from "../../utils/utils";
 import { IErrorInfo } from "../ErrorInfo/IErrorInfo";
 import { RenderError } from "./RenderError";
 import { RenderSpinner } from "./RenderSpinner";
-import { Text } from "office-ui-fabric-react/lib/Text";
+import { Text } from "@fluentui/react/lib/Text";
 import { AddComment } from "../AddComment/AddComment";
 import { ECommentAction } from "../../common/ECommentAction";
 import { IAddCommentPayload } from "../../models/IAddCommentPayload";

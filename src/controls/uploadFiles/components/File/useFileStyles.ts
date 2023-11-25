@@ -1,28 +1,28 @@
 import * as React from 'react';
 
-import { useAtomValue } from 'jotai/utils';
+import { useAtom } from 'jotai';
 import {
   ICheckboxProps,
   ICheckboxStyles,
-} from 'office-ui-fabric-react/lib/Checkbox';
+} from '@fluentui/react/lib/Checkbox';
 import {
   IDocumentCardImageStyles,
   IDocumentCardStyles,
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
+} from '@fluentui/react/lib/DocumentCard';
+import { IStackStyles } from '@fluentui/react/lib/Stack';
 import {
   FontSizes,
   FontWeights,
   mergeStyleSets,
-} from 'office-ui-fabric-react/lib/Styling';
-import { ITextStyles } from 'office-ui-fabric-react/lib/Text';
-import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/Styling';
+import { ITextStyles } from '@fluentui/react/lib/Text';
+import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
 export const useFileStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState] = useAtom(globalState);
   const { themeVariant } = appGlobalState;
 
 

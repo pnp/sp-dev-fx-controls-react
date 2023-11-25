@@ -1,10 +1,10 @@
-import { IButtonStyles } from "office-ui-fabric-react/lib/Button";
-import { IStackStyles, IStackTokens } from "office-ui-fabric-react/lib/Stack";
+import { IButtonStyles } from "@fluentui/react/lib/Button";
+import { IStackStyles, IStackTokens } from "@fluentui/react/lib/Stack";
 import {
   mergeStyles,
   mergeStyleSets,
-} from "office-ui-fabric-react/lib/Styling";
-import { ITextStyles } from "office-ui-fabric-react/lib/Text";
+} from "@fluentui/react/lib/Styling";
+import { ITextStyles } from "@fluentui/react/lib/Text";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 const currentTheme = window.__themeState__.theme;
 export const getMyTeamsStyles = (themeVariant: IReadonlyTheme) => { // eslint-disable-line @typescript-eslint/explicit-function-return-type

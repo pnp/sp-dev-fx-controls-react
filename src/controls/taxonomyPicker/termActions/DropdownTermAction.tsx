@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { DefaultButton } from '@fluentui/react/lib/Button';
 import { ITerm } from '../../../services/ISPTermStorePickerService';
 import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps, ActionChange } from './ITermsActions';
-import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
+import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
 import { getTermActionChange } from './getTermActionChange';
 
 export class DropdownTermAction extends React.Component<IConcreteTermActionProps> {

@@ -1,7 +1,7 @@
 import { ImageSize } from "../../../FileTypeIcon";
 import { IProgressAction } from "../../../Progress";
 import { IFilePickerResult } from "../../../FilePicker";
-import { ITag } from "office-ui-fabric-react";
+import { ITag } from "@fluentui/react";
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
 
 export interface IControlsTestState {
@@ -60,6 +60,7 @@ export interface IControlsTestState {
   isSecurityTrimmedControlDivVisible: boolean;
   isSitePickerDivVisible: boolean;
   isListPickerDivVisible: boolean;
+  isListItemCommentsDivVisible: boolean;
   isFieldPickerDivVisible: boolean;
   isIconPickerDivVisible: boolean;
   isComboBoxListItemPickerDivVisible: boolean;
@@ -89,4 +90,5 @@ export interface IControlsTestState {
   isUploadFilesDivVisible: boolean;
   toggleAll: boolean;
   showAllFilters: boolean;
+  isViewPickerDivVisible: boolean;
 }

@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
+import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
 import { IFilePickerResult } from '../../filePicker';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
@@ -11,6 +11,7 @@ export interface IDynamicFieldProps {
   listId: string;
   listItemId?: number;
   columnInternalName: string;
+  cultureName?: string;
   label?: string;
   placeholder?: string;
   onChanged?: (columnInternalName: string, newValue: any, additionalData?: FieldChangeAdditionalData) => void; // eslint-disable-line @typescript-eslint/no-explicit-any

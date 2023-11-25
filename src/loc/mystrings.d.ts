@@ -356,6 +356,7 @@ declare interface IControlStrings {
   CollectionDataItemMissingFields: string;
   InvalidUrlError: string;
   CollectionDataSearch: string;
+  CollectionDataMinimumUsersDefaultMessage: string
 
   ViewMore: string;
 
@@ -398,6 +399,8 @@ declare interface IControlStrings {
   //TermSetNavigationb Control
   TermSetNavigationNoTerms: string;
   TermSertNaviagtionErrorMessage: string;
+
+  HoverReactionBarSearchEmojiPlaceholder: string;
 }
 
 declare interface IDateTimeStrings {

@@ -1,4 +1,4 @@
-import { IDropdownStyles } from 'office-ui-fabric-react';
+import { IDropdownStyles } from '@fluentui/react';
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 

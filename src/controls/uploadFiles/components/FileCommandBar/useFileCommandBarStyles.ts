@@ -1,25 +1,25 @@
 import * as React from 'react';
 
-import { useAtomValue } from 'jotai/utils';
-import { IButtonStyles } from 'office-ui-fabric-react/lib/Button';
+import { useAtom } from 'jotai';
+import { IButtonStyles } from '@fluentui/react/lib/Button';
 import {
   ICheckboxProps,
   ICheckboxStyles,
-} from 'office-ui-fabric-react/lib/Checkbox';
-import { ICommandBarStyles } from 'office-ui-fabric-react/lib/CommandBar';
-import { IIconStyles } from 'office-ui-fabric-react/lib/Icon';
-import { IStackStyles } from 'office-ui-fabric-react/lib/Stack';
+} from '@fluentui/react/lib/Checkbox';
+import { ICommandBarStyles } from '@fluentui/react/lib/CommandBar';
+import { IIconStyles } from '@fluentui/react/lib/Icon';
+import { IStackStyles } from '@fluentui/react/lib/Stack';
 import {
   mergeStyles,
   mergeStyleSets,
-} from 'office-ui-fabric-react/lib/Styling';
-import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/Styling';
+import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
 export const useFileCommandBarStyles = () => {
-  const appGlobalState = useAtomValue(globalState);
+  const [appGlobalState] = useAtom(globalState);
   const { themeVariant, selectedFiles } = appGlobalState;
 
   const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback(

@@ -2,11 +2,11 @@ import * as React from 'react';
 import styles from './FolderPicker.module.scss';
 import { IFolderPickerProps, IFolderPickerState } from '.';
 import { IFolder } from '../../services/IFolderExplorerService';
-import { IconButton, PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { getId } from 'office-ui-fabric-react/lib/Utilities';
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
+import { IconButton, PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Label } from '@fluentui/react/lib/Label';
+import { Link } from '@fluentui/react/lib/Link';
+import { getId } from '@fluentui/react/lib/Utilities';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 import { FolderExplorer } from '../folderExplorer/FolderExplorer';
 import * as telemetry from '../../common/telemetry';
 

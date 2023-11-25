@@ -3,22 +3,22 @@ import * as React from 'react';
 import * as strings from 'ControlStrings';
 import {
   Customizer,
-} from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/Utilities';
 
 import {
   Stack,
-} from 'office-ui-fabric-react/lib/Stack';
+} from '@fluentui/react/lib/Stack';
 import {
   Icon,
-} from 'office-ui-fabric-react/lib/Icon';
+} from '@fluentui/react/lib/Icon';
 
 import {
   Label,
-} from 'office-ui-fabric-react/lib/Label';
+} from '@fluentui/react/lib/Label';
 import {
   MessageBarType,
  MessageBar,
-} from 'office-ui-fabric-react/lib/MessageBar';
+} from '@fluentui/react/lib/MessageBar';
 
 import { IProgressStepsIndicatorProps } from './IProgressStepsIndicatorProps';
 import {

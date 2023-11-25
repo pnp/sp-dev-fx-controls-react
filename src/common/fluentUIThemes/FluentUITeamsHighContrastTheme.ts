@@ -1,5 +1,5 @@
 import { Theme } from "@fluentui/theme";
-import { createTheme } from "office-ui-fabric-react/lib/Styling";
+import { createTheme } from "@fluentui/react/lib/Styling";
 
 export const fluentUITeamsHighContrastTheme: Theme = createTheme({
   palette: {

@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { PrimaryButton, } from 'office-ui-fabric-react/lib/Button';
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+import { PrimaryButton, } from '@fluentui/react/lib/Button';
 import { IUploadAttachmentProps } from './IUploadAttachmentProps';
 import { IUploadAttachmentState } from './IUploadAttachmentState';
 import SPservice from "../../services/SPService";
 import * as strings from 'ControlStrings';
-import { CommandBar } from 'office-ui-fabric-react/lib/CommandBar';
-import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
+import { CommandBar } from '@fluentui/react/lib/CommandBar';
+import { ProgressIndicator } from '@fluentui/react/lib/ProgressIndicator';
 import styles from './ListItemAttachments.module.scss';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {

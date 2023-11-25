@@ -5,17 +5,17 @@ import orderBy from 'lodash/orderBy';
 import {
   Dropdown,
   IDropdownOption,
-} from 'office-ui-fabric-react/lib/Dropdown';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
+} from '@fluentui/react/lib/Dropdown';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import {
   Spinner,
   SpinnerSize,
-} from 'office-ui-fabric-react/lib/Spinner';
-import { mergeStyleSets } from 'office-ui-fabric-react/lib/Styling';
+} from '@fluentui/react/lib/Spinner';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import {
   ISelectableOption,
   SelectableOptionMenuItemType,
-} from 'office-ui-fabric-react/lib/utilities/selectableOption/SelectableOption.types';
+} from '@fluentui/react/lib/utilities/selectableOption/SelectableOption.types';
 
 import { Async } from '@uifabric/utilities/lib/Async';
 

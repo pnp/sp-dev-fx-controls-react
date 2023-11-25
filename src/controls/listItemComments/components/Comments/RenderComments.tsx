@@ -1,6 +1,6 @@
-import { IconButton } from "office-ui-fabric-react/lib/Button";
-import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { IconButton } from "@fluentui/react/lib/Button";
+import { DocumentCard, DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
+import { Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { useCallback } from "react";
 import { useContext } from "react";
@@ -11,7 +11,7 @@ import { IComment } from "./IComment";
 import { RenderSpinner } from "./RenderSpinner";
 import { useListItemCommentsStyles } from "./useListItemCommentsStyles";
 import { useBoolean } from "@fluentui/react-hooks";
-import { List } from "office-ui-fabric-react/lib/List";
+import { List } from "@fluentui/react/lib/List";
 import { AppContext, ECommentAction } from "../..";
 
 export interface IRenderCommentsProps { }

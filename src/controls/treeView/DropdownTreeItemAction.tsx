@@ -1,5 +1,5 @@
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
-import { IContextualMenuItem, IContextualMenuProps } from 'office-ui-fabric-react/lib/ContextualMenu';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react/lib/ContextualMenu';
 import * as React from 'react';
 import { ITreeItem } from './ITreeItem';
 import { IConcreteTreeItemActionProps, ITreeItemAction } from './ITreeItemActions';

@@ -1,4 +1,4 @@
-@import '~office-ui-fabric-react/dist/sass/References.scss';
+@import '~@fluentui/react/dist/sass/References.scss';
 
 .collectionData {
   background-color: $ms-color-neutralLight;
@@ -176,4 +176,8 @@
     text-align: left;
     border-bottom: 1px solid $ms-color-neutralTertiary;
   }
+}
+
+.peoplePicker {
+  background-color: #fff;
 }

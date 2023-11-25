@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@fluentui/react-theme-provider/lib/ThemeProvider";
-import { IPartialTheme, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { IPartialTheme, ITheme } from "@fluentui/react/lib/Styling";
 import * as React from "react";
 import { useCallback } from "react";
 import { generateThemeFromColors, generateThemeVariant, getDefaultTheme } from "./VariantThemeProviderHelpers";

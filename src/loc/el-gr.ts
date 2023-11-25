@@ -344,6 +344,7 @@ define([], () => {
   "CollectionDataItemMissingFields": "Η συλλογή πεδίων είναι άδεια!",
   "InvalidUrlError": "Η παρεχόμενη διεύθυνση URL δεν είναι έγκυρη",
   "CollectionDataSearch": "Αναζήτηση",
+  "CollectionDataMinimumUsersDefaultMessage": "Minimum number of users to be selected is {0}",
   "MyTeamsLoadingMessage": "φόρτωση των ομάδων σας",
   "MyTeamsMessageError": "Κάτι πήγε στραβά κατά τη φόρτωση των ομάδων σας, δοκιμάστε αργότερα ή ανανεώστε το πρόγραμμα περιήγησης",
   "MyTeamsNoTeamsMessage": "Δεν έχεις ομάδες.",
