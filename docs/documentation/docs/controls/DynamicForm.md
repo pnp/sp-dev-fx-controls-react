@@ -26,6 +26,17 @@ import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
 ```
 ![DynamicForm](../assets/DynamicForm.png)
 
+## File selection
+
+To upload a file when creating a new document in a document library you need to specify:
+- enableFileSelection: Set this parameter to true to enable file selection.
+- contentTypeId: This parameter specifies the target content type ID of the document you are creating.
+- supportedFileExtensions: This parameter is optional and is used to specify the supported file extensions if they are different from the default ones.
+
+Enabling the file selection will display a new button on top of the form that allow the user to select a file from the recent files, browsing OneDrive or select and upload a file from the computer.
+
+![DynamicFormWithFileSelection](../assets/DynamicFormWithFileSelection.png)
+
 ## Implementation
 
 The `DynamicForm` can be configured with the following properties:
@@ -58,14 +69,3 @@ The `DynamicForm` can be configured with the following properties:
 | showDialogOnValidationError | boolean | no | Specifies if the dialog should be shown on validation error. Default - `false` |
 | customTitle | string | no | Specifies a custom title to be shown in the validation dialog. Default - empty |
 | customMessage | string | no | Specifies a custom message to be shown in the validation dialog. Default - empty |
-
-## File selection
-
-To upload a file when creating a new document in a document library you need to specify:
-- enableFileSelection: Set this parameter to true to enable file selection.
-- contentTypeId: This parameter specifies the target content type ID of the document you are creating.
-- supportedFileExtensions: This parameter is optional and is used to specify the supported file extensions if they are different from the default ones.
-
-Enabling the file selection will display a new button on top of the form that allow the user to select a file from the recent files, browsing OneDrive or select and upload a file from the computer.
-
-![DynamicFormWithFileSelection](../assets/DynamicFormWithFileSelection.png)
