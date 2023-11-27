@@ -4,10 +4,14 @@
       "version": "3.17.0",
       "changes":{
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)"
+        ],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Guido Zambarda](https://github.com/GuidoZam)"
+      ]
     },
     {
       "version": "3.16.0",

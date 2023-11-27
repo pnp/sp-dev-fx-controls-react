@@ -2,6 +2,14 @@
 
 ## 3.17.0
 
+### Enhancements
+
+- `DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)
+
+### Contributors
+
+Special thanks to our contributor: [Guido Zambarda](https://github.com/GuidoZam).
+
 ## 3.16.0
 
 ### New control(s)
