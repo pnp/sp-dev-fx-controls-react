@@ -9,6 +9,7 @@ import {
 import { IDropdownOption } from "@fluentui/react/lib/components/Dropdown";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
+import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import * as React from "react";
 import { IUploadImageResult } from "../../common/SPEntities";
 import SPservice from "../../services/SPService";
@@ -27,7 +28,6 @@ import {
   DialogFooter,
   DialogType,
 } from "@fluentui/react/lib/Dialog";
-import { Icon } from 'office-ui-fabric-react';
 
 import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
