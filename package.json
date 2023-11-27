@@ -116,7 +116,7 @@
     "codecov": "3.8.3",
     "enzyme": "^3.11.0",
     "eslint": "8.7.0",
-    "eslint-plugin-react-hooks": "4.3.0",
+    "eslint-plugin-react-hooks": "4.6.0",
     "gulp": "4.0.2",
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
