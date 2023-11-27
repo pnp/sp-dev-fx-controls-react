@@ -385,5 +385,8 @@ TermSetNavigationNoTerms: "No terms defined",
   "DynamicFormNumberValueMustBeGreaterThan": "Balioak {0} baino handiagoa izan behar du",
   "DynamicFormNumberValueMustBeBetween": "Balioak {0} eta {1} artean egon behar du",
   "DynamicFormNumberValueMustBeLowerThan": "Balioak {0} baino txikiagoa izan behar du",
+  "DynamicFormChooseFileLabel": "File",
+  "DynamicFormChooseFileButtonText": "Select file",
+  "DynamicFormRequiredFileMessage": "File is required.",
   };
 });
