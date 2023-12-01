@@ -1,4 +1,4 @@
-import { IDropdownOption } from "office-ui-fabric-react/lib/Dropdown";
+import { IDropdownOption } from '@fluentui/react/lib/Dropdown';
 
 export interface IListPickerState {
     loading: boolean;

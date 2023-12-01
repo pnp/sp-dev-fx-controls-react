@@ -30,5 +30,6 @@ export interface IControlsTestWebPartProps {
   dynamicFormCustomFormattingEnabled: boolean;
   dynamicFormClientSideValidationEnabled: boolean;
   dynamicFormFieldValidationEnabled: boolean;
+  dynamicFormFileSelectionEnabled: boolean;
   controlVisibility: ControlVisibility
 }

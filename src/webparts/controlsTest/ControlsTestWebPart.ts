@@ -82,8 +82,13 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
        }
      ); */
 
-  const element: React.ReactElement<IControlsTestProps> = React.createElement(
+  let listItemId: number = Number(this.properties.dynamicFormListItemId);
+  if (listItemId < 1 || isNaN(listItemId)) {
+    listItemId = undefined;
+  }
+  console.log(listItemId);
 
+  const element: React.ReactElement<IControlsTestProps> = React.createElement(
     ControlsTest,
       {
 
@@ -94,11 +99,12 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         title: this.properties.title ?? "Sample title",
         displayMode: this.displayMode,
         dynamicFormListId: this.properties.dynamicFormListId,
-        dynamicFormListItemId: this.properties.dynamicFormListItemId,
+        dynamicFormListItemId: listItemId?.toString() ?? undefined,
         dynamicFormErrorDialogEnabled: this.properties.dynamicFormErrorDialogEnabled,
         dynamicFormCustomFormattingEnabled: this.properties.dynamicFormCustomFormattingEnabled,
         dynamicFormClientSideValidationEnabled: this.properties.dynamicFormClientSideValidationEnabled,
         dynamicFormFieldValidationEnabled: this.properties.dynamicFormFieldValidationEnabled,
+        dynamicFormFileSelectionEnabled: this.properties.dynamicFormFileSelectionEnabled,
         onOpenPropertyPane: () => {
           this.context.propertyPane.open();
         },
@@ -153,7 +159,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
                   }
                 }),
                 PropertyPaneTextField('dynamicFormListItemId', {
-                  label: 'List Item ID for Dynamic Form'
+                  label: 'List Item ID for Dynamic Form',
                 }),
                 PropertyPaneToggle('dynamicFormErrorDialogEnabled', {
                   label: 'Dynamic Form Error Dialog'
@@ -166,6 +172,9 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
                 }),
                 PropertyPaneToggle('dynamicFormFieldValidationEnabled', {
                   label: 'Dynamic Form Field Validation'
+                }),
+                PropertyPaneToggle('dynamicFormFileSelectionEnabled', {
+                  label: 'Dynamic Form File Selection'
                 }),
               ]
             },

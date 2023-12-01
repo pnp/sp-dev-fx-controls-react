@@ -1,6 +1,6 @@
 import { IInstalledLanguageInfo } from '@pnp/sp/regional-settings';
 import { ISPField } from '../../common/SPEntities';
-import { MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBarType } from '@fluentui/react/lib/MessageBar';
 import { ICustomFormattingBodySection, ICustomFormattingNode } from '../../common/utilities/ICustomFormatting';
 import { IDynamicFieldProps } from './dynamicField/IDynamicFieldProps';
 import { IFilePickerResult } from "../filePicker";
@@ -33,4 +33,5 @@ export interface IDynamicFormState {
   isValidationErrorDialogOpen: boolean;
   selectedFile?: IFilePickerResult;
   missingSelectedFile?: boolean;
+  contentTypeId?: string;
 }

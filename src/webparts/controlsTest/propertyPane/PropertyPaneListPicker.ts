@@ -5,7 +5,7 @@ import {
   IPropertyPaneField,
   PropertyPaneFieldType
 } from '@microsoft/sp-property-pane';
-import { IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
+import { IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { IPropertyPaneCustomFieldProps } from '@microsoft/sp-property-pane';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 

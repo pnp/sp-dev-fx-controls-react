@@ -18,19 +18,13 @@ import { MessageBar, MessageBarType } from "@fluentui/react/lib/MessageBar";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
 import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
-import * as React from "react";
-import { IUploadImageResult } from "../../common/SPEntities";
-import SPservice from "../../services/SPService";
-import { IFilePickerResult } from "../filePicker";
 import { DynamicField } from "./dynamicField";
 import {
   DateFormat,
   FieldChangeAdditionalData,
   IDynamicFieldProps,
 } from "./dynamicField/IDynamicFieldProps";
-import { IFilePickerResult } from "../filePicker";
-import { IDynamicFormProps } from "./IDynamicFormProps";
-import { IDynamicFormState } from "./IDynamicFormState";
+import { FilePicker, IFilePickerResult } from "../filePicker";
 
 // pnp/sp, helpers / utils
 import { sp } from "@pnp/sp";
@@ -47,6 +41,10 @@ import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
+
+// Dynamic Form Props / State
+import { IDynamicFormProps } from "./IDynamicFormProps";
+import { IDynamicFormState } from "./IDynamicFormState";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -179,6 +177,10 @@ export class DynamicForm extends React.Component<
       footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true) as JSX.Element;
     }
 
+    // Content Type 
+    let contentTypeId = this.props.contentTypeId;
+    if (this.state.contentTypeId !== undefined) contentTypeId = this.state.contentTypeId;
+
     return (
       <div>
         {infoErrorMessages.map((ie, i) => (
@@ -196,8 +198,8 @@ export class DynamicForm extends React.Component<
             {headerContent}
             {this.props.enableFileSelection === true &&
               this.props.listItemId === undefined &&
-              this.props.contentTypeId !== undefined &&
-              this.props.contentTypeId.startsWith("0x0101") &&
+              contentTypeId !== undefined &&
+              contentTypeId.startsWith("0x0101") &&
               this.renderFileSelectionControl()}
             {(bodySections.length > 0 && !customFormattingDisabled) && bodySections
               .filter(bs => bs.fields.filter(bsf => hiddenByFormula.indexOf(bsf) < 0).length > 0)
@@ -311,7 +313,6 @@ export class DynamicForm extends React.Component<
     const {
       listId,
       listItemId,
-      contentTypeId,
       onSubmitted,
       onBeforeSubmit,
       onSubmitError,
@@ -319,6 +320,11 @@ export class DynamicForm extends React.Component<
       validationErrorDialogProps,
       returnListItemInstanceOnSubmit
     } = this.props;
+    
+    let contentTypeId = this.props.contentTypeId;
+    if (this.state.contentTypeId !== undefined) contentTypeId = this.state.contentTypeId;
+
+    const fileSelectRendered = !listItemId && contentTypeId.startsWith("0x0101") && enableFileSelection === true;
 
     try {
 
@@ -351,7 +357,7 @@ export class DynamicForm extends React.Component<
         }
 
         // Check min and max values for number fields
-        if (field.fieldType === "Number" && field.newValue !== undefined) {
+        if (field.fieldType === "Number" && field.newValue !== undefined && field.newValue.trim() !== "") {
           if ((field.newValue < field.minimumValue) || (field.newValue > field.maximumValue)) {
             shouldBeReturnBack = true;
           }
@@ -380,18 +386,7 @@ export class DynamicForm extends React.Component<
         return;
       }
 
-      if (enableFileSelection === true && this.state.selectedFile === undefined && this.props.listItemId === undefined) {
-        this.setState({
-          missingSelectedFile: true,
-          isValidationErrorDialogOpen:
-            validationErrorDialogProps
-              ?.showDialogOnValidationError === true,
-          validationErrors
-        });
-        return;
-      }
-
-      if (enableFileSelection === true && this.state.selectedFile === undefined && this.props.listItemId === undefined) {
+      if (fileSelectRendered === true && this.state.selectedFile === undefined && this.props.listItemId === undefined) {
         this.setState({
           missingSelectedFile: true,
           isValidationErrorDialogOpen:
@@ -546,7 +541,7 @@ export class DynamicForm extends React.Component<
         (!contentTypeId.startsWith("0x0120") &&
         contentTypeId.startsWith("0x01"))
       ) {
-        if (contentTypeId === undefined || enableFileSelection === true) {
+        if (fileSelectRendered === true) {
           await this.addFileToLibrary(objects);
         }
         else {
@@ -620,10 +615,7 @@ export class DynamicForm extends React.Component<
           }
           console.log("Error", error);
         }
-      } else if (contentTypeId.startsWith("0x01") && enableFileSelection === true) {
-        // We are adding a folder or a Document Set
-        await this.addFileToLibrary(objects);
-      }
+      } 
 
       this.setState({
         isSaving: false,
@@ -638,6 +630,9 @@ export class DynamicForm extends React.Component<
     }
   };
 
+  /**
+   * Adds selected file to the library
+   */
   private addFileToLibrary = async (objects: {}): Promise<void> => {
     const {
       selectedFile
@@ -651,49 +646,52 @@ export class DynamicForm extends React.Component<
       returnListItemInstanceOnSubmit
     } = this.props;
 
-    try {
-      const idField = "ID";
-      const contentTypeIdField = "ContentTypeId";
+    
+    if (selectedFile !== undefined) {
+        try {
+          const idField = "ID";
+          const contentTypeIdField = "ContentTypeId";
 
-      const library = await sp.web.lists.getById(listId);
-      const itemTitle =
-        selectedFile !== undefined && selectedFile.fileName !== undefined && selectedFile.fileName !== ""
-          ? (selectedFile.fileName as string).replace(
-            /["|*|:|<|>|?|/|\\||]/g,
-            "_"
-          ) // Replace not allowed chars in folder name
-          : ""; // Empty string will be replaced by SPO with Folder Item ID
-
-      const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
-      const fields = await fileCreatedResult.file.listItemAllFields();
-
-      if (fields[idField]) {
-        // Read the ID of the just created folder or Document Set
-        const folderId = fields[idField];
-
-        // Set the content type ID for the target item
-        objects[contentTypeIdField] = contentTypeId;
-        // Update the just created folder or Document Set
-        const iur = await library.items.getById(folderId).update(objects);
-        if (onSubmitted) {
-          onSubmitted(
-            iur.data,
-            returnListItemInstanceOnSubmit !== false
-              ? iur.item
-              : undefined
-          );
+          const library = await sp.web.lists.getById(listId);
+          const itemTitle =
+            selectedFile !== undefined && selectedFile.fileName !== undefined && selectedFile.fileName !== ""
+              ? (selectedFile.fileName as string).replace(
+                /["|*|:|<|>|?|/|\\||]/g,
+                "_"
+              ) // Replace not allowed chars in folder name
+              : ""; // Empty string will be replaced by SPO with Folder Item ID
+    
+          const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
+          const fields = await fileCreatedResult.file.listItemAllFields();
+    
+          if (fields[idField]) {
+            // Read the ID of the just created folder or Document Set
+            const folderId = fields[idField];
+    
+            // Set the content type ID for the target item
+            objects[contentTypeIdField] = contentTypeId;
+            // Update the just created folder or Document Set
+            const iur = await library.items.getById(folderId).update(objects);
+            if (onSubmitted) {
+              onSubmitted(
+                iur.data,
+                returnListItemInstanceOnSubmit !== false
+                  ? iur.item
+                  : undefined
+              );
+            }
+          } else {
+            throw new Error(
+              "Unable to read the ID of the just created folder or Document Set"
+            );
+          }
+        } catch (error) {
+          if (onSubmitError) {
+            onSubmitError(objects, error);
+          }
+          console.log("Error", error);
         }
-      } else {
-        throw new Error(
-          "Unable to read the ID of the just created folder or Document Set"
-        );
       }
-    } catch (error) {
-      if (onSubmitError) {
-        onSubmitError(objects, error);
-      }
-      console.log("Error", error);
-    }
   }
 
   /**
@@ -999,6 +997,7 @@ export class DynamicForm extends React.Component<
       }
 
       this.setState({
+        contentTypeId,
         clientValidationFormulas,
         customFormatting: {
           header: headerJSON,
@@ -1434,6 +1433,5 @@ export class DynamicForm extends React.Component<
         return 'Document';
     }
   }
-
 
 }

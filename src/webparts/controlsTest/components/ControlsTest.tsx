@@ -974,6 +974,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
               useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
               useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
+              enableFileSelection={this.props.dynamicFormFileSelectionEnabled}
             />
           </div>
         </div>

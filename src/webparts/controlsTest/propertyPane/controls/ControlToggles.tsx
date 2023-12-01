@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ValidControls } from '../../IControlsTestWebPartProps';
-import { TextField, Toggle } from 'office-ui-fabric-react';
+import { TextField, Toggle } from '@fluentui/react';
 
 export interface IControlTogglesProps {
     label: string;

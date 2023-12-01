@@ -29,6 +29,7 @@
         "dynamicFormCustomFormattingEnabled": true,
         "dynamicFormClientSideValidationEnabled": true,
         "dynamicFormFieldValidationEnabled" : true,
+        "dynamicFormFileSelectionEnabled": false,
         "controlVisibility": {
           "all": false,
           "accessibleAccordion": false,
