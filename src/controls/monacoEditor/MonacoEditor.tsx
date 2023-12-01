@@ -4,8 +4,8 @@ import { Elanguages } from ".";
 import { IMonacoEditorProps } from "./IMonacoEditorProps";
 import { useMonacoEditorStyles } from "./useMonacoEditorStyles";
 import { EStatus, useMonaco } from "./useMonaco";
-import { Spinner, SpinnerSize } from "office-ui-fabric-react/lib/Spinner";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Spinner, SpinnerSize } from "@fluentui/react/lib/Spinner";
+import { Stack } from "@fluentui/react/lib/Stack";
 import { Error } from "./Error";
 import { editor } from "monaco-editor";
 

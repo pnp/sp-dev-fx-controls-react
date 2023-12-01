@@ -113,7 +113,7 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | webUrl | string | yes | Url to web hosting list |
 | spHttpClient | RequestClient | yes | Any implementation of PnPJS RequestClient |
 | listId | string | yes | Guid or title of the list. |
-| onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
+| onSelectedItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
 | defaultSelectedItems | any[] | no | Initial items that have already been selected and should appear in the people picker. Support objects and Ids only |
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |

@@ -2,27 +2,27 @@ import * as React from "react";
 import {
   IBasePickerStyles,
   ITag,
-} from "office-ui-fabric-react/lib/Pickers";
+} from "@fluentui/react/lib/Pickers";
 import {
   Stack,
-} from "office-ui-fabric-react/lib/Stack";
+} from "@fluentui/react/lib/Stack";
 import {
   Text,
-} from "office-ui-fabric-react/lib/Text";
+} from "@fluentui/react/lib/Text";
 import {
   TextField
-} from "office-ui-fabric-react/lib/TextField";
+} from "@fluentui/react/lib/TextField";
 import {
   DefaultButton,
   PrimaryButton
-} from "office-ui-fabric-react/lib/components/Button";
-import { DialogType, DialogFooter, IDialogContentProps } from "office-ui-fabric-react/lib/components/Dialog";
-import { IModalProps } from "office-ui-fabric-react/lib/Modal";
+} from "@fluentui/react/lib/components/Button";
+import { DialogType, DialogFooter, IDialogContentProps } from "@fluentui/react/lib/components/Dialog";
+import { IModalProps } from "@fluentui/react/lib/Modal";
 import {
   Dropdown,
   IDropdownOption
-} from "office-ui-fabric-react/lib/components/Dropdown";
-import { Link } from "office-ui-fabric-react/lib/components/Link";
+} from "@fluentui/react/lib/components/Dropdown";
+import { Link } from "@fluentui/react/lib/components/Link";
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -31,16 +31,13 @@ import {
   DocumentCardTitle,
   DocumentCardType,
   IDocumentCardPreviewProps
-} from "office-ui-fabric-react/lib/DocumentCard";
-import { IIconProps } from "office-ui-fabric-react/lib/Icon";
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { ImageFit } from "office-ui-fabric-react/lib/Image";
-import { PanelType } from "office-ui-fabric-react/lib/Panel";
-import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
-import { ISize } from "office-ui-fabric-react/lib/Utilities";
-import {
-  DayOfWeek
-} from "office-ui-fabric-react/lib/utilities/dateValues/DateValues";
+} from "@fluentui/react/lib/DocumentCard";
+import { IIconProps } from "@fluentui/react/lib/Icon";
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
+import { ImageFit } from "@fluentui/react/lib/Image";
+import { PanelType } from "@fluentui/react/lib/Panel";
+import { mergeStyles } from "@fluentui/react/lib/Styling";
+import { ISize } from "@fluentui/react/lib/Utilities";
 
 import {
   ExclamationCircleIcon,
@@ -49,6 +46,7 @@ import {
   ShareGenericIcon,
   Text as NorthstarText
 } from "@fluentui/react-northstar";
+import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
 import {
   DisplayMode,
   Environment,
@@ -187,7 +185,7 @@ import { debounce } from "lodash";
 import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
 import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
 import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
-import { Label } from "office-ui-fabric-react/lib/Label";
+import { Label } from "@fluentui/react/lib/Label";
 import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
 import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
@@ -197,9 +195,10 @@ import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
-import { Toggle } from "office-ui-fabric-react";
+import { Toggle } from "@fluentui/react";
 import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
+
 
 
 // Used to render document card
@@ -1359,6 +1358,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <PeoplePicker context={this.props.context}
             titleText="People Picker (tenant scoped)"
             personSelectionLimit={10}
+            searchTextLimit={5} //New property : Specifies the minimum character count needed to begin retrieving search results. (default : 2)
             // groupName={"Team Site Owners"}
             showtooltip={true}
             required={true}

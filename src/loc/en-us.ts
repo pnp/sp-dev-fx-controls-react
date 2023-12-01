@@ -388,6 +388,9 @@ define([], () => {
     DynamicFormNumberValueMustBeGreaterThan: "Value must be greater than {0}",
     DynamicFormNumberValueMustBeBetween: "Value must be between {0} and {1}",
     DynamicFormNumberValueMustBeLowerThan: "Value must be lower than {0}",
+    DynamicFormChooseFileLabel: "File",
+    DynamicFormChooseFileButtonText: "Select file",
+    DynamicFormRequiredFileMessage: "File is required.",
     customDisplayName: "Use this location:",
     ListItemCommentDIalogDeleteSubText: "Are you sure that you want to delete this comment?",
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
@@ -422,6 +425,8 @@ TermSetNavigationNoTerms: "No terms defined",
     UpLoadFilesDragDropLabel: "Drag and Drop files or select Add File button",
     UpLoadFilesSelectAllLabel: "Select all",
     UploadFilesUploadButtonLabel: "Upload",
+
+    HoverReactionBarSearchEmojiPlaceholder: "Search emoji",
 
 };
 });

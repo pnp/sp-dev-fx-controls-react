@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { IIconPickerProps } from './IIconPickerProps';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox';
-import { IRenderFunction, getId } from 'office-ui-fabric-react/lib/Utilities';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
+import { IRenderFunction, getId } from '@fluentui/react/lib/Utilities';
 import styles from './IconPicker.module.scss';
 import * as strings from 'ControlStrings';
-import { Panel, PanelType, IPanelProps } from 'office-ui-fabric-react/lib/Panel';
+import { Panel, PanelType, IPanelProps } from '@fluentui/react/lib/Panel';
 import debounce from 'lodash/debounce';
 import { IIconPickerState } from './IIconPickerState';
 import * as telemetry from '../../common/telemetry';
-import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { FluentIconsService } from '../../services/FluentIconsService';
 
 export class IconPicker extends React.Component<IIconPickerProps, IIconPickerState> {

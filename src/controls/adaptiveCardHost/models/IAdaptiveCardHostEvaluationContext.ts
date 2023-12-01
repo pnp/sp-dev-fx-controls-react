@@ -1,4 +1,4 @@
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 import { IAadInfo } from './IAadInfo';
 import { ICultureInfo } from './ICultureInfo';
 import { ISPListInfo } from './ISPListInfo';

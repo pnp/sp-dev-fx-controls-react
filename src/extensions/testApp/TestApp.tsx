@@ -1,5 +1,5 @@
 import { ApplicationCustomizerContext } from '@microsoft/sp-application-base';
-import { DefaultButton } from 'office-ui-fabric-react';
+import { DefaultButton } from '@fluentui/react';
 import * as React from 'react';
 
 // import styles from './TestApp.module.scss';

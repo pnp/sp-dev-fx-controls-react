@@ -2,22 +2,22 @@ import * as React from 'react';
 import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataItemProps } from './ICollectionDataItemProps';
 import { ICollectionDataItemState } from './ICollectionDataItemState';
-import { TextField } from 'office-ui-fabric-react/lib/components/TextField';
-import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
-import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Checkbox } from 'office-ui-fabric-react/lib/components/Checkbox';
+import { TextField } from '@fluentui/react/lib/components/TextField';
+import { Icon } from '@fluentui/react/lib/components/Icon';
+import { Link } from '@fluentui/react/lib/components/Link';
+import { Checkbox } from '@fluentui/react/lib/components/Checkbox';
 import * as strings from 'ControlStrings';
 import { CustomCollectionFieldType, ICustomCollectionField } from '../ICustomCollectionField';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { ComboBox, IComboBoxOption } from 'office-ui-fabric-react/lib/components/ComboBox';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/components/Dropdown';
+import { ComboBox, IComboBoxOption } from '@fluentui/react/lib/components/ComboBox';
 import { PeoplePicker, PrincipalType } from "../../peoplepicker";
-import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/components/Callout';
+import { Callout, DirectionalHint } from '@fluentui/react/lib/components/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
-import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
-import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
+import { DatePicker } from '@fluentui/react/lib/DatePicker';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
   private emptyItem: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -57,7 +57,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
    * Update the item value on the field change
    */
   private onValueChanged = (fieldId: string, value: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
-
+    
     this.setState((prevState: ICollectionDataItemState): ICollectionDataItemState => {
       const { crntItem } = prevState;
       // Update the changed field

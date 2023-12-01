@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styles from './RteColorPicker.module.scss';
-import { Label } from 'office-ui-fabric-react/lib/Label';
+import { Label } from '@fluentui/react/lib/Label';
 import { ISwatchColorPickerGroupState, ISwatchColorPickerGroupProps, ISwatchColor } from './SwatchColorPickerGroup.types';
-import { FocusZone, FocusZoneDirection, FocusZoneTabbableElements } from 'office-ui-fabric-react/lib/FocusZone';
-import { ActionButton } from 'office-ui-fabric-react/lib/Button';
+import { FocusZone, FocusZoneDirection, FocusZoneTabbableElements } from '@fluentui/react/lib/FocusZone';
+import { ActionButton } from '@fluentui/react/lib/Button';
 import { chunk } from '@microsoft/sp-lodash-subset';
 
 export default class SwatchColorPickerGroup extends React.Component<ISwatchColorPickerGroupProps, ISwatchColorPickerGroupState> {

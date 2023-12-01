@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IDocumentCardStyles } from "office-ui-fabric-react/lib/DocumentCard";
-import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
-import { IStyle, mergeStyleSets } from "office-ui-fabric-react/lib/Styling";
+import { IDocumentCardStyles } from "@fluentui/react/lib/DocumentCard";
+import { IStackStyles } from "@fluentui/react/lib/Stack";
+import { IStyle, mergeStyleSets } from "@fluentui/react/lib/Styling";
 import { AppContext } from "../../common";
 
 export const useAddCommentStyles = () => { // eslint-disable-line @typescript-eslint/explicit-function-return-type

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styles from './TilesList.module.scss';
-import { SelectionZone } from 'office-ui-fabric-react/lib/Selection';
+import { SelectionZone } from '@fluentui/react/lib/Selection';
 import { IFile } from '../../../../services/FileBrowserService.types';
-import { List, IPageProps } from 'office-ui-fabric-react/lib/List';
-import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
-import { IRenderFunction, IRectangle, css } from 'office-ui-fabric-react/lib/Utilities';
+import { List, IPageProps } from '@fluentui/react/lib/List';
+import { FocusZone } from '@fluentui/react/lib/FocusZone';
+import { IRenderFunction, IRectangle, css } from '@fluentui/react/lib/Utilities';
 import { FolderTile } from '../FolderTile';
 import { DocumentTile } from '../DocumentTile';
 import { ITilesListProps } from './ITilesListProps';

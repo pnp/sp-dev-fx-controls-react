@@ -1,6 +1,6 @@
 import { ExtensionContext } from '@microsoft/sp-extension-base';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { IComboBoxOption } from 'office-ui-fabric-react/lib/';
+import { IComboBoxOption } from '@fluentui/react/lib/';
 
 export interface ILocationBoxOption extends IComboBoxOption {
   locationItem: ILocationPickerItem;

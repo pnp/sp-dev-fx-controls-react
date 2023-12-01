@@ -1,4 +1,4 @@
-@import "~office-ui-fabric-react/dist/sass/References.scss";
+@import '~@fluentui/react/dist/sass/References.scss';
 
 .FieldEditor {
 	padding: 4px 3px;
@@ -146,6 +146,11 @@
       }
     }
   }
+}
+
+.selectedFileContainer {
+	display: flex;
+	margin: 10px 0px;
 }
 
 h2.sectionTitle {

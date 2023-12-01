@@ -1,11 +1,11 @@
 import * as React from "react";
-import { IDocumentCardStyles } from "office-ui-fabric-react/lib/DocumentCard";
-import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
+import { IDocumentCardStyles } from "@fluentui/react/lib/DocumentCard";
+import { IStackStyles } from "@fluentui/react/lib/Stack";
 import {
   IStyle,
   mergeStyles,
   mergeStyleSets,
-} from "office-ui-fabric-react/lib/Styling";
+} from "@fluentui/react/lib/Styling";
 import { AppContext } from "../../common";
 import { TILE_HEIGHT } from "../../common/constants";
 

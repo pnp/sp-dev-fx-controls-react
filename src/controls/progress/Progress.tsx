@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IProgressProps, IProgressAction, ProgressActionState, IProgressState } from './IProgress';
 import { Action } from './Action';
-import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
+import { ProgressIndicator } from '@fluentui/react/lib/ProgressIndicator';
 import styles from './Progress.module.scss';
 import * as telemetry from "../../common/telemetry";
 
