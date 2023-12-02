@@ -79,6 +79,21 @@ export interface IDynamicFormProps {
   respectETag?: boolean;
 
   /**
+   * Specifies whether custom formatting (set when customizing the out of the box form) should be used. Default - true
+   */
+  useCustomFormatting?: boolean;
+
+  /**
+   * Specifies whether client side validation should be used. Default - true
+   */
+  useClientSideValidation?: boolean;
+
+  /**
+   * Specifies whether field validation (set in column settings) should be used. Default - true
+   */
+  useFieldValidation?: boolean;
+
+  /**
    * Specify validation error dialog properties
    */
   validationErrorDialogProps?: IValidationErrorDialogProps;
