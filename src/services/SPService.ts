@@ -535,7 +535,12 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          return [{ key: result[fieldName].ID, name: result[fieldName][lookupFieldName || 'Title'] }];
+          let value = result[fieldName][lookupFieldName || 'Title'];
+          const dateVal = Date.parse(value);
+          if (dateVal !== NaN) {
+              value = new Date(value).toLocaleDateString();
+          }         
+          return [{ key: result[fieldName].ID, name: value }];
         }
       }
 
@@ -559,14 +564,24 @@ export default class SPService implements ISPService {
            const isArray = Array.isArray(result[fieldName]);
            //multiselect lookups are arrays
            if (isArray) {
-            result[fieldName].forEach(element => {
-              lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
+            result[fieldName].forEach(element => {                
+              let value = element[fieldName][lookupFieldName || 'Title'];
+              const dateVal = Date.parse(value);
+              if (dateVal !== NaN) {
+                  value = new Date(value).toLocaleDateString();
+              }        
+              lookups.push({ key: element.ID, name: value });
             });
            }
            //single select lookups are objects
            else {
              const singleItem = result[fieldName];
-             lookups.push({ key: singleItem.ID, name: singleItem[lookupFieldName || 'Title'] });
+             let value = singleItem[fieldName][lookupFieldName || 'Title'];
+              const dateVal = Date.parse(value);
+              if (dateVal !== NaN) {
+                  value = new Date(value).toLocaleDateString();
+              }       
+             lookups.push({ key: singleItem.ID, name: value });
            }
           return lookups;
         }
