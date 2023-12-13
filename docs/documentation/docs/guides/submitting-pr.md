@@ -7,7 +7,7 @@ We appreciate your initiative and would love to integrate your work with the res
   - [AC: Keep Your Forked Git Repo Updated with Changes from the Original Upstream Repo](http://www.andrewconnell.com/blog/keep-your-forked-git-repo-updated-with-changes-from-the-original-upstream-repo)
   - Looking for a quick cheat sheet? Look no further:
 
-    ```sh
+    ```bash
     # assuming you are in the folder of your locally cloned fork....
     git checkout dev
 
