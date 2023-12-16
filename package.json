@@ -82,10 +82,10 @@
     "react-quill": "2.0.0",
     "regexify-string": "^1.0.16",
     "spfx-uifabric-themes": "^0.9.0",
-    "swiper": "^8.2.6"
+    "swiper": "^8.2.6",
+    "@iconify/react": "^4.1.1"
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.1",
     "@microsoft/eslint-config-spfx": "1.18.2",
     "@microsoft/eslint-plugin-spfx": "1.18.2",
     "@microsoft/microsoft-graph-types": "^2.1.0",
