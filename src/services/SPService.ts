@@ -793,4 +793,24 @@ export default class SPService implements ISPService {
       resolve(listData);
     });
   }
+
+  public async getFileName(listId: string, itemId: number, webUrl?: string): Promise<string> { 
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+
+      const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(${itemId})?@listId=guid'${encodeURIComponent(listId)}'&$select=FileLeafRef`;
+      const data = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      if (data.ok) {
+        const results = await data.json();
+        if (results) {
+          return results.FileLeafRef;
+        }
+      }
+
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
 }

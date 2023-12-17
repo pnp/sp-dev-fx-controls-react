@@ -488,8 +488,9 @@ export class DynamicForm extends React.Component<
     try {
       const spList = await sp.web.lists.getById(listId);
       let item = null;
+      const isEditingItem = listItemId !== undefined && listItemId !== null && listItemId !== 0;
       let etag: string | undefined = undefined;
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
+      if (isEditingItem) {
         item = await spList.items.getById(listItemId).get();
 
         if (onListItemLoaded) {
@@ -510,6 +511,7 @@ export class DynamicForm extends React.Component<
       const listFields = await this.getFormFields(
         listId,
         contentTypeId,
+        isEditingItem,
         this.webURL
       );
       const tempFields: IDynamicFieldProps[] = [];
@@ -706,6 +708,9 @@ export class DynamicForm extends React.Component<
             defaultValue = JSON.parse(defaultValue);
           } else if (fieldType === "Boolean") {
             defaultValue = Boolean(Number(defaultValue));
+          } else if (fieldType === "File") {
+            const fileName = await this._spService.getFileName(listId, listItemId);
+            defaultValue = fileName;
           }
 
           tempFields.push({
@@ -802,6 +807,7 @@ export class DynamicForm extends React.Component<
   private getFormFields = async (
     listId: string,
     contentTypeId: string | undefined,
+    isEditingItem: boolean,
     webUrl?: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> => {
@@ -818,7 +824,7 @@ export class DynamicForm extends React.Component<
         } else {
           apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/contenttypes('${contentTypeId}')/fields?@listId=guid'${encodeURIComponent(
             listId
-          )}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title')`;
+          )}'&$filter=ReadOnlyField eq false and Hidden eq false and (FromBaseType eq false or StaticName eq 'Title' ${isEditingItem ? "or StaticName eq 'FileLeafRef'" : ''})`;
         }
       } else {
         apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/fields?@listId=guid'${encodeURIComponent(

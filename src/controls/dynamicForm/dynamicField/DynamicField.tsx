@@ -525,6 +525,24 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           {descriptionEl}
           {errorTextEl}
         </div>;
+
+        case 'File':
+          return <div>
+            <div className={styles.titleContainer}>
+              <Icon className={styles.fieldIcon} iconName={"Page"} />
+              {labelEl}
+            </div>
+            <TextField
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              className={styles.fieldDisplay}
+              onChange={(e, newText) => { this.onChange(newText); }}
+              disabled={disabled}
+              onBlur={this.onBlur}
+              errorMessage={errorText}
+            />
+            {descriptionEl}
+          </div>;
     }
 
     return null;
