@@ -1,6 +1,6 @@
 import { IFilePickerTab } from "../FilePicker.types";
 import { FileBrowserService } from "../../../services/FileBrowserService";
-import { IBreadcrumbItem } from "office-ui-fabric-react/lib/Breadcrumb";
+import { IBreadcrumbItem } from "@fluentui/react/lib/Breadcrumb";
 
 export interface ISiteFilePickerTabProps extends IFilePickerTab {
   fileBrowserService: FileBrowserService;

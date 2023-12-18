@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { css } from '@fluentui/react/lib/Utilities';
 import clone from 'lodash/clone';
-import { IExpandingCardProps } from 'office-ui-fabric-react/lib/HoverCard';
-import { DirectionalHint } from 'office-ui-fabric-react/lib/common/DirectionalHint';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { IconButton, Button, ButtonType } from 'office-ui-fabric-react/lib/Button';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { IExpandingCardProps } from '@fluentui/react/lib/HoverCard';
+import { DirectionalHint } from '@fluentui/react/lib/common/DirectionalHint';
+import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
+import { IconButton, Button, ButtonType } from '@fluentui/react/lib/Button';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
+import { Link } from '@fluentui/react/lib/Link';
+import { Icon } from '@fluentui/react/lib/Icon';
 
 import { IPrincipal, IUserProfileProperties, IODataKeyValuePair } from '../../../common/SPEntities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';

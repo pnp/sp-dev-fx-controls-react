@@ -1,4 +1,4 @@
-import { MessageBar } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBar } from '@fluentui/react/lib/MessageBar';
 import * as React from 'react';
 import {IShowMessageProps} from './IShowMessageProps';
 

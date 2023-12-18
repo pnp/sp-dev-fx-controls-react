@@ -7,21 +7,81 @@
   "manifestVersion": 2,
   "requiresCustomScript": false,
   "supportsThemeVariants": true,
-  "supportedHosts": ["SharePointWebPart", "TeamsTab"],
-  "preconfiguredEntries": [{
-    "groupId": "45165954-80f9-44c1-9967-cd38ae92a33b",
-    "group": {
-      "default": "Under Development"
-    },
-    "title": {
-      "default": "ControlsTest"
-    },
-    "description": {
-      "default": "ControlsTest description"
-    },
-    "officeFabricIconFontName": "Share",
-    "properties": {
-      "description": "ControlsTest"
+  "supportedHosts": [
+    "SharePointWebPart",
+    "TeamsTab"
+  ],
+  "preconfiguredEntries": [
+    {
+      "groupId": "45165954-80f9-44c1-9967-cd38ae92a33b",
+      "group": {
+        "default": "Under Development"
+      },
+      "title": {
+        "default": "Controls Test"
+      },
+      "description": {
+        "default": "Web Part to test controls"
+      },
+      "officeFabricIconFontName": "Share",
+      "properties": {
+        "description": "Controls Test",
+        "dynamicFormCustomFormattingEnabled": true,
+        "dynamicFormClientSideValidationEnabled": true,
+        "dynamicFormFieldValidationEnabled" : true,
+        "dynamicFormFileSelectionEnabled": false,
+        "controlVisibility": {
+          "all": false,
+          "accessibleAccordion": false,
+          "adaptiveCardDesignerHost": false,
+          "adaptiveCardHost": false,
+          "animatedDialog": false,
+          "Carousel": false,
+          "ChartControl": false,
+          "ComboBoxListItemPicker": false,
+          "Dashboard": false,
+          "DateTimePicker": false,
+          "DragDropFiles": false,
+          "DynamicForm": false,
+          "EnhancedThemeProvider": false,
+          "FieldCollectionData": false,
+          "FieldPicker": false,
+          "FilePicker": false,
+          "FileTypeIcon": false,
+          "FolderExplorer": false,
+          "FolderPicker": false,
+          "GridLayout": false,
+          "IconPicker": false,
+          "IFrameDialog": false,
+          "IFramePanel": false,
+          "ListItemComments": false,
+          "ListItemPicker": false,
+          "ListPicker": false,
+          "ListView": false,
+          "LocationPicker": false,
+          "Map": false,
+          "ModernAudio": false,
+          "ModernTaxonomyPicker": false,
+          "Pagination": false,
+          "PeoplePicker": false,
+          "Placeholder": false,
+          "Progress": false,
+          "RichText": false,
+          "SecurityTrimmedControl": false,
+          "SiteBreadcrumb": false,
+          "SitePicker": false,
+          "TaxonomyPicker": false,
+          "TaxonomyTree": false,
+          "Teams": false,
+          "TestControl": false,
+          "Toolbar": false,
+          "TreeView": false,
+          "UploadFiles": false,
+          "VariantThemeProvider": false,
+          "ViewPicker": false,
+          "WebPartTitle": false
+        }
+      }
     }
-  }]
+  ]
 }

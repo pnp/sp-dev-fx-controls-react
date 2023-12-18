@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { Link } from 'office-ui-fabric-react/lib/Link';
+import { css } from '@fluentui/react/lib/Utilities';
+import { Link } from '@fluentui/react/lib/Link';
 
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';

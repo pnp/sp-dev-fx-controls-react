@@ -1,4 +1,4 @@
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.

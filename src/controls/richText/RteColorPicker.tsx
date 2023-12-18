@@ -3,10 +3,10 @@ import * as strings from 'ControlStrings';
 import styles from './RteColorPicker.module.scss';
 import SwatchColorPickerGroup from './SwatchColorPickerGroup';
 import { IRteColorPickerProps, IRteColorPickerState } from './RteColorPicker.types';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { Callout } from 'office-ui-fabric-react/lib/Callout';
+import { DefaultButton } from '@fluentui/react/lib/Button';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { Callout } from '@fluentui/react/lib/Callout';
 import { ISwatchColor } from './SwatchColorPickerGroup.types';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 

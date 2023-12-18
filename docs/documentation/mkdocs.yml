@@ -39,6 +39,7 @@ nav:
     - FolderExplorer: 'controls/FolderExplorer.md'
     - FolderPicker: 'controls/FolderPicker.md'
     - GridLayout: 'controls/GridLayout.md'
+    - HoverReactionsBar: 'controls/HoverReactionsBar.md'
     - IconPicker: 'controls/IconPicker.md'
     - IFrameDialog: 'controls/IFrameDialog.md'
     - IFramePanel: 'controls/IFramePanel.md'
@@ -72,6 +73,7 @@ nav:
     - TreeView: 'controls/TreeView.md'
     - UploadFiles: 'controls/UploadFiles.md'
     - VariantThemeProvider: 'controls/VariantThemeProvider.md'
+    - ViewPicker: 'controls/ViewPicker.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'

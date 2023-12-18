@@ -4,9 +4,9 @@ import { ISiteFilePickerTabProps } from './ISiteFilePickerTabProps';
 import { ISiteFilePickerTabState } from './ISiteFilePickerTabState';
 import { DocumentLibraryBrowser } from '../controls/DocumentLibraryBrowser/DocumentLibraryBrowser';
 import { FileBrowser } from '../controls/FileBrowser/FileBrowser';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
-import { Breadcrumb } from 'office-ui-fabric-react/lib/Breadcrumb';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { ScrollablePane } from '@fluentui/react/lib/ScrollablePane';
+import { Breadcrumb } from '@fluentui/react/lib/Breadcrumb';
 import { IFile, IFolder, ILibrary } from '../../../services/FileBrowserService.types';
 import { IFilePickerResult, FilePickerBreadcrumbItem } from '../FilePicker.types';
 

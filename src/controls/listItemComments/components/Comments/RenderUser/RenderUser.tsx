@@ -1,7 +1,7 @@
 import { Guid } from "@microsoft/sp-core-library";
-import { DocumentCard, DocumentCardDetails } from "office-ui-fabric-react/lib/DocumentCard";
-import { Persona } from "office-ui-fabric-react/lib/Persona";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { DocumentCard, DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
+import { Persona } from "@fluentui/react/lib/Persona";
+import { Stack } from "@fluentui/react/lib/Stack";
 import * as React from "react";
 import { IUserInfo } from "../../../models/IUsersResults";
 import { useListItemCommentsStyles } from "../useListItemCommentsStyles";

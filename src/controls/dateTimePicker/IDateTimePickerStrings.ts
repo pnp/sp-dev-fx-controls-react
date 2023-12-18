@@ -1,4 +1,4 @@
-import { IDatePickerStrings } from 'office-ui-fabric-react/lib/DatePicker';
+import { IDatePickerStrings } from '@fluentui/react/lib/DatePicker';
 
 export interface IDateTimePickerStrings extends IDatePickerStrings {
   dateLabel?: string;

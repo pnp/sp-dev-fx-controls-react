@@ -2,8 +2,8 @@
 import * as React from 'react';
 
 import { Provider } from 'jotai';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
-import { Text } from 'office-ui-fabric-react/lib/Text';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { Text } from '@fluentui/react/lib/Text';
 
 import { EnhancedThemeProvider } from '../../../enhancedThemeProvider';
 import { IUploadFilesProps } from './IUploadFilesProps';

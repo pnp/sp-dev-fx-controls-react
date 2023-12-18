@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { List } from 'office-ui-fabric-react/lib/List';
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { List } from '@fluentui/react/lib/List';
+import { Spinner } from '@fluentui/react/lib/Spinner';
+import { Image, ImageFit } from '@fluentui/react/lib/Image';
 import { IDocumentLibraryBrowserProps } from './IDocumentLibraryBrowserProps';
 import { IDocumentLibraryBrowserState } from './IDocumentLibraryBrowserState';
 import { ILibrary } from '../../../../services/FileBrowserService.types';
 
-import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { IRectangle } from '@fluentui/react/lib/Utilities';
+import { DefaultButton } from '@fluentui/react/lib/Button';
 
 import styles from './DocumentLibraryBrowser.module.scss';
 import * as strings from 'ControlStrings';

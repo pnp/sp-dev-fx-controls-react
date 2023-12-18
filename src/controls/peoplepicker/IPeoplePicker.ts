@@ -1,7 +1,7 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IBasePickerStyles } from "office-ui-fabric-react";
-import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
-import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
+import { IBasePickerStyles } from "@fluentui/react";
+import { DirectionalHint } from "@fluentui/react/lib/common/DirectionalHint";
+import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
 import { PrincipalType } from ".";
 
 /**
@@ -37,6 +37,10 @@ export interface IPeoplePickerProps {
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
   suggestionsLimit?: number;
+  /**
+   * Specifies the minimum character count needed to begin retrieving search results. (default : 2)
+   */
+  searchTextLimit?: number;
   /**
    * Specify the user / group types to retrieve
    */
