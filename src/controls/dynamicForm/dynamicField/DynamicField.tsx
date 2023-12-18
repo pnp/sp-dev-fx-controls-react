@@ -602,7 +602,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
      * If the condition is false, it returns null.
      */
 
-    return listItemId !== undefined && listItemId !== '' && listItemId !== null
+    return listItemId !== undefined && !isNaN(listItemId) && listItemId !== null
       ? ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required 
           ? strings.DynamicFormRequiredErrorMessage 
           : null)
@@ -612,7 +612,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private getNumberErrorText = (): string => {
     const {
-      changedValue, listItemId
+      changedValue, 
+      listItemId
     } = this.state;
     const {
       maximumValue,
@@ -620,7 +621,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       showAsPercentage
     } = this.props;
 
-    if(listItemId !== undefined && listItemId !== '' && listItemId !== null){
+    if(listItemId !== undefined && !isNaN(listItemId) && listItemId !== null){
       if ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required) {
         return strings.DynamicFormRequiredErrorMessage;
       }
