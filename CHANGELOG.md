@@ -15,6 +15,16 @@
 
 Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Tom G](https://github.com/t0mgerman).
 
+## 3.16.1
+
+### Fixes
+
+- `DynamicForm`: Additional check to see if DefaultValue is an object. No more null comparisons, which should have been undefined comparisons
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
 ## 3.16.0
 
 ### New control(s)
