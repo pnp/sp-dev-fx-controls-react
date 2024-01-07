@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "3.16.1",
+      "changes": {
+        "fixes": [
+          "`DynamicForm`: Additional check to see if DefaultValue is an object. No more null comparisons, which should have been undefined comparisons"
+        ]
+      },
+      "contributions": [
+        "[IRRDC](https://github.com/IRRDC)"
+      ]
+    },
+    {
       "version": "3.16.0",
       "changes": {
         "new": [
