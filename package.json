@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "3.16.0",
+  "version": "3.16.1",
   "node": ">=16.13.0 <17.0.0 || >=18.17.1 <19.0.0",
   "scripts": {
     "build": "gulp build",
