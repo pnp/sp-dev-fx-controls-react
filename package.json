@@ -110,7 +110,7 @@
     "@types/webpack-env": "~1.15.2",
     "@types/wicg-entries-api": "^2020.8.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
-    "ajv": "6.12.5",
+    "ajv": "8.12.0",
     "amd-loader": "0.0.8",
     "chai": "^4.3.4",
     "codecov": "3.8.3",
