@@ -6,6 +6,7 @@
 
 - `DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)
 - `DynamicForm`: Custom Formatting and Validation, ControlsTestWebPart updates [#1672](https://github.com/pnp/sp-dev-fx-controls-react/pull/1672)
+- `PeoplePicker `: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)
 
 ### Fixes
 
