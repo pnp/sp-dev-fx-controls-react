@@ -195,7 +195,7 @@ import { TestControl } from "./TestControl";
 import { UploadFiles } from "../../../controls/uploadFiles";
 import { IFileInfo } from "@pnp/sp/files";
 import { FieldPicker } from "../../../FieldPicker";
-import { Toggle } from "@fluentui/react";
+import { IPersonaProps, Toggle } from "@fluentui/react";
 import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
 
@@ -1321,9 +1321,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             personSelectionLimit={5}
             ensureUser={true}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-
             onChange={this._getPeoplePickerItems} />
 
+          <PeoplePicker context={this.props.context}
+            titleText="People Picker with filter for '.com'"
+            personSelectionLimit={5}
+            ensureUser={true}
+            principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
+            resultFilter={(result: IPersonaProps[]) => {
+              return result.filter(p => p["loginName"].indexOf(".com") !== -1);
+            }}
+            onChange={this._getPeoplePickerItems} />
 
           <PeoplePicker context={this.props.context}
             titleText="People Picker (Group not found)"

@@ -15,7 +15,7 @@ export interface IPeoplePickerProps {
   context: BaseComponentContext;
   /**
    * Text of the Control
-  */
+   */
   titleText?: string;
   /**
    * Web Absolute Url of source site. When this is provided, a search request is done to the local site.
@@ -32,7 +32,7 @@ export interface IPeoplePickerProps {
   /**
    * Id of SharePoint Group (Number) or Office365 Group (String)
    */
-  groupId?: number | string | (string|number)[];
+  groupId?: number | string | (string | number)[];
   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
@@ -79,7 +79,7 @@ export interface IPeoplePickerProps {
   /**
    * Prop to validate contents on blur
    */
-   validateOnFocusOut?: boolean;
+  validateOnFocusOut?: boolean;
   /**
    * Method to check value of People Picker text
    */
@@ -93,8 +93,8 @@ export interface IPeoplePickerProps {
    */
   tooltipDirectional?: DirectionalHint;
   /**
-  * Class Name for the whole People picker control
-  */
+   * Class Name for the whole People picker control
+   */
   peoplePickerWPclassName?: string;
   /**
    * Class Name for the People picker control
@@ -129,10 +129,14 @@ export interface IPeoplePickerProps {
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
-   /**
+  /**
    * styles to apply on control
    */
-    styles?: Partial<IBasePickerStyles>;
+  styles?: Partial<IBasePickerStyles>;
+  /**
+   * Define a filter to be applied to the search results, such as a filter to only show users from a specific domain
+   */
+  resultFilter?: (result: IPersonaProps[]) => IPersonaProps[];
 }
 
 export interface IPeoplePickerState {
