@@ -1,6 +1,6 @@
 import { FileBrowserService } from "../../../../services/FileBrowserService";
 import { IFile } from "../../../../services/FileBrowserService.types";
-import { Selection } from 'office-ui-fabric-react/lib/Selection';
+import { Selection } from '@fluentui/react/lib/Selection';
 import { IFilePickerResult } from "../../FilePicker.types";
 
 export interface ITilesListProps {

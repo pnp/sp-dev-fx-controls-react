@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   IButtonStyles,
   PrimaryButton,
-} from 'office-ui-fabric-react/lib/Button';
+} from '@fluentui/react/lib/Button';
 
 export interface IUploadButtonProps {
   onUpload: (file: File) => void;

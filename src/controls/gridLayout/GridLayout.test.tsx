@@ -14,9 +14,9 @@ import {
   IDocumentCardPreviewProps,
   DocumentCardLocation,
   DocumentCardType
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { ISize } from 'office-ui-fabric-react/lib/Utilities';
+} from '@fluentui/react/lib/DocumentCard';
+import { ImageFit } from '@fluentui/react/lib/Image';
+import { ISize } from '@fluentui/react/lib/Utilities';
 
 interface IDummyItem {
   thumbnail: string;

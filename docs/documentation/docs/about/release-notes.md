@@ -1,10 +1,36 @@
 # Releases
 
+## 3.17.0
+
+### Enhancements
+
+- `DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)
+- `DynamicForm`: Custom Formatting and Validation, ControlsTestWebPart updates [#1672](https://github.com/pnp/sp-dev-fx-controls-react/pull/1672)
+
+### Fixes
+
+- Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Tom G](https://github.com/t0mgerman).
+
+## 3.16.1
+
+### Fixes
+
+- `DynamicForm`: Additional check to see if DefaultValue is an object. No more null comparisons, which should have been undefined comparisons
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
 ## 3.16.0
 
 ### New control(s)
 
 - `ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)
+- `HoverReactionsBar`: new control HoverReactionsBar [#1652](https://github.com/pnp/sp-dev-fx-controls-react/pull/1652)
 
 ### Enhancements
 
@@ -13,6 +39,9 @@
 - `ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)
 - `FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)
 - `RichText`: Add https:// as placeholder instead of textbox value when adding url [#1651](https://github.com/pnp/sp-dev-fx-controls-react/pull/1656)
+- Fix package.json to remove phantom dependencies issues [#1660](https://github.com/pnp/sp-dev-fx-controls-react/issues/1660)
+- `PeoplePicker`: new property to starting the search after n characters [#374](https://github.com/pnp/sp-dev-fx-controls-react/issues/374)
+- SharePoint Framework v1.18.2 support
 
 ### Fixes
 
@@ -25,10 +54,16 @@
 - `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
 - `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
 - `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
+- `DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)
+- `ListItemAttachments`: Inconsistent file handling [#1644](https://github.com/pnp/sp-dev-fx-controls-react/issues/1644)
+- `Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)
+- `ListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
+- `ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
+- `ListItemAttachments`: Fix click behavior in ListItemAttachments component [#1692](https://github.com/pnp/sp-dev-fx-controls-react/pull/1692)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Dan Toft](https://github.com/Tanddant), [Gerke van Garderen](https://github.com/gerkevgarderen), [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tetsuya Kawahara](https://github.com/tecchan1107), [Tom G](https://github.com/t0mgerman), [Yannik Reiter](https://github.com/yannikreiter-maxworx).
 
 ## 3.15.0
 

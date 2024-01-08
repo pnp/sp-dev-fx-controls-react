@@ -1,5 +1,5 @@
 import { Theme } from "@fluentui/theme";
-import { createTheme, getTheme, IPalette, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { createTheme, getTheme, IPalette, ITheme } from "@fluentui/react/lib/Styling";
 
 export const fluentUIDefaultTheme = (): ITheme => {
     let currentTheme: Theme;

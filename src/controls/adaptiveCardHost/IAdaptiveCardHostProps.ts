@@ -1,6 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Action, CardElement, CardObjectRegistry, HostCapabilities } from 'adaptivecards';
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 import { AdaptiveCardHostThemeType } from './models/AdaptiveCardHostThemeType';
 import { IAdaptiveCardHostActionResult } from './models/IAdaptiveCardHostActionResult';
 

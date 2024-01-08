@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { css } from '@fluentui/react/lib/Utilities';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FieldBaseTextRenderer } from '../fieldBaseTextRenderer/FieldBaseTextRenderer';
 import * as telemetry from '../../../common/telemetry';

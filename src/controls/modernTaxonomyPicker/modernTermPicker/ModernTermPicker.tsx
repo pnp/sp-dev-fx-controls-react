@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasePicker } from 'office-ui-fabric-react/lib/components/pickers/BasePicker';
+import { BasePicker } from '@fluentui/react/lib/components/pickers/BasePicker';
 import { IModernTermPickerProps,
          ITermItemProps
        } from './ModernTermPicker.types';
@@ -7,12 +7,12 @@ import { TermItem } from '../termItem/TermItem';
 import { TermItemSuggestion } from '../termItem/TermItemSuggestion';
 import { IBasePickerStyleProps,
          IBasePickerStyles
-       } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
-import { getStyles } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.styles';
+       } from '@fluentui/react/lib/components/pickers/BasePicker.types';
+import { getStyles } from '@fluentui/react/lib/components/pickers/BasePicker.styles';
 import { initializeComponentRef,
          styled
-       } from 'office-ui-fabric-react/lib/Utilities';
-import { ISuggestionItemProps } from 'office-ui-fabric-react/lib/components/pickers/Suggestions/SuggestionsItem.types';
+       } from '@fluentui/react/lib/Utilities';
+import { ISuggestionItemProps } from '@fluentui/react/lib/components/pickers/Suggestions/SuggestionsItem.types';
 import { ITermInfo } from '@pnp/sp/taxonomy';
 
 export class ModernTermPickerBase extends BasePicker<ITermInfo, IModernTermPickerProps> {

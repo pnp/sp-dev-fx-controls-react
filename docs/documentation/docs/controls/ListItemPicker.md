@@ -53,7 +53,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | context | BaseComponentContext | yes | SPFx web part or extention context |
 | listId | string | yes | Guid or title of the list. |
 | itemLimit | number | yes | Number of items which can be selected |
-| onSelectItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
+| onSelectedItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | defaultSelectedItems | any[] | no | Initial items that have already been selected and should appear in the people picker. |

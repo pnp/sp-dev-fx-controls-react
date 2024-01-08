@@ -9,12 +9,12 @@ import {
   isEqual,
   pullAllWith,
 } from 'lodash';
-import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
-import { Stack } from 'office-ui-fabric-react/lib/Stack';
+import { PrimaryButton } from '@fluentui/react/lib/Button';
+import { Stack } from '@fluentui/react/lib/Stack';
 import {
   ScrollablePane,
   ScrollbarVisibility,
-} from 'office-ui-fabric-react/lib/ScrollablePane';
+} from '@fluentui/react/lib/ScrollablePane';
 
 import { DragDropFiles } from '../../../dragDropFiles';
 import { globalState } from '../../jotai/atoms';

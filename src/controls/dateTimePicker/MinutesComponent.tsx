@@ -1,9 +1,9 @@
 import * as strings from 'ControlStrings';
 import * as React from 'react';
 import { ITimeComponentProps } from './ITimeComponentProps';
-import { MaskedTextField } from 'office-ui-fabric-react/lib/TextField';
+import { MaskedTextField } from '@fluentui/react/lib/TextField';
 import { TimeHelper } from './TimeHelper';
-import { IDropdownOption, Dropdown } from 'office-ui-fabric-react/lib/Dropdown';
+import { IDropdownOption, Dropdown } from '@fluentui/react/lib/Dropdown';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
 
 /**

@@ -1,5 +1,5 @@
 import { mergeStyleSets } from '@fluentui/merge-styles';
-import { FontSizes, IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { FontSizes, IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 
 export interface IPlaceholderComponentClassNames {
   placeholder: string;

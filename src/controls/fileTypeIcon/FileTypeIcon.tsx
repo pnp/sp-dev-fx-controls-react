@@ -2,7 +2,7 @@ import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96, ImageInformation } from './IFileTypeIcon';
 import * as telemetry from '../../common/telemetry';
-import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
+import { Icon } from '@fluentui/react/lib/components/Icon';
 import { ICON_GENERIC_20 } from '.';
 
 const ICON_GENERIC = 'Page';

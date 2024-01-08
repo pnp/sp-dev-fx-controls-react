@@ -4,14 +4,13 @@ import {
   IReadonlyTheme,
 
 } from "@microsoft/sp-component-base";
+import { IControlsTestWebPartProps } from '../IControlsTestWebPartProps';
 
-export interface IControlsTestProps {
+export interface IControlsTestProps extends IControlsTestWebPartProps {
   context: WebPartContext;
-  description: string;
-  title: string;
   displayMode: DisplayMode;
+  onOpenPropertyPane: () => void;
   updateProperty: (value: string) => void;
-  totalPages?: number;
   themeVariant?:  IReadonlyTheme;
 }
 

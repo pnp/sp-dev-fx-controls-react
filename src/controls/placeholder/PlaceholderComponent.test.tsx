@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
-import { setIconOptions } from 'office-ui-fabric-react/lib/Styling';
+import { setIconOptions } from '@fluentui/react/lib/Styling';
 import { Placeholder } from './PlaceholderComponent';
 //import styles from './PlaceholderComponent.module.scss';
 import { getClassNames } from './PlaceholderComponent.styles';

@@ -1,4 +1,4 @@
-import { IProcessedStyleSet, mergeStyleSets } from "office-ui-fabric-react/lib/Styling";
+import { IProcessedStyleSet, mergeStyleSets } from "@fluentui/react/lib/Styling";
 import React from "react";
 
 export const useMonacoEditorStyles = (): {

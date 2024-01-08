@@ -2,7 +2,7 @@ import * as React from "react";
 import styles from './ModernAudio.module.scss';
 import * as strings from 'ControlStrings';
 import { IModernAudioProps } from "./IModernAudioProps";
-import { IconButton } from "office-ui-fabric-react";
+import { IconButton } from "@fluentui/react";
 import { ModernAudioLabelPosition } from './ModernAudioLabelPosition';
 
 export const ModernAudio: React.FC<IModernAudioProps> = (props: IModernAudioProps): JSX.Element => {

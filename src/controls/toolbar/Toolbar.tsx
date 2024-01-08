@@ -15,7 +15,7 @@ import { ToolbarFind } from "./ToolbarFind";
 import { ToolbarTheme } from "./ToolbarTheme";
 
 import "./toolbar.css";
-import { Icon } from "office-ui-fabric-react/lib/components/Icon/Icon";
+import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import { InFlowToolbarItem, toolbarMenuProps } from "./InFlowToolbarItem";
 import styles from "./Toolbar.module.scss";
 import { flattenedActions, getInFlowToolbarItems, getOverflowToolbarItems, TActionGroups, TFilters, TToolbarItems, TToolbarLayout } from "./ToolbarActionsUtils";

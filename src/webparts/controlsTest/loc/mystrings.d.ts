@@ -1,6 +1,8 @@
 declare interface IControlsTestWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
+  ControlsGroupName: string;
+  ControlSettingsGroupName: string;
   DescriptionFieldLabel: string;
 }
 

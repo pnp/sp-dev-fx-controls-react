@@ -1,9 +1,9 @@
 import * as React from "react";
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import styles from "./Pagination.module.scss";
 import isEqual from "lodash/isEqual";
 import * as telemetry from '../../common/telemetry';
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Stack } from "@fluentui/react/lib/Stack";
 
 export interface IPaginationProps {
   /**

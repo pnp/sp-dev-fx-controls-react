@@ -2,7 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { AdaptiveCard } from 'adaptivecards';
 import { IEvaluationContext } from 'adaptivecards-templating/lib/template-engine';
 import * as markdown from 'markdown-it';
-import { ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { ITheme } from '@fluentui/react/lib/Styling';
 import { IAdaptiveCardHostEvaluationContext } from './models/IAdaptiveCardHostEvaluationContext';
 
 export const initProcessMarkdown = (): void => {

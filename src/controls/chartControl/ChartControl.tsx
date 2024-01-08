@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IChartControlState, IChartControlProps } from './ChartControl.types';
 import styles from './ChartControl.module.scss';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { css } from '@fluentui/react/lib/Utilities';
 import { Chart, ChartSize } from 'chart.js';
 import { PaletteGenerator } from './PaletteGenerator';
 import { AccessibleChartTable } from './AccessibleChartTable';
