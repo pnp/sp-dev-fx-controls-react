@@ -35,6 +35,18 @@ import { FolderExplorer, IFolder } from "@pnp/spfx-controls-react/lib/FolderExpl
                 onSelect={this._onFolderSelect}
                 canCreateFolders={true} />
 ```
+- To use the `FolderExplorer` control to fetch folders from different sitecollection in your code as follows:
+
+```TypeScript
+<FolderExplorer context={this.props.context}
+                rootFolder={{
+                  Name: 'Documents',
+                  ServerRelativeUrl: `/sites/TestSite2/Shared Documents`
+                }}
+                onSelect={this._onFolderSelect}
+                canCreateFolders={true} 
+                siteAbsoluteUrl="https://xxxx.sharepoint.com/sites/TestSite2"/>
+```
 
 - The `onSelect` change event returns the selected folder and can be implemented as follows:
 
