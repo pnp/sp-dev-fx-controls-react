@@ -597,7 +597,7 @@ export class DynamicForm extends React.Component<
             hiddenName = response.value;
             termSetId = field.TermSetId;
             anchorId = field.AnchorId;
-            if (item && item[field.InternalName] && item[field.InternalName]) {
+            if (item && item[field.InternalName]) {
               item[field.InternalName].forEach((element) => {
                 selectedTags.push({
                   key: element.TermGuid,
@@ -606,16 +606,7 @@ export class DynamicForm extends React.Component<
               });
 
               defaultValue = selectedTags;
-            } else if (defaultValue) {
-              defaultValue.forEach((element) => {
-                selectedTags.push({
-                  key: element.TermGuid,
-                  name: element.Label,
-                });
-              });
-
-              defaultValue = selectedTags;
-            } else {
+            }  else {
               if (defaultValue && defaultValue !== "") {
                 defaultValue.split(/#|;/).forEach((element) => {
                   if (element.indexOf("|") !== -1)
