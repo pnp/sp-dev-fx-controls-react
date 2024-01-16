@@ -56,6 +56,11 @@ export interface ISPField {
     LookupDisplayUrl?: string;
     TypeAsString?: string;
     ResultType?: string;
+    ValidationFormula?: string;
+    ValidationMessage?: string;
+    MinimumValue?: number;
+    MaximumValue?: number;
+    CurrencyLocaleId?: number;
 }
 
 /**

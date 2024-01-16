@@ -79,7 +79,35 @@ export interface IDynamicFormProps {
   respectETag?: boolean;
 
   /**
+   * Specifies whether custom formatting (set when customizing the out of the box form) should be used. Default - true
+   */
+  useCustomFormatting?: boolean;
+
+  /**
+   * Specifies whether client side validation should be used. Default - true
+   */
+  useClientSideValidation?: boolean;
+
+  /**
+   * Specifies whether field validation (set in column settings) should be used. Default - true
+   */
+  useFieldValidation?: boolean;
+
+  /**
    * Specify validation error dialog properties
    */
   validationErrorDialogProps?: IValidationErrorDialogProps;
+
+  /**
+   * Specify if the form should support the creation of a new list item in a document library attaching a file to it.
+   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document.
+   * Default - false
+   */
+  enableFileSelection?: boolean;
+
+  /**
+   * Specify the supported file extensions for the file picker. Default - "docx", "doc", "pptx", "ppt", "xlsx", "xls", "pdf"
+   * Only used when enableFileSelection is true
+   */
+  supportedFileExtensions?: string[];
 }
