@@ -1,6 +1,17 @@
 {
   "versions": [
     {
+      "version": "3.16.2",
+      "changes": {
+        "fixes": [
+          "`DynamicForm`: Fixing the previous version's issue [#1736](https://github.com/pnp/sp-dev-fx-controls-react/pull/1736) (introduced in [#1718](https://github.com/pnp/sp-dev-fx-controls-react/pull/1718))"
+        ]
+      },
+      "contributions": [
+        "[IRRDC](https://github.com/IRRDC)"
+      ]
+    },
+    {
       "version": "3.16.1",
       "changes": {
         "fixes": [

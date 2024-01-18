@@ -1,5 +1,15 @@
 # Releases
 
+## 3.16.2
+
+### Fixes
+
+- `DynamicForm`: Fixing the previous version's issue [#1736](https://github.com/pnp/sp-dev-fx-controls-react/pull/1736) (introduced in [#1718](https://github.com/pnp/sp-dev-fx-controls-react/pull/1718))
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
 ## 3.16.1
 
 ### Fixes
