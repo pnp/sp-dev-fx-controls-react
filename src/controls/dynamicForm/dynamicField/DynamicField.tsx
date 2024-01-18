@@ -32,7 +32,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       spfxContext: { pageContext: this.props.context.pageContext }
     });
     this.state = {
-      changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null
+      changedValue: props.fieldDefaultValue !== undefined || props.fieldDefaultValue !== '' || props.fieldDefaultValue !== null || !this.isEmptyArray(props.fieldDefaultValue) ? props.fieldDefaultValue : null,
+      listItemId:props.listItemId 
     };
   }
 
@@ -611,14 +612,28 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private getRequiredErrorText = (): string => {
     const {
-      changedValue
+      changedValue,
+      listItemId
     } = this.state;
-    return (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+
+    /**
+     * checks if listItemId is not undefined, not an empty string, and not null.
+     * If that condition is true happens when new item is loaded, it evaluates the nested ternary operator to determine the return value.
+     * If the condition is false, it returns null.
+     */
+
+    return listItemId !== undefined && !isNaN(listItemId) && listItemId !== null
+      ? ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required 
+          ? strings.DynamicFormRequiredErrorMessage 
+          : null)
+      : null;
+
   }
 
   private getNumberErrorText = (): string => {
     const {
-      changedValue
+      changedValue, 
+      listItemId
     } = this.state;
     const {
       cultureName,
@@ -628,8 +643,10 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       showAsPercentage
     } = this.props;
 
-    if ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required) {
-      return strings.DynamicFormRequiredErrorMessage;
+    if(listItemId !== undefined && !isNaN(listItemId) && listItemId !== null){
+      if ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required) {
+        return strings.DynamicFormRequiredErrorMessage;
+      }
     }
 
     let minValue = minimumValue !== undefined && minimumValue !== -(Number.MAX_VALUE) ? minimumValue : undefined;
