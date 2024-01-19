@@ -415,7 +415,7 @@ export class DynamicForm extends React.Component<
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
-          if (["Lookup", "LookupMulti", "User", "UserMulti"].indexOf(fieldType) < 0) {
+          if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }
 
@@ -1200,7 +1200,7 @@ export class DynamicForm extends React.Component<
               });
             });
 
-            defaultValue = selectedTags;
+            value = selectedTags;
           } else {
             if (defaultValue && defaultValue !== "") {
               defaultValue.split(/#|;/).forEach((element) => {
