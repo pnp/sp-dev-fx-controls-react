@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Otsake 2",
   "HeaderH4": "Otsake 3",
   "HeaderBlockQuote": "Erotettu lainaus",
+  "SameTab": "Sama välilehti",
+  "NewTab": "Uusi välilehti",
   "AlignLeft": "Tasaa vasemmalle",
   "AlignCenter": "Keskelle",
   "AlignRight": "Tasaa oikealle",

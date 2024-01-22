@@ -91,6 +91,8 @@ declare interface IControlStrings {
   HeaderH3: string;
   HeaderH4: string;
   HeaderBlockQuote: string;
+  SameTab: string;
+  NewTab: string;
   AlignLeft: string;
   AlignCenter: string;
   AlignRight: string;
@@ -112,6 +114,7 @@ declare interface IControlStrings {
   InsertImageTitle: string;
   AddressFieldLabel: string;
   TextToDisplayLabel: string;
+  LinkTarget: string;
   SaveButtonLabel: string;
   CancelButtonLabel: string;
   RemoveLinkLabel: string;

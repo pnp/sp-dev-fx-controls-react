@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Nhóm 2",
   "HeaderH4": "Nhóm 3",
   "HeaderBlockQuote": "Kéo báo giá",
+  "SameTab": "Cùng một tab",
+  "NewTab": "Tab mới",
   "AlignLeft": "Canh lề trái",
   "AlignCenter": "Trung tâm",
   "AlignRight": "Canh lề phải",

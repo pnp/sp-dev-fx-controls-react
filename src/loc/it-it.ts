@@ -81,6 +81,8 @@ define([], () => {
   "HeaderH3": "Titolo 2",
   "HeaderH4": "Titolo 3",
   "HeaderBlockQuote": "Quotazione pull",
+  "SameTab": "Stessa scheda",
+  "NewTab": "Nuova scheda",
   "AlignLeft": "Allinea a sinistra",
   "AlignCenter": "Centro",
   "AlignRight": "Allinea a destra",

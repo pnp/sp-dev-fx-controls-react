@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Encapçalament 2",
   "HeaderH4": "Encapçalament 3",
   "HeaderBlockQuote": "Cita introductòria",
+  "SameTab": "La mateixa pestanya",
+  "NewTab": "Nova pestanya",
   "AlignLeft": "Alinea a l'esquerra",
   "AlignCenter": "Centre",
   "AlignRight": "Alinea a la dreta",

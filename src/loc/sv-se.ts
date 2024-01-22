@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Rubrik 2",
   "HeaderH4": "Rubrik 3",
   "HeaderBlockQuote": "Citat",
+  "SameTab": "Samma flik",
+  "NewTab": "Ny flik",
   "AlignLeft": "Vänsterjustera",
   "AlignCenter": "Centrera",
   "AlignRight": "Högerjustera",

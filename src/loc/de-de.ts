@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Überschrift 2",
   "HeaderH4": "Überschrift 3",
   "HeaderBlockQuote": "Textzitat",
+  "SameTab": "Gleiche Registerkarte",
+  "NewTab": "Neue Registerkarte",
   "AlignLeft": "Linksbündig",
   "AlignCenter": "Zentrieren",
   "AlignRight": "Rechtsbündig",

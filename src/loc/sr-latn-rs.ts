@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Naslov 2",
   "HeaderH4": "Naslov 3",
   "HeaderBlockQuote": "Povuci ponudu",
+  "SameTab": "Иста картица",
+  "NewTab": "Нови прозор",
   "AlignLeft": "Poravnaj levo",
   "AlignCenter": "Centar",
   "AlignRight": "Poravnaj desno",

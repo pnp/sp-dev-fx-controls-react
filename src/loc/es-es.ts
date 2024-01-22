@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Rumbo 2",
   "HeaderH4": "Rumbo 3",
   "HeaderBlockQuote": "Presupuesto de extracción",
+  "SameTab": "Misma pestaña",
+  "NewTab": "Nueva pestaña",
   "AlignLeft": "Alinear a la izquierda",
   "AlignCenter": "Centro",
   "AlignRight": "Alinear a la derecha",

@@ -83,6 +83,8 @@ define([], () => {
   "HeaderH3": "Başlık 2",
   "HeaderH4": "Başlık 3",
   "HeaderBlockQuote": "Teklif çekme",
+  "SameTab": "Aynı sekme",
+  "NewTab": "Yeni sekme",
   "AlignLeft": "Sola hizala",
   "AlignCenter": "Merkezi",
   "AlignRight": "Sağa hizala",
