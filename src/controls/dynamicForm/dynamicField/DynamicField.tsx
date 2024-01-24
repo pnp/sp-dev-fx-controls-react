@@ -79,7 +79,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       principalType,
       description,
       maximumValue,
-      minimumValue
+      minimumValue,
+      customIcon
     } = this.props;
 
     const {
@@ -113,7 +114,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'Text':
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"TextField"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "TextField"} />
             {labelEl}
           </div>
           <TextField
@@ -134,7 +135,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
           const noteValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
           return <div className={styles.richText}>
             <div className={styles.titleContainer}>
-              <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
+              <Icon className={styles.fieldIcon} iconName={customIcon ?? "AlignLeft"} />
               {labelEl}
             </div>
             <RichText
@@ -150,7 +151,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         else {
           return <div>
             <div className={styles.titleContainer}>
-              <Icon className={styles.fieldIcon} iconName={"AlignLeft"} />
+              <Icon className={styles.fieldIcon} iconName={customIcon ?? "AlignLeft"} />
               {labelEl}
             </div>
             <TextField
@@ -171,7 +172,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'Choice':
         return <div className={styles.fieldContainer}>
           <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
-            <Icon className={styles.fieldIcon} iconName={"CheckMark"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "CheckMark"} />
             {labelEl}
           </div>
           <Dropdown
@@ -187,7 +188,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'MultiChoice':
         return <div className={styles.fieldContainer}>
           <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
-            <Icon className={styles.fieldIcon} iconName={"MultiSelect"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "MultiSelect"} />
             {labelEl}
           </div>
           <Dropdown
@@ -204,7 +205,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'Location':
         return <div className={styles.fieldContainer}>
           <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
-            <Icon className={styles.fieldIcon} iconName={"POI"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "POI"} />
             {labelEl}
           </div>
           <LocationPicker
@@ -223,7 +224,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         const lookupValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Switch"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Switch"} />
             {labelEl}
           </div>
           <ListItemPicker
@@ -247,7 +248,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         const lookupMultiValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Switch"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Switch"} />
             {labelEl}
           </div>
           <ListItemPicker
@@ -271,7 +272,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"NumberField"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "NumberField"} />
             {labelEl}
           </div>
           <TextField
@@ -283,8 +284,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText || customNumberErrorMessage} 
-            min={minimumValue} 
+            errorMessage={errorText || customNumberErrorMessage}
+            min={minimumValue}
             max={maximumValue} />
           {descriptionEl}
         </div>;
@@ -294,7 +295,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"AllCurrency"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "AllCurrency"} />
             {labelEl}
           </div>
           <TextField
@@ -306,8 +307,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText || customNumberErrorMessage} 
-            min={minimumValue} 
+            errorMessage={errorText || customNumberErrorMessage}
+            min={minimumValue}
             max={maximumValue} />
           {descriptionEl}
         </div>;
@@ -315,7 +316,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'DateTime':
         return <div className={styles.fieldContainer}>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Calendar"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Calendar"} />
             {labelEl}
           </div>
           {
@@ -348,7 +349,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'Boolean':
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"CheckboxComposite"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "CheckboxComposite"} />
             {labelEl}
           </div>
           <Toggle
@@ -368,7 +369,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         const userValue = Boolean(changedValue) ? changedValue.map(cv => cv.secondaryText) : (value ? value : defaultValue);
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Contact"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Contact"} />
             {labelEl}
           </div>
           <PeoplePicker
@@ -392,7 +393,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'UserMulti':
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Contact"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Contact"} />
             {labelEl}
           </div>
           <PeoplePicker
@@ -415,7 +416,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'URL':
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"Link"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "Link"} />
             {labelEl}
           </div>
           <Stack
@@ -444,7 +445,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'Thumbnail':
         return <div>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"photo2"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "photo2"} />
             {labelEl}
           </div>
           <Stack
@@ -491,7 +492,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'TaxonomyFieldTypeMulti':
         return <div className={styles.fieldContainer}>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"BulletedTreeList"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "BulletedTreeList"} />
             {labelEl}
           </div>
           <div className={styles.pickersContainer}>
@@ -516,7 +517,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       case 'TaxonomyFieldType':
         return <div className={styles.fieldContainer}>
           <div className={styles.titleContainer}>
-            <Icon className={styles.fieldIcon} iconName={"BulletedTreeList"} />
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "BulletedTreeList"} />
             {labelEl}
           </div>
           <div className={styles.pickersContainer}>
@@ -687,7 +688,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       }
       else {
         // selectedItemArr = this.props.value;
-        selectedItemArr = !changedValue ? [] : 
+        selectedItemArr = !changedValue ? [] :
         ( Array.isArray(changedValue) ? [ ...changedValue ] : [ changedValue] );
       }
 

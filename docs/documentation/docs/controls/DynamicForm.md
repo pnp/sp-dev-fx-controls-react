@@ -62,6 +62,7 @@ The `DynamicForm` can be configured with the following properties:
 | fieldOverrides | {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement\<IDynamicFieldProps\>}} | no | Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render. |
 | respectEtag | boolean | no | Specifies if the form should respect the ETag of the item. Default - `true` |
 | validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
+| customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. | 
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 | Property | Type | Required | Description |

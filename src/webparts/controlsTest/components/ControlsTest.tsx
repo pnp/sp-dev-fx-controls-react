@@ -818,6 +818,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       dynamicFormListItemId = Number(this.props.dynamicFormListItemId);
     }
 
+    const dynamicFormCustomTitleIcon: {[key: string]: string} = {};
+    dynamicFormCustomTitleIcon["Title"] = "FavoriteStar";
+
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
       {
@@ -962,19 +965,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
         <div id="DynamicFormDiv" className={styles.container} hidden={!controlVisibility.DynamicForm}>
           <div className="ms-font-m">
-            <DynamicForm 
-              key={this.props.dynamicFormListId} 
-              context={this.props.context} 
-              listId={this.props.dynamicFormListId} 
-              listItemId={dynamicFormListItemId} 
+            <DynamicForm
+              key={this.props.dynamicFormListId}
+              context={this.props.context}
+              listId={this.props.dynamicFormListId}
+              listItemId={dynamicFormListItemId}
               validationErrorDialogProps={this.props.dynamicFormErrorDialogEnabled ? { showDialogOnValidationError: true } : undefined}
               returnListItemInstanceOnSubmit={true}
-              onCancelled={() => { console.log('Cancelled'); }} 
+              onCancelled={() => { console.log('Cancelled'); }}
               onSubmitted={async (data, item) => { let itemdata = await item.get(); console.log('Saved item', itemdata)}}
               useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
               useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
               useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
               enableFileSelection={this.props.dynamicFormFileSelectionEnabled}
+              customIcons={dynamicFormCustomTitleIcon}
             />
           </div>
         </div>
@@ -2589,5 +2593,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   // private _onFolderSelect = (folder: IFolder): void => {
   //   console.log('selected folder', folder);
-  // 
+  //
 }
