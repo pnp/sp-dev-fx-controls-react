@@ -79,7 +79,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       principalType,
       description,
       maximumValue,
-      minimumValue
+      minimumValue,
+      orderBy
     } = this.props;
 
     const {
@@ -237,6 +238,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             itemLimit={1}
             onSelectedItem={(newValue) => { this.onChange(newValue, true); }}
             context={context}
+            orderBy={orderBy}
           />
           {descriptionEl}
           {errorTextEl}
@@ -283,8 +285,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText || customNumberErrorMessage} 
-            min={minimumValue} 
+            errorMessage={errorText || customNumberErrorMessage}
+            min={minimumValue}
             max={maximumValue} />
           {descriptionEl}
         </div>;
@@ -306,8 +308,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             onChange={(e, newText) => { this.onChange(newText); }}
             disabled={disabled}
             onBlur={this.onBlur}
-            errorMessage={errorText || customNumberErrorMessage} 
-            min={minimumValue} 
+            errorMessage={errorText || customNumberErrorMessage}
+            min={minimumValue}
             max={maximumValue} />
           {descriptionEl}
         </div>;
@@ -687,7 +689,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       }
       else {
         // selectedItemArr = this.props.value;
-        selectedItemArr = !changedValue ? [] : 
+        selectedItemArr = !changedValue ? [] :
         ( Array.isArray(changedValue) ? [ ...changedValue ] : [ changedValue] );
       }
 
