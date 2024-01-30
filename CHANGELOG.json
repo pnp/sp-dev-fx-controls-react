@@ -12,14 +12,16 @@
         ],
         "fixes": [
           "Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)",
-          "`ModernTaxonomyPicker` not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)"
+          "`ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)",
+          "`DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)"
         ]
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Lars Fernhomberg](https://github.com/lafe)",
         "[Mark Bice](https://github.com/mbice)",
-        "[Tom G](https://github.com/t0mgerman)"
+        "[Tom G](https://github.com/t0mgerman)",
+        "[wuxiaojun514](https://github.com/wuxiaojun514)"
       ]
     },
     {
