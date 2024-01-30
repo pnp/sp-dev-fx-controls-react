@@ -105,7 +105,7 @@ export interface StyleOptions {
   showImage?: boolean;
 
   /**
-   * Indicates if we should show the Styles button (Heading 1, Heading 2, ..., Pull quote)
+   * Indicates if we should show the Styles button (Heading 2, Heading 3, ..., Pull quote)
    * @defaultvalue true
    */
   showStyles?: boolean;

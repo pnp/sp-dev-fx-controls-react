@@ -83,9 +83,9 @@ define([], () => {
     ListViewFilterLabel: "Filter the list",
 
     HeaderNormalText: "Normal text",
-    HeaderH2: "Heading 1",
-    HeaderH3: "Heading 2",
-    HeaderH4: "Heading 3",
+    HeaderH2: "Heading 2",
+    HeaderH3: "Heading 3",
+    HeaderH4: "Heading 4",
     HeaderBlockQuote: "Pull quote",
     AlignLeft: "Align left",
     AlignCenter: "Center",
