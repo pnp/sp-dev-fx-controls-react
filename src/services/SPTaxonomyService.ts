@@ -58,13 +58,13 @@ export class SPTaxonomyService {
     }
   }
 
-  public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, allowSelectingChildren = true, stringMatchId: string = '0', pageSize: number = 50): Promise<ITermInfo[]> {
+  public async searchTerm(termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid, allowSelectingChildren = true, stringMatchOption: string = 'StartsWith', pageSize: number = 50): Promise<ITermInfo[]> {
     try {
       const query = [
         `label='${label}'`,
         `setId='${termSetId}'`,
         `languageTag='${languageTag}'`,
-        `stringMatchId='${stringMatchId}'`
+        `stringMatchOption='${stringMatchOption}'`
       ];
 
       if(parentTermId !== Guid.empty) {
