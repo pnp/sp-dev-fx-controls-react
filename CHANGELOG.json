@@ -13,13 +13,15 @@
         "fixes": [
           "Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)",
           "`ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)",
-          "`DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)"
+          "`DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)",
+          "`PeoplePicker`: PeoplePicker returns no results with webAbsoluteUrl and ensureUser [#1669](https://github.com/pnp/sp-dev-fx-controls-react/issues/1669)"
         ]
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[Lars Fernhomberg](https://github.com/lafe)",
         "[Mark Bice](https://github.com/mbice)",
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[Tom G](https://github.com/t0mgerman)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)"
       ]
