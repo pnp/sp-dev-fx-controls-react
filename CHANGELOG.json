@@ -7,15 +7,21 @@
         "enhancements": [
           "`DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)",
           "`DynamicForm`: Custom Formatting and Validation, ControlsTestWebPart updates [#1672](https://github.com/pnp/sp-dev-fx-controls-react/pull/1672)",
-          "`PeoplePicker `: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)"
+          "`PeoplePicker`: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)",
+          "`RichText`: Align RichText heading styles and font sizes with OOB SharePoint text web part [#1706](https://github.com/pnp/sp-dev-fx-controls-react/pull/1706)"
         ],
         "fixes": [
-          "Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)"
+          "Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)",
+          "`ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)",
+          "`DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)"
         ]
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
-        "[Tom G](https://github.com/t0mgerman)"
+        "[Lars Fernhomberg](https://github.com/lafe)",
+        "[Mark Bice](https://github.com/mbice)",
+        "[Tom G](https://github.com/t0mgerman)",
+        "[wuxiaojun514](https://github.com/wuxiaojun514)"
       ]
     },
     {

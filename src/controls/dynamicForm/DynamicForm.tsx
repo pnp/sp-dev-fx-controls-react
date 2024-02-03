@@ -286,8 +286,7 @@ export class DynamicForm extends React.Component<
         field.columnInternalName
       )
     ) {
-      field.disabled = field.disabled || isSaving;
-      return fieldOverrides[field.columnInternalName](field);
+      return fieldOverrides[field.columnInternalName]({ ...field,disabled: field.disabled || isSaving} )
     }
 
     // Default render
