@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@fluentui/merge-styles": "8.5.12",
-    "@fluentui/react": "8.106.4",
+    "@fluentui/react": "8.115.4",
     "@fluentui/react-components": "^9.32.1",
     "@fluentui/react-file-type-icons": "^8.8.3",
     "@fluentui/react-hooks": "^8.2.6",
