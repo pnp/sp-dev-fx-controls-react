@@ -15,10 +15,11 @@
 - `ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)
 - `DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)
 - `PeoplePicker`: PeoplePicker returns no results with webAbsoluteUrl and ensureUser [#1669](https://github.com/pnp/sp-dev-fx-controls-react/issues/1669)
+- `DynamicForm`: [DynamicForm] Fixing multi taxonomy field (loading + saving existing item) [#1739](https://github.com/pnp/sp-dev-fx-controls-react/pull/1739)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Lars Fernhomberg](https://github.com/lafe), [Mark Bice](https://github.com/mbice), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Tom G](https://github.com/t0mgerman), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Lars Fernhomberg](https://github.com/lafe), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Tom G](https://github.com/t0mgerman), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.16.1
 
