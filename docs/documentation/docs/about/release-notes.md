@@ -21,6 +21,16 @@
 
 Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Lars Fernhomberg](https://github.com/lafe), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Tom G](https://github.com/t0mgerman), [wuxiaojun514](https://github.com/wuxiaojun514).
 
+## 3.16.2
+
+### Fixes
+
+- `DynamicForm`: Fixing the previous version's issue [#1736](https://github.com/pnp/sp-dev-fx-controls-react/pull/1736) (introduced in [#1718](https://github.com/pnp/sp-dev-fx-controls-react/pull/1718))
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
 ## 3.16.1
 
 ### Fixes
