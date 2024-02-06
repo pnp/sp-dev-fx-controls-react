@@ -1,0 +1,44 @@
+{
+    /**
+     * Populate and rename this file to launch.json to configure debugging
+     */
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Hosted workbench (chrome)",
+        "type": "chrome",
+        "request": "launch",
+        "url": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/workbench.aspx",
+        "webRoot": "${workspaceRoot}",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": {
+          "webpack:///.././src/*": "${webRoot}/src/*",
+          "webpack:///../../../src/*": "${webRoot}/src/*",
+          "webpack:///../../../../src/*": "${webRoot}/src/*",
+          "webpack:///../../../../../src/*": "${webRoot}/src/*"
+        },
+        "preLaunchTask": "npm: serve",
+        "runtimeArgs": [
+          "--remote-debugging-port=9222",
+        ]
+      },
+      {
+        "name": "Hosted workbench (edge)",
+        "type": "edge",
+        "request": "launch",
+        "url": "https://enter-your-SharePoint-site.sharepoint.com/sites/mySite/_layouts/15/workbench.aspx",
+        "webRoot": "${workspaceRoot}",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": {
+          "webpack:///.././src/*": "${webRoot}/src/*",
+          "webpack:///../../../src/*": "${webRoot}/src/*",
+          "webpack:///../../../../src/*": "${webRoot}/src/*",
+          "webpack:///../../../../../src/*": "${webRoot}/src/*"
+        },
+        "preLaunchTask": "npm: serve",
+        "runtimeArgs": [
+          "--remote-debugging-port=9222",
+        ]
+      },
+    ]
+  }

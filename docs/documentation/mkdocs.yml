@@ -73,6 +73,7 @@ nav:
     - TreeView: 'controls/TreeView.md'
     - UploadFiles: 'controls/UploadFiles.md'
     - VariantThemeProvider: 'controls/VariantThemeProvider.md'
+    - ViewPicker: 'controls/ViewPicker.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'

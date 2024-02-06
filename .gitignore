@@ -35,7 +35,11 @@ obj
 *.tgz
 
 # VSCode
-.vscode
+.vscode/*
+
+# Included VSCode files
+!.vscode/example-tasks.json
+!.vscode/example-launch.json
 
 # Documentation
 docs/documentation/site
