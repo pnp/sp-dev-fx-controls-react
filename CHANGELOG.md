@@ -1,20 +1,37 @@
 # Releases
 
+## 3.18.0
+
 ## 3.17.0
 
 ### Enhancements
 
 - `DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)
 - `DynamicForm`: Custom Formatting and Validation, ControlsTestWebPart updates [#1672](https://github.com/pnp/sp-dev-fx-controls-react/pull/1672)
-- `PeoplePicker `: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)
+- `PeoplePicker`: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)
+- `RichText`: Align RichText heading styles and font sizes with OOB SharePoint text web part [#1706](https://github.com/pnp/sp-dev-fx-controls-react/pull/1706)
 
 ### Fixes
 
 - Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)
+- `ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)
+- `DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)
+- `PeoplePicker`: PeoplePicker returns no results with webAbsoluteUrl and ensureUser [#1669](https://github.com/pnp/sp-dev-fx-controls-react/issues/1669)
+- `DynamicForm`: [DynamicForm] Fixing multi taxonomy field (loading + saving existing item) [#1739](https://github.com/pnp/sp-dev-fx-controls-react/pull/1739)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Tom G](https://github.com/t0mgerman).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Lars Fernhomberg](https://github.com/lafe), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Tom G](https://github.com/t0mgerman), [wuxiaojun514](https://github.com/wuxiaojun514).
+
+## 3.16.2
+
+### Fixes
+
+- `DynamicForm`: Fixing the previous version's issue [#1736](https://github.com/pnp/sp-dev-fx-controls-react/pull/1736) (introduced in [#1718](https://github.com/pnp/sp-dev-fx-controls-react/pull/1718))
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
 
 ## 3.16.1
 
