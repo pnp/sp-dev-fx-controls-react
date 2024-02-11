@@ -4,10 +4,14 @@
       "version": "3.18.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`DynamicField`: Added orderBy to DynamicField props for lookup fields"
+        ],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Guido Zambarda](https://github.com/GuidoZam)"
+      ]
     },
     {
       "version": "3.17.0",
