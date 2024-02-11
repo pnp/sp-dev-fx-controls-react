@@ -7,10 +7,13 @@
         "enhancements": [
           "`DynamicField`: Added orderBy to DynamicField props for lookup fields"
         ],
-        "fixes": []
+        "fixes": [
+          "`FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property"
+        ]
       },
       "contributions": [
-        "[Guido Zambarda](https://github.com/GuidoZam)"
+        "[Guido Zambarda](https://github.com/GuidoZam)",
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
       ]
     },
     {
