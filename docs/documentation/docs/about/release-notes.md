@@ -2,6 +2,14 @@
 
 ## 3.18.0
 
+### Enhancements
+
+- `DynamicField`: Added orderBy to DynamicField props for lookup fields
+
+### Contributors
+
+Special thanks to our contributor: [Guido Zambarda](https://github.com/GuidoZam).
+
 ## 3.17.0
 
 ### Enhancements
