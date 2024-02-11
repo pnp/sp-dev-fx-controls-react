@@ -4,11 +4,12 @@
 
 ### Enhancements
 
-- `DynamicField`: Added orderBy to DynamicField props for lookup fields
+- `DynamicField`: Added orderBy to DynamicField props for lookup fields[#1747](https://github.com/pnp/sp-dev-fx-controls-react/pull/1747)
 
 ### Fixes
 
-- `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property
+- `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property[#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)
+- Readme documents highlight extension does not work correctly[#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)
 
 ### Contributors
 
