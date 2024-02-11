@@ -7,41 +7,46 @@ export type FieldChangeAdditionalData = IFilePickerResult;
 
 export interface IDynamicFieldProps {
   context: BaseComponentContext;
-  
+
   /** Internal column name */
   columnInternalName: string;
   cultureName?: string;
-  
+
   /** SharePoint Field Type */
   fieldType: string;
-  
+
   /** Text label for field */
   label?: string;
-  
+
   /** Placeholder text for field */
   placeholder?: string;
-  
+
   /** Specifies if a field should be filled in order to pass validation */
   required: boolean;
-  
+
   /** Specifies if a field should be disabled */
   disabled?: boolean;
-  
+
   /** List Item Id, passed to various utility/helper functions to determine things like selected User UPN, Lookup text, Term labels etc. */
   listItemId?: number;
-  
+
   /** The default value of the field. */
   defaultValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /** Holds a field value. Set on all fields in the form. */
   value?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  
+
   /** Fired by DynamicField when a field value is changed */
-  onChanged?: (columnInternalName: string, newValue: any, validate: boolean, additionalData?: FieldChangeAdditionalData) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  onChanged?: (
+    columnInternalName: string,
+    newValue: any,
+    validate: boolean,
+    additionalData?: FieldChangeAdditionalData
+  ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /** Represents the value of the field as updated by the user. Only updated by fields when changed. */
   newValue?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  
+
   /** Represents a stringified value of the field. Used in custom formatting and validation. */
   stringValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
@@ -50,7 +55,7 @@ export interface IDynamicFieldProps {
 
   /** If validation raises an error message, it can be stored against the field here for display by DynamicField  */
   validationErrorMessage?: string;
-  
+
   /** Field Term Set ID, used in Taxonomy / Metadata fields */
   fieldTermSetId?: string;
 
@@ -64,16 +69,16 @@ export interface IDynamicFieldProps {
   lookupField?: string;
 
   // changedValue: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  
+
   /** Equivalent to HiddenListInternalName, used for Taxonomy Metadata fields */
   hiddenFieldName?: string;
-  
+
   /** Order of the field in the form */
   Order: number;
-  
+
   /** Used for files / image uploads */
   additionalData?: FieldChangeAdditionalData;
-  
+
   // Related to various field types
   options?: IDropdownOption[];
   isRichText?: boolean;
@@ -84,4 +89,5 @@ export interface IDynamicFieldProps {
   maximumValue?: number;
   minimumValue?: number;
   showAsPercentage?: boolean;
+  orderBy?: string;
 }
