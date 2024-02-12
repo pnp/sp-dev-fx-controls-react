@@ -1,7 +1,7 @@
 import * as React from "react";
 import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
-import { Calendar } from "@fluentui/react";
+import { Calendar } from "@fluentui/react/lib/Calendar";
 import { DatePicker } from "@fluentui/react/lib/DatePicker";
 import { Label } from "@fluentui/react/lib/Label";
 import { IconButton } from "@fluentui/react/lib/Button";
