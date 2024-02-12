@@ -282,6 +282,9 @@ export default class SPPeopleSearchService {
       if (userIdx !== -1) {
         return users[userIdx].Id;
       }
+    } //initialize the array if it doesnt exist with the siteUrl
+    else if(!this.cachedLocalUsers[siteUrl]) {
+      this.cachedLocalUsers[siteUrl] = [];
     }
 
     const restApi = `${siteUrl}/_api/web/ensureuser`;
