@@ -1299,6 +1299,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
 
           <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+          <DateTimePicker label="DateTime Picker (restricted dates)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" restrictedDates={[new Date(2024,1,15), new Date(2024,1,16), new Date(2024,1,17)]}/>
         </div>
         <div id="RichTextDiv" className={styles.container} hidden={!controlVisibility.RichText}>
           {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
