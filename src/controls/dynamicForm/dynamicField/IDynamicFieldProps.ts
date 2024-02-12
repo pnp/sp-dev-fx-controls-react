@@ -37,7 +37,12 @@ export interface IDynamicFieldProps {
   value?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /** Fired by DynamicField when a field value is changed */
-  onChanged?: (columnInternalName: string, newValue: any, validate: boolean, additionalData?: FieldChangeAdditionalData) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  onChanged?: (
+    columnInternalName: string,
+    newValue: any,
+    validate: boolean,
+    additionalData?: FieldChangeAdditionalData
+  ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   /** Represents the value of the field as updated by the user. Only updated by fields when changed. */
   newValue?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -85,4 +90,5 @@ export interface IDynamicFieldProps {
   minimumValue?: number;
   showAsPercentage?: boolean;
   customIcon?: string;
+  orderBy?: string;
 }

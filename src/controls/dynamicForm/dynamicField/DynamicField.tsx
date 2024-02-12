@@ -80,7 +80,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       description,
       maximumValue,
       minimumValue,
-      customIcon
+      customIcon,
+      orderBy
     } = this.props;
 
     const {
@@ -238,6 +239,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             itemLimit={1}
             onSelectedItem={(newValue) => { this.onChange(newValue, true); }}
             context={context}
+            orderBy={orderBy}
           />
           {descriptionEl}
           {errorTextEl}

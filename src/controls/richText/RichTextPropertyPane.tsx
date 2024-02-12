@@ -190,16 +190,18 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
           ariaLabel={strings.FontSizeTitle}
           selectedKey={selectedSize}
           options={[
+            { key: 'xsmall', text: '10' },
             { key: 'small', text: '12' },
             { key: 'medium', text: '14' },
-            { key: 'mediumplus', text: '15' },
-            { key: 'large', text: '17' },
-            { key: 'xlarge', text: '21' },
+            { key: 'mediumplus', text: '16' },
+            { key: 'large', text: '18' },
+            { key: 'xlarge', text: '20' },
             { key: 'xlargeplus', text: '24' },
             { key: 'xxlarge', text: '28' },
             { key: 'xxxlarge', text: '32' },
             { key: 'xxlargeplus', text: '36' },
             { key: 'super', text: '42' },
+            { key: 'superlarge', text: '68' }
           ]}
           onChanged={this.onChangeSize}
         />
