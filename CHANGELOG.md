@@ -4,16 +4,18 @@
 
 ### Enhancements
 
-- `DynamicField`: Added orderBy to DynamicField props for lookup fields[#1747](https://github.com/pnp/sp-dev-fx-controls-react/pull/1747)
+- `DynamicField`: Added orderBy to DynamicField props for lookup fields [#1747](https://github.com/pnp/sp-dev-fx-controls-react/pull/1747)
+- `DateTimePicker`: disable array of dates [#516](https://github.com/pnp/sp-dev-fx-controls-react/issues/516)
+- `DynamicForm`: new `customIcons` property to allow custom icons for the form [#1745](https://github.com/pnp/sp-dev-fx-controls-react/pull/1745)
 
 ### Fixes
 
-- `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property[#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)
-- Readme documents highlight extension does not work correctly[#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)
+- `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property [#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)
+- Readme documents highlight extension does not work correctly [#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [srpmtt](https://github.com/srpmtt).
 
 ## 3.17.0
 
