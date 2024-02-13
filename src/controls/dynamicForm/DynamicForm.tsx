@@ -908,6 +908,7 @@ export class DynamicForm extends React.Component<
       listItemId,
       disabledFields,
       respectETag,
+      customIcons,
       onListItemLoaded,
     } = this.props;
     let contentTypeId = this.props.contentTypeId;
@@ -986,7 +987,8 @@ export class DynamicForm extends React.Component<
         numberFields,
         listId,
         listItemId,
-        disabledFields
+        disabledFields,
+        customIcons
       );
 
       // Get installed languages for Currency fields
@@ -1028,7 +1030,7 @@ export class DynamicForm extends React.Component<
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[]): Promise<IDynamicFieldProps[]> {
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: {[key: string]: string}): Promise<IDynamicFieldProps[]> {
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
     const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
@@ -1285,6 +1287,7 @@ export class DynamicForm extends React.Component<
           minimumValue: minValue,
           maximumValue: maxValue,
           showAsPercentage: showAsPercentage,
+          customIcon: customIcons ? customIcons[field.InternalName] : undefined
         });
 
         // This may not be necessary now using RenderListDataAsStream

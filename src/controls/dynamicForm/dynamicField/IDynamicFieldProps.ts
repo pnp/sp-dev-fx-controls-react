@@ -89,5 +89,6 @@ export interface IDynamicFieldProps {
   maximumValue?: number;
   minimumValue?: number;
   showAsPercentage?: boolean;
+  customIcon?: string;
   orderBy?: string;
 }
