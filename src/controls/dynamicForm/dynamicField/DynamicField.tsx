@@ -16,7 +16,7 @@ import { DateTimePicker } from '../../dateTimePicker/DateTimePicker';
 import { FilePicker, IFilePickerResult } from '../../filePicker';
 import { ListItemPicker } from '../../listItemPicker';
 import { LocationPicker } from '../../locationPicker';
-import { PeoplePicker, PrincipalType } from '../../peoplepicker';
+import { IPeoplePickerContext, PeoplePicker, PrincipalType } from '../../peoplepicker';
 import { RichText } from '../../richText';
 import { IPickerTerms, TaxonomyPicker } from '../../taxonomyPicker';
 import styles from '../DynamicForm.module.scss';
@@ -91,6 +91,12 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       options: options,
       disabled: disabled,
       placeholder: placeholder
+    };
+
+    const peoplePickerContext: IPeoplePickerContext = {
+      absoluteUrl: context.pageContext.web.absoluteUrl,
+      msGraphClientFactory: context.msGraphClientFactory,
+      spHttpClient: context.spHttpClient
     };
 
     // const defaultValue = fieldDefaultValue;
@@ -377,7 +383,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             placeholder={placeholder}
             defaultSelectedUsers={userValue}
             peoplePickerCntrlclassName={styles.fieldDisplay}
-            context={context}
+            context={peoplePickerContext}
             personSelectionLimit={1}
             showtooltip={false}
             showHiddenInUI={false}
@@ -401,7 +407,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             placeholder={placeholder}
             defaultSelectedUsers={valueToDisplay !== undefined ? valueToDisplay : defaultValue}
             peoplePickerCntrlclassName={styles.fieldDisplay}
-            context={context}
+            context={peoplePickerContext}
             personSelectionLimit={30}
             showtooltip={false}
             showHiddenInUI={false}
