@@ -648,7 +648,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           onChangeSelection={this.handleChangeSelection}
           onFocus={this.handleOnFocus} 
           className={className} 
-          style={this.props?.styles}/>
+          style={this.props?.style}/>
 
         <RichTextPropertyPane ref={this.linkPropertyPane}
           editor={this.getEditor()}

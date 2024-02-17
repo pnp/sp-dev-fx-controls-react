@@ -21,7 +21,7 @@ export interface IRichTextProps {
    * Styles to apply to the rich text editor.
    * @defaultvalue undefined
    */
-  styles?: React.CSSProperties
+  style?: React.CSSProperties
   /**
    * Indicates if the rich text editor should be in edit mode
    * @defaultvalue true
