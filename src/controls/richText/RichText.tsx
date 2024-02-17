@@ -467,7 +467,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     }
 
     // Okay, we're in edit mode.
-    const { placeholder, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage } } = this.props;
+    const { placeholder,className, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage } } = this.props;
 
     // Get a unique id for the toolbar
     const modules = {
@@ -646,7 +646,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           value={text || ''} //property value causes issues, defaultValue does not
           onChange={this.handleChange}
           onChangeSelection={this.handleChangeSelection}
-          onFocus={this.handleOnFocus} />
+          onFocus={this.handleOnFocus} 
+          className={className} 
+          style={this.props?.styles}/>
 
         <RichTextPropertyPane ref={this.linkPropertyPane}
           editor={this.getEditor()}
