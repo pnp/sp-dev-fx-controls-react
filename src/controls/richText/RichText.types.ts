@@ -14,10 +14,14 @@ export interface IRichTextProps {
 
   /**
    * CSS class to apply to the rich text editor.
-   * @defaultvalue null
+   * @defaultvalue undefined
    */
   className?: string;
-
+ /**
+   * Styles to apply to the rich text editor.
+   * @defaultvalue undefined
+   */
+  style?: React.CSSProperties
   /**
    * Indicates if the rich text editor should be in edit mode
    * @defaultvalue true
