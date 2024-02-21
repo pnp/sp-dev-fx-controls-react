@@ -39,7 +39,7 @@ export interface IDynamicFieldProps {
   /** Fired by DynamicField when a field value is changed */
   onChanged?: (
     columnInternalName: string,
-    newValue: any,
+    newValue: any, // eslint-disable-line @typescript-eslint/no-explicit-any
     validate: boolean,
     additionalData?: FieldChangeAdditionalData
   ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
