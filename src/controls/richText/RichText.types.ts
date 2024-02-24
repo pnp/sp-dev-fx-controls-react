@@ -1,3 +1,4 @@
+import React from 'react';
 import { ISwatchColor } from './SwatchColorPickerGroup.types';
 export interface IRichTextProps {
   /**
@@ -19,6 +20,12 @@ export interface IRichTextProps {
   className?: string;
 
   /**
+   * Styles to apply to the rich text editor.
+   * @defaultvalue null
+   */
+  style?: React.CSSProperties;
+
+  /**
    * Indicates if the rich text editor should be in edit mode
    * @defaultvalue true
    */
@@ -28,7 +35,7 @@ export interface IRichTextProps {
    * Placeholder text to show when editor is empty.
    * @defaultvalue undefined
    */
-  placeholder? : string;
+  placeholder?: string;
 
   /**
    * The HTML text containing the rich text
