@@ -616,7 +616,15 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     const {
       changedValue
     } = this.state;
-    return (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required ? strings.DynamicFormRequiredErrorMessage : null;
+    const {value,newValue,required}=this.props;
+    if(newValue===undefined){
+      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) 
+      && (value === undefined || value === '' || value === null || this.isEmptyArray(value))? strings.DynamicFormRequiredErrorMessage : null;
+    }
+    else{
+      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ? strings.DynamicFormRequiredErrorMessage : null;
+    }
+   
   }
 
   private getNumberErrorText = (): string => {
