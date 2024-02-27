@@ -112,6 +112,7 @@ The following controls are currently available:
 - [TreeView](./controls/TreeView) (Tree View)
 - [UploadFiles](./controls/UploadFiles) (Upload Files)
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
+- [ViewPicker](./controls/ViewPicker.md) (View Picker Control)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
 
 

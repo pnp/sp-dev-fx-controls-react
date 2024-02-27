@@ -142,7 +142,13 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
       const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser, this.props.allowUnvalidated);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;
-      const filteredPersons = this.removeDuplicates(results, selectedPersons);
+      let filteredPersons = this.removeDuplicates(results, selectedPersons);
+
+      // If a resultFilter is provided apply the filter to the results
+      if (this.props.resultFilter !== undefined && filteredPersons.length > 0) {
+        filteredPersons = this.props.resultFilter(filteredPersons);
+      }
+
       // Add the users to the most recently used ones
       let recentlyUsed = [...filteredPersons, ...mostRecentlyUsedPersons];
       recentlyUsed = uniqBy(recentlyUsed, "text");

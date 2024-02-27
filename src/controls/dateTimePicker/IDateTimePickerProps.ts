@@ -153,4 +153,10 @@ export interface IDateTimePickerProps {
    * Icon used for clearDate iconbutton. Defaults to RemoveEvent
    */
   showClearDateIcon?: string;
+
+  /**
+   * If set the Calendar will not allow selection of dates in this array.
+   */
+  restrictedDates?: Date[];
+
 }
