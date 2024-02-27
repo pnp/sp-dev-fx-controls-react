@@ -221,7 +221,8 @@ export default class SPService implements ISPService {
     filterString?: string,
     substringSearch: boolean = false,
     orderBy?: string,
-    cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
+    cacheInterval: number = ICON_GENERIC_16,
+    top?: number): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
@@ -259,7 +260,7 @@ export default class SPService implements ISPService {
         return filteredItems;
       }
 
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}&$top=5000`;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}${top ? `&$top=${top}` : ''};
       isPost = false;
 
       //eslint-disable-next-line @typescript-eslint/no-explicit-any

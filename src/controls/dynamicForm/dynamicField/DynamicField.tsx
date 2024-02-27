@@ -80,7 +80,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       principalType,
       description,
       maximumValue,
-      minimumValue
+      minimumValue,
+      itemsQueryCountLimit
     } = this.props;
 
     const {
@@ -234,6 +235,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             itemLimit={1}
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
             context={context}
+            itemsQueryCountLimit={itemsQueryCountLimit}
           />
           {descriptionEl}
           {errorTextEl}
@@ -258,6 +260,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             itemLimit={100}
             onSelectedItem={(newValue) => { this.onChange(newValue); }}
             context={context}
+            itemsQueryCountLimit={itemsQueryCountLimit}
           />
           {descriptionEl}
           {errorTextEl}
