@@ -335,7 +335,7 @@ export class DynamicForm extends React.Component<
 
         // When a field is required and has no value
         if (field.required) {
-          if (field.newValue === undefined) {
+          if (field.newValue === undefined && field.value===undefined) {
             if (
               field.defaultValue === null ||
               field.defaultValue === "" ||
