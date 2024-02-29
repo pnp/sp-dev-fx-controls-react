@@ -636,10 +636,17 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       fieldType,
       maximumValue,
       minimumValue,
-      showAsPercentage
+      showAsPercentage,
+      value,
+      newValue,
+      required
     } = this.props;
 
-    if ((changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) && this.props.required) {
+    if (required && newValue!==undefined && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
+      return strings.DynamicFormRequiredErrorMessage;
+    }
+
+    if (required && newValue===undefined &&  (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
       return strings.DynamicFormRequiredErrorMessage;
     }
 
