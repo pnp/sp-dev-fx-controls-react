@@ -12,11 +12,13 @@
         "fixes": [
           "`FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property [#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)",
           "Readme documents highlight extension does not work correctly [#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)",
-          "`DynamicForm`: Error on rendering DynamicForm when having a Date Field with internal name starting with underscore ('_')[#1738](https://github.com/pnp/sp-dev-fx-controls-react/issues/1738)"
+          "`DynamicForm`: Error on rendering DynamicForm when having a Date Field with internal name starting with underscore ('_')[#1738](https://github.com/pnp/sp-dev-fx-controls-react/issues/1738)",
+          "`DynamicForm`: Dynamic form loading error in other site [#1758](https://github.com/pnp/sp-dev-fx-controls-react/issues/1758)"
         ]
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
+        "[IRRDC](https://github.com/IRRDC)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
         "[srpmtt](https://github.com/srpmtt)"
       ]
