@@ -654,9 +654,9 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
-      const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
         body: JSON.stringify({
