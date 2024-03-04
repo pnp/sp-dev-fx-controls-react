@@ -138,23 +138,19 @@
   "license": "MIT",
   "keywords": [
     "sharepoint",
+    "microsoft365",
+    "m365",
     "office365",
     "tools",
     "spfx",
-    "framework"
+    "sharepoint framework"
   ],
   "bugs": {
     "url": "https://github.com/pnp/sp-dev-fx-controls-react/issues"
   },
   "main": "lib/index.js",
   "homepage": "https://pnp.github.io/sp-dev-fx-controls-react/",
-  "contributors": [
-    "Gove, Russell <russellgove@gmail.com>",
-    "Kent Chris <>",
-    "Rodrigues, Joel <>",
-    "Struyf, Elio <info@estruyf.be>",
-    "Terentiev, Alex <alex@aterentiev.com>"
-  ],
+  "contributors": [],
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
