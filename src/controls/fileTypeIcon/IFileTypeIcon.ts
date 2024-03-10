@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 /**
  * Available icon types
  */
@@ -230,6 +232,7 @@ export interface IFileTypeIconProps {
   application?: ApplicationType;
   path?: string;
   size?: ImageSize;
+  onClick?: MouseEventHandler<HTMLElement>;
 }
 
 /**

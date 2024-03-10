@@ -264,6 +264,10 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       iconElm = <Icon iconName={iconClass} />;
     }
 
+    if (this.props.onClick) {
+      iconElm.props.onClick = this.props.onClick;
+    }
+
     // Return the icon element
     return iconElm;
   }
