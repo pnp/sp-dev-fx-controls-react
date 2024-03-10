@@ -1514,13 +1514,24 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <FileTypeIcon type={IconType.font} application={ApplicationType.SASS} />
           </div>
           <div className="ms-font-m">
-            Image icons with support to onClick event:
-            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
-            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
-            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
-            <FileTypeIcon type={IconType.image} application={ApplicationType.Word} onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
-            <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
-            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" onClick={(e) => console.log("Clicked on FileTypeIcon!")} />
+            Image icons:
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.docx" />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.unknown" />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pptx?querystring='prop1'&amp;prop2='test'" />
+            <FileTypeIcon type={IconType.image} application={ApplicationType.Word} />
+            <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />
+            <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
+          </div>
+          <div className="ms-font-m">
+            Image icons with support to events:
+            <FileTypeIcon type={IconType.image} application={ApplicationType.PowerApps} size={ImageSize.medium}
+              onClick={(e) => console.log("onClick on FileTypeIcon!")}
+              onDoubleClick={(e) => console.log("onDoubleClick on FileTypeIcon!")}
+              onMouseEnter={(e) => console.log("onMouseEnter on FileTypeIcon!")}
+              onMouseLeave={(e) => console.log("onMouseLeave on FileTypeIcon!")}
+              onMouseOver={(e) => console.log("onMouseOver on FileTypeIcon!")}
+              onMouseUp={(e) => console.log("onMouseUp on FileTypeIcon!")}
+              />
           </div>
           <div className="ms-font-m">Icon size tester:
             <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
