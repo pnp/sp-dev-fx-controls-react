@@ -57,7 +57,7 @@
     "@pnp/odata": "2.5.0",
     "@pnp/sp": "2.5.0",
     "@pnp/telemetry-js": "2.0.0",
-    "@popperjs/core": "2.5.4",
+    "@popperjs/core": "2.11.8",
     "@uifabric/icons": "7.9.5",
     "@uifabric/react-hooks": "7.16.4",
     "@uifabric/utilities": "7.38.2",
