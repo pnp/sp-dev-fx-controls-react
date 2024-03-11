@@ -7,16 +7,20 @@
 - `DynamicField`: Added orderBy to DynamicField props for lookup fields [#1747](https://github.com/pnp/sp-dev-fx-controls-react/pull/1747)
 - `DateTimePicker`: disable array of dates [#516](https://github.com/pnp/sp-dev-fx-controls-react/issues/516)
 - `DynamicForm`: new `customIcons` property to allow custom icons for the form [#1745](https://github.com/pnp/sp-dev-fx-controls-react/pull/1745)
+- `RichText`: Added style property to Rich text control [#1773](https://github.com/pnp/sp-dev-fx-controls-react/pull/1773)
+- `fast-serve`: Fast-serve update to match the most recent changes. [#1782](https://github.com/pnp/sp-dev-fx-controls-react/pull/1782)
+- `PeoplePicker`: Added context optimization [#1764](https://github.com/pnp/sp-dev-fx-controls-react/pull/1764)
 
 ### Fixes
 
 - `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property [#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)
 - Readme documents highlight extension does not work correctly [#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)
 - `DynamicForm`: Error on rendering DynamicForm when having a Date Field with internal name starting with underscore ('_')[#1738](https://github.com/pnp/sp-dev-fx-controls-react/issues/1738)
+- `DynamicForm`: Dynamic form loading error in other site [#1758](https://github.com/pnp/sp-dev-fx-controls-react/issues/1758)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [srpmtt](https://github.com/srpmtt).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [IRRDC](https://github.com/IRRDC), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergei Sergeev](https://github.com/s-KaiNet), [srpmtt](https://github.com/srpmtt).
 
 ## 3.17.0
 
