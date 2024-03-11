@@ -1530,6 +1530,17 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <FileTypeIcon type={IconType.image} application={ApplicationType.PDF} />
             <FileTypeIcon type={IconType.image} path="https://contoso.sharepoint.com/documents/filename.pdf" />
           </div>
+          <div className="ms-font-m">
+            Image icons with support to events:
+            <FileTypeIcon type={IconType.image} application={ApplicationType.PowerApps} size={ImageSize.medium}
+              onClick={(e) => console.log("onClick on FileTypeIcon!")}
+              onDoubleClick={(e) => console.log("onDoubleClick on FileTypeIcon!")}
+              onMouseEnter={(e) => console.log("onMouseEnter on FileTypeIcon!")}
+              onMouseLeave={(e) => console.log("onMouseLeave on FileTypeIcon!")}
+              onMouseOver={(e) => console.log("onMouseOver on FileTypeIcon!")}
+              onMouseUp={(e) => console.log("onMouseUp on FileTypeIcon!")}
+              />
+          </div>
           <div className="ms-font-m">Icon size tester:
             <Dropdown options={sizeOptions} onChanged={this._onIconSizeChange} />
             <FileTypeIcon type={IconType.image} size={this.state.imgSize} application={ApplicationType.Excel} />
