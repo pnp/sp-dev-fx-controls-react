@@ -35,5 +35,5 @@ export interface IListItemPickerProps {
     */
    enableDefaultSuggestions?: boolean;
    styles? : IBasePickerStyles;
-
+   itemsQueryCountLimit?: number;
 }
