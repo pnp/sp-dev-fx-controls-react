@@ -6,9 +6,9 @@ import { IMapState } from './IMapState';
 import { ICoordinates, MapType, LocationInfo } from './IMap';
 import { Label } from '@fluentui/react/lib/components/Label';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
-import { Icon } from "@fluentui/react/lib/components/Icon";
-import { PrimaryButton } from "@fluentui/react/lib/components/Button";
-import { TextField } from "@fluentui/react/lib/components/TextField";
+import { Icon } from "@fluentui/react/lib/Icon";
+import { PrimaryButton } from "@fluentui/react/lib/Button";
+import { TextField } from "@fluentui/react/lib/TextField";
 import * as telemetry from '../../common/telemetry';
 import { isEqual } from "@microsoft/sp-lodash-subset";
 

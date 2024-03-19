@@ -3,7 +3,7 @@ import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataViewerProps } from './ICollectionDataViewerProps';
 import { ICollectionDataViewerState } from './ICollectionDataViewerState';
 import { CollectionDataItem } from '../collectionDataItem';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { Icon } from '@fluentui/react/lib/components/Icon';
 import * as strings from 'ControlStrings';
 import { cloneDeep, sortBy, isEmpty, findIndex } from '@microsoft/sp-lodash-subset';

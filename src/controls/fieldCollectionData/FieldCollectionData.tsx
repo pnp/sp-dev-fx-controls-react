@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
-import { DefaultButton } from '@fluentui/react/lib/components/Button';
+import { DefaultButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType } from '@fluentui/react/lib/components/Panel';
 import { Label } from '@fluentui/react/lib/components/Label';
 import { CollectionDataViewer } from './collectionDataViewer';

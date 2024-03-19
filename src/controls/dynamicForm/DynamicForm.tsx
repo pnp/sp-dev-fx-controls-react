@@ -17,7 +17,6 @@ import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
 import { MessageBar, MessageBarType } from "@fluentui/react/lib/MessageBar";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
-import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import { DynamicField } from "./dynamicField";
 import {
   DateFormat,
@@ -45,6 +44,7 @@ import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 // Dynamic Form Props / State
 import { IDynamicFormProps } from "./IDynamicFormProps";
 import { IDynamicFormState } from "./IDynamicFormState";
+import { Icon } from "@fluentui/react/lib/Icon";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 

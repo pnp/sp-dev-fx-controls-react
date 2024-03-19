@@ -1,7 +1,7 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
 import SPservice from "../../services/SPService";
-import { TagPicker } from "@fluentui/react/lib/components/pickers/TagPicker/TagPicker";
+import { TagPicker } from '@fluentui/react/lib/Pickers';
 import { Label } from "@fluentui/react/lib/Label";
 import { getId } from '@fluentui/react/lib/Utilities';
 import { IListItemPickerProps } from "./IListItemPickerProps";
