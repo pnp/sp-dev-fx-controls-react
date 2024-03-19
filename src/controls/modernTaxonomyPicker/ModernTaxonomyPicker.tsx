@@ -11,7 +11,7 @@ import * as strings from 'ControlStrings';
 import {
   DefaultButton, IButtonStyles, IconButton, PrimaryButton
 } from '@fluentui/react/lib/Button';
-import { IIconProps } from '@fluentui/react/lib/components/Icon';
+import { IIconProps } from '@fluentui/react/lib/Icon';
 import { Label } from '@fluentui/react/lib/Label';
 import {
   Panel,

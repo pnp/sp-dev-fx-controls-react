@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BasePicker, IBasePickerProps, IInputProps, IPickerItemProps } from '@fluentui/react/lib/Pickers';
+import { Autofill, BasePicker, IBasePickerProps, IInputProps, IPickerItemProps } from '@fluentui/react/lib/Pickers';
 import { IPickerTerm, IPickerTerms } from './ITermPicker';
 import SPTermStorePickerService from './../../services/SPTermStorePickerService';
 import styles from './TaxonomyPicker.module.scss';
@@ -8,7 +8,6 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import * as strings from 'ControlStrings';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { ITermSet } from "../../services/ISPTermStorePickerService";
-import { Autofill } from '@fluentui/react/lib/components/Autofill/Autofill';
 import { LegacyRef, KeyboardEvent } from 'react';
 
 export class TermBasePicker extends BasePicker<IPickerTerm, IBasePickerProps<IPickerTerm>>

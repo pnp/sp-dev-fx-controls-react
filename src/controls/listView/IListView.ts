@@ -1,4 +1,4 @@
-import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from '@fluentui/react/lib/components/DetailsList';
+import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from '@fluentui/react/lib/DetailsList';
 
 export { SelectionMode };
 

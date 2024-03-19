@@ -15,14 +15,14 @@ import {
 import {
   DefaultButton,
   PrimaryButton
-} from "@fluentui/react/lib/components/Button";
-import { DialogType, DialogFooter, IDialogContentProps } from "@fluentui/react/lib/components/Dialog";
+} from "@fluentui/react/lib/Button";
+import { DialogType, DialogFooter, IDialogContentProps } from "@fluentui/react/lib/Dialog";
 import { IModalProps } from "@fluentui/react/lib/Modal";
 import {
   Dropdown,
   IDropdownOption
-} from "@fluentui/react/lib/components/Dropdown";
-import { Link } from "@fluentui/react/lib/components/Link";
+} from "@fluentui/react/lib/Dropdown";
+import { Link } from "@fluentui/react/lib/Link";
 import {
   DocumentCard,
   DocumentCardActivity,

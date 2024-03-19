@@ -3,12 +3,12 @@ import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataViewerProps } from './ICollectionDataViewerProps';
 import { ICollectionDataViewerState } from './ICollectionDataViewerState';
 import { CollectionDataItem } from '../collectionDataItem';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
-import { Icon } from '@fluentui/react/lib/components/Icon';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Icon } from '@fluentui/react/lib/Icon';
 import * as strings from 'ControlStrings';
 import { cloneDeep, sortBy, isEmpty, findIndex } from '@microsoft/sp-lodash-subset';
 import { Pagination } from '../../pagination';
-import { SearchBox } from '@fluentui/react/lib/components/SearchBox';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
 
 export class CollectionDataViewer extends React.Component<ICollectionDataViewerProps, ICollectionDataViewerState> {

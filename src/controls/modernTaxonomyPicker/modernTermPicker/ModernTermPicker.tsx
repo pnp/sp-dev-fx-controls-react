@@ -1,19 +1,17 @@
 import React from 'react';
-import { BasePicker } from '@fluentui/react/lib/components/pickers/BasePicker';
 import { IModernTermPickerProps,
          ITermItemProps
        } from './ModernTermPicker.types';
 import { TermItem } from '../termItem/TermItem';
 import { TermItemSuggestion } from '../termItem/TermItemSuggestion';
-import { IBasePickerStyleProps,
-         IBasePickerStyles
-       } from '@fluentui/react/lib/components/pickers/BasePicker.types';
-import { getStyles } from '@fluentui/react/lib/components/pickers/BasePicker.styles';
+
 import { initializeComponentRef,
          styled
        } from '@fluentui/react/lib/Utilities';
-import { ISuggestionItemProps } from '@fluentui/react/lib/components/pickers/Suggestions/SuggestionsItem.types';
+
 import { ITermInfo } from '@pnp/sp/taxonomy';
+import { BasePicker, IBasePickerStyleProps, IBasePickerStyles, ISuggestionItemProps } from '@fluentui/react/lib/Pickers';
+import { getStyles } from '@fluentui/react/lib/components/pickers/BasePicker.styles';
 
 export class ModernTermPickerBase extends BasePicker<ITermInfo, IModernTermPickerProps> {
   public static defaultProps = {

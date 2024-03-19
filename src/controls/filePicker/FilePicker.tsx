@@ -5,12 +5,13 @@ import { IIconProps } from "@fluentui/react/lib/Icon";
 import {
   ActionButton,
   PrimaryButton
-} from "@fluentui/react/lib/components/Button";
-import { Label } from "@fluentui/react/lib/components/Label";
+} from "@fluentui/react/lib/Button";
+
+import { Label } from "@fluentui/react/lib/Label";
 import {
   Panel,
   PanelType
-} from "@fluentui/react/lib/components/Panel";
+} from "@fluentui/react/lib/Panel";
 import {
   INavLink,
   INavLinkGroup,

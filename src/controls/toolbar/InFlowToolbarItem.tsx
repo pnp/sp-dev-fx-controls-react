@@ -6,11 +6,11 @@ import {
     tooltipAsLabelBehavior
 } from "@fluentui/react-northstar";
 import { cloneDeep } from "@microsoft/sp-lodash-subset";
-import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import * as React from "react";
 import { TAction } from "../../common/model/TAction";
 import styles from "./Toolbar.module.scss";
 import { TToolbarLayout } from "./ToolbarActionsUtils";
+import { Icon } from "@fluentui/react/lib/Icon";
 
 interface IInFlowToolbarItemProps {
     action: TAction;

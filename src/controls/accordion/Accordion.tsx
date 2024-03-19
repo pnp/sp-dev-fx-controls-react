@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './Accordion.module.scss';
 import { IAccordionProps, IAccordionState } from './index';
 import { css } from "@uifabric/utilities/lib/css";
-import { DefaultButton } from '@fluentui/react/lib/components/Button';
+import { DefaultButton } from '@fluentui/react/lib/Button';
 import { IIconProps } from '@fluentui/react/lib/Icon';
 import * as telemetry from '../../common/telemetry';
 

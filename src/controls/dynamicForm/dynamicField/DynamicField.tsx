@@ -3,7 +3,7 @@ import { sp } from '@pnp/sp/presets/all';
 import '@pnp/sp/webs';
 import * as strings from 'ControlStrings';
 import { ActionButton } from '@fluentui/react/lib/Button';
-import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/components/Dropdown';
+import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
 import { DatePicker } from '@fluentui/react/lib/DatePicker';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { Image } from '@fluentui/react/lib/Image';

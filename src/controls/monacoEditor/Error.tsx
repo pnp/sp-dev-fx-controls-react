@@ -1,5 +1,5 @@
 
-import { Stack } from "@fluentui/react/lib/components/Stack";
+import { Stack } from "@fluentui/react/lib/Stack";
 import { MessageBarType, MessageBar } from "@fluentui/react/lib/MessageBar";
 import * as React from "react";
 
