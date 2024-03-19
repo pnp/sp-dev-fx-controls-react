@@ -6,13 +6,12 @@ import SPPeopleSearchService from "../../services/PeopleSearchService";
 import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
-import { NormalPeoplePicker } from '@fluentui/react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { Label } from '@fluentui/react/lib/components/Label';
+import { Label } from '@fluentui/react/lib/Label';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
 import { IPersonaProps } from '@fluentui/react/lib/Persona';
-import { IBasePickerSuggestionsProps } from '@fluentui/react/lib/Pickers';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker} from '@fluentui/react/lib/Pickers';
 
 /**
  * PeoplePicker component

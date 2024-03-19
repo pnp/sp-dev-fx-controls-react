@@ -4,7 +4,7 @@ import styles from './Maps.module.scss';
 import { IMapProps } from './IMapProps';
 import { IMapState } from './IMapState';
 import { ICoordinates, MapType, LocationInfo } from './IMap';
-import { Label } from '@fluentui/react/lib/components/Label';
+import { Label } from '@fluentui/react/lib/Label';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { Icon } from "@fluentui/react/lib/Icon";
 import { PrimaryButton } from "@fluentui/react/lib/Button";

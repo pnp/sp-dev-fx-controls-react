@@ -1,6 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IBasePickerStyles, IPersonaProps } from "@fluentui/react";
-import { DirectionalHint } from "@fluentui/react/lib/common/DirectionalHint";
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
 import { PrincipalType } from ".";
 
 /**
