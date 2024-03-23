@@ -32,7 +32,7 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
-import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
+import { ChoiceFieldFormatType, IInstalledLanguageInfo } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -418,7 +418,7 @@ export class DynamicForm extends React.Component<
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
-          
+
           if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }
@@ -1066,6 +1066,7 @@ export class DynamicForm extends React.Component<
         let showAsPercentage: boolean | undefined;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const selectedTags: any = [];
+        let choiceType: ChoiceFieldFormatType | undefined;
 
         let fieldName = field.InternalName;
         if (fieldName.startsWith('_x') || fieldName.startsWith('_')) {
@@ -1085,6 +1086,10 @@ export class DynamicForm extends React.Component<
           field.Choices.forEach((element) => {
             choices.push({ key: element, text: element });
           });
+
+          // Store the choice type for Choice fields
+          // This represent the format of the choice field (Dropdown or Radio Buttons)
+          choiceType = field.FormatType;
         }
         if (field.FieldType === "MultiChoice") {
           field.MultiChoices.forEach((element) => {
@@ -1300,7 +1305,8 @@ export class DynamicForm extends React.Component<
           minimumValue: minValue,
           maximumValue: maxValue,
           showAsPercentage: showAsPercentage,
-          customIcon: customIcons ? customIcons[field.InternalName] : undefined
+          customIcon: customIcons ? customIcons[field.InternalName] : undefined,
+          choiceType: choiceType
         });
 
         // This may not be necessary now using RenderListDataAsStream
