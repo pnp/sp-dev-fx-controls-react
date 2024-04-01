@@ -1,7 +1,17 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
 $themePrimary: '[theme:themePrimary, default:#0078d7]';
 
+@include ms-motion-keyframes();
+
 .controlsTest {
+  .instruction {
+    @include ms-motion-slideLeftIn;
+    animation-duration: $ms-motion-duration-4 !important;
+    animation-delay: 0.5s !important;
+  }
   .container {
+    padding: 10px;
     max-width: 1200px;
     margin: 0px auto 20px auto;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);

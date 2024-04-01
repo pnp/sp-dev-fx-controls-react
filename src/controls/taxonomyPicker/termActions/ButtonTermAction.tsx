@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CommandBarButton } from 'office-ui-fabric-react/lib/Button';
+import { CommandBarButton } from '@fluentui/react/lib/Button';
 import { ITermAction, TermActionsDisplayStyle, IConcreteTermActionProps, ActionChange } from './ITermsActions';
 import { getTermActionChange } from './getTermActionChange';
 

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { IActionProps, ProgressActionState } from './IProgress';
 import styles from './Progress.module.scss';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { Label } from 'office-ui-fabric-react/lib/Label';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { Label } from '@fluentui/react/lib/Label';
+import { css } from '@fluentui/react/lib/Utilities';
 
 export class Action extends React.Component<IActionProps, {}> {
 

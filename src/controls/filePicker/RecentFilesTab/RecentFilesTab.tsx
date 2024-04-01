@@ -1,14 +1,14 @@
 import * as React from 'react';
 
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
-import { List } from 'office-ui-fabric-react/lib/List';
-import { IRectangle } from 'office-ui-fabric-react/lib/Utilities';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { Selection, SelectionMode, SelectionZone } from 'office-ui-fabric-react/lib/Selection';
-import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { Check } from 'office-ui-fabric-react/lib/Check';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { Spinner } from '@fluentui/react/lib/Spinner';
+import { FocusZone } from '@fluentui/react/lib/FocusZone';
+import { List } from '@fluentui/react/lib/List';
+import { IRectangle } from '@fluentui/react/lib/Utilities';
+import { css } from '@fluentui/react/lib/Utilities';
+import { Selection, SelectionMode, SelectionZone } from '@fluentui/react/lib/Selection';
+import { Image, ImageFit } from '@fluentui/react/lib/Image';
+import { Check } from '@fluentui/react/lib/Check';
 import { Placeholder } from '../../../Placeholder';
 import { IRecentFile } from '../../../services/FilesSearchService.types';
 import { IFilePickerResult } from '../FilePicker.types';
@@ -130,7 +130,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
         this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
         this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
       }
-      this._rowHeight = this._columnWidth;      
+      this._rowHeight = this._columnWidth;
     }
     return this._columnCount * ROWS_PER_PAGE;
   }
@@ -161,7 +161,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   /**
    * Renders a grid list containing results
    */
-  private _renderGridList = (): JSX.Element => {    
+  private _renderGridList = (): JSX.Element => {
     return <span className={styles.recentGridList} role="grid">
       <FocusZone>
         <SelectionZone selection={this._selection}
@@ -172,9 +172,9 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
           <List
             ref={this._linkElement}
             items={this.state.results}
-            onRenderCell={this._onRenderCell}          
+            onRenderCell={this._onRenderCell}
             getItemCountForPage={this._getItemCountForPage}
-            getPageHeight={this._getPageHeight}            
+            getPageHeight={this._getPageHeight}
             renderedWindowsAhead={4}
           />
         </SelectionZone>

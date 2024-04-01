@@ -1,8 +1,9 @@
 // Joao Mendes November 2018, SPFx reusable Control ListItemAttachments
 import * as React from 'react';
-import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Label } from "office-ui-fabric-react/lib/Label";
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { Label } from "@fluentui/react/lib/Label";
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
 import { UploadAttachment } from './UploadAttachment';
@@ -12,13 +13,13 @@ import {
   DocumentCardActions,
   DocumentCardPreview,
   IDocumentCardPreviewImage
-} from 'office-ui-fabric-react/lib/DocumentCard';
-import { ImageFit } from 'office-ui-fabric-react/lib/Image';
+} from '@fluentui/react/lib/DocumentCard';
+import { ImageFit } from '@fluentui/react/lib/Image';
 import { IListItemAttachmentsProps } from './IListItemAttachmentsProps';
 import { IListItemAttachmentsState } from './IListItemAttachmentsState';
 import SPservice from "../../services/SPService";
-import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import utilities from './utilities';
 import { Placeholder } from "../placeholder";
 import * as telemetry from '../../common/telemetry';
@@ -76,12 +77,14 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
   public async uploadAttachments(itemId: number): Promise<void> {
     if (this.state.filesToUpload) {
-      await Promise.all(this.state.filesToUpload.map(file => this._spservice.addAttachment(
-        this.props.listId,
-        itemId,
-        file.name,
-        file,
-        this.props.webUrl)));
+      for (const file of this.state.filesToUpload) {
+        await this._spservice.addAttachment(
+          this.props.listId,
+          itemId,
+          file.name,
+          file,
+          this.props.webUrl);
+      }
     }
     return new Promise<void>((resolve, reject) => {
       this.setState({
@@ -265,6 +268,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
             this.state.attachments.map(file => {
               const fileName = file.FileName;
               const previewImage = this.previewImages[fileName];
+              const clickDisabled = !this.state.itemId;
               return (
                 <div key={fileName} className={styles.documentCardWrapper}>
                   <TooltipHost
@@ -274,8 +278,8 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                     directionalHint={DirectionalHint.rightCenter}>
 
                     <DocumentCard
-                      onClickHref={!openAttachmentsInNewWindow && `${file.ServerRelativeUrl}?web=1`}
-                      onClick={openAttachmentsInNewWindow && (() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
+                      onClickHref={!clickDisabled && !openAttachmentsInNewWindow && `${file.ServerRelativeUrl}?web=1`}
+                      onClick={!clickDisabled && openAttachmentsInNewWindow && (() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank"))} // JJ - 20200613 - needed to support Microsoft Teams
                       className={styles.documentCard}>
                       <DocumentCardPreview previewImages={[previewImage]} />
                       <Label className={styles.fileLabel}>{fileName}</Label>

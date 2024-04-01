@@ -6,7 +6,7 @@ import {
     tooltipAsLabelBehavior
 } from "@fluentui/react-northstar";
 import { cloneDeep } from "@microsoft/sp-lodash-subset";
-import { Icon } from "office-ui-fabric-react/lib/components/Icon/Icon";
+import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import * as React from "react";
 import { TAction } from "../../common/model/TAction";
 import styles from "./Toolbar.module.scss";

@@ -2,7 +2,7 @@ import * as monacoLoader from '@monaco-editor/loader';
 import { Versions } from 'adaptivecards';
 import { BindingPreviewMode, CardDesigner, FieldDefinition, GlobalSettings, HostContainer, ToolbarChoicePicker } from 'adaptivecards-designer';
 import * as markdownit from 'markdown-it';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { injectContextProperty } from '../adaptiveCardHost/AdaptiveCardHost.Utilities';

@@ -9,17 +9,17 @@ import { IRichTextProps, IRichTextState } from './RichText.types';
 import { Guid } from '@microsoft/sp-core-library';
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { Dialog, DialogType, DialogFooter } from 'office-ui-fabric-react/lib/Dialog';
-import { TextField } from 'office-ui-fabric-react/lib/TextField';
-import { Link } from 'office-ui-fabric-react/lib/Link';
-import { PrimaryButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import { css, elementContains } from 'office-ui-fabric-react/lib/Utilities';
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import { Label } from 'office-ui-fabric-react/lib/Label';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
+import { TextField } from '@fluentui/react/lib/TextField';
+import { Link } from '@fluentui/react/lib/Link';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { css, elementContains } from '@fluentui/react/lib/Utilities';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { Label } from '@fluentui/react/lib/Label';
 
 const TOOLBARPADDING: number = 28;
 /**
@@ -41,10 +41,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private _richTextId = undefined;
 
   private ddStyleOpts = [{
-    key: 0,
-    text: strings.HeaderNormalText,
-    data: {}
-  }, {
     key: 2,
     text: strings.HeaderH2,
     data:
@@ -59,6 +55,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     text: strings.HeaderH4,
     data:
       { className: styles.toolbarButtonH4 }
+  }, {
+    key: 0,
+    text: strings.HeaderNormalText,
+    data: { className: styles.toolbarButtonNormal }
   }, {
     key: 7,
     text: strings.HeaderBlockQuote,
@@ -377,7 +377,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           containerClassName: 'ms-dialogMainOverride'
         }}>
         <TextField label={strings.AddressFieldLabel}
-          value={this.state.insertUrl !== undefined ? this.state.insertUrl : "https://"}
+          placeholder="https://"
+          value={this.state.insertUrl !== undefined ? this.state.insertUrl : ""}
           onChange={(e, newValue?: string) => {
             this.setState({
               insertUrl: newValue
@@ -510,7 +511,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'xxlarge',
       'xxxlarge',
       'xxlargeplus',
-      'super'];
+      'super',
+      'superlarge'];
     ReactQuillInstance.register(sizeClass, true);
 
     return (

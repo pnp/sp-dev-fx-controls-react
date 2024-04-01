@@ -2,22 +2,22 @@ import * as React from 'react';
 import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataItemProps } from './ICollectionDataItemProps';
 import { ICollectionDataItemState } from './ICollectionDataItemState';
-import { TextField } from 'office-ui-fabric-react/lib/components/TextField';
-import { Icon } from 'office-ui-fabric-react/lib/components/Icon';
-import { Link } from 'office-ui-fabric-react/lib/components/Link';
-import { Checkbox } from 'office-ui-fabric-react/lib/components/Checkbox';
+import { TextField } from '@fluentui/react/lib/components/TextField';
+import { Icon } from '@fluentui/react/lib/components/Icon';
+import { Link } from '@fluentui/react/lib/components/Link';
+import { Checkbox } from '@fluentui/react/lib/components/Checkbox';
 import * as strings from 'ControlStrings';
 import { CustomCollectionFieldType, ICustomCollectionField } from '../ICustomCollectionField';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/components/Dropdown';
-import { ComboBox, IComboBoxOption } from 'office-ui-fabric-react/lib/components/ComboBox';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/components/Dropdown';
+import { ComboBox, IComboBoxOption } from '@fluentui/react/lib/components/ComboBox';
 import { PeoplePicker, PrincipalType } from "../../peoplepicker";
-import { Callout, DirectionalHint } from 'office-ui-fabric-react/lib/components/Callout';
+import { Callout, DirectionalHint } from '@fluentui/react/lib/components/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
 import { Guid } from '@microsoft/sp-core-library';
 import { FieldValidator } from '../FieldValidator';
-import { DatePicker } from 'office-ui-fabric-react/lib/DatePicker';
-import { IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
+import { DatePicker } from '@fluentui/react/lib/DatePicker';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
 
 export class CollectionDataItem extends React.Component<ICollectionDataItemProps, ICollectionDataItemState> {
   private emptyItem: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -78,7 +78,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       _selectedOption = {
         key: value,
         text: value
-      };      
+      };
     } else {
       _selectedOption = option;
     }
@@ -92,8 +92,8 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       this.doAllFieldChecks();
 
       // Store this in the current state
-      
-      return {crntItem};
+
+      return { crntItem };
     });
 
   }
@@ -123,7 +123,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
         };
       }
 
-      if (_selected === null ) {
+      if (_selected === null) {
         _selected = [];
       }
 
@@ -144,7 +144,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
 
       this.doAllFieldChecks();
 
-      return { crntItem};
+      return { crntItem };
     });
   }
 
@@ -351,7 +351,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
       validation = await field.onGetErrorMessage(value, this.props.index, item);
       isValid = validation === "";
     } else if (typeof field.minimumUsers === "number" && value.length < field.minimumUsers) {
-        validation = typeof field.minimumUsersMessage === "string" ? field.minimumUsersMessage : strings.CollectionDataMinimumUsersDefaultMessage.replace("{0}", field.minimumUsers.toString());
+      validation = typeof field.minimumUsersMessage === "string" ? field.minimumUsersMessage : strings.CollectionDataMinimumUsersDefaultMessage.replace("{0}", field.minimumUsers.toString());
     }
 
     // Store the field validation
@@ -361,14 +361,14 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
     this.doAllFieldChecks();
     // Return empty the error message if needed
 
-    return ""; 
+    return "";
   }
 
   private comboboxValidation = (field: ICustomCollectionField, selected: string[] | string): void => {
     let isValid = true;
-    let validation = "";
+    const validation = "";
 
-    if (field.required && (selected === null || selected.length === 0) ) {
+    if (field.required && (selected === null || selected.length === 0)) {
       isValid = false;
     }
 
@@ -520,7 +520,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           value={item[field.id] ? new Date(item[field.id]) : undefined}
           onSelectDate={(date) => { this.onValueChanged(field.id, date) }}
           formatDate={(date) => { return date ? date?.toLocaleDateString() : ""; }}
-          />;
+        />;
       case CustomCollectionFieldType.custom:
         if (field.onCustomRender) {
           return field.onCustomRender(field, item[field.id], this.onValueChanged, item, item.uniqueId, this.onCustomFieldValidation);
@@ -535,9 +535,9 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           if (item[field.id] !== null) {
             for (let i: number = 0; i < item[field.id].length; i++) {
               _selectedComboBoxKeys.push(item[field.id][i].key);
-              
+
               // if selected option is not in list (anymore), add it to choices
-              if (typeof _comboBoxOptions.find(value => value.key === item[field.id][i].key) === "undefined" ) {
+              if (typeof _comboBoxOptions.find(value => value.key === item[field.id][i].key) === "undefined") {
                 _comboBoxOptions.push(item[field.id][i]);
               }
             }
@@ -548,44 +548,48 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           if (item[field.id] !== null) {
             _selectedComboBoxKey = item[field.id].key;
 
-            if (typeof _comboBoxOptions.find(value => value.key === item[field.id].key) === "undefined" ) {
+            if (typeof _comboBoxOptions.find(value => value.key === item[field.id].key) === "undefined") {
               _comboBoxOptions.push(item[field.id]);
             }
 
           }
-          
+
         }
 
-        return <ComboBox 
+        return <ComboBox
           onFocus={() => this.comboboxValidation(field, field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey)}
           onBlur={() => this.comboboxValidation(field, field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey)}
           multiSelect={field.multiSelect}
-          allowFreeform={field.allowFreeform} 
+          allowFreeform={field.allowFreeform}
           placeholder={field.placeholder}
           options={_comboBoxOptions}
-          selectedKey= { field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey}
+          selectedKey={field.multiSelect ? _selectedComboBoxKeys : _selectedComboBoxKey}
           required={field.required}
           disabled={disableFieldOnEdit}
-          onChange={async (event, option, index, value) =>{ 
-            field.multiSelect ? this.onValueChangedComboBoxMulti(field.id, option, value) : this.onValueChangedComboBoxSingle(field.id, option, value)
-          } }
-          
+          onChange={async (event, option, index, value) => {
+            if (field.multiSelect) {
+              this.onValueChangedComboBoxMulti(field.id, option, value)
+            } else {
+              this.onValueChangedComboBoxSingle(field.id, option, value)
+            }
+          }}
         />;
-      case CustomCollectionFieldType.peoplepicker: 
-      _selectedUsers = item[field.id] !== null ? item[field.id]: [] ;
+        
+      case CustomCollectionFieldType.peoplepicker:
+        _selectedUsers = item[field.id] !== null ? item[field.id] : [];
 
-        return <PeoplePicker 
-          peoplePickerCntrlclassName = {styles.peoplePicker}
-          context = {this.props.context}
+        return <PeoplePicker
+          peoplePickerCntrlclassName={styles.peoplePicker}
+          context={this.props.context}
           personSelectionLimit={typeof field.maximumUsers === "number" ? field.maximumUsers : typeof field.multiSelect === "boolean" && field.multiSelect === false ? 1 : 99}
           principalTypes={[PrincipalType.User]}
           ensureUser={true}
           placeholder={field.placeholder || field.title}
           required={field.required}
           onChange={(items: IPersonaProps[]) => {
-              const _selected: string[] = items.length === 0 ? null : items.map(({secondaryText}) => secondaryText); 
-              this.onValueChanged(field.id, _selected)
-            } 
+            const _selected: string[] = items.length === 0 ? null : items.map(({ secondaryText }) => secondaryText);
+            this.onValueChanged(field.id, _selected)
+          }
           }
           onGetErrorMessage={async (items: IPersonaProps[]) => await this.peoplepickerValidation(field, items, item)}
 
@@ -600,7 +604,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
           disabled={disableFieldOnEdit}
           onChange={(e, value) => this.onValueChanged(field.id, value)}
           deferredValidationTime={field.deferredValidationTime || field.deferredValidationTime >= 0 ? field.deferredValidationTime : 200}
-          onGetErrorMessage={async (value: string) =>  await this.fieldValidation(field, value) }
+          onGetErrorMessage={async (value: string) => await this.fieldValidation(field, value)}
           inputClassName="PropertyFieldCollectionData__panel__string-field" />;
     }
   }
@@ -712,10 +716,10 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
                 <Icon iconName="Clear" />
               </Link>
             ) : (
-                <Link title={strings.CollectionAddRowButtonLabel} className={`${this.disableAdd(crntItem) ? "" : styles.addBtn}`} disabled={this.disableAdd(crntItem)} onClick={this.addRow}>
-                  <Icon iconName="Add" />
-                </Link>
-              )
+              <Link title={strings.CollectionAddRowButtonLabel} className={`${this.disableAdd(crntItem) ? "" : styles.addBtn}`} disabled={this.disableAdd(crntItem)} onClick={this.addRow}>
+                <Icon iconName="Add" />
+              </Link>
+            )
           }
         </span>
       </div>

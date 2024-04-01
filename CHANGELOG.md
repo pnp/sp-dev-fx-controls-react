@@ -1,10 +1,52 @@
 # Releases
 
+## 3.17.0
+
+### Enhancements
+
+- `DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)
+- `DynamicForm`: Custom Formatting and Validation, ControlsTestWebPart updates [#1672](https://github.com/pnp/sp-dev-fx-controls-react/pull/1672)
+- `PeoplePicker`: Added custom filter to PeoplePicker selection [#1657](https://github.com/pnp/sp-dev-fx-controls-react/issues/1657)
+- `RichText`: Align RichText heading styles and font sizes with OOB SharePoint text web part [#1706](https://github.com/pnp/sp-dev-fx-controls-react/pull/1706)
+
+### Fixes
+
+- Build fails due to missing @iconify/react dependency after upgrade to 3.16.0 [#1719](https://github.com/pnp/sp-dev-fx-controls-react/issues/1719)
+- `ModernTaxonomyPicker`: not displaying suggestions when typing in values - API not found error [#1688](https://github.com/pnp/sp-dev-fx-controls-react/issues/1688)
+- `DynamicForm`: Disable issue on fieldOverrides field control when onBeforeSubmit return true [#1715](https://github.com/pnp/sp-dev-fx-controls-react/issues/1715)
+- `PeoplePicker`: PeoplePicker returns no results with webAbsoluteUrl and ensureUser [#1669](https://github.com/pnp/sp-dev-fx-controls-react/issues/1669)
+- `DynamicForm`: [DynamicForm] Fixing multi taxonomy field (loading + saving existing item) [#1739](https://github.com/pnp/sp-dev-fx-controls-react/pull/1739)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Lars Fernhomberg](https://github.com/lafe), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Tom G](https://github.com/t0mgerman), [wuxiaojun514](https://github.com/wuxiaojun514).
+
+## 3.16.2
+
+### Fixes
+
+- `DynamicForm`: Fixing the previous version's issue [#1736](https://github.com/pnp/sp-dev-fx-controls-react/pull/1736) (introduced in [#1718](https://github.com/pnp/sp-dev-fx-controls-react/pull/1718))
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
+## 3.16.1
+
+### Fixes
+
+- `DynamicForm`: Additional check to see if DefaultValue is an object. No more null comparisons, which should have been undefined comparisons
+
+### Contributors
+
+Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
+
 ## 3.16.0
 
 ### New control(s)
 
 - `ViewPicker`: new control ViewPicker [#1439](https://github.com/pnp/sp-dev-fx-controls-react/issues/1439)
+- `HoverReactionsBar`: new control HoverReactionsBar [#1652](https://github.com/pnp/sp-dev-fx-controls-react/pull/1652)
 
 ### Enhancements
 
@@ -12,6 +54,10 @@
 - `FieldCollectionData`: added date field control and updated number field [#1600](https://github.com/pnp/sp-dev-fx-controls-react/pull/1600)
 - `ListItemComments`: Added ListItemComments component to Controls.tsx [#1621](https://github.com/pnp/sp-dev-fx-controls-react/pull/1621)
 - `FolderPicker`: Improve documentation of FolderPicker [#1379](https://github.com/pnp/sp-dev-fx-controls-react/pull/1379)
+- `RichText`: Add https:// as placeholder instead of textbox value when adding url [#1651](https://github.com/pnp/sp-dev-fx-controls-react/pull/1656)
+- Fix package.json to remove phantom dependencies issues [#1660](https://github.com/pnp/sp-dev-fx-controls-react/issues/1660)
+- `PeoplePicker`: new property to starting the search after n characters [#374](https://github.com/pnp/sp-dev-fx-controls-react/issues/374)
+- SharePoint Framework v1.18.2 support
 
 ### Fixes
 
@@ -24,10 +70,16 @@
 - `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
 - `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
 - `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
+- `DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)
+- `ListItemAttachments`: Inconsistent file handling [#1644](https://github.com/pnp/sp-dev-fx-controls-react/issues/1644)
+- `Localization`: Update Japanese translations [#1686](https://github.com/pnp/sp-dev-fx-controls-react/pull/1686)
+- `ListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
+- `ComboBoxListItemPicker`: Fix docs for onSelectedItem [#1690](https://github.com/pnp/sp-dev-fx-controls-react/pull/1690)
+- `ListItemAttachments`: Fix click behavior in ListItemAttachments component [#1692](https://github.com/pnp/sp-dev-fx-controls-react/pull/1692)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Dan Toft](https://github.com/Tanddant), [Gerke van Garderen](https://github.com/gerkevgarderen), [Guido Zambarda](https://github.com/GuidoZam), [Joakim](https://github.com/daenur76), [Michaël Maillot](https://github.com/michaelmaillot), [Nils Andresen](https://github.com/nils-a), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Rico van de Ven](https://github.com/RicoNL), [Steve Beaugé](https://github.com/stevebeauge), [wuxiaojun514](https://github.com/wuxiaojun514), [Tetsuya Kawahara](https://github.com/tecchan1107), [Tom G](https://github.com/t0mgerman), [Yannik Reiter](https://github.com/yannikreiter-maxworx).
 
 ## 3.15.0
 

@@ -16,6 +16,7 @@ export * from './FolderExplorer';
 export * from './FolderPicker';
 export * from './IconPicker';
 export * from './Pagination';
+export * from './HoverReactionsBar';
 
 export * from './IFrameDialog';
 export * from './IFramePanel';

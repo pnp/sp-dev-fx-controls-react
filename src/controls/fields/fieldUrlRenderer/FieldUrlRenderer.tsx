@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
-import { Link } from 'office-ui-fabric-react/lib/Link';
+import { css } from '@fluentui/react/lib/Utilities';
+import { Link } from '@fluentui/react/lib/Link';
 
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import * as telemetry from '../../../common/telemetry';

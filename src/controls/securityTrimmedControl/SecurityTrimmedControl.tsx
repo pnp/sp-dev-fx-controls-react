@@ -3,7 +3,7 @@ import { ISecurityTrimmedControlProps, ISecurityTrimmedControlState, PermissionL
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SPPermission } from '@microsoft/sp-page-context';
 import * as telemetry from '../../common/telemetry';
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner } from '@fluentui/react/lib/Spinner';
 
 export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedControlProps, ISecurityTrimmedControlState> {
   constructor(props: ISecurityTrimmedControlProps) {

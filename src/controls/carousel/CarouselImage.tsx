@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './Carousel.module.scss';
-import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
-import { css } from 'office-ui-fabric-react/lib/Utilities';
+import { Image, ImageFit } from '@fluentui/react/lib/Image';
+import { css } from '@fluentui/react/lib/Utilities';
 
 /**
  * Carousel Image component props

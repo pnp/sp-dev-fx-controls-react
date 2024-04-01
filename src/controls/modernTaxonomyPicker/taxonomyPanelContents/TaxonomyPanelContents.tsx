@@ -7,7 +7,7 @@ import { IBasePickerStyleProps,
          ISuggestionItemProps,
          Label,
          Selection,
-       } from 'office-ui-fabric-react';
+       } from '@fluentui/react';
 import { ITermInfo,
          ITermSetInfo,
          ITermStoreInfo

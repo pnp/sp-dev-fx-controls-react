@@ -2,11 +2,11 @@ import * as React from 'react';
 import { ILocationPickerProps, ILocationPickerState, Mode, ILocationBoxOption, ILocationPickerItem } from './ILocationPicker';
 import styles from './LocationPicker.module.scss';
 import { SPHttpClient, ISPHttpClientOptions, SPHttpClientResponse, HttpClient, HttpClientResponse } from '@microsoft/sp-http';
-import { Text } from 'office-ui-fabric-react/lib/Text';
-import { Persona, PersonaSize } from 'office-ui-fabric-react/lib/Persona';
-import { ComboBox } from 'office-ui-fabric-react/lib/ComboBox';
-import { FontIcon } from 'office-ui-fabric-react/lib/Icon';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
+import { Text } from '@fluentui/react/lib/Text';
+import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
+import { ComboBox } from '@fluentui/react/lib/ComboBox';
+import { FontIcon } from '@fluentui/react/lib/Icon';
+import { IconButton } from '@fluentui/react/lib/Button';
 import * as strings from 'ControlStrings';
 import { isEqual } from '@microsoft/sp-lodash-subset';
 

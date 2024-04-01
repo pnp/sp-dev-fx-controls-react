@@ -1,12 +1,12 @@
 
-import { IButtonStyles } from "office-ui-fabric-react/lib/Button";
-import { IStackStyles } from "office-ui-fabric-react/lib/Stack";
+import { IButtonStyles } from "@fluentui/react/lib/Button";
+import { IStackStyles } from "@fluentui/react/lib/Stack";
 import {
   mergeStyles,
   mergeStyleSets,
-} from "office-ui-fabric-react/lib/Styling";
+} from "@fluentui/react/lib/Styling";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
-import { IBasePickerStyles } from "office-ui-fabric-react/lib/Pickers";
+import { IBasePickerStyles } from "@fluentui/react/lib/Pickers";
 const theme = window.__themeState__.theme;
 
 export const useTeamPickerStyles = (themeVariant:  IReadonlyTheme | undefined) => { // eslint-disable-line @typescript-eslint/explicit-function-return-type

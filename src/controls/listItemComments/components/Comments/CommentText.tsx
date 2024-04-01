@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Mention } from "./IComment";
-import { Text } from "office-ui-fabric-react/lib/Text";
+import { Text } from "@fluentui/react/lib/Text";
 import { LivePersona } from "../../../LivePersona";
 import { AppContext } from "../../common";
 import regexifyString from "regexify-string";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { Stack } from "@fluentui/react/lib/Stack";
 import { isArray, isObject } from "lodash";
 import he from 'he';
 export interface ICommentTextProps {
