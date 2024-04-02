@@ -1799,6 +1799,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               element={this.state.currentCarouselElement}
             />
           </div>
+          <div>
+            <h3>Carousel with minimal configuration:</h3>
+            <Carousel
+              element={this.carouselElements}
+              contentHeight={200}
+            />
+          </div>
         </div>
         <div id="SiteBreadcrumbDiv" className={styles.container} hidden={!controlVisibility.SiteBreadcrumb}>
           <div className={styles.siteBreadcrumb}>
