@@ -14,6 +14,7 @@ import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
 import CarouselImage, { ICarouselImageProps } from "./CarouselImage";
 import { CarouselIndicatorsDisplay } from "./ICarouselProps";
+import { mergeStyles } from "@fluentui/react/lib/Styling";
 
 export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
   private _intervalId: number | undefined;
@@ -74,7 +75,8 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       interval,
       indicatorsDisplay,
       rootStyles,
-      indicatorsContainerStyles
+      indicatorsContainerStyles,
+      contentHeight
     } = this.props;
 
     const processing = processingState === ProcessingState.processing;
@@ -83,6 +85,17 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     const nextButtonDisabled = processing || this.isCarouselButtonDisabled(true);
 
     const element = this.getElementToDisplay(currentIndex);
+
+    let contentContainerCustomClassName: ICssInput | undefined = undefined;
+    if (contentContainerStyles) {
+      contentContainerCustomClassName = contentContainerStyles;
+    }
+    else if (contentHeight) {
+      contentContainerCustomClassName = mergeStyles({
+        height: `${contentHeight}px`
+      });
+    }
+
 
     return (
       <div className={this.getMergedStyles(styles.root, rootStyles)}>
@@ -97,7 +110,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
               onClick={() => { this.onCarouselButtonClicked(false); }} />
           </div>
           <div
-            className={this.getMergedStyles(styles.contentContainer, contentContainerStyles)}
+            className={this.getMergedStyles(styles.contentContainer, contentContainerCustomClassName)}
             onMouseOver={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
             onTouchStart={pauseOnHover && interval !== null ? this.pauseCycle : undefined}
             onMouseLeave={pauseOnHover && interval !== null ? this.startCycle : undefined}
@@ -259,7 +272,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
         return "";
     }
 
-    const buttonsLocation = this.props.buttonsLocation ? this.props.buttonsLocation : CarouselButtonsLocation.top;
+    const buttonsLocation = this.props.buttonsLocation ? this.props.buttonsLocation : CarouselButtonsLocation.center;
     let buttonsLocationCss = "";
     switch (buttonsLocation) {
       case CarouselButtonsLocation.top:
