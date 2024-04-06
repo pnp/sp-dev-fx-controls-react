@@ -147,7 +147,12 @@ export class DynamicForm extends React.Component<
    * Default React component render method
    */
   public render(): JSX.Element {
-    const { customFormatting, fieldCollection, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
+    let {fieldCollection} = this.state
+    const { customFormatting, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
+
+    if (this.props.fieldOrder) {
+      fieldCollection = this.sortFields(fieldCollection, this.props.fieldOrder)
+    }
 
     const customFormattingDisabled = this.props.useCustomFormatting === false;
 
@@ -262,6 +267,25 @@ export class DynamicForm extends React.Component<
       </div>
     );
   }
+
+  private sortFields = (fields: IDynamicFieldProps[], customSort: string[]): IDynamicFieldProps[] => {
+    const fMap = new Map<string, IDynamicFieldProps>();
+
+    for (const field of fields) {
+      fMap.set(field.columnInternalName.toLowerCase(), field);
+    }
+
+    const sortedFields = customSort
+    .map((sortColumn) => sortColumn.toLowerCase())
+    .filter((normalizedSortColumn) => fMap.has(normalizedSortColumn))
+    .map((normalizedSortColumn) => fMap.get(normalizedSortColumn))
+    .filter((field) => field !== undefined);
+
+    const remainingFields = fields.filter((field) => !sortedFields.includes(field));
+    const uniqueRemainingFields = Array.from(new Set(remainingFields));
+
+    return [...sortedFields, ...uniqueRemainingFields];
+}
 
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
@@ -418,7 +442,7 @@ export class DynamicForm extends React.Component<
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
-          
+
           if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }
