@@ -35,6 +35,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             label={strings.LinkFileInstructions}
             ariaLabel={strings.LinkFileInstructions}
             defaultValue={"https://"}
+            placeholder={"https://"}
             onGetErrorMessage={(value: string) => this._getErrorMessagePromise(value)}
             autoAdjustHeight={false}
             underlined={false}
