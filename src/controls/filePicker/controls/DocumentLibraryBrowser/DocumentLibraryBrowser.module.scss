@@ -94,3 +94,45 @@
 .documentLibraryBrowserContainer {
   padding: 0;
 }
+
+.filePickerFolderCardTile {
+  max-width: 176px;
+  text-align: center;
+  outline: none;
+  position: relative;
+  @include ms-float(left);
+
+  &:hover {
+    background-color: $ms-color-neutralLighter;
+    border-radius: 5px;
+    .filePickerFolderCardTitle {
+      text-decoration: underline;
+    }
+  }
+
+  .filePickerFolderCardImage {
+    position: relative;
+    width: 112px;
+    height: 80px;
+    margin: 24px 32px 0px 32px;
+    cursor: pointer;
+
+    img {
+      display: block;
+      position: absolute;
+      left: -3px;
+      right: -3px;
+      bottom: -4px;
+    }
+  }
+
+  .filePickerFolderCardTitle {
+    cursor: pointer;
+    font-size: 14px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    padding: 12px 8px;
+    text-align: center;
+  }
+}
