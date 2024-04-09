@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Spinner } from "@fluentui/react/lib/Spinner";
 import { Stack } from "@fluentui/react/lib/Stack";
+import { Icon } from "@fluentui/react/lib/Icon";
 import { IDocumentLibraryBrowserProps } from "./IDocumentLibraryBrowserProps";
 import { IDocumentLibraryBrowserState } from "./IDocumentLibraryBrowserState";
 import { ILibrary } from "../../../../services/FileBrowserService.types";
@@ -62,14 +63,16 @@ export class DocumentLibraryBrowser extends React.Component<
         onClick={(_event) => this._handleOpenLibrary(item)}
       >
           <div className={styles.filePickerFolderCardImage}>
-            <img
-              aria-hidden="true"
-              src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg"
-            />
-            <img
-              aria-hidden="true"
-              src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg"
-            />
+            <Icon
+              className={styles.filePickerFolderCoverBack}
+              imageProps={{
+                src: strings.FolderBackPlate
+            }} />
+            <Icon
+              className={styles.filePickerFolderCoverFront}
+              imageProps={{
+                src: strings.FolderFrontPlate
+            }} />
           </div>
             <div className={styles.filePickerFolderCardTitle}>
               {item.title}

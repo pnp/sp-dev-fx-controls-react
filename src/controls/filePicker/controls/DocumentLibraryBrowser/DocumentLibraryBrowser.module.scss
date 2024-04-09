@@ -28,12 +28,19 @@
     margin: 24px 32px 0px 32px;
     cursor: pointer;
 
-    img {
+    .filePickerFolderCoverBack,
+    .filePickerFolderCoverFront {
       display: block;
       position: absolute;
       left: -3px;
       right: -3px;
       bottom: -4px;
+
+      img {
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
     }
   }
 
