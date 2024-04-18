@@ -142,6 +142,7 @@ import {
   MapType
 } from "../../../Map";
 import {
+  IPeoplePickerContext,
   PeoplePicker,
   PrincipalType
 } from "../../../controls/peoplepicker";
@@ -481,6 +482,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       ]
     }
   ];
+  private peoplePickerContext: IPeoplePickerContext;
 
   constructor(props: IControlsTestProps) {
     super(props);
@@ -513,6 +515,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       termStoreInfo: null,
       termSetInfo: null,
       testTerms: []
+    };
+
+    this.peoplePickerContext = {
+      absoluteUrl: this.props.context.pageContext.web.absoluteUrl,
+      msGraphClientFactory: this.props.context.msGraphClientFactory,
+      spHttpClient: this.props.context.spHttpClient
     };
 
     this._onIconSizeChange = this._onIconSizeChange.bind(this);
@@ -818,6 +826,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       dynamicFormListItemId = Number(this.props.dynamicFormListItemId);
     }
 
+    const dynamicFormCustomTitleIcon: {[key: string]: string} = {};
+    dynamicFormCustomTitleIcon["Title"] = "FavoriteStar";
+
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
       {
@@ -962,19 +973,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         </div>
         <div id="DynamicFormDiv" className={styles.container} hidden={!controlVisibility.DynamicForm}>
           <div className="ms-font-m">
-            <DynamicForm 
-              key={this.props.dynamicFormListId} 
-              context={this.props.context} 
-              listId={this.props.dynamicFormListId} 
-              listItemId={dynamicFormListItemId} 
+            <DynamicForm
+              key={this.props.dynamicFormListId}
+              context={this.props.context}
+              listId={this.props.dynamicFormListId}
+              listItemId={dynamicFormListItemId}
               validationErrorDialogProps={this.props.dynamicFormErrorDialogEnabled ? { showDialogOnValidationError: true } : undefined}
               returnListItemInstanceOnSubmit={true}
-              onCancelled={() => { console.log('Cancelled'); }} 
+              onCancelled={() => { console.log('Cancelled'); }}
               onSubmitted={async (data, item) => { let itemdata = await item.get(); console.log('Saved item', itemdata)}}
               useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
               useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
               useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
               enableFileSelection={this.props.dynamicFormFileSelectionEnabled}
+              customIcons={dynamicFormCustomTitleIcon}
             />
           </div>
         </div>
@@ -1299,6 +1311,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           />
 
           <DateTimePicker label="DateTime Picker (disabled)" disabled={true} />
+
+          <DateTimePicker label="DateTime Picker (restricted dates)" isMonthPickerVisible={false} showSeconds={false} onChange={(value) => console.log("DateTimePicker value:", value)} placeholder="Pick a date" restrictedDates={[new Date(2024,1,15), new Date(2024,1,16), new Date(2024,1,17)]}/>
         </div>
         <div id="RichTextDiv" className={styles.container} hidden={!controlVisibility.RichText}>
           {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
@@ -1315,15 +1329,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             theme={this.props.themeVariant} />
         </div>
         <div id="PeoplePickerDiv" className={styles.container} hidden={!controlVisibility.PeoplePicker}>
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker custom styles"
             styles={this.pickerStylesSingle}
-            personSelectionLimit={5}
+            personSelectionLimit={1}
             ensureUser={true}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
             onChange={this._getPeoplePickerItems} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker with filter for '.com'"
             personSelectionLimit={5}
             ensureUser={true}
@@ -1333,7 +1347,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }}
             onChange={this._getPeoplePickerItems} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (Group not found)"
             webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             groupName="Team Site Visitors 123"
@@ -1342,14 +1356,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
             onChange={this._getPeoplePickerItems} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (search for group)"
             groupName="Team Site Visitors"
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
             defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
             onChange={this._getPeoplePickerItems} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (pre-set global users)"
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
             defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
@@ -1357,14 +1371,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             personSelectionLimit={2}
             ensureUser={true} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (pre-set local users)"
             webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
             defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
             onChange={this._getPeoplePickerItems} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (tenant scoped)"
             personSelectionLimit={10}
             searchTextLimit={5} //New property : Specifies the minimum character count needed to begin retrieving search results. (default : 2)
@@ -1387,7 +1401,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             }} />
 
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (local scoped)"
             webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
             personSelectionLimit={5}
@@ -1402,7 +1416,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             suggestionsLimit={2}
             resolveDelay={200} />
 
-          <PeoplePicker context={this.props.context}
+          <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker (disabled)"
             disabled={true}
             showtooltip={true}
@@ -2589,5 +2603,5 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   // private _onFolderSelect = (folder: IFolder): void => {
   //   console.log('selected folder', folder);
-  // 
+  //
 }

@@ -411,9 +411,14 @@ export class DynamicForm extends React.Component<
           columnInternalName,
           hiddenFieldName,
         } = field;
+        let fieldcolumnInternalName = columnInternalName;
+        if (fieldcolumnInternalName.startsWith('_x') || fieldcolumnInternalName.startsWith('_')) {
+          fieldcolumnInternalName = `OData_${fieldcolumnInternalName}`;
+        }
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
+          
           if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }
@@ -421,19 +426,19 @@ export class DynamicForm extends React.Component<
           // Choice fields
 
           if (fieldType === "Choice") {
-            objects[columnInternalName] = field.newValue.key;
+            objects[fieldcolumnInternalName] = field.newValue.key;
           }
           if (fieldType === "MultiChoice") {
-            objects[columnInternalName] = { results: field.newValue };
+            objects[fieldcolumnInternalName] = { results: field.newValue };
           }
 
           // Lookup fields
 
           if (fieldType === "Lookup") {
             if (value && value.length > 0) {
-              objects[`${columnInternalName}Id`] = value[0].key;
+              objects[`${fieldcolumnInternalName}Id`] = value[0].key;
             } else {
-              objects[`${columnInternalName}Id`] = null;
+              objects[`${fieldcolumnInternalName}Id`] = null;
             }
           }
           if (fieldType === "LookupMulti") {
@@ -441,7 +446,7 @@ export class DynamicForm extends React.Component<
             field.newValue.forEach((element) => {
               value.push(element.key);
             });
-            objects[`${columnInternalName}Id`] = {
+            objects[`${fieldcolumnInternalName}Id`] = {
               results: value.length === 0 ? null : value,
             };
           }
@@ -449,10 +454,10 @@ export class DynamicForm extends React.Component<
           // User fields
 
           if (fieldType === "User") {
-            objects[`${columnInternalName}Id`] = field.newValue.length === 0 ? null : field.newValue;
+            objects[`${fieldcolumnInternalName}Id`] = field.newValue.length === 0 ? null : field.newValue;
           }
           if (fieldType === "UserMulti") {
-            objects[`${columnInternalName}Id`] = {
+            objects[`${fieldcolumnInternalName}Id`] = {
               results: field.newValue.length === 0 ? null : field.newValue,
             };
           }
@@ -460,7 +465,7 @@ export class DynamicForm extends React.Component<
           // Taxonomy / Managed Metadata fields
 
           if (fieldType === "TaxonomyFieldType") {
-            objects[columnInternalName] = {
+            objects[fieldcolumnInternalName] = {
               __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
               Label: value[0]?.name ?? "",
               TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
@@ -476,19 +481,19 @@ export class DynamicForm extends React.Component<
           // Other fields
 
           if (fieldType === "Location") {
-            objects[columnInternalName] = JSON.stringify(field.newValue);
+            objects[fieldcolumnInternalName] = JSON.stringify(field.newValue);
           }
           if (fieldType === "Thumbnail") {
             if (additionalData) {
               const uploadedImage = await this.uploadImage(additionalData);
-              objects[columnInternalName] = JSON.stringify({
+              objects[fieldcolumnInternalName] = JSON.stringify({
                 type: "thumbnail",
                 fileName: uploadedImage.Name,
                 serverRelativeUrl: uploadedImage.ServerRelativeUrl,
                 id: uploadedImage.UniqueId,
               });
             } else {
-              objects[columnInternalName] = null;
+              objects[fieldcolumnInternalName] = null;
             }
           }
         }
@@ -908,6 +913,7 @@ export class DynamicForm extends React.Component<
       listItemId,
       disabledFields,
       respectETag,
+      customIcons,
       onListItemLoaded,
     } = this.props;
     let contentTypeId = this.props.contentTypeId;
@@ -915,11 +921,11 @@ export class DynamicForm extends React.Component<
     try {
 
       // Fetch form rendering information from SharePoint
-      const listInfo = await this._spService.getListFormRenderInfo(listId);
+      const listInfo = await this._spService.getListFormRenderInfo(listId, this.webURL);
 
       // Fetch additional information about fields from SharePoint
       // (Number fields for min and max values, and fields with validation)
-      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId);
+      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId, this.webURL);
       const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
@@ -986,7 +992,8 @@ export class DynamicForm extends React.Component<
         numberFields,
         listId,
         listItemId,
-        disabledFields
+        disabledFields,
+        customIcons
       );
 
       // Get installed languages for Currency fields
@@ -1028,7 +1035,7 @@ export class DynamicForm extends React.Component<
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[]): Promise<IDynamicFieldProps[]> {
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: {[key: string]: string}): Promise<IDynamicFieldProps[]> {
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
     const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
@@ -1060,9 +1067,14 @@ export class DynamicForm extends React.Component<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const selectedTags: any = [];
 
+        let fieldName = field.InternalName;
+        if (fieldName.startsWith('_x') || fieldName.startsWith('_')) {
+          fieldName = `OData_${fieldName}`;
+        }
+
         // If a SharePoint Item was loaded, get the field value from it
-        if (item !== null && item[field.InternalName]) {
-          value = item[field.InternalName];
+        if (item !== null && item[fieldName]) {
+          value = item[fieldName];
           stringValue = value.toString();
         } else {
           defaultValue = field.DefaultValue;
@@ -1166,7 +1178,8 @@ export class DynamicForm extends React.Component<
             const response = await this._spService.getSingleManagedMetadataLabel(
               listId,
               listItemId,
-              field.InternalName
+              field.InternalName,
+              this.webURL
             );
             if (response) {
               selectedTags.push({
@@ -1219,8 +1232,10 @@ export class DynamicForm extends React.Component<
 
         // Setup DateTime fields
         if (field.FieldType === "DateTime") {
-          if (item !== null && item[field.InternalName]) {
-            value = new Date(item[field.InternalName]);
+
+          if (item !== null && item[fieldName]) {
+
+            value = new Date(item[fieldName]);
             stringValue = value.toISOString();
           } else if (defaultValue === "[today]") {
             defaultValue = new Date();
@@ -1229,7 +1244,7 @@ export class DynamicForm extends React.Component<
           }
 
           dateFormat = field.DateFormat || "DateOnly";
-          defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
+          defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
         }
 
         // Setup Thumbnail, Location and Boolean fields
@@ -1285,6 +1300,7 @@ export class DynamicForm extends React.Component<
           minimumValue: minValue,
           maximumValue: maxValue,
           showAsPercentage: showAsPercentage,
+          customIcon: customIcons ? customIcons[field.InternalName] : undefined
         });
 
         // This may not be necessary now using RenderListDataAsStream
@@ -1318,7 +1334,8 @@ export class DynamicForm extends React.Component<
         listItemId,
         file.fileName,
         buffer,
-        undefined
+        undefined,
+        this.webURL
       );
     }
   };
