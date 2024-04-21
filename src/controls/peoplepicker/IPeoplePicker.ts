@@ -1,5 +1,6 @@
-import { IBasePickerStyles, IPersonaProps } from "@fluentui/react";
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerStyles } from '@fluentui/react/lib/Pickers';
 import { IPeoplePickerContext, PrincipalType } from ".";
 
 /**
