@@ -10,6 +10,7 @@
 - `RichText`: Added style property to Rich text control [#1773](https://github.com/pnp/sp-dev-fx-controls-react/pull/1773)
 - `fast-serve`: Fast-serve update to match the most recent changes. [#1782](https://github.com/pnp/sp-dev-fx-controls-react/pull/1782)
 - `PeoplePicker`: Added context optimization [#1764](https://github.com/pnp/sp-dev-fx-controls-react/pull/1764)
+- `Multiple controls`: Wrong fluentui imports cause webpack build errors [#1763](https://github.com/pnp/sp-dev-fx-controls-react/issues/1763)
 
 ### Fixes
 
@@ -20,7 +21,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [IRRDC](https://github.com/IRRDC), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergei Sergeev](https://github.com/s-KaiNet), [srpmtt](https://github.com/srpmtt).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [IRRDC](https://github.com/IRRDC), [Matthias Z'Brun](https://github.com/raclettierer), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergei Sergeev](https://github.com/s-KaiNet), [srpmtt](https://github.com/srpmtt).
 
 ## 3.17.0
 
