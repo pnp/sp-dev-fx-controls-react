@@ -45,7 +45,7 @@ The FileTypeIcon component can be configured with the following properties:
 | onClick | React.MouseEvent\<HTMLElement> | no | Event triggered when the icon is clicked. |
 | onDoubleClick | React.MouseEvent\<HTMLElement> | no | Event triggered when the icon is double clicked. |
 | onMouseEnter | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse cursor enters the icon (without event bubbling). |
-| onMouseLeave | React.MouseEvent\<HTMLElement> | no | Event triggered when the mouse cursor leave the icon. |
+| onMouseLeave | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse cursor leaves the icon. |
 | onMouseOver | React.MouseEvent\<HTMLElement> | no | Event triggered when the mouse cursor is over the icon. |
 | onMouseUp | React.MouseEvent\<HTMLElement> | no | Event triggered when the mouse button is released after clicked on the icon. |
 
