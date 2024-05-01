@@ -1,4 +1,4 @@
-import { FocusEventHandler, KeyboardEventHandler, MouseEventHandler, ReactEventHandler } from "react";
+import { MouseEventHandler } from "react";
 
 /**
  * Available icon types
