@@ -142,6 +142,9 @@ Provides Widget link properties
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | href | string | yes | Link to be opened. |
+| title | string | no | The text to display for the link, if not provided, the default text will be used. |
+| color | string | no | The color of the link, if not provided, the default brand color will be used. |
+| target | string | no | The target property value for the generated anchor tag, if not provided, the default target will be *_blank*. |
 
 Enum `WidgetSize`
 
