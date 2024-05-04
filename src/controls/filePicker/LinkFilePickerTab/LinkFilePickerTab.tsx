@@ -34,6 +34,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             className={styles.linkTextField}
             label={strings.LinkFileInstructions}
             ariaLabel={strings.LinkFileInstructions}
+            defaultValue={"https://"}
             onGetErrorMessage={(value: string) => this._getErrorMessagePromise(value)}
             autoAdjustHeight={false}
             underlined={false}
@@ -63,7 +64,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Called as user types in a new value
    */
   private _handleChange = (fileUrl: string): void => {
-    const filePickerResult: IFilePickerResult = fileUrl ? {
+    const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
       fileAbsoluteUrl: fileUrl,
       fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
       fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl),
@@ -80,7 +81,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    */
   private _getErrorMessagePromise = async (value: string): Promise<string> => {
     // DOn't give an error for blank or placeholder value, but don't make it a valid entry either
-    if (value === undefined || value === '') {
+    if (value === undefined || value === 'https://') {
       this.setState({ isValid: false });
       return '';
     }
@@ -88,7 +89,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     // Make sure that user is typing a valid URL format
     if (!this._isUrl(value)) {
       this.setState({ isValid: false });
-      return strings.InvalidUrlError;
+      return '';
     }
 
     // If we don't allow external links, verify that we're in the same domain
