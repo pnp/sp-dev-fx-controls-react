@@ -42,5 +42,11 @@ The FileTypeIcon component can be configured with the following properties:
 | path | string | no | Path to the document. If this is provided, the control will use the file extension to display the corresponding icon. |
 | size | ImageSize | no | This is a property that only needs to be used when the type is set to image. It allows you to specify the image size. small (16px), normal (20px), medium (48px) and large (96px) are possible. Use the **ImageSize** enum to get the list of available images sizes. |
 | type | IconType | yes | This property specifies is you want to use the icon font or image. Use the **IconType** enum to get the list of available icon types. |
+| onClick | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the icon is clicked. |
+| onDoubleClick | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the icon is double clicked. |
+| onMouseEnter | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse cursor enters the icon (without event bubbling). |
+| onMouseLeave | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse cursor leaves the icon. |
+| onMouseOver | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse cursor enters the icon (with event bubbling). |
+| onMouseUp | React.MouseEvent&lt;HTMLElement&gt; | no | Event triggered when the mouse button is released after clicked on the icon. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FileTypeIcon)
