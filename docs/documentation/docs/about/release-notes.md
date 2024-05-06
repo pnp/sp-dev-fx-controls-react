@@ -11,6 +11,7 @@
 - `fast-serve`: Fast-serve update to match the most recent changes. [#1782](https://github.com/pnp/sp-dev-fx-controls-react/pull/1782)
 - `PeoplePicker`: Added context optimization [#1764](https://github.com/pnp/sp-dev-fx-controls-react/pull/1764)
 - `Multiple controls`: Wrong fluentui imports cause webpack build errors [#1763](https://github.com/pnp/sp-dev-fx-controls-react/issues/1763)
+- `FileTypeIcon`: Added standard events [#1789](https://github.com/pnp/sp-dev-fx-controls-react/pull/1789)
 
 ### Fixes
 
