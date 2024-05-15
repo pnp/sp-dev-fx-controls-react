@@ -57,20 +57,20 @@ The `ContentTypePicker` control can be configured with the following properties:
 | context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | listId | string | no | The ID of the list or library you wish to select content type(s) from. When not specified, picker will be populated with site content types.|
 | className | string | no | If provided, additional class name to provide on the dropdown element. |
-disabled | boolean | no | Whether or not the control is disabled. |
-includeHidden | boolean | no | Whether or not to include hidden content types. Default is true. |
-includeReadOnly | boolean | no | Whether or not to include read-only content types. Default is true. |
-group | string | no | Only show content types of a certain group. |
-filter | string | no | Filter content types from OData query (takes the upperhand of `hidden`, `readOnly` and `group` Filters). |
-orderBy | ContentTypesOrderBy | no | How to order the content types. |
-selectedContentTypes | string \| string[] | no | IDs of the selected item(s). If you provide this, you must maintain selection state by observing `onSelectionChanged` events and passing a new value in when changed.
-multiSelect | boolean | no | Indicates if multi-choice selections is allowed. Default is false. |
-label | string | no | The label to display. |
-placeholder | string | no | Input placeholder text. Displayed until option is selected. |
-onSelectionChanged | (newValue: ISPContentType \| ISPContentType[]): void | no | Callback issued when the selected option changes. |
-filterItems | (contentTypes: ISPContentType[]): ISPContentType[] | no | This function is invoked after the filtering has been done. This allows you to add additional custom filtering.
-webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
-showBlankOption | boolean | no | Whether or not to show a blank option. Default is false. Works only when `multiSelect` is false. |
+| disabled | boolean | no | Whether or not the control is disabled. |
+| includeHidden | boolean | no | Whether or not to include hidden content types. Default is true. |
+| includeReadOnly | boolean | no | Whether or not to include read-only content types. Default is true. |
+| group | string | no | Only show content types of a certain group. |
+| filter | string | no | Filter content types from OData query (takes the upperhand of `hidden`, `readOnly` and `group` Filters). |
+| orderBy | ContentTypesOrderBy | no | How to order the content types. |
+| selectedContentTypes | string \| string[] | no | IDs of the selected item(s). If you provide this, you must maintain selection state by observing `onSelectionChanged` events and passing a new value in when changed. |
+| multiSelect | boolean | no | Indicates if multi-choice selections is allowed. Default is false. |
+| label | string | no | The label to display. |
+| placeholder | string | no | Input placeholder text. Displayed until option is selected. |
+| onSelectionChanged | (newValue: ISPContentType \| ISPContentType[]): void | no | Callback issued when the selected option changes. |
+| filterItems | (contentTypes: ISPContentType[]): ISPContentType[] | no | This function is invoked after the filtering has been done. This allows you to add additional custom filtering. |
+| webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
+| showBlankOption | boolean | no | Whether or not to show a blank option. Default is false. Works only when `multiSelect` is false. |
 
 Enum `ContentTypesOrderBy`
 

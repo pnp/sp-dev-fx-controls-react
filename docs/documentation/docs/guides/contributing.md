@@ -27,7 +27,7 @@ Typos are embarrassing! Most PR's that fix typos will be accepted immediately. I
 Before contributing:
 
 - ensure that the **dev** branch on your fork is in sync with the original **sp-dev-fx-controls-react** repository
-    ```sh
+    ```bash
     # assuming you are in the folder of your locally cloned fork....
     git checkout dev
 
@@ -39,7 +39,8 @@ Before contributing:
     ```
 
 - create a feature branch for your change. If you'll get stuck on an issue or merging your PR will take a while, this will allow you to have a clean dev branch that you can use for contributing other changes
-    ```sh
+
+    ```bash
     git checkout -b my-contribution
     ```
 

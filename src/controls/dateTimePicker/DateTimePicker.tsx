@@ -1,6 +1,7 @@
 import * as React from "react";
 import { isEqual } from '@microsoft/sp-lodash-subset';
 import { TimeConvention, DateConvention } from "./DateTimeConventions";
+import { Calendar } from "@fluentui/react/lib/Calendar";
 import { DatePicker } from "@fluentui/react/lib/DatePicker";
 import { Label } from "@fluentui/react/lib/Label";
 import { IconButton } from "@fluentui/react/lib/Button";
@@ -246,13 +247,33 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
       maxDate,
       minutesIncrementStep,
       showClearDate = false,
-      showClearDateIcon = 'RemoveEvent'
+      showClearDateIcon = 'RemoveEvent',
+      restrictedDates = []
     } = this.props;
 
     const { textErrorMessage } = dateStrings;
     const hours: number = value !== null ? value.getHours() : this.state.hours;
     const minutes: number = value !== null ? value.getMinutes() : this.state.minutes;
     const seconds: number = value !== null ? value.getSeconds() : this.state.seconds;
+
+    const CalendarView = (): JSX.Element => {
+      return (
+        <Calendar
+          value={initialPickerDate}
+          strings={dateStrings}
+          isMonthPickerVisible={isMonthPickerVisible}
+          onSelectDate={this.onSelectDate}
+          firstDayOfWeek={firstDayOfWeek}
+          firstWeekOfYear={firstWeekOfYear}
+          showGoToToday={showGoToToday}
+          showMonthPickerAsOverlay={showMonthPickerAsOverlay}
+          showWeekNumbers={showWeekNumbers}
+          minDate={minDate}
+          maxDate={maxDate}
+          restrictedDates={restrictedDates}
+        />
+      );
+    };
 
     // Check if the time element needs to be rendered
     let timeElm: JSX.Element = <div className="hidden" />;
@@ -341,6 +362,7 @@ export class DateTimePicker extends React.Component<IDateTimePickerProps, IDateT
                 initialPickerDate={initialPickerDate}
                 minDate={minDate}
                 maxDate={maxDate}
+                calendarAs={restrictedDates.length ? CalendarView : undefined}
                 textField={{
                   onChange: (e, newValue) => this.handleTextChange(e, newValue, textErrorMessage)
                 }}
