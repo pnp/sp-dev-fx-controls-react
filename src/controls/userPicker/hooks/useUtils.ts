@@ -31,8 +31,6 @@ export const DOCICONURL_FOLDER = "https://static2.sharepointonline.com/files/fab
 
 export const useUtils = () => {
 
-
-
   const getFileExtension = React.useCallback((fileName: string): string => {
     if (!fileName) return "";
     const splitedName = fileName.split(".");
@@ -380,7 +378,6 @@ export const useUtils = () => {
     getMentionCharIndex,
     hasValidChars,
     hasValidMentionCharIndex,
-
     GetFileImageUrl,
     getShortName,
     isOndrive,

@@ -1,3 +1,4 @@
+import { PositioningShorthand } from '@fluentui/react-positioning';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BaseComponentContext,
@@ -19,4 +20,5 @@ export interface IUserPickerProps {
   theme?: IReadonlyTheme | undefined;
   context: BaseComponentContext;
   secondaryTextPropertyName?: "jobTitle" | "department" | "mail" | "officeLocation" | "mobilePhone" | "businessPhones" | "userPrincipalName"  ;
+  positioning?: PositioningShorthand;
 }

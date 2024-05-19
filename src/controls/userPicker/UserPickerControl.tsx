@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import * as React from 'react';
 
 import { useAtom } from 'jotai';
@@ -17,6 +17,7 @@ import { globalState } from './atoms/globalState';
 import { IUserPickerProps } from './IUserPickerProps';
 import { PopUpMenu } from './PopUpMenu';
 import { User } from './User';
+import { useUserPickerPositioning } from './useUserPickerPositioning';
 import { useUserPickerStyles } from './useUserPickerStyles';
 
 export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (props: IUserPickerProps) => {
@@ -38,11 +39,11 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
   const [appGlobalState, setAppGlobalState] = useAtom(globalState);
   const { selectedUsers } = appGlobalState;
   const [searchUser, setSearchUser] = React.useState<string>("");
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  /*  const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void; */
 
+  /*  const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void; */
+  const [userPickerPopupRef, userPickerTargetRef] = useUserPickerPositioning(props);
   const styles = useUserPickerStyles();
-  console.log(styles);
+
 
   React.useEffect(() => {
     setAppGlobalState({ ...appGlobalState, ...props });
@@ -100,7 +101,7 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
 
   return (
     <>
-      <div style={{ width: "100%" }} ref={containerRef}>
+      <div style={{ width: "100%" }} ref={userPickerTargetRef as React.MutableRefObject<HTMLDivElement> }>
         <Field
           label={label}
           required={required ?? false}
@@ -119,7 +120,7 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
                   value={searchUser}
                   appearance="underline"
                   style={{ borderWidth: 0, width: "100%" }}
-                  ref={buttonRef}
+
                   type="text"
                   placeholder={placeholder ?? "Search User"}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
@@ -139,7 +140,7 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
                 {open ? (
                   <PopUpMenu
                     secondaryTextPropertyName={secondaryTextPropertyName}
-                    target={containerRef}
+                    containerRef={userPickerPopupRef as any}
                     searchValue={searchUser}
                     isOpen={open}
                     onDismiss={(open: boolean) => {

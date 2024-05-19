@@ -76,4 +76,21 @@ export const useUserPickerStyles = makeStyles({
     ...shorthands.padding("10px"),
     ...shorthands.gap("5px"),
   },
+  usersContainer: {
+    overflowY: "auto",
+    overflowX: "hidden",
+    "scrollbar-color": tokens.colorNeutralBackground1,
+    "scrollbar-width": "thin",
+    "::-webkit-scrollbar-thumb": {
+      backgroundColor: tokens?.colorBrandStroke2,
+      ...shorthands.borderRadius("10px"),
+      ...shorthands.borderWidth("1px"),
+    },
+    "::-webkit-scrollbar": {
+      height: "10px",
+      width: "7px",
+    },
+    width: "100%",
+    maxHeight: "450px",
+  },
 });

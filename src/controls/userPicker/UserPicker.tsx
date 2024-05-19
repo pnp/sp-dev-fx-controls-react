@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import * as React from 'react';
+import * as React from "react";
 
-import { Provider } from 'jotai';
-import { has } from 'lodash';
-import { useTheme } from 'office-ui-fabric-react';
+import { Provider } from "jotai";
+import { has } from "lodash";
+import { useTheme } from "office-ui-fabric-react";
 
 import {
   FluentProvider,
+  IdPrefixProvider,
   teamsDarkTheme,
   teamsHighContrastTheme,
   teamsLightTheme,
   Theme,
-} from '@fluentui/react-components';
-import { createV9Theme } from '@fluentui/react-migration-v8-v9';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
+} from "@fluentui/react-components";
+import { createV9Theme } from "@fluentui/react-migration-v8-v9";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
 
-import { IUserPickerProps } from './IUserPickerProps';
-import { UserPickerControl } from './UserPickerControl';
+import { IUserPickerProps } from "./IUserPickerProps";
+import { UserPickerControl } from "./UserPickerControl";
 
 export const UserPicker: React.FunctionComponent<IUserPickerProps> = (
   props: React.PropsWithChildren<IUserPickerProps>
@@ -26,6 +27,7 @@ export const UserPicker: React.FunctionComponent<IUserPickerProps> = (
   const [theme, setTheme] = React.useState<Theme>();
   const currentSPTheme = useTheme();
   const [isInitialized, setIsInitialized] = React.useState<boolean>(false);
+
 
   React.useEffect(() => {
     (async () => {
@@ -57,11 +59,13 @@ export const UserPicker: React.FunctionComponent<IUserPickerProps> = (
 
   return (
     <>
+      <IdPrefixProvider value="userPicker-">
       <FluentProvider theme={theme}>
         <Provider>
           <UserPickerControl {...props} />
         </Provider>
       </FluentProvider>
+      </IdPrefixProvider>
     </>
   );
 };

@@ -60,6 +60,7 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
 
   return (
     <>
+    <div style={{width:"100%", height:"100px", }}>
       <UserPicker
         context={context}
         secondaryTextPropertyName="mail"
@@ -74,6 +75,7 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
         onSelectedUsers={onSelectedUsers}
         onRemoveSelectedUser={onRemovedUser}
       />
+      </div>
     </>
   );
 };
