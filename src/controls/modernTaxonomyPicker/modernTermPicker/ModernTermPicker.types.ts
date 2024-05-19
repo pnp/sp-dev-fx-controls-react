@@ -1,9 +1,8 @@
 import { ITermInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
-import { IBasePickerProps } from 'office-ui-fabric-react/lib/components/pickers/BasePicker.types';
-import { IPickerItemProps } from 'office-ui-fabric-react/lib/components/pickers/PickerItem.types';
-import { IStyle, ITheme } from 'office-ui-fabric-react/lib/Styling';
-import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
+import { IStyle, ITheme } from '@fluentui/react/lib/Styling';
+import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
+import { IBasePickerProps, IPickerItemProps } from '@fluentui/react/lib/Pickers';
 
 export interface IModernTermPickerProps extends IBasePickerProps<ITermInfo> {
   themeVariant?: IReadonlyTheme;

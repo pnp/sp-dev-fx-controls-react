@@ -1,8 +1,7 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IBasePickerStyles } from "office-ui-fabric-react";
-import { DirectionalHint } from "office-ui-fabric-react/lib/common/DirectionalHint";
-import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
-import { PrincipalType } from ".";
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerStyles } from '@fluentui/react/lib/Pickers';
+import { IPeoplePickerContext, PrincipalType } from ".";
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
@@ -12,10 +11,10 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: BaseComponentContext;
+  context: IPeoplePickerContext;
   /**
    * Text of the Control
-  */
+   */
   titleText?: string;
   /**
    * Web Absolute Url of source site. When this is provided, a search request is done to the local site.
@@ -32,11 +31,15 @@ export interface IPeoplePickerProps {
   /**
    * Id of SharePoint Group (Number) or Office365 Group (String)
    */
-  groupId?: number | string | (string|number)[];
+  groupId?: number | string | (string | number)[];
   /**
    * Maximum number of suggestions to show in the full suggestion list. (default: 5)
    */
   suggestionsLimit?: number;
+  /**
+   * Specifies the minimum character count needed to begin retrieving search results. (default : 2)
+   */
+  searchTextLimit?: number;
   /**
    * Specify the user / group types to retrieve
    */
@@ -75,7 +78,7 @@ export interface IPeoplePickerProps {
   /**
    * Prop to validate contents on blur
    */
-   validateOnFocusOut?: boolean;
+  validateOnFocusOut?: boolean;
   /**
    * Method to check value of People Picker text
    */
@@ -89,8 +92,8 @@ export interface IPeoplePickerProps {
    */
   tooltipDirectional?: DirectionalHint;
   /**
-  * Class Name for the whole People picker control
-  */
+   * Class Name for the whole People picker control
+   */
   peoplePickerWPclassName?: string;
   /**
    * Class Name for the People picker control
@@ -125,21 +128,14 @@ export interface IPeoplePickerProps {
    * Placeholder to be displayed in an empty term picker
    */
   placeholder?: string;
-   /**
+  /**
    * styles to apply on control
    */
-    styles?: Partial<IBasePickerStyles>;
-}
-
-export interface IPeoplePickerState {
-  mostRecentlyUsedPersons?: IPersonaProps[];
-  errorMessage?: string;
-  internalErrorMessage?: string;
-  resolveDelay?: number;
-
-  selectedPersons?: IPersonaProps[];
-  peoplePersonaMenu?: IPersonaProps[];
-  delayResults?: boolean;
+  styles?: Partial<IBasePickerStyles>;
+  /**
+   * Define a filter to be applied to the search results, such as a filter to only show users from a specific domain
+   */
+  resultFilter?: (result: IPersonaProps[]) => IPersonaProps[];
 }
 
 export interface IPeoplePickerUserItem {

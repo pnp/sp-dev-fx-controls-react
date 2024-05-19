@@ -1,4 +1,4 @@
-import { DayOfWeek, FirstWeekOfYear } from 'office-ui-fabric-react/lib/utilities/dateValues/DateValues';
+import { DayOfWeek, FirstWeekOfYear } from '@fluentui/react/lib/DateTimeUtilities';
 import { TimeConvention, DateConvention } from './DateTimeConventions';
 import { IDateTimePickerStrings } from './IDateTimePickerStrings';
 import { TimeDisplayControlType } from './TimeDisplayControlType';
@@ -153,4 +153,10 @@ export interface IDateTimePickerProps {
    * Icon used for clearDate iconbutton. Defaults to RemoveEvent
    */
   showClearDateIcon?: string;
+
+  /**
+   * If set the Calendar will not allow selection of dates in this array.
+   */
+  restrictedDates?: Date[];
+
 }

@@ -1,4 +1,3 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { findIndex } from "@microsoft/sp-lodash-subset";
 import { sp } from '@pnp/sp';
@@ -7,7 +6,7 @@ import "@pnp/sp/sputilities";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import { IUserInfo } from "../controls/peoplepicker/IUsers";
-import { IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
+import { IPeoplePickerContext, IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
 
 /**
  * Service implementation to search people in SharePoint
@@ -19,12 +18,16 @@ export default class SPPeopleSearchService {
   /**
    * Service constructor
    */
-  constructor(private context: BaseComponentContext) {
+  constructor(private context: IPeoplePickerContext) {
     this.cachedPersonas = {};
     this.cachedLocalUsers = {};
-    this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
+    this.cachedLocalUsers[context.absoluteUrl] = [];
     // Setup PnPjs
-    sp.setup({ pageContext: this.context.pageContext });
+    sp.setup({ pageContext: {
+      web: {
+        absoluteUrl: context.absoluteUrl
+      }
+    }});
   }
 
   /**
@@ -33,7 +36,7 @@ export default class SPPeopleSearchService {
    * @param value
    */
   public generateUserPhotoLink(value: string): string {
-    return `${this.context.pageContext.web.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
+    return `${this.context.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
   }
 
   /**
@@ -109,7 +112,7 @@ export default class SPPeopleSearchService {
   private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, allowUnvalidated: boolean, groupId: number | string): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
-      const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+      const userRequestUrl: string = `${siteUrl || this.context.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const searchBody: any = {
         queryParams: {
@@ -143,7 +146,7 @@ export default class SPPeopleSearchService {
 
           // Get user loginName from user email
           const _users = [];
-          const batch = Web(this.context.pageContext.web.absoluteUrl).createBatch();
+          const batch = Web(this.context.absoluteUrl).createBatch();
           for (const value of graphUserResponse.value) {
             sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data)).catch(() => {
               // no-op
@@ -203,7 +206,7 @@ export default class SPPeopleSearchService {
             for (const value of values) {
               // Only ensure the user if it is not a SharePoint group
               if (!value.EntityData || (value.EntityData && typeof value.EntityData.SPGroupID === "undefined" && value.EntityData.PrincipalType !== "UNVALIDATED_EMAIL_ADDRESS")) {
-                const id = await this.ensureUser(value.Key, siteUrl || this.context.pageContext.web.absoluteUrl);
+                const id = await this.ensureUser(value.Key, siteUrl || this.context.absoluteUrl);
                 value.LoginName = value.Key;
                 value.Key = id;
               }
@@ -282,6 +285,9 @@ export default class SPPeopleSearchService {
       if (userIdx !== -1) {
         return users[userIdx].Id;
       }
+    } //initialize the array if it doesnt exist with the siteUrl
+    else if(!this.cachedLocalUsers[siteUrl]) {
+      this.cachedLocalUsers[siteUrl] = [];
     }
 
     const restApi = `${siteUrl}/_api/web/ensureuser`;

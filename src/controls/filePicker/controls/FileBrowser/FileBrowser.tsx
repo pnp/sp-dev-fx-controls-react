@@ -7,11 +7,11 @@ import { IFilePickerResult } from '../../FilePicker.types';
 import { IFileBrowserProps } from './IFileBrowserProps';
 import { IFileBrowserState } from './IFileBrowserState';
 import { ViewType } from './FileBrowser.types';
-import { Spinner } from 'office-ui-fabric-react/lib/Spinner';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from 'office-ui-fabric-react/lib/DetailsList';
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react/lib/CommandBar';
-import { IContextualMenuItem } from 'office-ui-fabric-react/lib/ContextualMenu';
-import { ScrollablePane } from 'office-ui-fabric-react/lib/ScrollablePane';
+import { Spinner } from '@fluentui/react/lib/Spinner';
+import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, IDetailsRowProps, DetailsRow } from '@fluentui/react/lib/DetailsList';
+import { CommandBar, ICommandBarItemProps } from '@fluentui/react/lib/CommandBar';
+import { IContextualMenuItem } from '@fluentui/react/lib/ContextualMenu';
+import { ScrollablePane } from '@fluentui/react/lib/ScrollablePane';
 
 import styles from './FileBrowser.module.scss';
 import * as strings from 'ControlStrings';

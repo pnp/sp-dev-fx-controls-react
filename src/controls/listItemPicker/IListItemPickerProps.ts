@@ -1,4 +1,4 @@
-import { IBasePickerStyles } from 'office-ui-fabric-react';
+import { IBasePickerStyles } from '@fluentui/react';
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 

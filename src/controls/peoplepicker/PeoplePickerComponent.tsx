@@ -3,15 +3,26 @@ import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
 import styles from './PeoplePickerComponent.module.scss';
 import SPPeopleSearchService from "../../services/PeopleSearchService";
-import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
-import { TooltipHost, DirectionalHint } from 'office-ui-fabric-react/lib/Tooltip';
-import { NormalPeoplePicker } from 'office-ui-fabric-react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { Label } from 'office-ui-fabric-react/lib/components/Label';
-import { IBasePickerSuggestionsProps } from "office-ui-fabric-react/lib/components/pickers/BasePicker.types";
-import { IPersonaProps } from "office-ui-fabric-react/lib/components/Persona/Persona.types";
+import { IPeoplePickerProps } from './IPeoplePicker';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { Label } from '@fluentui/react/lib/Label';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker} from '@fluentui/react/lib/Pickers';
+
+interface IPeoplePickerState {
+  mostRecentlyUsedPersons?: IPersonaProps[];
+  errorMessage?: string;
+  internalErrorMessage?: string;
+  resolveDelay?: number;
+
+  selectedPersons?: IPersonaProps[];
+  peoplePersonaMenu?: IPersonaProps[];
+  delayResults?: boolean;
+}
 
 /**
  * PeoplePicker component
@@ -20,12 +31,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   private peopleSearchService: SPPeopleSearchService;
   private suggestionsLimit: number;
   private groupId: number | string | (string | number)[];
+  private searchTextCount: number;
 
   constructor(props: IPeoplePickerProps) {
     super(props);
 
     this.peopleSearchService = new SPPeopleSearchService(props.context);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
+    this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 
     telemetry.track('ReactPeoplePicker', {
       groupName: !!props.groupName,
@@ -135,11 +148,17 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * A search field change occured
    */
   private onSearchFieldChanged = async (searchText: string, currentSelected: IPersonaProps[]): Promise<IPersonaProps[]> => {
-    if (searchText.length > 2) {
+    if (searchText.length > this.searchTextCount) {
       const results = await this.peopleSearchService.searchPeople(searchText, this.suggestionsLimit, this.props.principalTypes, this.props.webAbsoluteUrl, this.groupId, this.props.ensureUser, this.props.allowUnvalidated);
       // Remove duplicates
       const { selectedPersons, mostRecentlyUsedPersons } = this.state;
-      const filteredPersons = this.removeDuplicates(results, selectedPersons);
+      let filteredPersons = this.removeDuplicates(results, selectedPersons);
+
+      // If a resultFilter is provided apply the filter to the results
+      if (this.props.resultFilter !== undefined && filteredPersons.length > 0) {
+        filteredPersons = this.props.resultFilter(filteredPersons);
+      }
+
       // Add the users to the most recently used ones
       let recentlyUsed = [...filteredPersons, ...mostRecentlyUsedPersons];
       recentlyUsed = uniqBy(recentlyUsed, "text");

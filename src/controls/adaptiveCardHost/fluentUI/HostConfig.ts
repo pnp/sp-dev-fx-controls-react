@@ -1,6 +1,6 @@
 import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
 import { ActionAlignment, HostConfig, TextColor, TextWeight } from 'adaptivecards';
-import { ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { ITheme } from '@fluentui/react/lib/Styling';
 
 const lightenDarkenColor = (col: string, amt: number): string => {
     let usePound = false;

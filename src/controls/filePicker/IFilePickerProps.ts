@@ -1,4 +1,4 @@
-import { IIconProps } from "office-ui-fabric-react/lib/Icon";
+import { IIconProps } from "@fluentui/react/lib/Icon";
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 

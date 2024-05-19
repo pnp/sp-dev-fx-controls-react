@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from './IFrameDialogContent.module.scss';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import omit from 'lodash/omit';
 
 export interface IIFrameDialogContentProps extends React.IframeHTMLAttributes<HTMLIFrameElement> {

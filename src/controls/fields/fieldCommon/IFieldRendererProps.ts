@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ICssInput } from 'office-ui-fabric-react/lib/Utilities';
+import { ICssInput } from '@fluentui/react/lib/Utilities';
 
 /**
  * base properties for field renderes

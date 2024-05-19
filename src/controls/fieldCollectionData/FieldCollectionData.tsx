@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
-import { DefaultButton } from 'office-ui-fabric-react/lib/components/Button';
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/components/Panel';
-import { Label } from 'office-ui-fabric-react/lib/components/Label';
+import { DefaultButton } from '@fluentui/react/lib/Button';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { Label } from '@fluentui/react/lib/Label';
 import { CollectionDataViewer } from './collectionDataViewer';
 import { IFieldCollectionDataProps, IFieldCollectionDataState } from "./IFieldCollectionData";
 import * as strings from 'ControlStrings';
-import { MessageBar, MessageBarType } from 'office-ui-fabric-react/lib/MessageBar';
+import { MessageBar, MessageBarType } from '@fluentui/react/lib/MessageBar';
 
 export class FieldCollectionData extends React.Component<IFieldCollectionDataProps, IFieldCollectionDataState> {
   constructor(props: IFieldCollectionDataProps) {
@@ -55,10 +55,10 @@ export class FieldCollectionData extends React.Component<IFieldCollectionDataPro
   }
 
   private getElement(): JSX.Element {
-    const _element: JSX.Element = typeof this.props.usePanel === "boolean" && this.props.usePanel === false 
-      ? 
-      <CollectionDataViewer {...this.props} fOnSave={this.onSave} fOnClose={this.closePanel} /> 
-      : 
+    const _element: JSX.Element = typeof this.props.usePanel === "boolean" && this.props.usePanel === false
+      ?
+      <CollectionDataViewer {...this.props} fOnSave={this.onSave} fOnClose={this.closePanel} />
+      :
       <div>
         <Label>{this.props.label}</Label>
 

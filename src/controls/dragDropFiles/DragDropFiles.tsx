@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './DragDropFiles.module.scss';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
+import { Icon } from '@fluentui/react/lib/Icon';
 import { IDragDropFilesState, IDragDropFilesProps } from './IDragDropFiles';
 
 /**

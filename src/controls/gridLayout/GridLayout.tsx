@@ -2,9 +2,9 @@ import * as React from 'react';
 import styles from './GridLayout.module.scss';
 
 // Used to render list grid
-import { FocusZone } from 'office-ui-fabric-react/lib/FocusZone';
-import { List } from 'office-ui-fabric-react/lib/List';
-import { IRectangle, ISize } from 'office-ui-fabric-react/lib/Utilities';
+import { FocusZone } from '@fluentui/react/lib/FocusZone';
+import { List } from '@fluentui/react/lib/List';
+import { IRectangle, ISize } from '@fluentui/react/lib/Utilities';
 
 import { IGridLayoutProps, IGridLayoutState } from './GridLayout.types';
 

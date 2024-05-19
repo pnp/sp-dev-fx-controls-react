@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@fluentui/react-theme-provider';
 import { getVariant, VariantThemeType } from "@fluentui/scheme-utilities";
-import { initializeIcons } from 'office-ui-fabric-react/lib/Icons';
-import { createTheme, getTheme, IPalette, ITheme } from "office-ui-fabric-react/lib/Styling";
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { createTheme, getTheme, IPalette, ITheme } from "@fluentui/react/lib/Styling";
 import * as React from "react";
 import { useCallback, useEffect, useState } from 'react';
 import { fluentUITeamsDarkTheme } from '../../common/fluentUIThemes/FluentUITeamsDarkTheme';

@@ -1,4 +1,4 @@
-import { IPartialTheme, ITheme } from 'office-ui-fabric-react/lib/Styling';
+import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 import { ITreeItem } from './ITreeItem';
 import { TreeItemActionsDisplayMode } from './ITreeItemActions';
 

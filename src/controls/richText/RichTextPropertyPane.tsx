@@ -3,10 +3,10 @@ import * as strings from 'ControlStrings';
 import styles from './RichTextPropertyPane.module.scss';
 import RteColorPicker from './RteColorPicker';
 import { IRichTextPropertyPaneProps, IRichTextPropertyPaneState } from './RichTextPropertyPane.types';
-import { IconButton } from 'office-ui-fabric-react/lib/Button';
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { TooltipHost } from 'office-ui-fabric-react/lib/Tooltip';
-import { Dropdown, IDropdownOption } from 'office-ui-fabric-react/lib/Dropdown';
+import { IconButton } from '@fluentui/react/lib/Button';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { TooltipHost } from '@fluentui/react/lib/Tooltip';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 import { RangeStatic } from 'quill';
 
@@ -190,16 +190,18 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
           ariaLabel={strings.FontSizeTitle}
           selectedKey={selectedSize}
           options={[
+            { key: 'xsmall', text: '10' },
             { key: 'small', text: '12' },
             { key: 'medium', text: '14' },
-            { key: 'mediumplus', text: '15' },
-            { key: 'large', text: '17' },
-            { key: 'xlarge', text: '21' },
+            { key: 'mediumplus', text: '16' },
+            { key: 'large', text: '18' },
+            { key: 'xlarge', text: '20' },
             { key: 'xlargeplus', text: '24' },
             { key: 'xxlarge', text: '28' },
             { key: 'xxxlarge', text: '32' },
             { key: 'xxlargeplus', text: '36' },
             { key: 'super', text: '42' },
+            { key: 'superlarge', text: '68' }
           ]}
           onChanged={this.onChangeSize}
         />

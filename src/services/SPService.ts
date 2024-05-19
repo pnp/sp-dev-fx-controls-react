@@ -4,7 +4,7 @@ import filter from 'lodash/filter';
 import find from 'lodash/find';
 import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPViews } from "../common/SPEntities";
 import { SPHelper, urlCombine } from "../common/utilities";
-import { IContentTypesOptions, IFieldsOptions, ILibsOptions, ISPService, LibsOrderBy } from "./ISPService";
+import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 interface ICachedListItems {
@@ -654,9 +654,9 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
-      const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
         body: JSON.stringify({
@@ -725,6 +725,55 @@ export default class SPService implements ISPService {
     const response = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
     const result = await response.json();
     return result;
+  }
+
+  /** 
+   * Get form rendering information for a SharePoint list. 
+   */
+  async getListFormRenderInfo(listId: string, webUrl?: string): Promise<IRenderListDataAsStreamClientFormResult> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiRequestPath = `/_api/web/lists(guid'${listId}')/RenderListDataAsStream`;
+
+      const apiUrl = urlCombine(webAbsoluteUrl, apiRequestPath, false);
+      const response = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
+        body: JSON.stringify({
+          "parameters": {
+            "RenderOptions": 64,
+            "ViewXml":"<View><ViewFields><FieldRef Name=\"ID\"/></ViewFields></View>",
+            "AddRequiredFields":true
+          }
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json() as IRenderListDataAsStreamClientFormResult;
+        return result;
+      }
+      return null;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Get additional form rendering and validation information for a SharePoint list.
+   * Captures information not returned by RenderListDataAsStream with RenderOptions = 64
+   */
+  async getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiRequestPath = `/_api/web/lists(guid'${listId}')/Fields?$filter=TypeAsString eq 'Number' or TypeAsString eq 'Currency' or ValidationFormula ne null`;
+
+      const apiUrl = urlCombine(webAbsoluteUrl, apiRequestPath, false);
+      const response = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
+      const result = await response.json();
+      return result.value;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
   }
 
   private _filterListItemsFieldValuesAsText(items: any[], internalColumnName: string, filterText: string | undefined, substringSearch: boolean): any[] { // eslint-disable-line @typescript-eslint/no-explicit-any

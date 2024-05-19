@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { PrimaryButton, DefaultButton, IconButton } from 'office-ui-fabric-react/lib/Button';
-import { Panel, PanelType } from 'office-ui-fabric-react/lib/Panel';
-import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
-import { Autofill } from 'office-ui-fabric-react/lib/components/Autofill/Autofill';
-import { Label } from 'office-ui-fabric-react/lib/Label';
+import { PrimaryButton, DefaultButton, IconButton } from '@fluentui/react/lib/Button';
+import { Panel, PanelType } from '@fluentui/react/lib/Panel';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
+import { Label } from '@fluentui/react/lib/Label';
 import TermPicker from './TermPicker';
 import { IPickerTerms, IPickerTerm } from './ITermPicker';
 import { ITaxonomyPickerProps, ITaxonomyPickerState } from './ITaxonomyPicker';
@@ -18,6 +17,7 @@ import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import { initializeIcons } from '@uifabric/icons';
 import * as telemetry from '../../common/telemetry';
 import { EmptyGuid } from '../../common/Constants';
+import { Autofill } from '@fluentui/react/lib/Autofill';
 
 /**
  * Image URLs / Base64

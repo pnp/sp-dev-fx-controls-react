@@ -83,9 +83,9 @@ define([], () => {
     ListViewFilterLabel: "Filter the list",
 
     HeaderNormalText: "Normal text",
-    HeaderH2: "Heading 1",
-    HeaderH3: "Heading 2",
-    HeaderH4: "Heading 3",
+    HeaderH2: "Heading 2",
+    HeaderH3: "Heading 3",
+    HeaderH4: "Heading 4",
     HeaderBlockQuote: "Pull quote",
     AlignLeft: "Align left",
     AlignCenter: "Center",
@@ -385,5 +385,8 @@ TermSetNavigationNoTerms: "No terms defined",
   "DynamicFormNumberValueMustBeGreaterThan": "Balioak {0} baino handiagoa izan behar du",
   "DynamicFormNumberValueMustBeBetween": "Balioak {0} eta {1} artean egon behar du",
   "DynamicFormNumberValueMustBeLowerThan": "Balioak {0} baino txikiagoa izan behar du",
+  "DynamicFormChooseFileLabel": "File",
+  "DynamicFormChooseFileButtonText": "Select file",
+  "DynamicFormRequiredFileMessage": "File is required.",
   };
 });

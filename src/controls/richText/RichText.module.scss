@@ -1,4 +1,4 @@
-@import '~office-ui-fabric-react/dist/sass/References.scss';
+@import '~@fluentui/react/dist/sass/References.scss';
 
 .richtext {
   color: inherit;
@@ -65,23 +65,27 @@
 .toolbarDropDownOption {
 
   &.toolbarButtonH2 {
-    font-size: 21px;
-    font-weight: 100;
+    font-size: 20px;
+    font-weight: 600;
   }
 
   &.toolbarButtonH3 {
-    font-size: 14px;
-    font-weight: 100 !important;
+    font-size: 18px;
+    font-weight: 600;
   }
 
   &.toolbarButtonH4 {
-    font-size: 14px;
-    font-weight: 100 !important;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   &.toolbarButtonBlockQuote {
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
+  }
+
+  &.toolbarButtonNormal {
+    font-size: 16px;
   }
 }
 
@@ -179,7 +183,7 @@
   .ql-snow .ql-toolbar button {
     background-color: "[theme:neutralPrimary, default:#{$ms-color-neutralPrimary}]";
     color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
-    font-size: 14px;
+    font-size: 16px;
     min-width: 34px;
     height: 34px;
     padding-top: 4px;
@@ -250,21 +254,21 @@
     min-height: 68px;
     font-family: "Segoe UI Web (West European)", Segoe UI, -apple-system,
       BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
-    font-size: 17px;
+    font-size: 18px;
 
     h2 {
-      font-weight: 100 !important;
+      font-weight: 600 !important;
       font-size: 28px;
     }
 
     h3 {
       font-size: 24px;
-      font-weight: 100 !important;
+      font-weight: 600 !important;
     }
 
     h4 {
-      font-size: 21px;
-      font-weight: 100 !important;
+      font-size: 20px;
+      font-weight: 600 !important;
     }
 
     blockquote,
@@ -276,14 +280,13 @@
     p,
     ul {
       -webkit-font-smoothing: antialiased;
-      color: "[theme:black, default:#{$ms-color-black}]";
       line-height: 1.3;
       // margin: 0 0 16px;
       word-wrap: break-word;
     }
 
     blockquote {
-      border-bottom-color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
+      border-bottom-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
       border-bottom-style: solid;
       border-bottom-width: 1px;
       border-left-style: none;
@@ -292,14 +295,13 @@
       border-right-style: none;
       border-right-width: 0;
       border-right-color: transparent;
-      border-top-color: "[theme:neutralTertiaryAlt, default:#{$ms-color-neutralTertiaryAlt}]";
+      border-top-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
       border-top-style: solid;
       border-top-width: 1px;
-      color: "[theme:neutralSecondaryAlt, default:#{$ms-color-neutralSecondaryAlt}]";
-      font-size: 24px;
+      font-size: 20px;
       font-style: italic;
-      font-weight: 100;
-      line-height: 31.2px;
+      font-weight: 600;
+      line-height: 1.3;
       margin-bottom: 28px;
       padding-bottom: 32px;
       margin-top: 28px;
@@ -311,6 +313,10 @@
       text-align: center;
     }
 
+    .ql-size-xsmall {
+      font-size: 10px;
+    }
+
     .ql-size-small {
       font-size: 12px;
     }
@@ -320,15 +326,15 @@
     }
 
     .ql-size-mediumplus {
-      font-size: 15px;
+      font-size: 16px;
     }
 
     .ql-size-large {
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .ql-size-xlarge {
-      font-size: 21px;
+      font-size: 20px;
     }
 
     .ql-size-xlargeplus {
@@ -350,6 +356,10 @@
     .ql-size-super {
       font-size: 42px;
     }
+
+    .ql-size-superlarge {
+      font-size: 68px;
+    }
   }
 
   @media screen and (min-width: 1024px) {
@@ -357,8 +367,8 @@
     .ql-editor ol,
     .ql-editor p,
     .ql-editor ul {
-      font-size: 17px;
-      font-weight: 300;
+      font-size: 18px;
+      font-weight: 400;
       line-height: 1.3;
     }
   }
@@ -375,8 +385,8 @@
   .ql-editor.ql-blank::before {
     font-style: normal;
     color: "[theme:neutralTertiary, default:#{$ms-color-neutralTertiary}]";
-    font-size: 17px;
-    font-weight: 300;
+    font-size: 18px;
+    font-weight: 400;
     line-height: 1.3;
   }
 

@@ -1,7 +1,7 @@
-import { ButtonGlobalClassNames } from "office-ui-fabric-react/lib/components/Button/BaseButton.classNames";
-import { getFocusStyle, getGlobalClassNames, HighContrastSelector } from "office-ui-fabric-react/lib/Styling";
-import { getRTL } from "office-ui-fabric-react/lib/Utilities";
+import { getFocusStyle, getGlobalClassNames, HighContrastSelector } from "@fluentui/react/lib/Styling";
+import { getRTL } from "@fluentui/react/lib/Utilities";
 import { ITermItemStyleProps, ITermItemStyles } from "../modernTermPicker/ModernTermPicker.types";
+import { ButtonGlobalClassNames } from "@fluentui/react/lib/Button";
 
 const GlobalClassNames = {
   root: 'ms-TagItem',

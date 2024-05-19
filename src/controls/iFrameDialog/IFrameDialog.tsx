@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Dialog, IDialogContentProps, IDialogProps, IDialogStyleProps, IDialogStyles } from 'office-ui-fabric-react/lib/Dialog';
+import { Dialog, IDialogContentProps, IDialogProps, IDialogStyleProps, IDialogStyles } from '@fluentui/react/lib/Dialog';
 import { IFrameDialogContent } from './IFrameDialogContent';
 import * as telemetry from '../../common/telemetry';
 import { Guid } from "@microsoft/sp-core-library";
 import omit from 'lodash/omit';
 import merge from 'lodash/merge';
-import { IStyleFunctionOrObject } from "office-ui-fabric-react/lib/Utilities";
+import { IStyleFunctionOrObject } from "@fluentui/react/lib/Utilities";
 
 export interface IFrameDialogProps extends IDialogProps {
   /**

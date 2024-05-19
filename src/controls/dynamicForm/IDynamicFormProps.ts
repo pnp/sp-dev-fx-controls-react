@@ -51,7 +51,13 @@ export interface IDynamicFormProps {
   /**
    * Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render
    */
-  fieldOverrides?: {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement<IDynamicFieldProps>}};
+  fieldOverrides?: {
+    [columnInternalName: string]: {
+      (
+        fieldProperties: IDynamicFieldProps
+      ): React.ReactElement<IDynamicFieldProps>;
+    };
+  };
 
   /**
    * Specifies if onSubmitted event should pass PnPJS list item (IItem) as a second parameter. Default - true
@@ -79,7 +85,41 @@ export interface IDynamicFormProps {
   respectETag?: boolean;
 
   /**
+   * Specifies whether custom formatting (set when customizing the out of the box form) should be used. Default - true
+   */
+  useCustomFormatting?: boolean;
+
+  /**
+   * Specifies whether client side validation should be used. Default - true
+   */
+  useClientSideValidation?: boolean;
+
+  /**
+   * Specifies whether field validation (set in column settings) should be used. Default - true
+   */
+  useFieldValidation?: boolean;
+
+  /**
    * Specify validation error dialog properties
    */
   validationErrorDialogProps?: IValidationErrorDialogProps;
+
+  /**
+   * Specify if the form should support the creation of a new list item in a document library attaching a file to it.
+   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document.
+   * Default - false
+   */
+  enableFileSelection?: boolean;
+
+  /**
+   * Specify the supported file extensions for the file picker. Default - "docx", "doc", "pptx", "ppt", "xlsx", "xls", "pdf"
+   * Only used when enableFileSelection is true
+   */
+  supportedFileExtensions?: string[];
+
+  /**
+   * Specify a set of custom icons to be used.
+   * The key is the field internal name and the value is the Fluent UI icon name.
+   */
+  customIcons?: { [columnInternalName: string]: string };
 }

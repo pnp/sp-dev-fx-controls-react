@@ -1,6 +1,6 @@
 import * as React from "react";
-import { MessageBar, MessageBarType } from "office-ui-fabric-react/lib/MessageBar";
-import { Stack } from "office-ui-fabric-react/lib/Stack";
+import { MessageBar, MessageBarType } from "@fluentui/react/lib/MessageBar";
+import { Stack } from "@fluentui/react/lib/Stack";
 export interface IErrorInfoProps {
   error: Error;
   showError: boolean;

@@ -1,14 +1,13 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
 import SPservice from "../../services/SPService";
-import { TagPicker } from "office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker";
-import { Label } from "office-ui-fabric-react/lib/Label";
-import { getId } from 'office-ui-fabric-react/lib/Utilities';
+import { ITag, TagPicker } from '@fluentui/react/lib/Pickers';
+import { Label } from "@fluentui/react/lib/Label";
+import { getId } from '@fluentui/react/lib/Utilities';
 import { IListItemPickerProps } from "./IListItemPickerProps";
 import { IListItemPickerState } from "./IListItemPickerState";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
-import { ITag } from 'office-ui-fabric-react/lib/components/pickers/TagPicker/TagPicker.types';
 import { SPHelper } from '../../common/utilities/SPHelper';
 import { Guid } from "@microsoft/sp-core-library"
 
