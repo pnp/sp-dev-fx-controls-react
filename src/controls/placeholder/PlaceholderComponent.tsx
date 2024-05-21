@@ -1,7 +1,7 @@
 import { ThemeContext } from '@fluentui/react-theme-provider/lib/ThemeContext';
 import { Theme } from '@fluentui/react-theme-provider/lib/types';
 import { PrimaryButton } from '@fluentui/react/lib/Button';
-import { Icon } from '@fluentui/react/lib/components/Icon';
+import { Icon } from '@fluentui/react/lib/Icon';
 import * as React from 'react';
 import { IPlaceholderState } from '.';
 import * as telemetry from '../../common/telemetry';

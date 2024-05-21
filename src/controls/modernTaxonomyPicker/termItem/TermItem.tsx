@@ -1,8 +1,9 @@
-import { IconButton } from '@fluentui/react/lib/components/Button/IconButton/IconButton';
+
 import { classNamesFunction, styled } from '@fluentui/react/lib/Utilities';
 import * as React from 'react';
 import { ITermItemProps, ITermItemStyleProps, ITermItemStyles } from '../modernTermPicker/ModernTermPicker.types';
 import { getStyles } from './TermItem.styles';
+import { IconButton } from '@fluentui/react/lib/Button';
 
 const getClassNames = classNamesFunction<ITermItemStyleProps, ITermItemStyles>();
 
