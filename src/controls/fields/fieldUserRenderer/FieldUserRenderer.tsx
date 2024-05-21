@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from '@fluentui/react/lib/Utilities';
 import clone from 'lodash/clone';
 import { IExpandingCardProps } from '@fluentui/react/lib/HoverCard';
-import { DirectionalHint } from '@fluentui/react/lib/common/DirectionalHint';
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
 import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
 import { IconButton, Button, ButtonType } from '@fluentui/react/lib/Button';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';

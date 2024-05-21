@@ -4,7 +4,7 @@ import { ListItemCommentsStateContext } from "../ListItemCommentsStateProvider";
 import { Dialog, DialogType, DialogFooter } from "@fluentui/react/lib/Dialog";
 import { PrimaryButton, DefaultButton } from "@fluentui/react/lib/Button";
 import { CommentItem } from "../Comments/CommentItem";
-import { DocumentCard } from "@fluentui/react/lib/components/DocumentCard";
+import { DocumentCard } from "@fluentui/react/lib/DocumentCard";
 import { DocumentCardDetails } from "@fluentui/react/lib/DocumentCard";
 import { Stack } from "@fluentui/react/lib/Stack";
 import { useListItemCommentsStyles } from "../Comments/useListItemCommentsStyles";
