@@ -1,28 +1,25 @@
 import * as React from "react";
+
+import { debounce } from "lodash";
+
+import { IPersonaProps } from "@fluentui/react";
 import {
-  IBasePickerStyles,
-  ITag,
-} from "@fluentui/react/lib/Pickers";
-import {
-  Stack,
-} from "@fluentui/react/lib/Stack";
-import {
-  Text,
-} from "@fluentui/react/lib/Text";
-import {
-  TextField
-} from "@fluentui/react/lib/TextField";
+  ExclamationCircleIcon,
+  Flex,
+  ScreenshareIcon,
+  ShareGenericIcon,
+  Text as NorthstarText,
+} from "@fluentui/react-northstar";
 import {
   DefaultButton,
-  PrimaryButton
+  PrimaryButton,
 } from "@fluentui/react/lib/Button";
-import { DialogType, DialogFooter, IDialogContentProps } from "@fluentui/react/lib/Dialog";
-import { IModalProps } from "@fluentui/react/lib/Modal";
+import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
 import {
-  Dropdown,
-  IDropdownOption
-} from "@fluentui/react/lib/Dropdown";
-import { Link } from "@fluentui/react/lib/Link";
+  DialogFooter,
+  DialogType,
+  IDialogContentProps,
+} from "@fluentui/react/lib/Dialog";
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -30,104 +27,145 @@ import {
   DocumentCardPreview,
   DocumentCardTitle,
   DocumentCardType,
-  IDocumentCardPreviewProps
+  IDocumentCardPreviewProps,
 } from "@fluentui/react/lib/DocumentCard";
-import { IIconProps } from "@fluentui/react/lib/Icon";
-import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
-import { ImageFit } from "@fluentui/react/lib/Image";
-import { PanelType } from "@fluentui/react/lib/Panel";
-import { mergeStyles } from "@fluentui/react/lib/Styling";
-import { ISize } from "@fluentui/react/lib/Utilities";
-
 import {
-  ExclamationCircleIcon,
-  Flex,
-  ScreenshareIcon,
-  ShareGenericIcon,
-  Text as NorthstarText
-} from "@fluentui/react-northstar";
-import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
+  Dropdown,
+  IDropdownOption,
+} from "@fluentui/react/lib/Dropdown";
+import { IIconProps } from "@fluentui/react/lib/Icon";
+import { ImageFit } from "@fluentui/react/lib/Image";
+import { Label } from "@fluentui/react/lib/Label";
+import { Link } from "@fluentui/react/lib/Link";
+import { IModalProps } from "@fluentui/react/lib/Modal";
+import { PanelType } from "@fluentui/react/lib/Panel";
+import {
+  IBasePickerStyles,
+  ITag,
+} from "@fluentui/react/lib/Pickers";
+import { Stack } from "@fluentui/react/lib/Stack";
+import { mergeStyles } from "@fluentui/react/lib/Styling";
+import { Text } from "@fluentui/react/lib/Text";
+import { TextField } from "@fluentui/react/lib/TextField";
+import { ISize } from "@fluentui/react/lib/Utilities";
 import {
   DisplayMode,
   Environment,
   EnvironmentType,
   Guid,
-  ServiceScope
+  ServiceScope,
 } from "@microsoft/sp-core-library";
-
 import { SPHttpClient } from "@microsoft/sp-http";
 import { SPPermission } from "@microsoft/sp-page-context";
+import { IFileInfo } from "@pnp/sp/files";
 
-import { Accordion } from "../../../controls/accordion";
+import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
+import {
+  Action,
+  AdaptiveCardHost,
+  AdaptiveCardHostThemeType,
+  CardElement,
+  CardObjectRegistry,
+  HostCapabilities,
+} from "../../../AdaptiveCardHost";
+import { AnimatedDialog } from "../../../AnimatedDialog";
 import {
   ChartControl,
-  ChartType
+  ChartType,
 } from "../../../ChartControl";
 import {
   Accordion as AccessibleAccordion,
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
-  AccordionItemPanel
+  AccordionItemPanel,
 } from "../../../controls/accessibleAccordion";
+import { Accordion } from "../../../controls/accordion";
 import {
   Carousel,
   CarouselButtonsDisplay,
   CarouselButtonsLocation,
   CarouselIndicatorsDisplay,
-  CarouselIndicatorShape
+  CarouselIndicatorShape,
 } from "../../../controls/carousel";
 import {
   Dashboard,
-  WidgetSize
+  WidgetSize,
 } from "../../../controls/dashboard";
 import {
-  TimeDisplayControlType
+  TimeDisplayControlType,
 } from "../../../controls/dateTimePicker/TimeDisplayControlType";
+import { DynamicForm } from "../../../controls/dynamicForm";
 import { IconPicker } from "../../../controls/iconPicker";
 import {
-  ComboBoxListItemPicker
+  ComboBoxListItemPicker,
 } from "../../../controls/listItemPicker/ComboBoxListItemPicker";
+import {
+  ILocationPickerItem,
+} from "../../../controls/locationPicker/ILocationPicker";
+import {
+  LocationPicker,
+} from "../../../controls/locationPicker/LocationPicker";
+import {
+  ModernTaxonomyPicker,
+} from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
+import { MyTeams } from "../../../controls/MyTeams";
 import { Pagination } from "../../../controls/pagination";
+import {
+  IPeoplePickerContext,
+  PeoplePicker,
+  PrincipalType,
+} from "../../../controls/peoplepicker";
+import { SitePicker } from "../../../controls/sitePicker/SitePicker";
 import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
 import {
-  TermActionsDisplayMode
+  TermActionsDisplayMode,
 } from "../../../controls/taxonomyPicker/termActions";
 import { Toolbar } from "../../../controls/toolbar";
 import {
   ITreeItem,
   TreeItemActionsDisplayMode,
   TreeView,
-  TreeViewSelectionMode
+  TreeViewSelectionMode,
 } from "../../../controls/treeView";
+import { UploadFiles } from "../../../controls/uploadFiles";
+import {
+  VariantThemeProvider,
+  VariantType,
+} from "../../../controls/variantThemeProvider";
+import { ViewPicker } from "../../../controls/viewPicker";
 import {
   DateConvention,
   DateTimePicker,
-  TimeConvention
+  TimeConvention,
 } from "../../../DateTimePicker";
+import { DragDropFiles } from "../../../DragDropFiles";
+import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
 import {
   CustomCollectionFieldType,
-  FieldCollectionData
+  FieldCollectionData,
 } from "../../../FieldCollectionData";
+import { FieldPicker } from "../../../FieldPicker";
 import {
   FilePicker,
-  IFilePickerResult
+  IFilePickerResult,
 } from "../../../FilePicker";
 import {
   ApplicationType,
   FileTypeIcon,
   IconType,
-  ImageSize
+  ImageSize,
 } from "../../../FileTypeIcon";
 import {
   FolderExplorer,
   IBreadcrumbItem,
-  IFolder
+  IFolder,
 } from "../../../FolderExplorer";
 import { FolderPicker } from "../../../FolderPicker";
 import { GridLayout } from "../../../GridLayout";
 import { IFrameDialog } from "../../../IFrameDialog";
 import { IFramePanel } from "../../../IFramePanel";
+import { ListItemComments } from "../../../ListItemComments";
 import { ListItemPicker } from "../../../ListItemPicker";
 import { ListPicker } from "../../../ListPicker";
 import {
@@ -135,26 +173,29 @@ import {
   IGrouping,
   IViewField,
   ListView,
-  SelectionMode
+  SelectionMode,
 } from "../../../ListView";
 import {
   Map,
-  MapType
+  MapType,
 } from "../../../Map";
 import {
-  IPeoplePickerContext,
-  PeoplePicker,
-  PrincipalType
-} from "../../../controls/peoplepicker";
+  ModernAudio,
+  ModernAudioLabelPosition,
+} from "../../../ModernAudio";
+import {
+  SPTaxonomyService,
+  TaxonomyTree,
+} from "../../../ModernTaxonomyPicker";
 import { Placeholder } from "../../../Placeholder";
 import {
   IProgressAction,
-  Progress
+  Progress,
 } from "../../../Progress";
 import { RichText } from "../../../RichText";
 import {
   PermissionLevel,
-  SecurityTrimmedControl
+  SecurityTrimmedControl,
 } from "../../../SecurityTrimmedControl";
 import { ITerm } from "../../../services/ISPTermStorePickerService";
 import SPTermStorePickerService
@@ -163,44 +204,19 @@ import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
 import {
   IPickerTerms,
   TaxonomyPicker,
-  UpdateType
+  UpdateType,
 } from "../../../TaxonomyPicker";
+import { TeamChannelPicker } from "../../../TeamChannelPicker";
+import { TeamPicker } from "../../../TeamPicker";
 import { WebPartTitle } from "../../../WebPartTitle";
-import { AnimatedDialog } from "../../../AnimatedDialog";
 import styles from "./ControlsTest.module.scss";
 import {
-  IControlsTestProps
-} from "./IControlsTestProps";
-import {
-  IControlsTestState
-} from "./IControlsTestState";
-import { MyTeams } from "../../../controls/MyTeams";
-import { TeamPicker } from "../../../TeamPicker";
-import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import { DragDropFiles } from "../../../DragDropFiles";
-import { SitePicker } from "../../../controls/sitePicker/SitePicker";
-import { DynamicForm } from '../../../controls/dynamicForm';
-import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
-import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
-import { debounce } from "lodash";
-import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
-import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
-import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
-import { Label } from "@fluentui/react/lib/Label";
-import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
-import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
-import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
-import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
-import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
+  ControlsTestEnhancedThemeProvider,
+  ControlsTestEnhancedThemeProviderFunctionComponent,
+} from "./ControlsTestEnhancedThemeProvider";
+import { IControlsTestProps } from "./IControlsTestProps";
+import { IControlsTestState } from "./IControlsTestState";
 import { TestControl } from "./TestControl";
-import { UploadFiles } from "../../../controls/uploadFiles";
-import { IFileInfo } from "@pnp/sp/files";
-import { FieldPicker } from "../../../FieldPicker";
-import { IPersonaProps, Toggle } from "@fluentui/react";
-import { ListItemComments } from "../../../ListItemComments";
-import { ViewPicker } from "../../../controls/viewPicker";
-
-
 
 // Used to render document card
 /**
@@ -2552,7 +2568,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           )}
         </div>
         <div id="TestControlDiv" className={styles.container} hidden={!controlVisibility.TestControl}>
-          <h3>Monaco Editor</h3>
+
           <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
         <div id="UploadFilesDiv" className={styles.container} hidden={!controlVisibility.UploadFiles}>

@@ -1,4 +1,24 @@
 declare interface IControlStrings {
+  ImagePickderSelectLabel: string;
+
+  ImagePickerDeleteImageLabel: string;
+  ImagePickderSelectLabel: string;
+  ImagePickerCancelLabel: string;
+  ImagePickerPanelHeaderText: string;
+  ImagePickerSharePointTabLabel: string;
+  ImagePickerOneDriveTabLabel: string;
+  ImagePickerStockImagesTabLabel: string;
+  ImagePickerUploadTabLabel: string;
+  ImagePickerDragFilesAccpted: string;
+  ImagePickerDragFilesRejected: string;
+  ImagePickerDragFilesActive: string;
+  ImagePickerDragDropText: string;
+  ImagePickerUploadLocationLabel: string;
+  ImagePickerUploadLocationOndriveLabel: string;
+  ImagePickerUploadLocationSharePointLabel: string;
+  ImagePickerRetryButtonLabel: string;
+  ImagePickerDeleteLabel: string;
+
   UpLoadFilesDragDropLabel: string;
   UploadFilesUploadButtonLabel: string;
   UploadFilesButtonLabel: string;
@@ -356,7 +376,7 @@ declare interface IControlStrings {
   CollectionDataItemMissingFields: string;
   InvalidUrlError: string;
   CollectionDataSearch: string;
-  CollectionDataMinimumUsersDefaultMessage: string
+  CollectionDataMinimumUsersDefaultMessage: string;
 
   ViewMore: string;
 
@@ -431,10 +451,6 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
-
-
-
-
 }
 
 declare module "ControlStrings" {
