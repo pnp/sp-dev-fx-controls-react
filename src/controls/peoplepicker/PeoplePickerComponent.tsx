@@ -3,16 +3,26 @@ import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
 import styles from './PeoplePickerComponent.module.scss';
 import SPPeopleSearchService from "../../services/PeopleSearchService";
-import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
+import { IPeoplePickerProps } from './IPeoplePicker';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
-import { NormalPeoplePicker } from '@fluentui/react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { Label } from '@fluentui/react/lib/components/Label';
-import { IBasePickerSuggestionsProps } from "@fluentui/react/lib/components/pickers/BasePicker.types";
-import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
+import { Label } from '@fluentui/react/lib/Label';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker} from '@fluentui/react/lib/Pickers';
+
+interface IPeoplePickerState {
+  mostRecentlyUsedPersons?: IPersonaProps[];
+  errorMessage?: string;
+  internalErrorMessage?: string;
+  resolveDelay?: number;
+
+  selectedPersons?: IPersonaProps[];
+  peoplePersonaMenu?: IPersonaProps[];
+  delayResults?: boolean;
+}
 
 /**
  * PeoplePicker component

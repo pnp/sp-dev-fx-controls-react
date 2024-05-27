@@ -104,8 +104,8 @@ The Carousel component can be configured with the following properties:
 | isInfinite | boolean | no | Indicates if infinite scrolling is enabled. |
 | canMoveNext | boolean | no | Property indicates if the next item button can be clicked. If not provided, status of the button is calculated based on the current index. <br />It is mandatory when triggerPageEvent is used. |
 | canMovePrev | boolean | no | Property indicates if the previous item button can be clicked. If not provided, status of the button is calculated based on the current index. <br />It is mandatory when triggerPageEvent is used. |
-| buttonsLocation | CarouselButtonsLocation | yes | Specifies the location of the buttons inside the container. |
-| buttonsDisplay | CarouselButtonsDisplay | yes | Specifies the buttons container display mode. |
+| buttonsLocation | CarouselButtonsLocation | no | Specifies the location of the buttons inside the container. Default: center |
+| buttonsDisplay | CarouselButtonsDisplay | no | Specifies the buttons container display mode. Default: block |
 | containerStyles | ICssInput | no | Allows to specify own styles for carousel container. |
 | loadingComponentContainerStyles | ICssInput | no | Allows to specify own styles for loading component. |
 | contentContainerStyles | ICssInput | no | Allows to specify own styles for elements container. |
@@ -134,6 +134,7 @@ The Carousel component can be configured with the following properties:
 | indicatorsContainerStyles | ICssInput | no | Allows to specify own styles for indicators container when indicatorsDisplay is set to "block" |
 | prevButtonAriaLabel | string | no | Aria label of the PreviousItem button. Default 'Previous item'. |
 | nextButtonAriaLabel | string | no | Aria label of the NextItem button. Default 'Next item'. |
+| contentHeight | number | no | Allows to specify the height of the content. Can be used instead of providing styles for the content container (`contentContainerStyles`). |
 
 enum `CarouselButtonsLocation`
 

@@ -17,21 +17,26 @@ This control renders a People picker field which can be used to select one or mo
 
 ![Selected people](../assets/Peoplepicker-multiplechoices.png)
 
-
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
 ```typescript
-import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
+import { IPeoplePickerContext, PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 ```
 
 - Use the `PeoplePicker` control in your code as follows:
 
 ```typescript
+const peoplePickerContext: IPeoplePickerContext = {
+    absoluteUrl: this.props.context.pageContext.web.absoluteUrl,
+    msGraphClientFactory: this.props.context.msGraphClientFactory,
+    spHttpClient: this.props.context.spHttpClient
+};
+
 <PeoplePicker
-    context={this.props.context}
+    context={peoplePickerContext}
     titleText="People Picker"
     personSelectionLimit={3}
     groupName={"Team Site Owners"} // Leave this blank in case you want to filter from all users
@@ -59,7 +64,7 @@ The People picker control can be configured with the following properties:
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | Context of the current web part. | |
+| context | IPeoplePickerContext | yes | Context of the component, based on the SPFx context ([*BaseComponentContext*](https://learn.microsoft.com/javascript/api/sp-component-base/basecomponentcontext?view=sp-typescript-latest)). | |
 | titleText | string | no | Text to be displayed on the control | |
 | groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | _none_ |
 | groupId | number \| string \| (string\|number)[] | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups | _none_ |
@@ -82,8 +87,8 @@ The People picker control can be configured with the following properties:
 | allowUnvalidated | boolean | no | When true, allow email addresses that have not been validated to be entered, effectively allowing any user. | false |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
-| placeholder | string | no | Short text hint to display in empty picker |
-| styles | Partial<IBasePickerStyles> | no | Styles to apply on control |
+| placeholder | string | no | Short text hint to display in empty picker | |
+| styles | Partial<IBasePickerStyles> | no | Styles to apply on control | |
 | searchTextLimit | number | no | Specifies the minimum character count needed to begin retrieving search results. | 2 |
 
 Enum `PrincipalType`
@@ -97,13 +102,21 @@ The `PrincipalType` enum can be used to specify the types of information you wan
 | SecurityGroup | 4 |
 | SharePointGroup | 8 |
 
+Interface `IPeoplePickerContext`
+
+Provides mandatory properties to search users on the tenant
+
+| Value | Type | Description |
+| ---- | ---- | ---- |
+| absoluteUrl | string | Current `SPWeb` absolute URL. |
+| msGraphClientFactory | MSGraphClientFactory | Instance of MSGraphClientFactory used for querying Microsoft Graph REST API. |
+| spHttpClient | SPHttpClient | Instance of SPHttpClient used for querying SharePoint REST API. |
 
 ## MSGraph Permissions required
 
-This control requires the following scopes if groupId is of type String:
+This control requires at least one the following scopes if `groupId` is of type `string`:
 
-at least : GroupMember.Read.All, Directory.Read.All
-
+- *GroupMember.Read.All* + *User.ReadBasic.All*
+- *Directory.Read.All*
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)
-

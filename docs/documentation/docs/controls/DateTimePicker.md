@@ -27,6 +27,7 @@ Here are some examples of the control:
 ```TypeScript
 import { DateTimePicker, DateConvention, TimeConvention } from '@pnp/spfx-controls-react/lib/DateTimePicker';
 ```
+
 - Use the `DateTimePicker` control in your code as follows, either as an uncontrolled or a controlled component:
 
 ```TypeScript
@@ -46,7 +47,6 @@ import { DateTimePicker, DateConvention, TimeConvention } from '@pnp/spfx-contro
 ## Implementation
 
 The `DateTimePicker` control can be configured with the following properties:
-
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
@@ -72,12 +72,13 @@ The `DateTimePicker` control can be configured with the following properties:
 | timeDisplayControlType | TimeDisplayControlType | no | Specifies what type of control to use when rendering time part. |
 | showLabels | boolean | no | Specifies if labels in front of date and time parts should be rendered. |
 | placeholder | string | no | Placeholder text for the DatePicker. |
-| initialPickerDate | Date | no | The initially highlighted date in the calendar picker
+| initialPickerDate | Date | no | The initially highlighted date in the calendar picker |
 | maxDate | Date | no | The maximum allowable date. |
 | minDate | Date | no | The minimum allowable date. |
 | minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdow` |
-| showClearDate | boolean | no | Controls whether the clearDate iconbutton must be available when date is selected, default to false
-| showClearDateIcon | string | no | Controls the icon used for clearDate iconbutton. Defaults to 'RemoveEvent'
+| showClearDate | boolean | no | Controls whether the clearDate iconbutton must be available when date is selected, default to false |
+| showClearDateIcon | string | no | Controls the icon used for clearDate iconbutton. Defaults to 'RemoveEvent' |
+| restrictedDates | Date[] | no | If set the Calendar will not allow selection of dates in this array. |
 
 Enum `TimeDisplayControlType`
 
@@ -112,6 +113,7 @@ Interface `IDateTimePickerStrings` extends [IDatePickerStrings](https://develope
 | textErrorMessage | string | no | Error message when text is entered in the date picker. |
 
 Type `MinutesIncrement`
+
 ```typescript
 type MinutesIncrement = 1 | 5 | 10 | 15 | 30;
 ```

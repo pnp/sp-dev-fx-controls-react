@@ -51,7 +51,13 @@ export interface IDynamicFormProps {
   /**
    * Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render
    */
-  fieldOverrides?: {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement<IDynamicFieldProps>}};
+  fieldOverrides?: {
+    [columnInternalName: string]: {
+      (
+        fieldProperties: IDynamicFieldProps
+      ): React.ReactElement<IDynamicFieldProps>;
+    };
+  };
 
   /**
    * Specifies if onSubmitted event should pass PnPJS list item (IItem) as a second parameter. Default - true
@@ -110,4 +116,10 @@ export interface IDynamicFormProps {
    * Only used when enableFileSelection is true
    */
   supportedFileExtensions?: string[];
+
+  /**
+   * Specify a set of custom icons to be used.
+   * The key is the field internal name and the value is the Fluent UI icon name.
+   */
+  customIcons?: { [columnInternalName: string]: string };
 }
