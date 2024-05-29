@@ -1,5 +1,16 @@
 # Releases
 
+## 3.18.1
+
+### Fixes
+
+- `FilePicker`: Fix issue with adding link by typing in 'From a link' tab [#1814](https://github.com/pnp/sp-dev-fx-controls-react/pull/1814)
+- Update nl-nl.ts [#1823](https://github.com/pnp/sp-dev-fx-controls-react/pull/1823)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Elio Struyf](https://github.com/estruyf).
+
 ## 3.18.0
 
 ### Enhancements
