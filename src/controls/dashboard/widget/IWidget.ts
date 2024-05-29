@@ -96,5 +96,20 @@ export interface IWidgetBodyContent {
  * Widget link
  */
 export interface IWidgetLink {
+  /**
+   * Link href
+   */
   href: string;
+  /**
+   * The text to display for the link, if not provided, the default text will be used
+   */
+  title?: string;
+  /**
+   * The color of the link, if not provided, the default color will be used
+   */
+  color?: string;
+  /**
+   * The target for the generated anchor tag, if not provided, the default target will be _blank
+   */
+  target?: "_blank" | "_self" | "_parent" | "_top" | "framename";
 }
