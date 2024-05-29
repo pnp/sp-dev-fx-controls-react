@@ -70,6 +70,7 @@ The RichText control can be configured with the following properties:
 | id | string | no | The ID to apply to the RichText control. |
 | label | string | no | The label displayed above the RichText control. |
 | className | string | no | The custom CSS class to apply to the RichText control. |
+| style | React.CSSProperties | no | The custom styles to apply to the RichText control. |
 | isEditMode | boolean | no | `true` indicates that users will be able to edit the content of the RichText control. `false` will display the rich text as read-only. |
 | styleOptions | StyleOptions | no | Define the styles you want to show or hide for the rich text editor |
 | value | string | no | Sets the rich text to display in the RichText control. |

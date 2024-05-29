@@ -4,7 +4,7 @@ import { IUploadFilePickerTabProps } from './IUploadFilePickerTabProps';
 import { IUploadFilePickerTabState } from './IUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { css } from '@fluentui/react/lib/Utilities';
 
 import * as strings from 'ControlStrings';

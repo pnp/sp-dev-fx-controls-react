@@ -1,7 +1,7 @@
-import { IComboBoxOptionStyles, IComboBoxStyles } from "@fluentui/react/lib/components/ComboBox";
+import { IComboBoxOptionStyles, IComboBoxStyles } from "@fluentui/react/lib/ComboBox";
 
-import { IAutofillProps } from "@fluentui/react/lib/components/Autofill";
-import { IKeytipProps } from "@fluentui/react/lib/components/Keytip";
+import { IAutofillProps } from "@fluentui/react/lib/Autofill";
+import { IKeytipProps } from "@fluentui/react/lib/Keytip";
 import { SPHttpClient } from '@microsoft/sp-http';
 
 export interface IComboBoxListItemPickerProps {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Dropdown, IDropdownOption } from '@fluentui/react/lib/components/Dropdown';
-import { Spinner } from '@fluentui/react/lib/components/Spinner';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { Spinner } from '@fluentui/react/lib/Spinner';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { ISPList } from '../../../../common/SPEntities';

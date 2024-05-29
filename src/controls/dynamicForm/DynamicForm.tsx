@@ -17,7 +17,6 @@ import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
 import { MessageBar, MessageBarType } from "@fluentui/react/lib/MessageBar";
 import { ProgressIndicator } from "@fluentui/react/lib/ProgressIndicator";
 import { IStackTokens, Stack } from "@fluentui/react/lib/Stack";
-import { Icon } from "@fluentui/react/lib/components/Icon/Icon";
 import { DynamicField } from "./dynamicField";
 import {
   DateFormat,
@@ -45,6 +44,7 @@ import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 // Dynamic Form Props / State
 import { IDynamicFormProps } from "./IDynamicFormProps";
 import { IDynamicFormState } from "./IDynamicFormState";
+import { Icon } from "@fluentui/react/lib/Icon";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
 
@@ -921,11 +921,11 @@ export class DynamicForm extends React.Component<
     try {
 
       // Fetch form rendering information from SharePoint
-      const listInfo = await this._spService.getListFormRenderInfo(listId);
+      const listInfo = await this._spService.getListFormRenderInfo(listId, this.webURL);
 
       // Fetch additional information about fields from SharePoint
       // (Number fields for min and max values, and fields with validation)
-      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId);
+      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId, this.webURL);
       const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
@@ -1178,7 +1178,8 @@ export class DynamicForm extends React.Component<
             const response = await this._spService.getSingleManagedMetadataLabel(
               listId,
               listItemId,
-              field.InternalName
+              field.InternalName,
+              this.webURL
             );
             if (response) {
               selectedTags.push({
@@ -1243,7 +1244,7 @@ export class DynamicForm extends React.Component<
           }
 
           dateFormat = field.DateFormat || "DateOnly";
-          defaultDayOfWeek = (await this._spService.getRegionalWebSettings()).FirstDayOfWeek;
+          defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
         }
 
         // Setup Thumbnail, Location and Boolean fields
@@ -1333,7 +1334,8 @@ export class DynamicForm extends React.Component<
         listItemId,
         file.fileName,
         buffer,
-        undefined
+        undefined,
+        this.webURL
       );
     }
   };

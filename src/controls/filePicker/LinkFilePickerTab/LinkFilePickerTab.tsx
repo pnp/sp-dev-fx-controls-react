@@ -4,7 +4,7 @@ import { ILinkFilePickerTabProps } from './ILinkFilePickerTabProps';
 import { ILinkFilePickerTabState } from './ILinkFilePickerTabState';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { IFilePickerResult } from '../FilePicker.types';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { css } from '@fluentui/react/lib/Utilities';
 
