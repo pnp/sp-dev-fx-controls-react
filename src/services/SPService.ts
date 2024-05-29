@@ -221,8 +221,8 @@ export default class SPService implements ISPService {
     filterString?: string,
     substringSearch: boolean = false,
     orderBy?: string,
-    cacheInterval: number = ICON_GENERIC_16,
-    top?: number): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
+    top?: number,
+    cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
     let isPost = false;
@@ -249,7 +249,7 @@ export default class SPService implements ISPService {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}${top ? `&$top=${top}` : ''}`;
     }
     else { // we need to get FieldValuesAsText and cache them
       const mapKey = `${webAbsoluteUrl}##${listId}##${internalColumnName}##${keyInternalColumnName || 'Id'}`;
@@ -260,7 +260,7 @@ export default class SPService implements ISPService {
         return filteredItems;
       }
 
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}${top ? `&$top=${top}` : ''};
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}${top ? `&$top=${top}` : ''}`;
       isPost = false;
 
       //eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -536,12 +536,7 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          let value = result[fieldName][lookupFieldName || 'Title'];
-          const dateVal = Date.parse(value);
-          if (dateVal !== NaN) {
-              value = new Date(value).toLocaleDateString();
-          }         
-          return [{ key: result[fieldName].ID, name: value }];
+          return [{ key: result[fieldName].ID, name: result[fieldName][lookupFieldName || 'Title'] }];
         }
       }
 
@@ -566,9 +561,9 @@ export default class SPService implements ISPService {
            //multiselect lookups are arrays
            if (isArray) {
             result[fieldName].forEach(element => {                
-              let value = element[fieldName][lookupFieldName || 'Title'];
+              let value = element[lookupFieldName || 'Title'];
               const dateVal = Date.parse(value);
-              if (dateVal !== NaN) {
+              if (!Number.isNaN(dateVal)) {
                   value = new Date(value).toLocaleDateString();
               }        
               lookups.push({ key: element.ID, name: value });
@@ -577,9 +572,9 @@ export default class SPService implements ISPService {
            //single select lookups are objects
            else {
              const singleItem = result[fieldName];
-             let value = singleItem[fieldName][lookupFieldName || 'Title'];
+             let value = singleItem[lookupFieldName || 'Title'];
               const dateVal = Date.parse(value);
-              if (dateVal !== NaN) {
+              if (!Number.isNaN(dateVal)) {
                   value = new Date(value).toLocaleDateString();
               }       
              lookups.push({ key: singleItem.ID, name: value });
