@@ -1,5 +1,5 @@
 import '@pnp/sp/folders';
-import { sp } from '@pnp/sp/presets/all';
+import { ChoiceFieldFormatType, sp } from '@pnp/sp/presets/all';
 import '@pnp/sp/webs';
 import * as strings from 'ControlStrings';
 import { ActionButton } from '@fluentui/react/lib/Button';
@@ -23,6 +23,8 @@ import styles from '../DynamicForm.module.scss';
 import { IDynamicFieldProps } from './IDynamicFieldProps';
 import { IDynamicFieldState } from './IDynamicFieldState';
 import CurrencyMap from "../CurrencyMap";
+import { ChoiceGroup, IChoiceGroupOption } from '@fluentui/react';
+
 
 export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFieldState> {
 
@@ -81,7 +83,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       maximumValue,
       minimumValue,
       customIcon,
-      orderBy
+      orderBy,
+      choiceType
     } = this.props;
 
     const {
@@ -177,18 +180,48 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
         }
 
       case 'Choice':
-        return <div className={styles.fieldContainer}>
-          <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
-            <Icon className={styles.fieldIcon} iconName={customIcon ?? "CheckMark"} />
-            {labelEl}
-          </div>
-          <Dropdown
+        let choiceControl: any = undefined;
+
+        // If the choiceType is dropdown
+        if (choiceType === ChoiceFieldFormatType.Dropdown) {
+          choiceControl = <Dropdown
             {...dropdownOptions}
             defaultSelectedKey={valueToDisplay ? undefined : defaultValue}
             selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
             onChange={(e, option) => { this.onChange(option, true); }}
             onBlur={this.onBlur}
-            errorMessage={errorText} />
+            errorMessage={errorText} />;
+        }
+        // If the choiceType is radio buttons
+        else if (choiceType === ChoiceFieldFormatType.RadioButtons) {
+          // Parse options into radio buttons
+          const optionsGroup: IChoiceGroupOption[] =
+            options.map((option) => {
+              return {
+                key: option.key.toString(),
+                text: option.text,
+                checked: option.key.toString() === valueToDisplay
+              };
+            });
+
+          // Create radio group
+          choiceControl = <ChoiceGroup
+            defaultSelectedKey={valueToDisplay ? undefined : defaultValue}
+            selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
+            options={optionsGroup}
+            onChange={(e, option) => { this.onChange(option, true); }}
+            label={label}
+            required={true}
+            disabled={disabled}
+            />;
+        }
+
+        return <div className={styles.fieldContainer}>
+          <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
+            <Icon className={styles.fieldIcon} iconName={customIcon ?? "CheckMark"} />
+            {labelEl}
+          </div>
+          {choiceControl}
           {descriptionEl}
         </div>;
 
