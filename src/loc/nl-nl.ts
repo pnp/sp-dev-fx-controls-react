@@ -145,7 +145,7 @@ define([], () => {
     "HighlightColorTeal": "Taling",
     "HighlightColorDarkgreen": "Donkergroen",
     "HighlightColorPurple": "Paarse",
-    "HighlightColorMaroon": "Bosneger",
+    "HighlightColorMaroon": "Kastanjebruin",
     "HighlightColorGold": "Goud",
     "HighlightColorDarkgrey": "Donkergrijs",
     "HighlightColorGrey": "Grijs",
