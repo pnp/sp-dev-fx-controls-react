@@ -221,7 +221,7 @@ export class DynamicForm extends React.Component<
             {!this.props.disabled && (
               <Stack className={styles.buttons} horizontal tokens={stackTokens}>
                 <PrimaryButton
-                  disabled={isSaving}
+                  disabled={this.props.saveDisabled || isSaving}
                   text={strings.Save}
                   onClick={() => this.onSubmitClick()}
                 />
@@ -418,7 +418,7 @@ export class DynamicForm extends React.Component<
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
-          
+
           if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }

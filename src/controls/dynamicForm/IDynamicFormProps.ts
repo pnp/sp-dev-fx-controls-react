@@ -14,6 +14,10 @@ export interface IDynamicFormProps {
    */
   disabled?: boolean;
   /**
+   * Specify if save button is disabled.
+   */
+  saveDisabled?: boolean;
+  /**
    * List id
    */
   listId: string;
