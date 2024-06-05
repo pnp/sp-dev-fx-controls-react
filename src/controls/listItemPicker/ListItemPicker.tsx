@@ -174,7 +174,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Function to load List Items
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
-    const { columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
+    const { columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch, itemsQueryCountLimit } = this.props;
     const {
       field, safeListId
     } = this.state;
@@ -182,7 +182,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     const keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      const listItems = await this._spservice.getListItems(filterText, safeListId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
+      const listItems = await this._spservice.getListItems(filterText, safeListId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : '', itemsQueryCountLimit); // JJ - 20200613 - find by substring as an option
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {
