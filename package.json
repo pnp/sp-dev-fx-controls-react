@@ -1,14 +1,14 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "3.18.0",
+  "version": "3.19.0",
   "node": ">=16.13.0 <17.0.0 || >=18.17.1 <19.0.0",
   "scripts": {
     "build": "gulp build",
     "clean": "gulp clean",
     "test": "gulp test",
     "test:unit": "npx jest --silent --maxWorkers=4",
-    "serve": "gulp bundle --custom-serve --max_old_space_size=4096 && fast-serve",
+    "serve": "fast-serve",
     "prepublishOnly": "gulp",
     "versionUpdater": "gulp versionUpdater",
     "karma": "karma start --circle true",
@@ -125,7 +125,7 @@
     "react-test-renderer": "17.0.1",
     "request-promise": "4.2.5",
     "sonarqube-scanner": "2.8.2",
-    "spfx-fast-serve-helpers": "1.18.4",
+    "spfx-fast-serve-helpers": "1.18.11",
     "ts-jest": "^29.1.1",
     "tslib": "2.3.1",
     "typescript": "4.7.4",
@@ -138,23 +138,19 @@
   "license": "MIT",
   "keywords": [
     "sharepoint",
+    "microsoft365",
+    "m365",
     "office365",
     "tools",
     "spfx",
-    "framework"
+    "sharepoint framework"
   ],
   "bugs": {
     "url": "https://github.com/pnp/sp-dev-fx-controls-react/issues"
   },
   "main": "lib/index.js",
   "homepage": "https://pnp.github.io/sp-dev-fx-controls-react/",
-  "contributors": [
-    "Gove, Russell <russellgove@gmail.com>",
-    "Kent Chris <>",
-    "Rodrigues, Joel <>",
-    "Struyf, Elio <info@estruyf.be>",
-    "Terentiev, Alex <alex@aterentiev.com>"
-  ],
+  "contributors": [],
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
