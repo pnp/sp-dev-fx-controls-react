@@ -695,7 +695,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private onChangeList = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
     // if we're already in list mode, toggle off
     const key = item.key;
-    const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'numbered' && this.state.formats.list === 'numbered') ? false : key;
+    const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'ordered' && this.state.formats.list === 'ordered') ? false : key;
     this.applyFormat("list", newAlignValue);
   }
 
