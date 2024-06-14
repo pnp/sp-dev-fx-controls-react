@@ -76,6 +76,8 @@ export class TilesList extends React.Component<ITilesListProps> {
               getItemCountForPage={this._getItemCountForPage}
               getPageHeight={this._getPageHeight}
               onRenderPage={(pageProps: IPageProps, defaultRender?: IRenderFunction<IPageProps>) => this._onRenderPage(pageProps, defaultRender)}
+              renderedWindowsAhead={this.props.items.length}
+              renderedWindowsBehind={this.props.items.length}
             />
           </div>
         </FocusZone>
