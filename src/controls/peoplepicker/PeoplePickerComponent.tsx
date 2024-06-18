@@ -95,6 +95,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
+  /**
+   * clears all users and groups
+   */
+  public clearSelectedPersons(): void {
+    this.setState({
+      selectedPersons: []
+    });
+  }
 
   /**
    * Get initial persons
@@ -385,6 +393,3 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     );
   }
 }
-
-
-
