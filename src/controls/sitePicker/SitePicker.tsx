@@ -30,6 +30,7 @@ import {
   ISite,
   ISitePickerProps,
 } from './ISitePicker';
+import { Icon } from '@fluentui/react';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -66,6 +67,10 @@ const styles = mergeStyleSets({
     fontWeight: '300',
     overflow: 'hidden',
     textOverflow: 'ellipsis'
+  },
+  customChevronContainer : {
+    display: 'flex',
+    gap:'10px'
   }
 });
 
@@ -112,6 +117,27 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     setSearchQuery(newSearchQuery);
     setFilteredSites(newFilteredSites);
   }, [allSites]);
+
+  const clearItems = React.useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    return setSites([]);
+  },[sites]);
+
+  const CustomChevron = () => {
+    if(sites && sites.length > 0){
+      return (
+        <div className={styles.customChevronContainer} >
+          <Icon iconName="Cancel" onClick={clearItems} />
+          <Icon iconName="ChevronDown" />
+        </div>
+      )
+    }
+    return (
+      <div className={styles.customChevronContainer} >
+          <Icon iconName="ChevronDown" />
+      </div>
+    )
+  }
 
   const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
     let newSelectedSites: ISite[] = [];
@@ -300,9 +326,10 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       <Dropdown
         label={label}
         placeholder={placeholder}
+        onRenderCaretDown={CustomChevron}
         options={getOptions()}
-        selectedKey={multiSelect === false && !!sites && !!sites[0] ? sites[0].url : undefined}
-        selectedKeys={multiSelect !== false && !!sites ? sites.map(s => s.url) : undefined}
+        selectedKey={multiSelect === false && !!sites && !!sites[0] ? sites[0].url : []}
+        selectedKeys={multiSelect !== false && !!sites ? sites.map(s => s.url) : []}
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
