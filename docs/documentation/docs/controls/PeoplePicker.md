@@ -13,7 +13,7 @@ This control renders a People picker field which can be used to select one or mo
 
 ![Selecting People](../assets/Peoplepicker-selectingchoices.png)
 
-**Selected people** 
+**Selected people**
 
 ![Selected people](../assets/Peoplepicker-multiplechoices.png)
 
@@ -58,6 +58,10 @@ private _getPeoplePickerItems(items: any[]) {
 }
 ```
 
+## Use Substrate search
+
+Sometimes, depending on how your organization is configured regarding users and groups, performing search can be tricky. As the `PeoplePicker` is using the `SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser` endpoint under the hood, there is an optional parameter called `useSubstrateSearch`. Setting this to `true` will perform a search using the Microsoft 365 Substrate, which will go through centralized stored data in order to find requested info. More details about this feature can be found [here](https://techcommunity.microsoft.com/t5/video-hub/admin-39-s-guide-to-the-microsoft-365-substrate/ba-p/3633132) and [here](https://youtu.be/uuiTR8r27Os?si=JkPyfiQggvCMj0xg&t=467).
+
 ## Implementation
 
 The People picker control can be configured with the following properties:
@@ -66,8 +70,8 @@ The People picker control can be configured with the following properties:
 | ---- | ---- | ---- | ---- | ---- |
 | context | IPeoplePickerContext | yes | Context of the component, based on the SPFx context ([*BaseComponentContext*](https://learn.microsoft.com/javascript/api/sp-component-base/basecomponentcontext?view=sp-typescript-latest)). | |
 | titleText | string | no | Text to be displayed on the control | |
-| groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | _none_ |
-| groupId | number \| string \| (string\|number)[] | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups | _none_ |
+| groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | *none* |
+| groupId | number \| string \| (string\|number)[] | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups | *none* |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
 | required | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
@@ -88,8 +92,9 @@ The People picker control can be configured with the following properties:
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
 | placeholder | string | no | Short text hint to display in empty picker | |
-| styles | Partial<IBasePickerStyles> | no | Styles to apply on control | |
+| styles | Partial&lt;IBasePickerStyles&gt; | no | Styles to apply on control | |
 | searchTextLimit | number | no | Specifies the minimum character count needed to begin retrieving search results. | 2 |
+| useSubstrateSearch | boolean | no | When `true`, performs a wider search using Microsoft 365 Substrate. | false |
 
 Enum `PrincipalType`
 

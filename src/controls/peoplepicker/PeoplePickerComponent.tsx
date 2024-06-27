@@ -36,7 +36,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   constructor(props: IPeoplePickerProps) {
     super(props);
 
-    this.peopleSearchService = new SPPeopleSearchService(props.context);
+    this.peopleSearchService = new SPPeopleSearchService(props.context, props.useSubstrateSearch);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
     this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 

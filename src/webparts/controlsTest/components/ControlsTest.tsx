@@ -1335,7 +1335,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             personSelectionLimit={1}
             ensureUser={true}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-            onChange={this._getPeoplePickerItems} />
+            onChange={this._getPeoplePickerItems}
+            useSubstrateSearch={false} />
 
           <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker with filter for '.com'"
