@@ -52,7 +52,7 @@ The `SitePicker` control can be configured with the following properties:
 | isDesc | boolean | no | Specifies if the list is sorted in descending order. Default: `false`. |
 | label | string | no | Label to use for the control. |
 | limitToCurrentSiteCollection | boolean | no | Specifies if the options should be limited by the current site collections. Taken into consideration if selectionMode is set to `web`. |
-| mode | `'site' | 'web' | 'hub'` | no | Defines what entities are available for selection: site collections, sites, hub sites. Default: `web`. |
+| mode | `'associatedsites' | 'site' | 'web' | 'hub'` | no | Defines what entities are available for selection: site collections, sites, hub sites and sites inside hub. Default: `web`. |
 | multiSelect | boolean | no | Optional mode indicates if multi-choice selections is allowed. Default: `true`. |
 | onChange | `(selectedSites: ISite[]) => void` | yes | Selection change handler. | 
 | orderBy | `'title' | 'url'` | no | Specifices if the list is sorted by title or url. Default: `title`. |
