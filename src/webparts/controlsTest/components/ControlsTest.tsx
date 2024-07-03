@@ -1992,7 +1992,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               title: "Card 1",
               desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
               widgetActionGroup: calloutItemsExample,
-              size: WidgetSize.Triple,
+              size: WidgetSize.Quadruple,
               body: [
                 {
                   id: "t1",

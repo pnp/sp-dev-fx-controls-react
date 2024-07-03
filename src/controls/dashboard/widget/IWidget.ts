@@ -27,6 +27,7 @@ export enum WidgetSize {
   Single = "single",
   Double = "double",
   Triple = "triple",
+  Quadruple = "quadruple",
   Box = "box",
 }
 

@@ -15,7 +15,7 @@ export const Widget = ({
         gridColumnEnd: "auto",
         gridRowEnd: "auto",
         "@media (max-width: 842px)": {
-            gridColumnEnd: "span 3",
+            gridColumnEnd: "span 4",
         },
     };
     if (widget.size === WidgetSize.Double) {
@@ -27,6 +27,9 @@ export const Widget = ({
     }
     if (widget.size === WidgetSize.Triple) {
         cardStyle.gridColumnEnd = "span 3";
+    }
+    if (widget.size === WidgetSize.Quadruple) {
+        cardStyle.gridColumnEnd = "span 4";
     }
     if(widget.controlOptions && widget.controlOptions.isHidden){
         return null;
