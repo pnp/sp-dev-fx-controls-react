@@ -210,8 +210,6 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
             selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
             options={optionsGroup}
             onChange={(e, option) => { this.onChange(option, true); }}
-            label={label}
-            required={true}
             disabled={disabled}
             />;
         }
