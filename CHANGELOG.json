@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes": []
+        "fixes": [
+          "DynamicForm - more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Niels Söth](https://github.com/nsoeth)"
+      ]
     },
     {
       "version": "3.18.1",

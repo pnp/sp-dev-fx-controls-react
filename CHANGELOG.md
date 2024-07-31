@@ -2,6 +2,14 @@
 
 ## 3.19.0
 
+### Fixes
+
+- DynamicForm - more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
+
+### Contributors
+
+Special thanks to our contributor: [Niels Söth](https://github.com/nsoeth).
+
 ## 3.18.1
 
 ### Fixes
