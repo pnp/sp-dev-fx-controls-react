@@ -4,7 +4,9 @@
       "version": "3.19.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "SharePoint Framework v1.19.0 support"
+        ],
         "fixes": [
           "DynamicForm - more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)"
         ]
