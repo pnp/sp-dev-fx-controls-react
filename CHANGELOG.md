@@ -2,6 +2,10 @@
 
 ## 3.19.0
 
+### Enhancements
+
+- SharePoint Framework v1.19.0 support
+
 ### Fixes
 
 - DynamicForm - more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
