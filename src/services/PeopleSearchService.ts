@@ -12,14 +12,12 @@ import { IPeoplePickerContext, IPeoplePickerUserItem, PrincipalType } from "../P
  * Service implementation to search people in SharePoint
  */
 export default class SPPeopleSearchService {
-  private cachedPersonas: { [property: string]: IUserInfo[] };
   private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
 
   /**
    * Service constructor
    */
-  constructor(private context: IPeoplePickerContext) {
-    this.cachedPersonas = {};
+  constructor(private context: IPeoplePickerContext, private substrateSearchEnabled: boolean) {
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[context.absoluteUrl] = [];
     // Setup PnPjs
@@ -123,6 +121,7 @@ export default class SPPeopleSearchService {
           PrincipalSource: 15,
           PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query,
+          UseSubstrateSearch: this.substrateSearchEnabled ?? false
         }
       };
 
