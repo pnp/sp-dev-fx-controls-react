@@ -6,6 +6,7 @@
 
 - SharePoint Framework v1.19.0 support [#1857](https://github.com/pnp/sp-dev-fx-controls-react/pull/1857)
 - `DynamicForm`: enable/disable save button [#1810](https://github.com/pnp/sp-dev-fx-controls-react/pull/1810)
+- `PeoplePicker`: Add new prop - `useSubstrateSearch` [#1819](https://github.com/pnp/sp-dev-fx-controls-react/pull/1819)
 
 ### Fixes
 
@@ -14,7 +15,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Niels Söth](https://github.com/nsoeth), [srpmtt](https://github.com/srpmtt).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Michaël Maillot](https://github.com/michaelmaillot), [Niels Söth](https://github.com/nsoeth), [srpmtt](https://github.com/srpmtt).
 
 ## 3.18.1
 
