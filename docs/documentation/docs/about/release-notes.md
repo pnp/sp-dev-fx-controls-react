@@ -8,11 +8,12 @@
 
 ### Fixes
 
-- DynamicForm - more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
+- `DynamicForm`: more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
+- `Richtext`: can not undo ordered lists [#1135](https://github.com/pnp/sp-dev-fx-controls-react/issues/1135)
 
 ### Contributors
 
-Special thanks to our contributor: [Niels Söth](https://github.com/nsoeth).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Niels Söth](https://github.com/nsoeth).
 
 ## 3.18.1
 
