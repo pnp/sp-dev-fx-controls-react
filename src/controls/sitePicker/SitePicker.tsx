@@ -2,15 +2,9 @@ import * as React from 'react';
 
 import findIndex from 'lodash/findIndex';
 import orderBy from 'lodash/orderBy';
-import {
-  Dropdown,
-  IDropdownOption,
-} from '@fluentui/react/lib/Dropdown';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
-import {
-  Spinner,
-  SpinnerSize,
-} from '@fluentui/react/lib/Spinner';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import {
   ISelectableOption,
@@ -26,58 +20,56 @@ import {
   getAssociatedSites,
   getHubSites,
 } from '../../services/SPSitesService';
-import {
-  ISite,
-  ISitePickerProps,
-} from './ISitePicker';
+import { ISite, ISitePickerProps } from './ISitePicker';
 import { Icon } from '@fluentui/react';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
     width: '100%',
     textAlign: 'center',
-    marginTop: '8px'
+    marginTop: '8px',
   },
   searchBox: {
-    margin: '4px 0'
+    margin: '4px 0',
   },
   siteOption: {
     display: 'flex',
     whiteSpace: 'nowrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   siteOptionCheckbox: {
     display: 'inline-block',
-    marginRight: '4px'
+    marginRight: '4px',
   },
   siteOptionContent: {
     display: 'flex',
     flexDirection: 'column',
     minWidth: '0',
-    padding: '4px 0'
+    padding: '4px 0',
   },
   siteOptionTitle: {
     lineHeight: '18px',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   siteOptionUrl: {
     fontSize: '12px',
     lineHeight: '14px',
     fontWeight: '300',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
-  customChevronContainer : {
+  customChevronContainer: {
     display: 'flex',
-    gap:'10px'
-  }
+    gap: '10px',
+  },
 });
 
 const async = new Async();
 
-export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: React.PropsWithChildren<ISitePickerProps>) => {
-
+export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
+  props: React.PropsWithChildren<ISitePickerProps>
+) => {
   const {
     label,
     disabled,
@@ -97,7 +89,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     selectedSites,
     trimDuplicates,
     additionalQuery,
-    hubsiteId
+    hubsiteId,
   } = props;
 
   const [isLoading, setIsLoading] = React.useState<boolean>();
@@ -106,76 +98,92 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
 
-  const onSearchChange = React.useCallback((e, newSearchQuery: string) => {
-    if (!allSites) {
-      return;
-    }
+  const onSearchChange = React.useCallback(
+    (e, newSearchQuery: string) => {
+      if (!allSites) {
+        return;
+      }
 
-    const loweredNewSearchQuery = newSearchQuery.toLowerCase();
-    const newFilteredSites = allSites.filter(s => s.title && s.title.toLowerCase().indexOf(loweredNewSearchQuery) !== -1);
+      const loweredNewSearchQuery = newSearchQuery.toLowerCase();
+      const newFilteredSites = allSites.filter(
+        (s) =>
+          s.title && s.title.toLowerCase().indexOf(loweredNewSearchQuery) !== -1
+      );
 
-    setSearchQuery(newSearchQuery);
-    setFilteredSites(newFilteredSites);
-  }, [allSites]);
+      setSearchQuery(newSearchQuery);
+      setFilteredSites(newFilteredSites);
+    },
+    [allSites]
+  );
 
-  const clearItems = React.useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    event.stopPropagation();
-    return setSites([]);
-  },[sites]);
+  const clearItems = React.useCallback(
+    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      event.stopPropagation();
+      return setSites([]);
+    },
+    [sites]
+  );
 
   const CustomChevron = () => {
-    if(sites && sites.length > 0){
+    if (sites && sites.length > 0) {
       return (
-        <div className={styles.customChevronContainer} >
+        <div className={styles.customChevronContainer}>
           <Icon iconName="Cancel" onClick={clearItems} />
           <Icon iconName="ChevronDown" />
         </div>
-      )
+      );
     }
     return (
-      <div className={styles.customChevronContainer} >
-          <Icon iconName="ChevronDown" />
+      <div className={styles.customChevronContainer}>
+        <Icon iconName="ChevronDown" />
       </div>
-    )
-  }
+    );
+  };
 
-  const onSelectionChange = React.useCallback((e, item: IDropdownOption, index: number) => {
-    let newSelectedSites: ISite[] = [];
-    if (multiSelect !== false) {
-      newSelectedSites = sites ? [...sites] : [];
-      const existingIndex = findIndex(newSelectedSites, s => s.url === item.key);
+  const onSelectionChange = React.useCallback(
+    (e, item: IDropdownOption, index: number) => {
+      let newSelectedSites: ISite[] = [];
+      if (multiSelect !== false) {
+        newSelectedSites = sites ? [...sites] : [];
+        const existingIndex = findIndex(
+          newSelectedSites,
+          (s) => s.url === item.key
+        );
 
-      if (existingIndex >= 0) {
-        newSelectedSites.splice(existingIndex, 1);
+        if (existingIndex >= 0) {
+          newSelectedSites.splice(existingIndex, 1);
+        } else if (item.data) {
+          newSelectedSites.push({
+            ...item.data,
+          });
+        }
+      } else if (item.data) {
+        newSelectedSites = [
+          {
+            ...item.data,
+          },
+        ];
       }
-      else if (item.data) {
-        newSelectedSites.push({
-          ...item.data
-        });
+
+      if (onChange) {
+        onChange(newSelectedSites);
       }
-    }
-    else if (item.data) {
-      newSelectedSites = [{
-        ...item.data
-      }];
-    }
 
-    if (onChange) {
-      onChange(newSelectedSites);
-    }
-
-    setSites(newSelectedSites);
-    //console.log(`onselction change set sites to ${newSelectedSites[0].title}`);
-  }, [sites, multiSelect, onChange]);
+      setSites(newSelectedSites);
+      //console.log(`onselction change set sites to ${newSelectedSites[0].title}`);
+    },
+    [sites, multiSelect, onChange]
+  );
 
   const getOptions = React.useCallback((): IDropdownOption[] => {
-
     if (!allSites) {
-      return [{
-        key: 'spinner',
-        text: '',
-        itemType: SelectableOptionMenuItemType.Header
-      }];
+      return [
+        {
+          key: 'spinner',
+          text: '',
+          itemType: SelectableOptionMenuItemType.Header,
+        },
+      ];
     }
 
     const result: IDropdownOption[] = [];
@@ -184,19 +192,19 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       result.push({
         key: 'search',
         text: '',
-        itemType: SelectableOptionMenuItemType.Header
+        itemType: SelectableOptionMenuItemType.Header,
       });
     }
 
-    const selectedSitesIds: string[] = sites ? sites.map(s => s.url) : [];
+    const selectedSitesIds: string[] = sites ? sites.map((s) => s.url) : [];
 
     if (filteredSites) {
-      filteredSites.forEach(s => {
+      filteredSites.forEach((s) => {
         result.push({
           key: s.url,
           text: s.title,
           data: s,
-          selected: selectedSitesIds.indexOf(s.url) !== -1
+          selected: selectedSitesIds.indexOf(s.url) !== -1,
         });
       });
     }
@@ -204,38 +212,49 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
     return result;
   }, [allowSearch, sites, filteredSites, allSites]);
 
-  const onRenderOption = (option?: ISelectableOption, defaultRender?: (props?: ISelectableOption) => JSX.Element | null): JSX.Element | null => {
+  const onRenderOption = (
+    option?: ISelectableOption,
+    defaultRender?: (props?: ISelectableOption) => JSX.Element | null
+  ): JSX.Element | null => {
     if (!props) {
       return null;
     }
 
     if (option.itemType === SelectableOptionMenuItemType.Header) {
       if (option.key === 'search') {
-        return <SearchBox
-          placeholder={searchPlaceholder}
-          value={searchQuery}
-          onChange={async.debounce(onSearchChange, deferredSearchTime || 200)}
-          className={styles.searchBox} />;
-      }
-      else if (option.key === 'spinner') {
+        return (
+          <SearchBox
+            placeholder={searchPlaceholder}
+            value={searchQuery}
+            onChange={async.debounce(onSearchChange, deferredSearchTime || 200)}
+            className={styles.searchBox}
+          />
+        );
+      } else if (option.key === 'spinner') {
         //
         // This happens when the dropdown is opened for the first time.
         // That's when we want to load the sites
         //
         setIsLoading(true);
 
-        return <div className={styles.loadingSpinnerContainer}>
-          <Spinner size={SpinnerSize.medium} />
-        </div>;
+        return (
+          <div className={styles.loadingSpinnerContainer}>
+            <Spinner size={SpinnerSize.medium} />
+          </div>
+        );
       }
     }
     // {multiSelect !== false && <Checkbox className={styles.siteOptionCheckbox} checked={option.selected} disabled={option.disabled} />}
-    return <div className={styles.siteOption}>
-      <div className={styles.siteOptionContent}>
-        <span className={styles.siteOptionTitle}>{option.text}</span>
-        <span className={styles.siteOptionUrl}>{toRelativeUrl(option.data ? option.data.url : '')}</span>
+    return (
+      <div className={styles.siteOption}>
+        <div className={styles.siteOptionContent}>
+          <span className={styles.siteOptionTitle}>{option.text}</span>
+          <span className={styles.siteOptionUrl}>
+            {toRelativeUrl(option.data ? option.data.url : '')}
+          </span>
+        </div>
       </div>
-    </div>;
+    );
   };
 
   React.useEffect(() => {
@@ -244,7 +263,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
 
   React.useEffect(() => {
     setSites(selectedSites);
-   // console.log(`firt useeffect set sites to ${selectedSites[0].title}`);
+    // console.log(`firt useeffect set sites to ${selectedSites[0].title}`);
     if (!allSites) {
       setIsLoading(true);
     }
@@ -255,12 +274,13 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
       return;
     }
 
-    setSites(osites => {
-      if (!osites) { // we want to set the state one time only
-      //  console.log(`second  useeffect part a  set sites to ${initialSites[0].title}`);
+    setSites((osites) => {
+      if (!osites) {
+        // we want to set the state one time only
+        //  console.log(`second  useeffect part a  set sites to ${initialSites[0].title}`);
         return initialSites;
       }
-    //  console.log(`second  useeffect part b  set sites to ${sites[0].title}`);
+      //  console.log(`second  useeffect part b  set sites to ${sites[0].title}`);
       return sites;
     });
 
@@ -284,32 +304,50 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         break;
 
       case 'associatedsites':
-        promise = getAssociatedSites(context, trimDuplicates === true, hubsiteId);
+        promise = getAssociatedSites(
+          context,
+          trimDuplicates === true,
+          hubsiteId
+        );
         break;
 
       default:
-        promise = getAllSites(context, mode !== 'site', limitToCurrentSiteCollection, trimDuplicates === true, additionalQuery);
+        promise = getAllSites(
+          context,
+          mode !== 'site',
+          limitToCurrentSiteCollection,
+          trimDuplicates === true,
+          additionalQuery
+        );
         break;
     }
 
-    promise.then(newSites => {
-      const copy = orderBy(newSites, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
-      setAllSites(copy);
-      setIsLoading(false);
-    })
-    .catch(() => {
-      // no-op;
-    });
-
+    promise
+      .then((newSites) => {
+        const copy = orderBy(
+          newSites,
+          [propOrderBy || 'title'],
+          [isDesc ? 'desc' : 'asc']
+        );
+        setAllSites(copy);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        // no-op;
+      });
   }, [context, isLoading, mode, limitToCurrentSiteCollection]);
 
   React.useEffect(() => {
-    setAllSites(s => {
+    setAllSites((s) => {
       if (!s) {
         return s;
       }
 
-      const copy = orderBy(s, [propOrderBy || 'title'], [isDesc ? 'desc' : 'asc']);
+      const copy = orderBy(
+        s,
+        [propOrderBy || 'title'],
+        [isDesc ? 'desc' : 'asc']
+      );
       return copy;
     });
   }, [propOrderBy, isDesc]);
@@ -328,8 +366,12 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (props: Rea
         placeholder={placeholder}
         onRenderCaretDown={CustomChevron}
         options={getOptions()}
-        selectedKey={multiSelect === false && !!sites && !!sites[0] ? sites[0].url : []}
-        selectedKeys={multiSelect !== false && !!sites ? sites.map(s => s.url) : []}
+        selectedKey={
+          multiSelect === false && !!sites && !!sites[0] ? sites[0].url : []
+        }
+        selectedKeys={
+          multiSelect !== false && !!sites ? sites.map((s) => s.url) : []
+        }
         disabled={disabled}
         multiSelect={multiSelect !== false}
         onRenderOption={onRenderOption}
