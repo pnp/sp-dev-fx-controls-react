@@ -2,16 +2,14 @@ import * as React from 'react';
 
 import findIndex from 'lodash/findIndex';
 import orderBy from 'lodash/orderBy';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { SearchBox } from '@fluentui/react/lib/SearchBox';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
+import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import {
-  Dropdown,
-  type IDropdownOption,
-  SearchBox,
-  Spinner,
-  SpinnerSize,
-  mergeStyleSets,
   ISelectableOption,
   SelectableOptionMenuItemType,
-} from '@fluentui/react';
+} from '@fluentui/react/lib/utilities/selectableOption/SelectableOption.types';
 
 import { Async } from '@uifabric/utilities/lib/Async';
 
@@ -23,6 +21,7 @@ import {
   getHubSites,
 } from '../../services/SPSitesService';
 import { ISite, ISitePickerProps } from './ISitePicker';
+import { Icon } from '@fluentui/react';
 
 const styles = mergeStyleSets({
   loadingSpinnerContainer: {
@@ -59,6 +58,10 @@ const styles = mergeStyleSets({
     fontWeight: '300',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+  customChevronContainer: {
+    display: 'flex',
+    gap: '10px',
   },
 });
 
@@ -112,6 +115,30 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
     },
     [allSites]
   );
+
+  const clearItems = React.useCallback(
+    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      event.stopPropagation();
+      return setSites([]);
+    },
+    [sites]
+  );
+
+  const CustomChevron = () => {
+    if (sites && sites.length > 0) {
+      return (
+        <div className={styles.customChevronContainer}>
+          <Icon iconName="Cancel" onClick={clearItems} />
+          <Icon iconName="ChevronDown" />
+        </div>
+      );
+    }
+    return (
+      <div className={styles.customChevronContainer}>
+        <Icon iconName="ChevronDown" />
+      </div>
+    );
+  };
 
   const onSelectionChange = React.useCallback(
     (e, item: IDropdownOption, index: number) => {
@@ -337,14 +364,13 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
       <Dropdown
         label={label}
         placeholder={placeholder}
+        onRenderCaretDown={CustomChevron}
         options={getOptions()}
         selectedKey={
-          multiSelect === false && !!sites && !!sites[0]
-            ? sites[0].url
-            : undefined
+          multiSelect === false && !!sites && !!sites[0] ? sites[0].url : []
         }
         selectedKeys={
-          multiSelect !== false && !!sites ? sites.map((s) => s.url) : undefined
+          multiSelect !== false && !!sites ? sites.map((s) => s.url) : []
         }
         disabled={disabled}
         multiSelect={multiSelect !== false}
