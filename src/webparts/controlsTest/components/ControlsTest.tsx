@@ -199,6 +199,7 @@ import { FieldPicker } from "../../../FieldPicker";
 import { IPersonaProps, Toggle } from "@fluentui/react";
 import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
+import { GeneralHelper } from "../../../Utilities";
 
 
 
@@ -736,13 +737,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
-    this.setState({ filePickerResult: filePickerResult });
     if (filePickerResult && filePickerResult.length > 0) {
       for (var i = 0; i < filePickerResult.length; i++) {
         const item = filePickerResult[i];
         const fileResultContent = await item.downloadFileContent();
         console.log(fileResultContent);
+        filePickerResult[i].fileSize = fileResultContent.size;
       }
+
+      this.setState({ filePickerResult: filePickerResult });
     }
   }
 
@@ -1854,7 +1857,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   FileName: {this.state.filePickerResult[0].fileName}
                 </div>
                 <div>
-                  File size: {this.state.filePickerResult[0].fileSize}
+                  File size: {GeneralHelper.formatBytes(this.state.filePickerResult[0].fileSize, 2)}
                 </div>
               </div>
             }
