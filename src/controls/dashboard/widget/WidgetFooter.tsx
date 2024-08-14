@@ -12,7 +12,7 @@ export const WidgetFooter = ({ widget }: { widget: IWidget }): JSX.Element => (
                 target={widget.link.target ?? "_blank"}
                 content={widget.link.title ?? strings.ViewMore}
                 size="small"
-                color={widget.link.color ?? "brand"}
+                color={widget.link.color ?? "default"}
                 style={{ textDecoration: "none" }}
             />
         </Flex>

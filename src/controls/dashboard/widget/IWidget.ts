@@ -97,7 +97,7 @@ export interface IWidgetBodyContent {
  */
 export interface IWidgetLink {
   /**
-   * Link href
+   * Link to be opened
    */
   href: string;
   /**
@@ -105,7 +105,7 @@ export interface IWidgetLink {
    */
   title?: string;
   /**
-   * The color of the link, if not provided, the default color will be used
+   * The color of the link, if not provided, the "brand" color will be used. The available colors can be found on the [official Fluent UI documentation of the Text control](https://fluentsite.z22.web.core.windows.net/0.66.2/components/text/definition#variations-color)
    */
   color?: string;
   /**
