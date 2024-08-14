@@ -18,19 +18,23 @@ export const Widget = ({
             gridColumnEnd: "span 4",
         },
     };
-    if (widget.size === WidgetSize.Double) {
-        cardStyle.gridColumnEnd = "span 2";
+
+    switch (widget.size) {
+        case WidgetSize.Double:
+            cardStyle.gridColumnEnd = "span 2";
+            break;
+        case WidgetSize.Box:
+            cardStyle.gridColumnEnd = "span 2";
+            cardStyle.gridRowEnd = "span 2";
+            break;
+        case WidgetSize.Triple:
+            cardStyle.gridColumnEnd = "span 3";
+            break;
+        case WidgetSize.Quadruple:
+            cardStyle.gridColumnEnd = "span 4";
+            break
     }
-    if (widget.size === WidgetSize.Box) {
-        cardStyle.gridColumnEnd = "span 2";
-        cardStyle.gridRowEnd = "span 2";
-    }
-    if (widget.size === WidgetSize.Triple) {
-        cardStyle.gridColumnEnd = "span 3";
-    }
-    if (widget.size === WidgetSize.Quadruple) {
-        cardStyle.gridColumnEnd = "span 4";
-    }
+
     if(widget.controlOptions && widget.controlOptions.isHidden){
         return null;
     }
