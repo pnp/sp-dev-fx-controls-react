@@ -89,6 +89,7 @@ export interface IDynamicFieldProps {
   maximumValue?: number;
   minimumValue?: number;
   showAsPercentage?: boolean;
+  itemsQueryCountLimit?: number;
   customIcon?: string;
   orderBy?: string;
 }
