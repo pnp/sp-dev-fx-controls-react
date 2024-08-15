@@ -147,12 +147,7 @@ export class DynamicForm extends React.Component<
    * Default React component render method
    */
   public render(): JSX.Element {
-    let {fieldCollection} = this.state
-    const { customFormatting, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
-
-    if (this.props.fieldOrder) {
-      fieldCollection = this.sortFields(fieldCollection, this.props.fieldOrder)
-    }
+    const { customFormatting, fieldCollection, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
 
     const customFormattingDisabled = this.props.useCustomFormatting === false;
 
@@ -1020,6 +1015,10 @@ export class DynamicForm extends React.Component<
         customIcons
       );
 
+      const sortedFields = this.props.fieldOrder?.length > 0
+        ? this.sortFields(tempFields, this.props.fieldOrder)
+        : tempFields;
+
       // Get installed languages for Currency fields
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
@@ -1035,7 +1034,7 @@ export class DynamicForm extends React.Component<
           footer: footerJSON
         },
         etag,
-        fieldCollection: tempFields,
+        fieldCollection: sortedFields,
         installedLanguages,
         validationFormulas
       }, () => this.performValidation(true));
