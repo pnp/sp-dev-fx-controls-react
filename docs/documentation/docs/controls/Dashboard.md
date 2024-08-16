@@ -152,6 +152,7 @@ Provides size of the widget
 | Single | Single-sized grid item. |
 | Double | Double-width grid item. |
 | Triple | Triple width grid item. |
+| Quadruple | Quadruple width grid item. |
 | Box | Double-width, double-height grid item. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Dashboard)
