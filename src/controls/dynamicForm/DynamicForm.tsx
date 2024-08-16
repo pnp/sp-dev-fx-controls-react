@@ -263,6 +263,25 @@ export class DynamicForm extends React.Component<
     );
   }
 
+  private sortFields = (fields: IDynamicFieldProps[], customSort: string[]): IDynamicFieldProps[] => {
+    const fMap = new Map<string, IDynamicFieldProps>();
+
+    for (const field of fields) {
+      fMap.set(field.columnInternalName.toLowerCase(), field);
+    }
+
+    const sortedFields = customSort
+    .map((sortColumn) => sortColumn.toLowerCase())
+    .filter((normalizedSortColumn) => fMap.has(normalizedSortColumn))
+    .map((normalizedSortColumn) => fMap.get(normalizedSortColumn))
+    .filter((field) => field !== undefined);
+
+    const remainingFields = fields.filter((field) => !sortedFields.includes(field));
+    const uniqueRemainingFields = Array.from(new Set(remainingFields));
+
+    return [...sortedFields, ...uniqueRemainingFields];
+}
+
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
     const { hiddenByFormula, isSaving, validationErrors } = this.state;
@@ -996,6 +1015,10 @@ export class DynamicForm extends React.Component<
         customIcons
       );
 
+      const sortedFields = this.props.fieldOrder?.length > 0
+        ? this.sortFields(tempFields, this.props.fieldOrder)
+        : tempFields;
+
       // Get installed languages for Currency fields
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
@@ -1011,7 +1034,7 @@ export class DynamicForm extends React.Component<
           footer: footerJSON
         },
         etag,
-        fieldCollection: tempFields,
+        fieldCollection: sortedFields,
         installedLanguages,
         validationFormulas
       }, () => this.performValidation(true));
