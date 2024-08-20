@@ -36,7 +36,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   constructor(props: IPeoplePickerProps) {
     super(props);
 
-    this.peopleSearchService = new SPPeopleSearchService(props.context);
+    this.peopleSearchService = new SPPeopleSearchService(props.context, props.useSubstrateSearch);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
     this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 
@@ -95,6 +95,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
+  /**
+   * clears all users and groups
+   */
+  public clearSelectedPersons(): void {
+    this.setState({
+      selectedPersons: []
+    });
+  }
 
   /**
    * Get initial persons
@@ -385,6 +393,3 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     );
   }
 }
-
-
-
