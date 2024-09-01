@@ -3,9 +3,7 @@ import * as React from 'react';
 
 import styles from './OotbFields.module.scss';
 import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
-import { FieldRendererHelper } from '../../../../common/utilities/FieldRendererHelper';
-import { IProps } from '../../../../common/Interfaces';
-import { IFieldRendererProps } from '../../../../controls/fields/fieldCommon/IFieldRendererProps';
+import { FieldRendererHelper, IProps, IFieldRendererProps } from '@pnp/spfx-controls-react';
 
 export interface IOotbFieldsProps extends IProps, IFieldRendererProps {
   text: string;

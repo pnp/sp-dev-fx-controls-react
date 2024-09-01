@@ -2,7 +2,9 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Log } from '@microsoft/sp-core-library';
 import {
-  BaseApplicationCustomizer, PlaceholderContent, PlaceholderName
+  BaseApplicationCustomizer,
+  PlaceholderContent,
+  PlaceholderName,
 } from '@microsoft/sp-application-base';
 
 import * as strings from 'TestApplicationCustomizerStrings';
@@ -21,15 +23,16 @@ export interface ITestApplicationCustomizerProperties {
 }
 
 /** A Custom Action which can be run during execution of a Client Side Application */
-export default class TestApplicationCustomizer
-  extends BaseApplicationCustomizer<ITestApplicationCustomizerProperties> {
-
+export default class TestApplicationCustomizer extends BaseApplicationCustomizer<ITestApplicationCustomizerProperties> {
   private _topPlaceHolder: PlaceholderContent | undefined;
 
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
 
-    this.context.placeholderProvider.changedEvent.add(this, this._renderPlaceHolders);
+    this.context.placeholderProvider.changedEvent.add(
+      this,
+      this._renderPlaceHolders
+    );
 
     return Promise.resolve();
   }
@@ -42,11 +45,16 @@ export default class TestApplicationCustomizer
       );
     }
 
-    const element: React.ReactElement<ITestAppProps> = React.createElement(TestApp, {
-      context: this.context
-    });
+    const element: React.ReactElement<ITestAppProps> = React.createElement(
+      TestApp,
+      {
+        context: this.context,
+      }
+    );
 
-    ReactDom.render(element, this._topPlaceHolder.domElement);
+    if (this._topPlaceHolder) {
+      ReactDom.render(element, this._topPlaceHolder.domElement);
+    }
   }
 
   private _onDispose(PlaceholderContent: PlaceholderContent): void {

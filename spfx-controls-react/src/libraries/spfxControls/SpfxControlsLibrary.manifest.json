@@ -1,0 +1,9 @@
+{
+  "id": "e9a37567-6524-4902-938d-4b143a50e466",
+  "alias": "SpfxControlsLibrary",
+  "componentType": "Library",
+
+  // The "*" signifies that the version should be taken from the package.json
+  "version": "*",
+  "manifestVersion": 2
+}

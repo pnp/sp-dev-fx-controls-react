@@ -1,8 +1,10 @@
-import { ImageSize } from "../../../FileTypeIcon";
-import { IProgressAction } from "../../../Progress";
-import { IFilePickerResult } from "../../../FilePicker";
-import { ITag } from "@fluentui/react";
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
+import {
+  ImageSize,
+  IProgressAction,
+  IFilePickerResult,
+} from '@pnp/spfx-controls-react';
+import { ITag } from '@fluentui/react';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
 
 export interface IControlsTestState {
   imgSize: ImageSize;
@@ -13,11 +15,11 @@ export interface IControlsTestState {
   iFrameDialogOpened?: boolean;
   iFramePanelOpened?: boolean;
   authorEmails: string[];
-  selectedList: string;
+  selectedList: string | undefined;
   progressActions: IProgressAction[];
   currentProgressActionIndex?: number;
-  dateTimeValue: Date;
-  richTextValue: string;
+  dateTimeValue?: Date;
+  richTextValue: string | undefined;
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
@@ -38,7 +40,7 @@ export interface IControlsTestState {
   actionTermId?: string;
   clickedActionTerm?: ITermInfo;
   selectedFilters?: string[];
-  termStoreInfo: ITermStoreInfo;
-  termSetInfo: ITermSetInfo;
+  termStoreInfo: ITermStoreInfo | null | undefined;
+  termSetInfo: ITermSetInfo | null | undefined;
   testTerms: ITermInfo[];
 }

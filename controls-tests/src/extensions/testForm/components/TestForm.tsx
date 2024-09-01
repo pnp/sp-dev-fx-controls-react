@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Log, FormDisplayMode } from '@microsoft/sp-core-library';
 import { FormCustomizerContext } from '@microsoft/sp-listview-extensibility';
-import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
-import { DynamicForm } from '../../../DynamicForm';
+import { EnhancedThemeProvider } from '@pnp/spfx-controls-react/lib/EnhancedThemeProvider';
+import { DynamicForm } from '@pnp/spfx-controls-react';
 // import styles from './TestForm.module.scss';
 
 export interface ITestFormProps {
@@ -12,18 +12,18 @@ export interface ITestFormProps {
   onClose: () => void;
 }
 
-interface ITestFormState { }
+interface ITestFormState {}
 
 const LOG_SOURCE: string = 'TestForm';
 
-export default class TestForm extends React.Component<ITestFormProps, ITestFormState> {
-
+export default class TestForm extends React.Component<
+  ITestFormProps,
+  ITestFormState
+> {
   constructor(props: ITestFormProps) {
     super(props);
 
-    this.state = {
-
-    };
+    this.state = {};
   }
 
   public componentDidMount(): void {
@@ -41,9 +41,12 @@ export default class TestForm extends React.Component<ITestFormProps, ITestFormS
           context={this.props.context}
           listId={this.props.context.list.guid.toString()}
           listItemId={this.props.context.itemId}
-          onListItemLoaded={async (listItemData: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+          onListItemLoaded={async (listItemData: any) => {
+            // eslint-disable-line @typescript-eslint/no-explicit-any
             console.log(listItemData);
-          }} />
-      </EnhancedThemeProvider>);
+          }}
+        />
+      </EnhancedThemeProvider>
+    );
   }
 }

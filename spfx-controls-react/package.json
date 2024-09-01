@@ -174,5 +174,6 @@
       "ControlStrings": "identity-obj-proxy",
       "\\.(css|scss)$": "identity-obj-proxy"
     }
-  }
+  },
+  "private": false
 }

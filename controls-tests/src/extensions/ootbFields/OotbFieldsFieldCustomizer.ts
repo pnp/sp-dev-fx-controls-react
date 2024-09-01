@@ -7,10 +7,8 @@ import {
   IFieldCustomizerCellEventParameters
 } from '@microsoft/sp-listview-extensibility';
 
-import * as strings from 'ControlStrings';
-import OotbFields, { IOotbFieldsProps } from './components/Customizer/OotbFields';
-import { SPHelper } from '../../common/utilities/SPHelper';
-import { GeneralHelper } from '../../common/utilities/GeneralHelper';
+import OotbFields from './components/Customizer/OotbFields';
+import { SPHelper, GeneralHelper } from '@pnp/spfx-controls-react';
 
 /**
  * If your field customizer uses the ClientSideComponentProperties JSON input,
