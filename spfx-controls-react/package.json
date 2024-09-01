@@ -18,7 +18,7 @@
     "sonarcloud:start": "gulp sonarqube --gulpfile gulpfile.sonarqube.js",
     "localization": "node scripts/execute-translation.js",
     "start:v8": "NODE_NO_HTTP2=1 gulp serve --nobrowser",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install spfx-controls-react/.husky"
   },
   "dependencies": {
     "@fluentui/merge-styles": "8.5.12",
