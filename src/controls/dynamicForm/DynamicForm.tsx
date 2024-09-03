@@ -221,7 +221,7 @@ export class DynamicForm extends React.Component<
             {!this.props.disabled && (
               <Stack className={styles.buttons} horizontal tokens={stackTokens}>
                 <PrimaryButton
-                  disabled={isSaving}
+                  disabled={this.props.saveDisabled || isSaving}
                   text={strings.Save}
                   onClick={() => this.onSubmitClick()}
                 />
@@ -262,6 +262,25 @@ export class DynamicForm extends React.Component<
       </div>
     );
   }
+
+  private sortFields = (fields: IDynamicFieldProps[], customSort: string[]): IDynamicFieldProps[] => {
+    const fMap = new Map<string, IDynamicFieldProps>();
+
+    for (const field of fields) {
+      fMap.set(field.columnInternalName.toLowerCase(), field);
+    }
+
+    const sortedFields = customSort
+    .map((sortColumn) => sortColumn.toLowerCase())
+    .filter((normalizedSortColumn) => fMap.has(normalizedSortColumn))
+    .map((normalizedSortColumn) => fMap.get(normalizedSortColumn))
+    .filter((field) => field !== undefined);
+
+    const remainingFields = fields.filter((field) => !sortedFields.includes(field));
+    const uniqueRemainingFields = Array.from(new Set(remainingFields));
+
+    return [...sortedFields, ...uniqueRemainingFields];
+}
 
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
@@ -418,7 +437,7 @@ export class DynamicForm extends React.Component<
         if (field.newValue !== null && field.newValue !== undefined) {
 
           let value = field.newValue;
-          
+
           if (["Lookup", "LookupMulti", "User", "UserMulti", "TaxonomyFieldTypeMulti"].indexOf(fieldType) < 0) {
             objects[columnInternalName] = value;
           }
@@ -996,6 +1015,10 @@ export class DynamicForm extends React.Component<
         customIcons
       );
 
+      const sortedFields = this.props.fieldOrder?.length > 0
+        ? this.sortFields(tempFields, this.props.fieldOrder)
+        : tempFields;
+
       // Get installed languages for Currency fields
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
@@ -1011,7 +1034,7 @@ export class DynamicForm extends React.Component<
           footer: footerJSON
         },
         etag,
-        fieldCollection: tempFields,
+        fieldCollection: sortedFields,
         installedLanguages,
         validationFormulas
       }, () => this.performValidation(true));

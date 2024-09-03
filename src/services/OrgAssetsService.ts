@@ -3,29 +3,35 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { ILibrary, FilesQueryResult } from "./FileBrowserService.types";
 
+/**
+ * OrgAssetsService class
+ */
 export class OrgAssetsService extends FileBrowserService {
+  // Site organization assets library server relative URL
   private _orgAssetsLibraryServerRelativeSiteUrl: string = null;
 
+  /**
+   * Constructor
+   * @param context Component context
+   * @param itemsToDownloadCount Items to download count
+   */
   constructor(context: BaseComponentContext, itemsToDownloadCount?: number) {
     super(context, itemsToDownloadCount);
   }
 
-  public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
+  /**
+   * Gets files from current sites library
+   * @param _listUrl Unused parameter (not used in this implementation)
+   * @param folderPath Folder path to get items from
+   * @param acceptedFilesExtensions File extensions to filter the results
+   * @param nextPageQueryStringParams Query string parameters to get the next page of results
+   * @returns Items in the specified folder
+   */
+  public getListItems = async (_listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-
-      // Retrieve Lib path from folder path
-      const isRootSite = this.context.pageContext.site.serverRelativeUrl === '/';
-
-      if (!isRootSite) {
-        if (folderPath.charAt(0) !== '/') {
-          folderPath = `/${folderPath}`;
-        }
-
-      } else {
-        if (folderPath.charAt(0) === '/') {
-          folderPath = folderPath.substring(1);
-        }
+      if (folderPath.charAt(0) !== '/') {
+        folderPath = `/${folderPath}`;
       }
 
       // Remove all the rest of the folder path
@@ -33,7 +39,7 @@ export class OrgAssetsService extends FileBrowserService {
       libName = libName.split('/')[0];
 
       // Build absolute library URL
-      const libFullUrl = this.buildAbsoluteUrl(!isRootSite ? `${this._orgAssetsLibraryServerRelativeSiteUrl}/${libName}` : `${this._orgAssetsLibraryServerRelativeSiteUrl}${libName}`);
+      const libFullUrl = this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libName}`);
 
       let queryStringParams: string = "";
       // Do not pass FolderServerRelativeUrl as query parameter
@@ -57,6 +63,11 @@ export class OrgAssetsService extends FileBrowserService {
     return filesQueryResult;
   }
 
+  /**
+   * Gets document and media libraries from the site
+   * @param includePageLibraries Unused parameter (not used in this implementation)
+   * @returns Document and media libraries from the site 
+   */
   public getSiteMediaLibraries = async (includePageLibraries: boolean = false): Promise<ILibrary[]> => {
     try {
       const restApi = `${this.context.pageContext.web.absoluteUrl}/_api/SP.Publishing.SitePageService.FilePickerTabOptions`;
@@ -79,6 +90,11 @@ export class OrgAssetsService extends FileBrowserService {
     }
   }
 
+  /**
+   * Parses the organisation assets library item
+   * @param libItem Library item to parse
+   * @returns Organisation assets library
+   */
   private _parseOrgAssetsLibraryItem = (libItem: any): ILibrary => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const orgAssetsLibrary: ILibrary = {
       absoluteUrl: this.buildAbsoluteUrl(libItem.LibraryUrl.DecodedUrl),
