@@ -64,6 +64,7 @@ The `DynamicForm` can be configured with the following properties:
 | saveDisabled | boolean | no | Specifies if save button is disabled. |
 | validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
 | customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. | 
+| folderServerRelativeUrl | string | no | Server relative URL of the folder a new item or file gets created in. If not set a new item or file will be created in the root folder of the list or library.
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 | Property | Type | Required | Description |

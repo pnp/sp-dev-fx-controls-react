@@ -555,6 +555,13 @@ export class DynamicForm extends React.Component<
             // check if item contenttype is passed, then update the object with content type id, else, pass the object
             if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
             const iar = await sp.web.lists.getById(listId).items.add(objects);
+            if (this.props.folderServerRelativeUrl && this.props.folderServerRelativeUrl !== '' && iar.item) {
+              // Move list item to target folder. Only way to directly create the item in the target folder would be to use AddValidateUpdateItemUsingPath which uses a different structure for the item's data.
+              const values = await iar.item.fieldValuesAsText();
+              const fileRef = values['FileRef'];
+              const fileLeafRef = values['FileLeafRef'];
+              await sp.web.getFileByServerRelativePath(fileRef).moveTo(this.props.folderServerRelativeUrl + '/' + fileLeafRef);
+            }
             if (onSubmitted) {
               onSubmitted(
                 iar.data,
@@ -587,9 +594,9 @@ export class DynamicForm extends React.Component<
                 "_"
               ) // Replace not allowed chars in folder name
               : ""; // Empty string will be replaced by SPO with Folder Item ID
-          const newFolder = await library.rootFolder.addSubFolderUsingPath(
-            folderTitle
-          );
+          const newFolder = this.props.folderServerRelativeUrl && this.props.folderServerRelativeUrl !== '' ?
+            await sp.web.getFolderByServerRelativePath(this.props.folderServerRelativeUrl).addSubFolderUsingPath(folderTitle) :
+            await library.rootFolder.addSubFolderUsingPath(folderTitle);
           const fields = await newFolder.listItemAllFields();
           if (fields[idField]) {
             // Read the ID of the just created folder or Document Set
@@ -665,7 +672,10 @@ export class DynamicForm extends React.Component<
               ) // Replace not allowed chars in folder name
               : ""; // Empty string will be replaced by SPO with Folder Item ID
 
-          const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
+          const fileCreatedResult = this.props.folderServerRelativeUrl && this.props.folderServerRelativeUrl !== '' ?
+           await sp.web.getFolderByServerRelativePath(this.props.folderServerRelativeUrl).files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent())
+           :
+           await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
           const fields = await fileCreatedResult.file.listItemAllFields();
 
           if (fields[idField]) {

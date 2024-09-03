@@ -126,4 +126,10 @@ export interface IDynamicFormProps {
    * The key is the field internal name and the value is the Fluent UI icon name.
    */
   customIcons?: { [columnInternalName: string]: string };
+
+  /**
+   * Server relative URL of the folder a new item or file gets created in.
+   * If not set a new item or file will be created in the root folder of the list or library.
+   */
+  folderServerRelativeUrl?: string;
 }
