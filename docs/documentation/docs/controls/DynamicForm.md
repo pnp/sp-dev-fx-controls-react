@@ -50,6 +50,7 @@ The `DynamicForm` can be configured with the following properties:
 | disabled | boolean | no | Allows form to be disabled. Default value is `false`|
 | disabledFields | string[] | no | InternalName of fields that should be disabled. Default value is `false`|
 | enableFileSelection | boolean | no | Specify if the form should support the creation of a new list item in a document library attaching a file to it. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document. Default value is `false`|
+| fieldOrder | string[] | no | List of fields internal names. Specifies fields custom sorting. |
 | hiddenFields | string[] | no | InternalName of fields that should be hidden. Default value is `false`|
 | onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|

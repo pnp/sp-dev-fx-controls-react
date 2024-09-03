@@ -27,6 +27,7 @@ export enum WidgetSize {
   Single = "single",
   Double = "double",
   Triple = "triple",
+  Quadruple = "quadruple",
   Box = "box",
 }
 
@@ -96,5 +97,20 @@ export interface IWidgetBodyContent {
  * Widget link
  */
 export interface IWidgetLink {
+  /**
+   * Link to be opened
+   */
   href: string;
+  /**
+   * The text to display for the link, if not provided, the default text will be used
+   */
+  title?: string;
+  /**
+   * The color of the link, if not provided, the "brand" color will be used. The available colors can be found on the [official Fluent UI documentation of the Text control](https://fluentsite.z22.web.core.windows.net/0.66.2/components/text/definition#variations-color)
+   */
+  color?: string;
+  /**
+   * The target for the generated anchor tag, if not provided, the default target will be _blank
+   */
+  target?: "_blank" | "_self" | "_parent" | "_top" | "framename";
 }

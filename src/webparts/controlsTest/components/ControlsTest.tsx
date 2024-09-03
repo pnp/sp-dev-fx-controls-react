@@ -906,6 +906,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }];
 
     const linkExample = { href: "#" };
+    const customizedLinkExample = {
+      href: "#",
+      title: "This is a customized link!",
+      color: "red",
+      target: "_top"
+    };
     const calloutItemsExample = [
       {
         id: "action_1",
@@ -1996,7 +2002,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               title: "Card 1",
               desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
               widgetActionGroup: calloutItemsExample,
-              size: WidgetSize.Triple,
+              size: WidgetSize.Quadruple,
               body: [
                 {
                   id: "t1",
@@ -2049,7 +2055,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {
               title: "Card 2",
               size: WidgetSize.Single,
-              link: linkExample,
+              link: customizedLinkExample,
             },
             {
               title: "Card 3",
@@ -2059,7 +2065,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {
               title: "Card 4",
               size: WidgetSize.Single,
-              link: linkExample,
+              link: customizedLinkExample,
             },
             {
               title: "Card 5",

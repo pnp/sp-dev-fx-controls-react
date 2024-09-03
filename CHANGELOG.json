@@ -1,6 +1,22 @@
 {
   "versions": [
     {
+      "version": "3.20.0",
+      "changes": {
+        "new": [],
+        "enhancements": [
+          "`Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)",
+          "`Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)",
+          "`DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)"
+        ],
+        "fixes": []
+      },
+      "contributions": [
+        "[Guido Zambarda](https://github.com/GuidoZam)",
+        "[srpmtt](https://github.com/srpmtt)"
+      ]
+    },
+    {
       "version": "3.19.0",
       "changes": {
         "new": [],

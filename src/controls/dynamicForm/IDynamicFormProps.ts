@@ -132,4 +132,10 @@ export interface IDynamicFormProps {
    * If not set a new item or file will be created in the root folder of the list or library.
    */
   folderServerRelativeUrl?: string;
+
+  /**
+   * Specify fields custom sorting.
+   * The value is the field internal name.
+   */
+  fieldOrder?: string[]
 }

@@ -126,7 +126,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
     [sites]
   );
 
-  const CustomChevron = () => {
+  const CustomChevron = (): JSX.Element => {
     if (sites && sites.length > 0) {
       return (
         <div className={styles.customChevronContainer}>
