@@ -37,19 +37,19 @@ import { HoverReactionsBar } from '@pnp/spfx-controls-react/lib/HoverReactionsBa
 - With the `onSelect` property you can get the selected emoji:
 
 ```typescript
-   const onSelectEmoji = React.useCallback(async (emoji: string, emojiInfo: IEmojiInfo) => {
-    console.log('emoji', emoji);
-    console.log('emojiInfo object',emojiInfo);
-    setIsOpenHoverReactionBar(false);
-  }, []);
+const onSelectEmoji = React.useCallback(async (emoji: string, emojiInfo: IEmojiInfo) => {
+  console.log('emoji', emoji);
+  console.log('emojiInfo object',emojiInfo);
+  setIsOpenHoverReactionBar(false);
+}, []);
 
-```
 onSelect: (emoji: string | undefined, emojiInfo?: IEmojiInfo) => void;
   isOpen: boolean;
   onDismiss: () => void;
   top4Reactions?: string[];
   target: HTMLDivElement;
   themeV8?: Theme ;
+```
 
 ## Implementation
 
@@ -57,7 +57,7 @@ The HoverReactionsBar control can be configured with the following properties:
 
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| isOpen | boolean | yes | show hoverReactionsVar |
+| isOpen | boolean | yes | show hoverReactionsBar |
 | onSelected |onSelect: (emoji: string, emojiInfo?: IEmojiInfo) => void;| yes | selected Emoji |
 | top4Reactions |  string[] | no |  name of emojis to show on the bar  |
 | target | HTMLDivElement | yes | container of controls who fire the HoverReactionsBar |
