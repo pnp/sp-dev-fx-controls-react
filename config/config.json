@@ -37,9 +37,6 @@
   },
   "externals": {},
   "localizedResources": {
-    "ControlStrings": "lib/loc/{locale}.js",
-    "ControlsTestWebPartStrings": "lib/webparts/controlsTest/loc/{locale}.js",
-    "ControlsTestFormCustomizerStrings": "lib/extensions/testForm/loc/{locale}.js",
-    "TestApplicationCustomizerStrings": "lib/extensions/testApp/loc/{locale}.js"
+    "ControlStrings": "lib/loc/{locale}.js"
   }
 }
