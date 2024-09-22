@@ -11,6 +11,7 @@ const patterns: [RegExp, TokenType][] = [
     [/^"([^"]*)"/, "STRING"],                           // Match double-quoted strings
     [/^'([^']*)'/, "STRING"],                           // Match single-quoted strings
     [/^\[[^\]]*\]/, "ARRAY"],                           // Array literals
+    // eslint-disable-next-line @rushstack/security/no-unsafe-regexp
     [new RegExp(`^(${ValidFuncNames.join('|')})\\(`), "FUNCTION"], // Functions or other words
     [/^(true|false)/, "BOOLEAN"],                       // Boolean literals
     [/^\w+/, "WORD"],                                   // Other words, checked against valid variables
@@ -434,6 +435,7 @@ export class FormulaEvaluation {
                     const searchStrReplaceAll = funcArgs[1];
                     const replaceAllStr = funcArgs[2];
                     // Using a global regex to simulate replaceAll behavior
+                    // eslint-disable-next-line @rushstack/security/no-unsafe-regexp
                     const globalRegex = new RegExp(searchStrReplaceAll, 'g');
                     return mainStrReplaceAll.replace(globalRegex, replaceAllStr);
                 }
@@ -573,6 +575,7 @@ export class FormulaEvaluation {
 
     public validate(expression: string): boolean {
         const validFunctionRegex = `(${ValidFuncNames.map(fn => `${fn}\\(`).join('|')})`;
+        // eslint-disable-next-line @rushstack/security/no-unsafe-regexp
         const pattern = new RegExp(`^(?:@\\w+|\\[\\$?[\\w+.]\\]|\\d+(?:\\.\\d+)?|"(?:[^"]*)"|'(?:[^']*)'|${validFunctionRegex}|[+\\-*/<>=%!&|?:,()\\[\\]]|\\?|:)`);
     
         /* Explanation -

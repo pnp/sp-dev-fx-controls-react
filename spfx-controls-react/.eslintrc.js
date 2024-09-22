@@ -2,6 +2,7 @@ require('@rushstack/eslint-config/patch/modern-module-resolution');
 module.exports = {
   extends: ['@microsoft/eslint-config-spfx/lib/profiles/default'],
   parserOptions: { tsconfigRootDir: __dirname },
+  ignorePatterns: ["src/loc/*.ts"],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -346,7 +347,9 @@ module.exports = {
         '**/test/*.ts',
         '**/test/*.tsx'
       ],
-      rules: {}
+      rules: {
+        '@typescript-eslint/no-empty-function': 0
+      }
     }
   ]
 };

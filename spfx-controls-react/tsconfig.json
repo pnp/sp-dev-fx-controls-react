@@ -22,7 +22,8 @@
     ],
     "types": [
       "webpack-env",
-      "wicg-entries-api"
+      "wicg-entries-api",
+      "jest",
     ],
     "lib": [
       "es5",
