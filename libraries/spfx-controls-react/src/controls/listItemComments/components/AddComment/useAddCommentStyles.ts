@@ -1,18 +1,40 @@
-import * as React from "react";
-import { IDocumentCardStyles } from "@fluentui/react/lib/DocumentCard";
-import { IStackStyles } from "@fluentui/react/lib/Stack";
-import { IStyle, mergeStyleSets } from "@fluentui/react/lib/Styling";
-import { AppContext } from "../../common";
+import * as React from 'react';
+import {
+  IDocumentCardStyles,
+  IProcessedStyleSet,
+  IStackStyles,
+  IStyle,
+  mergeStyleSets,
+} from '@fluentui/react';
+import { AppContext } from '../../common';
 
-export const useAddCommentStyles = () => { // eslint-disable-line @typescript-eslint/explicit-function-return-type
+export const useAddCommentStyles: () => {
+  documentCardUserStyles: Partial<IDocumentCardStyles>;
+  deleteButtonContainerStyles: Partial<IStackStyles>;
+  reactMentionStyles: object;
+  itemContainerStyles: IStackStyles;
+  searchMentionContainerStyles: Partial<IStackStyles>;
+  mentionsClasses: IProcessedStyleSet<{
+    mention: IStyle;
+  }>;
+  componentClasses: IProcessedStyleSet<{
+    container: IStyle;
+  }>;
+} = () => {
+  // eslint-disable-line @typescript-eslint/explicit-function-return-type
   const { theme } = React.useContext(AppContext);
   const itemContainerStyles: IStackStyles = {
-    root: { paddingTop: 0, paddingLeft: 20, paddingRight: 20, paddingBottom: 20 } as IStyle,
+    root: {
+      paddingTop: 0,
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingBottom: 20,
+    } as IStyle,
   };
 
   const deleteButtonContainerStyles: Partial<IStackStyles> = {
     root: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       right: 0,
     },
@@ -21,13 +43,13 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
   const searchMentionContainerStyles: Partial<IStackStyles> = {
     root: {
       borderWidth: 1,
-      borderStyle: "solid",
-      borderColor: "silver",
+      borderStyle: 'solid',
+      borderColor: 'silver',
       width: 322,
-      ":focus": {
+      ':focus': {
         borderColor: theme.themePrimary,
       },
-      ":hover": {
+      ':hover': {
         borderColor: theme.themePrimary,
       },
     },
@@ -37,8 +59,8 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
     root: {
       marginTop: 2,
       backgroundColor: theme?.white,
-      boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
-      ":hover": {
+      boxShadow: '0 5px 15px rgba(50, 50, 90, .1)',
+      ':hover': {
         borderColor: theme.themePrimary,
         backgroundColor: theme.neutralLighterAlt,
         borderWidth: 1,
@@ -49,16 +71,16 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
   const componentClasses = mergeStyleSets({
     container: {
       borderWidth: 1,
-      borderStyle: "solid",
-      display: "block",
-      borderColor: "silver",
-      overflow: "hidden",
+      borderStyle: 'solid',
+      display: 'block',
+      borderColor: 'silver',
+      overflow: 'hidden',
       width: 320,
-      ":focus": {
+      ':focus': {
         borderWidth: 2,
         borderColor: theme.themePrimary,
       },
-      ":hover": {
+      ':hover': {
         borderWidth: 2,
         borderColor: theme.themePrimary,
       },
@@ -67,25 +89,25 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
 
   const mentionsClasses = mergeStyleSets({
     mention: {
-      position: "relative",
+      position: 'relative',
       zIndex: 9999,
       color: theme.themePrimary,
-      pointerEvents: "none",
+      pointerEvents: 'none',
     } as IStyle,
   });
 
   const reactMentionStyles = {
     control: {
-      backgroundColor: "#fff",
+      backgroundColor: '#fff',
       fontSize: 12,
-      border: "none",
-      fontWeight: "normal",
+      border: 'none',
+      fontWeight: 'normal',
       outlineColor: theme.themePrimary,
       borderRadius: 0,
     } as IStyle,
-    "&multiLine": {
+    '&multiLine': {
       control: {
-        border: "none",
+        border: 'none',
         fontFamily:
           '"Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue"',
         minHeight: 35,
@@ -95,45 +117,45 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
       } as IStyle,
       highlighter: {
         padding: 9,
-        border: "none",
+        border: 'none',
         borderWidth: 0,
         borderRadius: 0,
       } as IStyle,
       input: {
         padding: 9,
-        border: "none",
-        outline: "none",
+        border: 'none',
+        outline: 'none',
       } as IStyle,
     },
 
-    "&singleLine": {
-      display: "inline-block",
+    '&singleLine': {
+      display: 'inline-block',
       height: 50,
       outlineColor: theme.themePrimary,
-      border: "none",
+      border: 'none',
       highlighter: {
         padding: 1,
-        border: "1px inset transparent",
+        border: '1px inset transparent',
       },
       input: {
         padding: 1,
-        width: "100%",
+        width: '100%',
         borderRadius: 0,
-        border: "none",
+        border: 'none',
       },
     },
 
     suggestions: {
       list: {
-        backgroundColor: "white",
-        border: "1px solid rgba(0,0,0,0.15)",
+        backgroundColor: 'white',
+        border: '1px solid rgba(0,0,0,0.15)',
         fontSize: 14,
       },
       item: {
-        padding: "5px 15px",
-        borderBottom: "1px solid",
+        padding: '5px 15px',
+        borderBottom: '1px solid',
         borderBottomColor: theme.themeLight,
-        "&focused": {
+        '&focused': {
           backgroundColor: theme.neutralLighterAlt,
         },
       },

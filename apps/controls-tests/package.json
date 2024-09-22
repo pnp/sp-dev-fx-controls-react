@@ -1,5 +1,5 @@
 {
-  "name": "sp-dev-fx-controls-react-tests",
+  "name": "@pnp/sp-dev-fx-controls-react-tests",
   "version": "0.0.1",
   "private": true,
   "engines": {
