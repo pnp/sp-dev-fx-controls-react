@@ -14,10 +14,10 @@ import {
   Stack,
   TextField,
   Toggle,
-} from "@fluentui/react";
-import * as React from "react";
-import { ThemeContext, useTheme } from "../../../EnhancedThemeProvider";
-import { Placeholder } from "../../../Placeholder";
+} from '@fluentui/react';
+import * as React from 'react';
+import { ThemeContext, useTheme } from '@pnp/spfx-controls-react/lib/EnhancedThemeProvider';
+import { Placeholder } from '@pnp/spfx-controls-react/lib/Placeholder';
 
 export const ControlsTestEnhancedThemeProviderFunctionComponent = () => {
   const theme = useTheme();
@@ -43,7 +43,7 @@ export const ControlsTestEnhancedThemeProviderFunctionComponent = () => {
         description="Please configure the web part."
         buttonLabel="Configure"
         onConfigure={() => {
-          alert("onConfigure");
+          alert('onConfigure');
         }}
       />
       <Link theme={theme} href="#">
@@ -56,28 +56,28 @@ export const ControlsTestEnhancedThemeProviderFunctionComponent = () => {
         CompoundButton
       </CompoundButton>
       <IconButton
-        iconProps={{ iconName: "Emoji2" }}
+        iconProps={{ iconName: 'Emoji2' }}
         title="Emoji"
         ariaLabel="Emoji"
         disabled={false}
         checked={false}
       />
       <IconButton
-        iconProps={{ iconName: "Emoji2" }}
+        iconProps={{ iconName: 'Emoji2' }}
         title="Emoji"
         ariaLabel="Emoji"
         disabled={true}
         checked={false}
       />
       <IconButton
-        iconProps={{ iconName: "Emoji2" }}
+        iconProps={{ iconName: 'Emoji2' }}
         title="Emoji"
         ariaLabel="Emoji"
         disabled={true}
         checked={true}
       />
       <IconButton
-        iconProps={{ iconName: "Emoji2" }}
+        iconProps={{ iconName: 'Emoji2' }}
         title="Emoji"
         ariaLabel="Emoji"
         disabled={false}
@@ -96,10 +96,10 @@ export class ControlsTestEnhancedThemeProvider extends React.Component {
             <ChoiceGroup
               defaultSelectedKey="B"
               options={[
-                { key: "A", text: "Option A" },
-                { key: "B", text: "Option B" },
-                { key: "C", text: "Option C", disabled: true },
-                { key: "D", text: "Option D" },
+                { key: 'A', text: 'Option A' },
+                { key: 'B', text: 'Option B' },
+                { key: 'C', text: 'Option C', disabled: true },
+                { key: 'D', text: 'Option D' },
               ]}
               label="Pick one"
               required={true}
@@ -120,30 +120,30 @@ export class ControlsTestEnhancedThemeProvider extends React.Component {
               label="Basic single-select ComboBox"
               options={[
                 {
-                  key: "Header1",
-                  text: "First heading",
+                  key: 'Header1',
+                  text: 'First heading',
                   itemType: SelectableOptionMenuItemType.Header,
                 },
-                { key: "A", text: "Option A" },
-                { key: "B", text: "Option B" },
-                { key: "C", text: "Option C" },
-                { key: "D", text: "Option D" },
+                { key: 'A', text: 'Option A' },
+                { key: 'B', text: 'Option B' },
+                { key: 'C', text: 'Option C' },
+                { key: 'D', text: 'Option D' },
                 {
-                  key: "divider",
-                  text: "-",
+                  key: 'divider',
+                  text: '-',
                   itemType: SelectableOptionMenuItemType.Divider,
                 },
                 {
-                  key: "Header2",
-                  text: "Second heading",
+                  key: 'Header2',
+                  text: 'Second heading',
                   itemType: SelectableOptionMenuItemType.Header,
                 },
-                { key: "E", text: "Option E" },
-                { key: "F", text: "Option F", disabled: true },
-                { key: "G", text: "Option G" },
-                { key: "H", text: "Option H" },
-                { key: "I", text: "Option I" },
-                { key: "J", text: "Option J" },
+                { key: 'E', text: 'Option E' },
+                { key: 'F', text: 'Option F', disabled: true },
+                { key: 'G', text: 'Option G' },
+                { key: 'H', text: 'Option H' },
+                { key: 'I', text: 'Option I' },
+                { key: 'J', text: 'Option J' },
               ]}
             />
 

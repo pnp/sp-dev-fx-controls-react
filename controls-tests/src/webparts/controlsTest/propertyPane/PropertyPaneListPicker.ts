@@ -63,7 +63,7 @@ export class PropertyPaneListPicker implements IPropertyPaneField<IPropertyPaneL
       wpContext: this.properties.wpContext,
       onChange: this.onChange.bind(this),
       selectedKey: this.properties.selectedKey,
-      disabled: this.properties.disabled,
+      disabled: this.properties.disabled || false,
       // required to allow the component to be re-rendered by calling this.render() externally
       // stateKey: new Date().toString()
     });

@@ -28,7 +28,6 @@ import { PropertyPaneControlToggles } from './propertyPane/PropertyPaneControlTo
 export default class ControlsTestWebPart extends BaseClientSideWebPart<IControlsTestWebPartProps> {
   private _themeProvider: ThemeProvider;
   private _themeVariant: IReadonlyTheme | undefined;
-  private _containerWidth: number = 0;
   protected async onInit(): Promise<void> {
 
 
@@ -82,7 +81,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
        }
      ); */
 
-  let listItemId: number = Number(this.properties.dynamicFormListItemId);
+  let listItemId: number | undefined = Number(this.properties.dynamicFormListItemId);
   if (listItemId < 1 || isNaN(listItemId)) {
     listItemId = undefined;
   }
@@ -99,7 +98,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         title: this.properties.title ?? "Sample title",
         displayMode: this.displayMode,
         dynamicFormListId: this.properties.dynamicFormListId,
-        dynamicFormListItemId: listItemId?.toString() ?? undefined,
+        dynamicFormListItemId: listItemId?.toString() ?? '',
         dynamicFormErrorDialogEnabled: this.properties.dynamicFormErrorDialogEnabled,
         dynamicFormCustomFormattingEnabled: this.properties.dynamicFormCustomFormattingEnabled,
         dynamicFormClientSideValidationEnabled: this.properties.dynamicFormClientSideValidationEnabled,
@@ -118,6 +117,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
       }
     );
 
+    // eslint-disable-next-line @microsoft/spfx/pair-react-dom-render-unmount
     ReactDom.render(element, this.domElement);
   }
 
@@ -126,7 +126,6 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   protected onAfterResize(newWidth: number): void {
-      this._containerWidth = newWidth;
       this.render();
   }
 

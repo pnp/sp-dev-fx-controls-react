@@ -12,13 +12,13 @@ import { createV9Theme } from '@fluentui/react-migration-v8-v9';
 import { Icon } from '@iconify/react';
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 
-import { HoverReactionsBar } from '../../../controls/HoverReactionsBar';
+import { HoverReactionsBar } from '@pnp/spfx-controls-react/lib/HoverReactionsBar';
 import {
   RenderEmoji,
-} from '../../../controls/HoverReactionsBar/components/reactionPicker/RenderEmoji';
+} from '@pnp/spfx-controls-react/lib/controls/HoverReactionsBar/components/reactionPicker/RenderEmoji';
 import {
   IEmojiInfo,
-} from '../../../controls/HoverReactionsBar/models/IFluentEmoji';
+} from '@pnp/spfx-controls-react/lib/controls/HoverReactionsBar/models/IFluentEmoji';
 
 const useStyles = makeStyles({
   root: {
@@ -53,7 +53,7 @@ export interface ITestControlProps {
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const { themeVariant, context } = props;
+  const { themeVariant } = props;
   const [isOpenHoverReactionBar, setIsOpenHoverReactionBar] = React.useState<boolean>(false);
   const [selectedEmoji, setSelectedEmoji] = React.useState<IEmojiInfo>();
   const divRefAddReaction = React.useRef<HTMLDivElement>(null);

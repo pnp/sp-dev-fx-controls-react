@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import * as React from 'react';
 import {
   IBasePickerStyles,
@@ -128,7 +129,7 @@ import {
   IPeoplePickerContext,
   PeoplePicker,
   PrincipalType,
-} from '@pnp/spfx-controls-react/lib/peoplepicker';
+} from '@pnp/spfx-controls-react/lib/PeoplePicker';
 import { RichText } from '@pnp/spfx-controls-react/lib/RichText';
 import {
   PermissionLevel,
@@ -641,7 +642,7 @@ export default class ControlsTest extends React.Component<
    * @param files
    */
   private _getDropFiles = (files: { name: string; fullPath: string }[]) => {
-    for (var i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       console.log('File name: ' + files[i].name);
       console.log('Folder Path: ' + files[i].fullPath);
     }
@@ -791,10 +792,11 @@ export default class ControlsTest extends React.Component<
 
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
     if (filePickerResult && filePickerResult.length > 0) {
-      for (var i = 0; i < filePickerResult.length; i++) {
+      for (let i = 0; i < filePickerResult.length; i++) {
         const item = filePickerResult[i];
         const fileResultContent = await item.downloadFileContent();
         console.log(fileResultContent);
+        // eslint-disable-next-line require-atomic-updates
         filePickerResult[i].fileSize = fileResultContent.size;
       }
 
@@ -1080,7 +1082,7 @@ export default class ControlsTest extends React.Component<
                 if (!item) {
                   return;
                 }
-                let itemdata = await item.get();
+                const itemdata = await item.get();
                 console.log('Saved item', itemdata);
               }}
               useClientSideValidation={
@@ -1175,7 +1177,7 @@ export default class ControlsTest extends React.Component<
                 <div style={{ margin: 20 }}>
                   <h2>Content Heading 2</h2>
                   <Text variant={'mediumPlus'}>Text </Text>
-                  <TextField></TextField>
+                  <TextField />
                 </div>
               </AccordionItemPanel>
             </AccordionItem>
@@ -1322,8 +1324,7 @@ export default class ControlsTest extends React.Component<
                         value: `${term.Name} (updated)`,
                       };
                     },
-                    applyToTerm: (term: ISPTerm) =>
-                      term.Name === 'internal',
+                    applyToTerm: (term: ISPTerm) => term.Name === 'internal',
                   },
                   {
                     title: 'Hide term',
@@ -1340,9 +1341,8 @@ export default class ControlsTest extends React.Component<
                       };
                     },
                     applyToTerm: (term: ISPTerm) =>
-                      (term.Name.toLowerCase() === 'help desk' ||
-                        term.Name.toLowerCase() ===
-                          'multi-column valo site page'),
+                      term.Name.toLowerCase() === 'help desk' ||
+                      term.Name.toLowerCase() === 'multi-column valo site page',
                   },
                   {
                     title: 'Disable term',
@@ -1603,7 +1603,10 @@ export default class ControlsTest extends React.Component<
             ]}
             resultFilter={(result: IPersonaProps[]) => {
               return result.filter(
-                (p) => ((p as unknown as any)['loginName'] as string).indexOf('.com') !== -1
+                (p) =>
+                  ((p as unknown as any)['loginName'] as string).indexOf(
+                    '.com'
+                  ) !== -1
               );
             }}
             onChange={this._getPeoplePickerItems}
@@ -2105,7 +2108,7 @@ export default class ControlsTest extends React.Component<
               }}
               currentIcon={'Warning'}
               buttonLabel="Icon Picker"
-            ></IconPicker>
+            />
           </div>
           <IconPicker
             buttonLabel={'Icon'}
@@ -2249,7 +2252,7 @@ export default class ControlsTest extends React.Component<
             label="Folder Picker"
             required={true}
             canCreateFolders={true}
-          ></FolderPicker>
+          />
         </div>
         <div
           id="CarouselDiv"
@@ -2423,9 +2426,7 @@ export default class ControlsTest extends React.Component<
             />
           </div>
           <p>
-            <a href="javascript:;" onClick={this.deleteItem}>
-              Deletes second item
-            </a>
+            <a onClick={this.deleteItem}>Deletes second item</a>
           </p>
         </div>
         <div
@@ -2892,7 +2893,7 @@ export default class ControlsTest extends React.Component<
                   this.setState({ showSuccessDialog: false });
                 }}
                 text="OK"
-              ></PrimaryButton>
+              />
             </div>
           </AnimatedDialog>
 
@@ -2915,7 +2916,7 @@ export default class ControlsTest extends React.Component<
                   this.setState({ showErrorDialog: false });
                 }}
                 text="OK"
-              ></PrimaryButton>
+              />
             </div>
           </AnimatedDialog>
         </div>
@@ -2932,7 +2933,7 @@ export default class ControlsTest extends React.Component<
                 locValue.DisplayName + ', ' + locValue.Address?.Street
               );
             }}
-          ></LocationPicker>
+          />
         </div>
         <div
           id="ModernTaxonomyPickerDiv"
@@ -3232,9 +3233,9 @@ export default class ControlsTest extends React.Component<
           <VariantThemeProvider variantType={VariantType.Strong}>
             <Stack tokens={{ childrenGap: 5, padding: 5 }}>
               <Label>
-                This Web Part implements an example on how to use the 'Fluent
+                {`This Web Part implements an example on how to use the 'Fluent
                 UI' theme library and how to apply/generate theme variation for
-                the Web Part itself.
+                the Web Part itself.`}
               </Label>
               <PrimaryButton>Primary Button</PrimaryButton>
               <DefaultButton>Default Button</DefaultButton>
@@ -3408,7 +3409,7 @@ export default class ControlsTest extends React.Component<
   }
 
   private getRandomCollectionFieldData = () => {
-    let result = [];
+    const result = [];
     for (let i = 1; i < 16; i++) {
       const sampleDate = new Date();
       sampleDate.setDate(sampleDate.getDate() + i);
@@ -3437,7 +3438,7 @@ export default class ControlsTest extends React.Component<
   private onItemSelected(items: ITreeItem[]) {
     console.log('items selected: ' + items.length);
   }
-  
+
   private _getPage(page: number) {
     console.log('Page:', page);
   }

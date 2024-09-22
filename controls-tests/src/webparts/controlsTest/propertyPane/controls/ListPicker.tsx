@@ -3,7 +3,7 @@ import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { Spinner } from '@fluentui/react/lib/Spinner';
 import { SPHttpClient } from "@microsoft/sp-http";
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import { ISPList } from '../../../../common/SPEntities';
+import { ISPList } from '@pnp/spfx-controls-react/lib/Common';
 
 export interface IListPickerProps {
     label: string;
@@ -17,7 +17,7 @@ export interface IListPickerProps {
 export interface IListPickerState {
     loading: boolean;
     options: IDropdownOption[];
-    error: string;
+    error?: string;
 }
 
 export class ListPicker extends React.Component<IListPickerProps, IListPickerState> {
@@ -29,7 +29,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
 
         this.state = {
             loading: false,
-            options: undefined,
+            options: [],
             error: undefined
         };
     }
@@ -51,7 +51,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
         this.setState({
             loading: true,
             error: undefined,
-            options: undefined
+            options: []
         });
         let options: IDropdownOption[] = [];
 
@@ -77,7 +77,7 @@ export class ListPicker extends React.Component<IListPickerProps, IListPickerSta
             this.setState({
                 loading: false,
                 error: error.statusText,
-                options: undefined
+                options: []
             });
         });
     }

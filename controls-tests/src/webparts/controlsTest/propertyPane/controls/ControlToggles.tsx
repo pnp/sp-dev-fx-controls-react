@@ -15,7 +15,6 @@ export interface IControlTogglesState {
 }
 
 export class ControlToggles extends React.Component<IControlTogglesProps, IControlTogglesState> {
-    private selectedKey: React.ReactText;
 
     constructor(props: IControlTogglesProps, state: IControlTogglesState) {
         super(props);
@@ -25,9 +24,9 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
         return (
             <div>
                 <TextField label="Search" placeholder="Search Controls" onChange={(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
-                    this.setState({ filter: newValue });
+                    this.setState({ filter: newValue || '' });
                 }} />
-                { this.getValidControls().map((control: string) => {
+                { this.getValidControls().map((control: keyof typeof this.props.controlVisibility) => {
                     if (this.state && this.state.filter && this.state.filter.length > 0 && control.toLowerCase().indexOf(this.state.filter.toLowerCase()) === -1) {
                         return null;
                     }
@@ -37,7 +36,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
                             label={this.getProperCase(control)} 
                             checked={this.props.controlVisibility && this.props.controlVisibility[control] || false}
                             onChange={(e, checked) => {
-                                this.props.onChange(control, checked);
+                                this.props.onChange(control, checked || false);
                             }} 
                         />
                     );
