@@ -37,7 +37,7 @@ export const ProgressStepsIndicator: React.FunctionComponent<IProgressStepsIndic
     labelStepStyles,
     stackStepsStyles,
     componentClasses,
-  } = getProgressStepsIndicatorStyles(themeVariant, currentStep, steps.length);
+  } = getProgressStepsIndicatorStyles(themeVariant);
 
   React.useEffect(() => {
     (() => {

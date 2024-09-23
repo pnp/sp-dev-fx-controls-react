@@ -1,45 +1,60 @@
 import * as React from 'react';
 
 import { useAtom } from 'jotai';
-import { IButtonStyles } from '@fluentui/react/lib/Button';
 import {
+  IButtonStyles,
   ICheckboxProps,
   ICheckboxStyles,
-} from '@fluentui/react/lib/Checkbox';
-import { ICommandBarStyles } from '@fluentui/react/lib/CommandBar';
-import { IIconStyles } from '@fluentui/react/lib/Icon';
-import { IStackStyles } from '@fluentui/react/lib/Stack';
-import {
+  ICommandBarStyles,
+  IIconStyles,
+  IStackStyles,
   mergeStyles,
   mergeStyleSets,
-} from '@fluentui/react/lib/Styling';
-import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
+  IStyleFunctionOrObject,
+} from '@fluentui/react';
 
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
-export const useFileCommandBarStyles = () => {
+export const useFileCommandBarStyles: () => {
+  buttonIconStyles: IIconStyles;
+  checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles>;
+  stackContainerStyles: IStackStyles;
+  controlStyles: {
+    fileIconHeaderIcon: string;
+    fileIconCell: string;
+    fileIconImg: string;
+    separator: string;
+    separatorVertrical: string;
+  };
+  commandBarStyles: ICommandBarStyles;
+  commandbarButtonStyles: IButtonStyles;
+} = () => {
   const [appGlobalState] = useAtom(globalState);
   const { themeVariant, selectedFiles } = appGlobalState;
 
-  const checkBoxStyles: IStyleFunctionOrObject<ICheckboxProps, ICheckboxStyles> = React.useCallback(
+  const checkBoxStyles: IStyleFunctionOrObject<
+    ICheckboxProps,
+    ICheckboxStyles
+  > = React.useCallback(
     (props: ICheckboxProps) => {
       return {
         checkbox: {
-          borderRadius: "50%",
+          borderRadius: '50%',
           borderWidth: 1,
-          borderStyle: "solid",
+          borderStyle: 'solid',
           borderColor: `${themeVariant?.palette?.themePrimary} !important`,
           color: `${themeVariant?.semanticColors.bodyText} !important`,
-          backgroundColor: !props.checked ? themeVariant?.palette.white : themeVariant?.palette.themeLighter,
+          backgroundColor: !props.checked
+            ? themeVariant?.palette.white
+            : themeVariant?.palette.themeLighter,
         },
         root: {
-          alignItems: "center",
+          alignItems: 'center',
 
           borderColor: `${themeVariant?.palette?.themePrimary} !important`,
           color: `${themeVariant?.semanticColors.bodyText} !important`,
-          ":hover": {
-            ".ms-Checkbox-checkbox": {
+          ':hover': {
+            '.ms-Checkbox-checkbox': {
               backgroundColor: `${themeVariant?.palette.themeLight} !important`,
             },
           },
@@ -49,13 +64,13 @@ export const useFileCommandBarStyles = () => {
         },
         text: {
           color: `${themeVariant?.semanticColors.bodyText} !important`,
-          ":hover": {
+          ':hover': {
             color: `${themeVariant?.semanticColors.bodyText} !important`,
           },
         },
         label: {
           color: `${themeVariant?.semanticColors.bodyText} !important`,
-          ":hover": {
+          ':hover': {
             borderColor: `${themeVariant?.palette?.themePrimary} !important`,
             color: `${themeVariant?.semanticColors.bodyText} !important`,
           },
@@ -77,38 +92,38 @@ export const useFileCommandBarStyles = () => {
     return mergeStyleSets({
       fileIconHeaderIcon: {
         padding: 0,
-        fontSize: "16px",
+        fontSize: '16px',
       },
       fileIconCell: mergeStyles({
-        textAlign: "center",
+        textAlign: 'center',
         selectors: {
-          "&:before": {
-            content: ".",
-            display: "inline-block",
-            verticalAlign: "middle",
-            height: "100%",
-            width: "0px",
-            visibility: "hidden",
+          '&:before': {
+            content: '.',
+            display: 'inline-block',
+            verticalAlign: 'middle',
+            height: '100%',
+            width: '0px',
+            visibility: 'hidden',
           },
         },
       }),
       fileIconImg: mergeStyles({
-        verticalAlign: "middle",
-        maxHeight: "16px",
-        maxWidth: "16px",
+        verticalAlign: 'middle',
+        maxHeight: '16px',
+        maxWidth: '16px',
       }),
 
       separator: mergeStyles({
         margin: 20,
-        height: "1px",
+        height: '1px',
         backgroundColor: themeVariant?.palette?.neutralLight,
-        opacity: themeVariant?.isInverted ? "0.2" : "1",
+        opacity: themeVariant?.isInverted ? '0.2' : '1',
       }),
       separatorVertrical: mergeStyles({
         height: 25,
-        width: "1px",
-        borderLeftStyle: "solid",
-        borderLeftWidth: "1px",
+        width: '1px',
+        borderLeftStyle: 'solid',
+        borderLeftWidth: '1px',
         borderLeftColor: themeVariant?.palette?.themePrimary,
       }),
     });
@@ -123,27 +138,28 @@ export const useFileCommandBarStyles = () => {
     };
   }, [themeVariant]);
 
-  const commandbarButtonStyles: IButtonStyles = React.useMemo((): IButtonStyles => {
-    return {
-      rootHovered: {
-        color: `${themeVariant?.semanticColors.bodyText} !important`,
-      },
-      labelHovered: {
-        color: `${themeVariant?.semanticColors.bodyText} !important`,
-      },
-      root: {
-        paddingLeft: 15,
-        display: selectedFiles.length ? "block" : "none",
-        color: themeVariant?.semanticColors.bodyText,
-      },
-    };
-  }, [selectedFiles]);
+  const commandbarButtonStyles: IButtonStyles =
+    React.useMemo((): IButtonStyles => {
+      return {
+        rootHovered: {
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+        },
+        labelHovered: {
+          color: `${themeVariant?.semanticColors.bodyText} !important`,
+        },
+        root: {
+          paddingLeft: 15,
+          display: selectedFiles.length ? 'block' : 'none',
+          color: themeVariant?.semanticColors.bodyText,
+        },
+      };
+    }, [selectedFiles]);
 
   const stackContainerStyles: IStackStyles = React.useMemo(() => {
     return {
       root: {
-        width: "100%",
-        padding: "0 20px",
+        width: '100%',
+        padding: '0 20px',
       },
     };
   }, [themeVariant]);

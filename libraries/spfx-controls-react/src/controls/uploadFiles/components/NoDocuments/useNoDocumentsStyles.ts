@@ -1,20 +1,25 @@
 import * as React from 'react';
 
 import { useAtom } from 'jotai';
-import { IIconStyles } from '@fluentui/react/lib/Icon';
-import { IStackStyles } from '@fluentui/react/lib/Stack';
 import {
+  IIconStyles,
+  IProcessedStyleSet,
+  IStackStyles,
   mergeStyles,
   mergeStyleSets,
-} from '@fluentui/react/lib/Styling';
+} from '@fluentui/react';
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
-export const useNoDocumentsStyles = () => {
+export const useNoDocumentsStyles: () => {
+  stackContainerStyles: IStackStyles;
+  controlStyles: IProcessedStyleSet<{
+    iconStyles: IIconStyles;
+}>
+} = () => {
   const [appGlobalState] = useAtom(globalState);
-  const { themeVariant  } = appGlobalState;
-
+  const { themeVariant } = appGlobalState;
 
   const controlStyles = React.useMemo(
     () =>
@@ -30,18 +35,18 @@ export const useNoDocumentsStyles = () => {
   const stackContainerStyles: IStackStyles = React.useMemo(() => {
     return {
       root: {
-        width: "100%",
-        height:  450,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        width: '100%',
+        height: 450,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: themeVariant?.palette?.neutralLighterAlt,
         borderWidth: 1,
-        borderStyle: "dashed",
+        borderStyle: 'dashed',
         borderColor: themeVariant?.palette?.neutralTertiaryAlt,
       },
     };
-  }, [themeVariant,  ]);
+  }, [themeVariant]);
 
   return { stackContainerStyles, controlStyles };
 };
