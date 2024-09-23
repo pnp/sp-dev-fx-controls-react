@@ -9,11 +9,16 @@
           "`Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)",
           "`DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)"
         ],
-        "fixes": []
+        "fixes": [
+          "Debug Controls in any language [#1882](https://github.com/pnp/sp-dev-fx-controls-react/pull/1882)",
+          "`AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)"
+        ]
       },
       "contributions": [
         "[Guido Zambarda](https://github.com/GuidoZam)",
-        "[srpmtt](https://github.com/srpmtt)"
+        "[Michaël Maillot](https://github.com/michaelmaillot)",
+        "[srpmtt](https://github.com/srpmtt)",
+        "[wilecoyotegenius](https://github.com/wilecoyotegenius)"
       ]
     },
     {
