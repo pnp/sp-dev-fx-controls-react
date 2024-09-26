@@ -404,6 +404,13 @@ declare interface IControlStrings {
   TermSertNaviagtionErrorMessage: string;
 
   HoverReactionBarSearchEmojiPlaceholder: string;
+
+  // Filter Bar
+  AppliedFiltersAriaLabel: string;
+  ClearAllFiltersTitle: string;
+  ClearFilterTitle: string;
+  ClearAllFiltersText: string;
+  FilterOverflowAriaLabel: string;
 }
 
 declare interface IDateTimeStrings {

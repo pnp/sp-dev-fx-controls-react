@@ -200,8 +200,7 @@ import { IPersonaProps, Toggle } from "@fluentui/react";
 import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
 import { GeneralHelper } from "../../../Utilities";
-
-
+import { FilterBar } from "../../../controls/filterBar";
 
 // Used to render document card
 /**
@@ -286,6 +285,34 @@ const toolbarFilters = [{
   title: "filter2"
 }];
 
+const filterBarFilters = [{
+  label: "Title",
+  value: "title 1"
+},
+{
+  label: "Field1",
+  value: "value 1"
+},
+{
+  label: "Title",
+  value: "title 2"
+},
+{
+  label: "Field2",
+  value: "Field 2"
+},
+{
+  label: "Field3",
+  value: "Field 3"
+},
+{
+  label: "Field4",
+  value: "Field 4-1"
+},
+{
+  label: "Field4",
+  value: "Field 4-2"
+}];
 /**
  * Component that can be used to test out the React controls from this project
  */
@@ -515,7 +542,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedFilters: ["filter1"],
       termStoreInfo: null,
       termSetInfo: null,
-      testTerms: []
+      testTerms: [],
+      filters: [...filterBarFilters]
     };
 
     this.peoplePickerContext = {
@@ -773,6 +801,32 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private _onFolderSelect = (folder: IFolder): void => {
     console.log('selected folder', folder);
 
+  }
+
+  private addFilter = () => {
+    const number = Math.floor(Math.random()*10)
+    const i = { label: `Field${number}`, value: `Field ${number}`};
+    this.setState({
+      filters: [...this.state.filters, i]
+    });
+  }
+
+  private onClearFilters = () => {
+    console.log("Cleared all filters");
+    this.setState({ filters: []});
+  }
+
+  private onRemoveFilter = (label: string, value: string) => {
+    console.log(`Cleared ${label} ${value}`);
+    const itm = this.state.filters.find(i => i.label === label && i.value === value);
+    if (itm) {
+        const index = this.state.filters.indexOf(itm);
+        this.state.filters.splice(index, 1)
+
+        this.setState({
+          filters: [...this.state.filters]
+        });
+    }
   }
 
   private _onFileClick = (file: IFileInfo): void => {
@@ -1741,6 +1795,10 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             required={true}
             canCreateFolders={true}
           ></FolderPicker>
+        </div>
+        <div id="FilterBarDiv" className={styles.container} hidden={!controlVisibility.FilterBar}>
+            <FilterBar items={this.state.filters} inlineItemCount={3} onClearFilters={this.onClearFilters} onRemoveFilter={this.onRemoveFilter} />
+            <button onClick={this.addFilter}>Add new filter</button>
         </div>
         <div id="CarouselDiv" className={styles.container} hidden={!controlVisibility.Carousel}>
           <div>

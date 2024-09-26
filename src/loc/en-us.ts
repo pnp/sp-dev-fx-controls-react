@@ -429,5 +429,10 @@ TermSetNavigationNoTerms: "No terms defined",
 
     HoverReactionBarSearchEmojiPlaceholder: "Search emoji",
 
+    AppliedFiltersAriaLabel: "Applied filters",
+    ClearAllFiltersTitle: "Clear all filters",
+    ClearFilterTitle: "Clear filter",
+    ClearAllFiltersText: "Clear filters",
+    FilterOverflowAriaLabel: "More"
 };
 });
