@@ -201,6 +201,7 @@ import { ListItemComments } from "../../../ListItemComments";
 import { ViewPicker } from "../../../controls/viewPicker";
 import { GeneralHelper } from "../../../Utilities";
 import { FilterBar } from "../../../controls/filterBar";
+import { ListItemAttachments } from "../../../ListItemAttachments";
 
 // Used to render document card
 /**
@@ -1025,6 +1026,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
             <PrimaryButton text="Open Web Part Settings" iconProps={{ iconName: 'Settings' }} onClick={this.props.onOpenPropertyPane} />
           </div>
+          <ListItemAttachments listId='e7a3ef63-70f6-4cc1-b95c-1f9eb8af2c8c' context={this.props.context} />
         </div>
         <div id="WebPartTitleDiv" className={styles.container} hidden={!controlVisibility.WebPartTitle}>
           <WebPartTitle displayMode={this.props.displayMode}
