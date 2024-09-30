@@ -1227,6 +1227,10 @@ export class DynamicForm extends React.Component<
           hiddenName = field.HiddenListInternalName;
           termSetId = field.TermSetId;
           anchorId = field.AnchorId;
+          if (item && item[field.InternalName] && item[field.InternalName].hasOwnProperty('__metadata') && item[field.InternalName].hasOwnProperty('results')) {
+            // Some combinations of included packages cause the returned data to be placed in a 'results' sub-property after compilation.
+            item[field.InternalName] = item[field.InternalName]['results'];
+          }
           if (item && item[field.InternalName]) {
             item[field.InternalName].forEach((element) => {
               selectedTags.push({
