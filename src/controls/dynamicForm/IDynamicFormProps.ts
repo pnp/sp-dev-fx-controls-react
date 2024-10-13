@@ -128,9 +128,14 @@ export interface IDynamicFormProps {
   customIcons?: { [columnInternalName: string]: string };
 
   /**
+   * Server relative URL of the folder a new item or file gets created in.
+   * If not set a new item or file will be created in the root folder of the list or library.
+   */
+  folderServerRelativeUrl?: string;
+
+  /**
    * Specify fields custom sorting.
    * The value is the field internal name.
    */
   fieldOrder?: string[]
-
 }
