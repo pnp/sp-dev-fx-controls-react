@@ -7,10 +7,10 @@
 }
 
 .filePickerFolderCardTile {
-  max-width: 176px;
+  width: 10vw;
+  margin: 1vh 0;
   text-align: center;
   outline: none;
-  position: relative;
   @include ms-float(left);
 
   &:hover {
@@ -22,35 +22,40 @@
   }
 
   .filePickerFolderCardImage {
-    position: relative;
-    width: 112px;
-    height: 80px;
-    margin: 24px 32px 0px 32px;
+    height: 100%;
     cursor: pointer;
+    margin: 1vw 0 0;
+
+    .filePickerFolderCoverBack {
+      display: block;
+      position: absolute;
+    }
+
+    .filePickerFolderCoverFront {
+      display: block;
+    }
 
     .filePickerFolderCoverBack,
     .filePickerFolderCoverFront {
-      display: block;
-      position: absolute;
-      left: -3px;
-      right: -3px;
-      bottom: -4px;
+      margin: 0 1vw;
+      width: 8vw;
 
       img {
         border: none;
         padding: 0;
         margin: 0;
+        width: 100%;
       }
     }
   }
 
   .filePickerFolderCardTitle {
     cursor: pointer;
-    font-size: 14px;
+    font-size: $ms-font-size-14;
     overflow:hidden;
     white-space:nowrap;
     text-overflow: ellipsis;
-    padding: 12px 8px;
+    padding: 1vh 0.5vw;
     text-align: center;
   }
 }
