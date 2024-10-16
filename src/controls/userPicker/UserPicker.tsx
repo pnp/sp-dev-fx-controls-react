@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { Provider } from "jotai";
 import { has } from "lodash";
-import { useTheme } from "office-ui-fabric-react";
 
 import {
   FluentProvider,
@@ -15,6 +14,7 @@ import {
   Theme,
 } from "@fluentui/react-components";
 import { createV9Theme } from "@fluentui/react-migration-v8-v9";
+import { useTheme } from "@fluentui/react-theme-provider";
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 
 import { IUserPickerProps } from "./IUserPickerProps";
