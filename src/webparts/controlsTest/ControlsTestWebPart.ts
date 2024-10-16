@@ -1,26 +1,33 @@
-import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import * as React from "react";
+import * as ReactDom from "react-dom";
 
-import * as strings from 'ControlsTestWebPartStrings';
+import * as strings from "ControlsTestWebPartStrings";
 
 import {
   IReadonlyTheme,
   ThemeChangedEventArgs,
   ThemeProvider,
-} from '@microsoft/sp-component-base';
-import { Version } from '@microsoft/sp-core-library';
+} from "@microsoft/sp-component-base";
+import { Version } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField, 
-  PropertyPaneToggle
-} from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+  PropertyPaneTextField,
+  PropertyPaneToggle,
+} from "@microsoft/sp-property-pane";
+import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import ControlsTest from './components/ControlsTest';
-import { IControlsTestProps } from './components/IControlsTestProps';
-import { ControlVisibility, IControlsTestWebPartProps } from './IControlsTestWebPartProps';
-import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
-import { PropertyPaneControlToggles } from './propertyPane/PropertyPaneControlToggles';
+import {
+  ITestControlProps,
+  TestControl,
+} from "./components/TestControl";
+import {
+  ControlVisibility,
+  IControlsTestWebPartProps,
+} from "./IControlsTestWebPartProps";
+import {
+  PropertyPaneControlToggles,
+} from "./propertyPane/PropertyPaneControlToggles";
+import { PropertyPaneListPicker } from "./propertyPane/PropertyPaneListPicker";
 
 /**
  * Web part to test the React controls
@@ -72,7 +79,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-     /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
+      const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
@@ -80,7 +87,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
           themeVariant: this._themeVariant,
 
        }
-     ); */
+     );
 
   let listItemId: number = Number(this.properties.dynamicFormListItemId);
   if (listItemId < 1 || isNaN(listItemId)) {
@@ -88,7 +95,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
   console.log(listItemId);
 
-  const element: React.ReactElement<IControlsTestProps> = React.createElement(
+/*   const element: React.ReactElement<IControlsTestProps> = React.createElement(
     ControlsTest,
       {
 
@@ -116,7 +123,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         },
         paginationTotalPages: this.properties.paginationTotalPages
       }
-    );
+    ); */
 
     ReactDom.render(element, this.domElement);
   }
