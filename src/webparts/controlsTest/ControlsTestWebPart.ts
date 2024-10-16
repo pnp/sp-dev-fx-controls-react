@@ -16,10 +16,8 @@ import {
 } from "@microsoft/sp-property-pane";
 import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
 
-import {
-  ITestControlProps,
-  TestControl,
-} from "./components/TestControl";
+import ControlsTest from "./components/ControlsTest";
+import { IControlsTestProps } from "./components/IControlsTestProps";
 import {
   ControlVisibility,
   IControlsTestWebPartProps,
@@ -79,7 +77,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-      const element: React.ReactElement<ITestControlProps> = React.createElement(
+    /*   const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
@@ -87,7 +85,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
           themeVariant: this._themeVariant,
 
        }
-     );
+     ); */
 
   let listItemId: number = Number(this.properties.dynamicFormListItemId);
   if (listItemId < 1 || isNaN(listItemId)) {
@@ -95,7 +93,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
   console.log(listItemId);
 
-/*   const element: React.ReactElement<IControlsTestProps> = React.createElement(
+  const element: React.ReactElement<IControlsTestProps> = React.createElement(
     ControlsTest,
       {
 
@@ -123,7 +121,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         },
         paginationTotalPages: this.properties.paginationTotalPages
       }
-    ); */
+    );
 
     ReactDom.render(element, this.domElement);
   }
