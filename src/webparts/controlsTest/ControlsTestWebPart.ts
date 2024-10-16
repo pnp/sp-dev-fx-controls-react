@@ -1,31 +1,29 @@
-import * as React from "react";
-import * as ReactDom from "react-dom";
-
-import * as strings from "ControlsTestWebPartStrings";
+import * as React from 'react';
+import * as ReactDom from 'react-dom';
 
 import {
   IReadonlyTheme,
   ThemeChangedEventArgs,
   ThemeProvider,
-} from "@microsoft/sp-component-base";
-import { Version } from "@microsoft/sp-core-library";
+} from '@microsoft/sp-component-base';
+import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneToggle,
-} from "@microsoft/sp-property-pane";
-import { BaseClientSideWebPart } from "@microsoft/sp-webpart-base";
+} from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
-import ControlsTest from "./components/ControlsTest";
-import { IControlsTestProps } from "./components/IControlsTestProps";
+import ControlsTest from './components/ControlsTest';
+import { IControlsTestProps } from './components/IControlsTestProps';
 import {
   ControlVisibility,
   IControlsTestWebPartProps,
-} from "./IControlsTestWebPartProps";
+} from './IControlsTestWebPartProps';
 import {
   PropertyPaneControlToggles,
-} from "./propertyPane/PropertyPaneControlToggles";
-import { PropertyPaneListPicker } from "./propertyPane/PropertyPaneListPicker";
+} from './propertyPane/PropertyPaneControlToggles';
+import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
 
 /**
  * Web part to test the React controls
@@ -140,11 +138,11 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: 'Change settings below'
           },
           groups: [
             {
-              groupName: strings.ControlSettingsGroupName,
+              groupName: 'Control Settings',
               groupFields: [
                 PropertyPaneTextField('title', {
                   label: 'Web Part Title'
@@ -184,7 +182,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
               ]
             },
             {
-              groupName: strings.ControlsGroupName,
+              groupName: 'Controls',
               groupFields: [
                 new PropertyPaneControlToggles('controlVisibility', {
                   controlVisibility: this.properties.controlVisibility,

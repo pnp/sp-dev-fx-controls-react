@@ -3,15 +3,34 @@ import { IFile, FilesQueryResult, ILibrary } from "./FileBrowserService.types";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { GeneralHelper } from "../common/utilities/GeneralHelper";
 
+/**
+ * File Browser Service
+ */
 export class FileBrowserService {
+  // Number of items to download
   protected itemsToDownloadCount: number;
+
+  // Component context
   protected context: BaseComponentContext;
+
+  // Site absolute URL
   protected siteAbsoluteUrl: string;
 
+  // Drive access token (additional file info)
   protected driveAccessToken: string;
+
+  // Media base URL (additional file info)
   protected mediaBaseUrl: string;
+
+  // Caller stack (additional file info)
   protected callerStack: string;
 
+  /**
+   * Constructor
+   * @param context Component context
+   * @param itemsToDownloadCount Number of items to download
+   * @param siteAbsoluteUrl Site absolute URL
+   */
   constructor(context: BaseComponentContext, itemsToDownloadCount: number = 100, siteAbsoluteUrl?: string) {
     this.context = context;
     this.siteAbsoluteUrl = siteAbsoluteUrl || context.pageContext.web.absoluteUrl;
@@ -23,8 +42,11 @@ export class FileBrowserService {
   /**
    * Gets files from current sites library
    * @param listUrl web-relative url of the list
-   * @param folderPath
-   * @param acceptedFilesExtensions
+   * @param folderPath Folder path to get items from
+   * @param acceptedFilesExtensions File extensions to filter the results
+   * @param nextPageQueryStringParams Query string parameters to get the next page of results
+   * @param sortBy Field to sort by
+   * @param isDesc Sort in descending order
    */
   public getListItems = async (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string, sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
@@ -49,6 +71,10 @@ export class FileBrowserService {
 
   /**
    * Provides the URL for file preview.
+   * @param file File to get thumbnail URL
+   * @param thumbnailWidth Thumbnail width
+   * @param thumbnailHeight Thumbnail height
+   * @returns Thumbnail URL with the specified dimensions
    */
   public getFileThumbnailUrl = (file: IFile, thumbnailWidth: number, thumbnailHeight: number): string => {
     const thumbnailUrl = `${this.mediaBaseUrl}/transform/thumbnail?provider=spo&inputFormat=${file.fileType}&cs=${this.callerStack}&docid=${file.spItemUrl}&${this.driveAccessToken}&width=${thumbnailWidth}&height=${thumbnailHeight}`;
@@ -58,6 +84,8 @@ export class FileBrowserService {
 
   /**
    * Gets document and media libraries from the site
+   * @param includePageLibraries Include page libraries (default `false`)
+   * @returns Media libraries information
    */
   public getSiteMediaLibraries = async (includePageLibraries: boolean = false): Promise<ILibrary[] | undefined> => {
     try {
@@ -83,6 +111,8 @@ export class FileBrowserService {
 
   /**
    * Gets document and media libraries from the site
+   * @param internalName Internal name of the library
+   * @returns Library name
    */
   public getLibraryNameByInternalName = async (internalName: string): Promise<string> => {
     try {
@@ -107,6 +137,9 @@ export class FileBrowserService {
 
   /**
    * Downloads document content from SP location.
+   * @param absoluteFileUrl Absolute URL of the file
+   * @param fileName Name of the file
+   * @returns File content
    */
   public downloadSPFileContent = async (absoluteFileUrl: string, fileName: string): Promise<File> => {
     try {
@@ -158,24 +191,9 @@ export class FileBrowserService {
   }
 
   /**
-   * Gets the Title of the current Web
-   * @returns SharePoint Site Title
+   * Gets the Title and Id of the current Web
+   * @returns SharePoint Site Title and Id
    */
-  public getSiteTitle = async (): Promise<string> => {
-    const restApi = `${this.siteAbsoluteUrl}/_api/web?$select=Title`;
-    const webResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
-
-    if (!webResult || !webResult.ok) {
-      throw new Error(`Something went wrong when executing request. Status='${webResult.status}'`);
-    }
-    if (!webResult || !webResult) {
-      throw new Error(`Cannot read data from the results.`);
-    }
-    const webJson = await webResult.json();
-    return webJson.Title;
-
-  }
-
   public getSiteTitleAndId = async (): Promise<{ title: string, id: string }> => {
     const restApi = `${this.siteAbsoluteUrl}/_api/web?$select=Title,Id`;
     const webResult = await this.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
@@ -193,9 +211,12 @@ export class FileBrowserService {
 
   /**
    * Executes query to load files with possible extension filtering
-   * @param restApi
-   * @param folderPath
-   * @param acceptedFilesExtensions
+   * @param restApi REST API URL
+   * @param folderPath Folder path to get items from
+   * @param acceptedFilesExtensions File extensions to filter the results
+   * @param sortBy Field to sort by
+   * @param isDesc Sort in descending order
+   * @returns Files query result
    */
   protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensions?: string[], sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
@@ -243,7 +264,8 @@ export class FileBrowserService {
 
   /**
    * Generates CamlQuery files filter.
-   * @param accepts
+   * @param accepts File extensions to filter the results
+   * @returns CamlQuery filter
    */
   protected getFileTypeFilter(accepts: string[]): string {
     let fileFilter: string = "";
@@ -264,6 +286,10 @@ export class FileBrowserService {
 
   /**
    * Generates Files CamlQuery ViewXml
+   * @param accepts File extensions to filter the results
+   * @param sortBy Field to sort by
+   * @param isDesc Sort in descending order
+   * @returns CamlQuery ViewXml
    */
   protected getFilesCamlQueryViewXml = (accepts: string[], sortBy: string, isDesc: boolean): string => {
     const fileFilter: string = this.getFileTypeFilter(accepts);
@@ -316,6 +342,8 @@ export class FileBrowserService {
 
   /**
    * Converts REST call results to IFile
+   * @param fileItem File item from REST call
+   * @returns File information
    */
   protected parseFileItem = (fileItem: any): IFile => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const modifiedFriendly: string = fileItem["Modified.FriendlyDisplay"];
@@ -348,6 +376,12 @@ export class FileBrowserService {
     return file;
   }
 
+  /**
+   * Converts REST call results to ILibrary
+   * @param libItem Library item from REST call
+   * @param webUrl Web URL
+   * @returns Library information
+   */
   protected parseLibItem = (libItem: any, webUrl: string): ILibrary => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const library: ILibrary = {
       title: libItem.Title,
@@ -361,12 +395,18 @@ export class FileBrowserService {
 
   /**
    * Creates an absolute URL
+   * @param relativeUrl Relative URL
+   * @returns Absolute URL
    */
   protected buildAbsoluteUrl = (relativeUrl: string): string => {
     const siteUrl: string = GeneralHelper.getAbsoluteDomainUrl(this.siteAbsoluteUrl);
     return `${siteUrl}${relativeUrl.indexOf('/') === 0 ? '' : '/'}${relativeUrl}`;
   }
 
+  /**
+   * Processes the response from the REST call to get additional information for the requested file
+   * @param fileResponse REST call response
+   */
   protected processResponse = (fileResponse: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     // Extract media base URL
     this.mediaBaseUrl = fileResponse.ListSchema[".mediaBaseUrl"];

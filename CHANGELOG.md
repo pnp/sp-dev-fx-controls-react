@@ -1,6 +1,53 @@
 # Releases
 
+## 3.20.0
+
+### Enhancements
+
+- `Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)
+- `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
+- `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
+
+### Fixes
+
+- Debug Controls in any language [#1882](https://github.com/pnp/sp-dev-fx-controls-react/pull/1882)
+- `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius).
+
 ## 3.19.0
+
+### Enhancements
+
+- SharePoint Framework v1.19.0 support [#1857](https://github.com/pnp/sp-dev-fx-controls-react/pull/1857)
+- `DynamicForm`: enable/disable save button [#1810](https://github.com/pnp/sp-dev-fx-controls-react/pull/1810)
+- `PeoplePicker`: add new prop - `useSubstrateSearch` [#1819](https://github.com/pnp/sp-dev-fx-controls-react/pull/1819)
+- `SitePicker`: add button to clear single / multiple selection [#1839](https://github.com/pnp/sp-dev-fx-controls-react/pull/1839)
+
+### Fixes
+
+- `DynamicForm`: more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
+- `Richtext`: can not undo ordered lists [#1135](https://github.com/pnp/sp-dev-fx-controls-react/issues/1135)
+- `FilePicker`: fixing organization tab browsing issue [#1861](https://github.com/pnp/sp-dev-fx-controls-react/pull/1861)
+- `PeoplePicker`: method to clear the array [#1838](https://github.com/pnp/sp-dev-fx-controls-react/pull/1838)
+- `SitePicker`: documentation patch [#1842](https://github.com/pnp/sp-dev-fx-controls-react/pull/1842)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [Luccas Castro](https://github.com/DevPio), [Michaël Maillot](https://github.com/michaelmaillot), [Niels Söth](https://github.com/nsoeth), [srpmtt](https://github.com/srpmtt).
+
+## 3.18.1
+
+### Fixes
+
+- `FilePicker`: Fix issue with adding link by typing in 'From a link' tab [#1814](https://github.com/pnp/sp-dev-fx-controls-react/pull/1814)
+- Update nl-nl.ts [#1823](https://github.com/pnp/sp-dev-fx-controls-react/pull/1823)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Elio Struyf](https://github.com/estruyf).
 
 ## 3.18.0
 

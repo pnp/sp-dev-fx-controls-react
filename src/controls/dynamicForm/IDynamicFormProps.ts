@@ -14,6 +14,10 @@ export interface IDynamicFormProps {
    */
   disabled?: boolean;
   /**
+   * Specify if save button is disabled.
+   */
+  saveDisabled?: boolean;
+  /**
    * List id
    */
   listId: string;
@@ -122,4 +126,11 @@ export interface IDynamicFormProps {
    * The key is the field internal name and the value is the Fluent UI icon name.
    */
   customIcons?: { [columnInternalName: string]: string };
+
+  /**
+   * Specify fields custom sorting.
+   * The value is the field internal name.
+   */
+  fieldOrder?: string[]
+
 }
