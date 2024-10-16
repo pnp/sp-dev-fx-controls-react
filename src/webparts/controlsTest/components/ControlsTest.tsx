@@ -1,25 +1,25 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { debounce } from "lodash";
+import { debounce } from 'lodash';
 
-import { IPersonaProps } from "@fluentui/react";
+import { IPersonaProps } from '@fluentui/react';
 import {
   ExclamationCircleIcon,
   Flex,
   ScreenshareIcon,
   ShareGenericIcon,
   Text as NorthstarText,
-} from "@fluentui/react-northstar";
+} from '@fluentui/react-northstar';
 import {
   DefaultButton,
   PrimaryButton,
-} from "@fluentui/react/lib/Button";
-import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
+} from '@fluentui/react/lib/Button';
+import { DayOfWeek } from '@fluentui/react/lib/DateTimeUtilities';
 import {
   DialogFooter,
   DialogType,
   IDialogContentProps,
-} from "@fluentui/react/lib/Dialog";
+} from '@fluentui/react/lib/Dialog';
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -28,38 +28,38 @@ import {
   DocumentCardTitle,
   DocumentCardType,
   IDocumentCardPreviewProps,
-} from "@fluentui/react/lib/DocumentCard";
+} from '@fluentui/react/lib/DocumentCard';
 import {
   Dropdown,
   IDropdownOption,
-} from "@fluentui/react/lib/Dropdown";
-import { IIconProps } from "@fluentui/react/lib/Icon";
-import { ImageFit } from "@fluentui/react/lib/Image";
-import { Label } from "@fluentui/react/lib/Label";
-import { Link } from "@fluentui/react/lib/Link";
-import { IModalProps } from "@fluentui/react/lib/Modal";
-import { PanelType } from "@fluentui/react/lib/Panel";
+} from '@fluentui/react/lib/Dropdown';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import { ImageFit } from '@fluentui/react/lib/Image';
+import { Label } from '@fluentui/react/lib/Label';
+import { Link } from '@fluentui/react/lib/Link';
+import { IModalProps } from '@fluentui/react/lib/Modal';
+import { PanelType } from '@fluentui/react/lib/Panel';
 import {
   IBasePickerStyles,
   ITag,
-} from "@fluentui/react/lib/Pickers";
-import { Stack } from "@fluentui/react/lib/Stack";
-import { mergeStyles } from "@fluentui/react/lib/Styling";
-import { Text } from "@fluentui/react/lib/Text";
-import { TextField } from "@fluentui/react/lib/TextField";
-import { ISize } from "@fluentui/react/lib/Utilities";
+} from '@fluentui/react/lib/Pickers';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { mergeStyles } from '@fluentui/react/lib/Styling';
+import { Text } from '@fluentui/react/lib/Text';
+import { TextField } from '@fluentui/react/lib/TextField';
+import { ISize } from '@fluentui/react/lib/Utilities';
 import {
   DisplayMode,
   Environment,
   EnvironmentType,
   Guid,
   ServiceScope,
-} from "@microsoft/sp-core-library";
-import { SPHttpClient } from "@microsoft/sp-http";
-import { SPPermission } from "@microsoft/sp-page-context";
-import { IFileInfo } from "@pnp/sp/files";
+} from '@microsoft/sp-core-library';
+import { SPHttpClient } from '@microsoft/sp-http';
+import { SPPermission } from '@microsoft/sp-page-context';
+import { IFileInfo } from '@pnp/sp/files';
 
-import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
+import { AdaptiveCardDesignerHost } from '../../../AdaptiveCardDesignerHost';
 import {
   Action,
   AdaptiveCardHost,
@@ -67,156 +67,158 @@ import {
   CardElement,
   CardObjectRegistry,
   HostCapabilities,
-} from "../../../AdaptiveCardHost";
-import { AnimatedDialog } from "../../../AnimatedDialog";
+} from '../../../AdaptiveCardHost';
+import { AnimatedDialog } from '../../../AnimatedDialog';
 import {
   ChartControl,
   ChartType,
-} from "../../../ChartControl";
+} from '../../../ChartControl';
 import {
   Accordion as AccessibleAccordion,
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
   AccordionItemPanel,
-} from "../../../controls/accessibleAccordion";
-import { Accordion } from "../../../controls/accordion";
+} from '../../../controls/accessibleAccordion';
+import { Accordion } from '../../../controls/accordion';
 import {
   Carousel,
   CarouselButtonsDisplay,
   CarouselButtonsLocation,
   CarouselIndicatorsDisplay,
   CarouselIndicatorShape,
-} from "../../../controls/carousel";
+} from '../../../controls/carousel';
 import {
   Dashboard,
   WidgetSize,
-} from "../../../controls/dashboard";
+} from '../../../controls/dashboard';
 import {
   TimeDisplayControlType,
-} from "../../../controls/dateTimePicker/TimeDisplayControlType";
-import { DynamicForm } from "../../../controls/dynamicForm";
-import { IconPicker } from "../../../controls/iconPicker";
+} from '../../../controls/dateTimePicker/TimeDisplayControlType';
+import { DynamicForm } from '../../../controls/dynamicForm';
+import { IconPicker } from '../../../controls/iconPicker';
 import {
   ComboBoxListItemPicker,
-} from "../../../controls/listItemPicker/ComboBoxListItemPicker";
+} from '../../../controls/listItemPicker/ComboBoxListItemPicker';
 import {
   ILocationPickerItem,
-} from "../../../controls/locationPicker/ILocationPicker";
+} from '../../../controls/locationPicker/ILocationPicker';
 import {
   LocationPicker,
-} from "../../../controls/locationPicker/LocationPicker";
+} from '../../../controls/locationPicker/LocationPicker';
 import {
   ModernTaxonomyPicker,
-} from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
-import { MyTeams } from "../../../controls/MyTeams";
-import { Pagination } from "../../../controls/pagination";
+} from '../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker';
+import { MyTeams } from '../../../controls/MyTeams';
+import { Pagination } from '../../../controls/pagination';
 import {
   IPeoplePickerContext,
   PeoplePicker,
   PrincipalType,
-} from "../../../controls/peoplepicker";
-import { SitePicker } from "../../../controls/sitePicker/SitePicker";
-import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
+} from '../../../controls/peoplepicker';
+import { SitePicker } from '../../../controls/sitePicker/SitePicker';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import {
   TermActionsDisplayMode,
-} from "../../../controls/taxonomyPicker/termActions";
-import { Toolbar } from "../../../controls/toolbar";
+} from '../../../controls/taxonomyPicker/termActions';
+import { Toolbar } from '../../../controls/toolbar';
 import {
   ITreeItem,
   TreeItemActionsDisplayMode,
   TreeView,
   TreeViewSelectionMode,
-} from "../../../controls/treeView";
-import { UploadFiles } from "../../../controls/uploadFiles";
+} from '../../../controls/treeView';
+import { UploadFiles } from '../../../controls/uploadFiles';
 import {
   VariantThemeProvider,
   VariantType,
-} from "../../../controls/variantThemeProvider";
-import { ViewPicker } from "../../../controls/viewPicker";
+} from '../../../controls/variantThemeProvider';
+import { ViewPicker } from '../../../controls/viewPicker';
 import {
   DateConvention,
   DateTimePicker,
   TimeConvention,
-} from "../../../DateTimePicker";
-import { DragDropFiles } from "../../../DragDropFiles";
-import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
+} from '../../../DateTimePicker';
+import { DragDropFiles } from '../../../DragDropFiles';
+import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
 import {
   CustomCollectionFieldType,
   FieldCollectionData,
-} from "../../../FieldCollectionData";
-import { FieldPicker } from "../../../FieldPicker";
+} from '../../../FieldCollectionData';
+import { FieldPicker } from '../../../FieldPicker';
 import {
   FilePicker,
   IFilePickerResult,
-} from "../../../FilePicker";
+} from '../../../FilePicker';
 import {
   ApplicationType,
   FileTypeIcon,
   IconType,
   ImageSize,
-} from "../../../FileTypeIcon";
+} from '../../../FileTypeIcon';
 import {
   FolderExplorer,
   IBreadcrumbItem,
   IFolder,
-} from "../../../FolderExplorer";
-import { FolderPicker } from "../../../FolderPicker";
-import { GridLayout } from "../../../GridLayout";
-import { IFrameDialog } from "../../../IFrameDialog";
-import { IFramePanel } from "../../../IFramePanel";
-import { ListItemComments } from "../../../ListItemComments";
-import { ListItemPicker } from "../../../ListItemPicker";
-import { ListPicker } from "../../../ListPicker";
+} from '../../../FolderExplorer';
+import { FolderPicker } from '../../../FolderPicker';
+import { GridLayout } from '../../../GridLayout';
+import { IFrameDialog } from '../../../IFrameDialog';
+import { IFramePanel } from '../../../IFramePanel';
+import { ListItemAttachments } from '../../../ListItemAttachments';
+import { ListItemComments } from '../../../ListItemComments';
+import { ListItemPicker } from '../../../ListItemPicker';
+import { ListPicker } from '../../../ListPicker';
 import {
   GroupOrder,
   IGrouping,
   IViewField,
   ListView,
   SelectionMode,
-} from "../../../ListView";
+} from '../../../ListView';
 import {
   Map,
   MapType,
-} from "../../../Map";
+} from '../../../Map';
 import {
   ModernAudio,
   ModernAudioLabelPosition,
-} from "../../../ModernAudio";
+} from '../../../ModernAudio';
 import {
   SPTaxonomyService,
   TaxonomyTree,
-} from "../../../ModernTaxonomyPicker";
-import { Placeholder } from "../../../Placeholder";
+} from '../../../ModernTaxonomyPicker';
+import { Placeholder } from '../../../Placeholder';
 import {
   IProgressAction,
   Progress,
-} from "../../../Progress";
-import { RichText } from "../../../RichText";
+} from '../../../Progress';
+import { RichText } from '../../../RichText';
 import {
   PermissionLevel,
   SecurityTrimmedControl,
-} from "../../../SecurityTrimmedControl";
-import { ITerm } from "../../../services/ISPTermStorePickerService";
+} from '../../../SecurityTrimmedControl';
+import { ITerm } from '../../../services/ISPTermStorePickerService';
 import SPTermStorePickerService
-  from "../../../services/SPTermStorePickerService";
-import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
+  from '../../../services/SPTermStorePickerService';
+import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import {
   IPickerTerms,
   TaxonomyPicker,
   UpdateType,
-} from "../../../TaxonomyPicker";
-import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import { TeamPicker } from "../../../TeamPicker";
-import { WebPartTitle } from "../../../WebPartTitle";
-import styles from "./ControlsTest.module.scss";
+} from '../../../TaxonomyPicker';
+import { TeamChannelPicker } from '../../../TeamChannelPicker';
+import { TeamPicker } from '../../../TeamPicker';
+import { GeneralHelper } from '../../../Utilities';
+import { WebPartTitle } from '../../../WebPartTitle';
+import styles from './ControlsTest.module.scss';
 import {
   ControlsTestEnhancedThemeProvider,
   ControlsTestEnhancedThemeProviderFunctionComponent,
-} from "./ControlsTestEnhancedThemeProvider";
-import { IControlsTestProps } from "./IControlsTestProps";
-import { IControlsTestState } from "./IControlsTestState";
-import { TestControl } from "./TestControl";
+} from './ControlsTestEnhancedThemeProvider';
+import { IControlsTestProps } from './IControlsTestProps';
+import { IControlsTestState } from './IControlsTestState';
+import { TestControl } from './TestControl';
 
 // Used to render document card
 /**
@@ -752,13 +754,15 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
-    this.setState({ filePickerResult: filePickerResult });
     if (filePickerResult && filePickerResult.length > 0) {
       for (var i = 0; i < filePickerResult.length; i++) {
         const item = filePickerResult[i];
         const fileResultContent = await item.downloadFileContent();
         console.log(fileResultContent);
+        filePickerResult[i].fileSize = fileResultContent.size;
       }
+
+      this.setState({ filePickerResult: filePickerResult });
     }
   }
 
@@ -919,6 +923,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }];
 
     const linkExample = { href: "#" };
+    const customizedLinkExample = {
+      href: "#",
+      title: "This is a customized link!",
+      color: "red",
+      target: "_top"
+    };
     const calloutItemsExample = [
       {
         id: "action_1",
@@ -978,6 +988,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
             <PrimaryButton text="Open Web Part Settings" iconProps={{ iconName: 'Settings' }} onClick={this.props.onOpenPropertyPane} />
           </div>
+          <ListItemAttachments listId='e7a3ef63-70f6-4cc1-b95c-1f9eb8af2c8c' context={this.props.context} />
         </div>
         <div id="WebPartTitleDiv" className={styles.container} hidden={!controlVisibility.WebPartTitle}>
           <WebPartTitle displayMode={this.props.displayMode}
@@ -1351,7 +1362,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             personSelectionLimit={1}
             ensureUser={true}
             principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
-            onChange={this._getPeoplePickerItems} />
+            onChange={this._getPeoplePickerItems}
+            useSubstrateSearch={false} />
 
           <PeoplePicker context={this.peoplePickerContext}
             titleText="People Picker with filter for '.com'"
@@ -1869,7 +1881,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   FileName: {this.state.filePickerResult[0].fileName}
                 </div>
                 <div>
-                  File size: {this.state.filePickerResult[0].fileSize}
+                  File size: {GeneralHelper.formatBytes(this.state.filePickerResult[0].fileSize, 2)}
                 </div>
               </div>
             }
@@ -2008,7 +2020,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               title: "Card 1",
               desc: "Last updated Monday, April 4 at 11:15 AM (PT)",
               widgetActionGroup: calloutItemsExample,
-              size: WidgetSize.Triple,
+              size: WidgetSize.Quadruple,
               body: [
                 {
                   id: "t1",
@@ -2061,7 +2073,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {
               title: "Card 2",
               size: WidgetSize.Single,
-              link: linkExample,
+              link: customizedLinkExample,
             },
             {
               title: "Card 3",
@@ -2071,7 +2083,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             {
               title: "Card 4",
               size: WidgetSize.Single,
-              link: linkExample,
+              link: customizedLinkExample,
             },
             {
               title: "Card 5",
