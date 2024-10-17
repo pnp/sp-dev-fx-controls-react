@@ -1,8 +1,6 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
-import * as strings from 'ControlsTestWebPartStrings';
-
 import {
   IReadonlyTheme,
   ThemeChangedEventArgs,
@@ -135,11 +133,11 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: 'Change settings below'
           },
           groups: [
             {
-              groupName: strings.ControlSettingsGroupName,
+              groupName: 'Control Settings',
               groupFields: [
                 PropertyPaneTextField('title', {
                   label: 'Web Part Title'
@@ -179,7 +177,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
               ]
             },
             {
-              groupName: strings.ControlsGroupName,
+              groupName: 'Controls',
               groupFields: [
                 new PropertyPaneControlToggles('controlVisibility', {
                   controlVisibility: this.properties.controlVisibility,
