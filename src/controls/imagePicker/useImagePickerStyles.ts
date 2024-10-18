@@ -2,7 +2,7 @@ import {
   makeStyles,
   shorthands,
   tokens,
-} from "@fluentui/react-components";
+} from '@fluentui/react-components';
 
 export const useImagePickerStyles = makeStyles({
   root: {
@@ -11,7 +11,6 @@ export const useImagePickerStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "start",
     alignItems: "start",
-
   },
   grid: {
     display: "grid",
@@ -37,8 +36,7 @@ export const useImagePickerStyles = makeStyles({
     justifyContent: "start",
     alignItems: "stretch",
     paddingTop: "15px",
-
-    ...shorthands.gap("10px"),
+    gap: "10px",
   },
   buttonContainer: {
     display: "flex",
@@ -60,7 +58,7 @@ export const useImagePickerStyles = makeStyles({
     backgroundColor: "transparent",
     ...shorthands.border(`0px none transparent`),
     ...shorthands.padding("0px"),
-    ...shorthands.overflow("hidden"),
+    overflow: "hidden",
   },
   stockImageContainer: {
     paddingTop: "10px",
@@ -73,7 +71,7 @@ export const useImagePickerStyles = makeStyles({
     height: "500px",
     ...shorthands.overflow("hidden"),
   },
-  renderImageContainer : {
+  renderImageContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

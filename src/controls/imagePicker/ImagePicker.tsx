@@ -1,23 +1,40 @@
-import * as React from "react";
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import * as React from 'react';
 
-import strings from "ControlStrings";
-import { useAtom } from "jotai";
+import strings from 'ControlStrings';
+import { useAtom } from 'jotai';
 
+import { css } from '@emotion/css';
 import {
   Button,
   Image,
-} from "@fluentui/react-components";
+} from '@fluentui/react-components';
 import {
   Delete16Regular,
   Image20Regular,
-} from "@fluentui/react-icons";
-import { BaseComponentContext } from "@microsoft/sp-component-base";
+} from '@fluentui/react-icons';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 
-import { contextState } from "./atoms/contextState";
-import { IFilePickerResult } from "./IFilePickerResult";
+import { contextState } from './atoms/contextState';
+import { IFilePickerResult } from './IFilePickerResult';
 /* import { RenderSpinner } from "./RenderSpninner/RenderSpinner"; */
-import { SelectFromSharePoint } from "./selectFromSharePoint";
-import { useImagePickerStyles } from "./useImagePickerStyles";
+import { SelectFromSharePoint } from './selectFromSharePoint';
+import { useImagePickerStyles } from './useImagePickerStyles';
+
+const maxWidth = 200;
+const maxHeight = 200;
+
+const useStyles = () => {
+  return {
+    image: css({
+      minWidth: maxWidth,
+      maxWidth: maxWidth,
+      height: maxHeight,
+      objectPosition: "top center",
+    }),
+  };
+};
 
 export interface IImagePickerProps {
   onFileSelected: (file: IFilePickerResult) => void;
@@ -39,6 +56,7 @@ const RenderPreviewImage = (props: { selectedImageFileUrl: string }): JSX.Elemen
   const maxWidth = 200;
   const maxHeight = 200;
   const styles = useImagePickerStyles();
+  const imageStyles = useStyles();
 
   if (!selectedImageFileUrl) {
     return null;
@@ -47,12 +65,7 @@ const RenderPreviewImage = (props: { selectedImageFileUrl: string }): JSX.Elemen
   return (
     <>
       <div className={styles.renderImageContainer}>
-        <Image
-          src={selectedImageFileUrl}
-          fit="cover"
-          style={{ minWidth: maxWidth, maxWidth: maxWidth, height: maxHeight }}
-          alt="Selected Image"
-        />
+        <Image src={selectedImageFileUrl} fit="cover" className={imageStyles.image} alt="Selected Image" />
       </div>
     </>
   );
@@ -130,7 +143,6 @@ export const ImagePicker: React.FunctionComponent<IImagePickerProps> = (
           onFileSelected={async (file: IFilePickerResult) => {
             onFileSelected(file);
             setSelectedImageFileUrl(file.previewDataUrl);
-
             onDismiss();
           }}
         />

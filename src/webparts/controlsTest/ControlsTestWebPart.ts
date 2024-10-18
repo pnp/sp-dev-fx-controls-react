@@ -9,16 +9,21 @@ import {
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField, 
-  PropertyPaneToggle
+  PropertyPaneTextField,
+  PropertyPaneToggle,
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
-import { ControlVisibility, IControlsTestWebPartProps } from './IControlsTestWebPartProps';
+import {
+  ControlVisibility,
+  IControlsTestWebPartProps,
+} from './IControlsTestWebPartProps';
+import {
+  PropertyPaneControlToggles,
+} from './propertyPane/PropertyPaneControlToggles';
 import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
-import { PropertyPaneControlToggles } from './propertyPane/PropertyPaneControlToggles';
 
 /**
  * Web part to test the React controls
@@ -70,7 +75,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   }
 
   public render(): void {
-     /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
+    /*  const element: React.ReactElement<ITestControlProps> = React.createElement(
 
       TestControl,
        {
@@ -78,8 +83,8 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
           themeVariant: this._themeVariant,
 
        }
-     ); */
-
+     );
+ */
   let listItemId: number = Number(this.properties.dynamicFormListItemId);
   if (listItemId < 1 || isNaN(listItemId)) {
     listItemId = undefined;

@@ -21,6 +21,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@emotion/css": "^11.13.4",
     "@fluentui/merge-styles": "8.5.12",
     "@fluentui/react": "8.106.4",
     "@fluentui/react-components": "^9.32.1",
