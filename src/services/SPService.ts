@@ -240,7 +240,12 @@ export default class SPService implements ISPService {
         orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} />`;
       }
 
-      const camlQuery = `<View><Query><Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where>${orderByStr}</Query></View>`;
+      let filterPart = ""
+      if (filterText) {
+        filterPart = `<Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where>`
+      }
+
+      const camlQuery = `<View><Query>${filterPart}${orderByStr}</Query></View>`;
 
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
