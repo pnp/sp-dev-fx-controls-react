@@ -8,6 +8,7 @@
 - `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
 - `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
 - `ImagePicker`:  new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
+- `UserPicker`:  new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
 
 ### Fixes
 
