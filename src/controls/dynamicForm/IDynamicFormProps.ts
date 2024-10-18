@@ -133,4 +133,10 @@ export interface IDynamicFormProps {
    */
   fieldOrder?: string[]
 
+  /**
+   * When uploading files: Specifies if last active tab will be stored after the Upload panel has been closed.
+   * Note: the value of selected tab is stored in the queryString hash.
+   * @default true
+   */
+   storeLastActiveTab?: boolean;
 }
