@@ -3,7 +3,13 @@
     "development"
   ],
   "hints": {
-    "axe/text-alternatives": "off",
-    "no-inline-styles": "off"
+    "axe/aria": "off",
+    "no-inline-styles": "off",
+    "axe/text-alternatives": [
+      "default",
+      {
+        "frame-title": "off"
+      }
+    ]
   }
 }
