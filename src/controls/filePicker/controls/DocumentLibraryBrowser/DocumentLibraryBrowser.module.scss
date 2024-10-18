@@ -2,95 +2,60 @@
 //@import "../PropertyPaneFilePicker.module.scss";
 
 /** TILES **/
-.filePickerFolderCardGrid {
-  overflow: hidden;
-  font-size: 0;
-
-  :global {
-    .ms-List-page {
-      overflow: hidden;
-      font-size: 0;
-    }
-
-    .ms-List-surface {
-      position: relative;
-    }
-  }
+.documentLibraryBrowserContainer {
+  padding: 0;
 }
 
 .filePickerFolderCardTile {
+  width: 10vw;
+  margin: 1vh 0;
   text-align: center;
   outline: none;
-  position: relative;
   @include ms-float(left);
-}
-
-.filePickerFolderCardPadder {
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  right: 5px;
-  bottom: 5px;
-}
-
-:global(.ms-Fabric--isFocusVisible) .filePickerFolderCardTile:focus:after {
-  content: "";
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 2px;
-  bottom: 2px;
-  box-sizing: border-box;
-  border: 1px solid "[theme:white, default:#{$ms-color-white}]";
-}
-
-.filePickerFolderCardSizer {
-  padding-bottom: 100%;
-}
-
-.filePickerFolderCardImage {
-  width: 100%;
-  left: 0;
-  top: 0;
-  color: "[theme:white, default:#{$ms-color-white}]";
-  position: absolute;
-  bottom: 0;
-  font-size: 12px;
-  width: 100%;
-}
-
-.filePickerFolderCardLabel {
-  background-color: "[theme:neutralLight, default:#{$ms-color-neutralLight}]";
-  height: 100%;
-  width: 100%;
-  top: 0;
-  color: "[theme:black, default:#{$ms-color-black}]";
-  padding: 10px;
-  position: absolute;
-  bottom: 0;
-  font-size: 12px;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 21px;
-  font-weight: 600;
-
-  :global .ms-Button-textContainer {
-    max-width: 100%;
-    word-break: break-word;
-  }
 
   &:hover {
-    color: "[theme:black, default:#{$ms-color-black}]";
-    background-color: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
+    background-color: $ms-color-neutralLighter;
+    border-radius: 5px;
+    .filePickerFolderCardTitle {
+      text-decoration: underline;
+    }
   }
 
-  &:active {
-    color: "[theme:black, default:#{$ms-color-black}]";
-    background-color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
-  }
-}
+  .filePickerFolderCardImage {
+    height: 100%;
+    cursor: pointer;
+    margin: 1vw 0 0;
 
-.documentLibraryBrowserContainer {
-  padding: 0;
+    .filePickerFolderCoverBack {
+      display: block;
+      position: absolute;
+    }
+
+    .filePickerFolderCoverFront {
+      display: block;
+    }
+
+    .filePickerFolderCoverBack,
+    .filePickerFolderCoverFront {
+      margin: 0 1vw;
+      width: 8vw;
+
+      img {
+        border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  .filePickerFolderCardTitle {
+    cursor: pointer;
+    font-size: $ms-font-size-14;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    padding: 1vh 0.5vw;
+    text-align: center;
+  }
 }
