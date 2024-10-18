@@ -17,10 +17,11 @@
 - `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)
 - `ListItemPicker`: PR fixes an issue with filtering when using calculated column as columnInternalName in ListItemPicker. [#1887](https://github.com/pnp/sp-dev-fx-controls-react/pull/1887)
 - `ListItemAttachments`: Fix 1858 to correct Chinese localization files #1894 [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)
+- `DynamicForm`: Fixing issue 1862 - Dynamic form should hide fields that are hidden on the List Content Type [#1872](https://github.com/pnp/sp-dev-fx-controls-react/pull/1872)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [IRRDC](https://github.com/IRRDC), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [IRRDC](https://github.com/IRRDC), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.19.0
 
