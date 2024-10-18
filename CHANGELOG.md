@@ -7,6 +7,7 @@
 - `Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)
 - `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
 - `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
+- `ImagePicker`:  new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
 
 ### Fixes
 
@@ -15,7 +16,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes).
 
 ## 3.19.0
 
