@@ -1,6 +1,7 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
 import { IFilePickerResult } from '../../filePicker';
+import { ChoiceFieldFormatType } from '@pnp/sp/fields';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
 export type FieldChangeAdditionalData = IFilePickerResult;
@@ -92,4 +93,5 @@ export interface IDynamicFieldProps {
   itemsQueryCountLimit?: number;
   customIcon?: string;
   orderBy?: string;
+  choiceType?: ChoiceFieldFormatType;
 }
