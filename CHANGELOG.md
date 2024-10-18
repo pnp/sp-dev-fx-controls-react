@@ -7,17 +7,18 @@
 - `Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)
 - `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
 - `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
-- `ImagePicker`:  new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
-- `UserPicker`:  new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
+- `ImagePicker`: new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
+- `UserPicker`: new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
 
 ### Fixes
 
 - Debug Controls in any language [#1882](https://github.com/pnp/sp-dev-fx-controls-react/pull/1882)
-- `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)
+- `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876),
+- `ListItemAttachments`: Fix 1858 to correct Chinese localization files [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [wuxiaojun514](https://github.com/wuxiaojun514)
 
 ## 3.19.0
 
@@ -68,7 +69,7 @@ Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina]
 
 - `FolderPicker`: Update documentation on how to use the control with siteAbsoluteUrl property [#1743](https://github.com/pnp/sp-dev-fx-controls-react/pull/1743)
 - Readme documents highlight extension does not work correctly [#1495](https://github.com/pnp/sp-dev-fx-controls-react/issues/1495)
-- `DynamicForm`: Error on rendering DynamicForm when having a Date Field with internal name starting with underscore ('_')[#1738](https://github.com/pnp/sp-dev-fx-controls-react/issues/1738)
+- `DynamicForm`: Error on rendering DynamicForm when having a Date Field with internal name starting with underscore ('\_')[#1738](https://github.com/pnp/sp-dev-fx-controls-react/issues/1738)
 - `DynamicForm`: Dynamic form loading error in other site [#1758](https://github.com/pnp/sp-dev-fx-controls-react/issues/1758)
 
 ### Contributors
@@ -142,7 +143,7 @@ Special thanks to our contributor: [IRRDC](https://github.com/IRRDC).
 - `TaxonomyPicker`: suggested item contains double termset name [#1597](https://github.com/pnp/sp-dev-fx-controls-react/issues/1597)
 - `DynamicForm`: DynamicForm does not properly handle NULL default values for Taxonomy fields [#1267](https://github.com/pnp/sp-dev-fx-controls-react/issues/1267)
 - `DynamicForm`: New items are always created with the default content type if the list has multiple content types [#1626](https://github.com/pnp/sp-dev-fx-controls-react/pull/1626)
-- `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
+- `PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620](https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)
 - `DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)
 - `DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)
 - `DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)
@@ -179,12 +180,12 @@ Special thanks to our contributors (in alphabetical order): [Dan Toft](https://g
 - `FieldPicker`: Changed react import to fix `cannot be used as a JSX component` error [#1500](https://github.com/pnp/sp-dev-fx-controls-react/pull/1500)
 - `Localization`: Fixes to Italian localization [#1532](https://github.com/pnp/sp-dev-fx-controls-react/pull/1532)
 - `Localization`: Fixes to Netherlands localization [#1537](https://github.com/pnp/sp-dev-fx-controls-react/pull/1537)
-- `ListItemAttachments`:  Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
+- `ListItemAttachments`: Fix the OnClick handler when clicking on the document card [#1541](https://github.com/pnp/sp-dev-fx-controls-react/issues/1541)
 - `fast-serve`: Fix issue with File and Directory Entries API [#1555](https://github.com/pnp/sp-dev-fx-controls-react/issues/1555)
 - `FilePicker`: Tile view issue on first render [#1558](https://github.com/pnp/sp-dev-fx-controls-react/issues/1558)
 - `DynamicForm` lookups - first time you select an option from a lookup, it doesnt select it [#1535](https://github.com/pnp/sp-dev-fx-controls-react/issues/1535)
 - `DynamicForm`: Fields of type Note don't get disabled [#1264](https://github.com/pnp/sp-dev-fx-controls-react/issues/1264)
-- `ListItemAttachments`:  Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)
+- `ListItemAttachments`: Fix for files containing dots in the name [#1580](https://github.com/pnp/sp-dev-fx-controls-react/issues/1580)
 - `PeoplePicker`: Shows wrong value in Dynamic Form when null is provided [#1421](https://github.com/pnp/sp-dev-fx-controls-react/issues/1421)
 - `DynamicForm`: Error on save when clearing person from Person or Group field and leaving it blank [#1578](https://github.com/pnp/sp-dev-fx-controls-react/issues/1578)
 - `DynamicForm`: Number validation is not working, if the field is set to minimum and maximum value [#1571](https://github.com/pnp/sp-dev-fx-controls-react/issues/1571)
@@ -206,7 +207,7 @@ Special thanks to our contributors (in alphabetical order): [Andreas Omayrat](ht
 
 - `DynamicForm`: Fixes DynamicForm trying to load TaxonomyFields with wrong display name [#1422](https://github.com/pnp/sp-dev-fx-controls-react/issues/1422)
 - `ListItemAttachments`: FIX: Cannot download items when it has a ilegal character [#1484](https://github.com/pnp/sp-dev-fx-controls-react/issues/1484)
-- `FilePicker`: FIX:  recent tab empty until re-render [#1482](https://github.com/pnp/sp-dev-fx-controls-react/issues/1482)
+- `FilePicker`: FIX: recent tab empty until re-render [#1482](https://github.com/pnp/sp-dev-fx-controls-react/issues/1482)
 - `Dynamic Form`: Adds onListItemLoaded handler to DynamicForm [#1472](https://github.com/pnp/sp-dev-fx-controls-react/issues/1472)
 - `Dynamic Form`: Fix for the DynamicForm when a defaultValue is null and the code try to call the split method on it. [#1486](https://github.com/pnp/sp-dev-fx-controls-react/pull/1486)
 - `DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)
@@ -468,7 +469,7 @@ Special thanks to our contributors (in alphabetical order): [Alexander M](https:
 - Update `mgt` package to the latest version [#1038](https://github.com/pnp/sp-dev-fx-controls-react/pull/1038)
 - `ListView`: Add ability to provide CSS class names for list wrapper and list itself [#1007](https://github.com/pnp/sp-dev-fx-controls-react/issues/1007)
 - `IconPicker`: `onCancel` property is added [#1043](https://github.com/pnp/sp-dev-fx-controls-react/issues/1043)
-- SharePoint Framework v1.13.* support
+- SharePoint Framework v1.13.\* support
 - `DynamicForm`: `disabledFields` property added [#987](https://github.com/pnp/sp-dev-fx-controls-react/pull/987)
 - `ListPicker`: Add multi numbers support for baseTemplate option [#1016](https://github.com/pnp/sp-dev-fx-controls-react/issues/1016)
 - `ComboboxListItemPicker`: Add option to sort the items in the picker [#985](https://github.com/pnp/sp-dev-fx-controls-react/issues/985)
@@ -476,7 +477,7 @@ Special thanks to our contributors (in alphabetical order): [Alexander M](https:
 - `Accordion`: Added custom icons [#1033](https://github.com/pnp/sp-dev-fx-controls-react/issues/1033)
 - Localization: Correction for german localizations [#1059](https://github.com/pnp/sp-dev-fx-controls-react/issues/1059)
 - Localization: Corrections for norwegian localizations [#1060](https://github.com/pnp/sp-dev-fx-controls-react/pull/1060)
-- `PeoplePicker `: Added Styles property [#1061](https://github.com/pnp/sp-dev-fx-controls-react/pull/1061)
+- `PeoplePicker`: Added Styles property [#1061](https://github.com/pnp/sp-dev-fx-controls-react/pull/1061)
 - Localization: Update pt-pt and pt-br loc files [#1066](https://github.com/pnp/sp-dev-fx-controls-react/pull/1066)
 
 ### Fixes
@@ -600,7 +601,7 @@ Special thanks to our contributors (in alphabetical order): [Nikolay Belykh](htt
 - `TeamPicker`: new Team Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
 - `TeamChannelPicker`: new Team Channel Picker control [#846](https://github.com/pnp/sp-dev-fx-controls-react/pull/846)
 - `SitePicker`: new Site Picker control [#868](https://github.com/pnp/sp-dev-fx-controls-react/pull/868)
-- `DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866) 
+- `DocumentLibraryBrowser`, `SiteFilePickerTab`: jest unit tests [#866](https://github.com/pnp/sp-dev-fx-controls-react/pull/866)
 - `DragDropFiles`: new DragDropFiles control [#861](https://github.com/pnp/sp-dev-fx-controls-react/issues/861)
 - `MyTeams`: new MyTeams control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)
 - `TeamChannelPicker`: new TeamChannelPicker control [#874](https://github.com/pnp/sp-dev-fx-controls-react/pull/874)
