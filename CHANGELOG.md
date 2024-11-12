@@ -19,6 +19,8 @@
 - `ListItemAttachments`: Fix 1858 to correct Chinese localization files #1894 [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)
 - `DynamicForm`: Fixing issue 1862 - Dynamic form should hide fields that are hidden on the List Content Type [#1872](https://github.com/pnp/sp-dev-fx-controls-react/pull/1872)
 - `GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)
+- `DynamicForm`: Always Show Required Field Validation Error In FormDisplayMode.Edit Mode [#1775](https://github.com/pnp/sp-dev-fx-controls-react/issues/1775)
+- `DynamicForm`: Required Field Validation won't work [#1760](https://github.com/pnp/sp-dev-fx-controls-react/issues/1760)
 
 ### Contributors
 
