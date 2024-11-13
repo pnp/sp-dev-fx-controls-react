@@ -31,6 +31,7 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
+import { IFolder } from "@pnp/sp/folders";
 import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
@@ -599,7 +600,8 @@ export class DynamicForm extends React.Component<
 
           const library = await sp.web.lists.getById(listId);          
           const folderFileName = this.getFolderName(objects);
-          const newFolder = await library.rootFolder.addSubFolderUsingPath(folderFileName);          
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);          
+          const newFolder = await folder.addSubFolderUsingPath(folderFileName);          
           const fields = await newFolder.listItemAllFields();
 
           if (fields[idField]) {
@@ -675,8 +677,9 @@ export class DynamicForm extends React.Component<
                 "_"
               ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
               : ""; // Empty string will be replaced by SPO with Folder Item ID
-
-          const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
+          
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);          
+          const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
           const fields = await fileCreatedResult.file.listItemAllFields();
 
           if (fields[idField]) {
@@ -1496,4 +1499,26 @@ export class DynamicForm extends React.Component<
 
     return folderNameValue.replace(/["|*|:|<|>|?|/|\\||]/g, "_").trim();
   }
+  
+  /**
+   * Returns a pnp/sp folder object based on the folderPath and the library the folder is in.
+   * The folderPath can be a server relative path, but should be in the same library.
+   * @param folderPath The path to the folder coming from the component properties
+   * @param rootFolder The rootFolder object of the library
+   * @returns 
+   */
+  private getFolderByPath = async (folderPath: string, rootFolder: IFolder): Promise<IFolder> => {
+    const libraryFolder = await rootFolder();
+    const normalizedFolderPath = decodeURIComponent(folderPath).toLowerCase().replace(/\/$/, "");
+    const serverRelativeLibraryPath = libraryFolder.ServerRelativeUrl.toLowerCase().replace(/\/$/, "");
+
+    // In case of a server relative path in the same library, return the folder
+    if (`${normalizedFolderPath}/`.startsWith(`${serverRelativeLibraryPath}/`)) {
+      return sp.web.getFolderByServerRelativePath(normalizedFolderPath);
+    }
+    
+    // In other cases, expect a list-relative path and return the folder
+    const folder = sp.web.getFolderByServerRelativePath(`${serverRelativeLibraryPath}/${normalizedFolderPath}`);
+    return folder;
+  };
 }
