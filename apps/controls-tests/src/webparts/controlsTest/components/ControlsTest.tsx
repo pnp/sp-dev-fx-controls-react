@@ -111,14 +111,14 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@pnp/spfx-controls-react/lib/AccessibleAccordion';
-import { Dashboard, WidgetSize } from '@pnp/spfx-controls-react/lib/dashboard';
-import { Toolbar } from '@pnp/spfx-controls-react/lib/toolbar';
+import { Dashboard, WidgetSize } from '@pnp/spfx-controls-react/lib/Dashboard';
+import { Toolbar } from '@pnp/spfx-controls-react/lib/Toolbar';
 import {
   ITreeItem,
   TreeItemActionsDisplayMode,
   TreeView,
   TreeViewSelectionMode,
-} from '@pnp/spfx-controls-react/lib/treeView';
+} from '@pnp/spfx-controls-react/lib/TreeView';
 import {
   CustomCollectionFieldType,
   FieldCollectionData,
@@ -160,7 +160,7 @@ import {
 import {
   VariantThemeProvider,
   VariantType,
-} from '@pnp/spfx-controls-react/lib/variantThemeProvider';
+} from '@pnp/spfx-controls-react/lib/VariantThemeProvider';
 import { EnhancedThemeProvider } from '@pnp/spfx-controls-react/lib/EnhancedThemeProvider';
 import {
   ControlsTestEnhancedThemeProvider,
@@ -171,7 +171,7 @@ import { TestControl } from './TestControl';
 import { IFileInfo } from '@pnp/sp/files';
 
 import { ListItemComments } from '@pnp/spfx-controls-react/lib/ListItemComments';
-import { ViewPicker } from '@pnp/spfx-controls-react/lib/viewPicker';
+import { ViewPicker } from '@pnp/spfx-controls-react/lib/ViewPicker';
 import { GeneralHelper } from '@pnp/spfx-controls-react/lib/Utilities';
 import { ITerm as ISPTerm } from '@pnp/spfx-controls-react/lib/services/ISPTermStorePickerService';
 

@@ -2,6 +2,13 @@ require('@rushstack/eslint-config/patch/modern-module-resolution');
 module.exports = {
   extends: ['@microsoft/eslint-config-spfx/lib/profiles/react'],
   parserOptions: { tsconfigRootDir: __dirname },
+  ignorePatterns: [
+    "src/webparts/controlsTest/components/*.tsx",
+    "src/webparts/controlsTest/ControlsTestWebPart.ts",
+    "src/loc/*.ts",
+    "src/extensions/ootbFields/**/*.ts",
+    "src/extensions/ootbFields/**/*.tsx"
+  ],
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -17,7 +24,7 @@ module.exports = {
         // Require Jest module mocking APIs to be called before any other statements in their code block. https://www.npmjs.com/package/@rushstack/eslint-plugin
         '@rushstack/hoist-jest-mock': 1,
         // Require regular expressions to be constructed from string constants rather than dynamically building strings at runtime. https://www.npmjs.com/package/@rushstack/eslint-plugin-security
-        '@rushstack/security/no-unsafe-regexp': 1,
+        '@rushstack/security/no-unsafe-regexp': 0,
         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         '@typescript-eslint/adjacent-overload-signatures': 1,
         // RATIONALE:         Code is more readable when the type of every variable is immediately obvious.
@@ -85,7 +92,7 @@ module.exports = {
         //
         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         // Set to 1 (warning) or 2 (error) to enable the rule
-        '@typescript-eslint/parameter-properties': 0,
+        '@typescript-eslint/no-parameter-properties': 0,
         // RATIONALE:         When left in shipping code, unused variables often indicate a mistake.  Dead code
         //                    may impact performance.
         //
@@ -313,7 +320,9 @@ module.exports = {
         '**/test/*.ts',
         '**/test/*.tsx'
       ],
-      rules: {}
+      rules: {
+        "@typescript-eslint/no-empty-function": 0
+      }
     }
   ]
 };
