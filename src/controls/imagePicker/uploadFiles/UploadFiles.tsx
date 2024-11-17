@@ -78,7 +78,7 @@ export const UploadFiles: React.FunctionComponent<IUploadFilesProps> = (
         setFiles((prevFiles) => prevFiles.filter((f) => f.name !== fileName));
         onSelectedFile(null);
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     },

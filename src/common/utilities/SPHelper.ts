@@ -409,7 +409,7 @@ export class SPHelper {
             if (window.sessionStorage) {
                 window.sessionStorage.setItem(Constants.LoadedViewFieldsKey, JSON.stringify(loadedViewFields));
             }
-        } catch (error) {
+        } catch {
             // do nothing, no need to stop fn execution
         }
     }
@@ -425,7 +425,7 @@ export class SPHelper {
             else {
                 return null;
             }
-        } catch (error) {
+        } catch {
             return null;
         }
     }
