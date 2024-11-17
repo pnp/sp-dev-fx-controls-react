@@ -284,7 +284,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           });
         }
       }
-      catch (err) {
+      catch {
         this.validated(items);
       }
     }

@@ -40,55 +40,64 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private _toolbarId = undefined;
   private _richTextId = undefined;
 
-  private ddStyleOpts = [{
-    key: 2,
-    text: strings.HeaderH2,
-    data:
-      { className: styles.toolbarButtonH2 }
-  }, {
-    key: 3,
-    text: strings.HeaderH3,
-    data:
-      { className: styles.toolbarButtonH3 }
-  }, {
-    key: 4,
-    text: strings.HeaderH4,
-    data:
-      { className: styles.toolbarButtonH4 }
-  }, {
-    key: 0,
-    text: strings.HeaderNormalText,
-    data: { className: styles.toolbarButtonNormal }
-  }, {
-    key: 7,
-    text: strings.HeaderBlockQuote,
-    data:
-      { className: styles.toolbarButtonBlockQuote }
-  }];
+  private ddStyleOpts = [
+    {
+      key: 2,
+      text: strings.HeaderH2,
+      data: { className: styles.toolbarButtonH2 },
+    },
+    {
+      key: 3,
+      text: strings.HeaderH3,
+      data: { className: styles.toolbarButtonH3 },
+    },
+    {
+      key: 4,
+      text: strings.HeaderH4,
+      data: { className: styles.toolbarButtonH4 },
+    },
+    {
+      key: 0,
+      text: strings.HeaderNormalText,
+      data: { className: styles.toolbarButtonNormal },
+    },
+    {
+      key: 7,
+      text: strings.HeaderBlockQuote,
+      data: { className: styles.toolbarButtonBlockQuote },
+    },
+  ];
 
-  private ddAlignOpts = [{
-    key: 'left',
-    text: strings.AlignLeft,
-    data: { icon: 'AlignLeft' }
-  }, {
-    key: 'center',
-    text: strings.AlignCenter,
-    data: { icon: 'AlignCenter' }
-  }, {
-    key: 'right',
-    text: strings.AlignRight,
-    data: { icon: 'AlignRight' }
-  }];
+  private ddAlignOpts = [
+    {
+      key: 'left',
+      text: strings.AlignLeft,
+      data: { icon: 'AlignLeft' },
+    },
+    {
+      key: 'center',
+      text: strings.AlignCenter,
+      data: { icon: 'AlignCenter' },
+    },
+    {
+      key: 'right',
+      text: strings.AlignRight,
+      data: { icon: 'AlignRight' },
+    },
+  ];
 
-  private ddListOpts = [{
-    key: 'bullet',
-    text: strings.ListBullet,
-    data: { icon: 'BulletedList' }
-  }, {
-    key: 'ordered',
-    text: strings.ListNumbered,
-    data: { icon: 'NumberedList' }
-  }];
+  private ddListOpts = [
+    {
+      key: 'bullet',
+      text: strings.ListBullet,
+      data: { icon: 'BulletedList' },
+    },
+    {
+      key: 'ordered',
+      text: strings.ListNumbered,
+      data: { icon: 'NumberedList' },
+    },
+  ];
 
   /**
    * Sets default properties
@@ -104,14 +113,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       showList: true,
       showLink: true,
       showImage: true,
-      showMore: true
-    }
+      showMore: true,
+    },
   };
 
   constructor(props: IRichTextProps) {
     super(props);
     telemetry.track('ReactRichText', {
-      className: !!props.className
+      className: !!props.className,
     });
 
     this.state = {
@@ -126,14 +135,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       insertImageUrl: undefined,
       selectedText: undefined,
       selectedUrl: undefined,
-      wrapperTop: 0
+      wrapperTop: 0,
     };
 
     // Get a unique toolbar id
-    this._toolbarId = "toolbar_" + Guid.newGuid().toString();
+    this._toolbarId = 'toolbar_' + Guid.newGuid().toString();
 
     // Get a unique rich text id if not provided by props
-    this._richTextId = props.id ?? "richText_" + Guid.newGuid().toString();
+    this._richTextId = props.id ?? 'richText_' + Guid.newGuid().toString();
   }
 
   /**
@@ -146,11 +155,13 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       document.addEventListener('focus', this.handleClickOutside);
 
       const domRect: DOMRect = this._wrapperRef.getBoundingClientRect();
-      const parentDomRect: DOMRect = this._wrapperRef.parentElement.getBoundingClientRect();
-      const toolbarTop: number = domRect.top - parentDomRect.top - TOOLBARPADDING;
+      const parentDomRect: DOMRect =
+        this._wrapperRef.parentElement.getBoundingClientRect();
+      const toolbarTop: number =
+        domRect.top - parentDomRect.top - TOOLBARPADDING;
 
       this.setState({
-        wrapperTop: toolbarTop
+        wrapperTop: toolbarTop,
       });
     }
   }
@@ -172,7 +183,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * @param prevProps
    * @param prevState
    */
-  public componentDidUpdate(prevProps: IRichTextProps, prevState: IRichTextState): void {
+  public componentDidUpdate(
+    prevProps: IRichTextProps,
+    prevState: IRichTextState
+  ): void {
     // If we're going from non-edit to edit mode
     if (this.props.isEditMode && !prevProps.isEditMode) {
       document.addEventListener('click', this.handleClickOutside);
@@ -192,7 +206,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    * @param nextProps
    * @param nextState
    */
-  public shouldComponentUpdate(nextProps: IRichTextProps, nextState: IRichTextState): boolean {
+  public shouldComponentUpdate(
+    nextProps: IRichTextProps,
+    nextState: IRichTextState
+  ): boolean {
     // Checks if the value coming in is the same
     if (isEqual(nextState, this.state) && isEqual(nextProps, this.props)) {
       return false;
@@ -202,9 +219,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   }
 
   public UNSAFE_componentWillReceiveProps(nextProps: IRichTextProps): void {
-    if (nextProps.value !== this.props.value && nextProps.value !== this.state.text) {
+    if (
+      nextProps.value !== this.props.value &&
+      nextProps.value !== this.state.text
+    ) {
       this.setState({
-        text: nextProps.value
+        text: nextProps.value,
       });
     }
   }
@@ -215,10 +235,10 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   public getEditor = (): Quill => {
     try {
       return this._quillElem.getEditor();
-    } catch (error) {
+    } catch {
       return undefined;
     }
-  }
+  };
 
   /**
    * Render style option
@@ -227,11 +247,17 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private onRenderStyleOption(option: IDropdownOption): JSX.Element {
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-toolbarButton`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
-          aria-describedby={`${option.text}-toolbarButton`}>
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={`${styles.toolbarDropDownOption} ${
+            option.data?.className ? option.data.className : ''
+          }`}
+          aria-describedby={`${option.text}-toolbarButton`}
+        >
           <span>{option.text}</span>
         </div>
       </TooltipHost>
@@ -247,11 +273,15 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const option = options[0];
 
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-dropDownTitle`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={styles.toolbarSubmenuDisplayButton}
-          aria-describedby={`${option.text}-dropDownTitle`}>
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={styles.toolbarSubmenuDisplayButton}
+          aria-describedby={`${option.text}-dropDownTitle`}
+        >
           <span>{option.text}</span>
         </div>
       </TooltipHost>
@@ -265,14 +295,22 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private onRenderAlignOption(option: IDropdownOption): JSX.Element {
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-toolbarButton`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
-          aria-describedby={`${option.text}-toolbarButton`}>
-          <Icon className={styles.toolbarDropDownIcon}
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={`${styles.toolbarDropDownOption} ${
+            option.data?.className ? option.data.className : ''
+          }`}
+          aria-describedby={`${option.text}-toolbarButton`}
+        >
+          <Icon
+            className={styles.toolbarDropDownIcon}
             iconName={option.data.icon}
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
       </TooltipHost>
     );
@@ -287,14 +325,20 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const option = options[0];
 
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-dropDownTitle`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={styles.toolbarSubmenuDisplayButton}
-          aria-describedby={`${option.text}-dropDownTitle`}>
-          <Icon className={styles.toolbarDropDownTitleIcon}
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={styles.toolbarSubmenuDisplayButton}
+          aria-describedby={`${option.text}-dropDownTitle`}
+        >
+          <Icon
+            className={styles.toolbarDropDownTitleIcon}
             iconName={option.data.icon}
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
       </TooltipHost>
     );
@@ -309,14 +353,20 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const option = options[0];
 
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-dropDownTitle`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={styles.toolbarSubmenuDisplayButton}
-          aria-describedby={`${option.text}-dropDownTitle`}>
-          <Icon className={styles.toolbarDropDownTitleIcon}
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={styles.toolbarSubmenuDisplayButton}
+          aria-describedby={`${option.text}-dropDownTitle`}
+        >
+          <Icon
+            className={styles.toolbarDropDownTitleIcon}
             iconName={option.data.icon}
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
       </TooltipHost>
     );
@@ -329,14 +379,22 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private onRenderListOption(option: IDropdownOption): JSX.Element {
     return (
-      <TooltipHost content={option.text}
+      <TooltipHost
+        content={option.text}
         id={`${option.text}-toolbarButton`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={`${styles.toolbarDropDownOption} ${option.data?.className ? option.data.className : ""}`}
-          aria-describedby={`${option.text}-toolbarButton`}>
-          <Icon className={styles.toolbarDropDownIcon}
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={`${styles.toolbarDropDownOption} ${
+            option.data?.className ? option.data.className : ''
+          }`}
+          aria-describedby={`${option.text}-toolbarButton`}
+        >
+          <Icon
+            className={styles.toolbarDropDownIcon}
             iconName={option.data.icon}
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
       </TooltipHost>
     );
@@ -347,14 +405,20 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private onRenderListPlaceholder(): JSX.Element {
     return (
-      <TooltipHost content={"Placeholder"}
+      <TooltipHost
+        content={'Placeholder'}
         id={`Placeholder-dropDownTitle`}
-        calloutProps={{ gapSpace: 0 }}>
-        <div className={styles.toolbarSubmenuDisplayButton}
-          aria-describedby={`Placeholder-dropDownTitle`}>
-          <Icon className={styles.toolbarDropDownTitleIcon}
+        calloutProps={{ gapSpace: 0 }}
+      >
+        <div
+          className={styles.toolbarSubmenuDisplayButton}
+          aria-describedby={`Placeholder-dropDownTitle`}
+        >
+          <Icon
+            className={styles.toolbarDropDownTitleIcon}
             iconName={'BulletedList'}
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
       </TooltipHost>
     );
@@ -365,7 +429,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private renderLinkDialog = (): JSX.Element => {
     return (
-      <Dialog hidden={this.state.hideDialog}
+      <Dialog
+        hidden={this.state.hideDialog}
         onDismiss={this.closeDialog}
         dialogContentProps={{
           type: DialogType.normal,
@@ -374,48 +439,66 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         modalProps={{
           className: styles.insertLinkDialog,
           isBlocking: true,
-          containerClassName: 'ms-dialogMainOverride'
-        }}>
-        <TextField label={strings.AddressFieldLabel}
+          containerClassName: 'ms-dialogMainOverride',
+        }}
+      >
+        <TextField
+          label={strings.AddressFieldLabel}
           placeholder="https://"
-          value={this.state.insertUrl !== undefined ? this.state.insertUrl : ""}
+          value={this.state.insertUrl !== undefined ? this.state.insertUrl : ''}
           onChange={(e, newValue?: string) => {
             this.setState({
-              insertUrl: newValue
+              insertUrl: newValue,
             });
-          }} />
+          }}
+        />
 
-        <TextField label={strings.TextToDisplayLabel}
+        <TextField
+          label={strings.TextToDisplayLabel}
           value={this.state.insertUrlText}
           onChange={(e, newValue?: string) => {
             if (newValue !== this.state.insertUrlText) {
               this.setState({
-                insertUrlText: newValue
+                insertUrlText: newValue,
               });
             }
-          }} />
+          }}
+        />
 
         <DialogFooter className={styles.actions}>
           <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
-            {
-              this.state.selectedUrl && (
-                <Link className={`${styles.action} ${styles.unlinkButton}`} onClick={this.handleRemoveLink}>{strings.RemoveLinkLabel}</Link>
-              )
-            }
-            <PrimaryButton className={styles.action} onClick={this.handleCreateLink} text={strings.SaveButtonLabel} disabled={this.checkLinkUrl()} />
-            <DefaultButton className={styles.action} onClick={this.closeDialog} text={strings.CancelButtonLabel} />
+            {this.state.selectedUrl && (
+              <Link
+                className={`${styles.action} ${styles.unlinkButton}`}
+                onClick={this.handleRemoveLink}
+              >
+                {strings.RemoveLinkLabel}
+              </Link>
+            )}
+            <PrimaryButton
+              className={styles.action}
+              onClick={this.handleCreateLink}
+              text={strings.SaveButtonLabel}
+              disabled={this.checkLinkUrl()}
+            />
+            <DefaultButton
+              className={styles.action}
+              onClick={this.closeDialog}
+              text={strings.CancelButtonLabel}
+            />
           </div>
         </DialogFooter>
       </Dialog>
     );
-  }
+  };
 
   /**
-  * Renders the "Insert Image" dialog
+   * Renders the "Insert Image" dialog
    */
   private renderImageDialog = (): JSX.Element => {
     return (
-      <Dialog hidden={this.state.hideImageDialog}
+      <Dialog
+        hidden={this.state.hideImageDialog}
         onDismiss={this.closeImageDialog}
         dialogContentProps={{
           type: DialogType.normal,
@@ -424,25 +507,41 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         modalProps={{
           className: styles.insertLinkDialog,
           isBlocking: true,
-          containerClassName: 'ms-dialogMainOverride'
-        }}>
-        <TextField label={strings.AddressFieldLabel}
-          value={this.state.insertImageUrl !== undefined ? this.state.insertImageUrl : ""}
+          containerClassName: 'ms-dialogMainOverride',
+        }}
+      >
+        <TextField
+          label={strings.AddressFieldLabel}
+          value={
+            this.state.insertImageUrl !== undefined
+              ? this.state.insertImageUrl
+              : ''
+          }
           onChange={(e, newValue?: string) => {
             this.setState({
-              insertImageUrl: newValue
+              insertImageUrl: newValue,
             });
-          }} />
+          }}
+        />
 
         <DialogFooter className={styles.actions}>
           <div className={`ms-Dialog-actionsRight ${styles.actionsRight}`}>
-            <PrimaryButton className={styles.action} onClick={this.handleInsertImage} text={strings.SaveButtonLabel} disabled={this.checkImageLinkUrl()} />
-            <DefaultButton className={styles.action} onClick={this.closeImageDialog} text={strings.CancelButtonLabel} />
+            <PrimaryButton
+              className={styles.action}
+              onClick={this.handleInsertImage}
+              text={strings.SaveButtonLabel}
+              disabled={this.checkImageLinkUrl()}
+            />
+            <DefaultButton
+              className={styles.action}
+              onClick={this.closeImageDialog}
+              text={strings.CancelButtonLabel}
+            />
           </div>
         </DialogFooter>
       </Dialog>
     );
-  }
+  };
 
   /**
    * Renders the Rich Text Editor
@@ -451,35 +550,56 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const { text } = this.state;
     const { isEditMode } = this.props;
 
-    const renderLabel: JSX.Element = (
-      (this.props.onRenderLabel && this.props.onRenderLabel(this.props)) ?? this.onRenderLabel()
-    );
+    const renderLabel: JSX.Element =
+      (this.props.onRenderLabel && this.props.onRenderLabel(this.props)) ??
+      this.onRenderLabel();
 
     // If we're not in edit mode, display read-only version of the html
     if (!isEditMode) {
       return (
         <>
           {renderLabel}
-          <div id={this._richTextId} className={css("ql-editor", styles.richtext, this.props.className || null)}
-            dangerouslySetInnerHTML={{ __html: text }} />
+          <div
+            id={this._richTextId}
+            className={css(
+              'ql-editor',
+              styles.richtext,
+              this.props.className || null
+            )}
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
         </>
       );
     }
 
     // Okay, we're in edit mode.
-    const { placeholder,style, styleOptions: { showStyles, showBold, showItalic, showUnderline, showAlign, showList, showLink, showMore, showImage } } = this.props;
+    const {
+      placeholder,
+      style,
+      styleOptions: {
+        showStyles,
+        showBold,
+        showItalic,
+        showUnderline,
+        showAlign,
+        showList,
+        showLink,
+        showMore,
+        showImage,
+      },
+    } = this.props;
 
     // Get a unique id for the toolbar
     const modules = {
       toolbar: {
-        container: "#" + this._toolbarId,
+        container: '#' + this._toolbarId,
         handlers: [
-          "link" // disable the link handler so we can add our own
-        ]
+          'link', // disable the link handler so we can add our own
+        ],
       },
       clipboard: {
-        matchVisual: false // prevents weird bug that inserts blank lines when loading stored text
-      }
+        matchVisual: false, // prevents weird bug that inserts blank lines when loading stored text
+      },
     };
 
     // Remove fonts and set Segoe UI as the main font
@@ -489,14 +609,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
     // Set headers and add blockquote capability
     const header = ReactQuillInstance.import('formats/header');
-    header.tagName = [
-      'H1',
-      'H2',
-      'H3',
-      'H4',
-      'H5',
-      'H6',
-      'blockquote'];
+    header.tagName = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'blockquote'];
     ReactQuillInstance.register(header, true);
 
     // Add the SharePoint font sizes
@@ -512,155 +625,189 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       'xxxlarge',
       'xxlargeplus',
       'super',
-      'superlarge'];
+      'superlarge',
+    ];
     ReactQuillInstance.register(sizeClass, true);
 
     return (
-      <div ref={(ref) => { this._wrapperRef = ref; }} className={css(styles.richtext && this.state.editing ? 'ql-active' : null, this.props.className || null) || null} style={style}>
+      <div
+        ref={(ref) => {
+          this._wrapperRef = ref;
+        }}
+        className={
+          css(
+            styles.richtext && this.state.editing ? 'ql-active' : null,
+            this.props.className || null
+          ) || null
+        }
+        style={style}
+      >
         {renderLabel}
         <div id={this._toolbarId} style={{ top: this.state.wrapperTop }}>
-          {
-            showStyles && (
-              <Dropdown
-                id="DropDownStyles"
-                className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
-                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                selectedKey={this.state.formats.header || 0}
-                options={this.ddStyleOpts}
-                onChange={this.onChangeHeading}
-                onRenderOption={this.onRenderStyleOption}
-                onRenderTitle={this.onRenderStyleTitle}
+          {showStyles && (
+            <Dropdown
+              id="DropDownStyles"
+              className={`${styles.headerDropDown} ${styles.toolbarDropDown}`}
+              onRenderCaretDown={() => (
+                <Icon
+                  className={styles.toolbarSubmenuCaret}
+                  iconName="CaretDownSolid8"
+                />
+              )}
+              selectedKey={this.state.formats.header || 0}
+              options={this.ddStyleOpts}
+              onChange={this.onChangeHeading}
+              onRenderOption={this.onRenderStyleOption}
+              onRenderTitle={this.onRenderStyleTitle}
+            />
+          )}
+          {showBold && (
+            <TooltipHost
+              content={strings.BoldTitle}
+              id="bold-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton
+                iconProps={{ iconName: 'Bold' }}
+                aria-describedby="bold-richtextbutton"
+                checked={this.state.formats.bold}
+                onClick={this.onChangeBold}
               />
-            )
-          }
-          {
-            showBold && (
-              <TooltipHost content={strings.BoldTitle}
-                id="bold-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton iconProps={{ iconName: 'Bold' }}
-                  aria-describedby="bold-richtextbutton"
-                  checked={this.state.formats.bold}
-                  onClick={this.onChangeBold} />
-              </TooltipHost>
-            )
-          }
-          {
-            showItalic && (
-              <TooltipHost content={strings.ItalicTitle}
-                id="italic-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton iconProps={{ iconName: 'Italic' }}
-                  aria-describedby="italic-richtextbutton"
-                  checked={this.state.formats.italic}
-                  onClick={this.onChangeItalic} />
-              </TooltipHost>
-            )
-          }
-          {
-            showUnderline && (
-              <TooltipHost content={strings.UnderlineTitle}
-                id="underline-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton iconProps={{ iconName: 'Underline' }}
-                  aria-describedby="underline-richtextbutton"
-                  checked={this.state.formats.underline}
-                  onClick={this.onChangeUnderline} />
-              </TooltipHost>
-            )
-          }
-          {
-            showAlign && (
-              <Dropdown className={`${styles.toolbarDropDown}`}
-                id="DropDownAlign"
-                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                selectedKey={this.state.formats.align || 'left'}
-                options={this.ddAlignOpts}
-                onChange={this.onChangeAlign}
-                onRenderOption={this.onRenderAlignOption}
-                onRenderTitle={this.onRenderAlignTitle}
+            </TooltipHost>
+          )}
+          {showItalic && (
+            <TooltipHost
+              content={strings.ItalicTitle}
+              id="italic-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton
+                iconProps={{ iconName: 'Italic' }}
+                aria-describedby="italic-richtextbutton"
+                checked={this.state.formats.italic}
+                onClick={this.onChangeItalic}
               />
-            )
-          }
-          {
-            showList && (
-              <Dropdown className={styles.toolbarDropDown}
-                id="DropDownLists"
-                onRenderCaretDown={() => <Icon className={styles.toolbarSubmenuCaret} iconName="CaretDownSolid8" />}
-                selectedKey={this.state.formats.list}
-                options={this.ddListOpts}
-                // this option is not available yet
-                notifyOnReselect={true} // allows re-selecting selected item to turn it off
-                onChange={this.onChangeList}
-                onRenderOption={this.onRenderListOption}
-                onRenderTitle={this.onRenderListTitle}
-                onRenderPlaceholder={this.onRenderListPlaceholder}
+            </TooltipHost>
+          )}
+          {showUnderline && (
+            <TooltipHost
+              content={strings.UnderlineTitle}
+              id="underline-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton
+                iconProps={{ iconName: 'Underline' }}
+                aria-describedby="underline-richtextbutton"
+                checked={this.state.formats.underline}
+                onClick={this.onChangeUnderline}
               />
-            )
-          }
-          {
-            showLink && (
-              <TooltipHost content={strings.LinkTitle}
-                id="link-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton checked={this.state.formats?.link !== undefined}
-                  onClick={this.showInsertLinkDialog}
-                  aria-describedby="link-richtextbutton"
-                  iconProps={{
-                    iconName: 'Link'
-                  }} />
-              </TooltipHost>
-            )
-          }
-          {
-            showImage && (
-              <TooltipHost content={strings.ImageTitle}
-                id="image-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton //checked={this.state.formats!.link !== undefined}
-                  onClick={this.showInsertImageDialog}
-                  aria-describedby="image-richtextbutton"
-                  iconProps={{
-                    iconName: 'PictureFill'
-                  }} />
-              </TooltipHost>
-            )
-          }
-          {
-            showMore && (
-              <TooltipHost content={strings.MoreTitle}
-                id="more-richtextbutton"
-                calloutProps={{ gapSpace: 0 }}>
-                <IconButton iconProps={{ iconName: 'More' }}
-                  aria-describedby="more-richtextbutton"
-                  onClick={this.handleShowMore} />
-              </TooltipHost>
-            )
-          }
+            </TooltipHost>
+          )}
+          {showAlign && (
+            <Dropdown
+              className={`${styles.toolbarDropDown}`}
+              id="DropDownAlign"
+              onRenderCaretDown={() => (
+                <Icon
+                  className={styles.toolbarSubmenuCaret}
+                  iconName="CaretDownSolid8"
+                />
+              )}
+              selectedKey={this.state.formats.align || 'left'}
+              options={this.ddAlignOpts}
+              onChange={this.onChangeAlign}
+              onRenderOption={this.onRenderAlignOption}
+              onRenderTitle={this.onRenderAlignTitle}
+            />
+          )}
+          {showList && (
+            <Dropdown
+              className={styles.toolbarDropDown}
+              id="DropDownLists"
+              onRenderCaretDown={() => (
+                <Icon
+                  className={styles.toolbarSubmenuCaret}
+                  iconName="CaretDownSolid8"
+                />
+              )}
+              selectedKey={this.state.formats.list}
+              options={this.ddListOpts}
+              // this option is not available yet
+              notifyOnReselect={true} // allows re-selecting selected item to turn it off
+              onChange={this.onChangeList}
+              onRenderOption={this.onRenderListOption}
+              onRenderTitle={this.onRenderListTitle}
+              onRenderPlaceholder={this.onRenderListPlaceholder}
+            />
+          )}
+          {showLink && (
+            <TooltipHost
+              content={strings.LinkTitle}
+              id="link-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton
+                checked={this.state.formats?.link !== undefined}
+                onClick={this.showInsertLinkDialog}
+                aria-describedby="link-richtextbutton"
+                iconProps={{
+                  iconName: 'Link',
+                }}
+              />
+            </TooltipHost>
+          )}
+          {showImage && (
+            <TooltipHost
+              content={strings.ImageTitle}
+              id="image-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton //checked={this.state.formats!.link !== undefined}
+                onClick={this.showInsertImageDialog}
+                aria-describedby="image-richtextbutton"
+                iconProps={{
+                  iconName: 'PictureFill',
+                }}
+              />
+            </TooltipHost>
+          )}
+          {showMore && (
+            <TooltipHost
+              content={strings.MoreTitle}
+              id="more-richtextbutton"
+              calloutProps={{ gapSpace: 0 }}
+            >
+              <IconButton
+                iconProps={{ iconName: 'More' }}
+                aria-describedby="more-richtextbutton"
+                onClick={this.handleShowMore}
+              />
+            </TooltipHost>
+          )}
         </div>
 
-        <ReactQuill ref={this.linkQuill}
+        <ReactQuill
+          ref={this.linkQuill}
           id={this._richTextId}
           placeholder={placeholder}
           modules={modules}
           value={text || ''} //property value causes issues, defaultValue does not
           onChange={this.handleChange}
           onChangeSelection={this.handleChangeSelection}
-          onFocus={this.handleOnFocus} />
+          onFocus={this.handleOnFocus}
+        />
 
-        <RichTextPropertyPane ref={this.linkPropertyPane}
+        <RichTextPropertyPane
+          ref={this.linkPropertyPane}
           editor={this.getEditor()}
           isOpen={this.state.morePaneVisible}
           onClose={this.handleClosePanel}
           onLink={this.showInsertLinkDialog}
-          customColors={this.props.customColors} />
+          customColors={this.props.customColors}
+        />
 
-        {
-          this.renderLinkDialog()
-        }
-        {
-          this.renderImageDialog()
-        }
+        {this.renderLinkDialog()}
+        {this.renderImageDialog()}
       </div>
     );
   }
@@ -670,34 +817,50 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
    */
   private onChangeBold = (): void => {
     const newBoldValue = !this.state.formats.bold;
-    this.applyFormat("bold", newBoldValue);
-  }
+    this.applyFormat('bold', newBoldValue);
+  };
 
   private onChangeItalic = (): void => {
     const newValue = !this.state.formats.italic;
-    this.applyFormat("italic", newValue);
-  }
+    this.applyFormat('italic', newValue);
+  };
 
   private onChangeUnderline = (): void => {
     const newValue = !this.state.formats.underline;
-    this.applyFormat("underline", newValue);
-  }
-  private onChangeHeading = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
+    this.applyFormat('underline', newValue);
+  };
+  private onChangeHeading = (
+    _event: React.FormEvent<HTMLDivElement>,
+    item?: IDropdownOption,
+    _index?: number
+  ): void => {
     const newHeadingValue = item.key === 0 ? '' : item.key.toString();
-    this.applyFormat("header", newHeadingValue);
-  }
+    this.applyFormat('header', newHeadingValue);
+  };
 
-  private onChangeAlign = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
+  private onChangeAlign = (
+    _event: React.FormEvent<HTMLDivElement>,
+    item?: IDropdownOption,
+    _index?: number
+  ): void => {
     const newAlignValue = item.key === 'left' ? false : item.key.toString();
-    this.applyFormat("align", newAlignValue);
-  }
+    this.applyFormat('align', newAlignValue);
+  };
 
-  private onChangeList = (_event: React.FormEvent<HTMLDivElement>, item?: IDropdownOption, _index?: number): void => {
+  private onChangeList = (
+    _event: React.FormEvent<HTMLDivElement>,
+    item?: IDropdownOption,
+    _index?: number
+  ): void => {
     // if we're already in list mode, toggle off
     const key = item.key;
-    const newAlignValue = (key === 'bullet' && this.state.formats.list === 'bullet') || (key === 'ordered' && this.state.formats.list === 'ordered') ? false : key;
-    this.applyFormat("list", newAlignValue);
-  }
+    const newAlignValue =
+      (key === 'bullet' && this.state.formats.list === 'bullet') ||
+      (key === 'ordered' && this.state.formats.list === 'ordered')
+        ? false
+        : key;
+    this.applyFormat('list', newAlignValue);
+  };
 
   /**
    * Displays the insert link dialog
@@ -707,11 +870,14 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const range = quill.getSelection();
 
     let linkText = this.state.selectedText;
-    if (this.state.selectedUrl !== undefined && this.state.selectedText === "") {
+    if (
+      this.state.selectedUrl !== undefined &&
+      this.state.selectedText === ''
+    ) {
       const { text } = this.state;
       const urlStartIndex = text.indexOf(this.state.selectedUrl);
-      const startTextIndex = text.indexOf(">", urlStartIndex) + 1;
-      const endTextIndex = text.indexOf("<", startTextIndex);
+      const startTextIndex = text.indexOf('>', urlStartIndex) + 1;
+      const endTextIndex = text.indexOf('<', startTextIndex);
       const realLength = endTextIndex - startTextIndex;
       linkText = text.substr(startTextIndex, realLength);
 
@@ -726,16 +892,16 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       hideDialog: false,
       insertUrlText: linkText,
       insertUrl: this.state.selectedUrl,
-      selectedRange: range
+      selectedRange: range,
     });
-  }
+  };
 
   /**
    * Hides the insert link dialog
    */
   private closeDialog = (): void => {
     this.setState({ hideDialog: true });
-  }
+  };
 
   /**
    * Displays the insert link dialog
@@ -746,9 +912,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
     this.setState({
       hideImageDialog: false,
-      selectedRange: range
+      selectedRange: range,
     });
-  }
+  };
 
   /**
    * Hides the insert image dialog
@@ -758,7 +924,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       hideImageDialog: true,
       insertImageUrl: undefined,
     });
-  }
+  };
 
   /**
    * When user enters the richtext editor, displays the border
@@ -767,7 +933,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     if (!this.state.editing) {
       this.setState({ editing: true });
     }
-  }
+  };
 
   /**
    * Called when user removes the link
@@ -776,7 +942,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const quill = this.getEditor();
     quill.format('link', false);
     this.closeDialog();
-  }
+  };
 
   /**
    * Called when user creates a new link
@@ -790,19 +956,28 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     }
 
     if (cursorPosition > -1) {
-      const textToInsert: string = (this.state.insertUrlText !== undefined && this.state.insertUrlText !== "") ? this.state.insertUrlText : this.state.insertUrl;
+      const textToInsert: string =
+        this.state.insertUrlText !== undefined &&
+        this.state.insertUrlText !== ''
+          ? this.state.insertUrlText
+          : this.state.insertUrl;
       const urlToInsert: string = this.state.insertUrl;
       quill.insertText(cursorPosition, textToInsert);
       quill.setSelection(cursorPosition, textToInsert.length);
-      quill.formatText(cursorPosition, textToInsert.length, 'link', urlToInsert);
+      quill.formatText(
+        cursorPosition,
+        textToInsert.length,
+        'link',
+        urlToInsert
+      );
     }
 
     this.setState({
       hideDialog: true,
       insertUrl: undefined,
-      insertUrlText: undefined
+      insertUrlText: undefined,
     });
-  }
+  };
 
   /**
    * Called when user insert an image
@@ -812,7 +987,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     try {
       const quill = this.getEditor();
       const cursorPosition: number = selectedRange.index;
-      quill.insertEmbed(cursorPosition, 'image', insertImageUrl, "user");
+      quill.insertEmbed(cursorPosition, 'image', insertImageUrl, 'user');
       this.setState({
         insertImageUrl: undefined,
         hideImageDialog: true,
@@ -824,36 +999,40 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         hideImageDialog: true,
       });
     }
-  }
+  };
 
   /**
    * Disable Save-button if hyperlink is undefined or empty
    * This prevents the user of adding an empty hyperlink
    */
   private checkLinkUrl = (): boolean => {
-    if (this.state.insertUrl !== undefined && this.state.insertUrl !== "") {
+    if (this.state.insertUrl !== undefined && this.state.insertUrl !== '') {
       return false;
     }
     return true;
-  }
+  };
 
   /**
    * Disable Save-button if hyperlink for the imported image is undefined or empty
    * This prevents the user of adding an empty image
    */
   private checkImageLinkUrl = (): boolean => {
-    if (this.state.insertImageUrl !== undefined && this.state.insertImageUrl !== "") {
+    if (
+      this.state.insertImageUrl !== undefined &&
+      this.state.insertImageUrl !== ''
+    ) {
       return false;
     }
     return true;
-  }
+  };
 
   /**
    * Applies a format to the selection
    * @param name format name
    * @param value format value, or false to unset format
    */
-  private applyFormat(name: string, value: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private applyFormat(name: string, value: any): void {
     const quill = this.getEditor();
     quill.format(name, value);
 
@@ -882,42 +1061,45 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         this.setState({
           selectedText: selectedText,
           selectedUrl: selectedUrl,
-          formats: formats
+          formats: formats,
         });
 
         if (this._propertyPaneRef && this.state.morePaneVisible) {
           this._propertyPaneRef.onChangeSelection(range, oldRange, source);
         }
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
-  }
+  };
 
   /**
    * Called when user clicks on the close icon
    */
   private handleClosePanel = (): void => {
     this.closePanel();
-  }
+  };
 
   /**
    * Closes the panel
    */
   private closePanel = (): void => {
     this.setState({ morePaneVisible: false });
-  }
+  };
 
   /**
    * Called when user clicks on the more button
    */
   private handleShowMore = (): void => {
-    this.setState({
-      morePaneVisible: !this.state.morePaneVisible
-    }, () => {
-      this.getEditor().focus();
-    });
-  }
+    this.setState(
+      {
+        morePaneVisible: !this.state.morePaneVisible,
+      },
+      () => {
+        this.getEditor().focus();
+      }
+    );
+  };
 
   /**
    * Called when user changes the text of the editor
@@ -938,7 +1120,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
           newState.formats = formats;
         }
       }
-
     }
 
     // do we need to pass this to a handler?
@@ -952,9 +1133,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     }
 
     this.setState({
-      ...newState
+      ...newState,
     });
-  }
+  };
 
   /**
    * Keeps track of whether we clicked outside the element
@@ -968,7 +1149,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
       // -- unless we're using the property pane or the dialog
       if (this.state.editing) {
         this.setState({
-          editing: false
+          editing: false,
         });
       }
     } else {
@@ -978,21 +1159,23 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         this.setState({ editing: true });
       }
     }
-  }
+  };
 
   /**
    * Links to the quill reference
    */
-  private linkQuill = (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private linkQuill = (e: any): void => {
     this._quillElem = e;
-  }
+  };
 
   /**
    * Links to the property pane element
    */
-  private linkPropertyPane = (e: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private linkPropertyPane = (e: any): void => {
     this._propertyPaneRef = e;
-  }
+  };
 
   /**
    * Renders the label above the rich text (if specified)
@@ -1001,13 +1184,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
     const { label } = this.props;
 
     if (label) {
-      return (
-        <Label htmlFor={this._richTextId}>
-          {label}
-        </Label>
-      );
+      return <Label htmlFor={this._richTextId}>{label}</Label>;
     }
 
     return null;
-  }
+  };
 }

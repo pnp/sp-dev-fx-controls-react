@@ -37,7 +37,7 @@ export const useUtils = (): IUseUtils => {
     try {
       const urlValid = new URL(url);
       return !!urlValid;
-    } catch (e) {
+    } catch {
       return false;
     }
   }, []);
@@ -169,7 +169,7 @@ export const useUtils = (): IUseUtils => {
     // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
     try {
       result = new File([blob], fileName);
-    } catch (ieErr) {
+    } catch {
       result = blob;
       result.fileName = fileName;
     }
