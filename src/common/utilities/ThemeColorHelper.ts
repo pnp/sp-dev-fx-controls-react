@@ -48,14 +48,14 @@ export class ThemeColorHelper {
                 return themeState[varName].replace('"', '').trim();
               }
             }
-          } catch (error) {
+          } catch {
             // do nothing
           }
 
           return defaultValue;
         }
       }
-    } catch (error) {
+    } catch {
       // do nothing
     }
 
