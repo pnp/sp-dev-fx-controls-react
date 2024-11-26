@@ -10,6 +10,7 @@
 - `ImagePicker`:  new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
 - `UserPicker`:  new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
 - `DynamicForm`: DynamicForm storeLastActiveTab option #1879 [#1879](https://github.com/pnp/sp-dev-fx-controls-react/pull/1879)
+- `FilePicker`: Image picker enhancements [#1805](https://github.com/pnp/sp-dev-fx-controls-react/pull/1805)
 
 ### Fixes
 
@@ -24,7 +25,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [IRRDC](https://github.com/IRRDC), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [IRRDC](https://github.com/IRRDC), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.19.0
 
