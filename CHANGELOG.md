@@ -22,10 +22,11 @@
 - `GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)
 - `DynamicForm`: Always Show Required Field Validation Error In FormDisplayMode.Edit Mode [#1775](https://github.com/pnp/sp-dev-fx-controls-react/issues/1775)
 - `DynamicForm`: Required Field Validation won't work [#1760](https://github.com/pnp/sp-dev-fx-controls-react/issues/1760)
+- `DynamicForm`: Adds ability to render file/folder name field in DynamicForm and Field. [#1906](https://github.com/pnp/sp-dev-fx-controls-react/pull/1906)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [Michaël Maillot](https://github.com/michaelmaillot), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [joaojmendes](https://github.com/joaojmendes), [IRRDC](https://github.com/IRRDC), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [IRRDC](https://github.com/IRRDC), [joaojmendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.19.0
 
