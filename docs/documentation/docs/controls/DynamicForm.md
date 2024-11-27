@@ -66,6 +66,7 @@ The `DynamicForm` can be configured with the following properties:
 | validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
 | customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. | 
 | storeLastActiveTab | boolean | no |  When uploading files: Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default - `true` |
+| folderPath | string | no | Server relative or library relative folder to create the item in. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. Defaults to the root folder of the library. |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 | Property | Type | Required | Description |
