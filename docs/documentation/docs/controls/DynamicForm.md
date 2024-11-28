@@ -50,6 +50,7 @@ The `DynamicForm` can be configured with the following properties:
 | disabled | boolean | no | Allows form to be disabled. Default value is `false`|
 | disabledFields | string[] | no | InternalName of fields that should be disabled. Default value is `false`|
 | enableFileSelection | boolean | no | Specify if the form should support the creation of a new list item in a document library attaching a file to it. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document. Default value is `false`|
+| fieldOrder | string[] | no | List of fields internal names. Specifies fields custom sorting. |
 | hiddenFields | string[] | no | InternalName of fields that should be hidden. Default value is `false`|
 | onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
@@ -64,6 +65,8 @@ The `DynamicForm` can be configured with the following properties:
 | saveDisabled | boolean | no | Specifies if save button is disabled. |
 | validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
 | customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. | 
+| storeLastActiveTab | boolean | no |  When uploading files: Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default - `true` |
+| folderPath | string | no | Server relative or library relative folder to create the item in. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. Defaults to the root folder of the library. |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 | Property | Type | Required | Description |

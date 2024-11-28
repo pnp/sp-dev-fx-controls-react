@@ -264,7 +264,7 @@ export default class SPPeopleSearchService {
 
       // Nothing to return
       return [];
-    } catch (e) {
+    } catch {
       console.error("PeopleSearchService::searchTenant: error occured while fetching the users.");
       return [];
     }
