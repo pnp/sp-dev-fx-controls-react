@@ -54,7 +54,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
           <div className={styles.webPartTitle} style={{ color: color }}>
             {
               this.props.displayMode === DisplayMode.Edit && (
-                <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} value={this.props.title} />
+                <textarea placeholder={this.props.placeholder ? this.props.placeholder : strings.WebPartTitlePlaceholder} aria-label={strings.WebPartTitleLabel} onChange={this._onChange} defaultValue={this.props.title} />
               )
             }
 
