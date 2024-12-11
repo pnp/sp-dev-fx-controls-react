@@ -6,10 +6,11 @@
 
 - `ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)
 - `Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)
+- `WebPartTitle`: Control Fails to Update After Initial Save [#1877](https://github.com/pnp/sp-dev-fx-controls-react/issues/1877)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina).
+Special thanks to our contributors (in alphabetical order): [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic).
 
 ## 3.20.0
 
