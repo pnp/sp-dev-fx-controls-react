@@ -1,5 +1,16 @@
 # Releases
 
+## 3.20.1
+
+### Fixes
+
+- `ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)
+- `Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina).
+
 ## 3.20.0
 
 ### Enhancements
