@@ -33,7 +33,7 @@ import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { IFolder } from "@pnp/sp/folders";
-import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
+import { IInstalledLanguageInfo, IItemUpdateResult, IList } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -55,6 +55,10 @@ const stackTokens: IStackTokens = { childrenGap: 20 };
 const getstyles = classNamesFunction<IDynamicFormStyleProps, IDynamicFormStyles>();
 const getFieldstyles = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
 const theme = getFluentUIThemeOrDefault();
+
+const timeout = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 /**
  * DynamicForm Class Control
@@ -626,7 +630,7 @@ export class DynamicFormBase extends React.Component<
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
             // Update the just created folder or Document Set
-            const iur = await library.items.getById(folderId).update(objects);
+            const iur = await this.updateListItemRetry(library, folderId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -704,7 +708,7 @@ export class DynamicFormBase extends React.Component<
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
             // Update the just created file
-            const iur = await library.items.getById(fileId).update(objects);
+            const iur = await this.updateListItemRetry(library, fileId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -1537,6 +1541,30 @@ export class DynamicFormBase extends React.Component<
     const folder = sp.web.getFolderByServerRelativePath(`${serverRelativeLibraryPath}/${normalizedFolderPath}`);
     return folder;
   };
+
+  /**
+   * Updates a list item and retries the operation if a 409 (Save Conflict) was thrown.
+   * @param list The list/library on which to execute the operation
+   * @param itemId The item ID
+   * @param objects The values to update the item with
+   * @param retry The retry index
+   * @returns An update result
+   */
+  private updateListItemRetry = async (list: IList, itemId: number, objects: {}, retry: number = 0): Promise<IItemUpdateResult> => {
+    try {
+      return await list.items.getById(itemId).update(objects);
+    }
+    catch (error)
+    {      
+      if (error.status === 409 && retry < 3) {
+        await timeout(100);
+        return await this.updateListItemRetry(list, itemId, objects, retry + 1);
+      }
+
+      throw error;
+    }    
+  }
+
 }
 
 export const DynamicForm = styled<IDynamicFormProps, IDynamicFormStyleProps, IDynamicFormStyles>(
