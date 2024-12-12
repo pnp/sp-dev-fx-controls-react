@@ -63,6 +63,7 @@ nav:
     - ProgressStepsIndicator: 'controls/ProgressStepsIndicator.md'
     - RichText: 'controls/RichText.md'
     - SecurityTrimmedControl: 'controls/SecurityTrimmedControl.md'
+    - ShareDialog: 'controls/ShareDialog.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SitePicker: 'controls/SitePicker.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'

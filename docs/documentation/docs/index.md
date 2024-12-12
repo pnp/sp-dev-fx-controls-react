@@ -102,6 +102,7 @@ The following controls are currently available:
 - [Progress](./controls/Progress) (shows progress of multiple SEQUENTIALLY executed actions)
 - [ProgressStepsIndicator.md](./controls/ProgressStepsIndicator) (shows a progress of steps)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
+- [ShareDialog](./controls/ShareDialog) (Share Dialog control)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SitePicker](./controls/SitePicker) (Site Picker control)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
