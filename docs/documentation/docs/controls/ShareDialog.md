@@ -39,20 +39,18 @@ The `ShareDialog` control can be configured with the following properties:
 
 | Property  | Type           | Required | Description                                             |
 |-----------|----------------|----------|---------------------------------------------------------|
-| siteUrl   | string         | no       | URL of the site where the item is located.              |
-| listId    | string         | no       | ID of the list containing the item to be shared.        |
-| itemId    | string/number  | no       | ID of the item to be shared.                            |
-| name      | string         | no       | Name of the item to be shared.                          |
-| onClose   | function       | no       | Callback function executed when the dialog is closed.   |
+| isOpen    | boolean        | yes      | open or close Dialog                                    |
+| options   | IDialogOptions | yes      |  ShareDialog Options                                    |
+| onClose   | function       | yes      | Callback function executed when the dialog is closed.   |
 
 ### Interface `IDialogOptions`
 
 | Property | Type           | Required | Description                               |
 |----------|----------------|----------|-------------------------------------------|
-| siteUrl  | string         | no       | URL of the site where the item is located.|
-| listId   | string         | no       | ID of the list containing the item.       |
-| itemId   | string/number  | no       | ID of the item to be shared.              |
-| name     | string         | no       | Name of the item to be shared.            |
+| siteUrl  | string         | yes      | URL of the site where the item is located.|
+| listId   | string         | yes      | ID of the list containing the item.       |
+| itemId   | string/number  | yes      | ID of the item to be shared.              |
+| name     | string         | yes      | Name of the item to be shared.            |
 
 ### Example `IDialogOptions` Usage
 
@@ -65,8 +63,8 @@ const dialogOptions: IDialogOptions = {
 };
 
 <ShareDialog
-  context={this.props.context}
-  {...dialogOptions}
+  isOpen: true,
+  options: dialogOptions.
   onClose={() => { console.log('Dialog closed'); }}
 />
 

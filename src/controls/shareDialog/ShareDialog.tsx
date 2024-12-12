@@ -30,10 +30,10 @@ interface IEventData {
 }
 
 interface IDialogOptions {
-  siteUrl?: string;
-  listId?: string;
-  itemId?: string | number;
-  name?: string;
+  siteUrl: string;
+  listId: string;
+  itemId: string | number;
+  name: string;
 }
 
 interface ShareDialogProps {
@@ -56,9 +56,6 @@ export const ShareDialog: React.FC<ShareDialogProps> = ({ isOpen, options, onClo
 
   const handleIframeMessage = useCallback(
     (event: MessageEvent) => {
-      if (event.origin !== window.location.origin) return;
-
-      console.log("Message from iframe:", event.data);
       const { name, height } = JSON.parse(event.data) as IEventData;
       switch (name) {
         case "share_dismiss":
@@ -110,7 +107,6 @@ export const ShareDialog: React.FC<ShareDialogProps> = ({ isOpen, options, onClo
         `&itemName= ${encodeName}` +
         `&channelId=` +
         `&origin=${origin}`;
-      console.log(url);
       setDialogUrl(url);
     } else {
       setDialogUrl(undefined);
