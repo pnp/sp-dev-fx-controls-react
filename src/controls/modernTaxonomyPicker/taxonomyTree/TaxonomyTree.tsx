@@ -65,6 +65,7 @@ export interface ITaxonomyTreeProps {
     termInfo: ITermInfo,
     updateTaxonomyTreeViewCallback?: (
       newTermItems?: ITermInfo[],
+      parentTerm?: ITermInfo[], //only for adding new terms
       updatedTermItems?: ITermInfo[],
       deletedTermItems?: ITermInfo[]
     ) => void
@@ -84,7 +85,7 @@ export function TaxonomyTree(
   const [groups, setGroups] = React.useState<IGroup[]>([]);
 
   const updateTaxonomyTreeViewWithNewTermItems = (
-    newTermItems: ITermInfo[]
+    newTermItems: ITermInfo[], parentTerm?: ITermInfo[]
   ): void => {
     for (const term of newTermItems) {
       const findGroupContainingTerm = (currentGroup: IGroup): IGroup => {
@@ -102,6 +103,21 @@ export function TaxonomyTree(
         return null;
       };
 
+      const findParentTermLevel = (groups: IGroup[], parentTermId: string): number | null => {
+        for (const group of groups) {
+          if (group.key === parentTermId) {
+            return group.level;
+          }
+          if (group.children && group.children.length > 0) {
+            const level = findParentTermLevel(group.children, parentTermId);
+            if (level !== null) {
+              return level;
+            }
+          }
+        }
+        return null;
+      };
+      const parentTermLevel = findParentTermLevel([groups[0]], parentTerm[0].id );
       const groupToAddTermTo = findGroupContainingTerm(groups[0]);
       let termNames = term.labels.filter(
         (termLabel) =>
@@ -121,7 +137,7 @@ export function TaxonomyTree(
         key: term.id,
         startIndex: -1,
         count: 50,
-        level: groupToAddTermTo.level + 1,
+        level: parentTermLevel + 1,
         isCollapsed: true,
         data: { skiptoken: "", term: term },
         hasMoreData: term.childrenCount > 0,
@@ -216,11 +232,12 @@ export function TaxonomyTree(
 
   const updateTaxonomyTreeView = (
     newTermItems?: ITermInfo[],
+    parentTerm?:ITermInfo[],
     updatedTermItems?: ITermInfo[],
     deletedTermItems?: ITermInfo[]
   ): void => {
     if (newTermItems) {
-      updateTaxonomyTreeViewWithNewTermItems(newTermItems);
+      updateTaxonomyTreeViewWithNewTermItems(newTermItems,parentTerm);
     }
 
     if (updatedTermItems) {
