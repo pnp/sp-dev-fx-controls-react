@@ -2,6 +2,10 @@
 
 ## 3.21.0
 
+### New control(s)
+
+- `ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
+
 ### Fixes
 
 - `ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)
@@ -12,7 +16,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.20.0
 
