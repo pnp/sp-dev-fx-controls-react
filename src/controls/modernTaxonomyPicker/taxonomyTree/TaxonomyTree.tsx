@@ -653,6 +653,13 @@ export function TaxonomyTree(
         IChoiceGroupStyles
       > = { root: { flex: "1" }, flexContainer: { width: "100%" } };
 
+      const getSelectedKey = (): string | null => {
+        const selectedItems = props.selection?.getSelection() as ITermInfo[] | undefined;
+        return selectedItems?.[0]?.id ?? null;
+      };
+
+
+
       return (
         <FocusZone
           direction={FocusZoneDirection.horizontal}
@@ -660,9 +667,7 @@ export function TaxonomyTree(
         >
           <ChoiceGroup
             options={options}
-            selectedKey={
-              props.selection && props.selection.getSelection()[0]?.id
-            }
+            selectedKey={getSelectedKey()}
             disabled={isDisabled}
             styles={choiceGroupStyles}
           />
