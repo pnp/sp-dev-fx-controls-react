@@ -2,8 +2,6 @@
 
 This control allows you to select one or more user from a AAD via its name or starting characters.
 
-!
-
 **Empty user picker**
 
 ![Empty user picker](../assets/userPicker03.png)
