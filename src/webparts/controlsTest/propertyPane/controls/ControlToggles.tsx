@@ -32,13 +32,13 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
                         return null;
                     }
                     return (
-                        <Toggle 
-                            key={control} 
-                            label={this.getProperCase(control)} 
+                        <Toggle
+                            key={control}
+                            label={this.getProperCase(control)}
                             checked={this.props.controlVisibility && this.props.controlVisibility[control] || false}
                             onChange={(e, checked) => {
                                 this.props.onChange(control, checked);
-                            }} 
+                            }}
                         />
                     );
                 }) }
@@ -48,15 +48,15 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
 
     private getValidControls(): string[] {
         const validControls: ValidControls[] = [
-            "all", 
-            "accessibleAccordion", "adaptiveCardDesignerHost", "adaptiveCardHost", 
-            "animatedDialog", "Carousel", "ChartControl", 
-            "ComboBoxListItemPicker", "Dashboard", "DateTimePicker", 
-            "DragDropFiles", "DynamicForm", "EnhancedThemeProvider", 
-            "FieldCollectionData", "FieldPicker", "FilePicker", 
+            "all",
+            "accessibleAccordion", "adaptiveCardDesignerHost", "adaptiveCardHost",
+            "animatedDialog", "Carousel", "ChartControl",
+            "ComboBoxListItemPicker", "Dashboard", "DateTimePicker",
+            "DragDropFiles", "DynamicForm", "EnhancedThemeProvider",
+            "FieldCollectionData", "FieldPicker", "FilePicker",
             "FileTypeIcon", "FolderExplorer", "FolderPicker",
             "GridLayout", "IconPicker", "IFrameDialog",
-            "IFramePanel", "ListPicker", "ListItemPicker",
+            "IFramePanel", "ListPicker", "ListItemAttachments","ListItemPicker",
             "ListItemComments", "ViewPicker", "ListView",
             "LocationPicker", "Map", "ModernAudio",
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
