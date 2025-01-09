@@ -683,6 +683,7 @@ export function TaxonomyTree(
           className={styles.taxonomyItemFocusZone}
         >
           <ChoiceGroup
+            key={new Date().getTime()}
             options={options}
             selectedKey={getSelectedKey()}
             disabled={isDisabled}
