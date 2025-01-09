@@ -3,7 +3,6 @@
 This control allows you to manage list item comments, you can add or delete comments to an item. The comments are listed in tile view.
 user can scroll to load more comments if they exist (infinite scroll);
 
-
 Here is an example of the control:
 
 ![ListItemComments](../assets/ListItemComments.gif)
@@ -24,6 +23,7 @@ Here is an example of the control:
 ```TypeScript
 import { ListItemComments } from '@pnp/spfx-controls-react/lib/ListItemComments';
 ```
+
 - Use the `ListItemComments` control in your code as follows:
 
 ```TypeScript
@@ -35,8 +35,10 @@ import { ListItemComments } from '@pnp/spfx-controls-react/lib/ListItemComments'
                   label="ListItem Comments"
                   />
 ```
+
 ## Use "highlightedCommentId" parameter to support Comment Notification Link
-SharePoint will send a comment notification if someone has been ***"@"*** in the comment. This comment notification mail contains a ***Go to comment*** button. 
+
+SharePoint will send a comment notification if someone has been ***"@"*** in the comment. This comment notification mail contains a ***Go to comment*** button.
 
 ![ListItemComments](../assets/ListItemComments05.png)
 
@@ -57,26 +59,25 @@ You can use ***highlightedCommentId*** to specify the comment you want to highli
 ```
 
 The specified comment will be highlighted with different border and background color (Use theme color).
+
 ![ListItemComments](../assets/ListItemComments06.png)
 
 ## Implementation
 
 The `ListItemComments` control can be configured with the following properties:
 
-
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| serviceScope | ServiceScope | yes | SPFx Service Scope  |
-| itemId | number | yes | List Item Id  |
+| serviceScope | ServiceScope | yes | SPFx Service Scope.  |
+| itemId | number | yes | List Item Id.  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
-| label | string | no | Label for control |
-| numberCommentsPerPage | number  | no | number of comments per page possible values 5 | 10 | 15 | 20  default 10 |
-| highlightedCommentId | string | no | The commend Id (e.g. "1") you want to highlight. This selected comment will show with different border and background color based on site theme |
-
+| label | string | no | Label for control. |
+| numberCommentsPerPage | number  | no | number of comments per page. Possible values: `5` \| `10` \| `15` \| `20` (default `10`). |
+| highlightedCommentId | string | no | The commend Id (e.g. "1") you want to highlight. This selected comment will show with different border and background color based on site theme. |
 
 ## MSGraph Permissions required
 
-This control requires at least the flowing scopes: `People.Read`, `User.ReadBasic.All`
- 
+This control requires at least the following scopes: `People.Read`, `User.ReadBasic.All`.
+
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemComments)

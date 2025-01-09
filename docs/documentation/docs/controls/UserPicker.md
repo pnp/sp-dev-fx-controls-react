@@ -2,15 +2,15 @@
 
 This control allows you to select one or more user from a AAD via its name or starting characters.
 
-**Empty user picker**
+- Empty user picker:
 
 ![Empty user picker](../assets/userPicker03.png)
 
-**Selecting Users**
+- Selecting Users:
 
 ![Selecting users](../assets/userPicker02.png)
 
-**Selected users in picker**
+- Selected users in picker:
 
 ![Selected users in the input](../assets/userPicker01.png)
 
@@ -61,7 +61,7 @@ const onRemovedUser = React.useCallback((user: IUserInfo) => {
 
 ## Implementation
 
-The UseryPicker control can be configured with the following properties:
+The UserPicker control can be configured with the following properties:
 
 | Property                  | Type                                                                                                                  | Required | Description                                                     |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------- |
@@ -74,15 +74,15 @@ The UseryPicker control can be configured with the following properties:
 | onSelectedUsers           | (users: IUserInfo[]) => void                                                                                          | no       | captures the event of when the users in the picker has changed. |
 | onRemoveSelectedUser      | (user: IUserInfo) => void                                                                                             | no       | captures the event of when the user in the picker was removed   |
 | placeholder               | string                                                                                                                | no       | placeholder to show                                             |
-| defaultSelectdUsers       | IUserInfo[]                                                                                                           | no       | default users to show on the picker                             |
+| defaultSelectedUsers       | IUserInfo[]                                                                                                           | no       | default users to show on the picker                             |
 | theme                     | IReadonlyTheme                                                                                                        | no       | theme                                                           |
-| secondaryTextPropertyName | values :"jobTitle" , "department" , "mail", "officeLocation" , "mobilePhone" , "businessPhones" , "userPrincipalName" | no       | secondary text to show on persona card                          |
+| secondaryTextPropertyName | values: "jobTitle" , "department" , "mail", "officeLocation" , "mobilePhone" , "businessPhones" , "userPrincipalName" | no       | secondary text to show on persona card                          |
 
-Interface `IUserInfo` extends User interface from `@microsoft/microsoft-graph-types``
+Interface `IUserInfo` extends `User` interface from `@microsoft/microsoft-graph-types`
 
-| Property  | Type     | Required | Description                      |
-| --------- | -------- | -------- | -------------------------------- |
-| userPhoto | string   | yes      | userPhoto to show on Person card |
-| presence  | Presence | yes      | user Presence                    |
+| Property  | Type     | Required | Description                       |
+| --------- | -------- | -------- | --------------------------------- |
+| userPhoto | string   | yes      | User photo to show on Person card |
+| presence  | Presence | yes      | User presence                     |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/UserPicker)

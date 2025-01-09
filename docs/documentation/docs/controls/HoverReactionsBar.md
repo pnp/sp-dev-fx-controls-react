@@ -2,15 +2,13 @@
 
 This control allows you to select an emoji from emoji bar or select from picker.
 
-
-**HoverReactionsBar**
+Here is an example of the control in action:
 
 ![hoverReactions3Bar](../assets/hoverReactions3Bar.png)
 
 ![hoverReactionsBar2](../assets/hoverReactionsBar2.png)
 
 ![hoverReactionsBar1](../assets/hoverReactionsBar1.png)
-
 
 ## How to use this control in your solutions
 
@@ -61,7 +59,7 @@ The HoverReactionsBar control can be configured with the following properties:
 | onSelected |onSelect: (emoji: string, emojiInfo?: IEmojiInfo) => void;| yes | selected Emoji |
 | top4Reactions |  string[] | no |  name of emojis to show on the bar  |
 | target | HTMLDivElement | yes | container of controls who fire the HoverReactionsBar |
-| onDismis | onDismiss: () => void; | yes | function to call to dismiss HoverReactionsBar|
+| onDismiss | onDismiss: () => void; | yes | function to call to dismiss HoverReactionsBar|
 | themeV8 | Theme | No | Set Fluent UI Theme|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/HoverReactionsBar)

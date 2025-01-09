@@ -24,11 +24,13 @@ import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
           onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
 ```
+
 ![DynamicForm](../assets/DynamicForm.png)
 
 ## File selection
 
 To upload a file when creating a new document in a document library you need to specify:
+
 - enableFileSelection: Set this parameter to true to enable file selection.
 - contentTypeId: This parameter specifies the target content type ID of the document you are creating.
 - supportedFileExtensions: This parameter is optional and is used to specify the supported file extensions if they are different from the default ones.
@@ -69,8 +71,9 @@ The `DynamicForm` can be configured with the following properties:
 | folderPath | string | no | Server relative or library relative folder to create the item in. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. Defaults to the root folder of the library. |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| showDialogOnValidationError | boolean | no | Specifies if the dialog should be shown on validation error. Default - `false` |
-| customTitle | string | no | Specifies a custom title to be shown in the validation dialog. Default - empty |
-| customMessage | string | no | Specifies a custom message to be shown in the validation dialog. Default - empty |
+
+| Property                    | Type    | Required | Description                                                                      |
+| --------------------------- | ------- | -------- | -------------------------------------------------------------------------------- |
+| showDialogOnValidationError | boolean | no       | Specifies if the dialog should be shown on validation error. Default - `false`   |
+| customTitle                 | string  | no       | Specifies a custom title to be shown in the validation dialog. Default - empty   |
+| customMessage               | string  | no       | Specifies a custom message to be shown in the validation dialog. Default - empty |
