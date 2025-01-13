@@ -8,6 +8,7 @@ This control renders lookup values. Each lookup item is clickable. Click on the 
 ![FieldLookupRenderer dialog](../../assets/FieldLookupRendererDialog.png)
 
 ## Covered Fields
+
 - Lookup (single, multi)
 
 ## How to use this control in your solutions
@@ -36,8 +37,7 @@ The FieldLookupRenderer component can be configured with the following propertie
 | lookups | ISPFieldLookupValue[] | yes | Lookup field values. |
 | dispFormUrl | boolean | no | Url of Display form for the list that is referenced by the lookup. |
 | onClick | (args: ILookupClickEventArgs) => {} | no | Custom event handler of lookup item click. If not set the dialog with Display Form will be shown. |
-| fieldId | string | Field's id |
-| context | IContext | Customizer context. Must be providede if fieldId is set |
+| fieldId | string | Field's id | |
+| context | IContext | Customizer context. Must be provided if fieldId is set | |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldLookupRenderer)
-

@@ -5,6 +5,7 @@ This control renders title either as a simple text or as a link to the Display F
 ![FieldTitleRenderer control output](../../assets/FieldTitleRenderer.png)
 
 ## Covered Fields
+
 - List Item Title (Title, LinkTitle, LinkTitleNoMenu)
 
 ## How to use this control in your solutions
@@ -26,17 +27,15 @@ import { FieldTitleRenderer } from "@pnp/spfx-controls-react/lib/FieldTitleRende
 
 The FieldTitleRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| text | string | no | Text to be rendered. |
-| isLink | boolean | yes | True if the name should be rendered as a link. |
-| baseUrl | string | no | Web Url. Should be provided if `onClick` is not defined |
-| listId | string | no | List Id. Should be provided if `onClick` is not defined |
-| id | number | no | Item Id. Should be provided if `onClick` is not defined |
-| onClick | (args: ITitleClickEventArgs) => {} | no | Custom title click event handler. If not set Display form for the item will be displayed. |
-
+| Property  | Type                               | Required | Description                                                                               |
+| --------- | ---------------------------------- | -------- | ----------------------------------------------------------------------------------------- |
+| cssProps  | React.CSSProperties                | no       | CSS styles to apply to the renderer.                                                      |
+| className | ICssInput                          | no       | CSS classes to apply to the renderer.                                                     |
+| text      | string                             | no       | Text to be rendered.                                                                      |
+| isLink    | boolean                            | yes      | True if the name should be rendered as a link.                                            |
+| baseUrl   | string                             | no       | Web Url. Should be provided if `onClick` is not defined                                   |
+| listId    | string                             | no       | List Id. Should be provided if `onClick` is not defined                                   |
+| id        | number                             | no       | Item Id. Should be provided if `onClick` is not defined                                   |
+| onClick   | (args: ITitleClickEventArgs) => {} | no       | Custom title click event handler. If not set Display form for the item will be displayed. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldTitleRenderer)
-

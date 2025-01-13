@@ -1,8 +1,8 @@
-# HoverReactionsBar
+# ImagePicker
 
-This control allows you to select or Upload Image from SharePoint, Ondrive or Stock Images.
+This control allows you to select or upload image from SharePoint, OneDrive or Stock Images.
 
-## ImagePicker
+Here is an example of the control in action:
 
 ![imagepicker](../assets/ImagePicker00.png)
 
@@ -39,11 +39,11 @@ import { ImagePicker } from '@pnp/spfx-controls-react/lib/ImagePicker';
 
 - With the `onFileSelect` property you can get the selected image:
 
-  ```typescript
-  const handleFileSelected = React.useCallback(async (file: IFilePickerResult) => {
-    console.log("file", file);
-  }, []);
-  ```
+```typescript
+const handleFileSelected = React.useCallback(async (file: IFilePickerResult) => {
+  console.log("file", file);
+}, []);
+```
 
 - With the `onDelete` property you can execute a callback after delete the image:
 

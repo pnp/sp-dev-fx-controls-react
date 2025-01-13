@@ -24,11 +24,13 @@ import { DynamicForm } from "@pnp/spfx-controls-react/lib/DynamicForm";
           onSubmitted={async (listItemData) => { console.log(listItemData); }}>
 </DynamicForm>
 ```
+
 ![DynamicForm](../assets/DynamicForm.png)
 
 ## File selection
 
 To upload a file when creating a new document in a document library you need to specify:
+
 - enableFileSelection: Set this parameter to true to enable file selection.
 - contentTypeId: This parameter specifies the target content type ID of the document you are creating.
 - supportedFileExtensions: This parameter is optional and is used to specify the supported file extensions if they are different from the default ones.
@@ -71,11 +73,11 @@ The `DynamicForm` can be configured with the following properties:
 | styles | IStyleFunctionOrObject&lt;IDynamicFormStyleProps, [IDynamicFormStyles](#IDynamicFormStyles)&gt; | no | Styles to apply on control.  See the example [here](#how-to-use-styles-property) |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| showDialogOnValidationError | boolean | no | Specifies if the dialog should be shown on validation error. Default - `false` |
-| customTitle | string | no | Specifies a custom title to be shown in the validation dialog. Default - empty |
-| customMessage | string | no | Specifies a custom message to be shown in the validation dialog. Default - empty |
+| Property                    | Type    | Required | Description                                                                      |
+| --------------------------- | ------- | -------- | -------------------------------------------------------------------------------- |
+| showDialogOnValidationError | boolean | no       | Specifies if the dialog should be shown on validation error. Default - `false`   |
+| customTitle                 | string  | no       | Specifies a custom title to be shown in the validation dialog. Default - empty   |
+| customMessage               | string  | no       | Specifies a custom message to be shown in the validation dialog. Default - empty |
 
 ## IDynamicFormStyles interface
 | Property | Type  | Description |
@@ -139,4 +141,3 @@ In this example it shows 4 columns (by default it shows 3 columns per row) in on
             }
           }}
 ```
-

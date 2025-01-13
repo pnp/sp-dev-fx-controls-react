@@ -1,6 +1,6 @@
 # SecurityTrimmedControl
 
-This control is intended to be used when you want to show or hide components based on the user permissions. The control can be used to check the user’s permissions on the current site / list were the solution is loaded, or on a remote site / list.
+This control is intended to be used when you want to show or hide components based on the user permissions. The control can be used to check the user's permissions on the current site / list were the solution is loaded, or on a remote site / list.
 
 ## How to use this control in your solutions
 
@@ -14,7 +14,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 
 - You can use the `SecurityTrimmedControl` as follows in your solutions:
 
-**Checking permissions on the current site**
+### Checking permissions on the current site
 
 ```jsx
 <SecurityTrimmedControl context={this.props.context}
@@ -24,7 +24,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 </SecurityTrimmedControl>
 ```
 
-**Checking permissions on the current list**
+### Checking permissions on the current list
 
 ```jsx
 <SecurityTrimmedControl context={this.props.context}
@@ -34,7 +34,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 </SecurityTrimmedControl>
 ```
 
-**Checking permissions on remote site**
+### Checking permissions on remote site
 
 ```jsx
 <SecurityTrimmedControl context={this.props.context}
@@ -45,7 +45,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 </SecurityTrimmedControl>
 ```
 
-**Checking permissions on remote list / library**
+### Checking permissions on remote list / library
 
 ```jsx
 <SecurityTrimmedControl context={this.props.context}
@@ -57,7 +57,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 </SecurityTrimmedControl>
 ```
 
-**Show a control when the user doesn't have permissions**
+### Show a control when the user doesn't have permissions
 
 ```jsx
 <SecurityTrimmedControl context={this.props.context}
@@ -74,18 +74,18 @@ import { SPPermission } from '@microsoft/sp-page-context';
 
 The `SecurityTrimmedControl` can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | Context of the web part, application customizer, field customizer, or list view command set. |
-| permissions | SPPermission[] | yes | The permissions to check for the user. |
-| level | PermissionLevel | yes | Specify where to check the user permissions: current site or list / remote site or list. |
-| remoteSiteUrl | string | no | The URL of the remote site. Required when you want to check permissions on remote site or list. |
-| relativeLibOrListUrl | string | no | The relative URL of the list or library. Required when you want to check permissions on remote list. |
-| folderPath | string | no | Specify the name of a folder to check the user permissions against. Will be overridden if itemId is present. |
-| itemId | number | no | Specify the ID of the item to check the user permissions against. Takes precedence over folder. |
-| className | string | no | Specify the className to be used on the parent element. |
-| noPermissionsControl | JSX.Element | no | Optional. Specify the control you want to render if user doesn't have permissions. |
-| showLoadingAnimation | boolean | no | Optional. Specify should render loading animation. |
+| Property             | Type                 | Required | Description                                                                                                  |
+| -------------------- | -------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
+| context              | BaseComponentContext | yes      | Context of the web part, application customizer, field customizer, or list view command set.                 |
+| permissions          | SPPermission[]       | yes      | The permissions to check for the user.                                                                       |
+| level                | PermissionLevel      | yes      | Specify where to check the user permissions: current site or list / remote site or list.                     |
+| remoteSiteUrl        | string               | no       | The URL of the remote site. Required when you want to check permissions on remote site or list.              |
+| relativeLibOrListUrl | string               | no       | The relative URL of the list or library. Required when you want to check permissions on remote list.         |
+| folderPath           | string               | no       | Specify the name of a folder to check the user permissions against. Will be overridden if itemId is present. |
+| itemId               | number               | no       | Specify the ID of the item to check the user permissions against. Takes precedence over folder.              |
+| className            | string               | no       | Specify the className to be used on the parent element.                                                      |
+| noPermissionsControl | JSX.Element          | no       | Optional. Specify the control you want to render if user doesn't have permissions.                           |
+| showLoadingAnimation | boolean              | no       | Optional. Specify should render loading animation.                                                           |
 
 The `PermissionLevel` enum has the following values:
 

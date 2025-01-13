@@ -1,6 +1,6 @@
 # ChartControl - Bubble Chart
 
-Bubble chart show elements across three dimensions. Each bubble in the chart is located according to the first two dimensions. The size of each bubble represents the thid dimension.
+Bubble chart show elements across three dimensions. Each bubble in the chart is located according to the first two dimensions. The size of each bubble represents the third dimension.
 
 ![Default Bubble Chart](../../assets/BubbleChart.png)
 
