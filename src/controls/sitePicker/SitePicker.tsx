@@ -67,7 +67,11 @@ const styles = mergeStyleSets({
   },
 });
 
-const async = new Async();
+useEffect(() => {
+  return () => {
+    async.dispose();
+  };
+}, []);
 
 export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
   props: React.PropsWithChildren<ISitePickerProps>
