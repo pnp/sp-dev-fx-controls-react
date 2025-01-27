@@ -62,7 +62,7 @@
     "@uifabric/react-hooks": "7.16.4",
     "@uifabric/utilities": "7.38.2",
     "adaptive-expressions": "4.22.3",
-    "adaptivecards": "2.11.2",
+    "adaptivecards": "3.0.5",
     "adaptivecards-designer": "2.4.3",
     "adaptivecards-templating": "^2.2.0",
     "animate.css": "^4.1.1",
