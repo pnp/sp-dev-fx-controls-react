@@ -1,0 +1,2462 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-3.1.0">
+    
+    
+      
+        <title>Line Chart - @pnp/spfx-controls-react</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.11e41852.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.20ef595d.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#chartcontrol-line-chart" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../.." title="@pnp/spfx-controls-react" class="md-header-nav__button md-logo">
+          
+            <img src="../../../assets/pnp-spfx-controls.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                @pnp/spfx-controls-react
+              </span>
+              <span class="md-header-nav__topic">
+                Line Chart
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../../.." title="Home" class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../guides/" title="Guides" class="md-tabs__link">
+          Guides
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../AccessibleAccordion/" title="Controls" class="md-tabs__link md-tabs__link--active">
+          Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../fields/main/" title="Field Controls" class="md-tabs__link">
+          Field Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../../about/release-notes/" title="About" class="md-tabs__link">
+          About
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../.." title="@pnp/spfx-controls-react" class="md-nav__button md-logo">
+      
+        <img src="../../../assets/pnp-spfx-controls.svg" width="48" height="48">
+      
+    </a>
+    @pnp/spfx-controls-react
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../beta/" title="Beta testing" class="md-nav__link">
+      Beta testing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../guides/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../guides/contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../guides/mpa/" title="Minimal Path to Awesome" class="md-nav__link">
+      Minimal Path to Awesome
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../guides/submitting-pr/" title="Submitting a PR" class="md-nav__link">
+      Submitting a PR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../guides/migrate-from-v1/" title="Migrate v1 to v2" class="md-nav__link">
+      Migrate v1 to v2
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../AccessibleAccordion/" title="AccessibleAccordion" class="md-nav__link">
+      AccessibleAccordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Accordion/" title="Accordion" class="md-nav__link">
+      Accordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../AdaptiveCardHost/" title="AdaptiveCardHost" class="md-nav__link">
+      AdaptiveCardHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../AdaptiveCardDesignerHost/" title="AdaptiveCardDesignerHost" class="md-nav__link">
+      AdaptiveCardDesignerHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../AnimatedDialog/" title="AnimatedDialog" class="md-nav__link">
+      AnimatedDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Carousel/" title="Carousel" class="md-nav__link">
+      Carousel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-7" type="checkbox" id="nav-4-7" checked>
+    
+    <label class="md-nav__link" for="nav-4-7">
+      Charts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-7">
+        Charts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ChartControl/" title="ChartControl" class="md-nav__link">
+      ChartControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../BarChart/" title="Bar Chart" class="md-nav__link">
+      Bar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../BubbleChart/" title="Bubble Chart" class="md-nav__link">
+      Bubble Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DoughnutChart/" title="Doughnut Chart" class="md-nav__link">
+      Doughnut Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Line Chart
+      </label>
+    
+    <a href="./" title="Line Chart" class="md-nav__link md-nav__link--active">
+      Line Chart
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-usage" title="Example Usage" class="md-nav__link">
+    Example Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variations" title="Variations" class="md-nav__link">
+    Variations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#curved-lines" title="Curved lines" class="md-nav__link">
+    Curved lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#area-chart" title="Area Chart" class="md-nav__link">
+    Area Chart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stacked-area-chart" title="Stacked Area Chart" class="md-nav__link">
+    Stacked Area Chart
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-properties" title="Dataset Properties" class="md-nav__link">
+    Dataset Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structure" title="Data Structure" class="md-nav__link">
+    Data Structure
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#number" title="number[]" class="md-nav__link">
+    number[]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point" title="Point[]" class="md-nav__link">
+    Point[]
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#point-configuration" title="Point Configuration" class="md-nav__link">
+    Point Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" title="Configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-more-information" title="For More Information" class="md-nav__link">
+    For More Information
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PieChart/" title="Pie Chart" class="md-nav__link">
+      Pie Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../PolarAreaChart/" title="Polar Area Chart" class="md-nav__link">
+      Polar Area Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RadarChart/" title="Radar Chart" class="md-nav__link">
+      Radar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ScatterChart/" title="Scatter Chart" class="md-nav__link">
+      Scatter Chart
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ComboBoxListItemPicker/" title="ComboBoxListItemPicker" class="md-nav__link">
+      ComboBoxListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ContentTypePicker/" title="ContentTypePicker" class="md-nav__link">
+      ContentTypePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Dashboard/" title="Dashboard" class="md-nav__link">
+      Dashboard
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../DateTimePicker/" title="DateTimePicker" class="md-nav__link">
+      DateTimePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../DragDropFiles/" title="DragDropFiles" class="md-nav__link">
+      DragDropFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../DynamicForm/" title="DynamicForm" class="md-nav__link">
+      DynamicForm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../EnhancedThemeProvider/" title="EnhancedThemeProvider" class="md-nav__link">
+      EnhancedThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FieldCollectionData/" title="FieldCollectionData" class="md-nav__link">
+      FieldCollectionData
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FieldPicker/" title="FieldPicker" class="md-nav__link">
+      FieldPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FilePicker/" title="FilePicker" class="md-nav__link">
+      FilePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FileTypeIcon/" title="FileTypeIcon" class="md-nav__link">
+      FileTypeIcon
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FolderExplorer/" title="FolderExplorer" class="md-nav__link">
+      FolderExplorer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../FolderPicker/" title="FolderPicker" class="md-nav__link">
+      FolderPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../GridLayout/" title="GridLayout" class="md-nav__link">
+      GridLayout
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../HoverReactionsBar/" title="HoverReactionsBar" class="md-nav__link">
+      HoverReactionsBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../IconPicker/" title="IconPicker" class="md-nav__link">
+      IconPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../IFrameDialog/" title="IFrameDialog" class="md-nav__link">
+      IFrameDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../IFramePanel/" title="IFramePanel" class="md-nav__link">
+      IFramePanel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListItemAttachments/" title="ListItemAttachments" class="md-nav__link">
+      ListItemAttachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListItemComments/" title="ListItemComments" class="md-nav__link">
+      ListItemComments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListItemPicker/" title="ListItemPicker" class="md-nav__link">
+      ListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListPicker/" title="ListPicker" class="md-nav__link">
+      ListPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListView/" title="ListView" class="md-nav__link">
+      ListView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ListView.ContextualMenu/" title="ListView: add a contextual menu" class="md-nav__link">
+      ListView: add a contextual menu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../LivePersona/" title="LivePersona" class="md-nav__link">
+      LivePersona
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../LocationPicker/" title="LocationPicker" class="md-nav__link">
+      LocationPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Map/" title="Map" class="md-nav__link">
+      Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ModernAudio/" title="ModernAudio" class="md-nav__link">
+      ModernAudio
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ModernTaxonomyPicker/" title="ModernTaxonomyPicker" class="md-nav__link">
+      ModernTaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MonacoEditor/" title="MonacoEditor" class="md-nav__link">
+      MonacoEditor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../MyTeams/" title="MyTeams" class="md-nav__link">
+      MyTeams
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Pagination/" title="Pagination" class="md-nav__link">
+      Pagination
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../PeoplePicker/" title="PeoplePicker" class="md-nav__link">
+      PeoplePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Placeholder/" title="Placeholder" class="md-nav__link">
+      Placeholder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Progress/" title="Progress" class="md-nav__link">
+      Progress
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ProgressStepsIndicator/" title="ProgressStepsIndicator" class="md-nav__link">
+      ProgressStepsIndicator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../RichText/" title="RichText" class="md-nav__link">
+      RichText
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SecurityTrimmedControl/" title="SecurityTrimmedControl" class="md-nav__link">
+      SecurityTrimmedControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SiteBreadcrumb/" title="SiteBreadcrumb" class="md-nav__link">
+      SiteBreadcrumb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../SitePicker/" title="SitePicker" class="md-nav__link">
+      SitePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../TaxonomyPicker/" title="TaxonomyPicker" class="md-nav__link">
+      TaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../TeamChannelPicker/" title="TeamChannelPicker" class="md-nav__link">
+      TeamChannelPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../TeamPicker/" title="TeamPicker" class="md-nav__link">
+      TeamPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../TermSetNavigation/" title="TermSetNavigation" class="md-nav__link">
+      TermSetNavigation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Toolbar/" title="Toolbar" class="md-nav__link">
+      Toolbar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../TreeView/" title="TreeView" class="md-nav__link">
+      TreeView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../UploadFiles/" title="UploadFiles" class="md-nav__link">
+      UploadFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../VariantThemeProvider/" title="VariantThemeProvider" class="md-nav__link">
+      VariantThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ViewPicker/" title="ViewPicker" class="md-nav__link">
+      ViewPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../WebPartTitle/" title="WebPartTitle" class="md-nav__link">
+      WebPartTitle
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Field Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Field Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/main/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldRendererHelper/" title="FieldRendererHelper" class="md-nav__link">
+      FieldRendererHelper
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldAttachmentsRenderer/" title="FieldAttachmentsRenderer" class="md-nav__link">
+      FieldAttachmentsRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldDateRenderer/" title="FieldDateRenderer" class="md-nav__link">
+      FieldDateRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldFileTypeRenderer/" title="FieldFileTypeRenderer" class="md-nav__link">
+      FieldFileTypeRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldLookupRenderer/" title="FieldLookupRenderer" class="md-nav__link">
+      FieldLookupRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldNameRenderer/" title="FieldNameRenderer" class="md-nav__link">
+      FieldNameRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldTaxonomyRenderer/" title="FieldTaxonomyRenderer" class="md-nav__link">
+      FieldTaxonomyRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldTextRenderer/" title="FieldTextRenderer" class="md-nav__link">
+      FieldTextRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldTitleRenderer/" title="FieldTitleRenderer" class="md-nav__link">
+      FieldTitleRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldUrlRenderer/" title="FieldUrlRenderer" class="md-nav__link">
+      FieldUrlRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../fields/FieldUserRenderer/" title="FieldUserRenderer" class="md-nav__link">
+      FieldUserRenderer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../about/release-notes/" title="Release notes" class="md-nav__link">
+      Release notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../about/license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-usage" title="Example Usage" class="md-nav__link">
+    Example Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variations" title="Variations" class="md-nav__link">
+    Variations
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#curved-lines" title="Curved lines" class="md-nav__link">
+    Curved lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#area-chart" title="Area Chart" class="md-nav__link">
+    Area Chart
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stacked-area-chart" title="Stacked Area Chart" class="md-nav__link">
+    Stacked Area Chart
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataset-properties" title="Dataset Properties" class="md-nav__link">
+    Dataset Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-structure" title="Data Structure" class="md-nav__link">
+    Data Structure
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#number" title="number[]" class="md-nav__link">
+    number[]
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point" title="Point[]" class="md-nav__link">
+    Point[]
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#point-configuration" title="Point Configuration" class="md-nav__link">
+    Point Configuration
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" title="Configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-more-information" title="For More Information" class="md-nav__link">
+    For More Information
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/pnp/sp-dev-fx-controls-react/blob/master/docs/documentation/docs/controls/charts/LineChart.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="chartcontrol-line-chart">ChartControl - Line Chart<a class="headerlink" href="#chartcontrol-line-chart" title="Permanent link">&para;</a></h1>
+<p>Line charts represent data values as plotted points on a line.</p>
+<p><img alt="Default Line Chart" src="../../../assets/LineChart.png" /></p>
+<h2 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h2>
+<p>To create a line chart, add the ChartControl import:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ChartControl</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@pnp/spfx-controls-react/lib/ChartControl&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Then render the ChartControl:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="s1">&#39;line&#39;</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span>
+</code></pre></div>
+
+<p>Alternatively, you can use the following import:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ChartControl</span><span class="p">,</span><span class="w"> </span><span class="nx">ChartType</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@pnp/spfx-controls-react/lib/ChartControl&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Followed by:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span>
+</code></pre></div>
+
+<p>For example, to render the chart above, use the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// set the data</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// set the options</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Line Chart&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span><span class="p">);</span>
+</code></pre></div>
+
+<h2 id="variations">Variations<a class="headerlink" href="#variations" title="Permanent link">&para;</a></h2>
+<h3 id="curved-lines">Curved lines<a class="headerlink" href="#curved-lines" title="Permanent link">&para;</a></h3>
+<p><img alt="Curved Line Chart" src="../../../assets/LineChartCurved.png" /></p>
+<p>You can render curved lines instead of straight lines by removing the <code>lineTension</code> setting from each dataset, or by setting it to a value other than <code>0</code>.</p>
+<p>For example, to render the above chart, use the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// set the data</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">//lineTension: 0, -- removed</span>
+<span class="w">        </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="o">-</span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">        </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgba(255, 99, 132, 0.2)&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgb(255, 99, 132)&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// set the options</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Curved Line Chart&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span><span class="p">);</span>
+</code></pre></div>
+
+<h3 id="area-chart">Area Chart<a class="headerlink" href="#area-chart" title="Permanent link">&para;</a></h3>
+<p><img alt="Area Chart" src="../../../assets/AreaChartDefault.png" /></p>
+<p>To render an area chart, change the <code>fill</code> setting of the dataset to <code>true</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// set the data</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// set the options</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Area Chart&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>If your chart has negative and positive values, you can control where the filled area by setting the <code>fill</code> setting to one of the following value:</p>
+<table>
+<thead>
+<tr>
+<th><code>fill</code> Value</th>
+<th>Description</th>
+<th>Sample</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'start'</code></td>
+<td>Fill from the bottom of the chart</td>
+<td><img alt="start fill" src="../../../assets/AreaChartFillStart.png" /></td>
+</tr>
+<tr>
+<td><code>'end'</code></td>
+<td>Fill from the top of the chart</td>
+<td><img alt="end fill" src="../../../assets/AreaChartFillEnd.png" /></td>
+</tr>
+<tr>
+<td><code>'origin'</code></td>
+<td>Fill from the 'zero' line Same as <code>true</code></td>
+<td><img alt="origin fill" src="../../../assets/AreaChart.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>For example, the code below will set the <code>fill</code> value to <code>start</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// set the data</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;start&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="o">-</span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="c1">// set the options</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Area Chart&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Which renders the following chart:</p>
+<p><img alt="Area Chart with Fill = 'start'" src="../../../assets/AreaChartFillStart.png" /></p>
+<h3 id="stacked-area-chart">Stacked Area Chart<a class="headerlink" href="#stacked-area-chart" title="Permanent link">&para;</a></h3>
+<p><img alt="Stacked Area Chart" src="../../../assets/StackedAreaChart.png" /></p>
+<p>If your bar chart has multiple datasets, you can render it as a stacked area chart by changing the settings on the Y axis to enable stacking, as follows:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">scales</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">yAxes</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">          </span><span class="nx">stacked</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span>
+<span class="w">      </span><span class="p">}]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>In order to render each dataset with a different color, make sure to specify the <code>backgroundColor</code> and <code>borderColor</code> settings for each dataset. </p>
+<p>For example, to render the above chart, use the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">    </span><span class="p">[</span>
+<span class="w">      </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="o">-</span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">      </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgba(255, 99, 132, 0.2)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgb(255, 99, 132)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My Second Dataset&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="mf">45</span><span class="p">,</span><span class="w"> </span><span class="mf">49</span><span class="p">,</span><span class="w"> </span><span class="mf">88</span><span class="p">,</span><span class="w"> </span><span class="mf">71</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">36</span><span class="p">,</span><span class="w"> </span><span class="mf">35</span><span class="p">,</span><span class="w"> </span><span class="mf">60</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">      </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgba(255, 159, 64, 0.2)&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgb(255, 159, 64)&#39;</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">  </span><span class="p">]</span>
+<span class="p">};</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">options</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartOptions</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">legend</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">display</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">text</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Stacked Area Chart&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">scales</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">yAxes</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">      </span><span class="nx">stacked</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span>
+<span class="w">    </span><span class="p">}]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="o">&lt;</span><span class="nx">ChartControl</span>
+<span class="w">    </span><span class="kr">type</span><span class="o">=</span><span class="p">{</span><span class="nx">ChartType</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="nx">data</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">options</span><span class="o">=</span><span class="p">{</span><span class="nx">options</span><span class="p">}</span>
+<span class="w">  </span><span class="o">/&gt;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>As with lines, you can set the <code>lineTension</code> value to render curved lines instead of straight lines:</p>
+<p><img alt="Curved Area Chart" src="../../../assets/AreaChartCurved.png" /></p>
+<p>In addition to the <code>fill</code> values listed above, you can specify how each dataset fill:</p>
+<table>
+<thead>
+<tr>
+<th><code>fill</code> Value Type</th>
+<th>Description</th>
+<th>Sample Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>number</td>
+<td>Fill to dataset by its absolute index</td>
+<td><code>1</code>, <code>2</code>, <code>3</code>, ...</td>
+</tr>
+<tr>
+<td>string</td>
+<td>Fill to dataset by its relative index</td>
+<td><code>'-3'</code>, <code>'-2'</code>, <code>'-1'</code>, <code>'+1'</code>, <code>'+2'</code>, <code>'+3'</code>, ...</td>
+</tr>
+</tbody>
+</table>
+<p>For example, if you use declare your datasets with the following fill values:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="kt">Chart.ChartData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">labels</span><span class="o">:</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">          </span><span class="s1">&#39;January&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;February&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;March&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;April&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;May&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;June&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;July&#39;</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">      </span><span class="nx">datasets</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My First Dataset&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;start&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="o">-</span><span class="mf">65</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">59</span><span class="p">,</span><span class="w"> </span><span class="mf">80</span><span class="p">,</span><span class="w"> </span><span class="mf">81</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">56</span><span class="p">,</span><span class="w"> </span><span class="mf">55</span><span class="p">,</span><span class="w"> </span><span class="mf">40</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">          </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgba(255, 99, 132, 0.2)&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;rgb(255, 99, 132)&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">label</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;My Second Dataset&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">fill</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;-1&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">lineTension</span><span class="o">:</span><span class="w"> </span><span class="kt">0</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">data</span><span class="o">:</span>
+<span class="w">            </span><span class="p">[</span>
+<span class="w">              </span><span class="mf">45</span><span class="p">,</span><span class="w"> </span><span class="mf">49</span><span class="p">,</span><span class="w"> </span><span class="mf">88</span><span class="p">,</span><span class="w"> </span><span class="mf">71</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">36</span><span class="p">,</span><span class="w"> </span><span class="mf">35</span><span class="p">,</span><span class="w"> </span><span class="mf">60</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">          </span><span class="nx">backgroundColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgba(255, 159, 64, 0.2)&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">borderColor</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;rgb(255, 159, 64)&#39;</span><span class="p">,</span>
+<span class="w">          </span><span class="nx">borderWidth</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">};</span>
+</code></pre></div>
+
+<p>Will cause the first dataset to fill from the bottom of the chart, while the second dataset will fill to the previous dataset (by it's relative index of <code>-1</code>)</p>
+<p><img alt="Stacked Area Chart with fill values start and '-1'" src="../../../assets/StackedAreaChartFillStartMinus1.png" /></p>
+<h2 id="dataset-properties">Dataset Properties<a class="headerlink" href="#dataset-properties" title="Permanent link">&para;</a></h2>
+<p>Line charts allow each dataset to have different configuration properties.</p>
+<p>Some properties can be provided as arrays. When arrays are provided, the settings in the array will be applied to each data element in the same order (e.g.: first value applies to first element, second value to second element, etc.)</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>label</td>
+<td>string</td>
+<td>Dataset label. Appears in the legend and tooltips.</td>
+</tr>
+<tr>
+<td>xAxisID</td>
+<td>string</td>
+<td>The axis ID for the X axis. If not specified, the dataset will be rendered on the first available X axis. If an ID is specified, the dataset will be rendered on that axis</td>
+</tr>
+<tr>
+<td>yAxisID</td>
+<td>string</td>
+<td>The axis ID for the Y axis. If not specified, the dataset will be rendered on the first available Y axis. If an ID is specified, the dataset will be rendered on that axis</td>
+</tr>
+<tr>
+<td>backgroundColor</td>
+<td>Color OR Color[]</td>
+<td>The fill color under the line.</td>
+</tr>
+<tr>
+<td>borderColor</td>
+<td>Color OR Color[]</td>
+<td>The color of the line.</td>
+</tr>
+<tr>
+<td>borderWidth</td>
+<td>number OR number[]</td>
+<td>The width of the line. Measured in pixels.</td>
+</tr>
+<tr>
+<td>borderDash</td>
+<td>number[]</td>
+<td>The length and spacing of dashes. Consist of an array of numbers that specify distances to alternately draw a line and a gap. If array length is odd, elements of the array will be repeated. If an empty array is provided, lines will be solid.</td>
+</tr>
+<tr>
+<td>borderDashOffset</td>
+<td>number</td>
+<td>The distance to offset dashes.</td>
+</tr>
+<tr>
+<td>borderCapStyle</td>
+<td><code>'butt'</code><br/><code>'round'</code><br/><code>'square'</code></td>
+<td>Specifies the end of the lines. Default is <code>'butt</code>'.</td>
+</tr>
+<tr>
+<td>borderJoinStyle</td>
+<td><code>'bevel'</code><br/><code>'round'</code><br/><code>'miter'</code></td>
+<td>Determines the shape used to join two line segments where they meet. Default is <code>'miter'</code>.</td>
+</tr>
+<tr>
+<td>cubicInterpolationMode</td>
+<td><code>'default'</code><br/><code>'monotone'</code></td>
+<td>Determins which algorithm is used to interpolate a smooth curve between data points.</td>
+</tr>
+<tr>
+<td>data</td>
+<td>number[] <br/> Point[]</td>
+<td>The chart's data. Required.</td>
+</tr>
+<tr>
+<td>fill</td>
+<td><code>false</code><br/>number<br/>string<br/><code>'start'</code><br/><code>'end'</code><br/><code>'origin'</code></td>
+<td>Controls how the dataset's area is filled.</td>
+</tr>
+<tr>
+<td>lineTension</td>
+<td>number</td>
+<td>Ttension of the Bezier curve line. <code>0</code> renders straight lines. Ignored if <code>cubicInterpolationMode</code> is set to <code>monotone</code>.</td>
+</tr>
+<tr>
+<td>pointBackgroundColor</td>
+<td>Color OR Color[]</td>
+<td>The point's fill color.</td>
+</tr>
+<tr>
+<td>pointBorderColor</td>
+<td>Color OR Color[]</td>
+<td>The point's border color.</td>
+</tr>
+<tr>
+<td>pointBorderWidth</td>
+<td>number OR number[]</td>
+<td>The point's border width.</td>
+</tr>
+<tr>
+<td>pointRadius</td>
+<td>number OR number[]</td>
+<td>The point's fill color.</td>
+</tr>
+<tr>
+<td>pointStyle</td>
+<td><code>'circle'</code> <br/><code>'cross'</code><br/><code>'crossRot'</code><br/><code>'dash'</code><br/><code>'line'</code><br/><code>'rect'</code><br/><code>'rectRounded'</code><br/><code>'rectRot'</code><br/><code>'star'</code><br/><code>'triangle'</code><br/>HTMLImageElement<br/>HTMLCanvasElement<br/>HTMLImageElement[]<br/>HTMLCanvasElement[]</td>
+<td>Style of point.</td>
+</tr>
+<tr>
+<td>pointRotation</td>
+<td>number OR number[]</td>
+<td>The point's roation, in degrees.</td>
+</tr>
+<tr>
+<td>pointHitRadius</td>
+<td>number OR number[]</td>
+<td>The point's border width.</td>
+</tr>
+<tr>
+<td>pointHoverBackgroundColor</td>
+<td>Color OR Color[]</td>
+<td>The point's background color when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>pointHoverBorderColor</td>
+<td>Color OR Color[]</td>
+<td>The point's border color when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>pointHoverBorderWidth</td>
+<td>number OR number[]</td>
+<td>The point's border width when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>pointHoverRadius</td>
+<td>number OR number[]</td>
+<td>The point's radius width when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>showLine</td>
+<td>boolean</td>
+<td>The point's radius width when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>spanGaps</td>
+<td>boolean</td>
+<td>The point's radius width when a mouse hovers over it.</td>
+</tr>
+<tr>
+<td>steppedLine</td>
+<td>boolean<br/><code>'before'</code><br/><code>'after'</code></td>
+<td>Determines whether the line is shown as a stepped line. Any value but <code>false</code> overrides the <code>lineTension</code> setting.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-structure">Data Structure<a class="headerlink" href="#data-structure" title="Permanent link">&para;</a></h2>
+<h3 id="number">number[]<a class="headerlink" href="#number" title="Permanent link">&para;</a></h3>
+<p>The <code>data</code> property of each dataset item consists of an array of numbers. Each point in the array corresponds to the matching label on the x axis:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">10</span><span class="p">,</span><span class="w"> </span><span class="mf">33</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">47</span><span class="p">]</span>
+</code></pre></div>
+
+<p>The chart elements will be rendered in the same order as found in the array.</p>
+<h3 id="point">Point[]<a class="headerlink" href="#point" title="Permanent link">&para;</a></h3>
+<p>You can also provide data elements with <code>x</code> and <code>y</code> coordinates:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span>
+<span class="w">    </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="kt">20</span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="kt">15</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span>
+<span class="p">}]</span>
+</code></pre></div>
+
+<h4 id="point-configuration">Point Configuration<a class="headerlink" href="#point-configuration" title="Permanent link">&para;</a></h4>
+<p>Point elements can be configured to change their appearance using the following configuration options:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>radius</td>
+<td>number</td>
+<td>3</td>
+<td>Point radius.</td>
+</tr>
+<tr>
+<td>pointStyle</td>
+<td><code>'circle'</code> <br/><code>'cross'</code><br/><code>'crossRot'</code><br/><code>'dash'</code><br/><code>'line'</code><br/><code>'rect'</code><br/><code>'rectRounded'</code><br/><code>'rectRot'</code><br/><code>'star'</code><br/><code>'triangle'</code></td>
+<td><code>'circle'</code></td>
+<td>Style of point.</td>
+</tr>
+<tr>
+<td>rotation</td>
+<td>number</td>
+<td>0</td>
+<td>Rotation of the point, in degrees.</td>
+</tr>
+<tr>
+<td>backgroundColor</td>
+<td>Color</td>
+<td><code>'rgba(0,0,0,0.1)</code></td>
+<td>Fill color.</td>
+</tr>
+<tr>
+<td>borderWidth</td>
+<td>number</td>
+<td>1</td>
+<td>Stroke width.</td>
+</tr>
+<tr>
+<td>borderColor</td>
+<td>Color</td>
+<td><code>'rgba(0,0,0,0.1)</code></td>
+<td>Stroke color.</td>
+</tr>
+<tr>
+<td>hitRadius</td>
+<td>number</td>
+<td>1</td>
+<td>Extra radius added around the point to make it easier to detect mouse events.</td>
+</tr>
+<tr>
+<td>hoverRadius</td>
+<td>number</td>
+<td>4</td>
+<td>Point radius, when mouse hovers over point.</td>
+</tr>
+<tr>
+<td>hoverBorderWidth</td>
+<td>number</td>
+<td>1</td>
+<td>Stroke width, when mouse hovers over point.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>The following configuration options are specific to line charts:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>showLines</td>
+<td>boolean</td>
+<td>true</td>
+<td>Indicates whether a line will be drawn between each data point. A value of <code>false</code> will not render lines.</td>
+</tr>
+<tr>
+<td>spanGaps</td>
+<td>boolean</td>
+<td>false</td>
+<td>Indicates whether invalid number values (<code>NaN</code>) will cause a break in the line . A value of <code>false</code> will not span data gaps and cause a break in the line.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="for-more-information">For More Information<a class="headerlink" href="#for-more-information" title="Permanent link">&para;</a></h2>
+<p>For more information on what options are available with Line charts, refer to the <a href="https://www.chartjs.org/docs/latest/charts/line.html">Line Chart documentation</a> on <a href="https://www.chartjs.org">Chart.js</a>.</p>
+<p><img alt="" src="https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/charts/LineChart" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../DoughnutChart/" title="Doughnut Chart" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Doughnut Chart
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../PieChart/" title="Pie Chart" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Pie Chart
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://twitter.com/m365pnp" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://aka.ms/sppnp-videos" class="md-footer-social__link fa fa-youtube"></a>
+    
+      <a href="https://aka.ms/sppnp" class="md-footer-social__link fa fa-link"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.9e1f3b71.js"></script>
+      
+      <script>app.initialize({version:"1.6.1",url:{base:"../../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

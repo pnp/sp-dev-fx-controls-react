@@ -1,0 +1,2009 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-3.1.0">
+    
+    
+      
+        <title>PeoplePicker - @pnp/spfx-controls-react</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.11e41852.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.20ef595d.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#people-picker" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="@pnp/spfx-controls-react" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/pnp-spfx-controls.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                @pnp/spfx-controls-react
+              </span>
+              <span class="md-header-nav__topic">
+                PeoplePicker
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Home" class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../guides/" title="Guides" class="md-tabs__link">
+          Guides
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../AccessibleAccordion/" title="Controls" class="md-tabs__link md-tabs__link--active">
+          Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../fields/main/" title="Field Controls" class="md-tabs__link">
+          Field Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../about/release-notes/" title="About" class="md-tabs__link">
+          About
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="@pnp/spfx-controls-react" class="md-nav__button md-logo">
+      
+        <img src="../../assets/pnp-spfx-controls.svg" width="48" height="48">
+      
+    </a>
+    @pnp/spfx-controls-react
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../beta/" title="Beta testing" class="md-nav__link">
+      Beta testing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/contributing/" title="Contributing" class="md-nav__link">
+      Contributing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/mpa/" title="Minimal Path to Awesome" class="md-nav__link">
+      Minimal Path to Awesome
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/submitting-pr/" title="Submitting a PR" class="md-nav__link">
+      Submitting a PR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../guides/migrate-from-v1/" title="Migrate v1 to v2" class="md-nav__link">
+      Migrate v1 to v2
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AccessibleAccordion/" title="AccessibleAccordion" class="md-nav__link">
+      AccessibleAccordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Accordion/" title="Accordion" class="md-nav__link">
+      Accordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AdaptiveCardHost/" title="AdaptiveCardHost" class="md-nav__link">
+      AdaptiveCardHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AdaptiveCardDesignerHost/" title="AdaptiveCardDesignerHost" class="md-nav__link">
+      AdaptiveCardDesignerHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../AnimatedDialog/" title="AnimatedDialog" class="md-nav__link">
+      AnimatedDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Carousel/" title="Carousel" class="md-nav__link">
+      Carousel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-7" type="checkbox" id="nav-4-7">
+    
+    <label class="md-nav__link" for="nav-4-7">
+      Charts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-7">
+        Charts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ChartControl/" title="ChartControl" class="md-nav__link">
+      ChartControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/BarChart/" title="Bar Chart" class="md-nav__link">
+      Bar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/BubbleChart/" title="Bubble Chart" class="md-nav__link">
+      Bubble Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/DoughnutChart/" title="Doughnut Chart" class="md-nav__link">
+      Doughnut Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/LineChart/" title="Line Chart" class="md-nav__link">
+      Line Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/PieChart/" title="Pie Chart" class="md-nav__link">
+      Pie Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/PolarAreaChart/" title="Polar Area Chart" class="md-nav__link">
+      Polar Area Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/RadarChart/" title="Radar Chart" class="md-nav__link">
+      Radar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../charts/ScatterChart/" title="Scatter Chart" class="md-nav__link">
+      Scatter Chart
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ComboBoxListItemPicker/" title="ComboBoxListItemPicker" class="md-nav__link">
+      ComboBoxListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ContentTypePicker/" title="ContentTypePicker" class="md-nav__link">
+      ContentTypePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Dashboard/" title="Dashboard" class="md-nav__link">
+      Dashboard
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DateTimePicker/" title="DateTimePicker" class="md-nav__link">
+      DateTimePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DragDropFiles/" title="DragDropFiles" class="md-nav__link">
+      DragDropFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../DynamicForm/" title="DynamicForm" class="md-nav__link">
+      DynamicForm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../EnhancedThemeProvider/" title="EnhancedThemeProvider" class="md-nav__link">
+      EnhancedThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FieldCollectionData/" title="FieldCollectionData" class="md-nav__link">
+      FieldCollectionData
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FieldPicker/" title="FieldPicker" class="md-nav__link">
+      FieldPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FilePicker/" title="FilePicker" class="md-nav__link">
+      FilePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FileTypeIcon/" title="FileTypeIcon" class="md-nav__link">
+      FileTypeIcon
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FolderExplorer/" title="FolderExplorer" class="md-nav__link">
+      FolderExplorer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../FolderPicker/" title="FolderPicker" class="md-nav__link">
+      FolderPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../GridLayout/" title="GridLayout" class="md-nav__link">
+      GridLayout
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../HoverReactionsBar/" title="HoverReactionsBar" class="md-nav__link">
+      HoverReactionsBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../IconPicker/" title="IconPicker" class="md-nav__link">
+      IconPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../IFrameDialog/" title="IFrameDialog" class="md-nav__link">
+      IFrameDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../IFramePanel/" title="IFramePanel" class="md-nav__link">
+      IFramePanel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListItemAttachments/" title="ListItemAttachments" class="md-nav__link">
+      ListItemAttachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListItemComments/" title="ListItemComments" class="md-nav__link">
+      ListItemComments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListItemPicker/" title="ListItemPicker" class="md-nav__link">
+      ListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListPicker/" title="ListPicker" class="md-nav__link">
+      ListPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListView/" title="ListView" class="md-nav__link">
+      ListView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ListView.ContextualMenu/" title="ListView: add a contextual menu" class="md-nav__link">
+      ListView: add a contextual menu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LivePersona/" title="LivePersona" class="md-nav__link">
+      LivePersona
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../LocationPicker/" title="LocationPicker" class="md-nav__link">
+      LocationPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Map/" title="Map" class="md-nav__link">
+      Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ModernAudio/" title="ModernAudio" class="md-nav__link">
+      ModernAudio
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ModernTaxonomyPicker/" title="ModernTaxonomyPicker" class="md-nav__link">
+      ModernTaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../MonacoEditor/" title="MonacoEditor" class="md-nav__link">
+      MonacoEditor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../MyTeams/" title="MyTeams" class="md-nav__link">
+      MyTeams
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Pagination/" title="Pagination" class="md-nav__link">
+      Pagination
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        PeoplePicker
+      </label>
+    
+    <a href="./" title="PeoplePicker" class="md-nav__link md-nav__link--active">
+      PeoplePicker
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-control-in-your-solutions" title="How to use this control in your solutions" class="md-nav__link">
+    How to use this control in your solutions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-substrate-search" title="Use Substrate search" class="md-nav__link">
+    Use Substrate search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" title="Implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#msgraph-permissions-required" title="MSGraph Permissions required" class="md-nav__link">
+    MSGraph Permissions required
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Placeholder/" title="Placeholder" class="md-nav__link">
+      Placeholder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Progress/" title="Progress" class="md-nav__link">
+      Progress
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ProgressStepsIndicator/" title="ProgressStepsIndicator" class="md-nav__link">
+      ProgressStepsIndicator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../RichText/" title="RichText" class="md-nav__link">
+      RichText
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SecurityTrimmedControl/" title="SecurityTrimmedControl" class="md-nav__link">
+      SecurityTrimmedControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SiteBreadcrumb/" title="SiteBreadcrumb" class="md-nav__link">
+      SiteBreadcrumb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SitePicker/" title="SitePicker" class="md-nav__link">
+      SitePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TaxonomyPicker/" title="TaxonomyPicker" class="md-nav__link">
+      TaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TeamChannelPicker/" title="TeamChannelPicker" class="md-nav__link">
+      TeamChannelPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TeamPicker/" title="TeamPicker" class="md-nav__link">
+      TeamPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TermSetNavigation/" title="TermSetNavigation" class="md-nav__link">
+      TermSetNavigation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Toolbar/" title="Toolbar" class="md-nav__link">
+      Toolbar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../TreeView/" title="TreeView" class="md-nav__link">
+      TreeView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../UploadFiles/" title="UploadFiles" class="md-nav__link">
+      UploadFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../VariantThemeProvider/" title="VariantThemeProvider" class="md-nav__link">
+      VariantThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ViewPicker/" title="ViewPicker" class="md-nav__link">
+      ViewPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../WebPartTitle/" title="WebPartTitle" class="md-nav__link">
+      WebPartTitle
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Field Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Field Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/main/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldRendererHelper/" title="FieldRendererHelper" class="md-nav__link">
+      FieldRendererHelper
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldAttachmentsRenderer/" title="FieldAttachmentsRenderer" class="md-nav__link">
+      FieldAttachmentsRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldDateRenderer/" title="FieldDateRenderer" class="md-nav__link">
+      FieldDateRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldFileTypeRenderer/" title="FieldFileTypeRenderer" class="md-nav__link">
+      FieldFileTypeRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldLookupRenderer/" title="FieldLookupRenderer" class="md-nav__link">
+      FieldLookupRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldNameRenderer/" title="FieldNameRenderer" class="md-nav__link">
+      FieldNameRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldTaxonomyRenderer/" title="FieldTaxonomyRenderer" class="md-nav__link">
+      FieldTaxonomyRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldTextRenderer/" title="FieldTextRenderer" class="md-nav__link">
+      FieldTextRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldTitleRenderer/" title="FieldTitleRenderer" class="md-nav__link">
+      FieldTitleRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldUrlRenderer/" title="FieldUrlRenderer" class="md-nav__link">
+      FieldUrlRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../fields/FieldUserRenderer/" title="FieldUserRenderer" class="md-nav__link">
+      FieldUserRenderer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/release-notes/" title="Release notes" class="md-nav__link">
+      Release notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-control-in-your-solutions" title="How to use this control in your solutions" class="md-nav__link">
+    How to use this control in your solutions
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-substrate-search" title="Use Substrate search" class="md-nav__link">
+    Use Substrate search
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" title="Implementation" class="md-nav__link">
+    Implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#msgraph-permissions-required" title="MSGraph Permissions required" class="md-nav__link">
+    MSGraph Permissions required
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/pnp/sp-dev-fx-controls-react/blob/master/docs/documentation/docs/controls/PeoplePicker.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="people-picker">People Picker<a class="headerlink" href="#people-picker" title="Permanent link">&para;</a></h1>
+<p>This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can also check out <a href="https://docs.microsoft.com/en-us/graph/toolkit/components/people-picker">People Picker</a> component in the <a href="https://github.com/microsoftgraph/microsoft-graph-toolkit">Microsoft Graph Toolkit</a>.</p>
+</div>
+<p><strong>Empty People Picker control with error message and tooltip</strong></p>
+<p><img alt="People Picker" src="../../assets/Peoplepicker-witherrorandtooltip.png" /></p>
+<p><strong>Selecting People</strong></p>
+<p><img alt="Selecting People" src="../../assets/Peoplepicker-selectingchoices.png" /></p>
+<p><strong>Selected people</strong></p>
+<p><img alt="Selected people" src="../../assets/Peoplepicker-multiplechoices.png" /></p>
+<h2 id="how-to-use-this-control-in-your-solutions">How to use this control in your solutions<a class="headerlink" href="#how-to-use-this-control-in-your-solutions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Check that you installed the <code>@pnp/spfx-controls-react</code> dependency. Check out the <a href="../../#getting-started">getting started</a> page for more information about installing the dependency.</li>
+<li>Import the following modules to your component:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">IPeoplePickerContext</span><span class="p">,</span><span class="w"> </span><span class="nx">PeoplePicker</span><span class="p">,</span><span class="w"> </span><span class="nx">PrincipalType</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;@pnp/spfx-controls-react/lib/PeoplePicker&quot;</span><span class="p">;</span>
+</code></pre></div>
+
+<ul>
+<li>Use the <code>PeoplePicker</code> control in your code as follows:</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">peoplePickerContext</span><span class="o">:</span><span class="w"> </span><span class="kt">IPeoplePickerContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">absoluteUrl</span><span class="o">:</span><span class="w"> </span><span class="kt">this.props.context.pageContext.web.absoluteUrl</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">msGraphClientFactory</span><span class="o">:</span><span class="w"> </span><span class="kt">this.props.context.msGraphClientFactory</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">spHttpClient</span><span class="o">:</span><span class="w"> </span><span class="kt">this.props.context.spHttpClient</span>
+<span class="p">};</span>
+
+<span class="o">&lt;</span><span class="nx">PeoplePicker</span>
+<span class="w">    </span><span class="nx">context</span><span class="o">=</span><span class="p">{</span><span class="nx">peoplePickerContext</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">titleText</span><span class="o">=</span><span class="s2">&quot;People Picker&quot;</span>
+<span class="w">    </span><span class="nx">personSelectionLimit</span><span class="o">=</span><span class="p">{</span><span class="mf">3</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">groupName</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Team Site Owners&quot;</span><span class="p">}</span><span class="w"> </span><span class="c1">// Leave this blank in case you want to filter from all users</span>
+<span class="w">    </span><span class="nx">showtooltip</span><span class="o">=</span><span class="p">{</span><span class="kc">true</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">required</span><span class="o">=</span><span class="p">{</span><span class="kc">true</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">disabled</span><span class="o">=</span><span class="p">{</span><span class="kc">true</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">searchTextLimit</span><span class="o">=</span><span class="p">{</span><span class="mf">5</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">_getPeoplePickerItems</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">showHiddenInUI</span><span class="o">=</span><span class="p">{</span><span class="kc">false</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">principalTypes</span><span class="o">=</span><span class="p">{[</span><span class="nx">PrincipalType</span><span class="p">.</span><span class="nx">User</span><span class="p">]}</span>
+<span class="w">    </span><span class="nx">resolveDelay</span><span class="o">=</span><span class="p">{</span><span class="mf">1000</span><span class="p">}</span><span class="w"> </span><span class="o">/&gt;</span>
+</code></pre></div>
+
+<ul>
+<li>With the <code>onChange</code> property you can get the selected People in the <code>PeoplePicker</code> :</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span><span class="w"> </span><span class="nx">_getPeoplePickerItems</span><span class="p">(</span><span class="nx">items</span><span class="o">:</span><span class="w"> </span><span class="kt">any</span><span class="p">[])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Items:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">items</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="use-substrate-search">Use Substrate search<a class="headerlink" href="#use-substrate-search" title="Permanent link">&para;</a></h2>
+<p>Sometimes, depending on how your organization is configured regarding users and groups, performing search can be tricky. As the <code>PeoplePicker</code> is using the <code>SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser</code> endpoint under the hood, there is an optional parameter called <code>useSubstrateSearch</code>. Setting this to <code>true</code> will perform a search using the Microsoft 365 Substrate, which will go through centralized stored data in order to find requested info. More details about this feature can be found <a href="https://techcommunity.microsoft.com/t5/video-hub/admin-39-s-guide-to-the-microsoft-365-substrate/ba-p/3633132">here</a> and <a href="https://youtu.be/uuiTR8r27Os?si=JkPyfiQggvCMj0xg&amp;t=467">here</a>.</p>
+<h2 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h2>
+<p>The People picker control can be configured with the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>context</td>
+<td>IPeoplePickerContext</td>
+<td>yes</td>
+<td>Context of the component, based on the SPFx context (<a href="https://learn.microsoft.com/javascript/api/sp-component-base/basecomponentcontext?view=sp-typescript-latest"><em>BaseComponentContext</em></a>).</td>
+<td></td>
+</tr>
+<tr>
+<td>titleText</td>
+<td>string</td>
+<td>no</td>
+<td>Text to be displayed on the control</td>
+<td></td>
+</tr>
+<tr>
+<td>groupName</td>
+<td>string</td>
+<td>no</td>
+<td>Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence.</td>
+<td><em>none</em></td>
+</tr>
+<tr>
+<td>groupId</td>
+<td>number | string | (string|number)[]</td>
+<td>no</td>
+<td>Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups</td>
+<td><em>none</em></td>
+</tr>
+<tr>
+<td>personSelectionLimit</td>
+<td>number</td>
+<td>no</td>
+<td>Defines the limit of people that can be selected in the control</td>
+<td>1</td>
+</tr>
+<tr>
+<td>required</td>
+<td>boolean</td>
+<td>no</td>
+<td>Set if the control is required or not</td>
+<td>false</td>
+</tr>
+<tr>
+<td>disabled</td>
+<td>boolean</td>
+<td>no</td>
+<td>Set if the control is disabled or not</td>
+<td>false</td>
+</tr>
+<tr>
+<td>errorMessage</td>
+<td>string</td>
+<td>no</td>
+<td>Static error message displayed below the picker. Use <code>onGetErrorMessage</code> to dynamically change the error message displayed (if any) based on the current value. <code>errorMessage</code> and <code>onGetErrorMessage</code> are mutually exclusive (<code>errorMessage</code> takes precedence).</td>
+<td></td>
+</tr>
+<tr>
+<td>onGetErrorMessage</td>
+<td>(items: IPersonaProps[]) =&gt; string | Promise&lt;string&gt;</td>
+<td>no</td>
+<td>The method is used to get the validation error message and determine whether the picker value is valid or not. Mutually exclusive with the static string <code>errorMessage</code> (it will take precedence over this).<br />When it returns string:<ul><li>If valid, it returns empty string.</li><li>If invalid, it returns the error message string to be shown below the picker.</li></ul><br />When it returns Promise&lt;string&gt;:<ul><li>The resolved value is display as error message.</li><li>The rejected, the value is thrown away.</li></ul></td>
+<td></td>
+</tr>
+<tr>
+<td>errorMessageClassName</td>
+<td>string</td>
+<td>no</td>
+<td>applies custom styling to the error message section</td>
+<td></td>
+</tr>
+<tr>
+<td>showtooltip</td>
+<td>boolean</td>
+<td>no</td>
+<td>Defines if need a tooltip or not</td>
+<td>false</td>
+</tr>
+<tr>
+<td>tooltipMessage</td>
+<td>string</td>
+<td>no</td>
+<td>Specify the tooltip message to display</td>
+<td></td>
+</tr>
+<tr>
+<td>tooltipDirectional</td>
+<td>DirectionalHint</td>
+<td>no</td>
+<td>Direction where the tooltip would be shown</td>
+<td></td>
+</tr>
+<tr>
+<td>onChange</td>
+<td>(items: IPersonaProps[]) =&gt; void</td>
+<td>no</td>
+<td>Get the selected users in the control.</td>
+<td></td>
+</tr>
+<tr>
+<td>peoplePickerWPclassName</td>
+<td>string</td>
+<td>no</td>
+<td>applies custom styling to the people picker element</td>
+<td></td>
+</tr>
+<tr>
+<td>peoplePickerCntrlclassName</td>
+<td>string</td>
+<td>no</td>
+<td>applies custom styling to the people picker control only</td>
+<td></td>
+</tr>
+<tr>
+<td>defaultSelectedUsers</td>
+<td>string[]</td>
+<td>no</td>
+<td>Default selected user emails or login names, optionally append <code>/title</code> with forward slash. If user is not found then only optional title will be shown. If you do not have email or login name of inactive users just pass <code>/title</code> alone prefixed with slash.</td>
+<td></td>
+</tr>
+<tr>
+<td>webAbsoluteUrl</td>
+<td>string</td>
+<td>no</td>
+<td>Specify the site URL on which you want to perform the user query call. If not provided, the people picker will perform a tenant wide people/group search. When provided it will search users/groups on the provided site.</td>
+<td></td>
+</tr>
+<tr>
+<td>principalTypes</td>
+<td>PrincipalType[]</td>
+<td>no</td>
+<td>Define which type of data you want to retrieve: User, SharePoint groups, Security groups. Multiple are possible.</td>
+<td></td>
+</tr>
+<tr>
+<td>ensureUser</td>
+<td>boolean</td>
+<td>no</td>
+<td>When ensure user property is true, it will return the local user ID on the current site when doing a tenant wide search.</td>
+<td>false</td>
+</tr>
+<tr>
+<td>allowUnvalidated</td>
+<td>boolean</td>
+<td>no</td>
+<td>When true, allow email addresses that have not been validated to be entered, effectively allowing any user.</td>
+<td>false</td>
+</tr>
+<tr>
+<td>suggestionsLimit</td>
+<td>number</td>
+<td>no</td>
+<td>Maximum number of suggestions to show in the full suggestion list.</td>
+<td>5</td>
+</tr>
+<tr>
+<td>resolveDelay</td>
+<td>number</td>
+<td>no</td>
+<td>Add delay to resolve and search users</td>
+<td>200</td>
+</tr>
+<tr>
+<td>placeholder</td>
+<td>string</td>
+<td>no</td>
+<td>Short text hint to display in empty picker</td>
+<td></td>
+</tr>
+<tr>
+<td>styles</td>
+<td>Partial&lt;IBasePickerStyles&gt;</td>
+<td>no</td>
+<td>Styles to apply on control</td>
+<td></td>
+</tr>
+<tr>
+<td>searchTextLimit</td>
+<td>number</td>
+<td>no</td>
+<td>Specifies the minimum character count needed to begin retrieving search results.</td>
+<td>2</td>
+</tr>
+<tr>
+<td>useSubstrateSearch</td>
+<td>boolean</td>
+<td>no</td>
+<td>When <code>true</code>, performs a wider search using Microsoft 365 Substrate.</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>Enum <code>PrincipalType</code></p>
+<p>The <code>PrincipalType</code> enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User</td>
+<td>1</td>
+</tr>
+<tr>
+<td>DistributionList</td>
+<td>2</td>
+</tr>
+<tr>
+<td>SecurityGroup</td>
+<td>4</td>
+</tr>
+<tr>
+<td>SharePointGroup</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p>Interface <code>IPeoplePickerContext</code></p>
+<p>Provides mandatory properties to search users on the tenant</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>absoluteUrl</td>
+<td>string</td>
+<td>Current <code>SPWeb</code> absolute URL.</td>
+</tr>
+<tr>
+<td>msGraphClientFactory</td>
+<td>MSGraphClientFactory</td>
+<td>Instance of MSGraphClientFactory used for querying Microsoft Graph REST API.</td>
+</tr>
+<tr>
+<td>spHttpClient</td>
+<td>SPHttpClient</td>
+<td>Instance of SPHttpClient used for querying SharePoint REST API.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="msgraph-permissions-required">MSGraph Permissions required<a class="headerlink" href="#msgraph-permissions-required" title="Permanent link">&para;</a></h2>
+<p>This control requires at least one the following scopes if <code>groupId</code> is of type <code>string</code>:</p>
+<ul>
+<li><em>GroupMember.Read.All</em> + <em>User.ReadBasic.All</em></li>
+<li><em>Directory.Read.All</em></li>
+</ul>
+<p><img alt="" src="https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Pagination/" title="Pagination" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Pagination
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Placeholder/" title="Placeholder" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Placeholder
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://twitter.com/m365pnp" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://aka.ms/sppnp-videos" class="md-footer-social__link fa fa-youtube"></a>
+    
+      <a href="https://aka.ms/sppnp" class="md-footer-social__link fa fa-link"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9e1f3b71.js"></script>
+      
+      <script>app.initialize({version:"1.6.1",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

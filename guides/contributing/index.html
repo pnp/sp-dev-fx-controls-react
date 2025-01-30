@@ -1,0 +1,1760 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-3.1.0">
+    
+    
+      
+        <title>Contributing - @pnp/spfx-controls-react</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.11e41852.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.22915126.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#009688">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.20ef595d.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="teal" data-md-color-accent="">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#contribution-guidelines" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="@pnp/spfx-controls-react" class="md-header-nav__button md-logo">
+          
+            <img src="../../assets/pnp-spfx-controls.svg" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                @pnp/spfx-controls-react
+              </span>
+              <span class="md-header-nav__topic">
+                Contributing
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Home" class="md-tabs__link">
+        Home
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../" title="Guides" class="md-tabs__link md-tabs__link--active">
+          Guides
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../controls/AccessibleAccordion/" title="Controls" class="md-tabs__link">
+          Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../controls/fields/main/" title="Field Controls" class="md-tabs__link">
+          Field Controls
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../about/release-notes/" title="About" class="md-tabs__link">
+          About
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="@pnp/spfx-controls-react" class="md-nav__button md-logo">
+      
+        <img src="../../assets/pnp-spfx-controls.svg" width="48" height="48">
+      
+    </a>
+    @pnp/spfx-controls-react
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/pnp/sp-dev-fx-controls-react" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      GitHub
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../beta/" title="Beta testing" class="md-nav__link">
+      Beta testing
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Contributing
+      </label>
+    
+    <a href="./" title="Contributing" class="md-nav__link md-nav__link--active">
+      Contributing
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#you-have-an-idea-for-a-new-component" title="You have an idea for a new component" class="md-nav__link">
+    You have an idea for a new component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#you-have-a-suggestion-for-improving-an-existing-component" title="You have a suggestion for improving an existing component" class="md-nav__link">
+    You have a suggestion for improving an existing component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#youve-found-a-bug" title="You've found a bug" class="md-nav__link">
+    You've found a bug
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-typos" title="Fixing typos" class="md-nav__link">
+    Fixing typos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" title="Tips" class="md-nav__link">
+    Tips
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-donts" title="DO's &amp; DON'Ts" class="md-nav__link">
+    DO's &amp; DON'Ts
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mpa/" title="Minimal Path to Awesome" class="md-nav__link">
+      Minimal Path to Awesome
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../submitting-pr/" title="Submitting a PR" class="md-nav__link">
+      Submitting a PR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../migrate-from-v1/" title="Migrate v1 to v2" class="md-nav__link">
+      Migrate v1 to v2
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/AccessibleAccordion/" title="AccessibleAccordion" class="md-nav__link">
+      AccessibleAccordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Accordion/" title="Accordion" class="md-nav__link">
+      Accordion
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/AdaptiveCardHost/" title="AdaptiveCardHost" class="md-nav__link">
+      AdaptiveCardHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/AdaptiveCardDesignerHost/" title="AdaptiveCardDesignerHost" class="md-nav__link">
+      AdaptiveCardDesignerHost
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/AnimatedDialog/" title="AnimatedDialog" class="md-nav__link">
+      AnimatedDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Carousel/" title="Carousel" class="md-nav__link">
+      Carousel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4-7" type="checkbox" id="nav-4-7">
+    
+    <label class="md-nav__link" for="nav-4-7">
+      Charts
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-7">
+        Charts
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ChartControl/" title="ChartControl" class="md-nav__link">
+      ChartControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/BarChart/" title="Bar Chart" class="md-nav__link">
+      Bar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/BubbleChart/" title="Bubble Chart" class="md-nav__link">
+      Bubble Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/DoughnutChart/" title="Doughnut Chart" class="md-nav__link">
+      Doughnut Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/LineChart/" title="Line Chart" class="md-nav__link">
+      Line Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/PieChart/" title="Pie Chart" class="md-nav__link">
+      Pie Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/PolarAreaChart/" title="Polar Area Chart" class="md-nav__link">
+      Polar Area Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/RadarChart/" title="Radar Chart" class="md-nav__link">
+      Radar Chart
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/charts/ScatterChart/" title="Scatter Chart" class="md-nav__link">
+      Scatter Chart
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ComboBoxListItemPicker/" title="ComboBoxListItemPicker" class="md-nav__link">
+      ComboBoxListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ContentTypePicker/" title="ContentTypePicker" class="md-nav__link">
+      ContentTypePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Dashboard/" title="Dashboard" class="md-nav__link">
+      Dashboard
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/DateTimePicker/" title="DateTimePicker" class="md-nav__link">
+      DateTimePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/DragDropFiles/" title="DragDropFiles" class="md-nav__link">
+      DragDropFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/DynamicForm/" title="DynamicForm" class="md-nav__link">
+      DynamicForm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/EnhancedThemeProvider/" title="EnhancedThemeProvider" class="md-nav__link">
+      EnhancedThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FieldCollectionData/" title="FieldCollectionData" class="md-nav__link">
+      FieldCollectionData
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FieldPicker/" title="FieldPicker" class="md-nav__link">
+      FieldPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FilePicker/" title="FilePicker" class="md-nav__link">
+      FilePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FileTypeIcon/" title="FileTypeIcon" class="md-nav__link">
+      FileTypeIcon
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FolderExplorer/" title="FolderExplorer" class="md-nav__link">
+      FolderExplorer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/FolderPicker/" title="FolderPicker" class="md-nav__link">
+      FolderPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/GridLayout/" title="GridLayout" class="md-nav__link">
+      GridLayout
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/HoverReactionsBar/" title="HoverReactionsBar" class="md-nav__link">
+      HoverReactionsBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/IconPicker/" title="IconPicker" class="md-nav__link">
+      IconPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/IFrameDialog/" title="IFrameDialog" class="md-nav__link">
+      IFrameDialog
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/IFramePanel/" title="IFramePanel" class="md-nav__link">
+      IFramePanel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListItemAttachments/" title="ListItemAttachments" class="md-nav__link">
+      ListItemAttachments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListItemComments/" title="ListItemComments" class="md-nav__link">
+      ListItemComments
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListItemPicker/" title="ListItemPicker" class="md-nav__link">
+      ListItemPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListPicker/" title="ListPicker" class="md-nav__link">
+      ListPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListView/" title="ListView" class="md-nav__link">
+      ListView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ListView.ContextualMenu/" title="ListView: add a contextual menu" class="md-nav__link">
+      ListView: add a contextual menu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/LivePersona/" title="LivePersona" class="md-nav__link">
+      LivePersona
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/LocationPicker/" title="LocationPicker" class="md-nav__link">
+      LocationPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Map/" title="Map" class="md-nav__link">
+      Map
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ModernAudio/" title="ModernAudio" class="md-nav__link">
+      ModernAudio
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ModernTaxonomyPicker/" title="ModernTaxonomyPicker" class="md-nav__link">
+      ModernTaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/MonacoEditor/" title="MonacoEditor" class="md-nav__link">
+      MonacoEditor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/MyTeams/" title="MyTeams" class="md-nav__link">
+      MyTeams
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Pagination/" title="Pagination" class="md-nav__link">
+      Pagination
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/PeoplePicker/" title="PeoplePicker" class="md-nav__link">
+      PeoplePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Placeholder/" title="Placeholder" class="md-nav__link">
+      Placeholder
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Progress/" title="Progress" class="md-nav__link">
+      Progress
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ProgressStepsIndicator/" title="ProgressStepsIndicator" class="md-nav__link">
+      ProgressStepsIndicator
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/RichText/" title="RichText" class="md-nav__link">
+      RichText
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/SecurityTrimmedControl/" title="SecurityTrimmedControl" class="md-nav__link">
+      SecurityTrimmedControl
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/SiteBreadcrumb/" title="SiteBreadcrumb" class="md-nav__link">
+      SiteBreadcrumb
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/SitePicker/" title="SitePicker" class="md-nav__link">
+      SitePicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/TaxonomyPicker/" title="TaxonomyPicker" class="md-nav__link">
+      TaxonomyPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/TeamChannelPicker/" title="TeamChannelPicker" class="md-nav__link">
+      TeamChannelPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/TeamPicker/" title="TeamPicker" class="md-nav__link">
+      TeamPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/TermSetNavigation/" title="TermSetNavigation" class="md-nav__link">
+      TermSetNavigation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/Toolbar/" title="Toolbar" class="md-nav__link">
+      Toolbar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/TreeView/" title="TreeView" class="md-nav__link">
+      TreeView
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/UploadFiles/" title="UploadFiles" class="md-nav__link">
+      UploadFiles
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/VariantThemeProvider/" title="VariantThemeProvider" class="md-nav__link">
+      VariantThemeProvider
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/ViewPicker/" title="ViewPicker" class="md-nav__link">
+      ViewPicker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/WebPartTitle/" title="WebPartTitle" class="md-nav__link">
+      WebPartTitle
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Field Controls
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Field Controls
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/main/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldRendererHelper/" title="FieldRendererHelper" class="md-nav__link">
+      FieldRendererHelper
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldAttachmentsRenderer/" title="FieldAttachmentsRenderer" class="md-nav__link">
+      FieldAttachmentsRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldDateRenderer/" title="FieldDateRenderer" class="md-nav__link">
+      FieldDateRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldFileTypeRenderer/" title="FieldFileTypeRenderer" class="md-nav__link">
+      FieldFileTypeRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldLookupRenderer/" title="FieldLookupRenderer" class="md-nav__link">
+      FieldLookupRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldNameRenderer/" title="FieldNameRenderer" class="md-nav__link">
+      FieldNameRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldTaxonomyRenderer/" title="FieldTaxonomyRenderer" class="md-nav__link">
+      FieldTaxonomyRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldTextRenderer/" title="FieldTextRenderer" class="md-nav__link">
+      FieldTextRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldTitleRenderer/" title="FieldTitleRenderer" class="md-nav__link">
+      FieldTitleRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldUrlRenderer/" title="FieldUrlRenderer" class="md-nav__link">
+      FieldUrlRenderer
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../controls/fields/FieldUserRenderer/" title="FieldUserRenderer" class="md-nav__link">
+      FieldUserRenderer
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      About
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        About
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/release-notes/" title="Release notes" class="md-nav__link">
+      Release notes
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../about/license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#you-have-an-idea-for-a-new-component" title="You have an idea for a new component" class="md-nav__link">
+    You have an idea for a new component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#you-have-a-suggestion-for-improving-an-existing-component" title="You have a suggestion for improving an existing component" class="md-nav__link">
+    You have a suggestion for improving an existing component
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#youve-found-a-bug" title="You've found a bug" class="md-nav__link">
+    You've found a bug
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-typos" title="Fixing typos" class="md-nav__link">
+    Fixing typos
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" title="Tips" class="md-nav__link">
+    Tips
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dos-donts" title="DO's &amp; DON'Ts" class="md-nav__link">
+    DO's &amp; DON'Ts
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/pnp/sp-dev-fx-controls-react/blob/master/docs/documentation/docs/guides/contributing.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="contribution-guidelines">Contribution guidelines<a class="headerlink" href="#contribution-guidelines" title="Permanent link">&para;</a></h1>
+<p>We appreciate that you're interested in helping with moving the project forward. Before you submit your first PR, please read the following guide. We'd hate to see you work on something that someone else is already working on, something that we agreed not to do or something that doesn't match the project.</p>
+<p>Sharing is caring!</p>
+<h2 id="you-have-an-idea-for-a-new-component">You have an idea for a new component<a class="headerlink" href="#you-have-an-idea-for-a-new-component" title="Permanent link">&para;</a></h2>
+<p>Awesome! Good ideas are invaluable for every product. Before you start hacking away, please check if there is no similar idea already listed in the <a href="https://github.com/pnp/sp-dev-fx-controls-react/issues">issue list</a>. If not, please create a new issue describing your idea. Once we agree on the feature scope and architecture, the feature will be ready for building. Don't hesitate to mention in the issue if you'd like to build the feature yourself.</p>
+<p>When building a new control, try to add your control to the default provided web part so that everyone can test it out. Please also provide the documentation for your controls in the <a href="../">documentation section</a>.</p>
+<h2 id="you-have-a-suggestion-for-improving-an-existing-component">You have a suggestion for improving an existing component<a class="headerlink" href="#you-have-a-suggestion-for-improving-an-existing-component" title="Permanent link">&para;</a></h2>
+<p>Nothing is perfect. If you have an idea how to improve an existing command or the CLI, let us know by submitting an issue in the <a href="https://github.com/pnp/sp-dev-fx-controls-react/issues">issue list</a>. Some things are done for a reason, but some are not. Let's discuss what you think and see how the project could be improved for everyone.</p>
+<h2 id="youve-found-a-bug">You've found a bug<a class="headerlink" href="#youve-found-a-bug" title="Permanent link">&para;</a></h2>
+<p>Bugs happen. When you find a bug, please have a look at the <a href="https://github.com/pnp/sp-dev-fx-controls-react/issues">issue list</a> if a similar bug has already been logged. If not, let us know what doesn't work and how we can reproduce it. If we can't reproduce your bug, we will ask you for clarification, which will only make it longer to fix it.</p>
+<h2 id="fixing-typos">Fixing typos<a class="headerlink" href="#fixing-typos" title="Permanent link">&para;</a></h2>
+<p>Typos are embarrassing! Most PR's that fix typos will be accepted immediately. In order to make it easier to review the PR, please narrow the focus instead of sending a huge PR of fixes.</p>
+<h2 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h2>
+<p>Before contributing:</p>
+<ul>
+<li>ensure that the <strong>dev</strong> branch on your fork is in sync with the original <strong>sp-dev-fx-controls-react</strong> repository</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># assuming you are in the folder of your locally cloned fork....</span>
+git<span class="w"> </span>checkout<span class="w"> </span>dev
+
+<span class="c1"># assuming you have a remote named `upstream` pointing to the official **sp-dev-fx-controls-react** repo</span>
+git<span class="w"> </span>fetch<span class="w"> </span>upstream
+
+<span class="c1"># update your local dev to be a mirror of what&#39;s in the main repo</span>
+git<span class="w"> </span>pull<span class="w"> </span>--rebase<span class="w"> </span>upstream<span class="w"> </span>dev
+</code></pre></div>
+
+<ul>
+<li>create a feature branch for your change. If you'll get stuck on an issue or merging your PR will take a while, this will allow you to have a clean dev branch that you can use for contributing other changes</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>my-contribution
+</code></pre></div>
+
+<h2 id="dos-donts">DO's &amp; DON'Ts<a class="headerlink" href="#dos-donts" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>DO</strong> follow the same project and test structure as the existing project.</li>
+<li><strong>DO</strong> include tests when adding new functionality and features. When fixing bugs, start with adding a test that highlights how the current behavior is broken.</li>
+<li><strong>DO</strong> keep discussions focused. When a new or related topic comes up it's often better to create new issue than to side track the conversation.</li>
+<li><strong>DO NOT</strong> submit PR's for coding style changes.</li>
+<li><strong>DO NOT</strong> surprise us with big PR's. Instead file an issue &amp; start a discussion so we can agree on a direction before you invest a large amount of time.</li>
+<li><strong>DO NOT</strong> commit code you didn't write.</li>
+<li><strong>DO NOT</strong> submit PR's that refactor existing code without a discussion first.</li>
+</ul>
+<p><img alt="" src="https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/Contributing" /></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Overview
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../mpa/" title="Minimal Path to Awesome" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Minimal Path to Awesome
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://twitter.com/m365pnp" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="http://aka.ms/sppnp-videos" class="md-footer-social__link fa fa-youtube"></a>
+    
+      <a href="https://aka.ms/sppnp" class="md-footer-social__link fa fa-link"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.9e1f3b71.js"></script>
+      
+      <script>app.initialize({version:"1.6.1",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>
