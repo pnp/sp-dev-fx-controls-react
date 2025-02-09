@@ -30,7 +30,7 @@ import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttach
                      disabled={false} />
 ```
 
-- If You want to use `ListItemAttachments` controls with new form You have to use React.createRef.
+- If you want to use `ListItemAttachments` controls with new form you have to use React.createRef.
 
 Following example will add selected attachments to list item with id = 1
 

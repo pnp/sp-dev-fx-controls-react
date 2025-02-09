@@ -2,9 +2,8 @@
 
 This control allows you to use LivePersona Card available on SharePoint Online.
 
-## Considerations/Disclaimer
-
-**The LivePersona Card uses an internal SharePoint Component and it can be changed in the future. Use at your own risk and be conscious that it's behaviour can be changed**
+!!! attention
+    The `LivePersona` Card uses an internal SharePoint Component and it can be changed in the future. Use at your own risk and be conscious that its behavior can be changed.
 
 ## Example
 
