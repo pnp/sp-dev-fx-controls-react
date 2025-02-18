@@ -41,4 +41,6 @@ export interface IControlsTestState {
   termStoreInfo: ITermStoreInfo;
   termSetInfo: ITermSetInfo;
   testTerms: ITermInfo[];
+  selectedUrlImagePicker: string;
+  isOpenHoverReactionBar: boolean;
 }

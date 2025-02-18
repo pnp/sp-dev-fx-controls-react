@@ -1,20 +1,21 @@
 export type ValidControls = "all" | 
-  "accessibleAccordion" | "adaptiveCardDesignerHost" | "adaptiveCardHost" | 
-  "animatedDialog" | "Carousel" | "ChartControl" | 
-  "ComboBoxListItemPicker" | "Dashboard" | "DateTimePicker" | 
+  "AccessibleAccordion" | "AdaptiveCardDesignerHost" | "AdaptiveCardHost" | 
+  "AnimatedDialog" | "Carousel" | "ChartControl" | 
+  "ComboBoxListItemPicker" | "ContentTypePicker" | "Dashboard" | "DateTimePicker" | 
   "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" | 
   "FieldCollectionData" | "FieldPicker" | "FilePicker" | 
   "FileTypeIcon" | "FolderExplorer" | "FolderPicker" |
-  "GridLayout" | "IconPicker" | "IFrameDialog" |
-  "IFramePanel" | "ListPicker" | "ListItemPicker" |
-  "ListItemComments" | "ViewPicker" | "ListView" |
+  "GridLayout" | "HoverReactionsBar" | "IconPicker" | "IFrameDialog" |
+  "IFramePanel" | "ImagePicker" | "ListItemAttachments" | "ListItemComments" |
+  "ListItemPicker" | "ListPicker" | "ListView" | "LivePersona" |
   "LocationPicker" | "Map" | "ModernAudio" |
-  "ModernTaxonomyPicker" | "Pagination" | "PeoplePicker" |
-  "Placeholder" | "Progress" | "RichText" |
+  "ModernTaxonomyPicker" | "MonacoEditor" | "Pagination" | "PeoplePicker" |
+  "Placeholder" | "Progress" | "ProgressStepsIndicator" | "RichText" |
   "SecurityTrimmedControl" | "SiteBreadcrumb" | "SitePicker" |
-  "TaxonomyPicker" | "TaxonomyTree" | "Teams" |
+  "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
   "TestControl" | "Toolbar" | "TreeView" |
-  "UploadFiles" | "VariantThemeProvider" | "WebPartTitle";
+  "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" | 
+  "WebPartTitle";
 
 export type ControlVisibility = {
   [K in ValidControls]: boolean;

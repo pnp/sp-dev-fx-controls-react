@@ -82,6 +82,4 @@ This control requires at least one of the following scopes:
 - `TermStore.Read.All`
 - `TermStore.ReadWrite.All`
 
-These M365Cli or PnP Powershell to add these permissions.
-
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TermSetNavigation)
