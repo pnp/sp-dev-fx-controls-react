@@ -11,15 +11,19 @@ import { css } from '@fluentui/react/lib/Utilities';
 import * as strings from 'ControlStrings';
 import styles from './LinkFilePickerTab.module.scss';
 
-
-export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTabProps, ILinkFilePickerTabState> {
+export default class LinkFilePickerTab extends React.Component<
+  ILinkFilePickerTabProps,
+  ILinkFilePickerTabState
+> {
   constructor(props: ILinkFilePickerTabProps) {
     super(props);
     this.state = { isValid: false };
   }
 
   public render(): React.ReactElement<ILinkFilePickerTabProps> {
-    const fileUrl = this.state.filePickerResult ? this.state.filePickerResult.fileAbsoluteUrl : null;
+    const fileUrl = this.state.filePickerResult
+      ? this.state.filePickerResult.fileAbsoluteUrl
+      : null;
     return (
       <div className={styles.tabContainer}>
         <div className={styles.tabHeaderContainer}>
@@ -34,7 +38,9 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             className={styles.linkTextField}
             label={strings.LinkFileInstructions}
             ariaLabel={strings.LinkFileInstructions}
-            onGetErrorMessage={(value: string) => this._getErrorMessagePromise(value)}
+            onGetErrorMessage={(value: string) =>
+              this._getErrorMessagePromise(value)
+            }
             autoAdjustHeight={false}
             underlined={false}
             borderless={false}
@@ -44,15 +50,25 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             value={fileUrl}
             onChange={(e, newValue: string) => this._handleChange(newValue)}
           />
-          {this.props.renderCustomLinkTabContent && this.props.renderCustomLinkTabContent(this.state.filePickerResult)}
+          {this.props.renderCustomLinkTabContent &&
+            this.props.renderCustomLinkTabContent(this.state.filePickerResult)}
         </div>
 
         <div className={styles.actionButtonsContainer}>
           <div className={styles.actionButtons}>
             <PrimaryButton
               disabled={!this.state.isValid}
-              onClick={() => this._handleSave()} className={styles.actionButton}>{strings.OpenButtonLabel}</PrimaryButton>
-            <DefaultButton onClick={() => this._handleClose()} className={styles.actionButton}>{strings.CancelButtonLabel}</DefaultButton>
+              onClick={() => this._handleSave()}
+              className={styles.actionButton}
+            >
+              {strings.OpenButtonLabel}
+            </PrimaryButton>
+            <DefaultButton
+              onClick={() => this._handleClose()}
+              className={styles.actionButton}
+            >
+              {strings.CancelButtonLabel}
+            </DefaultButton>
           </div>
         </div>
       </div>
@@ -63,16 +79,24 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Called as user types in a new value
    */
   private _handleChange = (fileUrl: string): void => {
-    const filePickerResult: IFilePickerResult = fileUrl ? {
-      fileAbsoluteUrl: fileUrl,
-      fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
-      fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl),
-      downloadFileContent: () => { return this.props.fileSearchService.downloadBingContent(fileUrl, GeneralHelper.getFileNameFromUrl(fileUrl)); }
-    } : null;
+    const filePickerResult: IFilePickerResult = fileUrl
+      ? {
+          fileAbsoluteUrl: fileUrl,
+          fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
+          fileNameWithoutExtension:
+            GeneralHelper.getFileNameWithoutExtension(fileUrl),
+          downloadFileContent: () => {
+            return this.props.fileSearchService.downloadBingContent(
+              fileUrl,
+              GeneralHelper.getFileNameFromUrl(fileUrl)
+            );
+          },
+        }
+      : null;
     this.setState({
-      filePickerResult
+      filePickerResult,
     });
-  }
+  };
 
   /**
    * Verifies the url that was typed in
@@ -97,31 +121,33 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
       return strings.NoExternalLinksValidationMessage;
     }
 
-    if(!this.props.checkIfFileExists){
+    if (!this.props.checkIfFileExists) {
       this.setState({ isValid: true });
       return '';
     }
 
-    const fileExists = await this.props.fileSearchService.checkFileExists(value);
+    const fileExists = await this.props.fileSearchService.checkFileExists(
+      value
+    );
     this.setState({ isValid: fileExists });
 
     const strResult = fileExists ? '' : strings.ProvidedValueIsInvalid;
     return strResult;
-  }
+  };
 
   /**
    * Handles when user saves
    */
   private _handleSave = (): void => {
     this.props.onSave([this.state.filePickerResult]);
-  }
+  };
 
   /**
    * HAndles when user closes without saving
    */
   private _handleClose = (): void => {
     this.props.onClose();
-  }
+  };
 
   /**
    * Is this a URL ?
@@ -131,18 +157,23 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     try {
       const myURL = new URL(fileUrl.toLowerCase());
       return myURL.host !== undefined;
-    } catch (error) {
+    } catch {
       return false;
     }
-  }
+  };
 
   private _isSameDomain = (fileUrl: string): boolean => {
     if (fileUrl) {
       return true;
     }
     const siteUrl: string = this.props.context.pageContext.web.absoluteUrl;
-    const siteDomainParts: string[] = GeneralHelper.getDomain(siteUrl).split('.');
-    const fileDomainParts: string[] = GeneralHelper.getDomain(fileUrl).split('.');
-    return siteDomainParts[0] === fileDomainParts[0] || `${siteDomainParts[0]}-my` === fileDomainParts[0];
-  }
+    const siteDomainParts: string[] =
+      GeneralHelper.getDomain(siteUrl).split('.');
+    const fileDomainParts: string[] =
+      GeneralHelper.getDomain(fileUrl).split('.');
+    return (
+      siteDomainParts[0] === fileDomainParts[0] ||
+      `${siteDomainParts[0]}-my` === fileDomainParts[0]
+    );
+  };
 }

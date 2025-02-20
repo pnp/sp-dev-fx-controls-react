@@ -1,8 +1,9 @@
-import { EMyTeamsTypes } from "./EMyTeamsTypes";
-import { IMyTeamsState } from "./IMyTeamsState";
-export const myTeamsReducer = ( // eslint-disable-line @typescript-eslint/explicit-function-return-type
+import { EMyTeamsTypes } from './EMyTeamsTypes';
+import { IMyTeamsState } from './IMyTeamsState';
+export const myTeamsReducer = (
   state: IMyTeamsState,
   action: { type: EMyTeamsTypes; payload: any } // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => {
   switch (action.type) {
     case EMyTeamsTypes.SET_MYTEAMS:

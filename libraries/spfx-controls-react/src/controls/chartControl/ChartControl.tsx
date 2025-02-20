@@ -9,8 +9,10 @@ import * as telemetry from '../../common/telemetry';
 import { ChartPalette } from './ChartControl.types';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 
-export class ChartControl extends React.Component<IChartControlProps, IChartControlState> {
-
+export class ChartControl extends React.Component<
+  IChartControlProps,
+  IChartControlState
+> {
   /**
    * Sets default properties
    */
@@ -18,7 +20,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     // We want accessibility on by default
     // -- it's the law in some countries!!!
     accessibility: {
-      enable: true
+      enable: true,
     },
     useTheme: true,
     palette: ChartPalette.OfficeColorful1,
@@ -26,8 +28,8 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     // parent elements
     options: {
       responsive: true,
-      maintainAspectRatio: true
-    }
+      maintainAspectRatio: true,
+    },
   };
 
   /**
@@ -47,13 +49,13 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       type: !!props.type,
       className: !!props.className,
       palette: !!props.palette,
-      accessibility: !!props.accessibility.enable
+      accessibility: !!props.accessibility.enable,
     });
 
     this.state = {
       isLoading: false,
       rejected: undefined,
-      data: undefined
+      data: undefined,
     };
   }
 
@@ -61,7 +63,6 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    * componentDidMount lifecycle hook
    */
   public componentDidMount(): void {
-
     if (this.props.datapromise) {
       this._doPromise(this.props.datapromise);
     } else {
@@ -76,7 +77,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   public UNSAFE_componentWillReceiveProps(nextProps: IChartControlProps): void {
     if (nextProps.datapromise !== this.props.datapromise) {
       this.setState({
-        isLoading: false
+        isLoading: false,
       });
 
       this._doPromise(nextProps.datapromise);
@@ -94,44 +95,45 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   }
 
   /**
-  * shouldComponentUpdate lifecycle hook
-  *
-  * @param nextProps
-  * @param nextState
-  */
-  public shouldComponentUpdate(nextProps: IChartControlProps, nextState: IChartControlState): boolean {
-    const { data,
+   * shouldComponentUpdate lifecycle hook
+   *
+   * @param nextProps
+   * @param nextState
+   */
+  public shouldComponentUpdate(
+    nextProps: IChartControlProps,
+    nextState: IChartControlState
+  ): boolean {
+    const {
+      data,
       options,
       plugins,
       className,
       accessibility,
       useTheme,
-      palette } = this.props;
-    return data !== nextProps.data ||
+      palette,
+    } = this.props;
+    return (
+      data !== nextProps.data ||
       options !== nextProps.options ||
       plugins !== nextProps.plugins ||
       className !== nextProps.className ||
       useTheme !== nextProps.useTheme ||
       palette !== nextProps.palette ||
-      accessibility !== nextProps.accessibility;
+      accessibility !== nextProps.accessibility
+    );
   }
 
   /**
    * Default React render method
    */
   public render(): React.ReactElement<IChartControlProps> {
-    const {
-      type,
-      accessibility,
-      useTheme,
-      options,
-      data
-    } = this.props;
+    const { type, accessibility, useTheme, options, data } = this.props;
 
     // If we're still loading, try to show the loading template
     if (this.state.isLoading) {
       if (this.props.loadingtemplate) {
-        if (typeof this.props.loadingtemplate === "function") {
+        if (typeof this.props.loadingtemplate === 'function') {
           return this.props.loadingtemplate();
         } else {
           return this.props.loadingtemplate;
@@ -142,7 +144,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     // If promise was rejected, try to show the rejected template
     if (this.state.rejected) {
       if (this.props.rejectedtemplate) {
-        if (typeof this.props.rejectedtemplate === "function") {
+        if (typeof this.props.rejectedtemplate === 'function') {
           return this.props.rejectedtemplate(this.state.rejected);
         } else {
           return this.props.rejectedtemplate;
@@ -153,20 +155,25 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
     const alternateText: string = accessibility.alternateText;
 
     return (
-      <div className={css(styles.chartComponent, (useTheme ? styles.themed : null), this.props.className)} >
-        <canvas ref={this._linkCanvas} role='img' aria-label={alternateText} />
-        {
-          accessibility.enable === undefined || accessibility.enable ? (
-            <AccessibleChartTable
-              chartType={type}
-              data={data || this.state.data}
-              chartOptions={options}
-              className={accessibility.className}
-              caption={accessibility.caption}
-              summary={accessibility.summary}
-              onRenderTable={accessibility.onRenderTable} />
-          ) : null
-        }
+      <div
+        className={css(
+          styles.chartComponent,
+          useTheme ? styles.themed : null,
+          this.props.className
+        )}
+      >
+        <canvas ref={this._linkCanvas} role="img" aria-label={alternateText} />
+        {accessibility.enable === undefined || accessibility.enable ? (
+          <AccessibleChartTable
+            chartType={type}
+            data={data || this.state.data}
+            chartOptions={options}
+            className={accessibility.className}
+            caption={accessibility.caption}
+            summary={accessibility.summary}
+            onRenderTable={accessibility.onRenderTable}
+          />
+        ) : null}
       </div>
     );
   }
@@ -245,13 +252,13 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   }
 
   /**
- * Calling getElementAtEvent(event) on your Chart instance passing an argument of an event,
- * or jQuery event, will return the single element at the event position.
- * If there are multiple items within range, only the first is returned.
- * The value returned from this method is an array with a single parameter.
- * An array is used to keep a consistent API between the get*AtEvent methods.
- * @param e the first element at the event point.
- */
+   * Calling getElementAtEvent(event) on your Chart instance passing an argument of an event,
+   * or jQuery event, will return the single element at the event position.
+   * If there are multiple items within range, only the first is returned.
+   * The value returned from this method is an array with a single parameter.
+   * An array is used to keep a consistent API between the get*AtEvent methods.
+   * @param e the first element at the event point.
+   */
   public getElementAtEvent(e: MouseEvent): {} {
     return this.getChart().getElementAtEvent(e);
   }
@@ -273,12 +280,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    * @param props chart control properties
    */
   private _initChart(props: IChartControlProps, data: Chart.ChartData): void {
-    const {
-      options,
-      type,
-      plugins,
-      useTheme
-    } = props;
+    const { options, type, plugins, useTheme } = props;
 
     // add event handlers -- if they weren't already provided through options
     if (this.props.onClick !== undefined) {
@@ -317,7 +319,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       type: type,
       data: data,
       options: options,
-      plugins: plugins
+      plugins: plugins,
     });
   }
 
@@ -327,50 +329,80 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       const datasets: Chart.ChartDataSets[] = data.datasets;
 
       if (datasets !== undefined) {
-        datasets.forEach(dataset => {
+        datasets.forEach((dataset) => {
           if (dataset.backgroundColor === undefined) {
             const datasetLength: number = dataset.data?.length;
             if (datasetLength) {
-              dataset.backgroundColor = PaletteGenerator.GetPalette(this.props.palette, datasetLength);
+              dataset.backgroundColor = PaletteGenerator.GetPalette(
+                this.props.palette,
+                datasetLength
+              );
             }
           }
         });
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
 
   private _applyChartThemes(): void {
     try {
-      Chart.defaults.global.defaultFontColor = ThemeColorHelper.GetThemeColor(styles.defaultFontColor);
+      Chart.defaults.global.defaultFontColor = ThemeColorHelper.GetThemeColor(
+        styles.defaultFontColor
+      );
       Chart.defaults.global.defaultFontFamily = styles.defaultFontFamily;
-      Chart.defaults.global.defaultFontSize = this._getFontSizeNumber(styles.defaultFontSize);
-      Chart.defaults.global.title.fontColor = ThemeColorHelper.GetThemeColor(styles.titleColor);
+      Chart.defaults.global.defaultFontSize = this._getFontSizeNumber(
+        styles.defaultFontSize
+      );
+      Chart.defaults.global.title.fontColor = ThemeColorHelper.GetThemeColor(
+        styles.titleColor
+      );
       Chart.defaults.global.title.fontFamily = styles.titleFont;
-      Chart.defaults.global.title.fontSize = this._getFontSizeNumber(styles.titleFontSize);
-      Chart.defaults.global.legend.labels.fontColor = ThemeColorHelper.GetThemeColor(styles.legendColor);
+      Chart.defaults.global.title.fontSize = this._getFontSizeNumber(
+        styles.titleFontSize
+      );
+      Chart.defaults.global.legend.labels.fontColor =
+        ThemeColorHelper.GetThemeColor(styles.legendColor);
       Chart.defaults.global.legend.labels.fontFamily = styles.legendFont;
-      Chart.defaults.global.legend.labels.fontSize = this._getFontSizeNumber(styles.legendFontSize);
-      Chart.defaults.global.tooltips.backgroundColor = ThemeColorHelper.GetThemeColor(styles.tooltipBackgroundColor);
-      Chart.defaults.global.tooltips.bodyFontColor = ThemeColorHelper.GetThemeColor(styles.tooltipBodyColor);
+      Chart.defaults.global.legend.labels.fontSize = this._getFontSizeNumber(
+        styles.legendFontSize
+      );
+      Chart.defaults.global.tooltips.backgroundColor =
+        ThemeColorHelper.GetThemeColor(styles.tooltipBackgroundColor);
+      Chart.defaults.global.tooltips.bodyFontColor =
+        ThemeColorHelper.GetThemeColor(styles.tooltipBodyColor);
       Chart.defaults.global.tooltips.bodyFontFamily = styles.tooltipFont;
-      Chart.defaults.global.tooltips.bodyFontSize = this._getFontSizeNumber(styles.tooltipFontSize);
-      Chart.defaults.global.tooltips.titleFontColor = ThemeColorHelper.GetThemeColor(styles.tooltipTitleColor);
+      Chart.defaults.global.tooltips.bodyFontSize = this._getFontSizeNumber(
+        styles.tooltipFontSize
+      );
+      Chart.defaults.global.tooltips.titleFontColor =
+        ThemeColorHelper.GetThemeColor(styles.tooltipTitleColor);
       Chart.defaults.global.tooltips.titleFontFamily = styles.tooltipTitleFont;
-      Chart.defaults.global.tooltips.titleFontSize = this._getFontSizeNumber(styles.tooltipTitleFontSize);
-      Chart.defaults.global.tooltips.footerFontColor = ThemeColorHelper.GetThemeColor(styles.tooltipFooterColor);
-      Chart.defaults.global.tooltips.footerFontFamily = styles.tooltipFooterFont;
-      Chart.defaults.global.tooltips.footerFontSize = this._getFontSizeNumber(styles.tooltipFooterFontSize);
-      Chart.defaults.global.tooltips.borderColor = ThemeColorHelper.GetThemeColor(styles.tooltipBorderColor);
+      Chart.defaults.global.tooltips.titleFontSize = this._getFontSizeNumber(
+        styles.tooltipTitleFontSize
+      );
+      Chart.defaults.global.tooltips.footerFontColor =
+        ThemeColorHelper.GetThemeColor(styles.tooltipFooterColor);
+      Chart.defaults.global.tooltips.footerFontFamily =
+        styles.tooltipFooterFont;
+      Chart.defaults.global.tooltips.footerFontSize = this._getFontSizeNumber(
+        styles.tooltipFooterFontSize
+      );
+      Chart.defaults.global.tooltips.borderColor =
+        ThemeColorHelper.GetThemeColor(styles.tooltipBorderColor);
 
-      if (Chart.defaults
-        && Chart.defaults.scale
-        && Chart.defaults.scale.gridLines
-        && Chart.defaults.scale.gridLines.color) {
-        Chart.defaults.scale.gridLines.color = ThemeColorHelper.GetThemeColor(styles.lineColor);
+      if (
+        Chart.defaults &&
+        Chart.defaults.scale &&
+        Chart.defaults.scale.gridLines &&
+        Chart.defaults.scale.gridLines.color
+      ) {
+        Chart.defaults.scale.gridLines.color = ThemeColorHelper.GetThemeColor(
+          styles.lineColor
+        );
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
@@ -380,21 +412,21 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       if (this._chart !== undefined) {
         this._chart.destroy();
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
 
   private _linkCanvas = (e: HTMLCanvasElement): void => {
     this._canvasElem = e;
-  }
+  };
 
   // Reads one of the Office Fabric defined font sizes
   // and converts to a number
   private _getFontSizeNumber(value: string): number {
     try {
       return parseInt(value.replace('px', ''), 10);
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }
@@ -404,25 +436,31 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
    * @param promise
    */
   private _doPromise(promise: Promise<Chart.ChartData>): void {
-    this.setState({
-      isLoading: true
-    }, () => {
-      promise.then(
-        results => {
-          this.setState({
-            isLoading: false,
-            data: results
-          }, () => {
-            this._initChart(this.props, results);
-          });
-        },
-        rejected => {
-          this.setState({
-            isLoading: false,
-            rejected: rejected
-          });
-        }
-      );
-    });
+    this.setState(
+      {
+        isLoading: true,
+      },
+      () => {
+        promise.then(
+          (results) => {
+            this.setState(
+              {
+                isLoading: false,
+                data: results,
+              },
+              () => {
+                this._initChart(this.props, results);
+              }
+            );
+          },
+          (rejected) => {
+            this.setState({
+              isLoading: false,
+              rejected: rejected,
+            });
+          }
+        );
+      }
+    );
   }
 }

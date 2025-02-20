@@ -40,7 +40,7 @@ export interface IControlsTestState {
   actionTermId?: string;
   clickedActionTerm?: ITermInfo;
   selectedFilters?: string[];
-  termStoreInfo: ITermStoreInfo | null | undefined;
-  termSetInfo: ITermSetInfo | null | undefined;
+  termStoreInfo: ITermStoreInfo | null | undefined; // eslint-disable-line @rushstack/no-new-null
+  termSetInfo: ITermSetInfo | null | undefined; // eslint-disable-line @rushstack/no-new-null
   testTerms: ITermInfo[];
 }

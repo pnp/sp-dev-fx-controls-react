@@ -4,7 +4,10 @@ import * as React from 'react';
 import { TermStore } from '@microsoft/microsoft-graph-types';
 
 interface IUseUtils {
-  getTermSetLocalizedNames: (termSet: TermStore.Set, language: string) => TermStore.LocalizedName[];
+  getTermSetLocalizedNames: (
+    termSet: TermStore.Set,
+    language: string
+  ) => TermStore.LocalizedName[];
   getTermProperty: (term: TermStore.Term, property: string) => string;
   getTermSetProperty: (termSet: TermStore.Set, property: string) => string;
   getCacheKey: (key: string, uniqueId: string) => string;
@@ -17,36 +20,48 @@ export const useUtils = (): IUseUtils => {
     return `${key}${uniqueId}`;
   }, []);
 
-  const getTermSetProperty = React.useCallback((termSet: TermStore.Set, property: string): string => {
-    if (!termSet && !property) {
-      return undefined;
-    }
-    return termSet.properties?.filter((prop) => prop.key === property)[0]?.value;
-  }, []);
+  const getTermSetProperty = React.useCallback(
+    (termSet: TermStore.Set, property: string): string => {
+      if (!termSet && !property) {
+        return undefined;
+      }
+      return termSet.properties?.filter((prop) => prop.key === property)[0]
+        ?.value;
+    },
+    []
+  );
 
   const getTermSetLocalizedNames = React.useCallback(
     (termSet: TermStore.Set, language: string): TermStore.LocalizedName[] => {
       if (!termSet && !language) {
         return undefined;
       }
-      return termSet.localizedNames?.filter((prop) => prop.languageTag === language);
+      return termSet.localizedNames?.filter(
+        (prop) => prop.languageTag === language
+      );
     },
     []
   );
 
-  const getTermProperty = React.useCallback((term: TermStore.Term, property: string): string => {
-    if (!term && !property) {
-      return undefined;
-    }
-    return term.properties?.filter((prop) => prop.key === property)[0]?.value;
-  }, []);
+  const getTermProperty = React.useCallback(
+    (term: TermStore.Term, property: string): string => {
+      if (!term && !property) {
+        return undefined;
+      }
+      return term.properties?.filter((prop) => prop.key === property)[0]?.value;
+    },
+    []
+  );
 
-  const getTermLabel = React.useCallback((term: TermStore.Term, name: string): string => {
-    if (!term && !name) {
-      return undefined;
-    }
-    return term.labels?.filter((prop) => prop.name === name)[0]?.name;
-  }, []);
+  const getTermLabel = React.useCallback(
+    (term: TermStore.Term, name: string): string => {
+      if (!term && !name) {
+        return undefined;
+      }
+      return term.labels?.filter((prop) => prop.name === name)[0]?.name;
+    },
+    []
+  );
 
   const validateUrl = React.useCallback((url: string): boolean => {
     if (!url) {
@@ -55,10 +70,17 @@ export const useUtils = (): IUseUtils => {
     try {
       const urlValid = new URL(url);
       return !!urlValid;
-    } catch (e) {
+    } catch {
       return false;
     }
   }, []);
 
-  return { getTermSetProperty, getCacheKey, getTermProperty, getTermSetLocalizedNames, getTermLabel, validateUrl };
+  return {
+    getTermSetProperty,
+    getCacheKey,
+    getTermProperty,
+    getTermSetLocalizedNames,
+    getTermLabel,
+    validateUrl,
+  };
 }; // ... }

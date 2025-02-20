@@ -284,7 +284,7 @@ export class GeneralHelper {
     // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
     try {
       result = new File([blob], fileName);
-    } catch (ieErr) {
+    } catch {
       result = blob;
       result.fileName = fileName;
     }
