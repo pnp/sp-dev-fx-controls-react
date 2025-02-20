@@ -25,6 +25,9 @@ importers:
       '@iconify/react':
         specifier: ^4.1.1
         version: 4.1.1(react@17.0.1)
+      '@microsoft/microsoft-graph-client':
+        specifier: 3.0.2
+        version: 3.0.2
       '@microsoft/sp-application-base':
         specifier: 1.19.0
         version: 1.19.0(@microsoft/microsoft-graph-client@1.7.2-spfx)(@types/react-dom@17.0.17)(@types/react@17.0.45)(react-dom@17.0.1)(react@17.0.1)
@@ -68,7 +71,7 @@ importers:
         specifier: 2.5.0
         version: 2.5.0
       '@pnp/spfx-controls-react':
-        specifier: workspace:^3.19.0
+        specifier: workspace:*
         version: link:../../libraries/spfx-controls-react
       lodash:
         specifier: 4.17.21
