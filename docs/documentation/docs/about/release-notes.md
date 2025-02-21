@@ -15,10 +15,11 @@
 - `ModernTaxonomyPicker` Fix - Adding a new term adds the term to the parentLevel [#1922](https://github.com/pnp/sp-dev-fx-controls-react/pull/1922)
 - `ModernTaxonomyPicker` allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
 - `UserPicker` fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
+- Optimizing ControlsTest webpart in the SPFx source project [#1951](https://github.com/pnp/sp-dev-fx-controls-react/pull/1951)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.20.0
 
