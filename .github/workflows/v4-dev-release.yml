@@ -20,7 +20,7 @@ jobs:
 
     - name: Update the package version
       working-directory: ./libraries/spfx-controls-react
-      if: github.ref == 'refs/heads/dev'
+      if: github.ref == 'refs/heads/v4-dev'
       run: node scripts/update-package-version.js $GITHUB_RUN_ID
 
     - name: Update version number for telemetry
@@ -38,6 +38,6 @@ jobs:
     - name: Publish beta release
       working-directory: ./libraries/spfx-controls-react
       run: npm publish --tag beta4 --access public
-      if: github.ref == 'refs/heads/dev'
+      if: github.ref == 'refs/heads/v4-dev'
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
