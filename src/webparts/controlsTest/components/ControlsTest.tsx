@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styles from './ControlsTest.module.scss';
-
 import { debounce } from 'lodash';
+
+//#region Import FluentUI Controls
 import { IPersonaProps, Persona } from '@fluentui/react';
 import {
   ExclamationCircleIcon,
@@ -48,6 +49,8 @@ import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { Text } from '@fluentui/react/lib/Text';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { ISize } from '@fluentui/react/lib/Utilities';
+//#endregion
+
 import {
   DisplayMode,
   Environment,
@@ -59,6 +62,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
 import { IFileInfo } from '@pnp/sp/files';
 import { sp } from '@pnp/sp';
 
+//#region Import PnP Controls
 const AdaptiveCardDesignerHost = React.lazy(() => import('../../../AdaptiveCardDesignerHost').then(module => ({ default: module.AdaptiveCardDesignerHost })));
 const AdaptiveCardHost = React.lazy(() => import('../../../AdaptiveCardHost').then(module => ({ default: module.AdaptiveCardHost })));
 import {
@@ -258,7 +262,7 @@ import { IControlsTestProps } from './IControlsTestProps';
 import { IControlsTestState } from './IControlsTestState';
 
 const UserPicker = React.lazy(() => import('../../../UserPicker').then(module => ({ default: module.UserPicker })));
-
+//#endregion
 import { GeneralHelper } from '../../../Utilities';
 
 // Used to render document card
