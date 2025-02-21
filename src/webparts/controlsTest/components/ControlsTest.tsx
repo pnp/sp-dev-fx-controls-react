@@ -231,6 +231,7 @@ import {
 } from '../../../Progress';
 
 const RichText = React.lazy(() => import('../../../RichText').then(module => ({ default: module.RichText })));
+const ShareDialog = React.lazy(() => import('../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
 
 const SecurityTrimmedControl = React.lazy(() => import('../../../SecurityTrimmedControl').then(module => ({ default: module.SecurityTrimmedControl })));
 import {
@@ -588,6 +589,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       testTerms: [],
       selectedUrlImagePicker: "",
       isOpenHoverReactionBar: false,
+      isOpenShareDialog: false,
     };
 
     this.peoplePickerContext = {
@@ -2116,7 +2118,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <PrimaryButton text="Open HoverReactionsBar" onClick={() => { this.setState({ isOpenHoverReactionBar: true }); }} />
               <HoverReactionsBar
                 isOpen={this.state.isOpenHoverReactionBar}
-                onSelect={(emoji, emojiInfo) => {console.log(emoji);} }
+                onSelect={(emoji, emojiInfo) => { console.log(emoji); }}
                 onDismiss={(): void => {
                   this.setState({ isOpenHoverReactionBar: false });
                 }}
@@ -2813,6 +2815,20 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   }
                 }]}
               />
+            </div>
+          }
+          {controlVisibility.ShareDialog &&
+            <div id="ShareDialogDiv" className={styles.container}>
+              <PrimaryButton text="Open Share dialog" onClick={() => { this.setState({ isOpenShareDialog: true }); }} />
+              <ShareDialog
+                isOpen={this.state.isOpenShareDialog}
+                onClose={() => this.setState({ isOpenShareDialog: false })}
+                options={{
+                  siteUrl: this.props.context.pageContext.web.absoluteUrl,
+                  listId: 'b1416fca-dc77-4198-a082-62a7657dcfa9',
+                  itemId: 1,
+                  name: 'Document Name'
+                }} />
             </div>
           }
           {controlVisibility.TaxonomyTree &&

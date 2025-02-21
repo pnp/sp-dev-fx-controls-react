@@ -43,4 +43,5 @@ export interface IControlsTestState {
   testTerms: ITermInfo[];
   selectedUrlImagePicker: string;
   isOpenHoverReactionBar: boolean;
+  isOpenShareDialog: boolean;
 }
