@@ -54,5 +54,6 @@ git checkout -b my-contribution
 - **DO NOT** surprise us with big PR's. Instead file an issue & start a discussion so we can agree on a direction before you invest a large amount of time.
 - **DO NOT** commit code you didn't write.
 - **DO NOT** submit PR's that refactor existing code without a discussion first.
+- **DO NOT** install packages using NPM, use Rushstack instead. See the [guidance](./rush.md) for more information.
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/Contributing)
