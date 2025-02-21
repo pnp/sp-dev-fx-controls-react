@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sp-dev-fx-controls-react-tests-client-side-solution",
+    "id": "8040e371-9a26-4c91-a181-afbdd33b41db",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "Microsoft 365 PnP",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.19.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "sp-dev-fx-controls-react-tests description"
+      },
+      "longDescription": {
+        "default": "sp-dev-fx-controls-react-tests description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "sp-dev-fx-controls-react-tests Feature",
+        "description": "The feature that activates elements of the sp-dev-fx-controls-react-tests solution.",
+        "id": "71a1a9c3-b0c0-42fe-9f46-d787ddcc4999",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/sp-dev-fx-controls-react-tests.sppkg"
+  }
+}

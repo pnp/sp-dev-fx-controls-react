@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "spfx-controls-library": {
+      "components": [
+        {
+          "entrypoint": "./lib//libraries/spfxControls/SpfxControlsLibrary.js",
+          "manifest": "./src/libraries/spfxControls/SpfxControlsLibrary.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "ControlStrings": "lib/loc/{locale}.js",
+    "SpfxControlsLibraryStrings": "lib/libraries/spfxControls/loc/{locale}.js"
+  }
+}
