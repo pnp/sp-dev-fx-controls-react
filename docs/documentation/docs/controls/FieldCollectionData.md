@@ -4,7 +4,7 @@ This control gives you the ability to insert a list / collection data which can 
 
 The control allows you to specify multiple data types like: string, number, boolean, or dropdown. It also provides the possibility to render custom field.
 
-**FieldCollectionData**
+## FieldCollectionData
 
 ![Code editor initial](../assets/FieldCollectionData.gif)
 
@@ -28,7 +28,6 @@ import { FieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-contro
 ```
 
 3. Add the control to the render method:
-
 
 ```TypeScript
 <FieldCollectionData 
@@ -120,13 +119,13 @@ Interface `ICustomCollectionField`
 | disableEdit | boolean | no | Allows you to specify if a field is disabled for editing. |
 | required | boolean | no | Specify if the field is required. |
 | options | [IDropdownOption[]](https://developer.microsoft.com/en-us/fabric#/components/dropdown) [IComboboxOption[]](https://developer.microsoft.com/en-us/fluentui#/controls/web/combobox) | no | Dropdown options. Only necessary when dropdown or combobox type is used. |
-| onRenderOption | IRenderFunction<ISelectableOption> | no | Dropdown custom options render method. Only for the **dropdown** field type. |
-| placeholder | string | no | Placehoder text which will be used for the input field. If not provided the input title will be used. |
+| onRenderOption | IRenderFunction&lt;ISelectableOption&gt; | no | Dropdown custom options render method. Only for the **dropdown** field type. |
+| placeholder | string | no | Placeholder text which will be used for the input field. If not provided the input title will be used. |
 | defaultValue | any | no | Specify a default value for the input field. |
 | deferredValidationTime | number | no | Field will start to validate after users stop typing for `deferredValidationTime` milliseconds. Default: 200ms. |
-| onGetErrorMessage | (value: any, index: number, crntItem: any): string \| Promise<string> | no | The method is used to get the validation error message and determine whether the input value is valid or not. It provides you the current row index and the item you are currently editing. |
+| onGetErrorMessage | (value: any, index: number, currentItem: any): string \| Promise&lt;string&gt; | no | The method is used to get the validation error message and determine whether the input value is valid or not. It provides you the current row index and the item you are currently editing. |
 | onCustomRender | (field: ICustomCollectionField, value: any, onUpdate: (fieldId: string, value: any) => void, item: any, itemUniqueId: string, onCustomFieldValidation: (fieldId: string, errorMessage: string) => void) => JSX.Element | no | This property is only required if you are using the `custom` field type and it can be used to specify the custom rendering of your control in the collection data. |
-| multiSelect | boolean| no | Specifies multiple options can be selected (**combobox**) or mutliple users can be selected (**peoplepicker**) |
+| multiSelect | boolean| no | Specifies multiple options can be selected (**combobox**) or multiple users can be selected (**peoplepicker**) |
 | allowFreeform | boolean | no | Specifies that own options can be entered. Only for **combobox** field type |
 | minimumUsers| number | no | Specifies the minimum number of users to be entered for **peoplepicker** field type |
 | minimumUsersMessage| string | no | Specifies the message to be displayed if minimumUsers are not entered for **peoplepicker** field type |
@@ -143,7 +142,7 @@ Enum `CustomCollectionFieldType`
 | combobox | Combobox field. You wil have to specify the `options` property, optional specify `allowFreeform` and `multiSelect` |
 | fabricIcon | Name of the [Office UI Fabric icon](https://developer.microsoft.com/en-us/fabric#/styles/icons) |
 | url | URL field |
-| peoplepicker | Peoplepicker control |
+| peoplepicker | peoplepicker control |
 | custom | This gives you control over the whole field rendering. Be sure to provide the `onCustomRender` method to render your control in the collection data. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-property-controls/wiki/FieldCollectionData)

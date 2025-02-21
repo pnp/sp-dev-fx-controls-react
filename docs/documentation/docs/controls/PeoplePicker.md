@@ -3,17 +3,17 @@
 This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.
 
 !!! Note
-    You can also check out [People Picker](https://docs.microsoft.com/en-us/graph/toolkit/components/people-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
+    You can also check out [People Picker](https://docs.microsoft.com/graph/toolkit/components/people-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
 
-**Empty People Picker control with error message and tooltip**
+- Empty People Picker control with error message and tooltip:
 
 ![People Picker](../assets/Peoplepicker-witherrorandtooltip.png)
 
-**Selecting People**
+- Selecting People:
 
 ![Selecting People](../assets/Peoplepicker-selectingchoices.png)
 
-**Selected people**
+- Selected people:
 
 ![Selected people](../assets/Peoplepicker-multiplechoices.png)
 
@@ -50,7 +50,7 @@ const peoplePickerContext: IPeoplePickerContext = {
     resolveDelay={1000} />
 ```
 
-- With the `onChange` property you can get the selected People in the `PeoplePicker` :
+- With the `onChange` property you can get the selected People in the `PeoplePicker`:
 
 ```typescript
 private _getPeoplePickerItems(items: any[]) {
@@ -100,28 +100,28 @@ Enum `PrincipalType`
 
 The `PrincipalType` enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.
 
-| Name | Value |
-| ---- | ---- |
-| User | 1 |
-| DistributionList | 2 |
-| SecurityGroup | 4 |
-| SharePointGroup | 8 |
+| Name             | Value |
+| ---------------- | ----- |
+| User             | 1     |
+| DistributionList | 2     |
+| SecurityGroup    | 4     |
+| SharePointGroup  | 8     |
 
 Interface `IPeoplePickerContext`
 
 Provides mandatory properties to search users on the tenant
 
-| Value | Type | Description |
-| ---- | ---- | ---- |
-| absoluteUrl | string | Current `SPWeb` absolute URL. |
+| Value                | Type                 | Description                                                                  |
+| -------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| absoluteUrl          | string               | Current `SPWeb` absolute URL.                                                |
 | msGraphClientFactory | MSGraphClientFactory | Instance of MSGraphClientFactory used for querying Microsoft Graph REST API. |
-| spHttpClient | SPHttpClient | Instance of SPHttpClient used for querying SharePoint REST API. |
+| spHttpClient         | SPHttpClient         | Instance of SPHttpClient used for querying SharePoint REST API.              |
 
 ## MSGraph Permissions required
 
 This control requires at least one the following scopes if `groupId` is of type `string`:
 
-- *GroupMember.Read.All* + *User.ReadBasic.All*
-- *Directory.Read.All*
+- `GroupMember.Read.All` + `User.ReadBasic.All`
+- `Directory.Read.All`
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)

@@ -1,28 +1,25 @@
-import * as React from "react";
+import * as React from 'react';
+
+import { debounce } from 'lodash';
+
+import { IPersonaProps } from '@fluentui/react';
 import {
-  IBasePickerStyles,
-  ITag,
-} from "@fluentui/react/lib/Pickers";
-import {
-  Stack,
-} from "@fluentui/react/lib/Stack";
-import {
-  Text,
-} from "@fluentui/react/lib/Text";
-import {
-  TextField
-} from "@fluentui/react/lib/TextField";
+  ExclamationCircleIcon,
+  Flex,
+  ScreenshareIcon,
+  ShareGenericIcon,
+  Text as NorthstarText,
+} from '@fluentui/react-northstar';
 import {
   DefaultButton,
-  PrimaryButton
-} from "@fluentui/react/lib/Button";
-import { DialogType, DialogFooter, IDialogContentProps } from "@fluentui/react/lib/Dialog";
-import { IModalProps } from "@fluentui/react/lib/Modal";
+  PrimaryButton,
+} from '@fluentui/react/lib/Button';
+import { DayOfWeek } from '@fluentui/react/lib/DateTimeUtilities';
 import {
-  Dropdown,
-  IDropdownOption
-} from "@fluentui/react/lib/Dropdown";
-import { Link } from "@fluentui/react/lib/Link";
+  DialogFooter,
+  DialogType,
+  IDialogContentProps,
+} from '@fluentui/react/lib/Dialog';
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -30,178 +27,198 @@ import {
   DocumentCardPreview,
   DocumentCardTitle,
   DocumentCardType,
-  IDocumentCardPreviewProps
-} from "@fluentui/react/lib/DocumentCard";
-import { IIconProps } from "@fluentui/react/lib/Icon";
-import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
-import { ImageFit } from "@fluentui/react/lib/Image";
-import { PanelType } from "@fluentui/react/lib/Panel";
-import { mergeStyles } from "@fluentui/react/lib/Styling";
-import { ISize } from "@fluentui/react/lib/Utilities";
-
+  IDocumentCardPreviewProps,
+} from '@fluentui/react/lib/DocumentCard';
 import {
-  ExclamationCircleIcon,
-  Flex,
-  ScreenshareIcon,
-  ShareGenericIcon,
-  Text as NorthstarText
-} from "@fluentui/react-northstar";
-import { DayOfWeek } from "@fluentui/react/lib/DateTimeUtilities";
+  Dropdown,
+  IDropdownOption,
+} from '@fluentui/react/lib/Dropdown';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import { ImageFit } from '@fluentui/react/lib/Image';
+import { Label } from '@fluentui/react/lib/Label';
+import { Link } from '@fluentui/react/lib/Link';
+import { IModalProps } from '@fluentui/react/lib/Modal';
+import { PanelType } from '@fluentui/react/lib/Panel';
+import {
+  IBasePickerStyles,
+  ITag,
+} from '@fluentui/react/lib/Pickers';
+import { Stack } from '@fluentui/react/lib/Stack';
+import { mergeStyles } from '@fluentui/react/lib/Styling';
+import { Text } from '@fluentui/react/lib/Text';
+import { TextField } from '@fluentui/react/lib/TextField';
+import { ISize } from '@fluentui/react/lib/Utilities';
 import {
   DisplayMode,
   Environment,
   EnvironmentType,
   Guid,
-  ServiceScope
-} from "@microsoft/sp-core-library";
+  ServiceScope,
+} from '@microsoft/sp-core-library';
+import { SPHttpClient } from '@microsoft/sp-http';
+import { SPPermission } from '@microsoft/sp-page-context';
+import { IFileInfo } from '@pnp/sp/files';
 
-import { SPHttpClient } from "@microsoft/sp-http";
-import { SPPermission } from "@microsoft/sp-page-context";
-
-import { Accordion } from "../../../controls/accordion";
+import { AdaptiveCardDesignerHost } from '../../../AdaptiveCardDesignerHost';
+import {
+  Action,
+  AdaptiveCardHost,
+  AdaptiveCardHostThemeType,
+  CardElement,
+  CardObjectRegistry,
+  HostCapabilities,
+} from '../../../AdaptiveCardHost';
+import { AnimatedDialog } from '../../../AnimatedDialog';
 import {
   ChartControl,
-  ChartType
-} from "../../../ChartControl";
+  ChartType,
+} from '../../../ChartControl';
 import {
   Accordion as AccessibleAccordion,
   AccordionItem,
   AccordionItemButton,
   AccordionItemHeading,
-  AccordionItemPanel
-} from "../../../controls/accessibleAccordion";
+  AccordionItemPanel,
+} from '../../../controls/accessibleAccordion';
+import { Accordion } from '../../../controls/accordion';
 import {
   Carousel,
   CarouselButtonsDisplay,
   CarouselButtonsLocation,
   CarouselIndicatorsDisplay,
-  CarouselIndicatorShape
-} from "../../../controls/carousel";
+  CarouselIndicatorShape,
+} from '../../../controls/carousel';
 import {
   Dashboard,
-  WidgetSize
-} from "../../../controls/dashboard";
+  WidgetSize,
+} from '../../../controls/dashboard';
 import {
-  TimeDisplayControlType
-} from "../../../controls/dateTimePicker/TimeDisplayControlType";
-import { IconPicker } from "../../../controls/iconPicker";
+  TimeDisplayControlType,
+} from '../../../controls/dateTimePicker/TimeDisplayControlType';
+import { DynamicForm } from '../../../controls/dynamicForm';
+import { IconPicker } from '../../../controls/iconPicker';
 import {
-  ComboBoxListItemPicker
-} from "../../../controls/listItemPicker/ComboBoxListItemPicker";
-import { Pagination } from "../../../controls/pagination";
-import { TermActionsDisplayStyle } from "../../../controls/taxonomyPicker";
+  ComboBoxListItemPicker,
+} from '../../../controls/listItemPicker/ComboBoxListItemPicker';
 import {
-  TermActionsDisplayMode
-} from "../../../controls/taxonomyPicker/termActions";
-import { Toolbar } from "../../../controls/toolbar";
+  ILocationPickerItem,
+} from '../../../controls/locationPicker/ILocationPicker';
+import {
+  LocationPicker,
+} from '../../../controls/locationPicker/LocationPicker';
+import {
+  ModernTaxonomyPicker,
+} from '../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker';
+import { MyTeams } from '../../../controls/MyTeams';
+import { Pagination } from '../../../controls/pagination';
+import {
+  IPeoplePickerContext,
+  PeoplePicker,
+  PrincipalType,
+} from '../../../controls/peoplepicker';
+import { SitePicker } from '../../../controls/sitePicker/SitePicker';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
+import {
+  TermActionsDisplayMode,
+} from '../../../controls/taxonomyPicker/termActions';
+import { Toolbar } from '../../../controls/toolbar';
 import {
   ITreeItem,
   TreeItemActionsDisplayMode,
   TreeView,
-  TreeViewSelectionMode
-} from "../../../controls/treeView";
+  TreeViewSelectionMode,
+} from '../../../controls/treeView';
+import { UploadFiles } from '../../../controls/uploadFiles';
+import {
+  VariantThemeProvider,
+  VariantType,
+} from '../../../controls/variantThemeProvider';
+import { ViewPicker } from '../../../controls/viewPicker';
 import {
   DateConvention,
   DateTimePicker,
-  TimeConvention
-} from "../../../DateTimePicker";
+  TimeConvention,
+} from '../../../DateTimePicker';
+import { DragDropFiles } from '../../../DragDropFiles';
+import { EnhancedThemeProvider } from '../../../EnhancedThemeProvider';
 import {
   CustomCollectionFieldType,
-  FieldCollectionData
-} from "../../../FieldCollectionData";
+  FieldCollectionData,
+} from '../../../FieldCollectionData';
+import { FieldPicker } from '../../../FieldPicker';
 import {
   FilePicker,
-  IFilePickerResult
-} from "../../../FilePicker";
+  IFilePickerResult,
+} from '../../../FilePicker';
 import {
   ApplicationType,
   FileTypeIcon,
   IconType,
-  ImageSize
-} from "../../../FileTypeIcon";
+  ImageSize,
+} from '../../../FileTypeIcon';
 import {
   FolderExplorer,
   IBreadcrumbItem,
-  IFolder
-} from "../../../FolderExplorer";
-import { FolderPicker } from "../../../FolderPicker";
-import { GridLayout } from "../../../GridLayout";
-import { IFrameDialog } from "../../../IFrameDialog";
-import { IFramePanel } from "../../../IFramePanel";
-import { ListItemPicker } from "../../../ListItemPicker";
-import { ListPicker } from "../../../ListPicker";
+  IFolder,
+} from '../../../FolderExplorer';
+import { FolderPicker } from '../../../FolderPicker';
+import { GridLayout } from '../../../GridLayout';
+import { IFrameDialog } from '../../../IFrameDialog';
+import { IFramePanel } from '../../../IFramePanel';
+import { ListItemAttachments } from '../../../ListItemAttachments';
+import { ListItemComments } from '../../../ListItemComments';
+import { ListItemPicker } from '../../../ListItemPicker';
+import { ListPicker } from '../../../ListPicker';
 import {
   GroupOrder,
   IGrouping,
   IViewField,
   ListView,
-  SelectionMode
-} from "../../../ListView";
+  SelectionMode,
+} from '../../../ListView';
 import {
   Map,
-  MapType
-} from "../../../Map";
+  MapType,
+} from '../../../Map';
 import {
-  IPeoplePickerContext,
-  PeoplePicker,
-  PrincipalType
-} from "../../../controls/peoplepicker";
-import { Placeholder } from "../../../Placeholder";
+  ModernAudio,
+  ModernAudioLabelPosition,
+} from '../../../ModernAudio';
+import {
+  SPTaxonomyService,
+  TaxonomyTree,
+} from '../../../ModernTaxonomyPicker';
+import { Placeholder } from '../../../Placeholder';
 import {
   IProgressAction,
-  Progress
-} from "../../../Progress";
-import { RichText } from "../../../RichText";
+  Progress,
+} from '../../../Progress';
+import { RichText } from '../../../RichText';
 import {
   PermissionLevel,
-  SecurityTrimmedControl
-} from "../../../SecurityTrimmedControl";
-import { ITerm } from "../../../services/ISPTermStorePickerService";
+  SecurityTrimmedControl,
+} from '../../../SecurityTrimmedControl';
+import { ITerm } from '../../../services/ISPTermStorePickerService';
 import SPTermStorePickerService
-  from "../../../services/SPTermStorePickerService";
-import { SiteBreadcrumb } from "../../../SiteBreadcrumb";
+  from '../../../services/SPTermStorePickerService';
+import { SiteBreadcrumb } from '../../../SiteBreadcrumb';
 import {
   IPickerTerms,
   TaxonomyPicker,
-  UpdateType
-} from "../../../TaxonomyPicker";
-import { WebPartTitle } from "../../../WebPartTitle";
-import { AnimatedDialog } from "../../../AnimatedDialog";
-import styles from "./ControlsTest.module.scss";
+  UpdateType,
+} from '../../../TaxonomyPicker';
+import { TeamChannelPicker } from '../../../TeamChannelPicker';
+import { TeamPicker } from '../../../TeamPicker';
+import { GeneralHelper } from '../../../Utilities';
+import { WebPartTitle } from '../../../WebPartTitle';
+import styles from './ControlsTest.module.scss';
 import {
-  IControlsTestProps
-} from "./IControlsTestProps";
-import {
-  IControlsTestState
-} from "./IControlsTestState";
-import { MyTeams } from "../../../controls/MyTeams";
-import { TeamPicker } from "../../../TeamPicker";
-import { TeamChannelPicker } from "../../../TeamChannelPicker";
-import { DragDropFiles } from "../../../DragDropFiles";
-import { SitePicker } from "../../../controls/sitePicker/SitePicker";
-import { DynamicForm } from '../../../controls/dynamicForm';
-import { LocationPicker } from "../../../controls/locationPicker/LocationPicker";
-import { ILocationPickerItem } from "../../../controls/locationPicker/ILocationPicker";
-import { debounce } from "lodash";
-import { ModernTaxonomyPicker } from "../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker";
-import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeType, CardObjectRegistry, CardElement, Action, HostCapabilities } from "../../../AdaptiveCardHost";
-import { VariantThemeProvider, VariantType } from "../../../controls/variantThemeProvider";
-import { Label } from "@fluentui/react/lib/Label";
-import { EnhancedThemeProvider } from "../../../EnhancedThemeProvider";
-import { ControlsTestEnhancedThemeProvider, ControlsTestEnhancedThemeProviderFunctionComponent } from "./ControlsTestEnhancedThemeProvider";
-import { AdaptiveCardDesignerHost } from "../../../AdaptiveCardDesignerHost";
-import { ModernAudio, ModernAudioLabelPosition } from "../../../ModernAudio";
-import { SPTaxonomyService, TaxonomyTree } from "../../../ModernTaxonomyPicker";
-import { TestControl } from "./TestControl";
-import { UploadFiles } from "../../../controls/uploadFiles";
-import { IFileInfo } from "@pnp/sp/files";
-import { FieldPicker } from "../../../FieldPicker";
-import { IPersonaProps, Toggle } from "@fluentui/react";
-import { ListItemComments } from "../../../ListItemComments";
-import { ViewPicker } from "../../../controls/viewPicker";
-import { GeneralHelper } from "../../../Utilities";
-
-
+  ControlsTestEnhancedThemeProvider,
+  ControlsTestEnhancedThemeProviderFunctionComponent,
+} from './ControlsTestEnhancedThemeProvider';
+import { IControlsTestProps } from './IControlsTestProps';
+import { IControlsTestState } from './IControlsTestState';
+import { TestControl } from './TestControl';
 
 // Used to render document card
 /**
@@ -971,6 +988,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           <div className={`${styles.row} ${styles.controlFiltersContainer}`}>
             <PrimaryButton text="Open Web Part Settings" iconProps={{ iconName: 'Settings' }} onClick={this.props.onOpenPropertyPane} />
           </div>
+          <ListItemAttachments listId='e7a3ef63-70f6-4cc1-b95c-1f9eb8af2c8c' context={this.props.context} />
         </div>
         <div id="WebPartTitleDiv" className={styles.container} hidden={!controlVisibility.WebPartTitle}>
           <WebPartTitle displayMode={this.props.displayMode}
@@ -2562,7 +2580,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           )}
         </div>
         <div id="TestControlDiv" className={styles.container} hidden={!controlVisibility.TestControl}>
-          <h3>Monaco Editor</h3>
+
           <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
         </div>
         <div id="UploadFilesDiv" className={styles.container} hidden={!controlVisibility.UploadFiles}>

@@ -93,7 +93,7 @@ The WebPartTitle control can be configured with the following properties:
 | updateProperty | Function | yes | Function that you can pass to update the title in the root web part. |
 | className | string | no | Optional property to specify a custom class that allows you to change the web part title style. |
 | placeholder | string | no | Optional property to specify a custom placeholder to display when the title is editable. |
-| themeVariant | IReadonlyTheme | no | The current loaded SharePoint theme/section background (More info: [Supporting section backgrounds](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/guidance/supporting-section-backgrounds)). |
+| themeVariant | IReadonlyTheme | no | The current loaded SharePoint theme/section background (More info: [Supporting section backgrounds](https://docs.microsoft.com/sharepoint/dev/spfx/web-parts/guidance/supporting-section-backgrounds)). |
 | moreLink | Function \| JSX.Element | no | Optional property to render a _See all_ link in the web part title. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/WebPartTitle)

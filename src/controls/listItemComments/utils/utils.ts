@@ -1,17 +1,24 @@
-import { SPComponentLoader } from "@microsoft/sp-loader";
-const DEFAULT_PERSONA_IMG_HASH: string = "7ad602295f8386b7615b582d87bcc294";
-const DEFAULT_IMAGE_PLACEHOLDER_HASH: string = "4a48f26592f4e1498d7a478a4c48609c";
-const MD5_MODULE_ID: string = "8494e7d7-6b99-47b2-a741-59873e42f16f";
-const PROFILE_IMAGE_URL: string = "/_layouts/15/userphoto.aspx?size=M&accountname=";
+import { SPComponentLoader } from '@microsoft/sp-loader';
+const DEFAULT_PERSONA_IMG_HASH: string = '7ad602295f8386b7615b582d87bcc294';
+const DEFAULT_IMAGE_PLACEHOLDER_HASH: string =
+  '4a48f26592f4e1498d7a478a4c48609c';
+const MD5_MODULE_ID: string = '8494e7d7-6b99-47b2-a741-59873e42f16f';
+const PROFILE_IMAGE_URL: string =
+  '/_layouts/15/userphoto.aspx?size=M&accountname=';
 
-export const getScrollPosition = (_dataListContainerRef: any): number => { // eslint-disable-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getScrollPosition = (_dataListContainerRef: any): number => {
   const { scrollTop, scrollHeight, clientHeight } = _dataListContainerRef;
   const percentNow = (scrollTop / (scrollHeight - clientHeight)) * 100;
   return percentNow;
 };
 
-export const b64toBlob = async (b64Data: string, contentType: string, sliceSize?: number): Promise<Blob> => {
-  contentType = contentType || "image/png";
+export const b64toBlob = async (
+  b64Data: string,
+  contentType: string,
+  sliceSize?: number
+): Promise<Blob> => {
+  contentType = contentType || 'image/png';
   sliceSize = sliceSize || 512;
 
   const byteCharacters: string = atob(b64Data);
@@ -47,18 +54,18 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
   console.log(pictureUrl);
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.addEventListener("load", () => {
-      const tempCanvas = document.createElement("canvas");
+    image.addEventListener('load', () => {
+      const tempCanvas = document.createElement('canvas');
       tempCanvas.width = image.width;
       tempCanvas.height = image.height;
-      tempCanvas.getContext("2d").drawImage(image, 0, 0);
+      tempCanvas.getContext('2d').drawImage(image, 0, 0);
       let base64Str;
       try {
-        base64Str = tempCanvas.toDataURL("image/png");
-      } catch (e) {
-        return "";
+        base64Str = tempCanvas.toDataURL('image/png');
+      } catch {
+        return '';
       }
-      base64Str = base64Str.replace(/^data:image\/png;base64,/, "");
+      base64Str = base64Str.replace(/^data:image\/png;base64,/, '');
       resolve(base64Str);
     });
     image.src = pictureUrl;
@@ -69,10 +76,13 @@ export const getImageBase64 = async (pictureUrl: string): Promise<string> => {
  * Load SPFx component by id, SPComponentLoader is used to load the SPFx components
  * @param componentId - componentId, guid of the component library
  */
-export const loadSPComponentById = async (componentId: string): Promise<unknown> => {
+export const loadSPComponentById = async (
+  componentId: string
+): Promise<unknown> => {
   return new Promise((resolve, reject) => {
     SPComponentLoader.loadComponentById(componentId)
-      .then((component: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((component: any) => {
         resolve(component);
       })
       .catch((error) => {
@@ -93,7 +103,7 @@ export const getMd5HashForUrl = async (url: string): Promise<string> => {
       const convertedHash: string = md5Hash(url);
       return convertedHash;
     }
-  } catch (error) {
+  } catch {
     return url;
   }
 };
@@ -109,9 +119,12 @@ export const getUserPhoto = async (userId): Promise<string> => {
   const url: string = await getImageBase64(personaImgUrl);
   const newHash = await getMd5HashForUrl(url);
 
-  if (newHash !== DEFAULT_PERSONA_IMG_HASH && newHash !== DEFAULT_IMAGE_PLACEHOLDER_HASH) {
-    return "data:image/png;base64," + url;
+  if (
+    newHash !== DEFAULT_PERSONA_IMG_HASH &&
+    newHash !== DEFAULT_IMAGE_PLACEHOLDER_HASH
+  ) {
+    return 'data:image/png;base64,' + url;
   } else {
-    return "undefined";
+    return 'undefined';
   }
 };

@@ -73,6 +73,7 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
       if (this._isCompact) {
         this._columnCount = 1;
         this._columnWidth = surfaceRect.width;
+        return this.props.items.length;
       } else {
         this._columnCount = Math.ceil(surfaceRect.width / (MAX_ROW_HEIGHT));
         this._columnWidth = Math.max(MIN_WIDTH, Math.floor(surfaceRect.width / this._columnCount) + Math.floor(PADDING / this._columnCount));
@@ -87,6 +88,9 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
    * Calculates the page height for the grid
    */
   private _getPageHeight = (): number => {
+    if (this._isCompact) {
+      return this.props.items.length * this._rowHeight;
+    }
     return this._rowHeight * ROWS_PER_PAGE;
   }
 

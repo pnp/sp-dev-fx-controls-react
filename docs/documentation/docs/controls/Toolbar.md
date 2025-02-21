@@ -55,7 +55,8 @@ import { Toolbar } from '@pnp/spfx-controls-react/lib/Toolbar';
 ```
 
 ## Controlled or uncontrolled management of selected filters
-The Toolbar component can internally manage the set of selected filters (uncontrolled) or the set of selected filters can be defined using property, `selectedFilterIds `(controlled).
+
+The Toolbar component can internally manage the set of selected filters (uncontrolled) or the set of selected filters can be defined using property, `selectedFilterIds`(controlled).
 
 If property `selectedFilterIds` is undefined then the set of selected filter IDs is uncontrolled and the Toolbar will initialise with an empty set of selected filters. As the user toggles the Toolbar's filters the function set on property, `onSelectedFiltersChange`, will be called with an array parameter of the currently selected filter IDs. The implementation of this function can return void or an array of filter IDs that the Toolbar should set. By returning an array of filter IDs the `onSelectedFiltersChange` implementation can alter the selected filters of an uncontrolled Toolbar in response to user attempts to set/clear filters.
 
@@ -75,10 +76,9 @@ The Toolbar component can be configured with the following properties:
 | selectedFilterIds | string[] | no | Specifies the IDs of the filters which should be displayed as selected by the Toolbar. |
 | onFindQueryChange | (findQuery: string) => string | no | Search query changed handler. |
 
-
 Type `TActionGroups`
 
-Provides Toolbar action groups settings
+Provides Toolbar action groups settings.
 
 ```typescript
 type TActionGroups = {
@@ -88,7 +88,7 @@ type TActionGroups = {
 
 Type `TActions`
 
-Provides Toolbar actions settings
+Provides Toolbar actions settings.
 
 ```typescript
 type TActions = {
@@ -98,18 +98,18 @@ type TActions = {
 
 Type `TAction`
 
-Provides Toolbar action settings
+Provides Toolbar action settings.
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| title | string | yes | Action title. |
-| iconName | string | no | Action icon name. |
-| multi | boolean | no | For future. |
-| onClick | ComponentEventHandler&lt;ToolbarItemProps&gt; | no | Action `onClick` handler. |
+| Property | Type                                          | Required | Description               |
+| -------- | --------------------------------------------- | -------- | ------------------------- |
+| title    | string                                        | yes      | Action title.             |
+| iconName | string                                        | no       | Action icon name.         |
+| multi    | boolean                                       | no       | For future.               |
+| onClick  | ComponentEventHandler&lt;ToolbarItemProps&gt; | no       | Action `onClick` handler. |
 
 Type `TFilters`
 
-Provides Toolbar filters settings
+Provides Toolbar filters settings.
 
 ```typescript
 type TFilters = ObjectShorthandCollection<TreeItemProps, never>;

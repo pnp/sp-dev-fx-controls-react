@@ -261,7 +261,7 @@ The ChartControl will automatically expand to fit its container. If you wish to 
 
 ### Accessibility
 
-As long as you provide labels for all your data elements, the ChartControl will render a hidden table. Users who are visually impaired and use a screen reader will hear a description of the data in the chart. 
+As long as you provide labels for all your data elements, the ChartControl will render a hidden table. Users who are visually impaired and use a screen reader will hear a description of the data in the chart.
 
 You can improve the accessible table by adding an `alternateText`, a `caption` and a `summary`. If you do not provide a `caption`, the control will attempt to use the chart's title.
 
@@ -304,16 +304,16 @@ The ChartControl can be configured with the following properties:
 | className | string | no | Optional property to specify a custom class that allows you to change the chart's styles. |
 | data | ChartData | no | The data you wish to display. |
 | datapromise | Promise<Chart.ChartData> | no | The promise to load data asynchronously. Use with `loadingtemplate` and `rejectedtemplate` |
-| loadingtemplate | JSX.Element <br/> () => JSX.Element | no | The HTML to display while waiting to resolve the `datapromise` |
+| loadingtemplate | JSX.Element <br /> () => JSX.Element | no | The HTML to display while waiting to resolve the `datapromise` |
 | options | ChartOptions | no | Optional property to set the chart's additional options. |
-| palette | [ChartPalette](#chartpalette) | no | Optional property to set the desired Office color paette |
+| palette | [ChartPalette](#chartpalette) | no | Optional property to set the desired Office color palette |
 | plugins | object[] | no | Optional property to set an array of objects implementing the IChartPlugin interface |
-| rejectedtemplate | JSX.Element <br/> () => JSX.Element | no | The HTML to display if the `datapromise` promise returns an error.
-| useTheme | boolean | no | Optional property to set whether the ChartControl should attempt to use theme colors. Setting it to false will use the startard Chart.js colors and fonts. |
+| rejectedtemplate | JSX.Element <br /> () => JSX.Element | no | The HTML to display if the `datapromise` promise returns an error.
+| useTheme | boolean | no | Optional property to set whether the ChartControl should attempt to use theme colors. Setting it to false will use the standard Chart.js colors and fonts. |
 | type | [ChartType](#charttype) or string | yes | The type of chart you wish to render. You can also use the string equivalent. |
 | onClick | (event?: MouseEvent, activeElements?: Array<{}>) => void | no | Optional callback method that get called when a user clicks on the chart |
 | onHover | (chart: Chart, event: MouseEvent, activeElements: Array<{}>) => void | no | Optional callback method that get called when a user hovers the chart |
-| onResize | (chart: Chart, newSize: ChartSize) => void | no | Optional callback method that get called when the window containing the ChartXontrol resizes |
+| onResize | (chart: Chart, newSize: ChartSize) => void | no | Optional callback method that get called when the window containing the ChartControl resizes |
 
 You can call the following methods to interact with the chart after it has been initialized:
 
@@ -334,17 +334,17 @@ You can call the following methods to interact with the chart after it has been 
 
 Defines the type of chart that will be rendered. For more information what data structure is required for each type of chart, review the Chart.js documentation ( links below ).
 
-| Name | Chart.js Equivalent | Description |
-| ---- | ---- | ---- |
-| [Bar](./charts/BarChart.md) | [bar](https://www.chartjs.org/docs/latest/charts/bar.html) | Vertical bar chart |
-| [Bubble](./charts/BubbleChart.md) | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html) | Bubble chart |
-| [Doughnut](./charts/DoughnutChart.md) | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Doughnut chart |
+| Name                                                     | Chart.js Equivalent                                                                       | Description          |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------- |
+| [Bar](./charts/BarChart.md)                              | [bar](https://www.chartjs.org/docs/latest/charts/bar.html)                                | Vertical bar chart   |
+| [Bubble](./charts/BubbleChart.md)                        | [bubble](https://www.chartjs.org/docs/latest/charts/bubble.html)                          | Bubble chart         |
+| [Doughnut](./charts/DoughnutChart.md)                    | [doughnut](https://www.chartjs.org/docs/latest/charts/doughnut.html)                      | Doughnut chart       |
 | [HorizontalBar](./charts/BarChart.md#horizontalbarchart) | [horizontalBar](https://www.chartjs.org/docs/latest/charts/bar.html#horizontal-bar-chart) | Horizontal bar chart |
-| [Line](./charts/LineChart.md) | [line](https://www.chartjs.org/docs/latest/charts/line.html) | Line chart |
-| [Pie](./charts/PieChart.md) | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html) | Pie chart |
-| [PolarArea](./charts/PolarAreaChart.md) | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html) | Polar area chart |
-| [Radar](./charts/RadarChart.md) | [radar](https://www.chartjs.org/docs/latest/charts/radar.html) | Radar chart |
-| [Scatter](./charts/ScatterChart.md) | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html) | Scatter graph |
+| [Line](./charts/LineChart.md)                            | [line](https://www.chartjs.org/docs/latest/charts/line.html)                              | Line chart           |
+| [Pie](./charts/PieChart.md)                              | [pie](https://www.chartjs.org/docs/latest/charts/doughnut.html)                           | Pie chart            |
+| [PolarArea](./charts/PolarAreaChart.md)                  | [polarArea](https://www.chartjs.org/docs/latest/charts/polar.html)                        | Polar area chart     |
+| [Radar](./charts/RadarChart.md)                          | [radar](https://www.chartjs.org/docs/latest/charts/radar.html)                            | Radar chart          |
+| [Scatter](./charts/ScatterChart.md)                      | [scatter](https://www.chartjs.org/docs/latest/charts/scatter.html)                        | Scatter graph        |
 
 ### IChartAccessibility
 
@@ -363,25 +363,25 @@ The `IChartAccessibility` interface implements the following properties:
 
 Defines one of the possible Office color palette to use in a chart. The color palettes are the same that you find within Office.
 
-| Name | Office Name | Description | Example |
-| ---- | ---- | ---- | ---- |
-| OfficeColorful1 | Office Colorful Palette 1 | Blue, Orange, Grey, Gold, Blue, Green | ![Office Colorful 1](../assets/OfficeColorful1.png) |
-| OfficeColorful2 | Office Colorful Palette 2 | Blue, Grey, Blue, Dark Blue, Dark Grey, Dark Blue | ![Office Colorful 2](../assets/OfficeColorful2.png) |
-| OfficeColorful3 | Office Colorful Palette 3 | Orange, Gold, Green, Brown, Dark Yellow, Dark Green | ![Office Colorful 3](../assets/OfficeColorful3.png) |
-| OfficeColorful4 | Office Colorful Palette 4 | Green, Blue, Gold, Dark Green, Dark Blue, Dark Yellow | ![Office Colorful 4](../assets/OfficeColorful4.png) |
-| OfficeMonochromatic1 | Monochromatic Palette 1 | Blue gradient, dark to light | ![Office Monochromatic 1](../assets/OfficeMono1.png) |
-| OfficeMonochromatic2 | Monochromatic Palette 2 | Orange gradient, dark to light | ![Office Monochromatic 2](../assets/OfficeMono2.png) |
-| OfficeMonochromatic3 | Monochromatic Palette 3 | Grey gradient, dark to light | ![Office Monochromatic 3](../assets/OfficeMono3.png) |
-| OfficeMonochromatic4 | Monochromatic Palette 4 | Gold gradient, dark to light | ![Office Monochromatic 4](../assets/OfficeMono4.png) |
-| OfficeMonochromatic5 | Monochromatic Palette 5 | Blue gradient, dark to light | ![Office Monochromatic 5](../assets/OfficeMono5.png) |
-| OfficeMonochromatic6 | Monochromatic Palette 6 | Green gradient, dark to light | ![Office Monochromatic 6](../assets/OfficeMono6.png) |
-| OfficeMonochromatic7 | Monochromatic Palette 7 | Dark Grey, Light Grey, Grey, Dark Grey, Light Grey, Grey | ![Office Monochromatic 7](../assets/OfficeMono7.png) |
-| OfficeMonochromatic8 | Monochromatic Palette 8 | Blue gradient, light to dark | ![Office Monochromatic 8](../assets/OfficeMono8.png) |
-| OfficeMonochromatic9 | Monochromatic Palette 9 | Orange gradient, light to dark | ![Office Monochromatic 9](../assets/OfficeMono9.png) |
-| OfficeMonochromatic10 | Monochromatic Palette 10 | Grey gradient, light to dark | ![Office Monochromatic 10](../assets/OfficeMono10.png) |
-| OfficeMonochromatic11 | Monochromatic Palette 11 | Gold gradient, light to dark | ![Office Monochromatic 11](../assets/OfficeMono11.png) |
-| OfficeMonochromatic12 | Monochromatic Palette 12 | Blue gradient, light to dark | ![Office Monochromatic 12](../assets/OfficeMono12.png) |
-| OfficeMonochromatic13 | Monochromatic Palette 13 | Green gradient, light to dark | ![Office Monochromatic 13](../assets/OfficeMono13.png) |
+| Name                  | Office Name               | Description                                              | Example                                                |
+| --------------------- | ------------------------- | -------------------------------------------------------- | ------------------------------------------------------ |
+| OfficeColorful1       | Office Colorful Palette 1 | Blue, Orange, Grey, Gold, Blue, Green                    | ![Office Colorful 1](../assets/OfficeColorful1.png)    |
+| OfficeColorful2       | Office Colorful Palette 2 | Blue, Grey, Blue, Dark Blue, Dark Grey, Dark Blue        | ![Office Colorful 2](../assets/OfficeColorful2.png)    |
+| OfficeColorful3       | Office Colorful Palette 3 | Orange, Gold, Green, Brown, Dark Yellow, Dark Green      | ![Office Colorful 3](../assets/OfficeColorful3.png)    |
+| OfficeColorful4       | Office Colorful Palette 4 | Green, Blue, Gold, Dark Green, Dark Blue, Dark Yellow    | ![Office Colorful 4](../assets/OfficeColorful4.png)    |
+| OfficeMonochromatic1  | Monochromatic Palette 1   | Blue gradient, dark to light                             | ![Office Monochromatic 1](../assets/OfficeMono1.png)   |
+| OfficeMonochromatic2  | Monochromatic Palette 2   | Orange gradient, dark to light                           | ![Office Monochromatic 2](../assets/OfficeMono2.png)   |
+| OfficeMonochromatic3  | Monochromatic Palette 3   | Grey gradient, dark to light                             | ![Office Monochromatic 3](../assets/OfficeMono3.png)   |
+| OfficeMonochromatic4  | Monochromatic Palette 4   | Gold gradient, dark to light                             | ![Office Monochromatic 4](../assets/OfficeMono4.png)   |
+| OfficeMonochromatic5  | Monochromatic Palette 5   | Blue gradient, dark to light                             | ![Office Monochromatic 5](../assets/OfficeMono5.png)   |
+| OfficeMonochromatic6  | Monochromatic Palette 6   | Green gradient, dark to light                            | ![Office Monochromatic 6](../assets/OfficeMono6.png)   |
+| OfficeMonochromatic7  | Monochromatic Palette 7   | Dark Grey, Light Grey, Grey, Dark Grey, Light Grey, Grey | ![Office Monochromatic 7](../assets/OfficeMono7.png)   |
+| OfficeMonochromatic8  | Monochromatic Palette 8   | Blue gradient, light to dark                             | ![Office Monochromatic 8](../assets/OfficeMono8.png)   |
+| OfficeMonochromatic9  | Monochromatic Palette 9   | Orange gradient, light to dark                           | ![Office Monochromatic 9](../assets/OfficeMono9.png)   |
+| OfficeMonochromatic10 | Monochromatic Palette 10  | Grey gradient, light to dark                             | ![Office Monochromatic 10](../assets/OfficeMono10.png) |
+| OfficeMonochromatic11 | Monochromatic Palette 11  | Gold gradient, light to dark                             | ![Office Monochromatic 11](../assets/OfficeMono11.png) |
+| OfficeMonochromatic12 | Monochromatic Palette 12  | Blue gradient, light to dark                             | ![Office Monochromatic 12](../assets/OfficeMono12.png) |
+| OfficeMonochromatic13 | Monochromatic Palette 13  | Green gradient, light to dark                            | ![Office Monochromatic 13](../assets/OfficeMono13.png) |
 
 ### IChartPlugin
 
@@ -397,7 +397,7 @@ If a hook is listed as cancellable, you can return `false` to cancel the event.
 | afterEvent           | (chartInstance: Chart, event: Event, options?: {}) => void | no | Called after an event occurs on the chart.   |
 | afterInit | (chartInstance: Chart, options?: {}) => void | no | Called after a chart initializes |
 | afterLayout          | (chartInstance: Chart, options?: {}) => void | no | Called after the chart layout was rendered.   |
-| afterRender          | (chartInstance: Chart, options?: {}) => void | no | Called after a rander.    |
+| afterRender          | (chartInstance: Chart, options?: {}) => void | no | Called after a render.    |
 | afterTooltipDraw     | (chartInstance: Chart, tooltipData?: {}, options?: {}) => void | no | Called after drawing the `tooltip`. Note that this hook will not be called if the tooltip drawing has been previously cancelled.   |
 | afterUpdate | (chartInstance: Chart, options?: {}) => void | no | Called after a chart updates |
 | beforeDatasetsDraw | (chartInstance: Chart, easing: string, options?: {}) => void | no | Called before the datasets are drawn but after scales are drawn. Cancellable.    |

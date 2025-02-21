@@ -1,5 +1,25 @@
 # Releases
 
+## 3.21.0
+
+### New control(s)
+
+- `ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
+
+### Fixes
+
+- `ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)
+- `Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)
+- `WebPartTitle`: Control Fails to Update After Initial Save [#1877](https://github.com/pnp/sp-dev-fx-controls-react/issues/1877)
+- `DynamicForm`: Creating a document set sometimes throws a 409 save [#1919](https://github.com/pnp/sp-dev-fx-controls-react/issues/1919)
+- `ModernTaxonomyPicker` Fix - Adding a new term adds the term to the parentLevel [#1922](https://github.com/pnp/sp-dev-fx-controls-react/pull/1922)
+- `ModernTaxonomyPicker` allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
+- `UserPicker` fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+
 ## 3.20.0
 
 ### Enhancements
@@ -7,10 +27,27 @@
 - `Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)
 - `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
 - `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
+- `ImagePicker`: new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
+- `UserPicker`: new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
+- `DynamicForm`: DynamicForm storeLastActiveTab option #1879 [#1879](https://github.com/pnp/sp-dev-fx-controls-react/pull/1879)
+- `FilePicker`: Image picker enhancements [#1805](https://github.com/pnp/sp-dev-fx-controls-react/pull/1805)
+- `DynamicForm`: Adds ability to create files/folders in subfolder using DynamicForm. [#1901](https://github.com/pnp/sp-dev-fx-controls-react/issues/1901)
+
+### Fixes
+
+- Debug Controls in any language [#1882](https://github.com/pnp/sp-dev-fx-controls-react/pull/1882)
+- `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)
+- `ListItemPicker`: PR fixes an issue with filtering when using calculated column as columnInternalName in ListItemPicker. [#1887](https://github.com/pnp/sp-dev-fx-controls-react/pull/1887)
+- `ListItemAttachments`: Fix 1858 to correct Chinese localization files #1894 [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)
+- `DynamicForm`: Fixing issue 1862 - Dynamic form should hide fields that are hidden on the List Content Type [#1872](https://github.com/pnp/sp-dev-fx-controls-react/pull/1872)
+- `GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)
+- `DynamicForm`: Always Show Required Field Validation Error In FormDisplayMode.Edit Mode [#1775](https://github.com/pnp/sp-dev-fx-controls-react/issues/1775)
+- `DynamicForm`: Required Field Validation won't work [#1760](https://github.com/pnp/sp-dev-fx-controls-react/issues/1760)
+- `DynamicForm`: Adds ability to render file/folder name field in DynamicForm and Field. [#1906](https://github.com/pnp/sp-dev-fx-controls-react/pull/1906)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [srpmtt](https://github.com/srpmtt).
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [IRRDC](https://github.com/IRRDC), [joaojmendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.19.0
 
