@@ -2,10 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 
-import strings from 'ControlStrings';
-import { useAtom } from 'jotai';
-
-import { css } from '@emotion/css';
 import {
   Button,
   Image,
@@ -14,12 +10,15 @@ import {
   Delete16Regular,
   Image20Regular,
 } from '@fluentui/react-icons';
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 
-import { contextState } from './atoms/contextState';
+import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IFilePickerResult } from './IFilePickerResult';
 /* import { RenderSpinner } from "./RenderSpninner/RenderSpinner"; */
 import { SelectFromSharePoint } from './selectFromSharePoint';
+import { contextState } from './atoms/contextState';
+import { css } from '@emotion/css';
+import strings from 'ControlStrings';
+import { useAtom } from 'jotai';
 import { useImagePickerStyles } from './useImagePickerStyles';
 
 const maxWidth = 200;
