@@ -20,6 +20,7 @@ Here is an example of the control:
 ```TypeScript
 import { ComboBoxListItemPicker } from '@pnp/spfx-controls-react/lib/ListItemPicker';
 ```
+
 - Use the `ComboBoxListItemPicker` control in your code as follows:
 
 ```TypeScript
@@ -80,6 +81,7 @@ private onSelectedItem(items: { Title: string, Id: string }[]) {
 ```
 
 If you use variables for `columnInternalName` and `keyColumnInternalName` the typing will look as follow:
+
 ``` typescript
 const columnInternalName = 'Title';
 const keyColumnInternalName = 'Id';
@@ -105,7 +107,6 @@ private onSelectedItem(items: {
 
 The `ComboBoxListItemPicker` control can be configured with the following properties:
 
-
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | columnInternalName | string | yes | InternalName of column to search and get values. |
@@ -119,11 +120,11 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | suggestionsHeaderText | string | no | The text that should appear at the top of the suggestion box. |
 | noResultsFoundText | string | no | The text that should appear when no results are returned. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
-| filter | string | no | Condition to filter list Item, same as $filter ODATA parameter|
+| filter | string | no | Condition to filter list Item, same as $filter OData parameter|
 | multiSelect | boolean | no | Allows multiple selection|
 | onInitialized | () => void | no | Calls when component is ready|
 | itemLimit | number | no | Maximum number of items to be displayed in the combobox. Default: 100 |
 | label | string | no | Specifies the text describing the combobox ListItemPicker. |
-| orderBy | string | no | Specifies the sequence of the items in the comboBox ,same as $orderBy ODATA parameter|
+| orderBy | string | no | Specifies the sequence of the items in the comboBox ,same as $orderBy OData parameter|
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ComboBoxListItemPicker)

@@ -7,7 +7,6 @@ import {
   PlaceholderName,
 } from '@microsoft/sp-application-base';
 
-import * as strings from 'TestApplicationCustomizerStrings';
 import TestApp, { ITestAppProps as ITestAppProps } from './TestApp';
 
 const LOG_SOURCE: string = 'TestApplicationCustomizer';
@@ -27,7 +26,7 @@ export default class TestApplicationCustomizer extends BaseApplicationCustomizer
   private _topPlaceHolder: PlaceholderContent | undefined;
 
   public onInit(): Promise<void> {
-    Log.info(LOG_SOURCE, `Initialized ${strings.Title}`);
+    Log.info(LOG_SOURCE, `Initialized TestApplicationCustomizer`);
 
     this.context.placeholderProvider.changedEvent.add(
       this,

@@ -63,3 +63,4 @@ export * from './VariantThemeProvider';
 export * from './AdaptiveCardDesignerHost';
 export * from './ListItemComments';
 export * from './ViewPicker';
+export * from './ShareDialog';

@@ -1,24 +1,17 @@
-import * as React from 'react';
+import * as React from "react";
 
 import {
-  Button,
   FluentProvider,
   makeStyles,
   shorthands,
   Theme,
   Title3,
-} from '@fluentui/react-components';
-import { createV9Theme } from '@fluentui/react-migration-v8-v9';
-import { Icon } from '@iconify/react';
-import { WebPartContext } from '@microsoft/sp-webpart-base';
+} from "@fluentui/react-components";
+import { createV9Theme } from "@fluentui/react-migration-v8-v9";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
 
-import { HoverReactionsBar } from '@pnp/spfx-controls-react/lib/HoverReactionsBar';
-import {
-  RenderEmoji,
-} from '@pnp/spfx-controls-react/lib/controls/HoverReactionsBar/components/reactionPicker/RenderEmoji';
-import {
-  IEmojiInfo,
-} from '@pnp/spfx-controls-react/lib/controls/HoverReactionsBar/models/IFluentEmoji';
+import { UserPicker } from "../../../controls/userPicker";
+import { IUserInfo } from "../../../controls/userPicker/models/IUserInfo";
 
 const useStyles = makeStyles({
   root: {
@@ -53,51 +46,26 @@ export interface ITestControlProps {
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const { themeVariant } = props;
-  const [isOpenHoverReactionBar, setIsOpenHoverReactionBar] = React.useState<boolean>(false);
-  const [selectedEmoji, setSelectedEmoji] = React.useState<IEmojiInfo>();
-  const divRefAddReaction = React.useRef<HTMLDivElement>(null);
+  const { themeVariant, context } = props;
+
   const styles = useStyles();
 
   const setTheme = React.useCallback((): Partial<Theme> => {
     return createV9Theme(themeVariant);
   }, [themeVariant]);
 
-  const onSelectEmoji = React.useCallback(async (emoji: string, emojiInfo: IEmojiInfo) => {
-    setSelectedEmoji(emojiInfo);
-    setIsOpenHoverReactionBar(false);
-  }, []);
+ const onSelectedUsers = (users: IUserInfo[]) => {
+  console.log('selected users',users);
+ };
+
   return (
     <>
       <FluentProvider theme={setTheme()}>
         <div className={styles.title}>
-          <Title3>Test Control - HoverReactionsBar</Title3>
+          <Title3>Test Control - userPicker</Title3>
         </div>
+          <UserPicker context={context} onSelectedUsers={onSelectedUsers}/>
 
-        <div ref={divRefAddReaction} className={styles.root}>
-          <Button
-            appearance="transparent"
-            icon={
-              <Icon
-                icon="fluent-emoji-high-contrast:thumbs-up"
-                width={22}
-                height={22}
-                onClick={(ev) => {
-                  setIsOpenHoverReactionBar(true);
-                }}
-              />
-            }
-          />
-          {selectedEmoji && <RenderEmoji emoji={selectedEmoji} className={styles.image} />}
-        </div>
-          <HoverReactionsBar
-            isOpen={isOpenHoverReactionBar}
-            onSelect={onSelectEmoji}
-            onDismiss={(): void => {
-              setIsOpenHoverReactionBar(false);
-            }}
-            target={divRefAddReaction.current as HTMLDivElement}
-          />
 
       </FluentProvider>
     </>

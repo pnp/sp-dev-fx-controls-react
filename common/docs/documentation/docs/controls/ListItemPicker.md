@@ -51,7 +51,7 @@ The `ListItemPicker` control can be configured with the following properties:
 | ------------------------ | ---------------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
 | columnInternalName       | string                 | yes      | InternalName of column to search and get values.                                                             |
 | keyColumnInternalName    | string                 | no       | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
-| context                  | BaseComponentContext   | yes      | SPFx web part or extention context                                                                           |
+| context                  | BaseComponentContext   | yes      | SPFx web part or extension context                                                                           |
 | listId                   | string                 | yes      | Guid or title of the list.                                                                                   |
 | itemLimit                | number                 | yes      | Number of items which can be selected                                                                        |
 | onSelectedItem           | (items: any[]) => void | yes      | Callback function which returns the selected items.                                                          |
@@ -61,8 +61,8 @@ The `ListItemPicker` control can be configured with the following properties:
 | suggestionsHeaderText    | string                 | no       | The text that should appear at the top of the suggestion box.                                                |
 | noResultsFoundText       | string                 | no       | The text that should appear when no results are returned.                                                    |
 | disabled                 | boolean                | no       | Specifies if the control is disabled or not.                                                                 |
-| filter                   | string                 | no       | condition to filter list Item, same as $filter ODATA parameter                                               |
-| orderBy                  | string                 | no       | condition to order by list Item, same as $orderby ODATA parameter                                            |
+| filter                   | string                 | no       | condition to filter list Item, same as $filter OData parameter                                               |
+| orderBy                  | string                 | no       | condition to order by list Item, same as $orderby OData parameter                                            |
 | placeholder              | string                 | no       | Short text hint to display in empty picker                                                                   |
 | substringSearch          | boolean                | no       | Specifies if substring search should be used                                                                 |
 | label                    | string                 | no       | Specifies the text describing the ListItemPicker.                                                            |

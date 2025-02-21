@@ -62,6 +62,7 @@ The control provides the passage and/or creation of the theme according to what 
 In order to access the theme, from child controls, there are two modes, one for function-based controls, one for class-based controls.
 
 - Access the theme from the child control using a function component:
+
 ```TypeScript
 export const ChildFunctionComponent = () => {
   const theme = useTheme();
@@ -73,6 +74,7 @@ export const ChildFunctionComponent = () => {
 ```
 
 - Access the theme from the child control using a class component:
+
 ```TypeScript
 export class ChildClassComponent extends React.Component {
   public render() {
@@ -88,6 +90,7 @@ export class ChildClassComponent extends React.Component {
 ```
 
 - Usage example using theme in child controls:
+
 ```TypeScript
 <EnhancedThemeProvider applyTo="element" context={this.props.context} theme={this.props.themeVariant}>
   <ChildFunctionComponent />
@@ -103,7 +106,7 @@ The `EnhancedThemeProvider` control can be configured with the following propert
 | ---- | ---- | ---- | ---- |
 | context | BaseComponentContext | yes | Sets the context from the SPFx component (a web part, an application customizer or a form customizer). |
 | as |  React.ElementType | no | A component that should be used as the root element of the ThemeProvider component. |
-| ref | React.Ref<HTMLElement> | no | Optional ref to the root element. |
+| ref | React.Ref&lt;HTMLElement&gt; | no | Optional ref to the root element. |
 | theme | PartialTheme \| Theme | no | Defines the theme provided by the user. |
 | renderer | StyleRenderer | no | Optional interface for registering dynamic styles. Defaults to using `merge-styles`. Use this to opt into a particular rendering implementation, such as `emotion`, `styled-components`, or `jss`. Note: performance will differ between all renders. Please measure your scenarios before using an alternative implementation. |
 | applyTo | 'element' \| 'body' \| 'none' | no | Defines where body-related theme is applied to. Setting to 'element' will apply body styles to the root element of ThemeProvider. Setting to 'body' will apply body styles to document body. Setting to 'none' will not apply body styles to either element or body.|
