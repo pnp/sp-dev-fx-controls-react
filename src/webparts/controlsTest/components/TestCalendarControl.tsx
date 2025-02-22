@@ -231,3 +231,5 @@ export const TestCalendarControl: React.FunctionComponent<ICalendarProps> = (
     </>
   );
 };
+
+export default TestCalendarControl;

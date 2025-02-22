@@ -47,6 +47,9 @@ export const useDayViewStyles = () => {
       gridColumn: "1",
       backgroundColor: tokens.colorNeutralBackground3,
       borderBottom: `3px solid ${tokens.colorNeutralStroke3}`,
+      position: 'sticky',
+      top: 0, // Sticks to the top of the scrollable container
+      zIndex: 10, // Ensures it stays above the scrolling grid
     }),
     timeColumn: css({
       gridColumn: "1",
@@ -116,6 +119,9 @@ export const useDayViewStyles = () => {
       padding: "8px",
       fontWeight: "bold",
       borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+      position: 'sticky',
+      top: 0, // Sticks to the top of the scrollable container
+      zIndex: 10, // Ensures it stays above the scrolling grid
     }),
     todayHeaderCell: css({
       borderTop: `5px solid ${tokens.colorBrandBackground}`,

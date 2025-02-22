@@ -3,7 +3,6 @@ import { css } from '@emotion/css';
 import { tokens } from '@fluentui/react-components';
 
 export const useWeekViewStyles = () => {
-  
   const styles = {
     container: css({
       display: 'flex',
@@ -24,7 +23,7 @@ export const useWeekViewStyles = () => {
       display: 'grid',
       gridTemplateColumns: '80px repeat(7, 1fr)', // Time column + 7 day columns
       gridTemplateRows: '50px 40px repeat(48, 33px)', // Header row + Full-day row + 48 rows (2 per hour)
-      height: 'fit-content', 
+      height: 'fit-content',
       overflowY: 'auto',
       border: `1px solid ${tokens.colorNeutralStroke1}`,
       maxHeight: 'calc(100vh - 100px)', // Limit the grid height to the viewport minus header/footer areas
@@ -48,6 +47,9 @@ export const useWeekViewStyles = () => {
       gridColumn: '1',
       backgroundColor: tokens.colorNeutralBackground3,
       borderBottom: `3px solid ${tokens.colorNeutralStroke3}`,
+      position: 'sticky',
+      top: 0, // Sticks to the top of the scrollable container
+      zIndex: 10, // Ensures it stays above the scrolling grid
     }),
     timeColumn: css({
       gridColumn: '1',
@@ -104,7 +106,7 @@ export const useWeekViewStyles = () => {
       color: tokens.colorNeutralForegroundOnBrand,
       borderRadius: '4px',
       overflow: 'hidden',
-     
+
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -115,12 +117,15 @@ export const useWeekViewStyles = () => {
       padding: '8px',
       fontWeight: 'bold',
       borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
+      position: 'sticky',
+      top: 0, // Sticks to the top of the scrollable container
+      zIndex: 10, // Ensures it stays above the scrolling grid
     }),
     todayHeaderCell: css({
       borderTop: `5px solid ${tokens.colorBrandBackground}`,
     }),
     eventCard: css({
-     padding:2,
+      padding: 2,
       alignItems: 'center',
       justifyContent: 'center',
       marginRight: '2px', // Spacing between events
@@ -131,7 +136,6 @@ export const useWeekViewStyles = () => {
       ':hover': {
         pointerEvents: 'auto',
         cursor: 'pointer',
-
       },
     }),
     event: css({
@@ -152,7 +156,6 @@ export const useWeekViewStyles = () => {
       ':hover': {
         pointerEvents: 'auto',
         cursor: 'pointer',
-       
       },
     }),
     dayCell: css({
@@ -161,8 +164,7 @@ export const useWeekViewStyles = () => {
       position: 'relative', // Allow child events to be positioned absolutely
       overflow: 'visible', // Ensure events aren't clipped
       FlexDirection: 'column', // Ensure events are stacked vertically
-      gap: "4px",
-    
+      gap: '4px',
     }),
     currentTimeIndicator: css({
       position: 'absolute',
@@ -183,24 +185,25 @@ export const useWeekViewStyles = () => {
       textOverflow: 'ellipsis',
       paddingLeft: '8px',
       wordBreak: 'break-word',
-        overflow: 'hidden',
+      overflow: 'hidden',
     }),
-      popoverContent: css({
+    popoverContent: css({
       padding: 0,
       borderTopWidth: 20,
-      borderTopStyle: "solid",
+      borderTopStyle: 'solid',
     }),
   };
 
-
-  const applyEventHouverColorClass = (backgroundColor:string, houveColor:string) => {
+  const applyEventHouverColorClass = (
+    backgroundColor: string,
+    houveColor: string
+  ) => {
     return css({
-      backgroundColor:backgroundColor ?? tokens.colorBrandBackground,
+      backgroundColor: backgroundColor ?? tokens.colorBrandBackground,
       ':hover': {
-        backgroundColor:houveColor ?? tokens.colorBrandBackgroundHover,
+        backgroundColor: houveColor ?? tokens.colorBrandBackgroundHover,
       },
     });
-    
   };
- return {styles, applyEventHouverColorClass};
+  return { styles, applyEventHouverColorClass };
 };
