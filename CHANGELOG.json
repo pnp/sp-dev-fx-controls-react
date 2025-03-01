@@ -4,7 +4,9 @@
       "version": "3.21.0",
       "changes": {
         "new": [
-          "`ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)"
+          "`ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)",
+          "Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)"
+
         ],
         "enhancements": [],
         "fixes": [
@@ -27,7 +29,8 @@
         "[Martin Lingstuyl](https://github.com/martinlingstuyl)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
         "[Nello D'Andrea](https://github.com/ferrarirosso)",
-        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
+        "[Petr Malášek](https://github.com/MalasekPetr)"
       ]
     },
     {
