@@ -1,7 +1,9 @@
 # FieldRendererHelper class
+
 FieldRendererHelper class is used to automatically apply needed Field Control based on current Field parameters.
 
 ## How to use this class in your solutions
+
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 
 - Import the following modules to your component:
@@ -26,7 +28,8 @@ public componentWillMount() {
   }
 ```
 
-- Render the requestted `fieldRenderer`:
+- Render the requested `fieldRenderer`:
+
 ```TypeScript
 public render(): React.ReactElement<{}> {
     return (
@@ -40,17 +43,18 @@ public render(): React.ReactElement<{}> {
 ## Implementation
 
 The FieldRendererHelper class contains single method `getFieldRenderer` with next signature:
+
 ```TypeScript
 public static getFieldRenderer(fieldValue: any, props: IFieldRendererProps, listItem: ListItemAccessor, context: IContext): Promise<JSX.Element>
 ```
 
 Parameters:
 
-| Parameter | Type | Description |
-| ---- | ---- | ---- |
-| fieldValue | any | Value of the field. |
-| props | IFieldRendererProps | Basic properties interface for Field Controls. Contains `className` and `cssProps` properties |
-| listItem | ListItemAccessor | Current List Item |
-| context | IContext | SPFx Context |
+| Parameter  | Type                | Description                                                                                   |
+| ---------- | ------------------- | --------------------------------------------------------------------------------------------- |
+| fieldValue | any                 | Value of the field.                                                                           |
+| props      | IFieldRendererProps | Basic properties interface for Field Controls. Contains `className` and `cssProps` properties |
+| listItem   | ListItemAccessor    | Current List Item                                                                             |
+| context    | IContext            | SPFx Context                                                                                  |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldRendererHelper)

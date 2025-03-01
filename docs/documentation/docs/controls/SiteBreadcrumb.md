@@ -24,8 +24,8 @@ import { SiteBreadcrumb } from "@pnp/spfx-controls-react/lib/SiteBreadcrumb";
 
 The SiteBreadcrumb control can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | Pass the context of your web part or application customizer extension. |
+| Property | Type                 | Required | Description                                                            |
+| -------- | -------------------- | -------- | ---------------------------------------------------------------------- |
+| context  | BaseComponentContext | yes      | Pass the context of your web part or application customizer extension. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/SiteBreadcrumb)

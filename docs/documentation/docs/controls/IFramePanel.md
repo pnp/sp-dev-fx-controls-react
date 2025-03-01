@@ -1,7 +1,7 @@
 # IFramePanel control
 
 This control renders a Panel with an iframe as content.
- 
+
 Here is an example of the control in action:
 
 ![IFrameDialog control](../assets/IFramePanel.png)
@@ -18,7 +18,6 @@ import { IFramePanel } from "@pnp/spfx-controls-react/lib/IFramePanel";
 - The `IFramePanel` uses the [Office Fabric UI implemenation of the panel](https://developer.microsoft.com/en-us/fabric#/components/panel). The properties of this control inherit the panel properties.
 
 - Use the `IFramePanel` control in your code as follows (`this._onIframeLoaded` and `this._onDismiss` are methods that should be implemented if you want to execute some actions when the iframe content is loaded and dialog should be closed respectively.)
-
 
 ```TypeScript
 <IFramePanel url={this.state.iFrameUrl}

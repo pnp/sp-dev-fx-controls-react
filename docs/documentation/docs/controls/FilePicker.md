@@ -1,7 +1,9 @@
 # FilePicker control
 
 File picker control allows to browse and select a file from various places.
-Currently supported locations
+
+Currently supported locations:
+
 - Recent files - tab allows to select a file from recently modified files based on the search results.
 - Web search - tab uses Bing cognitive services to look for a file. (Only images)
 - OneDrive - tab allows to select a file from the user's One Drive.
@@ -11,23 +13,24 @@ Currently supported locations
 - From a link - tab allows to paste a link to the document.
 
 ## Overview
-The control supports all types of file, however it also allows to specify list of extensions for the files that are going to be looked displayed. Currently, only single file selection is supported. 
+
+The control supports all types of file, however it also allows to specify list of extensions for the files that are going to be looked displayed. Currently, only single file selection is supported.
 ![File Picker overview](../assets/FilePickerOverview.png)
 
-
 ## Different display types
+
 File picker support 3 types of views : List, Compact list and Tiles. In case Tiles view is selected, the control shows the thumbnail of the file.
 ![File Picker views](../assets/FilePickerViews.gif)
 
-
 ## Breadcrumb support
+
 The control displays breadcrumb navigation that allows to easily switch folders or document libraries.
 ![File Picker breadcrumb](../assets/FilePickerBreadcrumb.gif)
 
 ## Paged data load
+
 File picker doesn't load all the files that exist in the folder. Instead, it allows to specify how many results are loaded in a batch, and executes paged requests when new data is required.
 ![File Picker paged data load](../assets/FilePickerPaging.gif)
-
 
 ## How to use this control
 
@@ -90,7 +93,7 @@ The FilePicker component can be configured with the following properties:
 | hideRecentTab | boolean | no | Specifies if RecentTab should be hidden. |
 | hideWebSearchTab | boolean | no | Specifies if WebSearchTab should be hidden. |
 | hideStockImages | boolean | no | Specifies if StockImagesTab should be hidden. |
-| hideOrganisationalAssetTab | boolean | no | Specifies if OrganisationalAssetTab should be hidden. |
+| hideOrganisationalAssetTab | boolean | no | Specifies if `OrganisationalAssetTab` should be hidden. |
 | hideOneDriveTab | boolean | no | Specifies if OneDriveTab should be hidden. |
 | hideSiteFilesTab | boolean | no | Specifies if SiteFilesTab should be hidden. |
 | hideLocalUploadTab | boolean | no | Specifies if LocalUploadTab should be hidden. |
@@ -115,7 +118,6 @@ Provides options for carousel buttons location.
 | fileNameWithoutExtension | string | File name of the result without the extension. |
 | fileAbsoluteUrl | string | Absolute URL of the file. Null in case of file upload. |
 | fileSize | number | Size of the result (in bytes). Set only for file upload |
-| downloadFileContent | () => Promise<File> | Function allows to download file content. Returns File object. |
-
+| downloadFileContent | () => Promise&lt;File&gt; | Function allows to download file content. Returns File object. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/filePicker/FilePicker)

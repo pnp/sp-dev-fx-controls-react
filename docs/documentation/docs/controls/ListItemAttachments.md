@@ -20,6 +20,7 @@ Here is an example of the control:
 ```TypeScript
 import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
 ```
+
 - Use the `ListItemAttachments` control in your code as follows:
 
 ```TypeScript
@@ -29,7 +30,7 @@ import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttach
                      disabled={false} />
 ```
 
-- If You want to use `ListItemAttachments` controls with new form You have to use React.createRef.
+- If you want to use `ListItemAttachments` controls with new form you have to use React.createRef.
 
 Following example will add selected attachments to list item with id = 1
 
@@ -52,16 +53,15 @@ let listItemAttachmentsComponentReference = React.createRef<ListItemAttachments>
 
 The `ListItemAttachments` control can be configured with the following properties:
 
-
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | SPFx web part or extention context |
+| context | BaseComponentContext | yes | SPFx web part or extension context |
 | itemId | number | no | List Item Id  |
 | listId | string | yes | Guid of the list. |
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | label | string | no | Main text to display on the placeholder, next to the icon. |
 | description | string | no | Description text to display on the placeholder, below the main text and icon. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
-| openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be openend in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
+| openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be opened in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemAttachments)

@@ -89,7 +89,6 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
   if (listItemId < 1 || isNaN(listItemId)) {
     listItemId = undefined;
   }
-  console.log(listItemId);
 
   const element: React.ReactElement<IControlsTestProps> = React.createElement(
     ControlsTest,

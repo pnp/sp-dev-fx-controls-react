@@ -70,4 +70,6 @@ Once you have MkDocs installed on your machine, in the command line:
 - run `cd ./docs/documentation` to change directory to where the manual pages are stored
 - run `mkdocs serve` to start the local web server with MkDocs and view the documentation in the web browser
 
+For documentation update, we suggest you to use IDE extensions to help you for the writing process. For example, if you're using VS Code, you can install [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker) for words spelling and [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) or [learn-markdown](https://marketplace.visualstudio.com/items?itemName=docsmsft.docs-markdown) for Markdown syntax.
+
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/mpa)
