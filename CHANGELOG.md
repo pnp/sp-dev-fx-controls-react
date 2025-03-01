@@ -5,6 +5,7 @@
 ### New control(s)
 
 - `ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
+- Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)
 
 ### Fixes
 
@@ -19,7 +20,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [EnablingLogic](https://github.com/EnablingLogic), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr).
 
 ## 3.20.0
 
