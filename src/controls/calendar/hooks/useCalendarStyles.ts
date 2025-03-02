@@ -1,10 +1,29 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
 import { css } from "@emotion/css";
 import { tokens } from "@fluentui/react-components";
 
-export const useCalendarStyles = () => {
-  const styles = {
+export interface IUseCalendarStyles {
+  styles: ICalendarStyles;
+  applyEventHouverColorClass: (backgroundColor: string, houverColor: string) => string;
+}
+
+export interface ICalendarStyles {
+  calendarWrapper: string;
+  header: string;
+  dayHeader: string;
+  day: string;
+  otherMonthDay: string;
+  cardDay: string;
+  cardDayOnHover: string;
+  currentDay: string;
+  currentDayLabel: string;
+  eventCard: string;
+  eventContainer: string;
+  eventCardWeekView: string;
+  popoverContent: string;
+}
+
+export const useCalendarStyles = ():  IUseCalendarStyles => {
+  const styles: ICalendarStyles = {
     calendarWrapper: css({
       padding: "20px",
       paddingTop: "10px",
@@ -53,7 +72,6 @@ export const useCalendarStyles = () => {
         backgroundColor: tokens.colorNeutralBackground2,
       },
     }),
-
     currentDay: css({
       borderTop: `5px solid ${tokens.colorBrandBackground}`,
     }),
@@ -62,11 +80,9 @@ export const useCalendarStyles = () => {
       fontWeight: 600,
     }),
     eventCard: css({
-      /*  backgroundColor: tokens.colorNeutralBackground1, */
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
-
       zIndex: 1, // Ensure it appears above parent hover styles
     }),
     eventContainer: css({
@@ -111,10 +127,11 @@ export const useCalendarStyles = () => {
       borderTopStyle: "solid",
     }),
   };
+
   const applyEventHouverColorClass = (
     backgroundColor: string,
     houverColor: string
-  ) => {
+  ): string => {
     return css({
       backgroundColor: backgroundColor ?? tokens.colorBrandBackground,
       ":hover": {

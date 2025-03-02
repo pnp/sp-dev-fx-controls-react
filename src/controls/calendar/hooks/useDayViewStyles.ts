@@ -105,7 +105,6 @@ export const useDayViewStyles = () => {
       height: "24px",
       padding: "4px 8px",
       backgroundColor: tokens.colorBrandBackground,
-      color: tokens.colorNeutralForegroundOnBrand,
       borderRadius: "4px",
       overflow: "hidden",
 

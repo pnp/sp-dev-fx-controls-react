@@ -6,28 +6,117 @@ import {
   IdPrefixProvider,
   webLightTheme,
 } from '@fluentui/react-components';
+import { ICalendarStyles, useCalendarStyles } from './hooks/useCalendarStyles';
 import { addDays, startOfMonth, startOfWeek } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 
 import { Day } from './Day';
-import { DayView } from './DayView';
+import DayView from './DayView';
 import { ECalendarViews } from './models/ECalendarViews';
 import { ICalendarControlProps } from './models/ICalendarControlProps';
 import { ICalendarDay } from './models/ICalendarDay';
 import { IEvent } from './models/IEvents';
 import { ResizeObserver } from '@juggle/resize-observer';
 import { Stack } from '@nuvemerudita/react-controls';
-import { Toolbar } from './Toolbar';
-import { WeekView } from './WeekView';
+import Toolbar from './Toolbar';
+import WeekView from './WeekView';
 import strings from 'ControlStrings';
 import { useCalendar } from './hooks/useCalendar';
-import { useCalendarStyles } from './hooks/useCalendarStyles';
 
 interface CalendarState {
   currentDate: Date;
 }
 
+const daysOfWeek: string[] = [
+  strings.CalendarControlDayOfWeekSunday,
+  strings.CalendarControlDayOfWeekMonday,
+  strings.CalendarControlDayOfWeekTuesday,
+  strings.CalendarControlDayOfWeekWednesday,
+  strings.CalendarControlDayOfWeekThursday,
+  strings.CalendarControlDayOfWeekFriday,
+  strings.CalendarControlDayOfWeekSaturday,
+];
 
+interface RenderMonthViewProps {
+  events: IEvent[];
+  currentDate: Date;
+  rowHeight: number;
+  getCalendarDays: (date: Date) => ICalendarDay[];
+  getEventsForDay: (dateObj: ICalendarDay) => IEvent[];
+  styles: ICalendarStyles;
+  onDaySlotClick?: (date: Date) => void;
+  height: number;
+  calendarRef: React.RefObject<HTMLDivElement>;
+}
+
+const RenderMonthView: React.FC<RenderMonthViewProps> = React.memo(
+  ({
+    currentDate,
+    rowHeight,
+    getCalendarDays,
+    getEventsForDay,
+    styles,
+    onDaySlotClick,
+    height,
+    calendarRef,
+  }) => {
+    return (
+      <Stack
+        height={height}
+        width="100%"
+        verticalAlign="start"
+        horizontalAlign="start"
+      >
+        <div className={styles.calendarWrapper} ref={calendarRef}>
+          {daysOfWeek.map((day) => (
+            <Body1 key={day} className={styles.dayHeader}>
+              {day}
+            </Body1>
+          ))}
+          {getCalendarDays(currentDate).map((dateObj, index) => {
+            const { day, currentMonth } = dateObj;
+            const dayEvents = currentMonth ? getEventsForDay(dateObj) : [];
+            return (
+              <Day
+                key={index}
+                day={day}
+                date={dateObj.date}
+                currentMonth={dateObj.currentMonth}
+                events={dayEvents}
+                columnHeight={rowHeight || 0}
+                onDayClick={onDaySlotClick}
+              />
+            );
+          })}
+        </div>
+      </Stack>
+    );
+  }
+);
+
+interface RenderWeekViewProps {
+  events: IEvent[];
+  currentDay: Date;
+  height: number;
+}
+
+const RenderWeekView: React.FC<RenderWeekViewProps> = React.memo(
+  ({ events, currentDay, height }) => {
+    return <WeekView events={events} currentDay={currentDay} height={height} />;
+  }
+);
+
+interface RenderDayViewProps {
+  events: IEvent[];
+  currentDay: Date;
+  height: number;
+}
+
+const RenderDayView: React.FC<RenderDayViewProps> = React.memo(
+  ({ events, currentDay, height }) => {
+    return <DayView currentDay={currentDay} events={events} height={height} />;
+  }
+);
 
 export const Calendar: React.FC<ICalendarControlProps> = ({
   events,
@@ -45,16 +134,6 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   const totalDisplayedDays = 42;
   const rowHeightRef = useRef<number>(0);
 
-  const daysOfWeek: string[] = [
-  strings.CalendarControlDayOfWeekSunday ,
-  strings.CalendarControlDayOfWeekMonday,
-  strings.CalendarControlDayOfWeekTuesday,
-  strings.CalendarControlDayOfWeekWednesday,
-  strings.CalendarControlDayOfWeekThursday,
-  strings.CalendarControlDayOfWeekFriday,
-  strings.CalendarControlDayOfWeekSaturday,
-];
-
   // Default current date
   const [currentDate, setCurrentDate] = useState<CalendarState['currentDate']>(
     new Date()
@@ -63,19 +142,14 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   const [selectedView, setSelectedView] = useState<ECalendarViews>(
     ECalendarViews.Month
   );
-  // Get month calendar
   const { getMonthCalendar } = useCalendar(
-    events,
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
-  // Get calendar days
+
   const getCalendarDays = React.useCallback((date: Date): ICalendarDay[] => {
-    // this is to get the first day of the week based on the date parameter
     const month = date.getMonth();
     const firstDayOfMonth = startOfMonth(date);
     const firstDayOfWeek = startOfWeek(firstDayOfMonth);
-
-    // Generate calendar days
     const calendarDays = Array.from(
       { length: totalDisplayedDays },
       (_, index): ICalendarDay => {
@@ -90,7 +164,6 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
     return calendarDays;
   }, []);
 
-  // Handle month change
   const handleMonthChange = React.useCallback(
     (date: Date): void => {
       if (onMonthChange) {
@@ -100,7 +173,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
     },
     [onMonthChange]
   );
-  // Handle day change
+
   const handleDayChange = React.useCallback(
     (date: Date): void => {
       if (onDayChange) {
@@ -110,7 +183,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
     },
     [onDayChange]
   );
-  // Handle week change
+
   const handleWeekChange = React.useCallback(
     (date: Date): void => {
       if (onWeekChange) {
@@ -120,7 +193,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
     },
     [onWeekChange]
   );
-  // Handle view change
+
   const handleViewChange = React.useCallback(
     (view: ECalendarViews): void => {
       if (onViewChange) {
@@ -131,24 +204,22 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
     [onViewChange]
   );
 
-  // Get events for the day
   const getEventsForDay = React.useCallback(
     (dateObj: ICalendarDay): IEvent[] => {
       const { date } = dateObj;
       const monthEvents = getMonthCalendar(
+        events,
         currentDate.getFullYear(),
         currentDate.getMonth()
       );
-      const dayString = date.toISOString().split('T')[0]; // Get date in YYYY-MM-DD format
+      const dayString = date.toISOString().split('T')[0];
       return monthEvents[dayString]?.flatMap((slot) => slot) || [];
     },
-    [currentDate]
+    [currentDate, events]
   );
-  // Resize observer
+
   useEffect(() => {
     const handleResize = (): void => {
-      // Get the height of the 8 column cell
-      // the first column cell  until 7th column cell are headers
       if (calendarRef.current) {
         requestAnimationFrame(() => {
           if (calendarRef.current) {
@@ -168,97 +239,89 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
       observer.observe(calendarRef.current);
     }
     handleResize();
-    // fallback for resize
     window.addEventListener('resize', handleResize);
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
     };
   }, [styles.calendarWrapper]);
-  // Toolbar component
 
-  // Render Month View
-  const RenderMonthView = React.memo(() => {
-    return (
-      <Stack
-        height={height}
-        width={'100%'}
-        verticalAlign="start"
-        horizontalAlign="start"
-      >
-        <div className={styles.calendarWrapper} ref={calendarRef}>
-          {daysOfWeek.map((day) => (
-            <Body1 key={day} className={styles.dayHeader}>
-              {day}
-            </Body1>
-          ))}
-          {getCalendarDays(currentDate).map((dateObj, index) => {
-            const { day, currentMonth } = dateObj;
-            const events = currentMonth ? getEventsForDay(dateObj) : [];
-            return (
-              <Day
-                key={index}
-                day={day}
-                date={dateObj.date}
-                currentMonth={dateObj.currentMonth}
-                events={events}
-                columnHeight={rowHeight || 0}
-                onDayClick={onDaySlotClick}
-              />
-            );
-          })}
-        </div>
-      </Stack>
-    );
-  });
-  // Render Week View
-  const RenderWeekView = React.memo(() => {
-    return (
-      <>
-        <WeekView events={events} currentDay={currentDate} height={height} />
-      </>
-    );
-  });
-  // Render Day View
-  const RenderDayView = React.memo(() => {
-    return (
-             <DayView currentDay={currentDate} events={events} height={height} />
-    );
-  });
-
-  // Render content
   const RenderContent = React.useCallback(() => {
     switch (selectedView) {
       case ECalendarViews.Month:
-        return <RenderMonthView />;
+        return (
+          <RenderMonthView
+            events={events}
+            currentDate={currentDate}
+            rowHeight={rowHeight}
+            getCalendarDays={getCalendarDays}
+            getEventsForDay={getEventsForDay}
+            styles={styles}
+            onDaySlotClick={onDaySlotClick}
+            height={height as number}
+            calendarRef={calendarRef}
+          />
+        );
       case ECalendarViews.Week:
-        return <RenderWeekView />;
+        return (
+          <RenderWeekView
+            events={events}
+            currentDay={currentDate}
+            height={height as number}
+          />
+        );
       case ECalendarViews.Day:
-        return <RenderDayView />;
+        return (
+          <RenderDayView
+            events={events}
+            currentDay={currentDate}
+            height={height as number}
+          />
+        );
       default:
-        return <RenderMonthView />;
+        return (
+          <RenderMonthView
+            events={events}
+            currentDate={currentDate}
+            rowHeight={rowHeight}
+            getCalendarDays={getCalendarDays}
+            getEventsForDay={getEventsForDay}
+            styles={styles}
+            onDaySlotClick={onDaySlotClick}
+            height={height as number}
+            calendarRef={calendarRef}
+          />
+        );
     }
-  }, [selectedView, RenderMonthView, RenderWeekView, RenderDayView]);
+  }, [
+    selectedView,
+    events,
+    currentDate,
+    rowHeight,
+    getCalendarDays,
+    getEventsForDay,
+    styles,
+    onDaySlotClick,
+    height,
+  ]);
 
   return (
-    <>
-      <IdPrefixProvider value="calendarControl-">
-        <FluentProvider theme={theme ?? webLightTheme}>
-          <Stack height={'100%'} verticalAlign="start">
-            <Toolbar
-              selectedView={selectedView}
-              onSelectedView={handleViewChange}
-              currentDate={currentDate}
-              setCurrentDate={setCurrentDate}
-              onWeekChange={handleWeekChange}
-              onMonthChange={handleMonthChange}
-              onDayChange={handleDayChange}
-            />
-            <RenderContent />
-          </Stack>
-        </FluentProvider>
-      </IdPrefixProvider>
-    </>
+    <IdPrefixProvider value="calendarControl-">
+      <FluentProvider theme={theme ?? webLightTheme}>
+        <Stack height="100%" verticalAlign="start">
+          <Toolbar
+            selectedView={selectedView}
+            onSelectedView={handleViewChange}
+            currentDate={currentDate}
+            setCurrentDate={setCurrentDate}
+            onWeekChange={handleWeekChange}
+            onMonthChange={handleMonthChange}
+            onDayChange={handleDayChange}
+          />
+          <RenderContent />
+        </Stack>
+      </FluentProvider>
+    </IdPrefixProvider>
   );
 };
 

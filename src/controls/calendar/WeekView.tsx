@@ -30,11 +30,12 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
   const [currentDate] = useState(currentDay);
   const [rowHeight, setRowHeight] = useState<number>(32); // Default row height
   const calendarRef = useRef<HTMLDivElement>(null);
-  const { getSpanSlots, getEventColors, getCalendarColors, formatDate } = useUtils();
+  const { getSpanSlots, getEventColors, getCalendarColors, formatDate } =
+    useUtils();
   const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 });
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const { getWeekEvents } = useCalendar(events, timeZone);
+  const { getWeekEvents } = useCalendar(timeZone);
 
   // Dynamic row height calculation using ResizeObserver
   useEffect(() => {
@@ -93,20 +94,23 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
   }, [weekStart, styles]);
 
   const renderFullDayEvents = React.useCallback((): JSX.Element => {
-    const weekEvents = getWeekEvents(weekStart.toISOString());
+    const weekEvents = getWeekEvents(events, weekStart.toISOString());
     return (
       <>
         <div className={styles.fullDayLabel}>
           <Body1>{strings.CalendarControlFullDaylabel}</Body1>
         </div>
         {Array.from({ length: 7 }, (_, dayIndex) => {
-          const weekDay = formatDate(addDays(weekStart, dayIndex).toISOString(), 'yyyy-MM-dd');
-          const dayEvents = weekEvents.find(day => day.date === weekDay);
+          const weekDay = formatDate(
+            addDays(weekStart, dayIndex).toISOString(),
+            'yyyy-MM-dd'
+          );
+          const dayEvents = weekEvents.find((day) => day.date === weekDay);
           const fullDayEvents = dayEvents?.fullDayEvents || [];
 
           return (
             <div key={dayIndex} className={styles.fullDayCell}>
-              {fullDayEvents.map(event => (
+              {fullDayEvents.map((event) => (
                 <div
                   key={event.id}
                   className={styles.fullDayEvent}
@@ -117,7 +121,9 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
                       : getEventColors(event.category!).backgroundColor,
                   }}
                 >
-                  <Caption1Strong className={styles.eventTitle}>{event.title}</Caption1Strong>
+                  <Caption1Strong className={styles.eventTitle}>
+                    {event.title}
+                  </Caption1Strong>
                 </div>
               ))}
             </div>
@@ -125,14 +131,20 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
         })}
       </>
     );
-  }, [weekStart, styles, getWeekEvents, getCalendarColors, getEventColors]);
+  }, [
+    weekStart,
+    styles,
+    getWeekEvents,
+    getCalendarColors,
+    getEventColors,
+    events,
+  ]);
 
   const renderDayCells = React.useCallback((): JSX.Element[] => {
-    const weekEvents = getWeekEvents(weekStart.toISOString());
-
+    const weekEvents = getWeekEvents(events, weekStart.toISOString());
     return Array.from({ length: 7 }, (_, dayIndex) => {
-      const weekDay = format(addDays(weekStart, dayIndex) , 'yyyy-MM-dd');
-      const dayEvents = weekEvents.find(day => day.date === weekDay);
+      const weekDay = format(addDays(weekStart, dayIndex), 'yyyy-MM-dd');
+      const dayEvents = weekEvents.find((day) => day.date === weekDay);
 
       return (
         <>
@@ -178,7 +190,7 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
         </>
       );
     });
-  }, [weekStart, styles, getWeekEvents, getSpanSlots, rowHeight]);
+  }, [weekStart, styles, getWeekEvents, getSpanSlots, rowHeight, events]);
 
   return (
     <div className={styles.container} style={{ height: height }}>

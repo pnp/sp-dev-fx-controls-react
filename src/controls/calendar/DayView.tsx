@@ -32,7 +32,7 @@ export const DayView: React.FC<IDayViewProps> = (props: IDayViewProps) => {
   const calendarRef = useRef<HTMLDivElement>(null);
   const { getSpanSlots, getEventColors, getCalendarColors } = useUtils();
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const { getWeekEvents } = useCalendar(events, timeZone);
+  const { getWeekEvents } = useCalendar(timeZone);
   const renderTimeColumn = React.useCallback((): JSX.Element[] => {
     return Array.from({ length: 24 }, (_, hour) => (
       <>
@@ -76,7 +76,7 @@ export const DayView: React.FC<IDayViewProps> = (props: IDayViewProps) => {
   ]);
 
   const renderFullDayEvents = React.useCallback((): JSX.Element => {
-    const weekEvents = getWeekEvents(currentDay.toISOString());
+    const weekEvents = getWeekEvents(events,currentDay.toISOString());
     return (
       <>
         <div className={styles.fullDayLabel}>
@@ -119,7 +119,7 @@ export const DayView: React.FC<IDayViewProps> = (props: IDayViewProps) => {
   ]);
   // Render the events for the current day
   const renderDayCells = React.useCallback((): JSX.Element[] => {
-    const weekEvents = getWeekEvents(currentDay.toISOString());
+    const weekEvents = getWeekEvents(events,currentDay.toISOString());
     // Render the events for the current day
     return Array.from({ length: 1 }, (_, dayIndex) => {
       const weekDay = format(addDays(currentDay, dayIndex), 'yyyy-MM-dd');
