@@ -15,6 +15,7 @@ import { Card, RenderLabel, Stack } from '@nuvemerudita/react-controls';
 
 import { IEvent } from './models/IEvents';
 import { css } from '@emotion/css';
+import strings from 'ControlStrings';
 import { useUtils } from './hooks/useUtils';
 
 export interface IEventDetailsPopoverProps {
@@ -55,7 +56,7 @@ const RenderProperty: React.FC<{
     <Stack>
       <RenderLabel label={fieldLabel} icon={icon} />
       <Stack paddingLeft={PADDING_LEFT}>
-        <Body1>{fieldValue} </Body1>
+        <Body1>{fieldValue}</Body1>
       </Stack>
     </Stack>
   );
@@ -85,7 +86,7 @@ export const EventDetailsPopover: React.FunctionComponent<
   const RenderAttendees = React.useCallback((): JSX.Element => {
     return (
       <Stack>
-        <RenderLabel label={'Attendees'} icon={'ph:users-three'} />
+        <RenderLabel label={strings.CalendarControlAttendeessLabel} icon={'ph:users-three'} />
         <Stack paddingLeft={PADDING_LEFT}>
           <AvatarGroup layout="stack">
             {partitionedItems.inlineItems.map((id) => (
