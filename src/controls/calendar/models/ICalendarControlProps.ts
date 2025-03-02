@@ -11,5 +11,5 @@ export interface ICalendarControlProps {
   onNext?: (date: Date) => void;
   onPrev?: (date:Date) => void;
   onViewChange?: (view: string) => void;
-
+  onDaySlotClick?: (date: Date) => void;
 }

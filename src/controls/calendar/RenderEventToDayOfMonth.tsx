@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
+import * as React from 'react';
 
 import {
   Caption1,
@@ -10,15 +10,15 @@ import {
   PositioningImperativeRef,
   mergeClasses,
   useId,
-} from "@fluentui/react-components";
-import { endOfDay, isWithinInterval, startOfDay } from "date-fns";
+} from '@fluentui/react-components';
+import { endOfDay, isWithinInterval, startOfDay } from 'date-fns';
 
-import { Card } from "@nuvemerudita/react-controls";
-import { EventDetailsPopover } from "./EventDetailsPopover";
-import { IEvent } from "./models/IEvents";
-import { IEventColors } from "./models/IEventColors";
-import { useCalendarStyles } from "./hooks/useCalendarStyles";
-import { useUtils } from "./hooks/useUtils";
+import { Card } from '@nuvemerudita/react-controls';
+import { EventDetailsPopover } from './EventDetailsPopover';
+import { IEvent } from './models/IEvents';
+import { IEventColors } from './models/IEventColors';
+import { useCalendarStyles } from './hooks/useCalendarStyles';
+import { useUtils } from './hooks/useUtils';
 
 export interface IRenderEventToDayOfMonthProps {
   events: IEvent[];
@@ -32,18 +32,19 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
 > = (props: React.PropsWithChildren<IRenderEventToDayOfMonthProps>) => {
   const headerId = useId();
   const { events, date, onCardHoverChange, columnHeight } = props;
-  const { styles, applyEventHouverColorClass } = useCalendarStyles(
-    props as never
-  );
+  const { styles, applyEventHouverColorClass } = useCalendarStyles();
 
   const positioningRef = React.useRef<PositioningImperativeRef>(null);
-  const { getEventColors } = useUtils();
+  const { getEventColors, getCalendarColors } = useUtils();
 
-  const handleMouseEnter = (eventTitle: string): void => {
-    if (onCardHoverChange) {
-      onCardHoverChange(true, eventTitle);
-    }
-  };
+  const handleMouseEnter = React.useCallback(
+    (eventTitle: string): void => {
+      if (onCardHoverChange) {
+        onCardHoverChange(true, eventTitle);
+      }
+    },
+    [onCardHoverChange]
+  );
 
   const handleMouseLeave = React.useCallback(
     (eventTitle: string) => {
@@ -66,25 +67,25 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
   const renderCard = React.useCallback(
     (index: number, calEvent: IEvent, colors: IEventColors) => {
       return (
-        <div ref={buttonRef} >
+        <div ref={buttonRef}>
           <Card
             key={index}
             className={mergeClasses(
               styles.eventCard,
               applyEventHouverColorClass(
                 colors.backgroundColor,
-                colors.hoverColor
+                colors.backgroundColor
               )
             )}
             paddingTop="4px"
             paddingBottom="4px"
             paddingLeft="8px"
             paddingRight="8px"
-            marginTop={index === 0 ? "0px" : "5px"}
+            marginTop={index === 0 ? '0px' : '5px'}
             cardHeader={<Caption1>{calEvent.title}</Caption1>}
             onMouseEnter={() => handleMouseEnter(calEvent.title)}
             onMouseLeave={() => handleMouseLeave(calEvent.title)}
-           />
+          />
         </div>
       );
     },
@@ -110,10 +111,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
               aria-labelledby={headerId}
               className={mergeClasses(
                 styles.popoverContent,
-                applyEventHouverColorClass(
-                  colors.backgroundColor,
-                  colors.hoverColor
-                )
+
               )}
             >
               <EventDetailsPopover event={calEvent} />
@@ -140,8 +138,13 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
           });
 
           if (!isEventInDay) return null;
-          const colors = getEventColors(calEvent.category as string);
-          const customRender = calEvent.onRenderInMonthView;
+          let colors: IEventColors | undefined = undefined;
+          if (calEvent.color) {
+            colors = getCalendarColors(calEvent.color);
+          } else {
+            colors = getEventColors(calEvent.category!);
+          }
+          const customRender = calEvent.onRenderInMonthView?.(calEvent);
           // If the event has a custom renderer, use it
           if (React.isValidElement(customRender)) {
             return React.cloneElement(customRender as React.ReactElement, {

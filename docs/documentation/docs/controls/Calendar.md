@@ -42,6 +42,7 @@ The Calendar Control accepts the following props:
 | onNext        | (date: Date) => void   | No       | Callback function triggered when navigating to the next period.     |
 | onPrev        | (date: Date) => void   | No       | Callback function triggered when navigating to the previous period. |
 | onViewChange  | (view: string) => void | No       | Callback function triggered when the view changes.                  |
+| onDaySlotClick | (date: Date) => void   | No       | Callback function triggered when an event is clicked on day slot on Month view |
 
 ## Event Object (IEvent)
 
@@ -70,7 +71,9 @@ Events displayed in the calendar are represented using the `IEvent` interface:
 | onRenderInDayView   | (event: IEvent) => JSX.Element | No       | Custom rendering function for day view.                        |
 | enableOnHover       | boolean                        | No       | Whether to enable hover effects on events.                     |
 | imageUrl            | string                         | No       | URL for an event-related image.                                |
-| eventLinkUrl        | string                         | No       | URL to navigate to event details.                              |
+| webLink        | string                         | No       | URL to navigate to event details.                              |
+| color              | string                         | No       | Custom color for the event.                                    |
+| backgroundColor    | string                         | No       | Custom background color for the event.                          |
 
 ## Attendee Object (IAttendee)
 

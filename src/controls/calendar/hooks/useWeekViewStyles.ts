@@ -1,9 +1,45 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import React from 'react';
 import { css } from '@emotion/css';
 import { tokens } from '@fluentui/react-components';
 
-export const useWeekViewStyles = () => {
-  const styles = {
+interface WeekViewStyles {
+  container: string;
+  header: string;
+  weekGrid: string;
+  blankHeader: string;
+  timeColumn: string;
+  timeCell: string;
+  fullDayRow: string;
+  fullDayLabel: string;
+  fullDayCell: string;
+  fullDayEvent: string;
+  dayHeaderCell: string;
+  todayHeaderCell: string;
+  eventCard: string;
+  event: string;
+  dayCell: string;
+  currentTimeIndicator: string;
+  currentHalfHourCell: string;
+  eventTitle: string;
+  popoverContent: string;
+}
+
+interface UseWeekViewStyles {
+  styles: WeekViewStyles;
+  applyEventHouverColorClass: (
+    backgroundColor: string,
+    hoverColor: string
+  ) => string;
+  appyDynamicStyles: (
+    eventIndex: number,
+    eventCount: number,
+    rowHeight: number,
+    spanSlots: number
+  ) => string;
+}
+
+export const useWeekViewStyles = (): UseWeekViewStyles => {
+  const styles: WeekViewStyles = {
     container: css({
       display: 'flex',
       flexDirection: 'column',
@@ -92,7 +128,7 @@ export const useWeekViewStyles = () => {
       borderRight: `1px solid ${tokens.colorNeutralStroke1}`, // Right border between day cells
       display: 'flex',
       flexDirection: 'row', // Arrange events horizontally
-      gap: '2px',
+      gap: '0px',
       padding: '4px', // Ensure events have spacing within the cell
       borderBottom: `3px solid ${tokens.colorNeutralStroke2}`, // Bottom border for the cell
       overflow: 'hidden', // Ensure events don’t overflow the cell
@@ -103,7 +139,7 @@ export const useWeekViewStyles = () => {
       height: '24px',
       padding: '4px 8px',
       backgroundColor: tokens.colorBrandBackground,
-      color: tokens.colorNeutralForegroundOnBrand,
+
       borderRadius: '4px',
       overflow: 'hidden',
 
@@ -141,7 +177,6 @@ export const useWeekViewStyles = () => {
     event: css({
       height: '100%',
       backgroundColor: tokens.colorBrandBackground,
-      color: tokens.colorNeutralForegroundOnBrand,
       borderRadius: '4px',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
@@ -179,7 +214,7 @@ export const useWeekViewStyles = () => {
     }),
     eventTitle: css({
       display: '-webkit-box',
-      '-webkit-line-clamp': '2',
+      '-webkit-line-clamp': '1',
       '-webkit-box-orient': 'vertical',
       textAlign: 'start',
       textOverflow: 'ellipsis',
@@ -194,16 +229,38 @@ export const useWeekViewStyles = () => {
     }),
   };
 
-  const applyEventHouverColorClass = (
-    backgroundColor: string,
-    houveColor: string
-  ) => {
-    return css({
-      backgroundColor: backgroundColor ?? tokens.colorBrandBackground,
-      ':hover': {
-        backgroundColor: houveColor ?? tokens.colorBrandBackgroundHover,
-      },
-    });
-  };
-  return { styles, applyEventHouverColorClass };
+  const applyEventHouverColorClass = React.useCallback(
+    (backgroundColor: string, hoverColor: string) => {
+      return css({
+        backgroundColor: backgroundColor ?? tokens.colorBrandBackground,
+
+        ':hover': {
+          backgroundColor: hoverColor ?? tokens.colorBrandBackgroundHover,
+        },
+      });
+    },
+    [tokens.colorBrandBackground, tokens.colorBrandBackgroundHover]
+  );
+
+  const appyDynamicStyles = React.useCallback(
+    (
+      eventIndex: number,
+      eventCount: number,
+      rowHeight: number,
+      spanSlots: number
+    ) => {
+      return css({
+        flex: `0 0 calc(100% / ${eventCount})`,
+        height: `${rowHeight * spanSlots}px`, // Dynamically calculate height
+        left: `${eventIndex * 10}%`, // Adjust for overlapping events
+        width: `calc(${100 - eventIndex * 10}% - 8px)`, // Adjust width for overlap
+        margin: 4, // Add margin for spacing
+        marginTop: 0,
+        marginBottom: 0,
+      });
+    },
+    []
+  );
+
+  return { styles, applyEventHouverColorClass, appyDynamicStyles };
 };

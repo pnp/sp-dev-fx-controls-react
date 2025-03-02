@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-empty */
 import * as React from 'react';
 
 import {
@@ -47,12 +43,20 @@ export const SelectCalendarView: React.FunctionComponent<
     view: [value ?? ECalendarViews.Month],
   });
 
-  const DayView = bundleIcon(CalendarDayFilled, CalendarDayRegular);
-  const MonthView = bundleIcon(CalendarMonthFilled, CalendarMonthRegular);
-  const WeekView = bundleIcon(CalendarWorkWeekFilled, CalendarWorkWeekRegular);
+  const DayView = React.useMemo(
+    () => bundleIcon(CalendarDayFilled, CalendarDayRegular),
+    []
+  );
+  const MonthView = React.useMemo(
+    () => bundleIcon(CalendarMonthFilled, CalendarMonthRegular),
+    []
+  );
+  const WeekView = React.useMemo(
+    () => bundleIcon(CalendarWorkWeekFilled, CalendarWorkWeekRegular),
+    []
+  );
 
   React.useEffect(() => {
-    // Synchronize selectedView with props
     if (value !== undefined) {
       setSelectedView(value);
       setCheckedValues({ view: [value] });
@@ -60,9 +64,12 @@ export const SelectCalendarView: React.FunctionComponent<
   }, [value]);
 
   const [open, setOpen] = React.useState(false);
-  const onOpenChange: MenuProps['onOpenChange'] = (_e, data) => {
-    setOpen(data.open);
-  };
+  const onOpenChange: MenuProps['onOpenChange'] = React.useCallback(
+    (_e, data) => {
+      setOpen(data.open);
+    },
+    []
+  );
 
   const viewIcon = React.useCallback(() => {
     switch (selectedView) {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 
 import {
@@ -13,17 +12,25 @@ import {
   partitionAvatarGroupItems,
 } from '@fluentui/react-components';
 import { Card, RenderLabel, Stack } from '@nuvemerudita/react-controls';
-import { format, parseISO } from 'date-fns';
 
 import { IEvent } from './models/IEvents';
 import { css } from '@emotion/css';
-import strings from 'ControlStrings';
+import { useUtils } from './hooks/useUtils';
 
 export interface IEventDetailsPopoverProps {
   event: IEvent;
 }
 
-const useStyles = (_props?: IEvent) => {
+const PADDING_LEFT = '32px';
+
+interface IUseStyles {
+  styles: {
+    banner: string;
+    fieldContainer: string;
+  };
+}
+
+const useStyles = (): IUseStyles => {
   const styles = {
     banner: css({
       display: 'flex',
@@ -47,7 +54,7 @@ const RenderProperty: React.FC<{
   return (
     <Stack>
       <RenderLabel label={fieldLabel} icon={icon} />
-      <Stack paddingLeft={'32px'}>
+      <Stack paddingLeft={PADDING_LEFT}>
         <Body1>{fieldValue} </Body1>
       </Stack>
     </Stack>
@@ -58,56 +65,43 @@ export const EventDetailsPopover: React.FunctionComponent<
   IEventDetailsPopoverProps
 > = (props: React.PropsWithChildren<IEventDetailsPopoverProps>) => {
   const { event } = props;
-  const { title, start, end, location, category, attendees } = event;
-
-  const { styles } = useStyles(event);
-  const formatedStartDate = format(parseISO(start), 'PPp');
-  const formatedEndDate = format(parseISO(end), 'PPp');
+  const { title, start, end, location, category, attendees, webLink } = event;
+  const { styles } = useStyles();
+  const { formatDate } = useUtils();
+  const formatedStartDate = formatDate(start, 'PPp');
+  const formatedEndDate = formatDate(end, 'PPp');
 
   const partitionedItems = partitionAvatarGroupItems({
-    items: attendees ? attendees?.map((attendee) => attendee.id) : [],
+    items: attendees?.map((attendee) => attendee.id) || [],
   });
 
-  const hasAttendees = React.useMemo(() => {
-    return attendees && attendees.length > 0;
-  }, [attendees]);
-
-  const getAttendeeName = React.useCallback(
+  const getAttendee = React.useCallback(
     (id: string) => {
-      return attendees?.find((attendee) => attendee.id === id)?.name || '';
-    },
-    [attendees]
-  );
-
-  const getAttendeeImage = React.useCallback(
-    (id: string) => {
-      return (
-        attendees?.find((attendee) => attendee.id === id)?.imageUrl || undefined
-      );
+      return attendees?.find((attendee) => attendee.id === id) || undefined;
     },
     [attendees]
   );
 
   const RenderAttendees = React.useCallback((): JSX.Element => {
     return (
-      <Stack RowGap={10} >
+      <Stack>
         <RenderLabel label={'Attendees'} icon={'ph:users-three'} />
-        <Stack paddingLeft={'32px'}>
-          <AvatarGroup layout="stack" size={28 }>
+        <Stack paddingLeft={PADDING_LEFT}>
+          <AvatarGroup layout="stack">
             {partitionedItems.inlineItems.map((id) => (
               <AvatarGroupItem
-                name={getAttendeeName(id)}
+                name={getAttendee(id)?.name}
                 key={id}
-                image={{ src: getAttendeeImage(id) }}
+                image={{ src: getAttendee(id)?.imageUrl }}
               />
             ))}
             {partitionedItems.overflowItems && (
               <AvatarGroupPopover>
                 {partitionedItems.overflowItems.map((id) => (
                   <AvatarGroupItem
-                    name={getAttendeeName(id)}
+                    name={getAttendee(id)?.name}
                     key={id}
-                    image={{ src: getAttendeeImage(id) }}
+                    image={{ src: getAttendee(id)?.imageUrl }}
                   />
                 ))}
               </AvatarGroupPopover>
@@ -124,7 +118,6 @@ export const EventDetailsPopover: React.FunctionComponent<
         appearance="subtle"
         padding="m"
         paddingTop={'s'}
-        paddingBottom={'xl'}
         width="250px"
         cardBody={
           <Stack RowGap={10}>
@@ -132,9 +125,11 @@ export const EventDetailsPopover: React.FunctionComponent<
               <Subtitle1>{title}</Subtitle1>
             </div>
             <Divider />
-            <Stack horizontal horizontalAlign="end" width={'100%'}>
-              <Badge appearance="filled">{category}</Badge>
-            </Stack>
+            {category && (
+              <Stack horizontal horizontalAlign="end" width={'100%'}>
+                <Badge appearance="filled">{category}</Badge>
+              </Stack>
+            )}
             <RenderProperty
               fieldLabel="Start"
               fieldValue={formatedStartDate}
@@ -150,26 +145,20 @@ export const EventDetailsPopover: React.FunctionComponent<
               fieldValue={location as string}
               icon={'mingcute:location-line'}
             />
-            {hasAttendees &&  <RenderAttendees />}
-
+            <RenderAttendees />
           </Stack>
         }
         cardFooterContent={
-          // display obnlye if eventLinkUrl is present
-          event.eventLinkUrl && (
-            <Stack horizontal horizontalAlign="end" width="100%">
-              <Button
-                appearance="subtle"
-                onClick={() => {
-                  if (event.eventLinkUrl) {
-                    window.open(event.eventLinkUrl, '_blank');
-                  }
-                }}
-              >
-                {strings.CalendarControlEventDetailsLabel}
-              </Button>
-            </Stack>
-          )
+          <Stack horizontal horizontalAlign="end" width="100%">
+            <Button
+              appearance="subtle"
+              onClick={() => {
+                window.open(webLink, '_blank');
+              }}
+            >
+              Details
+            </Button>
+          </Stack>
         }
       />
     </>

@@ -8,18 +8,14 @@ import {
   CalendarTodayRegular,
   bundleIcon,
 } from '@fluentui/react-icons';
-import {
-  SelectDay,
-  SelectMonth,
-  SelectWeek,
-} from '@nuvemerudita/react-controls';
 
 import { Button } from '@fluentui/react-button';
 import { ECalendarViews } from './models/ECalendarViews';
 import { SelectCalendarView } from './SelectCalendarView';
-import {
-Stack,
-} from '@nuvemerudita/react-controls';
+import { SelectDay } from '@nuvemerudita/react-controls';
+import { SelectMonth } from '@nuvemerudita/react-controls';
+import { SelectWeek } from '@nuvemerudita/react-controls';
+import { Stack } from '@nuvemerudita/react-controls';
 import { Tooltip } from '@fluentui/react-tooltip';
 import strings from 'ControlStrings';
 
@@ -43,25 +39,40 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(
     onMonthChange,
     onDayChange,
   }) => {
-    const ArrowDown = bundleIcon(ArrowDownFilled, ArrowDownRegular);
-    const ArrowUp = bundleIcon(ArrowUpFilled, ArrowUpRegular);
+    const ArrowDown = React.useMemo(
+      () => bundleIcon(ArrowDownFilled, ArrowDownRegular),
+      []
+    );
+    const ArrowUp = React.useMemo(
+      () => bundleIcon(ArrowUpFilled, ArrowUpRegular),
+      []
+    );
 
-    const onSelectWeek = (week: { startDate: Date; endDate: Date }): void => {
-      onWeekChange(week.startDate);
-      setCurrentDate(week.startDate);
-    };
+    const onSelectWeek = React.useCallback(
+      (week: { startDate: Date; endDate: Date }): void => {
+        onWeekChange(week.startDate);
+        setCurrentDate(week.startDate);
+      },
+      [onWeekChange, setCurrentDate]
+    );
 
-    const onSelectMonth = (month: Date): void => {
-      onMonthChange(month);
-      setCurrentDate(month);
-    };
+    const onSelectMonth = React.useCallback(
+      (month: Date): void => {
+        onMonthChange(month);
+        setCurrentDate(month);
+      },
+      [onMonthChange, setCurrentDate]
+    );
 
-    const onSelectDay = (day: Date): void => {
-      onDayChange(day);
-      setCurrentDate(day);
-    };
+    const onSelectDay = React.useCallback(
+      (day: Date): void => {
+        onDayChange(day);
+        setCurrentDate(day);
+      },
+      [onDayChange, setCurrentDate]
+    );
 
-    const RenderSelectView = (): JSX.Element => {
+    const RenderSelectView = React.useCallback((): JSX.Element => {
       switch (selectedView) {
         case ECalendarViews.Month:
           return <SelectMonth onSelected={onSelectMonth} value={currentDate} />;
@@ -72,41 +83,54 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(
         default:
           return <SelectMonth onSelected={onSelectMonth} value={currentDate} />;
       }
-    };
+    }, [selectedView, onSelectMonth, onSelectWeek, onSelectDay, currentDate]);
 
-    const RenderToday = (): JSX.Element => (
-      <Tooltip content="Today" relationship="label">
-        <Button
-          shape="circular"
-          icon={<CalendarTodayRegular />}
-          size="medium"
-          onClick={() => onDayChange(new Date())}
-        >
-          {strings.CalendarControlTodayLabel}
-        </Button>
-      </Tooltip>
+    const RenderToday = React.useCallback(
+      (): JSX.Element => (
+        <Tooltip content="Today" relationship="label">
+          <Button
+            shape="circular"
+            icon={<CalendarTodayRegular />}
+            size="medium"
+            onClick={() => onDayChange(new Date())}
+          >
+            {strings.CalendarControlTodayLabel}
+          </Button>
+        </Tooltip>
+      ),
+      [onDayChange]
     );
 
-    const handleNavigation = (offset: number): void => {
-      const newDate = new Date(currentDate);
-      switch (selectedView) {
-        case ECalendarViews.Month:
-          newDate.setMonth(newDate.getMonth() + offset);
-          onMonthChange(newDate);
-          break;
-        case ECalendarViews.Week:
-          newDate.setDate(newDate.getDate() + offset * 7);
-          onWeekChange(newDate);
-          break;
-        case ECalendarViews.Day:
-          newDate.setDate(newDate.getDate() + offset);
-          onDayChange(newDate);
-          break;
-        default:
-          break;
-      }
-      setCurrentDate(newDate);
-    };
+    const handleNavigation = React.useCallback(
+      (offset: number): void => {
+        const newDate = new Date(currentDate);
+        switch (selectedView) {
+          case ECalendarViews.Month:
+            newDate.setMonth(newDate.getMonth() + offset);
+            onMonthChange(newDate);
+            break;
+          case ECalendarViews.Week:
+            newDate.setDate(newDate.getDate() + offset * 7);
+            onWeekChange(newDate);
+            break;
+          case ECalendarViews.Day:
+            newDate.setDate(newDate.getDate() + offset);
+            onDayChange(newDate);
+            break;
+          default:
+            break;
+        }
+        setCurrentDate(newDate);
+      },
+      [
+        currentDate,
+        selectedView,
+        onMonthChange,
+        onWeekChange,
+        onDayChange,
+        setCurrentDate,
+      ]
+    );
 
     return (
       <Stack
@@ -130,14 +154,14 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(
         >
           <RenderToday />
           <RenderSelectView />
-          <Tooltip content="Previous" relationship="label">
+          <Tooltip content={strings.CalendarControlPreviousLabel} relationship="label">
             <Button
               size="medium"
               icon={<ArrowUp fontSize={14} />}
               onClick={() => handleNavigation(-1)}
             />
           </Tooltip>
-          <Tooltip content="Next" relationship="label">
+          <Tooltip content={strings.CalendarControlNextLabel} relationship="label">
             <Button
               size="medium"
               icon={<ArrowDown fontSize={14} />}

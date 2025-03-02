@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   Body1,
   Body1Strong,
+  Caption1Strong,
   Text,
   mergeClasses,
 } from '@fluentui/react-components';
@@ -28,7 +29,7 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
   const [currentDate] = useState(currentDay);
   const [rowHeight, setRowHeight] = useState<number>(32); // Default row height
   const calendarRef = useRef<HTMLDivElement>(null);
-  const { getSpanSlots } = useUtils();
+  const { getSpanSlots, getEventColors, getCalendarColors, formatDate } = useUtils();
   const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 });
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -52,15 +53,6 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
     return () => {
       observer.disconnect();
     };
-  }, [calendarRef]);
-
-  const generateColor = React.useCallback((str: string): string => {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const c = (hash & 0x00ffffff).toString(16).toUpperCase();
-    return `#${'00000'.substring(0, 6 - c.length) + c}`;
   }, []);
 
   const renderTimeColumn = React.useCallback((): JSX.Element[] => {
@@ -89,9 +81,9 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
               className={mergeClasses(styles.dayHeaderCell, isTodayClass)}
             >
               <Text weight="regular" size={600} style={{ paddingRight: 10 }}>
-                {format(day, 'dd')}
+                {formatDate(day.toISOString(), 'dd')}
               </Text>
-              <Body1>{format(day, 'EEE')}</Body1>
+              <Body1>{formatDate(day.toISOString(), 'EEE')}</Body1>
             </div>
           );
         })}
@@ -107,22 +99,24 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
           <Body1>All Day</Body1>
         </div>
         {Array.from({ length: 7 }, (_, dayIndex) => {
-          const weekDay = format(addDays(weekStart, dayIndex), 'yyyy-MM-dd');
-          const dayEvents = weekEvents.find((day) => day.date === weekDay);
+          const weekDay = formatDate(addDays(weekStart, dayIndex).toISOString(), 'yyyy-MM-dd');
+          const dayEvents = weekEvents.find(day => day.date === weekDay);
           const fullDayEvents = dayEvents?.fullDayEvents || [];
 
           return (
             <div key={dayIndex} className={styles.fullDayCell}>
-              {fullDayEvents.map((event) => (
+              {fullDayEvents.map(event => (
                 <div
                   key={event.id}
                   className={styles.fullDayEvent}
                   style={{
                     gridColumn: `${dayIndex + 2}`, // Position event in the correct day column
-                    backgroundColor: generateColor(event.title),
+                    backgroundColor: event.color
+                      ? getCalendarColors(event.color).backgroundColor
+                      : getEventColors(event.category!).backgroundColor,
                   }}
                 >
-                  <Body1 className={styles.eventTitle}>{event.title}</Body1>
+                  <Caption1Strong className={styles.eventTitle}>{event.title}</Caption1Strong>
                 </div>
               ))}
             </div>
@@ -130,14 +124,14 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
         })}
       </>
     );
-  }, [weekStart, styles, getWeekEvents, generateColor]);
+  }, [weekStart, styles, getWeekEvents, getCalendarColors, getEventColors]);
 
   const renderDayCells = React.useCallback((): JSX.Element[] => {
     const weekEvents = getWeekEvents(weekStart.toISOString());
 
     return Array.from({ length: 7 }, (_, dayIndex) => {
-      const weekDay = format(addDays(weekStart, dayIndex), 'yyyy-MM-dd');
-      const dayEvents = weekEvents.find((day) => day.date === weekDay);
+      const weekDay = format(addDays(weekStart, dayIndex) , 'yyyy-MM-dd');
+      const dayEvents = weekEvents.find(day => day.date === weekDay);
 
       return (
         <>
@@ -162,14 +156,6 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
                   );
                   // Only render the event in its starting timeslot
                   if (slotIndex === startSlot) {
-                    const customRender = event?.onRenderInWeekView;
-                    // If the event has a custom renderer, use it
-                    if (React.isValidElement(customRender)) {
-                      return React.cloneElement(
-                        customRender as React.ReactElement,
-                        {}
-                      );
-                    }
                     // Event Render
                     return (
                       <EventRenderer
@@ -196,11 +182,9 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
   return (
     <div className={styles.container} style={{ height: height }}>
       {/* Week Grid */}
-
       <div ref={calendarRef} className={styles.weekGrid}>
         <div className={styles.timeColumn}>{renderTimeColumn()}</div>
         {renderDayHeaders()}
-
         {renderFullDayEvents()}
         {renderDayCells()}
       </div>

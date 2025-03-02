@@ -1,3 +1,4 @@
+import { AvatarNamedColor } from "@fluentui/react-components";
 import { IAttendee } from "./IAttendee";
 
 export interface IEvent {
@@ -20,5 +21,6 @@ export interface IEvent {
   onRenderInDayView?: (event: IEvent) => JSX.Element;
   enableOnHouver?: boolean;
   imageUrl?: string;
-  eventLinkUrl?: string;
+  webLink?: string;
+  color?: AvatarNamedColor;
 }

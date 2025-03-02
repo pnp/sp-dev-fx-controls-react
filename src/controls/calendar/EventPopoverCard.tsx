@@ -1,23 +1,21 @@
-import * as React from 'react';
+import * as React from "react";
 
 import {
-  Body1,
-  Body1Strong,
+  Caption1,
+  Caption1Strong,
   Card,
   Popover,
   PopoverSurface,
   PopoverTrigger,
   mergeClasses,
   useId,
-} from '@fluentui/react-components';
+} from "@fluentui/react-components";
 
-import { EventDetailsPopover } from './EventDetailsPopover';
-import { IEvent } from './models/IEvents';
-import { Stack } from '@nuvemerudita/react-controls';
-import { format } from 'date-fns';
-import { useWeekViewStyles } from './hooks/useWeekViewStyles';
-
-// Assuming Stack is part of your library
+import { EventDetailsPopover } from "./EventDetailsPopover";
+import { IEvent } from "./models/IEvents";
+import { Stack } from  "@nuvemerudita/react-controls";
+import { useUtils } from  "./hooks/useUtils";
+import { useWeekViewStyles } from "./hooks/useWeekViewStyles";
 
 interface EventPopoverCardProps {
   event: IEvent;
@@ -37,24 +35,24 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
   eventCount,
 }) => {
   const headerId = useId();
-  const { styles, applyEventHouverColorClass } = useWeekViewStyles();
+  const { styles, applyEventHouverColorClass , appyDynamicStyles} = useWeekViewStyles();
   const cardRef = React.useRef<HTMLDivElement>(null);
-
+  const { formatDate } = useUtils();
 
   const cardContent = React.useMemo(
     () => (
       <div>
         <Stack columnGap={4} verticalAlign="center">
-          <Body1Strong className={styles.eventTitle}>{event.title}</Body1Strong>
+          <Caption1Strong className={styles.eventTitle}>{event.title}</Caption1Strong>
           <Stack
             columnGap={4}
             horizontal
             verticalAlign="center"
             horizontalAlign="start"
           >
-            <Body1>{format(new Date(event.start), "HH:mm")}H</Body1>
+            <Caption1>{formatDate(event.start, "HH:mm")}H</Caption1>
             {" - "}
-            <Body1>{format(new Date(event.end), "HH:mm")}H</Body1>
+            <Caption1>{formatDate(event.end, "HH:mm")}H</Caption1>
           </Stack>
         </Stack>
       </div>
@@ -68,15 +66,10 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
       key={event.id}
       className={mergeClasses(
         styles.eventCard,
-        applyEventHouverColorClass(colors.backgroundColor, colors.hoverColor)
+        applyEventHouverColorClass(colors.backgroundColor, colors.backgroundColor),
+        appyDynamicStyles(eventIndex, eventCount, rowHeight, spanSlots)
       )}
-      style={{
-        flex: `0 0 calc(100% / ${eventCount})`, // Ensure equal width for each event
-        height: `${rowHeight * spanSlots}px`, // Height spans the slots
-        left: `${eventIndex * 10}%`, // Adjust for overlap
-        width: `calc(${100 - eventIndex * 10}% - 8px)`, // Adjust width for overlap
-        margin: 4,
-      }}
+
     >
       {event.enableOnHouver ? (
         <Popover
@@ -86,24 +79,18 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
           closeOnIframeFocus={true}
           openOnHover
         >
-          <PopoverTrigger>
-            {cardContent}
-          </PopoverTrigger>
+          <PopoverTrigger>{cardContent}</PopoverTrigger>
           <PopoverSurface
             aria-labelledby={headerId}
             className={mergeClasses(
               styles.popoverContent,
-              applyEventHouverColorClass(
-                colors.backgroundColor,
-                colors.hoverColor
-              )
             )}
           >
             <EventDetailsPopover event={event} />
           </PopoverSurface>
         </Popover>
       ) : (
-         {cardContent}
+        cardContent
       )}
     </Card>
   );

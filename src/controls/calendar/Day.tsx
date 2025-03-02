@@ -1,12 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Body2, mergeClasses } from "@fluentui/react-components";
-import { Card, Stack } from "@nuvemerudita/react-controls";
+import { Body2, mergeClasses } from '@fluentui/react-components';
 
-import { IEvent } from "./models/IEvents";
-import { RenderEventToDayOfMonth } from "./RenderEventToDayOfMonth";
-import { isSameDay } from "date-fns";
-import { useCalendarStyles } from "./hooks/useCalendarStyles";
+import { Card } from  '@nuvemerudita/react-controls';
+import { IEvent } from './models/IEvents';
+import { RenderEventToDayOfMonth } from './RenderEventToDayOfMonth';
+import { Stack } from  '@nuvemerudita/react-controls';
+import { isSameDay } from 'date-fns';
+import { useCalendarStyles } from './hooks/useCalendarStyles';
 
 export interface IDayProps {
   day: number;
@@ -14,13 +15,14 @@ export interface IDayProps {
   currentMonth: boolean;
   events: IEvent[];
   columnHeight: number;
+  onDayClick?: (date: Date) => void;
 }
 
 export const Day: React.FunctionComponent<IDayProps> = (
   props: React.PropsWithChildren<IDayProps>
 ) => {
-  const { day, currentMonth, events, date, columnHeight } = props;
-  const { styles } = useCalendarStyles(props);
+  const { day, currentMonth, events, date, columnHeight, onDayClick } = props;
+  const { styles } = useCalendarStyles();
   const currentDate = new Date();
   const [isEventHovered, setIsEventHovered] = React.useState(false);
 
@@ -34,10 +36,11 @@ export const Day: React.FunctionComponent<IDayProps> = (
         horizontal
         horizontalAlign="start"
         verticalAlign="center"
-        RowGap={10}
+        paddingLeft={'m'}
+        paddingRight={'m'}
       >
         <Body2 className={styles.currentDayLabel}>
-          {day} {currentDate.toLocaleString("default", { month: "short" })}
+          {day} {currentDate.toLocaleString('default', { month: 'short' })}
         </Body2>
       </Stack>
     );
@@ -53,16 +56,26 @@ export const Day: React.FunctionComponent<IDayProps> = (
   return (
     <>
       <Card
+        onClick={onDayClick ? () => onDayClick(date) : undefined}
         className={mergeClasses(
           styles.cardDay,
-          currentMonth ? "" : styles.otherMonthDay,
-          isCurrentDayAndMonth ? styles.currentDay : "",
-          !isEventHovered ? styles.cardDayOnHover : ""
+          currentMonth ? '' : styles.otherMonthDay,
+          isCurrentDayAndMonth ? styles.currentDay : '',
+          !isEventHovered ? styles.cardDayOnHover : ''
         )}
         cardHeader={
-          isCurrentDayAndMonth ? renderCurrentDayLabel : <Body2>{day}</Body2>
+          isCurrentDayAndMonth ? (
+            renderCurrentDayLabel
+          ) : (
+            <Stack horizontal paddingLeft={'m'} paddingRight={'m'}>
+              <Body2>{day}</Body2>
+            </Stack>
+          )
         }
-        padding="xsmall"
+        paddingTop="m"
+        paddingBottom="m"
+        paddingLeft="0px"
+        paddingRight="0px"
         cardBody={
           <RenderEventToDayOfMonth
             events={events}
