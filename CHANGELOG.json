@@ -8,7 +8,9 @@
           "Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)"
 
         ],
-        "enhancements": [],
+        "enhancements": [
+          "Update markdown-it to >=13.0.2 [#1916](https://github.com/pnp/sp-dev-fx-controls-react/issues/1916)"
+        ],
         "fixes": [
           "`ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)",
           "`Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)",
@@ -25,6 +27,7 @@
         "[Adam Wójcik](https://github.com/Adam-it)",
         "[Alessandro Chiavarino](https://github.com/Alesso-Chiavarino)",
         "[Antanina Druzhkina](https://github.com/Ateina)",
+        "[brianpmccullough](https://github.com/brianpmccullough)",
         "[EnablingLogic](https://github.com/EnablingLogic)",
         "[Guido Zambarda](https://github.com/GuidoZam)",
         "[João Mendes](https://github.com/joaojmendes)",
