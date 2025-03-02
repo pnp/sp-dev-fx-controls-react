@@ -157,7 +157,7 @@ export const EventDetailsPopover: React.FunctionComponent<
                 window.open(webLink, '_blank');
               }}
             >
-              Details
+             {strings.CalendarControlDetailsLabel}
             </Button>
           </Stack>
         }
