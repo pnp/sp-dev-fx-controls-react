@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
-import { ICalendarControlProps } from "../models/ICalendarControlProps";
-import { IDayProps } from "../Day";
 import { css } from "@emotion/css";
 import { tokens } from "@fluentui/react-components";
 
-interface IStylesProps extends ICalendarControlProps, IDayProps {}
-
-export const useCalendarStyles = (_props?: IStylesProps) => {
+export const useCalendarStyles = () => {
   const styles = {
     calendarWrapper: css({
       padding: "20px",

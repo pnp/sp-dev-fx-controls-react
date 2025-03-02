@@ -222,9 +222,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   // Render Day View
   const RenderDayView = React.memo(() => {
     return (
-      <>
-        <DayView currentDay={currentDate} events={events} height={height} />
-      </>
+             <DayView currentDay={currentDate} events={events} height={height} />
     );
   });
 

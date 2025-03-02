@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { EventRenderer } from './EventRender';
 import { IEvent } from './models/IEvents';
 import { ResizeObserver } from '@juggle/resize-observer';
+import strings from 'ControlStrings';
 import { useCalendar } from './hooks/useCalendar';
 import { useUtils } from './hooks/useUtils';
 import { useWeekViewStyles } from './hooks/useWeekViewStyles';
@@ -96,7 +97,7 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
     return (
       <>
         <div className={styles.fullDayLabel}>
-          <Body1>All Day</Body1>
+          <Body1>{strings.CalendarControlFullDaylabel}</Body1>
         </div>
         {Array.from({ length: 7 }, (_, dayIndex) => {
           const weekDay = formatDate(addDays(weekStart, dayIndex).toISOString(), 'yyyy-MM-dd');

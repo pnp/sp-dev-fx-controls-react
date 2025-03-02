@@ -87,13 +87,13 @@ export const SelectCalendarView: React.FunctionComponent<
   const getViewLabel = React.useCallback((view: ECalendarViews) => {
     switch (view) {
       case ECalendarViews.Month:
-        return 'Month';
+        return strings.CalendarControlViewMonthLabel;
       case ECalendarViews.Week:
-        return 'Week';
+        return  strings.CalendarControlViewWeekLabel;
       case ECalendarViews.Day:
-        return 'Day';
+        return  strings.CalendarControlViewDayLabel;
       default:
-        return 'Month';
+        return  strings.CalendarControlViewMonthLabel;
     }
   }, []);
 

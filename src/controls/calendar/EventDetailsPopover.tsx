@@ -41,7 +41,7 @@ const useStyles = (): IUseStyles => {
       padding: `5px 10px 0px 10px`,
     }),
     fieldContainer: css({
-      paddingLeft: 32,
+      paddingLeft:  PADDING_LEFT,
     }),
   };
   return { styles };
