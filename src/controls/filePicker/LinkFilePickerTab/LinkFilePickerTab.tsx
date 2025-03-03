@@ -34,6 +34,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             className={styles.linkTextField}
             label={strings.LinkFileInstructions}
             ariaLabel={strings.LinkFileInstructions}
+            placeholder={"https://"}
             onGetErrorMessage={(value: string) => this._getErrorMessagePromise(value)}
             autoAdjustHeight={false}
             underlined={false}
@@ -131,7 +132,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     try {
       const myURL = new URL(fileUrl.toLowerCase());
       return myURL.host !== undefined;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

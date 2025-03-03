@@ -5,6 +5,7 @@ This control renders terms from Managed Metadata field.
 ![FieldTaxonomyRenderer control output](../../assets/FieldTaxonomyRenderer.png)
 
 ## Covered Fields
+
 - Managed Metadata
 
 ## How to use this control in your solutions
@@ -26,11 +27,10 @@ import { FieldTaxonomyRenderer } from "@pnp/spfx-controls-react/lib/FieldTaxonom
 
 The FieldTaxonomyRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| terms | ITerm[] | yes | Managed Metadata terms. |
+| Property  | Type                | Required | Description                           |
+| --------- | ------------------- | -------- | ------------------------------------- |
+| cssProps  | React.CSSProperties | no       | CSS styles to apply to the renderer.  |
+| className | ICssInput           | no       | CSS classes to apply to the renderer. |
+| terms     | ITerm[]             | yes      | Managed Metadata terms.               |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldTaxonomyRenderer)
-

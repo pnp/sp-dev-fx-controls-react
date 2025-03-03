@@ -99,6 +99,7 @@ Once the ECB component is created, you can add the contextual menu to the `ListV
 Inside the render method of the `IViewField`, the ECB component gets created and the current item will be used as a reference for the clicked row.
 
 ## The result
+
 The result will look like the following:
 
 ![ContextualMenu_shown](../assets/ListView.ContextualMenu.png)

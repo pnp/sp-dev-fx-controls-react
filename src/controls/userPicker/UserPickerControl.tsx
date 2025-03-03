@@ -20,7 +20,9 @@ import { User } from './User';
 import { useUserPickerPositioning } from './useUserPickerPositioning';
 import { useUserPickerStyles } from './useUserPickerStyles';
 
-export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (props: IUserPickerProps) => {
+export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (
+  props: IUserPickerProps
+) => {
   const {
     userSelectionLimit,
     label,
@@ -38,12 +40,12 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
   const [open, setOpen] = React.useState(false);
   const [appGlobalState, setAppGlobalState] = useAtom(globalState);
   const { selectedUsers } = appGlobalState;
-  const [searchUser, setSearchUser] = React.useState<string>("");
+  const [searchUser, setSearchUser] = React.useState<string>('');
 
   /*  const forceUpdate = React.useReducer(() => ({}), {})[1] as () => void; */
-  const [userPickerPopupRef, userPickerTargetRef] = useUserPickerPositioning(props);
+  const [userPickerPopupRef, userPickerTargetRef] =
+    useUserPickerPositioning(props);
   const styles = useUserPickerStyles();
-
 
   React.useEffect(() => {
     setAppGlobalState({ ...appGlobalState, ...props });
@@ -57,7 +59,10 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
 
   React.useEffect(() => {
     if (defaultSelectdUsers) {
-      setAppGlobalState({ ...appGlobalState, selectedUsers: defaultSelectdUsers });
+      setAppGlobalState({
+        ...appGlobalState,
+        selectedUsers: defaultSelectdUsers,
+      });
     }
   }, []);
 
@@ -69,7 +74,9 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
   }, [selectedUsers]);
 
   const showInput = React.useMemo(() => {
-    return userSelectionLimit ? selectedUsers.length < userSelectionLimit : true;
+    return userSelectionLimit
+      ? selectedUsers.length < userSelectionLimit
+      : true;
   }, [selectedUsers, userSelectionLimit]);
 
   const onRemove = React.useCallback(
@@ -77,7 +84,9 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
       const newUsers = selectedUsers.filter((user) => user.mail !== userId);
       const removedUser = selectedUsers.filter((user) => user.mail === userId);
       setAppGlobalState({ ...appGlobalState, selectedUsers: newUsers });
-      onRemoveSelectedUser && onRemoveSelectedUser(removedUser[0]);
+      if (onRemoveSelectedUser) {
+        onRemoveSelectedUser(removedUser[0]);
+      }
     },
 
     [selectedUsers]
@@ -90,7 +99,11 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
           return (
             <>
               <div className={styles.userItem} key={user.mail}>
-                <User userId={user.mail ?? ""} onRemove={onRemove} secondaryTextPropertyName={secondaryTextPropertyName}/>
+                <User
+                  userId={user.mail ?? ''}
+                  onRemove={onRemove}
+                  secondaryTextPropertyName={secondaryTextPropertyName}
+                />
               </div>
             </>
           );
@@ -101,7 +114,10 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
 
   return (
     <>
-      <div style={{ width: "100%" }} ref={userPickerTargetRef as React.MutableRefObject<HTMLDivElement> }>
+      <div
+        style={{ width: '100%' }}
+        ref={userPickerTargetRef as React.MutableRefObject<HTMLDivElement>}
+      >
         <Field
           label={label}
           required={required ?? false}
@@ -119,14 +135,16 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
                 <Input
                   value={searchUser}
                   appearance="underline"
-                  style={{ borderWidth: 0, width: "100%" }}
-
+                  style={{ borderWidth: 0, width: '100%' }}
                   type="text"
-                  placeholder={placeholder ?? "Search User"}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
+                  placeholder={placeholder ?? 'Search User'}
+                  onChange={(
+                    event: React.ChangeEvent<HTMLInputElement>,
+                    data: InputOnChangeData
+                  ) => {
                     setSearchUser(data.value);
                     if (data.value.length === 0) {
-                      setSearchUser("");
+                      setSearchUser('');
                       setOpen(false);
                     } else {
                       if (data.value.length >= 2) {
@@ -145,7 +163,7 @@ export const UserPickerControl: React.FunctionComponent<IUserPickerProps> = (pro
                     isOpen={open}
                     onDismiss={(open: boolean) => {
                       setOpen(false);
-                      setSearchUser("");
+                      setSearchUser('');
                     }}
                   />
                 ) : null}

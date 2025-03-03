@@ -1,8 +1,8 @@
-# HoverReactionsBar
+# ImagePicker
 
-This control allows you to select or Upload Image from SharePoint, Ondrive or Stock Images.
+This control allows you to select or upload image from SharePoint, OneDrive or Stock Images.
 
-## ImagePicker
+Here is an example of the control in action:
 
 ![imagepicker](../assets/ImagePicker00.png)
 
@@ -33,17 +33,16 @@ import { ImagePicker } from '@pnp/spfx-controls-react/lib/ImagePicker';
   onFileSelected={handleFileSelected}
   onDeleteFile={handleDeleteFile}
   selectedFileUrl={selectedImageUrl}
-  context={appContext}
- >
+  context={appContext} />
 ```
 
 - With the `onFileSelect` property you can get the selected image:
 
-  ```typescript
-  const handleFileSelected = React.useCallback(async (file: IFilePickerResult) => {
-    console.log("file", file);
-  }, []);
-  ```
+```typescript
+const handleFileSelected = React.useCallback(async (file: IFilePickerResult) => {
+  console.log("file", file);
+}, []);
+```
 
 - With the `onDelete` property you can execute a callback after delete the image:
 
@@ -60,8 +59,8 @@ The HoverReactionsBar control can be configured with the following properties:
 | Property        | Type                                              | Required | Description             |
 | --------------- | ------------------------------------------------- | -------- | ----------------------- |
 | onFileSelected  | onFileSelect: (file: IFilePickerResult ) => void; | yes      | OnSelectedFile Callback |
-| onDeleteFile    | onDeleteFile: () => void                          | no       | onDeleteFile CallBack   |
-| selectedFileUrl | string                                            | no       | Default Selected Image  |
+| onDeleteFile    | onDeleteFile: () => void                          | yes      | onDeleteFile CallBack   |
+| selectedFileUrl | string                                            | yes      | Default Selected Image  |
 | context         | BaseComponentContext                              | yes      | Context                 |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ImagePicker)

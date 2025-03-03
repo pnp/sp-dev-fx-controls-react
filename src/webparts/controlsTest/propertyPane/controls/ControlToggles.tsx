@@ -49,22 +49,24 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
     private getValidControls(): string[] {
         const validControls: ValidControls[] = [
             "all", 
-            "accessibleAccordion", "adaptiveCardDesignerHost", "adaptiveCardHost", 
-            "animatedDialog", "Carousel", "ChartControl", 
-            "ComboBoxListItemPicker", "Dashboard", "DateTimePicker", 
+            "AccessibleAccordion", "AdaptiveCardDesignerHost", "AdaptiveCardHost", 
+            "AnimatedDialog", "Carousel", "ChartControl", 
+            "ComboBoxListItemPicker", "ContentTypePicker", "Dashboard", "DateTimePicker", 
             "DragDropFiles", "DynamicForm", "EnhancedThemeProvider", 
             "FieldCollectionData", "FieldPicker", "FilePicker", 
             "FileTypeIcon", "FilterBar", "FolderExplorer", "FolderPicker",
-            "GridLayout", "IconPicker", "IFrameDialog",
-            "IFramePanel", "ListPicker", "ListItemPicker",
-            "ListItemComments", "ViewPicker", "ListView",
-            "LocationPicker", "Map", "ModernAudio",
+            "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
+            "IFramePanel", "ListItemPicker",
+            "ImagePicker", "ListItemAttachments", "ListItemComments",
+            "ListPicker", "ListView", "LivePersona",
+            "LocationPicker", "Map", "ModernAudio", "MonacoEditor",
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
-            "Placeholder", "Progress", "RichText",
-            "SecurityTrimmedControl", "SiteBreadcrumb", "SitePicker",
-            "TaxonomyPicker", "TaxonomyTree", "Teams",
+            "Placeholder", "Progress", "ProgressStepsIndicator", "RichText",
+            "ShareDialog", "SecurityTrimmedControl", "SiteBreadcrumb", "SitePicker",
+            "TaxonomyPicker", "TaxonomyTree", "Teams", "TermSetNavigation",
             "TestControl", "Toolbar", "TreeView",
-            "UploadFiles", "VariantThemeProvider", "WebPartTitle"
+            "UploadFiles", "UserPicker", "VariantThemeProvider",
+            "ViewPicker", "WebPartTitle"
         ];
         return validControls as string[];
     }

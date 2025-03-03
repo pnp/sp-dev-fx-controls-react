@@ -62,7 +62,7 @@ describe('<ListView />', () => {
     listView = mount(<ListView items={[]} />).update();
 
     expect(listView.state('items')).to.have.length(0);
-    expect(listView.state('columns')).to.be.null; // eslint-disable-line no-unused-expressions
+    expect(listView.state('columns')).to.be.null; // eslint-disable-line @typescript-eslint/no-unused-expressions, no-unused-expressions
     done();
   });
 
@@ -70,7 +70,7 @@ describe('<ListView />', () => {
     listView = mount(<ListView items={dummyItems} />).update();
 
     expect(listView.state('items')).to.have.length(2);
-    expect(listView.state('columns')).to.be.null; // eslint-disable-line no-unused-expressions
+    expect(listView.state('columns')).to.be.null; // eslint-disable-line @typescript-eslint/no-unused-expressions, no-unused-expressions
     done();
   });
 

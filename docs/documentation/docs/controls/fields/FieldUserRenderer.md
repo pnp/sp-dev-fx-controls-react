@@ -8,6 +8,7 @@ This control renders each referenced user/group as a link on a separate line. Ho
 **Note:** some icons may be rendered incorrectly if used with SharePoint Framework v1.3 or earlier
 
 ## Covered Fields
+
 - Person or Group
 
 ## How to use this control in your solutions
@@ -29,12 +30,11 @@ import { FieldUserRenderer } from "@pnp/spfx-controls-react/lib/FieldUserRendere
 
 The FieldUserRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| users | IPrincipal | no | Users/groups to be displayed as they appear in `event.fieldValue` for Field Customizer's `onRenderCell` event. |
-| context | IContext | yes | SPFx context. |
+| Property  | Type                | Required | Description                                                                                                    |
+| --------- | ------------------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| cssProps  | React.CSSProperties | no       | CSS styles to apply to the renderer.                                                                           |
+| className | ICssInput           | no       | CSS classes to apply to the renderer.                                                                          |
+| users     | IPrincipal          | no       | Users/groups to be displayed as they appear in `event.fieldValue` for Field Customizer's `onRenderCell` event. |
+| context   | IContext            | yes      | SPFx context.                                                                                                  |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldUserRenderer)
-

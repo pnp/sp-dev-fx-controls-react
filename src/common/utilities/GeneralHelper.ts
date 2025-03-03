@@ -252,7 +252,7 @@ export class GeneralHelper {
       try {
         result = new File([blob], fileName);
       }
-      catch (ieErr) {
+      catch {
         result = blob;
         result.fileName = fileName;
       }

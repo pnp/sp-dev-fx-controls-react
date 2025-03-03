@@ -31,7 +31,8 @@ import "@pnp/sp/lists";
 import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
-import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
+import { IFolder } from "@pnp/sp/folders";
+import { IInstalledLanguageInfo, IItemUpdateResult, IList } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -47,6 +48,10 @@ import { IDynamicFormState } from "./IDynamicFormState";
 import { Icon } from "@fluentui/react/lib/Icon";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
+
+const timeout = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 /**
  * DynamicForm Class Control
@@ -354,7 +359,7 @@ export class DynamicForm extends React.Component<
 
         // When a field is required and has no value
         if (field.required) {
-          if (field.newValue === null) {
+          if ((field.newValue === undefined || field.newValue.length === 0) && (field.value === undefined || field.value.length === 0)) {
             if (
               field.defaultValue === null ||
               field.defaultValue === "" ||
@@ -595,21 +600,14 @@ export class DynamicForm extends React.Component<
         // We are adding a folder or a Document Set
         try {
           const idField = "ID";
-          const titleField = "Title";
           const contentTypeIdField = "ContentTypeId";
 
           const library = await sp.web.lists.getById(listId);
-          const folderTitle =
-            objects[titleField] !== undefined && objects[titleField] !== ""
-              ? (objects[titleField] as string).replace(
-                /["|*|:|<|>|?|/|\\||]/g,
-                "_"
-              ) // Replace not allowed chars in folder name
-              : ""; // Empty string will be replaced by SPO with Folder Item ID
-          const newFolder = await library.rootFolder.addSubFolderUsingPath(
-            folderTitle
-          );
+          const folderFileName = this.getFolderName(objects);
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
+          const newFolder = await folder.addSubFolderUsingPath(folderFileName);
           const fields = await newFolder.listItemAllFields();
+
           if (fields[idField]) {
             // Read the ID of the just created folder or Document Set
             const folderId = fields[idField];
@@ -617,7 +615,7 @@ export class DynamicForm extends React.Component<
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
             // Update the just created folder or Document Set
-            const iur = await library.items.getById(folderId).update(objects);
+            const iur = await this.updateListItemRetry(library, folderId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -681,20 +679,21 @@ export class DynamicForm extends React.Component<
               ? (selectedFile.fileName as string).replace(
                 /["|*|:|<|>|?|/|\\||]/g,
                 "_"
-              ) // Replace not allowed chars in folder name
+              ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
               : ""; // Empty string will be replaced by SPO with Folder Item ID
 
-          const fileCreatedResult = await library.rootFolder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
+          const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
           const fields = await fileCreatedResult.file.listItemAllFields();
 
           if (fields[idField]) {
-            // Read the ID of the just created folder or Document Set
-            const folderId = fields[idField];
+            // Read the ID of the just created file
+            const fileId = fields[idField];
 
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
-            // Update the just created folder or Document Set
-            const iur = await library.items.getById(folderId).update(objects);
+            // Update the just created file
+            const iur = await this.updateListItemRetry(library, fileId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -705,7 +704,7 @@ export class DynamicForm extends React.Component<
             }
           } else {
             throw new Error(
-              "Unable to read the ID of the just created folder or Document Set"
+              "Unable to read the ID of the just created file"
             );
           }
         } catch (error) {
@@ -990,9 +989,17 @@ export class DynamicForm extends React.Component<
       // Load SharePoint list item
       const spList = sp.web.lists.getById(listId);
       let item = null;
+      const isEditingItem = listItemId !== undefined && listItemId !== null && listItemId !== 0;
       let etag: string | undefined = undefined;
-      if (listItemId !== undefined && listItemId !== null && listItemId !== 0) {
-        item = await spList.items.getById(listItemId).get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
+
+      if (isEditingItem) {
+        const spListItem = spList.items.getById(listItemId);
+
+        if (contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101")) {
+          spListItem.select("*","FileLeafRef"); // Explainer: FileLeafRef is not loaded by default. Load it to show the file/folder name in the field.
+        }
+
+        item = await spListItem.get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
 
         if (onListItemLoaded) {
           await onListItemLoaded(item);
@@ -1090,12 +1097,12 @@ export class DynamicForm extends React.Component<
           let showAsPercentage: boolean | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const selectedTags: any = [];
-  
+
           let fieldName = field.InternalName;
           if (fieldName.startsWith('_x') || fieldName.startsWith('_')) {
             fieldName = `OData_${fieldName}`;
           }
-  
+
           // If a SharePoint Item was loaded, get the field value from it
           if (item !== null && item[fieldName]) {
             value = item[fieldName];
@@ -1103,7 +1110,7 @@ export class DynamicForm extends React.Component<
           } else {
             defaultValue = field.DefaultValue;
           }
-  
+
           // Store choices for Choice fields
           if (field.FieldType === "Choice") {
             field.Choices.forEach((element) => {
@@ -1115,7 +1122,7 @@ export class DynamicForm extends React.Component<
               choices.push({ key: element, text: element });
             });
           }
-  
+
           // Setup Note, Number and Currency fields
           if (field.FieldType === "Note") {
             richText = field.RichText;
@@ -1131,7 +1138,7 @@ export class DynamicForm extends React.Component<
               cultureName = this.cultureNameLookup(numberField.CurrencyLocaleId);
             }
           }
-  
+
           // Setup Lookup fields
           if (field.FieldType === "Lookup" || field.FieldType === "LookupMulti") {
             lookupListId = field.LookupListId;
@@ -1154,7 +1161,7 @@ export class DynamicForm extends React.Component<
               value = [];
             }
           }
-  
+
           // Setup User fields
           if (field.FieldType === "User") {
             if (item !== null) {
@@ -1193,7 +1200,7 @@ export class DynamicForm extends React.Component<
             }
             principalType = field.PrincipalAccountType;
           }
-  
+
           // Setup Taxonomy / Metadata fields
           if (field.FieldType === "TaxonomyFieldType") {
             termSetId = field.TermSetId;
@@ -1235,7 +1242,7 @@ export class DynamicForm extends React.Component<
                   name: element.Label,
                 });
               });
-  
+
               value = selectedTags;
             } else {
               if (defaultValue && defaultValue !== "") {
@@ -1246,19 +1253,19 @@ export class DynamicForm extends React.Component<
                       name: element.split("|")[0],
                     });
                 });
-  
+
                 value = selectedTags;
                 stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
               }
             }
             if (defaultValue === "") defaultValue = null;
           }
-  
+
           // Setup DateTime fields
           if (field.FieldType === "DateTime") {
-  
+
             if (item !== null && item[fieldName]) {
-  
+
               value = new Date(item[fieldName]);
               stringValue = value.toISOString();
             } else if (defaultValue === "[today]") {
@@ -1266,11 +1273,11 @@ export class DynamicForm extends React.Component<
             } else if (defaultValue) {
               defaultValue = new Date(defaultValue);
             }
-  
+
             dateFormat = field.DateFormat || "DateOnly";
             defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
           }
-  
+
           // Setup Thumbnail, Location and Boolean fields
           if (field.FieldType === "Thumbnail") {
             if (defaultValue) {
@@ -1288,7 +1295,7 @@ export class DynamicForm extends React.Component<
             if (defaultValue !== undefined && defaultValue !== null) defaultValue = Boolean(Number(defaultValue));
             if (value !== undefined && value !== null) value = Boolean(Number(value));
           }
-  
+
           tempFields.push({
             value,
             newValue: undefined,
@@ -1326,7 +1333,7 @@ export class DynamicForm extends React.Component<
             showAsPercentage: showAsPercentage,
             customIcon: customIcons ? customIcons[field.InternalName] : undefined
           });
-  
+
           // This may not be necessary now using RenderListDataAsStream
           tempFields.sort((a, b) => a.Order - b.Order);
         }
@@ -1476,4 +1483,69 @@ export class DynamicForm extends React.Component<
     }
   }
 
+  /**
+   * Creates a folder name based on the FileLeafRef field (if rendered) or the Title field (if rendered)
+   * Replaces not allowed chars in folder name and trims spaces at the start and end of the string
+   * Empty string will be replaced by SPO with Folder Item ID
+   * @param objects The object containing the field values
+   * @returns the folder name
+   */
+  private getFolderName = (objects: {}): string => {
+    const titleField = "Title";
+    const fileLeafRefField = "FileLeafRef";
+    let folderNameValue = "";
+
+    if (objects[fileLeafRefField] !== undefined && objects[fileLeafRefField] !== "")
+      folderNameValue = objects[fileLeafRefField] as string;
+
+    if (objects[titleField] !== undefined && objects[titleField] !== "")
+      folderNameValue = objects[titleField] as string;
+
+    return folderNameValue.replace(/["|*|:|<|>|?|/|\\||]/g, "_").trim();
+  }
+
+  /**
+   * Returns a pnp/sp folder object based on the folderPath and the library the folder is in.
+   * The folderPath can be a server relative path, but should be in the same library.
+   * @param folderPath The path to the folder coming from the component properties
+   * @param rootFolder The rootFolder object of the library
+   * @returns
+   */
+  private getFolderByPath = async (folderPath: string, rootFolder: IFolder): Promise<IFolder> => {
+    const libraryFolder = await rootFolder();
+    const normalizedFolderPath = decodeURIComponent(folderPath).toLowerCase().replace(/\/$/, "");
+    const serverRelativeLibraryPath = libraryFolder.ServerRelativeUrl.toLowerCase().replace(/\/$/, "");
+
+    // In case of a server relative path in the same library, return the folder
+    if (`${normalizedFolderPath}/`.startsWith(`${serverRelativeLibraryPath}/`)) {
+      return sp.web.getFolderByServerRelativePath(normalizedFolderPath);
+    }
+
+    // In other cases, expect a list-relative path and return the folder
+    const folder = sp.web.getFolderByServerRelativePath(`${serverRelativeLibraryPath}/${normalizedFolderPath}`);
+    return folder;
+  };
+
+  /**
+   * Updates a list item and retries the operation if a 409 (Save Conflict) was thrown.
+   * @param list The list/library on which to execute the operation
+   * @param itemId The item ID
+   * @param objects The values to update the item with
+   * @param retry The retry index
+   * @returns An update result
+   */
+  private updateListItemRetry = async (list: IList, itemId: number, objects: {}, retry: number = 0): Promise<IItemUpdateResult> => {
+    try {
+      return await list.items.getById(itemId).update(objects);
+    }
+    catch (error)
+    {
+      if (error.status === 409 && retry < 3) {
+        await timeout(100);
+        return await this.updateListItemRetry(list, itemId, objects, retry + 1);
+      }
+
+      throw error;
+    }
+  }
 }
