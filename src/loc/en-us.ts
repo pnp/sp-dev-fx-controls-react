@@ -445,5 +445,10 @@ define([], () => {
     ImagePickerRetryButtonLabel: "Retry",
     ImagePickerDeleteLabel: "Delete",
 
+    AppliedFiltersAriaLabel: "Applied filters",
+    ClearAllFiltersTitle: "Clear all filters",
+    ClearFilterTitle: "Clear filter",
+    ClearAllFiltersText: "Clear filters",
+    FilterOverflowAriaLabel: "More"
   };
 });

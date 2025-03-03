@@ -54,7 +54,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "ComboBoxListItemPicker", "ContentTypePicker", "Dashboard", "DateTimePicker", 
             "DragDropFiles", "DynamicForm", "EnhancedThemeProvider", 
             "FieldCollectionData", "FieldPicker", "FilePicker", 
-            "FileTypeIcon", "FolderExplorer", "FolderPicker",
+            "FileTypeIcon", "FilterBar", "FolderExplorer", "FolderPicker",
             "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
             "IFramePanel", "ListItemPicker",
             "ImagePicker", "ListItemAttachments", "ListItemComments",

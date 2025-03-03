@@ -4,7 +4,7 @@ export type ValidControls = "all" |
   "ComboBoxListItemPicker" | "ContentTypePicker" | "Dashboard" | "DateTimePicker" | 
   "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" | 
   "FieldCollectionData" | "FieldPicker" | "FilePicker" | 
-  "FileTypeIcon" | "FolderExplorer" | "FolderPicker" |
+  "FileTypeIcon" | "FilterBar" | "FolderExplorer" | "FolderPicker" |
   "GridLayout" | "HoverReactionsBar" | "IconPicker" | "IFrameDialog" |
   "IFramePanel" | "ImagePicker" | "ListItemAttachments" | "ListItemComments" |
   "ListItemPicker" | "ListPicker" | "ListView" | "LivePersona" |

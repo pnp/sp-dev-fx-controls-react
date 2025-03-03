@@ -36,6 +36,7 @@ nav:
     - FieldPicker: 'controls/FieldPicker.md'
     - FilePicker: 'controls/FilePicker.md'
     - FileTypeIcon: 'controls/FileTypeIcon.md'
+    - FilterBar: 'controls/FilterBar.md'
     - FolderExplorer: 'controls/FolderExplorer.md'
     - FolderPicker: 'controls/FolderPicker.md'
     - GridLayout: 'controls/GridLayout.md'
