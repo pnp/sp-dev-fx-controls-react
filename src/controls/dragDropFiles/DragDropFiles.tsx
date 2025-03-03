@@ -14,7 +14,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
   private _dropEffect;
   private _enable;
 
-  constructor(props: IDragDropFilesProps) {
+  constructor(props: React.PropsWithChildren<IDragDropFilesProps>) {
     super(props);
     // Initialize state
     this.state = {
