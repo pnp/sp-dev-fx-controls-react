@@ -6,10 +6,12 @@
 
 - `ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
 - Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)
+- 'FilterBar`: new control `FilterBar` [#1884](https://github.com/pnp/sp-dev-fx-controls-react/pull/1884)
 
 ### Enhancements
 
 - Update markdown-it to >=13.0.2 [#1916](https://github.com/pnp/sp-dev-fx-controls-react/issues/1916)
+- Dispose of Async instance to prevent memory leak [#1936](https://github.com/pnp/sp-dev-fx-controls-react/pull/1936)
 
 ### Fixes
 
@@ -25,7 +27,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [brianpmccullough](https://github.com/brianpmccullough), [EnablingLogic](https://github.com/EnablingLogic), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr).
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [brianpmccullough](https://github.com/brianpmccullough), [EnablingLogic](https://github.com/EnablingLogic), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Kevin T. Coughlin](https://github.com/KevinTCoughlin), [Konrad K.](https://github.com/wilecoyotegenius), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr).
 
 ## 3.20.0
 
