@@ -1089,6 +1089,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
                   enableFileSelection={this.props.dynamicFormFileSelectionEnabled}
                   customIcons={dynamicFormCustomTitleIcon}
+                  useModernTaxonomyPicker={this.props.dynamicFormToggleTaxonomyPicker}
                 />
               </div>
             </div>

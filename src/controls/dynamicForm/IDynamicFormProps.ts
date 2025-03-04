@@ -141,9 +141,16 @@ export interface IDynamicFormProps {
    storeLastActiveTab?: boolean;
 
   /**
-   * Library relative folder to create the item in. 
-   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. 
+   * Library relative folder to create the item in.
+   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder.
    * Defaults to the root folder.
    */
   folderPath?: string;
+
+  /**
+   * Set to true to use the Modern Taxonomy Picker (ModernTaxonomyPicker).
+   * Set to false to use the classic TaxonomyPicker.
+   * Default is false
+   */
+  useModernTaxonomyPicker?: boolean;
 }
