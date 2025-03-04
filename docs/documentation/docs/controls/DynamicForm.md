@@ -66,9 +66,10 @@ The `DynamicForm` can be configured with the following properties:
 | respectEtag | boolean | no | Specifies if the form should respect the ETag of the item. Default - `true` |
 | saveDisabled | boolean | no | Specifies if save button is disabled. |
 | validationErrorDialogProps | IValidationErrorDialogProps | no | Specifies validation error dialog properties |
-| customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. | 
+| customIcons | { [ columnInternalName: string ]: string } | no | Specifies custom icons for the form. The key of this dictionary is the column internal name, the value is the Fluent UI icon name. |
 | storeLastActiveTab | boolean | no |  When uploading files: Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default - `true` |
 | folderPath | string | no | Server relative or library relative folder to create the item in. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. Defaults to the root folder of the library. |
+| useModernTaxonomyPicker | boolean | no | Specifies if the form should render ModernTaxonomyPicker control for Managed metadata fields. If set to true, Dynamic form will render ModernTaxonomyPicker control. If set to false, Dynamic form will render TaxonomyPicker control. Default is false |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 
