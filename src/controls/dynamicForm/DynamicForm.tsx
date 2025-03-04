@@ -362,7 +362,7 @@ export class DynamicForm extends React.Component<
 
         // When a field is required and has no value
         if (field.required) {
-          if (field.newValue === undefined && field.value===undefined) {
+          if ((field.newValue === undefined || field.newValue.length === 0) && (field.value === undefined || field.value.length === 0)) {
             if (
               field.defaultValue === null ||
               field.defaultValue === "" ||
@@ -1351,12 +1351,25 @@ export class DynamicForm extends React.Component<
                   });
 
                   value = selectedTags;
-                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                } else {
+                  if (defaultValue && defaultValue !== "") {
+                    defaultValue.split(/#|;/).forEach((element) => {
+                      if (element.indexOf("|") !== -1)
+                        selectedTags.push({
+                          key: element.split("|")[1],
+                          name: element.split("|")[0],
+                        });
+                    });
+
+                    value = selectedTags;
+                    stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  }
                 }
+                if (defaultValue === "") defaultValue = null;
               }
-              if (defaultValue === "") defaultValue = null;
             }
           }
+
 
           // Setup DateTime fields
           if (field.FieldType === "DateTime") {

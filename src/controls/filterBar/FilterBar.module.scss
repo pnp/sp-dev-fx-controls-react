@@ -1,0 +1,109 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+$--ms-semanticColors-listBackground: #ffffff;
+$--ms-effects-roundedCorner6: 6px;
+$--ms-effects-elevation4: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132), 0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+
+.container {
+    padding: 0 16px;
+    align-items: center;
+    background: $--ms-semanticColors-listBackground;
+    position: relative;
+    height: 42px;
+    white-space: pre;
+    display: flex;
+    color: "[theme:neutralSecondary, default:#{$ms-color-neutralSecondary}]";
+    overflow: hidden;
+    border-radius: $--ms-effects-roundedCorner6 $--ms-effects-roundedCorner6 0 0;
+    box-shadow: $--ms-effects-elevation4;
+}
+
+.pillGroup {
+    display: flex;
+    align-items: center;
+}
+
+html[dir=ltr] {
+    .label {
+        margin-right: 4px;
+        //         @extend .overflow;
+        //         margin-left: 0;
+    }
+    .overflow {
+        .label {
+            margin-left: 0;
+        }
+    }
+    .pill {
+        padding-left: 8px;
+    }
+    
+    .icon {
+        margin-right: 0;
+    }
+    .clearAll {
+        margin-right: 0;
+    }
+    .clearAll {
+        margin-left: auto;
+    }
+}
+html[dir=ltr] {
+    .label {
+        margin-left: 8px;
+    }
+
+    
+    .pill {
+        padding-right: 8px;
+    }
+    .icon {
+        margin-left: 10px;
+    }
+}
+
+.pill {
+    
+    background: "[theme:neutralLighter, default:#{$ms-color-neutralLighter}]";
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 24px;
+    margin: 0 4px;
+    cursor: pointer;
+    z-index: 2;
+    color: inherit;
+}
+
+.pillText {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: 2px;
+}
+
+.icon {
+    font-size: 12px;
+}
+.overflow {
+    padding: 2px 8px;
+
+    .pillGroup {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .pill {
+        margin: 6px 0;
+    }
+}
+
+.clearAll {
+    background: 0 0;
+    border: 1px solid "[theme:neutralSecondary, default:#{$ms-color-neutralSecondary}]";
+    height: 22px;
+}
+
+

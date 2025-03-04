@@ -82,6 +82,7 @@ The following controls are currently available:
 - [FieldPicker](./controls/FieldPicker) (control to pick one or multiple fields from a list or a site)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (shows the icon of a specified file path or application)
+- [FilterBar](./controls/FilterBar) (control that renders filters in a similar way to modern lists)
 - [FolderExplorer](./controls/FolderExplorer) (control that allows to browse the folders and sub-folders from a root folder)
 - [FolderPicker](./controls/FolderPicker) (control that allows to browse and select a folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
