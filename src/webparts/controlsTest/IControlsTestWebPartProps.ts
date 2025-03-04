@@ -14,7 +14,7 @@ export type ValidControls = "all" |
   "ShareDialog" | "SecurityTrimmedControl" | "SiteBreadcrumb" | "SitePicker" |
   "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
   "TestControl" | "Toolbar" | "TreeView" |
-  "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" | 
+  "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" |
   "WebPartTitle";
 
 export type ControlVisibility = {
@@ -32,5 +32,6 @@ export interface IControlsTestWebPartProps {
   dynamicFormClientSideValidationEnabled: boolean;
   dynamicFormFieldValidationEnabled: boolean;
   dynamicFormFileSelectionEnabled: boolean;
+  dynamicFormToggleTaxonomyPicker: boolean;
   controlVisibility: ControlVisibility
 }
