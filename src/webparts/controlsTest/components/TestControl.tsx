@@ -2,16 +2,16 @@ import * as React from "react";
 
 import {
   FluentProvider,
-  makeStyles,
-  shorthands,
   Theme,
   Title3,
+  makeStyles,
+  shorthands,
 } from "@fluentui/react-components";
-import { createV9Theme } from "@fluentui/react-migration-v8-v9";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
 
-import { UserPicker } from "../../../controls/userPicker";
 import { IUserInfo } from "../../../controls/userPicker/models/IUserInfo";
+import { UserPicker } from "../../../controls/userPicker";
+import { WebPartContext } from "@microsoft/sp-webpart-base";
+import { createV9Theme } from "@fluentui/react-migration-v8-v9";
 
 const useStyles = makeStyles({
   root: {
