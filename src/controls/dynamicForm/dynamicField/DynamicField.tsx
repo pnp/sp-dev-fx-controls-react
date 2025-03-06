@@ -32,7 +32,8 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       spfxContext: { pageContext: this.props.context.pageContext }
     });
     this.state = {
-      changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null
+      changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null,
+      listItemId: props.listItemId
     };
   }
 
@@ -642,22 +643,27 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private getRequiredErrorText = (): string => {
     const {
-      changedValue
+      changedValue,
+      listItemId
     } = this.state;
-    const {value,newValue,required}=this.props;
-    if(newValue===undefined){
-      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) 
-      && (value === undefined || value === '' || value === null || this.isEmptyArray(value))? strings.DynamicFormRequiredErrorMessage : null;
+    const { value, newValue, required } = this.props;
+
+    if (listItemId !== undefined && listItemId !== '' && listItemId !== null) {
+      if (newValue === undefined) {
+        return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))
+        && (value === undefined || value === '' || value === null || this.isEmptyArray(value)) ? strings.DynamicFormRequiredErrorMessage : null;
+      } else {
+        return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ? strings.DynamicFormRequiredErrorMessage : null;
+      }
     }
-    else{
-      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ? strings.DynamicFormRequiredErrorMessage : null;
-    }
-   
+
+    return null;
   }
 
   private getNumberErrorText = (): string => {
     const {
-      changedValue
+      changedValue,
+      listItemId
     } = this.state;
     const {
       cultureName,
@@ -674,9 +680,12 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       return strings.DynamicFormRequiredErrorMessage;
     }
 
-    if (required && newValue===undefined &&  (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
-      return strings.DynamicFormRequiredErrorMessage;
+    if(listItemId !== undefined && listItemId !== '' && listItemId !== null){
+      if (required && newValue===undefined &&  (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
+        return strings.DynamicFormRequiredErrorMessage;
+      }
     }
+
 
     let minValue = minimumValue !== undefined && minimumValue !== -(Number.MAX_VALUE) ? minimumValue : undefined;
     let maxValue = maximumValue !== undefined && maximumValue !== Number.MAX_VALUE ? maximumValue : undefined;
