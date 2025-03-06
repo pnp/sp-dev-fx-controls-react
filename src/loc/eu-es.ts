@@ -215,6 +215,7 @@ define([], () => {
     AddFileButtonLabel: "Add file",
     AddImageButtonLabel: "Add image",
     AriaCellValue: "{0} column, {1}",
+    CalendarControlDayOfWeekSunday: "Sunday",
     FilePickerCancelButtonLabel: "Cancel",
     CantValidateValidationMessage: "We couldn't verify this link. Please check the link and try again.",
     ChangeFileLinkLabel: "Change file",
