@@ -127,6 +127,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   onWeekChange,
   onViewChange,
   onDaySlotClick,
+  defaultView,
 }: ICalendarControlProps) => {
   const { styles } = useCalendarStyles();
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -140,7 +141,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   );
   // Default view
   const [selectedView, setSelectedView] = useState<ECalendarViews>(
-    ECalendarViews.Month
+    defaultView ?? ECalendarViews.Month
   );
   const { getMonthCalendar } = useCalendar(
     Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -245,6 +246,10 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
       window.removeEventListener('resize', handleResize);
     };
   }, [styles.calendarWrapper]);
+
+  useEffect(() => {
+    setSelectedView(defaultView ?? ECalendarViews.Month);
+  }, [defaultView]);
 
   const RenderContent = React.useCallback(() => {
     switch (selectedView) {

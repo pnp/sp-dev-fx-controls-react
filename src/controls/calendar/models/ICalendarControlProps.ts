@@ -1,3 +1,4 @@
+import { ECalendarViews } from "./ECalendarViews";
 import { IEvent } from "./IEvents";
 import { Theme } from "@fluentui/react-components";
 
@@ -12,4 +13,5 @@ export interface ICalendarControlProps {
   onPrev?: (date:Date) => void;
   onViewChange?: (view: string) => void;
   onDaySlotClick?: (date: Date) => void;
+  defaultView? :ECalendarViews | undefined
 }
