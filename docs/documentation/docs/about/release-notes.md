@@ -4,9 +4,10 @@
 
 ### New control(s)
 
-- `ShareDialog`: new control ShareDialog [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
+- `ShareDialog`: new control `ShareDialog` [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
 - Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)
-- 'FilterBar`: new control `FilterBar` [#1884](https://github.com/pnp/sp-dev-fx-controls-react/pull/1884)
+- `FilterBar`: new control `FilterBar` [#1884](https://github.com/pnp/sp-dev-fx-controls-react/pull/1884)
+- `Calendar`: new controls `Calendar` [#1955](https://github.com/pnp/sp-dev-fx-controls-react/pull/1955)
 
 ### Enhancements
 
