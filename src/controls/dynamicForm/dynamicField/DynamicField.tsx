@@ -32,8 +32,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       spfxContext: { pageContext: this.props.context.pageContext }
     });
     this.state = {
-      changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null,
-      listItemId: props.listItemId
+      changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null
     };
   }
 
@@ -643,12 +642,11 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private getRequiredErrorText = (): string => {
     const {
-      changedValue,
-      listItemId
+      changedValue
     } = this.state;
-    const { value, newValue, required } = this.props;
+    const { value, newValue, required,listItemId } = this.props;
 
-    if (listItemId !== undefined && listItemId !== '' && listItemId !== null) {
+    if (listItemId !== undefined && listItemId !== null) {
       if (newValue === undefined) {
         return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))
         && (value === undefined || value === '' || value === null || this.isEmptyArray(value)) ? strings.DynamicFormRequiredErrorMessage : null;
@@ -662,8 +660,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private getNumberErrorText = (): string => {
     const {
-      changedValue,
-      listItemId
+      changedValue
     } = this.state;
     const {
       cultureName,
@@ -673,14 +670,15 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
       showAsPercentage,
       value,
       newValue,
-      required
+      required,
+      listItemId
     } = this.props;
 
     if (required && newValue!==undefined && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
       return strings.DynamicFormRequiredErrorMessage;
     }
 
-    if(listItemId !== undefined && listItemId !== '' && listItemId !== null){
+    if(listItemId !== undefined && listItemId !== null){
       if (required && newValue===undefined &&  (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
         return strings.DynamicFormRequiredErrorMessage;
       }
