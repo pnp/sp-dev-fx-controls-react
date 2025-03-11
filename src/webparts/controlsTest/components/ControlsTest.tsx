@@ -1,26 +1,52 @@
 import * as React from 'react';
-import styles from './ControlsTest.module.scss';
-import { debounce } from 'lodash';
 
-//#region Import FluentUI Controls
-import { IPersonaProps, Persona } from '@fluentui/react';
 import {
-  ExclamationCircleIcon,
-  Flex,
-  ScreenshareIcon,
-  ShareGenericIcon,
-  Text as NorthstarText,
-} from '@fluentui/react-northstar';
+  AccordionItem,
+  AccordionItemButton,
+  AccordionItemHeading,
+  AccordionItemPanel,
+} from '../../../controls/accessibleAccordion';
+import {
+  Action,
+  AdaptiveCardHostThemeType,
+  CardElement,
+  CardObjectRegistry,
+  HostCapabilities,
+} from '../../../AdaptiveCardHost';
+import {
+  ApplicationType,
+  IconType,
+  ImageSize,
+} from '../../../FileTypeIcon';
+import {
+  CarouselButtonsDisplay,
+  CarouselButtonsLocation,
+  CarouselIndicatorShape,
+  CarouselIndicatorsDisplay,
+} from '../../../controls/carousel';
+import {
+  ControlsTestEnhancedThemeProvider,
+  ControlsTestEnhancedThemeProviderFunctionComponent,
+} from './ControlsTestEnhancedThemeProvider';
+import {
+  DateConvention,
+  TimeConvention,
+} from '../../../DateTimePicker';
 import {
   DefaultButton,
   PrimaryButton,
 } from '@fluentui/react/lib/Button';
-import { DayOfWeek } from '@fluentui/react/lib/DateTimeUtilities';
 import {
   DialogFooter,
   DialogType,
   IDialogContentProps,
 } from '@fluentui/react/lib/Dialog';
+import {
+  DisplayMode,
+  Environment,
+  EnvironmentType,
+  Guid
+} from '@microsoft/sp-core-library';
 import {
   DocumentCard,
   DocumentCardActivity,
@@ -34,75 +60,132 @@ import {
   Dropdown,
   IDropdownOption,
 } from '@fluentui/react/lib/Dropdown';
-import { IIconProps } from '@fluentui/react/lib/Icon';
-import { ImageFit } from '@fluentui/react/lib/Image';
-import { Label } from '@fluentui/react/lib/Label';
-import { Link } from '@fluentui/react/lib/Link';
-import { IModalProps } from '@fluentui/react/lib/Modal';
-import { PanelType } from '@fluentui/react/lib/Panel';
+import {
+  ExclamationCircleIcon,
+  Flex,
+  Text as NorthstarText,
+  ScreenshareIcon,
+  ShareGenericIcon,
+} from '@fluentui/react-northstar';
+import {
+  GroupOrder,
+  IGrouping,
+  IViewField,
+  SelectionMode,
+} from '../../../ListView';
 import {
   IBasePickerStyles,
   ITag,
 } from '@fluentui/react/lib/Pickers';
-import { Stack } from '@fluentui/react/lib/Stack';
-import { mergeStyles } from '@fluentui/react/lib/Styling';
-import { Text } from '@fluentui/react/lib/Text';
-import { TextField } from '@fluentui/react/lib/TextField';
-import { ISize } from '@fluentui/react/lib/Utilities';
-//#endregion
-
 import {
-  DisplayMode,
-  Environment,
-  EnvironmentType,
-  Guid
-} from '@microsoft/sp-core-library';
+  IPeoplePickerContext,
+  PrincipalType,
+} from '../../../controls/peoplepicker';
+//#region Import FluentUI Controls
+import { IPersonaProps, Persona } from '@fluentui/react';
+import {
+  IPickerTerms,
+  UpdateType,
+} from '../../../TaxonomyPicker';
+import {
+  ITreeItem,
+  TreeItemActionsDisplayMode,
+  TreeViewSelectionMode,
+} from '../../../controls/treeView';
+
+import { Accordion } from '../../../controls/accordion';
+import {
+  ChartType,
+} from '../../../ChartControl';
+import {
+  CustomCollectionFieldType,
+} from '../../../FieldCollectionData';
+import { DayOfWeek } from '@fluentui/react/lib/DateTimeUtilities';
+import { EAppHostName } from '../../../controls/userPicker/constants/EAppHostname';
+import { FilterBar } from '../../../FilterBar';
+//#endregion
+import { GeneralHelper } from '../../../Utilities';
+import { IControlsTestProps } from './IControlsTestProps';
+import { IControlsTestState } from './IControlsTestState';
+import { IFileInfo } from '@pnp/sp/files';
+import {
+  IFilePickerResult,
+} from '../../../FilePicker';
+import {
+  IFolder,
+} from '../../../FolderExplorer';
+import { IFrameDialogProps } from '../../../IFrameDialog';
+import { IIconProps } from '@fluentui/react/lib/Icon';
+import {
+  ILocationPickerItem,
+} from '../../../controls/locationPicker/ILocationPicker';
+import { IModalProps } from '@fluentui/react/lib/Modal';
+import {
+  IProgressAction,
+} from '../../../Progress';
+import { ISize } from '@fluentui/react/lib/Utilities';
+import { IStep } from '../../../controls/ProgressStepsIndicator';
+import { ITerm } from '../../../services/ISPTermStorePickerService';
+import { ImageFit } from '@fluentui/react/lib/Image';
+import { Label } from '@fluentui/react/lib/Label';
+import { Link } from '@fluentui/react/lib/Link';
+import {
+  MapType,
+} from '../../../Map';
+import {
+  ModernAudioLabelPosition,
+} from '../../../ModernAudio';
+import { PanelType } from '@fluentui/react/lib/Panel';
+import {
+  PermissionLevel,
+} from '../../../SecurityTrimmedControl';
 import { SPHttpClient } from '@microsoft/sp-http';
 import { SPPermission } from '@microsoft/sp-page-context';
-import { IFileInfo } from '@pnp/sp/files';
+import {
+  SPTaxonomyService
+} from '../../../ModernTaxonomyPicker';
+import SPTermStorePickerService
+  from '../../../services/SPTermStorePickerService';
+import { Stack } from '@fluentui/react/lib/Stack';
+import {
+  TermActionsDisplayMode,
+} from '../../../controls/taxonomyPicker/termActions';
+import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
+import TestCalendarControl from './TestCalendarControl';
+import { Text } from '@fluentui/react/lib/Text';
+import { TextField } from '@fluentui/react/lib/TextField';
+import {
+  TimeDisplayControlType,
+} from '../../../controls/dateTimePicker/TimeDisplayControlType';
+import {
+  VariantType,
+} from '../../../controls/variantThemeProvider';
+import {
+  WidgetSize,
+} from '../../../controls/dashboard';
+import { debounce } from 'lodash';
+import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { sp } from '@pnp/sp';
+import styles from './ControlsTest.module.scss';
+
+//#endregion
+
 
 //#region Import PnP Controls
 const AdaptiveCardDesignerHost = React.lazy(() => import('../../../AdaptiveCardDesignerHost').then(module => ({ default: module.AdaptiveCardDesignerHost })));
 const AdaptiveCardHost = React.lazy(() => import('../../../AdaptiveCardHost').then(module => ({ default: module.AdaptiveCardHost })));
-import {
-  Action,
-  AdaptiveCardHostThemeType,
-  CardElement,
-  CardObjectRegistry,
-  HostCapabilities,
-} from '../../../AdaptiveCardHost';
 
 const AnimatedDialog = React.lazy(() => import('../../../AnimatedDialog').then(module => ({ default: module.AnimatedDialog })));
 
 const ChartControl = React.lazy(() => import('../../../ChartControl').then(module => ({ default: module.ChartControl })));
-import {
-  ChartType,
-} from '../../../ChartControl';
 
 const AccessibleAccordion = React.lazy(() => import('../../../controls/accessibleAccordion').then(module => ({ default: module.Accordion })));
-import {
-  AccordionItem,
-  AccordionItemButton,
-  AccordionItemHeading,
-  AccordionItemPanel,
-} from '../../../controls/accessibleAccordion';
-import { Accordion } from '../../../controls/accordion';
 
 const Carousel = React.lazy(() => import('../../../controls/carousel').then(module => ({ default: module.Carousel })));
-import {
-  CarouselButtonsDisplay,
-  CarouselButtonsLocation,
-  CarouselIndicatorsDisplay,
-  CarouselIndicatorShape,
-} from '../../../controls/carousel';
 
 const ContentTypePicker = React.lazy(() => import('../../../controls/contentTypePicker').then(module => ({ default: module.ContentTypePicker })));
 
 const Dashboard = React.lazy(() => import('../../../controls/dashboard').then(module => ({ default: module.Dashboard })));
-import {
-  WidgetSize,
-} from '../../../controls/dashboard';
 
 const DynamicForm = React.lazy(() => import('../../../controls/dynamicForm').then(module => ({ default: module.DynamicForm })));
 const IconPicker = React.lazy(() => import('../../../controls/iconPicker').then(module => ({ default: module.IconPicker })));
@@ -112,9 +195,6 @@ const ComboBoxListItemPicker = React.lazy(() =>
 const LivePersona = React.lazy(() => import('../../../controls/LivePersona').then(module => ({ default: module.LivePersona })));
 
 const LocationPicker = React.lazy(() => import('../../../controls/locationPicker/LocationPicker').then(module => ({ default: module.LocationPicker })));
-import {
-  ILocationPickerItem,
-} from '../../../controls/locationPicker/ILocationPicker';
 
 const ModernTaxonomyPicker = React.lazy(() => import('../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker').then(module => ({ default: module.ModernTaxonomyPicker })));
 const MonacoEditor = React.lazy(() => import('../../../controls/monacoEditor').then(module => ({ default: module.MonacoEditor })));
@@ -122,76 +202,37 @@ const MyTeams = React.lazy(() => import('../../../controls/MyTeams').then(module
 const Pagination = React.lazy(() => import('../../../controls/pagination').then(module => ({ default: module.Pagination })));
 
 const PeoplePicker = React.lazy(() => import('../../../controls/peoplepicker').then(module => ({ default: module.PeoplePicker })));
-import {
-  IPeoplePickerContext,
-  PrincipalType,
-} from '../../../controls/peoplepicker';
 
 const ProgressStepsIndicator = React.lazy(() => import('../../../controls/ProgressStepsIndicator').then(module => ({ default: module.ProgressStepsIndicator })));
-import { IStep } from '../../../controls/ProgressStepsIndicator';
 
 const SitePicker = React.lazy(() => import('../../../controls/sitePicker/SitePicker').then(module => ({ default: module.SitePicker })));
 const Toolbar = React.lazy(() => import('../../../controls/toolbar').then(module => ({ default: module.Toolbar })));
 const TreeView = React.lazy(() => import('../../../controls/treeView').then(module => ({ default: module.TreeView })));
-import {
-  ITreeItem,
-  TreeItemActionsDisplayMode,
-  TreeViewSelectionMode,
-} from '../../../controls/treeView';
 const UploadFiles = React.lazy(() => import('../../../controls/uploadFiles').then(module => ({ default: module.UploadFiles })));
 const VariantThemeProvider = React.lazy(() => import('../../../controls/variantThemeProvider').then(module => ({ default: module.VariantThemeProvider })));
-import {
-  VariantType,
-} from '../../../controls/variantThemeProvider';
 const ViewPicker = React.lazy(() => import('../../../ViewPicker').then(module => ({ default: module.ViewPicker })));
 
 const DateTimePicker = React.lazy(() => import('../../../DateTimePicker').then(module => ({ default: module.DateTimePicker })));
-import {
-  DateConvention,
-  TimeConvention,
-} from '../../../DateTimePicker';
-import {
-  TimeDisplayControlType,
-} from '../../../controls/dateTimePicker/TimeDisplayControlType';
 
 const DragDropFiles = React.lazy(() => import('../../../DragDropFiles').then(module => ({ default: module.DragDropFiles })));
 
 const EnhancedThemeProvider = React.lazy(() => import('../../../EnhancedThemeProvider').then(module => ({ default: module.EnhancedThemeProvider })));
-import {
-  ControlsTestEnhancedThemeProvider,
-  ControlsTestEnhancedThemeProviderFunctionComponent,
-} from './ControlsTestEnhancedThemeProvider';
 
 const FieldCollectionData = React.lazy(() => import('../../../FieldCollectionData').then(module => ({ default: module.FieldCollectionData })));
-import {
-  CustomCollectionFieldType,
-} from '../../../FieldCollectionData';
 
 const FieldPicker = React.lazy(() => import('../../../FieldPicker').then(module => ({ default: module.FieldPicker })));
 
 const FilePicker = React.lazy(() => import('../../../FilePicker').then(module => ({ default: module.FilePicker })));
-import {
-  IFilePickerResult,
-} from '../../../FilePicker';
 
 const FileTypeIcon = React.lazy(() => import('../../../FileTypeIcon').then(module => ({ default: module.FileTypeIcon })));
-import {
-  ApplicationType,
-  IconType,
-  ImageSize,
-} from '../../../FileTypeIcon';
 
 const FolderExplorer = React.lazy(() => import('../../../FolderExplorer').then(module => ({ default: module.FolderExplorer })));
-import {
-  IFolder,
-} from '../../../FolderExplorer';
 
 const FolderPicker = React.lazy(() => import('../../../FolderPicker').then(module => ({ default: module.FolderPicker })));
 const GridLayout = React.lazy(() => import('../../../GridLayout').then(module => ({ default: module.GridLayout })));
 const HoverReactionsBar = React.lazy(() => import('../../../HoverReactionsBar').then(module => ({ default: module.HoverReactionsBar })));
 
 const IFrameDialog = React.lazy<React.ComponentType<IFrameDialogProps>>(() => import('../../../IFrameDialog').then(module => ({ default: module.IFrameDialog })));
-import { IFrameDialogProps } from '../../../IFrameDialog';
 
 const IFramePanel = React.lazy(() => import('../../../IFramePanel').then(module => ({ default: module.IFramePanel })));
 const ImagePicker = React.lazy(() => import('../../../ImagePicker').then(module => ({ default: module.ImagePicker })));
@@ -201,57 +242,25 @@ const ListItemPicker = React.lazy(() => import('../../../ListItemPicker').then(m
 const ListPicker = React.lazy(() => import('../../../ListPicker').then(module => ({ default: module.ListPicker })));
 
 const ListView = React.lazy(() => import('../../../ListView').then(module => ({ default: module.ListView })));
-import {
-  GroupOrder,
-  IGrouping,
-  IViewField,
-  SelectionMode,
-} from '../../../ListView';
 
 const Map = React.lazy(() => import('../../../Map').then(module => ({ default: module.Map })));
-import {
-  MapType,
-} from '../../../Map';
 
 const ModernAudio = React.lazy(() => import('../../../ModernAudio').then(module => ({ default: module.ModernAudio })));
-import {
-  ModernAudioLabelPosition,
-} from '../../../ModernAudio';
 
 const TaxonomyTree = React.lazy(() => import('../../../ModernTaxonomyPicker').then(module => ({ default: module.TaxonomyTree })));
-import {
-  SPTaxonomyService
-} from '../../../ModernTaxonomyPicker';
 
 const Placeholder = React.lazy(() => import('../../../Placeholder').then(module => ({ default: module.Placeholder })));
 
 const Progress = React.lazy(() => import('../../../Progress').then(module => ({ default: module.Progress })));
-import {
-  IProgressAction,
-} from '../../../Progress';
 
 const RichText = React.lazy(() => import('../../../RichText').then(module => ({ default: module.RichText })));
 const ShareDialog = React.lazy(() => import('../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
 
 const SecurityTrimmedControl = React.lazy(() => import('../../../SecurityTrimmedControl').then(module => ({ default: module.SecurityTrimmedControl })));
-import {
-  PermissionLevel,
-} from '../../../SecurityTrimmedControl';
 
 const SiteBreadcrumb = React.lazy(() => import('../../../SiteBreadcrumb').then(module => ({ default: module.SiteBreadcrumb })));
 
 const TaxonomyPicker = React.lazy(() => import('../../../TaxonomyPicker').then(module => ({ default: module.TaxonomyPicker })));
-import {
-  IPickerTerms,
-  UpdateType,
-} from '../../../TaxonomyPicker';
-import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
-import {
-  TermActionsDisplayMode,
-} from '../../../controls/taxonomyPicker/termActions';
-import { ITerm } from '../../../services/ISPTermStorePickerService';
-import SPTermStorePickerService
-  from '../../../services/SPTermStorePickerService';
 
 const TeamChannelPicker = React.lazy(() => import('../../../TeamChannelPicker').then(module => ({ default: module.TeamChannelPicker })));
 const TeamPicker = React.lazy(() => import('../../../TeamPicker').then(module => ({ default: module.TeamPicker })));
@@ -259,13 +268,8 @@ const TermSetNavigation = React.lazy(() => import('../../../TermSetNavigation').
 const WebPartTitle = React.lazy(() => import('../../../WebPartTitle').then(module => ({ default: module.WebPartTitle })));
 
 const TestControl = React.lazy(() => import('./TestControl').then(module => ({ default: module.TestControl })));
-import { IControlsTestProps } from './IControlsTestProps';
-import { IControlsTestState } from './IControlsTestState';
 
 const UserPicker = React.lazy(() => import('../../../UserPicker').then(module => ({ default: module.UserPicker })));
-//#endregion
-import { GeneralHelper } from '../../../Utilities';
-import { FilterBar } from '../../../FilterBar';
 
 // Used to render document card
 /**
@@ -1992,7 +1996,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <button onClick={this.addFilter}>Add new filter</button>
           </div>
           {controlVisibility.Carousel &&
-            
+
             <div id="CarouselDiv" className={styles.container}>
               <div>
                 <h3>Carousel with fixed elements:</h3>
@@ -2951,6 +2955,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               // onRemoveSelectedUser={onRemovedUser}
               />
             </div>
+          }
+          {
+            controlVisibility.Calendar &&
+            <div id="CalendarDiv" className={styles.container}>
+              <TestCalendarControl
+                  context={this.props.context} theme={this.props.themeVariant as any}   hasTeamsContext={false} themeString={'default'} title={'Calendar'} appHostName={EAppHostName.SharePoint} />
+            </div>
+
           }
         </div>
       </React.Suspense>
