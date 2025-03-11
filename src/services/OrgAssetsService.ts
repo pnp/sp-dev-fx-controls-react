@@ -11,14 +11,16 @@ export class OrgAssetsService extends FileBrowserService {
   private _orgAssetsLibraryServerRelativeSiteUrl: string = null;
 
   private get orgAssetsLibraryServerRelativeSiteUrl(): string {
-    if (this._orgAssetsLibraryServerRelativeSiteUrl === "/") {
-      return "";
-    }
-    return this._orgAssetsLibraryServerRelativeSiteUrl?.replace(/\/$/, "") ?? null;
+    return this._orgAssetsLibraryServerRelativeSiteUrl;
   }
 
   private set orgAssetsLibraryServerRelativeSiteUrl(value: string) {
-    this._orgAssetsLibraryServerRelativeSiteUrl = value;
+    if (value === "/") {
+      this._orgAssetsLibraryServerRelativeSiteUrl = "";
+    }
+    else {
+      this._orgAssetsLibraryServerRelativeSiteUrl = value?.replace(/\/$/, "") ?? null
+    }
   }
 
   /**
