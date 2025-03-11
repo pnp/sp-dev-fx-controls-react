@@ -646,13 +646,13 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
     } = this.state;
     const {value,newValue,required}=this.props;
     if(newValue===undefined){
-      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) 
-      && (value === undefined || value === '' || value === null || this.isEmptyArray(value))? strings.DynamicFormRequiredErrorMessage : null;
+      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))
+      && (value === undefined || value === '' || value === null || this.isEmptyArray(value) || this.checkUserArrayIsEmpty(value))? strings.DynamicFormRequiredErrorMessage : null;
     }
     else{
-      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ? strings.DynamicFormRequiredErrorMessage : null;
+      return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue) || this.checkUserArrayIsEmpty(changedValue)) ? strings.DynamicFormRequiredErrorMessage : null;
     }
-   
+
   }
 
   private getNumberErrorText = (): string => {
@@ -715,6 +715,10 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
 
   private isEmptyArray(value): boolean {
     return Array.isArray(value) && value.length === 0;
+  }
+
+  private checkUserArrayIsEmpty = (value): boolean => {
+    return Array.isArray(value) && value.every(item => item === "");
   }
 
   private MultiChoice_selection = (event: React.FormEvent<HTMLDivElement>, item: IDropdownOption): void => {
