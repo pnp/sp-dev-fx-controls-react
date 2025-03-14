@@ -121,23 +121,32 @@ The `DynamicForm` can be configured with the following properties:
 ## How to use styles property
 
 Property styles of Dynamic Form gives you a set of properties which you can use to modify styles.
-In this example it shows 4 columns (by default it shows 3 columns per row) in one row if screen size is bigger than 1280px and make the error message font size a bit large.
+In this example it shows 4 columns (by default it shows 3 columns per row) in one row if screen size is bigger than 1280px (it requires enable list formatting first)
+and make the error message font size a bit large.
 ```TypeScript
- styles={{
+          styles={{
             sectionFormField: {
               selectors: {
                 ':has(div)': {
                   [`@media (min-width: 1280px)`]: {
                     "min-width": '21%',
-                    "max-width": '21%' //force show 4 columns per row in big screen size
+                    "max-width": '21%' //force show 4 columns per row in big screen size when enabled list custom formatting
                   }
                 },
               },
             },
-            subComponentStyles:{
-              fieldStyles:{
-                errormessage:{
-                  "font-size":"18px" //overwrite the error message font size in Dynamic Field
+
+            subComponentStyles: {
+              fieldStyles: {
+                errormessage: {
+                  "font-size": "18px" //overwrite the error message font size in Dynamic Field for Lookup/Note/Date fields (The error message element is generated directly in Dynamic Field control)
+                },
+                fieldDisplay: {
+                  selectors: {
+                    '.ms-TextField-errorMessage': {
+                      "font-size": "18px !important" //overwrite the error message font size in Dynamic Field for TextField (error message element is wrapped in Fluent UI TextField control, we cannot modify it directly,we have to use 'selectors' to change it)
+                    }
+                  }
                 }
               }
             }
