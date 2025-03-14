@@ -10,7 +10,7 @@ export const getFieldStyles = (
   const { required, theme } = props;
   const { palette } = theme;
   const globalClassNames = {
-    titleContianer: 'titleContainer',
+    titleContainer: 'titleContainer',
     fieldEditor: 'fieldEditor',
     fieldIcon: 'fieldIcon',
     fieldContainer: 'fieldContainer',
@@ -55,7 +55,7 @@ export const getFieldStyles = (
 
   return {
     titleContainer: [
-      globalClassNames.titleContianer,
+      globalClassNames.titleContainer,
       {
         display: 'flex',
       },

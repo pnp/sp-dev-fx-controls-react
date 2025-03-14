@@ -305,6 +305,7 @@ export class DynamicFormBase extends React.Component<
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
     const { hiddenByFormula, isSaving, validationErrors } = this.state;
+    const styles = getFieldstyles(this._classNames.subComponentStyles.fieldStyles(), { theme: theme });
 
     // If the field is hidden by a formula or field doesn't exist (usually occurs in custom formatting section layout when field display name changed), don't render it
     if (!field || hiddenByFormula.find(h => h === field.columnInternalName)) {
@@ -332,6 +333,7 @@ export class DynamicFormBase extends React.Component<
     return (
       <DynamicField
         key={field.columnInternalName}
+        styles={styles}
         {...field}
         disabled={field.disabled || isSaving}
         validationErrorMessage={validationErrorMessage}
