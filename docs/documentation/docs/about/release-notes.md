@@ -26,6 +26,7 @@
 - Optimizing ControlsTest webpart in the SPFx source project [#1951](https://github.com/pnp/sp-dev-fx-controls-react/pull/1951)
 - [DynamicForm] Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
 - [DynamicForm] Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
+- [DynamicForm] required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
 
 ### Contributors
 
