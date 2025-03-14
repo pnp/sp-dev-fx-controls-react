@@ -70,9 +70,10 @@ The `DynamicForm` can be configured with the following properties:
 | storeLastActiveTab | boolean | no |  When uploading files: Specifies if last active tab will be stored after the Upload panel has been closed. Note: the value of selected tab is stored in the queryString hash. Default - `true` |
 | folderPath | string | no | Server relative or library relative folder to create the item in. This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. Defaults to the root folder of the library. |
 | className | string | no | Set CSS Class. |
-| styles | IStyleFunctionOrObject&lt;IDynamicFormStyleProps, [IDynamicFormStyles](#IDynamicFormStyles)&gt; | no | Styles to apply on control.  See the example [here](#how-to-use-styles-property) |
+| styles | IStyleFunctionOrObject&lt;IDynamicFormStyleProps, [IDynamicFormStyles](#idynamicformstyles-interface)&gt; | no | Styles to apply on control.  See the example [here](#how-to-use-styles-property) |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
+
 | Property                    | Type    | Required | Description                                                                      |
 | --------------------------- | ------- | -------- | -------------------------------------------------------------------------------- |
 | showDialogOnValidationError | boolean | no       | Specifies if the dialog should be shown on validation error. Default - `false`   |
@@ -80,24 +81,25 @@ The `DynamicForm` can be configured with the following properties:
 | customMessage               | string  | no       | Specifies a custom message to be shown in the validation dialog. Default - empty |
 
 ## IDynamicFormStyles interface
+
 | Property | Type  | Description |
 | ---- | ---- | ---- |
 | root | IStyle | styles for the root element |
-| sectionTitle | IStyle | styles for the **section title** when your list has enabled [list formatting on form layout](https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-body-with-one-or-more-sections) |
+| sectionTitle | IStyle | styles for the **section title** when your list has enabled [list formatting on form layout](https://learn.microsoft.com/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-body-with-one-or-more-sections) |
 | sectionFormFields | IStyle | styles for the **section container** when your list has enabled list formatting on form layout |
 | sectionFormField | IStyle | styles for the **section field** when your list has enabled list formatting on form layout |
 | sectionLine | IStyle | styles for the **section line break** when your list has enabled list formatting on form layout |
-| header | IStyle | styles for the **header** when your list has enabled list formatting on [custom header](https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-header) |
-| footer | IStyle | styles for the **footer** when your list has enabled list formatting on [custom footer](https://learn.microsoft.com/en-us/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-footer) |
+| header | IStyle | styles for the **header** when your list has enabled list formatting on [custom header](https://learn.microsoft.com/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-header) |
+| footer | IStyle | styles for the **footer** when your list has enabled list formatting on [custom footer](https://learn.microsoft.com/sharepoint/dev/declarative-customization/list-form-configuration#configure-custom-footer) |
 | validationErrorDialog | IStyle | styles for the **content** element in Validation Error Dialog  |
 | actions | IStyle | styles for the **actions** element in Validation Error Dialog  |
 | actionsRight | IStyle | styles for the **button container** of Validation Error Dialog  |
 | action | IStyle | styles for the **close button** in Validation Error Dialog  |
 | buttons | IStyle | styles for the buttons (save button/cancel button)  |
-| subComponentStyles | {fieldStyles: [IDynamicFieldStyles](#IDynamicFieldStyles)} | styles of dynamic field control|
-
+| subComponentStyles | {fieldStyles: [IDynamicFieldStyles](#idynamicfieldstyles-interface)} | styles of dynamic field control|
 
 ## IDynamicFieldStyles interface
+
 | Property | Type  | Description |
 | ---- | ---- | ---- |
 | FieldEditor | IStyle |  styles for root element |
@@ -116,8 +118,8 @@ The `DynamicForm` can be configured with the following properties:
 | thumbnailFieldButtons | IStyle | styles for button when field type is 'Thumbnail' |
 | selectedFileContainer | IStyle | styles for File Selection Control |
 
+## How to use styles property
 
-## How to use styles property 
 Property styles of Dynamic Form gives you a set of properties which you can use to modify styles.
 In this example it shows 4 columns (by default it shows 3 columns per row) in one row if screen size is bigger than 1280px and make the error message font size a bit large.
 ```TypeScript
