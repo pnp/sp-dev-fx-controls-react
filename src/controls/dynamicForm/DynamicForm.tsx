@@ -42,7 +42,7 @@ import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
-import { getStyles } from "./DynamicForm.sytles";
+import { getStyles } from "./DynamicForm.styles";
 import { getFluentUIThemeOrDefault } from "../../common/utilities/ThemeUtility";
 import { classNamesFunction, IProcessedStyleSet, styled } from "@fluentui/react";
 
