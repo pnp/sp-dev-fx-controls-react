@@ -24,7 +24,8 @@
 - `ModernTaxonomyPicker` allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
 - `UserPicker` fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
 - Optimizing ControlsTest webpart in the SPFx source project [#1951](https://github.com/pnp/sp-dev-fx-controls-react/pull/1951)
-- [Dynamic Form] Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
+- [DynamicForm] Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
+- [DynamicForm] Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
 
 ### Contributors
 
