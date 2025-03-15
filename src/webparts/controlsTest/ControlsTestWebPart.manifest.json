@@ -30,6 +30,7 @@
         "dynamicFormClientSideValidationEnabled": true,
         "dynamicFormFieldValidationEnabled" : true,
         "dynamicFormFileSelectionEnabled": false,
+        "dynamicFormToggleTaxonomyPicker": false,
         "controlVisibility": {
           "all": false,
           "AccessibleAccordion": false,
