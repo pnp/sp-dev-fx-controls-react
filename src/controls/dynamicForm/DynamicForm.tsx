@@ -1,7 +1,6 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import * as React from "react";
 import * as strings from "ControlStrings";
-import styles from "./DynamicForm.module.scss";
 
 // Controls
 import {
@@ -22,6 +21,8 @@ import {
   DateFormat,
   FieldChangeAdditionalData,
   IDynamicFieldProps,
+  IDynamicFieldStyleProps,
+  IDynamicFieldStyles,
 } from "./dynamicField/IDynamicFieldProps";
 import { FilePicker, IFilePickerResult } from "../filePicker";
 import { Guid } from '@microsoft/sp-core-library';
@@ -42,12 +43,19 @@ import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
 import { SPTaxonomyService } from '../../services/SPTaxonomyService';
+import { getStyles } from "./DynamicForm.styles";
+import { getFluentUIThemeOrDefault } from "../../common/utilities/ThemeUtility";
+import { classNamesFunction, IProcessedStyleSet, styled } from "@fluentui/react";
+
 // Dynamic Form Props / State
-import { IDynamicFormProps } from "./IDynamicFormProps";
+import { IDynamicFormProps, IDynamicFormStyleProps, IDynamicFormStyles } from "./IDynamicFormProps";
 import { IDynamicFormState } from "./IDynamicFormState";
 import { Icon } from "@fluentui/react/lib/Icon";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
+const getstyles = classNamesFunction<IDynamicFormStyleProps, IDynamicFormStyles>();
+const getFieldstyles = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
+const theme = getFluentUIThemeOrDefault();
 
 const timeout = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -56,7 +64,7 @@ const timeout = (ms: number): Promise<void> => {
 /**
  * DynamicForm Class Control
  */
-export class DynamicForm extends React.Component<
+export class DynamicFormBase extends React.Component<
   IDynamicFormProps,
   IDynamicFormState
 > {
@@ -67,6 +75,7 @@ export class DynamicForm extends React.Component<
   private webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
+  private _classNames: IProcessedStyleSet<IDynamicFormStyles>;
 
   constructor(props: IDynamicFormProps) {
     super(props);
@@ -158,10 +167,15 @@ export class DynamicForm extends React.Component<
 
     const customFormattingDisabled = this.props.useCustomFormatting === false;
 
+    const { className } = this.props;
+    const styles = (this._classNames = getstyles(this.props.styles, { className: className }));
+
     // Custom Formatting - Header
     let headerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.header) {
-      headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true) as JSX.Element;
+       headerContent = <div className={styles.header}>
+        {this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true)}
+      </div>
     }
 
     // Custom Formatting - Body
@@ -181,7 +195,9 @@ export class DynamicForm extends React.Component<
     // Custom Formatting - Footer
     let footerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.footer) {
-      footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true) as JSX.Element;
+      footerContent = <div className={styles.footer}>
+      {this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true)}
+    </div>
     }
 
     // Content Type
@@ -292,9 +308,10 @@ export class DynamicForm extends React.Component<
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
     const { hiddenByFormula, isSaving, validationErrors } = this.state;
+    const styles = getFieldstyles(this._classNames.subComponentStyles.fieldStyles(), { theme: theme });
 
-    // If the field is hidden by a formula, don't render it
-    if (hiddenByFormula.find(h => h === field.columnInternalName)) {
+    // If the field is hidden by a formula or field doesn't exist (usually occurs in custom formatting section layout when field display name changed), don't render it
+    if (!field || hiddenByFormula.find(h => h === field.columnInternalName)) {
       return null;
     }
 
@@ -319,6 +336,7 @@ export class DynamicForm extends React.Component<
     return (
       <DynamicField
         key={field.columnInternalName}
+        styles={styles}
         {...field}
         disabled={field.disabled || isSaving}
         validationErrorMessage={validationErrorMessage}
@@ -1013,7 +1031,7 @@ export class DynamicForm extends React.Component<
       let bodySections: ICustomFormattingBodySection[];
       if (listInfo.ClientFormCustomFormatter && listInfo.ClientFormCustomFormatter[contentTypeId]) {
         const customFormatInfo = JSON.parse(listInfo.ClientFormCustomFormatter[contentTypeId]) as ICustomFormatting;
-        bodySections = customFormatInfo.bodyJSONFormatter.sections;
+        bodySections = customFormatInfo.bodyJSONFormatter?.sections;
         headerJSON = customFormatInfo.headerJSONFormatter;
         footerJSON = customFormatInfo.footerJSONFormatter;
       }
@@ -1577,6 +1595,7 @@ export class DynamicForm extends React.Component<
       missingSelectedFile
     } = this.state;
 
+    const styles = getFieldstyles(this._classNames.subComponentStyles.fieldStyles(), { theme: theme });
     const labelEl = <label className={styles.fieldRequired + ' ' + styles.fieldLabel}>{strings.DynamicFormChooseFileLabel}</label>;
 
     return <div>
@@ -1708,4 +1727,14 @@ export class DynamicForm extends React.Component<
       throw error;
     }
   }
+
 }
+
+export const DynamicForm = styled<IDynamicFormProps, IDynamicFormStyleProps, IDynamicFormStyles>(
+  DynamicFormBase,
+  getStyles,
+  undefined,
+  {
+    scope: 'DynamicForm',
+  },
+);

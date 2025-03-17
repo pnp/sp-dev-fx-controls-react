@@ -27,10 +27,11 @@
 - [DynamicForm] Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
 - [DynamicForm] Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
 - [DynamicForm] required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
+- [DynamicForm] Fix for 1788/1794 and add styles property for support customizing styling [#1913](https://github.com/pnp/sp-dev-fx-controls-react/pull/1913)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [brianpmccullough](https://github.com/brianpmccullough), [EnablingLogic](https://github.com/EnablingLogic), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Kevin T. Coughlin](https://github.com/KevinTCoughlin), [Konrad K.](https://github.com/wilecoyotegenius), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr).
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [brianpmccullough](https://github.com/brianpmccullough), [EnablingLogic](https://github.com/EnablingLogic), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Kevin T. Coughlin](https://github.com/KevinTCoughlin), [Konrad K.](https://github.com/wilecoyotegenius), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.20.0
 

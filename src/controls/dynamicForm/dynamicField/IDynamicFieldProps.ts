@@ -1,5 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
+import { IStyle, IStyleFunctionOrObject, Theme } from '@fluentui/react';
 import { IFilePickerResult } from '../../filePicker';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
@@ -95,4 +96,30 @@ export interface IDynamicFieldProps {
   itemsQueryCountLimit?: number;
   customIcon?: string;
   orderBy?: string;
+  /** Used for customize component styling */
+  styles?:IStyleFunctionOrObject<IDynamicFieldStyleProps, IDynamicFieldStyles>;
+}
+
+
+export interface IDynamicFieldStyleProps {
+  theme: Theme; 
+  required?: boolean;
+}
+
+export interface IDynamicFieldStyles {
+ titleContainer: IStyle;
+ fieldIcon:IStyle;
+ fieldDisplay:IStyle;
+ fieldDisplayNoPadding:IStyle;
+ fieldContainer:IStyle;
+ fieldDescription:IStyle,
+ fieldLabel:IStyle;
+ labelContainer:IStyle;
+ pickersContainer:IStyle;
+ fieldEditor:IStyle;
+ errormessage:IStyle;
+ richText:IStyle;
+ thumbnailFieldButtons:IStyle;
+ selectedFileContainer:IStyle;
+ fieldRequired:IStyle;
 }
