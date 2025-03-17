@@ -107,6 +107,7 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         dynamicFormClientSideValidationEnabled: this.properties.dynamicFormClientSideValidationEnabled,
         dynamicFormFieldValidationEnabled: this.properties.dynamicFormFieldValidationEnabled,
         dynamicFormFileSelectionEnabled: this.properties.dynamicFormFileSelectionEnabled,
+        dynamicFormToggleTaxonomyPicker: this.properties.dynamicFormToggleTaxonomyPicker,
         onOpenPropertyPane: () => {
           this.context.propertyPane.open();
         },
@@ -177,6 +178,9 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
                 }),
                 PropertyPaneToggle('dynamicFormFileSelectionEnabled', {
                   label: 'Dynamic Form File Selection'
+                }),
+                PropertyPaneToggle('dynamicFormToggleTaxonomyPicker', {
+                  label: 'Dynamic Form Use Modern Taxonomy Picker'
                 }),
               ]
             },

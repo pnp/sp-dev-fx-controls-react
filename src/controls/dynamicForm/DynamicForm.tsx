@@ -25,7 +25,7 @@ import {
   IDynamicFieldStyles,
 } from "./dynamicField/IDynamicFieldProps";
 import { FilePicker, IFilePickerResult } from "../filePicker";
-
+import { Guid } from '@microsoft/sp-core-library';
 // pnp/sp, helpers / utils
 import { sp } from "@pnp/sp";
 import "@pnp/sp/lists";
@@ -33,7 +33,7 @@ import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { IFolder } from "@pnp/sp/folders";
-import { IInstalledLanguageInfo, IItemUpdateResult, IList } from "@pnp/sp/presets/all";
+import { IInstalledLanguageInfo, IItemUpdateResult, IList, ITermInfo } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -42,6 +42,7 @@ import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
+import { SPTaxonomyService } from '../../services/SPTaxonomyService';
 import { getStyles } from "./DynamicForm.styles";
 import { getFluentUIThemeOrDefault } from "../../common/utilities/ThemeUtility";
 import { classNamesFunction, IProcessedStyleSet, styled } from "@fluentui/react";
@@ -70,7 +71,7 @@ export class DynamicFormBase extends React.Component<
   private _spService: SPservice;
   private _formulaEvaluation: FormulaEvaluation;
   private _customFormatter: CustomFormattingHelper;
-
+  private _taxonomyService: SPTaxonomyService;
   private webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
@@ -78,7 +79,6 @@ export class DynamicFormBase extends React.Component<
 
   constructor(props: IDynamicFormProps) {
     super(props);
-
     // Initialize pnp sp
     if (this.props.webAbsoluteUrl) {
       sp.setup({
@@ -94,6 +94,9 @@ export class DynamicFormBase extends React.Component<
         spfxContext: { pageContext: this.props.context.pageContext },
       });
     }
+
+    // Initialize taxonomy service
+    this._taxonomyService = new SPTaxonomyService(this.props.context);
 
     // Initialize state
     this.state = {
@@ -358,7 +361,8 @@ export class DynamicFormBase extends React.Component<
       onSubmitError,
       enableFileSelection,
       validationErrorDialogProps,
-      returnListItemInstanceOnSubmit
+      returnListItemInstanceOnSubmit,
+      useModernTaxonomyPicker
     } = this.props;
 
     let contentTypeId = this.props.contentTypeId;
@@ -402,7 +406,6 @@ export class DynamicFormBase extends React.Component<
             shouldBeReturnBack = true;
           }
         }
-
       });
 
       // Perform validation
@@ -504,19 +507,38 @@ export class DynamicFormBase extends React.Component<
           }
 
           // Taxonomy / Managed Metadata fields
+          if(useModernTaxonomyPicker){
+            //Use ITermInfo[] for modern taxonomy picker
+            if (fieldType === "TaxonomyFieldType") {
+              objects[fieldcolumnInternalName] = {
+                  __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
+                  Label: value[0]?.labels[0]?.name ?? "",
+                  TermGuid: value[0]?.id ?? "11111111-1111-1111-1111-111111111111",
+                  WssId: "-1",
+              };
+            }
 
-          if (fieldType === "TaxonomyFieldType") {
-            objects[fieldcolumnInternalName] = {
-              __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-              Label: value[0]?.name ?? "",
-              TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
-              WssId: "-1",
-            };
-          }
-          if (fieldType === "TaxonomyFieldTypeMulti") {
-            objects[hiddenFieldName] = field.newValue
-              .map((term) => `-1#;${term.name}|${term.key};`)
-              .join("#");
+            if (fieldType === "TaxonomyFieldTypeMulti") {
+              objects[hiddenFieldName] = field.newValue
+                  .map((term) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
+                  .join("#");
+            }
+
+          } else {
+            //Use IPickerTerms
+            if (fieldType === "TaxonomyFieldType") {
+              objects[fieldcolumnInternalName] = {
+                __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
+                Label: value[0]?.name ?? "",
+                TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
+                WssId: "-1",
+              };
+            }
+            if (fieldType === "TaxonomyFieldTypeMulti") {
+              objects[hiddenFieldName] = field.newValue
+                .map((term) => `-1#;${term.name}|${term.key};`)
+                .join("#");
+            }
           }
 
           // Other fields
@@ -749,6 +771,7 @@ export class DynamicFormBase extends React.Component<
       return element.columnInternalName === internalName;
     })[0];
 
+    const { useModernTaxonomyPicker } = this.props;
     // Init new value(s)
     field.newValue = newValue;
     field.stringValue = newValue.toString();
@@ -766,8 +789,18 @@ export class DynamicFormBase extends React.Component<
     if (field.fieldType === "Lookup" || field.fieldType === "LookupMulti") {
       field.stringValue = newValue.map(nv => nv.key + ';#' + nv.name).join(';#');
     }
-    if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
-      field.stringValue = newValue.map(nv => nv.name).join(';');
+    if(useModernTaxonomyPicker){
+      if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
+        if (Array.isArray(newValue) && newValue.length > 0) {
+        field.stringValue = newValue.map(nv => nv.labels.map(label => label.name).join(';')).join(';');
+        } else {
+        field.stringValue = "";
+        }
+      }
+    } else {
+      if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
+        field.stringValue = newValue.map(nv => nv.name).join(';');
+      }
     }
 
     // Capture additional property data for User fields
@@ -1083,6 +1116,7 @@ export class DynamicFormBase extends React.Component<
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: {[key: string]: string}): Promise<IDynamicFieldProps[]> {
+    const{ useModernTaxonomyPicker } = this.props;
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
     const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
@@ -1219,64 +1253,141 @@ export class DynamicFormBase extends React.Component<
           }
 
           // Setup Taxonomy / Metadata fields
-          if (field.FieldType === "TaxonomyFieldType") {
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              const response = await this._spService.getSingleManagedMetadataLabel(
-                listId,
-                listItemId,
-                field.InternalName,
-                this.webURL
-              );
-              if (response) {
-                selectedTags.push({
-                  key: response.TermID,
-                  name: response.Label,
-                });
-                value = selectedTags;
-                stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+          if(useModernTaxonomyPicker){
+            if (field.FieldType === "TaxonomyFieldType") {
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
+              if (item !== null) {
+                const response = await this._spService.getSingleManagedMetadataLabel(
+                  listId,
+                  listItemId,
+                  field.InternalName,
+                  this.webURL
+                );
+                if (response) {
+                  const term = await this._taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(response.TermID));
+                  selectedTags.push({
+                    key: response.TermID,
+                    name: response.Label,
+                  });
+                  value = term;//selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              } else {
+                if (defaultValue !== "") {
+                  selectedTags.push({
+                    key: defaultValue.split("|")[1],
+                    name: defaultValue.split("|")[0].split("#")[1],
+                  });
+                  value = selectedTags;
+                }
               }
-            } else {
-              if (defaultValue !== "") {
-                selectedTags.push({
-                  key: defaultValue.split("|")[1],
-                  name: defaultValue.split("|")[0].split("#")[1],
-                });
-                value = selectedTags;
-              }
+              if (defaultValue === "") defaultValue = null;
             }
-            if (defaultValue === "") defaultValue = null;
-          }
-          if (field.FieldType === "TaxonomyFieldTypeMulti") {
-            hiddenName = field.HiddenListInternalName;
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item && item[field.InternalName]) {
-              item[field.InternalName].forEach((element) => {
-                selectedTags.push({
-                  key: element.TermGuid,
-                  name: element.Label,
+            if (field.FieldType === "TaxonomyFieldTypeMulti") {
+              hiddenName = field.HiddenListInternalName;
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
+              if (item && item[field.InternalName]) {
+                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,item[field.InternalName]);
+                item[field.InternalName].forEach((element) => {
+                  selectedTags.push({
+                    key: element.TermGuid,
+                    name: element.Label,
+                  });
                 });
-              });
 
-              value = selectedTags;
-            } else {
-              if (defaultValue && defaultValue !== "") {
-                defaultValue.split(/#|;/).forEach((element) => {
-                  if (element.indexOf("|") !== -1)
-                    selectedTags.push({
-                      key: element.split("|")[1],
-                      name: element.split("|")[0],
+                //value = selectedTags; _selectedTags
+                value = _selectedTags;
+              } else {
+                if (defaultValue && defaultValue !== "") {
+                  defaultValue.split(/#|;/).forEach((element) => {
+                    if (element.indexOf("|") !== -1)
+                      selectedTags.push({
+                        key: element.split("|")[1],
+                        name: element.split("|")[0],
+                      });
+                  });
+
+                  value = selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              }
+              if (defaultValue === "") defaultValue = null;
+            }
+          } else {
+            if (field.FieldType === "TaxonomyFieldType") {
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId;
+              if (item !== null) {
+                const response = await this._spService.getSingleManagedMetadataLabel(
+                  listId,
+                  listItemId,
+                  field.InternalName,
+                  this.webURL
+                );
+                if (response) {
+                  selectedTags.push({
+                    key: response.TermID,
+                    name: response.Label,
+                  });
+                  value = selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              } else {
+                if (defaultValue !== "") {
+                  selectedTags.push({
+                    key: defaultValue.split("|")[1],
+                    name: defaultValue.split("|")[0].split("#")[1],
+                  });
+                  value = selectedTags;
+                }
+              }
+              if (defaultValue === "") defaultValue = null;
+            }
+            if (field.FieldType === "TaxonomyFieldTypeMulti") {
+              hiddenName = field.HiddenListInternalName;
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId;
+              if (item && item[field.InternalName]) {
+                item[field.InternalName].forEach((element) => {
+                  selectedTags.push({
+                    key: element.TermGuid,
+                    name: element.Label,
+                  });
+                });
+
+                value = selectedTags;
+              } else {
+                if (defaultValue && defaultValue !== "") {
+                  defaultValue.split(/#|;/).forEach((element) => {
+                    if (element.indexOf("|") !== -1)
+                      selectedTags.push({
+                        key: element.split("|")[1],
+                        name: element.split("|")[0],
+                      });
+                  });
+
+                  value = selectedTags;
+                } else {
+                  if (defaultValue && defaultValue !== "") {
+                    defaultValue.split(/#|;/).forEach((element) => {
+                      if (element.indexOf("|") !== -1)
+                        selectedTags.push({
+                          key: element.split("|")[1],
+                          name: element.split("|")[0],
+                        });
                     });
-                });
 
-                value = selectedTags;
-                stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                    value = selectedTags;
+                    stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  }
+                }
+                if (defaultValue === "") defaultValue = null;
               }
             }
-            if (defaultValue === "") defaultValue = null;
           }
+
 
           // Setup DateTime fields
           if (field.FieldType === "DateTime") {
@@ -1348,7 +1459,8 @@ export class DynamicFormBase extends React.Component<
             minimumValue: minValue,
             maximumValue: maxValue,
             showAsPercentage: showAsPercentage,
-            customIcon: customIcons ? customIcons[field.InternalName] : undefined
+            customIcon: customIcons ? customIcons[field.InternalName] : undefined,
+            useModernTaxonomyPickerControl: useModernTaxonomyPicker,
           });
 
           // This may not be necessary now using RenderListDataAsStream
@@ -1357,6 +1469,55 @@ export class DynamicFormBase extends React.Component<
       }
     }
     return tempFields;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private getTermsForModernTaxonomyPicker = async (termsetId: any, terms: any): Promise<ITermInfo[]> => {
+    if (!terms || terms.length === 0) {
+      return [];
+    }
+    const selectedTerms: ITermInfo[] = await Promise.all(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      terms.map(async (fetchedterm: any) => {
+        if (!fetchedterm?.TermGuid) {
+          console.error(`Error: TermGuid is undefined for term`, fetchedterm);
+          return null;
+        }
+
+        try {
+          const response = await this._taxonomyService.getTermById(
+            Guid.parse(termsetId),
+            Guid.parse(fetchedterm.TermGuid)
+          );
+
+          return {
+            id: response.id,
+            labels: [
+              {
+                name: response.labels?.[0]?.name ?? fetchedterm.Label,
+                isDefault: response.labels?.[0]?.isDefault ?? true,
+                languageTag: response.labels?.[0]?.languageTag ?? "en-US",
+              },
+            ],
+            childrenCount: response.childrenCount ?? 0,
+            createdDateTime: response.createdDateTime ?? new Date().toISOString(),
+            lastModifiedDateTime: response.lastModifiedDateTime ?? new Date().toISOString(),
+            descriptions: response.descriptions ?? [],
+            customSortOrder: response.customSortOrder ?? [],
+            properties: response.properties ?? [],
+            localProperties: response.localProperties ?? [],
+            isDeprecated: response.isDeprecated ?? false,
+            isAvailableForTagging: response.isAvailableForTagging ?? [],
+            topicRequested: response.topicRequested ?? false,
+          } as ITermInfo;
+        } catch (error) {
+          console.error(`Error fetching term ${fetchedterm.TermGuid}:`, error);
+          return null;
+        }
+      })
+    );
+
+    return selectedTerms.filter(term => term !== null);
   }
 
   private cultureNameLookup(lcid: number): string {

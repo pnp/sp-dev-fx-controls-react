@@ -32,5 +32,6 @@ export interface IControlsTestWebPartProps {
   dynamicFormClientSideValidationEnabled: boolean;
   dynamicFormFieldValidationEnabled: boolean;
   dynamicFormFileSelectionEnabled: boolean;
+  dynamicFormToggleTaxonomyPicker: boolean;
   controlVisibility: ControlVisibility
 }

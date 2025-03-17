@@ -80,6 +80,9 @@ export interface IDynamicFieldProps {
   /** Used for files / image uploads */
   additionalData?: FieldChangeAdditionalData;
 
+  /** Used to Render TaxonomyPicker or ModernTaxonomyPicker */
+  useModernTaxonomyPickerControl?: boolean;
+
   // Related to various field types
   options?: IDropdownOption[];
   isRichText?: boolean;
