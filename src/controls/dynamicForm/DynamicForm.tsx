@@ -1238,7 +1238,7 @@ export class DynamicForm extends React.Component<
           if(useModernTaxonomyPicker){
             if (field.FieldType === "TaxonomyFieldType") {
               termSetId = field.TermSetId;
-              anchorId = field.AnchorId;
+              anchorId = field.AnchorId !== '00000000-0000-0000-0000-000000000000' ? field.AnchorId : null;
               if (item !== null) {
                 const response = await this._spService.getSingleManagedMetadataLabel(
                   listId,
@@ -1269,7 +1269,7 @@ export class DynamicForm extends React.Component<
             if (field.FieldType === "TaxonomyFieldTypeMulti") {
               hiddenName = field.HiddenListInternalName;
               termSetId = field.TermSetId;
-              anchorId = field.AnchorId;
+              anchorId = field.AnchorId !== '00000000-0000-0000-0000-000000000000' ? field.AnchorId : null;
               if (item && item[field.InternalName]) {
                 const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,item[field.InternalName]);
                 item[field.InternalName].forEach((element) => {

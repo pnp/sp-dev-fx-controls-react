@@ -34,7 +34,7 @@ module.exports = {
         //
         // STANDARDIZED BY:   @typescript-eslint\eslint-plugin\dist\configs\recommended.json
         '@typescript-eslint/explicit-function-return-type': [
-          0,
+          1,
           {
             'allowExpressions': true,
             'allowTypedFunctionExpressions': true,

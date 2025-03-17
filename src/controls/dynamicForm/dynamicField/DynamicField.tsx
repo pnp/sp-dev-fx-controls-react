@@ -560,7 +560,7 @@ export class DynamicField extends React.Component<IDynamicFieldProps, IDynamicFi
                 placeHolder={placeholder}
                 allowMultipleSelections={false}
                 termSetId={fieldTermSetId}
-                anchorTermId={fieldAnchorId}
+                anchorTermId={fieldAnchorId !== null ? fieldAnchorId : undefined}
                 panelTitle={strings.DynamicFormTermPanelTitle}
                 context={context}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
