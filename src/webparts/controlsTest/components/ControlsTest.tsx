@@ -2531,7 +2531,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <ModernTaxonomyPicker
                 allowMultipleSelections={true}
                 termSetId={this.termSetId}
-                anchorTermId='eea43536-1ef0-4248-8763-2f068b3d7778'
                 panelTitle="Panel title"
                 label={"Modern Taxonomy Picker"}
                 context={this.props.context}
