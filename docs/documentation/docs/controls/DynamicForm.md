@@ -123,6 +123,7 @@ The `DynamicForm` can be configured with the following properties:
 Property styles of Dynamic Form gives you a set of properties which you can use to modify styles.
 In this example it shows 4 columns (by default it shows 3 columns per row) in one row if screen size is bigger than 1280px (it requires enable list formatting first)
 and make the error message font size a bit large.
+
 ```TypeScript
 styles={{
   sectionFormField: {
