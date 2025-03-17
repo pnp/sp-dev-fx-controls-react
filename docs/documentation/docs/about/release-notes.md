@@ -13,6 +13,7 @@
 
 - Update markdown-it to >=13.0.2 [#1916](https://github.com/pnp/sp-dev-fx-controls-react/issues/1916)
 - Dispose of Async instance to prevent memory leak [#1936](https://github.com/pnp/sp-dev-fx-controls-react/pull/1936)
+- `DynamicForm`: Added support to ModernTaxonomyPicker [#1962](https://github.com/pnp/sp-dev-fx-controls-react/pull/1962)
 
 ### Fixes
 
@@ -20,14 +21,14 @@
 - `Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)
 - `WebPartTitle`: Control Fails to Update After Initial Save [#1877](https://github.com/pnp/sp-dev-fx-controls-react/issues/1877)
 - `DynamicForm`: Creating a document set sometimes throws a 409 save [#1919](https://github.com/pnp/sp-dev-fx-controls-react/issues/1919)
-- `ModernTaxonomyPicker` Fix - Adding a new term adds the term to the parentLevel [#1922](https://github.com/pnp/sp-dev-fx-controls-react/pull/1922)
-- `ModernTaxonomyPicker` allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
-- `UserPicker` fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
+- `ModernTaxonomyPicker`: Fix - Adding a new term adds the term to the parentLevel [#1922](https://github.com/pnp/sp-dev-fx-controls-react/pull/1922)
+- `ModernTaxonomyPicker`: allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
+- `UserPicker`: fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
 - Optimizing ControlsTest webpart in the SPFx source project [#1951](https://github.com/pnp/sp-dev-fx-controls-react/pull/1951)
-- [DynamicForm] Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
-- [DynamicForm] Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
-- [DynamicForm] required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
-- [DynamicForm] Fix for 1788/1794 and add styles property for support customizing styling [#1913](https://github.com/pnp/sp-dev-fx-controls-react/pull/1913)
+- `DynamicForm`: Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
+- `DynamicForm`: Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
+- `DynamicForm`: required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
+- `DynamicForm`: Fix for 1788/1794 and add styles property for support customizing styling [#1913](https://github.com/pnp/sp-dev-fx-controls-react/pull/1913)
 
 ### Contributors
 
