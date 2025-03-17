@@ -113,7 +113,7 @@ export interface IDynamicFieldStyles {
  fieldLabel:IStyle;
  labelContainer:IStyle;
  pickersContainer:IStyle;
- FieldEditor:IStyle;
+ fieldEditor:IStyle;
  errormessage:IStyle;
  richText:IStyle;
  thumbnailFieldButtons:IStyle;

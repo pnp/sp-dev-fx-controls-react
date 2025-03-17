@@ -78,7 +78,7 @@ export const getFieldStyles = (
       globalClassNames.fieldDisplayNoPadding,
       fieldDisplay_style,
     ],
-    FieldEditor: [globalClassNames.fieldEditor, { padding: '4px 3px' }],
+    fieldEditor: [globalClassNames.fieldEditor, { padding: '4px 3px' }],
     fieldDescription: [
       globalClassNames.fieldDescription,
       {

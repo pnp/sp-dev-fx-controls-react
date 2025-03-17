@@ -56,7 +56,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
         required:this.props.required
       }));
       return (
-        <div className={styles.FieldEditor}>
+        <div className={styles.fieldEditor}>
           {this.getFieldComponent()}
         </div>
       );
