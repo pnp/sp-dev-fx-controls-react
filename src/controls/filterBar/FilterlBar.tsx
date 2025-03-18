@@ -31,7 +31,7 @@ export interface IFilterPillBarProps {
 
 export const FilterBar: React.FunctionComponent<IFilterPillBarProps> = (props: IFilterPillBarProps) => {
     
-    const orderedArray = (arr: IFilterBarItem[]) => {
+    const orderedArray = (arr: IFilterBarItem[]): IFilterBarItem[] => {
         const ret: IFilterBarItem[] = [];
         arr.map(i => {
             const index = findLastIndex(ret, r => r.label === i.label);
@@ -65,14 +65,14 @@ export const FilterBar: React.FunctionComponent<IFilterPillBarProps> = (props: I
         return acc;
     }, []);
 
-    const clearAll = () => {
+    const clearAll = (): void => {
         
         if (props.onClearFilters) {
             props.onClearFilters();
         }
     }
 
-    const pillClick = (label?: string, value?: string) => {
+    const pillClick = (label?: string, value?: string): void => {
         console.log(label, value);
         if (props.onRemoveFilter) {
             props.onRemoveFilter(label as string, value as string);

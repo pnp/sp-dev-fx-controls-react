@@ -12,7 +12,7 @@ export interface IOverflowPillProps  {
     items: IFilterBarItemGroup[];
 }
 
-export const OverflowPill = (props: IOverflowPillProps) => {
+export const OverflowPill = (props: IOverflowPillProps): JSX.Element => {
     const [overlayVisible, {toggle: toggleOverlayVisible}] = useBoolean(false);
     const divId = useId('callout-div');
 
@@ -20,7 +20,7 @@ export const OverflowPill = (props: IOverflowPillProps) => {
         toggleOverlayVisible();
     } 
 
-    const pillClick = (label, value) => {
+    const pillClick = (label, value): void => {
         if (props.onClick)
         {
             props.onClick(label, value);

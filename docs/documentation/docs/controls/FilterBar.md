@@ -79,10 +79,10 @@ The `FilterBar` control can be configured with the following properties:
 | onRemoveFilter | (label: string, value: string) => void | no | Callback function called after clicking a singular filter pill | |
 
 ## IFilterBarItem
-| Property | Type | Required | Description | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| label | string | yes | Filter label | |
-| value | string | yes | Filter value | |
 
+| Property | Type   | Required | Description  | Default |
+| -------- | ------ | -------- | ------------ | ------- |
+| label    | string | yes      | Filter label |         |
+| value    | string | yes      | Filter value |         |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FilterBar)

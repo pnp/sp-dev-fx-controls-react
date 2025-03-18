@@ -10,15 +10,16 @@ export interface IPillProps  {
     value?: string;
     field?: string;
 }
-export const Pill = (props: IPillProps) => {
+export const Pill = (props: IPillProps): JSX.Element => {
     
-    const onClick = (event) => {
+    const onClick = (event): void => {
         if (props.onClick)
         {
             props.onClick(props.field, props.value);
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const buttonProps: any = {
         title: props.clearAll ? strings.ClearAllFiltersTitle: strings.ClearFilterTitle,
         className: `${styles.pill} ${props.clearAll ? `${styles.pill} ${styles.clearAll}` : ""}`,
