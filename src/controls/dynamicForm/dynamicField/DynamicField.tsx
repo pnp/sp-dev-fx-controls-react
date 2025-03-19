@@ -353,6 +353,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
               onSelectDate={(newDate) => { this.onChange(newDate, true); }}
               disabled={disabled}
               firstDayOfWeek={firstDayOfWeek}
+              allowTextInput={true}
             />}
           {
             dateFormat === 'DateTime' &&
@@ -364,6 +365,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
               onChange={(newDate) => { this.onChange(newDate, true); }}
               disabled={disabled}
               firstDayOfWeek={firstDayOfWeek}
+              allowTextInput={true}
             />
           }
           {descriptionEl}
