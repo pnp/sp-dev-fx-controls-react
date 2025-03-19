@@ -2,6 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
+  CalendarControlDayOfWeekSunday: "Sunday",
   TermSertNaviagtionErrorMessage: "未发现术语集",
   TermSetNavigationNoTerms: "没有定义术语",
   "Save": "保存",

@@ -24,7 +24,8 @@ import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
   {/* Specify the components to load where Drag and drop area should work */}
 </DragDropFiles>
 ```
-**Content with drag and drop applied**
+
+### Content with drag and drop applied
 
 ```jsx
  <DragDropFiles 
@@ -38,13 +39,14 @@ import { DragDropFiles } from "@pnp/spfx-controls-react/lib/DragDropFiles";
 
           </DragDropFiles>
 ```
+
 ![Custom html with drag and drop](../assets/DragDropFilesSample1.png)
 
-**ListView with drag and drop applied**
+### ListView with drag and drop applied
 
 ![ListView control with drag and drop Control](../assets/ListView-DragDrop.png)
 
-**FilePicker with drag and drop applied**
+### FilePicker with drag and drop applied
 
 ![FilePicker control with grouping](../assets/DragDropFilesSample2.png)
 
@@ -65,14 +67,12 @@ private _getDropFiles = (files) => {
 
 The `DragDropFiles` can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| dropEffect | string  | no | Visual feedback given to user during a drag and drop operation (copy,move,link,none). Default value is `copy`. |
-| enable | boolean | no | Option allow control to be enable or disable. Default value is `true`|
-| labelMessage | string | no | Message displayed in drag drop preview. |
-| onDrop | any | no | Method that returns all Files[] from drag and drop file area.   |
-| iconName | string | no | Icon Name from Office UI Fabric Icons. |
-
-
+| Property     | Type    | Required | Description                                                                                                    |
+| ------------ | ------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| dropEffect   | string  | no       | Visual feedback given to user during a drag and drop operation (copy,move,link,none). Default value is `copy`. |
+| enable       | boolean | no       | Option allow control to be enable or disable. Default value is `true`                                          |
+| labelMessage | string  | no       | Message displayed in drag drop preview.                                                                        |
+| onDrop       | any     | no       | Method that returns all Files[] from drag and drop file area.                                                  |
+| iconName     | string  | no       | Icon Name from Office UI Fabric Icons.                                                                         |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/DragDropFiles)

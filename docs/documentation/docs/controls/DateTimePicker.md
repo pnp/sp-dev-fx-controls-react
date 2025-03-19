@@ -75,42 +75,42 @@ The `DateTimePicker` control can be configured with the following properties:
 | initialPickerDate | Date | no | The initially highlighted date in the calendar picker |
 | maxDate | Date | no | The maximum allowable date. |
 | minDate | Date | no | The minimum allowable date. |
-| minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdow` |
-| showClearDate | boolean | no | Controls whether the clearDate iconbutton must be available when date is selected, default to false |
-| showClearDateIcon | string | no | Controls the icon used for clearDate iconbutton. Defaults to 'RemoveEvent' |
+| minutesIncrementStep | MinutesIncrement | no | Specifies minutes' increment step for `TimeDisplayControlType.Dropdown` |
+| showClearDate | boolean | no | Controls whether the clearDate iconButton must be available when date is selected, default to false |
+| showClearDateIcon | string | no | Controls the icon used for clearDate iconButton. Defaults to 'RemoveEvent' |
 | restrictedDates | Date[] | no | If set the Calendar will not allow selection of dates in this array. |
 
 Enum `TimeDisplayControlType`
 
-| Name | Description |
-| ---- | ---- |
-| Text | Renders Time part as Masked Edit |
-| Dropdown | Renders Time part as Dropdown |
+| Name     | Description                      |
+| -------- | -------------------------------- |
+| Text     | Renders Time part as Masked Edit |
+| Dropdown | Renders Time part as Dropdown    |
 
 Enum `DateConvention`
 
-| Name | Description |
-| ---- | ---- |
+| Name     | Description                    |
+| -------- | ------------------------------ |
 | DateTime | Shows the date and time picker |
-| Date | Shows only the date picker |
+| Date     | Shows only the date picker     |
 
 Enum `TimeConvention`
 
-| Name | Description |
-| ---- | ---- |
+| Name    | Description                                              |
+| ------- | -------------------------------------------------------- |
 | Hours12 | Specify the hours in 12-hours (AM / PM) time convention. |
-| Hours24 | Specify the hours in 24-hours time convention. |
+| Hours24 | Specify the hours in 24-hours time convention.           |
 
 Interface `IDateTimePickerStrings` extends [IDatePickerStrings](https://developer.microsoft.com/en-us/fabric#/components/datepicker)
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| dateLabel | string | no | Label for the date selector. |
-| timeLabel | string | no | Label for the time of day selector. |
-| timeSeparator | string | no | Separator between time of day components (hours, minutes, seconds). |
-| amDesignator | string | no | Used as AM designator when 12-hour clock is used. |
-| pmDesignator | string | no | Used as PM designator when 12-hour clock is used. |
-| textErrorMessage | string | no | Error message when text is entered in the date picker. |
+| Property         | Type   | Required | Description                                                         |
+| ---------------- | ------ | -------- | ------------------------------------------------------------------- |
+| dateLabel        | string | no       | Label for the date selector.                                        |
+| timeLabel        | string | no       | Label for the time of day selector.                                 |
+| timeSeparator    | string | no       | Separator between time of day components (hours, minutes, seconds). |
+| amDesignator     | string | no       | Used as AM designator when 12-hour clock is used.                   |
+| pmDesignator     | string | no       | Used as PM designator when 12-hour clock is used.                   |
+| textErrorMessage | string | no       | Error message when text is entered in the date picker.              |
 
 Type `MinutesIncrement`
 

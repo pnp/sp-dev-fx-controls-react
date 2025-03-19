@@ -17,9 +17,9 @@ All Inputs Elements and Actions of Adaptive Cards have been redefined using Flue
 
 Thanks to the "context" property that allows you to pass the SPFx context, whether the "data" property is passed or not, a new field called @context will be injected into the data object.
 
-This allows, using Adaptive Cards templating syntax and binding feature of the Designer, to access to the context informations.
+This allows, using Adaptive Cards templating syntax and binding feature of the Designer, to access to the context information.
 
-For more info please to refear tot he documentation of [AdaptiveCardHost ](http://www.google.com)control
+For more info please to refer tot he documentation of [AdaptiveCardHost ](http://www.google.com)control
 
 Here is an example of the control in action inside a Web Part:
 
@@ -89,7 +89,7 @@ The `AdaptiveCardDesignerHost` control can be configured with the following prop
 | data | { "$root": object } | false | Set Data Source for template rendering | - |
 | newCardPayload | object | false | Set Adaptive Card payload for the New Card | - |
 | hostContainers | HostContainer[] | false | Set custom HostContainers | [] |
-| supportedTargetVersions | Version[] | false | Set the suported Versions | [Versions.v1_5] |
+| supportedTargetVersions | Version[] | false | Set the supported Versions | [Versions.v1_5] |
 | snippets | IToolboxSnippet[] | false | Set the Toolbox Snippets | [] |
 | bindingPreviewMode | BindingPreviewMode | false | Set the Binding preview mode | BindingPreviewMode.GeneratedData |
 | enableDataBindingSupport | boolean | false | Enable the support for Data Binding | true |

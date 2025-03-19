@@ -1,3 +1,3 @@
 export * from './ProgressStepsIndicator';
-export { IProgressStepsIndicatorProps } from './IProgressStepsIndicatorProps';
-export { IStep } from './IStep';
+export * from './IProgressStepsIndicatorProps';
+export * from './IStep';

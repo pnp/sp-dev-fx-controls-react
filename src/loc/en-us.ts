@@ -445,5 +445,30 @@ define([], () => {
     ImagePickerRetryButtonLabel: "Retry",
     ImagePickerDeleteLabel: "Delete",
 
+    AppliedFiltersAriaLabel: "Applied filters",
+    ClearAllFiltersTitle: "Clear all filters",
+    ClearFilterTitle: "Clear filter",
+    ClearAllFiltersText: "Clear filters",
+    FilterOverflowAriaLabel: "More",
+
+  CalendarControlDayOfWeekSunday:  "Sunday",
+  CalendarControlDayOfWeekMonday: "Monday",
+  CalendarControlDayOfWeekTuesday: "Tuesday",
+  CalendarControlDayOfWeekWednesday: "Wednesday",
+  CalendarControlDayOfWeekThursday: "Thursday",
+  CalendarControlDayOfWeekFriday: "Friday",
+  CalendarControlDayOfWeekSaturday: "Saturday",
+CalendarControlDetailsLabel: "Details",
+
+CalendarControlViewMonthLabel: "Month",
+CalendarControlViewWeekLabel: "Week",
+CalendarControlViewDayLabel: "Day",
+CalendarControlTodayLabel: "Today",
+CalendarControlPreviousLabel: "Previous",
+CalendarControlNextLabel: "Next",
+
+CalendarControlAttendeessLabel: "Attendees",
+CalendarControlFullDaylabel: "Full Day",
+
   };
 });
