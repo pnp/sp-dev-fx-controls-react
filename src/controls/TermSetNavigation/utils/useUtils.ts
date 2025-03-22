@@ -55,10 +55,10 @@ export const useUtils = (): IUseUtils => {
     try {
       const urlValid = new URL(url);
       return !!urlValid;
-    } catch (e) {
+    } catch {
       return false;
     }
   }, []);
 
   return { getTermSetProperty, getCacheKey, getTermProperty, getTermSetLocalizedNames, getTermLabel, validateUrl };
-}; // ... }
+};

@@ -1,6 +1,6 @@
-import { IBasePickerStyles } from "@fluentui/react";
-import { DirectionalHint } from "@fluentui/react/lib/common/DirectionalHint";
-import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerStyles } from '@fluentui/react/lib/Pickers';
 import { IPeoplePickerContext, PrincipalType } from ".";
 
 /**
@@ -136,6 +136,10 @@ export interface IPeoplePickerProps {
    * Define a filter to be applied to the search results, such as a filter to only show users from a specific domain
    */
   resultFilter?: (result: IPersonaProps[]) => IPersonaProps[];
+  /**
+   * When `true`, performs a wider search using Microsoft 365 Substrate
+   */
+  useSubstrateSearch?: boolean;
 }
 
 export interface IPeoplePickerUserItem {

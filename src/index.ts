@@ -45,3 +45,5 @@ export * from './LivePersona';
 export * from './ModernAudio';
 export * from './MonacoEditor';
 export * from './UploadFiles';
+export * from './ShareDialog';
+export * from './Calendar';

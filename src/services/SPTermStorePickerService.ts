@@ -211,7 +211,7 @@ export default class SPTermStorePickerService {
             if (useSessionStorage && window.sessionStorage) {
               window.sessionStorage.setItem(termsetId, JSON.stringify(termStoreResultTermSet));
             }
-          } catch (error) {
+          } catch {
             // do nothing, sometimes storage quota exceed error if too many items
           }
           return termStoreResultTermSet;
@@ -272,7 +272,7 @@ export default class SPTermStorePickerService {
       else {
         return null;
       }
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -343,7 +343,7 @@ export default class SPTermStorePickerService {
             window.sessionStorage.setItem(anchorId, JSON.stringify(returnTerms));
           }
         }
-        catch (error) {
+        catch {
           // do nothing
         }
       }

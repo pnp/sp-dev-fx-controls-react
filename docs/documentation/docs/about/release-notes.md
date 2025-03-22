@@ -1,5 +1,100 @@
 # Releases
 
+## 3.21.0
+
+### New control(s)
+
+- `ShareDialog`: new control `ShareDialog` [#1897](https://github.com/pnp/sp-dev-fx-controls-react/pull/1897)
+- Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)
+- `FilterBar`: new control `FilterBar` [#1884](https://github.com/pnp/sp-dev-fx-controls-react/pull/1884)
+- `Calendar`: new controls `Calendar` [#1955](https://github.com/pnp/sp-dev-fx-controls-react/pull/1955)
+
+### Enhancements
+
+- Update markdown-it to >=13.0.2 [#1916](https://github.com/pnp/sp-dev-fx-controls-react/issues/1916)
+- Dispose of Async instance to prevent memory leak [#1936](https://github.com/pnp/sp-dev-fx-controls-react/pull/1936)
+- `DynamicForm`: Added support to ModernTaxonomyPicker [#1962](https://github.com/pnp/sp-dev-fx-controls-react/pull/1962)
+
+### Fixes
+
+- `ListItemComments`: Can't select text from comment [#1874](https://github.com/pnp/sp-dev-fx-controls-react/issues/1874)
+- `Localization`: Bad translations in DateTimePicker control [#1909](https://github.com/pnp/sp-dev-fx-controls-react/issues/1909)
+- `WebPartTitle`: Control Fails to Update After Initial Save [#1877](https://github.com/pnp/sp-dev-fx-controls-react/issues/1877)
+- `DynamicForm`: Creating a document set sometimes throws a 409 save [#1919](https://github.com/pnp/sp-dev-fx-controls-react/issues/1919)
+- `ModernTaxonomyPicker`: Fix - Adding a new term adds the term to the parentLevel [#1922](https://github.com/pnp/sp-dev-fx-controls-react/pull/1922)
+- `ModernTaxonomyPicker`: allowMultipleSelections = false, but panel allows multiple items to be selected [#1847](https://github.com/pnp/sp-dev-fx-controls-react/issues/1847)
+- `UserPicker`: fix exports and add missing link to documentation [#1925](https://github.com/pnp/sp-dev-fx-controls-react/issues/1925)
+- Optimizing ControlsTest webpart in the SPFx source project [#1951](https://github.com/pnp/sp-dev-fx-controls-react/pull/1951)
+- `DynamicForm`: Not handling mandatory Lookup fields well [#1914](https://github.com/pnp/sp-dev-fx-controls-react/issues/1914)
+- `DynamicForm`: Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
+- `DynamicForm`: required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
+- `DynamicForm`: Fix for 1788/1794 and add styles property for support customizing styling [#1913](https://github.com/pnp/sp-dev-fx-controls-react/pull/1913)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Adam Wójcik](https://github.com/Adam-it), [Alessandro Chiavarino](https://github.com/Alesso-Chiavarino), [Antanina Druzhkina](https://github.com/Ateina), [brianpmccullough](https://github.com/brianpmccullough), [EnablingLogic](https://github.com/EnablingLogic), [Guido Zambarda](https://github.com/GuidoZam), [João Mendes](https://github.com/joaojmendes), [Kevin T. Coughlin](https://github.com/KevinTCoughlin), [Konrad K.](https://github.com/wilecoyotegenius), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nello D'Andrea](https://github.com/ferrarirosso), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Petr Malášek](https://github.com/MalasekPetr), [wuxiaojun514](https://github.com/wuxiaojun514).
+
+## 3.20.0
+
+### Enhancements
+
+- `Dashboard`: added new WidgetSize [#1845](https://github.com/pnp/sp-dev-fx-controls-react/pull/1845)
+- `Dashboard`: IWidgetLink improvements [#1813](https://github.com/pnp/sp-dev-fx-controls-react/pull/1813)
+- `DynamicForm`: custom sorting [#1802](https://github.com/pnp/sp-dev-fx-controls-react/pull/1802)
+- `ImagePicker`: new Control ImagePicker [#1820](https://github.com/pnp/sp-dev-fx-controls-react/pull/1820)
+- `UserPicker`: new Control UserPicker [#1675](https://github.com/pnp/sp-dev-fx-controls-react/pull/1675)
+- `DynamicForm`: DynamicForm storeLastActiveTab option #1879 [#1879](https://github.com/pnp/sp-dev-fx-controls-react/pull/1879)
+- `FilePicker`: Image picker enhancements [#1805](https://github.com/pnp/sp-dev-fx-controls-react/pull/1805)
+- `DynamicForm`: Adds ability to create files/folders in subfolder using DynamicForm. [#1901](https://github.com/pnp/sp-dev-fx-controls-react/issues/1901)
+
+### Fixes
+
+- Debug Controls in any language [#1882](https://github.com/pnp/sp-dev-fx-controls-react/pull/1882)
+- `AdaptiveCardHost`: lock down adaptive-expression package version [#1876](https://github.com/pnp/sp-dev-fx-controls-react/issues/1876)
+- `ListItemPicker`: PR fixes an issue with filtering when using calculated column as columnInternalName in ListItemPicker. [#1887](https://github.com/pnp/sp-dev-fx-controls-react/pull/1887)
+- `ListItemAttachments`: Fix 1858 to correct Chinese localization files #1894 [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)
+- `DynamicForm`: Fixing issue 1862 - Dynamic form should hide fields that are hidden on the List Content Type [#1872](https://github.com/pnp/sp-dev-fx-controls-react/pull/1872)
+- `GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)
+- `DynamicForm`: Always Show Required Field Validation Error In FormDisplayMode.Edit Mode [#1775](https://github.com/pnp/sp-dev-fx-controls-react/issues/1775)
+- `DynamicForm`: Required Field Validation won't work [#1760](https://github.com/pnp/sp-dev-fx-controls-react/issues/1760)
+- `DynamicForm`: Adds ability to render file/folder name field in DynamicForm and Field. [#1906](https://github.com/pnp/sp-dev-fx-controls-react/pull/1906)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [IRRDC](https://github.com/IRRDC), [joaojmendes](https://github.com/joaojmendes), [Martin Lingstuyl](https://github.com/martinlingstuyl), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [srpmtt](https://github.com/srpmtt), [wilecoyotegenius](https://github.com/wilecoyotegenius), [wuxiaojun514](https://github.com/wuxiaojun514).
+
+## 3.19.0
+
+### Enhancements
+
+- SharePoint Framework v1.19.0 support [#1857](https://github.com/pnp/sp-dev-fx-controls-react/pull/1857)
+- `DynamicForm`: enable/disable save button [#1810](https://github.com/pnp/sp-dev-fx-controls-react/pull/1810)
+- `PeoplePicker`: add new prop - `useSubstrateSearch` [#1819](https://github.com/pnp/sp-dev-fx-controls-react/pull/1819)
+- `SitePicker`: add button to clear single / multiple selection [#1839](https://github.com/pnp/sp-dev-fx-controls-react/pull/1839)
+
+### Fixes
+
+- `DynamicForm`: more than 100 lookups and date format in lookup field [#1722](https://github.com/pnp/sp-dev-fx-controls-react/pull/1722)
+- `Richtext`: can not undo ordered lists [#1135](https://github.com/pnp/sp-dev-fx-controls-react/issues/1135)
+- `FilePicker`: fixing organization tab browsing issue [#1861](https://github.com/pnp/sp-dev-fx-controls-react/pull/1861)
+- `PeoplePicker`: method to clear the array [#1838](https://github.com/pnp/sp-dev-fx-controls-react/pull/1838)
+- `SitePicker`: documentation patch [#1842](https://github.com/pnp/sp-dev-fx-controls-react/pull/1842)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Guido Zambarda](https://github.com/GuidoZam), [Luccas Castro](https://github.com/DevPio), [Michaël Maillot](https://github.com/michaelmaillot), [Niels Söth](https://github.com/nsoeth), [srpmtt](https://github.com/srpmtt).
+
+## 3.18.1
+
+### Fixes
+
+- `FilePicker`: Fix issue with adding link by typing in 'From a link' tab [#1814](https://github.com/pnp/sp-dev-fx-controls-react/pull/1814)
+- Update nl-nl.ts [#1823](https://github.com/pnp/sp-dev-fx-controls-react/pull/1823)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Elio Struyf](https://github.com/estruyf).
+
 ## 3.18.0
 
 ### Enhancements
@@ -10,6 +105,8 @@
 - `RichText`: Added style property to Rich text control [#1773](https://github.com/pnp/sp-dev-fx-controls-react/pull/1773)
 - `fast-serve`: Fast-serve update to match the most recent changes. [#1782](https://github.com/pnp/sp-dev-fx-controls-react/pull/1782)
 - `PeoplePicker`: Added context optimization [#1764](https://github.com/pnp/sp-dev-fx-controls-react/pull/1764)
+- `Multiple controls`: Wrong fluentui imports cause webpack build errors [#1763](https://github.com/pnp/sp-dev-fx-controls-react/issues/1763)
+- `FileTypeIcon`: Added standard events [#1789](https://github.com/pnp/sp-dev-fx-controls-react/pull/1789)
 
 ### Fixes
 
@@ -20,7 +117,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [IRRDC](https://github.com/IRRDC), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergei Sergeev](https://github.com/s-KaiNet), [srpmtt](https://github.com/srpmtt).
+Special thanks to our contributors (in alphabetical order): [Guido Zambarda](https://github.com/GuidoZam), [Harminder Singh](https://github.com/HarminderSethi), [IRRDC](https://github.com/IRRDC), [Matthias Z'Brun](https://github.com/raclettierer), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Sergei Sergeev](https://github.com/s-KaiNet), [srpmtt](https://github.com/srpmtt).
 
 ## 3.17.0
 

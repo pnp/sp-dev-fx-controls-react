@@ -6,6 +6,18 @@ const fs = require('fs');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-Grid' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideLeftIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-fadeIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideRightIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-fadeOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-scaleDownIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-scaleDownOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideLeftOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideRightOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideUpOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideDownOut' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideUpIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideDownIn' is not camelCase and will not be type-safe.`);
 
 // Update the version number in the version.ts file
 gulp.task('versionUpdater', (done) => {

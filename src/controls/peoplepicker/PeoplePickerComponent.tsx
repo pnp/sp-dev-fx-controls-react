@@ -6,13 +6,12 @@ import SPPeopleSearchService from "../../services/PeopleSearchService";
 import { IPeoplePickerProps } from './IPeoplePicker';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
-import { NormalPeoplePicker } from '@fluentui/react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { Label } from '@fluentui/react/lib/components/Label';
-import { IBasePickerSuggestionsProps } from "@fluentui/react/lib/components/pickers/BasePicker.types";
-import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
+import { Label } from '@fluentui/react/lib/Label';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker} from '@fluentui/react/lib/Pickers';
 
 interface IPeoplePickerState {
   mostRecentlyUsedPersons?: IPersonaProps[];
@@ -37,7 +36,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   constructor(props: IPeoplePickerProps) {
     super(props);
 
-    this.peopleSearchService = new SPPeopleSearchService(props.context);
+    this.peopleSearchService = new SPPeopleSearchService(props.context, props.useSubstrateSearch);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
     this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 
@@ -96,6 +95,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
+  /**
+   * clears all users and groups
+   */
+  public clearSelectedPersons(): void {
+    this.setState({
+      selectedPersons: []
+    });
+  }
 
   /**
    * Get initial persons
@@ -277,7 +284,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           });
         }
       }
-      catch (err) {
+      catch {
         this.validated(items);
       }
     }
@@ -386,6 +393,3 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     );
   }
 }
-
-
-

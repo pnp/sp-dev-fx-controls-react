@@ -1,30 +1,45 @@
-import { ThemeProvider } from '@fluentui/react-theme-provider';
-import { mergeThemes } from '@fluentui/theme/lib/mergeThemes';
-import { Action, AdaptiveCard, CardElement, CardObjectRegistry, ExecuteAction, GlobalRegistry, OpenUrlAction, SerializationContext, SubmitAction } from 'adaptivecards';
-import { Template } from 'adaptivecards-templating';
-import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
-import { CustomizerContext } from '@fluentui/react/lib/Utilities';
 import * as React from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import { ThemeProvider } from '@fluentui/react-theme-provider';
+import { mergeThemes } from '@fluentui/theme';
 import {
-  useCallback,
-  useEffect,
-  useRef
-} from 'react';
+  Action,
+  AdaptiveCard,
+  CardElement,
+  CardObjectRegistry,
+  ExecuteAction,
+  GlobalRegistry,
+  OpenUrlAction,
+  SerializationContext,
+  SubmitAction,
+} from 'adaptivecards';
+import { Template } from 'adaptivecards-templating';
+import { IPartialTheme, ITheme, CustomizerContext } from '@fluentui/react';
 import { fluentUIDefaultTheme } from '../../common/fluentUIThemes/FluentUIDefaultTheme';
 import { initializeAdaptiveCardHost } from './AdaptiveCardHost.HostConfig';
-import { initProcessMarkdown, injectContextProperty } from './AdaptiveCardHost.Utilities';
+import {
+  initProcessMarkdown,
+  injectContextProperty,
+} from './AdaptiveCardHost.Utilities';
 import { registerFluentUIActions, registerFluentUIElements } from './fluentUI';
 import { IAdaptiveCardHostProps } from './IAdaptiveCardHostProps';
 import { AdaptiveCardHostThemeType } from './models/AdaptiveCardHostThemeType';
 import { IAdaptiveCardHostActionResult } from './models/IAdaptiveCardHostActionResult';
 
-export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => {
+export const AdaptiveCardHost = (
+  props: IAdaptiveCardHostProps
+): JSX.Element => {
   const renderElementRef = useRef<HTMLDivElement>(null);
   const adaptiveCardInstanceRef = useRef<AdaptiveCard>(null);
   const serializationContextInstanceRef = useRef<SerializationContext>(null);
   const fluentUIThemeInstanceRef = useRef<ITheme>(null);
   const fluentUICustomizerContext = React.useContext(CustomizerContext);
-  const adaptiveCardInstanceRefDependencies = [props.card, props.onSetCustomElements, props.onSetCustomActions, props.onUpdateHostCapabilities];
+  const adaptiveCardInstanceRefDependencies = [
+    props.card,
+    props.onSetCustomElements,
+    props.onSetCustomActions,
+    props.onUpdateHostCapabilities,
+  ];
 
   // Init Process Markdown
   useEffect(() => {
@@ -40,31 +55,50 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
   // *****
 
   // create executeAction
-  const invokeAction = useCallback((action: Action) => {
-    if (props.onInvokeAction) {
-      let actionResult: IAdaptiveCardHostActionResult;
-      const type = action.getJsonTypeName();
-      switch (type) {
-        case OpenUrlAction.JsonTypeName: {
-          const openUrlAction = action as OpenUrlAction;
-          actionResult = { type: type, title: openUrlAction.title, url: openUrlAction.url };
+  const invokeAction = useCallback(
+    (action: Action) => {
+      if (props.onInvokeAction) {
+        let actionResult: IAdaptiveCardHostActionResult;
+        const type = action.getJsonTypeName();
+        switch (type) {
+          case OpenUrlAction.JsonTypeName:
+            {
+              const openUrlAction = action as OpenUrlAction;
+              actionResult = {
+                type: type,
+                title: openUrlAction.title,
+                url: openUrlAction.url,
+              };
+            }
+            break;
+          case SubmitAction.JsonTypeName:
+            {
+              const submitAction = action as SubmitAction;
+              actionResult = {
+                type: type,
+                title: submitAction.title,
+                data: submitAction.data,
+              };
+            }
+            break;
+          case ExecuteAction.JsonTypeName:
+            {
+              const executeAction = action as ExecuteAction;
+              actionResult = {
+                type: type,
+                title: executeAction.title,
+                data: executeAction.data,
+                verb: executeAction.verb,
+              };
+            }
+            break;
         }
-          break;
-        case SubmitAction.JsonTypeName: {
-          const submitAction = action as SubmitAction;
-          actionResult = { type: type, title: submitAction.title, data: submitAction.data };
-        }
-          break;
-        case ExecuteAction.JsonTypeName: {
-          const executeAction = action as ExecuteAction;
-          actionResult = { type: type, title: executeAction.title, data: executeAction.data, verb: executeAction.verb };
-        }
-          break;
-      }
 
-      props.onInvokeAction(actionResult);
-    }
-  }, [props.onInvokeAction]);
+        props.onInvokeAction(actionResult);
+      }
+    },
+    [props.onInvokeAction]
+  );
   // *****
 
   // set hostConfig
@@ -78,7 +112,8 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
     }
 
     // if this control is wrapped on "ThemeProvider" take the theme from the context
-    const contextTheme: ITheme | IPartialTheme = fluentUICustomizerContext.customizations.settings.theme;
+    const contextTheme: ITheme | IPartialTheme =
+      fluentUICustomizerContext.customizations.settings.theme;
     // *****
 
     if (props.theme) {
@@ -90,18 +125,25 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
     }
     // **********
 
-    const hostConfigResult = initializeAdaptiveCardHost(inputThemeType, mergeThemes(fluentUIDefaultTheme(), inputFluentUITheme));
+    const hostConfigResult = initializeAdaptiveCardHost(
+      inputThemeType,
+      mergeThemes(fluentUIDefaultTheme(), inputFluentUITheme)
+    );
     const currentHostConfig = hostConfigResult.hostConfig;
 
     fluentUIThemeInstanceRef.current = hostConfigResult.theme;
     adaptiveCardInstanceRef.current.hostConfig = hostConfigResult.hostConfig;
 
-
     if (props.onUpdateHostCapabilities) {
       props.onUpdateHostCapabilities(currentHostConfig.hostCapabilities);
     }
-
-  }, [...adaptiveCardInstanceRefDependencies, fluentUICustomizerContext, props.theme, props.themeType, props.hostConfig]);
+  }, [
+    ...adaptiveCardInstanceRefDependencies,
+    fluentUICustomizerContext,
+    props.theme,
+    props.themeType,
+    props.hostConfig,
+  ]);
   // *****
 
   // set invokeAction
@@ -132,7 +174,6 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
     const currentSerializationContext = serializationContextInstanceRef.current;
     currentSerializationContext.setElementRegistry(elementRegistry);
     currentSerializationContext.setActionRegistry(actionRegistry);
-
   }, [...adaptiveCardInstanceRefDependencies]);
   // *****
 
@@ -147,15 +188,22 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
     const currentAdaptiveCard = adaptiveCardInstanceRef.current;
     try {
       const template = new Template(props.card);
-      const evaluationContext = injectContextProperty(props.data, fluentUIThemeInstanceRef.current, props.context);
+      const evaluationContext = injectContextProperty(
+        props.data,
+        fluentUIThemeInstanceRef.current,
+        props.context
+      );
       const cardPayload = template.expand(evaluationContext);
 
-      currentAdaptiveCard.parse(cardPayload, serializationContextInstanceRef.current);
+      currentAdaptiveCard.parse(
+        cardPayload,
+        serializationContextInstanceRef.current
+      );
 
       const renderedElement = currentAdaptiveCard.render();
       // If this isn't acceptable, we should compare the old template with the new template
       if (renderedElement.outerHTML !== currentRenderElement.innerHTML) {
-        currentRenderElement.innerHTML = "";
+        currentRenderElement.innerHTML = '';
         currentRenderElement.appendChild(renderedElement);
       }
     } catch (cardRenderError) {
@@ -163,14 +211,25 @@ export const AdaptiveCardHost = (props: IAdaptiveCardHostProps): JSX.Element => 
         props.onError(cardRenderError);
       }
     }
-  }, [...adaptiveCardInstanceRefDependencies, props.data, props.hostConfig, props.onError]);
+  }, [
+    ...adaptiveCardInstanceRefDependencies,
+    props.data,
+    props.hostConfig,
+    props.onError,
+  ]);
   // *****
 
   return (
-    <ThemeProvider theme={(fluentUIThemeInstanceRef.current) ? fluentUIThemeInstanceRef.current : fluentUIDefaultTheme()}>
+    <ThemeProvider
+      theme={
+        fluentUIThemeInstanceRef.current
+          ? fluentUIThemeInstanceRef.current
+          : fluentUIDefaultTheme()
+      }
+    >
       <div
         ref={renderElementRef}
-        className={`${(props.className) ? props.className : ""}`}
+        className={`${props.className ? props.className : ''}`}
         style={props.style}
       />
     </ThemeProvider>

@@ -1,14 +1,13 @@
 import * as strings from 'ControlStrings';
 import * as React from "react";
 import SPservice from "../../services/SPService";
-import { TagPicker } from "@fluentui/react/lib/components/pickers/TagPicker/TagPicker";
+import { ITag, TagPicker } from '@fluentui/react/lib/Pickers';
 import { Label } from "@fluentui/react/lib/Label";
 import { getId } from '@fluentui/react/lib/Utilities';
 import { IListItemPickerProps } from "./IListItemPickerProps";
 import { IListItemPickerState } from "./IListItemPickerState";
 import * as telemetry from '../../common/telemetry';
 import isEqual from 'lodash/isEqual';
-import { ITag } from '@fluentui/react/lib/components/pickers/TagPicker/TagPicker.types';
 import { SPHelper } from '../../common/utilities/SPHelper';
 import { Guid } from "@microsoft/sp-core-library"
 
@@ -175,7 +174,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
    * Function to load List Items
    */
   private loadListItems = async (filterText: string): Promise<{ key: string; name: string }[]> => {
-    const { columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch } = this.props;
+    const { columnInternalName, keyColumnInternalName, webUrl, filter, orderBy, substringSearch, itemsQueryCountLimit } = this.props;
     const {
       field, safeListId
     } = this.state;
@@ -183,7 +182,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
     const keyColumn: string = keyColumnInternalName || 'Id';
 
     try {
-      const listItems = await this._spservice.getListItems(filterText, safeListId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : ''); // JJ - 20200613 - find by substring as an option
+      const listItems = await this._spservice.getListItems(filterText, safeListId, columnInternalName, field, keyColumn, webUrl, filter, substringSearch, orderBy ? orderBy : '', itemsQueryCountLimit); // JJ - 20200613 - find by substring as an option
       // Check if the list had items
       if (listItems.length > 0) {
         for (const item of listItems) {

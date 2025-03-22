@@ -1,4 +1,42 @@
 declare interface IControlStrings {
+  CalendarControlDayOfWeekSunday: string;
+  CalendarControlDayOfWeekMonday: string;
+  CalendarControlDayOfWeekTuesday: string;
+  CalendarControlDayOfWeekWednesday: string;
+  CalendarControlDayOfWeekThursday: string;
+  CalendarControlDayOfWeekFriday: string;
+  CalendarControlDayOfWeekSaturday: string;
+
+  CalendarControlDetailsLabel: string;
+  CalendarControlViewMonthLabel: string;
+  CalendarControlViewWeekLabel: string;
+  CalendarControlViewDayLabel: string;
+  CalendarControlTodayLabel: string;
+
+  CalendarControlPreviousLabel: string;
+  CalendarControlNextLabel: string;
+
+  CalendarControlAttendeessLabel: string;
+  CalendarControlFullDaylabel: string;
+
+  ImagePickderSelectLabel: string;
+  ImagePickerDeleteImageLabel: string;
+  ImagePickerCancelLabel: string;
+  ImagePickerPanelHeaderText: string;
+  ImagePickerSharePointTabLabel: string;
+  ImagePickerOneDriveTabLabel: string;
+  ImagePickerStockImagesTabLabel: string;
+  ImagePickerUploadTabLabel: string;
+  ImagePickerDragFilesAccpted: string;
+  ImagePickerDragFilesRejected: string;
+  ImagePickerDragFilesActive: string;
+  ImagePickerDragDropText: string;
+  ImagePickerUploadLocationLabel: string;
+  ImagePickerUploadLocationOndriveLabel: string;
+  ImagePickerUploadLocationSharePointLabel: string;
+  ImagePickerRetryButtonLabel: string;
+  ImagePickerDeleteLabel: string;
+
   UpLoadFilesDragDropLabel: string;
   UploadFilesUploadButtonLabel: string;
   UploadFilesButtonLabel: string;
@@ -73,19 +111,18 @@ declare interface IControlStrings {
   ListItemAttachmentsdialogOKbuttonLabelOnDelete: string;
   ListItemAttachmentsuploadAttachmentDialogTitle: string;
   ListItemAttachmentsuploadAttachmentButtonLabel: string;
-  ListItemAttachmentsuploadAttachmentErrorMsg: String;
+  ListItemAttachmentsuploadAttachmentErrorMsg: string;
   ListItemAttachmentsCommandBarAddAttachmentLabel: string;
   ListItemAttachmentsloadingMessage: string;
   ListItemAttachmentslPlaceHolderIconText: string;
   ListItemAttachmentslPlaceHolderDescription: string;
   ListItemAttachmentslPlaceHolderButtonLabel: string;
-  //Maps
+
   mapsErrorMessage: string;
   mapsLoadingText: string;
   mapsSearchButtonText: string;
   mapsTitlePrefix: string;
 
-  //RichText
   HeaderNormalText: string;
   HeaderH2: string;
   HeaderH3: string;
@@ -329,7 +366,6 @@ declare interface IControlStrings {
   Yes: string;
   OrgAssetsLinkLabel: string;
 
-  // folder explorer
   NewFolderNamePlaceholder: string;
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
@@ -337,15 +373,12 @@ declare interface IControlStrings {
   NewFolderIncorrectSymbolsError: string;
   SomethingWentWrong: string;
 
-  //Icon picker
   SelectedLabel: string;
   SelectIcon: string;
 
-  //Tree View
   TreeViewExpandTitle: string;
   TreeViewCollapseTitle: string;
 
-  // FieldCollectionData
   CollectionDataEmptyFields: string;
   CollectionDataEmptyValue: string;
   CollectionAddRowButtonLabel: string;
@@ -356,7 +389,7 @@ declare interface IControlStrings {
   CollectionDataItemMissingFields: string;
   InvalidUrlError: string;
   CollectionDataSearch: string;
-  CollectionDataMinimumUsersDefaultMessage: string
+  CollectionDataMinimumUsersDefaultMessage: string;
 
   ViewMore: string;
 
@@ -376,10 +409,8 @@ declare interface IControlStrings {
   DynamicFormChooseFileButtonText: string;
   DynamicFormRequiredFileMessage: string;
 
-  // Location picker
   customDisplayName: string;
 
-  // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;
   ModernTaxonomyPickerTreeTitleSingle: string;
   ModernTaxonomyPickerTreeTitleMulti: string;
@@ -404,6 +435,13 @@ declare interface IControlStrings {
   TermSertNaviagtionErrorMessage: string;
 
   HoverReactionBarSearchEmojiPlaceholder: string;
+
+  // Filter Bar
+  AppliedFiltersAriaLabel: string;
+  ClearAllFiltersTitle: string;
+  ClearFilterTitle: string;
+  ClearAllFiltersText: string;
+  FilterOverflowAriaLabel: string;
 }
 
 declare interface IDateTimeStrings {
@@ -431,10 +469,6 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
-
-
-
-
 }
 
 declare module "ControlStrings" {

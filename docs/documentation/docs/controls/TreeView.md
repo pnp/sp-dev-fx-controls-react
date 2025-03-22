@@ -1,4 +1,4 @@
-## TreeView control
+# TreeView control
 
 This graphical control allows to present a hierarchical view of information. Each tree item can have a number of subitems. This is often visualized by indentation in a list. A tree item can be expanded to reveal subitems (if exist), and collapsed to hide subitems.
 
@@ -6,15 +6,15 @@ Here are examples of the control in action:
 
 ![Tree View control](../assets/TreeView-control.gif)
 
-**With all possible options**
+- With all possible options:
 
 ![Tree View control](../assets/TreeView-all-possible-options.png)
 
-**Without check boxes or when selection mode is 'None'**
+- Without check boxes or when selection mode is 'None':
 
 ![Tree View control](../assets/TreeView-without-checkbox.png)
 
-**Without check boxes, and selection mode is multiple**
+- Without check boxes, and selection mode is multiple:
 
 ![Tree View control](../assets/TreeView-without-checkbox-selection-mode.png)
 
@@ -63,6 +63,7 @@ private onTreeItemExpandCollapse(item: ITreeItem, isExpanded: boolean) {
 ```
 
 ## Custom Rendering
+
 You can fully customize how tree items are rendered by providing the `onRenderItem` callback function and returning whatever `JSX.Element` you want.
 
 For example, you can define your function in a .tsx file like this:
@@ -89,8 +90,8 @@ The `TreeView` control can be configured with the following properties:
 
 | Property                       | Type                       | Required | Description                                                                                                                        |
 |--------------------------------|----------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
-| items                          | ITreeItem[]                | yes      | An array of tree items to display. refer [example](#example-of-array-of-tree-items-used-to-render-control-as-in-first-screenshot). |
-| defaultExpanded                | boolean                    | no       | Specify if the tree items are displayed as expanded by default (defaults to false.                                                |
+| items                          | ITreeItem[]                | yes      | An array of tree items to display. refer [example](#example-of-array-of-tree-items-used-to-render-control-as-in-2nd-screenshot). |
+| defaultExpanded                | boolean                    | no       | Specify if the tree items are displayed as expanded by default (defaults to false).                                                |
 | selectionMode                  | enum                       | no       | Specifies the selection mode of tree view (defaults to Single selection).                                                            |
 | selectChildrenIfParentSelected | boolean                    | no       | Specifies if the children should be selected when parent item is selected (defaults to false). __Deprecated__: prefer usage of `selectChildrenMode` for more flexibility.                                      |
 | selectChildrenMode | SelectChildrenMode                    | no       | Specifies if the children should be selected when parent item is selected (defaults to None). Flagged enum, values can be combined eg. `SelectChildrenMode.Select \| SelectChildrenMode.Unselect`                                     |
@@ -110,7 +111,7 @@ Enum `TreeViewSelectionMode`
 Specifies the selection mode of tree item.
 
 | Value    |
-|----------|
+| -------- |
 | Single   |
 | Multiple |
 | None     |
@@ -126,7 +127,7 @@ Specifies when the children of a selected item need to be automatically selected
 | Unselect     | When unselecting an item, its children are also unselected   |
 | Mount     | When the component is mounted, all children of selected items are also selected |
 | Update     | When the component receives new props, all children of selected items are also selected |
-| All     | Shorthand for a combination of all of the above, same as `SelectChildrenMode.Select \| SelectChildrenMode.Unselect \| SelectChildrenMode.Mount \| SelectChildrenMode.Update` |                    |
+| All     | Shorthand for a combination of all of the above, same as `SelectChildrenMode.Select` \| `SelectChildrenMode.Unselect` \| `SelectChildrenMode.Mount` \| `SelectChildrenMode.Update` |
 
 Interface `ITreeItem`
 
@@ -143,7 +144,6 @@ Each tree item in the `treeitems` property is defined as `ITreeItem` as follows:
 | data       | any               | no       | Specify an additional data of the tree item.                     |
 | actions    | ITreeItemAction[] | no       | Specify list of actions for the tree item.                       |
 | children   | ITreeItem[]       | no       | Specify list of child tree items.                                |
-
 
 Interface `ITreeItemAction`
 
@@ -261,7 +261,8 @@ items: [
           }
         ]
 ```
-`IconpProps` in above example can be declared as below
+
+`iconProps` in above example can be declared as below
 
 ```typescript
 private skypeCheckIcon: IIconProps = { iconName: 'SkypeCheck' };

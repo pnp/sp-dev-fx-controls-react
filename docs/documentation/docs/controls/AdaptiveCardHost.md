@@ -13,15 +13,16 @@ All Elements and Actions of Adaptive Cards have been redefined using Fluent UI R
 
 Thanks to the "context" property that allows you to pass the SPFx context, whether the "data" property is passed or not, a new field called @context will be injected into the data object.
 
-This allows, using Adaptive Cards templating syntax, to access to the context informations using the following fields (for more information on these fields, refer to the [BaseComponentContext](https://docs.microsoft.com/en-us/javascript/api/sp-component-base/basecomponentcontext) class):
+This allows, using Adaptive Cards templating syntax, to access to the context information using the following fields (for more information on these fields, refer to the [BaseComponentContext](https://docs.microsoft.com/javascript/api/sp-component-base/basecomponentcontext) class):
+
 - "theme": property "theme" from the current theme applied to the card.
-- "aadInfo": Azure AD informations retrieved from the SPFx context object.
-- "cultureInfo": Culture informations retrieved from the SPFx context object.
-- "userInfo": User informations retrieved from the SPFx context object.
-- "spListInfo": Current List informations retrieved from the SPFx context object.
-- "spListItemInfo": Current List item informations retrieved from the SPFx context object.
-- "spSiteInfo": Current Site informations retrieved from the SPFx context object.
-- "spWebInfo": Current Web informations retrieved from the SPFx context object.
+- "aadInfo": Azure AD information retrieved from the SPFx context object.
+- "cultureInfo": Culture information retrieved from the SPFx context object.
+- "userInfo": User information retrieved from the SPFx context object.
+- "spListInfo": Current List information retrieved from the SPFx context object.
+- "spListItemInfo": Current List item information retrieved from the SPFx context object.
+- "spSiteInfo": Current Site information retrieved from the SPFx context object.
+- "spWebInfo": Current Web information retrieved from the SPFx context object.
 
 The Adaptive Cards version supported is 1.5, by using the 'adaptivecards' npm package version 2.10.0.
 
@@ -91,7 +92,7 @@ import { AdaptiveCardHost, IAdaptiveCardHostActionResult, AdaptiveCardHostThemeT
 />
 ```
 
-- Example on use the `AdaptiveCardHost` control with SharePoint Theme "Section Variation" ('this.props.theme' is the theme that come from the Web Part) */):
+- Example on use the `AdaptiveCardHost` control with SharePoint Theme "Section Variation" ('this.props.theme' is the theme that come from the Web Part):
 
 ```TypeScript
 <AdaptiveCardHost
@@ -155,28 +156,28 @@ The `AdaptiveCardHost` control can be configured with the following properties:
 | hostConfig | object | no | Set custom HostConfig. |
 | onInvokeAction | (action: IAdaptiveCardActionResult) => void | yes | Invoked every time an Action is performed. |
 | onError | (error: Error) => void | yes | Invoked every time an exception occurs in the rendering phase. |
-| onSetCustomElements | (registry: CardObjectRegistry<CardElement>) => void | no | Invoked to manage Elements to the current Adaptive Card instance. |
-| onSetCustomActions | (registry: CardObjectRegistry<Action>) => void | no | Invoked to manage Actions to the current Adaptive Card instance. |
+| onSetCustomElements | (registry: CardObjectRegistry&lt;CardElement&gt;) => void | no | Invoked to manage Elements to the current Adaptive Card instance. |
+| onSetCustomActions | (registry: CardObjectRegistry&lt;Action&gt;) => void | no | Invoked to manage Actions to the current Adaptive Card instance. |
 | onUpdateHostCapabilities | (hostCapabilities: HostCapabilities) => void | no | Invoked to manage the HostCapabilities object like add custom properties. |
 | context | BaseComponentContext | no | Set the context from the SPFx component. If set, some context properties will be automatically injected into the data object, so they can be used by the Adaptive Cards binding engine. |
 
 Interface `IAdaptiveCardHostActionResult`
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| type | string | yes | Type of the Action. |
-| title | string | no | Title of the Action. |
-| url | string | no | Url of the Action. |
-| data | object | no | Data of the Action. |
-| verb | string | no | Verb of the Action. |
+| Property | Type   | Required | Description          |
+| -------- | ------ | -------- | -------------------- |
+| type     | string | yes      | Type of the Action.  |
+| title    | string | no       | Title of the Action. |
+| url      | string | no       | Url of the Action.   |
+| data     | object | no       | Data of the Action.  |
+| verb     | string | no       | Verb of the Action.  |
 
 Enum `AdaptiveCardHostThemeType`
 
-| Type | Description |
-| ---- | ---- |
-| SharePoint | Use the SharePoint current Theme or Theme Variation |
-| Teams | Use the Fluent UI Teams default theme |
-| TeamsDark | Use the Fluent UI Teams dark theme |
-| TeamsHighContrast | Use the Fluent UI Teams high contrast theme |
+| Type              | Description                                         |
+| ----------------- | --------------------------------------------------- |
+| SharePoint        | Use the SharePoint current Theme or Theme Variation |
+| Teams             | Use the Fluent UI Teams default theme               |
+| TeamsDark         | Use the Fluent UI Teams dark theme                  |
+| TeamsHighContrast | Use the Fluent UI Teams high contrast theme         |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/AdaptiveCardHost)

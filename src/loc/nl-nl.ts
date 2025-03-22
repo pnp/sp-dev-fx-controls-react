@@ -2,6 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
+    CalendarControlDayOfWeekSunday: "Sunday",
     "Save": "Opslaan",
     "Cancel": "Annuleren",
     "SiteBreadcrumbLabel": "Website broodkruimelpad",
@@ -145,7 +146,7 @@ define([], () => {
     "HighlightColorTeal": "Taling",
     "HighlightColorDarkgreen": "Donkergroen",
     "HighlightColorPurple": "Paarse",
-    "HighlightColorMaroon": "Bosneger",
+    "HighlightColorMaroon": "Kastanjebruin",
     "HighlightColorGold": "Goud",
     "HighlightColorDarkgrey": "Donkergrijs",
     "HighlightColorGrey": "Grijs",

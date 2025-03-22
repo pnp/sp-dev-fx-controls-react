@@ -52,7 +52,7 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
         {isArray(commentText) ? (
           (commentText as any[]).map((el, i) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             if (isObject(el)) {
-              return <span style={{ paddingRight: 5 }}>{el}</span>;
+              return <span key={i} style={{ paddingRight: 5 }}>{el}</span>;
             } else {
               const _el: string = el.trim();
               if (_el.length) {

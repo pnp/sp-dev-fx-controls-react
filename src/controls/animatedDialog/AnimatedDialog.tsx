@@ -6,8 +6,6 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 
-// Animate.min.css
-//require('../../../node_modules/animate.css/animate.min.css');
 require('animate.css/animate.min.css');
 
 export interface IAnimatedDialogProps extends IDialogProps {
@@ -52,7 +50,7 @@ export function AnimatedDialog(props: React.PropsWithChildren<IAnimatedDialogPro
                         try {
                             await props.onOkClick();
                             props.onSuccess();
-                        } catch (error) {
+                        } catch {
                             props.onError();
                         }
                         setLoading(false);
