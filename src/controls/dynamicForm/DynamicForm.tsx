@@ -459,7 +459,7 @@ export class DynamicFormBase extends React.Component<
         if (fieldcolumnInternalName.startsWith('_x') || fieldcolumnInternalName.startsWith('_')) {
           fieldcolumnInternalName = `OData_${fieldcolumnInternalName}`;
         }
-        if (field.newValue !== null && field.newValue !== undefined) {
+        if (field.newValue !== undefined) {
 
           let value = field.newValue;
 
@@ -491,7 +491,7 @@ export class DynamicFormBase extends React.Component<
               value.push(element.key);
             });
             objects[`${fieldcolumnInternalName}Id`] = {
-              results: value.length === 0 ? null : value,
+              results: value.length === 0 ? [] : value,
             };
           }
 
@@ -774,7 +774,7 @@ export class DynamicFormBase extends React.Component<
     const { useModernTaxonomyPicker } = this.props;
     // Init new value(s)
     field.newValue = newValue;
-    field.stringValue = newValue.toString();
+    field.stringValue = newValue? newValue.toString():'';
     field.additionalData = additionalData;
     field.subPropertyValues = {};
 
