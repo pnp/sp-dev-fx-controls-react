@@ -29,6 +29,7 @@
 - `DynamicForm`: Loads with Validation Errors if no List Item Id is set [#1655](https://github.com/pnp/sp-dev-fx-controls-react/issues/1655)
 - `DynamicForm`: required Fields not checked before submit [#1953](https://github.com/pnp/sp-dev-fx-controls-react/issues/1953)
 - `DynamicForm`: Fix for 1788/1794 and add styles property for support customizing styling [#1913](https://github.com/pnp/sp-dev-fx-controls-react/pull/1913)
+- `DynamicForm`: Hotfix for 1937 and 1961 [#1967](https://github.com/pnp/sp-dev-fx-controls-react/pull/1967)
 
 ### Contributors
 
