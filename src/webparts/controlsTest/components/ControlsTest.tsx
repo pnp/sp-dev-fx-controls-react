@@ -895,7 +895,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       <DocumentCard
         type={isCompact ? DocumentCardType.compact : DocumentCardType.normal}
         onClick={(ev: React.SyntheticEvent<HTMLElement>) => alert("You clicked on a grid item")}
-
+        style={{maxWidth: _finalSize.width}}
       >
         <DocumentCardPreview {...previewProps} />
         {!isCompact && <DocumentCardLocation location={item.location} />}
@@ -2110,7 +2110,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
                 items={sampleGridData}
                 onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
-              />
+                itemMinWidth={250}
+                itemMaxWidth={600}
+                itemPadding={60}
+                //compactThreshold={220}
+                //rowsPerPage={1}
+                />
             </div>
           }
           {controlVisibility.HoverReactionsBar &&
