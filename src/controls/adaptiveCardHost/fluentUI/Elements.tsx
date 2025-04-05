@@ -286,6 +286,7 @@ export class FluentUIDateInput extends Input {
             this.valueChanged();
           }}
           theme={theme}
+          value={this.defaultValue ? this.convertStringToDate(this.defaultValue) : undefined}
           componentRef={(input) => { this.refControl = input; }}
         />
       </ThemeProvider>;
@@ -360,6 +361,12 @@ export class FluentUIDateInput extends Input {
     if (this._value) {
       const offset = this._value.getTimezoneOffset();
       const value = new Date(this._value.getTime() - (offset * 60 * 1000));
+      return value.toISOString().split('T')[0];
+    }
+    else if (this.defaultValue) {
+      const date = this.convertStringToDate(this.defaultValue);
+      const offset = date.getTimezoneOffset();
+      const value = new Date(date.getTime() - (offset * 60 * 1000));
       return value.toISOString().split('T')[0];
     }
     else {
