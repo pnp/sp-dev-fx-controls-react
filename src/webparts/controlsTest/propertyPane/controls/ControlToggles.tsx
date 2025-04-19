@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { ValidControls } from '../../IControlsTestWebPartProps';
+
 import { TextField, Toggle } from '@fluentui/react';
+
+import { ValidControls } from '../../IControlsTestWebPartProps';
 
 export interface IControlTogglesProps {
     label: string;
@@ -32,13 +34,13 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
                         return null;
                     }
                     return (
-                        <Toggle 
-                            key={control} 
-                            label={this.getProperCase(control)} 
+                        <Toggle
+                            key={control}
+                            label={this.getProperCase(control)}
                             checked={this.props.controlVisibility && this.props.controlVisibility[control] || false}
                             onChange={(e, checked) => {
                                 this.props.onChange(control, checked);
-                            }} 
+                            }}
                         />
                     );
                 }) }
@@ -48,13 +50,13 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
 
     private getValidControls(): string[] {
         const validControls: ValidControls[] = [
-            "all", 
-            "AccessibleAccordion", "AdaptiveCardDesignerHost", "AdaptiveCardHost", 
-            "AnimatedDialog", "Carousel", "ChartControl", 
-            "ComboBoxListItemPicker", "ContentTypePicker", "Dashboard", "DateTimePicker", 
-            "DragDropFiles", "DynamicForm", "EnhancedThemeProvider", 
-            "FieldCollectionData", "FieldPicker", "FilePicker", 
-            "FileTypeIcon", "FolderExplorer", "FolderPicker",
+            "all",
+            "AccessibleAccordion", "AdaptiveCardDesignerHost", "AdaptiveCardHost",
+            "AnimatedDialog", "Carousel", "ChartControl",
+            "ComboBoxListItemPicker", "ContentTypePicker", "Dashboard", "DateTimePicker",
+            "DragDropFiles", "DynamicForm", "EnhancedThemeProvider",
+            "FieldCollectionData", "FieldPicker", "FilePicker",
+            "FileTypeIcon", "FilterBar", "FolderExplorer", "FolderPicker",
             "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
             "IFramePanel", "ListItemPicker",
             "ImagePicker", "ListItemAttachments", "ListItemComments",
@@ -66,7 +68,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "TaxonomyPicker", "TaxonomyTree", "Teams", "TermSetNavigation",
             "TestControl", "Toolbar", "TreeView",
             "UploadFiles", "UserPicker", "VariantThemeProvider",
-            "ViewPicker", "WebPartTitle"
+            "ViewPicker", "WebPartTitle", "Calendar"
         ];
         return validControls as string[];
     }

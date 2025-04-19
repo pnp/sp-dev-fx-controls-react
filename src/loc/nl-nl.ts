@@ -2,6 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
+    CalendarControlDayOfWeekSunday: "Sunday",
     "Save": "Opslaan",
     "Cancel": "Annuleren",
     "SiteBreadcrumbLabel": "Website broodkruimelpad",
