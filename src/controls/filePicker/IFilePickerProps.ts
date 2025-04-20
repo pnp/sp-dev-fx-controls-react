@@ -175,4 +175,9 @@ export interface IFilePickerProps {
    * Specifies if file check should be done
    */
    checkIfFileExists?: boolean;
+  /**
+   * Specifies tab order
+   * default ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
+   */
+   tabOrder?: string[];
 }

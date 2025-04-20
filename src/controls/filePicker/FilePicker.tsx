@@ -47,6 +47,8 @@ export class FilePicker extends React.Component<
   private orgAssetsService: OrgAssetsService;
   private fileSearchService: FilesSearchService;
 
+  private tabOrder = this.props.tabOrder ?? ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"];
+
   constructor(props: IFilePickerProps) {
     super(props);
 
@@ -89,7 +91,7 @@ export class FilePicker extends React.Component<
 
     this.setState({
       organisationAssetsEnabled: orgAssetsEnabled,
-      selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
+      selectedTab: this._getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
     });
     if (!!this.props.context && !!this.props.webAbsoluteUrl) {
       const { title, id } = await this.fileBrowserService.getSiteTitleAndId();
@@ -294,7 +296,7 @@ export class FilePicker extends React.Component<
   private _handleOpenPanel = (): void => {
     this.setState({
       panelOpen: true,
-      selectedTab: this.getDefaultSelectedTabKey(
+      selectedTab: this._getDefaultSelectedTabKey(
         this.props,
         this.state.organisationAssetsEnabled
       ),
@@ -344,7 +346,7 @@ export class FilePicker extends React.Component<
    */
   private _getNavPanelOptions = (): INavLinkGroup[] => {
     const addUrl = this.props.storeLastActiveTab !== false;
-    const links = [];
+    let links: INavLink[] = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
@@ -422,41 +424,57 @@ export class FilePicker extends React.Component<
       });
     }
 
+    if(this.props.tabOrder) {
+      links = this._getTabOrder(links);
+    }
+
     const groups: INavLinkGroup[] = [{ links }];
     return groups;
   }
 
-  private getDefaultSelectedTabKey = (
+  /**
+   * Sorts navigation tabs based on the tabOrder prop
+   */
+  private _getTabOrder = (links: INavLink[]): INavLink[] => {
+    const sortedKeys = [
+      ...this.tabOrder,
+      ...links.map(l => l.key).filter(key => !this.tabOrder.includes(key)),
+    ];
+
+    links.sort((a, b) => {
+      return sortedKeys.indexOf(a.key) - sortedKeys.indexOf(b.key);
+    });
+
+    return links;
+  };
+
+  /**
+   * Returns the default selected tab key
+   */
+  private _getDefaultSelectedTabKey = (
     props: IFilePickerProps,
     orgAssetsEnabled: boolean
   ): string => {
-    if (!props.hideRecentTab) {
-      return "keyRecent";
-    }
-    if (!props.hideStockImages) {
-      return "keyStockImages";
-    }
-    if (props.bingAPIKey && !props.hideWebSearchTab) {
-      return "keyWeb";
-    }
-    if (!props.hideOrganisationalAssetTab && orgAssetsEnabled) {
-      return "keyOrgAssets";
-    }
-    if (!props.hideOneDriveTab) {
-      return "keyOneDrive";
-    }
-    if (!props.hideSiteFilesTab) {
-      return "keySite";
-    }
-    if (!props.hideLocalUploadTab) {
-      return "keyUpload";
-    }
-    if (!props.hideLinkUploadTab) {
-      return "keyLink";
-    }
-    if (!props.hideLocalMultipleUploadTab) {
-      return "keyMultipleUpload";
-    }
+    const tabConfig = [
+      { isTabVisible: !props.hideRecentTab, tabKey: "keyRecent" },
+      { isTabVisible: !props.hideStockImages, tabKey: "keyStockImages" },
+      { isTabVisible: props.bingAPIKey && !props.hideWebSearchTab, tabKey: "keyWeb" },
+      { isTabVisible: !props.hideOrganisationalAssetTab && orgAssetsEnabled, tabKey: "keyOrgAssets" },
+      { isTabVisible: !props.hideOneDriveTab, tabKey: "keyOneDrive" },
+      { isTabVisible: !props.hideSiteFilesTab, tabKey: "keySite" },
+      { isTabVisible: !props.hideLocalUploadTab, tabKey: "keyUpload" },
+      { isTabVisible: !props.hideLinkUploadTab, tabKey: "keyLink" },
+      { isTabVisible: !props.hideLocalMultipleUploadTab, tabKey: "keyMultipleUpload" }
+    ];
 
+    const visibleTabs = tabConfig.filter(tab => tab.isTabVisible);
+    const visibleTabKeys = visibleTabs.map(tab => tab.tabKey);
+
+    if (this.props.tabOrder) {
+      const visibleTabSet = new Set(visibleTabKeys);
+      return this.tabOrder.find(key => visibleTabSet.has(key));
+    } else {
+      return visibleTabKeys[0]; // first visible tab from default order
+    }
   }
 }
