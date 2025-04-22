@@ -470,7 +470,7 @@ export class FilePicker extends React.Component<
     const visibleTabKeys = visibleTabs.map(tab => tab.tabKey);
 
     // If defaultSelectedTab is provided and is visible, then return tabKey
-    if(this.props.defaultSelectedTab ?? visibleTabKeys.includes(this.props.defaultSelectedTab)) {
+    if(this.props.defaultSelectedTab && visibleTabKeys.includes(this.props.defaultSelectedTab)) {
       return this.props.defaultSelectedTab;
     }
 
