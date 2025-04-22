@@ -3,6 +3,7 @@ import { IIconProps } from "@fluentui/react/lib/Icon";
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 
 import { IFilePickerResult } from "./FilePicker.types";
+import { FilePickerTab } from "./FilePickerTab";
 
 export interface IFilePickerProps {
   /**
@@ -179,11 +180,11 @@ export interface IFilePickerProps {
    * Specifies tab order
    * default ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
    */
-   tabOrder?: string[];
+   tabOrder?: FilePickerTab[];
   /**
    * Specifies default selected tab
    * One of the keys from tabOrder
    * One of ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
   */
-  defaultSelectedTab?: string;
+  defaultSelectedTab?: FilePickerTab;
 }

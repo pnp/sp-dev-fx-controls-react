@@ -167,6 +167,7 @@ import { debounce } from 'lodash';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { sp } from '@pnp/sp';
 import styles from './ControlsTest.module.scss';
+import { FilePickerTab } from '../../../controls/filePicker/FilePickerTab';
 
 //#endregion
 
@@ -2137,6 +2138,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onChange={(filePickerResult: IFilePickerResult[]) => { console.log(filePickerResult); }}
                   context={this.props.context}
                   hideRecentTab={false}
+                  hideLinkUploadTab={true}
                   renderCustomUploadTabContent={() => (
                     <FolderExplorer context={this.props.context}
                       rootFolder={this.rootFolder}
@@ -2144,6 +2146,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                       onSelect={this._onFolderSelect}
                       canCreateFolders={true}
                     />)}
+                    tabOrder={[FilePickerTab.Web, FilePickerTab.OneDrive]}
+                    defaultSelectedTab={FilePickerTab.MultipleUpload}
                 />
               </div>
               <p><a href="javascript:;" onClick={this.deleteItem}>Deletes second item</a></p>
