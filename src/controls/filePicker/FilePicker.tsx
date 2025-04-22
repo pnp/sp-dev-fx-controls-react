@@ -455,7 +455,7 @@ export class FilePicker extends React.Component<
     props: IFilePickerProps,
     orgAssetsEnabled: boolean
   ): string => {
-    const tabConfig = [
+    const tabsConfig = [
       { isTabVisible: !props.hideRecentTab, tabKey: "keyRecent" },
       { isTabVisible: !props.hideStockImages, tabKey: "keyStockImages" },
       { isTabVisible: props.bingAPIKey && !props.hideWebSearchTab, tabKey: "keyWeb" },
@@ -467,9 +467,15 @@ export class FilePicker extends React.Component<
       { isTabVisible: !props.hideLocalMultipleUploadTab, tabKey: "keyMultipleUpload" }
     ];
 
-    const visibleTabs = tabConfig.filter(tab => tab.isTabVisible);
+    const visibleTabs = tabsConfig.filter(tab => tab.isTabVisible);
     const visibleTabKeys = visibleTabs.map(tab => tab.tabKey);
 
+    // If defaultSelectedTab is provided and is visible, then return tabKey
+    if(this.props.defaultSelectedTab ?? visibleTabKeys.includes(this.props.defaultSelectedTab)) {
+      return this.props.defaultSelectedTab;
+    }
+
+    // If no valid default tab is provided, find the first visible tab in the order
     if (this.props.tabOrder) {
       const visibleTabSet = new Set(visibleTabKeys);
       return this.tabOrder.find(key => visibleTabSet.has(key));

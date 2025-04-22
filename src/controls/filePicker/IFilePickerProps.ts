@@ -180,4 +180,10 @@ export interface IFilePickerProps {
    * default ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
    */
    tabOrder?: string[];
+  /**
+   * Specifies default selected tab
+   * One of the keys from tabOrder
+   * One of ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
+  */
+  defaultSelectedTab?: string;
 }
