@@ -178,13 +178,12 @@ export interface IFilePickerProps {
    checkIfFileExists?: boolean;
   /**
    * Specifies tab order
-   * default ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
+   * Default [FilePickerTab.Recent, FilePickerTab.StockImages, FilePickerTab.Web, FilePickerTab.OrgAssets, FilePickerTab.OneDrive, FilePickerTab.Site, FilePickerTab.Upload, FilePickerTab.Link, FilePickerTab.MultipleUpload]
    */
    tabOrder?: FilePickerTab[];
   /**
    * Specifies default selected tab
-   * One of the keys from tabOrder
-   * One of ["keyRecent", "keyStockImages", "keyWeb", "keyOrgAssets", "keyOneDrive", "keySite", "keyUpload", "keyLink", "keyMultipleUpload"]
+   * One of the values from the FilePickerTab enum: Recent, StockImages, Web, OrgAssets, OneDrive, Site, Upload, Link, or MultipleUpload.
   */
   defaultSelectedTab?: FilePickerTab;
 }
