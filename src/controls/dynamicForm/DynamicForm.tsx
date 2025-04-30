@@ -1,7 +1,6 @@
 /* eslint-disable @microsoft/spfx/no-async-await */
 import * as React from "react";
 import * as strings from "ControlStrings";
-import styles from "./DynamicForm.module.scss";
 
 // Controls
 import {
@@ -22,9 +21,11 @@ import {
   DateFormat,
   FieldChangeAdditionalData,
   IDynamicFieldProps,
+  IDynamicFieldStyleProps,
+  IDynamicFieldStyles,
 } from "./dynamicField/IDynamicFieldProps";
 import { FilePicker, IFilePickerResult } from "../filePicker";
-
+import { Guid } from '@microsoft/sp-core-library';
 // pnp/sp, helpers / utils
 import { sp } from "@pnp/sp";
 import "@pnp/sp/lists";
@@ -32,7 +33,7 @@ import "@pnp/sp/content-types";
 import "@pnp/sp/folders";
 import "@pnp/sp/items";
 import { IFolder } from "@pnp/sp/folders";
-import { IInstalledLanguageInfo } from "@pnp/sp/presets/all";
+import { IInstalledLanguageInfo, IItemUpdateResult, IList, ITermInfo } from "@pnp/sp/presets/all";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -41,32 +42,43 @@ import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
 import CustomFormattingHelper from "../../common/utilities/CustomFormatting";
+import { SPTaxonomyService } from '../../services/SPTaxonomyService';
+import { getStyles } from "./DynamicForm.styles";
+import { getFluentUIThemeOrDefault } from "../../common/utilities/ThemeUtility";
+import { classNamesFunction, IProcessedStyleSet, styled } from "@fluentui/react";
 
 // Dynamic Form Props / State
-import { IDynamicFormProps } from "./IDynamicFormProps";
+import { IDynamicFormProps, IDynamicFormStyleProps, IDynamicFormStyles } from "./IDynamicFormProps";
 import { IDynamicFormState } from "./IDynamicFormState";
 import { Icon } from "@fluentui/react/lib/Icon";
 
 const stackTokens: IStackTokens = { childrenGap: 20 };
+const getstyles = classNamesFunction<IDynamicFormStyleProps, IDynamicFormStyles>();
+const getFieldstyles = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
+const theme = getFluentUIThemeOrDefault();
+
+const timeout = (ms: number): Promise<void> => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 /**
  * DynamicForm Class Control
  */
-export class DynamicForm extends React.Component<
+export class DynamicFormBase extends React.Component<
   IDynamicFormProps,
   IDynamicFormState
-> {  
+> {
   private _spService: SPservice;
   private _formulaEvaluation: FormulaEvaluation;
   private _customFormatter: CustomFormattingHelper;
-
+  private _taxonomyService: SPTaxonomyService;
   private webURL = this.props.webAbsoluteUrl
     ? this.props.webAbsoluteUrl
     : this.props.context.pageContext.web.absoluteUrl;
+  private _classNames: IProcessedStyleSet<IDynamicFormStyles>;
 
   constructor(props: IDynamicFormProps) {
     super(props);
-
     // Initialize pnp sp
     if (this.props.webAbsoluteUrl) {
       sp.setup({
@@ -82,6 +94,9 @@ export class DynamicForm extends React.Component<
         spfxContext: { pageContext: this.props.context.pageContext },
       });
     }
+
+    // Initialize taxonomy service
+    this._taxonomyService = new SPTaxonomyService(this.props.context);
 
     // Initialize state
     this.state = {
@@ -152,10 +167,15 @@ export class DynamicForm extends React.Component<
 
     const customFormattingDisabled = this.props.useCustomFormatting === false;
 
+    const { className } = this.props;
+    const styles = (this._classNames = getstyles(this.props.styles, { className: className }));
+
     // Custom Formatting - Header
     let headerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.header) {
-      headerContent = this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true) as JSX.Element;
+       headerContent = <div className={styles.header}>
+        {this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true)}
+      </div>
     }
 
     // Custom Formatting - Body
@@ -175,7 +195,9 @@ export class DynamicForm extends React.Component<
     // Custom Formatting - Footer
     let footerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.footer) {
-      footerContent = this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true) as JSX.Element;
+      footerContent = <div className={styles.footer}>
+      {this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true)}
+    </div>
     }
 
     // Content Type
@@ -286,9 +308,10 @@ export class DynamicForm extends React.Component<
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
     const { hiddenByFormula, isSaving, validationErrors } = this.state;
+    const styles = getFieldstyles(this._classNames.subComponentStyles.fieldStyles(), { theme: theme });
 
-    // If the field is hidden by a formula, don't render it
-    if (hiddenByFormula.find(h => h === field.columnInternalName)) {
+    // If the field is hidden by a formula or field doesn't exist (usually occurs in custom formatting section layout when field display name changed), don't render it
+    if (!field || hiddenByFormula.find(h => h === field.columnInternalName)) {
       return null;
     }
 
@@ -313,6 +336,7 @@ export class DynamicForm extends React.Component<
     return (
       <DynamicField
         key={field.columnInternalName}
+        styles={styles}
         {...field}
         disabled={field.disabled || isSaving}
         validationErrorMessage={validationErrorMessage}
@@ -337,7 +361,8 @@ export class DynamicForm extends React.Component<
       onSubmitError,
       enableFileSelection,
       validationErrorDialogProps,
-      returnListItemInstanceOnSubmit
+      returnListItemInstanceOnSubmit,
+      useModernTaxonomyPicker
     } = this.props;
 
     let contentTypeId = this.props.contentTypeId;
@@ -355,7 +380,7 @@ export class DynamicForm extends React.Component<
 
         // When a field is required and has no value
         if (field.required) {
-          if (field.newValue === undefined && field.value===undefined) {
+          if ((field.newValue === undefined || field.newValue.length === 0) && (field.value === undefined || field.value.length === 0)) {
             if (
               field.defaultValue === null ||
               field.defaultValue === "" ||
@@ -381,7 +406,6 @@ export class DynamicForm extends React.Component<
             shouldBeReturnBack = true;
           }
         }
-
       });
 
       // Perform validation
@@ -435,7 +459,7 @@ export class DynamicForm extends React.Component<
         if (fieldcolumnInternalName.startsWith('_x') || fieldcolumnInternalName.startsWith('_')) {
           fieldcolumnInternalName = `OData_${fieldcolumnInternalName}`;
         }
-        if (field.newValue !== null && field.newValue !== undefined) {
+        if (field.newValue !== undefined) {
 
           let value = field.newValue;
 
@@ -467,7 +491,7 @@ export class DynamicForm extends React.Component<
               value.push(element.key);
             });
             objects[`${fieldcolumnInternalName}Id`] = {
-              results: value.length === 0 ? null : value,
+              results: value.length === 0 ? [] : value,
             };
           }
 
@@ -483,19 +507,38 @@ export class DynamicForm extends React.Component<
           }
 
           // Taxonomy / Managed Metadata fields
+          if(useModernTaxonomyPicker){
+            //Use ITermInfo[] for modern taxonomy picker
+            if (fieldType === "TaxonomyFieldType") {
+              objects[fieldcolumnInternalName] = {
+                  __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
+                  Label: value[0]?.labels[0]?.name ?? "",
+                  TermGuid: value[0]?.id ?? "11111111-1111-1111-1111-111111111111",
+                  WssId: "-1",
+              };
+            }
 
-          if (fieldType === "TaxonomyFieldType") {
-            objects[fieldcolumnInternalName] = {
-              __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-              Label: value[0]?.name ?? "",
-              TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
-              WssId: "-1",
-            };
-          }
-          if (fieldType === "TaxonomyFieldTypeMulti") {
-            objects[hiddenFieldName] = field.newValue
-              .map((term) => `-1#;${term.name}|${term.key};`)
-              .join("#");
+            if (fieldType === "TaxonomyFieldTypeMulti") {
+              objects[hiddenFieldName] = field.newValue
+                  .map((term) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
+                  .join("#");
+            }
+
+          } else {
+            //Use IPickerTerms
+            if (fieldType === "TaxonomyFieldType") {
+              objects[fieldcolumnInternalName] = {
+                __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
+                Label: value[0]?.name ?? "",
+                TermGuid: value[0]?.key ?? "11111111-1111-1111-1111-111111111111",
+                WssId: "-1",
+              };
+            }
+            if (fieldType === "TaxonomyFieldTypeMulti") {
+              objects[hiddenFieldName] = field.newValue
+                .map((term) => `-1#;${term.name}|${term.key};`)
+                .join("#");
+            }
           }
 
           // Other fields
@@ -595,13 +638,13 @@ export class DynamicForm extends React.Component<
       else if (contentTypeId.startsWith("0x0120")) {
         // We are adding a folder or a Document Set
         try {
-          const idField = "ID";          
+          const idField = "ID";
           const contentTypeIdField = "ContentTypeId";
 
-          const library = await sp.web.lists.getById(listId);          
+          const library = await sp.web.lists.getById(listId);
           const folderFileName = this.getFolderName(objects);
-          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);          
-          const newFolder = await folder.addSubFolderUsingPath(folderFileName);          
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
+          const newFolder = await folder.addSubFolderUsingPath(folderFileName);
           const fields = await newFolder.listItemAllFields();
 
           if (fields[idField]) {
@@ -611,7 +654,7 @@ export class DynamicForm extends React.Component<
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
             // Update the just created folder or Document Set
-            const iur = await library.items.getById(folderId).update(objects);
+            const iur = await this.updateListItemRetry(library, folderId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -677,8 +720,8 @@ export class DynamicForm extends React.Component<
                 "_"
               ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
               : ""; // Empty string will be replaced by SPO with Folder Item ID
-          
-          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);          
+
+          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
           const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
           const fields = await fileCreatedResult.file.listItemAllFields();
 
@@ -689,7 +732,7 @@ export class DynamicForm extends React.Component<
             // Set the content type ID for the target item
             objects[contentTypeIdField] = contentTypeId;
             // Update the just created file
-            const iur = await library.items.getById(fileId).update(objects);
+            const iur = await this.updateListItemRetry(library, fileId, objects);
             if (onSubmitted) {
               onSubmitted(
                 iur.data,
@@ -728,9 +771,10 @@ export class DynamicForm extends React.Component<
       return element.columnInternalName === internalName;
     })[0];
 
+    const { useModernTaxonomyPicker } = this.props;
     // Init new value(s)
     field.newValue = newValue;
-    field.stringValue = newValue.toString();
+    field.stringValue = newValue? newValue.toString():'';
     field.additionalData = additionalData;
     field.subPropertyValues = {};
 
@@ -745,8 +789,18 @@ export class DynamicForm extends React.Component<
     if (field.fieldType === "Lookup" || field.fieldType === "LookupMulti") {
       field.stringValue = newValue.map(nv => nv.key + ';#' + nv.name).join(';#');
     }
-    if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
-      field.stringValue = newValue.map(nv => nv.name).join(';');
+    if(useModernTaxonomyPicker){
+      if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
+        if (Array.isArray(newValue) && newValue.length > 0) {
+        field.stringValue = newValue.map(nv => nv.labels.map(label => label.name).join(';')).join(';');
+        } else {
+        field.stringValue = "";
+        }
+      }
+    } else {
+      if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
+        field.stringValue = newValue.map(nv => nv.name).join(';');
+      }
     }
 
     // Capture additional property data for User fields
@@ -977,7 +1031,7 @@ export class DynamicForm extends React.Component<
       let bodySections: ICustomFormattingBodySection[];
       if (listInfo.ClientFormCustomFormatter && listInfo.ClientFormCustomFormatter[contentTypeId]) {
         const customFormatInfo = JSON.parse(listInfo.ClientFormCustomFormatter[contentTypeId]) as ICustomFormatting;
-        bodySections = customFormatInfo.bodyJSONFormatter.sections;
+        bodySections = customFormatInfo.bodyJSONFormatter?.sections;
         headerJSON = customFormatInfo.headerJSONFormatter;
         footerJSON = customFormatInfo.footerJSONFormatter;
       }
@@ -988,13 +1042,13 @@ export class DynamicForm extends React.Component<
       const isEditingItem = listItemId !== undefined && listItemId !== null && listItemId !== 0;
       let etag: string | undefined = undefined;
 
-      if (isEditingItem) {                
+      if (isEditingItem) {
         const spListItem = spList.items.getById(listItemId);
-        
-        if (contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101")) { 
+
+        if (contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101")) {
           spListItem.select("*","FileLeafRef"); // Explainer: FileLeafRef is not loaded by default. Load it to show the file/folder name in the field.
         }
-        
+
         item = await spListItem.get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
 
         if (onListItemLoaded) {
@@ -1062,6 +1116,7 @@ export class DynamicForm extends React.Component<
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: {[key: string]: string}): Promise<IDynamicFieldProps[]> {
+    const{ useModernTaxonomyPicker } = this.props;
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
     const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
@@ -1093,12 +1148,12 @@ export class DynamicForm extends React.Component<
           let showAsPercentage: boolean | undefined;
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const selectedTags: any = [];
-  
+
           let fieldName = field.InternalName;
           if (fieldName.startsWith('_x') || fieldName.startsWith('_')) {
             fieldName = `OData_${fieldName}`;
           }
-  
+
           // If a SharePoint Item was loaded, get the field value from it
           if (item !== null && item[fieldName]) {
             value = item[fieldName];
@@ -1106,7 +1161,7 @@ export class DynamicForm extends React.Component<
           } else {
             defaultValue = field.DefaultValue;
           }
-  
+
           // Store choices for Choice fields
           if (field.FieldType === "Choice") {
             field.Choices.forEach((element) => {
@@ -1118,7 +1173,7 @@ export class DynamicForm extends React.Component<
               choices.push({ key: element, text: element });
             });
           }
-  
+
           // Setup Note, Number and Currency fields
           if (field.FieldType === "Note") {
             richText = field.RichText;
@@ -1134,7 +1189,7 @@ export class DynamicForm extends React.Component<
               cultureName = this.cultureNameLookup(numberField.CurrencyLocaleId);
             }
           }
-  
+
           // Setup Lookup fields
           if (field.FieldType === "Lookup" || field.FieldType === "LookupMulti") {
             lookupListId = field.LookupListId;
@@ -1157,7 +1212,7 @@ export class DynamicForm extends React.Component<
               value = [];
             }
           }
-  
+
           // Setup User fields
           if (field.FieldType === "User") {
             if (item !== null) {
@@ -1196,72 +1251,149 @@ export class DynamicForm extends React.Component<
             }
             principalType = field.PrincipalAccountType;
           }
-  
+
           // Setup Taxonomy / Metadata fields
-          if (field.FieldType === "TaxonomyFieldType") {
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item !== null) {
-              const response = await this._spService.getSingleManagedMetadataLabel(
-                listId,
-                listItemId,
-                field.InternalName,
-                this.webURL
-              );
-              if (response) {
-                selectedTags.push({
-                  key: response.TermID,
-                  name: response.Label,
-                });
-                value = selectedTags;
-                stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+          if(useModernTaxonomyPicker){
+            if (field.FieldType === "TaxonomyFieldType") {
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
+              if (item !== null) {
+                const response = await this._spService.getSingleManagedMetadataLabel(
+                  listId,
+                  listItemId,
+                  field.InternalName,
+                  this.webURL
+                );
+                if (response) {
+                  const term = await this._taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(response.TermID));
+                  selectedTags.push({
+                    key: response.TermID,
+                    name: response.Label,
+                  });
+                  value = term;//selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              } else {
+                if (defaultValue !== "") {
+                  selectedTags.push({
+                    key: defaultValue.split("|")[1],
+                    name: defaultValue.split("|")[0].split("#")[1],
+                  });
+                  value = selectedTags;
+                }
               }
-            } else {
-              if (defaultValue !== "") {
-                selectedTags.push({
-                  key: defaultValue.split("|")[1],
-                  name: defaultValue.split("|")[0].split("#")[1],
-                });
-                value = selectedTags;
-              }
+              if (defaultValue === "") defaultValue = null;
             }
-            if (defaultValue === "") defaultValue = null;
-          }
-          if (field.FieldType === "TaxonomyFieldTypeMulti") {
-            hiddenName = field.HiddenListInternalName;
-            termSetId = field.TermSetId;
-            anchorId = field.AnchorId;
-            if (item && item[field.InternalName]) {
-              item[field.InternalName].forEach((element) => {
-                selectedTags.push({
-                  key: element.TermGuid,
-                  name: element.Label,
+            if (field.FieldType === "TaxonomyFieldTypeMulti") {
+              hiddenName = field.HiddenListInternalName;
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
+              if (item && item[field.InternalName]) {
+                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,item[field.InternalName]);
+                item[field.InternalName].forEach((element) => {
+                  selectedTags.push({
+                    key: element.TermGuid,
+                    name: element.Label,
+                  });
                 });
-              });
-  
-              value = selectedTags;
-            } else {
-              if (defaultValue && defaultValue !== "") {
-                defaultValue.split(/#|;/).forEach((element) => {
-                  if (element.indexOf("|") !== -1)
-                    selectedTags.push({
-                      key: element.split("|")[1],
-                      name: element.split("|")[0],
+
+                //value = selectedTags; _selectedTags
+                value = _selectedTags;
+              } else {
+                if (defaultValue && defaultValue !== "") {
+                  defaultValue.split(/#|;/).forEach((element) => {
+                    if (element.indexOf("|") !== -1)
+                      selectedTags.push({
+                        key: element.split("|")[1],
+                        name: element.split("|")[0],
+                      });
+                  });
+
+                  value = selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              }
+              if (defaultValue === "") defaultValue = null;
+            }
+          } else {
+            if (field.FieldType === "TaxonomyFieldType") {
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId;
+              if (item !== null) {
+                const response = await this._spService.getSingleManagedMetadataLabel(
+                  listId,
+                  listItemId,
+                  field.InternalName,
+                  this.webURL
+                );
+                if (response) {
+                  selectedTags.push({
+                    key: response.TermID,
+                    name: response.Label,
+                  });
+                  value = selectedTags;
+                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                }
+              } else {
+                if (defaultValue !== "") {
+                  selectedTags.push({
+                    key: defaultValue.split("|")[1],
+                    name: defaultValue.split("|")[0].split("#")[1],
+                  });
+                  value = selectedTags;
+                }
+              }
+              if (defaultValue === "") defaultValue = null;
+            }
+            if (field.FieldType === "TaxonomyFieldTypeMulti") {
+              hiddenName = field.HiddenListInternalName;
+              termSetId = field.TermSetId;
+              anchorId = field.AnchorId;
+              if (item && item[field.InternalName]) {
+                item[field.InternalName].forEach((element) => {
+                  selectedTags.push({
+                    key: element.TermGuid,
+                    name: element.Label,
+                  });
+                });
+
+                value = selectedTags;
+              } else {
+                if (defaultValue && defaultValue !== "") {
+                  defaultValue.split(/#|;/).forEach((element) => {
+                    if (element.indexOf("|") !== -1)
+                      selectedTags.push({
+                        key: element.split("|")[1],
+                        name: element.split("|")[0],
+                      });
+                  });
+
+                  value = selectedTags;
+                } else {
+                  if (defaultValue && defaultValue !== "") {
+                    defaultValue.split(/#|;/).forEach((element) => {
+                      if (element.indexOf("|") !== -1)
+                        selectedTags.push({
+                          key: element.split("|")[1],
+                          name: element.split("|")[0],
+                        });
                     });
-                });
-  
-                value = selectedTags;
-                stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+
+                    value = selectedTags;
+                    stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  }
+                }
+                if (defaultValue === "") defaultValue = null;
               }
             }
-            if (defaultValue === "") defaultValue = null;
           }
-  
+
+
           // Setup DateTime fields
           if (field.FieldType === "DateTime") {
-  
+
             if (item !== null && item[fieldName]) {
-  
+
               value = new Date(item[fieldName]);
               stringValue = value.toISOString();
             } else if (defaultValue === "[today]") {
@@ -1269,11 +1401,11 @@ export class DynamicForm extends React.Component<
             } else if (defaultValue) {
               defaultValue = new Date(defaultValue);
             }
-  
+
             dateFormat = field.DateFormat || "DateOnly";
             defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
           }
-  
+
           // Setup Thumbnail, Location and Boolean fields
           if (field.FieldType === "Thumbnail") {
             if (defaultValue) {
@@ -1327,15 +1459,65 @@ export class DynamicForm extends React.Component<
             minimumValue: minValue,
             maximumValue: maxValue,
             showAsPercentage: showAsPercentage,
-            customIcon: customIcons ? customIcons[field.InternalName] : undefined
+            customIcon: customIcons ? customIcons[field.InternalName] : undefined,
+            useModernTaxonomyPickerControl: useModernTaxonomyPicker,
           });
-  
+
           // This may not be necessary now using RenderListDataAsStream
           tempFields.sort((a, b) => a.Order - b.Order);
         }
       }
     }
     return tempFields;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private getTermsForModernTaxonomyPicker = async (termsetId: any, terms: any): Promise<ITermInfo[]> => {
+    if (!terms || terms.length === 0) {
+      return [];
+    }
+    const selectedTerms: ITermInfo[] = await Promise.all(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      terms.map(async (fetchedterm: any) => {
+        if (!fetchedterm?.TermGuid) {
+          console.error(`Error: TermGuid is undefined for term`, fetchedterm);
+          return null;
+        }
+
+        try {
+          const response = await this._taxonomyService.getTermById(
+            Guid.parse(termsetId),
+            Guid.parse(fetchedterm.TermGuid)
+          );
+
+          return {
+            id: response.id,
+            labels: [
+              {
+                name: response.labels?.[0]?.name ?? fetchedterm.Label,
+                isDefault: response.labels?.[0]?.isDefault ?? true,
+                languageTag: response.labels?.[0]?.languageTag ?? "en-US",
+              },
+            ],
+            childrenCount: response.childrenCount ?? 0,
+            createdDateTime: response.createdDateTime ?? new Date().toISOString(),
+            lastModifiedDateTime: response.lastModifiedDateTime ?? new Date().toISOString(),
+            descriptions: response.descriptions ?? [],
+            customSortOrder: response.customSortOrder ?? [],
+            properties: response.properties ?? [],
+            localProperties: response.localProperties ?? [],
+            isDeprecated: response.isDeprecated ?? false,
+            isAvailableForTagging: response.isAvailableForTagging ?? [],
+            topicRequested: response.topicRequested ?? false,
+          } as ITermInfo;
+        } catch (error) {
+          console.error(`Error fetching term ${fetchedterm.TermGuid}:`, error);
+          return null;
+        }
+      })
+    );
+
+    return selectedTerms.filter(term => term !== null);
   }
 
   private cultureNameLookup(lcid: number): string {
@@ -1413,6 +1595,7 @@ export class DynamicForm extends React.Component<
       missingSelectedFile
     } = this.state;
 
+    const styles = getFieldstyles(this._classNames.subComponentStyles.fieldStyles(), { theme: theme });
     const labelEl = <label className={styles.fieldRequired + ' ' + styles.fieldLabel}>{strings.DynamicFormChooseFileLabel}</label>;
 
     return <div>
@@ -1493,19 +1676,19 @@ export class DynamicForm extends React.Component<
 
     if (objects[fileLeafRefField] !== undefined && objects[fileLeafRefField] !== "")
       folderNameValue = objects[fileLeafRefField] as string;
-    
+
     if (objects[titleField] !== undefined && objects[titleField] !== "")
       folderNameValue = objects[titleField] as string;
 
     return folderNameValue.replace(/["|*|:|<|>|?|/|\\||]/g, "_").trim();
   }
-  
+
   /**
    * Returns a pnp/sp folder object based on the folderPath and the library the folder is in.
    * The folderPath can be a server relative path, but should be in the same library.
    * @param folderPath The path to the folder coming from the component properties
    * @param rootFolder The rootFolder object of the library
-   * @returns 
+   * @returns
    */
   private getFolderByPath = async (folderPath: string, rootFolder: IFolder): Promise<IFolder> => {
     const libraryFolder = await rootFolder();
@@ -1516,9 +1699,42 @@ export class DynamicForm extends React.Component<
     if (`${normalizedFolderPath}/`.startsWith(`${serverRelativeLibraryPath}/`)) {
       return sp.web.getFolderByServerRelativePath(normalizedFolderPath);
     }
-    
+
     // In other cases, expect a list-relative path and return the folder
     const folder = sp.web.getFolderByServerRelativePath(`${serverRelativeLibraryPath}/${normalizedFolderPath}`);
     return folder;
   };
+
+  /**
+   * Updates a list item and retries the operation if a 409 (Save Conflict) was thrown.
+   * @param list The list/library on which to execute the operation
+   * @param itemId The item ID
+   * @param objects The values to update the item with
+   * @param retry The retry index
+   * @returns An update result
+   */
+  private updateListItemRetry = async (list: IList, itemId: number, objects: {}, retry: number = 0): Promise<IItemUpdateResult> => {
+    try {
+      return await list.items.getById(itemId).update(objects);
+    }
+    catch (error)
+    {
+      if (error.status === 409 && retry < 3) {
+        await timeout(100);
+        return await this.updateListItemRetry(list, itemId, objects, retry + 1);
+      }
+
+      throw error;
+    }
+  }
+
 }
+
+export const DynamicForm = styled<IDynamicFormProps, IDynamicFormStyleProps, IDynamicFormStyles>(
+  DynamicFormBase,
+  getStyles,
+  undefined,
+  {
+    scope: 'DynamicForm',
+  },
+);

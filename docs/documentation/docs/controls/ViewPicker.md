@@ -12,14 +12,12 @@ Here is an example of the control:
 
 `ViewPicker` multi selection mode:
 
-![ViewPicker multi selection](../assets/ViewPicker-multi.png) 
-
+![ViewPicker multi selection](../assets/ViewPicker-multi.png)
 
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the control into your component:
-
 
 ```TypeScript
 import { ViewPicker } from "@pnp/spfx-controls-react/lib/ViewPicker";
@@ -44,7 +42,6 @@ import { ViewPicker } from "@pnp/spfx-controls-react/lib/ViewPicker";
   }
 ```
 
-
 ## Implementation
 
 The `ViewPicker` control can be configured with the following properties
@@ -54,7 +51,7 @@ The `ViewPicker` control can be configured with the following properties
 | context | BaseComponentContext | yes | The context object of the SPFx loaded webpart or customizer. |
 | className | string | no | If provided, additional class name to provide on the dropdown element. |
 | disabled | boolean | no | Whether or not the view picker control is disabled. |
-| filter | string | no | Filter views from Odata query. |
+| filter | string | no | Filter views from OData query. |
 | label | string | no | Label to use for the control. |
 | listId | string | no | The List Id of the list. |
 | placeholder | string | no | Placeholder label to show in the dropdown. |
@@ -63,12 +60,12 @@ The `ViewPicker` control can be configured with the following properties
 | multiSelect | boolean | no | Optional mode indicates if multi-choice selections is allowed. Default to `false`. |
 | showBlankOption | boolean | no | Whether or not to show a blank option. Default to `false`. |
 | viewsToExclude | string[] | no | Defines view titles which should be excluded from the view picker control. |
-| webAbsoulteUrl | string | no | Absolute Web Url of target site (user requires permissions) |
+| webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions) |
 | onSelectionChanged | (newValue: string OR string[]): void | no | Callback function when the selected option changes. |
 
 Enum `orderBy`
 
 | Value |
-| ---- |
-| Id |
+| ----- |
+| Id    |
 | Title |

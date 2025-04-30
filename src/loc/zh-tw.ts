@@ -2,6 +2,7 @@ declare var define: any;
 
 define([], () => {
   return {
+ CalendarControlDayOfWeekSunday: "Sunday",
  "TermSertNaviagtionErrorMessage": "未發現術語集",
   "TermSetNavigationNoTerms": "沒有定義術語",
   "Save": "儲存",
@@ -399,7 +400,7 @@ define([], () => {
   "ModernAudioMute": "靜音",
 
   "ProgressStepsIndicatorNoSteps": "沒有步驟",
-  
+
   "UploadFilesButtonLabel": "添加",
   "UpLoadFilesDeleteButtonLabel": "刪除",
   "UpLoadFilesDragDropLabel": "拖拽文件或者選擇使用文件上傳按鈕",

@@ -6,7 +6,7 @@ import * as telemetry from '../../common/telemetry';
 import { Spinner } from '@fluentui/react/lib/Spinner';
 
 export class SecurityTrimmedControl extends React.Component<ISecurityTrimmedControlProps, ISecurityTrimmedControlState> {
-  constructor(props: ISecurityTrimmedControlProps) {
+  constructor(props: React.PropsWithChildren<ISecurityTrimmedControlProps>) {
     super(props);
 
     this.state = {

@@ -4,11 +4,11 @@ This control renders a list view for the given set of items.
 
 ![ListView control output](../assets/ListView.png)
 
-**List view control with grouping applied**
+- List view control with grouping applied:
 
 ![ListView control with grouping](../assets/ListView-grouping.png)
 
-**List view control with drag and drop applied**
+- List view control with drag and drop applied:
 
 ![ListView control with grouping](../assets/ListView-DragDrop.png)
 
@@ -41,6 +41,7 @@ import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp
   className={styles.listWrapper}
   listClassName={styles.list} />
 ```
+
 - The control provides full text filtering through all the columns. If you want to execute filtering on the specified columns, you can use syntax : `<ColumnName>`:`<FilterValue>`. Use `':'` as a separator between column name and value. Control support both `'fieldName'` and `'name'` properties of IColumn interface.
 
 - With the `selection` property you can define a method that which gets called when the user selects one or more items in the list view:
@@ -50,7 +51,8 @@ private _getSelection(items: any[]) {
   console.log('Selected items:', items);
 }
 ```
-- With the `groupByFields` property you can define an array of field objects which will be used for grouping. 
+
+- With the `groupByFields` property you can define an array of field objects which will be used for grouping.
 
 **Important**: the same order of the fields defines how grouping will be applied. In the snippet the `ListView` control will first group by the `Extension` and after that by the `Author` field.
 
@@ -106,29 +108,29 @@ The ListView control can be configured with the following properties:
 
 The `IViewField` has the following implementation:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| name | string | yes | Name of the field. |
-| displayName | string | no | Name that will be used as the column title. If not defined, the name property will be used. |
-| linkPropertyName | string | no | Specify the field name that needs to be used to render a link for the current field. |
-| sorting | boolean | no | Specify if you want to enable sorting for the current field. |
-| minWidth | number | no | Specify the minimum width of the column. |
-| maxWidth | number | no | Specify the maximum width of the column. |
-| isResizable | boolean | no | Determines if the column can be resized. |
-| render | function | no | Override how the field has to get rendered. |
+| Property         | Type     | Required | Description                                                                                 |
+| ---------------- | -------- | -------- | ------------------------------------------------------------------------------------------- |
+| name             | string   | yes      | Name of the field.                                                                          |
+| displayName      | string   | no       | Name that will be used as the column title. If not defined, the name property will be used. |
+| linkPropertyName | string   | no       | Specify the field name that needs to be used to render a link for the current field.        |
+| sorting          | boolean  | no       | Specify if you want to enable sorting for the current field.                                |
+| minWidth         | number   | no       | Specify the minimum width of the column.                                                    |
+| maxWidth         | number   | no       | Specify the maximum width of the column.                                                    |
+| isResizable      | boolean  | no       | Determines if the column can be resized.                                                    |
+| render           | function | no       | Override how the field has to get rendered.                                                 |
 
 The `IGrouping` has the following implementation:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| name | string | yes | Name of the field |
-| order | GroupOrder | yes | Specify how the group needs to be ordered. |
+| Property | Type       | Required | Description                                |
+| -------- | ---------- | -------- | ------------------------------------------ |
+| name     | string     | yes      | Name of the field                          |
+| order    | GroupOrder | yes      | Specify how the group needs to be ordered. |
 
 enum `GroupOrder`
 
-| Value | Description |
-| ---- | ---- |
-| ascending | Order the group in ascending order. |
+| Value      | Description                          |
+| ---------- | ------------------------------------ |
+| ascending  | Order the group in ascending order.  |
 | descending | Order the group in descending order. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListView)

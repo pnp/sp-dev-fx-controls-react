@@ -1,7 +1,8 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IItem } from '@pnp/sp/items';
+import { IStyle, IStyleFunctionOrObject } from '@fluentui/react';
 import React from 'react';
-import { IDynamicFieldProps } from './dynamicField';
+import { IDynamicFieldProps,IDynamicFieldStyles } from './dynamicField';
 import { IValidationErrorDialogProps } from './IValidationErrorDialogProps';
 
 export interface IDynamicFormProps {
@@ -141,9 +142,54 @@ export interface IDynamicFormProps {
    storeLastActiveTab?: boolean;
 
   /**
-   * Library relative folder to create the item in. 
-   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder. 
+   * Library relative folder to create the item in.
+   * This option is only available for document libraries and works only when the contentTypeId is specified and has a base type of type Document or Folder.
    * Defaults to the root folder.
    */
   folderPath?: string;
+
+  /**
+   * Set to true to use the Modern Taxonomy Picker (ModernTaxonomyPicker).
+   * Set to false to use the classic TaxonomyPicker.
+   * Default is false
+   */
+  useModernTaxonomyPicker?: boolean;
+
+  /**
+   * Call to provide customized styling
+   * Read https://github.com/microsoft/fluentui/blob/master/docs/react-wiki-archive/Component-Styling.md#using-a-styleable-component for more information
+   */
+  styles?: IStyleFunctionOrObject<IDynamicFormStyleProps, IDynamicFormStyles>;
+
+  /**
+   * CSS Class name to add to the root element.
+   */
+  className?: string;
+}
+
+
+
+export type IDynamicFormStyleProps = Pick<IDynamicFormProps, 'className'> & { };
+
+export interface IDynamicFormSubComponentStyles {
+  fieldStyles: IDynamicFieldStyles;
+}
+
+export interface IDynamicFormStyles {
+  root: IStyle;
+  sectionTitle: IStyle;
+  sectionFormFields: IStyle;
+  sectionFormField: IStyle;
+  sectionLine: IStyle;
+  header:IStyle;
+  footer:IStyle;
+  validationErrorDialog: IStyle;
+  buttons: IStyle;
+  actions: IStyle;
+  actionsRight: IStyle;
+  action: IStyle;
+   /**
+   * sub component styles for dynamic field
+   */
+   subComponentStyles: IDynamicFormSubComponentStyles;
 }

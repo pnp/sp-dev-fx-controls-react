@@ -1,8 +1,26 @@
 declare interface IControlStrings {
-  ImagePickderSelectLabel: string;
+  CalendarControlDayOfWeekSunday: string;
+  CalendarControlDayOfWeekMonday: string;
+  CalendarControlDayOfWeekTuesday: string;
+  CalendarControlDayOfWeekWednesday: string;
+  CalendarControlDayOfWeekThursday: string;
+  CalendarControlDayOfWeekFriday: string;
+  CalendarControlDayOfWeekSaturday: string;
 
-  ImagePickerDeleteImageLabel: string;
+  CalendarControlDetailsLabel: string;
+  CalendarControlViewMonthLabel: string;
+  CalendarControlViewWeekLabel: string;
+  CalendarControlViewDayLabel: string;
+  CalendarControlTodayLabel: string;
+
+  CalendarControlPreviousLabel: string;
+  CalendarControlNextLabel: string;
+
+  CalendarControlAttendeessLabel: string;
+  CalendarControlFullDaylabel: string;
+
   ImagePickderSelectLabel: string;
+  ImagePickerDeleteImageLabel: string;
   ImagePickerCancelLabel: string;
   ImagePickerPanelHeaderText: string;
   ImagePickerSharePointTabLabel: string;
@@ -93,19 +111,18 @@ declare interface IControlStrings {
   ListItemAttachmentsdialogOKbuttonLabelOnDelete: string;
   ListItemAttachmentsuploadAttachmentDialogTitle: string;
   ListItemAttachmentsuploadAttachmentButtonLabel: string;
-  ListItemAttachmentsuploadAttachmentErrorMsg: String;
+  ListItemAttachmentsuploadAttachmentErrorMsg: string;
   ListItemAttachmentsCommandBarAddAttachmentLabel: string;
   ListItemAttachmentsloadingMessage: string;
   ListItemAttachmentslPlaceHolderIconText: string;
   ListItemAttachmentslPlaceHolderDescription: string;
   ListItemAttachmentslPlaceHolderButtonLabel: string;
-  //Maps
+
   mapsErrorMessage: string;
   mapsLoadingText: string;
   mapsSearchButtonText: string;
   mapsTitlePrefix: string;
 
-  //RichText
   HeaderNormalText: string;
   HeaderH2: string;
   HeaderH3: string;
@@ -349,7 +366,6 @@ declare interface IControlStrings {
   Yes: string;
   OrgAssetsLinkLabel: string;
 
-  // folder explorer
   NewFolderNamePlaceholder: string;
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
@@ -357,15 +373,12 @@ declare interface IControlStrings {
   NewFolderIncorrectSymbolsError: string;
   SomethingWentWrong: string;
 
-  //Icon picker
   SelectedLabel: string;
   SelectIcon: string;
 
-  //Tree View
   TreeViewExpandTitle: string;
   TreeViewCollapseTitle: string;
 
-  // FieldCollectionData
   CollectionDataEmptyFields: string;
   CollectionDataEmptyValue: string;
   CollectionAddRowButtonLabel: string;
@@ -396,10 +409,8 @@ declare interface IControlStrings {
   DynamicFormChooseFileButtonText: string;
   DynamicFormRequiredFileMessage: string;
 
-  // Location picker
   customDisplayName: string;
 
-  // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;
   ModernTaxonomyPickerTreeTitleSingle: string;
   ModernTaxonomyPickerTreeTitleMulti: string;
@@ -424,6 +435,13 @@ declare interface IControlStrings {
   TermSertNaviagtionErrorMessage: string;
 
   HoverReactionBarSearchEmojiPlaceholder: string;
+
+  // Filter Bar
+  AppliedFiltersAriaLabel: string;
+  ClearAllFiltersTitle: string;
+  ClearFilterTitle: string;
+  ClearAllFiltersText: string;
+  FilterOverflowAriaLabel: string;
 }
 
 declare interface IDateTimeStrings {

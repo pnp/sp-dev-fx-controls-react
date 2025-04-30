@@ -1,6 +1,6 @@
 # Grid Layout control
 
-This control renders a responsive grid layout for your web parts.  The grid layout behaves according to the [SharePoint web part layouts design pattern](https://docs.microsoft.com/en-us/sharepoint/dev/design/layout-patterns#grid-layout).
+This control renders a responsive grid layout for your web parts.  The grid layout behaves according to the [SharePoint web part layouts design pattern](https://docs.microsoft.com/sharepoint/dev/design/layout-patterns#grid-layout).
 
 ![Grid Layout Control](../assets/GridLayout.png)
 
@@ -125,7 +125,7 @@ import { ISize } from 'office-ui-fabric-react/lib/Utilities';
   }
 ```
 
- > Note that the sample code above uses the `isCompact` parameter to remove `DocumentCard` elements and to render a compact layout. You may choose to ignore the `isCompact` parameter if you do not wish to handle compact layouts. 
+ > Note that the sample code above uses the `isCompact` parameter to remove `DocumentCard` elements and to render a compact layout. You may choose to ignore the `isCompact` parameter if you do not wish to handle compact layouts.
 
 - Use the `GridLayout` control in your code as follows:
 
@@ -145,7 +145,7 @@ The grid layout control can be configured with the following properties:
 | ---- | ---- | ---- | ---- |
 | ariaLabel | string | no | The accessible text you wish to display for the grid control. We recommend that you use `"List of content, use right and left arrow keys to navigate, arrow down to access details."`. |
 | items | any[] | yes | The array of items you wish to display. |
-| listProps | IListProps | no | Provides additional list properties to customize the underlaying list. |
+| listProps | IListProps | no | Provides additional list properties to customize the underlying list. |
 | onRenderGridItem | function | yes | onRenderGridItem handler for the grid layout. Use this handler to specify how you wish to render each grid item |
 
-![Telemetry](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/gridlayout)
+![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/gridlayout)
