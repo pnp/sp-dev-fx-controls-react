@@ -6,12 +6,12 @@ The Calendar Control allows users to view and manage events in a calendar interf
 
 Here is an example of the control in action:
 
-![calendar](../assets/calendar1.png)
-![calendar](../assets/calendar2.png)
-![calendar](../assets/calendar3.png)
-![calendar](../assets/calendar4.png)
-![calendar](../assets/calendar5.png)
-![calendar](../assets/calendar6.png)
+![calendar](../assets/Calendar1.png)
+![calendar](../assets/Calendar2.png)
+![calendar](../assets/Calendar3.png)
+![calendar](../assets/Calendar4.png)
+![calendar](../assets/Calendar5.png)
+![calendar](../assets/Calendar6.png)
 
 ## Installation
 
@@ -31,17 +31,17 @@ import { IEvent } from '@pnp/spfx-controls-react/lib/calendar/IEvent';
 
 The Calendar Control accepts the following props:
 
-| Property      | Type                   | Required | Description                                                         |
-| ------------- | ---------------------- | -------- | ------------------------------------------------------------------- |
-| events        | IEvent[]               | Yes      | List of events to display in the calendar.                          |
-| height        | string \| number       | No       | Height of the calendar.                                             |
-| theme         | Theme                  | No       | Theme to apply to the calendar.                                     |
-| onMonthChange | (date: Date) => void   | No       | Callback function triggered when the month changes.                 |
-| onDayChange   | (date: Date) => void   | No       | Callback function triggered when the day changes.                   |
-| onWeekChange  | (date: Date) => void   | No       | Callback function triggered when the week changes.                  |
-| onNext        | (date: Date) => void   | No       | Callback function triggered when navigating to the next period.     |
-| onPrev        | (date: Date) => void   | No       | Callback function triggered when navigating to the previous period. |
-| onViewChange  | (view: string) => void | No       | Callback function triggered when the view changes.                  |
+| Property       | Type                   | Required | Description                                                                    |
+| -------------- | ---------------------- | -------- | ------------------------------------------------------------------------------ |
+| events         | IEvent[]               | Yes      | List of events to display in the calendar.                                     |
+| height         | string \| number       | No       | Height of the calendar.                                                        |
+| theme          | Theme                  | No       | Theme to apply to the calendar.                                                |
+| onMonthChange  | (date: Date) => void   | No       | Callback function triggered when the month changes.                            |
+| onDayChange    | (date: Date) => void   | No       | Callback function triggered when the day changes.                              |
+| onWeekChange   | (date: Date) => void   | No       | Callback function triggered when the week changes.                             |
+| onNext         | (date: Date) => void   | No       | Callback function triggered when navigating to the next period.                |
+| onPrev         | (date: Date) => void   | No       | Callback function triggered when navigating to the previous period.            |
+| onViewChange   | (view: string) => void | No       | Callback function triggered when the view changes.                             |
 | onDaySlotClick | (date: Date) => void   | No       | Callback function triggered when an event is clicked on day slot on Month view |
 
 ## Event Object (IEvent)
@@ -71,9 +71,9 @@ Events displayed in the calendar are represented using the `IEvent` interface:
 | onRenderInDayView   | (event: IEvent) => JSX.Element | No       | Custom rendering function for day view.                        |
 | enableOnHover       | boolean                        | No       | Whether to enable hover effects on events.                     |
 | imageUrl            | string                         | No       | URL for an event-related image.                                |
-| webLink        | string                         | No       | URL to navigate to event details.                              |
-| color              | string                         | No       | Custom color for the event.                                    |
-| backgroundColor    | string                         | No       | Custom background color for the event.                          |
+| webLink             | string                         | No       | URL to navigate to event details.                              |
+| color               | string                         | No       | Custom color for the event.                                    |
+| backgroundColor     | string                         | No       | Custom background color for the event.                         |
 
 ## Attendee Object (IAttendee)
 

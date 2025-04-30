@@ -14,6 +14,7 @@ nav:
     - AdaptiveCardHost: 'controls/AdaptiveCardHost.md'
     - AdaptiveCardDesignerHost: 'controls/AdaptiveCardDesignerHost.md'
     - AnimatedDialog: 'controls/AnimatedDialog.md'
+    - Calendar: 'controls/Calendar.md'
     - Carousel: 'controls/Carousel.md'
     - Charts:
       - "ChartControl": 'controls/ChartControl.md'
