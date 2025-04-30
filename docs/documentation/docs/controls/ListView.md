@@ -17,13 +17,13 @@ This control renders a list view for the given set of items.
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
 - Import the following modules to your component:
 
-```TypeScript
+```typeScript
 import { ListView, IViewField, SelectionMode, GroupOrder, IGrouping } from "@pnp/spfx-controls-react/lib/ListView";
 ```
 
 - Use the `ListView` control in your code as follows:
 
-```TypeScript
+```typeScript
 <ListView
   items={items}
   viewFields={viewFields}
@@ -56,7 +56,7 @@ private _getSelection(items: any[]) {
 
 **Important**: the same order of the fields defines how grouping will be applied. In the snippet the `ListView` control will first group by the `Extension` and after that by the `Author` field.
 
-```TypeScript
+```typeScript
 const groupByFields: IGrouping[] = [
   {
     name: "Extension", 
@@ -81,6 +81,86 @@ private _getDropFiles = (files) => {
   }
 ```
 
+## Disabling flatten items
+
+By default, the ListView control is flattening the items passed as prop, which means that nested objects such as arrays are transformed and put at level 0. This can be a problem when manipulating items with objects or sub-arrays. When setting the prop `flattenItems` to `false`, items are returned "as provided" which enables custom rendering. See the following example:
+
+```typescript
+// ...
+public render(): React.ReactElement<{}> {
+  const itms = [
+    {
+      id: 1,
+      displayName: 'Adele Vance',
+      email: 'adelev@contoso.onmicrosoft.com',
+      managers: [{displayName: "Tony Stark"}, {displayName: "Natasha Romanoff"}]
+    },
+    {
+      id: 2,
+      displayName: 'Alex Wilber',
+      email: 'alexw@contoso.onmicrosoft.com',
+      managers: [{displayName: "Maria Hill"}, {displayName: "Bruce Banner"}]
+    },
+    {
+      id: 3,
+      displayName: 'Megan Bowen',
+      email: 'meganb@contoso.onmicrosoft.com',
+      managers: [{displayName: "Thor"}, {displayName: "Tony Stark"}]
+    },
+  ];
+
+  const vwFields: IViewField[] = [
+    {
+      name: "id",
+      displayName: "ID",
+      sorting: false,
+      minWidth: 50,
+      maxWidth: 50
+    },
+    {
+      name: "displayName",
+      displayName: "Name",
+      sorting: true,
+      minWidth: 100,
+      maxWidth: 100
+    },
+    {
+      name: "email",
+      displayName: "E-mail",
+      sorting: true,
+      minWidth: 150,
+      maxWidth: 150
+    },
+    {
+      name: "managers",
+      displayName: "Managers",
+      sorting: true,
+      render: (item?: any, index?: number, column?: any): JSX.Element => {
+        return (
+          <div style={{display: 'flex', columnGap: '10px'}}>
+            {item.managers.map(itm => {return <span>{itm.displayName}</span>})}
+          </div>
+        );
+      },
+      minWidth: 100,
+      maxWidth: 100
+    }
+  ];
+
+  return (
+    <ListView items={itms}
+      viewFields={vwFields}
+      compact={true}
+      selectionMode={SelectionMode.single}
+      showFilter={true}
+      dragDropFiles={true}
+      stickyHeader={true}
+      flattenItems={false}
+    />
+  );
+}
+```
+
 ## Implementation
 
 The ListView control can be configured with the following properties:
@@ -100,11 +180,12 @@ The ListView control can be configured with the following properties:
 | defaultFilter | string | no | Specify the initial filter to be applied to the list. |
 | dragDropFiles | boolean | no | Specify the drag and drop files area option. Default false. |
 | onDrop | file | no | Event handler returns files from drag and drop. |
-| stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky |
+| stickyHeader | boolean | no | Specifies if the header of the `ListView`, including search box, is sticky. |
 | onRenderRow | (props: IDetailsRowProps) => JSX.Element \| null | no | Callback to override the default row rendering. |
-| sortItems | (items: any[], columnName: string, descending: boolean) =&gt; any[] | no | Custom sorting function to handle sorting by column |
-| className | string | no | Class name to apply additional styles on list view wrapper |
-| listClassName | string | no | Class name to apply additional styles on list view |
+| sortItems | (items: any[], columnName: string, descending: boolean) =&gt; any[] | no | Custom sorting function to handle sorting by column. |
+| className | string | no | Class name to apply additional styles on list view wrapper. |
+| listClassName | string | no | Class name to apply additional styles on list view. |
+| flattenItems | boolean | no | Specify if items should be flatten or not. Default value is `true`. |
 
 The `IViewField` has the following implementation:
 
