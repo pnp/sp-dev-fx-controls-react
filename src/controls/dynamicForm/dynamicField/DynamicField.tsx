@@ -190,7 +190,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           </div>;
         }
 
-      case 'Choice':
+      case 'Choice': {
         let choiceControl: any = undefined;
 
         // If the choiceType is dropdown
