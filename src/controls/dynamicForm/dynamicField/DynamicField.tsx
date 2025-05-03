@@ -233,7 +233,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           {choiceControl}
           {descriptionEl}
         </div>;
-
+}
       case 'MultiChoice':
         return <div className={styles.fieldContainer}>
           <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
