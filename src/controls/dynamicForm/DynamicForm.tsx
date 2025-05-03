@@ -1168,11 +1168,25 @@ export class DynamicFormBase extends React.Component<
             field.Choices.forEach((element) => {
               choices.push({ key: element, text: element });
             });
+
+            if (field.FormatType === 1) {
+              choiceType = ChoiceFieldFormatType.RadioButtons;
+            }
+            else {
+              choiceType = ChoiceFieldFormatType.Dropdown;
+            }
           }
           if (field.FieldType === "MultiChoice") {
             field.MultiChoices.forEach((element) => {
               choices.push({ key: element, text: element });
             });
+
+            if (field.FormatType === 1) {
+              choiceType = ChoiceFieldFormatType.RadioButtons;
+            }
+            else {
+              choiceType = ChoiceFieldFormatType.Dropdown;
+            }
           }
 
           // Setup Note, Number and Currency fields
