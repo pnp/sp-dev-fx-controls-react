@@ -151,14 +151,14 @@ export const CommentsList: React.FunctionComponent = () => {
 
   return (
     <>
-      <Stack tokens={{ childrenGap: 10, maxWidth: 335 }}>
+      <Stack tokens={{ childrenGap: 10 }}>
         <RenderError errorInfo={errorInfo} />
         <AddComment />
         <Text variant="small" block style={{ fontWeight: 600 }}>
           {strings.ListItemCommentsLabel}
         </Text>
         <div className={configurationListClasses.titlesContainer} onScroll={handleScroll} ref={scrollPanelRef}>
-          <Stack>
+          <Stack styles={{ root: { width: '100%' }}}>
             <RenderComments />
           </Stack>
         </div>

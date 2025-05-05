@@ -124,8 +124,8 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
       <>
         <Stack tokens={{ padding: 5 }} styles={{ root: { width: 260 } }}>
           <Stack horizontal horizontalAlign="start" tokens={{ childrenGap: 10 }}>
-            <img src={`${PHOTO_URL}${_user.mail}`} width={30} height={30} style={{ borderRadius: "50%" }} />
-            <Stack>
+            <img src={`${PHOTO_URL}${_user.mail}`} width={30} height={30} style={{ borderRadius: "50%" }} alt={_user.displayName} />
+            <Stack styles={{ root: { overflow: "hidden" } }}>
               <Text styles={{ root: { fontWeight: 700 } }} variant="smallPlus" nowrap>
                 {_user.displayName}
               </Text>
