@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Patvirtinti naikinimo komentarą",
   "ListItemCommentsLabel": "Komentarai",
   "ListItemCommentsNoCommentsLabel": "Komentarų nėra",
+  "ListItemCommentsPlaceholder": "@paminėkite arba komentuokite",
   "OrgAssetsLinkLabel": "Savo organizacijoje",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Įveskite terminą, kurį norite pažymėti",

@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Apstiprināt dzēst komentāru",
   "ListItemCommentsLabel": "Komentāri",
   "ListItemCommentsNoCommentsLabel": "Nav komentāru",
+  "ListItemCommentsPlaceholder": "@pieminēt vai komentēt",
   "OrgAssetsLinkLabel": "Jūsu organizācija",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Ievadiet vārdu, kuru vēlaties atzīmēt",

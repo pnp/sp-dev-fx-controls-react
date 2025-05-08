@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Xác nhận Xóa Chú thích",
   "ListItemCommentsLabel": "Ý kiến",
   "ListItemCommentsNoCommentsLabel": "Không có bình luận",
+  "ListItemCommentsPlaceholder": "@đề cập hoặc bình luận",
   "OrgAssetsLinkLabel": "Tổ chức của bạn",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Nhập cụm từ bạn muốn gắn thẻ",

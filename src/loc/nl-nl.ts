@@ -377,6 +377,7 @@ define([], () => {
     "ListItemCommentsDialogDeleteTitle": "Opmerking verwijderen bevestigen",
     "ListItemCommentsLabel": "Opmerkingen",
     "ListItemCommentsNoCommentsLabel": "Er is geen commentaar",
+    "ListItemCommentsPlaceholder": "@vermelden of commentaar",
     "OrgAssetsLinkLabel": "Uw organisatie",
     "MyTeamsMessageDontHaveTeams": "You don't have any teams",
     "ModernTaxonomyPickerDefaultPlaceHolder": "Voer een term in die u wilt taggen",

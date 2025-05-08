@@ -49,10 +49,12 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
   };
   const documentCardStyles: Partial<IDocumentCardStyles> = {
     root: {
+      maxWidth: "initial",
       marginBottom: 7,
-      width: 322,
+      width: "100%",
       backgroundColor: theme.neutralLighterAlt,
       userSelect: "text",
+      boxSizing: "border-box",
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
@@ -62,11 +64,13 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
 
   const documentCardHighlightedStyles: Partial<IDocumentCardStyles> = {
     root: {
+      maxWidth: "initial",
       marginBottom: 7,
-      width: 322,
+      width: "100%",
       backgroundColor: theme.themeLighter,
       userSelect: "text",
       border: "solid 3px "+theme.themePrimary,
+      boxSizing: "border-box",
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
@@ -78,6 +82,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     root: {
       marginBottom: 5,
       backgroundColor: theme.neutralLighterAlt,
+      boxSizing: "border-box",
       ":hover": {
         borderColor: theme.themePrimary,
         borderWidth: 1,
@@ -90,6 +95,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
       marginTop: 2,
       backgroundColor: theme?.white,
       boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
+      boxSizing: "border-box",
 
       ":hover": {
         borderColor: theme.themePrimary,
@@ -116,6 +122,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
       display: "block",
     } as IStyle,
     titlesContainer: {
+      width: "100%",
       height: tilesHeight,
       marginBottom: 10,
       display: "flex",

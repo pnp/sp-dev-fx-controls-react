@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Подтвердить удаление комментария",
   "ListItemCommentsLabel": "Комментарии",
   "ListItemCommentsNoCommentsLabel": "Нет комментариев",
+  "ListItemCommentsPlaceholder": "@упомянуть или комментировать",
   "OrgAssetsLinkLabel": "Ваша организация",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Введите термин, который нужно пометить",
