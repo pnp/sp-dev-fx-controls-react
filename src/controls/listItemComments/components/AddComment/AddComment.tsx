@@ -16,6 +16,7 @@ import SPPeopleSearchService from "../../../../services/PeopleSearchService";
 import { MSGraphClientFactory, SPHttpClient } from "@microsoft/sp-http";
 import { PageContext } from "@microsoft/sp-page-context";
 import { PrincipalType } from "../../../peoplepicker";
+import * as strings from "ControlStrings";
 
 export interface IAddCommentProps {}
 
@@ -152,7 +153,7 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
         <MentionsInput
           value={commentText}
           onChange={_onChange}
-          placeholder="@mention or comment"
+          placeholder={strings.ListItemCommentsPlaceholder}
           style={_reactMentionStyles}
           suggestionsPortalHost={sugestionsContainer.current}
         >

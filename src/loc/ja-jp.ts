@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "コメントの削除の確認",
   "ListItemCommentsLabel": "コメント",
   "ListItemCommentsNoCommentsLabel": "コメントはありません",
+  "ListItemCommentsPlaceholder": "@メンションまたはコメント",
   "OrgAssetsLinkLabel": "あなたの組織",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "タグ付けする用語を入力してください",

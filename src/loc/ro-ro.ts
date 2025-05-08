@@ -379,6 +379,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Confirmați ștergerea comentariului",
   "ListItemCommentsLabel": "Comentarii",
   "ListItemCommentsNoCommentsLabel": "Nu există comentarii",
+  "ListItemCommentsPlaceholder": "@menționează sau comentează",
   "OrgAssetsLinkLabel": "Organizația dvs.",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Introduceți un termen pe care doriți să-l etichetați",

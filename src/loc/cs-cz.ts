@@ -425,6 +425,7 @@ define([], () => {
     ListItemCommentsDialogDeleteTitle: "Potvrzení odstranění komentáře",
     ListItemCommentsLabel: "Komentáře",
     ListItemCommentsNoCommentsLabel: "Žádné komentáře",
+    ListItemCommentsPlaceholder: "@zmínit nebo komentovat",
     OrgAssetsLinkLabel: "Vaše organizace",
 
     ModernTaxonomyPickerDefaultPlaceHolder: "Zadejte termín k označení",
