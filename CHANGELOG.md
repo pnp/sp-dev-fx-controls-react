@@ -2,6 +2,10 @@
 
 ## 3.22.0
 
+### Enhancements
+
+- SharePoint Framework v1.19.0 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
+
 ## 3.21.0
 
 ### New control(s)
