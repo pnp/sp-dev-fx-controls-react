@@ -1,6 +1,6 @@
 {
   "@microsoft/generator-sharepoint": {
-    "version": "1.20.0",
+    "version": "1.21.1",
     "libraryName": "sp-dev-fx-controls-react",
     "libraryId": "92b1e52c-a5fa-490a-bcf4-76080f39442c",
     "environment": "spo",

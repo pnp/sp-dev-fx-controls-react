@@ -994,7 +994,7 @@ export class DynamicFormBase extends React.Component<
       // Fetch additional information about fields from SharePoint
       // (Number fields for min and max values, and fields with validation)
       const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId, this.webURL);
-      const numberFields = additionalInfo.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
+      const numberFields = additionalInfo?.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
       const validationFormulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
