@@ -1181,12 +1181,7 @@ export class DynamicFormBase extends React.Component<
               choices.push({ key: element, text: element });
             });
 
-            if (field.FormatType === 1) {
-              choiceType = ChoiceFieldFormatType.RadioButtons;
-            }
-            else {
-              choiceType = ChoiceFieldFormatType.Dropdown;
-            }
+            choiceType = ChoiceFieldFormatType.Dropdown;
           }
 
           // Setup Note, Number and Currency fields
