@@ -204,7 +204,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
             errorMessage={errorText} />;
         }
         // If the choiceType is radio buttons
-        else if (choiceType === ChoiceFieldFormatType.RadioButtons) {
+        else {
           // Parse options into radio buttons
           const optionsGroup: IChoiceGroupOption[] =
             options.map((option) => {
