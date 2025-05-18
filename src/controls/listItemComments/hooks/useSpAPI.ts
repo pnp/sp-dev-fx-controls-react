@@ -20,7 +20,6 @@ export const useSpAPI = (): returnObject => {
   const { serviceScope, webUrl, listId, itemId, numberCommentsPerPage } =
     useContext(AppContext);
   let _webUrl: string = '';
-  console.log('web', webUrl);
   serviceScope.whenFinished(async () => {
     _webUrl = serviceScope.consume(PageContext.serviceKey).web.absoluteUrl;
   });

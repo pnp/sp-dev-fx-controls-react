@@ -11,7 +11,7 @@ import { TILE_HEIGHT } from "../../common/constants";
 
 interface returnObjectStyles {
   itemContainerStyles: IStackStyles;
-  ButtonsContainerStyles: Partial<IStackStyles>;
+  buttonsContainerStyles: Partial<IStackStyles>;
   userListContainerStyles: Partial<IStackStyles>;
   renderUserContainerStyles: Partial<IStackStyles>;
   documentCardStyles: Partial<IDocumentCardStyles>;
@@ -37,7 +37,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     } as IStyle,
   };
 
-  const ButtonsContainerStyles: Partial<IStackStyles> = {
+  const buttonsContainerStyles: Partial<IStackStyles> = {
     root: {
       position: 'absolute',
       top: 0,
@@ -142,7 +142,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
 
   return {
     itemContainerStyles,
-    ButtonsContainerStyles,
+    buttonsContainerStyles,
     userListContainerStyles,
     renderUserContainerStyles,
     documentCardStyles,

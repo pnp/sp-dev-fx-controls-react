@@ -33,7 +33,7 @@ export const RenderComments: React.FunctionComponent<
     documentCardStyles,
     documentCardHighlightedStyles,
     itemContainerStyles,
-    ButtonsContainerStyles,
+    buttonsContainerStyles,
   } = useListItemCommentsStyles();
   const { comments, isLoading } = listItemCommentsState;
 
@@ -67,7 +67,7 @@ export const RenderComments: React.FunctionComponent<
           <Stack
             horizontal
             horizontalAlign="end"
-            styles={ButtonsContainerStyles}
+            styles={buttonsContainerStyles}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Text>{comment.likeCount}</Text>
@@ -81,7 +81,11 @@ export const RenderComments: React.FunctionComponent<
                     type: EListItemCommentsStateTypes.SET_SELECTED_COMMENT,
                     payload: comment,
                   });
-                  !comment.isLikedByUser ? _likeComment() : _unLikeComment();
+                  if (!comment.isLikedByUser) {
+                    _likeComment();
+                  } else {
+                    _unLikeComment();
+                  }
                 }}
               />
             </div>
