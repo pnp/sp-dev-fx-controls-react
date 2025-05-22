@@ -20,8 +20,22 @@ import { RenderComments } from "./RenderComments";
 export const CommentsList: React.FunctionComponent = () => {
   const { listItemCommentsState, setlistItemCommentsState } = useContext(ListItemCommentsStateContext);
   const { configurationListClasses } = useListItemCommentsStyles();
-  const { getListItemComments, getNextPageOfComments, addComment, deleteComment } = useSpAPI();
-  const { comments, isScrolling, pageInfo, commentAction, commentToAdd, selectedComment } = listItemCommentsState;
+  const {
+    getListItemComments,
+    getNextPageOfComments,
+    addComment,
+    deleteComment,
+    likeComment,
+    unlikeComment,
+  } = useSpAPI();
+  const {
+    comments,
+    isScrolling,
+    pageInfo,
+    commentAction,
+    commentToAdd,
+    selectedComment,
+  } = listItemCommentsState;
   const { hasMore, nextLink } = pageInfo;
   const scrollPanelRef = useRef<HTMLDivElement>();
   const { errorInfo } = listItemCommentsState;
@@ -32,16 +46,23 @@ export const CommentsList: React.FunctionComponent = () => {
         type: EListItemCommentsStateTypes.SET_IS_LOADING,
         payload: true,
       });
-      const _commentsResults: IlistItemCommentsResults = await getListItemComments();
+      const _commentsResults: IlistItemCommentsResults =
+        await getListItemComments();
       setlistItemCommentsState({
         type: EListItemCommentsStateTypes.SET_LIST_ITEM_COMMENTS,
         payload: _commentsResults.comments,
       });
       setlistItemCommentsState({
         type: EListItemCommentsStateTypes.SET_DATA_PAGE_INFO,
-        payload: { hasMore: _commentsResults.hasMore, nextLink: _commentsResults.nextLink } as IPageInfo,
+        payload: {
+          hasMore: _commentsResults.hasMore,
+          nextLink: _commentsResults.nextLink,
+        } as IPageInfo,
       });
-      setlistItemCommentsState({ type: EListItemCommentsStateTypes.SET_COMMENT_ACTION, payload: undefined });
+      setlistItemCommentsState({
+        type: EListItemCommentsStateTypes.SET_COMMENT_ACTION,
+        payload: undefined,
+      });
       setlistItemCommentsState({
         type: EListItemCommentsStateTypes.SET_IS_LOADING,
         payload: false,
@@ -99,25 +120,110 @@ export const CommentsList: React.FunctionComponent = () => {
     [setlistItemCommentsState, _loadComments]
   );
 
+  const _onCommentLike = useCallback(
+    async (commentId: number) => {
+      try {
+        const _errorInfo: IErrorInfo = { showError: false, error: undefined };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+        await likeComment(commentId);
+        await _loadComments();
+      } catch (error) {
+        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+      }
+    },
+    [setlistItemCommentsState, _loadComments]
+  );
+  const _onCommentUnlike = useCallback(
+    async (commentId: number) => {
+      try {
+        const _errorInfo: IErrorInfo = { showError: false, error: undefined };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+        await unlikeComment(commentId);
+        await _loadComments();
+      } catch (error) {
+        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        setlistItemCommentsState({
+          type: EListItemCommentsStateTypes.SET_ERROR_INFO,
+          payload: _errorInfo,
+        });
+      }
+    },
+    [setlistItemCommentsState, _loadComments]
+  );
+
   useEffect(() => {
     switch (commentAction) {
       case ECommentAction.ADD:
         (async () => {
           // Add new comment
           await _onAddComment(commentToAdd);
-        })().then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
+        })()
+          .then(() => {
+            /* no-op; */
+          })
+          .catch(() => {
+            /* no-op; */
+          });
+        break;
+      case ECommentAction.LIKE:
+        (async () => {
+          // Add new comment
+          const commentId = Number(selectedComment.id);
+          await _onCommentLike(commentId);
+        })()
+          .then(() => {
+            /* no-op; */
+          })
+          .catch(() => {
+            /* no-op; */
+          });
+        break;
+      case ECommentAction.UNLIKE:
+        (async () => {
+          // Add new comment
+          const commentId = Number(selectedComment.id);
+          await _onCommentUnlike(commentId);
+        })()
+          .then(() => {
+            /* no-op; */
+          })
+          .catch(() => {
+            /* no-op; */
+          });
         break;
       case ECommentAction.DELETE:
         (async () => {
           // delete comment
           const commentId = Number(selectedComment.id);
           await _onADeleteComment(commentId);
-        })().then(() => { /* no-op; */}).catch(() => { /* no-op; */ });
+        })()
+          .then(() => {
+            /* no-op; */
+          })
+          .catch(() => {
+            /* no-op; */
+          });
         break;
       default:
         break;
     }
-  }, [commentAction, selectedComment, commentToAdd, _onAddComment, _onADeleteComment]);
+  }, [
+    commentAction,
+    selectedComment,
+    commentToAdd,
+    _onAddComment,
+    _onADeleteComment,
+  ]);
 
   useEffect(() => {
     (async () => {

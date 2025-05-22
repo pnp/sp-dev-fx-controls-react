@@ -11,7 +11,7 @@ import { TILE_HEIGHT } from "../../common/constants";
 
 interface returnObjectStyles {
   itemContainerStyles: IStackStyles;
-  deleteButtonContainerStyles: Partial<IStackStyles>;
+  buttonsContainerStyles: Partial<IStackStyles>;
   userListContainerStyles: Partial<IStackStyles>;
   renderUserContainerStyles: Partial<IStackStyles>;
   documentCardStyles: Partial<IDocumentCardStyles>;
@@ -29,12 +29,17 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     : 7 * TILE_HEIGHT;
 
   const itemContainerStyles: IStackStyles = {
-    root: { paddingTop: 0, paddingLeft: 20, paddingRight: 20, paddingBottom: 20 } as IStyle,
+    root: {
+      paddingTop: 0,
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingBottom: 20,
+    } as IStyle,
   };
 
-  const deleteButtonContainerStyles: Partial<IStackStyles> = {
+  const buttonsContainerStyles: Partial<IStackStyles> = {
     root: {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       right: 0,
     },
@@ -45,15 +50,20 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
   };
 
   const renderUserContainerStyles: Partial<IStackStyles> = {
-    root: { paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10 },
+    root: {
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+    },
   };
   const documentCardStyles: Partial<IDocumentCardStyles> = {
     root: {
       marginBottom: 7,
       width: 322,
       backgroundColor: theme.neutralLighterAlt,
-      userSelect: "text",
-      ":hover": {
+      userSelect: 'text',
+      ':hover': {
         borderColor: theme.themePrimary,
         borderWidth: 1,
       } as IStyle,
@@ -65,9 +75,9 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
       marginBottom: 7,
       width: 322,
       backgroundColor: theme.themeLighter,
-      userSelect: "text",
-      border: "solid 3px "+theme.themePrimary,
-      ":hover": {
+      userSelect: 'text',
+      border: 'solid 3px ' + theme.themePrimary,
+      ':hover': {
         borderColor: theme.themePrimary,
         borderWidth: 1,
       } as IStyle,
@@ -78,7 +88,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     root: {
       marginBottom: 5,
       backgroundColor: theme.neutralLighterAlt,
-      ":hover": {
+      ':hover': {
         borderColor: theme.themePrimary,
         borderWidth: 1,
       } as IStyle,
@@ -89,9 +99,9 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     root: {
       marginTop: 2,
       backgroundColor: theme?.white,
-      boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
+      boxShadow: '0 5px 15px rgba(50, 50, 90, .1)',
 
-      ":hover": {
+      ':hover': {
         borderColor: theme.themePrimary,
         backgroundColor: theme.neutralLighterAlt,
         borderWidth: 1,
@@ -113,18 +123,18 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
       color: theme.themePrimary,
     }),
     divContainer: {
-      display: "block",
+      display: 'block',
     } as IStyle,
     titlesContainer: {
       height: tilesHeight,
       marginBottom: 10,
-      display: "flex",
+      display: 'flex',
       marginTop: 15,
-      overflow: "auto",
-      "&::-webkit-scrollbar-thumb": {
+      overflow: 'auto',
+      '&::-webkit-scrollbar-thumb': {
         backgroundColor: theme.neutralLighter,
       },
-      "&::-webkit-scrollbar": {
+      '&::-webkit-scrollbar': {
         width: 5,
       },
     } as IStyle,
@@ -132,7 +142,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
 
   return {
     itemContainerStyles,
-    deleteButtonContainerStyles,
+    buttonsContainerStyles,
     userListContainerStyles,
     renderUserContainerStyles,
     documentCardStyles,
