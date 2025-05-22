@@ -4,7 +4,16 @@
 
 ### Enhancements
 
-- SharePoint Framework v1.19.0 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
+- SharePoint Framework v1.21.1 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
+- `ListItemComments`: Implement like and unlike ability to list item comments control [#1974](https://github.com/pnp/sp-dev-fx-controls-react/pull/1974)
+
+### Fixes
+
+- `DynamicForm`: Added choice radio button handling [#1798](https://github.com/pnp/sp-dev-fx-controls-react/pull/1798)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED).
 
 ## 3.21.0
 
