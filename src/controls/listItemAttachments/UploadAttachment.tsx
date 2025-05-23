@@ -90,6 +90,25 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
   }
 
   /**
+   * Called when the hidden file input is clicked (activated).
+   * @param e - Mouse click event on the file input element.
+  */
+  private onInputActivated = (e: React.MouseEvent<HTMLInputElement>): void => {
+    setTimeout(() => {
+      window.addEventListener('focus', this.handleFocusAfterDialog);
+    }, 300);
+  }
+
+  /**
+   * Handles window focus event after the file picker dialog is closed.
+  */
+  private handleFocusAfterDialog = (): void => {
+    window.removeEventListener('focus', this.handleFocusAfterDialog);
+    this._isFileExplorerOpen = false;
+    this.props.onUploadDialogClosed();
+  };
+
+  /**
    * Close dialog
    */
   private closeDialog = (): void => {
@@ -109,7 +128,9 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
                style={{ display: 'none' }}
                type="file"
                onChange={(e) => this.addAttachment(e)}
-               ref={this.fileInput} />
+               onClick={(e) => this.onInputActivated(e)}
+               ref={this.fileInput}
+               />
         <div className={styles.uploadBar}>
           <CommandBar
             items={[{

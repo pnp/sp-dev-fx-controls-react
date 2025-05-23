@@ -93,6 +93,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       }, () => this.loadAttachments().then(resolve));
     });
   }
+
   protected loadAttachmentsPreview(files: IListItemAttachmentFile[]): Promise<void> {
     const filePreviewImages = files.map(file => this.loadAttachmentPreview(file));
     return Promise.all(filePreviewImages).then(filePreviews => {
@@ -252,6 +253,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           context={this.props.context}
           onAttachmentUpload={this._onAttachmentUpload}
           fireUpload={this.state.fireUpload}
+          onUploadDialogClosed={() => this.setState({ fireUpload: false })}
         />
 
         {
