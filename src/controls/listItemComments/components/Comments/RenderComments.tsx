@@ -5,7 +5,7 @@ import {
 } from '@fluentui/react/lib/DocumentCard';
 import { Stack } from '@fluentui/react/lib/Stack';
 import * as React from 'react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useContext } from 'react';
 import { ConfirmDelete } from '../ConfirmDelete/ConfirmDelete';
 import {
@@ -17,8 +17,9 @@ import { IComment } from './IComment';
 import { RenderSpinner } from './RenderSpinner';
 import { useListItemCommentsStyles } from './useListItemCommentsStyles';
 import { useBoolean } from '@fluentui/react-hooks';
-import { List, Text } from '@fluentui/react';
+import { Link, List, Text } from '@fluentui/react';
 import { AppContext, ECommentAction } from '../..';
+import { LikedUserList } from './LikedUserList';
 
 export interface IRenderCommentsProps {}
 
@@ -38,6 +39,8 @@ export const RenderComments: React.FunctionComponent<
   const { comments, isLoading } = listItemCommentsState;
 
   const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedLikedBy, setSelectedLikedBy] = useState<any>([]);
 
   const _likeComment = useCallback(() => {
     setlistItemCommentsState({
@@ -70,7 +73,19 @@ export const RenderComments: React.FunctionComponent<
             styles={buttonsContainerStyles}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Text>{comment.likeCount}</Text>
+              {comment.likeCount > 0 ? (
+                <Link
+                  onClick={() => {
+                    setSelectedLikedBy(comment.likedBy);
+                    setShowDialog(true);
+                  }}
+                >
+                  {comment.likeCount}
+                </Link>
+              ) : (
+                <Text>{comment.likeCount}</Text>
+              )}
+
               <IconButton
                 iconProps={{
                   iconName: `${comment.isLikedByUser ? 'LikeSolid' : 'Like'}`,
@@ -135,6 +150,11 @@ export const RenderComments: React.FunctionComponent<
           }
           setHideDialog();
         }}
+      />
+      <LikedUserList
+        isDialogOpen={showDialog}
+        setShowDialog={setShowDialog}
+        likedBy={selectedLikedBy}
       />
     </>
   );

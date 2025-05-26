@@ -2,12 +2,15 @@ import * as React from "react";
 import { IDocumentCardStyles } from "@fluentui/react/lib/DocumentCard";
 import { IStackStyles } from "@fluentui/react/lib/Stack";
 import {
+  FontWeights,
+  getTheme,
   IStyle,
   mergeStyles,
   mergeStyleSets,
-} from "@fluentui/react/lib/Styling";
-import { AppContext } from "../../common";
-import { TILE_HEIGHT } from "../../common/constants";
+} from '@fluentui/react/lib/Styling';
+import { AppContext } from '../../common';
+import { TILE_HEIGHT } from '../../common/constants';
+import { IButtonStyles } from '@fluentui/react';
 
 interface returnObjectStyles {
   itemContainerStyles: IStackStyles;
@@ -19,10 +22,14 @@ interface returnObjectStyles {
   documentCardHighlightedStyles: Partial<IDocumentCardStyles>;
   documentCardUserStyles: Partial<IDocumentCardStyles>;
   configurationListClasses: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  contentStyles: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  iconButtonStyles: Partial<IButtonStyles>;
 }
 
 export const useListItemCommentsStyles = (): returnObjectStyles => {
   const { theme, numberCommentsPerPage } = React.useContext(AppContext);
+  const fluentTheme = getTheme();
+
   // Calc Height List tiles Container Based on number Items per Page
   const tilesHeight: number = numberCommentsPerPage
     ? (numberCommentsPerPage < 5 ? 5 : numberCommentsPerPage) * TILE_HEIGHT + 35
@@ -140,6 +147,55 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     } as IStyle,
   });
 
+  const contentStyles = mergeStyleSets({
+    container: {
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      alignItems: 'stretch',
+    },
+    header: [
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
+      fluentTheme.fonts.xLargePlus,
+      {
+        flex: '1 1 auto',
+        borderTop: `4px solid ${theme.themePrimary}`,
+        color: theme.neutralPrimary,
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: FontWeights.semibold,
+        padding: '12px 12px 14px 24px',
+      },
+    ],
+    heading: {
+      color: theme.neutralPrimary,
+      fontWeight: FontWeights.semibold,
+      fontSize: 'inherit',
+      margin: '0',
+    },
+    body: {
+      flex: '4 4 auto',
+      padding: '0 24px 24px 24px',
+      overflowY: 'hidden',
+      selectors: {
+        p: { margin: '14px 0' },
+        'p:first-child': { marginTop: 0 },
+        'p:last-child': { marginBottom: 0 },
+      },
+    },
+  });
+
+  const iconButtonStyles: Partial<IButtonStyles> = {
+    root: {
+      color: theme.neutralPrimary,
+      marginLeft: 'auto',
+      marginTop: '4px',
+      marginRight: '2px',
+    },
+    rootHovered: {
+      color: theme.neutralDark,
+    },
+  };
+
   return {
     itemContainerStyles,
     buttonsContainerStyles,
@@ -150,5 +206,7 @@ export const useListItemCommentsStyles = (): returnObjectStyles => {
     documentCardHighlightedStyles,
     documentCardUserStyles,
     configurationListClasses,
+    contentStyles,
+    iconButtonStyles,
   };
 };
