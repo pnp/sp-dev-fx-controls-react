@@ -120,7 +120,7 @@ export const useSpAPI = (): returnObject => {
         webUrl ?? _webUrl
       }/_api/web/lists(@a1)/GetItemById(@a2)/GetComments()?@a1='${listId}'&@a2='${itemId}'&$top=${
         numberCommentsPerPage ?? 10
-      }`;
+      }&$expand=likedBy`;
       const _listResults: SPHttpClientResponse = await spHttpClient.get(
         `${_endPointUrl}`,
         SPHttpClient.configurations.v1
