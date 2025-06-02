@@ -12,6 +12,7 @@
 ### Fixes
 
 - `DynamicForm`: Added choice radio button handling [#1798](https://github.com/pnp/sp-dev-fx-controls-react/pull/1798)
+- `FilePicker`: Global quill styles from filepicker overwrite other quill editors [#1996](https://github.com/pnp/sp-dev-fx-controls-react/issues/1996)
 
 ### Contributors
 
