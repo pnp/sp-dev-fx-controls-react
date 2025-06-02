@@ -105,7 +105,7 @@
   width: 100%;
 }
 
-:global {
+:global(.pnp-richtext-quill-container) {
   .ql-toolbar {
     background-color: transparent;
     color: "[theme:neutralLighterAlt, default:#{$ms-color-neutralLighterAlt}]";
