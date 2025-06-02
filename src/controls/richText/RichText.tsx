@@ -22,6 +22,7 @@ import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { Label } from '@fluentui/react/lib/Label';
 
 const TOOLBARPADDING: number = 28;
+const CONTAINER_CLASS: string = 'pnp-richtext-quill-container';
 /**
  * Creates a rich text editing control that mimics the out-of-the-box
  * SharePoint Rich Text control.
@@ -637,6 +638,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         className={
           css(
             styles.richtext && this.state.editing ? 'ql-active' : null,
+            CONTAINER_CLASS,
             this.props.className || null
           ) || null
         }
