@@ -637,7 +637,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
         className={
           css(
             styles.richtext && this.state.editing ? 'ql-active' : null,
-            'pnp-richtext-quill-container',
+            CONTAINER_CLASS,
             this.props.className || null
           ) || null
         }
