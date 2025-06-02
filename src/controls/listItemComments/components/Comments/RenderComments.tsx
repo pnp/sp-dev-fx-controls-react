@@ -40,6 +40,7 @@ export const RenderComments: React.FunctionComponent<
 
   const [hideDialog, { toggle: setHideDialog }] = useBoolean(true);
   const [showDialog, setShowDialog] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedLikedBy, setSelectedLikedBy] = useState<any>([]);
 
   const _likeComment = useCallback(() => {

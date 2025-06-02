@@ -73,8 +73,8 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
     <>
       <Stack wrap horizontal horizontalAlign="start" verticalAlign="center">
         {isArray(commentText) ? (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (commentText as any[]).map((el, i) => {
-            // eslint-disable-line @typescript-eslint/no-explicit-any
             if (isObject(el)) {
               return (
                 <span key={i} style={{ paddingRight: 5 }}>
