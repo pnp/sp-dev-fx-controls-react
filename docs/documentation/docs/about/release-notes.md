@@ -7,6 +7,7 @@
 - SharePoint Framework v1.21.1 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
 - `ListItemComments`: Implement like and unlike ability to list item comments control [#1974](https://github.com/pnp/sp-dev-fx-controls-react/pull/1974)
 - `ListItemComments`: Need a feature to view the list of users who liked a comment [#2003](https://github.com/pnp/sp-dev-fx-controls-react/issues/2003)
+- `ListItemComments`: Clicable links [#1969](https://github.com/pnp/sp-dev-fx-controls-react/issues/1969)
 
 ### Fixes
 
