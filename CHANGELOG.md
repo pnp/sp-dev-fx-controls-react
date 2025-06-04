@@ -7,16 +7,17 @@
 - SharePoint Framework v1.21.1 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
 - `ListItemComments`: Implement like and unlike ability to list item comments control [#1974](https://github.com/pnp/sp-dev-fx-controls-react/pull/1974)
 - `ListItemComments`: Need a feature to view the list of users who liked a comment [#2003](https://github.com/pnp/sp-dev-fx-controls-react/issues/2003)
-- `ListItemComments`: Clicable links [#1969](https://github.com/pnp/sp-dev-fx-controls-react/issues/1969)
+- `ListItemComments`: Clickable links [#1969](https://github.com/pnp/sp-dev-fx-controls-react/issues/1969)
 
 ### Fixes
 
 - `DynamicForm`: Added choice radio button handling [#1798](https://github.com/pnp/sp-dev-fx-controls-react/pull/1798)
-- `FilePicker`: Global quill styles from filepicker overwrite other quill editors [#1996](https://github.com/pnp/sp-dev-fx-controls-react/issues/1996)
+- `FilePicker`: Global quill styles from FilePicker overwrite other quill editors [#1996](https://github.com/pnp/sp-dev-fx-controls-react/issues/1996)
+- `FilePicker`: Unable to browse through organization assets library when located on root site [#1784](https://github.com/pnp/sp-dev-fx-controls-react/issues/1784)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED).
+Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED).
 
 ## 3.21.0
 
