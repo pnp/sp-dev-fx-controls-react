@@ -73,6 +73,10 @@ export interface IWidget {
    * Widget's link
    */
   link?: IWidgetLink;
+  /**
+   * Number of rows to span (vertical extension)
+   */
+  rowSpan?: number;
 }
 
 /**
