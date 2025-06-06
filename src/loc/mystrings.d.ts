@@ -46,6 +46,7 @@ declare interface IControlStrings {
   ProgressStepsIndicatorNoSteps: string;
   ListItemCommentsLabel: string;
   ListItemCommentsNoCommentsLabel: string;
+  ListItemCommentsPlaceholder: string;
   ListItemCommentDIalogDeleteSubText: string;
   ListItemCommentsDialogDeleteTitle: string;
 

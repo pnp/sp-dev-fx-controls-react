@@ -258,6 +258,7 @@ define([], () => {
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
     ListItemCommentsNoCommentsLabel: "There is no Comments",
+    ListItemCommentsPlaceholder: "@aipatu edo iruzkina",
     ListLayoutAriaLabel: "View options. {0}  {1} .",
     ListLayoutCompact: "Compact view",
     ListLayoutCompactDescription: "View items and details in a compact list",

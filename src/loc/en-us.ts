@@ -395,6 +395,7 @@ define([], () => {
     ListItemCommentsDialogDeleteTitle: "Confirm Delete Comment",
     ListItemCommentsLabel: "Comments",
     ListItemCommentsNoCommentsLabel: "There are no Comments",
+    ListItemCommentsPlaceholder: "@mention or comment",
     OrgAssetsLinkLabel: "Your organization",
 
     ModernTaxonomyPickerDefaultPlaceHolder: "Type term to tag",
