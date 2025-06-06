@@ -251,6 +251,10 @@ export function TaxonomyTree(
 
   React.useEffect(() => {
     let termRootName = "";
+    if (!props.anchorTermInfo && !props.termSetInfo) {
+      return;
+    }
+    
     if (props.anchorTermInfo) {
       let anchorTermNames = props.anchorTermInfo.labels.filter(
         (name) => name.languageTag === props.languageTag && name.isDefault
@@ -264,15 +268,15 @@ export function TaxonomyTree(
       }
       termRootName = anchorTermNames[0].name;
     } else {
-      let termSetNames = props.termSetInfo.localizedNames.filter(
+      let termSetNames = props.termSetInfo?.localizedNames.filter(
         (name) => name.languageTag === props.languageTag
-      );
+      ) || [];
       if (termSetNames.length === 0) {
         termSetNames = props.termSetInfo.localizedNames.filter(
           (name) => name.languageTag === props.termStoreInfo.defaultLanguageTag
-        );
+        ) || [];
       }
-      termRootName = termSetNames[0].name;
+      termRootName = termSetNames[0].name || '';
     }
     const rootGroup: IGroup = {
       name: termRootName,
@@ -904,6 +908,10 @@ export function TaxonomyTree(
   ): boolean => {
     return ev.which === getRTLSafeKeyCode(KeyCodes.right);
   };
+
+  if (!props.termSetInfo && !props.termStoreInfo) {
+    return <></>;
+  }
 
   return (
     <div>

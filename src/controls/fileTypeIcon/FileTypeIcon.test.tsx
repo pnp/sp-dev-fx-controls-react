@@ -183,14 +183,14 @@ describe('<FileTypeIcon />', () => {
   });
 
   it('Image icon size test with unkown size', (done) => {
-    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} size={8} application={ApplicationType.Word} />);
+    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} size={ImageSize.small} application={ApplicationType.Word} />);
     expect(fileTypeIcon.find('div.ms-BrandIcon--icon16')).to.have.length(1);
     expect(fileTypeIcon.find('i')).to.have.length(0);
     done();
   });
 
   it('Image icon size test with unkown size for generic icon', (done) => {
-    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} size={8} />);
+    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} size={ImageSize.small} />);
     expect(fileTypeIcon.find('div img')).to.have.length(1);
     expect(fileTypeIcon.find('div.ms-BrandIcon--icon16')).to.have.length(0);
     expect(fileTypeIcon.find('i')).to.have.length(0);
@@ -198,7 +198,7 @@ describe('<FileTypeIcon />', () => {
   });
 
   it('Image icon test with unkown application', (done) => {
-    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} application={90} />);
+    fileTypeIcon = mount(<FileTypeIcon type={IconType.image} application={90 as unknown as ApplicationType} />);
     expect(fileTypeIcon.find('div img')).to.have.length(1);
     expect(fileTypeIcon.find('div.ms-BrandIcon--icon16')).to.have.length(0);
     expect(fileTypeIcon.find('i')).to.have.length(0);
