@@ -115,11 +115,11 @@ export class OneDriveService extends FileBrowserService {
       if (!oneDriveLibsData || !oneDriveLibsData.value || oneDriveLibsData.value.length === 0) {
         throw new Error(`Cannot read one drive libs data.`);
       }
-
+      const isDefaultLang = this.isCurrentLanguageDefault();
       const myDocumentsLibrary = oneDriveLibsData.value[0];
-      this.oneDrivePersonalLibraryTitle = myDocumentsLibrary.Title;
-      this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${myDocumentsLibrary.Title}`;
-      this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${myDocumentsLibrary.Title}`;
+      this.oneDrivePersonalLibraryTitle = isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName;
+      this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName}`;
+      this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName}`;
     } catch (error) {
       console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`);
       this.oneDriveRootFolderAbsoluteUrl = null;
@@ -182,5 +182,12 @@ export class OneDriveService extends FileBrowserService {
    */
   protected buildAbsoluteUrl = (relativeUrl: string): string => {
     return `https://${this.oneDrivePersonalUrl.split("//")[1].split("/")[0]}${relativeUrl}`;
+  }
+
+  /**
+   * Checks if the current language is default (en-US)
+   */
+  public isCurrentLanguageDefault(): boolean {
+    return this.context.pageContext.cultureInfo.currentUICultureName === 'en-US';
   }
 }
