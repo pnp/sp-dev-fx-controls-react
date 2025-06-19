@@ -470,7 +470,7 @@ export class DynamicFormBase extends React.Component<
           // Choice fields
 
           if (fieldType === "Choice") {
-            objects[fieldcolumnInternalName] = field.newValue.key;
+            objects[fieldcolumnInternalName] = field.newValue?field.newValue.key:null
           }
           if (fieldType === "MultiChoice") {
             objects[fieldcolumnInternalName] = { results: field.newValue };
@@ -781,7 +781,7 @@ export class DynamicFormBase extends React.Component<
     // Store string values for various field types
 
     if (field.fieldType === "Choice") {
-      field.stringValue = newValue.text;
+        field.stringValue = newValue? newValue.text:'';
     }
     if (field.fieldType === "MultiChoice") {
       field.stringValue = newValue.join(';#');
