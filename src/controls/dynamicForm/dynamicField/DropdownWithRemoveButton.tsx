@@ -30,7 +30,7 @@ export const DropdownWithRemoveButton = (props: IDropdownProps): JSX.Element => 
         <Dropdown
             {...props}
             onRenderTitle={titleRendererWithRemoveButton}
-            onBlur={(e) => { setIsEditing(false); if (props.onBlur) { props.onBlur(e) } }}
+            onMouseLeave={(e) => { setIsEditing(false); if (props.onMouseLeave) { props.onMouseLeave(e) }}}
             onFocus={(e) => { setIsEditing(true); if (props.onFocus) { props.onFocus(e) } }}
         />
 
