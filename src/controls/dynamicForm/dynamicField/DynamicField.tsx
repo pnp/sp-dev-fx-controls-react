@@ -26,6 +26,7 @@ import { ModernTaxonomyPicker } from '../../modernTaxonomyPicker';
 import { classNamesFunction, IProcessedStyleSet, styled, ChoiceGroup, IChoiceGroupOption } from '@fluentui/react';
 import { getFluentUIThemeOrDefault } from '../../../common/utilities/ThemeUtility';
 import { getFieldStyles } from './DynamicField.styles';
+import { DropdownWithRemoveButton } from './DropdownWithRemoveButton';
 
 const getClassNames = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
 
@@ -195,7 +196,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
 
         // If the choiceType is dropdown
         if (choiceType === ChoiceFieldFormatType.Dropdown) {
-          choiceControl = <Dropdown
+          choiceControl = <DropdownWithRemoveButton
             {...dropdownOptions}
             defaultSelectedKey={valueToDisplay ? undefined : defaultValue}
             selectedKey={typeof valueToDisplay === "object" ? valueToDisplay?.key : valueToDisplay}
