@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react';
+import * as React from "react";
 
 import {
   Caption1,
@@ -10,15 +10,15 @@ import {
   PositioningImperativeRef,
   mergeClasses,
   useId,
-} from '@fluentui/react-components';
-import { endOfDay, isWithinInterval, startOfDay } from 'date-fns';
+} from "@fluentui/react-components";
+import { endOfDay, isWithinInterval, startOfDay } from "date-fns";
 
-import { Card } from '@nuvemerudita/react-controls';
-import { EventDetailsPopover } from './EventDetailsPopover';
-import { IEvent } from './models/IEvents';
-import { IEventColors } from './models/IEventColors';
-import { useCalendarStyles } from './hooks/useCalendarStyles';
-import { useUtils } from './hooks/useUtils';
+import { Card } from "@nuvemerudita/react-controls";
+import { EventDetailsPopover } from "./EventDetailsPopover";
+import { IEvent } from "./models/IEvents";
+import { IEventColors } from "./models/IEventColors";
+import { useCalendarStyles } from "./hooks/useCalendarStyles";
+import { useUtils } from "./hooks/useUtils";
 
 export interface IRenderEventToDayOfMonthProps {
   events: IEvent[];
@@ -43,7 +43,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
         onCardHoverChange(true, eventTitle);
       }
     },
-    [onCardHoverChange]
+    [onCardHoverChange],
   );
 
   const handleMouseLeave = React.useCallback(
@@ -52,7 +52,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
         onCardHoverChange(false, eventTitle);
       }
     },
-    [onCardHoverChange]
+    [onCardHoverChange],
   );
 
   // Set the target for the popover
@@ -60,7 +60,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
     (el: HTMLDivElement | null) => {
       positioningRef.current?.setTarget(el);
     },
-    [positioningRef]
+    [positioningRef],
   );
 
   // Render the card
@@ -74,14 +74,14 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
               styles.eventCard,
               applyEventHouverColorClass(
                 colors.backgroundColor,
-                colors.backgroundColor
-              )
+                colors.backgroundColor,
+              ),
             )}
             paddingTop="4px"
             paddingBottom="4px"
             paddingLeft="8px"
             paddingRight="8px"
-            marginTop={index === 0 ? '0px' : '5px'}
+            marginTop={index === 0 ? "0px" : "5px"}
             cardHeader={<Caption1>{calEvent.title}</Caption1>}
             onMouseEnter={() => handleMouseEnter(calEvent.title)}
             onMouseLeave={() => handleMouseLeave(calEvent.title)}
@@ -89,7 +89,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
         </div>
       );
     },
-    [handleMouseEnter, handleMouseLeave, applyEventHouverColorClass]
+    [handleMouseEnter, handleMouseLeave, applyEventHouverColorClass],
   );
 
   const renderCardWithPopOver = React.useCallback(
@@ -109,10 +109,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
             </PopoverTrigger>
             <PopoverSurface
               aria-labelledby={headerId}
-              className={mergeClasses(
-                styles.popoverContent,
-
-              )}
+              className={mergeClasses(styles.popoverContent)}
             >
               <EventDetailsPopover event={calEvent} />
             </PopoverSurface>
@@ -120,7 +117,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
         </>
       );
     },
-    [renderCard]
+    [renderCard],
   );
 
   if (!events || !events?.length) return <> </>;
@@ -150,11 +147,11 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
             return React.cloneElement(customRender as React.ReactElement, {
               className: mergeClasses(
                 (customRender.props as any).className,
-                styles.eventCard
+                styles.eventCard,
               ),
             });
           }
-          return calEvent.enableOnHouver
+          return calEvent.enableOnHover
             ? renderCardWithPopOver(calEvent, index, colors)
             : renderCard(index, calEvent, colors);
         })}

@@ -13,8 +13,8 @@ import {
 
 import { EventDetailsPopover } from "./EventDetailsPopover";
 import { IEvent } from "./models/IEvents";
-import { Stack } from  "@nuvemerudita/react-controls";
-import { useUtils } from  "./hooks/useUtils";
+import { Stack } from "@nuvemerudita/react-controls";
+import { useUtils } from "./hooks/useUtils";
 import { useWeekViewStyles } from "./hooks/useWeekViewStyles";
 
 interface EventPopoverCardProps {
@@ -35,7 +35,8 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
   eventCount,
 }) => {
   const headerId = useId();
-  const { styles, applyEventHouverColorClass , appyDynamicStyles} = useWeekViewStyles();
+  const { styles, applyEventHouverColorClass, appyDynamicStyles } =
+    useWeekViewStyles();
   const cardRef = React.useRef<HTMLDivElement>(null);
   const { formatDate } = useUtils();
 
@@ -43,7 +44,9 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
     () => (
       <div>
         <Stack columnGap={4} verticalAlign="center">
-          <Caption1Strong className={styles.eventTitle}>{event.title}</Caption1Strong>
+          <Caption1Strong className={styles.eventTitle}>
+            {event.title}
+          </Caption1Strong>
           <Stack
             columnGap={4}
             horizontal
@@ -57,7 +60,7 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
         </Stack>
       </div>
     ),
-    [event]
+    [event],
   );
 
   return (
@@ -66,12 +69,14 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
       key={event.id}
       className={mergeClasses(
         styles.eventCard,
-        applyEventHouverColorClass(colors.backgroundColor, colors.backgroundColor),
-        appyDynamicStyles(eventIndex, eventCount, rowHeight, spanSlots)
+        applyEventHouverColorClass(
+          colors.backgroundColor,
+          colors.backgroundColor,
+        ),
+        appyDynamicStyles(eventIndex, eventCount, rowHeight, spanSlots),
       )}
-
     >
-      {event.enableOnHouver ? (
+      {event.enableOnHover ? (
         <Popover
           withArrow
           mouseLeaveDelay={50}
@@ -82,9 +87,7 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
           <PopoverTrigger>{cardContent}</PopoverTrigger>
           <PopoverSurface
             aria-labelledby={headerId}
-            className={mergeClasses(
-              styles.popoverContent,
-            )}
+            className={mergeClasses(styles.popoverContent)}
           >
             <EventDetailsPopover event={event} />
           </PopoverSurface>
