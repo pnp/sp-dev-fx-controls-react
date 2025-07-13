@@ -23,7 +23,7 @@
           "`Dynamic Form`: Hotfix for issue 2014 [#2026](https://github.com/pnp/sp-dev-fx-controls-react/issues/2014)",
           "`ListItemAttachments`: Update ListItemAttachments.tsx: let user set webUrl fix for issue 1975 [#2009](https://github.com/pnp/sp-dev-fx-controls-react/issues/1975",
           "`FilePicker`:  Files keep loading when previewing all files in OneDrive [#2021](https://github.com/pnp/sp-dev-fx-controls-react/issues/1994)",
-          ["`ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)"],
+          ["`ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)"]
         ]
       },
       "contributions": [
