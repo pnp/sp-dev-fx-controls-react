@@ -11,6 +11,7 @@
 - `Polish translations`: Updates Polish translations. Closes #1991](https://github.com/pnp/sp-dev-fx-controls-react/issues/1991)
 - `Dashboard`: Dashboard widget rowspan [#2007](https://github.com/pnp/sp-dev-fx-controls-react/pull/2007)
 - `ListItemComments`: Guest user @-mentions and styling fix for ListItemComments [#1990](https://github.com/pnp/sp-dev-fx-controls-react/pull/1990)
+- `GridLayout`: 1852 - Grid layout settings as parameters [#1976](https://github.com/pnp/sp-dev-fx-controls-react/pull/1976)
 
 ### Fixes
 
@@ -22,10 +23,12 @@
 - `ListItemAttachments`: Update ListItemAttachments.tsx: let user set webUrl fix for issue 1975 [#2009](https://github.com/pnp/sp-dev-fx-controls-react/issues/1975
 - `FilePicker`:  Files keep loading when previewing all files in OneDrive [#2021](https://github.com/pnp/sp-dev-fx-controls-react/issues/1994)
 - `ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)
+- `filePicker`: FilePicker order of tabs and default tab[#1980](https://github.com/pnp/sp-dev-fx-controls-react/issues/921) 
+- `ListView` ListView: add new prop - flattenItems  [#189](https://github.com/pnp/sp-dev-fx-controls-react/issues/189) , [#222](https://github.com/pnp/sp-dev-fx-controls-react/issues/222)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED), [Joseph Jang](https://github.com/heesungjang), [wuxiaojun514](https://github.com/wuxiaojun514), [Michał Kornet](https://github.com/mkm17), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Antanina Druzhkina](https://github.com/Ateina).
+Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED), [Joseph Jang](https://github.com/heesungjang), [wuxiaojun514](https://github.com/wuxiaojun514), [Michał Kornet](https://github.com/mkm17), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Antanina Druzhkina](https://github.com/Ateina), [Michaël Maillot](https://github.com/michaelmaillot).
 
 ## 3.21.0
 
