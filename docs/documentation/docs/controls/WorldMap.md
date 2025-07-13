@@ -2,6 +2,10 @@
 
 A React component for displaying interactive world maps with markers, search functionality, and customizable styling using MapLibre GL JS.
 
+This use Mapitiler API for map tiles and supports custom styles.
+By default, it uses a free demo map without requiring an API key, but if you want to use MapTiler or a custom style, you can provide an API key and style URL.
+To Get the API key, you can register on [MapTiler](https://www.maptiler.com/) and create a Account to get your API key.
+
 ## Table of Contents
 
 - [Installation](#installation)
