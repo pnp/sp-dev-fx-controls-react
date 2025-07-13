@@ -17,15 +17,13 @@ import { EAppHostName } from "../../../controls/userPicker/constants/EAppHostnam
 import { createV9Theme } from "@fluentui/react-migration-v8-v9";
 
 export interface ICalendarProps {
-
   hasTeamsContext: boolean;
   themeString: string;
-  theme?: Partial<Theme>  | undefined;
+  theme?: Partial<Theme> | undefined;
   context: BaseComponentContext;
   title: string;
   appHostName: EAppHostName;
 }
-
 
 export const mockEvents: IEvent[] = [
   {
@@ -41,7 +39,7 @@ export const mockEvents: IEvent[] = [
     type: "Work",
     isOnlineMeeting: true,
     description: "Daily team standup to discuss tasks and blockers.",
-    enableOnHouver: true,
+    enableOnHover: true,
     imageUrl: "https://via.placeholder.com/150",
     color: "blue",
     webLink: "https://outlook.com",
@@ -56,7 +54,7 @@ export const mockEvents: IEvent[] = [
     importance: "High",
     sensitivity: "Confidential",
     description: "Final deadline for the Q1 marketing campaign submission.",
-    enableOnHouver: false,
+    enableOnHover: false,
     color: "red",
     webLink: "https://outlook.com",
   },
@@ -73,18 +71,16 @@ export const mockEvents: IEvent[] = [
         name: "John Doe",
         email: "joao.j.mendes@nuvemerudita.com",
         id: "567891",
-
       },
       {
         name: "Jane Smith",
         email: "geral@nuvemerudita.com",
         id: "987654",
-
       },
     ],
     importance: "Medium",
     description: "Quarterly review meeting with ABC Corp.",
-    enableOnHouver: true,
+    enableOnHover: true,
     color: "gold",
     webLink: "https://outlook.com",
   },
@@ -96,7 +92,7 @@ export const mockEvents: IEvent[] = [
     category: "Break",
     importance: "Low",
     description: "Time to relax and enjoy some food!",
-    enableOnHouver: false,
+    enableOnHover: false,
     color: "cornflower",
     webLink: null,
   },
@@ -110,7 +106,7 @@ export const mockEvents: IEvent[] = [
     importance: "High",
     sensitivity: "Public",
     description: "Quarterly town hall with leadership updates.",
-    enableOnHouver: true,
+    enableOnHover: true,
     imageUrl: "https://via.placeholder.com/150",
     webLink: "https://outlook.com",
     color: "seafoam",
@@ -128,18 +124,16 @@ export const mockEvents: IEvent[] = [
         name: "Alex Johnson",
         email: "alex.johnson@example.com",
         id: "23456",
-
       },
       {
         name: "Maria Lee",
         email: "maria.lee@example.com",
         id: "78900",
-
       },
     ],
     importance: "Medium",
     description: "Weekly update call with the dev team.",
-    enableOnHouver: true,
+    enableOnHover: true,
     color: "peach",
     webLink: "https://outlook.com",
   },
@@ -152,7 +146,7 @@ export const mockEvents: IEvent[] = [
     location: "Downtown Convention Center",
     importance: "High",
     description: "Meet with top industry leaders and innovators.",
-    enableOnHouver: true,
+    enableOnHover: true,
     imageUrl: "https://via.placeholder.com/150",
     webLink: "https://outlook.com",
     color: "purple",
@@ -167,7 +161,7 @@ export const mockEvents: IEvent[] = [
     importance: "High",
     sensitivity: "Confidential",
     description: "Review of financial reports and upcoming projections.",
-    enableOnHouver: true,
+    enableOnHover: true,
     imageUrl: "https://via.placeholder.com/150",
     webLink: "https://outlook.com",
     color: "steel",
@@ -181,7 +175,7 @@ export const mockEvents: IEvent[] = [
     location: "Manager’s Office",
     importance: "Medium",
     description: "Weekly check-in with direct manager.",
-    enableOnHouver: true,
+    enableOnHover: true,
     color: "lavender",
     webLink: "https://outlook.com",
   },
@@ -195,19 +189,19 @@ export const mockEvents: IEvent[] = [
     location: "Webex",
     importance: "Medium",
     description: "An in-depth look at AI trends for the upcoming year.",
-    enableOnHouver: true,
+    enableOnHover: true,
     imageUrl: "https://via.placeholder.com/150",
     color: "magenta",
   },
 ];
 
 export const TestCalendarControl: React.FunctionComponent<ICalendarProps> = (
-  props: React.PropsWithChildren<ICalendarProps>
+  props: React.PropsWithChildren<ICalendarProps>,
 ) => {
   const { theme, themeString, hasTeamsContext } = props;
 
   const [FUI9theme, setFUI9theme] = React.useState<Partial<Theme> | undefined>(
-    undefined
+    undefined,
   );
 
   const setTheme = React.useCallback((): Partial<Theme> => {
@@ -215,10 +209,10 @@ export const TestCalendarControl: React.FunctionComponent<ICalendarProps> = (
       return themeString === "dark"
         ? teamsDarkTheme
         : themeString === "contrast"
-        ? teamsHighContrastTheme
-        : {
-            ...teamsLightTheme,
-          };
+          ? teamsHighContrastTheme
+          : {
+              ...teamsLightTheme,
+            };
     } else {
       const nthme = createV9Theme(theme as never);
 
@@ -244,7 +238,6 @@ export const TestCalendarControl: React.FunctionComponent<ICalendarProps> = (
             onMonthChange={(date: Date) => console.log("month", date)}
             onWeekChange={(date: Date) => console.log("week", date)}
             onViewChange={(view: string) => console.log("view", view)}
-
           />
         </FluentProvider>
       </IdPrefixProvider>
