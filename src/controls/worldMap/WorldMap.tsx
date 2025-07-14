@@ -102,7 +102,6 @@ const WorldMap: React.FC<IWorldMapProps> = (props) => {
         theme={props.theme}
         data={countries}
         onClick={(c) => console.log('Clicked', c)}
-        mapKey="fYK99t1qjkKbINH0saMD"
         title="Microsoft Locations Worldwide"
       />
     </section>
