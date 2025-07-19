@@ -13,6 +13,7 @@ import {
 
 import { MapRef } from 'react-map-gl/maplibre';
 import { css } from '@emotion/css';
+import strings from 'ControlStrings';
 
 export interface MapNavigationProps {
   mapRef: React.RefObject<MapRef>;
@@ -64,11 +65,11 @@ export const MapNavigation: React.FC<MapNavigationProps> = ({
 
   return (
     <div className={vertical ? `${navStyle} ${navStyleVertical}` : navStyle}>
-      <Tooltip content="Zoom in" relationship="label">
+      <Tooltip content={strings.worldMapZoomContent} relationship="label">
         <Button
           appearance="subtle"
           icon={<ZoomIn24Regular />}
-          aria-label="Zoom in"
+          aria-label={strings.worldMapZoomIn}
           className={buttonStyle}
           onClick={handleZoomIn}
         />
@@ -77,7 +78,7 @@ export const MapNavigation: React.FC<MapNavigationProps> = ({
         <Button
           appearance="subtle"
           icon={<ZoomOut24Regular />}
-          aria-label="Zoom out"
+          aria-label={strings.worldMapZoomOut}
           className={buttonStyle}
           onClick={handleZoomOut}
         />
@@ -86,7 +87,7 @@ export const MapNavigation: React.FC<MapNavigationProps> = ({
         <Button
           appearance="subtle"
           icon={<ArrowReset24Regular />}
-          aria-label="Reset"
+          aria-label={strings.worldMapReset}
           className={buttonStyle}
           onClick={handleReset}
         />

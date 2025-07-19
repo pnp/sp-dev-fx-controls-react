@@ -11,6 +11,7 @@ import { IMaplibreWorldMapProps } from './IMaplibreWorldMapProps';
 import MapNavigation from './MapNavigation';
 import Marker from './Marker';
 import { css } from '@emotion/css';
+import strings from 'ControlStrings';
 import { useCleanMapStyle } from './useCleanMapStyle';
 
 const MULTI_STYLE_URLS = {
@@ -97,8 +98,8 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
   // Search configuration with defaults
   const searchConfig = useMemo(() => ({
     enabled: search?.enabled ?? true,
-    placeholder: search?.placeholder ?? 'Search locations...',
-    searchField: search?.searchField ?? 'name',
+    placeholder: search?.placeholder ?? strings.worldMapSearchLocations,
+    searchField: search?.searchField ?? strings.worldMapSearchField,
     zoomLevel: search?.zoomLevel ?? 8,
     position: {
       top: '10px',
@@ -209,12 +210,12 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
   }, [filteredData, fitPadding]);
 
   if (!cleanStyle) {
-    return <Text>Loading map style…</Text>;
+    return <Text>{strings.worldMapLoadintText}</Text>;
   }
 
   return (
     <div className={styles.container}>
-      <Subtitle1>{title ?? 'World Map'}</Subtitle1>
+      <Subtitle1>{title ?? strings.worldMapTitle}</Subtitle1>
       <div className={styles.mapContainer}>
         <Map
           ref={mapRef}
@@ -259,8 +260,8 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
             />
             {searchTerm && (
               <div className={styles.searchResults}>
-                {filteredData.length} location
-                {filteredData.length !== 1 ? 's' : ''} found
+                {filteredData.length} {strings.worldMapLocationLabel}
+                {filteredData.length !== 1 ? 's' : ''} {strings.worldMapFoundLabel}
               </div>
             )}
           </div>

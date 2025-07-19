@@ -7,7 +7,7 @@ import { Marker as MapMarker } from 'react-map-gl/maplibre';
 import TooltipContent from './TooltipContent';
 import { css } from '@emotion/css';
 
-const useStyles = () => {
+const useStyles = (): { flag: string; tooltipContent: string } => {
   return {
     flag: css`
       width: 22px;

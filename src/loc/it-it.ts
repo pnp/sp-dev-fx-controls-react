@@ -3,6 +3,17 @@ declare var define: any;
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  worldMapCoord: "Coord:",
+  worldMapE: "° E",
+  worldMapFoundLabel: "found",
+  worldMapLoadintText: "Loading map style…",
+  worldMapLocationLabel: "location",
+  worldMapN: "° N",
+  worldMapSearchField: "name",
+  worldMapSearchLocations: "Search locations...",
+  worldMapTitle: "World Map",
+  worldMapZoomContent: "Zoom in",
+  worldMapZoomIn: "Zoom in",
   "Save": "Salva",
   "Cancel": "Annulla",
   "SiteBreadcrumbLabel": "Breadcrumb del sito web",

@@ -7,6 +7,7 @@ import {
 
 import { IData } from "./IData";
 import { css } from "@emotion/css";
+import strings from "ControlStrings";
 
 export interface CountryTooltipContentProps {
  data: IData;
@@ -62,9 +63,9 @@ export const TooltipContent: React.FC<CountryTooltipContentProps> = ({
         <Text className={titleStyles}>{data.name}</Text>
       </div>
       <div className={rowStyles}>
-        <Text className={subTitleStyles}>Coord:</Text>
-        <Text>{data.coordinates[1].toFixed(2)}° N</Text>
-        <Text>{data.coordinates[0].toFixed(2)}° E</Text>
+        <Text className={subTitleStyles}>{strings.worldMapCoord}</Text>
+        <Text>{data.coordinates[1].toFixed(2)}{strings.worldMapN}</Text>
+        <Text>{data.coordinates[0].toFixed(2)}{strings.worldMapE}</Text>
       </div>
     </div>
   );

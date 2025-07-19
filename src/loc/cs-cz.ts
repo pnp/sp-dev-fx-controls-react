@@ -478,5 +478,16 @@ define([], () => {
     ImagePickerUploadLocationSharePointLabel: "Aktuální web",
     ImagePickerRetryButtonLabel: "Zkusit znovu",
     ImagePickerDeleteLabel: "Odstranit",
+  worldMapCoord: "Coord:",
+  worldMapE: "° E",
+  worldMapFoundLabel: "found",
+  worldMapLoadintText: "Loading map style…",
+  worldMapLocationLabel: "location",
+  worldMapN: "° N",
+  worldMapSearchField: "name",
+  worldMapSearchLocations: "Search locations...",
+  worldMapTitle: "World Map",
+  worldMapZoomContent: "Zoom in",
+  worldMapZoomIn: "Zoom in",
   };
 });
