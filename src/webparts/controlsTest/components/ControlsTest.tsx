@@ -163,6 +163,7 @@ import {
 import {
   WidgetSize,
 } from '../../../controls/dashboard';
+import WorldMap from './WorldMap';
 import { debounce } from 'lodash';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { sp } from '@pnp/sp';
@@ -2963,6 +2964,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   context={this.props.context} theme={this.props.themeVariant as any}   hasTeamsContext={false} themeString={'default'} title={'Calendar'} appHostName={EAppHostName.SharePoint} />
             </div>
 
+          }
+          {controlVisibility.WorldMap &&
+            <div id="WorldMapDiv" className={styles.container}>
+              <WorldMap description={'World Map Sample'} isDarkTheme={false} hasTeamsContext={false} title={'Microsoft Locations Worldwide'}     />
+            </div>
           }
         </div>
       </React.Suspense>

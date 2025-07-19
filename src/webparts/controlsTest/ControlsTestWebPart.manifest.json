@@ -89,7 +89,8 @@
           "UserPicker": false,
           "VariantThemeProvider": false,
           "ViewPicker": false,
-          "WebPartTitle": false
+          "WebPartTitle": false,
+          "WorldMap": false
         }
       }
     }

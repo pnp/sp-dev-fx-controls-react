@@ -2,28 +2,28 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
 import {
-  IReadonlyTheme,
-  ThemeChangedEventArgs,
-  ThemeProvider,
-} from '@microsoft/sp-component-base';
-import { Version } from '@microsoft/sp-core-library';
+  ControlVisibility,
+  IControlsTestWebPartProps,
+} from './IControlsTestWebPartProps';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneToggle,
 } from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import {
+  IReadonlyTheme,
+  ThemeChangedEventArgs,
+  ThemeProvider,
+} from '@microsoft/sp-component-base';
 
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
-import {
-  ControlVisibility,
-  IControlsTestWebPartProps,
-} from './IControlsTestWebPartProps';
 import {
   PropertyPaneControlToggles,
 } from './propertyPane/PropertyPaneControlToggles';
 import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
+import { Version } from '@microsoft/sp-core-library';
 
 /**
  * Web part to test the React controls
