@@ -25,10 +25,11 @@
 - `ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)
 - `filePicker`: FilePicker order of tabs and default tab[#1980](https://github.com/pnp/sp-dev-fx-controls-react/issues/921) 
 - `ListView` ListView: add new prop - flattenItems  [#189](https://github.com/pnp/sp-dev-fx-controls-react/issues/189) , [#222](https://github.com/pnp/sp-dev-fx-controls-react/issues/222)
+- `DynamicForm`: issue with fields that are not part of [#1986](https://github.com/pnp/sp-dev-fx-controls-react/issues/1986)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED), [Joseph Jang](https://github.com/heesungjang), [wuxiaojun514](https://github.com/wuxiaojun514), [Michał Kornet](https://github.com/mkm17), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Antanina Druzhkina](https://github.com/Ateina), [Michaël Maillot](https://github.com/michaelmaillot).
+Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Guido Zambarda](https://github.com/GuidoZam), [Joseph Jang](https://github.com/heesungjang), [Michał Kornet](https://github.com/mkm17), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Sandeep P S](https://github.com/Sandeep-FED), [Valeras Narbutas](https://github.com/ValerasNarbutas), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.21.0
 
