@@ -260,8 +260,7 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
             />
             {searchTerm && (
               <div className={styles.searchResults}>
-                {filteredData.length} {strings.worldMapLocationLabel}
-                {filteredData.length !== 1 ? 's' : ''} {strings.worldMapFoundLabel}
+                {filteredData.length} {filteredData.length === 1 ? strings.worldMapLocationLabel : strings.worldMapLocationPluralLabel} {strings.worldMapFoundLabel}
               </div>
             )}
           </div>

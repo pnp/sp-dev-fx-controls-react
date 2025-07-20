@@ -74,7 +74,7 @@ export const MapNavigation: React.FC<MapNavigationProps> = ({
           onClick={handleZoomIn}
         />
       </Tooltip>
-      <Tooltip content="Zoom out" relationship="label">
+      <Tooltip content={strings.worldMapZoomOut} relationship="label">
         <Button
           appearance="subtle"
           icon={<ZoomOut24Regular />}
@@ -83,7 +83,7 @@ export const MapNavigation: React.FC<MapNavigationProps> = ({
           onClick={handleZoomOut}
         />
       </Tooltip>
-      <Tooltip content="Reset map" relationship="label">
+      <Tooltip content={strings.worldMapResetMap} relationship="label">
         <Button
           appearance="subtle"
           icon={<ArrowReset24Regular />}

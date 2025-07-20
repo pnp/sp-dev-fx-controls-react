@@ -6,6 +6,7 @@ import { IMarkerProps } from './IMarkerProps';
 import { Marker as MapMarker } from 'react-map-gl/maplibre';
 import TooltipContent from './TooltipContent';
 import { css } from '@emotion/css';
+import strings from 'ControlStrings';
 
 const useStyles = (): { flag: string; tooltipContent: string } => {
   return {
@@ -56,7 +57,7 @@ export const Marker: React.FC<IMarkerProps> = ({
       >
         <img
           src={data.imageUrl}
-          alt={`${data.name} flag`}
+          alt={`${data.name} ${strings.worldMapFlag}`}
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = '')}
           style={{ cursor: 'pointer' }}

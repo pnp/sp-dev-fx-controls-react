@@ -57,7 +57,7 @@ export const TooltipContent: React.FC<CountryTooltipContentProps> = ({
       <div className={rowStyles}>
         <img
           src={data.imageUrl}
-          alt={`${data.name} flag`}
+          alt={`${data.name} ${strings.worldMapFlag}`}
           className={imageStyles}
         />
         <Text className={titleStyles}>{data.name}</Text>
