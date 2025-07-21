@@ -3,8 +3,14 @@
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import Map, { MapRef, StyleSpecification } from 'react-map-gl/maplibre';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SearchBox, Subtitle1, Text, } from '@fluentui/react-components';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { SearchBox, Subtitle1, Text } from '@fluentui/react-components';
 
 import { IData } from './IData';
 import { IMaplibreWorldMapProps } from './IMaplibreWorldMapProps';
@@ -15,9 +21,12 @@ import strings from 'ControlStrings';
 import { useCleanMapStyle } from './useCleanMapStyle';
 
 const MULTI_STYLE_URLS = {
-  satellite: (key: string) => `https://api.maptiler.com/maps/satellite/style.json?key=${key}`,
-  streets: (key: string) => `https://api.maptiler.com/maps/streets/style.json?key=${key}`,
-  topo: (key: string) => `https://api.maptiler.com/maps/topo-v2/style.json?key=${key}`,
+  satellite: (key: string) =>
+    `https://api.maptiler.com/maps/satellite/style.json?key=${key}`,
+  streets: (key: string) =>
+    `https://api.maptiler.com/maps/streets/style.json?key=${key}`,
+  topo: (key: string) =>
+    `https://api.maptiler.com/maps/topo-v2/style.json?key=${key}`,
   demo: `https://demotiles.maplibre.org/style.json`, // Free demo style (no key required)
 };
 
@@ -96,18 +105,21 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
   const [initialViewState] = useState({ longitude: 0, latitude: 20, zoom: 1 });
 
   // Search configuration with defaults
-  const searchConfig = useMemo(() => ({
-    enabled: search?.enabled ?? true,
-    placeholder: search?.placeholder ?? strings.worldMapSearchLocations,
-    searchField: search?.searchField ?? strings.worldMapSearchField,
-    zoomLevel: search?.zoomLevel ?? 8,
-    position: {
-      top: '10px',
-      left: '10px',
-      ...search?.position,
-    },
-    ...search,
-  }), [search]);
+  const searchConfig = useMemo(
+    () => ({
+      enabled: search?.enabled ?? true,
+      placeholder: search?.placeholder ?? strings.worldMapSearchLocations,
+      searchField: search?.searchField ?? strings.worldMapSearchField,
+      zoomLevel: search?.zoomLevel ?? 8,
+      position: {
+        top: '10px',
+        left: '10px',
+        ...search?.position,
+      },
+      ...search,
+    }),
+    [search]
+  );
 
   // Reset to initial view when search is cleared
   const resetToInitialView = useCallback(() => {
@@ -135,37 +147,41 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
   }, [data, fitPadding, initialViewState]);
 
   // Filter data based on search term
-  const handleSearch = useCallback((term: string) => {
-    setSearchTerm(term);
+  const handleSearch = useCallback(
+    (term: string) => {
+      setSearchTerm(term);
 
-    if (!term.trim()) {
-      setFilteredData(data);
-      search?.onSearchChange?.(term, data);
-      resetToInitialView();
-      return;
-    }
+      if (!term.trim()) {
+        setFilteredData(data);
+        search?.onSearchChange?.(term, data);
+        resetToInitialView();
+        return;
+      }
 
-    const filtered = data.filter((item) => {
-      const searchValue = typeof searchConfig.searchField === 'function'
-        ? searchConfig.searchField(item)
-        : item[searchConfig.searchField as keyof IData] as string;
+      const filtered = data.filter((item) => {
+        const searchValue =
+          typeof searchConfig.searchField === 'function'
+            ? searchConfig.searchField(item)
+            : (item[searchConfig.searchField as keyof IData] as string);
 
-      return searchValue?.toLowerCase().includes(term.toLowerCase());
-    });
-
-    setFilteredData(filtered);
-    search?.onSearchChange?.(term, filtered);
-
-    // Auto-zoom to first result
-    if (filtered.length > 0 && mapRef.current) {
-      const firstResult = filtered[0];
-      mapRef.current.getMap().flyTo({
-        center: firstResult.coordinates,
-        zoom: searchConfig.zoomLevel,
-        duration: 1000,
+        return searchValue?.toLowerCase().includes(term.toLowerCase());
       });
-    }
-  }, [data, search, searchConfig, resetToInitialView]);
+
+      setFilteredData(filtered);
+      search?.onSearchChange?.(term, filtered);
+
+      // Auto-zoom to first result
+      if (filtered.length > 0 && mapRef.current) {
+        const firstResult = filtered[0];
+        mapRef.current.getMap().flyTo({
+          center: firstResult.coordinates,
+          zoom: searchConfig.zoomLevel,
+          duration: 1000,
+        });
+      }
+    },
+    [data, search, searchConfig, resetToInitialView]
+  );
 
   // Handle search clear
   const handleSearchClear = useCallback(() => {
@@ -260,7 +276,11 @@ export const MaplibreWorldMap: React.FC<IMaplibreWorldMapProps> = ({
             />
             {searchTerm && (
               <div className={styles.searchResults}>
-                {filteredData.length} {filteredData.length === 1 ? strings.worldMapLocationLabel : strings.worldMapLocationPluralLabel} {strings.worldMapFoundLabel}
+                {filteredData.length}{' '}
+                {filteredData.length === 1
+                  ? strings.worldMapLocationLabel
+                  : strings.worldMapLocationPluralLabel}{' '}
+                {strings.worldMapFoundLabel}
               </div>
             )}
           </div>

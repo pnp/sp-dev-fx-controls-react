@@ -3,8 +3,6 @@ declare var define: any;
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
-  TermSertNaviagtionErrorMessage: "TermSet not found",
-  TermSetNavigationNoTerms: "No terms defined",
   worldMapCoord: "Coord:",
   worldMapE: "° E",
   worldMapFlag: "flag",
@@ -18,6 +16,8 @@ define([], () => {
   worldMapTitle: "World Map",
   worldMapZoomContent: "Zoom in",
   worldMapZoomIn: "Zoom in",
+  TermSetNaviagtionErrorMessage: "Zestaw Terminów nie został znaleziony",
+  TermSetNavigationNoTerms: "Brak zdefiniowanych terminów",
   "Save": "Zapisać",
   "Cancel": "Anuluj",
   "SiteBreadcrumbLabel": "Strona nawigacyjnej",
