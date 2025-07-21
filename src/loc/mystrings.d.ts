@@ -7,6 +7,7 @@ declare interface IControlStrings {
   CalendarControlDayOfWeekFriday: string;
   CalendarControlDayOfWeekSaturday: string;
 
+
   CalendarControlDetailsLabel: string;
   CalendarControlViewMonthLabel: string;
   CalendarControlViewWeekLabel: string;
@@ -442,6 +443,22 @@ declare interface IControlStrings {
   ClearFilterTitle: string;
   ClearAllFiltersText: string;
   FilterOverflowAriaLabel: string;
+  worldMapZoomContent: string;
+  worldMapZoomIn: string;
+  worldMapZoomOut: string;
+  worldMapReset: string;
+  worldMapCoord: string;
+  worldMapE: string;
+worldMapN: string;
+worldMapSearchField: string;
+worldMapSearchLocations: string;
+worldMapTitle: string;
+worldMapFoundLabel: string;
+worldMapLocationLabel: string;
+worldMapLocationPluralLabel: string;
+worldMapLoadintText: string;
+worldMapResetMap: string;
+worldMapFlag: string;
 }
 
 declare interface IDateTimeStrings {
@@ -469,6 +486,14 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+
+
+
+
+
+
+
+
 }
 
 declare module "ControlStrings" {
