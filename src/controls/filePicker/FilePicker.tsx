@@ -36,6 +36,7 @@ import { StockImages } from "./StockImagesTab/StockImages";
 import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
 import MultipleUploadFilePickerTab from "./MultipleUploadFilePickerTab/MultipleUploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
+import { FilePickerTab } from "./FilePickerTab";
 
 
 export class FilePicker extends React.Component<
@@ -89,7 +90,7 @@ export class FilePicker extends React.Component<
 
     this.setState({
       organisationAssetsEnabled: orgAssetsEnabled,
-      selectedTab: this.getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
+      selectedTab: this._getDefaultSelectedTabKey(this.props, orgAssetsEnabled),
     });
     if (!!this.props.context && !!this.props.webAbsoluteUrl) {
       const { title, id } = await this.fileBrowserService.getSiteTitleAndId();
@@ -190,7 +191,7 @@ export class FilePicker extends React.Component<
             />
           </div>
           <div className={styles.tabsContainer}>
-            {this.state.selectedTab === "keyLink" && (
+            {this.state.selectedTab === FilePickerTab.Link && (
               <LinkFilePickerTab
                 fileSearchService={this.fileSearchService}
                 renderCustomLinkTabContent={
@@ -201,7 +202,7 @@ export class FilePicker extends React.Component<
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyUpload" && (
+            {this.state.selectedTab === FilePickerTab.Upload && (
               <UploadFilePickerTab
                 renderCustomUploadTabContent={
                   this.props.renderCustomUploadTabContent
@@ -210,7 +211,7 @@ export class FilePicker extends React.Component<
                 onChange={this._handleOnChange}
               />
             )}
-            {this.state.selectedTab === "keyMultipleUpload" && (
+            {this.state.selectedTab === FilePickerTab.MultipleUpload && (
               <MultipleUploadFilePickerTab
                 renderCustomMultipleUploadTabContent={
                   this.props.renderCustomMultipleUploadTabContent
@@ -219,7 +220,7 @@ export class FilePicker extends React.Component<
                 onChange={this._handleOnChange}
               />
             )}
-            {this.state.selectedTab === "keySite" && (
+            {this.state.selectedTab === FilePickerTab.Site && (
               <SiteFilePickerTab
                 fileBrowserService={this.fileBrowserService}
                 includePageLibraries={this.props.includePageLibraries}
@@ -230,37 +231,37 @@ export class FilePicker extends React.Component<
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyOrgAssets" && (
+            {this.state.selectedTab === FilePickerTab.OrgAssets && (
               <SiteFilePickerTab
                 breadcrumbFirstNode={{
                   isCurrentItem: true,
                   text: strings.OrgAssetsTabLabel,
-                  key: "keyOrgAssets",
+                  key: FilePickerTab.OrgAssets,
                 }}
                 fileBrowserService={this.orgAssetsService}
                 webTitle={this.state.webTitle}
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyWeb" && (
+            {this.state.selectedTab === FilePickerTab.Web && (
               <WebSearchTab
                 bingSearchService={this.fileSearchService}
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyOneDrive" && (
+            {this.state.selectedTab === FilePickerTab.OneDrive && (
               <OneDriveFilesTab
                 oneDriveService={this.oneDriveService}
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyRecent" && (
+            {this.state.selectedTab === FilePickerTab.Recent && (
               <RecentFilesTab
                 fileSearchService={this.fileSearchService}
                 {...linkTabProps}
               />
             )}
-            {this.state.selectedTab === "keyStockImages" && (
+            {this.state.selectedTab === FilePickerTab.StockImages && (
               <StockImages
                 language={
                   this.props.context.pageContext.cultureInfo.currentCultureName
@@ -294,7 +295,7 @@ export class FilePicker extends React.Component<
   private _handleOpenPanel = (): void => {
     this.setState({
       panelOpen: true,
-      selectedTab: this.getDefaultSelectedTabKey(
+      selectedTab: this._getDefaultSelectedTabKey(
         this.props,
         this.state.organisationAssetsEnabled
       ),
@@ -344,21 +345,21 @@ export class FilePicker extends React.Component<
    */
   private _getNavPanelOptions = (): INavLinkGroup[] => {
     const addUrl = this.props.storeLastActiveTab !== false;
-    const links = [];
+    let links = [];
 
     if (!this.props.hideRecentTab) {
       links.push({
         name: strings.RecentLinkLabel,
         url: addUrl ? "#recent" : undefined,
         icon: "Recent",
-        key: "keyRecent",
+        key: FilePickerTab.Recent,
       });
     }
     if (!this.props.hideStockImages) {
       links.push({
         name: strings.StockImagesLinkLabel,
         url: addUrl ? "#stockImages" : undefined,
-        key: "keyStockImages",
+        key: FilePickerTab.StockImages,
         icon: "ImageSearch",
       });
     }
@@ -366,7 +367,7 @@ export class FilePicker extends React.Component<
       links.push({
         name: strings.WebSearchLinkLabel,
         url: addUrl ? "#search" : undefined,
-        key: "keyWeb",
+        key: FilePickerTab.Web,
         icon: "Search",
       });
     }
@@ -378,14 +379,14 @@ export class FilePicker extends React.Component<
         name: strings.OrgAssetsLinkLabel,
         url: addUrl ? "#orgAssets" : undefined,
         icon: "FabricFolderConfirm",
-        key: "keyOrgAssets",
+        key: FilePickerTab.OrgAssets,
       });
     }
     if (!this.props.hideOneDriveTab) {
       links.push({
         name: "OneDrive",
         url: addUrl ? "#onedrive" : undefined,
-        key: "keyOneDrive",
+        key: FilePickerTab.OneDrive,
         icon: "OneDrive",
       });
     }
@@ -393,7 +394,7 @@ export class FilePicker extends React.Component<
       links.push({
         name: strings.SiteLinkLabel,
         url: addUrl ? "#globe" : undefined,
-        key: "keySite",
+        key: FilePickerTab.Site,
         icon: "Globe",
       });
     }
@@ -401,7 +402,7 @@ export class FilePicker extends React.Component<
       links.push({
         name: strings.UploadLinkLabel,
         url: addUrl ? "#upload" : undefined,
-        key: "keyUpload",
+        key: FilePickerTab.Upload,
         icon: "System",
       });
     }
@@ -409,7 +410,7 @@ export class FilePicker extends React.Component<
       links.push({
         name: strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName,
         url: addUrl ? "#Multipleupload" : undefined,
-        key: "keyMultipleUpload",
+        key: FilePickerTab.MultipleUpload,
         icon: "BulkUpload",
       });
     }
@@ -417,46 +418,68 @@ export class FilePicker extends React.Component<
       links.push({
         name: strings.FromLinkLinkLabel,
         url: addUrl ? "#link" : undefined,
-        key: "keyLink",
+        key: FilePickerTab.Link,
         icon: "Link",
       });
+    }
+
+    if(this.props.tabOrder) {
+      links = this._getTabOrder(links);
     }
 
     const groups: INavLinkGroup[] = [{ links }];
     return groups;
   }
 
-  private getDefaultSelectedTabKey = (
+  /**
+   * Sorts navigation tabs based on the tabOrder prop
+   */
+  private _getTabOrder = (links): INavLink[] => {
+    const sortedKeys = [
+      ...this.props.tabOrder,
+      ...links.map(l => l.key).filter(key => !this.props.tabOrder.includes(key)),
+    ];
+
+    links.sort((a, b) => {
+      return sortedKeys.indexOf(a.key) - sortedKeys.indexOf(b.key);
+    });
+
+    return links;
+  };
+
+  /**
+   * Returns the default selected tab key
+   */
+  private _getDefaultSelectedTabKey = (
     props: IFilePickerProps,
     orgAssetsEnabled: boolean
   ): string => {
-    if (!props.hideRecentTab) {
-      return "keyRecent";
-    }
-    if (!props.hideStockImages) {
-      return "keyStockImages";
-    }
-    if (props.bingAPIKey && !props.hideWebSearchTab) {
-      return "keyWeb";
-    }
-    if (!props.hideOrganisationalAssetTab && orgAssetsEnabled) {
-      return "keyOrgAssets";
-    }
-    if (!props.hideOneDriveTab) {
-      return "keyOneDrive";
-    }
-    if (!props.hideSiteFilesTab) {
-      return "keySite";
-    }
-    if (!props.hideLocalUploadTab) {
-      return "keyUpload";
-    }
-    if (!props.hideLinkUploadTab) {
-      return "keyLink";
-    }
-    if (!props.hideLocalMultipleUploadTab) {
-      return "keyMultipleUpload";
+    const tabsConfig = [
+      { isTabVisible: !props.hideRecentTab, tabKey: FilePickerTab.Recent },
+      { isTabVisible: !props.hideStockImages, tabKey: FilePickerTab.StockImages },
+      { isTabVisible: props.bingAPIKey && !props.hideWebSearchTab, tabKey: FilePickerTab.Web },
+      { isTabVisible: !props.hideOrganisationalAssetTab && orgAssetsEnabled, tabKey: FilePickerTab.OrgAssets },
+      { isTabVisible: !props.hideOneDriveTab, tabKey: FilePickerTab.OneDrive },
+      { isTabVisible: !props.hideSiteFilesTab, tabKey: FilePickerTab.Site },
+      { isTabVisible: !props.hideLocalUploadTab, tabKey: FilePickerTab.Upload },
+      { isTabVisible: !props.hideLinkUploadTab, tabKey: FilePickerTab.Link },
+      { isTabVisible: !props.hideLocalMultipleUploadTab, tabKey: FilePickerTab.MultipleUpload }
+    ];
+
+    const visibleTabs = tabsConfig.filter(tab => tab.isTabVisible);
+    const visibleTabKeys = visibleTabs.map(tab => tab.tabKey);
+
+    // If defaultSelectedTab is provided and is visible, then return tabKey
+    if(this.props.defaultSelectedTab && visibleTabKeys.includes(this.props.defaultSelectedTab)) {
+      return this.props.defaultSelectedTab;
     }
 
+    // If no valid default tab is provided, find the first visible tab in the order
+    if (this.props.tabOrder) {
+      const visibleTabSet = new Set(visibleTabKeys);
+      return this.props.tabOrder.find(key => visibleTabSet.has(key));
+    } else {
+      return visibleTabKeys[0]; // first visible tab from default order
+    }
   }
 }

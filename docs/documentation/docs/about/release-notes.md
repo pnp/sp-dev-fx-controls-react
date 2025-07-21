@@ -8,16 +8,28 @@
 - `ListItemComments`: Implement like and unlike ability to list item comments control [#1974](https://github.com/pnp/sp-dev-fx-controls-react/pull/1974)
 - `ListItemComments`: Need a feature to view the list of users who liked a comment [#2003](https://github.com/pnp/sp-dev-fx-controls-react/issues/2003)
 - `ListItemComments`: Clickable links [#1969](https://github.com/pnp/sp-dev-fx-controls-react/issues/1969)
+- `Polish translations`: Updates Polish translations. Closes #1991](https://github.com/pnp/sp-dev-fx-controls-react/issues/1991)
+- `Dashboard`: Dashboard widget rowspan [#2007](https://github.com/pnp/sp-dev-fx-controls-react/pull/2007)
+- `ListItemComments`: Guest user @-mentions and styling fix for ListItemComments [#1990](https://github.com/pnp/sp-dev-fx-controls-react/pull/1990)
+- `GridLayout`: 1852 - Grid layout settings as parameters [#1976](https://github.com/pnp/sp-dev-fx-controls-react/pull/1976)
 
 ### Fixes
 
 - `DynamicForm`: Added choice radio button handling [#1798](https://github.com/pnp/sp-dev-fx-controls-react/pull/1798)
 - `FilePicker`: Global quill styles from FilePicker overwrite other quill editors [#1996](https://github.com/pnp/sp-dev-fx-controls-react/issues/1996)
 - `FilePicker`: Unable to browse through organization assets library when located on root site [#1784](https://github.com/pnp/sp-dev-fx-controls-react/issues/1784)
+- `Calendar`: Fix - fix-typo-enableOnHover [#2021](https://github.com/pnp/sp-dev-fx-controls-react/pull/2021)
+- `Dynamic Form`: Hotfix for issue 2014 [#2026](https://github.com/pnp/sp-dev-fx-controls-react/issues/2014)
+- `ListItemAttachments`: Update ListItemAttachments.tsx: let user set webUrl fix for issue 1975 [#2009](https://github.com/pnp/sp-dev-fx-controls-react/issues/1975
+- `FilePicker`:  Files keep loading when previewing all files in OneDrive [#2021](https://github.com/pnp/sp-dev-fx-controls-react/issues/1994)
+- `ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)
+- `filePicker`: FilePicker order of tabs and default tab[#1980](https://github.com/pnp/sp-dev-fx-controls-react/issues/921) 
+- `ListView` ListView: add new prop - flattenItems  [#189](https://github.com/pnp/sp-dev-fx-controls-react/issues/189) , [#222](https://github.com/pnp/sp-dev-fx-controls-react/issues/222)
+- `DynamicForm`: issue with fields that are not part of [#1986](https://github.com/pnp/sp-dev-fx-controls-react/issues/1986)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Guido Zambarda](https://github.com/GuidoZam), [Sandeep P S](https://github.com/Sandeep-FED).
+Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Guido Zambarda](https://github.com/GuidoZam), [Joseph Jang](https://github.com/heesungjang), [Michał Kornet](https://github.com/mkm17), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Sandeep P S](https://github.com/Sandeep-FED), [Valeras Narbutas](https://github.com/ValerasNarbutas), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.21.0
 

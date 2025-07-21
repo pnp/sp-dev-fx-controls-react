@@ -230,7 +230,9 @@ export class DynamicFormBase extends React.Component<
               <>
                 <h2 className={styles.sectionTitle}>{section.displayname}</h2>
                 <div className={styles.sectionFormFields}>
-                  {section.fields.map((f, i) => (
+                  {section.fields
+                    .filter(f => fieldCollection.find(fc => fc.label === f))
+                    .map((f, i) => (
                     <div key={f} className={styles.sectionFormField}>
                       {this.renderField(fieldCollection.find(fc => fc.label === f) as IDynamicFieldProps)}
                     </div>
