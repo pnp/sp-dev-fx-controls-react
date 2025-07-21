@@ -1,3 +1,5 @@
+
+
 declare var define: any;
 
 define([], () => {
@@ -469,6 +471,21 @@ CalendarControlNextLabel: "Next",
 
 CalendarControlAttendeessLabel: "Attendees",
 CalendarControlFullDaylabel: "Full Day",
-
+worldMapCoord: "Coord:",
+worldMapE: "° E",
+worldMapFlag: "flag",
+worldMapFoundLabel: "found",
+worldMapLoadintText: "Loading map style…",
+worldMapLocationLabel: "location",
+worldMapLocationPluralLabel: "locations",
+worldMapN: "° N",
+worldMapZoomContent: "Zoom in",
+worldMapZoomIn: "Zoom in",
+worldMapZoomOut: "Zoom out",
+worldMapReset: "Reset",
+  worldMapResetMap: "Reset map",
+  worldMapSearchField: "name",
+  worldMapSearchLocations: "Search locations...",
+  worldMapTitle: "World Map",
   };
 });

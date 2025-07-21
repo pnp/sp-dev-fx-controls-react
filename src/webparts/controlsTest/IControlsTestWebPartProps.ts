@@ -1,6 +1,6 @@
 export type ValidControls = "all" |
   "AccessibleAccordion" | "AdaptiveCardDesignerHost" | "AdaptiveCardHost" |
-  "AnimatedDialog" | "Carousel" | "ChartControl" |
+  "AnimatedDialog" | "Carousel" | "ChartControl" | "Calendar" |
   "ComboBoxListItemPicker" | "ContentTypePicker" | "Dashboard" | "DateTimePicker" |
   "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" |
   "FieldCollectionData" | "FieldPicker" | "FilePicker" |
@@ -15,7 +15,7 @@ export type ValidControls = "all" |
   "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
   "TestControl" | "Toolbar" | "TreeView" |
   "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" |
-  "WebPartTitle" | "Calendar";
+  "WebPartTitle" | "WorldMap" ;
 
 export type ControlVisibility = {
   [K in ValidControls]: boolean;
