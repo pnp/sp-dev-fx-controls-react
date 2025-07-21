@@ -2,6 +2,10 @@
 
 ## 3.22.0
 
+### New control(s)
+
+- `WorldMap`: new control `WorldMap` [#2023](https://github.com/pnp/sp-dev-fx-controls-react/pull/2023)
+
 ### Enhancements
 
 - SharePoint Framework v1.21.1 support [#1998](https://github.com/pnp/sp-dev-fx-controls-react/pull/1998)
@@ -29,7 +33,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Guido Zambarda](https://github.com/GuidoZam), [Joseph Jang](https://github.com/heesungjang), [Michał Kornet](https://github.com/mkm17), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Sandeep P S](https://github.com/Sandeep-FED), [Valeras Narbutas](https://github.com/ValerasNarbutas), [wuxiaojun514](https://github.com/wuxiaojun514).
+Special thanks to our contributors (in alphabetical order): [Alberto Gutierrez Perez](https://github.com/albegut), [Alex Terentiev](https://github.com/AJIXuMuK), [Antanina Druzhkina](https://github.com/Ateina), [Floris Pleegzorg Oost-Vlaanderen](https://github.com/Floris-Pleegzorg-Oost-Vlaanderen), [Guido Zambarda](https://github.com/GuidoZam), [joaojmendes](https://github.com/joaojmendes), [Joseph Jang](https://github.com/heesungjang), [Michał Kornet](https://github.com/mkm17), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Patrik Hellgren](https://github.com/PatrikHellgren), [Sandeep P S](https://github.com/Sandeep-FED), [Valeras Narbutas](https://github.com/ValerasNarbutas), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.21.0
 
