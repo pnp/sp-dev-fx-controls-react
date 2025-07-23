@@ -123,6 +123,7 @@ The following controls are currently available:
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
 - [ViewPicker](./controls/ViewPicker.md) (View Picker Control)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
+- [WorldMap](./controls/WorldMap) (World Map control)
 
 Field customizer controls:
 
