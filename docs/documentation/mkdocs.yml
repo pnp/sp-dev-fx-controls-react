@@ -80,6 +80,7 @@ nav:
     - VariantThemeProvider: 'controls/VariantThemeProvider.md'
     - ViewPicker: 'controls/ViewPicker.md'
     - WebPartTitle: 'controls/WebPartTitle.md'
+    - WorldMap: 'controls/WorldMap.md'
   - 'Field Controls':
     - 'Getting started': 'controls/fields/main.md'
     - FieldRendererHelper: 'controls/fields/FieldRendererHelper.md'
