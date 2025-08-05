@@ -18,6 +18,7 @@ build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideUpOut
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideDownOut' is not camelCase and will not be type-safe.`);
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideUpIn' is not camelCase and will not be type-safe.`);
 build.addSuppression(`Warning - [sass] The local CSS class 'ms-motion-slideDownIn' is not camelCase and will not be type-safe.`);
+build.addSuppression(`Warning - [sass] The local CSS class 'pnp-richtext-quill-container' is not camelCase and will not be type-safe.`);
 
 // Update the version number in the version.ts file
 gulp.task('versionUpdater', (done) => {
