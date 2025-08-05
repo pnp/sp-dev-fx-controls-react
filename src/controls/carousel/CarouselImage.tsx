@@ -121,7 +121,7 @@ export default class CarouselImage extends React.Component<ICarouselImageProps, 
       </div>;
 
       if (url) {
-        details = <a href={url} target={target} data-interception="off">{detailsContent}</a>;
+        details = <a href={url} target={target} data-interception={target==="_blank"? "off":"on"}>{detailsContent}</a>;
       }
       else {
         details = detailsContent;
