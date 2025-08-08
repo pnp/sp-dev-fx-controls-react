@@ -9,4 +9,5 @@ export interface IUploadAttachmentProps {
   context: BaseComponentContext;
   fireUpload?: boolean;
   onAttachmentUpload: (file?: File) => void;
+  onUploadDialogClosed: () => void;
 }
