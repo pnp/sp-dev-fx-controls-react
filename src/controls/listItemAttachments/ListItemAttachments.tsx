@@ -51,7 +51,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
     };
 
     // Get SPService Factory
-    this._spservice = new SPservice(this.props.context);
+    this._spservice = new SPservice(this.props.context, this.props.webUrl);
     this._utilities = new utilities();
   }
 
