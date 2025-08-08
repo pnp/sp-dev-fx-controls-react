@@ -161,6 +161,7 @@ import {
   VariantType,
 } from '../../../controls/variantThemeProvider';
 import {
+  IWidgetLink,
   WidgetSize,
 } from '../../../controls/dashboard';
 import WorldMap from './WorldMap';
@@ -1056,7 +1057,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
 
     const linkExample = { href: "#" };
-    const customizedLinkExample = {
+    const customizedLinkExample: any = {
       href: "#",
       title: "This is a customized link!",
       color: "red",
@@ -2364,6 +2365,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   title: "Card 2",
                   size: WidgetSize.Single,
                   link: customizedLinkExample,
+                  rowSpan: 2
                 },
                 {
                   title: "Card 3",
