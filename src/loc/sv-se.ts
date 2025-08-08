@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Bekräfta ta bort kommentar",
   "ListItemCommentsLabel": "Kommentarer",
   "ListItemCommentsNoCommentsLabel": "Det finns inga kommentarer",
+  "ListItemCommentsPlaceholder": "@omnämnande eller kommentar",
   "OrgAssetsLinkLabel": "Din organisation",
   "MyTeamsMessageDontHaveTeams": "Du har inga teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Ange en term som du vill tagga",

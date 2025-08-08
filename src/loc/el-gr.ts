@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Επιβεβαίωση διαγραφής σχολίου",
   "ListItemCommentsLabel": "Σχόλια",
   "ListItemCommentsNoCommentsLabel": "No comments",
+  "ListItemCommentsPlaceholder": "@αναφορά ή σχόλιο",
   "OrgAssetsLinkLabel": "Ο οργανισμός σας",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Εισαγάγετε έναν όρο που θέλετε να προσθέσετε ετικέτα",
