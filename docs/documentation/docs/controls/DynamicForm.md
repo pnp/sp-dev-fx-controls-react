@@ -72,6 +72,7 @@ The `DynamicForm` can be configured with the following properties:
 | useModernTaxonomyPicker | boolean | no | Specifies if the form should render [ModernTaxonomyPicker](./ModernTaxonomyPicker.md) control for Managed metadata fields. If set to `true`, Dynamic form will render ModernTaxonomyPicker control. If set to `false`, Dynamic form will render TaxonomyPicker control. Default is `false` |
 | className | string | no | Set CSS Class. |
 | styles | IStyleFunctionOrObject&lt;IDynamicFormStyleProps, [IDynamicFormStyles](#idynamicformstyles-interface)&gt; | no | Styles to apply on control.  See the example [here](#how-to-use-styles-property) |
+| itemsQueryCountLimit | number | no | 	Number of items to display in the lookup fields of the form |                                                            |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 
