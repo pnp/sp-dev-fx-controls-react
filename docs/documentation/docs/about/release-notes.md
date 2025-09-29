@@ -2,14 +2,19 @@
 
 ## 3.23.0
 
+### Enhancements
+
+- `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
+- `DynamicForm`: Add itemsQueryCountLimit for Lookup fields [#2033](https://github.com/pnp/sp-dev-fx-controls-react/issues/2033)
+
 ### Fixes
 
 - `RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)
-- `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
+- `Carousel`: links not opening on a new tab with target: _blank [#2022](https://github.com/pnp/sp-dev-fx-controls-react/issues/2022)
 
 ### Contributors
 
-Special thanks to our contributor: [Mark Bice](https://github.com/mbice).
+Special thanks to our contributors (in alphabetical order): [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Niels Söth](https://github.com/nsoeth).
 
 ## 3.22.0
 
