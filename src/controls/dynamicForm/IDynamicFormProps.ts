@@ -2,7 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IItem } from '@pnp/sp/items';
 import { IStyle, IStyleFunctionOrObject } from '@fluentui/react';
 import React from 'react';
-import { IDynamicFieldProps,IDynamicFieldStyles } from './dynamicField';
+import { IDynamicFieldProps, IDynamicFieldStyles } from './dynamicField';
 import { IValidationErrorDialogProps } from './IValidationErrorDialogProps';
 
 export interface IDynamicFormProps {
@@ -139,7 +139,7 @@ export interface IDynamicFormProps {
    * Note: the value of selected tab is stored in the queryString hash.
    * @default true
    */
-   storeLastActiveTab?: boolean;
+  storeLastActiveTab?: boolean;
 
   /**
    * Library relative folder to create the item in.
@@ -165,11 +165,16 @@ export interface IDynamicFormProps {
    * CSS Class name to add to the root element.
    */
   className?: string;
+
+  /**
+   * Number of items to display in the lookup fields of the form.
+   */
+  itemsQueryCountLimit?: number;
 }
 
 
 
-export type IDynamicFormStyleProps = Pick<IDynamicFormProps, 'className'> & { };
+export type IDynamicFormStyleProps = Pick<IDynamicFormProps, 'className'> & {};
 
 export interface IDynamicFormSubComponentStyles {
   fieldStyles: IDynamicFieldStyles;
@@ -181,15 +186,15 @@ export interface IDynamicFormStyles {
   sectionFormFields: IStyle;
   sectionFormField: IStyle;
   sectionLine: IStyle;
-  header:IStyle;
-  footer:IStyle;
+  header: IStyle;
+  footer: IStyle;
   validationErrorDialog: IStyle;
   buttons: IStyle;
   actions: IStyle;
   actionsRight: IStyle;
   action: IStyle;
-   /**
-   * sub component styles for dynamic field
-   */
-   subComponentStyles: IDynamicFormSubComponentStyles;
+  /**
+  * sub component styles for dynamic field
+  */
+  subComponentStyles: IDynamicFormSubComponentStyles;
 }
