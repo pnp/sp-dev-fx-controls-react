@@ -5,6 +5,7 @@
 ### Fixes
 
 - `RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)
+- `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
 
 ### Contributors
 
