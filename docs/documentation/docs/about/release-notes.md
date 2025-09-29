@@ -1,5 +1,15 @@
 # Releases
 
+## 3.23.0
+
+### Fixes
+
+- `RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)
+
+### Contributors
+
+Special thanks to our contributor: [Mark Bice](https://github.com/mbice).
+
 ## 3.22.0
 
 ### New control(s)

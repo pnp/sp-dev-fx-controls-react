@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "3.23.0",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "`RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)"
+        ]
+      },
+      "contributions": [
+        "[Mark Bice](https://github.com/mbice)"
+      ]
+    },
+    {
       "version": "3.22.0",
       "changes": {
         "new": [
@@ -55,7 +68,6 @@
           "Add cs-cz.ts [#1932](https://github.com/pnp/sp-dev-fx-controls-react/pull/1932)",
           "`FilterBar`: new control `FilterBar` [#1884](https://github.com/pnp/sp-dev-fx-controls-react/pull/1884)",
           "`Calendar`: new controls `Calendar` [#1955](https://github.com/pnp/sp-dev-fx-controls-react/pull/1955)"
-
         ],
         "enhancements": [
           "Update markdown-it to >=13.0.2 [#1916](https://github.com/pnp/sp-dev-fx-controls-react/issues/1916)",
@@ -215,7 +227,7 @@
     },
     {
       "version": "3.17.0",
-      "changes":{
+      "changes": {
         "new": [],
         "enhancements": [
           "`DyanmicForm`: Added file handling [#1625](https://github.com/pnp/sp-dev-fx-controls-react/pull/1625)",
@@ -359,7 +371,6 @@
         "[Sergei Sergeev](https://github.com/s-KaiNet)",
         "[Sharepointalist](https://github.com/sharepointalist)",
         "[Zhephyr](https://github.com/Zhephyr54)"
-
       ]
     },
     {
@@ -417,7 +428,6 @@
           "`AdaptiveCardHost`: Logic to prevent re-renders (flicker) [#1425](https://github.com/pnp/sp-dev-fx-controls-react/pull/1425)",
           "`ListItemComments`: Add new parameter for ListItemComments to highlight comment [#1430](https://github.com/pnp/sp-dev-fx-controls-react/pull/1430)",
           "`ComboBoxListItemPicker`: Update ComboBoxListItemPicker.md [#1470](https://github.com/pnp/sp-dev-fx-controls-react/pull/1470)"
-
         ],
         "fixes": [
           "`DateTimePicker`: broken link for `getErrorMessage` property fixed [#1277](https://github.com/pnp/sp-dev-fx-controls-react/pull/1381)",
@@ -438,7 +448,6 @@
           "`DateTimePicker`: Date picker locale [#1095](https://github.com/pnp/sp-dev-fx-controls-react/issues/1095)",
           "`RichText`: Use theme colors - fix dark mode [#669](https://github.com/pnp/sp-dev-fx-controls-react/issues/669)",
           "`FilePicker`: Use theme colors - fix dark mode [#1132](https://github.com/pnp/sp-dev-fx-controls-react/issues/1132)"
-
         ]
       },
       "contributions": [
@@ -460,7 +469,6 @@
         "[Samuele Furnari](https://github.com/SamueleFurnari)",
         "[sambilfinger](https://github.com/sambilfinger)",
         "[wuxiaojun514](https://github.com/wuxiaojun514)"
-
       ]
     },
     {
@@ -513,7 +521,6 @@
           "`Placeholder`: Documentation example to only display in edit mode [#1280](https://github.com/pnp/sp-dev-fx-controls-react/issues/1280)",
           "`DynamicForm`: Update documentation regarding onBeforeSubmit [#1319](https://github.com/pnp/sp-dev-fx-controls-react/issues/1319)",
           "`DynamicForm`: FirstDayOfWeek in DatePickers from webs regional settings [#1317](https://github.com/pnp/sp-dev-fx-controls-react/issues/1317)"
-
         ],
         "fixes": [
           "`PeoplePicker`: fixes where people picker returns no results [#1292](https://github.com/pnp/sp-dev-fx-controls-react/issues/1292)",
@@ -584,7 +591,6 @@
           "`PeoplePicker`: PeoplePicker validation on focus out [#1221](https://github.com/pnp/sp-dev-fx-controls-react/pull/1221)",
           "`DynamicForm`: Cannot display lookup value when the source field is not Title [#1215](https://github.com/pnp/sp-dev-fx-controls-react/issues/1215)",
           "`FilePicker`: the endPoint for webSearch do not work [#1256](https://github.com/pnp/sp-dev-fx-controls-react/issues/1256)"
-
         ]
       },
       "contributions": [
