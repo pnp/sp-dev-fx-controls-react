@@ -122,6 +122,21 @@ export class DynamicFormBase extends React.Component<
   }
 
   /**
+   * Updates the ETag stored in the component's state.
+   * This is useful when the list item has been modified externally (e.g., by adding/removing attachments)
+   * and you need to update the ETag to prevent 412 conflict errors on save.
+   * 
+   * @param itemData - The updated item data containing the new ETag
+   */
+  public updateETag(itemData: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
+    if (itemData && itemData["odata.etag"]) {
+      this.setState({
+        etag: itemData["odata.etag"]
+      });
+    }
+  }
+
+  /**
    * Lifecycle hook when component is mounted
    */
   public componentDidMount(): void {
