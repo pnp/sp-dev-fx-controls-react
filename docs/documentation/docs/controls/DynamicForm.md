@@ -120,6 +120,56 @@ The `DynamicForm` can be configured with the following properties:
 | thumbnailFieldButtons | IStyle | styles for button when field type is 'Thumbnail' |
 | selectedFileContainer | IStyle | styles for File Selection Control |
 
+## Public Methods
+
+The `DynamicForm` control exposes the following public methods that can be called using a ref:
+
+### updateETag(itemData: any): void
+
+Updates the ETag stored in the component's state. This is useful when the list item has been modified externally (e.g., by adding/removing attachments using the ListItemAttachments control) and you need to update the ETag to prevent 412 conflict errors on save.
+
+**Parameters:**
+- `itemData` - The updated item data containing the new ETag (typically from SharePoint REST API response with `odata.etag` property)
+
+**Example:**
+
+```TypeScript
+import * as React from 'react';
+import { DynamicForm } from '@pnp/spfx-controls-react/lib/DynamicForm';
+import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
+
+export class MyComponent extends React.Component {
+  private dynamicFormRef = React.createRef<DynamicForm>();
+
+  private onAttachmentChange = (itemData: any): void => {
+    // Update the DynamicForm's ETag when attachments are modified
+    if (this.dynamicFormRef.current) {
+      this.dynamicFormRef.current.updateETag(itemData);
+    }
+  }
+
+  public render() {
+    return (
+      <div>
+        <ListItemAttachments
+          listId={this.props.listId}
+          itemId={this.props.itemId}
+          context={this.props.context}
+          onAttachmentChange={this.onAttachmentChange}
+        />
+        <DynamicForm
+          ref={this.dynamicFormRef}
+          context={this.props.context}
+          listId={this.props.listId}
+          listItemId={this.props.itemId}
+          respectETag={true}
+        />
+      </div>
+    );
+  }
+}
+```
+
 ## How to use styles property
 
 Property styles of Dynamic Form gives you a set of properties which you can use to modify styles.
