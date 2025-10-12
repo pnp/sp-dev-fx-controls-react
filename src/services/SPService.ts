@@ -237,7 +237,7 @@ export default class SPService implements ISPService {
         if (orderByParts[1] && orderByParts[1].toLowerCase() === 'desc') {
           ascStr = `Ascending="FALSE"`;
         }
-        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} />`;
+        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} /></OrderBy>`;
       }
 
       let filterPart = ""
