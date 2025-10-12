@@ -1,5 +1,15 @@
 # Releases
 
+## 1.21.4
+
+### Fixes
+
+- Wrong translation in Chinese [#2015](https://github.com/pnp/sp-dev-fx-controls-react/issues/2015)
+
+### Contributors
+
+Special thanks to our contributor: [s1nce](https://github.com/s1nce).
+
 ## 1.21.3
 
 ### Fixes
