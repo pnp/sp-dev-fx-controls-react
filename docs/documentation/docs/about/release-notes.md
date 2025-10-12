@@ -11,10 +11,11 @@
 
 - `RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)
 - `Carousel`: links not opening on a new tab with target: _blank [#2022](https://github.com/pnp/sp-dev-fx-controls-react/issues/2022)
+- `ListItemPicker`: calculated column as columnInternalName not working [#1870](https://github.com/pnp/sp-dev-fx-controls-react/issues/1870)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Niels Söth](https://github.com/nsoeth).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Niels Söth](https://github.com/nsoeth).
 
 ## 3.22.0
 
