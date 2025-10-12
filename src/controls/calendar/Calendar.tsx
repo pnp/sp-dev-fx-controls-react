@@ -7,7 +7,7 @@ import {
   webLightTheme,
 } from '@fluentui/react-components';
 import { ICalendarStyles, useCalendarStyles } from './hooks/useCalendarStyles';
-import { addDays, startOfMonth, startOfWeek } from 'date-fns';
+import { addDays, startOfMonth, startOfWeek, format } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 
 import { Day } from './Day';
@@ -213,8 +213,9 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
         currentDate.getFullYear(),
         currentDate.getMonth()
       );
-      const dayString = date.toISOString().split('T')[0];
-      return monthEvents[dayString]?.flatMap((slot) => slot) || [];
+      const dayString = format(date, 'yyyy-MM-dd');
+      const dayEvents = monthEvents[dayString]?.flatMap((slot) => slot) || [];
+      return dayEvents;
     },
     [currentDate, events]
   );
