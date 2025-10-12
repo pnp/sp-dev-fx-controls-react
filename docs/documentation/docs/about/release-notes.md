@@ -16,6 +16,7 @@
 - `Calendar`: not displaying items [#2025](https://github.com/pnp/sp-dev-fx-controls-react/issues/2025)
 - `ListItemComments`: Error when using some special characters in text [#2047](https://github.com/pnp/sp-dev-fx-controls-react/issues/2047)
 - Update `FolderExplorerService.ts` to add import @pnp/sp/files [#2050](https://github.com/pnp/sp-dev-fx-controls-react/pull/2050)
+- `RichText`: indent controls missing icons [#2045](https://github.com/pnp/sp-dev-fx-controls-react/issues/2045)
 
 ### Contributors
 
