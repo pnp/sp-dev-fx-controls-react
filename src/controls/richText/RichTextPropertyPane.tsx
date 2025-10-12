@@ -434,7 +434,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
                 className={styles.propertyPaneButton}
                 aria-describedby="increaseindent-propertyPaneButton"
                 iconProps={{
-                  iconName: 'IncreaseIndentLegacy',
+                  iconName: 'IncreaseIndentText',
                   style: {
                     fontSize: '20px'
                   }
@@ -449,7 +449,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
                 className={styles.propertyPaneButton}
                 aria-describedby="decreaseindent-propertyPaneButton"
                 iconProps={{
-                  iconName: 'DecreaseIndentLegacy',
+                  iconName: 'DecreaseIndentText',
                   style: {
                     fontSize: '20px'
                   }
