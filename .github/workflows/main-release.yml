@@ -31,6 +31,6 @@ jobs:
       run: npm run build
 
     - name: Publish release
-      run: npm publish --tag v1
+      run: npm publish --tag version1
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
