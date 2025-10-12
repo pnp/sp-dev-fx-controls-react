@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "version": "1.21.4",
+      "changes": {
+        "new": [],
+        "enhancements": [],
+        "fixes": [
+          "Wrong translation in Chinese [#2015](https://github.com/pnp/sp-dev-fx-controls-react/issues/2015)"
+        ]
+      },
+      "contributions": [
+        "[s1nce](https://github.com/s1nce)"
+      ]
+    },
+    {
       "version": "1.21.3",
       "changes": {
         "new": [],
