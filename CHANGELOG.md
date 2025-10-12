@@ -13,6 +13,7 @@
 - `Carousel`: links not opening on a new tab with target: _blank [#2022](https://github.com/pnp/sp-dev-fx-controls-react/issues/2022)
 - `ListItemPicker`: calculated column as columnInternalName not working [#1870](https://github.com/pnp/sp-dev-fx-controls-react/issues/1870)
 - `Calendar`: not displaying items [#2025](https://github.com/pnp/sp-dev-fx-controls-react/issues/2025)
+- `ListItemComments`: Error when using some special characters in text [#2047](https://github.com/pnp/sp-dev-fx-controls-react/issues/2047)
 
 ### Contributors
 
