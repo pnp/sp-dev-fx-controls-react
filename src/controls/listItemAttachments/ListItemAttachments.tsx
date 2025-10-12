@@ -77,13 +77,19 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
   public async uploadAttachments(itemId: number): Promise<void> {
     if (this.state.filesToUpload) {
+      let updatedItem: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
       for (const file of this.state.filesToUpload) {
-        await this._spservice.addAttachment(
+        updatedItem = await this._spservice.addAttachment(
           this.props.listId,
           itemId,
           file.name,
           file,
           this.props.webUrl);
+      }
+      
+      // Notify parent component of the ETag change (use the last updated item)
+      if (updatedItem && this.props.onAttachmentChange) {
+        this.props.onAttachmentChange(updatedItem);
       }
     }
     return new Promise<void>((resolve, reject) => {
@@ -201,7 +207,12 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
 
     try {
       if (this.state.itemId) {
-        await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.state.itemId, this.props.webUrl);
+        const updatedItem = await this._spservice.deleteAttachment(file.FileName, this.props.listId, this.state.itemId, this.props.webUrl);
+        
+        // Notify parent component of the ETag change
+        if (updatedItem && this.props.onAttachmentChange) {
+          this.props.onAttachmentChange(updatedItem);
+        }
       }
       else {
         const filesToUpload = this.state.filesToUpload;
@@ -254,6 +265,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
           onAttachmentUpload={this._onAttachmentUpload}
           fireUpload={this.state.fireUpload}
           onUploadDialogClosed={() => this.setState({ fireUpload: false })}
+          onAttachmentChange={this.props.onAttachmentChange}
         />
 
         {

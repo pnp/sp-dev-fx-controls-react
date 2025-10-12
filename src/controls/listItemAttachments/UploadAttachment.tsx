@@ -66,7 +66,12 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
         try {
           if(this.props.itemId && this.props.itemId > 0){
-            await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+            const updatedItem = await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+            
+            // Notify parent component of the ETag change
+            if (updatedItem && this.props.onAttachmentChange) {
+              this.props.onAttachmentChange(updatedItem);
+            }
           }
 
           this.props.onAttachmentUpload(file);
