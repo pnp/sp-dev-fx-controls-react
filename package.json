@@ -101,7 +101,7 @@
     "@microsoft/sp-module-interfaces": "1.21.1",
     "@rushstack/eslint-config": "4.0.1",
     "@types/chart.js": "2.7.40",
-    "@types/enzyme": "^2.8.12",
+    "@types/enzyme": "^3.10.19",
     "@types/es6-promise": "3.3.0",
     "@types/he": "^1.1.2",
     "@types/jest": "25.2.3",
