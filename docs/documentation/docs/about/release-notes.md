@@ -4,6 +4,7 @@
 
 ### Enhancements
 
+- Update MPA page with compatibility matrix [#2063](https://github.com/pnp/sp-dev-fx-controls-react/pull/2063)
 - `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
 - `DynamicForm`: Add itemsQueryCountLimit for Lookup fields [#2033](https://github.com/pnp/sp-dev-fx-controls-react/issues/2033)
 - `ImagePicker`: FluentProvider to SelectFromSharePoint component so token is not undefined [#2046](https://github.com/pnp/sp-dev-fx-controls-react/pull/2046)
@@ -21,7 +22,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [moudhafersalhi](https://github.com/moudhafersalhi), [Niels Söth](https://github.com/nsoeth), [SeyedAliAsghari96](https://github.com/SeyedAliAsghari96).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [moudhafersalhi](https://github.com/moudhafersalhi), [Niels Söth](https://github.com/nsoeth), [SeyedAliAsghari96](https://github.com/SeyedAliAsghari96).
 
 ## 3.22.0
 
