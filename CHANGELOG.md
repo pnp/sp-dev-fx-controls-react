@@ -19,10 +19,11 @@
 - Update `FolderExplorerService.ts` to add import @pnp/sp/files [#2050](https://github.com/pnp/sp-dev-fx-controls-react/pull/2050)
 - `RichText`: indent controls missing icons [#2045](https://github.com/pnp/sp-dev-fx-controls-react/issues/2045)
 - Using `ListItemAttachments` to add/remove attachments causes ETag errors [#2051](https://github.com/pnp/sp-dev-fx-controls-react/issues/2051)
+- `DynamicForm` and `ModernTaxonomyPicker`: using default value in taxonomy column does not work [#2040](https://github.com/pnp/sp-dev-fx-controls-react/issues/2040)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [moudhafersalhi](https://github.com/moudhafersalhi), [Niels Söth](https://github.com/nsoeth), [SeyedAliAsghari96](https://github.com/SeyedAliAsghari96).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [diabhoil](https://github.com/diabhoil), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [moudhafersalhi](https://github.com/moudhafersalhi), [Niels Söth](https://github.com/nsoeth), [SeyedAliAsghari96](https://github.com/SeyedAliAsghari96).
 
 ## 3.22.0
 
