@@ -237,7 +237,7 @@ export default class SPService implements ISPService {
         if (orderByParts[1] && orderByParts[1].toLowerCase() === 'desc') {
           ascStr = `Ascending="FALSE"`;
         }
-        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} />`;
+        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} /></OrderBy>`;
       }
 
       let filterPart = ""
@@ -393,8 +393,9 @@ export default class SPService implements ISPService {
    * @param listId
    * @param itemId
    * @param webUrl
+   * @returns Updated list item with new ETag
    */
-  public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<void> {
+  public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const spOpts: ISPHttpClientOptions = {
         headers: { "X-HTTP-Method": 'DELETE', }
@@ -402,6 +403,14 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/getByFileName(@fileName)/RecycleObject?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+      
+      // Fetch the updated item to get the new ETag
+      const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
+      const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
+      if (itemData.ok) {
+        return await itemData.json();
+      }
+      return null;
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);
@@ -416,8 +425,9 @@ export default class SPService implements ISPService {
    * @param fileName
    * @param file
    * @param webUrl
+   * @returns Updated list item with new ETag
    */
-  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
+  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       // Remove special characters in FileName
       //Updating the escape characters for filename as per the doucmentations
@@ -436,7 +446,14 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/add(FileName=@fileName)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-      return;
+      
+      // Fetch the updated item to get the new ETag
+      const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
+      const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
+      if (itemData.ok) {
+        return await itemData.json();
+      }
+      return null;
     } catch (error) {
       return Promise.reject(error);
     }

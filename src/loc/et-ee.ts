@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Kommentaari kustutamise kinnitamine",
   "ListItemCommentsLabel": "Kommentaarid",
   "ListItemCommentsNoCommentsLabel": "Kommentaare pole",
+  "ListItemCommentsPlaceholder": "@mainige või kommenteeri",
   "OrgAssetsLinkLabel": "Teie organisatsioon",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Sisestage termin, mille soovite märgistada",

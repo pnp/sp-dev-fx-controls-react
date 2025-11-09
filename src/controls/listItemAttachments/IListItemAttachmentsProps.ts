@@ -16,4 +16,9 @@ export interface IListItemAttachmentsProps {
    * Description text to display on the placeholder, below the main text and icon
    */
   description?:string;
+  /**
+   * Callback function to notify parent components when attachments are modified and the item ETag changes
+   * @param itemData - The updated item data including the new ETag
+   */
+  onAttachmentChange?: (itemData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

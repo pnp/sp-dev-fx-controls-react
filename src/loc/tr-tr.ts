@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Açıklamayı Sil'i Onayla",
   "ListItemCommentsLabel": "Yorum",
   "ListItemCommentsNoCommentsLabel": "Yorum Yok",
+  "ListItemCommentsPlaceholder": "@bahset veya yorum yap",
   "OrgAssetsLinkLabel": "Kuruluşunuz",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Etiketlemek istediğiniz bir terim girin",

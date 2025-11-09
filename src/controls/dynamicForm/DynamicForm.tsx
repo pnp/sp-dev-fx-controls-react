@@ -122,6 +122,21 @@ export class DynamicFormBase extends React.Component<
   }
 
   /**
+   * Updates the ETag stored in the component's state.
+   * This is useful when the list item has been modified externally (e.g., by adding/removing attachments)
+   * and you need to update the ETag to prevent 412 conflict errors on save.
+   * 
+   * @param itemData - The updated item data containing the new ETag
+   */
+  public updateETag(itemData: any): void { // eslint-disable-line @typescript-eslint/no-explicit-any
+    if (itemData && itemData["odata.etag"]) {
+      this.setState({
+        etag: itemData["odata.etag"]
+      });
+    }
+  }
+
+  /**
    * Lifecycle hook when component is mounted
    */
   public componentDidMount(): void {
@@ -173,7 +188,7 @@ export class DynamicFormBase extends React.Component<
     // Custom Formatting - Header
     let headerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.header) {
-       headerContent = <div className={styles.header}>
+      headerContent = <div className={styles.header}>
         {this._customFormatter.renderCustomFormatContent(customFormatting.header, this.getFormValuesForValidation(), true)}
       </div>
     }
@@ -196,8 +211,8 @@ export class DynamicFormBase extends React.Component<
     let footerContent: JSX.Element;
     if (!customFormattingDisabled && customFormatting?.footer) {
       footerContent = <div className={styles.footer}>
-      {this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true)}
-    </div>
+        {this._customFormatter.renderCustomFormatContent(customFormatting.footer, this.getFormValuesForValidation(), true)}
+      </div>
     }
 
     // Content Type
@@ -227,20 +242,20 @@ export class DynamicFormBase extends React.Component<
             {(bodySections.length > 0 && !customFormattingDisabled) && bodySections
               .filter(bs => bs.fields.filter(bsf => hiddenByFormula.indexOf(bsf) < 0).length > 0)
               .map((section, i) => (
-              <>
-                <h2 className={styles.sectionTitle}>{section.displayname}</h2>
-                <div className={styles.sectionFormFields}>
-                  {section.fields
-                    .filter(f => fieldCollection.find(fc => fc.label === f))
-                    .map((f, i) => (
-                    <div key={f} className={styles.sectionFormField}>
-                      {this.renderField(fieldCollection.find(fc => fc.label === f) as IDynamicFieldProps)}
-                    </div>
-                  ))}
-                </div>
-                {i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
-              </>
-            ))}
+                <>
+                  <h2 className={styles.sectionTitle}>{section.displayname}</h2>
+                  <div className={styles.sectionFormFields}>
+                    {section.fields
+                      .filter(f => fieldCollection.find(fc => fc.label === f))
+                      .map((f, i) => (
+                        <div key={f} className={styles.sectionFormField}>
+                          {this.renderField(fieldCollection.find(fc => fc.label === f) as IDynamicFieldProps)}
+                        </div>
+                      ))}
+                  </div>
+                  {i < bodySections.length - 1 && <hr className={styles.sectionLine} aria-hidden={true} />}
+                </>
+              ))}
             {(bodySections.length === 0 || customFormattingDisabled) && fieldCollection.map((f, i) => this.renderField(f))}
             {footerContent}
             {!this.props.disabled && (
@@ -296,16 +311,16 @@ export class DynamicFormBase extends React.Component<
     }
 
     const sortedFields = customSort
-    .map((sortColumn) => sortColumn.toLowerCase())
-    .filter((normalizedSortColumn) => fMap.has(normalizedSortColumn))
-    .map((normalizedSortColumn) => fMap.get(normalizedSortColumn))
-    .filter((field) => field !== undefined);
+      .map((sortColumn) => sortColumn.toLowerCase())
+      .filter((normalizedSortColumn) => fMap.has(normalizedSortColumn))
+      .map((normalizedSortColumn) => fMap.get(normalizedSortColumn))
+      .filter((field) => field !== undefined);
 
     const remainingFields = fields.filter((field) => !sortedFields.includes(field));
     const uniqueRemainingFields = Array.from(new Set(remainingFields));
 
     return [...sortedFields, ...uniqueRemainingFields];
-}
+  }
 
   private renderField = (field: IDynamicFieldProps): JSX.Element => {
     const { fieldOverrides } = this.props;
@@ -331,7 +346,7 @@ export class DynamicFormBase extends React.Component<
         field.columnInternalName
       )
     ) {
-      return fieldOverrides[field.columnInternalName]({ ...field,disabled: field.disabled || isSaving} )
+      return fieldOverrides[field.columnInternalName]({ ...field, disabled: field.disabled || isSaving })
     }
 
     // Default render
@@ -342,6 +357,7 @@ export class DynamicFormBase extends React.Component<
         {...field}
         disabled={field.disabled || isSaving}
         validationErrorMessage={validationErrorMessage}
+        itemsQueryCountLimit={this.props.itemsQueryCountLimit}
       />
     );
   }
@@ -509,21 +525,21 @@ export class DynamicFormBase extends React.Component<
           }
 
           // Taxonomy / Managed Metadata fields
-          if(useModernTaxonomyPicker){
+          if (useModernTaxonomyPicker) {
             //Use ITermInfo[] for modern taxonomy picker
             if (fieldType === "TaxonomyFieldType") {
               objects[fieldcolumnInternalName] = {
-                  __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
-                  Label: value[0]?.labels[0]?.name ?? "",
-                  TermGuid: value[0]?.id ?? "11111111-1111-1111-1111-111111111111",
-                  WssId: "-1",
+                __metadata: { type: "SP.Taxonomy.TaxonomyFieldValue" },
+                Label: value[0]?.labels[0]?.name ?? "",
+                TermGuid: value[0]?.id ?? "11111111-1111-1111-1111-111111111111",
+                WssId: "-1",
               };
             }
 
             if (fieldType === "TaxonomyFieldTypeMulti") {
               objects[hiddenFieldName] = field.newValue
-                  .map((term) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
-                  .join("#");
+                .map((term) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
+                .join("#");
             }
 
           } else {
@@ -608,7 +624,7 @@ export class DynamicFormBase extends React.Component<
         contentTypeId === undefined ||
         contentTypeId === "" ||
         (!contentTypeId.startsWith("0x0120") &&
-        contentTypeId.startsWith("0x01"))
+          contentTypeId.startsWith("0x01"))
       ) {
         if (fileSelectRendered === true) {
           await this.addFileToLibrary(objects);
@@ -710,51 +726,51 @@ export class DynamicFormBase extends React.Component<
 
 
     if (selectedFile !== undefined) {
-        try {
-          const idField = "ID";
-          const contentTypeIdField = "ContentTypeId";
+      try {
+        const idField = "ID";
+        const contentTypeIdField = "ContentTypeId";
 
-          const library = await sp.web.lists.getById(listId);
-          const itemTitle =
-            selectedFile !== undefined && selectedFile.fileName !== undefined && selectedFile.fileName !== ""
-              ? (selectedFile.fileName as string).replace(
-                /["|*|:|<|>|?|/|\\||]/g,
-                "_"
-              ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
-              : ""; // Empty string will be replaced by SPO with Folder Item ID
+        const library = await sp.web.lists.getById(listId);
+        const itemTitle =
+          selectedFile !== undefined && selectedFile.fileName !== undefined && selectedFile.fileName !== ""
+            ? (selectedFile.fileName as string).replace(
+              /["|*|:|<|>|?|/|\\||]/g,
+              "_"
+            ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
+            : ""; // Empty string will be replaced by SPO with Folder Item ID
 
-          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
-          const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
-          const fields = await fileCreatedResult.file.listItemAllFields();
+        const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
+        const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
+        const fields = await fileCreatedResult.file.listItemAllFields();
 
-          if (fields[idField]) {
-            // Read the ID of the just created file
-            const fileId = fields[idField];
+        if (fields[idField]) {
+          // Read the ID of the just created file
+          const fileId = fields[idField];
 
-            // Set the content type ID for the target item
-            objects[contentTypeIdField] = contentTypeId;
-            // Update the just created file
-            const iur = await this.updateListItemRetry(library, fileId, objects);
-            if (onSubmitted) {
-              onSubmitted(
-                iur.data,
-                returnListItemInstanceOnSubmit !== false
-                  ? iur.item
-                  : undefined
-              );
-            }
-          } else {
-            throw new Error(
-              "Unable to read the ID of the just created file"
+          // Set the content type ID for the target item
+          objects[contentTypeIdField] = contentTypeId;
+          // Update the just created file
+          const iur = await this.updateListItemRetry(library, fileId, objects);
+          if (onSubmitted) {
+            onSubmitted(
+              iur.data,
+              returnListItemInstanceOnSubmit !== false
+                ? iur.item
+                : undefined
             );
           }
-        } catch (error) {
-          if (onSubmitError) {
-            onSubmitError(objects, error);
-          }
-          console.log("Error", error);
+        } else {
+          throw new Error(
+            "Unable to read the ID of the just created file"
+          );
         }
+      } catch (error) {
+        if (onSubmitError) {
+          onSubmitError(objects, error);
+        }
+        console.log("Error", error);
       }
+    }
   }
 
   /**
@@ -776,7 +792,7 @@ export class DynamicFormBase extends React.Component<
     const { useModernTaxonomyPicker } = this.props;
     // Init new value(s)
     field.newValue = newValue;
-    field.stringValue = newValue? newValue.toString():'';
+    field.stringValue = newValue ? newValue.toString() : '';
     field.additionalData = additionalData;
     field.subPropertyValues = {};
 
@@ -791,12 +807,12 @@ export class DynamicFormBase extends React.Component<
     if (field.fieldType === "Lookup" || field.fieldType === "LookupMulti") {
       field.stringValue = newValue.map(nv => nv.key + ';#' + nv.name).join(';#');
     }
-    if(useModernTaxonomyPicker){
+    if (useModernTaxonomyPicker) {
       if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
         if (Array.isArray(newValue) && newValue.length > 0) {
-        field.stringValue = newValue.map(nv => nv.labels.map(label => label.name).join(';')).join(';');
+          field.stringValue = newValue.map(nv => nv.labels.map(label => label.name).join(';')).join(';');
         } else {
-        field.stringValue = "";
+          field.stringValue = "";
         }
       }
     } else {
@@ -851,7 +867,7 @@ export class DynamicFormBase extends React.Component<
       field.stringValue = emails.join(";");
     }
 
-    const validationErrors = {...this.state.validationErrors};
+    const validationErrors = { ...this.state.validationErrors };
     if (validationErrors[field.columnInternalName]) delete validationErrors[field.columnInternalName];
 
     this.setState({
@@ -1048,7 +1064,7 @@ export class DynamicFormBase extends React.Component<
         const spListItem = spList.items.getById(listItemId);
 
         if (contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101")) {
-          spListItem.select("*","FileLeafRef"); // Explainer: FileLeafRef is not loaded by default. Load it to show the file/folder name in the field.
+          spListItem.select("*", "FileLeafRef"); // Explainer: FileLeafRef is not loaded by default. Load it to show the file/folder name in the field.
         }
 
         item = await spListItem.get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
@@ -1117,8 +1133,8 @@ export class DynamicFormBase extends React.Component<
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: {[key: string]: string}): Promise<IDynamicFieldProps[]> {
-    const{ useModernTaxonomyPicker } = this.props;
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: { [key: string]: string }): Promise<IDynamicFieldProps[]> {
+    const { useModernTaxonomyPicker } = this.props;
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
     const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
@@ -1129,7 +1145,7 @@ export class DynamicFormBase extends React.Component<
 
       // Process fields that are not marked as hidden
       if (hiddenFields.indexOf(field.InternalName) < 0) {
-        if(field.Hidden === false) {
+        if (field.Hidden === false) {
           order++;
           let hiddenName = "";
           let termSetId = "";
@@ -1265,7 +1281,7 @@ export class DynamicFormBase extends React.Component<
           }
 
           // Setup Taxonomy / Metadata fields
-          if(useModernTaxonomyPicker){
+          if (useModernTaxonomyPicker) {
             if (field.FieldType === "TaxonomyFieldType") {
               termSetId = field.TermSetId;
               anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
@@ -1737,8 +1753,7 @@ export class DynamicFormBase extends React.Component<
     try {
       return await list.items.getById(itemId).update(objects);
     }
-    catch (error)
-    {
+    catch (error) {
       if (error.status === 409 && retry < 3) {
         await timeout(100);
         return await this.updateListItemRetry(list, itemId, objects, retry + 1);

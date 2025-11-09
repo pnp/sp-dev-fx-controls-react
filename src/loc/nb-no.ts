@@ -392,6 +392,7 @@ define([], () => {
     "ListItemCommentsDialogDeleteTitle": "Bekreft sletting av kommentar",
     "ListItemCommentsLabel": "Kommentarer",
     "ListItemCommentsNoCommentsLabel": "Det finnes ingen kommentarer",
+    "ListItemCommentsPlaceholder": "@nevn eller kommenter",
     "OrgAssetsLinkLabel": "Egen organisasjon",
     "MyTeamsMessageDontHaveTeams": "Du har ingen team",
     "ModernTaxonomyPickerDefaultPlaceHolder": "Skriv inn termen som skal merkes",

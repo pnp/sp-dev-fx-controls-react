@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Potvrda brisanja komentara",
   "ListItemCommentsLabel": "Komentare",
   "ListItemCommentsNoCommentsLabel": "Nema komentara",
+  "ListItemCommentsPlaceholder": "@pomeni ili komentariši",
   "OrgAssetsLinkLabel": "Vaša organizacija",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Unesite termin koji želite da označite",

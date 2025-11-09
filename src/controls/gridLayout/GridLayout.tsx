@@ -10,13 +10,6 @@ import { IGridLayoutProps, IGridLayoutState } from './GridLayout.types';
 
 import * as telemetry from '../../common/telemetry';
 
-// Get the constants from the SCSS so that we don't hard-code look and feel elements
-const ROWS_PER_PAGE: number = +styles.rowsPerPage;
-const MAX_ROW_HEIGHT: number = +styles.maxWidth;
-const PADDING: number = +styles.padding;
-const MIN_WIDTH: number = +styles.minWidth;
-const COMPACT_THRESHOLD: number = +styles.compactThreshold;
-
 /**
  * Grid layout component
  */
@@ -30,6 +23,13 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
 
     telemetry.track('ReactGridLayout');
   }
+
+  //Get constants from SCSS if they are not passed in props
+  private ROWS_PER_PAGE: number = this.props.rowsPerPage ?? +styles.rowsPerPage;
+  private MAX_WIDTH: number = this.props.itemMaxWidth ?? +styles.maxWidth;
+  private MIN_WIDTH: number = this.props.itemMinWidth ?? +styles.minWidth;
+  private PADDING: number = this.props.itemPadding ?? +styles.padding;
+  private COMPACT_THRESHOLD: number = this.props.compactThreshold ?? +styles.compactThreshold;
 
   // Number of columns in a row
   private _columnCount: number;
@@ -49,17 +49,17 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
   public render(): React.ReactElement<IGridLayoutProps> {
     return (
       <div className={styles.gridLayout} role="group" aria-label={this.props.ariaLabel}>
-      <FocusZone>
-        <List
-          role="presentation"
-          className={styles.gridLayoutList}
-          items={this.props.items}
-          getItemCountForPage={this._getItemCountForPage}
-          getPageHeight={this._getPageHeight}
-          onRenderCell={this._onRenderCell}
-          {...this.props.listProps}
-        />
-      </FocusZone>
+        <FocusZone>
+          <List
+            role="presentation"
+            className={styles.gridLayoutList}
+            items={this.props.items}
+            getItemCountForPage={this._getItemCountForPage}
+            getPageHeight={this._getPageHeight}
+            onRenderCell={this._onRenderCell}
+            {...this.props.listProps}
+          />
+        </FocusZone>
       </div>
     );
   }
@@ -69,19 +69,19 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
    */
   private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
     if (itemIndex === 0) {
-      this._isCompact = surfaceRect.width < COMPACT_THRESHOLD;
+      this._isCompact = surfaceRect.width < this.COMPACT_THRESHOLD;
       if (this._isCompact) {
         this._columnCount = 1;
         this._columnWidth = surfaceRect.width;
         return this.props.items.length;
       } else {
-        this._columnCount = Math.ceil(surfaceRect.width / (MAX_ROW_HEIGHT));
-        this._columnWidth = Math.max(MIN_WIDTH, Math.floor(surfaceRect.width / this._columnCount) + Math.floor(PADDING / this._columnCount));
+        this._columnCount = Math.ceil(surfaceRect.width / (this.MAX_WIDTH));
+        this._columnWidth = Math.max(this.MIN_WIDTH, Math.floor(surfaceRect.width / this._columnCount) + Math.floor(this.PADDING / this._columnCount));
         this._rowHeight = this._columnWidth;
       }
     }
 
-    return this._columnCount * ROWS_PER_PAGE;
+    return this._columnCount * this.ROWS_PER_PAGE;
   }
 
   /**
@@ -91,7 +91,7 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
     if (this._isCompact) {
       return this.props.items.length * this._rowHeight;
     }
-    return this._rowHeight * ROWS_PER_PAGE;
+    return this._rowHeight * this.ROWS_PER_PAGE;
   }
 
   /**
@@ -99,9 +99,9 @@ export class GridLayout extends React.Component<IGridLayoutProps, IGridLayoutSta
    */
   private _onRenderCell = (item: any, index: number | undefined): JSX.Element => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const isCompact: boolean = this._isCompact;
-    const cellPadding: number = index % this._columnCount !== this._columnCount - 1 && !isCompact ? PADDING : 0;
+    const cellPadding: number = index % this._columnCount !== this._columnCount - 1 && !isCompact ? this.PADDING : 0;
     const finalSize: ISize = { width: this._columnWidth, height: this._rowHeight };
-    const cellWidth: number = isCompact ? this._columnWidth + PADDING : this._columnWidth - PADDING;
+    const cellWidth: number = isCompact ? this._columnWidth + this.PADDING : this._columnWidth - this.PADDING;
     return (
       <div
         style={{

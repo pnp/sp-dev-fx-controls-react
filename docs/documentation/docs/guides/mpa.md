@@ -4,7 +4,59 @@ The shortest way to prepare your local copy of the project for development and t
 
 ## Install prerequisites
 
-Before you start contributing to this project, you will need Node.js. This project (current version 3.x) has been tested with the 18.x version of Node.js and the version of NPM that comes with it. You can use [Node Version Manager](https://github.com/nvm-sh/nvm) or [Node Version Switcher](https://github.com/jasongin/nvs) to switch between different versions of Node.js.
+Before you start contributing to this project, you will need Node.js. You can use [Node Version Manager](https://github.com/nvm-sh/nvm) or [Node Version Switcher](https://github.com/jasongin/nvs) to switch between different versions of Node.js.
+
+As this project is based on SPFx, it aligns with the following [development compatibility matrix](https://learn.microsoft.com/sharepoint/dev/spfx/compatibility#spfx-development-environment-compatibility):
+
+| Version | SPFx Version Supported | Node Versions Supported |
+| ------- | ---------------------- | ----------------------- |
+| 3.23.0  | 1.21.1                 | 22                      |
+| 3.22.0  | 1.21.1                 | 22                      |
+| 3.21.0  | 1.21.0                 | 22                      |
+| 3.20.0  | 1.20.0                 | 18                      |
+| 3.19.0  | 1.19.0                 | 18                      |
+| 3.18.0  | 1.18.2                 | 16, 18                  |
+| 3.17.0  | 1.18.2                 | 16, 18                  |
+| 3.16.0  | 1.18.2                 | 16, 18                  |
+| 3.15.0  | 1.17.1                 | 16                      |
+| 3.14.0  | 1.17.1                 | 16                      |
+| 3.13.0  | 1.16.1                 | 14, 16, 18              |
+| 3.12.0  | 1.16.0                 | 14, 16, 18              |
+| 3.11.0  | 1.15.2                 | 12, 14, 16              |
+| 3.10.0  | 1.15.2                 | 12, 14, 16              |
+| 3.9.0   | 1.15.0                 | 12, 14, 16              |
+| 3.8.0   | 1.14.0                 | 12, 14                  |
+| 3.7.0   | 1.14.0                 | 12, 14                  |
+| 3.6.0   | 1.13.*                 | 12, 14                  |
+| 3.5.0   | 1.13.*                 | 12, 14                  |
+| 3.4.0   | 1.12.1                 | 10, 12, 14              |
+| 3.3.0   | 1.12.1                 | 10, 12, 14              |
+| 3.2.0   | 1.12.1                 | 10, 12, 14              |
+| 3.1.0   | 1.12.1                 | 10, 12, 14              |
+| 3.0.0   | 1.12                   | 10, 12                  |
+| 2.9.0   | 1.11                   | 10                      |
+| 2.8.0   | 1.11                   | 10                      |
+| 2.7.0   | 1.11                   | 10                      |
+| 2.6.0   | 1.11                   | 10                      |
+| 2.5.0   | 1.11                   | 10                      |
+| 2.4.0   | 1.11                   | 10                      |
+| 2.3.0   | 1.11                   | 10                      |
+| 2.2.0   | 1.11                   | 10                      |
+| 2.1.0   | 1.11                   | 10                      |
+| 2.0.0   | 1.11                   | 10                      |
+| 1.20.0  | 1.10                   | 8, 10                   |
+| 1.19.0  | 1.10                   | 8, 10                   |
+| 1.18.0  | 1.10                   | 8, 10                   |
+| 1.17.0  | 1.10                   | 8, 10                   |
+| 1.16.0  | 1.10                   | 8, 10                   |
+| 1.15.0  | 1.10                   | 8, 10                   |
+| 1.14.0  | 1.10                   | 8, 10                   |
+| 1.13.0  | 1.10                   | 8, 10                   |
+| 1.12.0  | 1.10                   | 8, 10                   |
+| 1.11.0  | 1.10                   | 8, 10                   |
+
+!!! important
+    Because of this SPFx dependency, SPFx projects that are using PnP React Reusable Controls have to use the exact same version. For example, if your project is using version 1.21.0 of SPFx, the version of PnP Controls has to be version 3.21.0. Otherwise, you'll have to cast SPFx objects to `any` to avoid compatibility mismatch issues.
 
 ## Get the local version of the project
 

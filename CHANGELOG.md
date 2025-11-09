@@ -1,5 +1,29 @@
 # Releases
 
+## 3.23.0
+
+### Enhancements
+
+- Update MPA page with compatibility matrix [#2063](https://github.com/pnp/sp-dev-fx-controls-react/pull/2063)
+- `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
+- `DynamicForm`: Add itemsQueryCountLimit for Lookup fields [#2033](https://github.com/pnp/sp-dev-fx-controls-react/issues/2033)
+- `ImagePicker`: FluentProvider to SelectFromSharePoint component so token is not undefined [#2046](https://github.com/pnp/sp-dev-fx-controls-react/pull/2046)
+
+### Fixes
+
+- `RichText`: Rich Text in v 3.22 ribbon renders incorrectly [#2036](https://github.com/pnp/sp-dev-fx-controls-react/issues/2036)
+- `Carousel`: links not opening on a new tab with target: _blank [#2022](https://github.com/pnp/sp-dev-fx-controls-react/issues/2022)
+- `ListItemPicker`: calculated column as columnInternalName not working [#1870](https://github.com/pnp/sp-dev-fx-controls-react/issues/1870)
+- `Calendar`: not displaying items [#2025](https://github.com/pnp/sp-dev-fx-controls-react/issues/2025)
+- `ListItemComments`: Error when using some special characters in text [#2047](https://github.com/pnp/sp-dev-fx-controls-react/issues/2047)
+- Update `FolderExplorerService.ts` to add import @pnp/sp/files [#2050](https://github.com/pnp/sp-dev-fx-controls-react/pull/2050)
+- `RichText`: indent controls missing icons [#2045](https://github.com/pnp/sp-dev-fx-controls-react/issues/2045)
+- Using `ListItemAttachments` to add/remove attachments causes ETag errors [#2051](https://github.com/pnp/sp-dev-fx-controls-react/issues/2051)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Harminder Singh](https://github.com/HarminderSethi), [Mark Bice](https://github.com/mbice), [Michaël Maillot](https://github.com/michaelmaillot), [moudhafersalhi](https://github.com/moudhafersalhi), [Niels Söth](https://github.com/nsoeth), [SeyedAliAsghari96](https://github.com/SeyedAliAsghari96).
+
 ## 3.22.0
 
 ### New control(s)

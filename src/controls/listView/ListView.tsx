@@ -236,7 +236,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     let columns: IColumn[] = null;
     // Check if a set of items was provided
     if (typeof items !== 'undefined' && items !== null) {
-      tempState.items = this._flattenItems(items);
+      tempState.items = props.flattenItems === undefined || props.flattenItems ? this._flattenItems(items) : items;
     }
 
     // Check if an icon needs to be shown
