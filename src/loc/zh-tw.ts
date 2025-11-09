@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "確認刪除評論",
   "ListItemCommentsLabel": "評論",
   "ListItemCommentsNoCommentsLabel": "沒有評論",
+  "ListItemCommentsPlaceholder": "@提及或評論",
   "OrgAssetsLinkLabel": "您的組織",
   "MyTeamsMessageDontHaveTeams": "你沒有任何teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "輸入您要標記的術語",

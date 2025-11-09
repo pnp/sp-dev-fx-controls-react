@@ -23,12 +23,14 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
       borderWidth: 1,
       borderStyle: "solid",
       borderColor: "silver",
-      width: 322,
+      width: "100%",
+      boxSizing: "border-box",
       ":focus": {
         borderColor: theme.themePrimary,
       },
       ":hover": {
         borderColor: theme.themePrimary,
+        boxSizing: "border-box",
       },
     },
   };
@@ -38,10 +40,12 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
       marginTop: 2,
       backgroundColor: theme?.white,
       boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
+      boxSizing: "border-box",
       ":hover": {
         borderColor: theme.themePrimary,
         backgroundColor: theme.neutralLighterAlt,
         borderWidth: 1,
+        boxSizing: "border-box",
       } as IStyle,
     } as IStyle,
   };
@@ -53,14 +57,21 @@ export const useAddCommentStyles = () => { // eslint-disable-line @typescript-es
       display: "block",
       borderColor: "silver",
       overflow: "hidden",
-      width: 320,
-      ":focus": {
+      width: "100%",
+      boxSizing: "border-box",
+      paddingTop: 1,
+      paddingLeft: 1,
+    ":focus": {
         borderWidth: 2,
         borderColor: theme.themePrimary,
+        paddingTop: 0,
+        paddingLeft: 0,
       },
       ":hover": {
         borderWidth: 2,
         borderColor: theme.themePrimary,
+        paddingTop: 0,
+        paddingLeft: 0,
       },
     } as IStyle,
   });

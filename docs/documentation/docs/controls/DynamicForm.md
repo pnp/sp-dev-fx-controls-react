@@ -72,6 +72,7 @@ The `DynamicForm` can be configured with the following properties:
 | useModernTaxonomyPicker | boolean | no | Specifies if the form should render [ModernTaxonomyPicker](./ModernTaxonomyPicker.md) control for Managed metadata fields. If set to `true`, Dynamic form will render ModernTaxonomyPicker control. If set to `false`, Dynamic form will render TaxonomyPicker control. Default is `false` |
 | className | string | no | Set CSS Class. |
 | styles | IStyleFunctionOrObject&lt;IDynamicFormStyleProps, [IDynamicFormStyles](#idynamicformstyles-interface)&gt; | no | Styles to apply on control.  See the example [here](#how-to-use-styles-property) |
+| itemsQueryCountLimit | number | no | 	Number of items to display in the lookup fields of the form |                                                            |
 
 ## Validation Error Dialog Properties `IValidationErrorDialogProps`
 
@@ -118,6 +119,56 @@ The `DynamicForm` can be configured with the following properties:
 | richText | IStyle | styles for richText sub control |
 | thumbnailFieldButtons | IStyle | styles for button when field type is 'Thumbnail' |
 | selectedFileContainer | IStyle | styles for File Selection Control |
+
+## Public Methods
+
+The `DynamicForm` control exposes the following public methods that can be called using a ref:
+
+### updateETag(itemData: any): void
+
+Updates the ETag stored in the component's state. This is useful when the list item has been modified externally (e.g., by adding/removing attachments using the ListItemAttachments control) and you need to update the ETag to prevent 412 conflict errors on save.
+
+**Parameters:**
+- `itemData` - The updated item data containing the new ETag (typically from SharePoint REST API response with `odata.etag` property)
+
+**Example:**
+
+```TypeScript
+import * as React from 'react';
+import { DynamicForm } from '@pnp/spfx-controls-react/lib/DynamicForm';
+import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
+
+export class MyComponent extends React.Component {
+  private dynamicFormRef = React.createRef<DynamicForm>();
+
+  private onAttachmentChange = (itemData: any): void => {
+    // Update the DynamicForm's ETag when attachments are modified
+    if (this.dynamicFormRef.current) {
+      this.dynamicFormRef.current.updateETag(itemData);
+    }
+  }
+
+  public render() {
+    return (
+      <div>
+        <ListItemAttachments
+          listId={this.props.listId}
+          itemId={this.props.itemId}
+          context={this.props.context}
+          onAttachmentChange={this.onAttachmentChange}
+        />
+        <DynamicForm
+          ref={this.dynamicFormRef}
+          context={this.props.context}
+          listId={this.props.listId}
+          listItemId={this.props.itemId}
+          respectETag={true}
+        />
+      </div>
+    );
+  }
+}
+```
 
 ## How to use styles property
 

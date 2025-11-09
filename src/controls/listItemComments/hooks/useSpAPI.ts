@@ -5,6 +5,7 @@ import { IlistItemCommentsResults } from "./../models";
 import { IAddCommentPayload } from "../models/IAddCommentPayload";
 import { IComment } from "../components/Comments/IComment";
 import { PageContext } from "@microsoft/sp-page-context";
+import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 interface returnObject {
   getListItemComments: () => Promise<IlistItemCommentsResults>;
   getNextPageOfComments: (
@@ -53,9 +54,10 @@ export const useSpAPI = (): returnObject => {
         webUrl ?? _webUrl
       }/_api/web/lists(@a1)/GetItemById(@a2)/Comments()?@a1='${listId}'&@a2='${itemId}'`;
       const spOpts: ISPHttpClientOptions = {
-        body: `{ "text": "${comment.text}", "mentions": ${JSON.stringify(
-          comment.mentions
-        )}}`,
+        body: JSON.stringify({
+          text: GeneralHelper.encodeText(comment.text),
+          mentions: comment.mentions
+        }),
       };
       const _listResults: SPHttpClientResponse = await spHttpClient.post(
         `${_endPointUrl}`,

@@ -63,5 +63,53 @@ The `ListItemAttachments` control can be configured with the following propertie
 | description | string | no | Description text to display on the placeholder, below the main text and icon. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be opened in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
+| onAttachmentChange | (itemData: any) => void | no | Callback function invoked when attachments are added or removed. Receives the updated item data including the new ETag. This is useful when using the control within a form (like DynamicForm) that tracks ETags for optimistic concurrency control. |
+
+## Usage with DynamicForm
+
+When using `ListItemAttachments` within a `DynamicForm` or any component that uses ETags for optimistic concurrency control, you should use the `onAttachmentChange` callback to update the ETag when attachments are modified:
+
+```TypeScript
+import * as React from 'react';
+import { DynamicForm } from '@pnp/spfx-controls-react/lib/DynamicForm';
+import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
+
+export class MyFormComponent extends React.Component<any, any> {
+  private dynamicFormRef = React.createRef<DynamicForm>();
+
+  /**
+   * Callback invoked when attachments are added or removed
+   * Updates the ETag in DynamicForm to prevent 412 conflicts
+   */
+  private onAttachmentChange = (itemData: any): void => {
+    if (this.dynamicFormRef.current) {
+      this.dynamicFormRef.current.updateETag(itemData);
+    }
+  }
+
+  public render(): React.ReactElement {
+    return (
+      <div>
+        <ListItemAttachments
+          listId={listId}
+          itemId={itemId}
+          context={this.props.context}
+          onAttachmentChange={this.onAttachmentChange}
+        />
+        
+        <DynamicForm
+          ref={this.dynamicFormRef}
+          context={this.props.context}
+          listId={listId}
+          listItemId={itemId}
+          respectETag={true}
+        />
+      </div>
+    );
+  }
+}
+```
+
+This prevents 412 ETag conflict errors when saving the form after adding or removing attachments.
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ListItemAttachments)

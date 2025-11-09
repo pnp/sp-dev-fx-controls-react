@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Confirmació de la supressió del comentari",
   "ListItemCommentsLabel": "Comentaris",
   "ListItemCommentsNoCommentsLabel": "No comments",
+  "ListItemCommentsPlaceholder": "@menció o comentari",
   "OrgAssetsLinkLabel": "La vostra organització",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Introduïu un terme que vulgueu etiquetar",

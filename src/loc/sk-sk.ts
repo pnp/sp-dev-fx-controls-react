@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Potvrdiť odstránenie komentára",
   "ListItemCommentsLabel": "Komentáre",
   "ListItemCommentsNoCommentsLabel": "Nie sú žiadne komentáre",
+  "ListItemCommentsPlaceholder": "@zmienka alebo komentár",
   "OrgAssetsLinkLabel": "Vašej organizácie",
   "MyTeamsMessageDontHaveTeams": "You don't have any teams",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Zadajte výraz, ktorý chcete označiť",

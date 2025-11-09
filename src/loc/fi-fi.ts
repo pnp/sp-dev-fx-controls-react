@@ -392,6 +392,7 @@ define([], () => {
   "ListItemCommentsDialogDeleteTitle": "Vahvista poista kommentti",
   "ListItemCommentsLabel": "Kommentit",
   "ListItemCommentsNoCommentsLabel": "Kommentteja ei ole",
+  "ListItemCommentsPlaceholder": "@mainitse tai kommentoi",
   "OrgAssetsLinkLabel": "Oma organisaatio",
   "MyTeamsMessageDontHaveTeams": "Sinulla ei ole yhtään tiimejä",
   "ModernTaxonomyPickerDefaultPlaceHolder": "Kirjoita tagi, jonka haluat merkitä",
