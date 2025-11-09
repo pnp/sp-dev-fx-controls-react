@@ -1,5 +1,7 @@
 # Releases
 
+## 3.24.0
+
 ## 3.23.0
 
 ### Enhancements
