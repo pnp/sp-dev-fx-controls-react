@@ -1303,11 +1303,13 @@ export class DynamicFormBase extends React.Component<
                 }
               } else {
                 if (defaultValue !== "") {
+                  const termId = defaultValue.split("|")[1];
                   selectedTags.push({
-                    key: defaultValue.split("|")[1],
+                    key: termId,
                     name: defaultValue.split("|")[0].split("#")[1],
                   });
-                  value = selectedTags;
+                  const term = await this._taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(termId));
+                  value = term;//selectedTags;
                 }
               }
               if (defaultValue === "") defaultValue = null;
@@ -1317,13 +1319,13 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
               if (item && item[field.InternalName]) {
-                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, item[field.InternalName]);
-                item[field.InternalName].forEach((element) => {
-                  selectedTags.push({
-                    key: element.TermGuid,
-                    name: element.Label,
-                  });
-                });
+                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,item[field.InternalName]);
+                // item[field.InternalName].forEach((element) => {
+                //   selectedTags.push({
+                //     key: element.TermGuid,
+                //     name: element.Label,
+                //   });
+                // });
 
                 //value = selectedTags; _selectedTags
                 value = _selectedTags;
@@ -1337,7 +1339,12 @@ export class DynamicFormBase extends React.Component<
                       });
                   });
 
-                  value = selectedTags;
+                  const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,selectedTags.map(dv => ({
+                    Label: dv.name,
+                    TermGuid: dv.key
+                  })));
+                  //value = selectedTags;
+                  value = _selectedTags;
                   stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
                 }
               }
