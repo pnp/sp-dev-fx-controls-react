@@ -2,6 +2,14 @@
 
 ## 3.24.0
 
+### Fixes
+
+- `PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)
+
+### Contributors
+
+Special thanks to our contributor: [Michaël Maillot](https://github.com/michaelmaillot).
+
 ## 3.23.0
 
 ### Enhancements

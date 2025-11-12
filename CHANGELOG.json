@@ -5,9 +5,13 @@
       "changes": {
         "new": [],
         "enhancements": [],
-        "fixes":[]
+        "fixes":[
+          "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)"
+        ]
       },
-      "contributions": []
+      "contributions": [
+        "[Michaël Maillot](https://github.com/michaelmaillot)"
+      ]
     },
     {
       "version": "3.23.0",
