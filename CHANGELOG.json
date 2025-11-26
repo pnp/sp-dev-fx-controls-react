@@ -6,11 +6,13 @@
         "new": [],
         "enhancements": [],
         "fixes":[
-          "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)"
+          "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)",
+          "`FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)"
         ]
       },
       "contributions": [
-        "[Michaël Maillot](https://github.com/michaelmaillot)"
+        "[Michaël Maillot](https://github.com/michaelmaillot)",
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
       ]
     },
     {
