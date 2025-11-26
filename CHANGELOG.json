@@ -59,7 +59,7 @@
           "`ListItemComments`: Implement like and unlike ability to list item comments control [#1974](https://github.com/pnp/sp-dev-fx-controls-react/pull/1974)",
           "`ListItemComments`: Need a feature to view the list of users who liked a comment [#2003](https://github.com/pnp/sp-dev-fx-controls-react/issues/2003)",
           "`ListItemComments`: Clickable links [#1969](https://github.com/pnp/sp-dev-fx-controls-react/issues/1969)",
-          "`Polish translations`: Updates Polish translations. Closes #1991](https://github.com/pnp/sp-dev-fx-controls-react/issues/1991)",
+          "`Polish translations`: Updates Polish translations. Closes [#1991](https://github.com/pnp/sp-dev-fx-controls-react/issues/1991)",
           "`Dashboard`: Dashboard widget rowspan [#2007](https://github.com/pnp/sp-dev-fx-controls-react/pull/2007)",
           "`ListItemComments`: Guest user @-mentions and styling fix for ListItemComments [#1990](https://github.com/pnp/sp-dev-fx-controls-react/pull/1990)",
           "`GridLayout`: 1852 - Grid layout settings as parameters [#1976](https://github.com/pnp/sp-dev-fx-controls-react/pull/1976)"
@@ -70,7 +70,7 @@
           "`FilePicker`: Unable to browse through organization assets library when located on root site [#1784](https://github.com/pnp/sp-dev-fx-controls-react/issues/1784)",
           "`Calendar`: Fix - fix-typo-enableOnHover [#2021](https://github.com/pnp/sp-dev-fx-controls-react/pull/2021)",
           "`Dynamic Form`: Hotfix for issue 2014 [#2026](https://github.com/pnp/sp-dev-fx-controls-react/issues/2014)",
-          "`ListItemAttachments`: Update ListItemAttachments.tsx: let user set webUrl fix for issue 1975 [#2009](https://github.com/pnp/sp-dev-fx-controls-react/issues/1975",
+          "`ListItemAttachments`: Update ListItemAttachments.tsx: let user set webUrl fix for issue 1975 [#2009](https://github.com/pnp/sp-dev-fx-controls-react/issues/1975)",
           "`FilePicker`:  Files keep loading when previewing all files in OneDrive [#2021](https://github.com/pnp/sp-dev-fx-controls-react/issues/1994)",
           "`ListItemAttachments`: ListItemAttachments cancel event is hanging the control  [#1982](https://github.com/pnp/sp-dev-fx-controls-react/issues/1966)",
           "`filePicker`: FilePicker order of tabs and default tab[#1980](https://github.com/pnp/sp-dev-fx-controls-react/issues/921) ",
@@ -165,7 +165,7 @@
           "`ListItemPicker`: PR fixes an issue with filtering when using calculated column as columnInternalName in ListItemPicker. [#1887](https://github.com/pnp/sp-dev-fx-controls-react/pull/1887)",
           "`ListItemAttachments`: Fix 1858 to correct Chinese localization files #1894 [#1894](https://github.com/pnp/sp-dev-fx-controls-react/pull/1894)",
           "`DynamicForm`: Fixing issue 1862 - Dynamic form should hide fields that are hidden on the List Content Type [#1872](https://github.com/pnp/sp-dev-fx-controls-react/pull/1872)",
-          "`GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)",
+          "`GridLayout`: A quick fix for #838. When compact mode the number of items rendered per page must match the number of all items. [#1851](https://github.com/pnp/sp-dev-fx-controls-react/pull/1851)",
           "`DynamicForm`: Always Show Required Field Validation Error In FormDisplayMode.Edit Mode [#1775](https://github.com/pnp/sp-dev-fx-controls-react/issues/1775)",
           "`DynamicForm`: Required Field Validation won't work [#1760](https://github.com/pnp/sp-dev-fx-controls-react/issues/1760)",
           "`DynamicForm`: Adds ability to render file/folder name field in DynamicForm and Field. [#1906](https://github.com/pnp/sp-dev-fx-controls-react/pull/1906)"
@@ -334,7 +334,7 @@
           "`TaxonomyPicker`: suggested item contains double termset name [#1597](https://github.com/pnp/sp-dev-fx-controls-react/issues/1597)",
           "`DynamicForm`: DynamicForm does not properly handle NULL default values for Taxonomy fields [#1267](https://github.com/pnp/sp-dev-fx-controls-react/issues/1267)",
           "`DynamicForm`: New items are always created with the default content type if the list has multiple content types [#1626](https://github.com/pnp/sp-dev-fx-controls-react/pull/1626)",
-          "`PeoplePicker`:PeoplePicker won't accept Multiple Users with the same name [#1620] (https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)",
+          "`PeoplePicker`: PeoplePicker won't accept Multiple Users with the same name [#1620](https://github.com/pnp/sp-dev-fx-controls-react/pull/1620)",
           "`DynamicForm`: Dynamic Form accessed TaxonomyFieldTypeMulti without considering sub-array results [#1614](https://github.com/pnp/sp-dev-fx-controls-react/pull/1614)",
           "`DynamicForm`: Number validations are working, but the percentage values are not getting saved [#1601](https://github.com/pnp/sp-dev-fx-controls-react/pull/1601)",
           "`DynamicForm`: Number validation is preventing form save in certain circumstances, not enabled for currency fields [#1604](https://github.com/pnp/sp-dev-fx-controls-react/issues/1604)",
@@ -426,7 +426,7 @@
           "`DynamicForm`: DynamicForm - Fixing Required Multi Field Saving Problem [#1489](https://github.com/pnp/sp-dev-fx-controls-react/issues/1489)",
           "`FolderExplorer`: FolderExplorer doesn't explore folders with ' in the name [#1491](https://github.com/pnp/sp-dev-fx-controls-react/issues/1491)",
           "`DynamicForm`: cannot display lookup value when the source field is not Title [#1511](https://github.com/pnp/sp-dev-fx-controls-react/issues/1511)",
-          "`FilePicker`:Features/1478 filepicker tiles view [#1521](https://github.com/pnp/sp-dev-fx-controls-react/issues/1521)"
+          "`FilePicker`: Features/1478 filepicker tiles view [#1521](https://github.com/pnp/sp-dev-fx-controls-react/issues/1521)"
         ]
       },
       "contributions": [
@@ -1315,7 +1315,7 @@
           "`TaxonomyPicker`: browse (tree view) doesn't work with SP 2016 On-Premises [#183](https://github.com/pnp/sp-dev-fx-controls-react/issues/183)",
           "`FilePicker`: default tab when opened shows hidden RecentTab [#477](https://github.com/pnp/sp-dev-fx-controls-react/issues/477)",
           "`PeoplePicker`: The required error message not showing [#590](https://github.com/pnp/sp-dev-fx-controls-react/issues/590)",
-          "`ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](fails in Microsoft Teams Tab SPFx applications)",
+          "`ListItemAttachments`: fails in Microsoft Teams Tab SPFx applications [#582](https://github.com/pnp/sp-dev-fx-controls-react/issues/582)",
           "`Carousel`: Changing pages doesn't work [#609](https://github.com/pnp/sp-dev-fx-controls-react/issues/609)",
           "`TaxonomyPicker`: no suggestions are displayed if `anchorId` is not set",
           "`TaxonomyPicker`: Suggestion/match does not work as expected [#604](https://github.com/pnp/sp-dev-fx-controls-react/issues/604)",
