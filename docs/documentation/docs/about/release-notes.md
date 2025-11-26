@@ -5,10 +5,11 @@
 ### Fixes
 
 - `PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)
+- `FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)
 
 ### Contributors
 
-Special thanks to our contributor: [Michaël Maillot](https://github.com/michaelmaillot).
+Special thanks to our contributors (in alphabetical order): [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.23.0
 
