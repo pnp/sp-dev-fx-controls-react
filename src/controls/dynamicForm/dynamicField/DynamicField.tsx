@@ -43,18 +43,12 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
 
   private _classNames: IProcessedStyleSet<IDynamicFieldStyles>;
 
-  public componentDidUpdate(): void {
-    if ((this.props.defaultValue === "" || this.props.defaultValue === null) && this.state.changedValue === null) {
-      this.setState({ changedValue: "" });
-    }
-  }
-
   public render(): JSX.Element {
     try {
       const theme = getFluentUIThemeOrDefault();
       const styles = (this._classNames = getClassNames(this.props.styles, {
         theme: theme,
-        required:this.props.required
+        required: this.props.required
       }));
       return (
         <div className={styles.fieldEditor}>
@@ -115,7 +109,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
     };
 
     // const defaultValue = fieldDefaultValue;
-    const styles=this._classNames;
+    const styles = this._classNames;
     const labelEl = <label className={styles.fieldLabel}>{label}</label>;
     const errorText = this.props.validationErrorMessage || this.getRequiredErrorText();
     const errorTextEl = <text className={styles.errormessage}>{errorText}</text>;
@@ -222,7 +216,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
             options={optionsGroup}
             onChange={(e, option) => { this.onChange(option, true); }}
             disabled={disabled}
-            />;
+          />;
         }
 
         return <div className={styles.fieldContainer}>
@@ -233,7 +227,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           {choiceControl}
           {descriptionEl}
         </div>;
-}
+      }
       case 'MultiChoice':
         return <div className={styles.fieldContainer}>
           <div className={`${styles.labelContainer} ${styles.titleContainer}`}>
@@ -608,7 +602,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
                 onChange={(newValue?: any) => { this.onChange(newValue, true); }}
               />
             </div>
-          :
+            :
             <div className={styles.pickersContainer}>
               <TaxonomyPicker
                 label=""
@@ -714,10 +708,11 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
   }
 
   private onBlur = (): void => {
-    if (this.state.changedValue === null && this.props.defaultValue === "") {
-      this.setState({ changedValue: "" });
+    // If we have a changedValue, or the user has cleared out a field
+    if (this.state.changedValue || this.state.changedValue === "") {
+      // Notify DynamicForm and fire its onChange event
+      this.props.onChanged(this.props.columnInternalName, this.state.changedValue, true);
     }
-    this.props.onChanged(this.props.columnInternalName, this.state.changedValue, true);
   }
 
   private getRequiredErrorText = (): string => {
@@ -725,12 +720,12 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
       changedValue
     } = this.state;
 
-    const { value, newValue, required,listItemId } = this.props;
+    const { value, newValue, required, listItemId } = this.props;
 
     if (listItemId !== undefined && listItemId !== null) {
       if (newValue === undefined) {
         return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))
-        && (value === undefined || value === '' || value === null || this.isEmptyArray(value) || this.checkUserArrayIsEmpty(value)) ? strings.DynamicFormRequiredErrorMessage : null;
+          && (value === undefined || value === '' || value === null || this.isEmptyArray(value) || this.checkUserArrayIsEmpty(value)) ? strings.DynamicFormRequiredErrorMessage : null;
       } else {
         return required && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue) || this.checkUserArrayIsEmpty(value)) ? strings.DynamicFormRequiredErrorMessage : null;
       }
@@ -755,12 +750,12 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
       listItemId
     } = this.props;
 
-    if (required && newValue!==undefined && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
+    if (required && newValue !== undefined && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))) {
       return strings.DynamicFormRequiredErrorMessage;
     }
 
-    if(listItemId !== undefined && listItemId !== null){
-      if (required && newValue===undefined &&  (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue)) ) {
+    if (listItemId !== undefined && listItemId !== null) {
+      if (required && newValue === undefined && (value === undefined || value === '' || value === null || this.isEmptyArray(value)) && (changedValue === undefined || changedValue === '' || changedValue === null || this.isEmptyArray(changedValue))) {
         return strings.DynamicFormRequiredErrorMessage;
       }
     }
@@ -826,7 +821,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
       else {
         // selectedItemArr = this.props.value;
         selectedItemArr = !changedValue ? [] :
-        ( Array.isArray(changedValue) ? [ ...changedValue ] : [ changedValue] );
+          (Array.isArray(changedValue) ? [...changedValue] : [changedValue]);
       }
 
       if (item.selected) {
