@@ -33,6 +33,14 @@
     background-color: transparent !important;
     font-size: 15px;
   }
+
+  .detailsList {
+    .detailsListIcon {
+      vertical-align: middle;
+      max-height: 16px;
+      max-width: 16px;
+    }
+  }
 }
 
 .uploadBar {
