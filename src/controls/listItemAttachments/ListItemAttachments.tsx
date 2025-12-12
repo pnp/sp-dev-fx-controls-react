@@ -362,6 +362,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 if (openAttachmentsInNewWindow) {
                   return (
                     <Link
+                      className={styles.detailsListLink}
                       onClick={() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank")}
                     >
                       {file.FileName}
@@ -370,7 +371,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                 }
 
                 return (
-                  <Link href={`${file.ServerRelativeUrl}?web=1`}>
+                  <Link className={styles.detailsListLink} href={`${file.ServerRelativeUrl}?web=1`}>
                     {file.FileName}
                   </Link>
                 );
