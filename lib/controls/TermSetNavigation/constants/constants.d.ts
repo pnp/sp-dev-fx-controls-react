@@ -1,0 +1,24 @@
+export declare const TERMSET_PROPERTY_FIELD_USE_SEARCH = "search";
+export declare const TERMSET_PROPERTY_FIELD_USE_MYTOOLS = "useMyTools";
+export declare const TERMSET_PROPERTY_FIELD_LANGUAGE = "language";
+export declare const TERMSET_PROPERTY_FIELD_LOCALE = "locale";
+export declare const TERMSET_PROPERTY_FIELD_ID = "id";
+export declare const TERMSET_PROPERTY_FIELD_LINKURL = "linkURL";
+export declare const TERMSET_PROPERTY_FIELD_AUDIENCE_TAGET = "audienceTarget";
+export declare const TERMSET_PROPERTY_FIELD_ISDEFAULT = "isDefault";
+export declare const TERMSET_PROPERTY_FIELD_BACKGROUND_COLOR = "backgroundColor";
+export declare const TERMSET_PROPERTY_FIELD_HOVER_COLOR = "hoverColor";
+export declare const TERMSET_PROPERTY_FIELD_TEXT_COLOR = "textColor";
+export declare const TERMSET_PROPERTY_FIELD_TEXT_HOVER_COLOR = "textHoverColor";
+export declare const FLAGS_API = "https://flagsapi.com/";
+export declare const TERMSETS_LIST_KEY = "___Managementnavigation_listtermSets__";
+export declare const TERMSETS_CHILDREN_KEY = "___Managementnavigation_termSetChildren__";
+export declare const TERM_CHILDREN_KEY = "___Managementnavigation_termChildren__";
+export declare const TERMSTORE_KEY = "___Managementnavigation_termStore__";
+export declare const TERM_GROUP_KEY = "___Managementnavigation_termGroup__";
+export declare const TERM_GROUP_NAME = "Intranet Global Navigations";
+export declare const DEFAULT_ITEMS_PER_PAGE = 12;
+export declare const ITEM_HEIGHT = 42;
+export declare const DEFAULT_LIST_HEIGHT: number;
+export declare const GROUPS_LIST_KEY = "___Managementnavigation_listGroups__";
+//# sourceMappingURL=constants.d.ts.map

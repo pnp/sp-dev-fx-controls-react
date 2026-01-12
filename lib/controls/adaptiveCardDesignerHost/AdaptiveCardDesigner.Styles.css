@@ -1,0 +1,2176 @@
+/* Added */
+
+.acd-designer-root {
+    border: 1px solid #d2d2d2;
+}
+
+.acd-designer-host {
+    width: fit-content;
+}
+
+.acd-toolbox-header-commandButton {
+    height: unset !important;
+}
+
+.adaptiveCardHostContainer {
+    background-color: #eceff1;
+    border: 1px solid e6e6e6;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.ms-ctrl-overlay {
+    z-index: 9999999999 !important;
+}
+
+.acd-toolbox-header {
+    background-color: #f1f1f1;
+}
+
+.acd-dialog-overlay {
+    z-index: 9999999999 !important;
+    font-family: "Segoe UI Web (West European)", Segoe UI, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+}
+
+.acd-error-pane {
+    background-color: #b40000 !important;
+}
+
+.acd-error-pane-message.selectable:hover {
+    background-color: #8a0000 !important;
+}
+
+.acd-icon-save::before {
+    content: "\E74E";
+}
+
+/* ***** */
+
+.ms-ctrl-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+}
+
+@keyframes slideTopToBottom {
+    0% {
+        transform: translate(0, -20px);
+    }
+}
+
+@keyframes slideBottomToTop {
+    0% {
+        transform: translate(0, 20px);
+    }
+}
+
+@keyframes slideLeftToRight {
+    0% {
+        transform: translate(-20px, 0);
+    }
+}
+
+@keyframes slideRightToLeft {
+    0% {
+        transform: translate(20px, 0);
+    }
+}
+
+.ms-ctrl-slide {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+.ms-ctrl-slide.ms-ctrl-slideTopToBottom {
+    animation-name: fadeIn, slideTopToBottom;
+}
+
+.ms-ctrl-slide.ms-ctrl-slideBottomToTop {
+    animation-name: fadeIn, slideBottomToTop;
+}
+
+.ms-ctrl-slide.ms-ctrl-slideLeftToRight {
+    animation-name: fadeIn, slideLeftToRight;
+}
+
+.ms-ctrl-slide.ms-ctrl-slideRightToLeft {
+    animation-name: fadeIn, slideRightToLeft;
+}
+
+@font-face {
+    font-family: 'FabricMDL2Icons';
+    src: url("https://static2.sharepointonline.com/files/fabric/assets/icons/fabricmdl2icons.woff2?2.21") format("woff2"), url("https://static2.sharepointonline.com/files/fabric/assets/icons/fabricmdl2icons.woff?2.21") format("woff"), url("https://static2.sharepointonline.com/files/fabric/assets/icons/fabricmdl2icons.ttf?2.21") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.ms-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-family: 'FabricMDL2Icons';
+    font-style: normal;
+    font-weight: normal;
+}
+
+.ms-icon-close::before {
+    content: '\E8BB';
+}
+
+.ms-icon-chevronDown::before {
+    content: '\E70D';
+}
+
+.ms-icon-chevronLeft::before {
+    content: "\E76B";
+}
+
+.ms-icon-chevronRight::before {
+    content: "\E76C";
+}
+
+.ms-icon-calendar::before {
+    content: "\E787";
+}
+
+.ms-icon-radioOff::before {
+    content: "\ECCA";
+}
+
+.ms-icon-radioOn::before {
+    content: "\ECCB";
+}
+
+.ms-icon-checkboxOff::before {
+    content: "\E739";
+}
+
+.ms-icon-checkboxOn::before {
+    content: "\E73A";
+}
+
+.ms-icon-checkboxOn-reversed::before {
+    content: "\E73D";
+}
+
+.ms-icon-checkMark::before {
+    content: "\E73E";
+}
+
+.ms-ctrl {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.ms-ctrl-dropdown {
+    border: 1px solid #EEEEEE;
+    background-color: white;
+    height: 32px;
+    display: flex;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+}
+
+.ms-ctrl-dropdown:hover {
+    border: 1px solid #0078D7;
+}
+
+@media (forced-colors: none) {
+    .ms-ctrl-dropdown:focus {
+        border: 1px solid #0078D7;
+        outline: 0;
+    }
+}
+
+.ms-dropdown-label {
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 100%;
+    width: 100%;
+    color: #333333;
+    flex: 1 1 100%;
+    padding-right: 12px;
+}
+
+.ms-dropdown-label.placeholder {
+    color: gray;
+}
+
+.ms-ctrl-dropdown-button {
+    line-height: 32px;
+    flex: 0 0 auto;
+}
+
+.ms-ctrl-dropdown-button:hover {
+    color: #0078D7;
+}
+
+.ms-ctrl-dropdown-item {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    padding: 0px 12px 0px 12px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.ms-ctrl-dropdown-item:hover {
+    background-color: #EEEEEE;
+}
+
+@media (forced-colors: none) {
+    .ms-ctrl-dropdown-item:focus {
+        outline: 0;
+        background-color: #CCCCCC;
+    }
+}
+
+.ms-ctrl-popup-container {
+    border: 1px solid #EEEEEE;
+    background-color: white;
+    position: absolute;
+    box-shadow: 0 0 15px -5px rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+}
+
+.ms-ctrl-popup-container:focus {
+    outline: 0;
+}
+
+.ms-ctrl-calendar {
+    display: inline-block;
+}
+
+.ms-ctrl-calendarHeader {
+    font-size: 18px;
+    color: gray;
+    padding-left: 4px;
+    line-height: 34px;
+}
+
+.ms-ctrl-calendarNavButton {
+    text-align: center;
+    line-height: 34px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.ms-ctrl-calendarNavButton:hover {
+    background-color: #EEEEEE;
+}
+
+.ms-ctrl-calendarDayHeader {
+    font-size: 12px;
+    text-align: center;
+    padding: 6px 8px 6px 8px;
+    color: #333333;
+}
+
+.ms-ctrl-calendarDay {
+    font-size: 12px;
+    text-align: center;
+    padding: 6px 8px 6px 8px;
+    color: #333333;
+    cursor: pointer;
+}
+
+.ms-ctrl-calendarDay:hover {
+    background-color: #EEEEEE;
+}
+
+.ms-ctrl-calendarDay.subdued {
+    color: gray;
+}
+
+.ms-ctrl-calendarDay.selected {
+    color: white;
+    background-color: #0078D7;
+}
+
+.ms-calendarPopup {
+    padding: 6px;
+    overflow: hidden;
+}
+
+.ms-ctrl-datePicker {
+    border: 1px solid #EEEEEE;
+    height: 32px;
+    display: flex;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+}
+
+.ms-ctrl-datePicker:hover {
+    border: 1px solid #0078D7;
+}
+
+.ms-ctrl-datePicker:focus {
+    border: 1px solid #0078D7;
+    outline: 0;
+}
+
+.ms-ctrl-checkbox {
+    outline: 0;
+    cursor: pointer;
+}
+
+.ms-ctrl-checkbox input[type=checkbox] {
+    visibility: hidden;
+}
+
+.ms-ctrl-checkbox label {
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.ms-ctrl-checkbox label span {
+    margin-left: 24px;
+    line-height: 18px;
+    color: #333333;
+    display: inline-block;
+}
+
+.ms-ctrl-checkbox label span:hover {
+    color: black;
+}
+
+.ms-ctrl-checkbox label::before {
+    box-sizing: border-box;
+    display: inline-block;
+    position: absolute;
+    border: 1px solid #A6A6A6;
+    content: "";
+    width: 18px;
+    height: 18px;
+    transition-property: background, border, border-color;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+.ms-ctrl-checkbox label:hover::before {
+    border: 1px solid #767676;
+}
+
+.ms-ctrl-checkbox input[type=checkbox]:checked+label::before {
+    content: "";
+    border: 1px solid #0078D7;
+    background-color: #0078D7;
+}
+
+.ms-ctrl-checkbox input[type=checkbox]:checked+label::after {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'FabricMDL2Icons';
+    font-style: normal;
+    font-weight: bold;
+    content: "\E73E";
+    color: white;
+    position: absolute;
+    width: 18px;
+    line-height: 18px;
+    left: 0;
+    top: 0;
+    text-align: center;
+    transition-property: background, border, border-color;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+.ms-ctrl-radiobutton {
+    outline: 0;
+    cursor: pointer;
+}
+
+.ms-ctrl-radiobutton input[type=radio] {
+    visibility: hidden;
+}
+
+.ms-ctrl-radiobutton label {
+    display: inline-block;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.ms-ctrl-radiobutton label span {
+    margin-left: 22px;
+    line-height: 16px;
+    color: #333333;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ms-ctrl-radiobutton label span:hover {
+    color: black;
+}
+
+.ms-ctrl-radiobutton label::before {
+    content: "";
+    box-sizing: border-box;
+    display: inline-block;
+    position: absolute;
+    border: 1px solid #A6A6A6;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.ms-ctrl-radiobutton label:hover::before {
+    border: 1px solid #767676;
+}
+
+.ms-ctrl-radiobutton input[type=radio]:checked+label::before {
+    border: 1px solid #0078D7;
+}
+
+.ms-ctrl-radiobutton input[type=radio]+label::after {
+    content: "";
+    box-sizing: border-box;
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 0;
+    height: 0;
+}
+
+.ms-ctrl-radiobutton input[type=radio]:checked+label::after {
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    background-color: #0078D7;
+    border-radius: 50%;
+    transition-property: top, left, right, width, height;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+.ms-ctrl-textbox {
+    border: 1px solid #EEEEEE;
+    color: #333333;
+    outline: 0;
+    resize: none;
+    padding: 4px 8px;
+}
+
+.ms-ctrl-textbox-multiline {
+    overflow: auto;
+}
+
+.ms-ctrl-textbox:-moz-placeholder {
+    color: gray;
+}
+
+.ms-ctrl-textbox::-moz-placeholder {
+    color: gray;
+}
+
+.ms-ctrl-textbox:-ms-input-placeholder {
+    color: gray;
+}
+
+.ms-ctrl-textbox::-ms-input-placeholder {
+    color: gray;
+}
+
+.ms-ctrl-textbox::-webkit-input-placeholder {
+    color: gray;
+}
+
+.ms-ctrl-textbox:hover {
+    border: 1px solid #0078D7;
+}
+
+.ms-ctrl-textbox:focus,
+.ms-ctrl-textbox:active {
+    border: 1px solid #0078D7;
+}
+
+@font-face {
+    font-family: 'FabricMDL2Icons';
+    src: url("https://static2.sharepointonline.com/files/fabric/assets/icons/fabricmdl2icons-3.54.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.acd-designer-root *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.acd-designer-root *::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.acd-designer-root *:hover::-webkit-scrollbar-thumb {
+    background-color: #CDCDCD;
+}
+
+@media all and (min-width: 651px) {
+    .content {
+        display: flex;
+        flex: 1 1 auto;
+        overflow-y: hidden;
+    }
+}
+
+.acd-designer-cardArea {
+    flex: 1 1 70%;
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.acd-designer-host {
+    margin: 20px 40px 20px 20px;
+}
+
+.acd-designer-card-header {
+    display: none;
+}
+
+.acd-designersurface {
+    outline: none;
+}
+
+.acd-hidden {
+    display: none !important;
+}
+
+@media all and (min-width: 651px) {
+    .acd-toolPalette-pane {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        background-color: white;
+        border-right: 1px solid #D2D2D2;
+    }
+}
+
+.acd-treeView {
+    margin: 0;
+}
+
+.acd-treeView-pane {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    width: 360px;
+    background-color: white;
+}
+
+.acd-treeView-host {
+    flex: 1 1 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 6px;
+    background-color: white;
+}
+
+.acd-propertySheet-pane {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    width: 360px;
+    background-color: #F9F9F9;
+}
+
+.acd-propertySheet-host {
+    flex: 1 1 100%;
+    overflow: auto;
+}
+
+.acd-vertical-splitter {
+    border-left: 1px solid #D2D2D2;
+    cursor: ew-resize;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    z-index: 1;
+}
+
+.acd-horizontal-splitter {
+    border-top: 1px solid #D2D2D2;
+    cursor: ns-resize;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    z-index: 1;
+}
+
+.acd-code-editor {
+    overflow: hidden;
+}
+
+.acd-json-editor-pane {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 360px;
+}
+
+.acd-json-editor-host {
+    flex: 1 1 100%;
+}
+
+.acd-error-pane {
+    flex: 0 0 65px;
+    color: white;
+    background-color: #2D7BB7;
+    border-top: 1px solid #D2D2D2;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.acd-error-pane-message {
+    padding: 1px 4px 2px 4px;
+    cursor: default;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.acd-error-pane-message.selectable {
+    cursor: pointer;
+}
+
+.acd-error-pane-message.selectable:hover {
+    background-color: navy;
+}
+
+/*
+    In-place editors
+*/
+
+.acd-inplace-editor-host {
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    outline: 1px dashed steelblue;
+    background-color: white;
+}
+
+.acd-inplace-editor {
+    flex: 1 1 100%;
+    align-items: stretch;
+}
+
+.acd-textBlock-inplace-editor {
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    resize: none;
+    color: black !important;
+}
+
+.acd-dialog-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.acd-dialog-frame {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px -5px rgba(0, 0, 0, 0.4);
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.acd-dialog-title-host {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin-bottom: 10px;
+}
+
+.acd-dialog-title {
+    font-weight: bold;
+    flex: 1 1 auto;
+    font-size: 24px;
+}
+
+.acd-dialog-buttonBar {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.acd-dialog-message {
+    margin-top: 10px;
+}
+
+.acd-open-sample-item-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+    justify-content: space-evenly;
+}
+
+.acd-open-sample-item {
+    width: 350px;
+    height: 100%;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.acd-open-sample-item-thumbnail {
+    overflow: hidden;
+    height: 100%;
+    min-height: 150px;
+    max-height: 400px;
+    width: 100%;
+    pointer-events: none;
+    border: 1.5px solid #EEEEEE;
+    display: flex;
+    justify-content: center;
+}
+
+.acd-open-sample-item-title {
+    margin-top: 10px;
+}
+
+.acd-open-sample-item:hover>.acd-open-sample-item-thumbnail {
+    box-shadow: 0 0 20px -5px #CCCCCC;
+    border: 1.5px solid #CCCCCC;
+}
+
+.acd-open-sample-item:hover>.acd-open-sample-item-title {
+    font-weight: bold;
+}
+
+.acd-open-code-dialog-container {
+    display: flex;
+}
+
+.acd-open-code-dialog-preview-container {
+    flex: 1;
+}
+
+.acd-open-code-dialog-editor-container {
+    flex: 1;
+}
+
+.acd-open-code-dialog-editor {
+    width: 100%;
+    height: 90%;
+}
+
+@keyframes acd-spinner-rotate {
+    from {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.acd-spinner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: rgb(0, 120, 212) rgb(199, 224, 244) rgb(199, 224, 244) rgb(199, 224, 244);
+    animation-name: acd-spinner-rotate;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
+}
+
+/*
+    Icons
+*/
+
+.acd-icon {
+    font-family: 'FabricMDL2Icons';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.acd-dialog-titleBar-button {
+    color: black;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 4px;
+    border: none;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.acd-dialog-titleBar-button:hover {
+    background-color: #CCCCCC;
+}
+
+.acd-toolPalette-icon {
+    color: #2D7BB7;
+}
+
+.acd-treeView-icon {
+    color: #2D7BB7;
+}
+
+.acd-icon-bolt::before {
+    content: "\E945";
+}
+
+.acd-icon-addColumn::before {
+    content: "\F1D6";
+}
+
+.acd-icon-remove::before {
+    content: "\E711";
+}
+
+.acd-icon-drag::before {
+    content: "\E7C2";
+}
+
+.acd-icon-defaultElementIcon::before {
+    content: "\F50B";
+}
+
+.acd-icon-image::before {
+    content: "\ECAB";
+}
+
+.acd-icon-adaptiveCard::before {
+    content: "\EEBD";
+}
+
+.acd-icon-column::before {
+    content: "\E799";
+}
+
+.acd-icon-columnSet::before {
+    content: "\F1D5";
+}
+
+.acd-icon-container::before {
+    content: "\E739";
+}
+
+.acd-icon-factSet::before {
+    content: "\F2A2";
+}
+
+.acd-icon-actionSet::before {
+    content: "\E945";
+}
+
+.acd-icon-image::before {
+    content: "\EB9F";
+}
+
+.acd-icon-imageSet::before {
+    content: "\E7AA";
+}
+
+.acd-icon-inputChoiceSet::before {
+    content: "\F2C7";
+}
+
+.acd-icon-inputDate::before {
+    content: "\E787";
+}
+
+.acd-icon-inputNumber::before {
+    content: "\EDC4";
+}
+
+.acd-icon-inputText::before {
+    content: "\EDC3";
+}
+
+.acd-icon-inputTime::before {
+    content: "\E917";
+}
+
+.acd-icon-inputToggle::before {
+    content: "\E73A";
+}
+
+.acd-icon-textBlock::before {
+    content: "\E8E9";
+}
+
+.acd-icon-richTextBlock::before {
+    content: "\EDC2";
+}
+
+.acd-icon-chevronDown::before {
+    content: "\E70D";
+}
+
+.acd-icon-chevronUp::before {
+    content: "\E70E";
+}
+
+.acd-icon-chevronRight::before {
+    content: "\E76C";
+}
+
+.acd-icon-chevronLeft::before {
+    content: "\E76B";
+}
+
+.acd-icon-newCard::before {
+    content: "\F321";
+}
+
+.acd-icon-fullScreen::before {
+    content: "\E740";
+}
+
+.acd-icon-actionShowCard::before {
+    content: "\EEBD";
+}
+
+.acd-icon-actionOpenUrl::before {
+    content: "\E71B";
+}
+
+.acd-icon-actionSubmit::before {
+    content: "\E73E";
+}
+
+.acd-icon-actionToggleVisibility::before {
+    content: "\E7B3";
+}
+
+.acd-icon-actionHttp::before {
+    content: "\E774";
+}
+
+.acd-icon-copy::before {
+    content: "\E8C8";
+}
+
+.acd-icon-help::before {
+    content: "\E897";
+}
+
+.acd-icon-header-expanded::before {
+    content: "\F166";
+}
+
+.acd-icon-header-collapsed::before {
+    content: "\F164";
+}
+
+.acd-icon-undo::before {
+    content: "\E7A7";
+}
+
+.acd-icon-redo::before {
+    content: "\E7A6";
+}
+
+.acd-icon-media::before {
+    content: "\EB1C";
+}
+
+.acd-icon-dot::before {
+    content: "\E915";
+}
+
+.acd-icon-dataStructure::before {
+    content: "\EC8D";
+}
+
+.acd-icon-preview::before {
+    content: "\E8A1";
+}
+
+.acd-icon-open::before {
+    content: "\ED25";
+}
+
+.acd-icon-customPaletteItem::before {
+    content: "\ECAA";
+}
+
+.acd-icon-table::before {
+    content: "\ED86";
+}
+
+.acd-icon-tableRow::before {
+    content: "\F82A";
+}
+
+.acd-icon-tableCell::before {
+    content: "\F50A";
+}
+
+/*
+    Side panes
+*/
+
+/* NOTE: All of these are layed out sequentially on small-x-dimension displays */
+@media all and (min-width: 651px) {
+    .acd-dockedLeft {
+        border-right: 1px solid #D2D2D2;
+    }
+
+    .acd-dockedRight {
+        border-left: 1px solid #D2D2D2;
+    }
+
+    .acd-verticalCollapsedTabContainer {}
+
+    .acd-horizontalCollapsedTabContainer {
+        display: flex;
+        flex: 0 0 auto;
+        border-top: 1px solid #D2D2D2;
+    }
+
+    .acd-horizontalCollapsedTabContainer>.acd-toolbox-header {
+        border-right: 1px solid #D2D2D2;
+    }
+
+    .acd-verticalCollapsedTabContainer.acd-dockedLeft>.acd-toolbox-header {
+        width: 32px;
+        height: 170px;
+        border-bottom: 1px solid #D2D2D2;
+    }
+
+    .acd-verticalCollapsedTabContainer.acd-dockedLeft .acd-toolbox-header-content {
+        width: 170px;
+        height: 32px;
+        transform-origin: 0 0;
+        transform: rotate(-90deg) translate(-170px, 0px);
+    }
+
+    .acd-verticalCollapsedTabContainer.acd-dockedRight>.acd-toolbox-header {
+        width: 32px;
+        height: 170px;
+        border-bottom: 1px solid #D2D2D2;
+    }
+
+    .acd-verticalCollapsedTabContainer.acd-dockedRight .acd-toolbox-header-content {
+        width: 170px;
+        height: 32px;
+        transform-origin: 0 100%;
+        transform: rotate(90deg) translate(-32px, 0px);
+    }
+
+    .acd-sidepanel-parent {
+        display: flex;
+        position: relative;
+    }
+
+    .acd-sidepanel-parent-vertical {
+        flex-direction: row;
+        overflow-x: hidden;
+    }
+
+    .acd-sidepanel-parent-horizontal {
+        flex-direction: column;
+        overflow-y: hidden;
+    }
+
+    .acd-sidepanel-host {
+        display: flex;
+        flex: 1 1 auto;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .acd-sidepanel-host-vertical {
+        flex-direction: column;
+    }
+
+    .acd-sidepanel-host-horizontal {
+        flex-direction: row;
+    }
+
+    .acd-toolbox {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .acd-toolbox-stretch {
+        flex: 1 1 auto;
+    }
+
+    .acd-toolbox-no-stretch {
+        flex: 0 0 auto;
+    }
+}
+
+.acd-toolbox-header {
+    height: 32px;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.acd-toolbox-header-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.acd-toolbox-header-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 4px 8px;
+    font-size: 12px;
+    color: black;
+}
+
+.acd-toolbox-header-commandButton {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 100%;
+    padding: 4px 8px;
+    color: gray;
+}
+
+.acd-toolbox-header-commandButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.acd-toolbox-header-commandButton:active {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.acd-toolbox-header-commandsHost {
+    display: flex;
+    height: 100%;
+}
+
+.acd-previewRightAndBottomDocks {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    overflow: hidden;
+}
+
+@media all and (min-width: 651px) {
+    .acd-previewAndBottomDocks {
+        display: flex;
+        flex: 1 1 100%;
+        overflow: hidden;
+    }
+}
+
+.acd-designersurface.dragging {
+    cursor: move;
+}
+
+.acd-designersurface.dragging>.acd-peer:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+/*
+    Designer peers
+*/
+
+@keyframes acd-peer-frame-appear {
+    from {
+        border-color: transparent
+    }
+
+    to {
+        border-color: steelblue
+    }
+}
+
+@keyframes acd-peer-frame-disappear {
+
+    /*
+    from { border-color: currentColor }
+    */
+    to {
+        border-color: transparent
+    }
+}
+
+.acd-peer {
+    animation-name: acd-peer-frame-disappear;
+    animation-duration: 150ms;
+    animation-fill-mode: forwards;
+    border: 1px dashed transparent;
+}
+
+.acd-peer.invisible {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNv1OCegAAAAwSURBVChTY/j//z8cA0EDOh+vJJjGJwll45YE81E4WBTjlQTT+CShbNyS////ZwAAVxKXcckJBiYAAAAASUVORK5CYII=');
+    background-repeat: repeat;
+    background-color: white;
+    opacity: 0.4;
+}
+
+.acd-peer:hover,
+.acd-peer.selected,
+.acd-peer.dragging {
+    animation-name: acd-peer-frame-appear;
+    animation-duration: 200ms;
+    animation-fill-mode: forwards;
+}
+
+.acd-peer.dragover {
+    border: 1px dashed green !important;
+}
+
+.acd-peer.dragover:hover {
+    background-color: none;
+}
+
+.acd-peerButton {
+    font-size: 14px;
+    border: 1px solid steelblue;
+    color: steelblue;
+    background-color: white;
+    cursor: default;
+    user-select: none;
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    pointer-events: all !important;
+    height: 20px;
+    border-radius: 0;
+    outline: none;
+}
+
+.acd-peerButton.fixedWidth {
+    width: 20px;
+}
+
+.acd-peerButton.fixedWidth.circular {
+    border-radius: 50%;
+}
+
+.acd-peerButton.variableWidth {}
+
+.acd-peerButton-icon {
+    font-family: 'FabricMDL2Icons';
+    font-style: normal;
+    font-weight: normal;
+    justify-content: center;
+}
+
+.acd-peerButton-text {
+    font-family: inherit;
+    justify-content: center;
+    padding: 0px 4px;
+}
+
+.acd-peerButton:hover {
+    background-color: steelblue;
+    color: white;
+}
+
+/*
+    Tool box
+*/
+
+.acd-palette-category {
+    align-items: center;
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    list-style-type: none;
+    position: relative;
+    white-space: nowrap;
+    padding: 6px 16px 6px 16px;
+    cursor: default;
+    background-color: #EEEEEE;
+}
+
+.acd-palette-item {
+    cursor: move;
+    display: flex;
+    align-items: center;
+    padding: 6px 16px 6px 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.acd-palette-item-label {
+    font-size: 14px;
+    white-space: nowrap;
+    margin-left: 8px;
+    flex: 1 1 100%;
+}
+
+.acd-palette-item:hover {
+    background-color: #EEEEEE;
+}
+
+/*
+    Visual tree view
+*/
+
+.acd-tree-item {
+    cursor: pointer;
+}
+
+.acd-tree-item.selected {
+    background-color: #BCE2FF;
+}
+
+.acd-tree-item:hover {
+    background-color: #EEEEEE;
+}
+
+.acd-tree-item.selected:hover {
+    background-color: #A3D8FF;
+}
+
+.acd-tree-item-expandCollapseButton {
+    font-family: 'FabricMDL2Icons';
+    font-size: 10px;
+    width: 16px;
+}
+
+.acd-tree-item-text {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    padding: 4px 4px 4px 8px;
+}
+
+.acd-tree-item-typeName {
+    margin-left: 8px;
+}
+
+.acd-tree-item-additionalText {
+    color: #757575;
+    margin-left: 8px;
+}
+
+.acd-data-tree-item-additionalText {
+    color: #2D7BB7;
+    margin-left: 8px;
+}
+
+/*
+    Toolbar
+*/
+
+.acd-toolbar {
+    justify-content: space-between;
+    background-color: #F1F1F1;
+    align-items: center;
+    border-bottom: 1px solid #D2D2D2;
+}
+
+.acd-toolbar-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.acd-toolbar-label {
+    color: black;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.acd-toolbar-choicePicker {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    margin: 0px 8px 0px 8px;
+}
+
+@media all and (min-width: 651px) {
+    .acd-toolbar {
+        display: flex;
+        flex: 0 0 auto;
+    }
+}
+
+.acd-toolbar-separator {
+    width: 1px;
+    height: 30px;
+    border-left: 1px solid #D2D2D2;
+}
+
+.acd-toolbar-button {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 10px;
+    border: 1px solid transparent;
+    font-style: normal;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+}
+
+.acd-toolbar-button:hover {
+    background-color: white;
+}
+
+.acd-toolbar-button:active {
+    border: 1px solid black;
+}
+
+.acd-toolbar-button.acd-toolbar-button-disabled {
+    color: lightgray;
+    background-color: transparent;
+    cursor: default;
+}
+
+@media (forced-colors: none) {
+    .acd-toolbar-button.acd-toolbar-button-toggled {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+@media (forced-colors: active) {
+    .acd-toolbar-button.acd-toolbar-button-toggled {
+        background-color: highlight;
+        color: highlightText;
+        forced-color-adjust: none;
+    }
+}
+
+.acd-toolbar-button-iconOnly::before {
+    margin-right: 0 !important;
+}
+
+.acd-toolbar-button::before {
+    font-family: 'FabricMDL2Icons';
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.acd-fieldPicker-host {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/*
+    Adaptive Card renderer styles for Property Sheet and other
+    designer AC-based parts of designer UI.
+*/
+
+.default-ac-image.default-ac-selectable {
+    cursor: pointer;
+}
+
+.default-ac-media-poster {}
+
+.default-ac-media-poster.empty {
+    height: 200px;
+    background-color: #F2F2F2;
+}
+
+.default-ac-media-playButton {
+    width: 56px;
+    height: 56px;
+    border: 1px solid #EEEEEE;
+    border-radius: 28px;
+    box-shadow: 0px 0px 10px #EEEEEE;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    cursor: pointer;
+}
+
+.default-ac-media-playButton-arrow {
+    color: black;
+}
+
+.default-ac-media-playButton:hover {
+    background-color: white;
+}
+
+a.default-ac-anchor {
+    text-decoration: none;
+}
+
+a.default-ac-anchor:link {
+    color: #005A9E;
+}
+
+a.default-ac-anchor:visited {
+    color: #005A9E;
+}
+
+a.default-ac-anchor:link:active {
+    color: #004D84;
+}
+
+a.default-ac-anchor:visited:active {
+    color: #004D84;
+}
+
+.default-ac-container.default-ac-selectable,
+.default-ac-columnSet.default-ac-selectable {
+    padding: 0;
+}
+
+.default-ac-container.default-ac-selectable:hover,
+.default-ac-columnSet.default-ac-selectable:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.default-ac-container.default-ac-selectable:active,
+.default-ac-columnSet.default-ac-selectable:active {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.default-ac-pushButton,
+.acd-dialog-button {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 10px 5px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 31px;
+    background-color: #EEEEEE;
+    color: black;
+    border: 1px solid #888888;
+    border-radius: 2px;
+}
+
+.default-ac-pushButton:hover,
+.acd-dialog-button:hover {
+    /* background-color: #DDDDDD; */
+    border: 1px solid #777777;
+}
+
+.default-ac-pushButton:active,
+.acd-dialog-button:active {
+    /* background-color: #CCCCCC; */
+    border: 1px solid #777777;
+}
+
+.default-ac-pushButton.subdued {
+    color: #666666;
+    border: 1px solid #EEEEEE;
+}
+
+.default-ac-pushButton.subdued:hover {
+    background-color: #0078D7;
+    color: white;
+    border: 1px solid #0078D7;
+}
+
+@media (forced-colors: none) {
+    .default-ac-pushButton.expanded {
+        background-color: #0078D7;
+        color: white;
+        border: 1px solid #0078D7;
+    }
+}
+
+@media (forced-colors: active) {
+    .default-ac-pushButton.expanded {
+        background-color: highlight;
+        color: highlightText;
+        forced-color-adjust: none;
+    }
+}
+
+.default-ac-pushButton.expandable:after {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-family: 'FabricMDL2Icons';
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 900;
+    margin: auto 0px auto 6px;
+    content: '\E70D';
+}
+
+.default-ac-pushButton.expandable.expanded:after {
+    content: '\E70E';
+}
+
+.default-ac-input {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    color: black;
+}
+
+.default-ac-input.default-ac-textInput {
+    resize: none;
+}
+
+.default-ac-input.default-ac-textInput.default-ac-multiline {
+    height: 72px;
+}
+
+.default-ac-input.default-ac-textInput,
+.default-ac-input.default-ac-numberInput,
+.default-ac-input.default-ac-dateInput,
+.default-ac-input.default-ac-timeInput {
+    height: 31px;
+}
+
+.default-ac-input.default-ac-textInput,
+.default-ac-input.default-ac-numberInput,
+.default-ac-input.default-ac-dateInput,
+.default-ac-input.default-ac-timeInput,
+.default-ac-input.default-ac-multichoiceInput {
+    border: 1px solid #DDDDDD;
+    padding: 4px 8px 4px 8px;
+}
+
+.default-ac-textBlock {
+    cursor: default;
+}
+
+.default-ac-textBlock.default-ac-selectable:hover {
+    color: #2D7BB7 !important;
+    cursor: pointer;
+}
+
+/* PIC2CARD css changes*/
+.acd-pic2card-container {
+    display: flex;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    margin: 10px;
+    position: relative;
+    flex-direction: column;
+}
+
+.acd-poweredby-title {
+    font-family: Helvetica;
+    font-size: 13px;
+    color: #0a0a0a;
+    margin-top: 7px;
+    margin-right: 9px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.acd-poweredby-title .link {
+    margin-left: 3px;
+    color: #0367c1;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.acd-poweredby-title .link:hover {
+    color: blue;
+}
+
+.acd-sample-list {
+    overflow: auto;
+    height: calc(100% - 40px);
+}
+
+.acd-sample-image-container {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.acd-image-upload-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border-right: solid 1px #dddbdb;
+}
+
+.acd-image-title {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-family: Helvetica;
+    font-size: 16px;
+    color: #0a0a0a;
+}
+
+.acd-image-title-content {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-family: Helvetica;
+    font-size: 12px;
+    opacity: 0.61;
+    color: #0a0a0a;
+}
+
+.acd-image-file-container {
+    width: 394px;
+    min-height: 394px;
+    margin-top: 30px;
+    display: flex;
+    align-self: center;
+    border: dashed 1px #cdcdcd;
+    background-color: #ffffff;
+    overflow: auto;
+}
+
+.error-info {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+
+.sample-info-text {
+    margin-left: 15px;
+}
+
+.acd-spinner-host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .4;
+}
+
+.acd-image-spinner {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: 50%;
+    left: 50%;
+}
+
+.acd-conversion-text {
+    position: absolute;
+    width: 258px;
+    height: 28px;
+    top: 56%;
+    left: 42%;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+}
+
+.acd-upload-control {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.acd-upload-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.acd-image-placeholder {
+    max-width: 270px;
+    max-height: 280px;
+}
+
+.acd-file-type {
+    height: 40px;
+    color: white;
+}
+
+.acd-file-type::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.acd-file-type:focus::before {
+    margin-top: 1px;
+    border: 2px solid #0a0a0a;
+}
+
+.acd-file-type:focus {
+    outline: none;
+}
+
+.acd-file-type::before,
+.acd-card-button {
+    content: attr(button-name);
+    display: inline-block;
+    width: 232px;
+    height: 32px;
+    background-color: #286ec0;
+    font-family: Helvetica;
+    font-size: 14px;
+    color: #ffffff;
+    border: 1px solid #286ec0;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+    line-height: 30px;
+}
+
+.acd-card-button {
+    margin-top: 7px;
+}
+
+.acd-card-button:focus {
+    outline: #0a0a0a auto 1px;
+}
+
+.acd-file-type:hover::before {
+    border-color: black;
+}
+
+.acd-image-file-note {
+    font-family: Helvetica;
+    font-size: 11px;
+    color: #0a0a0a;
+    margin-top: 7px;
+}
+
+.acd-image-file-note .link {
+    color: #0367c1;
+    cursor: pointer;
+}
+
+.acd-image-upload {
+    width: 400px;
+    height: 300px;
+    border: dashed 1px #c9cbcc;
+    background-color: rgba(235, 237, 240, 0.32);
+    justify-content: space-evenly;
+}
+
+.acd-checkbox-container {
+    align-items: center;
+    display: flex;
+    font-family: Helvetica;
+    font-size: 11px;
+    margin-top: 7px;
+    font-weight: bold;
+    color: #0a0a0a;
+}
+
+.acd-checkbox-element {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.acd-custom-checkbox {
+    height: 14px;
+    width: 14px;
+    background-color: transparent;
+    border-radius: 2px;
+    border: 1px solid#286ec0;
+    z-index: 1;
+}
+
+.acd-custom-checkbox-foucs {
+    border: 2px solid #0a0a0a;
+}
+
+.acd-custom-checkbox::after {
+    position: absolute;
+    content: "";
+    left: 12px;
+    top: 12px;
+    height: 0;
+    width: 0;
+    border-radius: 5px;
+    border: solid #009bff;
+    border-width: 0 3px 3px 0;
+    transform: rotate(0deg) scale(0);
+    opacity: 1;
+}
+
+.acd-checkbox-element:checked~.acd-custom-checkbox {
+    border-radius: 2px;
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+    border: 1px solid #286ec0;
+    background-color: #286ec0;
+}
+
+.acd-checkbox-element:checked~.acd-custom-checkbox::after {
+    transform: rotate(45deg) scale(1);
+    opacity: 1;
+    top: 0px;
+    left: 4px;
+    width: 2px;
+    height: 9px;
+    border: solid white;
+    border-radius: 0;
+    background-color: transparent;
+    border-width: 0 2px 2px 0;
+}
+
+.acd-label-element {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.acd-label-element .link {
+    color: #0367c1;
+    cursor: pointer;
+}
+
+.acd-image-container {
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.acd-sample-container {
+    display: flex;
+    height: calc(100% - 21px);
+}
+
+.acd-image-upload:hover {
+    box-shadow: 0 0 20px -5px #cccccc;
+    border: 1.5px dashed #cccccc;
+}
+
+.acd-image-container:hover>.acd-open-sample-item-title {
+    font-weight: bold;
+}
+
+.acd-sample-image {
+    max-width: 40%;
+    margin: 12px;
+    cursor: pointer;
+}
+
+.acd-image-text-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.acd-image-new-title {
+    background-color: #2D7BB7;
+    color: #ffffff;
+    padding: 3px 10px;
+    font-weight: bold;
+    font-family: Helvetica;
+    font-size: 14px;
+}
+
+.acd-image-upload-title {
+    font-family: Helvetica;
+    font-size: 18px;
+    font-weight: bold;
+    color: #161717;
+    margin-top: 10px;
+}
+
+.acd-image-description {
+    opacity: 0.72;
+    font-family: Helvetica;
+    font-size: 14px;
+    text-align: center;
+    color: #161717;
+    margin-top: 10px;
+    width: 80%;
+}
+
+.acd-try-now-button {
+    width: 138px;
+    height: 31px;
+    border-radius: 2px;
+    background-color: #2D7BB7;
+    border: 1px solid #2D7BB7;
+    font-family: Helvetica;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.acd-error-text {
+    font-size: 13px;
+    margin-top: 10px;
+    color: red;
+    font-family: Helvetica;
+}
+
+/* NOTE: small-x-dimension display */
+@media all and (max-width: 650px) {
+    .acd-designer-cardArea {
+        border-bottom: 1px solid #D2D2D2;
+    }
+
+    .acd-designer-card-header {
+        display: flex;
+        flex: 1 1 auto;
+        height: 32px;
+        align-items: center;
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    .acd-designer-host {
+        margin: inherit;
+    }
+
+    .acd-designer-host>* {
+        margin: auto;
+        padding: 3px;
+    }
+
+    .acd-treeView-pane {
+        width: 100%;
+    }
+
+    .acd-treeView-host {
+        overflow: auto;
+    }
+
+    .acd-propertySheet-pane {
+        width: 100%;
+    }
+
+    .acd-vertical-splitter {
+        display: none;
+    }
+
+    .acd-horizontal-splitter {
+        display: none;
+    }
+
+    .acd-code-editor {
+        height: 400px !important;
+        /* needed to override height from settings*/
+    }
+
+    .acd-json-editor-pane {
+        height: 100%;
+    }
+
+    .acd-error-pane {
+        flex: 1 1 auto;
+        white-space: normal;
+        overflow: auto;
+    }
+
+    .acd-dialog-frame {
+        padding: 2px;
+        width: 95% !important;
+        height: 95% !important;
+    }
+
+    .acd-dialog-title-host {
+        margin-bottom: 1px;
+    }
+
+    .acd-dialog-title {
+        font-size: 18px;
+    }
+
+    .acd-dialog-buttonBar {
+        padding-top: 5px;
+    }
+
+    .acd-open-sample-item {
+        padding: 4px;
+    }
+
+    .acd-open-sample-item-title {
+        margin-top: 5px;
+    }
+
+    .acd-toolbox {
+        border-bottom: 1px solid #D2D2D2;
+        width: 100% !important;
+        /* overrides stored width from settings */
+        height: auto !important;
+    }
+
+    .acd-previewRightAndBottomDocks {
+        display: flex;
+        flex: 1 1 100%;
+    }
+
+    .acd-palette-item-container {
+        display: flex;
+        flex: 1 1 auto;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: flex-start;
+    }
+
+    .acd-toolbar-content {
+        justify-content: space-between;
+    }
+
+    .acd-toolbar-separator {
+        display: none;
+    }
+
+    .acd-toolbar-label {
+        margin-left: 0px;
+        margin-right: 2px;
+    }
+
+    .acd-toolbar-button {
+        padding: 2px 2px 2px 2px;
+    }
+
+    .acd-toolbar-choicePicker {
+        margin-left: 2px;
+        margin-right: 2px;
+        flex: 0 1 auto;
+    }
+
+    .ms-ctrl-dropdown {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+}

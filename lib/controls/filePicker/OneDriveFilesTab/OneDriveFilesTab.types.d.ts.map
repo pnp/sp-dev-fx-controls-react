@@ -1,0 +1,1 @@
+{"version":3,"file":"OneDriveFilesTab.types.d.ts","sourceRoot":"","sources":["../../../../src/controls/filePicker/OneDriveFilesTab/OneDriveFilesTab.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,MAAM,gCAAgC,CAAC;AACjE,OAAO,EAAE,KAAK,EAAE,MAAM,4CAA4C,CAAC;AAEnE,MAAM,WAAW,2BAA4B,SAAQ,eAAe;IAClE,UAAU,CAAC,EAAE,KAAK,CAAC;CACpB"}

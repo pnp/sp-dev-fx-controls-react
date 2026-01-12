@@ -1,0 +1,1 @@
+{"version":3,"file":"useMonacoEditorStyles.d.ts","sourceRoot":"","sources":["../../../src/controls/monacoEditor/useMonacoEditorStyles.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,kBAAkB,EAAkB,MAAM,6BAA6B,CAAC;AAGjF,eAAO,MAAM,qBAAqB;oBAChB,mBAAmB;QACjC,eAAe,EAAE;YACf,MAAM,EAAE,MAAM,CAAC;SAChB,CAAC;KACH,CAAC;CAWH,CAAC"}

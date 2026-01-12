@@ -1,0 +1,1 @@
+{"version":3,"file":"IAttendee.d.ts","sourceRoot":"","sources":["../../../../src/controls/calendar/models/IAttendee.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,SAAS;IACtB,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,QAAQ,CAAC,EAAE,MAAM,CAAC;CACjB"}

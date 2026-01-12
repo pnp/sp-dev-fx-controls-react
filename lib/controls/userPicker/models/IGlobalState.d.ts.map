@@ -1,0 +1,1 @@
+{"version":3,"file":"IGlobalState.d.ts","sourceRoot":"","sources":["../../../../src/controls/userPicker/models/IGlobalState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,qBAAqB,CAAC;AACvD,OAAO,EAAE,SAAS,EAAE,MAAM,aAAa,CAAC;AAExC,MAAM,WAAW,YAAa,SAAQ,gBAAgB;IACjD,aAAa,EAAE,SAAS,EAAE,CAAC;CAC/B"}

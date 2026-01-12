@@ -1,0 +1,1 @@
+{"version":3,"file":"IPeoplePickerContext.d.ts","sourceRoot":"","sources":["../../../src/controls/peoplepicker/IPeoplePickerContext.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,oBAAoB,EAAE,YAAY,EAAE,MAAM,oBAAoB,CAAC;AAExE;;GAEG;AACH,MAAM,WAAW,oBAAoB;IACjC;;OAEG;IACH,WAAW,EAAE,MAAM,CAAC;IACpB;;OAEG;IACH,oBAAoB,EAAE,oBAAoB,CAAC;IAC3C;;OAEG;IACH,YAAY,EAAE,YAAY,CAAC;CAC9B"}

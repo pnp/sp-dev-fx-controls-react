@@ -1,0 +1,2 @@
+export declare const useRenderHeaderStyles: () => Record<"closeButton" | "divider" | "renderHeaderContent" | "renderHeaderHeader" | "renderHeaderFooter" | "renderHeaderBody" | "renderHeaderTitleContainer" | "renderHeaderTitle" | "renderHeaderDescription" | "dialogTitleAndDescriptionContainer", string>;
+//# sourceMappingURL=useRenderHeaderStyles.d.ts.map
