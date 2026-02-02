@@ -10,6 +10,7 @@
 
 - `ListItemComments`: Multiline comment doesn't display correctly in ListItemComments control due to missing line break [2078](https://github.com/pnp/sp-dev-fx-controls-react/issues/2078)
 - `ImagePicker`: Imagepicker strings fix [2077](https://github.com/pnp/sp-dev-fx-controls-react/pull/2077)
+- `TreeView`: TreeView Item - pass through imageProps of iconProps to TreeItem   [#2074](https://github.com/pnp/sp-dev-fx-controls-react/issues/2074)
 
 ### New Control(s)
 
