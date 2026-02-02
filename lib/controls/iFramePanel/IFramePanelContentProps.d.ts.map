@@ -1,0 +1,1 @@
+{"version":3,"file":"IFramePanelContentProps.d.ts","sourceRoot":"","sources":["../../../src/controls/iFramePanel/IFramePanelContentProps.tsx"],"names":[],"mappings":";AAAA,MAAM,WAAW,wBAAyB,SAAQ,KAAK,CAAC,oBAAoB,CAAC,iBAAiB,CAAC;IAC7F,KAAK,EAAE,MAAM,IAAI,CAAC;IAClB,YAAY,CAAC,EAAE,CAAC,MAAM,EAAE,iBAAiB,KAAK,IAAI,CAAC;CACpD"}

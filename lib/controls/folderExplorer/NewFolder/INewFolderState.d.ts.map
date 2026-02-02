@@ -1,0 +1,1 @@
+{"version":3,"file":"INewFolderState.d.ts","sourceRoot":"","sources":["../../../../src/controls/folderExplorer/NewFolder/INewFolderState.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,eAAe;IAC9B,UAAU,EAAE,MAAM,CAAC;IACnB,SAAS,EAAE,OAAO,CAAC;IACnB,OAAO,EAAE,OAAO,CAAC;IACjB,YAAY,CAAC,EAAE,MAAM,CAAC;CACvB"}

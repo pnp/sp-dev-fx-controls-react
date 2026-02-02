@@ -1,0 +1,1 @@
+{"version":3,"file":"IUserInfo.d.ts","sourceRoot":"","sources":["../../../../src/controls/adaptiveCardHost/models/IUserInfo.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,SAAS;IACxB,WAAW,EAAE,MAAM,CAAC;IACpB,KAAK,EAAE,MAAM,CAAC;IACd,oBAAoB,EAAE,OAAO,CAAC;IAC9B,mBAAmB,EAAE,OAAO,CAAC;IAC7B,SAAS,EAAE,MAAM,CAAC;IAClB,kBAAkB,EAAE,OAAO,CAAC;CAC7B"}

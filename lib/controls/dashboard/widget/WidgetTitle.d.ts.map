@@ -1,0 +1,1 @@
+{"version":3,"file":"WidgetTitle.d.ts","sourceRoot":"","sources":["../../../../src/controls/dashboard/widget/WidgetTitle.tsx"],"names":[],"mappings":"AAAA,OAAO,EAGH,aAAa,EACP,MAAM,2BAA2B,CAAC;AAG5C,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAEpC,eAAO,MAAM,WAAW;YAMZ,OAAO;iBACF,cAAc,GAAG,CAAC;uBACZ,OAAO;8BACA,OAAO,KAAK,IAAI;MAC1C,WAmCH,CAAC"}

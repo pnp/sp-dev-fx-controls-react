@@ -1,0 +1,1 @@
+{"version":3,"file":"IFolderPickerState.d.ts","sourceRoot":"","sources":["../../../src/controls/folderPicker/IFolderPickerState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,uCAAuC,CAAC;AAEhE,MAAM,WAAW,kBAAkB;IACjC,SAAS,EAAE,OAAO,CAAC;IACnB,cAAc,EAAE,OAAO,CAAC;CACzB"}

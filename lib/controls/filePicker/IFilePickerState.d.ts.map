@@ -1,0 +1,1 @@
+{"version":3,"file":"IFilePickerState.d.ts","sourceRoot":"","sources":["../../../src/controls/filePicker/IFilePickerState.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,gBAAgB;IAC/B,WAAW,CAAC,EAAE,OAAO,CAAC;IACtB,SAAS,CAAC,EAAE,OAAO,CAAC;IACpB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,KAAK,CAAC,EAAE,MAAM,CAAC;IAEf,yBAAyB,CAAC,EAAE,OAAO,CAAC;CACrC"}

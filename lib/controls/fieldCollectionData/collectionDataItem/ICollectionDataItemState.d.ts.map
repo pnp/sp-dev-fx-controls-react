@@ -1,0 +1,1 @@
+{"version":3,"file":"ICollectionDataItemState.d.ts","sourceRoot":"","sources":["../../../../src/controls/fieldCollectionData/collectionDataItem/ICollectionDataItemState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAEtC,MAAM,WAAW,wBAAwB;IACvC,QAAQ,EAAE,GAAG,CAAC;IACd,SAAS,CAAC,EAAE,QAAQ,EAAE,CAAC;IACvB,WAAW,CAAC,EAAE,OAAO,CAAC;CACvB"}

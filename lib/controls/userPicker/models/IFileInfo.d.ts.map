@@ -1,0 +1,1 @@
+{"version":3,"file":"IFileInfo.d.ts","sourceRoot":"","sources":["../../../../src/controls/userPicker/models/IFileInfo.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,QAAQ;IACvB,eAAe,EAAE,MAAM,CAAC;IACxB,iBAAiB,EAAE,MAAM,CAAC;IAC1B,aAAa,CAAC,EAAE,MAAM,CAAC;IACvB,EAAE,EAAE,MAAM,CAAC;IACX,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,MAAM,EAAE,MAAM,CAAC;CAChB"}

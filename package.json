@@ -139,6 +139,12 @@
     "typescript": "5.3.3",
     "webpack-bundle-analyzer": "^4.1.0"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/pnp/sp-dev-fx-controls-react"

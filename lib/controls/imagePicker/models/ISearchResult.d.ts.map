@@ -1,0 +1,1 @@
+{"version":3,"file":"ISearchResult.d.ts","sourceRoot":"","sources":["../../../../src/controls/imagePicker/models/ISearchResult.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,mBAAmB,EAAE,MAAM,uBAAuB,CAAC;AAE5D,MAAM,WAAW,aAAa;IAC1B,MAAM,EAAG,mBAAmB,EAAE,CAAA;IAC9B,cAAc,EAAE,OAAO,CAAC;IACxB,KAAK,EAAE,MAAM,CAAC;CACjB"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"ITreeViewState.d.ts","sourceRoot":"","sources":["../../../src/controls/treeView/ITreeViewState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,aAAa,CAAC;AAExC;;GAEG;AACH,MAAM,WAAW,cAAc;IAC3B;;OAEG;IACH,MAAM,EAAE,OAAO,CAAC;IAChB;;OAEG;IACH,eAAe,EAAE,OAAO,CAAC;IACzB;;OAEG;IACH,WAAW,EAAE,SAAS,EAAE,CAAC;CAC5B"}
