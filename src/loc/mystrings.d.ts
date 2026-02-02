@@ -1,4 +1,21 @@
 declare interface IControlStrings {
+
+
+  KPISucess: string;
+  KPIDEfaultTitle: string;
+  KPIError: string;
+  KPIExceedsGoalTreshhold: string;
+  KPIGoal: string;
+  KPIMaxAllowedThreshold: string;
+  KPINoDescription: string;
+  KPIProgressGoal: string;
+  KPITotalItemsInScope: string;
+  KPIWithinGoalThreshold: string;
+  KPITotalItems: string;
+    KPICurrentValueAsPercent: string;
+KPIExceedGoal: string;
+KPIOnTrack: string;
+
   CalendarControlDayOfWeekSunday: string;
   CalendarControlDayOfWeekMonday: string;
   CalendarControlDayOfWeekTuesday: string;
@@ -444,6 +461,9 @@ declare interface IControlStrings {
   ClearFilterTitle: string;
   ClearAllFiltersText: string;
   FilterOverflowAriaLabel: string;
+KPIPercentOfTotal: string;
+
+
   worldMapZoomContent: string;
   worldMapZoomIn: string;
   worldMapZoomOut: string;
@@ -462,7 +482,7 @@ worldMapResetMap: string;
 worldMapFlag: string;
 }
 
-declare interface IDateTimeStrings {
+
   L_RelativeDateTime_AFewSecondsFuture: string;
   L_RelativeDateTime_AFewSeconds: string;
   L_RelativeDateTime_AboutAMinuteFuture: string;

@@ -23,14 +23,13 @@ import {
 } from '@fluentui/react-icons';
 import { IKpiCardProps } from './IKpiCardProps';
 import { EGoalMetric } from './IKpiCardData';
+import strings from 'ControlStrings';
 
 export const KPICard: React.FunctionComponent<IKpiCardProps> = (
   props: React.PropsWithChildren<IKpiCardProps>,
 ) => {
   const { dataCard } = props;
   const styles = useKpiStyles();
-
-
 
   const isGreen = React.useMemo(
     () =>
@@ -52,7 +51,8 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
     [dataCard.currentValue, dataCard.totalItems],
   );
   const isOnTrack = React.useMemo(
-    () =>  dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
+    () =>
+      dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
         ? dataCard.currentValue <= dataCard.goal
         : dataCard.currentValue >= dataCard.goal,
     [dataCard.currentValue, dataCard.goal],
@@ -115,14 +115,13 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
                   info={
                     <>
                       <Text size={300} color="neutralSecondary">
-                        {dataCard.description ||
-                          'No description provided for this KPI card.'}
+                        {dataCard.description || strings.KPINoDescription}
                       </Text>
                     </>
                   }
                 >
-                  <Text  weight="bold" size={300}>
-                    {dataCard.title?.toUpperCase() || 'KPI Card'}
+                  <Text weight="bold" size={300}>
+                    {dataCard.title?.toUpperCase() || strings.KPIDEfaultTitle}
                   </Text>
                 </InfoLabel>
               </Stack>
@@ -131,8 +130,8 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
               <Tooltip
                 content={
                   isOnTrack
-                    ? '✓ Within goal threshold'
-                    : '⚠ Exceeds goal threshold'
+                    ? `✓ ${strings.KPIWithinGoalThreshold}`
+                    : `⚠ ${strings.KPIExceedsGoalTreshhold}`
                 }
                 relationship="inaccessible"
               >
@@ -165,19 +164,15 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
               {dataCard.currentValue} <br />
             </Text>
             <Text weight="semibold" size={300} color="neutralSecondary">
-              / {dataCard.goal} Goal
-            </Text  >
+              / {dataCard.goal} {strings.KPIGoal}
+            </Text>
           </Stack>
           <Stack gap="s">
             <Stack direction="horizontal" justifyContent="space-between">
               <Text size={300} color="neutralSecondary">
-                Progress Goal
+                {strings.KPIProgressGoal}
               </Text>
-              <Text
-                size={300}
-                color="neutralSecondary"
-                weight="bold"
-              >
+              <Text size={300} color="neutralSecondary" weight="bold">
                 {((dataCard.currentValue / dataCard.goal) * 100).toFixed(2)}%
               </Text>
             </Stack>
@@ -190,7 +185,7 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
           </Stack>
           <CardFooter>
             <Tooltip
-              content="Maximum allowed threshold"
+              content={strings.KPIMaxAllowedThreshold}
               relationship="inaccessible"
             >
               <Text className={styles.footerMetric}>
@@ -209,10 +204,15 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
             />
 
             {/* Total Items */}
-            <Tooltip content="Total items in scope" relationship="inaccessible">
+            <Tooltip
+              content={strings.KPITotalItemsInScope}
+              relationship="inaccessible"
+            >
               <Text className={styles.footerMetric}>
                 <DocumentRegular className={styles.footerIcon} />
-                <Text className={styles.footerLabel}>Total Items</Text>
+                <Text className={styles.footerLabel}>
+                  {strings.KPITotalItems}
+                </Text>
                 <Text className={styles.footerValue}>
                   {dataCard.totalItems.toLocaleString()}
                 </Text>
@@ -229,12 +229,12 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
 
             {/* % of Total */}
             <Tooltip
-              content="Current value as % of total items"
+              content={strings.KPICurrentValueAsPercent}
               relationship="inaccessible"
             >
               <Text className={styles.footerMetric}>
                 <CalculatorRegular className={styles.footerIcon} />
-                <Text className={styles.footerLabel}>% of Total</Text>
+                <Text className={styles.footerLabel}>{strings.KPIPercentOfTotal}</Text>
                 <Text className={styles.footerValue}>
                   {totalPercent.toFixed(2)}%
                 </Text>
@@ -254,7 +254,7 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
                 )
               }
             >
-              {isOnTrack ? 'On Track' : 'Exceeds Goal'}
+              {isOnTrack ? strings.KPIOnTrack : strings.KPIExceedGoal}
             </Badge>
           </Stack>
         </Stack>
