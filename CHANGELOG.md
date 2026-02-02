@@ -8,11 +8,14 @@
 
 ### Fixes
 
+- `ListItemComments`: Multiline comment doesn't display correctly in ListItemComments control due to missing line break [2078](https://github.com/pnp/sp-dev-fx-controls-react/issues/2078)
+- `ImagePicker`: Imagepicker strings fix [2077](https://github.com/pnp/sp-dev-fx-controls-react/pull/2077)
+
 ### New Control(s)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina) .
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina),[wuxiaojun514](https://github.com/wuxiaojun514),[Paul Schaeflein](https://github.com/pschaeflein)  .
 
 ## 3.23.0
 
