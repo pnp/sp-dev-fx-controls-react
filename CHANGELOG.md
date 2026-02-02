@@ -1,5 +1,19 @@
 # Releases
 
+## 3.24.0
+
+### Enhancements
+
+- `ListItemAttachments`: Add render options for ListItemAttachments [2081](https://github.com/pnp/sp-dev-fx-controls-react/pull/2081)
+
+### Fixes
+
+### New Control(s)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina) .
+
 ## 3.23.0
 
 ### Enhancements
@@ -8,6 +22,7 @@
 - `fast-serve`: Update spfx-fast-serve-helpers to 1.21.1 [#2038](https://github.com/pnp/sp-dev-fx-controls-react/pull/2038)
 - `DynamicForm`: Add itemsQueryCountLimit for Lookup fields [#2033](https://github.com/pnp/sp-dev-fx-controls-react/issues/2033)
 - `ImagePicker`: FluentProvider to SelectFromSharePoint component so token is not undefined [#2046](https://github.com/pnp/sp-dev-fx-controls-react/pull/2046)
+
 
 ### Fixes
 
