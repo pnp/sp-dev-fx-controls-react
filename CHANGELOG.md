@@ -1,5 +1,19 @@
 # Releases
 
+## 3.24.0
+
+### Enhancements
+
+- `ListItemAttachments`: Add render options for ListItemAttachments [2081](https://github.com/pnp/sp-dev-fx-controls-react/pull/2081)
+
+### Fixes
+
+### New Control(s)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina) .
+
 ## 3.23.0
 
 ### Enhancements
