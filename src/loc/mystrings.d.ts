@@ -6,6 +6,8 @@ declare interface IControlStrings {
   KPIError: string;
   KPIExceedsGoalTreshhold: string;
   KPIGoal: string;
+  KPIHigherIsBetter: string;
+  KPILowerIsBetter: string;
   KPIMaxAllowedThreshold: string;
   KPINoDescription: string;
   KPIProgressGoal: string;
@@ -15,6 +17,7 @@ declare interface IControlStrings {
     KPICurrentValueAsPercent: string;
 KPIExceedGoal: string;
 KPIOnTrack: string;
+KPIPercentOfTotal: string;
 
   CalendarControlDayOfWeekSunday: string;
   CalendarControlDayOfWeekMonday: string;
@@ -480,8 +483,6 @@ worldMapLocationPluralLabel: string;
 worldMapLoadintText: string;
 worldMapResetMap: string;
 worldMapFlag: string;
-}
-
 
   L_RelativeDateTime_AFewSecondsFuture: string;
   L_RelativeDateTime_AFewSeconds: string;

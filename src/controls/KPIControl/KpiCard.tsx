@@ -31,16 +31,18 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
   const { dataCard } = props;
   const styles = useKpiStyles();
 
-  const isGreen = React.useMemo(
+  // Determine if KPI is on track based on goal metric type
+  const isOnTrack = React.useMemo(
     () =>
       dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
-        ? dataCard.currentValue <= dataCard.goal
-        : dataCard.currentValue >= dataCard.goal,
-    [dataCard.currentValue, dataCard.goal],
+        ? dataCard.currentValue <= dataCard.goal  // Lower is better: on track when current <= goal
+        : dataCard.currentValue >= dataCard.goal, // Higher is better: on track when current >= goal
+    [dataCard.currentValue, dataCard.goal, dataCard.goalMetric],
   );
+
   const progressColor = React.useMemo(
-    () => (isGreen ? 'success' : 'error'),
-    [isGreen],
+    () => (isOnTrack ? 'success' : 'error'),
+    [isOnTrack],
   );
   const goal = React.useMemo(
     () => dataCard.goal.toLocaleString(),
@@ -49,13 +51,6 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
   const totalPercent = React.useMemo(
     () => (dataCard.currentValue / dataCard.totalItems) * 100,
     [dataCard.currentValue, dataCard.totalItems],
-  );
-  const isOnTrack = React.useMemo(
-    () =>
-      dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
-        ? dataCard.currentValue <= dataCard.goal
-        : dataCard.currentValue >= dataCard.goal,
-    [dataCard.currentValue, dataCard.goal],
   );
 
   // Success / Danger foregrounds (icon + badge text + bar fill)
@@ -110,20 +105,33 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
         <Stack gap="m" padding="m">
           <CardHeader
             header={
-              <Stack direction="horizontal" alignItems="center" gap="8px">
-                <InfoLabel
-                  info={
-                    <>
-                      <Text size={300} color="neutralSecondary">
-                        {dataCard.description || strings.KPINoDescription}
-                      </Text>
-                    </>
-                  }
+              <Stack direction="vertical" gap="2px">
+                <Stack direction="horizontal" alignItems="center" gap="8px">
+                  <InfoLabel
+                    info={
+                      <>
+                        <Text size={300} color="neutralSecondary">
+                          {dataCard.description || strings.KPINoDescription}
+                        </Text>
+                      </>
+                    }
+                  >
+                    <Text weight="bold" size={300}>
+                      {dataCard.title?.toUpperCase() || strings.KPIDEfaultTitle}
+                    </Text>
+                  </InfoLabel>
+                </Stack>
+                <Text
+                  size={200}
+                  style={{
+                    color: tokens.colorNeutralForeground3,
+                    fontStyle: 'italic',
+                  }}
                 >
-                  <Text weight="bold" size={300}>
-                    {dataCard.title?.toUpperCase() || strings.KPIDEfaultTitle}
-                  </Text>
-                </InfoLabel>
+                  {dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
+                    ? strings.KPILowerIsBetter
+                    : strings.KPIHigherIsBetter}
+                </Text>
               </Stack>
             }
             action={

@@ -20,7 +20,7 @@ npm install @pnp/spfx-controls-react
 
 ## Example of KPIControl
 
-![KPIControl Example](../assets/KPIControl.png)
+![KPIControl Example](../assets/KPIControl3.png)
 
 ## Basic Usage
 
