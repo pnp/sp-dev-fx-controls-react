@@ -48,6 +48,7 @@ export const useKpiStyles = (): IKpiStyles => {
   const styles = {
     card: css({
       width: "100%",
+      height: "310px",
       borderRadius: 10,
       background: tokens.colorNeutralBackground1,
       border: `1px solid ${tokens.colorNeutralStroke1}`,
