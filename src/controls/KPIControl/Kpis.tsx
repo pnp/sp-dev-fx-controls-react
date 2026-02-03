@@ -1,81 +1,81 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import * as React from "react";
-import { Stack } from "./stack/Stack";
-import { KPICard } from "./KpiCard";
-import { KPICardSkeleton } from "./KpiCardSkeleton";
-import { useKpiStyles } from "./useKpiStyles";
+import * as React from 'react';
+import { Stack } from './stack/Stack';
+import { KPICard } from './KpiCard';
+import { KPICardSkeleton } from './KpiCardSkeleton';
+import { useKpiStyles } from './useKpiStyles';
 
-import { NoKpisCard } from "./NoKpisCard";
-import { ShowError } from "./showError";
-import { IKpiCardData } from "./IKpiCardData";
-
-
+import { NoKpisCard } from './NoKpisCard';
+import { ShowError } from './showError';
+import { IKpiCardData } from './IKpiCardData';
+import { KPICardCompact } from './KpiCardCompact';
 
 const mockData: IKpiCardData[] = [
   {
-    identifier: "kpi-1",
-    title: "Sales Revenue",
-    currentValue: 125.000 ,
-    goal: 150.000,
-    totalItems: 200.000,
-    description: "Total sales revenue for Q1",
+    identifier: 'kpi-1',
+    title: 'Sales Revenue',
+    currentValue: 125.0,
+    goal: 150.0,
+    totalItems: 200.0,
+    description: 'Total sales revenue for Q1',
     goalMetric: 2,
   },
   {
-    identifier: "kpi-2",
-    title: "Customer Satisfaction",
+    identifier: 'kpi-2',
+    title: 'Customer Satisfaction',
     currentValue: 87,
     goal: 90,
     totalItems: 100,
-    description: "Customer satisfaction score",
+    description: 'Customer satisfaction score',
     goalMetric: 1,
   },
   {
-    identifier: "kpi-3",
-    title: "Tasks Completed",
+    identifier: 'kpi-3',
+    title: 'Tasks Completed',
     currentValue: 42,
     goal: 50,
     totalItems: 60,
-    description: "Number of tasks completed this month",
+    description: 'Number of tasks completed this month',
     goalMetric: 2,
   },
   {
-    identifier: "kpi-4",
-    title: "New Customers",
+    identifier: 'kpi-4',
+    title: 'New Customers',
     currentValue: 156,
     goal: 200,
     totalItems: 250,
-    description: "New customer acquisitions this quarter",
+    description: 'New customer acquisitions this quarter',
     goalMetric: 1,
   },
   {
-    identifier: "kpi-5",
-    title: "Response Time",
+    identifier: 'kpi-5',
+    title: 'Response Time',
     currentValue: 2.5,
     goal: 2,
     totalItems: 5,
-    description: "Average response time in hours",
+    description: 'Average response time in hours',
     goalMetric: 2,
   },
   {
-    identifier: "kpi-6",
-    title: "Employee Engagement",
+    identifier: 'kpi-6',
+    title: 'Employee Engagement',
     currentValue: 78,
     goal: 85,
     totalItems: 100,
-    description: "Employee engagement score percentage",
+    description: 'Employee engagement score percentage',
     goalMetric: 1,
   },
 ];
 
 export interface IKpisProps {
   skeletonCount?: number;
+  compact?: boolean;
 }
 
 export const Kpis: React.FunctionComponent<IKpisProps> = (
   props: React.PropsWithChildren<IKpisProps>,
 ) => {
-  const { skeletonCount = 3 } = props;
+  const { skeletonCount = 3, compact = false } = props;
   const styles = useKpiStyles();
   const kpis = mockData;
   const loading = false;
@@ -92,32 +92,26 @@ export const Kpis: React.FunctionComponent<IKpisProps> = (
 
   return (
     <>
-      <Stack
-        gap="l"
-        direction="horizontal"
-        padding="l"
-        paddingTop="s"
-
-
-      >
+      <Stack gap="l" direction="horizontal" padding="l" paddingTop="s">
         <>
           {loading ? (
             renderSkeletons()
           ) : error ? (
             <ShowError message={error} />
           ) : (
-          <div className={styles.kpiContainer}>
-          {kpis.length > 0 ? (
-            kpis.map((kpi) => (
-              <KPICard
-                key={kpi.identifier}
-                dataCard={kpi}
-              />
-            ))
-          ) : (
-            <NoKpisCard />
-          )}
-          </div>
+            <div className={styles.kpiContainer}>
+              {kpis.length > 0 ? (
+                kpis.map((kpi) =>
+                  compact ? (
+                    <KPICardCompact key={kpi.identifier} dataCard={kpi} />
+                  ) : (
+                    <KPICard key={kpi.identifier} dataCard={kpi} />
+                  ),
+                )
+              ) : (
+                <NoKpisCard />
+              )}
+            </div>
           )}
         </>
       </Stack>

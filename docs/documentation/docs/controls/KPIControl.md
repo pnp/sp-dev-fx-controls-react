@@ -1,11 +1,12 @@
 # KPIControl
 
-A React component for displaying Key Performance Indicator (KPI) cards in a responsive grid layout. Each card visualizes progress toward a goal with visual indicators, progress bars, and status badges.
+A React component for displaying Key Performance Indicator (KPI) cards in a responsive grid layout. Each card visualizes progress toward a goal with visual indicators, progress bars, and status badges. Two card variants are available: a full-featured card and a compact version.
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
+- [Card Variants](#card-variants)
 - [Properties](#properties)
 - [Data Structure](#data-structure)
 - [Goal Metrics](#goal-metrics)
@@ -20,7 +21,7 @@ npm install @pnp/spfx-controls-react
 
 ## Example of KPIControl
 
-![KPIControl Example](../assets/KPIControl3.png)
+![KPIControl Example](../assets/KPIControl.png)
 
 ## Basic Usage
 
@@ -35,7 +36,13 @@ const MyKPIComponent: React.FC = () => {
 };
 ```
 
-## Using Individual KPI Cards
+## Card Variants
+
+The KPIControl offers two card variants to suit different use cases:
+
+### KPICard (Full Version)
+
+The full KPICard displays comprehensive information including footer metrics (Goal, Total Items, % of Total) and a status badge.
 
 ```tsx
 import * as React from 'react';
@@ -59,6 +66,46 @@ const MyKPICard: React.FC = () => {
 };
 ```
 
+### KPICardCompact (Compact Version)
+
+The compact version displays only essential information: title, goal metric indicator, current value, goal, and progress bar. Ideal for dashboards with limited space or when displaying many KPIs.
+
+```tsx
+import * as React from 'react';
+import { KPICardCompact } from '@pnp/spfx-controls-react/lib/KPIControl';
+import { IKpiCardData, EGoalMetric } from '@pnp/spfx-controls-react/lib/KPIControl';
+
+const MyCompactKPICard: React.FC = () => {
+  const kpiData: IKpiCardData = {
+    identifier: 'sales-kpi',
+    title: 'Sales Revenue',
+    currentValue: 125000,
+    goal: 150000,
+    totalItems: 200000,
+    description: 'Total sales revenue for Q1',
+    goalMetric: EGoalMetric.HIGHER_IS_BETTER,
+  };
+
+  return (
+    <KPICardCompact dataCard={kpiData} />
+  );
+};
+```
+
+### Comparison
+
+| Feature | KPICard | KPICardCompact |
+|---------|---------|----------------|
+| Title | ✅ | ✅ |
+| Goal Metric Indicator | ✅ | ✅ |
+| Current Value / Goal | ✅ | ✅ |
+| Progress Bar | ✅ | ✅ |
+| Progress Percentage | ✅ | ✅ |
+| Footer Metrics (Goal, Total Items, % of Total) | ✅ | ❌ |
+| Status Badge (On Track / Off Track) | ✅ | ❌ |
+| Glow Effect | ✅ | ✅ |
+| Info Tooltip | ✅ | ✅ |
+
 ## Properties
 
 ### Kpis Component Properties
@@ -66,8 +113,24 @@ const MyKPICard: React.FC = () => {
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `skeletonCount` | `number` | No | `3` | Number of skeleton cards to display while loading |
+| `compact` | `boolean` | No | `false` | When `true`, renders compact KPI cards instead of full cards |
 
-### KPICard Component Properties
+#### Using the compact prop
+
+```tsx
+import * as React from 'react';
+import { Kpis } from '@pnp/spfx-controls-react/lib/KPIControl';
+
+// Full cards (default)
+const FullKpis: React.FC = () => <Kpis />;
+
+// Compact cards
+const CompactKpis: React.FC = () => <Kpis compact />;
+```
+
+### KPICard & KPICardCompact Component Properties
+
+Both card variants share the same props interface:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
@@ -233,5 +296,93 @@ const salesKpi: IKpiCardData = {
   totalItems: 150000,
   description: 'Monthly sales target - higher is better',
   goalMetric: EGoalMetric.HIGHER_IS_BETTER,
+};
+```
+
+### Using Compact Cards in a Dashboard
+
+```tsx
+import * as React from 'react';
+import { KPICardCompact } from '@pnp/spfx-controls-react/lib/KPIControl';
+import { IKpiCardData, EGoalMetric } from '@pnp/spfx-controls-react/lib/KPIControl';
+
+const kpis: IKpiCardData[] = [
+  {
+    identifier: 'kpi-1',
+    title: 'Sales Revenue',
+    currentValue: 125000,
+    goal: 150000,
+    totalItems: 200000,
+    description: 'Total sales revenue for Q1',
+    goalMetric: EGoalMetric.HIGHER_IS_BETTER,
+  },
+  {
+    identifier: 'kpi-2',
+    title: 'Customer Satisfaction',
+    currentValue: 87,
+    goal: 90,
+    totalItems: 100,
+    description: 'Customer satisfaction score',
+    goalMetric: EGoalMetric.HIGHER_IS_BETTER,
+  },
+  {
+    identifier: 'kpi-3',
+    title: 'Response Time',
+    currentValue: 1.5,
+    goal: 2,
+    totalItems: 5,
+    description: 'Average response time in hours',
+    goalMetric: EGoalMetric.LOWER_IS_BETTER,
+  },
+];
+
+const MyCompactKPIs: React.FC = () => {
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+      {kpis.map((kpi) => (
+        <KPICardCompact key={kpi.identifier} dataCard={kpi} />
+      ))}
+    </div>
+  );
+};
+```
+
+### Mixing Full and Compact Cards
+
+You can use both card types in the same dashboard for different purposes:
+
+```tsx
+import * as React from 'react';
+import { KPICard, KPICardCompact } from '@pnp/spfx-controls-react/lib/KPIControl';
+import { IKpiCardData, EGoalMetric } from '@pnp/spfx-controls-react/lib/KPIControl';
+
+const primaryKpi: IKpiCardData = {
+  identifier: 'primary-kpi',
+  title: 'Revenue',
+  currentValue: 125000,
+  goal: 150000,
+  totalItems: 200000,
+  description: 'Primary KPI with full details',
+  goalMetric: EGoalMetric.HIGHER_IS_BETTER,
+};
+
+const secondaryKpis: IKpiCardData[] = [
+  // ... secondary KPIs
+];
+
+const MixedDashboard: React.FC = () => {
+  return (
+    <div>
+      {/* Primary KPI with full details */}
+      <KPICard dataCard={primaryKpi} />
+      
+      {/* Secondary KPIs in compact format */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginTop: '16px' }}>
+        {secondaryKpis.map((kpi) => (
+          <KPICardCompact key={kpi.identifier} dataCard={kpi} />
+        ))}
+      </div>
+    </div>
+  );
 };
 ```

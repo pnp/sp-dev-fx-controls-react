@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import {
+  Body1,
   FluentProvider,
   IdPrefixProvider,
   Theme,
+  Title1,
   Title3,
   makeStyles,
   shorthands,
@@ -68,7 +70,10 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
         <div className={styles.title}>
           <Title3>KPIS Control Test</Title3>
         </div>
+        <Body1>Regular cards</Body1>
         <Kpis />
+        <Body1>Compact cards</Body1>
+        <Kpis compact={true} />
       </FluentProvider>
       </IdPrefixProvider>
     </>
