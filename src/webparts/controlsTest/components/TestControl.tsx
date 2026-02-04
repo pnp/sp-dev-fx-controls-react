@@ -1,19 +1,22 @@
 import * as React from 'react';
 
 import {
+  Body1,
   FluentProvider,
   IdPrefixProvider,
   Theme,
+  Title1,
   Title3,
   makeStyles,
   shorthands,
 } from '@fluentui/react-components';
 
 import { IUserInfo } from '../../../controls/userPicker/models/IUserInfo';
-import { UserPicker } from '../../../controls/userPicker';
+
 import { WebPartContext } from '@microsoft/sp-webpart-base';
-import WorldMap from '../../../controls/worldMap/WorldMap';
+
 import { createV9Theme } from '@fluentui/react-migration-v8-v9';
+import { Kpis } from '../../../controls/KPIControl';
 
 const useStyles = makeStyles({
   root: {
@@ -63,18 +66,14 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
   return (
     <>
     <IdPrefixProvider value="test-control-">
-      <FluentProvider theme={setTheme()}>
+      <FluentProvider theme={setTheme()} applyStylesToPortals={true}>
         <div className={styles.title}>
-          <Title3>Test Control - WorldMap</Title3>
+          <Title3>KPIS Control Test</Title3>
         </div>
-        <WorldMap
-          theme={setTheme() as Theme}
-          description={''}
-          isDarkTheme={false}
-          hasTeamsContext={false}
-          title={'Test Control - World Map'}
-          styles={{ width: '100%', height: '600vh' }}
-        />
+        <Body1>Regular cards</Body1>
+        <Kpis />
+        <Body1>Compact cards</Body1>
+        <Kpis compact={true} />
       </FluentProvider>
       </IdPrefixProvider>
     </>
