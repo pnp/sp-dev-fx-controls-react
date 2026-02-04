@@ -17,7 +17,7 @@ const mockData: IKpiCardData[] = [
     currentValue: 125.0,
     goal: 150.0,
     totalItems: 200.0,
-    description: 'Total sales revenue for Q1',
+    description: 'This is a comprehensive description of the Total Sales Revenue KPI for Q1. This metric tracks all revenue generated from product sales, service contracts, and recurring subscriptions across all business units and geographic regions. The goal is set based on historical performance, market conditions, and strategic growth objectives. Performance is evaluated weekly with detailed breakdowns by product category, sales team, and customer segment. This KPI is critical for quarterly business reviews and investor reporting.',
     goalMetric: 2,
   },
   {

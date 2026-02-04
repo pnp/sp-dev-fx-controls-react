@@ -31,6 +31,14 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
   const { dataCard } = props;
   const styles = useKpiStyles();
 
+  // State to control InfoLabel popover visibility
+  const [isInfoLabelOpen, setIsInfoLabelOpen] = React.useState(false);
+
+  // Handle card mouse leave to auto-dismiss InfoLabel
+  const handleCardMouseLeave = React.useCallback(() => {
+    setIsInfoLabelOpen(false);
+  }, []);
+
   // Determine if KPI is on track based on goal metric type
   const isOnTrack = React.useMemo(
     () =>
@@ -97,7 +105,7 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
 
   return (
     <>
-      <Card className={styles.card}>
+      <Card className={styles.card} onMouseLeave={handleCardMouseLeave}>
         {/* Glow blob effect - green for on track, red for exceeds goal */}
         <div
           className={isOnTrack ? styles.glowBlobSuccess : styles.glowBlobError}
@@ -108,6 +116,13 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
               <Stack direction="vertical" gap="2px">
                 <Stack direction="horizontal" alignItems="center" gap="8px">
                   <InfoLabel
+                    style={{ zIndex: 99999 }}
+                    infoButton={{
+                      popover: {
+                        open: isInfoLabelOpen,
+                        onOpenChange: (_e, data) => setIsInfoLabelOpen(data.open),
+                      },
+                    }}
                     info={
                       <>
                         <Text size={300} color="neutralSecondary">

@@ -53,12 +53,13 @@ export const useKpiStyles = (): IKpiStyles => {
       background: tokens.colorNeutralBackground1,
       border: `1px solid ${tokens.colorNeutralStroke1}`,
       boxShadow: tokens.shadow8,
-      overflow: "hidden",
+      overflow: "visible",
       position: "relative",
       padding: "0px 15px !important",
       transition: "transform 0.25s ease, box-shadow 0.25s ease",
-      "&:hover": {
-        transform: "translateY(-3px)",
+      "&:hover, &:focus-within": {
+        zIndex: 10,
+        transform: "translateY(-2px)",
         boxShadow: tokens.shadow16, // deeper on hover
       },
     }),
