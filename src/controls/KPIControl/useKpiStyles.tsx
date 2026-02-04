@@ -22,6 +22,7 @@ interface IKpiStyles {
   footerIcon: string;
   footerLabel: string;
   footerValue: string;
+  footerDivider: string;
   glowBlob: string;
   glowBlobSuccess: string;
   glowBlobError: string;
@@ -42,6 +43,7 @@ interface IKpiStyles {
   noKpiButtonContainer: string;
   noKpiButton: string;
   noKpiDecorativeLine: string;
+  footerGrid: string;
 }
 
 export const useKpiStyles = (): IKpiStyles => {
@@ -91,6 +93,10 @@ export const useKpiStyles = (): IKpiStyles => {
       fontSize: tokens.fontSizeBase400,
       fontWeight: tokens.fontWeightSemibold,
       color: tokens.colorNeutralForeground2,
+    }),
+    footerDivider: css({
+      height: "32px",
+      borderColor: tokens.colorNeutralStroke1,
     }),
     glowBlob: css({
       position: "absolute",
@@ -291,6 +297,14 @@ export const useKpiStyles = (): IKpiStyles => {
       marginTop: "16px",
       position: "relative",
       zIndex: 1,
+    }),
+    footerGrid: css({
+      width: "100%",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(80px, 1fr))",
+
+      alignItems: "center",
+
     }),
   };
   return styles;

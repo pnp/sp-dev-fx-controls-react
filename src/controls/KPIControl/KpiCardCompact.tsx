@@ -48,7 +48,7 @@ export const KPICardCompact: React.FunctionComponent<IKpiCardProps> = (
     [isOnTrack],
   );
 
-  // Success / Danger foregrounds (icon + badge text + bar fill)
+  // Success / Danger foregrounds
   const accentFg = React.useMemo(
     () =>
       isOnTrack
@@ -56,11 +56,6 @@ export const KPICardCompact: React.FunctionComponent<IKpiCardProps> = (
         : tokens.colorPaletteRedForeground2,
     [isOnTrack],
   );
-
-  // Success / Danger backgrounds (badge pill bg)
-
-  // Success / Danger borders (badge pill border)
-
 
   return (
     <>

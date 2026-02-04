@@ -43,7 +43,7 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
   const isOnTrack = React.useMemo(
     () =>
       dataCard.goalMetric === EGoalMetric.LOWER_IS_BETTER
-        ? dataCard.currentValue <= dataCard.goal  // Lower is better: on track when current <= goal
+        ? dataCard.currentValue <= dataCard.goal // Lower is better: on track when current <= goal
         : dataCard.currentValue >= dataCard.goal, // Higher is better: on track when current >= goal
     [dataCard.currentValue, dataCard.goal, dataCard.goalMetric],
   );
@@ -61,7 +61,7 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
     [dataCard.currentValue, dataCard.totalItems],
   );
 
-  // Success / Danger foregrounds (icon + badge text + bar fill)
+  // Success / Danger foregrounds
   const accentFg = React.useMemo(
     () =>
       isOnTrack
@@ -120,7 +120,8 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
                     infoButton={{
                       popover: {
                         open: isInfoLabelOpen,
-                        onOpenChange: (_e, data) => setIsInfoLabelOpen(data.open),
+                        onOpenChange: (_e, data) =>
+                          setIsInfoLabelOpen(data.open),
                       },
                     }}
                     info={
@@ -211,27 +212,21 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
               content={strings.KPIMaxAllowedThreshold}
               relationship="inaccessible"
             >
-              <Text className={styles.footerMetric}>
+              <Stack alignItems="center" gap={tokens.spacingVerticalXXS}>
                 <TargetRegular className={styles.footerIcon} />
                 <Text className={styles.footerLabel}>Goal</Text>
                 <Text className={styles.footerValue}>{goal}</Text>
-              </Text>
+              </Stack>
             </Tooltip>
 
-            <Divider
-              vertical
-              style={{
-                height: '32px',
-                borderColor: tokens.colorNeutralStroke1, // token border
-              }}
-            />
+            <Divider vertical className={styles.footerDivider} />
 
             {/* Total Items */}
             <Tooltip
               content={strings.KPITotalItemsInScope}
               relationship="inaccessible"
             >
-              <Text className={styles.footerMetric}>
+              <Stack alignItems="center" gap={tokens.spacingVerticalXXS}>
                 <DocumentRegular className={styles.footerIcon} />
                 <Text className={styles.footerLabel}>
                   {strings.KPITotalItems}
@@ -239,29 +234,25 @@ export const KPICard: React.FunctionComponent<IKpiCardProps> = (
                 <Text className={styles.footerValue}>
                   {dataCard.totalItems.toLocaleString()}
                 </Text>
-              </Text>
+              </Stack>
             </Tooltip>
 
-            <Divider
-              vertical
-              style={{
-                height: '32px',
-                borderColor: tokens.colorNeutralStroke1,
-              }}
-            />
+            <Divider vertical className={styles.footerDivider} />
 
             {/* % of Total */}
             <Tooltip
               content={strings.KPICurrentValueAsPercent}
               relationship="inaccessible"
             >
-              <Text className={styles.footerMetric}>
+              <Stack alignItems="center" gap={tokens.spacingVerticalXXS}>
                 <CalculatorRegular className={styles.footerIcon} />
-                <Text className={styles.footerLabel}>{strings.KPIPercentOfTotal}</Text>
+                <Text className={styles.footerLabel}>
+                  {strings.KPIPercentOfTotal}
+                </Text>
                 <Text className={styles.footerValue}>
                   {totalPercent.toFixed(2)}%
                 </Text>
-              </Text>
+              </Stack>
             </Tooltip>
           </CardFooter>
           <Stack>
