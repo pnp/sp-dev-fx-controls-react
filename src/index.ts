@@ -47,3 +47,4 @@ export * from './MonacoEditor';
 export * from './UploadFiles';
 export * from './ShareDialog';
 export * from './Calendar';
+export * from './GroupPicker';

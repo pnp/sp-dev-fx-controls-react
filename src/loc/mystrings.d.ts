@@ -60,6 +60,9 @@ declare interface IControlStrings {
   TeamPickerButtonRemoveTitle: string;
   TeamPickerSugestionsHeaderText: string;
   TeamPickernoResultsFoundText: string;
+  GroupPickerSuggestionsHeaderText: string;
+  GroupPickerGroupTypeM365Label: string;
+  GroupPickerGroupTypeSecurityLabel: string;
 
   TeamChannelPickerSugestionHeaderText: string;
   TeamsChannelPickerNoresultsFoundText: string;
