@@ -18,7 +18,7 @@ Here is an example of the control:
 
 ![GroupPicker Security](../assets/GroupPicker-Security.png)
 
-`GroupPicker` multi-selection mode
+`GroupPicker` multi-selection mode:
 
 ![GroupPicker multi selection](../assets/GroupPicker-MultiSelect.png)
 
