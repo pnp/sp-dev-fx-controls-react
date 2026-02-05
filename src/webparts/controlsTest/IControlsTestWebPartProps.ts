@@ -5,6 +5,7 @@ export type ValidControls = "all" |
   "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" |
   "FieldCollectionData" | "FieldPicker" | "FilePicker" |
   "FileTypeIcon" | "FilterBar" | "FolderExplorer" | "FolderPicker" |
+  "GroupPicker" |
   "GridLayout" | "HoverReactionsBar" | "IconPicker" | "IFrameDialog" |
   "IFramePanel" | "ImagePicker" | "ListItemAttachments" | "ListItemComments" |
   "ListItemPicker" | "ListPicker" | "ListView" | "LivePersona" |
