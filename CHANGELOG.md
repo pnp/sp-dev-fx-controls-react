@@ -1,4 +1,5 @@
 # Releases
+ 
 
 ## 3.24.0
 
@@ -6,10 +7,22 @@
 
 - `PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)
 - `FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)
+- `ListItemComments`: Multiline comment doesn't display correctly in ListItemComments control due to missing line break [2078](https://github.com/pnp/sp-dev-fx-controls-react/issues/2078)
+- `ImagePicker`: Imagepicker strings fix [2077](https://github.com/pnp/sp-dev-fx-controls-react/pull/2077)
+- `TreeView`: TreeView Item - pass through imageProps of iconProps to TreeItem   [#2074](https://github.com/pnp/sp-dev-fx-controls-react/issues/2074)
+
+### Enhancements
+
+- `ListItemAttachments`: Add render options for ListItemAttachments [2081](https://github.com/pnp/sp-dev-fx-controls-react/pull/2081)
+
+### New Control(s)
+
+- `GroupPicker`: New GroupPicker Control - select one or multiple M365 Groups [2085](https://github.com/pnp/sp-dev-fx-controls-react/pull/2085)
 
 ### Contributors
 
 Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina),[wuxiaojun514](https://github.com/wuxiaojun514),[Paul Schaeflein](https://github.com/pschaeflein).
 
 ## 3.23.0
 
