@@ -52,6 +52,7 @@
           "FileTypeIcon": false,
           "FolderExplorer": false,
           "FolderPicker": false,
+          "GroupPicker": false,
           "GridLayout": false,
           "HoverReactionsBar": false,
           "IconPicker": false,

@@ -233,6 +233,7 @@ const FolderExplorer = React.lazy(() => import('../../../FolderExplorer').then(m
 const FolderPicker = React.lazy(() => import('../../../FolderPicker').then(module => ({ default: module.FolderPicker })));
 const GridLayout = React.lazy(() => import('../../../GridLayout').then(module => ({ default: module.GridLayout })));
 const HoverReactionsBar = React.lazy(() => import('../../../HoverReactionsBar').then(module => ({ default: module.HoverReactionsBar })));
+const GroupPicker = React.lazy(() => import('../../../GroupPicker').then(module => ({ default: module.GroupPicker })));
 
 const IFrameDialog = React.lazy<React.ComponentType<IFrameDialogProps>>(() => import('../../../IFrameDialog').then(module => ({ default: module.IFrameDialog })));
 
@@ -617,6 +618,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
+      selectedGroups: [],
       errorMessage: "This field is required",
       selectedFilters: ["filter1"],
       termStoreInfo: null,
@@ -1628,6 +1630,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 disabled={true}
                 showtooltip={true}
                 defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
+            </div>
+          }
+          {controlVisibility.GroupPicker &&
+            <div id="GroupPickerDiv" className={styles.container}>
+              <GroupPicker
+                appcontext={this.props.context}
+                label="Group Picker"
+                itemLimit={3}
+                selectedGroups={this.state.selectedGroups}
+                multiSelect={true}
+                onSelectedGroups={(tagList: ITag[]) => {
+                  this.setState({ selectedGroups: tagList });
+                }}
+                groupType="M365"
+                themeVariant={this.props.themeVariant}
+              />
             </div>
           }
           {controlVisibility.DragDropFiles &&
