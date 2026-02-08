@@ -62,6 +62,7 @@
           "ListItemComments": false,
           "ListItemPicker": false,
           "ListPicker": false,
+          "ListToolbar": false,
           "ListView": false,
           "LivePersona": false,
           "LocationPicker": false,
