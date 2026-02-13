@@ -75,7 +75,7 @@
     "date-fns": "^2.22.1",
     "he": "^1.2.0",
     "jotai": "^2.4.2",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "maplibre-gl": "^5.6.1",
     "markdown-it": "^14.1.0",
     "monaco-editor": "^0.29.1",
