@@ -11,10 +11,11 @@
 
 - `PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)
 - `FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)
+- Fix ReDoS vulnerability by upgrading markdown-it: [#2089](https://github.com/pnp/sp-dev-fx-controls-react/pull/2089)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [akshataggrwal](https://github.com/akshataggrwal), [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
 
 ## 3.23.0
 
