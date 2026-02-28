@@ -198,7 +198,7 @@ export default class TreeItem extends React.Component<ITreeItemProps, ITreeItemS
             // Rendering when item has iconProps
             item.iconProps &&
             <span>
-              <Icon className={styles.icon} iconName={item.iconProps.iconName} style={item.iconProps.style} theme={this.props.theme} />
+              <Icon className={styles.icon} iconName={item.iconProps.iconName} style={item.iconProps.style} theme={this.props.theme} imageProps={item.iconProps.imageProps} />
               &nbsp;
             </span>
           }

@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 import {
+  Body1,
+  FluentProvider,
+  IdPrefixProvider,
+  Theme,
+  Title1,
+  Title3,
   makeStyles,
   shorthands,
   Button,
@@ -32,6 +38,11 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 
 import { ListToolbar } from '../../../controls/ListToolbar';
 import { IToolbarItem } from '../../../controls/ListToolbar';
+        
+import { IUserInfo } from '../../../controls/userPicker/models/IUserInfo';
+
+import { createV9Theme } from '@fluentui/react-migration-v8-v9';
+import { Kpis } from '../../../controls/KPIControl';
 
 const useStyles = makeStyles({
   root: {
@@ -324,5 +335,18 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
         ariaLabel="Document library toolbar"
       />
     </div>
+    <>
+    <IdPrefixProvider value="test-control-">
+      <FluentProvider theme={setTheme()} applyStylesToPortals={true}>
+        <div className={styles.title}>
+          <Title3>KPIS Control Test</Title3>
+        </div>
+        <Body1>Regular cards</Body1>
+        <Kpis />
+        <Body1>Compact cards</Body1>
+        <Kpis compact={true} />
+      </FluentProvider>
+      </IdPrefixProvider>
+    </>
   );
 };
