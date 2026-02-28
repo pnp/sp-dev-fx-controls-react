@@ -244,6 +244,8 @@ const ListItemComments = React.lazy(() => import('../../../ListItemComments').th
 const ListItemPicker = React.lazy(() => import('../../../ListItemPicker').then(module => ({ default: module.ListItemPicker })));
 const ListPicker = React.lazy(() => import('../../../ListPicker').then(module => ({ default: module.ListPicker })));
 
+const ListToolbar = React.lazy(() => import('../../../controls/ListToolbar').then(module => ({ default: module.ListToolbar })));
+
 const ListView = React.lazy(() => import('../../../ListView').then(module => ({ default: module.ListView })));
 
 const Map = React.lazy(() => import('../../../Map').then(module => ({ default: module.Map })));
@@ -2940,6 +2942,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   showIcons={true}
                 />
               )}
+            </div>
+          }
+          {controlVisibility.ListToolbar &&
+            <div id="ListToolbarDiv" className={styles.container}>
+              <h3>ListToolbar</h3>
+              <ListToolbar
+                context={this.props.context}
+                theme={this.props.themeVariant as any}
+                items={[
+                  { key: 'new', label: 'New', icon: <span>+</span>, onClick: () => console.log('New clicked'), group: 'actions' },
+                  { key: 'edit', label: 'Edit', icon: <span>✎</span>, onClick: () => console.log('Edit clicked'), group: 'actions' },
+                  { key: 'delete', label: 'Delete', icon: <span>🗑</span>, onClick: () => console.log('Delete clicked'), appearance: 'subtle', group: 'danger' },
+                ]}
+                farItems={[
+                  { key: 'filter', label: 'Filter', icon: <span>🔍</span>, onClick: () => console.log('Filter clicked'), isFarItem: true },
+                  { key: 'settings', label: 'Settings', icon: <span>⚙</span>, onClick: () => console.log('Settings clicked'), isFarItem: true },
+                ]}
+                totalCount={10}
+                showGroupDividers={true}
+                ariaLabel="List Toolbar"
+              />
             </div>
           }
           {controlVisibility.TestControl &&
