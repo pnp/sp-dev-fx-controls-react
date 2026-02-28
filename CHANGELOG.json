@@ -7,7 +7,9 @@
           "`KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)",
           "`ListToolbar`: new control `ListToolbar` [#2088](https://github.com/pnp/sp-dev-fx-controls-react/pull/2088)"
         ],
-        "enhancements": [],
+        "enhancements": [
+          "`ModernTaxonomyPicker`: Adding support to display matched synonyms [#2093](https://github.com/pnp/sp-dev-fx-controls-react/pull/2093)"
+        ],
         "fixes":[
           "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)",
           "`FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)",
@@ -20,7 +22,8 @@
         "[Antanina Druzhkina](https://github.com/Ateina)",
         "[joaojmendes](https://github.com/joaojmendes)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
-        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
+        "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)",
+        "[Randell Hodges](https://github.com/randellhodges)"
       ]
     },
     {
