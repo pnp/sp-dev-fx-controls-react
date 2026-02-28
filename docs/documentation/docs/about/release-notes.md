@@ -7,6 +7,10 @@
 - `KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)
 - `ListToolbar`: new control `ListToolbar` [#2088](https://github.com/pnp/sp-dev-fx-controls-react/pull/2088)
 
+### Enhancements
+
+- `ModernTaxonomyPicker`: Adding support to display matched synonyms [#2093](https://github.com/pnp/sp-dev-fx-controls-react/pull/2093)
+
 ### Fixes
 
 - `PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)
@@ -16,7 +20,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [akshataggrwal](https://github.com/akshataggrwal), [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada).
+Special thanks to our contributors (in alphabetical order): [akshataggrwal](https://github.com/akshataggrwal), [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [Michaël Maillot](https://github.com/michaelmaillot), [Nishkalank Bezawada](https://github.com/NishkalankBezawada), [Randell Hodges](https://github.com/randellhodges).
 
 ## 3.23.0
 
