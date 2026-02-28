@@ -3,7 +3,9 @@
     {
       "version": "3.24.0",
       "changes": {
-        "new": [],
+        "new": [
+          "`KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)"
+        ],
         "enhancements": [],
         "fixes":[
           "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)",
@@ -12,6 +14,7 @@
       },
       "contributions": [
         "[Antanina Druzhkina](https://github.com/Ateina)",
+        "[joaojmendes](https://github.com/joaojmendes)",
         "[Michaël Maillot](https://github.com/michaelmaillot)",
         "[Nishkalank Bezawada](https://github.com/NishkalankBezawada)"
       ]
