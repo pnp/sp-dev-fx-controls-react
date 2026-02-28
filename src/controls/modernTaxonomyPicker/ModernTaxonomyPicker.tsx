@@ -168,7 +168,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     return terms;
   }
 
+  let searchFilter: string = null;
+
   async function onResolveSuggestions(filter: string, selectedItems?: ITermInfo[]): Promise<ITermInfo[]> {
+
+    searchFilter = filter;
     if (filter === '') {
       return [];
     }
@@ -213,6 +217,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
         term={term}
         termStoreInfo={currentTermStoreInfo}
         languageTag={currentLanguageTag}
+        searchFilter={searchFilter}
         {...itemProps}
       />
     );

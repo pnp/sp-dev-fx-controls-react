@@ -1,13 +1,25 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
-html[dir='ltr'] .termSuggestionContainer
+html[dir='ltr']
 {
-  text-align: left;
+  .termSuggestionContainer
+  {
+    text-align: left;
+  }
+  .termSynonymList {
+    padding-left: 0;
+  }
 }
 
-html[dir='rtl'] .termSuggestionContainer
+html[dir='rtl']
 {
-  text-align: right;
+  .termSuggestionContainer
+  {
+    text-align: right;
+  }
+  .termSynonymList {
+    padding-right: 0;
+  }
 }
 
 .termSuggestionContainer
@@ -17,10 +29,34 @@ html[dir='rtl'] .termSuggestionContainer
   padding-right: 12px;
   padding-bottom: 7px;
 
-  .termSuggestionPath
+  .termSuggestionPath,
+  .termSynonymList
   {
     font-size: 12px;
     color: #666666;
+  }
+
+  .termSynonymList
+  {
+    color: #605e5c;
+    font-size: var(--ms-fonts-medium-fontSize, 14px);
+    list-style: none;
+    margin-block-start: 2px;
+    margin-top: 2px;
+    > li
+    {
+      &::before
+      {
+        content: '•';
+        font-size: 11px;
+        padding-left: 4px;
+      }
+
+      > span.synonymPrefix
+      {
+        font-weight: 600;
+      }
+    }
   }
 
 }
