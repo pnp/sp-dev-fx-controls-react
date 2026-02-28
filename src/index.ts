@@ -22,7 +22,6 @@ export * from './IFrameDialog';
 export * from './IFramePanel';
 export * from './Common';
 export * from './Utilities';
-export * from './IFrameDialog';
 export * from './FieldPicker';
 export * from './FieldCommon';
 export * from './FieldAttachmentsRenderer';

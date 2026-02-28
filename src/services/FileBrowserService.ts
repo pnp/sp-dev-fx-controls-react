@@ -63,7 +63,7 @@ export class FileBrowserService {
       filesQueryResult = await this._getListDataAsStream(restApi, folderPath, acceptedFilesExtensions, sortBy, isDesc);
     } catch (error) {
       filesQueryResult.items = null;
-      console.error(error.message);
+      console.error(error instanceof Error ? error.message : String(error));
     }
     return filesQueryResult;
   }
@@ -101,10 +101,10 @@ export class FileBrowserService {
         throw new Error(`Cannot read data from the results.`);
       }
 
-      const result: ILibrary[] = libResults.value.map((libItem) => { return this.parseLibItem(libItem, absoluteUrl); });
+      const result: ILibrary[] = libResults.value.map((libItem: any) => { return this.parseLibItem(libItem, absoluteUrl); }); // eslint-disable-line @typescript-eslint/no-explicit-any
       return result;
     } catch (error) {
-      console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error.message}'`);
+      console.error(`[FileBrowserService.getSiteMediaLibraries]: Err='${error instanceof Error ? error.message : String(error)}'`);
       return undefined;
     }
   }
@@ -130,7 +130,7 @@ export class FileBrowserService {
 
       return libResults.vti_x005f_listtitle !== internalName && libResults.vti_x005f_listtitle || "";
     } catch (error) {
-      console.error(`[FileBrowserService.getSiteLibraryNameByInternalName]: Err='${error.message}'`);
+      console.error(`[FileBrowserService.getSiteLibraryNameByInternalName]: Err='${error instanceof Error ? error.message : String(error)}'`);
       return null;
     }
   }
@@ -153,7 +153,7 @@ export class FileBrowserService {
       const blob: Blob = await fileDownloadResult.blob();
       return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[FileBrowserService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[FileBrowserService.fetchFileContent] Err='${err instanceof Error ? err.message : String(err)}'`);
       return null;
     }
   }
@@ -250,14 +250,14 @@ export class FileBrowserService {
       // Set additional information from the ListResponse
       this.processResponse(filesResult);
 
-      const items = filesResult.ListData.Row.map(fileItem => this.parseFileItem(fileItem));
+      const items = filesResult.ListData.Row.map((fileItem: any) => this.parseFileItem(fileItem)); // eslint-disable-line @typescript-eslint/no-explicit-any
       filesQueryResult = {
         items: items,
         nextHref: filesResult.ListData.NextHref
       };
     } catch (error) {
       filesQueryResult.items = undefined;
-      console.error(error.message);
+      console.error(error instanceof Error ? error.message : String(error));
     }
     return filesQueryResult;
   }
