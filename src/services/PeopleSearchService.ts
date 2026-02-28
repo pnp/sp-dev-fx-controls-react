@@ -144,7 +144,7 @@ export default class SPPeopleSearchService {
         if (graphUserResponse.value && graphUserResponse.value.length > 0) {
 
           // Get user loginName from user email
-          const _users = [];
+          const _users: any[] = [];
           const batch = Web(this.context.absoluteUrl).createBatch();
           for (const value of graphUserResponse.value) {
             sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data)).catch(() => {
@@ -196,7 +196,7 @@ export default class SPPeopleSearchService {
 
           // Filter out "UNVALIDATED_EMAIL_ADDRESS"
           if (!allowUnvalidated) {
-            values = values.filter(v => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS"));
+            values = values.filter((v: any) => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS"));
           }
 
 
@@ -213,8 +213,8 @@ export default class SPPeopleSearchService {
           }
 
           // Filter out NULL keys
-          values = values.filter(v => v.Key !== null);
-          const userResults = values.map(element => {
+          values = values.filter((v: any) => v.Key !== null);
+          const userResults = values.map((element: any) => {
             const accountName: string = element.Description || "";
             const email: string = element.EntityData?.Email || element.Description;
             const secondaryText = element.EntityData?.Email || element.ProviderName;

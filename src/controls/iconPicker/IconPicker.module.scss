@@ -107,11 +107,11 @@
   }
 }
 .iconRadio:checked + .iconLabel {
+  color: "[theme: themePrimary, default: #0078d7]";
   &:after {
     opacity: 1;
     border-color: "[theme: themePrimary, default: #0078d7]";
   }
-  color: "[theme: themePrimary, default: #0078d7]";
 }
 .iconRadio:focus + .iconLabel {
   outline: 1px;

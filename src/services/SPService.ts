@@ -58,7 +58,7 @@ export default class SPService implements ISPService {
       const result: { value: ISPContentType[] } = await data.json();
       return result.value;
     } catch (error) {
-      throw Error(error);
+      throw Error(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -102,7 +102,7 @@ export default class SPService implements ISPService {
       const result: { value: ISPField[] } = await data.json();
       return result.value;
     } catch (error) {
-      throw Error(error);
+      throw Error(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -582,7 +582,7 @@ export default class SPService implements ISPService {
            const isArray = Array.isArray(result[fieldName]);
            //multiselect lookups are arrays
            if (isArray) {
-            result[fieldName].forEach(element => {                
+            result[fieldName].forEach((element: any) => {                
               let value = element[lookupFieldName || 'Title'];
               const dateVal = Date.parse(value);
               if (!Number.isNaN(dateVal)) {
@@ -641,8 +641,8 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          const emails = [];
-          result[fieldName].forEach(element => {
+          const emails: string[] = [];
+          result[fieldName].forEach((element: any) => {
             const loginNameWithoutClaimsToken = element.Name.split("|").pop();
             if(!loginNameWithoutClaimsToken.toLowerCase().includes('null')){
               if(!element.Title.toLowerCase().includes('null')){

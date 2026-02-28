@@ -80,7 +80,7 @@ const getAllSitesInternal = async (ctx: BaseComponentContext, queryText: string,
   let res: ISite[] = [];
   res = values.map(element => {
     const site: ISite = {} as ISite;
-    element.Cells.forEach(cell => {
+    element.Cells.forEach((cell: any) => {
       switch (cell.Key) {
         case 'Title':
           site.title = cell.Value;
@@ -135,7 +135,7 @@ export const getHubSites = async (ctx: BaseComponentContext): Promise<ISite[]> =
   const response = await ctx.spHttpClient.get(requestUrl, SPHttpClient.configurations.v1);
   const json = await response.json();
 
-  json.value.forEach(v => {
+  json.value.forEach((v: any) => {
     hubSites.push({
       title: v.Title,
       id: v.SiteId,

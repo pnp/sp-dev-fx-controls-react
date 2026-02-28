@@ -11,6 +11,10 @@ dist
 lib
 solution
 temp
+lib-dts
+lib-commonjs
+lib-esm
+jest-output
 *.sppkg
 
 # Coverage directory used by tools like istanbul
