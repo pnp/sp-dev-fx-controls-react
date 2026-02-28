@@ -4,7 +4,8 @@
       "version": "3.24.0",
       "changes": {
         "new": [
-          "`KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)"
+          "`KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)",
+          "`ListToolbar`: new control `ListToolbar` [#2088](https://github.com/pnp/sp-dev-fx-controls-react/pull/2088)"
         ],
         "enhancements": [],
         "fixes":[
