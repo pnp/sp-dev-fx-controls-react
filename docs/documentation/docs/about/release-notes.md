@@ -5,6 +5,7 @@
 ### New control(s)
 
 - `KPIControl`: new control `KPIControl` [#2084](https://github.com/pnp/sp-dev-fx-controls-react/pull/2084)
+- `ListToolbar`: new control `ListToolbar` [#2088](https://github.com/pnp/sp-dev-fx-controls-react/pull/2088)
 
 ### Fixes
 
