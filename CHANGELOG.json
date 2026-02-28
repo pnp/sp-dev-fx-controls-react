@@ -11,7 +11,8 @@
         "fixes":[
           "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)",
           "`FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)",
-          "Fix ReDoS vulnerability by upgrading markdown-it: [#2089](https://github.com/pnp/sp-dev-fx-controls-react/pull/2089)"
+          "Fix ReDoS vulnerability by upgrading markdown-it: [#2089](https://github.com/pnp/sp-dev-fx-controls-react/pull/2089)",
+          "Upgrade lodash from 4.17.21 to 4.17.23 to address Prototype Pollution vulnerability: [#2090](https://github.com/pnp/sp-dev-fx-controls-react/pull/2090)"
         ]
       },
       "contributions": [
