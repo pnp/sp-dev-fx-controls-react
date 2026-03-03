@@ -1,0 +1,1 @@
+{"version":3,"file":"ITeamChannel.d.ts","sourceRoot":"","sources":["../../../src/common/model/ITeamChannel.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,YAAY;IAC3B,WAAW,EAAE,MAAM,CAAC;IACpB,WAAW,EAAE,MAAM,CAAC;IACpB,EAAE,EAAE,MAAM,CAAC;IACX,mBAAmB,EAAE,OAAO,CAAC;IAC7B,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,cAAc,EAAE,MAAM,CAAC;CACxB"}

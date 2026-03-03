@@ -1,0 +1,1 @@
+{"version":3,"file":"IShowMessageProps.d.ts","sourceRoot":"","sources":["../../../../../src/controls/MyTeams/components/ShowMessage/IShowMessageProps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,gCAAgC,CAAC;AAElE,MAAM,WAAW,iBAAkB,SAAQ,gBAAgB;IACvD,MAAM,EAAC,OAAO,CAAC;IACf,OAAO,EAAC,GAAG,CAAC,OAAO,GAAG,MAAM,CAAC;CAChC"}

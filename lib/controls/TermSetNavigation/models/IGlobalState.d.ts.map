@@ -1,0 +1,1 @@
+{"version":3,"file":"IGlobalState.d.ts","sourceRoot":"","sources":["../../../../src/controls/TermSetNavigation/models/IGlobalState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,iBAAiB,CAAC;AAE3C,OAAO,EAAE,gBAAgB,EAAE,MAAM,qBAAqB,CAAC;AAEvD,MAAM,WAAW,YAAa,SAAQ,gBAAgB;IACrD,YAAY,EAAG,QAAQ,CAAC;IACxB,qBAAqB,EAAE,OAAO,CAAC;IAC/B,qBAAqB,EAAE,OAAO,CAAC;CAC/B"}

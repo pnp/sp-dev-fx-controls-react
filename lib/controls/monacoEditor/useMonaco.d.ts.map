@@ -1,0 +1,1 @@
+{"version":3,"file":"useMonaco.d.ts","sourceRoot":"","sources":["../../../src/controls/monacoEditor/useMonaco.ts"],"names":[],"mappings":"AACA,OAAe,EAAE,MAAM,EAAE,MAAM,uBAAuB,CAAC;AAGvD,oBAAY,OAAO;IACjB,OAAO,IAAA;IACP,MAAM,IAAA;IACN,KAAK,IAAA;CACN;AAED,eAAO,MAAM,SAAS;YACZ,MAAM;YACN,OAAO;WACR,KAAK;CA0Bb,CAAC"}

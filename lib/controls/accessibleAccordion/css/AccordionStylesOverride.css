@@ -1,0 +1,85 @@
+/**
+* ----------------------------------------------
+* accordion styles Override default
+* ----------------------------------------------
+**/
+.accordion {
+  margin-top: 20px;
+  border-bottom: 1px solid var(--accordion-bodyDivider);
+  color: var(--accordion-bodyText);
+  background-color: var(--accordion-bodyBackground);
+}
+
+.accordion__item:last-child {
+  margin-bottom: -0.5px;
+}
+
+.accordion__button {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--accordion-buttonText);
+  background-color: var(--accordion-buttonBackground);
+}
+
+.accordion__button {
+  background: 0 0;
+  border: 1px solid transparent;
+  border-top-color: var(--accordion-bodyDivider);
+  border-radius: 0;
+  cursor: pointer;
+  display: block;
+  line-height: 44px;
+  height: 44px;
+  padding-left: 10px;
+}
+
+.accordion__button:focus {
+  outline-width: 0.5px;
+  outline-style: solid;
+  border-top-color: transparent;
+}
+
+.accordion__button:hover {
+  background-color: var(--accordion-buttonBackgroundHovered);
+}
+
+.accordion__button::after {
+  display: block;
+  float: right;
+  content: '';
+  height: 10px;
+  width: 10px;
+  margin-right: 12px;
+  border-bottom: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(-45deg);
+  margin-top: 15px;
+}
+
+.accordion__button[aria-expanded='true']::after,
+.accordion__button[aria-selected='true']::after {
+  transform: rotate(45deg);
+}
+
+[hidden] {
+  display: none;
+}
+
+.accordion__panel {
+  margin-top: 1px;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  color: var(--accordion-bodyText);
+  background-color: var(--accordion-bodyBackground);
+  animation: accordionFadeIn 0.35s ease-in;
+}
+
+@keyframes accordionFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

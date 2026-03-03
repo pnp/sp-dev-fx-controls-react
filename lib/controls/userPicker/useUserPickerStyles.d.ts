@@ -1,0 +1,2 @@
+export declare const useUserPickerStyles: () => Record<"image" | "container" | "imageButton" | "userItem" | "userItemCloseButton" | "selectUserMainContainer" | "selectedUserContainer" | "inputContainer" | "userCardStyles" | "popupContainer" | "usersContainer", string>;
+//# sourceMappingURL=useUserPickerStyles.d.ts.map

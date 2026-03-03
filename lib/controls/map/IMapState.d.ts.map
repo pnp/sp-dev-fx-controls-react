@@ -1,0 +1,1 @@
+{"version":3,"file":"IMapState.d.ts","sourceRoot":"","sources":["../../../src/controls/map/IMapState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,GAAG,CAAC;AAEjC,MAAM,WAAW,SAAS;IACxB,WAAW,EAAE,YAAY,CAAC;IAC1B,OAAO,EAAE,MAAM,CAAC;IAChB,gBAAgB,EAAE,OAAO,CAAC;IAC1B,OAAO,EAAE,OAAO,CAAC;CAClB"}

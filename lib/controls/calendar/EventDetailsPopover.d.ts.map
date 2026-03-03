@@ -1,0 +1,1 @@
+{"version":3,"file":"EventDetailsPopover.d.ts","sourceRoot":"","sources":["../../../src/controls/calendar/EventDetailsPopover.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAe/B,OAAO,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAC;AAK1C,MAAM,WAAW,yBAAyB;IACxC,KAAK,EAAE,MAAM,CAAC;CACf;AA0CD,eAAO,MAAM,mBAAmB,EAAE,KAAK,CAAC,iBAAiB,CACvD,yBAAyB,CAqG1B,CAAC"}

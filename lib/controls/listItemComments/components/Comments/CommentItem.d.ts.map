@@ -1,0 +1,1 @@
+{"version":3,"file":"CommentItem.d.ts","sourceRoot":"","sources":["../../../../../src/controls/listItemComments/components/Comments/CommentItem.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAO/B,OAAO,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAMtC,MAAM,WAAW,4BAA4B;IAC3C,OAAO,EAAE,QAAQ,CAAC;CACnB;AAED,eAAO,MAAM,WAAW,EAAE,KAAK,CAAC,iBAAiB,CAAC,4BAA4B,CA4B7E,CAAC"}

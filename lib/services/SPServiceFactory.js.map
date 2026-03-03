@@ -1,0 +1,1 @@
+{"version":3,"file":"SPServiceFactory.js","sourceRoot":"","sources":["../../src/services/SPServiceFactory.ts"],"names":[],"mappings":"AAEA,OAAO,SAAS,MAAM,aAAa,CAAC;AAEpC;IAAA;IAIA,CAAC;IAHe,8BAAa,GAA3B,UAA4B,OAA6B,EAAE,YAAsB,EAAE,YAAqB,EAAE,cAAuB;QAC/H,OAAO,IAAI,SAAS,CAAC,OAAO,EAAE,cAAc,CAAC,CAAC;IAChD,CAAC;IACH,uBAAC;AAAD,CAAC,AAJD,IAIC"}

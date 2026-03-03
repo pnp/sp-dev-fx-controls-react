@@ -1,0 +1,1 @@
+{"version":3,"file":"IFileCommandBarProps.d.ts","sourceRoot":"","sources":["../../../../../src/controls/uploadFiles/components/FileCommandBar/IFileCommandBarProps.ts"],"names":[],"mappings":"AAEA,MAAM,WAAY,oBAAoB;IACpC,QAAQ,CAAC,EAAE,CAAC,IAAI,EAAE,IAAI,KAAK,IAAI,CAAC;IAChC,aAAa,CAAC,EAAE,CAAC,UAAU,EAAC,OAAO,KAAK,IAAI,CAAC;IAC7C,QAAQ,CAAC,EAAE,MAAM,IAAI,CAAC;CACvB"}

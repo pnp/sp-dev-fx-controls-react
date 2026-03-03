@@ -1,0 +1,1 @@
+{"version":3,"file":"globalState.js","sourceRoot":"","sources":["../../../../../src/controls/uploadFiles/jotai/atoms/globalState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,IAAI,EAAE,MAAM,OAAO,CAAC;AAI7B,MAAM,CAAC,IAAM,WAAW,GAAG,IAAI,CAAe;IAC5C,KAAK,EAAE,EAAE;IACT,aAAa,EAAE,EAAE;IACjB,SAAS,EAAE,KAAK;IAChB,cAAc,EAAE,CAAC;IACjB,YAAY,EAAE,SAAS;IACvB,QAAQ,EAAE,CAAC;CACZ,CAAC,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"IDocumentLibraryBrowserState.d.ts","sourceRoot":"","sources":["../../../../../src/controls/filePicker/controls/DocumentLibraryBrowser/IDocumentLibraryBrowserState.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,+CAA+C,CAAC;AAEzE,MAAM,WAAW,4BAA4B;IAC3C,SAAS,EAAE,OAAO,CAAC;IACnB,KAAK,EAAE,QAAQ,EAAE,CAAC;CACnB"}

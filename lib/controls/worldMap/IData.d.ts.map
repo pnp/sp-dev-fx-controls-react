@@ -1,0 +1,1 @@
+{"version":3,"file":"IData.d.ts","sourceRoot":"","sources":["../../../src/controls/worldMap/IData.ts"],"names":[],"mappings":"AACA;;;GAGG;AACH,MAAM,WAAW,KAAK;IACpB;;;OAGG;IACH,EAAE,EAAE,MAAM,CAAC;IAEX;;;;OAIG;IACH,IAAI,EAAE,MAAM,CAAC;IAEb;;;;OAIG;IACH,QAAQ,EAAE,MAAM,CAAC;IAEjB;;;;OAIG;IACH,IAAI,EAAE,MAAM,CAAC;IAEb;;;;OAIG;IACH,WAAW,EAAE,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;CAC/B"}

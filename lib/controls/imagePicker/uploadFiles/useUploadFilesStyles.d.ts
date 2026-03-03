@@ -1,0 +1,2 @@
+export declare const useUploadFilesStyles: () => Record<"card" | "selectedImage" | "baseStyle" | "dragContainer" | "imagesContainer" | "itemBody" | "headerTitle" | "bottomContainer" | "deleteStyle" | "iconRefreshStyle" | "dragDropIconStyles" | "containerGlobalMarginTop", string>;
+//# sourceMappingURL=useUploadFilesStyles.d.ts.map

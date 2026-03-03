@@ -1,0 +1,2 @@
+export declare const useHoverReactionsStyles: () => Record<"card" | "emoji" | "emojiList" | "cardContent" | "searchBox" | "emojiRoot" | "emojiImage", string>;
+//# sourceMappingURL=useHoverReactionsStyles.d.ts.map

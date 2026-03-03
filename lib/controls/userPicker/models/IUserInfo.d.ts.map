@@ -1,0 +1,1 @@
+{"version":3,"file":"IUserInfo.d.ts","sourceRoot":"","sources":["../../../../src/controls/userPicker/models/IUserInfo.ts"],"names":[],"mappings":"AAAA,OAAO,EACL,QAAQ,EACR,IAAI,EACL,MAAM,kCAAkC,CAAC;AAE1C,MAAM,WAAW,SAAU,SAAQ,IAAI;IACrC,SAAS,EAAE,MAAM,CAAC;IAClB,QAAQ,EAAE,QAAQ,GAAG,SAAS,CAAC;CAChC"}

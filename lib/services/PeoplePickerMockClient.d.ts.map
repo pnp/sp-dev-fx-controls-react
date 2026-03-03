@@ -1,0 +1,1 @@
+{"version":3,"file":"PeoplePickerMockClient.d.ts","sourceRoot":"","sources":["../../src/services/PeoplePickerMockClient.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,iBAAiB,CAAC;AAExD,eAAO,MAAM,SAAS,EAAG,qBAAqB,EAwC7C,CAAC;AAEF,qBAAa,sBAAsB;IAC1B,YAAY,UAAoB,GAAG,SAAU,MAAM,MAAO,GAAG,EAAE,KAAG,OAAO,CAM9E;CACH"}

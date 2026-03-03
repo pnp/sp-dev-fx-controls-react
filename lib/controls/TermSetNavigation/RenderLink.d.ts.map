@@ -1,0 +1,1 @@
+{"version":3,"file":"RenderLink.d.ts","sourceRoot":"","sources":["../../../src/controls/TermSetNavigation/RenderLink.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAI/B,OAAO,EAEL,QAAQ,EAGT,MAAM,iBAAiB,CAAC;AAUzB,MAAM,WAAW,gBAAgB;IAC/B,IAAI,EAAE,QAAQ,CAAC;IACf,eAAe,CAAC,EAAE,OAAO,CAAC;CAE3B;AAED,eAAO,MAAM,UAAU,EAAE,KAAK,CAAC,iBAAiB,CAAC,gBAAgB,CAgDhE,CAAC"}

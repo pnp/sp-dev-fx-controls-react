@@ -1,0 +1,1 @@
+{"version":3,"file":"ITermSetListResponse.d.ts","sourceRoot":"","sources":["../../../../src/controls/TermSetNavigation/models/ITermSetListResponse.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,kCAAkC,CAAC;AAE7D,MAAM,WAAW,iBAAiB;IAChC,gBAAgB,EAAE,MAAM,CAAC;IACzB,KAAK,EAAE,SAAS,CAAC,GAAG,EAAE,CAAC;CACxB"}

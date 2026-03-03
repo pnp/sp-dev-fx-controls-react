@@ -1,0 +1,1 @@
+{"version":3,"file":"IFieldRendererProps.d.ts","sourceRoot":"","sources":["../../../../src/controls/fields/fieldCommon/IFieldRendererProps.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAC/B,OAAO,EAAE,SAAS,EAAE,MAAM,+BAA+B,CAAC;AAE1D;;GAEG;AACH,MAAM,WAAW,mBAAmB;IAChC;;OAEG;IACH,QAAQ,CAAC,EAAE,KAAK,CAAC,aAAa,CAAC;IAE/B;;OAEG;IACH,SAAS,CAAC,EAAE,SAAS,CAAC;CACzB"}

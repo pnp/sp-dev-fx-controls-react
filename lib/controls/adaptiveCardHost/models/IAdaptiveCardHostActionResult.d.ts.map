@@ -1,0 +1,1 @@
+{"version":3,"file":"IAdaptiveCardHostActionResult.d.ts","sourceRoot":"","sources":["../../../../src/controls/adaptiveCardHost/models/IAdaptiveCardHostActionResult.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,6BAA6B;IAC1C,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,CAAC,EAAE,MAAM,CAAC;IACf,GAAG,CAAC,EAAE,MAAM,CAAC;IACb,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,MAAM,CAAC;CACjB"}

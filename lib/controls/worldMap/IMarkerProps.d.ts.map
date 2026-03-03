@@ -1,0 +1,1 @@
+{"version":3,"file":"IMarkerProps.d.ts","sourceRoot":"","sources":["../../../src/controls/worldMap/IMarkerProps.tsx"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAE,MAAM,SAAS,CAAC;AAChC,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAEpC,MAAM,WAAW,YAAa,SAAQ,OAAO;IAC3C,IAAI,EAAE,KAAK,CAAC;IACZ,OAAO,CAAC,EAAE,CAAC,IAAI,EAAE,KAAK,KAAK,IAAI,CAAC;CACjC"}

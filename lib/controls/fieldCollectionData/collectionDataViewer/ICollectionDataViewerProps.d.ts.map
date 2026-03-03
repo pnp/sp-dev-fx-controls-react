@@ -1,0 +1,1 @@
+{"version":3,"file":"ICollectionDataViewerProps.d.ts","sourceRoot":"","sources":["../../../../src/controls/fieldCollectionData/collectionDataViewer/ICollectionDataViewerProps.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,yBAAyB,EAAE,MAAM,8BAA8B,CAAC;AAEzE,MAAM,WAAW,0BAA2B,SAAQ,yBAAyB;IAC3E,OAAO,EAAE,CAAC,KAAK,EAAE,GAAG,EAAE,KAAK,IAAI,CAAC;IAChC,QAAQ,EAAE,MAAM,IAAI,CAAC;CACtB"}

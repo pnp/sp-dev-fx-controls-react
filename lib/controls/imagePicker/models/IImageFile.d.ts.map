@@ -1,0 +1,1 @@
+{"version":3,"file":"IImageFile.d.ts","sourceRoot":"","sources":["../../../../src/controls/imagePicker/models/IImageFile.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,UAAU;IACtB,QAAQ,EAAE,MAAM,CAAC;IACjB,QAAQ,EAAE,MAAM,CAAC;IAClB,QAAQ,EAAE,MAAM,CAAC;IAChB,mBAAmB,EAAE,MAAM,OAAO,CAAC,MAAM,CAAC,CAAC;IAC3C,GAAG,EAAE,MAAM,CAAC;CAChB"}

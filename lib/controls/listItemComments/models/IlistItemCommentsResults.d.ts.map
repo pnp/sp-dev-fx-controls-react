@@ -1,0 +1,1 @@
+{"version":3,"file":"IlistItemCommentsResults.d.ts","sourceRoot":"","sources":["../../../../src/controls/listItemComments/models/IlistItemCommentsResults.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,iCAAiC,CAAC;AAC3D,MAAM,WAAW,wBAAwB;IACvC,QAAQ,EAAE,QAAQ,EAAE,CAAC;IACrB,OAAO,CAAC,EAAE,OAAO,CAAC;IAClB,QAAQ,CAAC,EAAE,MAAM,CAAC;CACnB"}

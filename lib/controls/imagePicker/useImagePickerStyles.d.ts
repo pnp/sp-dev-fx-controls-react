@@ -1,0 +1,2 @@
+export declare const useImagePickerStyles: () => Record<"image" | "grid" | "root" | "toolbarContainer" | "buttonContainer" | "selectedImage" | "stockImagesPicker" | "stockImageContainer" | "renderImageContainer", string>;
+//# sourceMappingURL=useImagePickerStyles.d.ts.map
