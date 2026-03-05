@@ -454,7 +454,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    */
   private _itemSelectionChanged = (): void => {
     const filePickerResults: IFilePickerResult[] = [];
-    this._selection.getSelection().map((item: IFile, index: number) => {
+    (this._selection.getSelection() as IFile[]).map((item: IFile, index: number) => {
       if (!item.isFolder) {
         filePickerResults.push({
           fileAbsoluteUrl: item.absoluteUrl,
@@ -502,7 +502,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString, sortField, isDesc);
     } catch (error) {
       filesQueryResult.items = null;
-      console.error(error.message);
+      console.error((error as Error).message);
     } finally {
 
 

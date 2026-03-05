@@ -7,7 +7,7 @@ import { WebPartTitle } from './WebPartTitle';
 import styles from './WebPartTitle.module.scss';
 import { DisplayMode } from '@microsoft/sp-core-library';
 
-declare const sinon;
+declare const sinon: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 describe('<WebPartTitle />', () => {
   let webparttitle: ReactWrapper;
@@ -15,7 +15,7 @@ describe('<WebPartTitle />', () => {
   const dummyClass = "DummyClass";
   const dummyMoreLink = "See all";
   const dummyColor = "#ffffff";
-  const dummyUpdateFnc = sinon.spy((value) => { return value; });
+  const dummyUpdateFnc = sinon.spy((value: string) => { return value; });
 
   afterEach(() => {
     webparttitle.unmount();

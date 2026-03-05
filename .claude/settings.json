@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/alexterentiev/Work/community/sp-dev-fx-controls-react/**)",
+      "Bash(node -e \"console.log\\(require\\(''/Users/alexterentiev/Work/community/sp-dev-fx-controls-react/node_modules/markdown-it/package.json''\\).version\\)\")",
+      "Bash(npm info @types/markdown-it versions --json)",
+      "Bash(node -e \"const v=JSON.parse\\(require\\(''fs''\\).readFileSync\\(''/dev/stdin'',''utf8''\\)\\); console.log\\(v.filter\\(x=>x.startsWith\\(''14.''\\)\\).join\\(''\\\\n''\\)\\)\")",
+      "Bash(npm install --save-dev --save-exact @types/markdown-it@14.1.1)",
+      "Bash(node -e \"console.log\\(require\\(''/Users/alexterentiev/Work/community/sp-dev-fx-controls-react/node_modules/uuid/package.json''\\).version\\)\")",
+      "Bash(node -e \"console.log\\(require\\(''/Users/alexterentiev/Work/community/sp-dev-fx-controls-react/node_modules/color/package.json''\\).version\\)\")",
+      "Bash(npm info @types/uuid versions --json)",
+      "Bash(node -e \"const v=JSON.parse\\(require\\(''fs''\\).readFileSync\\(''/dev/stdin'',''utf8''\\)\\); const matching=v.filter\\(x=>x.startsWith\\(''8.''\\)\\); console.log\\(matching[matching.length-1]\\)\")",
+      "Bash(npm info @types/color versions --json)",
+      "Bash(node -e \"const v=JSON.parse\\(require\\(''fs''\\).readFileSync\\(''/dev/stdin'',''utf8''\\)\\); const matching=v.filter\\(x=>x.startsWith\\(''3.''\\)\\); console.log\\(matching[matching.length-1]\\)\")",
+      "Bash(ls /Users/alexterentiev/Work/community/sp-dev-fx-controls-react/node_modules/color/*.d.ts)",
+      "Bash(node -e \"const p=require\\(''/Users/alexterentiev/Work/community/sp-dev-fx-controls-react/node_modules/color/package.json''\\); console.log\\(p.types||p.typings||''none''\\)\")",
+      "Bash(npm install --save-dev --save-exact @types/uuid@8.3.4 @types/color@3.0.6)"
+    ]
+  }
+}

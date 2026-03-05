@@ -10,7 +10,7 @@ export interface IPillGroupProps {
 
 export const PillGroup: React.FunctionComponent<IPillGroupProps> = (props) => {
     
-    const onClick = (label, value): void => {
+    const onClick = (label: string, value: string): void => {
         if (props.onRemoveFilter)
         {
             props.onRemoveFilter(label, value);

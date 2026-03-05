@@ -209,7 +209,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             group.children = subGroup.groups;
           } else {
             // Add the items to the updated items order array
-            groupedItems[groupItems].forEach((item) => {
+            groupedItems[groupItems].forEach((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
               updatedItemsOrder.push(item);
             });
           }
@@ -611,7 +611,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           labelMessage={strings.UploadFileHeader}
           onDrop={
             dragDropFiles ?
-              (files) => {
+              (files: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                 this.props.onDrop(files);
               } : []
           } >

@@ -129,7 +129,7 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
   /**
    * On Selected Item
    */
-  private onItemChanged = (selectedItems: { key: string; name: string }[]): void => {
+  private onItemChanged = (selectedItems?: ITag[]): void => {
     this.setState({
       selectedItems: selectedItems
     });
@@ -194,8 +194,8 @@ export class ListItemPicker extends React.Component<IListItemPickerProps, IListI
       console.log(`Error get Items`, error);
       this.setState({
         showError: true,
-        errorMessage: error.message,
-        noresultsFoundText: error.message
+        errorMessage: (error as Error).message,
+        noresultsFoundText: (error as Error).message
       });
       return null;
     }

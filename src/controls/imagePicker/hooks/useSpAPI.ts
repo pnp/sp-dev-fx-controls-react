@@ -57,7 +57,7 @@ export const useSpAPI = (context: BaseComponentContext): ISpAPI => {
       const blob: Blob = await fileDownloadResult.blob();
       return  getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[DownloadBingContent] Err='${err.message}'`);
+      console.error(`[DownloadBingContent] Err='${(err as Error).message}'`);
       return null;
     }
   }
@@ -80,7 +80,7 @@ export const useSpAPI = (context: BaseComponentContext): ISpAPI => {
       const blob: Blob = await fileDownloadResult.blob();
       return  getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[DownloadBingContent] Err='${err.message}'`);
+      console.error(`[DownloadBingContent] Err='${(err as Error).message}'`);
       return null;
     }
   };

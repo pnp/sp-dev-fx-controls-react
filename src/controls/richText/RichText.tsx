@@ -38,8 +38,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   private _quillElem: ReactQuill = undefined;
   private _wrapperRef: HTMLDivElement = undefined;
   private _propertyPaneRef: RichTextPropertyPane = undefined;
-  private _toolbarId = undefined;
-  private _richTextId = undefined;
+  private _toolbarId: string = undefined;
+  private _richTextId: string = undefined;
 
   private ddStyleOpts = [
     {
@@ -936,7 +936,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * When user enters the richtext editor, displays the border
    */
-  private handleOnFocus = (range, source, editor): void => {
+  private handleOnFocus = (range: any, source: any, editor: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (!this.state.editing) {
       this.setState({ editing: true });
     }
@@ -1052,7 +1052,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Called when richtext selection changes
    */
-  private handleChangeSelection = (range, oldRange, source): void => {
+  private handleChangeSelection = (range: any, oldRange: any, source: any): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const quill = this.getEditor();
     try {
       if (quill) {
@@ -1147,8 +1147,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
   /**
    * Keeps track of whether we clicked outside the element
    */
-  private handleClickOutside = (event): void => {
-    const outside: boolean = !elementContains(this._wrapperRef, event.target);
+  private handleClickOutside = (event: Event): void => {
+    const outside: boolean = !elementContains(this._wrapperRef, event.target as HTMLElement);
 
     // Did we click outside?
     if (outside) {

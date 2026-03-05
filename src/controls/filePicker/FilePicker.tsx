@@ -434,13 +434,13 @@ export class FilePicker extends React.Component<
   /**
    * Sorts navigation tabs based on the tabOrder prop
    */
-  private _getTabOrder = (links): INavLink[] => {
+  private _getTabOrder = (links: INavLink[]): INavLink[] => {
     const sortedKeys = [
       ...this.props.tabOrder,
-      ...links.map(l => l.key).filter(key => !this.props.tabOrder.includes(key)),
+      ...links.map((l: INavLink) => l.key).filter((key) => !this.props.tabOrder.includes(key as FilePickerTab)),
     ];
 
-    links.sort((a, b) => {
+    links.sort((a: INavLink, b: INavLink) => {
       return sortedKeys.indexOf(a.key) - sortedKeys.indexOf(b.key);
     });
 

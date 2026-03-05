@@ -37,7 +37,7 @@ export const DeleteFile: React.FunctionComponent<IDeleteFileProps> = (
             icon={<Delete className={styles.deleteStyle} />}
             size="small"
             appearance="transparent"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               e.stopPropagation();
               onDeleteFile();

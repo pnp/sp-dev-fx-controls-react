@@ -11,7 +11,7 @@ import styles from './ListItemAttachments.module.scss';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
-  private fileInput;
+  private fileInput: React.RefObject<HTMLInputElement>;
   private _isFileExplorerOpen = false;
 
   constructor(props: IUploadAttachmentProps) {
@@ -83,7 +83,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           this.setState({
             hideDialog: false,
             isLoading: false,
-            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
+            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', (error as Error).message)
           });
           reject(error);
         }

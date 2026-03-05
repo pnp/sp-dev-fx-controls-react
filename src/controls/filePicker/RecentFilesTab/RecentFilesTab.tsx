@@ -99,7 +99,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   private _onSelectionChanged = (): void => {
     const filePickerResults: IFilePickerResult[] = [];
     // Get the selected item
-    this._selection.getSelection().map((selectedKey: IRecentFile) => {
+    (this._selection.getSelection() as IRecentFile[]).map((selectedKey: IRecentFile) => {
       if (!selectedKey.isFolder && selectedKey.fileUrl)
         filePickerResults.push({
           fileAbsoluteUrl: selectedKey.fileUrl,

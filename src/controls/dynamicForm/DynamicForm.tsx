@@ -463,7 +463,7 @@ export class DynamicFormBase extends React.Component<
       });
 
       /** Item values for save / update */
-      const objects = {};
+      const objects: Record<string, unknown> = {};
 
       for (let i = 0, len = fields.length; i < len; i++) {
         const field = fields[i];
@@ -505,7 +505,7 @@ export class DynamicFormBase extends React.Component<
           }
           if (fieldType === "LookupMulti") {
             value = [];
-            field.newValue.forEach((element) => {
+            field.newValue.forEach((element: { key: string | number }) => {
               value.push(element.key);
             });
             objects[`${fieldcolumnInternalName}Id`] = {
@@ -538,7 +538,7 @@ export class DynamicFormBase extends React.Component<
 
             if (fieldType === "TaxonomyFieldTypeMulti") {
               objects[hiddenFieldName] = field.newValue
-                .map((term) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
+                .map((term: ITermInfo) => `-1#;${term.labels[0]?.name || ""}|${term.id};`)
                 .join("#");
             }
 
@@ -554,7 +554,7 @@ export class DynamicFormBase extends React.Component<
             }
             if (fieldType === "TaxonomyFieldTypeMulti") {
               objects[hiddenFieldName] = field.newValue
-                .map((term) => `-1#;${term.name}|${term.key};`)
+                .map((term: { name: string; key: string }) => `-1#;${term.name}|${term.key};`)
                 .join("#");
             }
           }
@@ -611,9 +611,9 @@ export class DynamicFormBase extends React.Component<
             );
           }
         } catch (error) {
-          apiError = error.message;
+          apiError = (error as Error).message;
           if (onSubmitError) {
-            onSubmitError(objects, error);
+            onSubmitError(objects, error as Error);
           }
           console.log("Error", error);
         }
@@ -645,9 +645,9 @@ export class DynamicFormBase extends React.Component<
               );
             }
           } catch (error) {
-            apiError = error.message;
+            apiError = (error as Error).message;
             if (onSubmitError) {
-              onSubmitError(objects, error);
+              onSubmitError(objects, error as Error);
             }
             console.log("Error", error);
           }
@@ -670,7 +670,7 @@ export class DynamicFormBase extends React.Component<
             const folderId = fields[idField];
 
             // Set the content type ID for the target item
-            objects[contentTypeIdField] = contentTypeId;
+            (objects as any)[contentTypeIdField] = contentTypeId;
             // Update the just created folder or Document Set
             const iur = await this.updateListItemRetry(library, folderId, objects);
             if (onSubmitted) {
@@ -687,9 +687,9 @@ export class DynamicFormBase extends React.Component<
             );
           }
         } catch (error) {
-          apiError = error.message;
+          apiError = (error as Error).message;
           if (onSubmitError) {
-            onSubmitError(objects, error);
+            onSubmitError(objects, error as Error);
           }
           console.log("Error", error);
         }
@@ -702,7 +702,7 @@ export class DynamicFormBase extends React.Component<
       });
     } catch (error) {
       if (onSubmitError) {
-        onSubmitError(null, error);
+        onSubmitError(null, error as Error);
       }
       console.log(`Error onSubmit`, error);
     }
@@ -711,7 +711,7 @@ export class DynamicFormBase extends React.Component<
   /**
    * Adds selected file to the library
    */
-  private addFileToLibrary = async (objects: {}): Promise<void> => {
+  private addFileToLibrary = async (objects: Record<string, unknown>): Promise<void> => {
     const {
       selectedFile
     } = this.state;
@@ -766,7 +766,7 @@ export class DynamicFormBase extends React.Component<
         }
       } catch (error) {
         if (onSubmitError) {
-          onSubmitError(objects, error);
+          onSubmitError(objects, error as Error);
         }
         console.log("Error", error);
       }
@@ -805,19 +805,19 @@ export class DynamicFormBase extends React.Component<
       field.stringValue = newValue.join(';#');
     }
     if (field.fieldType === "Lookup" || field.fieldType === "LookupMulti") {
-      field.stringValue = newValue.map(nv => nv.key + ';#' + nv.name).join(';#');
+      field.stringValue = newValue.map((nv: { key: string | number; name: string }) => nv.key + ';#' + nv.name).join(';#');
     }
     if (useModernTaxonomyPicker) {
       if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
         if (Array.isArray(newValue) && newValue.length > 0) {
-          field.stringValue = newValue.map(nv => nv.labels.map(label => label.name).join(';')).join(';');
+          field.stringValue = newValue.map((nv: ITermInfo) => nv.labels.map((label: { name: string }) => label.name).join(';')).join(';');
         } else {
           field.stringValue = "";
         }
       }
     } else {
       if (field.fieldType === "TaxonomyFieldType" || field.fieldType === "TaxonomyFieldTypeMulti") {
-        field.stringValue = newValue.map(nv => nv.name).join(';');
+        field.stringValue = newValue.map((nv: { name: string }) => nv.name).join(';');
       }
     }
 
@@ -1115,7 +1115,7 @@ export class DynamicFormBase extends React.Component<
       }, () => this.performValidation(true));
 
     } catch (error) {
-      this.updateFormMessages(MessageBarType.error, 'An error occurred while loading: ' + error.message);
+      this.updateFormMessages(MessageBarType.error, 'An error occurred while loading: ' + (error as Error).message);
       console.error(`An error occurred while loading DynamicForm`, error);
       return null;
     }
@@ -1299,7 +1299,7 @@ export class DynamicFormBase extends React.Component<
                     name: response.Label,
                   });
                   value = term;//selectedTags;
-                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  stringValue = selectedTags?.map((dv: { key: string; name: string }) => dv.key + ';#' + dv.name).join(';#');
                 }
               } else {
                 if (defaultValue !== "") {
@@ -1331,7 +1331,7 @@ export class DynamicFormBase extends React.Component<
                 value = _selectedTags;
               } else {
                 if (defaultValue && defaultValue !== "") {
-                  defaultValue.split(/#|;/).forEach((element) => {
+                  defaultValue.split(/#|;/).forEach((element: string) => {
                     if (element.indexOf("|") !== -1)
                       selectedTags.push({
                         key: element.split("|")[1],
@@ -1339,13 +1339,13 @@ export class DynamicFormBase extends React.Component<
                       });
                   });
 
-                  const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,selectedTags.map(dv => ({
+                  const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,selectedTags.map((dv: { key: string; name: string }) => ({
                     Label: dv.name,
                     TermGuid: dv.key
                   })));
                   //value = selectedTags;
                   value = _selectedTags;
-                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  stringValue = selectedTags?.map((dv: { key: string; name: string }) => dv.key + ';#' + dv.name).join(';#');
                 }
               }
               if (defaultValue === "") defaultValue = null;
@@ -1367,7 +1367,7 @@ export class DynamicFormBase extends React.Component<
                     name: response.Label,
                   });
                   value = selectedTags;
-                  stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                  stringValue = selectedTags?.map((dv: { key: string; name: string }) => dv.key + ';#' + dv.name).join(';#');
                 }
               } else {
                 if (defaultValue !== "") {
@@ -1385,7 +1385,7 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId;
               if (item && item[field.InternalName]) {
-                item[field.InternalName].forEach((element) => {
+                item[field.InternalName].forEach((element: { TermGuid: string; Label: string }) => {
                   selectedTags.push({
                     key: element.TermGuid,
                     name: element.Label,
@@ -1395,7 +1395,7 @@ export class DynamicFormBase extends React.Component<
                 value = selectedTags;
               } else {
                 if (defaultValue && defaultValue !== "") {
-                  defaultValue.split(/#|;/).forEach((element) => {
+                  defaultValue.split(/#|;/).forEach((element: string) => {
                     if (element.indexOf("|") !== -1)
                       selectedTags.push({
                         key: element.split("|")[1],
@@ -1406,7 +1406,7 @@ export class DynamicFormBase extends React.Component<
                   value = selectedTags;
                 } else {
                   if (defaultValue && defaultValue !== "") {
-                    defaultValue.split(/#|;/).forEach((element) => {
+                    defaultValue.split(/#|;/).forEach((element: string) => {
                       if (element.indexOf("|") !== -1)
                         selectedTags.push({
                           key: element.split("|")[1],
@@ -1415,7 +1415,7 @@ export class DynamicFormBase extends React.Component<
                     });
 
                     value = selectedTags;
-                    stringValue = selectedTags?.map(dv => dv.key + ';#' + dv.name).join(';#');
+                    stringValue = selectedTags?.map((dv: { key: string; name: string }) => dv.key + ';#' + dv.name).join(';#');
                   }
                 }
                 if (defaultValue === "") defaultValue = null;
@@ -1754,7 +1754,7 @@ export class DynamicFormBase extends React.Component<
       return await list.items.getById(itemId).update(objects);
     }
     catch (error) {
-      if (error.status === 409 && retry < 3) {
+      if ((error as { status?: number }).status === 409 && retry < 3) {
         await timeout(100);
         return await this.updateListItemRetry(list, itemId, objects, retry + 1);
       }

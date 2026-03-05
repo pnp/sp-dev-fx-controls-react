@@ -442,7 +442,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     else if (isArray(element) && (arrayLen = (element as JSX.Element[] | ICarouselImageProps[]).length) > 0) {
       // Retrieve proper element from the array
       if (currentIndex >= 0 && arrayLen > currentIndex) {
-        const arrayEl = element[currentIndex];
+        const arrayEl = (element as any)[currentIndex];
 
         result = 'props' in arrayEl ? arrayEl as JSX.Element :
           <CarouselImage {...arrayEl} />;

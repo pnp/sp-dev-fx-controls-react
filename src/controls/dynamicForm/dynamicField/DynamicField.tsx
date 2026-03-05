@@ -420,7 +420,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
         </div>;
 
       case 'User': {
-        const userValue = Boolean(changedValue) ? changedValue.map(cv => cv.secondaryText) : (value ? value : defaultValue);
+        const userValue = Boolean(changedValue) ? changedValue.map((cv: { secondaryText: string }) => cv.secondaryText) : (value ? value : defaultValue);
         return <div>
           <div className={styles.titleContainer}>
             <Icon className={styles.fieldIcon} iconName={customIcon ?? "Contact"} />
@@ -778,8 +778,8 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
     let minValueCur: string, maxValueCur: string;
     if (fieldType === "Currency" && cultureName) {
       const countryCode = cultureName.split('-')?.[1];
-      if (minValue) minValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: CurrencyMap[countryCode] }).format(minValue);
-      if (maxValue) maxValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: CurrencyMap[countryCode] }).format(maxValue);
+      if (minValue) minValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(minValue);
+      if (maxValue) maxValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(maxValue);
     }
 
     if (changedValue !== undefined && changedValue !== null && changedValue.length > 0) {
@@ -801,11 +801,11 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
     return null;
   }
 
-  private isEmptyArray(value): boolean {
+  private isEmptyArray(value: unknown): boolean {
     return Array.isArray(value) && value.length === 0;
   }
 
-  private checkUserArrayIsEmpty = (value): boolean => {
+  private checkUserArrayIsEmpty = (value: unknown): boolean => {
     return Array.isArray(value) && value.every(item => item === "");
   }
 
@@ -815,11 +815,11 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
     } = this.state;
 
     try {
-      let selectedItemArr;
+      let selectedItemArr: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
       const value = this.props.value || this.props.defaultValue;
       if (changedValue === null && value !== null) {
         selectedItemArr = [];
-        value.forEach(element => {
+        value.forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           selectedItemArr.push(element);
         });
       }

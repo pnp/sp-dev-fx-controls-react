@@ -35,7 +35,7 @@ export const ReactionGroups: React.FunctionComponent<IReactionGroupsProps> = (
             <Button
               className={styles.groupButton}
               key={index}
-              onClick={(ev) => {
+              onClick={(ev: React.MouseEvent) => {
                 ev.preventDefault();
                 onSelectedGroup(groupName);
               }}

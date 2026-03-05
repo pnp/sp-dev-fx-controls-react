@@ -91,7 +91,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   *
   * @param value File path
   */
-  private _getFileExtension(value): string {
+  private _getFileExtension(value: string): string {
     // Split the URL on the dots
     const splittedValue = value.split('.');
     // Take the last value

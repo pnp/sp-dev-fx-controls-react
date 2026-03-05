@@ -9,7 +9,7 @@ import { Placeholder } from './PlaceholderComponent';
 import { getClassNames } from './PlaceholderComponent.styles';
 import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
 
-declare const sinon;
+declare const sinon: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const themeToApply = getFluentUIThemeOrDefault();
 const styles = getClassNames(themeToApply);
@@ -21,7 +21,7 @@ describe('<Placeholder />', () => {
   const dummyText = "Dummy icon text";
   const dummyClass = "dummyClass";
   const dummyLabel = "Dummy label";
-  const dummyOnConfigure = sinon.spy((evt) => { /* Nothing to do here */ });
+  const dummyOnConfigure = sinon.spy((evt: any) => { /* Nothing to do here */ }); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   beforeAll(() => {
     // Suppress icon warnings.
