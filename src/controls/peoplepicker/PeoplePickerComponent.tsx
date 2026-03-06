@@ -201,7 +201,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * On blur UI event
    * @param ev
    */
-  private onBlur = (ev): void => {
+  private onBlur = (ev: React.FocusEvent<HTMLInputElement | import('@fluentui/react').Autofill>): void => {
     if (this.props.validateOnFocusOut) {
       this.validate(this.state.selectedPersons)
         .then(() => {

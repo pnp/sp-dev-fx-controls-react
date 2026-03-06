@@ -232,7 +232,7 @@ export class CollectionDataViewer extends React.Component<ICollectionDataViewerP
     this.props.fOnClose();
   }
 
-  private getPagesCount = (items): number => {
+  private getPagesCount = (items: any[]): number => { // eslint-disable-line @typescript-eslint/no-explicit-any
     if (!this.isPagingEnabled()) {
       return 1;
     }

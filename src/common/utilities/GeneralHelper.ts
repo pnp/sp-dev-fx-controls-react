@@ -260,7 +260,7 @@ export class GeneralHelper {
       return result;
     }
 
-    public static formatBytes(bytes, decimals): string {
+    public static formatBytes(bytes: number, decimals: number): string {
       if (bytes === 0) {
         return strings.EmptyFileSize;
       }
@@ -303,7 +303,7 @@ export class GeneralHelper {
     /**
      * Returns extension of the file
      */
-    public static getFileExtension(fileName): string {
+    public static getFileExtension(fileName: string): string {
 
       // Split the URL on the dots
       const splitFileName = fileName.toLowerCase().split('.');
@@ -321,8 +321,8 @@ export class GeneralHelper {
       return `.${extensionValue}`;
     }
 
-    private static _getEncodedChar(c): string {
-        const o = {
+    private static _getEncodedChar(c: string): string {
+        const o: Record<string, string> = {
             "<": "&lt;",
             ">": "&gt;",
             "&": "&amp;",

@@ -52,8 +52,8 @@ export const Team: React.FunctionComponent<ITeamProps> = (
 
   const onClickChannel = React.useCallback(
     (
-      ev: React.MouseEvent<HTMLElement, MouseEvent>,
-      item: IContextualMenuItem
+      ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>,
+      item?: IContextualMenuItem
     ) => {
       if (onSelectedChannel) {
         onSelectedChannel(item.data.teamId, item.key)

@@ -50,7 +50,7 @@ export class FieldTextRenderer extends React.Component<IFieldTextRendererProps, 
 
     public render(): JSX.Element {
         const isSafeForInnerHTML: boolean = this.props.isSafeForInnerHTML;
-        const isTruncatedClassNameObj: ICssInput = {};
+        const isTruncatedClassNameObj: ICssInput & { [key: string]: unknown } = {}; // hack to avoid ts warning
         isTruncatedClassNameObj[styles.isTruncated] = this.props.isTruncated;
         let text: string = this.props.text;
         if (isSafeForInnerHTML && this.props.isTruncated) {

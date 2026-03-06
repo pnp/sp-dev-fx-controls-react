@@ -65,10 +65,10 @@ export class PropertyPaneControlToggles implements IPropertyPaneField<IPropertyP
 
     private onChange(controlName: string, enabled: boolean): void {
         if (controlName === "all") {
-            const newValue = {...this.properties.controlVisibility};
+            const newValue: ControlVisibility = {...this.properties.controlVisibility};
             for (const control in newValue) {
-                if (newValue[control] !== undefined) {
-                    newValue[control] = enabled;
+                if (newValue[control as keyof ControlVisibility] !== undefined) {
+                    newValue[control as keyof ControlVisibility] = enabled;
                 }
             }
             this.properties.onPropertyChange(newValue);

@@ -721,7 +721,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   * Method that retrieves files from drag and drop
   * @param files
   */
-  private _getDropFiles = (files) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private _getDropFiles = (files: any[]) => {
     for (var i = 0; i < files.length; i++) {
       console.log("File name: " + files[i].name);
       console.log("Folder Path: " + files[i].fullPath);
@@ -1555,7 +1556,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 ensureUser={true}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 resultFilter={(result: IPersonaProps[]) => {
-                  return result.filter(p => p["loginName"].indexOf(".com") !== -1);
+                  return result.filter(p => (p as any)["loginName"].indexOf(".com") !== -1);
                 }}
                 onChange={this._getPeoplePickerItems} />
 
@@ -3035,7 +3036,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         "Field2": i,
         "Field3": "https://pnp.github.io/",
         "Field4": true,
-        "Field5": null,
+        "Field5": null as any,
         "Field6": { key: "choice 1", text: "choice 1" },
         "Field7": [{ key: "choice 1", text: "choice 1" }, { key: "choice 2", text: "choice 2" }],
         "Field8": sampleDate

@@ -19,6 +19,8 @@ module.exports = {
         'sourceType': 'module'
       },
       rules: {
+        // Require chunk names for dynamic imports in SPFx projects. https://www.npmjs.com/package/@rushstack/eslint-plugin
+        '@rushstack/import-requires-chunk-name': 1,
         // Prevent usage of the JavaScript null value, while allowing code to access existing APIs that may require null. https://www.npmjs.com/package/@rushstack/eslint-plugin
         '@rushstack/no-new-null': 1,
         // Require Jest module mocking APIs to be called before any other statements in their code block. https://www.npmjs.com/package/@rushstack/eslint-plugin
@@ -295,9 +297,7 @@ module.exports = {
         // ====================================================================
         // @microsoft/eslint-plugin-spfx
         // ====================================================================
-        '@microsoft/spfx/import-requires-chunk-name': 1,
-        '@microsoft/spfx/no-require-ensure': 2,
-        '@microsoft/spfx/pair-react-dom-render-unmount': 1
+        '@microsoft/spfx/no-require-ensure': 2
       }
     },
     {

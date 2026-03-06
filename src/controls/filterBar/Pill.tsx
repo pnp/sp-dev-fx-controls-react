@@ -12,7 +12,7 @@ export interface IPillProps  {
 }
 export const Pill = (props: IPillProps): JSX.Element => {
     
-    const onClick = (event): void => {
+    const onClick = (event: React.MouseEvent): void => {
         if (props.onClick)
         {
             props.onClick(props.field, props.value);

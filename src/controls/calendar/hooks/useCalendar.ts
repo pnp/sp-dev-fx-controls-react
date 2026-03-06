@@ -99,7 +99,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
             time: `${String(Math.floor(index / 2)).padStart(2, '0')}:${
               index % 2 === 0 ? '00' : '30'
             }`,
-            events: [],
+            events: [] as IEvent[],
           })
         );
 

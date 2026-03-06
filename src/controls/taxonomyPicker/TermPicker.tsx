@@ -218,7 +218,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
       const picker = this.state.elRef as unknown as TermBasePicker;
       const autoFill = picker?.['input']?.current as Autofill; // eslint-disable-line dot-notation
       if (autoFill) {
-        autoFill['_value'] = ''; // eslint-disable-line dot-notation
+        (autoFill as any)['_value'] = ''; // eslint-disable-line dot-notation, @typescript-eslint/no-explicit-any
         autoFill.setState({ inputValue: '' });
       } else {
         throw new Error(`TermPicker.TermBasePicker.render.clearDisplayValue no autoFill to reset displayValue`);
@@ -229,8 +229,8 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
 
     if(onNewTerm) {
       inputProps.onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e && e.key === 'Enter' && (! (e.ctrlKey || e.altKey || e.shiftKey)) && e.target?.['value'] ) { // eslint-disable-line dot-notation
-          onNewTerm(e.target['value']); // eslint-disable-line dot-notation
+        if (e && e.key === 'Enter' && (! (e.ctrlKey || e.altKey || e.shiftKey)) && (e.target as HTMLInputElement).value ) { // eslint-disable-line dot-notation
+          onNewTerm((e.target as HTMLInputElement).value); // eslint-disable-line dot-notation
           clearDisplayValue();
         }
       };
@@ -239,7 +239,7 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
     return (
       <div>
         <TermBasePicker
-          ref={(elRef) => {
+          ref={(elRef: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             if (!this.state.elRef) {
               this.setState({ elRef });
             }

@@ -20,6 +20,7 @@ import {
 import {
   IBasePickerStyleProps,
   IBasePickerStyles,
+  IPickerItemProps,
   ISuggestionItemProps
 } from '@fluentui/react/lib/Pickers';
 import {
@@ -52,7 +53,7 @@ export interface IModernTaxonomyPickerProps {
   disabled?: boolean;
   required?: boolean;
   onChange?: (newValue?: ITermInfo[]) => void;
-  onRenderItem?: (itemProps: ITermItemProps) => JSX.Element;
+  onRenderItem?: (itemProps: IPickerItemProps<ITermInfo>) => JSX.Element;
   onRenderSuggestionsItem?: (term: ITermInfo, itemProps: ISuggestionItemProps<ITermInfo>) => JSX.Element;
   placeHolder?: string;
   customPanelWidth?: number;
@@ -235,7 +236,8 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     return labels;
   }
 
-  function onRenderItem(itemProps: ITermItemProps): JSX.Element {
+  function onRenderItem(itemProps: IPickerItemProps<ITermInfo>): JSX.Element {
+    const termItemProps = itemProps as ITermItemProps;
     const labels = getLabelsForCurrentLanguage(itemProps.item);
     let fullParentPrefixes: string[] = [ labels[0].name ];
 
@@ -249,7 +251,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
       fullParentPrefixes = fullParentPrefixes.reverse();
     }
     return labels.length > 0 ? (
-      <TermItem languageTag={currentLanguageTag} termStoreInfo={currentTermStoreInfo} name={fullParentPrefixes.join(":")} {...itemProps}>{fullParentPrefixes.join(":")}</TermItem>
+      <TermItem languageTag={currentLanguageTag} termStoreInfo={currentTermStoreInfo} name={fullParentPrefixes.join(":")} {...termItemProps}>{fullParentPrefixes.join(":")}</TermItem>
     ) : null;
   }
 

@@ -29,7 +29,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
                 <TextField label="Search" placeholder="Search Controls" onChange={(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
                     this.setState({ filter: newValue });
                 }} />
-                { this.getValidControls().map((control: string) => {
+                { this.getValidControls().map((control: ValidControls) => {
                     if (this.state && this.state.filter && this.state.filter.length > 0 && control.toLowerCase().indexOf(this.state.filter.toLowerCase()) === -1) {
                         return null;
                     }
@@ -48,7 +48,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
         );
     }
 
-    private getValidControls(): string[] {
+    private getValidControls(): ValidControls[] {
         const validControls: ValidControls[] = [
             "all",
             "AccessibleAccordion", "AdaptiveCardDesignerHost", "AdaptiveCardHost",
@@ -70,7 +70,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "UploadFiles", "UserPicker", "VariantThemeProvider",
             "ViewPicker", "WebPartTitle", "Calendar"
         ];
-        return validControls as string[];
+        return validControls;
     }
 
     private getProperCase(name: string): string {

@@ -135,9 +135,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       });
     }
     else if (this.state.filesToUpload && this.state.filesToUpload.length > 0) {
-      const files = this.state.filesToUpload.map(file => ({
+      const files: IListItemAttachmentFile[] = this.state.filesToUpload.map(file => ({
         FileName: file.name,
-        ServerRelativeUrl: undefined
+        ServerRelativeUrl: undefined as unknown as string
       }));
       await this.loadAttachmentsPreview(files);
     }
@@ -248,7 +248,7 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         hideDialog: false,
         file: null,
         deleteAttachment: false,
-        dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', file.FileName).replace('{1}', error.message)
+        dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', file.FileName).replace('{1}', (error as Error).message)
       });
     }
   }

@@ -154,7 +154,7 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
           value={commentText}
           onChange={_onChange}
           placeholder={strings.ListItemCommentsPlaceholder}
-          style={_reactMentionStyles}
+          style={_reactMentionStyles as React.CSSProperties}
           suggestionsPortalHost={sugestionsContainer.current}
         >
           <Mention

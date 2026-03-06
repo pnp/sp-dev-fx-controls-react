@@ -137,7 +137,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         </span>;
     }
 
-    private _onClick(e): boolean {
+    private _onClick(e: React.MouseEvent<HTMLElement>): boolean {
         if (this.props.onClick) {
             e.stopPropagation();
             e.preventDefault();
@@ -147,7 +147,7 @@ export class FieldNameRenderer extends React.Component<IFieldNameRendererProps, 
         }
     }
 
-    private _onDoubleClick(e): boolean {
+    private _onDoubleClick(e: MouseEvent): boolean {
         if (this.props.onDoubleClick) {
             e.stopPropagation();
             e.preventDefault();

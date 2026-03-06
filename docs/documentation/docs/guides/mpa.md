@@ -64,8 +64,8 @@ As this project is based on SPFx, it aligns with the following [development comp
 - clone your fork
 - in the command line, run the following commands:
   - `npm install` to restore dependencies
-  - `npm install -g gulp-cli` in order to run `gulp` commands (run `npm list -g gulp-cli` to check if already installed on your machine or not)
-  - `gulp serve` to serve your project (or `npm run serve` if you want to use [`spfx-fast-serve`](https://github.com/s-KaiNet/spfx-fast-serve))
+  - `npm install -g @rushstack/heft` in order to run `heft` commands (run `npm list -g @rushstack/heft` to check if already installed on your machine or not)
+  - `npm run start` to serve your project
 - Start making your changes
 
 ### Run the project locally
@@ -74,8 +74,7 @@ As this project embeds a SPFx solution, you have the ability to test all the con
 
 You can also debug the controls in any supported language by running one of the following commands (for example in _french_):
 
-- `gulp serve --locale=fr-fr`
-- `npx fast-serve --locale=fr-fr` (if using `spfx-fast-serve`)
+- `npm run start --locale=fr-fr`
 
 Beware that both argument and value have to be lower case. Supported locales are listed in the following project's path: `src\loc`.
 

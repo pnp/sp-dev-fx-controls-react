@@ -32,7 +32,7 @@ export class StockImages extends React.Component<IStockImagesProps> {
     );
   }
 
-  private _handleImageIframeEvent = (event): void => {
+  private _handleImageIframeEvent = (event: MessageEvent): void => {
     if (!event || !event.origin || event.origin.indexOf("https://hubblecontent.osi.office.net") !== 0) {
       return;
     }

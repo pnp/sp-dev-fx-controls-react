@@ -403,18 +403,18 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
         else if (!a.isFolder && b.isFolder) {
           return -1;
         }
-        let firstValue = a[column.fieldName] || '';
-        let secondValue = b[column.fieldName] || '';
+        let firstValue: any = a[column.fieldName as keyof IFile] || ''; // eslint-disable-line @typescript-eslint/no-explicit-any
+        let secondValue: any = b[column.fieldName as keyof IFile] || ''; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         if (column.data === 'string') {
-          return sortString(firstValue, secondValue, isSortedDescending);
+          return sortString(firstValue as string, secondValue as string, isSortedDescending);
         }
         else if (column.data === 'date') {
-          return sortDate(firstValue, secondValue, isSortedDescending);
+          return sortDate(firstValue as Date, secondValue as Date, isSortedDescending);
         }
         else if (column.data === 'number') {
-          firstValue = parseFloat(firstValue);
-          secondValue = parseFloat(secondValue);
+          firstValue = parseFloat(firstValue as string);
+          secondValue = parseFloat(secondValue as string);
         }
 
         return isSortedDescending ? secondValue - firstValue : firstValue - secondValue;
@@ -454,7 +454,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    */
   private _itemSelectionChanged = (): void => {
     const filePickerResults: IFilePickerResult[] = [];
-    this._selection.getSelection().map((item: IFile, index: number) => {
+    (this._selection.getSelection() as IFile[]).map((item: IFile, index: number) => {
       if (!item.isFolder) {
         filePickerResults.push({
           fileAbsoluteUrl: item.absoluteUrl,
@@ -502,7 +502,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
       filesQueryResult = await this.props.fileBrowserService.getListItems(libraryUrl, folderPath, accepts, nextPageQueryString, sortField, isDesc);
     } catch (error) {
       filesQueryResult.items = null;
-      console.error(error.message);
+      console.error((error as Error).message);
     } finally {
 
 
