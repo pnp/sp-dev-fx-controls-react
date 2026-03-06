@@ -53,3 +53,4 @@ release
 *.scss.d.ts
 
 .heft
+.claude
