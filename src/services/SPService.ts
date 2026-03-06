@@ -582,7 +582,7 @@ export default class SPService implements ISPService {
            const isArray = Array.isArray(result[fieldName]);
            //multiselect lookups are arrays
            if (isArray) {
-            result[fieldName].forEach((element: any) => {                
+            result[fieldName].forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
               let value = element[lookupFieldName || 'Title'];
               const dateVal = Date.parse(value);
               if (!Number.isNaN(dateVal)) {
@@ -642,7 +642,7 @@ export default class SPService implements ISPService {
         const result = await data.json();
         if (result && result[fieldName]) {
           const emails: string[] = [];
-          result[fieldName].forEach((element: any) => {
+          result[fieldName].forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             const loginNameWithoutClaimsToken = element.Name.split("|").pop();
             if(!loginNameWithoutClaimsToken.toLowerCase().includes('null')){
               if(!element.Title.toLowerCase().includes('null')){

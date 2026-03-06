@@ -778,8 +778,8 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
     let minValueCur: string, maxValueCur: string;
     if (fieldType === "Currency" && cultureName) {
       const countryCode = cultureName.split('-')?.[1];
-      if (minValue) minValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(minValue);
-      if (maxValue) maxValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(maxValue);
+      if (minValue) minValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(minValue); // eslint-disable-line @typescript-eslint/no-explicit-any
+      if (maxValue) maxValueCur = Intl.NumberFormat(cultureName, { style: 'currency', currency: (CurrencyMap as any)[countryCode] }).format(maxValue); // eslint-disable-line @typescript-eslint/no-explicit-any
     }
 
     if (changedValue !== undefined && changedValue !== null && changedValue.length > 0) {

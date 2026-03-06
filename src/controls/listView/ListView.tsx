@@ -156,7 +156,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       // Check if grouping is configured
       if (groupByFields && groupByFields.length > 0) {
         // Create grouped items object
-        const groupedItems = {};
+        const groupedItems: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
         items.forEach((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           let groupName = item[groupField.name];
           // Check if the group name exists
@@ -178,7 +178,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         });
 
         // Sort the grouped items object by its key
-        const sortedGroups = {};
+        const sortedGroups: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
         let groupNames = Object.keys(groupedItems);
         groupNames = groupField.order === GroupOrder.ascending ? groupNames.sort() : groupNames.sort().reverse();
         groupNames.forEach((key: string) => {

@@ -265,14 +265,13 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     // Bind events
-    iconElm.props.onClick = this.props.onClick;
-    iconElm.props.onDoubleClick = this.props.onDoubleClick;
-    iconElm.props.onMouseEnter = this.props.onMouseEnter;
-    iconElm.props.onMouseLeave = this.props.onMouseLeave;
-    iconElm.props.onMouseOver = this.props.onMouseOver;
-    iconElm.props.onMouseUp = this.props.onMouseUp;
-
-    // Return the icon element
-    return iconElm;
+    return React.cloneElement(iconElm, {
+      onClick: this.props.onClick,
+      onDoubleClick: this.props.onDoubleClick,
+      onMouseEnter: this.props.onMouseEnter,
+      onMouseLeave: this.props.onMouseLeave,
+      onMouseOver: this.props.onMouseOver,
+      onMouseUp: this.props.onMouseUp
+    });
   }
 }

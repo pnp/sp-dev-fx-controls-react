@@ -16,7 +16,7 @@ export const useDeleteFile = ( context: BaseComponentContext) => {
       return true;
     } catch (err) {
       console.error(`[DeleteFile] Err='${(err as Error).message}'`);
-      throw new Error(`Something went wrong when deleting the file. Status='${(err as any).status}`);
+      throw new Error(`Something went wrong when deleting the file. Status='${(err as any).status}`); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     }
 

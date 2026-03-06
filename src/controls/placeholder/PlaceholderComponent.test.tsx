@@ -1,5 +1,3 @@
-/// <reference types="sinon" />
-
 import * as React from 'react';
 import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
@@ -8,8 +6,6 @@ import { Placeholder } from './PlaceholderComponent';
 //import styles from './PlaceholderComponent.module.scss';
 import { getClassNames } from './PlaceholderComponent.styles';
 import { getFluentUIThemeOrDefault } from '../../common/utilities/ThemeUtility';
-
-declare const sinon: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 const themeToApply = getFluentUIThemeOrDefault();
 const styles = getClassNames(themeToApply);
@@ -21,7 +17,7 @@ describe('<Placeholder />', () => {
   const dummyText = "Dummy icon text";
   const dummyClass = "dummyClass";
   const dummyLabel = "Dummy label";
-  const dummyOnConfigure = sinon.spy((evt: any) => { /* Nothing to do here */ }); // eslint-disable-line @typescript-eslint/no-explicit-any
+  const dummyOnConfigure = jest.fn(() => { /* Nothing to do here */ });
 
   beforeAll(() => {
     // Suppress icon warnings.
@@ -88,9 +84,7 @@ describe('<Placeholder />', () => {
     placeholder = mount(<Placeholder description={dummyDescription} iconName={dummyIcon} iconText={dummyText} buttonLabel={dummyLabel} onConfigure={dummyOnConfigure} />);
 
     placeholder.find('button').simulate('click');
-    /* eslint-disable */
-    expect(dummyOnConfigure.called).to.be.true;
-    /* eslint-enable */
+    expect(dummyOnConfigure.mock.calls.length).to.be.greaterThan(0);
 
     done();
   });

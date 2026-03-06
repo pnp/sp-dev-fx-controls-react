@@ -229,8 +229,8 @@ export default class TermPicker extends React.Component<ITermPickerProps, ITermP
 
     if(onNewTerm) {
       inputProps.onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e && e.key === 'Enter' && (! (e.ctrlKey || e.altKey || e.shiftKey)) && e.target?.['value'] ) { // eslint-disable-line dot-notation
-          onNewTerm(e.target['value']); // eslint-disable-line dot-notation
+        if (e && e.key === 'Enter' && (! (e.ctrlKey || e.altKey || e.shiftKey)) && (e.target as HTMLInputElement).value ) { // eslint-disable-line dot-notation
+          onNewTerm((e.target as HTMLInputElement).value); // eslint-disable-line dot-notation
           clearDisplayValue();
         }
       };

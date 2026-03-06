@@ -1,5 +1,3 @@
-/// <reference types="sinon" />
-
 import * as React from 'react';
 import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
@@ -7,15 +5,13 @@ import { WebPartTitle } from './WebPartTitle';
 import styles from './WebPartTitle.module.scss';
 import { DisplayMode } from '@microsoft/sp-core-library';
 
-declare const sinon: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-
 describe('<WebPartTitle />', () => {
   let webparttitle: ReactWrapper;
   const dummyTitle = "Dummy Title";
   const dummyClass = "DummyClass";
   const dummyMoreLink = "See all";
   const dummyColor = "#ffffff";
-  const dummyUpdateFnc = sinon.spy((value: string) => { return value; });
+  const dummyUpdateFnc = jest.fn((value: string) => { return value; });
 
   afterEach(() => {
     webparttitle.unmount();
@@ -48,12 +44,10 @@ describe('<WebPartTitle />', () => {
     textArea.simulate('change', { target: { value: "New web part title" }});
 
     // Check if function is called
-    /* eslint-disable */
-    expect(dummyUpdateFnc.called).to.be.true;
-    /* eslint-enable */
+    expect(dummyUpdateFnc.mock.calls.length).to.be.greaterThan(0);
 
     // Check if the returned value is correct
-    expect(dummyUpdateFnc.args[0]).contains("New web part title");
+    expect(dummyUpdateFnc.mock.calls[0]).to.contain("New web part title");
 
     done();
   });

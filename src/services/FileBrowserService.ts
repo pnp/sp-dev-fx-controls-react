@@ -221,7 +221,7 @@ export class FileBrowserService {
   protected _getListDataAsStream = async (restApi: string, folderPath: string, acceptedFilesExtensions?: string[], sortBy?: string, isDesc?: boolean): Promise<FilesQueryResult> => {
     let filesQueryResult: FilesQueryResult = { items: [], nextHref: null };
     try {
-      const body = {
+      const body: Record<string, unknown> = {
         parameters: {
           AllowMultipleValueFilterForTaxonomyFields: true,
           // ContextInfo (1), ListData (2), ListSchema (4), ViewMetadata (1024), EnableMediaTAUrls (4096), ParentInfo (8192)
@@ -231,7 +231,7 @@ export class FileBrowserService {
       };
       if (folderPath) {
         // eslint-disable-next-line dot-notation
-        body.parameters["FolderServerRelativeUrl"] = folderPath;
+        (body.parameters as Record<string, unknown>)["FolderServerRelativeUrl"] = folderPath;
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const data: any = await this.context.spHttpClient.fetch(restApi, SPHttpClient.configurations.v1, {

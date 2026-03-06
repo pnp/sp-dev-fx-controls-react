@@ -1556,7 +1556,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 ensureUser={true}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 resultFilter={(result: IPersonaProps[]) => {
-                  return result.filter(p => p["loginName"].indexOf(".com") !== -1);
+                  return result.filter(p => (p as any)["loginName"].indexOf(".com") !== -1);
                 }}
                 onChange={this._getPeoplePickerItems} />
 

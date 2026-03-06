@@ -670,7 +670,7 @@ export class DynamicFormBase extends React.Component<
             const folderId = fields[idField];
 
             // Set the content type ID for the target item
-            (objects as any)[contentTypeIdField] = contentTypeId;
+            (objects as any)[contentTypeIdField] = contentTypeId; // eslint-disable-line @typescript-eslint/no-explicit-any
             // Update the just created folder or Document Set
             const iur = await this.updateListItemRetry(library, folderId, objects);
             if (onSubmitted) {
@@ -1015,7 +1015,7 @@ export class DynamicFormBase extends React.Component<
       const numberFields = additionalInfo?.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
-      const validationFormulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">> = additionalInfo.reduce((prev, cur) => {
+      const validationFormulas: Record<string, Pick<ISPField, "ValidationFormula" | "ValidationMessage">> = additionalInfo.reduce((prev: any, cur) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         if (!prev[cur.InternalName] && cur.ValidationFormula) {
           prev[cur.InternalName] = {
             ValidationFormula: cur.ValidationFormula,
@@ -1319,7 +1319,7 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
               if (item && item[field.InternalName]) {
-                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,item[field.InternalName]);
+                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, item[field.InternalName]);
                 // item[field.InternalName].forEach((element) => {
                 //   selectedTags.push({
                 //     key: element.TermGuid,
@@ -1339,7 +1339,7 @@ export class DynamicFormBase extends React.Component<
                       });
                   });
 
-                  const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId,selectedTags.map((dv: { key: string; name: string }) => ({
+                  const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, selectedTags.map((dv: { key: string; name: string }) => ({
                     Label: dv.name,
                     TermGuid: dv.key
                   })));
@@ -1705,7 +1705,7 @@ export class DynamicFormBase extends React.Component<
    * @param objects The object containing the field values
    * @returns the folder name
    */
-  private getFolderName = (objects: {}): string => {
+  private getFolderName = (objects: any): string => { // eslint-disable-line @typescript-eslint/no-explicit-any
     const titleField = "Title";
     const fileLeafRefField = "FileLeafRef";
     let folderNameValue = "";
