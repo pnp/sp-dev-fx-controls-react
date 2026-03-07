@@ -9,6 +9,7 @@
 
 ### Enhancements
 
+- SharePoint Framework v1.22.2 support
 - `ModernTaxonomyPicker`: Adding support to display matched synonyms [#2093](https://github.com/pnp/sp-dev-fx-controls-react/pull/2093)
 
 ### Fixes
