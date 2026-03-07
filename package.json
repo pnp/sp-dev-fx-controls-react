@@ -10,7 +10,7 @@
     "clean": "heft clean",
     "serve": "fast-serve",
     "start": "heft start --clean",
-    "versionUpdater": "heft versionUpdater",
+    "versionUpdater": "heft version-updater",
     "eject-webpack": "heft eject-webpack",
     "karma": "karma start --circle true",
     "changelog": "node scripts/create-changelog.js && node scripts/sync-changelogs.js && heft version-updater",
