@@ -8,6 +8,7 @@
           "`ListToolbar`: new control `ListToolbar` [#2088](https://github.com/pnp/sp-dev-fx-controls-react/pull/2088)"
         ],
         "enhancements": [
+          "SharePoint Framework v1.22.2 support",
           "`ModernTaxonomyPicker`: Adding support to display matched synonyms [#2093](https://github.com/pnp/sp-dev-fx-controls-react/pull/2093)"
         ],
         "fixes":[
