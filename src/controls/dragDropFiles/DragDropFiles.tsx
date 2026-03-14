@@ -9,10 +9,10 @@ import { IDragDropFilesState, IDragDropFilesProps } from './IDragDropFiles';
 export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDropFilesState> {
   private dragCounter = 0;
   private dropRef = React.createRef<HTMLDivElement>();
-  private _LabelMessage;
-  private _IconName;
-  private _dropEffect;
-  private _enable;
+  private _LabelMessage: string;
+  private _IconName: string;
+  private _dropEffect: string;
+  private _enable: boolean;
 
   constructor(props: React.PropsWithChildren<IDragDropFilesProps>) {
     super(props);
@@ -52,11 +52,11 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
    * Stop listeners from onDragOver event.
    * @param e
    */
-  private handleonDragOver = (e): void => {
+  private handleonDragOver = (e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      e.dataTransfer.dropEffect = e.dataTransfer.dropEffect = this.props.dropEffect;
+      e.dataTransfer.dropEffect = e.dataTransfer.dropEffect = this.props.dropEffect as DataTransfer["dropEffect"];
     }
   }
   /**
@@ -68,7 +68,7 @@ export class DragDropFiles extends React.Component<IDragDropFilesProps, IDragDro
     e.stopPropagation();
     this.dragCounter++;
     if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      e.dataTransfer.dropEffect = this._dropEffect;
+      e.dataTransfer.dropEffect = this._dropEffect as DataTransfer["dropEffect"];
       this.setState({ dragStatus: true });
     }
   }

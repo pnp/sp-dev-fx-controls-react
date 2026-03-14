@@ -94,7 +94,7 @@ export const PopUpMenu = (props: IPopUpMenuProps): JSX.Element => {
         setRenderUsers(usersToRender);
         setIsSearching(false);
       } catch (error) {
-        setError(error);
+        setError(error as Error);
         console.log(error);
       } finally {
         setIsLoading(false);

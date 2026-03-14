@@ -3,8 +3,8 @@ import { ILocationPickerProps, ILocationPickerState, Mode, ILocationBoxOption, I
 import styles from './LocationPicker.module.scss';
 import { SPHttpClient, ISPHttpClientOptions, SPHttpClientResponse, HttpClient, HttpClientResponse } from '@microsoft/sp-http';
 import { Text } from '@fluentui/react/lib/Text';
-import { Persona, PersonaSize } from '@fluentui/react/lib/Persona';
-import { ComboBox } from '@fluentui/react/lib/ComboBox';
+import { IPersonaProps, Persona, PersonaSize } from '@fluentui/react/lib/Persona';
+import { ComboBox, IComboBox, IComboBoxOption } from '@fluentui/react/lib/ComboBox';
 import { FontIcon } from '@fluentui/react/lib/Icon';
 import { IconButton } from '@fluentui/react/lib/Button';
 import * as strings from 'ControlStrings';
@@ -64,11 +64,11 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     );
   }
 
-  private onRenderOption = (item: ILocationBoxOption): JSX.Element => {
+  private onRenderOption = (item?: IComboBoxOption): JSX.Element => {
     const {
       text,
       locationItem
-    } = item;
+    } = item as ILocationBoxOption;
     if (locationItem.EntityType === "Custom") {
       return <Persona
         text={text}
@@ -107,7 +107,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           openOnKeyboardFocus={true}
           scrollSelectedToTop={true}
           isButtonAriaHidden={true}
-          onInput={(e) => this.getLocatios(e.target["value"])} // eslint-disable-line dot-notation
+          onInput={(e) => this.getLocatios((e.target as HTMLInputElement).value)} // eslint-disable-line dot-notation
           onChange={this.onChange}
           errorMessage={errorMessage}
         />;
@@ -191,8 +191,6 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           </div>
         </div>;
     }
-
-    return null;
   }
 
   private getLocationText = (item: ILocationPickerItem, mode: "full" | "street" | "noStreet"): string => {
@@ -227,27 +225,28 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
       });
   }
 
-  private onBlur = (ev): void => {
+  private onBlur = (ev: React.FocusEvent<HTMLDivElement>): void => {
     try {
-      if (ev !== null && ev.relatedTarget["title"] !== "Location" && ev.relatedTarget["title"] !== "Clear") { // eslint-disable-line dot-notation
+      if (ev !== null && ev.relatedTarget && (ev.relatedTarget as HTMLElement).title !== "Location" && (ev.relatedTarget as HTMLElement).title !== "Clear") { // eslint-disable-line dot-notation
         this.setState({ currentMode: Mode.view });
       }
     } catch { /* no-op; */ }
   }
 
-  private onChange = (ev, option: ILocationBoxOption): void => {
-    this.setState({ selectedItem: option.locationItem, currentMode: Mode.editView },
+  private onChange = (ev: React.FormEvent<IComboBox>, option?: IComboBoxOption): void => {
+    const locationOption = option as ILocationBoxOption;
+    this.setState({ selectedItem: locationOption.locationItem, currentMode: Mode.editView },
       () => {
         if (this.focusRef.current !== null)
           this.focusRef.current.focus();
       });
 
     if (this.props.onChange) {
-      this.props.onChange(option.locationItem);
+      this.props.onChange(locationOption.locationItem);
     }
   }
 
-  private customRenderInitials(props): JSX.Element {
+  private customRenderInitials(props: IPersonaProps): JSX.Element {
     if (props.imageAlt === "Custom")
       return <FontIcon aria-label="Poi" iconName="Poi" style={{ fontSize: "14pt" }} />;
     else
@@ -268,7 +267,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
     this._token = PrimaryQueryResult.access_token;
   }
 
-  private async getLocatios(searchText): Promise<void> {
+  private async getLocatios(searchText: string): Promise<void> {
     try {
       const optionsForCustomRender: ILocationBoxOption[] = [];
       const requestHeaders: Headers = new Headers();
@@ -283,7 +282,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
       const json = await response1.json();
 
 
-      json.MeetingLocations.forEach((v, i) => {
+      json.MeetingLocations.forEach((v: any, i: number) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         const loc: ILocationPickerItem = v["MeetingLocation"]; // eslint-disable-line dot-notation
         optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc }); // eslint-disable-line dot-notation
       });

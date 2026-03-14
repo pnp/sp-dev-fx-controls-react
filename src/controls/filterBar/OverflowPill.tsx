@@ -20,7 +20,7 @@ export const OverflowPill = (props: IOverflowPillProps): JSX.Element => {
         toggleOverlayVisible();
     } 
 
-    const pillClick = (label, value): void => {
+    const pillClick = (label: string, value: string): void => {
         if (props.onClick)
         {
             props.onClick(label, value);

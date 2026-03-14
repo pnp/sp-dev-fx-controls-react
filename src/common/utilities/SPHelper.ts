@@ -31,7 +31,8 @@ export class SPHelper {
         if (!columnName)
             return '';
 
-        return Constants.FieldNamesMapping[columnName] ? Constants.FieldNamesMapping[columnName].storedName : columnName;
+        const mapping = Constants.FieldNamesMapping as Record<string, { storedName: string }>;
+        return mapping[columnName] ? mapping[columnName].storedName : columnName;
     }
 
     /**
@@ -171,9 +172,10 @@ export class SPHelper {
                 };
             }
 
+            const fieldRecord = field as unknown as Record<string, unknown>;
 
-            if (GeneralHelper.isDefined(field[propertyName])) {
-                resolve(field[propertyName]);
+            if (GeneralHelper.isDefined(fieldRecord[propertyName])) {
+                resolve(fieldRecord[propertyName]);
                 return;
             }
 
@@ -196,7 +198,7 @@ export class SPHelper {
                     if (!GeneralHelper.isDefined(fieldValue)) {
                         fieldValue = '';
                     }
-                    field[propertyName] = fieldValue;
+                    fieldRecord[propertyName] = fieldValue;
                     SPHelper._updateFieldInSessionStorage(field, context);
                 }, (error) => {
                     resolve('');
@@ -204,12 +206,12 @@ export class SPHelper {
             }
             else {
                 sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select(propertyName).get().then(f => {
-                    field[propertyName] = f[propertyName];
+                    fieldRecord[propertyName] = (f as unknown as Record<string, unknown>)[propertyName];
 
                     loadedViewFields[viewId][field.Id] = field;
 
                     SPHelper._updateSessionStorageLoadedViewFields(loadedViewFields);
-                    resolve(field[propertyName]);
+                    resolve(fieldRecord[propertyName]);
                 }, (error) => {
                     resolve('');
                 });
@@ -249,10 +251,11 @@ export class SPHelper {
             sp.setup({
                 spfxContext: context
             });
-            sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select('LookupWebId', 'LookupList').get().then((f: IFieldLookupInfo) => {
-                sp.site.openWebById(f.LookupWebId).then(openedWeb => {
+            sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select('LookupWebId', 'LookupList').get().then((f: IFieldInfo) => {
+                const lookupField = f as unknown as IFieldLookupInfo;
+                sp.site.openWebById(lookupField.LookupWebId).then(openedWeb => {
                     openedWeb.web.select('Url').get().then(w => {
-                        field.LookupDisplayUrl = `${w.Url}/_layouts/15/listform.aspx?PageType=4&ListId=${f.LookupList}`;
+                        field.LookupDisplayUrl = `${w.Url}/_layouts/15/listform.aspx?PageType=4&ListId=${lookupField.LookupList}`;
                         SPHelper._updateFieldInSessionStorage(field, context);
                         resolve(field.LookupDisplayUrl);
                     }, (error) => {

@@ -1,6 +1,6 @@
 # ListItemAttachments control
 
-This control allows you to manage list item attachments, you can add or delete associated attachments. The attachments are listed in tile view.
+This control allows you to manage list item attachments, you can add or delete associated attachments. The attachments can be displayed in different modes: tiles (default), list, or compact list.
 
 Here is an example of the control:
 
@@ -11,6 +11,10 @@ Here is an example of the control:
 ![ListItemAttachments Confirm Delete](../assets/ListItemAttachmentDeleteConfirm.png)
 
 ![ListItemAttachments Attachment Deleted ](../assets/ListItemAttachementDeletedMsg.png)
+
+![ListItemAttachments Details List ](../assets/ListItemAttachmentsDetailsList.png)
+
+![ListItemAttachments Details List Compact ](../assets/ListItemAttachmentsDetailsListCompact.png)
 
 ## How to use this control in your solutions
 
@@ -28,6 +32,30 @@ import { ListItemAttachments } from '@pnp/spfx-controls-react/lib/ListItemAttach
                      itemId={1}
                      context={this.props.context}
                      disabled={false} />
+```
+
+- You can customize the display mode of attachments. Import the `AttachmentsDisplayMode` enum and use it:
+
+```TypeScript
+import { ListItemAttachments, AttachmentsDisplayMode } from '@pnp/spfx-controls-react/lib/ListItemAttachments';
+
+// Tiles view (default)
+<ListItemAttachments listId='dfa283f4-5faf-4d54-b6b8-5bcaf2725af5'
+                     itemId={1}
+                     context={this.props.context}
+                     displayMode={AttachmentsDisplayMode.Tiles} />
+
+// List view
+<ListItemAttachments listId='dfa283f4-5faf-4d54-b6b8-5bcaf2725af5'
+                     itemId={1}
+                     context={this.props.context}
+                     displayMode={AttachmentsDisplayMode.DetailsList} />
+
+// Compact list view
+<ListItemAttachments listId='dfa283f4-5faf-4d54-b6b8-5bcaf2725af5'
+                     itemId={1}
+                     context={this.props.context}
+                     displayMode={AttachmentsDisplayMode.DetailsListCompact} />
 ```
 
 - If you want to use `ListItemAttachments` controls with new form you have to use React.createRef.
@@ -61,9 +89,20 @@ The `ListItemAttachments` control can be configured with the following propertie
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | label | string | no | Main text to display on the placeholder, next to the icon. |
 | description | string | no | Description text to display on the placeholder, below the main text and icon. |
+| displayMode | AttachmentsDisplayMode | no | Display mode for rendering attachments. Options: `AttachmentsDisplayMode.Tiles` (default), `AttachmentsDisplayMode.DetailsList`, or `AttachmentsDisplayMode.DetailsListCompact`. |
 | disabled | boolean | no | Specifies if the control is disabled or not. |
 | openAttachmentsInNewWindow | boolean | no | Specifies if the attachment should be opened in a separate browser tab. Use this property set to `true` if you plan to use the component in Microsoft Teams. |
 | onAttachmentChange | (itemData: any) => void | no | Callback function invoked when attachments are added or removed. Receives the updated item data including the new ETag. This is useful when using the control within a form (like DynamicForm) that tracks ETags for optimistic concurrency control. |
+
+enum `AttachmentsDisplayMode`
+
+Display mode for rendering attachments.
+
+| Value | Description |
+| ---- | ---- |
+| Tiles | Displays attachments as tiles/thumbnails using DocumentCard components. This is the default mode. |
+| DetailsList | Displays attachments in a list format with file type icons, file names, and delete actions. |
+| DetailsListCompact | Displays attachments in a compact list format with reduced row height and padding. |
 
 ## Usage with DynamicForm
 

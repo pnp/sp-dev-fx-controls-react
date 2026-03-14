@@ -68,7 +68,7 @@ export const CommentsList: React.FunctionComponent = () => {
         payload: false,
       });
     } catch (error) {
-      const _errorInfo: IErrorInfo = { showError: true, error: error.message };
+      const _errorInfo: IErrorInfo = { showError: true, error: error as Error };
       setlistItemCommentsState({
         type: EListItemCommentsStateTypes.SET_ERROR_INFO,
         payload: _errorInfo,
@@ -87,7 +87,7 @@ export const CommentsList: React.FunctionComponent = () => {
         await addComment(commentText);
         await _loadComments();
       } catch (error) {
-        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        const _errorInfo: IErrorInfo = { showError: true, error: error as Error };
         setlistItemCommentsState({
           type: EListItemCommentsStateTypes.SET_ERROR_INFO,
           payload: _errorInfo,
@@ -110,7 +110,7 @@ export const CommentsList: React.FunctionComponent = () => {
         await deleteComment(commentId);
         await _loadComments();
       } catch (error) {
-        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        const _errorInfo: IErrorInfo = { showError: true, error: error as Error };
         setlistItemCommentsState({
           type: EListItemCommentsStateTypes.SET_ERROR_INFO,
           payload: _errorInfo,
@@ -131,7 +131,7 @@ export const CommentsList: React.FunctionComponent = () => {
         await likeComment(commentId);
         await _loadComments();
       } catch (error) {
-        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        const _errorInfo: IErrorInfo = { showError: true, error: error as Error };
         setlistItemCommentsState({
           type: EListItemCommentsStateTypes.SET_ERROR_INFO,
           payload: _errorInfo,
@@ -151,7 +151,7 @@ export const CommentsList: React.FunctionComponent = () => {
         await unlikeComment(commentId);
         await _loadComments();
       } catch (error) {
-        const _errorInfo: IErrorInfo = { showError: true, error: error };
+        const _errorInfo: IErrorInfo = { showError: true, error: error as Error };
         setlistItemCommentsState({
           type: EListItemCommentsStateTypes.SET_ERROR_INFO,
           payload: _errorInfo,

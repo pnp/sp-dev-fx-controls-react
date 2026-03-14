@@ -1,9 +1,11 @@
 // Joao Mendes November 2018, SPFx reusable Control ListItemAttachments
 import * as React from 'react';
 import { Dialog, DialogType, DialogFooter } from '@fluentui/react/lib/Dialog';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
+import { PrimaryButton, DefaultButton, IconButton } from '@fluentui/react/lib/Button';
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
 import { Label } from "@fluentui/react/lib/Label";
+import { Link } from '@fluentui/react/lib/Link';
+import { DetailsList, DetailsListLayoutMode, SelectionMode } from '@fluentui/react/lib/DetailsList';
 import * as strings from 'ControlStrings';
 import styles from './ListItemAttachments.module.scss';
 import { UploadAttachment } from './UploadAttachment';
@@ -17,6 +19,7 @@ import {
 import { ImageFit } from '@fluentui/react/lib/Image';
 import { IListItemAttachmentsProps } from './IListItemAttachmentsProps';
 import { IListItemAttachmentsState } from './IListItemAttachmentsState';
+import { AttachmentsDisplayMode } from './AttachmentsDisplayMode';
 import SPservice from "../../services/SPService";
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
@@ -132,9 +135,9 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
       });
     }
     else if (this.state.filesToUpload && this.state.filesToUpload.length > 0) {
-      const files = this.state.filesToUpload.map(file => ({
+      const files: IListItemAttachmentFile[] = this.state.filesToUpload.map(file => ({
         FileName: file.name,
-        ServerRelativeUrl: undefined
+        ServerRelativeUrl: undefined as unknown as string
       }));
       await this.loadAttachmentsPreview(files);
     }
@@ -245,41 +248,32 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
         hideDialog: false,
         file: null,
         deleteAttachment: false,
-        dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', file.FileName).replace('{1}', error.message)
+        dialogMessage: strings.ListItemAttachmentsfileDeleteError.replace('{0}', file.FileName).replace('{1}', (error as Error).message)
       });
     }
   }
 
   /**
-   * Default React render method
+   * Get file extension from filename
+   * @param fileName - The file name to extract extension from
+   * @returns The file extension (without the dot) or empty string if no extension
    */
-  public render(): React.ReactElement<IListItemAttachmentsProps> {
+  private getFileExtension(fileName: string): string {
+    const lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex === -1 || lastDotIndex === fileName.length - 1) {
+      return '';
+    }
+    return fileName.substring(lastDotIndex + 1).toLowerCase();
+  }
+
+  /**
+   * Renders attachments in tile/thumbnail mode using DocumentCard components
+   * @returns JSX element containing attachment tiles
+   */
+  private renderTiles (): JSX.Element {
     const { openAttachmentsInNewWindow } = this.props;
-    return (
-      <div className={styles.ListItemAttachments}>
-        <UploadAttachment
-          listId={this.props.listId}
-          itemId={this.state.itemId}
-          disabled={this.props.disabled}
-          context={this.props.context}
-          onAttachmentUpload={this._onAttachmentUpload}
-          fireUpload={this.state.fireUpload}
-          onUploadDialogClosed={() => this.setState({ fireUpload: false })}
-          onAttachmentChange={this.props.onAttachmentChange}
-        />
-
-        {
-          this.state.showPlaceHolder ?
-            <Placeholder
-              iconName='Upload'
-              iconText={this.props.label || strings.ListItemAttachmentslPlaceHolderIconText}
-              description={this.props.description || strings.ListItemAttachmentslPlaceHolderDescription}
-              buttonLabel={strings.ListItemAttachmentslPlaceHolderButtonLabel}
-              hideButton={this.props.disabled}
-              onConfigure={() => this.setState({ fireUpload: true })} />
-            :
-
-            this.state.attachments.map(file => {
+    return <React.Fragment>{
+      this.state.attachments.map(file => {
               const fileName = file.FileName;
               const previewImage = this.previewImages[fileName];
               const clickDisabled = !this.state.itemId;
@@ -321,7 +315,134 @@ export class ListItemAttachments extends React.Component<IListItemAttachmentsPro
                   </TooltipHost>
                 </div>
               );
-            })}
+            })
+          }</React.Fragment>
+  }
+
+  /**
+   * Renders attachments in list mode using DetailsList component
+   * Supports both normal and compact display modes
+   * @returns JSX element containing attachment list
+   */
+  private renderDetailsList (): JSX.Element {
+    const { displayMode, openAttachmentsInNewWindow } = this.props;
+        const columns = [
+            {
+              key: 'columnFileType',
+              name: 'File Type',
+              iconName: 'Page',
+              isIconOnly: true,
+              minWidth: 16,
+              maxWidth: 16,
+              onRender: (file: IListItemAttachmentFile) => {
+                const fileExtension = this.getFileExtension(file.FileName);
+                const previewImage = this.previewImages[file.FileName];
+                const iconUrl = previewImage?.previewImageSrc || '';
+                return (
+                  <TooltipHost content={`${fileExtension || 'file'}`}>
+                    <img src={iconUrl} className={styles.detailsListIcon} alt={`${fileExtension} file icon`} />
+                  </TooltipHost>
+                );
+              },
+            },
+            {
+              key: 'columnFileName',
+              name: 'File Name',
+              fieldName: 'FileName',
+              minWidth: 150,
+              maxWidth: 800,
+              isResizable: true,
+              onRender: (file: IListItemAttachmentFile) => {
+                const clickDisabled = !this.state.itemId;
+
+                if (clickDisabled) {
+                  return <span>{file.FileName}</span>;
+                }
+
+                if (openAttachmentsInNewWindow) {
+                  return (
+                    <Link
+                      className={styles.detailsListLink}
+                      onClick={() => window.open(`${file.ServerRelativeUrl}?web=1`, "_blank")}
+                    >
+                      {file.FileName}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <Link className={styles.detailsListLink} href={`${file.ServerRelativeUrl}?web=1`}>
+                    {file.FileName}
+                  </Link>
+                );
+              }
+            },
+            { 
+              key: 'columnDeleteIcon', 
+              name: '', 
+              minWidth: 32,
+              maxWidth: 32,
+              isResizable: true,
+              onRender: (file: IListItemAttachmentFile) => {
+                return (
+                  <IconButton
+                    className={styles.detailsListIcon}
+                    iconProps={{ iconName: "Delete" }}
+                    disabled={this.props.disabled}
+                    onClick={
+                              (ev) => { 
+                                ev.preventDefault();
+                                ev.stopPropagation();
+                                this.onDeleteAttachment(file); }} />
+
+                );
+              },
+            }
+    ];
+    return <DetailsList
+            className={styles.detailsList}
+            items={this.state.attachments}
+            columns={columns}
+            selectionMode={SelectionMode.none}
+            layoutMode={DetailsListLayoutMode.justified}
+            compact={displayMode === AttachmentsDisplayMode.DetailsListCompact}
+          />
+  }
+
+  /**
+   * Default React render method
+   */
+  public render(): React.ReactElement<IListItemAttachmentsProps> {
+    const { displayMode } = this.props;
+    return (
+      <div className={styles.ListItemAttachments}>
+        <UploadAttachment
+          listId={this.props.listId}
+          itemId={this.state.itemId}
+          disabled={this.props.disabled}
+          context={this.props.context}
+          onAttachmentUpload={this._onAttachmentUpload}
+          fireUpload={this.state.fireUpload}
+          onUploadDialogClosed={() => this.setState({ fireUpload: false })}
+          onAttachmentChange={this.props.onAttachmentChange}
+        />
+
+        {
+          this.state.showPlaceHolder ?
+            <Placeholder
+              iconName='Upload'
+              iconText={this.props.label || strings.ListItemAttachmentslPlaceHolderIconText}
+              description={this.props.description || strings.ListItemAttachmentslPlaceHolderDescription}
+              buttonLabel={strings.ListItemAttachmentslPlaceHolderButtonLabel}
+              hideButton={this.props.disabled}
+              onConfigure={() => this.setState({ fireUpload: true })} />
+            :
+
+            <>
+              {(!displayMode || displayMode === AttachmentsDisplayMode.Tiles) && this.renderTiles()}
+              {(displayMode === AttachmentsDisplayMode.DetailsList || displayMode === AttachmentsDisplayMode.DetailsListCompact) && this.renderDetailsList()}
+            </>
+            }
         {!this.state.hideDialog &&
 
           <Dialog

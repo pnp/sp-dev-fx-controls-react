@@ -66,7 +66,7 @@ export class TilesList extends React.Component<ITilesListProps> {
 
   public render(): React.ReactElement<ITilesListProps> {
     return (
-      <SelectionZone selection={this.props.selection} onItemInvoked={(item: IFile) => { this._handleItemInvoked(item); }}>
+      <SelectionZone selection={this.props.selection} onItemInvoked={(item) => { this._handleItemInvoked(item as IFile); }}>
         <FocusZone>
           <div data-is-scrollable>
             <List

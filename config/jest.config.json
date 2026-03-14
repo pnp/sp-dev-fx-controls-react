@@ -1,0 +1,24 @@
+{
+  "extends": "@microsoft/spfx-web-build-rig/profiles/default/config/jest.config.json",
+
+  "setupFilesAfterEnv": [
+    "<rootDir>/tests/setupHeft.js"
+  ],
+
+  "moduleNameMapper": {
+    "cheerio/lib/utils": "cheerio/utils",
+    "^undici$": "<rootDir>/tests/__mocks__/undici.js",
+    "@ms/sp-telemetry": "identity-obj-proxy",
+    "@microsoft/sp-webpart-base": "identity-obj-proxy",
+    "@microsoft/sp-core-library": "<rootDir>/tests/__mocks__/sp-core-library.js",
+    "@microsoft/sp-http": "<rootDir>/tests/__mocks__/sp-http.js",
+    "@microsoft/sp-application-base": "identity-obj-proxy",
+    "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
+    "@fluentui/react-theme-provider/lib/(.*)$": "@fluentui/react-theme-provider/lib-commonjs/$1",
+    "src/common/telemetry/(.*)$": "identity-obj-proxy",
+    "@pnp/sp": "identity-obj-proxy",
+    "'@pnp/sp/fields": "identity-obj-proxy",
+    "ControlStrings": "identity-obj-proxy",
+    "\\.(css|scss)$": "identity-obj-proxy"
+  }
+}

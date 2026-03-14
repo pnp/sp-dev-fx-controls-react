@@ -233,6 +233,7 @@ const FolderExplorer = React.lazy(() => import('../../../FolderExplorer').then(m
 const FolderPicker = React.lazy(() => import('../../../FolderPicker').then(module => ({ default: module.FolderPicker })));
 const GridLayout = React.lazy(() => import('../../../GridLayout').then(module => ({ default: module.GridLayout })));
 const HoverReactionsBar = React.lazy(() => import('../../../HoverReactionsBar').then(module => ({ default: module.HoverReactionsBar })));
+const GroupPicker = React.lazy(() => import('../../../GroupPicker').then(module => ({ default: module.GroupPicker })));
 
 const IFrameDialog = React.lazy<React.ComponentType<IFrameDialogProps>>(() => import('../../../IFrameDialog').then(module => ({ default: module.IFrameDialog })));
 
@@ -242,6 +243,8 @@ const ListItemAttachments = React.lazy(() => import('../../../ListItemAttachment
 const ListItemComments = React.lazy(() => import('../../../ListItemComments').then(module => ({ default: module.ListItemComments })));
 const ListItemPicker = React.lazy(() => import('../../../ListItemPicker').then(module => ({ default: module.ListItemPicker })));
 const ListPicker = React.lazy(() => import('../../../ListPicker').then(module => ({ default: module.ListPicker })));
+
+const ListToolbar = React.lazy(() => import('../../../controls/ListToolbar').then(module => ({ default: module.ListToolbar })));
 
 const ListView = React.lazy(() => import('../../../ListView').then(module => ({ default: module.ListView })));
 
@@ -617,6 +620,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       showErrorDialog: false,
       selectedTeam: [],
       selectedTeamChannels: [],
+      selectedGroups: [],
       errorMessage: "This field is required",
       selectedFilters: ["filter1"],
       termStoreInfo: null,
@@ -717,7 +721,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   * Method that retrieves files from drag and drop
   * @param files
   */
-  private _getDropFiles = (files) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private _getDropFiles = (files: any[]) => {
     for (var i = 0; i < files.length; i++) {
       console.log("File name: " + files[i].name);
       console.log("Folder Path: " + files[i].fullPath);
@@ -1551,7 +1556,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 ensureUser={true}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 resultFilter={(result: IPersonaProps[]) => {
-                  return result.filter(p => p["loginName"].indexOf(".com") !== -1);
+                  return result.filter(p => (p as any)["loginName"].indexOf(".com") !== -1);
                 }}
                 onChange={this._getPeoplePickerItems} />
 
@@ -1628,6 +1633,22 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 disabled={true}
                 showtooltip={true}
                 defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
+            </div>
+          }
+          {controlVisibility.GroupPicker &&
+            <div id="GroupPickerDiv" className={styles.container}>
+              <GroupPicker
+                appcontext={this.props.context}
+                label="Group Picker"
+                itemLimit={3}
+                selectedGroups={this.state.selectedGroups}
+                multiSelect={true}
+                onSelectedGroups={(tagList: ITag[]) => {
+                  this.setState({ selectedGroups: tagList });
+                }}
+                groupType="M365"
+                themeVariant={this.props.themeVariant}
+              />
             </div>
           }
           {controlVisibility.DragDropFiles &&
@@ -2924,6 +2945,27 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               )}
             </div>
           }
+          {controlVisibility.ListToolbar &&
+            <div id="ListToolbarDiv" className={styles.container}>
+              <h3>ListToolbar</h3>
+              <ListToolbar
+                context={this.props.context}
+                theme={this.props.themeVariant as any}
+                items={[
+                  { key: 'new', label: 'New', icon: <span>+</span>, onClick: () => console.log('New clicked'), group: 'actions' },
+                  { key: 'edit', label: 'Edit', icon: <span>✎</span>, onClick: () => console.log('Edit clicked'), group: 'actions' },
+                  { key: 'delete', label: 'Delete', icon: <span>🗑</span>, onClick: () => console.log('Delete clicked'), appearance: 'subtle', group: 'danger' },
+                ]}
+                farItems={[
+                  { key: 'filter', label: 'Filter', icon: <span>🔍</span>, onClick: () => console.log('Filter clicked'), isFarItem: true },
+                  { key: 'settings', label: 'Settings', icon: <span>⚙</span>, onClick: () => console.log('Settings clicked'), isFarItem: true },
+                ]}
+                totalCount={10}
+                showGroupDividers={true}
+                ariaLabel="List Toolbar"
+              />
+            </div>
+          }
           {controlVisibility.TestControl &&
             <div id="TestControlDiv" className={styles.container}>
               <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
@@ -2994,7 +3036,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         "Field2": i,
         "Field3": "https://pnp.github.io/",
         "Field4": true,
-        "Field5": null,
+        "Field5": null as any,
         "Field6": { key: "choice 1", text: "choice 1" },
         "Field7": [{ key: "choice 1", text: "choice 1" }, { key: "choice 2", text: "choice 2" }],
         "Field8": sampleDate

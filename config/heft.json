@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/heft/v0/heft.schema.json",
+  "extends": "@microsoft/spfx-web-build-rig/profiles/default/config/heft.json",
+  "phasesByName": {
+    "version-updater": {
+      "tasksByName": {
+        "version-updater": {
+          "taskPlugin": {
+            "pluginPackage": "@rushstack/heft",
+            "pluginName": "run-script-plugin",
+            "options": {
+              "scriptPath": "./versionUpdater.mjs"
+            }
+          }
+        }
+      }
+    }
+  }
+}

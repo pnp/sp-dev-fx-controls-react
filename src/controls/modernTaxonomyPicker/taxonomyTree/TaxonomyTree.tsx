@@ -559,7 +559,7 @@ export function TaxonomyTree(
 
     const isDisabled =
       groupHeaderProps.group.data.term.isAvailableForTagging.filter(
-        (t) => t.setId === props.termSetInfo.id
+        (t: { setId: string; isAvailable: boolean }) => t.setId === props.termSetInfo.id
       )[0].isAvailable === false;
     const isSelected =
       props.selection &&
@@ -742,7 +742,7 @@ export function TaxonomyTree(
     const isDisabled =
       headerProps.group.data.term &&
       headerProps.group.data.term.isAvailableForTagging.filter(
-        (t) => t.setId === props.termSetInfo.id
+        (t: { setId: string; isAvailable: boolean }) => t.setId === props.termSetInfo.id
       )[0].isAvailable === false;
 
     return (

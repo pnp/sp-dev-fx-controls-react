@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { css, ISerializableObject } from '@fluentui/react/lib/Utilities';
+import { css } from '@fluentui/react/lib/Utilities';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import { FileTypeIcon, IconType } from '../../fileTypeIcon';
@@ -40,7 +40,7 @@ export class FieldFileTypeRenderer extends React.Component<IFieldFileTypeRendere
   }
 
   public render(): JSX.Element {
-    const optionalStyles: ISerializableObject = {
+    const optionalStyles: any = { // eslint-disable-line @typescript-eslint/no-explicit-any
     };
     optionalStyles[styles.folder] = this.props.isFolder;
     return (

@@ -139,7 +139,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     return (
       <FocusZone>
         <SelectionZone selection={this._selection}
-          onItemInvoked={(item: ISearchResult) => this._selection.setKeySelected(item.key, true, true)}
+          onItemInvoked={(item) => this._selection.setKeySelected((item as ISearchResult).key, true, true)}
         >
           <List
             ref={this._linkElement}
