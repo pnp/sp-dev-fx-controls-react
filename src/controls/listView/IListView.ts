@@ -153,6 +153,10 @@ export interface IViewField {
    */
   isResizable?: boolean;
   /**
+   * Determines if the column should be rendered as multiline.
+   */
+  isMultiline?: boolean;
+  /**
    * Override the render method of the field
    */
   render?: (item?: any, index?: number, column?: IColumn) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
