@@ -3,7 +3,7 @@ import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPViews } from "../common/SPEntities";
-import { SPHelper, urlCombine } from "../common/utilities";
+import { isValidISODateString, SPHelper, urlCombine } from "../common/utilities";
 import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
@@ -584,8 +584,7 @@ export default class SPService implements ISPService {
            if (isArray) {
             result[fieldName].forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
               let value = element[lookupFieldName || 'Title'];
-              const dateVal = Date.parse(value);
-              if (!Number.isNaN(dateVal)) {
+              if (isValidISODateString(value)) {
                   value = new Date(value).toLocaleDateString();
               }        
               lookups.push({ key: element.ID, name: value });
@@ -595,10 +594,9 @@ export default class SPService implements ISPService {
            else {
              const singleItem = result[fieldName];
              let value = singleItem[lookupFieldName || 'Title'];
-              const dateVal = Date.parse(value);
-              if (!Number.isNaN(dateVal)) {
-                  value = new Date(value).toLocaleDateString();
-              }       
+              if (isValidISODateString(value)) {
+                value = new Date(value).toLocaleDateString();
+              }
              lookups.push({ key: singleItem.ID, name: value });
            }
           return lookups;
