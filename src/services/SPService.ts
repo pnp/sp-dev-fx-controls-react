@@ -578,27 +578,15 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          const lookups = [];
-           const isArray = Array.isArray(result[fieldName]);
-           //multiselect lookups are arrays
-           if (isArray) {
-            result[fieldName].forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-              let value = element[lookupFieldName || 'Title'];
-              if (isValidISODateString(value)) {
-                  value = new Date(value).toLocaleDateString();
-              }        
-              lookups.push({ key: element.ID, name: value });
-            });
-           }
-           //single select lookups are objects
-           else {
-             const singleItem = result[fieldName];
-             let value = singleItem[lookupFieldName || 'Title'];
-              if (isValidISODateString(value)) {
+          const lookups: { key: number; name: string }[] = [];
+          const items = Array.isArray(result[fieldName]) ? result[fieldName] : Array.of(result[fieldName]);
+          items.forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+            let value = element[lookupFieldName || 'Title'];
+            if (isValidISODateString(value)) {
                 value = new Date(value).toLocaleDateString();
-              }
-             lookups.push({ key: singleItem.ID, name: value });
-           }
+            }        
+            lookups.push({ key: element.ID, name: value });
+          });
           return lookups;
         }
       }
