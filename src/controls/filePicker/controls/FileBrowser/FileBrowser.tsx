@@ -50,7 +50,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
           // if (fileType.toLowerCase() === 'aspx') {
           //   fileType = 'html';
           // }
-          // const iconUrl = isPhoto ? strings.PhotoIconUrl : `https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/${fileType}.png`;
+          // const iconUrl = isPhoto ? strings.PhotoIconUrl : `https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/${fileType}.png`;
 
           // const altText: string = item.isFolder ? strings.FolderAltText : strings.ImageAltText.replace('{0}', item.fileType);
           // return <div className={styles.fileTypeIcon}>
