@@ -1,4 +1,5 @@
 /* eslint-disable no-unmodified-loop-condition */
+import { format } from 'date-fns';
 import { IEvent } from '../models/IEvents';
 import { useCallback, } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // Use UUID for generating unique IDs
@@ -39,9 +40,10 @@ export const useCalendar = (timezone: string): IUseCalendar => {
   // Memoized helper for timezone handling
   const toLocalDate = useCallback(
     (dateString: string): Date => {
-      return new Date(
-        new Date(dateString).toLocaleString(undefined, { timeZone: timezone })
+      const localDate = new Date(
+        new Date(dateString).toLocaleString('en-US', { timeZone: timezone })
       );
+      return localDate
     },
     [timezone]
   );
@@ -59,7 +61,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
 
       for (let day = 1; day <= daysInMonth; day++) {
         const date = new Date(year, month, day);
-        const dateString = date.toISOString().split('T')[0];
+        const dateString =  format(date, 'yyyy-MM-dd');
         calendarEventsByDay[dateString] = [];
       }
 
@@ -69,7 +71,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
         const currentDate = new Date(eventStart);
 
         while (currentDate <= eventEnd) {
-          const dateString = currentDate.toISOString().split('T')[0];
+          const dateString =  format(currentDate, 'yyyy-MM-dd');
           if (calendarEventsByDay[dateString]) {
             calendarEventsByDay[dateString].push(event);
           }
@@ -91,7 +93,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
       for (let i = 0; i < 7; i++) {
         const currentDate = new Date(start);
         currentDate.setDate(start.getDate() + i);
-        const dateString = currentDate.toISOString().split('T')[0];
+        const dateString =  format(currentDate, 'yyyy-MM-dd');
 
         const dayTimeSlots: TimeSlot[] = Array.from(
           { length: 48 },
@@ -111,8 +113,8 @@ export const useCalendar = (timezone: string): IUseCalendar => {
 
           if (event.isFullDay) {
             if (
-              eventStart.toISOString().split('T')[0] <= dateString &&
-              eventEnd.toISOString().split('T')[0] >= dateString
+              format(eventStart, 'yyyy-MM-dd') <= dateString &&
+              format(eventEnd, 'yyyy-MM-dd') >= dateString
             ) {
               fullDayEvents.push(event);
             }
@@ -120,12 +122,12 @@ export const useCalendar = (timezone: string): IUseCalendar => {
           }
 
           if (
-            eventStart.toISOString().split('T')[0] <= dateString &&
-            eventEnd.toISOString().split('T')[0] >= dateString
+            format(eventStart, 'yyyy-MM-dd') <= dateString &&
+            format(eventEnd, 'yyyy-MM-dd') >= dateString
           ) {
             const currentSlot = new Date(eventStart);
             while (currentSlot <= eventEnd) {
-              const slotDateString = currentSlot.toISOString().split('T')[0];
+              const slotDateString = format(currentSlot, 'yyyy-MM-dd');
               if (slotDateString === dateString) {
                 const slotIndex =
                   currentSlot.getHours() * 2 +
