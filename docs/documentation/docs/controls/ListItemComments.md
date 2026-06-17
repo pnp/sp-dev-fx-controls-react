@@ -74,7 +74,7 @@ The `ListItemComments` control can be configured with the following properties:
 | webUrl | string | no | URL of the site. By default it uses the current site URL. |
 | label | string | no | Label for control. |
 | numberCommentsPerPage | number  | no | number of comments per page. Possible values: `5` \| `10` \| `15` \| `20` (default `10`). |
-| highlightedCommentId | string | no | The commend Id (e.g. "1") you want to highlight. This selected comment will show with different border and background color based on site theme. |
+| highlightedCommentId | string | no | The comment Id (e.g. "1") you want to highlight. This selected comment will show with different border and background color based on site theme. |
 
 ## MSGraph Permissions required
 

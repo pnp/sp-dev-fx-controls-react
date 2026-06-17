@@ -7,7 +7,7 @@ The motivation behind this control is to have a React control that facilitates t
 - Automatic use of Adaptive Cards Templating if an object containing data is passed to the control.
 
 For graphic integration, in the case of SharePoint the current theme (page or section theme) or a custom theme is used.
-Three custom themes have been created for Microsoft Teams to emulate the colors of the available themes: Default, Dark and Hight Contrast.
+Three custom themes have been created for Microsoft Teams to emulate the colors of the available themes: Default, Dark and High Contrast.
 
 All Elements and Actions of Adaptive Cards have been redefined using Fluent UI React, both for SharePoint and Microsoft Teams (in this case the "Fluent UI Northstar" library is not used), adding and improving features that are not managed in Microsoft's implementation of the "adaptivecards-fluentui" library (Theme support for example).
 

@@ -65,7 +65,7 @@ import { SPPermission } from '@microsoft/sp-page-context';
                         remoteSiteUrl="https://<tenant>.sharepoint.com/sites/<siteName>"
                         relativeLibOrListUrl="/sites/<siteName>/<list-or-library-URL>"
                         permissions={[SPPermission.addListItems]}
-                        noPermissionsControl={<p>SOrry, you don't have permissions to this list.</p>}>
+                        noPermissionsControl={<p>Sorry, you don't have permissions to this list.</p>}>
   {/* Specify the components to load when user has the required permissions */}
 </SecurityTrimmedControl>
 ```
