@@ -115,7 +115,7 @@ export const WeekView: React.FC<IWeekViewProps> = (props: IWeekViewProps) => {
                   key={event.id}
                   className={styles.fullDayEvent}
                   style={{
-                    gridColumn: `${dayIndex + 2}`, // Position event in the correct day column
+                    gridColumn: `${dayIndex + 2}`,
                     backgroundColor: event.color
                       ? getCalendarColors(event.color).backgroundColor
                       : getEventColors(event.category!).backgroundColor,

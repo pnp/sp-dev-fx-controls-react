@@ -3,6 +3,9 @@ declare var define: any;
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Domingo",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Valor atual em % do total de itens",
   KPIDEfaultTitle: "Cartão KPI",
   KPIError: "ERRO",

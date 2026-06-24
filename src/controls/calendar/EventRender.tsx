@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import * as React from 'react';
 
 import { EventPopoverCard } from './EventPopoverCard';
@@ -38,12 +38,12 @@ export const EventRenderer: React.FC<IEventRendererProps> = ({
     return React.cloneElement(customOnRenderEvent as React.ReactElement, {
       event,
       className: mergeClasses(
-        (customOnRenderEvent.props as any).className,
+        (customOnRenderEvent.props as { className?: string }).className,
         styles.eventCard,
         appyDynamicStyles(eventIndex, eventCount, rowHeight, spanSlots)
       ),
       style: {
-        ...(customOnRenderEvent.props as any).style,
+        ...(customOnRenderEvent.props as { style?: React.CSSProperties }).style,
       },
     });
   }
