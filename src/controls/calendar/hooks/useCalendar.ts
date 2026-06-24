@@ -11,7 +11,7 @@ export interface TimeSlot {
 
 export interface DayEvents {
   date: string;
-  fullDayEvents: IEvent[]; // Add full-day events for the day
+  fullDayEvents: IEvent[];
   timeSlots: TimeSlot[];
 }
 
@@ -45,7 +45,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
     [timezone]
   );
 
-  // Memoize getMonthCalendar to avoid re-creation unless dependencies change
+
   const getMonthCalendar = useCallback(
     (
       events: IEvent[],
@@ -81,7 +81,7 @@ export const useCalendar = (timezone: string): IUseCalendar => {
     [initializeEventsWithId, toLocalDate]
   );
 
-  // Memoize getWeekEvents to avoid unnecessary re-computation
+
   const getWeekEvents = useCallback(
     (events: IEvent[], startDate: string): DayEvents[] => {
       const weekEvents: DayEvents[] = [];
