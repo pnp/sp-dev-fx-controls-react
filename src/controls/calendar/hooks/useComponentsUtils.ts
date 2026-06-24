@@ -49,7 +49,7 @@ export const useComponentUtils = (): IUseUtils => {
     }
   }, []);
 
-  const trimBeginDoubleSlash = (value: string) => {
+  const trimBeginDoubleSlash = (value: string): string => {
     if (value.charAt(0) === '/' && value.charAt(1) === '/') {
       return value.substring(1, value.length);
     }
