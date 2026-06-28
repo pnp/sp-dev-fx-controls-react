@@ -37,7 +37,7 @@ import { IInstalledLanguageInfo, IItemUpdateResult, IList, ITermInfo, ChoiceFiel
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
-import { IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
+import { IAppendOnlyNoteHistoryEntry, IClientFormTextFieldInfo, IRenderExtendedListFormDataResultNotesField, IRenderExtendedListFormDataResultStatic, IRenderListDataAsStreamClientFormResult } from "../../services/ISPService";
 import { ISPField, IUploadImageResult } from "../../common/SPEntities";
 import { FormulaEvaluation } from "../../common/utilities/FormulaEvaluation";
 import { Context } from "../../common/utilities/FormulaEvaluation.types";
@@ -695,6 +695,21 @@ export class DynamicFormBase extends React.Component<
         }
       }
 
+      // Reload append-only history after save
+      if (listItemId && this.state.fieldCollection.some(f => f.isAppendOnly)) {
+        const updatedExtendedInfo = await this._spService.getExtendedListFormData(listId, listItemId, this.webURL);
+        this.setState(prevState => ({
+          fieldCollection: prevState.fieldCollection.map(field =>
+            field.isAppendOnly 
+            ? { ...field, 
+                notesAppendOnlyHistory: updatedExtendedInfo[field.columnInternalName], 
+                newValue: '', 
+                value: '' } 
+            : field
+          )
+        }));
+      }
+
       this.setState({
         isSaving: false,
         etag: newETag,
@@ -1059,6 +1074,7 @@ export class DynamicFormBase extends React.Component<
       let item = null;
       const isEditingItem = listItemId !== undefined && listItemId !== null && listItemId !== 0;
       let etag: string | undefined = undefined;
+      let extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined = undefined;
 
       if (isEditingItem) {
         const spListItem = spList.items.getById(listItemId);
@@ -1076,6 +1092,13 @@ export class DynamicFormBase extends React.Component<
         if (respectETag !== false) {
           etag = item["odata.etag"];
         }
+
+        const appendOnlyFields = listInfo.ClientForms.Edit[contentTypeName]
+          .filter(field => field.FieldType === 'Note' && (field as IClientFormTextFieldInfo).AppendOnly);
+
+        if (appendOnlyFields.length > 0) {
+          extendedInfo = await this._spService.getExtendedListFormData(listId, listItemId, this.webURL);
+        }
       }
 
       // Build the field collection
@@ -1087,7 +1110,8 @@ export class DynamicFormBase extends React.Component<
         listId,
         listItemId,
         disabledFields,
-        customIcons
+        customIcons,
+        extendedInfo
       );
 
       const sortedFields = this.props.fieldOrder?.length > 0
@@ -1133,7 +1157,7 @@ export class DynamicFormBase extends React.Component<
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: { [key: string]: string }): Promise<IDynamicFieldProps[]> {
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: { [key: string]: string }, extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined): Promise<IDynamicFieldProps[]> {
     const { useModernTaxonomyPicker } = this.props;
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
@@ -1158,6 +1182,7 @@ export class DynamicFormBase extends React.Component<
           let stringValue = null;
           const subPropertyValues: Record<string, unknown> = {};
           let richText = false;
+          let appendOnly = false;
           let dateFormat: DateFormat | undefined;
           let principalType = "";
           let cultureName: string;
@@ -1167,7 +1192,7 @@ export class DynamicFormBase extends React.Component<
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const selectedTags: any = [];
           let choiceType: ChoiceFieldFormatType | undefined;
-
+          let notesAppendOnlyHistory: IAppendOnlyNoteHistoryEntry[] | undefined;
           let fieldName = field.InternalName;
           if (fieldName.startsWith('_x') || fieldName.startsWith('_')) {
             fieldName = `OData_${fieldName}`;
@@ -1205,6 +1230,11 @@ export class DynamicFormBase extends React.Component<
           // Setup Note, Number and Currency fields
           if (field.FieldType === "Note") {
             richText = field.RichText;
+            appendOnly = field.AppendOnly;
+            if (field.AppendOnly) {
+              notesAppendOnlyHistory = extendedInfo?.[field.InternalName];
+              value = '';
+            }
           }
           if (field.FieldType === "Number" || field.FieldType === "Currency") {
             const numberField = numberFields.find(f => f.InternalName === field.InternalName);
@@ -1486,6 +1516,7 @@ export class DynamicFormBase extends React.Component<
             hiddenFieldName: hiddenName,
             Order: order,
             isRichText: richText,
+            isAppendOnly: appendOnly,
             dateFormat: dateFormat,
             firstDayOfWeek: defaultDayOfWeek,
             listItemId: listItemId,
@@ -1496,7 +1527,8 @@ export class DynamicFormBase extends React.Component<
             showAsPercentage: showAsPercentage,
             customIcon: customIcons ? customIcons[field.InternalName] : undefined,
             useModernTaxonomyPickerControl: useModernTaxonomyPicker,
-            choiceType: choiceType
+            choiceType: choiceType,
+            notesAppendOnlyHistory: notesAppendOnlyHistory
           });
 
           // This may not be necessary now using RenderListDataAsStream
