@@ -7,6 +7,7 @@
 - `Calendar` - Remove the dependency of @nuvemerudita/react-controls (deprecated library) [#2119](https://github.com/pnp/sp-dev-fx-controls-react/pull/2119)
 - Calendar not showing items like #2025, but also completely crashes when changing views - AEST Timezone (GMT+10) [#2115](https://github.com/pnp/sp-dev-fx-controls-react/issues/2115)
 - tiny fix: correct spelling mistakes in CHANGELOG.json [#2118](https://github.com/pnp/sp-dev-fx-controls-react/pull/2118)
+- Correct spelling mistakes in controls documentation [#2117](https://github.com/pnp/sp-dev-fx-controls-react/pull/2117)
 
 ### Contributors
 
