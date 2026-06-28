@@ -310,7 +310,7 @@ define([], () => {
       "Nebyly nalezeny žádné výsledky. Zkuste prosím upravit filtrační možnosti.",
     ODModifiedField: "Upraveno",
     ODPhotoIconUrl:
-      "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
     ODRowArialLabelTemplate:
       "{0}, {1}, Upraveno {2}, upravil {3}, {4}, {5}",
     OneDriveConfirmDialogBody:
@@ -325,7 +325,7 @@ define([], () => {
     OneDriveRootFolderName: "Soubory",
     OpenButtonLabel: "Otevřít",
     PhotoIconUrl:
-      "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
     OrgAssetsTabLabel: "Obrázky a soubory poskytované vaší organizací",
     PoweredByBing: "Využívá Bing",
     RecentDocumentsHeader: "Nedávné dokumenty",

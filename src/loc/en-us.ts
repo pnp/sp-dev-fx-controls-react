@@ -291,7 +291,7 @@ define([], () => {
     NoResultsBadEnglish: "***There is no result found. Try to change the filter options",
     ODModifiedField: "Modified",
     ODPhotoIconUrl:
-      "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
     ODRowArialLabelTemplate: "{0}, {1}, Modified {2}, edited by {3}, {4}, {5}",
     OneDriveConfirmDialogBody:
       "This item is from your OneDrive site. Files and folders in OneDrive are private unless you share them. Have you shared this file with your site members so they can ccess it?",
@@ -305,7 +305,7 @@ define([], () => {
     OneDriveRootFolderName: "Files",
     OpenButtonLabel: "Open",
     PhotoIconUrl:
-      "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
     OrgAssetsTabLabel: "Images and files provided by your organization",
     PoweredByBing: "Powered by Bing",
     RecentDocumentsHeader: "Recent documents",
