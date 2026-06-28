@@ -8,10 +8,11 @@
 - Calendar not showing items like #2025, but also completely crashes when changing views - AEST Timezone (GMT+10) [#2115](https://github.com/pnp/sp-dev-fx-controls-react/issues/2115)
 - tiny fix: correct spelling mistakes in CHANGELOG.json [#2118](https://github.com/pnp/sp-dev-fx-controls-react/pull/2118)
 - Correct spelling mistakes in controls documentation [#2117](https://github.com/pnp/sp-dev-fx-controls-react/pull/2117)
+- `PeoplePicker`: Show nameless people in PeoplePicker component [#2111](https://github.com/pnp/sp-dev-fx-controls-react/pull/2111)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [UsrRian](https://github.com/UsrRian).
 
 ## 3.24.0
 
