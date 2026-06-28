@@ -13,10 +13,11 @@
 - tiny fix: correct spelling mistakes in CHANGELOG.json [#2118](https://github.com/pnp/sp-dev-fx-controls-react/pull/2118)
 - Correct spelling mistakes in controls documentation [#2117](https://github.com/pnp/sp-dev-fx-controls-react/pull/2117)
 - `PeoplePicker`: Show nameless people in PeoplePicker component [#2111](https://github.com/pnp/sp-dev-fx-controls-react/pull/2111)
+- Fix: Old CDN icon / image url does not work. [#2107](https://github.com/pnp/sp-dev-fx-controls-react/pull/2107)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [joaojmendes](https://github.com/joaojmendes), [UsrRian](https://github.com/UsrRian).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [gszdev](https://github.com/gszdev), [joaojmendes](https://github.com/joaojmendes), [UsrRian](https://github.com/UsrRian).
 
 ## 3.24.0
 
