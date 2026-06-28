@@ -723,7 +723,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _getDropFiles = (files: any[]) => {
-    for (var i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       console.log("File name: " + files[i].name);
       console.log("Folder Path: " + files[i].fullPath);
     }
@@ -882,11 +882,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
     if (filePickerResult && filePickerResult.length > 0) {
-      for (var i = 0; i < filePickerResult.length; i++) {
+      for (let i = 0; i < filePickerResult.length; i++) {
         const item = filePickerResult[i];
         const fileResultContent = await item.downloadFileContent();
         console.log(fileResultContent);
-        filePickerResult[i].fileSize = fileResultContent.size;
+        item.fileSize = fileResultContent.size;
       }
 
       this.setState({ filePickerResult: filePickerResult });

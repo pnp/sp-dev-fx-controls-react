@@ -6,6 +6,7 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 require('animate.css/animate.min.css');
 
 export interface IAnimatedDialogProps extends IDialogProps {
