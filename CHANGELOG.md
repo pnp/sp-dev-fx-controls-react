@@ -5,6 +5,7 @@
 ### Enhancements
 
 - `DynamicForm`: Multiline Text Column (with Append changes) not showing comment history (#1556)[https://github.com/pnp/sp-dev-fx-controls-react/issues/1556]
+- `ListView`: Rendering multiline or long text fields [#822](https://github.com/pnp/sp-dev-fx-controls-react/issues/822)
 
 ### Fixes
 
