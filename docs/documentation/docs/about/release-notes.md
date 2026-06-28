@@ -16,6 +16,7 @@
 - `PeoplePicker`: Show nameless people in PeoplePicker component [#2111](https://github.com/pnp/sp-dev-fx-controls-react/pull/2111)
 - Fix: Old CDN icon / image url does not work. [#2107](https://github.com/pnp/sp-dev-fx-controls-react/pull/2107)
 - `PeoplePicker`: defaultSelectedUsers resolves wrong group when groups have similar names [#2101](https://github.com/pnp/sp-dev-fx-controls-react/issues/2101)
+- `DateTimePicker`: "showClearDate" button not disabled when component is set as disabled [#1332](https://github.com/pnp/sp-dev-fx-controls-react/issues/1332)
 
 ### Contributors
 
