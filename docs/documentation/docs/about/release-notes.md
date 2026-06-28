@@ -15,10 +15,11 @@
 - Correct spelling mistakes in controls documentation [#2117](https://github.com/pnp/sp-dev-fx-controls-react/pull/2117)
 - `PeoplePicker`: Show nameless people in PeoplePicker component [#2111](https://github.com/pnp/sp-dev-fx-controls-react/pull/2111)
 - Fix: Old CDN icon / image url does not work. [#2107](https://github.com/pnp/sp-dev-fx-controls-react/pull/2107)
+- `PeoplePicker`: defaultSelectedUsers resolves wrong group when groups have similar names [#2101](https://github.com/pnp/sp-dev-fx-controls-react/issues/2101)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [gszdev](https://github.com/gszdev), [joaojmendes](https://github.com/joaojmendes), [UsrRian](https://github.com/UsrRian).
+Special thanks to our contributors (in alphabetical order): [Antanina Druzhkina](https://github.com/Ateina), [Chad Eiserloh](https://github.com/c-eiser13), [gszdev](https://github.com/gszdev), [joaojmendes](https://github.com/joaojmendes), [UsrRian](https://github.com/UsrRian).
 
 ## 3.24.0
 
