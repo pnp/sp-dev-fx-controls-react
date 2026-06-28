@@ -17,7 +17,7 @@ import { ICalendarControlProps } from './models/ICalendarControlProps';
 import { ICalendarDay } from './models/ICalendarDay';
 import { IEvent } from './models/IEvents';
 import { ResizeObserver } from '@juggle/resize-observer';
-import { Stack } from '@nuvemerudita/react-controls';
+import { Stack } from  './stack/Stack';
 import Toolbar from './Toolbar';
 import WeekView from './WeekView';
 import strings from 'ControlStrings';
@@ -64,8 +64,9 @@ const RenderMonthView: React.FC<RenderMonthViewProps> = React.memo(
       <Stack
         height={height}
         width="100%"
-        verticalAlign="start"
-        horizontalAlign="start"
+        direction="vertical"
+        justifyContent="start"
+        alignItems="start"
       >
         <div className={styles.calendarWrapper} ref={calendarRef}>
           {daysOfWeek.map((day) => (
@@ -314,7 +315,7 @@ export const Calendar: React.FC<ICalendarControlProps> = ({
   return (
     <IdPrefixProvider value="calendarControl-">
       <FluentProvider theme={theme ?? webLightTheme}>
-        <Stack height="100%" verticalAlign="start">
+        <Stack height="100%" direction="vertical" justifyContent="start">
           <Toolbar
             selectedView={selectedView}
             onSelectedView={handleViewChange}

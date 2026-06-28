@@ -2,6 +2,9 @@ declare var define: any;
 
 define([], () => {
   return {
+    CalendarControlSelectMonthLabel: "Select month",
+    CalendarControlSelectDayLabel: "Select day",
+    CalendarControlSelectWeekLabel: "Select week",
     Save: "Uložit",
     Cancel: "Zrušit",
 

@@ -2,12 +2,13 @@ import * as React from 'react';
 
 import { Body2, mergeClasses } from '@fluentui/react-components';
 
-import { Card } from  '@nuvemerudita/react-controls';
 import { IEvent } from './models/IEvents';
 import { RenderEventToDayOfMonth } from './RenderEventToDayOfMonth';
-import { Stack } from  '@nuvemerudita/react-controls';
+
 import { isSameDay } from 'date-fns';
 import { useCalendarStyles } from './hooks/useCalendarStyles';
+import { Stack } from './stack';
+import { Card } from './Card';
 
 export interface IDayProps {
   day: number;
@@ -19,7 +20,7 @@ export interface IDayProps {
 }
 
 export const Day: React.FunctionComponent<IDayProps> = (
-  props: React.PropsWithChildren<IDayProps>
+  props: React.PropsWithChildren<IDayProps>,
 ) => {
   const { day, currentMonth, events, date, columnHeight, onDayClick } = props;
   const { styles } = useCalendarStyles();
@@ -33,9 +34,9 @@ export const Day: React.FunctionComponent<IDayProps> = (
   const renderCurrentDayLabel = React.useMemo(() => {
     return (
       <Stack
-        horizontal
-        horizontalAlign="start"
-        verticalAlign="center"
+        direction="horizontal"
+        justifyContent="start"
+        alignItems="center"
         paddingLeft={'m'}
         paddingRight={'m'}
       >
@@ -50,7 +51,7 @@ export const Day: React.FunctionComponent<IDayProps> = (
     (isHovered: boolean): void => {
       setIsEventHovered(isHovered);
     },
-    []
+    [],
   );
 
   return (
@@ -61,13 +62,13 @@ export const Day: React.FunctionComponent<IDayProps> = (
           styles.cardDay,
           currentMonth ? '' : styles.otherMonthDay,
           isCurrentDayAndMonth ? styles.currentDay : '',
-          !isEventHovered ? styles.cardDayOnHover : ''
+          !isEventHovered ? styles.cardDayOnHover : '',
         )}
         cardHeader={
           isCurrentDayAndMonth ? (
             renderCurrentDayLabel
           ) : (
-            <Stack horizontal paddingLeft={'m'} paddingRight={'m'}>
+            <Stack direction="horizontal" paddingLeft={'m'} paddingRight={'m'}>
               <Body2>{day}</Body2>
             </Stack>
           )
