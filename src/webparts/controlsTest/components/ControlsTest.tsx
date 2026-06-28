@@ -800,8 +800,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected items from People  Picker
    * @param items
    */
-  private _getPeoplePickerItems(items: any[]) {
+  private _getPeoplePickerItems = (items: any[]) => {
+    this.setState({
+      authorEmails: items
+    });
     console.log('Items:', items);
+  }
+
+  private defaultUsers = (): string[] => {
+    const users = ["Communications", "melliott@americanveterinarygroup.com"];
+    return users;
   }
 
   /**
@@ -1560,16 +1568,16 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 }}
                 onChange={this._getPeoplePickerItems} />
 
-              <PeoplePicker context={this.peoplePickerContext}
+             {/*  <PeoplePicker context={this.peoplePickerContext}
                 titleText="People Picker (Group not found)"
                 webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
                 groupName="Team Site Visitors 123"
                 ensureUser={true}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                onChange={this._getPeoplePickerItems} />
+                onChange={this._getPeoplePickerItems} /> */}
 
-              <PeoplePicker context={this.peoplePickerContext}
+              {/* <PeoplePicker context={this.peoplePickerContext}
                 titleText="People Picker (search for group)"
                 groupName="Team Site Visitors"
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
@@ -1589,7 +1597,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 webAbsoluteUrl={this.props.context.pageContext.site.absoluteUrl}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 defaultSelectedUsers={["admin@tenant.onmicrosoft.com", "test@tenant.onmicrosoft.com"]}
-                onChange={this._getPeoplePickerItems} />
+                onChange={this._getPeoplePickerItems} /> */}
 
               <PeoplePicker context={this.peoplePickerContext}
                 titleText="People Picker (tenant scoped)"
@@ -1606,12 +1614,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 suggestionsLimit={5}
                 resolveDelay={200}
                 placeholder={'Select a SharePoint principal (User or Group)'}
-                onGetErrorMessage={async (items: any[]) => {
+                ensureUser={true}
+                defaultSelectedUsers={this.defaultUsers()}              
+                /* onGetErrorMessage={async (items: any[]) => {
                   if (!items || items.length < 2) {
                     return 'error';
                   }
                   return '';
-                }} />
+                }} */ />
 
               <PeoplePicker context={this.peoplePickerContext}
                 titleText="People Picker (local scoped)"
@@ -1628,11 +1638,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 suggestionsLimit={2}
                 resolveDelay={200} />
 
-              <PeoplePicker context={this.peoplePickerContext}
+              {/* <PeoplePicker context={this.peoplePickerContext}
                 titleText="People Picker (disabled)"
                 disabled={true}
                 showtooltip={true}
-                defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} />
+                defaultSelectedUsers={['aleksei.dovzhyk@sharepointalist.com']} /> */}
             </div>
           }
           {controlVisibility.GroupPicker &&

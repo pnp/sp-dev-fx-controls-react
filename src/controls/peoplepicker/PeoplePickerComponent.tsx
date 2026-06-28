@@ -134,7 +134,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           valueAndTitle = userValue.split('/');
         }
 
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated, this.suggestionsLimit);
         if (userResult) {
           selectedPersons.push(userResult);
         }
