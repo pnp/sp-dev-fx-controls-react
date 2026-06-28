@@ -2,6 +2,10 @@
 
 ## 3.25.0
 
+### Enhancements
+
+- `DynamicForm`: Multiline Text Column (with Append changes) not showing comment history (#1556)[https://github.com/pnp/sp-dev-fx-controls-react/issues/1556]
+
 ### Fixes
 
 - `Calendar` - Remove the dependency of @nuvemerudita/react-controls (deprecated library) [#2119](https://github.com/pnp/sp-dev-fx-controls-react/pull/2119)
