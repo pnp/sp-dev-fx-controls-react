@@ -18,17 +18,17 @@ Example of use in SharePoint in a `SharePointFullPage - Isolated web parts` (not
 
 As for Teams, given the inconsistency of the theme system of Fluent UI NorthStar (used in Teams) and Fluent UI React (used by SPFx), the themes are "emulated".
 
-The control contains the refining of Teams' `Default`, `Dark` and `Hight Contrast` themes.
+The control contains the refining of Teams' `Default`, `Dark` and `High Contrast` themes.
 
 The `Default` and `Dark themes` were created simply using the Fluent UI Themes designer and the primary colors of their corresponding Teams themes.
 
-For the `Hight Contrast` theme, on the other hand, given the complexity of creating a completely new theme and above all in Hight Contrast mode (neither supported nor gives SharePoint nor gives Fluent UI v7), it was decided to create the theme by hand and support only "main controls".
+For the `High Contrast` theme, on the other hand, given the complexity of creating a completely new theme and above all in High Contrast mode (neither supported nor gives SharePoint nor gives Fluent UI v7), it was decided to create the theme by hand and support only "main controls".
 
 `This means that this theme is not perfect and above all not all controls will be displayed correctly.`
 
-This is not a big deal, as the same theme provided by SharePoint has the same problems, it does not support Hight Contrast rendering for all controls.
+This is not a big deal, as the same theme provided by SharePoint has the same problems, it does not support High Contrast rendering for all controls.
 
-For the `Hight Contrast` theme (in Teams), only these controls are supported by this control: `ChoiceGroup, Checkbox, ComboBox, DatePicker, SpinButton, TextField, Toggle, PrimaryButton, DefaultButton, CompoundButton, IconButton`, other fluent controls may have color rendering problems.
+For the `High Contrast` theme (in Teams), only these controls are supported by this control: `ChoiceGroup, Checkbox, ComboBox, DatePicker, SpinButton, TextField, Toggle, PrimaryButton, DefaultButton, CompoundButton, IconButton`, other fluent controls may have color rendering problems.
 
 Example of use in Teams as a `TeamsPersonalApp` (note that the titles H1, H2, H3 and the paragraph are normal html tags that automatically take the font and color style from the control):
 ![Enhanced Theme Provider - TeamsPersonalApp / TeamsTab](../assets/EnhancedThemeProviderTeams.gif)

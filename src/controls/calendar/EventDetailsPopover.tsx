@@ -11,12 +11,14 @@ import {
   Subtitle1,
   partitionAvatarGroupItems,
 } from '@fluentui/react-components';
-import { Card, RenderLabel, Stack } from '@nuvemerudita/react-controls';
 
 import { IEvent } from './models/IEvents';
 import { css } from '@emotion/css';
 import strings from 'ControlStrings';
 import { useUtils } from './hooks/useUtils';
+import { Stack } from './stack';
+import { RenderLabel } from './RenderLabel';
+import { Card } from './Card';
 
 export interface IEventDetailsPopoverProps {
   event: IEvent;
@@ -41,7 +43,7 @@ const useStyles = (): IUseStyles => {
       padding: `5px 10px 0px 10px`,
     }),
     fieldContainer: css({
-      paddingLeft:  PADDING_LEFT,
+      paddingLeft: PADDING_LEFT,
     }),
   };
   return { styles };
@@ -80,13 +82,16 @@ export const EventDetailsPopover: React.FunctionComponent<
     (id: string) => {
       return attendees?.find((attendee) => attendee.id === id) || undefined;
     },
-    [attendees]
+    [attendees],
   );
 
   const RenderAttendees = React.useCallback((): JSX.Element => {
     return (
       <Stack>
-        <RenderLabel label={strings.CalendarControlAttendeessLabel} icon={'ph:users-three'} />
+        <RenderLabel
+          label={strings.CalendarControlAttendeessLabel}
+          icon={'ph:users-three'}
+        />
         <Stack paddingLeft={PADDING_LEFT}>
           <AvatarGroup layout="stack">
             {partitionedItems.inlineItems.map((id) => (
@@ -121,13 +126,13 @@ export const EventDetailsPopover: React.FunctionComponent<
         paddingTop={'s'}
         width="250px"
         cardBody={
-          <Stack RowGap={10}>
+          <Stack rowGap={'10px'}>
             <div className={styles.banner}>
               <Subtitle1>{title}</Subtitle1>
             </div>
             <Divider />
             {category && (
-              <Stack horizontal horizontalAlign="end" width={'100%'}>
+              <Stack direction="horizontal" justifyContent="end" width={'100%'}>
                 <Badge appearance="filled">{category}</Badge>
               </Stack>
             )}
@@ -150,14 +155,14 @@ export const EventDetailsPopover: React.FunctionComponent<
           </Stack>
         }
         cardFooterContent={
-          <Stack horizontal horizontalAlign="end" width="100%">
+          <Stack direction="horizontal" justifyContent="end" width="100%">
             <Button
               appearance="subtle"
               onClick={() => {
                 window.open(webLink, '_blank');
               }}
             >
-             {strings.CalendarControlDetailsLabel}
+              {strings.CalendarControlDetailsLabel}
             </Button>
           </Stack>
         }

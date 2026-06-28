@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Priečinok",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, priečinok, upravený {1}, editovaný {2}, {3} položky, súkromné",
   "FromLinkLinkLabel": "Z odkazu",
   "ImageAltText": ". {0} obrázok",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Skúste vybrať súbor z webu alebo ho nahrajte zo zariadenia.",
   "NoResultsBadEnglish": "Neexistuje žiadny výsledok hľadania. Pokúste sa zmeniť možnosti filtra",
   "ODModifiedField": "Upravené",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, upravené {2}, editované {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Táto položka je z lokality OneDrive. Súbory a priečinky v službe OneDrive sú súkromné, pokiaľ ich nezdieľate. Zdieľali ste tento súbor s členmi vašej stránky, aby mohli rístup to?",
   "OneDriveConfirmDialogTitle": "Len kontrola...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Tento priečinok je prázdny",
   "OneDriveRootFolderName": "Súbory",
   "OpenButtonLabel": "Otvoriť",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Obrázky a súbory, ktoré poskytuje vaša organizácia",
   "PoweredByBing": "Spravované Bing",
   "RecentDocumentsHeader": "Nedávne dokumenty",

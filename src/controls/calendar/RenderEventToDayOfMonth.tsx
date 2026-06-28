@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import * as React from "react";
 
 import {
@@ -13,12 +12,13 @@ import {
 } from "@fluentui/react-components";
 import { endOfDay, isWithinInterval, startOfDay } from "date-fns";
 
-import { Card } from "@nuvemerudita/react-controls";
+
 import { EventDetailsPopover } from "./EventDetailsPopover";
 import { IEvent } from "./models/IEvents";
 import { IEventColors } from "./models/IEventColors";
 import { useCalendarStyles } from "./hooks/useCalendarStyles";
 import { useUtils } from "./hooks/useUtils";
+import { Card } from "./Card";
 
 export interface IRenderEventToDayOfMonthProps {
   events: IEvent[];
@@ -146,7 +146,7 @@ export const RenderEventToDayOfMonth: React.FunctionComponent<
           if (React.isValidElement(customRender)) {
             return React.cloneElement(customRender as React.ReactElement, {
               className: mergeClasses(
-                (customRender.props as any).className,
+                (customRender.props as { className?: string }).className,
                 styles.eventCard,
               ),
             });

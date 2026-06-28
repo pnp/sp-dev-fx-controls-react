@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Carpeta",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, carpeta, {1} modificada, editada per {2}, {3} elements,",
   "FromLinkLinkLabel": "Des d'un enllaç",
   "ImageAltText": ". {0} imatge",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Proveu de seleccionar un fitxer del vostre lloc web o carregueu-ne un del dispositiu.",
   "NoResultsBadEnglish": "No hi ha cap resultat trobat. Proveu de canviar les opcions de filtre",
   "ODModifiedField": "Modificat",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, {2} modificades, editat per {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Aquest element és del vostre lloc del OneDrive. Els fitxers i les carpetes del OneDrive són privats a menys que els compartiu. Heu compartit aquest fitxer amb els membres del vostre lloc perquè el puguin l?",
   "OneDriveConfirmDialogTitle": "Només comprovant...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Aquesta carpeta està buida",
   "OneDriveRootFolderName": "Arxius",
   "OpenButtonLabel": "Obert",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Imatges i fitxers proporcionats per la vostra organització",
   "PoweredByBing": "Alimentat per Bing",
   "RecentDocumentsHeader": "Documents recents",

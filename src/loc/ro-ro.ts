@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Folderul",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, pliant, {1} modificat, editat de {2}, articole {3}, privat",
   "FromLinkLinkLabel": "De la un link",
   "ImageAltText": ". {0} imagine",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Încercați să selectați un fișier de pe site sau încărcați unul de pe dispozitiv.",
   "NoResultsBadEnglish": "Nu s-a găsit niciun rezultat. Încercați să modificați opțiunile de filtrare",
   "ODModifiedField": "Modificat",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, {2} modificat, editat de {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Acest element este de pe site-ul OneDrive. Fișierele și folderele din OneDrive sunt private dacă nu le partajați. Ați partajat acest fișier cu membrii site-ului dvs., astfel încât acestea să poată să-l ccess?",
   "OneDriveConfirmDialogTitle": "Doar de verificare...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Acest folder este gol",
   "OneDriveRootFolderName": "Fişierele",
   "OpenButtonLabel": "Deschide",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Imagini și fișiere furnizate de organizația dvs.",
   "PoweredByBing": "Realizat de Bing",
   "RecentDocumentsHeader": "Documente recente",

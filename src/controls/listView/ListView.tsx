@@ -24,6 +24,9 @@ const classNames = mergeStyleSets({
   wrapper: {
     height: '50vh',
     position: 'relative'
+  },
+  multilineCell: {
+    whiteSpace: 'break-spaces'
   }
 });
 
@@ -387,6 +390,12 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (field.linkPropertyName) {
       return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         return <a href={item[field.linkPropertyName]}>{item[column.fieldName]}</a>;
+      };
+    }
+
+    if (field.isMultiline) {
+      return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+        return <span className={classNames.multilineCell}>{item[column.fieldName]}</span>;
       };
     }
   }

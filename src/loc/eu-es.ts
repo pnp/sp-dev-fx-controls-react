@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
@@ -216,6 +217,9 @@ define([], () => {
     AddImageButtonLabel: "Add image",
     AriaCellValue: "{0} column, {1}",
     CalendarControlDayOfWeekSunday: "Sunday",
+    CalendarControlSelectMonthLabel: "Select month",
+    CalendarControlSelectDayLabel: "Select day",
+    CalendarControlSelectWeekLabel: "Select week",
     FilePickerCancelButtonLabel: "Cancel",
     CantValidateValidationMessage: "We couldn't verify this link. Please check the link and try again.",
     ChangeFileLinkLabel: "Change file",
@@ -235,7 +239,7 @@ define([], () => {
     FolderAltText: "Folder",
     FolderBackPlate: "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
     FolderFrontPlate: "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-    FolderIconUrl: "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+    FolderIconUrl: "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     FolderLabelTemplate: "{0}, Folder, Modified {1}, edited by {2}, {3} items, Private",
     FromLinkLinkLabel: "From a link",
     ImageAltText: ".{0} Image",
@@ -300,7 +304,7 @@ define([], () => {
     NoRecentFilesDescription: "Try selecting a file from your site, or upload one from your device.",
     NoResultsBadEnglish: "***There is no result found. Try to change the filter options",
     ODModifiedField: "Modified",
-    ODPhotoIconUrl: "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+    ODPhotoIconUrl: "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
     ODRowArialLabelTemplate: "{0}, {1}, Modified {2}, edited by {3}, {4}, {5}",
     OneDriveConfirmDialogBody: "This item is from your OneDrive site. Files and folders in OneDrive are private unless you share them. Have you shared this file with your site members so they can ccess it?",
     OneDriveConfirmDialogTitle: "Just checking...",
@@ -310,7 +314,7 @@ define([], () => {
     OneDriveEmptyFolderTitle: "This folder is empty",
     OneDriveRootFolderName: "Files",
     OpenButtonLabel: "Open",
-    PhotoIconUrl: "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+    PhotoIconUrl: "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
     OrgAssetsTabLabel: "Images and files provided by your organization",
     PoweredByBing: "Powered by Bing",
     RecentDocumentsHeader: "Recent documents",

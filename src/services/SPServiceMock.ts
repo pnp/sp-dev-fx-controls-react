@@ -1,4 +1,4 @@
-import { ISPService, ILibsOptions, IFieldsOptions, IContentTypesOptions, IRenderListDataAsStreamClientFormResult } from "./ISPService";
+import { ISPService, ILibsOptions, IFieldsOptions, IContentTypesOptions, IRenderListDataAsStreamClientFormResult, IRenderExtendedListFormDataResultNotesField, IRenderExtendedListFormDataResultStatic } from "./ISPService";
 import { ISPContentType, ISPField, ISPLists, ISPViews } from "../common/SPEntities";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
@@ -14,6 +14,9 @@ export default class SPServiceMock implements ISPService {
     throw new Error("Method not implemented.");
   }
   public getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]> {
+    throw new Error("Method not implemented.");
+  }
+  public getExtendedListFormData(listId: string, itemId: number, webUrl?: string): Promise<IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField> {
     throw new Error("Method not implemented.");
   }
   public getFields(options?: IFieldsOptions): Promise<ISPField[]> {

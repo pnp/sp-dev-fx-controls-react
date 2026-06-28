@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Fasciklu",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, fasciklu, modificirane {1}, uređuju {2}, {3} stavke, privatno",
   "FromLinkLinkLabel": "Iz veze",
   "ImageAltText": ". {0} slika",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Pokušajte da izaberete datoteku sa vaše lokacije ili otpremite jednu sa uređaja.",
   "NoResultsBadEnglish": "Rezultat nije pronađen. Pokušajte da promenite opcije filtera",
   "ODModifiedField": "Izmenio",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, modificirane {2}, uređuju {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Ova stavka je sa vaše OneDrive lokacije. Datoteke i fascikle u usluzi OneDrive su privatne ako ih ne delite. Da li ste delili ovu datoteku sa članovima lokacije kako bi mogli da je svaraju?",
   "OneDriveConfirmDialogTitle": "Samo Provjeravanje...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Ova fascikla je prazna",
   "OneDriveRootFolderName": "Datoteke",
   "OpenButtonLabel": "Otvorite",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Slike i datoteke koje obezbeđuje vaša organizacija",
   "PoweredByBing": "Napajanje pomoću usluge Bing",
   "RecentDocumentsHeader": "Nedavni dokumenti",

@@ -25,6 +25,10 @@ export const getFieldStyles = (
     thumbnailFieldButtons: 'thumbnailFieldButtons',
     selectedFileContainer: 'selectedFileContainer',
     fieldRequired: 'fieldRequired',
+    appendOnlyHistoryContainer: 'appendOnlyHistoryContainer',
+    appendOnlyHistoryEntry: 'appendOnlyHistoryEntry',
+    appendOnlyHistoryAuthor: 'appendOnlyHistoryAuthor',
+    appendOnlyHistoryDate: 'appendOnlyHistoryDate',
   };
 
   const fieldDisplayNoPadding_style: IStyle = {
@@ -130,6 +134,19 @@ export const getFieldStyles = (
     thumbnailFieldButtons: [
       globalClassNames.thumbnailFieldButtons,
       { display: 'flex' },
+    ],
+    appendOnlyHistoryContainer: [globalClassNames.appendOnlyHistoryContainer, { selectors: { p: { margin: 0 } } }],
+    appendOnlyHistoryEntry: [
+      globalClassNames.appendOnlyHistoryEntry,
+      { display: 'flex', gap: 4, fontSize: 12, padding: '4px 0' },
+    ],
+    appendOnlyHistoryAuthor: [
+      globalClassNames.appendOnlyHistoryAuthor,
+      { fontWeight: 600 },
+    ],
+    appendOnlyHistoryDate: [
+      globalClassNames.appendOnlyHistoryDate,
+      { color: palette.themePrimary, cursor: 'pointer' },
     ],
     errormessage: [
       globalClassNames.errormessage,

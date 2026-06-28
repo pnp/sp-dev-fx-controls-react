@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Ordner",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, Ordner, geänderte {1}, bearbeitet von {2}, {3} Elementen, Privat",
   "FromLinkLinkLabel": "Von einem Link",
   "ImageAltText": ". {0} Bild",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Versuchen Sie, eine Datei von Ihrer Website auszuwählen, oder laden Sie eine Datei von Ihrem Gerät hoch.",
   "NoResultsBadEnglish": "Es wurde kein Ergebnis gefunden. Versuchen Sie, die Filteroptionen zu ändern",
   "ODModifiedField": "Geändert",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, Modified {2}, bearbeitet von {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Dieses Element stammt von Ihrer OneDrive-Website. Dateien und Ordner in OneDrive sind privat, es sei denn, Sie geben sie aus. Haben Sie diese Datei für Ihre Websitemitglieder freigegeben, damit sie sie zissen können?",
   "OneDriveConfirmDialogTitle": "Nur überprüfen...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Dieser Ordner ist leer",
   "OneDriveRootFolderName": "Dateien",
   "OpenButtonLabel": "Öffnen",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Bilder und Dateien, die von Ihrer Organisation bereitgestellt werden",
   "PoweredByBing": "Angetrieben von Bing",
   "RecentDocumentsHeader": "Aktuelle Dokumente",

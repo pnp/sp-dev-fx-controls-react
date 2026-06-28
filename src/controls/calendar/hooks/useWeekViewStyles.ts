@@ -44,8 +44,8 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       display: 'flex',
       flexDirection: 'column',
       width: 'calc(100% - 40px)',
-      height: '100vh', // Make the container take the full viewport height
-      overflow: 'hidden', // Prevent window scrolling
+      height: '100vh',
+      overflow: 'hidden',
       padding: '20px',
     }),
     header: css({
@@ -57,26 +57,26 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
     }),
     weekGrid: css({
       display: 'grid',
-      gridTemplateColumns: '80px repeat(7, 1fr)', // Time column + 7 day columns
-      gridTemplateRows: '50px 40px repeat(48, 33px)', // Header row + Full-day row + 48 rows (2 per hour)
+      gridTemplateColumns: '80px repeat(7, 1fr)',
+      gridTemplateRows: '50px 40px repeat(48, 33px)',
       height: 'fit-content',
       overflowY: 'auto',
       border: `1px solid ${tokens.colorNeutralStroke1}`,
-      maxHeight: 'calc(100vh - 100px)', // Limit the grid height to the viewport minus header/footer areas
-      scrollbarWidth: 'thin', // Thin scrollbar for Firefox
-      scrollbarColor: `${tokens.colorBrandBackground} ${tokens.colorNeutralBackground1}`, // Scrollbar colors for Firefox
+      maxHeight: 'calc(100vh - 100px)',
+      scrollbarWidth: 'thin',
+      scrollbarColor: `${tokens.colorBrandBackground} ${tokens.colorNeutralBackground1}`,
       '&::-webkit-scrollbar': {
-        width: '8px', // Width of the scrollbar
+        width: '8px',
       },
       '&::-webkit-scrollbar-track': {
-        background: tokens.colorNeutralBackground1, // Scrollbar track background
+        background: tokens.colorNeutralBackground1,
       },
       '&::-webkit-scrollbar-thumb': {
-        background: tokens.colorBrandBackground, // Scrollbar thumb color (brand color)
-        borderRadius: '4px', // Rounded corners for the thumb
+        background: tokens.colorBrandBackground,
+        borderRadius: '4px',
       },
       '&::-webkit-scrollbar-thumb:hover': {
-        background: tokens.colorBrandBackgroundHover, // Lighter color on hover
+        background: tokens.colorBrandBackgroundHover,
       },
     }),
     blankHeader: css({
@@ -84,19 +84,19 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       backgroundColor: tokens.colorNeutralBackground3,
       borderBottom: `3px solid ${tokens.colorNeutralStroke3}`,
       position: 'sticky',
-      top: 0, // Sticks to the top of the scrollable container
-      zIndex: 10, // Ensures it stays above the scrolling grid
+      top: 0,
+      zIndex: 10,
     }),
     timeColumn: css({
       gridColumn: '1',
-      gridRow: '3 / span 49', // Spans the entire rows after the header and full-day row
+      gridRow: '3 / span 49',
       display: 'flex',
       flexDirection: 'column',
       backgroundColor: tokens.colorNeutralBackground1,
       borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
     }),
     timeCell: css({
-      height: '100%', // Let the height be dictated by the grid row's size
+      height: '100%',
       display: 'flex',
       alignItems: 'center',
       fontSize: '12px',
@@ -105,36 +105,36 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       justifyContent: 'center',
     }),
     fullDayRow: css({
-      gridRow: '2', // Full-day events occupy the second row
+      gridRow: '2',
       display: 'grid',
-      gridTemplateColumns: '80px repeat(7, 1fr)', // Time column + 7 day columns
-      gap: '0', // Ensure cells align properly
-      padding: '0', // Remove padding for proper alignment
+      gridTemplateColumns: '80px repeat(7, 1fr)',
+      gap: '0',
+      padding: '0',
       backgroundColor: tokens.colorNeutralBackground2,
-      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`, // Bottom border for the row
+      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`,
     }),
     fullDayLabel: css({
-      gridColumn: '1', // Place in the first column
+      gridColumn: '1',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       alignContent: 'center',
       color: tokens.colorBrandBackground,
       padding: '5px',
-      borderRight: `1px solid ${tokens.colorNeutralStroke1}`, // Right border for the label cell
-      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`, // Bottom border for the cell
+      borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
+      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`,
     }),
     fullDayCell: css({
-      borderRight: `1px solid ${tokens.colorNeutralStroke1}`, // Right border between day cells
+      borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
       display: 'flex',
-      flexDirection: 'row', // Arrange events horizontally
+      flexDirection: 'row',
       gap: '0px',
-      padding: '4px', // Ensure events have spacing within the cell
-      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`, // Bottom border for the cell
-      overflow: 'hidden', // Ensure events don’t overflow the cell
+      padding: '4px',
+      borderBottom: `3px solid ${tokens.colorNeutralStroke2}`,
+      overflow: 'hidden',
     }),
     fullDayEvent: css({
-      flex: '1 1 auto', // Allow events to share space equally
+      flex: '1 1 auto',
       minWidth: '24px',
       height: '24px',
       padding: '4px 8px',
@@ -154,8 +154,8 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       fontWeight: 'bold',
       borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
       position: 'sticky',
-      top: 0, // Sticks to the top of the scrollable container
-      zIndex: 10, // Ensures it stays above the scrolling grid
+      top: 0,
+      zIndex: 10,
     }),
     todayHeaderCell: css({
       borderTop: `5px solid ${tokens.colorBrandBackground}`,
@@ -164,9 +164,9 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       padding: 2,
       alignItems: 'center',
       justifyContent: 'center',
-      marginRight: '2px', // Spacing between events
-      zIndex: 1, // Ensure event appears above others
-      position: 'absolute', // Position relative to the cell
+      marginRight: '2px',
+      zIndex: 1,
+      position: 'absolute',
       alignContent: 'center',
       overflow: 'hidden',
       ':hover': {
@@ -184,9 +184,9 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      marginRight: '2px', // Spacing between events
-      zIndex: 1, // Ensure event appears above others
-      position: 'absolute', // Position relative to the cell
+      marginRight: '2px',
+      zIndex: 1,
+      position: 'absolute',
       alignContent: 'center',
       ':hover': {
         pointerEvents: 'auto',
@@ -194,11 +194,11 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       },
     }),
     dayCell: css({
-      borderBottom: `1px solid ${tokens.colorNeutralStroke1}`, // Cell borders
+      borderBottom: `1px solid ${tokens.colorNeutralStroke1}`,
       borderRight: `1px solid ${tokens.colorNeutralStroke1}`,
-      position: 'relative', // Allow child events to be positioned absolutely
-      overflow: 'visible', // Ensure events aren't clipped
-      FlexDirection: 'column', // Ensure events are stacked vertically
+      position: 'relative',
+      overflow: 'visible',
+      FlexDirection: 'column',
       gap: '4px',
     }),
     currentTimeIndicator: css({
@@ -210,7 +210,7 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
       zIndex: 1,
     }),
     currentHalfHourCell: css({
-      border: `2px solid ${tokens.colorPaletteRedBorderActive}`, // Highlight with a red border
+      border: `2px solid ${tokens.colorPaletteRedBorderActive}`,
     }),
     eventTitle: css({
       display: '-webkit-box',
@@ -251,10 +251,10 @@ export const useWeekViewStyles = (): UseWeekViewStyles => {
     ) => {
       return css({
         flex: `0 0 calc(100% / ${eventCount})`,
-        height: `${rowHeight * spanSlots}px`, // Dynamically calculate height
-        left: `${eventIndex * 10}%`, // Adjust for overlapping events
-        width: `calc(${100 - eventIndex * 10}% - 8px)`, // Adjust width for overlap
-        margin: 4, // Add margin for spacing
+        height: `${rowHeight * spanSlots}px`,
+        left: `${eventIndex * 10}%`,
+        width: `calc(${100 - eventIndex * 10}% - 8px)`,
+        margin: 4,
         marginTop: 0,
         marginBottom: 0,
       });

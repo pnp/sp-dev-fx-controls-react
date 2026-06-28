@@ -4,7 +4,7 @@ import filter from 'lodash/filter';
 import find from 'lodash/find';
 import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPViews } from "../common/SPEntities";
 import { isValidISODateString, SPHelper, urlCombine } from "../common/utilities";
-import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
+import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderExtendedListFormDataResultStatic, IRenderExtendedListFormDataResultNotesField, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 interface ICachedListItems {
@@ -789,6 +789,29 @@ export default class SPService implements ISPService {
       const response = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       const result = await response.json();
       return result.value;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Retrieves extended list form data for a list item, including append-only note history.
+   * Calls RenderExtendedListFormData with options=30 to include version history.
+   * @param listId - The GUID of the SharePoint list
+   * @param itemId - The ID of the list item
+   * @param webUrl - Optional web URL; defaults to the current web
+   */
+  async getExtendedListFormData(listId: string, itemId: number, webUrl?: string): Promise<IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiRequestPath = `/_api/web/lists(guid'${listId}')/RenderExtendedListFormData(itemId=${itemId},formId='editform',mode='2',options=30,cutoffVersion=0)`;
+
+      const apiUrl = urlCombine(webAbsoluteUrl, apiRequestPath, false);
+      const response = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {});
+      const { value } = await response.json();
+      const result = JSON.parse(value) as IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField
+      return result;
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);

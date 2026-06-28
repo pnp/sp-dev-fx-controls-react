@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Mappe",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, mappe, ændret {1}, redigeret af {2}, {3} elementer, privat",
   "FromLinkLinkLabel": "Fra et link",
   "ImageAltText": ". {0} billede",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Prøv at vælge en fil fra dit website, eller upload en fra din enhed.",
   "NoResultsBadEnglish": "Der er ikke fundet noget resultat. Prøv at ændre filtreringsindstillingerne",
   "ODModifiedField": "Ændret",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, ændret {2}, redigeret af {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Dette element er fra dit OneDrive-websted. Filer og mapper i OneDrive er private, medmindre du deler dem. Har du delt denne fil med dit webstedsmedlemmer, så de kan dgang det?",
   "OneDriveConfirmDialogTitle": "Bare tjekker...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Denne mappe er tom",
   "OneDriveRootFolderName": "Filer",
   "OpenButtonLabel": "Åbne",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Billeder og filer, der leveres af din organisation",
   "PoweredByBing": "Drevet af Bing",
   "RecentDocumentsHeader": "Seneste dokumenter",

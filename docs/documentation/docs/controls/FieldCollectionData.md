@@ -139,7 +139,7 @@ Enum `CustomCollectionFieldType`
 | number | Number field |
 | boolean | Checkbox |
 | dropdown | Dropdown field. You will have to specify the `options` property when using this field type |
-| combobox | Combobox field. You wil have to specify the `options` property, optional specify `allowFreeform` and `multiSelect` |
+| combobox | Combobox field. You will have to specify the `options` property, optional specify `allowFreeform` and `multiSelect` |
 | fabricIcon | Name of the [Office UI Fabric icon](https://developer.microsoft.com/en-us/fabric#/styles/icons) |
 | url | URL field |
 | peoplepicker | peoplepicker control |

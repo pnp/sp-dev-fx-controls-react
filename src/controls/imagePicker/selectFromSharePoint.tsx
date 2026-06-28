@@ -41,6 +41,7 @@ import { WebPartContext } from '@microsoft/sp-webpart-base';
 import { useTheme } from '@fluentui/react-theme-provider';
 import { createV9Theme } from '@fluentui/react-migration-v8-v9';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const defaultImage = require('./constants/defaultImage.png');
 
 export interface ISelectFromSharePointProps {
