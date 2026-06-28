@@ -4,7 +4,9 @@
       "version": "3.25.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "`DynamicForm`: Multiline Text Column (with Append changes) not showing comment history (#1556)[https://github.com/pnp/sp-dev-fx-controls-react/issues/1556]"
+        ],
         "fixes":[
           "`Calendar` - Remove the dependency of @nuvemerudita/react-controls (deprecated library) [#2119](https://github.com/pnp/sp-dev-fx-controls-react/pull/2119)",
           "Calendar not showing items like #2025, but also completely crashes when changing views - AEST Timezone (GMT+10) [#2115](https://github.com/pnp/sp-dev-fx-controls-react/issues/2115)",
