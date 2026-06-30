@@ -1,4 +1,5 @@
 import '../extensions/String.extensions';
+import { parseISO, isValid } from 'date-fns';
 
 import * as strings from 'ControlStrings';
 
@@ -404,4 +405,8 @@ export function dateToNumber(date: string | number | Date): number {
   }
 
   return dateObj.getTime();
+}
+
+export function isValidISODateString(dateString: string): boolean {
+  return isValid(parseISO(dateString));
 }
