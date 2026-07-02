@@ -65,6 +65,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
             "Placeholder", "Progress", "ProgressStepsIndicator", "RichText",
             "ShareDialog", "SecurityTrimmedControl", "SiteBreadcrumb", "SitePicker",
+            "SPFilePicker",
             "TaxonomyPicker", "TaxonomyTree", "Teams", "TermSetNavigation",
             "TestControl", "Toolbar", "TreeView",
             "UploadFiles", "UserPicker", "VariantThemeProvider",

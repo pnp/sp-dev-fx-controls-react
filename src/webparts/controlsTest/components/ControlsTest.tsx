@@ -152,6 +152,7 @@ import {
 } from '../../../controls/taxonomyPicker/termActions';
 import { TermActionsDisplayStyle } from '../../../controls/taxonomyPicker';
 import TestCalendarControl from './TestCalendarControl';
+import TestSPFilePickerControl from './TestSPFilePickerControl';
 import { Text } from '@fluentui/react/lib/Text';
 import { TextField } from '@fluentui/react/lib/TextField';
 import {
@@ -1615,7 +1616,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 resolveDelay={200}
                 placeholder={'Select a SharePoint principal (User or Group)'}
                 ensureUser={true}
-                defaultSelectedUsers={this.defaultUsers()}              
+                defaultSelectedUsers={this.defaultUsers()}
                 /* onGetErrorMessage={async (items: any[]) => {
                   if (!items || items.length < 2) {
                     return 'error';
@@ -3021,6 +3022,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
             <div id="CalendarDiv" className={styles.container}>
               <TestCalendarControl
                   context={this.props.context} theme={this.props.themeVariant as any}   hasTeamsContext={false} themeString={'default'} title={'Calendar'} appHostName={EAppHostName.SharePoint} />
+            </div>
+
+          }
+          {
+            controlVisibility.SPFilePicker &&
+            <div id="SPFilePickerDiv" className={styles.container}>
+              <TestSPFilePickerControl context={this.props.context} />
             </div>
 
           }

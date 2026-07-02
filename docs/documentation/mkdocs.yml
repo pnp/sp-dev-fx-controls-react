@@ -69,6 +69,7 @@ nav:
     - ShareDialog: 'controls/ShareDialog.md'
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SitePicker: 'controls/SitePicker.md'
+    - SPFilePicker: 'controls/SPFilePicker.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - TeamChannelPicker: 'controls/TeamChannelPicker.md'
     - TeamPicker: 'controls/TeamPicker.md'
