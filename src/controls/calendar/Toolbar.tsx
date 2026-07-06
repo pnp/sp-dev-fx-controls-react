@@ -12,12 +12,14 @@ import {
 import { Button } from '@fluentui/react-button';
 import { ECalendarViews } from './models/ECalendarViews';
 import { SelectCalendarView } from './SelectCalendarView';
-import { SelectDay } from '@nuvemerudita/react-controls';
-import { SelectMonth } from '@nuvemerudita/react-controls';
-import { SelectWeek } from '@nuvemerudita/react-controls';
-import { Stack } from '@nuvemerudita/react-controls';
+
 import { Tooltip } from '@fluentui/react-tooltip';
 import strings from 'ControlStrings';
+
+import { SelectDay } from './selectDay';
+import { SelectMonth } from './selectMonth';
+import { SelectWeek } from './selectWeek/SelectWeek';
+import { Stack } from './stack';
 
 interface ToolbarProps {
   selectedView: ECalendarViews;
@@ -136,21 +138,21 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(
       <Stack
         width="calc(100% - 40px)"
         height="fit-content"
-        horizontal
-        horizontalAlign="space-between"
-        verticalAlign="center"
+        direction="horizontal"
+        justifyContent="space-between"
+        alignItems="center"
         paddingLeft="20px"
         paddingRight="20px"
         paddingBottom="10px"
         paddingTop="10px"
-        columnGap={10}
-        styles={{ overflow: 'hidden' }}
+        columnGap={'10px'}
+        style={{ overflow: 'hidden' }}
       >
         <Stack
-          horizontal
-          horizontalAlign="start"
-          verticalAlign="center"
-          columnGap={10}
+          direction="horizontal"
+          justifyContent="start"
+          alignItems="center"
+          columnGap={'10px'}
         >
           <RenderToday />
           <RenderSelectView />
@@ -170,10 +172,10 @@ export const Toolbar: React.FC<ToolbarProps> = React.memo(
           </Tooltip>
         </Stack>
         <Stack
-          horizontal
-          horizontalAlign="start"
-          verticalAlign="center"
-          columnGap={10}
+          direction="horizontal"
+          justifyContent="start"
+          alignItems="center"
+          columnGap={'10px'}
         >
           <SelectCalendarView
             onSelected={onSelectedView}

@@ -32,6 +32,9 @@ KPIPercentOfTotal: string;
   CalendarControlViewMonthLabel: string;
   CalendarControlViewWeekLabel: string;
   CalendarControlViewDayLabel: string;
+  CalendarControlSelectMonthLabel: string;
+  CalendarControlSelectDayLabel: string;
+  CalendarControlSelectWeekLabel: string;
   CalendarControlTodayLabel: string;
 
   CalendarControlPreviousLabel: string;

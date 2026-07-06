@@ -83,6 +83,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
       label,
       placeholder,
       isRichText,
+      isAppendOnly,
       //bingAPIKey,
       dateFormat,
       firstDayOfWeek,
@@ -95,6 +96,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
       customIcon,
       orderBy,
       choiceType,
+      notesAppendOnlyHistory,
       useModernTaxonomyPickerControl
     } = this.props;
 
@@ -151,7 +153,17 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           {descriptionEl}
         </div>;
 
-      case 'Note':
+      case 'Note': {
+        const notesHistory: JSX.Element = isAppendOnly && notesAppendOnlyHistory?.length > 0
+          ? <div className={styles.appendOnlyHistoryContainer}>{notesAppendOnlyHistory.map((comment) => (
+              <div key={comment.versionId} className={styles.appendOnlyHistoryEntry}>
+                <span className={styles.appendOnlyHistoryAuthor}>{comment.createdTitle}</span>
+                <span className={styles.appendOnlyHistoryDate}>({comment.createdTime})</span>
+                <span>: </span>
+                <span dangerouslySetInnerHTML={{ __html: comment.value }} />
+              </div>
+            ))}</div>
+          : null;
         if (isRichText) {
           const noteValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
           return <div className={styles.richText}>
@@ -165,6 +177,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
               className={styles.fieldDisplay}
               onChange={(newText) => { this.onChange(newText); return newText; }}
               isEditMode={!disabled} />
+            {notesHistory}
             {descriptionEl}
             {errorTextEl}
           </div>;
@@ -186,9 +199,11 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
               onBlur={this.onBlur}
               errorMessage={errorText}
             />
+            {notesHistory}
             {descriptionEl}
           </div>;
         }
+      }
 
       case 'Choice': {
         let choiceControl: JSX.Element = undefined;

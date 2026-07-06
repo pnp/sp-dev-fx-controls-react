@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
  CalendarControlDayOfWeekSunday: "Sunday",
+ CalendarControlSelectMonthLabel: "Select month",
+ CalendarControlSelectDayLabel: "Select day",
+ CalendarControlSelectWeekLabel: "Select week",
  KPICurrentValueAsPercent: "Current value as % of total items",
  KPIDEfaultTitle: "KPI Card",
  KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "資料夾",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}， 資料夾， 修改{1}， 編輯{2}， {3}項目， 私有",
   "FromLinkLinkLabel": "從連結",
   "ImageAltText": ".{0}圖像",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "請嘗試從您的網站中選擇文件，或從設備上傳文件。",
   "NoResultsBadEnglish": "未找到結果。嘗試更改篩選器選項",
   "ODModifiedField": "變更",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}，{1}，修改{2}，由{3}、{4}、{5}編輯",
   "OneDriveConfirmDialogBody": "此專案來自您的 OneDrive 網站。OneDrive 中的檔和資料夾是私有的，除非您共用它們。您是否與您的網站成員共用此檔，以便他們可以成功？",
   "OneDriveConfirmDialogTitle": "只是檢查...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "此資料夾為空",
   "OneDriveRootFolderName": "文件",
   "OpenButtonLabel": "打開",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "組織提供的圖像和文件",
   "PoweredByBing": "由必應支持",
   "RecentDocumentsHeader": "最近文件",

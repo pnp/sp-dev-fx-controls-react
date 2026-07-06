@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Папка",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, папка, модифицирани {1}, редактиран от {2}, {3} елементи, Private",
   "FromLinkLinkLabel": "От връзка",
   "ImageAltText": ". {0} изображение",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Опитайте да изберете файл от сайта си или да качите такъв от устройството си.",
   "NoResultsBadEnglish": "Няма намерен резултат. Опитайте се да промените опциите за филтриране",
   "ODModifiedField": "Модифицирани",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, модифицирани {2}, {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Този елемент е от вашия сайт в OneDrive. Файловете и папките в OneDrive са частни, освен ако не ги споделяте. Споделили ли сте този файл с членовете на сайта си, за да могат да го направят?",
   "OneDriveConfirmDialogTitle": "Просто проверявам...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Тази папка е празна",
   "OneDriveRootFolderName": "Файлове",
   "OpenButtonLabel": "Отворен",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Изображения и файлове, предоставени от вашата организация",
   "PoweredByBing": "Осъществено от Bing",
   "RecentDocumentsHeader": "Последни документи",

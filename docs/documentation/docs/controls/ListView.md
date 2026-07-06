@@ -198,6 +198,7 @@ The `IViewField` has the following implementation:
 | minWidth         | number   | no       | Specify the minimum width of the column.                                                    |
 | maxWidth         | number   | no       | Specify the maximum width of the column.                                                    |
 | isResizable      | boolean  | no       | Determines if the column can be resized.                                                    |
+| isMultiline      | boolean  | no       | Determines if the column should be rendered as multiline. Has no effect when a custom `render` function is provided.    |
 | render           | function | no       | Override how the field has to get rendered.                                                 |
 
 The `IGrouping` has the following implementation:

@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Kausta",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, kaust, muudetud {1}, toimetanud {2}, {3} üksused, Privaatne",
   "FromLinkLinkLabel": "Lingi kaudu",
   "ImageAltText": ". {0} pilt",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Proovige valida oma saidilt mõni fail või laadige see oma seadmest üles.",
   "NoResultsBadEnglish": "Tulemust ei leitud. Proovige muuta filtri suvandeid",
   "ODModifiedField": "Muudetud",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, modifitseeritud {2}, mida on toimetanud {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "See üksus on teie OneDrive ' i saidilt. OneDrive ' i failid ja kaustad on privaatsed, kui te neid ühiskasutusse ei jaga. Kas jagate seda faili oma saidiliikmetega, et nad saaksid seda teha?",
   "OneDriveConfirmDialogTitle": "Lihtsalt kontrollin...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "See kaust on tühi",
   "OneDriveRootFolderName": "Faile",
   "OpenButtonLabel": "Avatud",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Teie organisatsiooni esitatud pildid ja failid",
   "PoweredByBing": "Powered by Bing",
   "RecentDocumentsHeader": "Hiljutised dokumendid",

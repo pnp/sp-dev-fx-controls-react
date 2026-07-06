@@ -25,7 +25,7 @@ const LOG_SOURCE: string = 'OotbFieldsFieldCustomizer';
 export default class OotbFieldsFieldCustomizer
   extends BaseFieldCustomizer<IOotbFieldsFieldCustomizerProperties> {
 
-    private _shouldRenderUndefiend: boolean = false;
+  private _shouldRenderUndefiend: boolean = false;
 
   public onInit(): Promise<void> {
     // Add your custom initialization to this method.  The framework will wait
@@ -53,10 +53,10 @@ export default class OotbFieldsFieldCustomizer
           context: this.context,
           //cssProps: { backgroundColor: '#f00' },
           className: 'fake-class'
-        });
+        })
 
       ReactDOM.render(ootbFields, event.domElement);
-    });
+    }).catch(() => { });
   }
 
   public onDisposeCell(event: IFieldCustomizerCellEventParameters): void {

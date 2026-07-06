@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
   CalendarControlDayOfWeekSunday: "Sunday",
+  CalendarControlSelectMonthLabel: "Select month",
+  CalendarControlSelectDayLabel: "Select day",
+  CalendarControlSelectWeekLabel: "Select week",
   KPICurrentValueAsPercent: "Current value as % of total items",
   KPIDEfaultTitle: "KPI Card",
   KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
   "FolderAltText": "Mapi",
   "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
   "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-  "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+  "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
   "FolderLabelTemplate": "{0}, mape, modificēts {1}, rediģēts pēc {2}, {3} vienumi, privāti",
   "FromLinkLinkLabel": "No saites",
   "ImageAltText": ". {0} attēlu",
@@ -301,7 +305,7 @@ define([], () => {
   "NoRecentFilesDescription": "Pamēģiniet atlasīt failu no savas vietnes vai augšupielādēt to no savas ierīces.",
   "NoResultsBadEnglish": "Nav atrasts neviens rezultāts. Mēģiniet mainīt filtrēšanas opcijas",
   "ODModifiedField": "Modificēt",
-  "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+  "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
   "ODRowArialLabelTemplate": "{0}, {1}, modificējis {2}, rediģējis {3}, {4}, {5}",
   "OneDriveConfirmDialogBody": "Šis vienums ir no jūsu OneDrive vietnes. Faili un mapes pakalpojumā OneDrive ir privāti, ja vien tos nekoplietojat. Vai esat dalītu šo failu ar jūsu vietnes dalībniekiem, lai viņi varētu piekļuve cipari to?",
   "OneDriveConfirmDialogTitle": "Tikai pārbaudot...",
@@ -311,7 +315,7 @@ define([], () => {
   "OneDriveEmptyFolderTitle": "Šī mape ir tukša",
   "OneDriveRootFolderName": "Failus",
   "OpenButtonLabel": "Atvērt",
-  "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+  "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
   "OrgAssetsTabLabel": "Jūsu organizācijas nodrošinātie attēli un faili",
   "PoweredByBing": "Darbojas ar Bing",
   "RecentDocumentsHeader": "Nesenie dokumenti",

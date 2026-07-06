@@ -9,7 +9,7 @@ This control renders document's name as a link. The link provides either preview
 
 ## Covered Fields
 
-- Document Name (LinkFilename, LinkFilenameNomenu, FileLieafRef)
+- Document Name (LinkFilename, LinkFilenameNomenu, FileLeafRef)
 
 ## How to use this control in your solutions
 

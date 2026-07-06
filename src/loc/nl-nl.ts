@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
     CalendarControlDayOfWeekSunday: "Sunday",
+    CalendarControlSelectMonthLabel: "Select month",
+    CalendarControlSelectDayLabel: "Select day",
+    CalendarControlSelectWeekLabel: "Select week",
     KPICurrentValueAsPercent: "Current value as % of total items",
     KPIDEfaultTitle: "KPI Card",
     KPIError: "error",
@@ -259,7 +263,7 @@ define([], () => {
     "FolderAltText": "Map",
     "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
     "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-    "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+    "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     "FolderLabelTemplate": "{0}, map, gewijzigd {1}, bewerkt door {2}, {3} items, privé",
     "FromLinkLinkLabel": "Via een koppeling",
     "ImageAltText": ". {0} afbeelding",
@@ -299,7 +303,7 @@ define([], () => {
     "NoRecentFilesDescription": "Probeer een bestand van je site te selecteren of upload het van je apparaat.",
     "NoResultsBadEnglish": "Er is geen resultaat gevonden. Probeer de filteropties te wijzigen",
     "ODModifiedField": "Bewerkt",
-    "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+    "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
     "ODRowArialLabelTemplate": "{0}, {1}, gewijzigd {2}, bewerkt door {3}, {4}, {5}",
     "OneDriveConfirmDialogBody": "Dit object is afkomstig van je OneDrive-site. Bestanden en mappen in OneDrive zijn privé tenzij je ze deelt. Heeft u dit bestand gedeeld met uw siteleden zodat ze het kunnen Cess?",
     "OneDriveConfirmDialogTitle": "Gewoon controleren...",
@@ -309,7 +313,7 @@ define([], () => {
     "OneDriveEmptyFolderTitle": "Deze map is leeg",
     "OneDriveRootFolderName": "Bestanden",
     "OpenButtonLabel": "Openen",
-    "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+    "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
     "OrgAssetsTabLabel": "Afbeeldingen en bestanden die door uw organisatie worden geleverd",
     "PoweredByBing": "Mogelijk gemaakt door Bing",
     "RecentDocumentsHeader": "Recente documenten",

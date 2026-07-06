@@ -64,12 +64,12 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string | number)[] = null, ensureUser: boolean = false, allowUnvalidated: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string | number)[] = null, ensureUser: boolean = false, allowUnvalidated: boolean = false, maximumSuggestions: number = 5): Promise<IPeoplePickerUserItem> {
     // If groupId is array, load data from all groups
     if (Array.isArray(groupId)) {
       let userResults: IPeoplePickerUserItem[] = [];
       for (const id of groupId) {
-        const tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, id);
+        const tmpResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, id);
         userResults = userResults.concat(tmpResults);
       }
 
@@ -78,8 +78,15 @@ export default class SPPeopleSearchService {
       const filteredUserResults = userResults.filter(({ loginName }, index) => !logins.includes(loginName, index + 1));
       return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
     } else {
-      const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, groupId);
-      return (userResults && userResults.length > 0) ? userResults[0] : null;
+      const userResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, groupId);
+      if (userResults && userResults.length > 0) {
+        const exactMatch = userResults.filter(u => u.loginName?.toLowerCase() === email.toLowerCase() || u.secondaryText?.toLowerCase() === email.toLowerCase() || u.text?.toLowerCase() === email.toLowerCase());
+        if (exactMatch && exactMatch.length > 0) {
+          return exactMatch[0];
+        }
+      }
+      return null;
+      //return (userResults && userResults.length > 0) ? userResults[0] : null;
     }
   }
 

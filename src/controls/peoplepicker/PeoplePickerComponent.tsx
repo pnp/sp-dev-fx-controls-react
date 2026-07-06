@@ -134,12 +134,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           valueAndTitle = userValue.split('/');
         }
 
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated, this.suggestionsLimit);
         if (userResult) {
           selectedPersons.push(userResult);
         }
-        else if (valueAndTitle.length === 2 && valueAndTitle[1]) { //user not found.. bind the title if exists
-          const inactiveUser: IPersonaProps = { text: valueAndTitle[1] };
+        else {
+          // User not found (e.g. left the organization) - show with whatever identifier is available so they can be removed
+          const displayName = (valueAndTitle.length === 2 && valueAndTitle[1]) ? valueAndTitle[1] : valueAndTitle[0];
+          const inactiveUser: IPersonaProps = { text: displayName };
           selectedPersons.push(inactiveUser);
         }
       }

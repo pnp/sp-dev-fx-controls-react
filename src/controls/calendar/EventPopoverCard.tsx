@@ -13,9 +13,10 @@ import {
 
 import { EventDetailsPopover } from "./EventDetailsPopover";
 import { IEvent } from "./models/IEvents";
-import { Stack } from "@nuvemerudita/react-controls";
+
 import { useUtils } from "./hooks/useUtils";
 import { useWeekViewStyles } from "./hooks/useWeekViewStyles";
+import { Stack } from "./stack";
 
 interface EventPopoverCardProps {
   event: IEvent;
@@ -43,15 +44,15 @@ export const EventPopoverCard: React.FC<EventPopoverCardProps> = ({
   const cardContent = React.useMemo(
     () => (
       <div>
-        <Stack columnGap={4} verticalAlign="center">
+        <Stack columnGap={'4px'} alignItems="center">
           <Caption1Strong className={styles.eventTitle}>
             {event.title}
           </Caption1Strong>
           <Stack
-            columnGap={4}
-            horizontal
-            verticalAlign="center"
-            horizontalAlign="start"
+            columnGap={'4px'}
+            direction="horizontal"
+            alignItems="center"
+            justifyContent="start"
           >
             <Caption1>{formatDate(event.start, "HH:mm")}H</Caption1>
             {" - "}

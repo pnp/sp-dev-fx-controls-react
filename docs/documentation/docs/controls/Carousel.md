@@ -54,7 +54,7 @@ Carousel component with provided `triggerPageEvent`
 
 Carousel component with provided `ICarouselImageProps[]` slides:
 
-```TypeSCript
+```TypeScript
 <Carousel
   buttonsLocation={CarouselButtonsLocation.center}
   buttonsDisplay={CarouselButtonsDisplay.buttonsOnly}

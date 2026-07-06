@@ -1,8 +1,12 @@
+// eslint-disable-next-line no-var
 declare var define: any;
 
 define([], () => {
   return {
     CalendarControlDayOfWeekSunday: "Sunday",
+    CalendarControlSelectMonthLabel: "Select month",
+    CalendarControlSelectDayLabel: "Select day",
+    CalendarControlSelectWeekLabel: "Select week",
     KPICurrentValueAsPercent: "Current value as % of total items",
     KPIDEfaultTitle: "KPI Card",
     KPIError: "error",
@@ -261,7 +265,7 @@ define([], () => {
     "FolderAltText": "Mappe",
     "FolderBackPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_backplate.svg",
     "FolderFrontPlate": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
-    "FolderIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20/folder.svg",
+    "FolderIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     "FolderLabelTemplate": "{0}, mappe, endret {1}, redigert av {2}, {3} elementer, privat",
     "FromLinkLinkLabel": "Fra en kobling",
     "ImageAltText": ". {0} bilde",
@@ -301,7 +305,7 @@ define([], () => {
     "NoRecentFilesDescription": "Prøv å velge en fil fra nettstedet ditt, eller Last opp en fra enheten din.",
     "NoResultsBadEnglish": "Det finnes ingen resultater. Prøv å endre filteralternativene",
     "ODModifiedField": "Endret",
-    "ODPhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-18_20190124.001/odsp-media/images/itemtypes/16_2x/photo.png",
+    "ODPhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/16_2x/photo.png",
     "ODRowArialLabelTemplate": "{0}, {1}, modifisert {2}, redigert av {3}, {4}, {5}",
     "OneDriveConfirmDialogBody": "Dette elementet er fra OneDrive-webområdet. Filer og mapper i OneDrive er private med mindre du deler dem. Har du delt denne filen med område medlemmene slik at de kan tilgangen den?",
     "OneDriveConfirmDialogTitle": "Bare sjekker...",
@@ -311,7 +315,7 @@ define([], () => {
     "OneDriveEmptyFolderTitle": "Denne mappen er tom",
     "OneDriveRootFolderName": "Filer",
     "OpenButtonLabel": "Åpne",
-    "PhotoIconUrl": "https://spoprod-a.akamaihd.net/files/odsp-next-prod_2019-01-11_20190116.001/odsp-media/images/itemtypes/20_2x/photo.png",
+    "PhotoIconUrl": "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20_2x/photo.png",
     "OrgAssetsTabLabel": "Bilder og filer fra organisasjonen",
     "PoweredByBing": "Drevet av Bing",
     "RecentDocumentsHeader": "Nylig brukte dokumenter",
