@@ -4,7 +4,7 @@
 
 The SPFilePicker Control embeds the Microsoft‑hosted **File Picker v8** (`/_layouts/15/FilePicker.aspx`) inside any SharePoint Framework (SPFx) web part or extension. It renders a trigger button that opens the picker in a modal dialog (iframe) or a popup window and returns the selected item(s) through an `onPicked` callback.
 
-![spfilepicker](../assets/SPFilePicker.png.png)
+![spfilepicker](../assets/SPFilePicker.png)
 
 It has **no dependency on any adapter** — it works directly from the SPFx `WebPartContext`, resolving the site URL and SharePoint access tokens via the built‑in `aadTokenProviderFactory`.
 
