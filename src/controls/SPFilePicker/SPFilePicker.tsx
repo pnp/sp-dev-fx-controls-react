@@ -3,6 +3,7 @@ import {
   Button,
   Dialog,
   DialogSurface,
+  mergeClasses,
   Spinner,
 } from '@fluentui/react-components';
 import { useSPFilePicker } from './hooks/useSPFilePicker';
@@ -60,7 +61,7 @@ export const SPFilePicker: React.FunctionComponent<ISPFilePickerProps> = (props)
   const resolvedBaseUrl = baseUrl ?? context.pageContext.web.absoluteUrl ?? '';
   const styles = useSPFilePickerStyles(dialogHeight);
 
-  const { isOpen, isLoading, iframeRef, open, markLoaded } = useSPFilePicker({
+  const { isOpen, isLoading, iframeRef, open, close, markLoaded } = useSPFilePicker({
     context,
     baseUrl: resolvedBaseUrl,
     entry,
@@ -80,11 +81,23 @@ export const SPFilePicker: React.FunctionComponent<ISPFilePickerProps> = (props)
 
   const renderTrigger = (): React.ReactNode => {
     if (trigger) {
-      return (
-        <span className={className} onClick={disabled ? undefined : open}>
-          {trigger}
-        </span>
-      );
+      const triggerOnClick = trigger.props.onClick;
+
+      return React.cloneElement(trigger, {
+        'aria-disabled': disabled || undefined,
+        className: mergeClasses(trigger.props.className, className),
+        onClick: (event: React.MouseEvent<HTMLElement>): void => {
+          if (disabled) {
+            event.preventDefault();
+            return;
+          }
+
+          triggerOnClick?.(event);
+          if (!event.defaultPrevented) {
+            open();
+          }
+        },
+      });
     }
     return (
       <Button
@@ -103,7 +116,16 @@ export const SPFilePicker: React.FunctionComponent<ISPFilePickerProps> = (props)
       {renderTrigger()}
 
       {target === 'iframe' && (
-        <Dialog open={isOpen} modalType="modal">
+        <Dialog
+          open={isOpen}
+          modalType="modal"
+          onOpenChange={(_event, data) => {
+            if (!data.open) {
+              onCancel?.();
+              close();
+            }
+          }}
+        >
           <DialogSurface
             className={styles.dialogSurface}
             style={{ maxWidth: dialogWidth, width: dialogWidth }}

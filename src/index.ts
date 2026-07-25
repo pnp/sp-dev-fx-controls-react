@@ -12,6 +12,7 @@ export * from './Progress';
 export * from './ProgressStepsIndicator';
 export * from './DateTimePicker';
 export * from './FilePicker';
+export * from './SPFilePicker';
 export * from './FolderExplorer';
 export * from './FolderPicker';
 export * from './IconPicker';

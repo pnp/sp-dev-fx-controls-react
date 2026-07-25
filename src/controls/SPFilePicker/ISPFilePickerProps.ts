@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { MouseEventHandler, ReactElement } from 'react';
 import type { WebPartContext } from '@microsoft/sp-webpart-base';
 import type {
   ISPFilePickerEntry,
@@ -10,6 +10,12 @@ import type {
   SPFilePickerTarget,
   SPFilePickerTokenResolver,
 } from './ISPFilePicker.types';
+
+export interface ISPFilePickerTriggerProps {
+  'aria-disabled'?: boolean;
+  className?: string;
+  onClick?: MouseEventHandler<HTMLElement>;
+}
 
 /**
  * Props for the ready-to-use {@link SPFilePicker} component.
@@ -82,19 +88,16 @@ export interface ISPFilePickerProps {
 
   /* ---- appearance ---- */
   /**
-   * Custom trigger element. When provided it replaces the default button.
-   * The element receives an `onClick` handler that opens the picker.
+   * Custom interactive trigger element. When provided it replaces the default
+   * button and receives an `onClick` handler that opens the picker.
    */
-  trigger?: ReactNode;
+  trigger?: ReactElement<ISPFilePickerTriggerProps>;
 
   /** Text for the default trigger button. Defaults to `Select from SharePoint`. */
   buttonText?: string;
 
-  /** Title shown in the dialog header (iframe target). Defaults to `Select a file`. */
+  /** Accessible title applied to the picker iframe. Defaults to `Select a file`. */
   dialogTitle?: string;
-
-  /** Cancel button text in the dialog. Defaults to `Cancel`. */
-  cancelText?: string;
 
   /** Disable the trigger. */
   disabled?: boolean;
@@ -105,6 +108,6 @@ export interface ISPFilePickerProps {
   /** Dialog / iframe height in px (iframe target). Defaults to `680`. */
   dialogHeight?: number;
 
-  /** Additional CSS class applied to the trigger container. */
+  /** Additional CSS class applied to the trigger element. */
   className?: string;
 }

@@ -73,14 +73,13 @@ The SPFilePicker Control accepts the following props:
 
 | Property     | Type      | Required | Description                                                                     |
 | ------------ | --------- | -------- | ------------------------------------------------------------------------------- |
-| trigger      | ReactNode | No       | Custom trigger element that replaces the default button (receives `onClick`).   |
+| trigger      | ReactElement | No       | Custom interactive trigger element that replaces the default button and receives `onClick`. |
 | buttonText   | string    | No       | Default button label. Defaults to `Select from SharePoint`.                     |
-| dialogTitle  | string    | No       | iframe dialog title. Defaults to `Select a file`.                               |
-| cancelText   | string    | No       | Cancel button text in the dialog. Defaults to `Cancel`.                         |
+| dialogTitle  | string    | No       | Accessible title applied to the picker iframe. Defaults to `Select a file`.     |
 | disabled     | boolean   | No       | Disable the trigger. Defaults to `false`.                                       |
 | dialogWidth  | number    | No       | Dialog width in px (iframe target). Defaults to `1080`.                         |
 | dialogHeight | number    | No       | Dialog / iframe height in px (iframe target). Defaults to `680`.               |
-| className    | string    | No       | Additional CSS class applied to the trigger container.                          |
+| className    | string    | No       | Additional CSS class applied to the trigger element.                            |
 
 ## Picked Item Object (ISPFilePickerItem)
 

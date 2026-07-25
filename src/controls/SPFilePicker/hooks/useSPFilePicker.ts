@@ -5,11 +5,15 @@ import type {
   ISPFilePickerConfig,
   ISPFilePickerError,
   ISPFilePickerItem,
-  ISPFilePickerRawConfiguration,
   SPFilePickerTarget,
   SPFilePickerTokenResolver,
 } from '../ISPFilePicker.types';
 import { useLogging } from './useLogging';
+import {
+  buildSPFilePickerConfiguration,
+  isExpectedPickerInitializeEvent,
+  requireAccessToken,
+} from './SPFilePicker.helpers';
 import * as strings from 'ControlStrings';
 
 /**
@@ -70,8 +74,6 @@ export interface IUseSPFilePickerReturn {
    */
   markLoaded: () => void;
 }
-
-const SDK_VERSION = '8.0';
 
 /** Small RFC-4122-ish unique id used for the picker channel. */
 function createChannelId(): string {
@@ -180,33 +182,17 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
 
   /** Builds the v8 picker configuration object. */
   const buildConfiguration = useCallback(
-    (channelId: string): ISPFilePickerRawConfiguration => {
-      const useCookies = authMode === 'cookie';
-      const base: ISPFilePickerRawConfiguration = {
-        sdk: SDK_VERSION,
-        // The current SharePoint site of `baseUrl` by default.
-        entry: entry ?? { sharePoint: {} },
-        // IMPORTANT: presence of `authentication` (even empty) tells the picker
-        // the HOST will provide tokens (token mode). The empty object is ALSO
-        // REQUIRED when embedding the picker in an iframe — without it the picker
-        // renders but never delivers pick/close commands over the channel.
-        // Cookie mode (omitting it) only works for a popup window target.
-        ...(useCookies ? {} : { authentication: {} }),
-        messaging: {
-          origin: window.location.origin,
-          channelId,
-          // identifyParent is only relevant for the first-party (cookie) flow.
-          ...(useCookies ? { identifyParent: true } : {}),
-        },
-        selection: { mode: selectionMode },
-        typesAndSources: {
-          mode: itemsMode,
-          ...(fileTypes && fileTypes.length > 0 ? { filters: fileTypes } : {}),
-        },
-      };
-
-      return { ...base, ...(raw ?? {}) } as ISPFilePickerRawConfiguration;
-    },
+    (channelId: string) =>
+      buildSPFilePickerConfiguration({
+        channelId,
+        parentOrigin: window.location.origin,
+        entry,
+        selectionMode,
+        itemsMode,
+        fileTypes,
+        authMode,
+        raw,
+      }),
     [entry, selectionMode, itemsMode, fileTypes, raw, authMode],
   );
 
@@ -262,10 +248,10 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
       switch (command?.command) {
         case 'authenticate': {
           try {
-            const token = await resolveToken(command.resource);
-            if (!token) {
-              throw new Error(strings.SPFilePickerUnableToObtainTokenError);
-            }
+            const token = requireAccessToken(
+              await resolveToken(command.resource),
+              strings.SPFilePickerUnableToObtainTokenError,
+            );
             port.postMessage({
               type: 'result',
               id: payload.id,
@@ -329,18 +315,28 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
 
   /** Wires the `initialize` handshake to the picker window. */
   const attachWindowListener = useCallback(
-    (_pickerWindow: Window, channelId: string) => {
+    (pickerWindow: Window, channelId: string) => {
+      const expectedOrigin = new URL(baseUrl).origin;
       const listener = (event: MessageEvent): void => {
-        const data = event.data;
-        // Match by channelId (a unique per-launch id). Source identity is not
-        // reliable once the iframe navigates cross-origin, so we don't gate on it.
-        if (data?.type === 'initialize' && data?.channelId === channelId) {
+        if (
+          isExpectedPickerInitializeEvent(
+            event,
+            pickerWindow,
+            channelId,
+            expectedOrigin,
+          )
+        ) {
           const port = event.ports?.[0];
           if (!port) return;
 
+          window.removeEventListener('message', listener);
+          windowListenerRef.current = undefined;
           portRef.current = port;
           port.addEventListener('message', (m) => {
-            void handlePortMessage(m);
+            handlePortMessage(m).catch((e) => {
+              const messageText = e instanceof Error ? e.message : String(e);
+              raiseError('messageHandlingFailed', messageText);
+            });
           });
           port.start();
           port.postMessage({ type: 'activate' });
@@ -350,7 +346,7 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
       windowListenerRef.current = listener;
       window.addEventListener('message', listener);
     },
-    [handlePortMessage],
+    [baseUrl, handlePortMessage, raiseError],
   );
 
   /** Loads the picker into the given window. */
@@ -376,7 +372,10 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
       }
 
       // Token mode: POST the access token so the picker can authenticate.
-      const accessToken = await resolveToken(baseUrl);
+      const accessToken = requireAccessToken(
+        await resolveToken(baseUrl),
+        strings.SPFilePickerUnableToObtainTokenError,
+      );
       const doc = pickerWindow.document;
       const form = doc.createElement('form');
       form.setAttribute('action', url);
@@ -396,17 +395,24 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
 
   /** Performs the launch once a target window is available. */
   const launch = useCallback(
-    async (pickerWindow: Window): Promise<void> => {
+    (pickerWindow: Window): void => {
       const channelId = createChannelId();
       channelIdRef.current = channelId;
-      attachWindowListener(pickerWindow, channelId);
-      try {
-        await submitPickerForm(pickerWindow, channelId);
-      } catch (e) {
+
+      const handleLaunchError = (e: unknown): void => {
         const messageText = e instanceof Error ? e.message : String(e);
         raiseError('launchFailed', messageText);
         close();
+      };
+
+      try {
+        attachWindowListener(pickerWindow, channelId);
+      } catch (e) {
+        handleLaunchError(e);
+        return;
       }
+
+      submitPickerForm(pickerWindow, channelId).catch(handleLaunchError);
     },
     [attachWindowListener, submitPickerForm, raiseError, close],
   );
@@ -429,7 +435,7 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
         return;
       }
       popupRef.current = win;
-      void launch(win);
+      launch(win);
     }
     // For iframe target the launch happens in the effect below once the
     // iframe has been rendered by the consumer.
@@ -443,7 +449,7 @@ export function useSPFilePicker(options: IUseSPFilePickerOptions): IUseSPFilePic
     // Avoid re-launching if a channel is already established.
     if (channelIdRef.current) return;
     info('launching picker into iframe');
-    void launch(win);
+    launch(win);
   }, [isOpen, target, launch, info]);
 
   // Clean up on unmount.

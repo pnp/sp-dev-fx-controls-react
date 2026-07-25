@@ -517,7 +517,6 @@ worldMapFlag: string;
   // SP File Picker
   SPFilePickerButtonText: string;
   SPFilePickerDialogTitle: string;
-  SPFilePickerCancelButtonText: string;
   SPFilePickerMissingBaseUrlError: string;
   SPFilePickerPopupBlockedError: string;
   SPFilePickerUnableToObtainTokenError: string;
