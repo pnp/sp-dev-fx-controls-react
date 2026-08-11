@@ -79,6 +79,7 @@
           "SecurityTrimmedControl": false,
           "SiteBreadcrumb": false,
           "SitePicker": false,
+          "SPFilePicker": false,
           "TaxonomyPicker": false,
           "TaxonomyTree": false,
           "Teams": false,

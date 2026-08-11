@@ -514,7 +514,12 @@ worldMapFlag: string;
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
-
+  // SP File Picker
+  SPFilePickerButtonText: string;
+  SPFilePickerDialogTitle: string;
+  SPFilePickerMissingBaseUrlError: string;
+  SPFilePickerPopupBlockedError: string;
+  SPFilePickerUnableToObtainTokenError: string;
 
 
 
