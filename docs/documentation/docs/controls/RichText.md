@@ -61,6 +61,30 @@ const onRenderCustomLabel = (rtProps: IRichTextProps): JSX.Element => {
 }
 ```
 
+It is also possible to provide custom formatting styles for built-in rich text elements. These styles are scoped to the current RichText instance and applied both in edit mode and read-only mode.
+
+```TypeScript
+<RichText
+  value={this.props.value}
+  customStyles={{
+    normal: {
+      color: '#323130',
+      lineHeight: 1.6
+    },
+    header2: {
+      fontSize: '30px',
+      color: '#005a9e'
+    },
+    blockQuote: {
+      backgroundColor: '#f3f2f1',
+      borderLeft: '4px solid #005a9e',
+      paddingLeft: '12px'
+    }
+  }}
+  onChange={(text) => this.onTextChange(text)}
+/>
+```
+
 ## Implementation
 
 The RichText control can be configured with the following properties:
@@ -72,10 +96,28 @@ The RichText control can be configured with the following properties:
 | className | string | no | The custom CSS class to apply to the RichText control. |
 | style | React.CSSProperties | no | The custom styles to apply to the RichText control. |
 | isEditMode | boolean | no | `true` indicates that users will be able to edit the content of the RichText control. `false` will display the rich text as read-only. |
+| placeholder | string | no | Placeholder text to show when the editor is empty. |
 | styleOptions | StyleOptions | no | Define the styles you want to show or hide for the rich text editor |
 | value | string | no | Sets the rich text to display in the RichText control. |
+| customColors | ISwatchColor[] | no | Additional colors to include in the side-panel font color swatch. |
+| customStyles | IRichTextCustomFormattingStyles | no | Object-based formatting styles applied by the control to built-in rich text elements such as normal text, headings, block quotes, and lists. |
 | onChange | (text: string) => string | no | onChange handler for the RichText control. The function must return a `string` containing the rich text to display in the RichText control. |
 | onRenderLabel | (props: IRichTextProps) => JSX.Element | no | Custom renderer for the RichText control's label. The function must return a `JSX.Element`. |
+
+`IRichTextCustomFormattingStyles` interface
+
+| Property | Type | Required | Description |
+| ---- | ---- | ---- | ---- |
+| normal | React.CSSProperties | no | Styles applied to the root rich text content. |
+| header2 | React.CSSProperties | no | Styles applied to `h2` content. |
+| header3 | React.CSSProperties | no | Styles applied to `h3` content. |
+| header4 | React.CSSProperties | no | Styles applied to `h4` content. |
+| blockQuote | React.CSSProperties | no | Styles applied to `blockquote` content. |
+| div | React.CSSProperties | no | Styles applied to `div` content. |
+| p | React.CSSProperties | no | Styles applied to `p` content. |
+| ul | React.CSSProperties | no | Styles applied to `ul` content. |
+| ol | React.CSSProperties | no | Styles applied to `ol` content. |
+| li | React.CSSProperties | no | Styles applied to `li` content. |
 
 `StyleOptions` interface
 
@@ -86,6 +128,7 @@ The RichText control can be configured with the following properties:
 | showItalic | boolean | no | Indicates whether to show the **Italic** toolbar button or not.  Default value is `true` |
 | showLink | boolean | no | Indicates whether to show the **Hyperlink** toolbar button or not.  Default value is `true` |
 | showList | boolean | no | Indicates whether to show the **List** toolbar button or not.  Default value is `true` |
+| showImage | boolean | no | Indicates whether to show the **Image** toolbar button or not. Default value is `true` |
 | showMore | boolean | no | Indicates whether to show the **More** toolbar button or not. Note that this option is independent from the other `show___` options. I.e.: Setting `showBold` to `false` will disable the **Bold** toolbar, but will not disable it from the formatting pane. Default value is `true` |
 | showStyles | boolean | no | Indicates whether to show the **Headings** toolbar button or not. Note that this option is independent from the other `show___` options. I.e.: Setting `showBold` to `false` will disable the **Bold** toolbar, but will not disable it from the formatting pane. Default value is `true` |
 | showUnderline | boolean | no | Indicates whether to show the **Underline** toolbar button or not. Note that this option is independent from the other `show___` options. I.e.: Setting `showBold` to `false` will disable the **Bold** toolbar, but will not disable it from the formatting pane. Default value is `true` |

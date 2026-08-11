@@ -3,6 +3,7 @@ import * as strings from 'ControlStrings';
 import styles from './RichTextPropertyPane.module.scss';
 import RteColorPicker from './RteColorPicker';
 import { IRichTextPropertyPaneProps, IRichTextPropertyPaneState } from './RichTextPropertyPane.types';
+import { ISwatchColor } from './SwatchColorPickerGroup.types';
 import { IconButton } from '@fluentui/react/lib/Button';
 import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
@@ -10,7 +11,23 @@ import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
 import { RangeStatic } from 'quill';
 
+const FONT_SIZE_OPTIONS: IDropdownOption[] = [
+  { key: 'xsmall', text: '10', data: { px: 10 } },
+  { key: 'small', text: '12', data: { px: 12 } },
+  { key: 'medium', text: '14', data: { px: 14 } },
+  { key: 'mediumplus', text: '16', data: { px: 16 } },
+  { key: 'large', text: '18', data: { px: 18 } },
+  { key: 'xlarge', text: '20', data: { px: 20 } },
+  { key: 'xlargeplus', text: '24', data: { px: 24 } },
+  { key: 'xxlarge', text: '28', data: { px: 28 } },
+  { key: 'xxxlarge', text: '32', data: { px: 32 } },
+  { key: 'xxlargeplus', text: '36', data: { px: 36 } },
+  { key: 'super', text: '42', data: { px: 42 } },
+  { key: 'superlarge', text: '68', data: { px: 68 } }
+];
+
 export default class RichTextPropertyPane extends React.Component<IRichTextPropertyPaneProps, IRichTextPropertyPaneState> {
+  private _customSizeValuesPx: Set<number> = new Set<number>();
 
   constructor(props: IRichTextPropertyPaneProps) {
     super(props);
@@ -92,9 +109,92 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
 
     if (range) {
       const formats = quill.getFormat(range);
+
+      const renderedStyles = this.getRenderedStyleValues(range);
+      // Keep Quill inline formats as source of truth; only use rendered values as fallback.
+      if ((formats.size === undefined || formats.size === null || formats.size === '') && renderedStyles.size !== undefined) {
+        formats.size = renderedStyles.size;
+      }
+      if ((formats.color === undefined || formats.color === null || formats.color === '') && renderedStyles.color !== undefined) {
+        formats.color = renderedStyles.color;
+      }
+      if ((formats.background === undefined || formats.background === null || formats.background === '') && renderedStyles.background !== undefined) {
+        formats.background = renderedStyles.background;
+      }
+
+      this.refreshCustomSizeValuesFromDocument();
+
       this.setState({
         formats
       });
+    }
+  }
+
+  /**
+   * Reads computed styles from the selected rendered element to keep tracked
+   * formatting values (size, color, highlight) in sync with custom CSS classes.
+   */
+  private getRenderedStyleValues = (range: RangeStatic): { size?: string; color?: string; background?: string } => {
+    const quill = this.props.editor;
+
+    // Access Quill's root DOM element; if unavailable we cannot read computed styles.
+    const editor = quill?.root as HTMLElement;
+    if (!editor) {
+      return {};
+    }
+
+    // Normalize the selection index to a non-negative value.
+    const requestedIndex = Math.max(0, range.index || 0);
+
+    // For caret selections (length 0), probe one character back when possible.
+    // This helps when the caret sits at a boundary where the next node has different styles.
+    const probeIndex = range.length === 0 && requestedIndex > 0 ? requestedIndex - 1 : requestedIndex;
+
+    // Line-level node is the most reliable source for block formats (h2/h3/h4/blockquote/etc.).
+    const [line] = quill.getLine(probeIndex);
+
+    // Convert Quill line model node to a DOM element we can inspect.
+    const lineElement = line?.domNode as HTMLElement;
+
+    // Also inspect the exact piece of content where the cursor/selection is,
+    // so inline color/highlight styles can still be detected when needed.
+    const [leaf] = quill.getLeaf(probeIndex);
+    const leafNode = leaf?.domNode as Node;
+
+    // If leaf is a text node, use its parent element; otherwise use the element directly.
+    const leafElement = leafNode?.nodeType === Node.TEXT_NODE
+      ? (leafNode.parentElement as HTMLElement)
+      : (leafNode as HTMLElement);
+
+    // Choose the best target element for style inspection in priority order:
+    // 1) line element (best for block styles),
+    // 2) nearest block-like ancestor from leaf,
+    // 3) leaf element itself,
+    // 4) editor root as final fallback.
+    const targetElement = lineElement
+      || (leafElement?.closest('h1, h2, h3, h4, h5, h6, blockquote, p, div, li, ul, ol') as HTMLElement)
+      || leafElement
+      || editor;
+
+    try {
+      // Read final, browser-resolved CSS values after all classes/cascades are applied.
+      const computed = getComputedStyle(targetElement);
+
+      // Parse numeric font size in pixels from values like "18px".
+      const fontSize = parseInt(computed.fontSize, 10);
+
+      // Resolve to a known Quill size key when it matches one of our supported options.
+      // Example: 28 -> "xxlarge".
+      const sizeKey = FONT_SIZE_OPTIONS.find((option) => option.data?.px === fontSize)?.key?.toString();
+
+      return {
+        // If size is known, return the Quill key; otherwise return raw px string (display-only fallback).
+        size: sizeKey || `${fontSize}px`,
+        color: computed.color,
+        background: computed.backgroundColor
+      };
+    } catch {
+      return {};
     }
   }
 
@@ -183,26 +283,14 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   private renderFontSizesGroup = (): JSX.Element => {
     // get the selected header
     const selectedSize = this.state.formats?.size ? this.state.formats.size : 'large';
+    const sizeOptions = this.buildSortedSizeOptions(selectedSize);
 
     return (
       <div className={styles.propertyPaneGroupField}>
         <Dropdown label={strings.FontSizeTitle}
           ariaLabel={strings.FontSizeTitle}
           selectedKey={selectedSize}
-          options={[
-            { key: 'xsmall', text: '10' },
-            { key: 'small', text: '12' },
-            { key: 'medium', text: '14' },
-            { key: 'mediumplus', text: '16' },
-            { key: 'large', text: '18' },
-            { key: 'xlarge', text: '20' },
-            { key: 'xlargeplus', text: '24' },
-            { key: 'xxlarge', text: '28' },
-            { key: 'xxxlarge', text: '32' },
-            { key: 'xxlargeplus', text: '36' },
-            { key: 'super', text: '42' },
-            { key: 'superlarge', text: '68' }
-          ]}
+          options={sizeOptions}
           onChanged={this.onChangeSize}
         />
       </div>
@@ -318,19 +406,31 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   private renderColorStylesGroup = (): JSX.Element => {
     const color: string = this.state.formats.color || ThemeColorHelper.GetThemeColor(styles.NeutralPrimary);
     const backgroundColor: string = this.state.formats.background || "rgba(0, 0, 0, 0)";
+    const customFontColors = this.mergeSwatchColors(
+      this.props.customColors,
+      this.getCustomStyleSwatchColors('color')
+    );
+    const customHighlightColors = this.getCustomStyleSwatchColors('backgroundColor');
 
     /**
      * Add custom colors if passed as a property
      */
     const fontColorGroups = ["themeColors","standardColors"];
-    if(this.props.customColors) fontColorGroups.push('customColors');
+    if (customFontColors.length > 0) {
+      fontColorGroups.push('customColors');
+    }
+
+    const highlightColorGroups = ["highlightColors"];
+    if (customHighlightColors.length > 0) {
+      highlightColorGroups.push('customColors');
+    }
 
     return (
       <div className={styles.propertyPaneGroupField}>
         <div className="ms-CustomFieldHost">
           <div className={styles.controlsInOneRow}>
             <RteColorPicker colorPickerGroups={fontColorGroups} // changed to variable
-              customColors={this.props.customColors}
+              customColors={customFontColors}
               buttonLabel={strings.FontColorLabel}
               id="fontColor-propertyPaneButton"
               defaultButtonLabel={strings.AutomaticFontColor}
@@ -341,15 +441,14 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
               switchToDefaultColor={() => this.handleFillColorChanged(undefined)} />
 
             <RteColorPicker buttonLabel={strings.HighlightColorLabel}
-              colorPickerGroups={[
-                "highlightColors"
-              ]}
+              colorPickerGroups={highlightColorGroups}
               fillThemeColor={false}
               onColorChanged={this.handleHighlightColorChanged}
               switchToDefaultColor={() => this.handleHighlightColorChanged(undefined)}
               previewColor={backgroundColor}
               defaultButtonLabel={strings.NoColorHighlightColor}
               selectedColor={backgroundColor}
+              customColors={customHighlightColors}
               id="highlightColor-propertyPaneButton"
             />
           </div>
@@ -563,8 +662,15 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    * On heading change
    */
   private onChangeHeading = (item: IDropdownOption): void => {
+    const quill = this.props.editor;
     const newHeadingValue = item.key === 0 ? '' : item.key.toString();
-    this.applyFormat("header", newHeadingValue);
+
+    // Reset explicit font-size so heading defaults (including customStyles) can apply.
+    quill.format('size', false);
+    quill.format('header', newHeadingValue);
+    setTimeout(() => {
+      this.onChangeSelection(quill.getSelection());
+    }, 100);
   }
 
   /**
@@ -580,8 +686,212 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    * On size change
    */
   private onChangeSize = (item: IDropdownOption): void => {
+    if (typeof item.key === 'string' && item.key.endsWith('px')) {
+      const quill = this.props.editor;
+      // This option represents a computed size outside Quill's whitelist.
+      // Clear inline size so block-level/default styles can drive the rendered size.
+      quill.format('size', false);
+      setTimeout(() => {
+        this.onChangeSelection(quill.getSelection());
+      }, 100);
+      return;
+    }
+
     const newSizeValue = item.key === 0 ? '' : item.key.toString();
     this.applyFormat("size", newSizeValue);
+  }
+
+  /**
+   * Builds the size dropdown list by combining:
+   * - Quill whitelist sizes,
+   * - font sizes found in custom style classes,
+   * - and rendered custom sizes detected in the editor.
+   *
+   * Duplicate values are keyed by size and collapsed into a single option.
+   */
+  private buildSortedSizeOptions = (selectedSize?: string): IDropdownOption[] => {
+    const optionsByKey: Record<string, IDropdownOption> = {};
+
+    // Start with standard Quill sizes.
+    FONT_SIZE_OPTIONS.forEach((option) => {
+      optionsByKey[option.key.toString()] = option;
+    });
+
+    // Include custom sizes declared in customStyles.
+    this.getCustomStyleFontSizesPx().forEach((px) => {
+      const key = `${px}px`;
+      optionsByKey[key] = {
+        key,
+        text: String(px),
+        data: { px }
+      };
+    });
+
+    // Include custom rendered sizes detected from current document content.
+    this._customSizeValuesPx.forEach((px) => {
+      const key = `${px}px`;
+      optionsByKey[key] = {
+        key,
+        text: String(px),
+        data: { px }
+      };
+    });
+
+    // Keep currently selected value visible even if it is no longer in collected options.
+    if (selectedSize && !optionsByKey[selectedSize]) {
+      optionsByKey[selectedSize] = {
+        key: selectedSize,
+        text: selectedSize.endsWith('px') ? selectedSize.replace('px', '') : selectedSize
+      };
+    }
+
+    // Sort numerically so users see a predictable ascending list.
+    return Object.values(optionsByKey)
+      .sort((a, b) => this.getSizeOptionPx(a) - this.getSizeOptionPx(b));
+  }
+
+  /**
+   * Resolves a dropdown option to a numeric pixel value for sorting.
+   */
+  private getSizeOptionPx = (option: IDropdownOption): number => {
+    // Preferred source: explicit numeric metadata.
+    const value = option.data?.px;
+    if (typeof value === 'number' && !Number.isNaN(value)) {
+      return value;
+    }
+
+    // Fallback: parse displayed text value.
+    const textValue = parseInt(option.text?.toString() || '', 10);
+    // Invalid values are pushed to the end of the list.
+    return Number.isNaN(textValue) ? Number.MAX_SAFE_INTEGER : textValue;
+  }
+
+  /**
+   * Extracts distinct font sizes (px) from the custom style configuration.
+   */
+  private getCustomStyleFontSizesPx = (): number[] => {
+    const customStyles = this.props.customStyles;
+    if (!customStyles) {
+      return [];
+    }
+
+    const fontSizesPx = new Set<number>();
+
+    Object.values(customStyles).forEach((style) => {
+      const fontSize = style?.fontSize;
+      const fontSizePx = this.parseStyleSizePx(fontSize);
+
+      if (fontSizePx !== undefined) {
+        fontSizesPx.add(fontSizePx);
+      }
+    });
+
+    return Array.from(fontSizesPx);
+  }
+
+  /**
+   * Builds a deduplicated color list from custom style declarations for
+   * either font color or background color.
+   */
+  private getCustomStyleSwatchColors = (styleKey: 'color' | 'backgroundColor'): ISwatchColor[] => {
+    const customStyles = this.props.customStyles;
+    if (!customStyles) {
+      return [];
+    }
+
+    const colorsByValue: Record<string, ISwatchColor> = {};
+
+    Object.values(customStyles).forEach((style) => {
+      const colorValue = style?.[styleKey];
+      if (typeof colorValue !== 'string' || !colorValue.trim()) {
+        return;
+      }
+
+      const normalizedColor = colorValue.trim().toLowerCase();
+      colorsByValue[normalizedColor] = {
+        color: colorValue,
+        id: `custom-style-${styleKey}-${normalizedColor.replace(/[^a-z0-9]+/g, '-')}`,
+        label: colorValue
+      };
+    });
+
+    return Object.values(colorsByValue);
+  }
+
+  /**
+   * Merges multiple color groups into one list and deduplicates by normalized
+   * color value, so the picker does not show repeated entries.
+   */
+  private mergeSwatchColors = (...colorGroups: Array<ISwatchColor[] | undefined>): ISwatchColor[] => {
+    const colorsByValue: Record<string, ISwatchColor> = {};
+
+    colorGroups.forEach((group) => {
+      group?.forEach((color) => {
+        const normalizedColor = color.color.trim().toLowerCase();
+        if (!normalizedColor) {
+          return;
+        }
+
+        colorsByValue[normalizedColor] = color;
+      });
+    });
+
+    return Object.values(colorsByValue);
+  }
+
+  /**
+   * Parses a CSS-like font size input into a numeric pixel value.
+   * Accepts number inputs or strings such as "18px".
+   */
+  private parseStyleSizePx = (fontSize: string | number | undefined): number | undefined => {
+    if (typeof fontSize === 'number' && !Number.isNaN(fontSize)) {
+      return fontSize;
+    }
+
+    if (typeof fontSize === 'string') {
+      const parsedFontSize = parseInt(fontSize, 10);
+      if (!Number.isNaN(parsedFontSize)) {
+        return parsedFontSize;
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
+   * Scans the rendered editor content and stores non-whitelisted computed
+   * font sizes. These values are exposed in the size dropdown so current
+   * formatting can still be represented to the user.
+   */
+  private refreshCustomSizeValuesFromDocument = (): void => {
+    const quill = this.props.editor;
+    const root = quill?.root as HTMLElement;
+
+    if (!root) {
+      return;
+    }
+
+    const customSizeValuesPx = new Set<number>();
+    const fontSizeElements = [root, ...Array.from(root.querySelectorAll<HTMLElement>('*'))];
+
+    fontSizeElements.forEach((element) => {
+      // Read the final computed font size after CSS cascade is applied.
+      const computedFontSize = getComputedStyle(element).fontSize;
+      const fontSizePx = parseInt(computedFontSize, 10);
+
+      if (Number.isNaN(fontSizePx)) {
+        return;
+      }
+
+      if (FONT_SIZE_OPTIONS.some((option) => option.data?.px === fontSizePx)) {
+        return;
+      }
+
+      customSizeValuesPx.add(fontSizePx);
+    });
+
+    // Replace the cache atomically to keep updates simple and deterministic.
+    this._customSizeValuesPx = customSizeValuesPx;
   }
 
   /**

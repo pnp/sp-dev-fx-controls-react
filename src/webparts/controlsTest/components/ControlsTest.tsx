@@ -155,6 +155,7 @@ import TestCalendarControl from './TestCalendarControl';
 import TestSPFilePickerControl from './TestSPFilePickerControl';
 import { Text } from '@fluentui/react/lib/Text';
 import { TextField } from '@fluentui/react/lib/TextField';
+import { Toggle } from '@fluentui/react/lib/Toggle';
 import {
   TimeDisplayControlType,
 } from '../../../controls/dateTimePicker/TimeDisplayControlType';
@@ -170,6 +171,7 @@ import { debounce } from 'lodash';
 import { mergeStyles } from '@fluentui/react/lib/Styling';
 import { sp } from '@pnp/sp';
 import styles from './ControlsTest.module.scss';
+import type { IRichTextCustomFormattingStyles } from '../../../RichText';
 
 //#endregion
 
@@ -388,6 +390,18 @@ const filterBarFilters = [{
   label: "Field4",
   value: "Field 4-2"
 }];
+
+const RICH_TEXT_RESET_VALUE = [
+  '<p><span class="ql-size-xsmall">10px inline size sample</span> and <span class="ql-size-large">18px sample</span>.</p>',
+  '<h2>Heading 2 sample with custom root styling</h2>',
+  '<h3>Heading 3 sample with custom root styling</h3>',
+  '<h4>Heading 4 sample with custom root styling</h4>',
+  '<blockquote>Block quote sample. This line validates quote spacing, border and emphasis.</blockquote>',
+  '<div>Div sample text with a <a href="https://pnp.github.io/sp-dev-fx-controls-react/" target="_blank" rel="noopener noreferrer">documentation link</a>.</div>',
+  '<p>Paragraph sample with <span style="color: rgb(166, 0, 0);">font color</span>, <span style="background-color: rgb(255, 245, 157);">highlight</span>, and <span style="color: rgb(0, 102, 204); background-color: rgb(204, 235, 255);">combined color/highlight</span>.</p>',
+  '<ul><li>Unordered item one</li><li>Unordered item two with <span style="color: rgb(0, 102, 204);">inline color</span></li></ul>',
+  '<ol><li>Ordered item one</li><li>Ordered item two with <span style="background-color: rgb(255, 236, 179);">inline highlight</span></li></ol>'
+].join('');
 /**
  * Component that can be used to test out the React controls from this project
  */
@@ -594,6 +608,66 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   private divRefAddReaction: React.RefObject<HTMLDivElement> = React.createRef();
   private peoplePickerContext: IPeoplePickerContext;
   private termSetId: string = "8ed8c9ea-7052-4c1d-a4d7-b9c10bffea6f";
+  private readonly richTextCustomFormattingStyles: IRichTextCustomFormattingStyles = {
+    normal: {
+      color: '#1f1f1f',
+      backgroundColor: '#fbfcff',
+      fontSize: 18,
+      lineHeight: '1.5'
+    },
+    header2: {
+      color: '#0f548c',
+      fontSize: 34,
+      letterSpacing: '0.01em',
+      marginTop: 18,
+      marginBottom: 10
+    },
+    header3: {
+      color: '#7a2e0b',
+      fontSize: 28,
+      marginTop: 16,
+      marginBottom: 8
+    },
+    header4: {
+      color: '#4a3f70',
+      fontSize: 22,
+      textTransform: 'uppercase',
+      letterSpacing: '0.04em',
+      marginTop: 14,
+      marginBottom: 8
+    },
+    blockQuote: {
+      backgroundColor: '#f7f2ec',
+      borderTopColor: '#d7cab8',
+      borderBottomColor: '#d7cab8',
+      color: '#5b4636',
+      fontSize: 22,
+      fontStyle: 'italic'
+    },
+    div: {
+      borderLeft: '3px solid #b7d6f7',
+      paddingLeft: 10
+    },
+    p: {
+      borderLeft: '3px solid #b7d6f7',
+      paddingLeft: 10,
+      marginTop: 10,
+      marginBottom: 10
+    },
+    ul: {
+      backgroundColor: '#f2f8ff',
+      paddingTop: 6,
+      paddingBottom: 6
+    },
+    ol: {
+      backgroundColor: '#fff8f1',
+      paddingTop: 6,
+      paddingBottom: 6
+    },
+    li: {
+      marginBottom: 6
+    }
+  };
 
   constructor(props: IControlsTestProps) {
     super(props);
@@ -609,6 +683,8 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       progressActions: this._initProgressActions(),
       dateTimeValue: new Date(),
       richTextValue: null,
+      richTextEditMode: true,
+      richTextUseCustomFormatting: true,
       canMovePrev: false,
       canMoveNext: true,
       currentCarouselElement: this.carouselElements[0],
@@ -1533,8 +1609,39 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           {controlVisibility.RichText &&
             <div id="RichTextDiv" className={styles.container}>
               {/* <RichText isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.richTextValue = value; return value; }} /> */}
-              <RichText label="My rich text field" value={this.state.richTextValue} isEditMode={this.props.displayMode === DisplayMode.Edit} onChange={value => { this.setState({ richTextValue: value }); return value; }} />
-              <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: 'test' }); }} />
+              <RichText
+                label="My rich text field"
+                value={this.state.richTextValue}
+                isEditMode={this.state.richTextEditMode}
+                customStyles={this.state.richTextUseCustomFormatting ? this.richTextCustomFormattingStyles : undefined}
+                onChange={value => {
+                  this.setState({ richTextValue: value });
+                  return value;
+                }}
+              />
+              <div className={styles.richTextActions}>
+                <PrimaryButton text='Reset text' onClick={() => { this.setState({ richTextValue: RICH_TEXT_RESET_VALUE }); }} />
+                <div className={styles.richTextToggles}>
+                  <Toggle
+                    label="Edit mode"
+                    checked={this.state.richTextEditMode}
+                    onChange={(_event, checked) => {
+                      this.setState({ richTextEditMode: !!checked });
+                    }}
+                    onText="On"
+                    offText="Off"
+                  />
+                  <Toggle
+                    label="Custom formatting"
+                    checked={this.state.richTextUseCustomFormatting}
+                    onChange={(_event, checked) => {
+                      this.setState({ richTextUseCustomFormatting: !!checked });
+                    }}
+                    onText="On"
+                    offText="Off"
+                  />
+                </div>
+              </div>
             </div>
           }
           {controlVisibility.Placeholder &&

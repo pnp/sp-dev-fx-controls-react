@@ -25,7 +25,8 @@
   height: 20px;
 
   &.border {
-    border: 1px solid "[theme: black, default: #{$ms-color-black}]";
+    outline: 1px solid "[theme: black, default: #{$ms-color-black}]";
+    outline-offset: -1px;
   }
 }
 
@@ -41,7 +42,6 @@
 .previewIcon {
   padding-left: 7px;
   font-size: 7px;
-  padding-top: 8px;
 }
 
 .pickerCallout {
@@ -62,7 +62,8 @@
   }
 
   &.border {
-    border: 1px solid "[theme:black, default: #{$ms-color-black}]";
+    outline: 1px solid "[theme:black, default: #{$ms-color-black}]";
+    outline-offset: -1px;
   }
 
   &.fillDefaultColor {
