@@ -64,6 +64,7 @@
           "ListItemPicker": false,
           "ListPicker": false,
           "ListView": false,
+          "DetailsList": false,
           "LivePersona": false,
           "LocationPicker": false,
           "Map": false,

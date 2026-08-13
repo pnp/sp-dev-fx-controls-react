@@ -192,7 +192,7 @@
       "src/common/telemetry/(.*)$": "identity-obj-proxy",
       "@pnp/sp": "identity-obj-proxy",
       "'@pnp/sp/fields": "identity-obj-proxy",
-      "ControlStrings": "identity-obj-proxy",
+      "ControlStrings": "<rootDir>/tests/__mocks__/ControlStrings.js",
       "\\.(css|scss)$": "identity-obj-proxy"
     }
   }

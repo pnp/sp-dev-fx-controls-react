@@ -60,7 +60,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "GroupPicker", "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
             "IFramePanel", "ListItemPicker",
             "ImagePicker", "ListItemAttachments", "ListItemComments",
-            "ListPicker", "ListView", "LivePersona",
+            "ListPicker", "ListView", "DetailsList", "LivePersona",
             "LocationPicker", "Map", "ModernAudio", "MonacoEditor",
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
             "Placeholder", "Progress", "ProgressStepsIndicator", "RichText",

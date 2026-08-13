@@ -94,6 +94,15 @@ define([], () => {
     mapsTitlePrefix: "Mapa:",
 
     ListViewFilterLabel: "Filtrovat seznam",
+    DetailsListAriaLabel: "Details list",
+    DetailsListHeaderAriaLabel: "List header",
+    DetailsListSelectAllRowsAriaLabel: "Select all rows",
+    DetailsListSelectionAriaLabel: "Selection",
+    DetailsListSelectRowAriaLabel: "Select row {0}",
+    DetailsListResizeColumnAriaLabel: "Resize {0} column",
+    DetailsListLoading: "Loading",
+    DetailsListLoadingMore: "Loading more items",
+    DetailsListNoItems: "No items to display",
 
     HeaderNormalText: "Normální text",
     HeaderH2: "Nadpis 2",
