@@ -86,6 +86,7 @@
           "TermSetNavigation": false,
           "TestControl": false,
           "Toolbar": false,
+          "Toast": false,
           "TreeView": false,
           "UploadFiles": false,
           "UserPicker": false,

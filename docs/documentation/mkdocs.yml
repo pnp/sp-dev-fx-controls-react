@@ -75,6 +75,7 @@ nav:
     - TeamPicker: 'controls/TeamPicker.md'
     - TermSetNavigation: 'controls/TermSetNavigation.md'
     - Toolbar: 'controls/Toolbar.md'
+    - Toast: 'controls/Toast.md'
     - TreeView: 'controls/TreeView.md'
     - UploadFiles: 'controls/UploadFiles.md'
     - UserPicker: 'controls/UserPicker.md'

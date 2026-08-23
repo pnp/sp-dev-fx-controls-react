@@ -258,6 +258,7 @@ const TaxonomyTree = React.lazy(() => import('../../../ModernTaxonomyPicker').th
 const Placeholder = React.lazy(() => import('../../../Placeholder').then(module => ({ default: module.Placeholder })));
 
 const Progress = React.lazy(() => import('../../../Progress').then(module => ({ default: module.Progress })));
+const Toast = React.lazy(() => import('../../../Toast').then(module => ({ default: module.Toast })));
 
 const RichText = React.lazy(() => import('../../../RichText').then(module => ({ default: module.RichText })));
 const ShareDialog = React.lazy(() => import('../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
@@ -2201,6 +2202,21 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           {controlVisibility.ProgressStepsIndicator &&
             <div id="ProgressStepsIndicatorDiv" className={styles.container}>
               <ProgressStepsIndicator steps={this.progressSteps} currentStep={0} themeVariant={this.props.themeVariant} />
+            </div>
+          }
+          {controlVisibility.Toast &&
+            <div id="ToastDiv" className={styles.container}>
+              <h3>Toast</h3>
+              <Toast
+                title="Decision saved"
+                body="This native Fluent UI toast will dismiss after five seconds."
+                subtitle="Controls Test"
+                intent="success"
+                dismissible
+                autoDismiss
+                duration={5}
+                durationUnit="seconds"
+              />
             </div>
           }
           {controlVisibility.GridLayout &&
