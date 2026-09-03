@@ -1467,7 +1467,7 @@ export class DynamicFormBase extends React.Component<
               defaultValue = new Date(defaultValue);
             }
 
-            dateFormat = field.DateFormat || "DateOnly";
+            dateFormat = field.DisplayFormat === 1 ? "DateTime" : "DateOnly";
             defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
           }
 
