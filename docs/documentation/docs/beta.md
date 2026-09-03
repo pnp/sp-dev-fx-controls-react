@@ -1,8 +1,10 @@
-# Testing out a beta release ![](https://img.shields.io/npm/v/@pnp/spfx-controls-react/next.svg)
+# Testing out a beta release
+
+![](https://img.shields.io/npm/v/@pnp/spfx-controls-react/next.svg)
 
 All you need to do for testing out a beta release of `@pnp/spfx-controls-react` is to install the dependency as follows:
 
-```
+```bash
 npm install @pnp/spfx-controls-react@next --save
 ```
 

@@ -1,4 +1,4 @@
-@import '~@fluentui/react/dist/sass/References.scss';
+@import 'pkg:@fluentui/react/dist/sass/References.scss';
 
 $themePrimary: '[theme:themePrimary, default:#0078d7]';
 
@@ -6,9 +6,9 @@ $themePrimary: '[theme:themePrimary, default:#0078d7]';
 
 .controlsTest {
   .instruction {
-    @include ms-motion-slideLeftIn;
     animation-duration: $ms-motion-duration-4 !important;
     animation-delay: 0.5s !important;
+    @include ms-motion-slideLeftIn;
   }
   .container {
     padding: 10px;

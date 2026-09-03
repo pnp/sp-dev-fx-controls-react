@@ -59,8 +59,8 @@ export enum IMEMode {
   Active  = 2, 
   Disabled = 3
 }
-export type ClientFormFieldInfoFieldType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "MultiChoice" | "User" | "UserMulti" | "Note" | "DateTime" | "URL" | "Lookup" | "LookupMulti" | "Hyperlink" | "Thumbnail" | "Currency" | "Location" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti";
-export type ClientFormFieldInfoType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "User" | "Note" | "DateTime" | "URL" | "Lookup" | "URL" | "Thumbnail" | "Currency" | "Location";
+export type ClientFormFieldInfoFieldType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "MultiChoice" | "User" | "UserMulti" | "Note" | "DateTime" | "URL" | "Lookup" | "LookupMulti" | "Hyperlink" | "Thumbnail" | "Currency" | "Location" | "TaxonomyFieldType" | "TaxonomyFieldTypeMulti" | "File";
+export type ClientFormFieldInfoType = "Attachments" | "Text" | "Number" | "Boolean" | "Choice" | "User" | "Note" | "DateTime" | "URL" | "Lookup" | "URL" | "Thumbnail" | "Currency" | "Location" | "File";
 export interface IClientFormBaseInfo {
   Id: string;
   Title: string;
@@ -98,6 +98,10 @@ export interface IClientFormLocationFieldInfo extends IClientFormBaseInfo {
 export interface IClientFormBooleanFieldInfo extends IClientFormBaseInfo {
   FieldType: "Boolean";
   Type: "Boolean";
+}
+export interface IClientFormFileFieldInfo extends IClientFormBaseInfo {
+  FieldType: "File";
+  Type: "File";
 }
 export interface IClientFormTextFieldInfo extends IClientFormBaseInfo {
   FieldType: "Text" | "Note";
@@ -213,7 +217,7 @@ export interface IClientFormLookupFieldInfo extends IClientFormBaseLookupFieldIn
   LookupListUrl: string;
   LookupFieldName: string;
 }
-export type ClientFormFieldInfo = IClientFormTextFieldInfo | IClientFormNumberFieldInfo | IClientFormChoiceFieldInfo | IClientFormDateFieldInfo | IClientFormLookupFieldInfo | IClientFormUserFieldInfo | IClientFormTaxonomyFieldInfo | IClientFormImageFieldInfo | IClientFormHyperlinkFieldInfo | IClientFormLocationFieldInfo | IClientFormCurrencyFieldInfo | IClientFormBooleanFieldInfo;
+export type ClientFormFieldInfo = IClientFormTextFieldInfo | IClientFormNumberFieldInfo | IClientFormChoiceFieldInfo | IClientFormDateFieldInfo | IClientFormLookupFieldInfo | IClientFormUserFieldInfo | IClientFormTaxonomyFieldInfo | IClientFormImageFieldInfo | IClientFormHyperlinkFieldInfo | IClientFormLocationFieldInfo | IClientFormCurrencyFieldInfo | IClientFormBooleanFieldInfo | IClientFormFileFieldInfo;
 export interface IClientFormInfoByContentType {
   [contentType: string]: ClientFormFieldInfo[];
 }
@@ -234,6 +238,24 @@ export interface IRenderListDataAsStreamClientFormResult {
   ClientFormCustomFormatter: Record<string, string>;
   EnableAttachments: "true" | "false";
   FormRenderModes: IClientFormRenderModeByContentType;
+}
+
+export interface IRenderExtendedListFormDataResultStatic {
+  ListData: Record<string, unknown>;
+  ListSchema: { New: IClientFormInfoByContentType; Edit: IClientFormInfoByContentType };
+}
+
+export interface IRenderExtendedListFormDataResultNotesField {
+  [fieldName: string]: IAppendOnlyNoteHistoryEntry[];
+}
+
+export interface IAppendOnlyNoteHistoryEntry {
+  value: string;
+  versionId: number;
+  createdEmail: string;
+  createdTitle: string;
+  createdId: number;
+  createdTime: string;
 }
 
 export interface ISPService {
@@ -266,6 +288,15 @@ export interface ISPService {
      * Captures information not returned by RenderListDataAsStream with RenderOptions = 64
      */
     getAdditionalListFormFieldInfo(listId: string, webUrl?: string): Promise<ISPField[]>;
+
+    /**
+     * Retrieves extended list form data for a list item, including append-only note history.
+     * Calls RenderExtendedListFormData with options=30 to include version history.
+     * @param listId - The GUID of the SharePoint list
+     * @param itemId - The ID of the list item
+     * @param webUrl - Optional web URL; defaults to the current web
+     */
+    getExtendedListFormData(listId: string, itemId: number, webUrl?: string): Promise<IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField>;
 
     /**
      *  Get the views from lists or libraries

@@ -4,7 +4,7 @@ import { IMultipleUploadFilePickerTabProps } from './IMultipleUploadFilePickerTa
 import { IMultipleUploadFilePickerTabState } from './IMultipleUploadFilePickerTabState';
 import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { css } from '@fluentui/react/lib/Utilities';
 import { DragDropFiles } from '../../dragDropFiles/DragDropFiles';
 

@@ -5,6 +5,7 @@ This control renders simple text.
 ![FieldTextRenderer control output](../../assets/FieldTextRenderer.png)
 
 ## Covered Fields
+
 - Single line of text
 - Multiple lines of text
 - Choice
@@ -32,11 +33,10 @@ import { FieldTextRenderer } from "@pnp/spfx-controls-react/lib/FieldTextRendere
 
 The FieldTextRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| text | string | no | Text to be rendered |
+| Property  | Type                | Required | Description                           |
+| --------- | ------------------- | -------- | ------------------------------------- |
+| cssProps  | React.CSSProperties | no       | CSS styles to apply to the renderer.  |
+| className | ICssInput           | no       | CSS classes to apply to the renderer. |
+| text      | string              | no       | Text to be rendered                   |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldTextRenderer)
-

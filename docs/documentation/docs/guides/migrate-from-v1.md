@@ -70,19 +70,23 @@ The easiest way to upgrade the SharePoint Framework solution is to use [Office36
 ```
 
 - `showRequiredError` has been deleted.
-  - Use `errorMessage` or `onGetErrorMessage` to provide the error message.
+    - Use `errorMessage` or `onGetErrorMessage` to provide the error message.
 - `selectedItems` is renamed to `onChange`
-  - `onChange` better describes the purpose of the property.
+    - `onChange` better describes the purpose of the property.
 
-  ### FolderPicker
-  `FolderPicker` default picker has been removed.
-  If you used `FolderPicker` as:
-  ```typescript
-  import FolderPicker from '@pnp/spfx-controls-react/lib/controls/folderPicker/FolderPicker';
-  ```
-  You should update to 
-  ```typescript
-  import { FolderPicker } from '@pnp/spfx-controls-react/lib/FolderPicker';
-  ```
+### FolderPicker
+
+`FolderPicker` default picker has been removed.
+If you used `FolderPicker` as:
+
+```typescript
+import FolderPicker from '@pnp/spfx-controls-react/lib/controls/folderPicker/FolderPicker';
+```
+
+You should update to:
+
+```typescript
+import { FolderPicker } from '@pnp/spfx-controls-react/lib/FolderPicker';
+```
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides/MigrateFromV1)

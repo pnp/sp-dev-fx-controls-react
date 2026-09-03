@@ -68,15 +68,15 @@ Polar area charts allow each dataset to have different configuration properties.
 
 Properties are provided as arrays. The settings in the array will be applied to each data element in the same order (e.g.: first value applies to first element, second value to second element, etc.)
 
-| Name                  | Type                                              | Description |
-| ----                  | ----                                              | ---- |
-| backgroundColor       | Color[]                                  | The segment's fill color.  |
-| borderColor           | Color[]                                  | The segment's border color.  |
-| borderWidth           | number[]                                | The segment's border width. Measured in pixels. |
-| data | number[] | The chart's data. Required. |
-| hoverBackgroundColor  | Color[]                                  | The segment's fill color when a mouse hovers over it |
-| hoverBorderColor      | Color[]                                  | The segment's border color when a mouse hovers over it.  |
-| hoverBorderWidth      | number[]                                | The segment's border width when a mouse hovers over it.  |
+| Name                 | Type     | Description                                             |
+| -------------------- | -------- | ------------------------------------------------------- |
+| backgroundColor      | Color[]  | The segment's fill color.                               |
+| borderColor          | Color[]  | The segment's border color.                             |
+| borderWidth          | number[] | The segment's border width. Measured in pixels.         |
+| data                 | number[] | The chart's data. Required.                             |
+| hoverBackgroundColor | Color[]  | The segment's fill color when a mouse hovers over it    |
+| hoverBorderColor     | Color[]  | The segment's border color when a mouse hovers over it. |
+| hoverBorderWidth     | number[] | The segment's border width when a mouse hovers over it. |
 
 ## Data Structure
 
@@ -90,11 +90,11 @@ data: [20, 10, 33, 47]
 
 The following configuration options are specific to polar area charts:
 
-| Name | Type | Default | Description |
-| ---- | ---- | ---- | ---- |
-| rotation | number | -0.5 * Math.PI | The angle at which the polar segments start |
-| animation.animateRotate | boolean | true | `true` will animate the chart while rotating it.  |
-| animation.animateScale | boolean | false | `true` will animate the chart while scaling it.  |
+| Name                    | Type    | Default        | Description                                      |
+| ----------------------- | ------- | -------------- | ------------------------------------------------ |
+| rotation                | number  | -0.5 * Math.PI | The angle at which the polar segments start      |
+| animation.animateRotate | boolean | true           | `true` will animate the chart while rotating it. |
+| animation.animateScale  | boolean | false          | `true` will animate the chart while scaling it.  |
 
 ## For More Information
 

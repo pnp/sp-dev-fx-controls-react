@@ -1,8 +1,9 @@
 # Animated Dialog
 
-Animated Dialog control is an extended version of the [Office UI Fabric React Dialog](https://developer.microsoft.com/en-us/fluentui#/controls/web/dialog#IDialog). Animated Dialog control adds the following to the dialog 
- - Entrance and exit animations
- - Animated icon above the title
+Animated Dialog control is an extended version of the [Office UI Fabric React Dialog](https://developer.microsoft.com/en-us/fluentui#/controls/web/dialog#IDialog). Animated Dialog control adds the following to the dialog:
+
+- Entrance and exit animations
+- Animated icon above the title
 
 This control uses [Animate.css](https://animate.style/) to add the animations.
 
@@ -12,7 +13,7 @@ Here is an example of the control in action:
 
 ## Animate.css and animation names
 
-[Animate.css](https://animate.style/) is a library that adds css animtions to controls. The website has all the names of the animations and any of them can be used in the `Animated Dialog` control. The default entrance animation name used in this control is `bounceIn` and the default exit animaton name is `zoomOut`.
+[Animate.css](https://animate.style/) is a library that adds css animations to controls. The website has all the names of the animations and any of them can be used in the `Animated Dialog` control. The default entrance animation name used in this control is `bounceIn` and the default exit animation name is `zoomOut`.
 
 ## How to use this control in your solutions
 
@@ -25,7 +26,7 @@ import { AnimatedDialog } from "@pnp/spfx-controls-react/lib/AnimatedDialog";
 
 ## Different ways of using the control
 
-### 1. Simple way 
+### 1. Simple way
 
 The code below adds a dialog with an entrance animation of `bounceIn` and exit animation of `zoomOut`. (These are the default animations)
 
@@ -63,6 +64,7 @@ const animatedModalProps: IModalProps = {
         </DialogFooter>
 </AnimatedDialog>
 ```
+
 #### Simple animated dialog
 
 ![Simple animated dialog control](../assets/DefaultAnimatedDialog.gif)
@@ -115,12 +117,13 @@ const animatedModalProps: IModalProps = {
 ### 3. Adding icons and functions
 
 The code below does the following:
+
 - adds an icon (question mark) above the title
 - adds `Yes` and `No` buttons in the footer as `showAnimatedDialogFooter` is set to `true`.
-- passes 3 functions
+- passes 3 functions:
     - onOkClick : The function that gets executed when the `Ok/Yes` button is clicked.
     - onSuccess : The function that gets executed on successful operation of the above function.
-    - onError: The function that gets executed when the `onOkClick` function fails. 
+    - onError: The function that gets executed when the `onOkClick` function fails.
 
 ```TypeScript
 // Initial state
@@ -338,16 +341,15 @@ In addition to the`Office UI Fabric dialog` [properties](https://developer.micro
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| dialogAnimationInType | string | no | The name of the dialog entrace animation. See [animate.css](https://animate.style/) for values | bounceIn |
+| dialogAnimationInType | string | no | The name of the dialog entrance animation. See [animate.css](https://animate.style/) for values | bounceIn |
 | dialogAnimationOutType | string | no | The name of the dialog exit animation. See [animate.css](https://animate.style/) for values | zoomOut |
 | iconName | string | no | The name of the Fabric UI icon that appears above title. | |
-| iconAnimationType | string | no | The name of the icon entrace animation. See [animate.css](https://animate.style/) for values. | zoomIn |
-| showAnimatedDialogFooter | boolean | no | Should the animated dialog show it's own footer. [See example 3 and 4](#3-Adding-icons-and-functions) above for usage. | false |
-| okButtonText | string | no | The text of the the OK button if showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | Ok |
-| cancelButtonText | string | no | The text of the the Cancel button if showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | Cancel |
-| onOkClick | function | no | The function to be executed when Ok button is clicked. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
-| onSuccess | function | no | The function to be executed after successful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
-| onError | function | no | The function to be executed after unsuccessful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-Adding-icons-and-functions) above for usage. | |
-
+| iconAnimationType | string | no | The name of the icon entrance animation. See [animate.css](https://animate.style/) for values. | zoomIn |
+| showAnimatedDialogFooter | boolean | no | Should the animated dialog show it's own footer. [See example 3 and 4](#3-adding-icons-and-functions) above for usage. | false |
+| okButtonText | string | no | The text of the the OK button if showAnimatedDialogFooter is `true`. [See example 3](#3-adding-icons-and-functions) above for usage. | Ok |
+| cancelButtonText | string | no | The text of the the Cancel button if showAnimatedDialogFooter is `true`. [See example 3](#3-adding-icons-and-functions) above for usage. | Cancel |
+| onOkClick | function | no | The function to be executed when Ok button is clicked. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-adding-icons-and-functions) above for usage. | |
+| onSuccess | function | no | The function to be executed after successful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-adding-icons-and-functions) above for usage. | |
+| onError | function | no | The function to be executed after unsuccessful execution of the OK button function. Valid only when showAnimatedDialogFooter is `true`. [See example 3](#3-adding-icons-and-functions) above for usage. | |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/AnimatedDialog)

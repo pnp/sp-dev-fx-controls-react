@@ -1,34 +1,21 @@
-import * as React from 'react';
-import { List } from '@fluentui/react/lib/List';
-import { Spinner } from '@fluentui/react/lib/Spinner';
-import { Image, ImageFit } from '@fluentui/react/lib/Image';
-import { IDocumentLibraryBrowserProps } from './IDocumentLibraryBrowserProps';
-import { IDocumentLibraryBrowserState } from './IDocumentLibraryBrowserState';
-import { ILibrary } from '../../../../services/FileBrowserService.types';
+import * as React from "react";
+import { Spinner } from "@fluentui/react/lib/Spinner";
+import { Stack } from "@fluentui/react/lib/Stack";
+import { Icon } from "@fluentui/react/lib/Icon";
+import { IDocumentLibraryBrowserProps } from "./IDocumentLibraryBrowserProps";
+import { IDocumentLibraryBrowserState } from "./IDocumentLibraryBrowserState";
+import { ILibrary } from "../../../../services/FileBrowserService.types";
 
-import { IRectangle } from '@fluentui/react/lib/Utilities';
-import { DefaultButton } from '@fluentui/react/lib/Button';
-
-import styles from './DocumentLibraryBrowser.module.scss';
-import * as strings from 'ControlStrings';
-
-/**
- * Rows per page
- */
-export const ROWS_PER_PAGE = 3;
-
-/**
- * Maximum row height
- */
-export const MAX_ROW_HEIGHT = 250;
+import styles from "./DocumentLibraryBrowser.module.scss";
+import * as strings from "ControlStrings";
 
 /**
  * This would have been better done as an Office Fabric TileList, but it isn't available yet for production use
  */
-export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrowserProps, IDocumentLibraryBrowserState> {
-  private _columnCount: number;
-  private _columnWidth: number;
-  private _rowHeight: number;
+export class DocumentLibraryBrowser extends React.Component<
+  IDocumentLibraryBrowserProps,
+  IDocumentLibraryBrowserState
+> {
 
   constructor(props: IDocumentLibraryBrowserProps) {
     super(props);
@@ -54,58 +41,42 @@ export class DocumentLibraryBrowser extends React.Component<IDocumentLibraryBrow
     return (
       <div className={styles.documentLibraryBrowserContainer}>
         {isLoading && <Spinner label={strings.Loading} />}
-        <List
-          className={styles.filePickerFolderCardGrid}
-          items={lists}
-          getItemCountForPage={this._getItemCountForPage}
-          getPageHeight={this._getPageHeight}
-          renderedWindowsAhead={4}
-          onRenderCell={this._onRenderLibraryTile}
-        />
+        <Stack wrap horizontal horizontalAlign="start" verticalAlign="center">
+          {lists.map((list, index) =>
+            this._onRenderLibraryTile(list, index)
+          )}
+        </Stack>
       </div>
     );
   }
 
-  /**
-   * Calculates how many items there should be in the page
-   */
-  private _getItemCountForPage = (itemIndex: number, surfaceRect: IRectangle): number => {
-    if (itemIndex === 0) {
-      this._columnCount = Math.ceil(surfaceRect.width / MAX_ROW_HEIGHT);
-      this._columnWidth = Math.floor(surfaceRect.width / this._columnCount);
-      this._rowHeight = this._columnWidth;
-    }
-
-    return this._columnCount * ROWS_PER_PAGE;
-  }
-
-  /**
-   * Gets the height of a list "page"
-   */
-  private _getPageHeight = (): number => {
-    return this._rowHeight * ROWS_PER_PAGE;
-  }
-
-  /**
+   /**
    * Renders a cell for search suggestions
    */
   private _onRenderLibraryTile = (item: ILibrary, index: number | undefined): JSX.Element => {
-    const imgSrc = item.iconPath ? item.iconPath : "";
 
     return (
       <div
+        key={item.absoluteUrl}
         className={styles.filePickerFolderCardTile}
         data-is-focusable={true}
-        style={{
-          width: 100 / this._columnCount + '%'
-        }}
+        onClick={(_event) => this._handleOpenLibrary(item)}
       >
-        <div className={styles.filePickerFolderCardSizer}>
-          <div className={styles.filePickerFolderCardPadder}>
-            <Image src={imgSrc} className={styles.filePickerFolderCardImage} imageFit={ImageFit.cover} />
-            <DefaultButton className={styles.filePickerFolderCardLabel} onClick={(_event) => this._handleOpenLibrary(item)}>{item.title}</DefaultButton>
+          <div className={styles.filePickerFolderCardImage}>
+            <Icon
+              className={styles.filePickerFolderCoverBack}
+              imageProps={{
+                src: strings.FolderBackPlate
+            }} />
+            <Icon
+              className={styles.filePickerFolderCoverFront}
+              imageProps={{
+                src: strings.FolderFrontPlate
+            }} />
           </div>
-        </div>
+            <div className={styles.filePickerFolderCardTitle}>
+              {item.title}
+          </div>
       </div>
     );
   }

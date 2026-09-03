@@ -32,7 +32,7 @@ export class ThemeColorHelper {
             if (themeStateVariable === undefined) {
               return defaultValue;
             }
-            const themeState: {} = themeStateVariable.theme;
+            const themeState: Record<string, string> = themeStateVariable.theme as unknown as Record<string, string>;
 
             if (themeState === undefined) {
               return defaultValue;
@@ -48,14 +48,14 @@ export class ThemeColorHelper {
                 return themeState[varName].replace('"', '').trim();
               }
             }
-          } catch (error) {
+          } catch {
             // do nothing
           }
 
           return defaultValue;
         }
       }
-    } catch (error) {
+    } catch {
       // do nothing
     }
 

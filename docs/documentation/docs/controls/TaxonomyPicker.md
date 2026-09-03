@@ -2,25 +2,24 @@
 
 This control allows you to select one or more Terms from a TermSet via its name or TermSet ID. You can also configure the control to select the child terms from a specific term in the TermSet by setting the AnchorId.
 
-!!! note "Disclaimer" 
+!!! note "Disclaimer"
     This control makes use of the `ProcessQuery` API end-points to retrieve the managed metadata information. This will get changed once the APIs for managing managed metadata will become available.
 
-**Empty term picker**
+- Empty term picker:
 
 ![Empty term picker](../assets/termpicker-empty.png)
 
-**Selecting terms**
+- Selecting terms:
 
 ![Selecting terms](../assets/termPicker-tree-selection.png)
 
-**Selected terms in picker** 
+- Selected terms in picker:
 
 ![Selected terms in the input](../assets/termpicker-selected-terms.png)
 
-**Term picker: Auto Complete**
+- Term picker: Auto Complete:
 
 ![Selected terms in the input](../assets/termpicker-input-autocomplete.png)
-
 
 ## How to use this control in your solutions
 
@@ -177,7 +176,7 @@ The TaxonomyPicker control can be configured with the following properties:
 | isTermSetSelectable | boolean | no | Specify if the TermSet itself is selectable in the tree view. |
 | disabledTermIds | string[] | no | Specify which terms should be disabled in the term set so that they cannot be selected. |
 | disableChildrenOfDisabledParents | boolean | no | Specify if you want to disable the child terms when their parent is disabled. |
-| anchorId | string | no | Set the anchorid to a child term in the TermSet to be able to select terms from that level and below. |
+| anchorId | string | no | Set the anchor id to a child term in the TermSet to be able to select terms from that level and below. |
 | termActions | ITermActions | no | Allows to execute custom action on the term like e.g. get other term labelsITermActions. |
 | hideTagsNotAvailableForTagging | boolean | no | Specifies if the tags marked with 'Available for tagging' = false should be hidden |
 | validateOnLoad | boolean | no | Specifies if the initial values will be validated, when the component is loaded. Default value is false |
@@ -190,7 +189,6 @@ The TaxonomyPicker control can be configured with the following properties:
 | useSessionStorage | boolean | no | Specify if the control uses session storage. Default is set to true for better performance. |
 | onPanelSelectionChange | (prevValue: IPickerTerms, newValue: IPickerTerms) => void | no | Panel selection change handler. Can be used to interact with the control while selecting items in the panel, before Click or Cancel is clicked. |
 | selectChildrenIfParentSelected | boolean | no | Specifies if the children should be selected when parent item is selected (defaults to false). |
-
 
 Interface `IPickerTerm`
 
@@ -213,7 +211,7 @@ Interface `ITermActions`
 | actions | ITermAction[] | yes | The array of supported actions | |
 | termActionsDisplayStyle | TermActionsDisplayStyle | no | Defines how to display term action button, available options: text, icon, text and icon | text |
 | termActionsDisplayMode | TermActionsDisplayMode | no | Defines how to display term actions, as buttons or dropdown | buttons |
-| initialize | (spTermService: SPTermStorePickerService) => Promise\<void\> | no | Initializes the term action with the taxonomy service |
+| initialize | (spTermService: SPTermStorePickerService) => Promise&lt;void&gt; | no | Initializes the term action with the taxonomy service | |
 
 Interface `ITreeItemAction`
 
@@ -224,9 +222,8 @@ Interface `ITreeItemAction`
 | iconName | string | no | Name of the icon to be used to display action |
 | hidden | boolean | no | Specify if the action is hidden. This could be used for instance when you want to invoke the action right after rendering. |
 | invokeActionOnRender | boolean | no | Specifies if you want to invoke the action on render |
-| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: "disabled" \| "hidden", value: boolean) => void) => Promise\<boolean\> \| boolean | yes | Method checks if the current term is supported for the action. The method provices a couple of additional callback functions to make it possibe to programatically change the terms and its actions. |
-| actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise\<UpdateAction\> | yes | Method to be executed when action is fired |
-
+| applyToTerm | (currentTerm: ITerm, triggerActionCallback: (updateAction: UpdateAction) => void, setActionStateForTerm: (actionId: string, termId: string, type: `disabled` \| `hidden`, value: boolean) => void) => Promise&lt;boolean&gt; \| boolean | yes | Method checks if the current term is supported for the action. The method provides a couple of additional callback functions to make it possible to programmatically change the terms and its actions. |
+| actionCallback | (spTermService: SPTermStorePickerService, currentTerm: ITerm) => Promise&lt;UpdateAction&gt; | yes | Method to be executed when action is fired |
 
 Interface `UpdateAction`
 
@@ -237,12 +234,12 @@ Interface `UpdateAction`
 
 Enum `UpdateType`
 
-| Value |
-| ---- |
+| Value           |
+| --------------- |
 | updateTermLabel |
 | updateTermsTree |
-| hideTerm |
-| disableTerm |
-| selectTerm |
+| hideTerm        |
+| disableTerm     |
+| selectTerm      |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/TaxonomyPicker)

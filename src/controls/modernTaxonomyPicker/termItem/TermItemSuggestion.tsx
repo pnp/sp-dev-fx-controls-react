@@ -9,6 +9,7 @@ export interface ITermItemSuggestionProps<T> extends ISuggestionItemProps<T> {
   term: ITermInfo;
   languageTag?: string;
   termStoreInfo?: ITermStoreInfo;
+  searchFilter?: string;
   onLoadParentLabel?: (termId: Guid) => Promise<string>;
 }
 
@@ -27,21 +28,34 @@ export function TermItemSuggestion(props: ITermItemSuggestionProps<ITermInfo>): 
     }
   }, []);
 
-  let labels: {
-                name: string;
-                isDefault: boolean;
-                languageTag: string;
-              }[];
+  const filterLabels = (isDefault: boolean, nameFilter?: (name: string) => boolean): {
+      name: string;
+      isDefault: boolean;
+      languageTag: string;
+    }[] => {
 
-  if (props.languageTag && props.termStoreInfo) {
-    labels = props.term.labels.filter((name) => name.languageTag === props.languageTag && name.isDefault);
-    if (labels.length === 0) {
-      labels = props.term.labels.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag && name.isDefault);
+    nameFilter = nameFilter || (() => true);
+
+    if (props.languageTag && props.termStoreInfo) {
+      let labels = props.term.labels.filter((name) => name.languageTag === props.languageTag && name.isDefault === isDefault && nameFilter(name.name));
+      if (labels.length === 0) {
+        labels = props.term.labels.filter((name) => name.languageTag === props.termStoreInfo.defaultLanguageTag && name.isDefault === isDefault && nameFilter(name.name));
+      }
+      return labels;
+    }
+    else {
+      return props.term.labels.filter((name) => name.isDefault === isDefault && nameFilter(name.name));
     }
   }
-  else {
-    labels = props.term.labels.filter((name) => name.isDefault);
-  }
+
+  const labels = filterLabels(true);
+  const synonyms = props.searchFilter ? filterLabels(false, (name) => {
+    const prefix = props.searchFilter!;
+    if (prefix.length > name.length)
+      return false;
+    const compareTo = name.substring(0, prefix.length);
+    return compareTo.localeCompare(prefix, undefined, { sensitivity: 'base' }) === 0;
+  }) : [];
 
   return (
     <div className={styles.termSuggestionContainer} title={labels[0]?.name}>
@@ -49,6 +63,9 @@ export function TermItemSuggestion(props: ITermItemSuggestionProps<ITermInfo>): 
       {parentLabel !== "" && <div>
         <span className={styles.termSuggestionPath}>{`${strings.ModernTaxonomyPickerSuggestionInLabel} ${parentLabel}`}</span>
       </div>}
+      {synonyms.length > 0 && <ul className={styles.termSynonymList}>
+        {synonyms.map((synonym) => <li key={synonym.name}><span className={styles.synonymPrefix}>{synonym.name.substring(0, props.searchFilter!.length)}</span><span>{synonym.name.substring(props.searchFilter!.length)}</span></li>)}
+      </ul>}
     </div>
   );
 }

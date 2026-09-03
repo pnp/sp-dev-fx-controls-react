@@ -54,5 +54,4 @@ The `Accordion` control can be configured with the following properties:
 | collapsedIcon | string | no | Optional custom icon when accordion is collapsed [See Fluent UI icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)| ChevronRight |
 | expandedIcon | string | no | Optional custom icon when accordion is expanded [See Fluent UI icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)| ChevronDown |
 
-
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/Accordion)

@@ -106,9 +106,10 @@ export default class CustomFormattingHelper {
             // to be evaluated:
             const styleProperties: React.CSSProperties = {};
             if (node.style) {
-                for (const styleAttribute in node.style) {
-                    if (node.style[styleAttribute]) {
-                        styleProperties[styleAttribute] = this.evaluateCustomFormatContent(node.style[styleAttribute], context) as string;
+                const nodeStyle = node.style as Record<string, string>;
+                for (const styleAttribute in nodeStyle) {
+                    if (nodeStyle[styleAttribute]) {
+                        (styleProperties as Record<string, string>)[styleAttribute] = this.evaluateCustomFormatContent(nodeStyle[styleAttribute], context) as string;
                     }
                 }
             }

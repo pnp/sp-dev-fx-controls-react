@@ -42,7 +42,7 @@ import { FolderPicker, IFolder } from "@pnp/spfx-controls-react/lib/FolderPicker
                 canCreateFolders={true} />
 ```
 
-- To use the `FolderExplorer` control to fetch folders from different sitecollection in your code as follows:
+- To use the `FolderExplorer` control to fetch folders from different site collection in your code as follows:
 
 ```TypeScript
 <FolderExplorer context={this.props.context}

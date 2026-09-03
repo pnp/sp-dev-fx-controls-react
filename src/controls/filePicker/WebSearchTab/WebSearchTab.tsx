@@ -3,7 +3,7 @@ import * as React from 'react';
 import { IWebSearchTabProps } from './IWebSearchTabProps';
 import { IWebSearchTabState } from './IWebSearchTabState';
 import { ISearchSuggestion, ImageSize, ImageAspect, ImageLicense, DEFAULT_SUGGESTIONS, MAX_ROW_HEIGHT, ROWS_PER_PAGE } from './WebSearchTab.types';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { Label } from '@fluentui/react/lib/Label';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import { Check } from '@fluentui/react/lib/Check';
@@ -139,7 +139,7 @@ export default class WebSearchTab extends React.Component<IWebSearchTabProps, IW
     return (
       <FocusZone>
         <SelectionZone selection={this._selection}
-          onItemInvoked={(item: ISearchResult) => this._selection.setKeySelected(item.key, true, true)}
+          onItemInvoked={(item) => this._selection.setKeySelected((item as ISearchResult).key, true, true)}
         >
           <List
             ref={this._linkElement}

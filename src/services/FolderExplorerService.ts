@@ -6,6 +6,7 @@ import { sp } from "@pnp/sp";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import "@pnp/sp/folders";
+import "@pnp/sp/files";
 import "@pnp/sp/lists";
 import { IFolderAddResult } from "@pnp/sp/folders";
 import { IFileInfo } from "@pnp/sp/files";

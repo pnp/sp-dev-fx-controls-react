@@ -130,8 +130,6 @@ export const useFluentEmojis = (): IUseFluentEmojis => {
     } else {
       return getFluentEmojiByglyph(glyph);
     }
-
-    return undefined;
   }, []);
 
   return {

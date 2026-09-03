@@ -1,6 +1,9 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
+import { IStyle, IStyleFunctionOrObject, Theme } from '@fluentui/react';
 import { IFilePickerResult } from '../../filePicker';
+import { ChoiceFieldFormatType } from '@pnp/sp/fields';
+import { IAppendOnlyNoteHistoryEntry } from '../../../services/ISPService';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
 export type FieldChangeAdditionalData = IFilePickerResult;
@@ -79,9 +82,13 @@ export interface IDynamicFieldProps {
   /** Used for files / image uploads */
   additionalData?: FieldChangeAdditionalData;
 
+  /** Used to Render TaxonomyPicker or ModernTaxonomyPicker */
+  useModernTaxonomyPickerControl?: boolean;
+
   // Related to various field types
   options?: IDropdownOption[];
   isRichText?: boolean;
+  isAppendOnly?: boolean;
   dateFormat?: DateFormat;
   firstDayOfWeek: number;
   principalType?: string;
@@ -89,6 +96,39 @@ export interface IDynamicFieldProps {
   maximumValue?: number;
   minimumValue?: number;
   showAsPercentage?: boolean;
+  itemsQueryCountLimit?: number;
   customIcon?: string;
   orderBy?: string;
+  choiceType?: ChoiceFieldFormatType;
+  notesAppendOnlyHistory?: IAppendOnlyNoteHistoryEntry[];
+  /** Used for customize component styling */
+  styles?:IStyleFunctionOrObject<IDynamicFieldStyleProps, IDynamicFieldStyles>;
+}
+
+
+export interface IDynamicFieldStyleProps {
+  theme: Theme; 
+  required?: boolean;
+}
+
+export interface IDynamicFieldStyles {
+ titleContainer: IStyle;
+ fieldIcon:IStyle;
+ fieldDisplay:IStyle;
+ fieldDisplayNoPadding:IStyle;
+ fieldContainer:IStyle;
+ fieldDescription:IStyle,
+ fieldLabel:IStyle;
+ labelContainer:IStyle;
+ pickersContainer:IStyle;
+ fieldEditor:IStyle;
+ errormessage:IStyle;
+ richText:IStyle;
+ thumbnailFieldButtons:IStyle;
+ selectedFileContainer:IStyle;
+ fieldRequired:IStyle;
+ appendOnlyHistoryContainer:IStyle;
+ appendOnlyHistoryEntry:IStyle;
+ appendOnlyHistoryAuthor:IStyle;
+ appendOnlyHistoryDate:IStyle;
 }

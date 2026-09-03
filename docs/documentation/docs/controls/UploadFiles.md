@@ -27,23 +27,20 @@ import {
         />
 ```
 
- 
 ![uploadFiles](../assets/UploadFiles.gif)
 ![uploadFiles](../assets/UploadFiles02.png)
 ![uploadFiles](../assets/UploadFiles01.png)
- 
+
 ## Implementation
 
 The `UploadFiles` can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| pageSize | number  | no | number of files to show per page base on this value the height of control is calculate, default 15 |
-| context | WebPartContext | yes | webPartContext |
-| title | string | yes | title |
-| onUploadFiles | (files: File[]) => void; | yes | Method that returns all Files[]     |
-| themeVariant | IReadonlyTheme | no |Theme Variant |
-
-
+| Property      | Type                     | Required | Description                                                                                        |
+| ------------- | ------------------------ | -------- | -------------------------------------------------------------------------------------------------- |
+| pageSize      | number                   | no       | number of files to show per page base on this value the height of control is calculate, default 15 |
+| context       | WebPartContext           | yes      | webPartContext                                                                                     |
+| title         | string                   | yes      | title                                                                                              |
+| onUploadFiles | (files: File[]) => void; | yes      | Method that returns all Files[]                                                                    |
+| themeVariant  | IReadonlyTheme           | no       | Theme Variant                                                                                      |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/UploadFiles)

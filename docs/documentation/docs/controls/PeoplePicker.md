@@ -3,20 +3,19 @@
 This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.
 
 !!! Note
-    You can also check out [People Picker](https://docs.microsoft.com/en-us/graph/toolkit/components/people-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
+    You can also check out [People Picker](https://docs.microsoft.com/graph/toolkit/components/people-picker) component in the [Microsoft Graph Toolkit](https://github.com/microsoftgraph/microsoft-graph-toolkit).
 
-**Empty People Picker control with error message and tooltip**
+- Empty People Picker control with error message and tooltip:
 
 ![People Picker](../assets/Peoplepicker-witherrorandtooltip.png)
 
-**Selecting People**
+- Selecting People:
 
 ![Selecting People](../assets/Peoplepicker-selectingchoices.png)
 
-**Selected people** 
+- Selected people:
 
 ![Selected people](../assets/Peoplepicker-multiplechoices.png)
-
 
 ## How to use this control in your solutions
 
@@ -24,14 +23,20 @@ This control renders a People picker field which can be used to select one or mo
 - Import the following modules to your component:
 
 ```typescript
-import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
+import { IPeoplePickerContext, PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 ```
 
 - Use the `PeoplePicker` control in your code as follows:
 
 ```typescript
+const peoplePickerContext: IPeoplePickerContext = {
+    absoluteUrl: this.props.context.pageContext.web.absoluteUrl,
+    msGraphClientFactory: this.props.context.msGraphClientFactory,
+    spHttpClient: this.props.context.spHttpClient
+};
+
 <PeoplePicker
-    context={this.props.context}
+    context={peoplePickerContext}
     titleText="People Picker"
     personSelectionLimit={3}
     groupName={"Team Site Owners"} // Leave this blank in case you want to filter from all users
@@ -45,7 +50,7 @@ import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/People
     resolveDelay={1000} />
 ```
 
-- With the `onChange` property you can get the selected People in the `PeoplePicker` :
+- With the `onChange` property you can get the selected People in the `PeoplePicker`:
 
 ```typescript
 private _getPeoplePickerItems(items: any[]) {
@@ -53,16 +58,24 @@ private _getPeoplePickerItems(items: any[]) {
 }
 ```
 
+## Use Substrate search
+
+Sometimes, depending on how your organization is configured regarding users and groups, performing search can be tricky. As the `PeoplePicker` is using the `SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser` endpoint under the hood, there is an optional parameter called `useSubstrateSearch`. Setting this to `true` will perform a search using the Microsoft 365 Substrate, which will go through centralized stored data in order to find requested info. More details about this feature can be found [here](https://techcommunity.microsoft.com/t5/video-hub/admin-39-s-guide-to-the-microsoft-365-substrate/ba-p/3633132) and [here](https://youtu.be/uuiTR8r27Os?si=JkPyfiQggvCMj0xg&t=467).
+
+## Enable external users search
+
+To enable external users search, the `allowUnvalidated` property must be set to `true`. Behind the scenes, it will include returned values from search with `EntityData.PrincipalType` set to `UNVALIDATED_EMAIL_ADDRESS`.
+
 ## Implementation
 
 The People picker control can be configured with the following properties:
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| context | BaseComponentContext | yes | Context of the current web part. | |
+| context | IPeoplePickerContext | yes | Context of the component, based on the SPFx context ([*BaseComponentContext*](https://learn.microsoft.com/javascript/api/sp-component-base/basecomponentcontext?view=sp-typescript-latest)). | |
 | titleText | string | no | Text to be displayed on the control | |
-| groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | _none_ |
-| groupId | number \| string \| (string\|number)[] | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups | _none_ |
+| groupName | string | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupName and groupId specified groupName takes precedence. | *none* |
+| groupId | number \| string \| (string\|number)[] | no | Group from which users are fetched. Leave it blank if need to filter all users. When both groupId and groupName specified groupName takes precedence. If string is specified, Microsoft 365 Group is used. If array is used, fetch results from multiple groups | *none* |
 | personSelectionLimit | number | no | Defines the limit of people that can be selected in the control | 1 |
 | required | boolean | no | Set if the control is required or not | false |
 | disabled | boolean | no | Set if the control is disabled or not | false |
@@ -82,28 +95,37 @@ The People picker control can be configured with the following properties:
 | allowUnvalidated | boolean | no | When true, allow email addresses that have not been validated to be entered, effectively allowing any user. | false |
 | suggestionsLimit | number | no | Maximum number of suggestions to show in the full suggestion list. | 5 |
 | resolveDelay | number | no | Add delay to resolve and search users | 200 |
-| placeholder | string | no | Short text hint to display in empty picker |
-| styles | Partial<IBasePickerStyles> | no | Styles to apply on control |
+| placeholder | string | no | Short text hint to display in empty picker | |
+| styles | Partial&lt;IBasePickerStyles&gt; | no | Styles to apply on control | |
 | searchTextLimit | number | no | Specifies the minimum character count needed to begin retrieving search results. | 2 |
+| useSubstrateSearch | boolean | no | When `true`, performs a wider search using Microsoft 365 Substrate. | false |
 
 Enum `PrincipalType`
 
 The `PrincipalType` enum can be used to specify the types of information you want to query: User, Security groups, and/or SharePoint groups.
 
-| Name | Value |
-| ---- | ---- |
-| User | 1 |
-| DistributionList | 2 |
-| SecurityGroup | 4 |
-| SharePointGroup | 8 |
+| Name             | Value |
+| ---------------- | ----- |
+| User             | 1     |
+| DistributionList | 2     |
+| SecurityGroup    | 4     |
+| SharePointGroup  | 8     |
 
+Interface `IPeoplePickerContext`
+
+Provides mandatory properties to search users on the tenant
+
+| Value                | Type                 | Description                                                                  |
+| -------------------- | -------------------- | ---------------------------------------------------------------------------- |
+| absoluteUrl          | string               | Current `SPWeb` absolute URL.                                                |
+| msGraphClientFactory | MSGraphClientFactory | Instance of MSGraphClientFactory used for querying Microsoft Graph REST API. |
+| spHttpClient         | SPHttpClient         | Instance of SPHttpClient used for querying SharePoint REST API.              |
 
 ## MSGraph Permissions required
 
-This control requires the following scopes if groupId is of type String:
+This control requires at least one the following scopes if `groupId` is of type `string`:
 
-at least : GroupMember.Read.All, Directory.Read.All
-
+- `GroupMember.Read.All` + `User.ReadBasic.All`
+- `Directory.Read.All`
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/PeoplePicker)
-

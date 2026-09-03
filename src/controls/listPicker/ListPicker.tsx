@@ -1,6 +1,6 @@
 import { cloneDeep } from '@microsoft/sp-lodash-subset';
-import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/components/Dropdown';
-import { Spinner, SpinnerSize } from '@fluentui/react/lib/components/Spinner';
+import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
+import { Spinner, SpinnerSize } from '@fluentui/react/lib/Spinner';
 import * as React from 'react';
 
 import * as telemetry from '../../common/telemetry';

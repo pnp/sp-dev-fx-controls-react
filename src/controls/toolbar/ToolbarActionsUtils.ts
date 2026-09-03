@@ -1,5 +1,5 @@
 import { ObjectShorthandCollection, ShorthandCollection, ToolbarItemProps, ToolbarItemShorthandKinds, TreeItemProps } from "@fluentui/react-northstar";
-import { TActions } from "../../common/model/TAction";
+import { TAction, TActions } from "../../common/model/TAction";
 import styles from "./Toolbar.module.scss";
 
 
@@ -45,7 +45,7 @@ export function flattenedActions(actionGroups: TActionGroups): TActions {
         {}
     );
 }
-export function getInFlowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element): TToolbarItems {
+export function getInFlowToolbarItems(allActions: TActions, childredFactory: (action: TAction) => JSX.Element): TToolbarItems {
     return Object.keys(allActions).reduce(
         (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
             const action = allActions[actionSlug];
@@ -75,7 +75,7 @@ export function getInFlowToolbarItems(allActions: TActions, childredFactory: (ac
     );
 }
 
-export function getOverflowToolbarItems(allActions: TActions, childredFactory: (action) => JSX.Element): TToolbarItems {
+export function getOverflowToolbarItems(allActions: TActions, childredFactory: (action: TAction) => JSX.Element): TToolbarItems {
     return Object.keys(allActions).reduce(
         (acc: TToolbarItems, actionSlug, index, actionSlugs) => {
             const action = allActions[actionSlug];

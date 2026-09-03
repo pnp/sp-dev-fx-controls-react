@@ -16,12 +16,12 @@ export class DesignerPeerCategory {
 
 export class NameValuePairPropertyEditor extends PropertySheetEntry {
     private collectionChanged(context: PropertySheetContext, nameValuePairs: INameValuePair[], refreshPropertySheet: boolean): void {
-        context.target[this.collectionPropertyName] = [];
+        (context.target as any)[this.collectionPropertyName] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         for (const nameValuePair of nameValuePairs) {
             const item = this.createCollectionItem(nameValuePair.name, nameValuePair.value);
 
-            context.target[this.collectionPropertyName].push(item);
+            (context.target as any)[this.collectionPropertyName].push(item); // eslint-disable-line @typescript-eslint/no-explicit-any
         }
 
         context.peer.changed(refreshPropertySheet);
@@ -30,7 +30,7 @@ export class NameValuePairPropertyEditor extends PropertySheetEntry {
     public render(context: PropertySheetContext): Adaptive.CardElement {
         const result = new Adaptive.Container();
 
-        const collection = context.target[this.collectionPropertyName];
+        const collection = (context.target as any)[this.collectionPropertyName]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
         if (!Array.isArray(collection)) {
             throw new Error("The " + this.collectionPropertyName + " property on " + context.peer.getCardObject().getJsonTypeName() + " either doesn't exist or isn't an array.");

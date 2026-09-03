@@ -23,7 +23,7 @@ import { VariantThemeProvider, VariantType, IThemeColors } from "@pnp/spfx-contr
 
 - Example on use the `VariantThemeProvider` control with the 'Neutral' variant on custom theme generated from the 'themeColors' property:
 
-```TSX
+```jsx
 const customThemeColors: IThemeColors = {
     primaryColor: "#0078d4",
     textColor: "#323130",
@@ -38,7 +38,7 @@ const customThemeColors: IThemeColors = {
 
 - Example on use the `VariantThemeProvider` control with the 'Strong' variant on theme passed with the  from the 'theme' property:
 
-```TSX
+```jsx
 <VariantThemeProvider 
     theme={theme}
     variantType={VariantType.Strong}>
@@ -53,7 +53,7 @@ The `VariantThemeProvider` control can be configured with the following properti
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | as | React.ElementType | no | A component that should be used as the root element of the ThemeProvider component. |
-| ref | React.Ref<HTMLElement> | no | Optional ref to the root element. |
+| ref | React.Ref&lt;HTMLElement&gt; | no | Optional ref to the root element. |
 | theme | PartialTheme \| Theme | no | Defines the theme provided by the user. |
 | renderer | StyleRenderer | no | Optional interface for registering dynamic styles. Defaults to using `merge-styles`. Use this to opt into a particular rendering implementation, such as `emotion`, `styled-components`, or `jss`. Note: performance will differ between all renders. Please measure your scenarios before using an alternative implementation. |
 | applyTo | element \| body \| none | no | Defines where body-related theme is applied to. Setting to 'element' will apply body styles to the root element of this control. Setting to 'body' will apply body styles to document body. Setting to 'none' will not apply body styles to either element or body. |
@@ -62,19 +62,19 @@ The `VariantThemeProvider` control can be configured with the following properti
 
 Interface `IThemeColors`
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| primaryColor | string | yes | Primary Color of the theme. |
-| textColor | string | yes | Text Color of the theme. |
-| backgroundColor | string | yes | Background Color of the theme. |
+| Property        | Type   | Required | Description                    |
+| --------------- | ------ | -------- | ------------------------------ |
+| primaryColor    | string | yes      | Primary Color of the theme.    |
+| textColor       | string | yes      | Text Color of the theme.       |
+| backgroundColor | string | yes      | Background Color of the theme. |
 
 Enum `VariantType`
 
-| Type | Description |
-| ---- | ---- |
-| None | Apply the theme without variations. |
+| Type    | Description                                 |
+| ------- | ------------------------------------------- |
+| None    | Apply the theme without variations.         |
 | Neutral | Apply the 'Neutral' variation to the theme. |
-| Soft | Apply the 'Soft' variation to the theme. |
-| Strong | Apply the 'Strong' variation to the theme. |
+| Soft    | Apply the 'Soft' variation to the theme.    |
+| Strong  | Apply the 'Strong' variation to the theme.  |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/VariantThemeProvider)

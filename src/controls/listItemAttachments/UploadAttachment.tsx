@@ -11,7 +11,7 @@ import styles from './ListItemAttachments.module.scss';
 
 export class UploadAttachment extends React.Component<IUploadAttachmentProps, IUploadAttachmentState> {
   private _spservice: SPservice;
-  private fileInput;
+  private fileInput: React.RefObject<HTMLInputElement>;
   private _isFileExplorerOpen = false;
 
   constructor(props: IUploadAttachmentProps) {
@@ -66,7 +66,12 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
 
         try {
           if(this.props.itemId && this.props.itemId > 0){
-            await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+            const updatedItem = await this._spservice.addAttachment(this.props.listId, this.props.itemId, file.name, file, this.props.webUrl);
+            
+            // Notify parent component of the ETag change
+            if (updatedItem && this.props.onAttachmentChange) {
+              this.props.onAttachmentChange(updatedItem);
+            }
           }
 
           this.props.onAttachmentUpload(file);
@@ -78,7 +83,7 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
           this.setState({
             hideDialog: false,
             isLoading: false,
-            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', error.message)
+            dialogMessage: strings.ListItemAttachmentsuploadAttachmentErrorMsg.replace('{0}', file.name).replace('{1}', (error as Error).message)
           });
           reject(error);
         }
@@ -88,6 +93,25 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
     });
 
   }
+
+  /**
+   * Called when the hidden file input is clicked (activated).
+   * @param e - Mouse click event on the file input element.
+  */
+  private onInputActivated = (e: React.MouseEvent<HTMLInputElement>): void => {
+    setTimeout(() => {
+      window.addEventListener('focus', this.handleFocusAfterDialog);
+    }, 300);
+  }
+
+  /**
+   * Handles window focus event after the file picker dialog is closed.
+  */
+  private handleFocusAfterDialog = (): void => {
+    window.removeEventListener('focus', this.handleFocusAfterDialog);
+    this._isFileExplorerOpen = false;
+    this.props.onUploadDialogClosed();
+  };
 
   /**
    * Close dialog
@@ -109,7 +133,9 @@ export class UploadAttachment extends React.Component<IUploadAttachmentProps, IU
                style={{ display: 'none' }}
                type="file"
                onChange={(e) => this.addAttachment(e)}
-               ref={this.fileInput} />
+               onClick={(e) => this.onInputActivated(e)}
+               ref={this.fileInput}
+               />
         <div className={styles.uploadBar}>
           <CommandBar
             items={[{

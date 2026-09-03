@@ -1,4 +1,3 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { findIndex } from "@microsoft/sp-lodash-subset";
 import { sp } from '@pnp/sp';
@@ -7,24 +6,26 @@ import "@pnp/sp/sputilities";
 import "@pnp/sp/webs";
 import { Web } from "@pnp/sp/webs";
 import { IUserInfo } from "../controls/peoplepicker/IUsers";
-import { IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
+import { IPeoplePickerContext, IPeoplePickerUserItem, PrincipalType } from "../PeoplePicker";
 
 /**
  * Service implementation to search people in SharePoint
  */
 export default class SPPeopleSearchService {
-  private cachedPersonas: { [property: string]: IUserInfo[] };
   private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
 
   /**
    * Service constructor
    */
-  constructor(private context: BaseComponentContext) {
-    this.cachedPersonas = {};
+  constructor(private context: IPeoplePickerContext, private substrateSearchEnabled: boolean) {
     this.cachedLocalUsers = {};
-    this.cachedLocalUsers[this.context.pageContext.web.absoluteUrl] = [];
+    this.cachedLocalUsers[context.absoluteUrl] = [];
     // Setup PnPjs
-    sp.setup({ pageContext: this.context.pageContext });
+    sp.setup({ pageContext: {
+      web: {
+        absoluteUrl: context.absoluteUrl
+      }
+    }});
   }
 
   /**
@@ -33,7 +34,7 @@ export default class SPPeopleSearchService {
    * @param value
    */
   public generateUserPhotoLink(value: string): string {
-    return `${this.context.pageContext.web.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
+    return `${this.context.absoluteUrl}/_layouts/15/userphoto.aspx?accountname=${encodeURIComponent(value)}&size=M`;
   }
 
   /**
@@ -63,12 +64,12 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string | number)[] = null, ensureUser: boolean = false, allowUnvalidated: boolean = false): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string | number)[] = null, ensureUser: boolean = false, allowUnvalidated: boolean = false, maximumSuggestions: number = 5): Promise<IPeoplePickerUserItem> {
     // If groupId is array, load data from all groups
     if (Array.isArray(groupId)) {
       let userResults: IPeoplePickerUserItem[] = [];
       for (const id of groupId) {
-        const tmpResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, id);
+        const tmpResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, id);
         userResults = userResults.concat(tmpResults);
       }
 
@@ -77,8 +78,15 @@ export default class SPPeopleSearchService {
       const filteredUserResults = userResults.filter(({ loginName }, index) => !logins.includes(loginName, index + 1));
       return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
     } else {
-      const userResults = await this.searchTenant(siteUrl, email, 1, principalTypes, ensureUser, allowUnvalidated, groupId);
-      return (userResults && userResults.length > 0) ? userResults[0] : null;
+      const userResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, groupId);
+      if (userResults && userResults.length > 0) {
+        const exactMatch = userResults.filter(u => u.loginName?.toLowerCase() === email.toLowerCase() || u.secondaryText?.toLowerCase() === email.toLowerCase() || u.text?.toLowerCase() === email.toLowerCase());
+        if (exactMatch && exactMatch.length > 0) {
+          return exactMatch[0];
+        }
+      }
+      return null;
+      //return (userResults && userResults.length > 0) ? userResults[0] : null;
     }
   }
 
@@ -109,7 +117,7 @@ export default class SPPeopleSearchService {
   private async searchTenant(siteUrl: string, query: string, maximumSuggestions: number, principalTypes: PrincipalType[], ensureUser: boolean, allowUnvalidated: boolean, groupId: number | string): Promise<IPeoplePickerUserItem[]> {
     try {
       // If the running env is SharePoint, loads from the peoplepicker web service
-      const userRequestUrl: string = `${siteUrl || this.context.pageContext.web.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
+      const userRequestUrl: string = `${siteUrl || this.context.absoluteUrl}/_api/SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser`;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const searchBody: any = {
         queryParams: {
@@ -120,6 +128,7 @@ export default class SPPeopleSearchService {
           PrincipalSource: 15,
           PrincipalType: this.getSumOfPrincipalTypes(principalTypes),
           QueryString: query,
+          UseSubstrateSearch: this.substrateSearchEnabled ?? false
         }
       };
 
@@ -142,8 +151,8 @@ export default class SPPeopleSearchService {
         if (graphUserResponse.value && graphUserResponse.value.length > 0) {
 
           // Get user loginName from user email
-          const _users = [];
-          const batch = Web(this.context.pageContext.web.absoluteUrl).createBatch();
+          const _users: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
+          const batch = Web(this.context.absoluteUrl).createBatch();
           for (const value of graphUserResponse.value) {
             sp.web.inBatch(batch).ensureUser(value.userPrincipalName).then(u => _users.push(u.data)).catch(() => {
               // no-op
@@ -194,7 +203,7 @@ export default class SPPeopleSearchService {
 
           // Filter out "UNVALIDATED_EMAIL_ADDRESS"
           if (!allowUnvalidated) {
-            values = values.filter(v => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS"));
+            values = values.filter((v: any) => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS")); // eslint-disable-line @typescript-eslint/no-explicit-any
           }
 
 
@@ -203,7 +212,7 @@ export default class SPPeopleSearchService {
             for (const value of values) {
               // Only ensure the user if it is not a SharePoint group
               if (!value.EntityData || (value.EntityData && typeof value.EntityData.SPGroupID === "undefined" && value.EntityData.PrincipalType !== "UNVALIDATED_EMAIL_ADDRESS")) {
-                const id = await this.ensureUser(value.Key, siteUrl || this.context.pageContext.web.absoluteUrl);
+                const id = await this.ensureUser(value.Key, siteUrl || this.context.absoluteUrl);
                 value.LoginName = value.Key;
                 value.Key = id;
               }
@@ -211,8 +220,8 @@ export default class SPPeopleSearchService {
           }
 
           // Filter out NULL keys
-          values = values.filter(v => v.Key !== null);
-          const userResults = values.map(element => {
+          values = values.filter((v: any) => v.Key !== null); // eslint-disable-line @typescript-eslint/no-explicit-any
+          const userResults = values.map((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             const accountName: string = element.Description || "";
             const email: string = element.EntityData?.Email || element.Description;
             const secondaryText = element.EntityData?.Email || element.ProviderName;
@@ -262,7 +271,7 @@ export default class SPPeopleSearchService {
 
       // Nothing to return
       return [];
-    } catch (e) {
+    } catch {
       console.error("PeopleSearchService::searchTenant: error occured while fetching the users.");
       return [];
     }

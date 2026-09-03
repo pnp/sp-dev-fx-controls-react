@@ -133,7 +133,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
 
     // The data must have matching labels to render
     // otherwise this is pointless
-    return data.labels && data.labels.map((labelValue: string, rowIndex: number) => {
+    return data.labels && (data.labels as string[]).map((labelValue: string, rowIndex: number) => {
       const cells: JSX.Element[] = data.datasets.map((dataSet: ChartDataSets, dsIndex: number) => {
         return <td key={`dataCell-${Guid.newGuid().toString()}`}>{dataSet.data[rowIndex]}</td>;
       });

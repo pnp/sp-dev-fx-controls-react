@@ -44,7 +44,7 @@ export class FilesSearchService {
 
       return true;
     } catch (err) {
-      console.error(`[BingFilesService.fetchFile]: Err='${err.message}'`);
+      console.error(`[BingFilesService.fetchFile]: Err='${err instanceof Error ? err.message : String(err)}'`);
       return false;
     }
   }
@@ -125,10 +125,10 @@ export class FilesSearchService {
         throw new Error(`Cannot read JSON result`);
       }
 
-      const recentFilesResult: IRecentFile[] = recentSearchData.PrimaryQueryResult.RelevantResults.Table.Rows.map((row) => { return this.parseRecentSearchResult(row.Cells); });
+      const recentFilesResult: IRecentFile[] = recentSearchData.PrimaryQueryResult.RelevantResults.Table.Rows.map((row: any) => { return this.parseRecentSearchResult(row.Cells); }); // eslint-disable-line @typescript-eslint/no-explicit-any
       return recentFilesResult;
     } catch (err) {
-      console.error(`[BingFilesService.executeRecentSearch]: Err='${err.message}'`);
+      console.error(`[BingFilesService.executeRecentSearch]: Err='${err instanceof Error ? err.message : String(err)}'`);
       return undefined;
     }
   }
@@ -174,7 +174,7 @@ export class FilesSearchService {
 
       return searchResults;
     } catch (err) {
-      console.error(`[BingFilesService.executeSearch]: Err='${err.message}'`);
+      console.error(`[BingFilesService.executeSearch]: Err='${err instanceof Error ? err.message : String(err)}'`);
       return null;
     }
   }
@@ -195,7 +195,7 @@ export class FilesSearchService {
       // Retrieve file from blob - method supports IE11
       return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[FileSearchService.fetchFileContent] Err='${err instanceof Error ? err.message : String(err)}'`);
       return null;
     }
   }
@@ -218,7 +218,7 @@ export class FilesSearchService {
       const blob: Blob = await fileDownloadResult.blob();
       return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[FileSearchService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[FileSearchService.fetchFileContent] Err='${err instanceof Error ? err.message : String(err)}'`);
       return null;
     }
   }

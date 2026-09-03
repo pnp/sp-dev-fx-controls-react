@@ -5,6 +5,7 @@ This control renders date string as a simple text.
 ![FieldDateRenderer control output](../../assets/FieldDateRenderer.png)
 
 ## Covered Fields
+
 - Date and Time
 
 ## How to use this control in your solutions
@@ -28,11 +29,10 @@ import { FieldDateRenderer } from "@pnp/spfx-controls-react/lib/FieldDateRendere
 
 The FieldDateRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| text | string | no | Text to be rendered |
+| Property  | Type                | Required | Description                           |
+| --------- | ------------------- | -------- | ------------------------------------- |
+| cssProps  | React.CSSProperties | no       | CSS styles to apply to the renderer.  |
+| className | ICssInput           | no       | CSS classes to apply to the renderer. |
+| text      | string              | no       | Text to be rendered                   |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldDateRenderer)
-

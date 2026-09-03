@@ -48,14 +48,14 @@ The `SitePicker` control can be configured with the following properties:
 | deferredSearchTime | number | no | The list will be filtered after users stop typing for `deferredSearchTime` milliseconds. Default: 200. |
 | className | string | no | If provided, additional class name to provide on the dropdown element. |
 | disabled | boolean | no | Whether or not the control is disabled. |
-| initialSites | ISite[] | no | Intial data to load in the 'Selected sites' area (optional). |
+| initialSites | ISite[] | no | Initial data to load in the 'Selected sites' area (optional). |
 | isDesc | boolean | no | Specifies if the list is sorted in descending order. Default: `false`. |
 | label | string | no | Label to use for the control. |
 | limitToCurrentSiteCollection | boolean | no | Specifies if the options should be limited by the current site collections. Taken into consideration if selectionMode is set to `web`. |
-| mode | `'site' | 'web' | 'hub'` | no | Defines what entities are available for selection: site collections, sites, hub sites. Default: `web`. |
+| mode | `associatedsites` \| `site` \| `web` \| `hub` | no | Defines what entities are available for selection: site collections, sites, hub sites and sites inside hub. Default: `web`. |
 | multiSelect | boolean | no | Optional mode indicates if multi-choice selections is allowed. Default: `true`. |
-| onChange | `(selectedSites: ISite[]) => void` | yes | Selection change handler. | 
-| orderBy | `'title' | 'url'` | no | Specifices if the list is sorted by title or url. Default: `title`. |
+| onChange | `(selectedSites: ISite[]) => void` | yes | Selection change handler. |
+| orderBy | `title` \| `url` | no | Specifies if the list is sorted by title or url. Default: `title`. |
 | placeholder | string | no | Placeholder label to show in the dropdown. |
 | searchPlaceholder | string | no | Search input placeholder text. Displayed until search text is entered. |
 | trimDuplicates | boolean | no | Specifies if the duplicates should be trimmed. false by default. Applicable if mode is set to site or web. |
@@ -63,12 +63,12 @@ The `SitePicker` control can be configured with the following properties:
 
 Interface `ISite`
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| id | string | no | ID of the site collection. |
-| title | string | no | Title of the site. |
-| url | string | no | URL of the site. |
-| webId | string | no | ID of the site. **Note: the value is not populated if the `mode` is set to `hub`. |
-| hubSiteId | string | no | ID of the hub site. |
+| Property  | Type   | Required | Description                                                                       |
+| --------- | ------ | -------- | --------------------------------------------------------------------------------- |
+| id        | string | no       | ID of the site collection.                                                        |
+| title     | string | no       | Title of the site.                                                                |
+| url       | string | no       | URL of the site.                                                                  |
+| webId     | string | no       | ID of the site. **Note: the value is not populated if the `mode` is set to `hub`. |
+| hubSiteId | string | no       | ID of the hub site.                                                               |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/SitePicker)

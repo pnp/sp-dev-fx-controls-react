@@ -90,7 +90,7 @@ export const Navigation: React.FunctionComponent<INavigationProps> = (
           isLoadedTermSetsRef.current = true;
         }
       } catch (error) {
-        setError(error);
+        setError(error as Error);
       } finally {
         setAppGlobalState((state) => ({ ...state, isLoadingNavitionTree: false }));
       }

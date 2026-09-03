@@ -26,7 +26,7 @@ export interface IListPickerProps {
   */
   includeHidden?: boolean;
   /**
-   * Filter list from OData query (takes precendents over Hidden and BaseTemplate Filters)
+   * Filter list from OData query (takes precedence over `includeHidden` and `baseTemplate` filters)
    */
   filter?: string;
   /**

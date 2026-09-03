@@ -3,16 +3,26 @@ import * as React from 'react';
 import * as telemetry from '../../common/telemetry';
 import styles from './PeoplePickerComponent.module.scss';
 import SPPeopleSearchService from "../../services/PeopleSearchService";
-import { IPeoplePickerProps, IPeoplePickerState } from './IPeoplePicker';
+import { IPeoplePickerProps } from './IPeoplePicker';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { DirectionalHint } from '@fluentui/react/lib/Callout';
-import { NormalPeoplePicker } from '@fluentui/react/lib/components/pickers/PeoplePicker/PeoplePicker';
-import { Label } from '@fluentui/react/lib/components/Label';
-import { IBasePickerSuggestionsProps } from "@fluentui/react/lib/components/pickers/BasePicker.types";
-import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
+import { Label } from '@fluentui/react/lib/Label';
 import FieldErrorMessage from '../errorMessage/ErrorMessage';
 import isEqual from 'lodash/isEqual';
 import uniqBy from 'lodash/uniqBy';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerSuggestionsProps, NormalPeoplePicker} from '@fluentui/react/lib/Pickers';
+
+interface IPeoplePickerState {
+  mostRecentlyUsedPersons?: IPersonaProps[];
+  errorMessage?: string;
+  internalErrorMessage?: string;
+  resolveDelay?: number;
+
+  selectedPersons?: IPersonaProps[];
+  peoplePersonaMenu?: IPersonaProps[];
+  delayResults?: boolean;
+}
 
 /**
  * PeoplePicker component
@@ -26,7 +36,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
   constructor(props: IPeoplePickerProps) {
     super(props);
 
-    this.peopleSearchService = new SPPeopleSearchService(props.context);
+    this.peopleSearchService = new SPPeopleSearchService(props.context, props.useSubstrateSearch);
     this.suggestionsLimit = this.props.suggestionsLimit ? this.props.suggestionsLimit : 5;
     this.searchTextCount = this.props.searchTextLimit ? this.props.searchTextLimit : 2;
 
@@ -85,6 +95,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     }
   }
 
+  /**
+   * clears all users and groups
+   */
+  public clearSelectedPersons(): void {
+    this.setState({
+      selectedPersons: []
+    });
+  }
 
   /**
    * Get initial persons
@@ -116,12 +134,14 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           valueAndTitle = userValue.split('/');
         }
 
-        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated);
+        const userResult = await this.peopleSearchService.searchPersonByEmailOrLogin(valueAndTitle[0], principalTypes, webAbsoluteUrl, this.groupId, ensureUser, allowUnvalidated, this.suggestionsLimit);
         if (userResult) {
           selectedPersons.push(userResult);
         }
-        else if (valueAndTitle.length === 2 && valueAndTitle[1]) { //user not found.. bind the title if exists
-          const inactiveUser: IPersonaProps = { text: valueAndTitle[1] };
+        else {
+          // User not found (e.g. left the organization) - show with whatever identifier is available so they can be removed
+          const displayName = (valueAndTitle.length === 2 && valueAndTitle[1]) ? valueAndTitle[1] : valueAndTitle[0];
+          const inactiveUser: IPersonaProps = { text: displayName };
           selectedPersons.push(inactiveUser);
         }
       }
@@ -183,7 +203,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
    * On blur UI event
    * @param ev
    */
-  private onBlur = (ev): void => {
+  private onBlur = (ev: React.FocusEvent<HTMLInputElement | import('@fluentui/react').Autofill>): void => {
     if (this.props.validateOnFocusOut) {
       this.validate(this.state.selectedPersons)
         .then(() => {
@@ -266,7 +286,7 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
           });
         }
       }
-      catch (err) {
+      catch {
         this.validated(items);
       }
     }
@@ -375,6 +395,3 @@ export class PeoplePicker extends React.Component<IPeoplePickerProps, IPeoplePic
     );
   }
 }
-
-
-

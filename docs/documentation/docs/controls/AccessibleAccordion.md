@@ -63,19 +63,16 @@ import {
 
 The `Accordion` control can be configured with the following properties:
 
-
 ### Accordion
 
 | Property | Type | Required | Description | Default |
 | ---- | ---- | ---- | ---- | ---- |
-| allowMultipleExpanded | boolean | no | Don't autocollapse items when expanding other items. | `false` |
+| allowMultipleExpanded | boolean | no | Don't auto-collapse items when expanding other items. | `false` |
 | allowZeroExpanded | boolean | no | Allow the only remaining expanded item to be collapsed. | `false` |
 | preExpanded | string[] | no | Accepts an array of strings and any `AccordionItem` whose `uuid` prop matches any one of these strings will be expanded on mount. | `[]` |
 | className | string | no | Class(es) to apply to element. | "accordion" |
 | onChange | (string[]) => void | no | Callback which is invoked when items are expanded or collapsed. Gets passed `uuid`s of the currently expanded `AccordionItem`s. | |
-| theme | IPartialTheme \| ITheme | no | Set Fluent UI Theme. If not set or set to null or not defined, the theme passed through context will be used, or the default theme of the page will be loaded. |
-
-
+| theme | IPartialTheme \| ITheme | no | Set Fluent UI Theme. If not set or set to null or not defined, the theme passed through context will be used, or the default theme of the page will be loaded. | |
 
 ### AccordionItem
 
@@ -84,7 +81,6 @@ The `Accordion` control can be configured with the following properties:
 | className | string | no | Class(es) to apply to element. | "accordion__item" |
 | uuid | string \| number | no | Recommended for use with `onChange`. Will be auto-generated if not provided. | |
 | dangerouslySetExpanded | boolean | no | Enables external control of the expansion. **Warning: This may impact accessibility negatively, use at your own risk** | |
-
 
 ### AccordionItemHeading
 
@@ -95,24 +91,21 @@ The `Accordion` control can be configured with the following properties:
 
 ### AccordionItemButton
 
-| Property | Type | Required | Description | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| className | string | no | Class(es) to apply to the 'button' element. | "accordion__button" |
-
+| Property  | Type   | Required | Description                                 | Default             |
+| --------- | ------ | -------- | ------------------------------------------- | ------------------- |
+| className | string | no       | Class(es) to apply to the 'button' element. | "accordion__button" |
 
 ### AccordionItemPanel
 
-| Property | Type | Required | Description | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| className | string | no | Class(es) to apply to element. | "accordion__panel" |
-
+| Property  | Type   | Required | Description                    | Default            |
+| --------- | ------ | -------- | ------------------------------ | ------------------ |
+| className | string | no       | Class(es) to apply to element. | "accordion__panel" |
 
 ### AccordionItemState
 
-| Property | Type | Required | Description | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| children | ({ expanded: boolean, disabled: booleam }): JSX.Element | yes | item's children. | |
-
+| Property | Type                                                    | Required | Description      | Default |
+| -------- | ------------------------------------------------------- | -------- | ---------------- | ------- |
+| children | ({ expanded: boolean, disabled: boolean }): JSX.Element | yes      | item's children. |         |
 
 ## Helpers
 
@@ -124,6 +117,5 @@ resetNextUuid : () => void
 
 Resets the internal counter for Accordion items' identifiers (including `id`
 attributes). For use in test suites and isomorphic frameworks.
-
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/AccessibleAccordion)

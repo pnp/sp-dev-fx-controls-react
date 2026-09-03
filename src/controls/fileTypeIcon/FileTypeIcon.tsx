@@ -2,7 +2,7 @@ import * as React from 'react';
 import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96, ImageInformation } from './IFileTypeIcon';
 import * as telemetry from '../../common/telemetry';
-import { Icon } from '@fluentui/react/lib/components/Icon';
+import { Icon } from '@fluentui/react/lib/Icon';
 import { ICON_GENERIC_20 } from '.';
 
 const ICON_GENERIC = 'Page';
@@ -91,7 +91,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   *
   * @param value File path
   */
-  private _getFileExtension(value): string {
+  private _getFileExtension(value: string): string {
     // Split the URL on the dots
     const splittedValue = value.split('.');
     // Take the last value
@@ -264,7 +264,14 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
       iconElm = <Icon iconName={iconClass} />;
     }
 
-    // Return the icon element
-    return iconElm;
+    // Bind events
+    return React.cloneElement(iconElm, {
+      onClick: this.props.onClick,
+      onDoubleClick: this.props.onDoubleClick,
+      onMouseEnter: this.props.onMouseEnter,
+      onMouseLeave: this.props.onMouseLeave,
+      onMouseOver: this.props.onMouseOver,
+      onMouseUp: this.props.onMouseUp
+    });
   }
 }

@@ -70,7 +70,7 @@ export const MyTeams: React.FunctionComponent<IMyTeamsProps> = (
           type: EMyTeamsTypes.SET_MYTEAMS,
           payload: _teams
         });
-      } catch (error) {
+      } catch {
         const messageError: IShowMessageProps = {
           isShow: true,
           message: strings.MyTeamsMessageError,

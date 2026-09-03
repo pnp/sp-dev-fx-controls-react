@@ -6,8 +6,6 @@ Here is an example of the control in action:
 
 ![ProgressStepsIndicator](../assets/ProgressStepsIndicator.png)
 
- 
-
 ## How to use this control in your solutions
 
 - Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
@@ -34,18 +32,17 @@ const progressSteps: IStep[] = [
 }
 ```
 
-
 ## Implementation
 
 The `ProgressStepsIndicator` control can be configured with the following properties:
 
-| Property | Type | Required | Description | Default |
-| ---- | ---- | ---- | ---- | ---- |
-| steps | ISteps[] | yes | Perogress Steps | |
-| currentStep | number | yes | index of current step | default is 0|
-| themeVariant | IReadonlyTheme | undefined | no | Theme | |
- 
- The `IStep Interface` definition:
+| Property     | Type           | Required  | Description           | Default      |
+| ------------ | -------------- | --------- | --------------------- | ------------ |
+| steps        | ISteps[]       | yes       | Progress Steps       |              |
+| currentStep  | number         | yes       | index of current step | default is 0 |
+| themeVariant | IReadonlyTheme | undefined | no                    | Theme        |
+
+The `IStep Interface` definition:
 
 ```TypeScript
 Interface IStep {
@@ -54,8 +51,5 @@ Interface IStep {
   description:string;
 }
 ```
-
-
-
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ProgressStepsIndicator)

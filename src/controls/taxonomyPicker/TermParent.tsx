@@ -86,7 +86,7 @@ export default class TermParent extends React.Component<ITermParentProps, ITermP
     // Check if the terms have been loaded
     if (this.state.loaded) {
       if (this._terms.length > 0) {
-        const disabledPaths = [];
+        const disabledPaths: string[] = [];
         termElm = (
           <div style={styleProps}>
             {

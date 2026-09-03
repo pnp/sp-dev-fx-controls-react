@@ -1,4 +1,4 @@
-import { LocalizedFontFamilies } from '@fluentui/theme/lib/fonts';
+import { LocalizedFontFamilies } from '@fluentui/theme';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 import { create } from 'nano-css';
 

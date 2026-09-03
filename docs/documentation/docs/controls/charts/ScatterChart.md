@@ -80,6 +80,7 @@ return (
     options={options}
   />);
 ```
+
 ## Dataset Properties
 
 Scatter charts allow each dataset to have different configuration properties.
@@ -98,16 +99,16 @@ Some properties can be provided as arrays. When arrays are provided, the setting
 | borderDashOffset      | number                                            | The distance to offset dashes. |
 | borderCapStyle        | `'butt'`<br/>`'round'`<br/>`'square'`             | Specifies the end of the lines. Default is `'butt`'. |
 | borderJoinStyle       | `'bevel'`<br/>`'round'`<br/>`'miter'`             | Determines the shape used to join two line segments where they meet. Default is `'miter'`. |
-| cubicInterpolationMode  | `'default'`<br/>`'monotone'`                    | Determins which algorithm is used to interpolate a smooth curve between data points. |
+| cubicInterpolationMode  | `'default'`<br/>`'monotone'`                    | Determines which algorithm is used to interpolate a smooth curve between data points. |
 | data | Point[] | The chart's data. Required. |
 | fill      | `false`<br/>number<br/>string<br/>`'start'`<br/>`'end'`<br/>`'origin'` | Controls how the dataset's area is filled.  |
-| lineTension      | number                                | Ttension of the Bezier curve line. `0` renders straight lines. Ignored if `cubicInterpolationMode` is set to `monotone`.  |
+| lineTension      | number                                | Tension of the Bézier curve line. `0` renders straight lines. Ignored if `cubicInterpolationMode` is set to `monotone`.  |
 | pointBackgroundColor  | Color OR Color[]                                  | The point's fill color. |
 | pointBorderColor      | Color OR Color[]                                  | The point's border color.  |
 | pointBorderWidth      | number OR number[]                                | The point's border width.  |
 | pointRadius  | number OR number[]                                  | The point's fill color. |
 | pointStyle      | `'circle'` <br/>`'cross'`<br/>`'crossRot'`<br/>`'dash'`<br/>`'line'`<br/>`'rect'`<br/>`'rectRounded'`<br/>`'rectRot'`<br/>`'star'`<br/>`'triangle'`<br/>HTMLImageElement<br/>HTMLCanvasElement<br/>HTMLImageElement[]<br/>HTMLCanvasElement[]  | Style of point. |
-| pointRotation      | number OR number[]                                | The point's roation, in degrees.  |
+| pointRotation      | number OR number[]                                | The point's rotation, in degrees.  |
 | pointHitRadius      | number OR number[]                                | The point's border width.  |
 | pointHoverBackgroundColor  | Color OR Color[]                                  | The point's background color when a mouse hovers over it. |
 | pointHoverBorderColor      | Color OR Color[]                                  | The point's border color when a mouse hovers over it.  |
@@ -116,7 +117,6 @@ Some properties can be provided as arrays. When arrays are provided, the setting
 | showLine      | boolean                                | The point's radius width when a mouse hovers over it.  |
 | spanGaps      | boolean                                | The point's radius width when a mouse hovers over it.  |
 | steppedLine      | boolean<br/>`'before'`<br/>`'after'`| Determines whether the line is shown as a stepped line. Any value but `false` overrides the `lineTension` setting.  |
-
 
 ## Data Structure
 
@@ -133,7 +133,7 @@ data:
 }]
 ```
 
-#### Point Configuration
+## Point Configuration
 
 Point elements can be configured to change their appearance using the following configuration options:
 
@@ -174,6 +174,7 @@ For example, to render the above chart, use the following code:
 ```
 
 You can also control point configurations at the dataset level.
+
  ```TypeScript
  const data: Chart.ChartData = {
       datasets: [{

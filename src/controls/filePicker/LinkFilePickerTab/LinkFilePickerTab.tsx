@@ -4,7 +4,7 @@ import { ILinkFilePickerTabProps } from './ILinkFilePickerTabProps';
 import { ILinkFilePickerTabState } from './ILinkFilePickerTabState';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { IFilePickerResult } from '../FilePicker.types';
-import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/components/Button';
+import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { css } from '@fluentui/react/lib/Utilities';
 
@@ -34,7 +34,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
             className={styles.linkTextField}
             label={strings.LinkFileInstructions}
             ariaLabel={strings.LinkFileInstructions}
-            defaultValue={"https://"}
+            placeholder={"https://"}
             onGetErrorMessage={(value: string) => this._getErrorMessagePromise(value)}
             autoAdjustHeight={false}
             underlined={false}
@@ -64,7 +64,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    * Called as user types in a new value
    */
   private _handleChange = (fileUrl: string): void => {
-    const filePickerResult: IFilePickerResult = fileUrl && this._isUrl(fileUrl) ? {
+    const filePickerResult: IFilePickerResult = fileUrl ? {
       fileAbsoluteUrl: fileUrl,
       fileName: GeneralHelper.getFileNameFromUrl(fileUrl),
       fileNameWithoutExtension: GeneralHelper.getFileNameWithoutExtension(fileUrl),
@@ -81,7 +81,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
    */
   private _getErrorMessagePromise = async (value: string): Promise<string> => {
     // DOn't give an error for blank or placeholder value, but don't make it a valid entry either
-    if (value === undefined || value === 'https://') {
+    if (value === undefined || value === '') {
       this.setState({ isValid: false });
       return '';
     }
@@ -89,7 +89,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     // Make sure that user is typing a valid URL format
     if (!this._isUrl(value)) {
       this.setState({ isValid: false });
-      return '';
+      return strings.InvalidUrlError;
     }
 
     // If we don't allow external links, verify that we're in the same domain
@@ -132,7 +132,7 @@ export default class LinkFilePickerTab extends React.Component<ILinkFilePickerTa
     try {
       const myURL = new URL(fileUrl.toLowerCase());
       return myURL.host !== undefined;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

@@ -1,6 +1,6 @@
 # FolderExplorer control
 
-This control allows you to explore a folder structure by clinking on a folder to load it's sub-folders and using a breadcrumb navigation to navigate back to a previous level.
+This control allows you to explore a folder structure by clicking on a folder to load it's sub-folders and using a breadcrumb navigation to navigate back to a previous level.
 It also allows the user to create a new folder at the current level being explored.
 
 Here is an example of the control:

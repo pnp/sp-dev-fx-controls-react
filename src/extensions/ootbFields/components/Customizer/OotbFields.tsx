@@ -38,7 +38,7 @@ export default class OotbFields extends React.Component<IOotbFieldsProps, IOotbF
       this.setState({
         fieldRenderer: fieldRenderer
       });
-    });
+    }).catch(() => {});
   }
 
   public componentDidMount(): void {

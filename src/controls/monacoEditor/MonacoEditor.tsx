@@ -40,7 +40,7 @@ export const MonacoEditor: React.FunctionComponent<IMonacoEditorProps> = (
               JSON.parse(currentValue);
             }
           } catch (e) {
-            validationErrors.push(e.message);
+            validationErrors.push(e instanceof Error ? (e as Error).message : String(e));
           }
           console.log(currentValue);
           onValueChange(currentValue, validationErrors);

@@ -336,7 +336,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
           }
         });
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
@@ -370,7 +370,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
         && Chart.defaults.scale.gridLines.color) {
         Chart.defaults.scale.gridLines.color = ThemeColorHelper.GetThemeColor(styles.lineColor);
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
@@ -380,7 +380,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
       if (this._chart !== undefined) {
         this._chart.destroy();
       }
-    } catch (error) {
+    } catch {
       // no-op;
     }
   }
@@ -394,7 +394,7 @@ export class ChartControl extends React.Component<IChartControlProps, IChartCont
   private _getFontSizeNumber(value: string): number {
     try {
       return parseInt(value.replace('px', ''), 10);
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }

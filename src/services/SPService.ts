@@ -3,8 +3,8 @@ import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import { ISPContentType, ISPField, ISPList, ISPLists, IUploadImageResult, ISPViews } from "../common/SPEntities";
-import { SPHelper, urlCombine } from "../common/utilities";
-import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
+import { isValidISODateString, SPHelper, urlCombine } from "../common/utilities";
+import { IContentTypesOptions, IFieldsOptions, ILibsOptions, IRenderExtendedListFormDataResultStatic, IRenderExtendedListFormDataResultNotesField, IRenderListDataAsStreamClientFormResult, ISPService, LibsOrderBy } from "./ISPService";
 import {orderBy } from '../controls/viewPicker/IViewPicker';
 
 interface ICachedListItems {
@@ -58,7 +58,7 @@ export default class SPService implements ISPService {
       const result: { value: ISPContentType[] } = await data.json();
       return result.value;
     } catch (error) {
-      throw Error(error);
+      throw Error(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -102,7 +102,7 @@ export default class SPService implements ISPService {
       const result: { value: ISPField[] } = await data.json();
       return result.value;
     } catch (error) {
-      throw Error(error);
+      throw Error(error instanceof Error ? error.message : String(error));
     }
   }
 
@@ -221,6 +221,7 @@ export default class SPService implements ISPService {
     filterString?: string,
     substringSearch: boolean = false,
     orderBy?: string,
+    top?: number,
     cacheInterval: number = 1): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
     let apiUrl = '';
@@ -236,10 +237,15 @@ export default class SPService implements ISPService {
         if (orderByParts[1] && orderByParts[1].toLowerCase() === 'desc') {
           ascStr = `Ascending="FALSE"`;
         }
-        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} />`;
+        orderByStr = `<OrderBy><FieldRef Name="${orderByParts[0]}" ${ascStr} /></OrderBy>`;
       }
 
-      const camlQuery = `<View><Query><Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where>${orderByStr}</Query></View>`;
+      let filterPart = ""
+      if (filterText) {
+        filterPart = `<Where>${substringSearch ? '<Contains>' : '<BeginsWith>'}<FieldRef Name="${internalColumnName}"/><Value Type="${field.ResultType}">${filterText}</Value>${substringSearch ? '</Contains>' : '</BeginsWith>'}</Where>`
+      }
+
+      const camlQuery = `<View><Query>${filterPart}${orderByStr}</Query></View>`;
 
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
@@ -248,7 +254,7 @@ export default class SPService implements ISPService {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}`;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}${top ? `&$top=${top}` : ''}`;
     }
     else { // we need to get FieldValuesAsText and cache them
       const mapKey = `${webAbsoluteUrl}##${listId}##${internalColumnName}##${keyInternalColumnName || 'Id'}`;
@@ -259,7 +265,7 @@ export default class SPService implements ISPService {
         return filteredItems;
       }
 
-      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}`;
+      apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName},FieldValuesAsText/${internalColumnName}&$expand=FieldValuesAsText&$orderby=${orderBy}${filterString ? '&$filter=' + filterString : ''}${top ? `&$top=${top}` : ''}`;
       isPost = false;
 
       //eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -387,8 +393,9 @@ export default class SPService implements ISPService {
    * @param listId
    * @param itemId
    * @param webUrl
+   * @returns Updated list item with new ETag
    */
-  public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<void> {
+  public async deleteAttachment(fileName: string, listId: string, itemId: number, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       const spOpts: ISPHttpClientOptions = {
         headers: { "X-HTTP-Method": 'DELETE', }
@@ -396,6 +403,14 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/getByFileName(@fileName)/RecycleObject?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
+      
+      // Fetch the updated item to get the new ETag
+      const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
+      const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
+      if (itemData.ok) {
+        return await itemData.json();
+      }
+      return null;
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);
@@ -410,8 +425,9 @@ export default class SPService implements ISPService {
    * @param fileName
    * @param file
    * @param webUrl
+   * @returns Updated list item with new ETag
    */
-  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<void> {
+  public async addAttachment(listId: string, itemId: number, fileName: string, file: File, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
       // Remove special characters in FileName
       //Updating the escape characters for filename as per the doucmentations
@@ -430,7 +446,14 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/add(FileName=@fileName)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-      return;
+      
+      // Fetch the updated item to get the new ETag
+      const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
+      const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
+      if (itemData.ok) {
+        return await itemData.json();
+      }
+      return null;
     } catch (error) {
       return Promise.reject(error);
     }
@@ -555,19 +578,15 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          const lookups = [];
-           const isArray = Array.isArray(result[fieldName]);
-           //multiselect lookups are arrays
-           if (isArray) {
-            result[fieldName].forEach(element => {
-              lookups.push({ key: element.ID, name: element[lookupFieldName || 'Title'] });
-            });
-           }
-           //single select lookups are objects
-           else {
-             const singleItem = result[fieldName];
-             lookups.push({ key: singleItem.ID, name: singleItem[lookupFieldName || 'Title'] });
-           }
+          const lookups: { key: number; name: string }[] = [];
+          const items = Array.isArray(result[fieldName]) ? result[fieldName] : Array.of(result[fieldName]);
+          items.forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+            let value = element[lookupFieldName || 'Title'];
+            if (isValidISODateString(value)) {
+                value = new Date(value).toLocaleDateString();
+            }        
+            lookups.push({ key: element.ID, name: value });
+          });
           return lookups;
         }
       }
@@ -608,8 +627,8 @@ export default class SPService implements ISPService {
       if (data.ok) {
         const result = await data.json();
         if (result && result[fieldName]) {
-          const emails = [];
-          result[fieldName].forEach(element => {
+          const emails: string[] = [];
+          result[fieldName].forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
             const loginNameWithoutClaimsToken = element.Name.split("|").pop();
             if(!loginNameWithoutClaimsToken.toLowerCase().includes('null')){
               if(!element.Title.toLowerCase().includes('null')){
@@ -654,9 +673,9 @@ export default class SPService implements ISPService {
     }
   }
 
-  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+  public async getSingleManagedMetadataLabel(listId: string, listItemId: number, fieldName: string, webUrl?: string): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
     try {
-      const webAbsoluteUrl = this._context.pageContext.web.absoluteUrl;
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/RenderListDataAsStream?@listId=guid'${encodeURIComponent(listId)}'`;
       const data = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {
         body: JSON.stringify({
@@ -770,6 +789,29 @@ export default class SPService implements ISPService {
       const response = await this._context.spHttpClient.get(apiUrl, SPHttpClient.configurations.v1);
       const result = await response.json();
       return result.value;
+    } catch (error) {
+      console.dir(error);
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Retrieves extended list form data for a list item, including append-only note history.
+   * Calls RenderExtendedListFormData with options=30 to include version history.
+   * @param listId - The GUID of the SharePoint list
+   * @param itemId - The ID of the list item
+   * @param webUrl - Optional web URL; defaults to the current web
+   */
+  async getExtendedListFormData(listId: string, itemId: number, webUrl?: string): Promise<IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField> {
+    try {
+      const webAbsoluteUrl = !webUrl ? this._context.pageContext.web.absoluteUrl : webUrl;
+      const apiRequestPath = `/_api/web/lists(guid'${listId}')/RenderExtendedListFormData(itemId=${itemId},formId='editform',mode='2',options=30,cutoffVersion=0)`;
+
+      const apiUrl = urlCombine(webAbsoluteUrl, apiRequestPath, false);
+      const response = await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, {});
+      const { value } = await response.json();
+      const result = JSON.parse(value) as IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField
+      return result;
     } catch (error) {
       console.dir(error);
       return Promise.reject(error);

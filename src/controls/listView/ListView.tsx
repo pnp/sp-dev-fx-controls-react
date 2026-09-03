@@ -6,7 +6,7 @@ import { IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from '@fluentui/react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
-import { IColumn, IGroupRenderProps } from '@fluentui/react/lib/components/DetailsList';
+import { IColumn, IGroupRenderProps } from '@fluentui/react/lib/DetailsList';
 import { findIndex, has, sortBy, isEqual, cloneDeep } from '@microsoft/sp-lodash-subset';
 import { FileTypeIcon, IconType } from '../fileTypeIcon/index';
 import * as strings from 'ControlStrings';
@@ -24,6 +24,9 @@ const classNames = mergeStyleSets({
   wrapper: {
     height: '50vh',
     position: 'relative'
+  },
+  multilineCell: {
+    whiteSpace: 'break-spaces'
   }
 });
 
@@ -156,7 +159,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
       // Check if grouping is configured
       if (groupByFields && groupByFields.length > 0) {
         // Create grouped items object
-        const groupedItems = {};
+        const groupedItems: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
         items.forEach((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
           let groupName = item[groupField.name];
           // Check if the group name exists
@@ -178,7 +181,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
         });
 
         // Sort the grouped items object by its key
-        const sortedGroups = {};
+        const sortedGroups: any = {}; // eslint-disable-line @typescript-eslint/no-explicit-any
         let groupNames = Object.keys(groupedItems);
         groupNames = groupField.order === GroupOrder.ascending ? groupNames.sort() : groupNames.sort().reverse();
         groupNames.forEach((key: string) => {
@@ -209,7 +212,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
             group.children = subGroup.groups;
           } else {
             // Add the items to the updated items order array
-            groupedItems[groupItems].forEach((item) => {
+            groupedItems[groupItems].forEach((item: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
               updatedItemsOrder.push(item);
             });
           }
@@ -236,7 +239,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     let columns: IColumn[] = null;
     // Check if a set of items was provided
     if (typeof items !== 'undefined' && items !== null) {
-      tempState.items = this._flattenItems(items);
+      tempState.items = props.flattenItems === undefined || props.flattenItems ? this._flattenItems(items) : items;
     }
 
     // Check if an icon needs to be shown
@@ -387,6 +390,12 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
     if (field.linkPropertyName) {
       return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         return <a href={item[field.linkPropertyName]}>{item[column.fieldName]}</a>;
+      };
+    }
+
+    if (field.isMultiline) {
+      return (item: any, index?: number, column?: IColumn) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+        return <span className={classNames.multilineCell}>{item[column.fieldName]}</span>;
       };
     }
   }
@@ -611,7 +620,7 @@ export class ListView extends React.Component<IListViewProps, IListViewState> {
           labelMessage={strings.UploadFileHeader}
           onDrop={
             dragDropFiles ?
-              (files) => {
+              (files: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
                 this.props.onDrop(files);
               } : []
           } >

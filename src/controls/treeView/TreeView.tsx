@@ -131,11 +131,11 @@ export class TreeView extends React.Component<ITreeViewProps, ITreeViewState> {
   /**
    * Unselects all child nodes of selected parent.
    */
-  private unSelectChildren(item, unselectArray: string[]): void {
+  private unSelectChildren(item: ITreeItem, unselectArray: string[]): void {
     const tempItem: any = item; // eslint-disable-line @typescript-eslint/no-explicit-any
 
     if (tempItem.children) {
-      tempItem.children.forEach(element => {
+      tempItem.children.forEach((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         unselectArray.push(element.key);
 
         if (element.children) {

@@ -41,7 +41,7 @@ export class SPTaxonomyService {
         }
         const termsResult = await legacyChildrenQueryable() as {value: ITermInfo[], skiptoken: string};
         return termsResult;
-      } catch (error) {
+      } catch {
         return { value: [], skiptoken: '' };
       }
   }
@@ -53,7 +53,7 @@ export class SPTaxonomyService {
     try {
       const termInfo = await sp.termStore.sets.getById(termSetId.toString()).terms.getById(termId.toString()).expand("parent")();
       return termInfo;
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }
@@ -86,7 +86,7 @@ export class SPTaxonomyService {
       }
 
       return filteredTerms;
-    } catch (error) {
+    } catch {
       return [];
     }
   }

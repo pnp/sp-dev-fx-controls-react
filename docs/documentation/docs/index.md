@@ -1,13 +1,16 @@
-# Reusable React controls for your SharePoint Framework solutions ![](https://img.shields.io/npm/v/@pnp/spfx-controls-react.svg)
+# Reusable React controls for your SharePoint Framework solutions
+
+![](https://img.shields.io/npm/v/@pnp/spfx-controls-react.svg)
 
 This repository provides developers with a set of reusable React controls that can be used in SharePoint Framework (SPFx) solutions. The project provides controls for building web parts and extensions.
 
 ![Placeholder example](./assets/placeholder-intro.png)
 
 !!! attention
-    In order to migrate to `v3` it is adviced to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
+    In order to migrate to `v3` it is advised to follow this guide: [Migrating from V1](./guides/migrate-from-v1).
 
 ## Library Versions
+
 Currently there are 3 active versions of the controls. Please, reference the table below to see what version to use in your project.
 
 | Version | SPFx minimal dependency | Fluent UI (Office UI Fabric React) version | SharePoint Version | Comments |
@@ -44,7 +47,7 @@ Once the package is installed, you will have to configure the resource file of t
 
 ## Telemetry
 
-All controls gather telemetry to verify the usage. Only the name of the control and related data gets captured. 
+All controls gather telemetry to verify the usage. Only the name of the control and related data gets captured.
 
 > More information about the service that we are using for this can be found here: [PnP Telemetry Proxy](https://github.com/pnp/telemetry-proxy-node).
 
@@ -61,32 +64,35 @@ telemetry.optOut();
 
 The following controls are currently available:
 
-- [AccessibleAccordion](./controls/AccessibleAccordion) (Control to render an accordion. React `AccessibleAccordion`-based implementation)
-- [Accordion](./controls/Accordion) (Control to render an accordion)
-- [AdaptiveCardHost](./controls/AdaptiveCardHost.md) (Control to render Adaptive Cards)
-- [AdaptiveCardDesignerHost](./controls/AdaptiveCardDesignerHost.md) (Control to render Adaptive Cards Designer)
-- [AnimatedDialog](./controls/AnimatedDialog) (Animated dialog control)
-- [Carousel](./controls/Carousel) (Control displays children elements with 'previous/next element' options)
+- [AccessibleAccordion](./controls/AccessibleAccordion) (renders an accordion. React `AccessibleAccordion`-based implementation)
+- [Accordion](./controls/Accordion) (renders an accordion)
+- [AdaptiveCardHost](./controls/AdaptiveCardHost.md) (renders Adaptive Cards)
+- [AdaptiveCardDesignerHost](./controls/AdaptiveCardDesignerHost.md) (renders Adaptive Cards Designer)
+- [AnimatedDialog](./controls/AnimatedDialog) (animated dialog control)
+- [Carousel](./controls/Carousel) (displays children elements with 'previous/next element' options)
 - [Charts](./controls/ChartControl) (makes it easy to integrate [Chart.js](https://www.chartjs.org/) charts into web part)
 - [ComboBoxListItemPicker](./controls/ComboBoxListItemPicker) (allows to select one or more items from a list)
-- [ContentTypePicker](./controls/ContentTypePicker) (Control to pick a content type)
-- [Dashboard](./controls/Dashboard) (Control to render dashboard in Microsoft Teams)
+- [ContentTypePicker](./controls/ContentTypePicker) (control to pick a content type)
+- [Dashboard](./controls/Dashboard) (renders dashboard in Microsoft Teams)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
-- [DragDropFiles](./controls/DragDropFiles) (Allow drag and drop of files in selected areas)
+- [DragDropFiles](./controls/DragDropFiles) (allows drag and drop of files in selected areas)
 - [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
-- [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (Enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
-- [FieldCollectionData](./controls/FieldCollectionData) (control gives you the ability to insert a list / collection data which can be used in your web part / application customizer)
+- [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
+- [FieldCollectionData](./controls/FieldCollectionData) (gives the ability to insert a list / collection data which can be used in your web part / application customizer)
 - [FieldPicker](./controls/FieldPicker) (control to pick one or multiple fields from a list or a site)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
-- [FileTypeIcon](./controls/FileTypeIcon) (Control that shows the icon of a specified file path or application)
-- [FolderExplorer](./controls/FolderExplorer) (Control that allows to browse the folders and sub-folders from a root folder)
-- [FolderPicker](./controls/FolderPicker) (Control that allows to browse and select a folder)
+- [FileTypeIcon](./controls/FileTypeIcon) (shows the icon of a specified file path or application)
+- [FilterBar](./controls/FilterBar) (control that renders filters in a similar way to modern lists)
+- [FolderExplorer](./controls/FolderExplorer) (control that allows to browse the folders and sub-folders from a root folder)
+- [FolderPicker](./controls/FolderPicker) (control that allows to browse and select a folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
-- [HoverReactionsBar](./controls/HoverReactionsBar) (control that allows you to select an emoji from emoji bar or select from picker)
+- [HoverReactionsBar](./controls/HoverReactionsBar) (control that allows to select an emoji from emoji bar or select from picker)
 - [IconPicker](./controls/IconPicker) (control that allows to search and select an icon from office-ui-fabric icons)
 - [IFrameDialog](./controls/IFrameDialog) (renders a Dialog with an iframe as a content)
 - [IFramePanel](./controls/IFramePanel) (renders a Panel with an iframe as a content)
-- [ListItemComments](./controls/ListItemComments) (controls that allows to manage list item comments similarly to out-of-the box experience)
+- [ImagePicker](./controls/ImagePicker) (control that allows to search and select or upload image from SharePoint, OneDrive or Stock Images)
+- [ListItemAttachments](./controls/ListItemAttachments) (manages list item attachments)
+- [ListItemComments](./controls/ListItemComments) (manages list item comments similarly to out-of-the box experience)
 - [ListItemPicker](./controls/ListItemPicker) (allows to select one or more items from a list)
 - [ListPicker](./controls/ListPicker) (allows to select one or multiple available lists/libraries of the current site)
 - [ListView](./controls/ListView) (List view control)
@@ -97,24 +103,27 @@ The following controls are currently available:
 - [ModernTaxonomyPicker](./controls/ModernTaxonomyPicker) (Modern Taxonomy Picker)
 - [MonacoEditor](./controls/MonacoEditor) (Monaco Editor)
 - [MyTeams](./controls/MyTeams) (My Teams)
+- [Pagination](./controls/Pagination) (renders a Pagination component which can be used to show limited information of data)
 - [PeoplePicker](./controls/PeoplePicker) (People Picker)
 - [Placeholder](./controls/Placeholder) (shows an initial placeholder if the web part has to be configured)
 - [Progress](./controls/Progress) (shows progress of multiple SEQUENTIALLY executed actions)
-- [ProgressStepsIndicator.md](./controls/ProgressStepsIndicator) (shows a progress of steps)
+- [ProgressStepsIndicator](./controls/ProgressStepsIndicator) (shows a progress of steps)
+- [RichText](./controls/RichText) (provides rich text editing and display capability)
 - [SecurityTrimmedControl](./controls/SecurityTrimmedControl) (intended to be used when you want to show or hide components based on the user permissions)
+- [ShareDialog](./controls/ShareDialog) (Share Dialog control)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SitePicker](./controls/SitePicker) (Site Picker control)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [TeamChannelPicker](./controls/TeamChannelPicker) (Team Channel Picker)
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
-- [TermSetNavigation](./controls/TermSetNavigation) (Team Picker)
-- [Toolbar](./controls/Toolbar) (Control to render Toolbar in Microsoft Teams)
+- [TermSetNavigation](./controls/TermSetNavigation) (control for navigating and selecting a Term from a TermSet)
+- [Toolbar](./controls/Toolbar) (renders Toolbar in Microsoft Teams)
 - [TreeView](./controls/TreeView) (Tree View)
 - [UploadFiles](./controls/UploadFiles) (Upload Files)
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
 - [ViewPicker](./controls/ViewPicker.md) (View Picker Control)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
-
+- [WorldMap](./controls/WorldMap) (World Map control)
 
 Field customizer controls:
 

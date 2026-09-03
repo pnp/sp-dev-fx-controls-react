@@ -1,8 +1,7 @@
-import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IBasePickerStyles } from "@fluentui/react";
-import { DirectionalHint } from "@fluentui/react/lib/common/DirectionalHint";
-import { IPersonaProps } from "@fluentui/react/lib/components/Persona/Persona.types";
-import { PrincipalType } from ".";
+import { DirectionalHint } from '@fluentui/react/lib/Callout';
+import { IPersonaProps } from '@fluentui/react/lib/Persona';
+import { IBasePickerStyles } from '@fluentui/react/lib/Pickers';
+import { IPeoplePickerContext, PrincipalType } from ".";
 
 /**
  * Used to display a placeholder in case of no or temporary content. Button is optional.
@@ -12,7 +11,7 @@ export interface IPeoplePickerProps {
   /**
    * Context of the component
    */
-  context: BaseComponentContext;
+  context: IPeoplePickerContext;
   /**
    * Text of the Control
    */
@@ -137,17 +136,10 @@ export interface IPeoplePickerProps {
    * Define a filter to be applied to the search results, such as a filter to only show users from a specific domain
    */
   resultFilter?: (result: IPersonaProps[]) => IPersonaProps[];
-}
-
-export interface IPeoplePickerState {
-  mostRecentlyUsedPersons?: IPersonaProps[];
-  errorMessage?: string;
-  internalErrorMessage?: string;
-  resolveDelay?: number;
-
-  selectedPersons?: IPersonaProps[];
-  peoplePersonaMenu?: IPersonaProps[];
-  delayResults?: boolean;
+  /**
+   * When `true`, performs a wider search using Microsoft 365 Substrate
+   */
+  useSubstrateSearch?: boolean;
 }
 
 export interface IPeoplePickerUserItem {

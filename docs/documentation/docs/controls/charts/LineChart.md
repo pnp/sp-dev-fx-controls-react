@@ -245,7 +245,7 @@ const options: Chart.ChartOptions = {
 };
 ```
 
-In order to render each dataset with a different color, make sure to specify the `backgroundColor` and `borderColor` settings for each dataset. 
+In order to render each dataset with a different color, make sure to specify the `backgroundColor` and `borderColor` settings for each dataset.
 
 For example, to render the above chart, use the following code:
 
@@ -378,16 +378,16 @@ Some properties can be provided as arrays. When arrays are provided, the setting
 | borderDashOffset      | number                                            | The distance to offset dashes. |
 | borderCapStyle        | `'butt'`<br/>`'round'`<br/>`'square'`             | Specifies the end of the lines. Default is `'butt`'. |
 | borderJoinStyle       | `'bevel'`<br/>`'round'`<br/>`'miter'`             | Determines the shape used to join two line segments where they meet. Default is `'miter'`. |
-| cubicInterpolationMode  | `'default'`<br/>`'monotone'`                    | Determins which algorithm is used to interpolate a smooth curve between data points. |
+| cubicInterpolationMode  | `'default'`<br/>`'monotone'`                    | Determines which algorithm is used to interpolate a smooth curve between data points. |
 | data | number[] <br/> Point[] | The chart's data. Required. |
 | fill      | `false`<br/>number<br/>string<br/>`'start'`<br/>`'end'`<br/>`'origin'` | Controls how the dataset's area is filled.  |
-| lineTension      | number                                | Ttension of the Bezier curve line. `0` renders straight lines. Ignored if `cubicInterpolationMode` is set to `monotone`.  |
+| lineTension      | number                                | Tension of the Bézier curve line. `0` renders straight lines. Ignored if `cubicInterpolationMode` is set to `monotone`.  |
 | pointBackgroundColor  | Color OR Color[]                                  | The point's fill color. |
 | pointBorderColor      | Color OR Color[]                                  | The point's border color.  |
 | pointBorderWidth      | number OR number[]                                | The point's border width.  |
 | pointRadius  | number OR number[]                                  | The point's fill color. |
 | pointStyle      | `'circle'` <br/>`'cross'`<br/>`'crossRot'`<br/>`'dash'`<br/>`'line'`<br/>`'rect'`<br/>`'rectRounded'`<br/>`'rectRot'`<br/>`'star'`<br/>`'triangle'`<br/>HTMLImageElement<br/>HTMLCanvasElement<br/>HTMLImageElement[]<br/>HTMLCanvasElement[]  | Style of point. |
-| pointRotation      | number OR number[]                                | The point's roation, in degrees.  |
+| pointRotation      | number OR number[]                                | The point's rotation, in degrees.  |
 | pointHitRadius      | number OR number[]                                | The point's border width.  |
 | pointHoverBackgroundColor  | Color OR Color[]                                  | The point's background color when a mouse hovers over it. |
 | pointHoverBorderColor      | Color OR Color[]                                  | The point's border color when a mouse hovers over it.  |

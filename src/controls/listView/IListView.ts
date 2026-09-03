@@ -1,4 +1,4 @@
-import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from '@fluentui/react/lib/components/DetailsList';
+import { IColumn, IGroup, SelectionMode, IDetailsRowProps } from '@fluentui/react/lib/DetailsList';
 
 export { SelectionMode };
 
@@ -84,6 +84,11 @@ export interface IListViewProps {
    * @returns sorted collection of items
    */
   sortItems?: (items: any[], columnName: string, descending: boolean) => any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /**
+   * Specify if items should be flatten or not.
+   * Default value is `true`.
+   */
+  flattenItems?: boolean;
 }
 
 export interface IListViewState {
@@ -96,11 +101,13 @@ export interface IListViewState {
    */
   items?: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
-   * Given column defitions.
+   * Given column definitions.
    * If none are provided, default columns will be created based on the item's properties.
    */
   columns?: IColumn[];
-
+  /**
+   * Grouping applied to the view.
+   */
   groups?: IGroup[];
 
 }
@@ -145,6 +152,10 @@ export interface IViewField {
    * Determines if the column can be resized.
    */
   isResizable?: boolean;
+  /**
+   * Determines if the column should be rendered as multiline.
+   */
+  isMultiline?: boolean;
   /**
    * Override the render method of the field
    */

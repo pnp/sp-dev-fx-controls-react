@@ -1,6 +1,6 @@
 export class LocalesHelper {
 
-  private static locales = {
+  private static locales: Record<number, string> = {
     1025: 'ar-SA',
     1026: 'bg-BG',
     1027: 'ca-ES',
@@ -53,7 +53,7 @@ export class LocalesHelper {
     10266: 'sr-Cyrl-RS',
   };
   public static getLocaleId(localeName: string): number {
-    const pos: number = Object.keys(this.locales).findIndex(locKey => this.locales[locKey] === localeName);
+    const pos: number = Object.keys(this.locales).findIndex(locKey => this.locales[parseInt(locKey)] === localeName);
     if (pos > -1) {
       return parseInt(Object.keys(this.locales)[pos]);
     }

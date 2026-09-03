@@ -1,7 +1,7 @@
 # IFramePanel control
 
 This control renders a Panel with an iframe as content.
- 
+
 Here is an example of the control in action:
 
 ![IFrameDialog control](../assets/IFramePanel.png)
@@ -15,10 +15,9 @@ Here is an example of the control in action:
 import { IFramePanel } from "@pnp/spfx-controls-react/lib/IFramePanel";
 ```
 
-- The `IFramePanel` uses the [Office Fabric UI implemenation of the panel](https://developer.microsoft.com/en-us/fabric#/components/panel). The properties of this control inherit the panel properties.
+- The `IFramePanel` uses the [Office Fabric UI implementation of the panel](https://developer.microsoft.com/en-us/fabric#/components/panel). The properties of this control inherit the panel properties.
 
 - Use the `IFramePanel` control in your code as follows (`this._onIframeLoaded` and `this._onDismiss` are methods that should be implemented if you want to execute some actions when the iframe content is loaded and dialog should be closed respectively.)
-
 
 ```TypeScript
 <IFramePanel url={this.state.iFrameUrl}
@@ -38,7 +37,7 @@ The IFramePanel component extends the properties from the [Fabric UI IPanelProps
 | Property | Type | Required | Description |
 | ---- | ---- | ---- | ---- |
 | url | string | yes | iframe Url |
-| heigth | string | yes | iframe's height, if empty it will be dynamically set to the full height available in the panel's content area |
+| height | string | yes | iframe's height, if empty it will be dynamically set to the full height available in the panel's content area |
 | iframeOnload | iframeOnLoad?: (iframe: any) => {} | no | iframe's onload event handler |
 | name | string | no | Specifies the name of an iframe |
 | allowFullScreen | boolean | no | Specifies if iframe content can be displayed in a full screen |

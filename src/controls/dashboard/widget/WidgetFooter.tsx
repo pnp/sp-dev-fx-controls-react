@@ -9,10 +9,10 @@ export const WidgetFooter = ({ widget }: { widget: IWidget }): JSX.Element => (
             <Text
                 as="a"
                 href={widget.link.href}
-                target="_blank"
-                content={strings.ViewMore}
+                target={widget.link.target ?? "_blank"}
+                content={widget.link.title ?? strings.ViewMore}
                 size="small"
-                color="brand"
+                color={widget.link.color ?? "default"}
                 style={{ textDecoration: "none" }}
             />
         </Flex>

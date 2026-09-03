@@ -1,20 +1,23 @@
-export type ValidControls = "all" | 
-  "accessibleAccordion" | "adaptiveCardDesignerHost" | "adaptiveCardHost" | 
-  "animatedDialog" | "Carousel" | "ChartControl" | 
-  "ComboBoxListItemPicker" | "Dashboard" | "DateTimePicker" | 
-  "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" | 
-  "FieldCollectionData" | "FieldPicker" | "FilePicker" | 
-  "FileTypeIcon" | "FolderExplorer" | "FolderPicker" |
-  "GridLayout" | "IconPicker" | "IFrameDialog" |
-  "IFramePanel" | "ListPicker" | "ListItemPicker" |
-  "ListItemComments" | "ViewPicker" | "ListView" |
+export type ValidControls = "all" |
+  "AccessibleAccordion" | "AdaptiveCardDesignerHost" | "AdaptiveCardHost" |
+  "AnimatedDialog" | "Carousel" | "ChartControl" | "Calendar" |
+  "ComboBoxListItemPicker" | "ContentTypePicker" | "Dashboard" | "DateTimePicker" |
+  "DragDropFiles" | "DynamicForm" | "EnhancedThemeProvider" |
+  "FieldCollectionData" | "FieldPicker" | "FilePicker" |
+  "FileTypeIcon" | "FilterBar" | "FolderExplorer" | "FolderPicker" |
+  "GroupPicker" |
+  "GridLayout" | "HoverReactionsBar" | "IconPicker" | "IFrameDialog" |
+  "IFramePanel" | "ImagePicker" | "ListItemAttachments" | "ListItemComments" |
+  "ListItemPicker" | "ListPicker" | "ListToolbar" | "ListView" | "LivePersona" |
   "LocationPicker" | "Map" | "ModernAudio" |
-  "ModernTaxonomyPicker" | "Pagination" | "PeoplePicker" |
-  "Placeholder" | "Progress" | "RichText" |
-  "SecurityTrimmedControl" | "SiteBreadcrumb" | "SitePicker" |
-  "TaxonomyPicker" | "TaxonomyTree" | "Teams" |
+  "ModernTaxonomyPicker" | "MonacoEditor" | "Pagination" | "PeoplePicker" |
+  "Placeholder" | "Progress" | "ProgressStepsIndicator" | "RichText" |
+  "ShareDialog" | "SecurityTrimmedControl" | "SiteBreadcrumb" | "SitePicker" |
+  "SPFilePicker" |
+  "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
   "TestControl" | "Toolbar" | "TreeView" |
-  "UploadFiles" | "VariantThemeProvider" | "WebPartTitle";
+  "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" |
+  "WebPartTitle" | "WorldMap" ;
 
 export type ControlVisibility = {
   [K in ValidControls]: boolean;
@@ -31,5 +34,6 @@ export interface IControlsTestWebPartProps {
   dynamicFormClientSideValidationEnabled: boolean;
   dynamicFormFieldValidationEnabled: boolean;
   dynamicFormFileSelectionEnabled: boolean;
+  dynamicFormToggleTaxonomyPicker: boolean;
   controlVisibility: ControlVisibility
 }

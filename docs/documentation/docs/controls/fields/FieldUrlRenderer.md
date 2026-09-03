@@ -6,6 +6,7 @@ This control renders Hyperlink or Picture field value as a link or image.
 ![FieldUrlRenderer Image control output](../../assets/FieldUrlRendererImage.png)
 
 ## Covered Fields
+
 - Hyperlink or Image
 - Url in Links List
 
@@ -32,13 +33,12 @@ import { FieldUrlRenderer } from "@pnp/spfx-controls-react/lib/FieldUrlRenderer"
 
 The FieldUrlRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| text | string | no | Text to be rendered. |
-| url | string | yes | Url. |
-| isImageUrl | boolean | no | True if the control should be rendered as an image. |
+| Property   | Type                | Required | Description                                         |
+| ---------- | ------------------- | -------- | --------------------------------------------------- |
+| cssProps   | React.CSSProperties | no       | CSS styles to apply to the renderer.                |
+| className  | ICssInput           | no       | CSS classes to apply to the renderer.               |
+| text       | string              | no       | Text to be rendered.                                |
+| url        | string              | yes      | Url.                                                |
+| isImageUrl | boolean             | no       | True if the control should be rendered as an image. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldUrlRenderer)
-

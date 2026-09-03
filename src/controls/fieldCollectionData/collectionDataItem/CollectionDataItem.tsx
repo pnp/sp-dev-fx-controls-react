@@ -2,16 +2,16 @@ import * as React from 'react';
 import styles from '../FieldCollectionData.module.scss';
 import { ICollectionDataItemProps } from './ICollectionDataItemProps';
 import { ICollectionDataItemState } from './ICollectionDataItemState';
-import { TextField } from '@fluentui/react/lib/components/TextField';
-import { Icon } from '@fluentui/react/lib/components/Icon';
-import { Link } from '@fluentui/react/lib/components/Link';
-import { Checkbox } from '@fluentui/react/lib/components/Checkbox';
+import { TextField } from '@fluentui/react/lib/TextField';
+import { Icon } from '@fluentui/react/lib/Icon';
+import { Link } from '@fluentui/react/lib/Link';
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import * as strings from 'ControlStrings';
 import { CustomCollectionFieldType, ICustomCollectionField } from '../ICustomCollectionField';
-import { Dropdown, IDropdownOption } from '@fluentui/react/lib/components/Dropdown';
-import { ComboBox, IComboBoxOption } from '@fluentui/react/lib/components/ComboBox';
-import { PeoplePicker, PrincipalType } from "../../peoplepicker";
-import { Callout, DirectionalHint } from '@fluentui/react/lib/components/Callout';
+import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
+import { ComboBox, IComboBoxOption } from '@fluentui/react/lib/ComboBox';
+import { IPeoplePickerContext, PeoplePicker, PrincipalType } from "../../peoplepicker";
+import { Callout, DirectionalHint } from '@fluentui/react/lib/Callout';
 import { CollectionIconField } from '../collectionIconField';
 import { clone, findIndex, sortBy } from '@microsoft/sp-lodash-subset';
 import { Guid } from '@microsoft/sp-core-library';
@@ -467,6 +467,11 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
   private renderField(field: ICustomCollectionField, item: any): JSX.Element { // eslint-disable-line @typescript-eslint/no-explicit-any
     const disableFieldOnEdit: boolean = field.disableEdit && !!this.props.fUpdateItem;
     const _selectedComboBoxKeys: string[] = [];
+    const peoplePickerContext: IPeoplePickerContext = {
+      absoluteUrl: this.props.context.pageContext.web.absoluteUrl,
+      spHttpClient: this.props.context.spHttpClient,
+      msGraphClientFactory: this.props.context.msGraphClientFactory
+    };
     let _selectedComboBoxKey: string = null;
     let _comboBoxOptions: IComboBoxOption[] = null;
     let _selectedUsers: string[] = null;
@@ -580,7 +585,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
 
         return <PeoplePicker
           peoplePickerCntrlclassName={styles.peoplePicker}
-          context={this.props.context}
+          context={peoplePickerContext}
           personSelectionLimit={typeof field.maximumUsers === "number" ? field.maximumUsers : typeof field.multiSelect === "boolean" && field.multiSelect === false ? 1 : 99}
           principalTypes={[PrincipalType.User]}
           ensureUser={true}

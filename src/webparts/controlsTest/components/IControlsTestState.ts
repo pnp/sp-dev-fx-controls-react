@@ -3,6 +3,7 @@ import { IProgressAction } from "../../../Progress";
 import { IFilePickerResult } from "../../../FilePicker";
 import { ITag } from "@fluentui/react";
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
+import { IFilterBarItem } from "../../../FilterBar";
 
 export interface IControlsTestState {
   imgSize: ImageSize;
@@ -32,6 +33,7 @@ export interface IControlsTestState {
   showErrorDialog?: boolean;
   selectedTeam: ITag[];
   selectedTeamChannels: ITag[];
+  selectedGroups?: ITag[];
   filePickerDefaultFolderAbsolutePath?: string;
   errorMessage?: string;
   termPanelIsOpen?: boolean;
@@ -41,4 +43,8 @@ export interface IControlsTestState {
   termStoreInfo: ITermStoreInfo;
   termSetInfo: ITermSetInfo;
   testTerms: ITermInfo[];
+  selectedUrlImagePicker: string;
+  isOpenHoverReactionBar: boolean;
+  isOpenShareDialog: boolean;
+  filters: IFilterBarItem[];
 }

@@ -7,6 +7,7 @@ This control renders Clip icon based on the provided `count` property is defined
 **Note:** this control displays correctly starting with SharePoint Framework v1.4
 
 ## Covered Fields
+
 - Attachments
 
 ## How to use this control in your solutions
@@ -28,10 +29,10 @@ import { FieldAttachmentsRenderer } from "@pnp/spfx-controls-react/lib/FieldAtta
 
 The FieldAttachmentsRenderer component can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| cssProps | React.CSSProperties | no | CSS styles to apply to the renderer. |
-| className | ICssInput | no | CSS classes to apply to the renderer. |
-| count | number | no | Amount of attachments. The icon is displayed if the property is defined and greater than 0 |
+| Property  | Type                | Required | Description                                                                                |
+| --------- | ------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| cssProps  | React.CSSProperties | no       | CSS styles to apply to the renderer.                                                       |
+| className | ICssInput           | no       | CSS classes to apply to the renderer.                                                      |
+| count     | number              | no       | Amount of attachments. The icon is displayed if the property is defined and greater than 0 |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/fields/FieldAttachmentsRenderer)
