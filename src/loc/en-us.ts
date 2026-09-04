@@ -458,6 +458,12 @@ define([], () => {
     ClearAllFiltersText: "Clear filters",
     FilterOverflowAriaLabel: "More",
 
+    SPFilePickerButtonText: "Select from SharePoint",
+    SPFilePickerDialogTitle: "Select a file",
+    SPFilePickerMissingBaseUrlError: "A base URL is required to open the file picker.",
+    SPFilePickerPopupBlockedError: "The picker popup was blocked by the browser.",
+    SPFilePickerUnableToObtainTokenError: "Unable to obtain a token.",
+
   CalendarControlDayOfWeekSunday:  "Sunday",
   CalendarControlDayOfWeekMonday: "Monday",
   CalendarControlDayOfWeekTuesday: "Tuesday",

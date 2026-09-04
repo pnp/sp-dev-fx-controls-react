@@ -1,7 +1,7 @@
 {
   "name": "@pnp/spfx-controls-react",
   "description": "Reusable React controls for SharePoint Framework solutions",
-  "version": "3.25.1",
+  "version": "3.26.0",
   "engines": {
     "node": ">=22.14.0 < 23.0.0"
   },
@@ -84,7 +84,7 @@
     "react": "17.0.1",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "17.0.1",
-    "react-dropzone": "^14.2.3",
+    "react-dropzone": "^16.0.0",
     "react-map-gl": "^8.0.4",
     "react-mentions": "^4.3.0",
     "react-quill": "2.0.0",
@@ -104,7 +104,6 @@
     "@types/chart.js": "2.7.40",
     "@types/color": "3.0.6",
     "@types/enzyme": "^2.8.12",
-    "@types/es6-promise": "3.3.0",
     "@types/he": "^1.1.2",
     "@types/jest": "30.0.0",
     "@types/lodash": "4.14.202",
