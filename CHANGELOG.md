@@ -2,6 +2,14 @@
 
 ## 3.26.0
 
+### Enhancements
+
+- SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)
+
+### Contributors
+
+Special thanks to our contributor: [Shirish Mawande](https://github.com/shirishmawande).
+
 ## 3.25.0
 
 ### Enhancements
