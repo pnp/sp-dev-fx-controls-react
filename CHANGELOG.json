@@ -4,10 +4,14 @@
       "version": "3.26.0",
       "changes": {
         "new": [],
-        "enhancements": [],
+        "enhancements": [
+          "SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)"
+        ],
         "fixes": []
       },
-      "contributions": []
+      "contributions": [
+        "[Shirish Mawande](https://github.com/shirishmawande)"
+      ]
     },
     {
       "version": "3.25.0",
