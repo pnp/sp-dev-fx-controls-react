@@ -96,7 +96,7 @@
     "@microsoft/eslint-config-spfx": "1.23.0",
     "@microsoft/eslint-plugin-spfx": "1.23.0",
     "@microsoft/microsoft-graph-types": "^2.1.0",
-    "@microsoft/sp-module-interfaces": "1.23.0",
+    "@microsoft/sp-module-interfaces": "1.23.2",
     "@microsoft/spfx-heft-plugins": "1.23.0",
     "@microsoft/spfx-web-build-rig": "1.23.0",
     "@rushstack/heft": "1.2.17",
