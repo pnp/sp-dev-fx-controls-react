@@ -118,6 +118,7 @@ The following controls are currently available:
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
 - [TermSetNavigation](./controls/TermSetNavigation) (control for navigating and selecting a Term from a TermSet)
 - [Toolbar](./controls/Toolbar) (renders Toolbar in Microsoft Teams)
+- [Toast](./controls/Toast) (displays zero-configuration Fluent UI notifications)
 - [TreeView](./controls/TreeView) (Tree View)
 - [UploadFiles](./controls/UploadFiles) (Upload Files)
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
