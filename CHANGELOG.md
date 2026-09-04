@@ -1,5 +1,18 @@
 # Releases
 
+## 3.26.0
+
+### Enhancements
+
+- SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)
+- `RichText`: Screen reader doesn't announce state of text formatting controls whether its selected or not when accessing it through tab [#1945](https://github.com/pnp/sp-dev-fx-controls-react/issues/1945)
+- `FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)
+- `FileTypeIcon`: Some icons are not showing [#2104](https://github.com/pnp/sp-dev-fx-controls-react/issues/2104)
+
+### Contributors
+
+Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Joao Livio](https://github.com/jtlivio), [Shirish Mawande](https://github.com/shirishmawande).
+
 ## 3.25.0
 
 ### Enhancements

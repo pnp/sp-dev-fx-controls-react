@@ -269,7 +269,7 @@ define([], () => {
     FolderFrontPlate:
       "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
     FolderIconUrl:
-      "https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types/20/folder.svg",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     FolderLabelTemplate:
       "{0}, Složka, Upraveno {1}, upravil {2}, {3} položek, Soukromé",
     FromLinkLinkLabel: "Z odkazu",

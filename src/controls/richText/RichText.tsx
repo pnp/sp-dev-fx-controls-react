@@ -676,6 +676,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 <IconButton
                   iconProps={{ iconName: 'Bold' }}
                   aria-describedby="bold-richtextbutton"
+                  toggle
                   checked={this.state.formats.bold}
                   onClick={this.onChangeBold}
                 />
@@ -690,6 +691,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 <IconButton
                   iconProps={{ iconName: 'Italic' }}
                   aria-describedby="italic-richtextbutton"
+                  toggle
                   checked={this.state.formats.italic}
                   onClick={this.onChangeItalic}
                 />
@@ -704,6 +706,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 <IconButton
                   iconProps={{ iconName: 'Underline' }}
                   aria-describedby="underline-richtextbutton"
+                  toggle
                   checked={this.state.formats.underline}
                   onClick={this.onChangeUnderline}
                 />
@@ -753,6 +756,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
                 calloutProps={{ gapSpace: 0 }}
               >
                 <IconButton
+                  toggle
                   checked={this.state.formats?.link !== undefined}
                   onClick={this.showInsertLinkDialog}
                   aria-describedby="link-richtextbutton"
