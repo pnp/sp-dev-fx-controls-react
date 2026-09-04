@@ -84,7 +84,7 @@
     "react": "17.0.1",
     "react-accessible-accordion": "^5.0.0",
     "react-dom": "17.0.1",
-    "react-dropzone": "^20.1.1",
+    "react-dropzone": "^16.0.0",
     "react-map-gl": "^8.0.4",
     "react-mentions": "^4.3.0",
     "react-quill": "2.0.0",
