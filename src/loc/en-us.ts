@@ -251,7 +251,7 @@ define([], () => {
     FolderFrontPlate:
       "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
     FolderIconUrl:
-      "https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types/20/folder.svg",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     FolderLabelTemplate: "{0}, Folder, Modified {1}, edited by {2}, {3} items, Private",
     FromLinkLinkLabel: "From a link",
     ImageAltText: ".{0} Image",
