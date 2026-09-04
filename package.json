@@ -103,7 +103,7 @@
     "@types/chai": "4.3.4",
     "@types/chart.js": "2.7.40",
     "@types/color": "3.0.6",
-    "@types/enzyme": "^2.8.12",
+    "@types/enzyme": "^3.10.19",
     "@types/he": "^1.1.2",
     "@types/jest": "30.0.0",
     "@types/lodash": "4.14.202",
