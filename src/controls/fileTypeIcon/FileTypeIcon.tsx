@@ -7,7 +7,7 @@ import { ICON_GENERIC_20 } from '.';
 
 const ICON_GENERIC = 'Page';
 const ICON_DEFAULT_SIZE = 'icon16';
-const ICON_CDN_URL = `https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types`;
+const ICON_CDN_URL = `https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types`;
 
 /**
 * File type icon component

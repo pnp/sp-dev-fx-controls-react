@@ -6,7 +6,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import { FileTypeIcon } from './FileTypeIcon';
 import { IconType, ApplicationType, ImageSize } from './IFileTypeIcon';
 
-const ICON_CDN_URL = `https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types`;
+const ICON_CDN_URL = `https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types`;
 
 describe('<FileTypeIcon />', () => {
   let fileTypeIcon: ReactWrapper;
