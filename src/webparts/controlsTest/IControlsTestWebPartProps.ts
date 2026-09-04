@@ -8,7 +8,7 @@ export type ValidControls = "all" |
   "GroupPicker" |
   "GridLayout" | "HoverReactionsBar" | "IconPicker" | "IFrameDialog" |
   "IFramePanel" | "ImagePicker" | "ListItemAttachments" | "ListItemComments" |
-  "ListItemPicker" | "ListPicker" | "ListToolbar" | "ListView" | "LivePersona" |
+  "ListItemPicker" | "ListPicker" | "ListToolbar" | "ListView" | "DetailsList" | "LivePersona" |
   "LocationPicker" | "Map" | "ModernAudio" |
   "ModernTaxonomyPicker" | "MonacoEditor" | "Pagination" | "PeoplePicker" |
   "Placeholder" | "Progress" | "ProgressStepsIndicator" | "RichText" |

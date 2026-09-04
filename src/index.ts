@@ -1,5 +1,6 @@
 export * from './FileTypeIcon';
 export * from './ListView';
+export * from './DetailsList';
 export * from './Placeholder';
 export * from './SiteBreadcrumb';
 export * from './TaxonomyPicker';

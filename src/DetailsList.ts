@@ -1,0 +1,26 @@
+export {
+  DetailsList,
+  CheckboxVisibility,
+  ColumnActionsMode,
+  ColumnDragEndLocation,
+  ConstrainMode,
+  DetailsListLayoutMode,
+  DetailsListSelectionMode,
+} from './controls/DetailsList';
+export type {
+  DetailsListKey,
+  DetailsListScrollToMode,
+  IColumn,
+  IColumnReorderOptions,
+  IDetailsGroupHeaderProps,
+  IDetailsHeaderProps,
+  IDetailsList,
+  IDetailsListFieldProps,
+  IDetailsListGroup,
+  IDetailsListProps,
+  IDetailsListRowDragDropEvents,
+  IDetailsListSelectionChange,
+  IDetailsListShimmerRowProps,
+  IDetailsRowProps,
+  IDetailsListStyles,
+} from './controls/DetailsList';

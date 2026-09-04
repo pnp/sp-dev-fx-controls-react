@@ -98,6 +98,15 @@ KPIPercentOfTotal: string;
 
   PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
+  DetailsListAriaLabel: string;
+  DetailsListHeaderAriaLabel: string;
+  DetailsListSelectAllRowsAriaLabel: string;
+  DetailsListSelectionAriaLabel: string;
+  DetailsListSelectRowAriaLabel: string;
+  DetailsListResizeColumnAriaLabel: string;
+  DetailsListLoading: string;
+  DetailsListLoadingMore: string;
+  DetailsListNoItems: string;
 
   PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
