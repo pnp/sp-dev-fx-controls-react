@@ -2,8 +2,7 @@ import * as React from "react";
 import { ListItemCommentsStateProvider } from "./components/ListItemCommentsStateProvider";
 import { ServiceScope } from "@microsoft/sp-core-library";
 import { AppContext } from "./common";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Theme } from "spfx-uifabric-themes"; // Don't remove this import is need to theme load form global var from window object
+import { getTheme } from "@fluentui/react/lib/Styling";
 import { CommentsList } from "./components/Comments/CommentsList";
 import { Stack } from "@fluentui/react/lib/Stack";
 import { Text } from "@fluentui/react/lib/Text";
@@ -17,7 +16,7 @@ export interface IListItemCommentsProps {
   label?: string;
   highlightedCommentId?:string;
 }
-const theme = window.__themeState__.theme;
+const theme = getTheme().palette;
 export const ListItemComments: React.FunctionComponent<IListItemCommentsProps> = (
   props: React.PropsWithChildren<IListItemCommentsProps>
 ) => {
