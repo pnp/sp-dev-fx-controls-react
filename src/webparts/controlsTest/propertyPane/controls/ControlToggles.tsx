@@ -60,7 +60,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "GroupPicker", "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
             "IFramePanel", "ListItemPicker",
             "ImagePicker", "ListItemAttachments", "ListItemComments",
-            "ListPicker", "ListView", "LivePersona",
+            "ListPicker", "ListToolbar", "ListView", "LivePersona",
             "LocationPicker", "Map", "ModernAudio", "MonacoEditor",
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
             "Placeholder", "Progress", "ProgressStepsIndicator", "RichText",
@@ -69,7 +69,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
             "TaxonomyPicker", "TaxonomyTree", "Teams", "TermSetNavigation",
             "TestControl", "Toolbar", "Toast", "TreeView",
             "UploadFiles", "UserPicker", "VariantThemeProvider",
-            "ViewPicker", "WebPartTitle", "Calendar"
+            "ViewPicker", "WebPartTitle", "WorldMap", "Calendar"
         ];
         return validControls;
     }

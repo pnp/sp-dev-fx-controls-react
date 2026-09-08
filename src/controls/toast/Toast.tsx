@@ -10,7 +10,7 @@ interface IToastDispatcherProps extends IShowToastOptions {
 const ToastDispatcher = (props: IToastDispatcherProps): React.ReactElement => {
   const { toastRef: forwardedRef, onDismiss, ...options } = props;
   const context = React.useContext(ToastContext);
-  const elementRef = React.useRef<HTMLDivElement>(null);
+  const elementRef = React.useRef<React.RefObject<HTMLDivElement>>(React.createRef<HTMLDivElement>());
   const toastIdRef = React.useRef<string>();
   const activeRef = React.useRef(false);
   const visibleRef = React.useRef(false);
@@ -37,18 +37,24 @@ const ToastDispatcher = (props: IToastDispatcherProps): React.ReactElement => {
     }
 
     activeRef.current = true;
+    // Each dispatch owns its ref: an exiting toast must not clear its replacement's handle.
+    const dispatchedElementRef = React.createRef<HTMLDivElement>();
+    elementRef.current = dispatchedElementRef;
     toastIdRef.current = context.dispatchToast(
       {
         ...optionsRef.current,
         onDismiss: () => {
-          if (mountedRef.current) {
+          if (mountedRef.current && elementRef.current === dispatchedElementRef) {
             onDismissRef.current?.();
           }
         },
       },
       {
-        elementRef,
+        elementRef: dispatchedElementRef,
         onStatusChange: (status) => {
+          if (elementRef.current !== dispatchedElementRef) {
+            return;
+          }
           activeRef.current = status === 'queued' || status === 'visible';
           visibleRef.current = status === 'visible';
         },
@@ -58,12 +64,12 @@ const ToastDispatcher = (props: IToastDispatcherProps): React.ReactElement => {
 
   React.useImperativeHandle(forwardedRef, () => ({
     get element(): HTMLDivElement | undefined {
-      return elementRef.current ?? undefined;
+      return elementRef.current.current ?? undefined;
     },
     show,
     dismiss,
     isVisible: () => visibleRef.current,
-    focus: () => elementRef.current?.focus(),
+    focus: () => elementRef.current.current?.focus(),
   }), [dismiss, show]);
 
   React.useEffect(() => {

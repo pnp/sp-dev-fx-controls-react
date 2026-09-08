@@ -110,7 +110,7 @@ The `Toast` control can be configured with the following properties:
 | media | `React.ReactNode` | No | Icon or media displayed in the title region. |
 | action | `React.ReactNode` | No | Custom action displayed in the title region. |
 | autoDismiss | `boolean` | No | Dismisses the toast after the configured duration. Defaults to `false`. |
-| duration | `number` | No | Delay before automatic dismissal. Defaults to `3000` milliseconds. |
+| duration | `number` | No | Delay before automatic dismissal. When omitted, defaults to `3000` milliseconds regardless of `durationUnit`. |
 | durationUnit | `'milliseconds' \| 'seconds'` | No | Unit used by `duration`. Defaults to `'milliseconds'`. |
 | position | `'top-end' \| 'top-start' \| 'bottom-end' \| 'bottom-start' \| 'top' \| 'bottom'` | No | Portal position of the toast. Defaults to `'top-end'`. |
 | pauseOnHover | `boolean` | No | Pauses the auto-dismiss timer while the pointer is over the toast. Defaults to `true`. |
@@ -118,7 +118,7 @@ The `Toast` control can be configured with the following properties:
 | dismissible | `boolean` | No | Displays a dismiss action. Defaults to `false`. |
 | dismissAriaLabel | `string` | No | Accessible label for the default dismiss button. |
 | dismissAction | `React.ReactElement` | No | Custom element used instead of the default dismiss button. |
-| onDismiss | `() => void` | No | Called once when the toast is dismissed. |
+| onDismiss | `() => void` | No | Called once when the toast is dismissed. Imperative dismissal invokes it after the exit animation. Not called when its owning component or provider is unmounted. |
 | children | `React.ReactNode` | No | Body content used when `body` is not provided. |
 | classNames | `IToastClassNames` | No | Class names for the root, title, body, and footer. |
 | styles | `IToastStyles` | No | Inline styles for the root, title, body, and footer. |
@@ -143,7 +143,7 @@ The direct `intent` property is passed to Fluent UI's toast controller, which su
 | pauseOnWindowBlur | `boolean` | No | Default inactive-window pause behavior. Defaults to `true`. |
 | limit | `number` | No | Maximum number of visible notifications before additional notifications are queued. |
 | offset | `ToastOffset` | No | Distance between the toaster and viewport edges. |
-| mountNode | `HTMLElement` | No | Custom portal mount node. |
+| mountNode | `ToasterProps['mountNode']` | No | Custom portal mount node or Fluent portal slot configuration. |
 | inline | `boolean` | No | Renders the toaster inline instead of through a portal. |
 
 ### useToast API
@@ -175,6 +175,12 @@ The toast is dispatched when the component mounts. Render it conditionally when 
 ```
 
 A standalone `Toast` owns a private toaster. Place multiple declarative toasts beneath one `ToastProvider`, or use `showToast`, when notifications may be visible simultaneously.
+
+Content and timing properties are captured when a notification is dispatched; rerendering does not update or restart an active notification. Remount the component (for example, with a new `key`) to display new content, or call `showToast` for a new notification. Provider default changes apply to subsequent dispatches. The declarative `onDismiss` callback uses the latest supplied function.
+
+### Known Fluent queue limitation
+
+With a finite `limit`, Fluent's native `dismissToast` does not remove a notification that is still queued. Consequently, a queued declarative `Toast` can appear later even if its component has been unmounted. This also affects individual queued notifications dismissed through `useToast`. Until upstream queued cancellation is fixed, omit `limit` when notifications may need to be cancelled before becoming visible. An expected-failure regression tracks this behavior; it is not a supported cancellation guarantee.
 
 ## Imperative API
 

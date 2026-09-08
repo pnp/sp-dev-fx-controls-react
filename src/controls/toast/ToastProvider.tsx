@@ -17,8 +17,8 @@ import type { Theme, ToastStatus } from '@fluentui/react-components';
 import { DismissRegular } from '@fluentui/react-icons';
 
 import type { IShowToastOptions, IToastController, IToastProviderProps } from './IToast';
+import { getToastTimeout } from './toastTimeout';
 
-const DEFAULT_DURATION_MS = 3000;
 const DEFAULT_ID_PREFIX = 'toastControl-';
 let providerInstanceId = 0;
 let toastInstanceId = 0;
@@ -35,15 +35,6 @@ export interface IToastContextValue extends IToastController {
 export const ToastContext = React.createContext<IToastContextValue | undefined>(undefined);
 
 const hasContent = (content: React.ReactNode): boolean => content !== undefined && content !== null;
-
-const getTimeout = (options: IShowToastOptions): number => {
-  if (!options.autoDismiss) {
-    return -1;
-  }
-
-  const duration = options.duration ?? DEFAULT_DURATION_MS;
-  return options.durationUnit === 'seconds' ? duration * 1000 : duration;
-};
 
 interface IToastProviderControllerProps extends Omit<IToastProviderProps, 'toasterId'> {
   theme: Theme;
@@ -66,8 +57,17 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
     inline,
   } = props;
   const controller = useToastController(toasterId);
+  const defaultsRef = React.useRef({ position, pauseOnHover, pauseOnWindowBlur });
+  const mountedRef = React.useRef(true);
+  defaultsRef.current = { position, pauseOnHover, pauseOnWindowBlur };
+
+  React.useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
 
   const dispatch = React.useCallback((options: IShowToastOptions, metadata?: IDispatchMetadata): string => {
+    const defaults = defaultsRef.current;
     const {
       toastId: providedToastId,
       intent,
@@ -77,9 +77,9 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
       footer,
       media,
       action,
-      position: toastPosition = position,
-      pauseOnHover: toastPauseOnHover = pauseOnHover,
-      pauseOnWindowBlur: toastPauseOnWindowBlur = pauseOnWindowBlur,
+      position: toastPosition = defaults.position,
+      pauseOnHover: toastPauseOnHover = defaults.pauseOnHover,
+      pauseOnWindowBlur: toastPauseOnWindowBlur = defaults.pauseOnWindowBlur,
       dismissible = false,
       dismissAriaLabel = 'Dismiss notification',
       dismissAction,
@@ -100,15 +100,17 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
       <Button appearance="transparent" icon={<DismissRegular />} aria-label={dismissAriaLabel} />
     );
     const renderedAction = action ?? (dismissible ? <ToastTrigger>{dismissActionElement}</ToastTrigger> : undefined);
+    let dismissed = false;
 
     controller.dispatchToast(
       <FluentToast
+        tabIndex={-1}
         {...toastProps}
         ref={metadata?.elementRef}
         className={mergeClasses(toastProps.className, classNames?.root)}
         style={{ ...toastProps.style, ...styles?.root }}
       >
-        {hasContent(title) ? (
+        {hasContent(title) || hasContent(renderedAction) || hasContent(media) || hasContent(titleProps?.action) ? (
           <ToastTitle
             {...titleProps}
             media={hasContent(media) ? { children: media } : titleProps?.media}
@@ -143,20 +145,24 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
         toastId,
         intent,
         position: toastPosition,
-        timeout: autoDismiss ? getTimeout({ ...options, duration, durationUnit }) : -1,
+        timeout: getToastTimeout({ autoDismiss, duration, durationUnit }),
         pauseOnHover: toastPauseOnHover,
         pauseOnWindowBlur: toastPauseOnWindowBlur,
         onStatusChange: (_event, data): void => {
           metadata?.onStatusChange?.(data.status);
-          if (data.status === 'dismissed') {
-            onDismiss?.();
+          // Fluent's imperative dismiss APIs emit unmounted, but not dismissed.
+          if (!dismissed && (data.status === 'dismissed' || data.status === 'unmounted')) {
+            dismissed = true;
+            if (mountedRef.current) {
+              onDismiss?.();
+            }
           }
         },
       },
     );
 
     return toastId;
-  }, [controller, pauseOnHover, pauseOnWindowBlur, position, toasterId]);
+  }, [controller, toasterId]);
 
   const contextValue = React.useMemo<IToastContextValue>(() => ({
     dispatchToast: dispatch,
@@ -169,8 +175,8 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
 
   return (
     <ToastContext.Provider value={contextValue}>
-      {children}
       {/* The Fluent providers wrap only the toaster so consumer content keeps its own theme and layout. */}
+      {/* Register the toaster listener before consumers dispatch from their mount effects. */}
       <IdPrefixProvider value={idPrefix}>
         <FluentProvider theme={theme} style={{ backgroundColor: 'transparent' }}>
           <Toaster
@@ -185,6 +191,7 @@ const ToastProviderController = (props: IToastProviderControllerProps): React.Re
           />
         </FluentProvider>
       </IdPrefixProvider>
+      {children}
     </ToastContext.Provider>
   );
 };
