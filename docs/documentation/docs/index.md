@@ -75,6 +75,7 @@ The following controls are currently available:
 - [ContentTypePicker](./controls/ContentTypePicker) (control to pick a content type)
 - [Dashboard](./controls/Dashboard) (renders dashboard in Microsoft Teams)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
+- [DetailsList](./controls/DetailsList) (control for rendering detailed lists)
 - [DragDropFiles](./controls/DragDropFiles) (allows drag and drop of files in selected areas)
 - [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
 - [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
