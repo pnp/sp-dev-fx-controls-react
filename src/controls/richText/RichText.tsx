@@ -1219,7 +1219,6 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 				const formats = quill.getFormat(range);
 
 				if (!isEqual(formats, this.state.formats)) {
-					console.log(`current format: ${formats.list}`);
 					newState.formats = formats;
 				}
 			}
