@@ -249,6 +249,44 @@ const ListToolbar = React.lazy(() => import('../../../controls/ListToolbar').the
 
 const ListView = React.lazy(() => import('../../../ListView').then(module => ({ default: module.ListView })));
 
+interface IDetailsListShowcaseErrorBoundaryProps {
+  children?: React.ReactNode;
+}
+
+interface IDetailsListShowcaseErrorBoundaryState {
+  error?: Error;
+}
+
+class DetailsListShowcaseErrorBoundary extends React.Component<
+  IDetailsListShowcaseErrorBoundaryProps,
+  IDetailsListShowcaseErrorBoundaryState
+> {
+  public state: IDetailsListShowcaseErrorBoundaryState = {};
+
+  public componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    // Keep the host page alive while preserving the original diagnostic.
+    console.error('DetailsList showcase failed to render.', error, errorInfo);
+    this.setState({ error });
+  }
+
+  public render(): React.ReactNode {
+    if (this.state.error) {
+      return (
+        <div role="alert">
+          DetailsList showcase could not be rendered. Check the browser console for details.
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+const DetailsList = React.lazy(() =>
+  import(/* webpackChunkName: 'details-list-showcase' */ './TestDetailsListControl')
+    .then(module => ({ default: module.TestDetailsListControl }))
+);
+
 const Map = React.lazy(() => import('../../../Map').then(module => ({ default: module.Map })));
 
 const ModernAudio = React.lazy(() => import('../../../ModernAudio').then(module => ({ default: module.ModernAudio })));
@@ -1697,6 +1735,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 className={styles.listViewWrapper}
               // defaultFilter="Team"
               />
+            </div>
+          }
+          {controlVisibility.DetailsList &&
+            <div id="DetailsListDiv" className={styles.container}>
+              <DetailsListShowcaseErrorBoundary>
+                <DetailsList />
+              </DetailsListShowcaseErrorBoundary>
             </div>
           }
           {controlVisibility.ChartControl &&

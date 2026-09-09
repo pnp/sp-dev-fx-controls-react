@@ -30,6 +30,7 @@ nav:
     - ContentTypePicker: 'controls/ContentTypePicker.md'
     - Dashboard: 'controls/Dashboard.md'
     - DateTimePicker: 'controls/DateTimePicker.md'
+    - DetailsList: 'controls/DetailsList.md'
     - DragDropFiles: 'controls/DragDropFiles.md'
     - DynamicForm: 'controls/DynamicForm.md'
     - EnhancedThemeProvider: 'controls/EnhancedThemeProvider.md'

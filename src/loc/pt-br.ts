@@ -77,6 +77,15 @@ define([], () => {
     mapsSearchButtonText: 'Procurar',
     mapsTitlePrefix: 'Mapa de',
     ListViewFilterLabel: "Filtre a lista",
+    DetailsListAriaLabel: "Details list",
+    DetailsListHeaderAriaLabel: "List header",
+    DetailsListSelectAllRowsAriaLabel: "Select all rows",
+    DetailsListSelectionAriaLabel: "Selection",
+    DetailsListSelectRowAriaLabel: "Select row {0}",
+    DetailsListResizeColumnAriaLabel: "Resize {0} column",
+    DetailsListLoading: "Loading",
+    DetailsListLoadingMore: "Loading more items",
+    DetailsListNoItems: "No items to display",
     HeaderNormalText: "Texto normal",
     HeaderH2: "Cabeçalho 2",
     HeaderH3: "Título 3",
@@ -443,4 +452,3 @@ worldMapZoomIn: "Zoom in",
     "UploadFilesUploadButtonLabel": "Upload",
 };
 });
-
