@@ -1,6 +1,6 @@
 import type { Quill } from 'quill';
-import { ISwatchColor } from './SwatchColorPickerGroup.types';
-import { IRichTextCustomFormattingStyles } from './RichText.types';
+import type { ISwatchColor } from './SwatchColorPickerGroup.types';
+import type { IRichTextCustomFormattingStyles } from './RichText.types';
 
 export interface IRichTextPropertyPaneProps {
   className?: string;
