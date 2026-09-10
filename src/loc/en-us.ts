@@ -89,6 +89,15 @@ define([], () => {
     mapsTitlePrefix: "Map of",
 
     ListViewFilterLabel: "Filter the list",
+    DetailsListAriaLabel: "Details list",
+    DetailsListHeaderAriaLabel: "List header",
+    DetailsListSelectAllRowsAriaLabel: "Select all rows",
+    DetailsListSelectionAriaLabel: "Selection",
+    DetailsListSelectRowAriaLabel: "Select row {0}",
+    DetailsListResizeColumnAriaLabel: "Resize {0} column",
+    DetailsListLoading: "Loading",
+    DetailsListLoadingMore: "Loading more items",
+    DetailsListNoItems: "No items to display",
 
     HeaderNormalText: "Normal text",
     HeaderH2: "Heading 2",
@@ -251,7 +260,7 @@ define([], () => {
     FolderFrontPlate:
       "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/foldericons/folder-large_frontplate_nopreview.svg",
     FolderIconUrl:
-      "https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types/20/folder.svg",
+      "https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types/20/folder.svg",
     FolderLabelTemplate: "{0}, Folder, Modified {1}, edited by {2}, {3} items, Private",
     FromLinkLinkLabel: "From a link",
     ImageAltText: ".{0} Image",

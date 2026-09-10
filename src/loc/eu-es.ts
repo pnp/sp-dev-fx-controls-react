@@ -82,6 +82,15 @@ define([], () => {
     mapsTitlePrefix: 'Map of',
 
     ListViewFilterLabel: "Filter the list",
+    DetailsListAriaLabel: "Details list",
+    DetailsListHeaderAriaLabel: "List header",
+    DetailsListSelectAllRowsAriaLabel: "Select all rows",
+    DetailsListSelectionAriaLabel: "Selection",
+    DetailsListSelectRowAriaLabel: "Select row {0}",
+    DetailsListResizeColumnAriaLabel: "Resize {0} column",
+    DetailsListLoading: "Loading",
+    DetailsListLoadingMore: "Loading more items",
+    DetailsListNoItems: "No items to display",
 
     HeaderNormalText: "Normal text",
     HeaderH2: "Heading 2",
