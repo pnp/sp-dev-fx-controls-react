@@ -1308,9 +1308,12 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 		}
 
 		// Read mode uses the id directly on .ql-editor, edit mode renders .ql-editor inside an id'd wrapper.
+		const escapedRichTextId = typeof CSS !== 'undefined' && typeof CSS.escape === 'function'
+ 			? CSS.escape(this._richTextId)
+ 			: this._richTextId;
 		const baseSelectors = [
-			`#${this._richTextId}.ql-editor`,
-			`#${this._richTextId} .ql-editor`,
+			`#${escapedRichTextId}.ql-editor`,
+			`#${escapedRichTextId} .ql-editor`,
 		];
 		const rules: string[] = [];
 
