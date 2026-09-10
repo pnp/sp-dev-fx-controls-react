@@ -13,10 +13,11 @@
 - `FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)
 - `FileTypeIcon`: Some icons are not showing [#2104](https://github.com/pnp/sp-dev-fx-controls-react/issues/2104)
 - `RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)
+- `DynamicForm`: renders DateTime fields as date-only when DateFormat is null [#2132](https://github.com/pnp/sp-dev-fx-controls-react/issues/2132)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Joao Livio](https://github.com/jtlivio), [joaojmendes](https://github.com/joaojmendes), [Shirish Mawande](https://github.com/shirishmawande), [UsrRian](https://github.com/UsrRian).
+Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Joao Livio](https://github.com/jtlivio), [joaojmendes](https://github.com/joaojmendes), [Shirish Mawande](https://github.com/shirishmawande), [till-llit](https://github.com/till-llit), [UsrRian](https://github.com/UsrRian).
 
 ## 3.25.0
 
