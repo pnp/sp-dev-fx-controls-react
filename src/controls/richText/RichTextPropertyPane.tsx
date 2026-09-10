@@ -182,14 +182,17 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
 
       // Parse numeric font size in pixels from values like "18px".
       const fontSize = parseInt(computed.fontSize, 10);
+      const hasFontSize = !Number.isNaN(fontSize);
 
       // Resolve to a known Quill size key when it matches one of our supported options.
       // Example: 28 -> "xxlarge".
-      const sizeKey = FONT_SIZE_OPTIONS.find((option) => option.data?.px === fontSize)?.key?.toString();
+      const sizeKey = hasFontSize
+ 				? FONT_SIZE_OPTIONS.find((option) => option.data?.px === fontSize)?.key?.toString()
+ 				: undefined;
 
       return {
         // If size is known, return the Quill key; otherwise return raw px string (display-only fallback).
-        size: sizeKey || `${fontSize}px`,
+        size: sizeKey || (hasFontSize ? `${fontSize}px` : undefined),
         color: computed.color,
         background: computed.backgroundColor
       };
