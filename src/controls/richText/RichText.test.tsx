@@ -58,3 +58,127 @@ describe('<RichText />', () => {
     done();
   });
 });
+
+describe('customStyles', () => {
+  const baseProps = {
+    value: '',
+    isEditMode: false,
+  };
+
+  const getStyleElement = (id: string): HTMLStyleElement =>
+    document.head.querySelector(
+      `style[data-richtext-formatting="${id}"]`
+    ) as HTMLStyleElement;
+
+  const getStyleText = (id: string): string =>
+    getStyleElement(id)?.textContent || '';
+
+  afterEach(() => {
+    document.head
+      .querySelectorAll('style[data-richtext-formatting]')
+      .forEach((element) => element.remove());
+  });
+
+  it('injects styles scoped to the rich text instance id', () => {
+    const wrapper = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-one"
+        customStyles={{
+          normal: { color: 'red' },
+          header2: { fontSize: 20 },
+        }}
+      />
+    );
+
+    expect(getStyleElement('rich-text-one')).to.not.equal(null);
+    expect(getStyleText('rich-text-one')).to.contain(
+      '#rich-text-one.ql-editor'
+    );
+    expect(getStyleText('rich-text-one')).to.contain('color: red;');
+    expect(getStyleText('rich-text-one')).to.contain('h2');
+    expect(getStyleText('rich-text-one')).to.not.contain('rich-text-two');
+
+    wrapper.unmount();
+  });
+
+  it('keeps styles isolated between instances', () => {
+    const first = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-one"
+        customStyles={{ normal: { color: 'red' } }}
+      />
+    );
+    const second = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-two"
+        customStyles={{ normal: { color: 'blue' } }}
+      />
+    );
+
+    expect(getStyleText('rich-text-one')).to.contain('color: red;');
+    expect(getStyleText('rich-text-one')).to.not.contain('color: blue;');
+    expect(getStyleText('rich-text-two')).to.contain('color: blue;');
+
+    first.unmount();
+    second.unmount();
+  });
+
+  it('updates styles when customStyles changes', () => {
+    const wrapper = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-one"
+        customStyles={{ normal: { color: 'red' } }}
+      />
+    );
+
+    wrapper.setProps({
+      customStyles: {
+        normal: { color: 'green' },
+        header3: { marginTop: 8 },
+      },
+    });
+
+    expect(getStyleText('rich-text-one')).to.contain('color: green;');
+    expect(getStyleText('rich-text-one')).to.contain('margin-top: 8px;');
+    expect(getStyleText('rich-text-one')).to.not.contain('color: red;');
+
+    wrapper.unmount();
+  });
+
+  it('removes styles when customStyles is removed', () => {
+    const wrapper = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-one"
+        customStyles={{ normal: { color: 'red' } }}
+      />
+    );
+
+    expect(getStyleElement('rich-text-one')).to.not.equal(null);
+
+    wrapper.setProps({ customStyles: undefined });
+
+    expect(getStyleElement('rich-text-one')).to.equal(null);
+    wrapper.unmount();
+  });
+
+  it('removes styles when unmounted', () => {
+    const wrapper = mount(
+      <RichText
+        {...baseProps}
+        id="rich-text-one"
+        customStyles={{ normal: { color: 'red' } }}
+      />
+    );
+
+    expect(getStyleElement('rich-text-one')).to.not.equal(null);
+
+    wrapper.unmount();
+
+    expect(getStyleElement('rich-text-one')).to.equal(null);
+  });
+});
