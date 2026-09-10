@@ -866,6 +866,8 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
    * font sizes. These values are exposed in the size dropdown so current
    * formatting can still be represented to the user.
    */
+  private _lastScannedHtml: string | undefined = undefined;
+
   private refreshCustomSizeValuesFromDocument = (): void => {
     const quill = this.props.editor;
     const root = quill?.root as HTMLElement;
@@ -873,6 +875,16 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
     if (!root) {
       return;
     }
+
+    // Scanning every element is expensive, so only rescan when the document
+    // content actually changed (selection-only changes reuse the cache).
+    const currentHtml = root.innerHTML;
+
+    if (currentHtml === this._lastScannedHtml) {
+      return;
+    }
+
+    this._lastScannedHtml = currentHtml;
 
     const customSizeValuesPx = new Set<number>();
     const fontSizeElements = [root, ...Array.from(root.querySelectorAll<HTMLElement>('*'))];
