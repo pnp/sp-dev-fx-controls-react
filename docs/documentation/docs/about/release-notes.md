@@ -2,6 +2,10 @@
 
 ## 3.26.0
 
+### New control(s)
+
+- `DetailsList`: New control DetailsList added [#2130](https://github.com/pnp/sp-dev-fx-controls-react/pull/2130)
+
 ### Enhancements
 
 - SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)
@@ -11,7 +15,7 @@
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Joao Livio](https://github.com/jtlivio), [Shirish Mawande](https://github.com/shirishmawande).
+Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Joao Livio](https://github.com/jtlivio), [joaojmendes](https://github.com/joaojmendes), [Shirish Mawande](https://github.com/shirishmawande).
 
 ## 3.25.0
 
