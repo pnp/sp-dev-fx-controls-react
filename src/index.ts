@@ -1,5 +1,6 @@
 export * from './FileTypeIcon';
 export * from './ListView';
+export * from './DetailsList';
 export * from './Placeholder';
 export * from './SiteBreadcrumb';
 export * from './TaxonomyPicker';
@@ -10,8 +11,10 @@ export * from './ListItemAttachments';
 export * from './ChartControl';
 export * from './Progress';
 export * from './ProgressStepsIndicator';
+export * from './Toast';
 export * from './DateTimePicker';
 export * from './FilePicker';
+export * from './SPFilePicker';
 export * from './FolderExplorer';
 export * from './FolderPicker';
 export * from './IconPicker';

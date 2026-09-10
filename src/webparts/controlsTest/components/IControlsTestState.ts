@@ -19,6 +19,8 @@ export interface IControlsTestState {
   currentProgressActionIndex?: number;
   dateTimeValue: Date;
   richTextValue: string;
+  richTextEditMode: boolean;
+  richTextUseCustomFormatting: boolean;
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
