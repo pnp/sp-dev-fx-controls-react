@@ -177,79 +177,79 @@ import type { IRichTextCustomFormattingStyles } from '../../../RichText';
 
 
 //#region Import PnP Controls
-const AdaptiveCardDesignerHost = React.lazy(() => import('../../../AdaptiveCardDesignerHost').then(module => ({ default: module.AdaptiveCardDesignerHost })));
-const AdaptiveCardHost = React.lazy(() => import('../../../AdaptiveCardHost').then(module => ({ default: module.AdaptiveCardHost })));
+const AdaptiveCardDesignerHost = React.lazy(() => import(/* webpackChunkName: 'adaptive-card-designer-host-showcase' */ '../../../AdaptiveCardDesignerHost').then(module => ({ default: module.AdaptiveCardDesignerHost })));
+const AdaptiveCardHost = React.lazy(() => import(/* webpackChunkName: 'adaptive-card-host-showcase' */ '../../../AdaptiveCardHost').then(module => ({ default: module.AdaptiveCardHost })));
 
-const AnimatedDialog = React.lazy(() => import('../../../AnimatedDialog').then(module => ({ default: module.AnimatedDialog })));
+const AnimatedDialog = React.lazy(() => import(/* webpackChunkName: 'animated-dialog-showcase' */ '../../../AnimatedDialog').then(module => ({ default: module.AnimatedDialog })));
 
-const ChartControl = React.lazy(() => import('../../../ChartControl').then(module => ({ default: module.ChartControl })));
+const ChartControl = React.lazy(() => import(/* webpackChunkName: 'chart-control-showcase' */ '../../../ChartControl').then(module => ({ default: module.ChartControl })));
 
-const AccessibleAccordion = React.lazy(() => import('../../../controls/accessibleAccordion').then(module => ({ default: module.Accordion })));
+const AccessibleAccordion = React.lazy(() => import(/* webpackChunkName: 'accessible-accordion-showcase' */ '../../../controls/accessibleAccordion').then(module => ({ default: module.Accordion })));
 
-const Carousel = React.lazy(() => import('../../../controls/carousel').then(module => ({ default: module.Carousel })));
+const Carousel = React.lazy(() => import(/* webpackChunkName: 'carousel-showcase' */ '../../../controls/carousel').then(module => ({ default: module.Carousel })));
 
-const ContentTypePicker = React.lazy(() => import('../../../controls/contentTypePicker').then(module => ({ default: module.ContentTypePicker })));
+const ContentTypePicker = React.lazy(() => import(/* webpackChunkName: 'content-type-picker-showcase' */ '../../../controls/contentTypePicker').then(module => ({ default: module.ContentTypePicker })));
 
-const Dashboard = React.lazy(() => import('../../../controls/dashboard').then(module => ({ default: module.Dashboard })));
+const Dashboard = React.lazy(() => import(/* webpackChunkName: 'dashboard-showcase' */ '../../../controls/dashboard').then(module => ({ default: module.Dashboard })));
 
-const DynamicForm = React.lazy(() => import('../../../controls/dynamicForm').then(module => ({ default: module.DynamicForm })));
-const IconPicker = React.lazy(() => import('../../../controls/iconPicker').then(module => ({ default: module.IconPicker })));
+const DynamicForm = React.lazy(() => import(/* webpackChunkName: 'dynamic-form-showcase' */ '../../../controls/dynamicForm').then(module => ({ default: module.DynamicForm })));
+const IconPicker = React.lazy(() => import(/* webpackChunkName: 'icon-picker-showcase' */ '../../../controls/iconPicker').then(module => ({ default: module.IconPicker })));
 const ComboBoxListItemPicker = React.lazy(() =>
-  import('../../../controls/listItemPicker/ComboBoxListItemPicker').then(module => ({ default: module.ComboBoxListItemPicker })));
+  import(/* webpackChunkName: 'combo-box-list-item-picker-showcase' */ '../../../controls/listItemPicker/ComboBoxListItemPicker').then(module => ({ default: module.ComboBoxListItemPicker })));
 
-const LivePersona = React.lazy(() => import('../../../controls/LivePersona').then(module => ({ default: module.LivePersona })));
+const LivePersona = React.lazy(() => import(/* webpackChunkName: 'live-persona-showcase' */ '../../../controls/LivePersona').then(module => ({ default: module.LivePersona })));
 
-const LocationPicker = React.lazy(() => import('../../../controls/locationPicker/LocationPicker').then(module => ({ default: module.LocationPicker })));
+const LocationPicker = React.lazy(() => import(/* webpackChunkName: 'location-picker-showcase' */ '../../../controls/locationPicker/LocationPicker').then(module => ({ default: module.LocationPicker })));
 
-const ModernTaxonomyPicker = React.lazy(() => import('../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker').then(module => ({ default: module.ModernTaxonomyPicker })));
-const MonacoEditor = React.lazy(() => import('../../../controls/monacoEditor').then(module => ({ default: module.MonacoEditor })));
-const MyTeams = React.lazy(() => import('../../../controls/MyTeams').then(module => ({ default: module.MyTeams })));
-const Pagination = React.lazy(() => import('../../../controls/pagination').then(module => ({ default: module.Pagination })));
+const ModernTaxonomyPicker = React.lazy(() => import(/* webpackChunkName: 'modern-taxonomy-picker-showcase' */ '../../../controls/modernTaxonomyPicker/ModernTaxonomyPicker').then(module => ({ default: module.ModernTaxonomyPicker })));
+const MonacoEditor = React.lazy(() => import(/* webpackChunkName: 'monaco-editor-showcase' */ '../../../controls/monacoEditor').then(module => ({ default: module.MonacoEditor })));
+const MyTeams = React.lazy(() => import(/* webpackChunkName: 'my-teams-showcase' */ '../../../controls/MyTeams').then(module => ({ default: module.MyTeams })));
+const Pagination = React.lazy(() => import(/* webpackChunkName: 'pagination-showcase' */ '../../../controls/pagination').then(module => ({ default: module.Pagination })));
 
-const PeoplePicker = React.lazy(() => import('../../../controls/peoplepicker').then(module => ({ default: module.PeoplePicker })));
+const PeoplePicker = React.lazy(() => import(/* webpackChunkName: 'people-picker-showcase' */ '../../../controls/peoplepicker').then(module => ({ default: module.PeoplePicker })));
 
-const ProgressStepsIndicator = React.lazy(() => import('../../../controls/ProgressStepsIndicator').then(module => ({ default: module.ProgressStepsIndicator })));
+const ProgressStepsIndicator = React.lazy(() => import(/* webpackChunkName: 'progress-steps-indicator-showcase' */ '../../../controls/ProgressStepsIndicator').then(module => ({ default: module.ProgressStepsIndicator })));
 
-const SitePicker = React.lazy(() => import('../../../controls/sitePicker/SitePicker').then(module => ({ default: module.SitePicker })));
-const Toolbar = React.lazy(() => import('../../../controls/toolbar').then(module => ({ default: module.Toolbar })));
-const TreeView = React.lazy(() => import('../../../controls/treeView').then(module => ({ default: module.TreeView })));
-const UploadFiles = React.lazy(() => import('../../../controls/uploadFiles').then(module => ({ default: module.UploadFiles })));
-const VariantThemeProvider = React.lazy(() => import('../../../controls/variantThemeProvider').then(module => ({ default: module.VariantThemeProvider })));
-const ViewPicker = React.lazy(() => import('../../../ViewPicker').then(module => ({ default: module.ViewPicker })));
+const SitePicker = React.lazy(() => import(/* webpackChunkName: 'site-picker-showcase' */ '../../../controls/sitePicker/SitePicker').then(module => ({ default: module.SitePicker })));
+const Toolbar = React.lazy(() => import(/* webpackChunkName: 'toolbar-showcase' */ '../../../controls/toolbar').then(module => ({ default: module.Toolbar })));
+const TreeView = React.lazy(() => import(/* webpackChunkName: 'tree-view-showcase' */ '../../../controls/treeView').then(module => ({ default: module.TreeView })));
+const UploadFiles = React.lazy(() => import(/* webpackChunkName: 'upload-files-showcase' */ '../../../controls/uploadFiles').then(module => ({ default: module.UploadFiles })));
+const VariantThemeProvider = React.lazy(() => import(/* webpackChunkName: 'variant-theme-provider-showcase' */ '../../../controls/variantThemeProvider').then(module => ({ default: module.VariantThemeProvider })));
+const ViewPicker = React.lazy(() => import(/* webpackChunkName: 'view-picker-showcase' */ '../../../ViewPicker').then(module => ({ default: module.ViewPicker })));
 
-const DateTimePicker = React.lazy(() => import('../../../DateTimePicker').then(module => ({ default: module.DateTimePicker })));
+const DateTimePicker = React.lazy(() => import(/* webpackChunkName: 'date-time-picker-showcase' */ '../../../DateTimePicker').then(module => ({ default: module.DateTimePicker })));
 
-const DragDropFiles = React.lazy(() => import('../../../DragDropFiles').then(module => ({ default: module.DragDropFiles })));
+const DragDropFiles = React.lazy(() => import(/* webpackChunkName: 'drag-drop-files-showcase' */ '../../../DragDropFiles').then(module => ({ default: module.DragDropFiles })));
 
-const EnhancedThemeProvider = React.lazy(() => import('../../../EnhancedThemeProvider').then(module => ({ default: module.EnhancedThemeProvider })));
+const EnhancedThemeProvider = React.lazy(() => import(/* webpackChunkName: 'enhanced-theme-provider-showcase' */ '../../../EnhancedThemeProvider').then(module => ({ default: module.EnhancedThemeProvider })));
 
-const FieldCollectionData = React.lazy(() => import('../../../FieldCollectionData').then(module => ({ default: module.FieldCollectionData })));
+const FieldCollectionData = React.lazy(() => import(/* webpackChunkName: 'field-collection-data-showcase' */ '../../../FieldCollectionData').then(module => ({ default: module.FieldCollectionData })));
 
-const FieldPicker = React.lazy(() => import('../../../FieldPicker').then(module => ({ default: module.FieldPicker })));
+const FieldPicker = React.lazy(() => import(/* webpackChunkName: 'field-picker-showcase' */ '../../../FieldPicker').then(module => ({ default: module.FieldPicker })));
 
-const FilePicker = React.lazy(() => import('../../../FilePicker').then(module => ({ default: module.FilePicker })));
+const FilePicker = React.lazy(() => import(/* webpackChunkName: 'file-picker-showcase' */ '../../../FilePicker').then(module => ({ default: module.FilePicker })));
 
-const FileTypeIcon = React.lazy(() => import('../../../FileTypeIcon').then(module => ({ default: module.FileTypeIcon })));
+const FileTypeIcon = React.lazy(() => import(/* webpackChunkName: 'file-type-icon-showcase' */ '../../../FileTypeIcon').then(module => ({ default: module.FileTypeIcon })));
 
-const FolderExplorer = React.lazy(() => import('../../../FolderExplorer').then(module => ({ default: module.FolderExplorer })));
+const FolderExplorer = React.lazy(() => import(/* webpackChunkName: 'folder-explorer-showcase' */ '../../../FolderExplorer').then(module => ({ default: module.FolderExplorer })));
 
-const FolderPicker = React.lazy(() => import('../../../FolderPicker').then(module => ({ default: module.FolderPicker })));
-const GridLayout = React.lazy(() => import('../../../GridLayout').then(module => ({ default: module.GridLayout })));
-const HoverReactionsBar = React.lazy(() => import('../../../HoverReactionsBar').then(module => ({ default: module.HoverReactionsBar })));
-const GroupPicker = React.lazy(() => import('../../../GroupPicker').then(module => ({ default: module.GroupPicker })));
+const FolderPicker = React.lazy(() => import(/* webpackChunkName: 'folder-picker-showcase' */ '../../../FolderPicker').then(module => ({ default: module.FolderPicker })));
+const GridLayout = React.lazy(() => import(/* webpackChunkName: 'grid-layout-showcase' */ '../../../GridLayout').then(module => ({ default: module.GridLayout })));
+const HoverReactionsBar = React.lazy(() => import(/* webpackChunkName: 'hover-reactions-bar-showcase' */ '../../../HoverReactionsBar').then(module => ({ default: module.HoverReactionsBar })));
+const GroupPicker = React.lazy(() => import(/* webpackChunkName: 'group-picker-showcase' */ '../../../GroupPicker').then(module => ({ default: module.GroupPicker })));
 
-const IFrameDialog = React.lazy<React.ComponentType<IFrameDialogProps>>(() => import('../../../IFrameDialog').then(module => ({ default: module.IFrameDialog })));
+const IFrameDialog = React.lazy<React.ComponentType<IFrameDialogProps>>(() => import(/* webpackChunkName: 'iframe-dialog-showcase' */ '../../../IFrameDialog').then(module => ({ default: module.IFrameDialog })));
 
-const IFramePanel = React.lazy(() => import('../../../IFramePanel').then(module => ({ default: module.IFramePanel })));
-const ImagePicker = React.lazy(() => import('../../../ImagePicker').then(module => ({ default: module.ImagePicker })));
-const ListItemAttachments = React.lazy(() => import('../../../ListItemAttachments').then(module => ({ default: module.ListItemAttachments })));
-const ListItemComments = React.lazy(() => import('../../../ListItemComments').then(module => ({ default: module.ListItemComments })));
-const ListItemPicker = React.lazy(() => import('../../../ListItemPicker').then(module => ({ default: module.ListItemPicker })));
-const ListPicker = React.lazy(() => import('../../../ListPicker').then(module => ({ default: module.ListPicker })));
+const IFramePanel = React.lazy(() => import(/* webpackChunkName: 'iframe-panel-showcase' */ '../../../IFramePanel').then(module => ({ default: module.IFramePanel })));
+const ImagePicker = React.lazy(() => import(/* webpackChunkName: 'image-picker-showcase' */ '../../../ImagePicker').then(module => ({ default: module.ImagePicker })));
+const ListItemAttachments = React.lazy(() => import(/* webpackChunkName: 'list-item-attachments-showcase' */ '../../../ListItemAttachments').then(module => ({ default: module.ListItemAttachments })));
+const ListItemComments = React.lazy(() => import(/* webpackChunkName: 'list-item-comments-showcase' */ '../../../ListItemComments').then(module => ({ default: module.ListItemComments })));
+const ListItemPicker = React.lazy(() => import(/* webpackChunkName: 'list-item-picker-showcase' */ '../../../ListItemPicker').then(module => ({ default: module.ListItemPicker })));
+const ListPicker = React.lazy(() => import(/* webpackChunkName: 'list-picker-showcase' */ '../../../ListPicker').then(module => ({ default: module.ListPicker })));
 
-const ListToolbar = React.lazy(() => import('../../../controls/ListToolbar').then(module => ({ default: module.ListToolbar })));
+const ListToolbar = React.lazy(() => import(/* webpackChunkName: 'list-toolbar-showcase' */ '../../../controls/ListToolbar').then(module => ({ default: module.ListToolbar })));
 
-const ListView = React.lazy(() => import('../../../ListView').then(module => ({ default: module.ListView })));
+const ListView = React.lazy(() => import(/* webpackChunkName: 'list-view-showcase' */ '../../../ListView').then(module => ({ default: module.ListView })));
 
 interface IDetailsListShowcaseErrorBoundaryProps {
   children?: React.ReactNode;
@@ -289,34 +289,34 @@ const DetailsList = React.lazy(() =>
     .then(module => ({ default: module.TestDetailsListControl }))
 );
 
-const Map = React.lazy(() => import('../../../Map').then(module => ({ default: module.Map })));
+const Map = React.lazy(() => import(/* webpackChunkName: 'map-showcase' */ '../../../Map').then(module => ({ default: module.Map })));
 
-const ModernAudio = React.lazy(() => import('../../../ModernAudio').then(module => ({ default: module.ModernAudio })));
+const ModernAudio = React.lazy(() => import(/* webpackChunkName: 'modern-audio-showcase' */ '../../../ModernAudio').then(module => ({ default: module.ModernAudio })));
 
-const TaxonomyTree = React.lazy(() => import('../../../ModernTaxonomyPicker').then(module => ({ default: module.TaxonomyTree })));
+const TaxonomyTree = React.lazy(() => import(/* webpackChunkName: 'taxonomy-tree-showcase' */ '../../../ModernTaxonomyPicker').then(module => ({ default: module.TaxonomyTree })));
 
-const Placeholder = React.lazy(() => import('../../../Placeholder').then(module => ({ default: module.Placeholder })));
+const Placeholder = React.lazy(() => import(/* webpackChunkName: 'placeholder-showcase' */ '../../../Placeholder').then(module => ({ default: module.Placeholder })));
 
-const Progress = React.lazy(() => import('../../../Progress').then(module => ({ default: module.Progress })));
-const Toast = React.lazy(() => import('../../../Toast').then(module => ({ default: module.Toast })));
+const Progress = React.lazy(() => import(/* webpackChunkName: 'progress-showcase' */ '../../../Progress').then(module => ({ default: module.Progress })));
+const Toast = React.lazy(() => import(/* webpackChunkName: 'toast-showcase' */ '../../../Toast').then(module => ({ default: module.Toast })));
 
-const RichText = React.lazy(() => import('../../../RichText').then(module => ({ default: module.RichText })));
-const ShareDialog = React.lazy(() => import('../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
+const RichText = React.lazy(() => import(/* webpackChunkName: 'rich-text-showcase' */ '../../../RichText').then(module => ({ default: module.RichText })));
+const ShareDialog = React.lazy(() => import(/* webpackChunkName: 'share-dialog-showcase' */ '../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
 
-const SecurityTrimmedControl = React.lazy(() => import('../../../SecurityTrimmedControl').then(module => ({ default: module.SecurityTrimmedControl })));
+const SecurityTrimmedControl = React.lazy(() => import(/* webpackChunkName: 'security-trimmed-control-showcase' */ '../../../SecurityTrimmedControl').then(module => ({ default: module.SecurityTrimmedControl })));
 
-const SiteBreadcrumb = React.lazy(() => import('../../../SiteBreadcrumb').then(module => ({ default: module.SiteBreadcrumb })));
+const SiteBreadcrumb = React.lazy(() => import(/* webpackChunkName: 'site-breadcrumb-showcase' */ '../../../SiteBreadcrumb').then(module => ({ default: module.SiteBreadcrumb })));
 
-const TaxonomyPicker = React.lazy(() => import('../../../TaxonomyPicker').then(module => ({ default: module.TaxonomyPicker })));
+const TaxonomyPicker = React.lazy(() => import(/* webpackChunkName: 'taxonomy-picker-showcase' */ '../../../TaxonomyPicker').then(module => ({ default: module.TaxonomyPicker })));
 
-const TeamChannelPicker = React.lazy(() => import('../../../TeamChannelPicker').then(module => ({ default: module.TeamChannelPicker })));
-const TeamPicker = React.lazy(() => import('../../../TeamPicker').then(module => ({ default: module.TeamPicker })));
-const TermSetNavigation = React.lazy(() => import('../../../TermSetNavigation').then(module => ({ default: module.TermSetNavigation })));
-const WebPartTitle = React.lazy(() => import('../../../WebPartTitle').then(module => ({ default: module.WebPartTitle })));
+const TeamChannelPicker = React.lazy(() => import(/* webpackChunkName: 'team-channel-picker-showcase' */ '../../../TeamChannelPicker').then(module => ({ default: module.TeamChannelPicker })));
+const TeamPicker = React.lazy(() => import(/* webpackChunkName: 'team-picker-showcase' */ '../../../TeamPicker').then(module => ({ default: module.TeamPicker })));
+const TermSetNavigation = React.lazy(() => import(/* webpackChunkName: 'term-set-navigation-showcase' */ '../../../TermSetNavigation').then(module => ({ default: module.TermSetNavigation })));
+const WebPartTitle = React.lazy(() => import(/* webpackChunkName: 'web-part-title-showcase' */ '../../../WebPartTitle').then(module => ({ default: module.WebPartTitle })));
 
-const TestControl = React.lazy(() => import('./TestControl').then(module => ({ default: module.TestControl })));
+const TestControl = React.lazy(() => import(/* webpackChunkName: 'test-control-showcase' */ './TestControl').then(module => ({ default: module.TestControl })));
 
-const UserPicker = React.lazy(() => import('../../../UserPicker').then(module => ({ default: module.UserPicker })));
+const UserPicker = React.lazy(() => import(/* webpackChunkName: 'user-picker-showcase' */ '../../../UserPicker').then(module => ({ default: module.UserPicker })));
 
 // Used to render document card
 /**
