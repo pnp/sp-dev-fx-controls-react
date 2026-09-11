@@ -1,11 +1,13 @@
 import type { Quill } from 'quill';
-import { ISwatchColor } from './SwatchColorPickerGroup.types';
+import type { ISwatchColor } from './SwatchColorPickerGroup.types';
+import type { IRichTextCustomFormattingStyles } from './RichText.types';
 
 export interface IRichTextPropertyPaneProps {
   className?: string;
   editor: Quill;
   isOpen: boolean;
   customColors?: ISwatchColor[];
+  customStyles?: IRichTextCustomFormattingStyles;
   onClose: () => void;
   onLink: () => void;
 }
