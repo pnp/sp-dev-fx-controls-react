@@ -83,7 +83,7 @@ const addSelectableParent = (
   items: ShorthandCollection<TreeItemProps>
 ): ShorthandCollection<TreeItemProps> => {
   return items.map((item) => {
-    if (item && item.hasOwnProperty("items"))  
+    if (item && Object.prototype.hasOwnProperty.call(item, "items"))
       return Object.assign(item, {
         selectableParent: true,
         items: addSelectableParent(get(item, ["items"], [])),
