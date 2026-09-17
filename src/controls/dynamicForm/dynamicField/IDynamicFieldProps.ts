@@ -45,7 +45,7 @@ export interface IDynamicFieldProps {
     newValue: any, // eslint-disable-line @typescript-eslint/no-explicit-any
     validate: boolean,
     additionalData?: FieldChangeAdditionalData
-  ) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  ) => void;  
 
   /** Represents the value of the field as updated by the user. Only updated by fields when changed. */
   newValue?: any; // eslint-disable-line @typescript-eslint/no-explicit-any

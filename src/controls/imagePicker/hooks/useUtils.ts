@@ -165,7 +165,7 @@ export const useUtils = (): IUseUtils => {
   }, []);
 
   const getFileFromBlob = React.useCallback((blob: Blob, fileName: string): File => {
-    let result: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
+    let result: any = null;  
     // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
     try {
       result = new File([blob], fileName);

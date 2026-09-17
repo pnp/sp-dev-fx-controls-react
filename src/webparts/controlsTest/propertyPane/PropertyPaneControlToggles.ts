@@ -10,7 +10,7 @@ import { ControlVisibility } from '../IControlsTestWebPartProps';
 
 export interface IPropertyPaneControlTogglesProps {
     label: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     onPropertyChange: (controlVisibility: ControlVisibility) => void;
     controlVisibility: ControlVisibility;
 }

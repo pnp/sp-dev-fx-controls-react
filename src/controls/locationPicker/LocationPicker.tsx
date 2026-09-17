@@ -107,7 +107,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
           openOnKeyboardFocus={true}
           scrollSelectedToTop={true}
           isButtonAriaHidden={true}
-          onInput={(e) => this.getLocatios((e.target as HTMLInputElement).value)} // eslint-disable-line dot-notation
+          onInput={(e) => this.getLocatios((e.target as HTMLInputElement).value)}  
           onChange={this.onChange}
           errorMessage={errorMessage}
         />;
@@ -227,7 +227,7 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
   private onBlur = (ev: React.FocusEvent<HTMLDivElement>): void => {
     try {
-      if (ev !== null && ev.relatedTarget && (ev.relatedTarget as HTMLElement).title !== "Location" && (ev.relatedTarget as HTMLElement).title !== "Clear") { // eslint-disable-line dot-notation
+      if (ev !== null && ev.relatedTarget && (ev.relatedTarget as HTMLElement).title !== "Location" && (ev.relatedTarget as HTMLElement).title !== "Clear") {  
         this.setState({ currentMode: Mode.view });
       }
     } catch { /* no-op; */ }

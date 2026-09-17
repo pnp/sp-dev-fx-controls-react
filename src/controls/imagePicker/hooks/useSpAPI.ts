@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-for-in-array */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';

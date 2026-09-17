@@ -5,7 +5,7 @@ import * as React from 'react';
 import addSeconds from 'date-fns/addSeconds';
 import isAfter from 'date-fns/isAfter';
 
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 interface IStorage {
   value: unknown;
   expires: string;

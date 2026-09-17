@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/no-floating-promises */
+ 
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import Map, { MapRef, StyleSpecification } from 'react-map-gl/maplibre';

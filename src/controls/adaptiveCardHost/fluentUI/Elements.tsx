@@ -23,7 +23,7 @@ import { getFluentUIThemeFromHostCapability, hostCapabilitiesFluentUIThemeKey } 
 
 const internalRender = (renderReact: () => JSX.Element): HTMLElement => {
   const div = document.createElement("div");
-  ReactDOM.render(renderReact(), div); // eslint-disable-line @microsoft/spfx/pair-react-dom-render-unmount
+  ReactDOM.render(renderReact(), div); // eslint-disable-line @rushstack/pair-react-dom-render-unmount
   return div;
 };
 

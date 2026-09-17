@@ -163,7 +163,6 @@ import {
   VariantType,
 } from '../../../controls/variantThemeProvider';
 import {
-  IWidgetLink,
   WidgetSize,
 } from '../../../controls/dashboard';
 import WorldMap from './WorldMap';
@@ -797,7 +796,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
         try {
           termsSet = await this.spTaxonomyService.getTermSetInfo(Guid.parse(this.termSetId));
-        } catch (error) {
+        } catch {
           /** no-op */
         }
 
@@ -1116,7 +1115,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
 
     const dynamicFormCustomTitleIcon: { [key: string]: string } = {};
-    dynamicFormCustomTitleIcon["Title"] = "FavoriteStar";
+    dynamicFormCustomTitleIcon.Title = "FavoriteStar";
 
     // Size options for the icon size dropdown
     const sizeOptions: IDropdownOption[] = [
@@ -1162,7 +1161,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         name: 'ServerRelativeUrl',
         displayName: 'Path',
         render: (item: any) => {
-          return <a href={item['ServerRelativeUrl']}>Link</a>;
+          return <a href={item.ServerRelativeUrl}>Link</a>;
         },
         isResizable: true
       },
@@ -1274,7 +1273,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   validationErrorDialogProps={this.props.dynamicFormErrorDialogEnabled ? { showDialogOnValidationError: true } : undefined}
                   returnListItemInstanceOnSubmit={true}
                   onCancelled={() => { console.log('Cancelled'); }}
-                  onSubmitted={async (data, item) => { let itemdata = await item.get(); console.log('Saved item', itemdata) }}
+                  onSubmitted={async (data, item) => { const itemdata = await item.get(); console.log('Saved item', itemdata) }}
                   useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
                   useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
                   useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}
@@ -1381,7 +1380,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                     <div style={{ margin: 20 }}>
                       <h2>Content Heading 2</h2>
                       <Text variant={"mediumPlus"}>Text </Text>
-                      <TextField></TextField>
+                      <TextField />
                     </div>
                   </AccordionItemPanel>
                 </AccordionItem>
@@ -1711,7 +1710,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 ensureUser={true}
                 principalTypes={[PrincipalType.User, PrincipalType.SharePointGroup, PrincipalType.SecurityGroup, PrincipalType.DistributionList]}
                 resultFilter={(result: IPersonaProps[]) => {
-                  return result.filter(p => (p as any)["loginName"].indexOf(".com") !== -1);
+                  return result.filter(p => (p as any).loginName.indexOf(".com") !== -1);
                 }}
                 onChange={this._getPeoplePickerItems} />
 
@@ -2175,7 +2174,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 label='Folder Picker'
                 required={true}
                 canCreateFolders={true}
-              ></FolderPicker>
+               />
             </div>
           }
           <div id="FilterBarDiv" className={styles.container} hidden={!controlVisibility.FilterBar}>
@@ -2696,8 +2695,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               >
                 <div className={styles.dialogContent}><span>Thank you.</span></div>
                 <div className={styles.dialogFooter}>
-                  <PrimaryButton onClick={() => { this.setState({ showSuccessDialog: false }); }} text="OK" >
-                  </PrimaryButton>
+                  <PrimaryButton onClick={() => { this.setState({ showSuccessDialog: false }); }} text="OK"  />
                 </div>
               </AnimatedDialog>
 
@@ -2711,8 +2709,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               >
                 <div className={styles.dialogContent}><span>Ther was an error.</span></div>
                 <div className={styles.dialogFooter}>
-                  <PrimaryButton onClick={() => { this.setState({ showErrorDialog: false }); }} text="OK" >
-                  </PrimaryButton>
+                  <PrimaryButton onClick={() => { this.setState({ showErrorDialog: false }); }} text="OK"  />
                 </div>
               </AnimatedDialog>
             </div>
@@ -2731,7 +2728,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           }
           {controlVisibility.LocationPicker &&
             <div id="LocationPickerDiv" className={styles.container}>
-              <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }}></LocationPicker>
+              <LocationPicker context={this.props.context} label="Location" onChange={(locValue: ILocationPickerItem) => { console.log(locValue.DisplayName + ", " + locValue.Address.Street); }} />
             </div>
           }
           {controlVisibility.ModernTaxonomyPicker &&
@@ -3211,7 +3208,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   private getRandomCollectionFieldData = () => {
-    let result = [];
+    const result: Record<string, unknown>[] = [];
     for (let i = 1; i < 16; i++) {
 
       const sampleDate = new Date();

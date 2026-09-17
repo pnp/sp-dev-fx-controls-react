@@ -1027,7 +1027,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	 * When user enters the richtext editor, displays the border
 	 */
 	private handleOnFocus = (range: any, source: any, editor: any): void => {
-		// eslint-disable-line @typescript-eslint/no-explicit-any
+		 
 		if (!this.state.editing) {
 			this.setState({ editing: true });
 		}
@@ -1148,7 +1148,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 		oldRange: any,
 		source: any
 	): void => {
-		// eslint-disable-line @typescript-eslint/no-explicit-any
+		 
 		const quill = this.getEditor();
 		try {
 			if (quill) {

@@ -84,7 +84,7 @@ export default class CustomFormattingHelper {
         } 
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     public renderCustomFormatContent = (node: ICustomFormattingNode, context: Context, rootEl: boolean = false): JSX.Element | string | number => {
 
         // We don't want attempts to render custom format content to kill the component or web part, 

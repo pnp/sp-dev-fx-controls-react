@@ -14,7 +14,7 @@ import {
 import { DEFAULT_PAGE_SIZE } from '../../constants/constants';
 import { globalState } from '../../jotai/atoms';
 
-/* eslint-disable @typescript-eslint/no-empty-function */
+ 
 export const useDocumentListStyles = () => {
   const [appGlobalState,] = useAtom(globalState);
   const { themeVariant, containerWidth, pageSize, files } = appGlobalState;

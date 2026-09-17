@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
+ 
 import * as React from 'react';
 import { Stack } from './stack/Stack';
 import { KPICard } from './KpiCard';

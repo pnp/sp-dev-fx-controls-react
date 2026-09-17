@@ -1,5 +1,5 @@
 import { PositioningShorthand } from '@fluentui/react-positioning';
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import {
   BaseComponentContext,
   IReadonlyTheme,

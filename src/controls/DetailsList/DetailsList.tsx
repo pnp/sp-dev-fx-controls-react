@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IdPrefixProvider, Spinner, Text, mergeClasses } from '@fluentui/react-components';
+import { Spinner, Text, mergeClasses } from '@fluentui/react-components';
 import type {
   DetailsListKey,
   DetailsListScrollToMode,
