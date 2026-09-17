@@ -7,8 +7,7 @@ import {
   IFieldCustomizerCellEventParameters
 } from '@microsoft/sp-listview-extensibility';
 
-import * as strings from 'ControlStrings';
-import OotbFields, { IOotbFieldsProps } from './components/Customizer/OotbFields';
+import OotbFields from './components/Customizer/OotbFields';
 import { SPHelper } from '../../common/utilities/SPHelper';
 import { GeneralHelper } from '../../common/utilities/GeneralHelper';
 

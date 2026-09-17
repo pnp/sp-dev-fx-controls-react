@@ -70,7 +70,7 @@ interface DetailsListRowProps<T> {
   onRenderRow: IDetailsListProps<T>['onRenderRow'];
 }
 
-const isInteractiveTarget = (target: EventTarget | null): boolean =>
+const isInteractiveTarget = (target: EventTarget | undefined): boolean =>
   target instanceof Element &&
   Boolean(
     target.closest(
@@ -216,7 +216,7 @@ export const DetailsListRow = <T,>({
           : {}),
       }}
       onClick={(event) => {
-        if (!isInteractiveTarget(event.target)) {
+        if (!isInteractiveTarget(event.target ?? undefined)) {
           selectItem(renderProps.item, renderProps.itemIndex, event, false);
         }
       }}

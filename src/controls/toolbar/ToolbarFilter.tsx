@@ -83,7 +83,7 @@ const addSelectableParent = (
   items: ShorthandCollection<TreeItemProps>
 ): ShorthandCollection<TreeItemProps> => {
   return items.map((item) => {
-    if (item && item.hasOwnProperty("items")) // eslint-disable-line no-prototype-builtins
+    if (item && item.hasOwnProperty("items"))  
       return Object.assign(item, {
         selectableParent: true,
         items: addSelectableParent(get(item, ["items"], [])),

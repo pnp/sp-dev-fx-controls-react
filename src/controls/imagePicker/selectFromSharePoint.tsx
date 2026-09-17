@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+ 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable require-atomic-updates */

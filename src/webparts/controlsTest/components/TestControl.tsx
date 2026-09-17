@@ -5,13 +5,10 @@ import {
   FluentProvider,
   IdPrefixProvider,
   Theme,
-  Title1,
   Title3,
   makeStyles,
   shorthands,
 } from '@fluentui/react-components';
-
-import { IUserInfo } from '../../../controls/userPicker/models/IUserInfo';
 
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 
@@ -51,17 +48,13 @@ export interface ITestControlProps {
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const { themeVariant, context } = props;
+  const { themeVariant } = props;
 
   const styles = useStyles();
 
   const setTheme = React.useCallback((): Partial<Theme> => {
     return createV9Theme(themeVariant);
   }, [themeVariant]);
-
-  const onSelectedUsers = (users: IUserInfo[]) => {
-    console.log('selected users', users);
-  };
 
   return (
     <>

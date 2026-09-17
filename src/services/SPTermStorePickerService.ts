@@ -258,7 +258,7 @@ export default class SPTermStorePickerService {
     return this.searchTermsByTermSet(searchText);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   private getTermsById<T>(termId: string, useSessionStorage: boolean = true): T | null {
     try {
       if (useSessionStorage && window.sessionStorage) {

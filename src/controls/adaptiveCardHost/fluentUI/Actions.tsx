@@ -111,7 +111,7 @@ const createActionDiv = (
   theme?: ITheme): HTMLDivElement => {
   const div = document.createElement("div");
   div.className = "fluentUI";
-  // eslint-disable-next-line @microsoft/spfx/pair-react-dom-render-unmount
+   
   ReactDOM.render(
     <ActionButton
       text={title}

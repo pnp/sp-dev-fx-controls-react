@@ -284,7 +284,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
         </div>;
 
       case 'Lookup':
-        //eslint-disable-next-line no-case-declarations
+         
         const lookupValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
@@ -310,7 +310,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
         </div>;
 
       case 'LookupMulti':
-        //eslint-disable-next-line no-case-declarations
+         
         const lookupMultiValue = valueToDisplay !== undefined ? valueToDisplay : defaultValue;
         return <div>
           <div className={styles.titleContainer}>
