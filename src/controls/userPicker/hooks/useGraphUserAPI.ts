@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
- 
- 
 import * as React from 'react';
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
