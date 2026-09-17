@@ -34,7 +34,7 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
             href={part}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: theme.link }}
+            style={{ color: theme.themePrimary }}
           >
             {part}
           </Link>
