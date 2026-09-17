@@ -848,7 +848,7 @@ export class DynamicFormBase extends React.Component<
           user = newValue[0].loginName;
         }
         const result = await sp.web.ensureUser(user);
-        field.newValue = result.data.Id;  
+        field.newValue = result.data.Id; // eslint-disable-line require-atomic-updates
         field.stringValue = user;
         field.subPropertyValues = {
           id: result.data.Id,
