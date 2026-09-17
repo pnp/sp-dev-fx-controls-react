@@ -3208,7 +3208,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   }
 
   private getRandomCollectionFieldData = () => {
-    const result = [];
+    const result: Record<string, unknown>[] = [];
     for (let i = 1; i < 16; i++) {
 
       const sampleDate = new Date();
