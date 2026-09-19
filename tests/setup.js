@@ -1,3 +1,6 @@
+const { initializeFileTypeIcons } = require("@fluentui/react-file-type-icons");
+const { initializeIcons } = require("@fluentui/react/lib/Icons");
+
 jest.mock("@microsoft/sp-http", () => {
   return {
     SPHttpClient: {
@@ -19,4 +22,8 @@ jest.mock("@microsoft/decorators", () => {
     }
   }
 })
+
+initializeIcons();
+initializeFileTypeIcons();
+
 DEBUG = true;

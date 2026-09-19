@@ -1,5 +1,42 @@
 /// <reference types="sinon" />
 
+jest.mock('chart.js', () => {
+  const chartMock = jest.fn().mockImplementation(function (canvas: HTMLCanvasElement) {
+    this.canvas = canvas;
+    this.destroy = jest.fn();
+    this.update = jest.fn();
+    this.render = jest.fn();
+    this.stop = jest.fn();
+    this.clear = jest.fn();
+    this.toBase64Image = jest.fn();
+    this.getDatasetAtEvent = jest.fn().mockReturnValue([]);
+    this.getElementAtEvent = jest.fn().mockReturnValue([]);
+    this.getElementsAtEvent = jest.fn().mockReturnValue([]);
+  });
+
+  chartMock.defaults = {
+    global: {
+      title: {},
+      legend: {
+        labels: {}
+      },
+      tooltips: {},
+      defaultFontColor: undefined,
+      defaultFontFamily: undefined,
+      defaultFontSize: undefined
+    },
+    scale: {
+      gridLines: {
+        color: undefined
+      }
+    }
+  };
+
+  return {
+    Chart: chartMock
+  };
+});
+
 import * as React from 'react';
 import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';
@@ -100,5 +137,4 @@ describe('<ChartControl />', () => {
   });
 
 });
-
 
