@@ -1,39 +1,43 @@
 /// <reference types="sinon" />
 
 jest.mock('chart.js', () => {
-  const chartMock = jest.fn().mockImplementation(function (canvas: HTMLCanvasElement) {
-    this.canvas = canvas;
-    this.destroy = jest.fn();
-    this.update = jest.fn();
-    this.render = jest.fn();
-    this.stop = jest.fn();
-    this.clear = jest.fn();
-    this.toBase64Image = jest.fn();
-    this.getDatasetAtEvent = jest.fn().mockReturnValue([]);
-    this.getElementAtEvent = jest.fn().mockReturnValue([]);
-    this.getElementsAtEvent = jest.fn().mockReturnValue([]);
-  });
-
-  chartMock.defaults = {
-    global: {
-      title: {},
-      legend: {
-        labels: {}
+  class MockChart {
+    public static defaults = {
+      global: {
+        title: {},
+        legend: {
+          labels: {}
+        },
+        tooltips: {},
+        defaultFontColor: '',
+        defaultFontFamily: '',
+        defaultFontSize: 0
       },
-      tooltips: {},
-      defaultFontColor: undefined,
-      defaultFontFamily: undefined,
-      defaultFontSize: undefined
-    },
-    scale: {
-      gridLines: {
-        color: undefined
+      scale: {
+        gridLines: {
+          color: ''
+        }
       }
+    };
+
+    public canvas: HTMLCanvasElement;
+    public destroy = jest.fn();
+    public update = jest.fn();
+    public render = jest.fn();
+    public stop = jest.fn();
+    public clear = jest.fn();
+    public toBase64Image = jest.fn();
+    public getDatasetAtEvent = jest.fn().mockReturnValue([]);
+    public getElementAtEvent = jest.fn().mockReturnValue([]);
+    public getElementsAtEvent = jest.fn().mockReturnValue([]);
+
+    constructor(canvas: HTMLCanvasElement) {
+      this.canvas = canvas;
     }
-  };
+  }
 
   return {
-    Chart: chartMock
+    Chart: MockChart
   };
 });
 
@@ -137,4 +141,3 @@ describe('<ChartControl />', () => {
   });
 
 });
-

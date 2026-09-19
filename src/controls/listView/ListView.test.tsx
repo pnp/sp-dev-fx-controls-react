@@ -15,6 +15,7 @@ class Wrapper extends React.Component {
 /* tslint:disable */
 describe('<ListView />', () => {
   let listView: ReactWrapper;
+  let consoleWarnSpy: jest.SpyInstance;
 
   const dummyItems = [{
     id: 0,
@@ -56,7 +57,20 @@ describe('<ListView />', () => {
     listView.unmount();
   });
 
-  beforeEach(() => { });
+  beforeAll(() => {
+    const originalConsoleWarn = console.warn;
+    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation((message?: unknown, ...args: unknown[]) => {
+      if (typeof message === 'string' && message.includes('was used but not registered')) {
+        return;
+      }
+
+      originalConsoleWarn.call(console, message, ...args);
+    });
+  });
+
+  afterAll(() => {
+    consoleWarnSpy.mockRestore();
+  });
 
   it('Test view with an empty array of items', (done) => {
     listView = mount(<ListView items={[]} />).update();
