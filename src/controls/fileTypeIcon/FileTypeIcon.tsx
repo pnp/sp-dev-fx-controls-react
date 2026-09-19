@@ -19,8 +19,10 @@ const customIcons = {
 initializeIcons();
 
 const missingIcons = Object.keys(customIcons).reduce((icons: Record<string, string>, iconName) => {
-  if (!getIcon(iconName)) {
-    icons[iconName] = customIcons[iconName];
+  const typedIconName = iconName as keyof typeof customIcons;
+
+  if (!getIcon(typedIconName)) {
+    icons[typedIconName] = customIcons[typedIconName];
   }
 
   return icons;
