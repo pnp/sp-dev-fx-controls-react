@@ -1,3 +1,6 @@
+const { initializeIcons } = require("@uifabric/icons");
+const { registerIcons } = require("@uifabric/styling");
+
 jest.mock("@microsoft/sp-http", () => {
   return {
     SPHttpClient: {
@@ -19,4 +22,14 @@ jest.mock("@microsoft/decorators", () => {
     }
   }
 });
+
+initializeIcons();
+registerIcons({
+  icons: {
+    FileSass: "\uEAE3",
+    VisioDocument: "\uE452",
+    WordDocument: "\uE8A5"
+  }
+});
+
 DEBUG = true;

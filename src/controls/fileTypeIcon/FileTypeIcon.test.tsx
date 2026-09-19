@@ -10,25 +10,9 @@ const ICON_CDN_URL = `https://res-1.cdn.office.net/files/fabric-cdn-prod_2025100
 
 describe('<FileTypeIcon />', () => {
   let fileTypeIcon: ReactWrapper;
-  let consoleWarnSpy: jest.SpyInstance;
-
-  beforeAll(() => {
-    const originalConsoleWarn = console.warn;
-    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation((message?: unknown, ...args: unknown[]) => {
-      if (typeof message === 'string' && message.includes('was used but not registered')) {
-        return;
-      }
-
-      originalConsoleWarn.call(console, message, ...args);
-    });
-  });
 
   afterEach(() => {
     fileTypeIcon.unmount();
-  });
-
-  afterAll(() => {
-    consoleWarnSpy.mockRestore();
   });
 
   /**
