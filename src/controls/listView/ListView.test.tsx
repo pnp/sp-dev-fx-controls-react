@@ -56,6 +56,8 @@ describe('<ListView />', () => {
     listView.unmount();
   });
 
+  beforeEach(() => { });
+
   it('Test view with an empty array of items', (done) => {
     listView = mount(<ListView items={[]} />).update();
 

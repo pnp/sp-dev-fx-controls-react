@@ -1,46 +1,5 @@
 /// <reference types="sinon" />
 
-jest.mock('chart.js', () => {
-  class MockChart {
-    public static defaults = {
-      global: {
-        title: {},
-        legend: {
-          labels: {}
-        },
-        tooltips: {},
-        defaultFontColor: '',
-        defaultFontFamily: '',
-        defaultFontSize: 0
-      },
-      scale: {
-        gridLines: {
-          color: ''
-        }
-      }
-    };
-
-    public canvas: HTMLCanvasElement;
-    public destroy = jest.fn();
-    public update = jest.fn();
-    public render = jest.fn();
-    public stop = jest.fn();
-    public clear = jest.fn();
-    public toBase64Image = jest.fn();
-    public getDatasetAtEvent = jest.fn().mockReturnValue([]);
-    public getElementAtEvent = jest.fn().mockReturnValue([]);
-    public getElementsAtEvent = jest.fn().mockReturnValue([]);
-
-    constructor(canvas: HTMLCanvasElement) {
-      this.canvas = canvas;
-    }
-  }
-
-  return {
-    Chart: MockChart
-  };
-});
-
 import * as React from 'react';
 import { expect } from 'chai';
 import { mount, ReactWrapper } from 'enzyme';

@@ -18,6 +18,5 @@ jest.mock("@microsoft/decorators", () => {
       return control;
     }
   }
-});
-
+})
 DEBUG = true;
