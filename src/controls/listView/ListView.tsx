@@ -4,6 +4,7 @@ import { ScrollablePane, ScrollbarVisibility } from '@fluentui/react/lib/Scrolla
 import { Sticky, StickyPositionType } from '@fluentui/react/lib/Sticky';
 import { IRenderFunction } from '@fluentui/react/lib/Utilities';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IGroup, IDetailsHeaderProps } from '@fluentui/react/lib/DetailsList';
 import { IListViewProps, IListViewState, IViewField, IGrouping, GroupOrder } from './IListView';
 import { IColumn, IGroupRenderProps } from '@fluentui/react/lib/DetailsList';
@@ -19,6 +20,8 @@ import omit from 'lodash/omit';
 import functions from 'lodash/functions';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
 import { Guid } from '@microsoft/sp-core-library';
+
+initializeIcons();
 
 const classNames = mergeStyleSets({
   wrapper: {
