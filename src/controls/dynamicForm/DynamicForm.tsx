@@ -948,7 +948,7 @@ export class DynamicFormBase extends React.Component<
         const context = this.getFormValuesForValidation();
         if (requireValue && !context[fieldName]) continue;
         const result = this._formulaEvaluation.evaluate(formula, context);
-        if (Boolean(result) !== true) {
+        if (result !== true && result !== "true") {
           results[fieldName] = message;
         }
       }
