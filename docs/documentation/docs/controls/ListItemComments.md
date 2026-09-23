@@ -60,6 +60,8 @@ You can use ***highlightedCommentId*** to specify the comment you want to highli
 
 The specified comment will be highlighted with different border and background color (Use theme color).
 
+Mentions in comments are rendered inline with the surrounding text and wrap naturally. An explicit line break in the comment starts a new line.
+
 ![ListItemComments](../assets/ListItemComments06.png)
 
 ## Implementation
