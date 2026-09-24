@@ -3022,7 +3022,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <h3>Variant Theme Provider</h3>
               <VariantThemeProvider variantType={VariantType.Strong}>
                 <Stack tokens={{ childrenGap: 5, padding: 5 }}>
-                  <Label>This Web Part implements an example on how to use the 'Fluent UI' theme library and how to apply/generate theme variation for the Web Part itself.</Label>
+                  <Label>This Web Part implements an example on how to use the &#39;Fluent UI&#39; theme library and how to apply/generate theme variation for the Web Part itself.</Label>
                   <PrimaryButton>Primary Button</PrimaryButton>
                   <DefaultButton>Default Button</DefaultButton>
                   <Link>Link</Link>
