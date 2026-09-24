@@ -38,7 +38,7 @@
     "@fluentui/style-utilities": "^8.15.1",
     "@fluentui/styles": "0.66.5",
     "@fluentui/theme": "^2.6.6",
-    "@iconify/react": "^4.1.1",
+    "@iconify/react": "^6.0.2",
     "@juggle/resize-observer": "3.4.0",
     "@microsoft/decorators": "1.23.2",
     "@microsoft/mgt-react": "3.1.3",
