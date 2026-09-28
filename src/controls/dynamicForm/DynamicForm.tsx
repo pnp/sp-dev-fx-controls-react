@@ -1560,13 +1560,11 @@ export class DynamicFormBase extends React.Component<
 
           return {
             id: response.id,
-            labels: [
-              {
-                name: response.labels?.[0]?.name ?? fetchedterm.Label,
-                isDefault: response.labels?.[0]?.isDefault ?? true,
-                languageTag: response.labels?.[0]?.languageTag ?? "en-US",
-              },
-            ],
+            labels: response.labels ? response.labels : [{
+              name: fetchedterm.Label,
+              isDefault: true,
+              languageTag: "en-US"
+            }],
             childrenCount: response.childrenCount ?? 0,
             createdDateTime: response.createdDateTime ?? new Date().toISOString(),
             lastModifiedDateTime: response.lastModifiedDateTime ?? new Date().toISOString(),
