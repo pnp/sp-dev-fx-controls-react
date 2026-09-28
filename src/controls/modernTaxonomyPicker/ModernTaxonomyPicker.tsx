@@ -233,6 +233,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     if (labels.length === 0) {
       labels = item.labels.filter((name) => name.languageTag === currentTermStoreInfo.defaultLanguageTag && name.isDefault);
     }
+    if(labels.length === 0) {
+      labels = [item.labels[0]];
+    }
     return labels;
   }
 
