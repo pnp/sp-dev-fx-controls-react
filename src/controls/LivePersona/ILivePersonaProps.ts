@@ -15,6 +15,10 @@ export interface ILivePersonatProps {
    * If info should not appear on hover
    */
   disableHover?: boolean;
+  /**
+   * Render the persona card inline with surrounding content.
+   */
+  inline?: boolean;
 
   /**
    * The content to wrap with persona info

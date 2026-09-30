@@ -2,9 +2,11 @@ import * as React from "react";
 import { createElement, useEffect, useRef , useState} from "react";
 import { Log } from "@microsoft/sp-core-library";
 import { SPComponentLoader } from "@microsoft/sp-loader";
+import { mergeStyles } from "@fluentui/react/lib/Styling";
 import { ILivePersonatProps} from '.';
 
 const LIVE_PERSONA_COMPONENT_ID: string = "914330ee-2df2-4f6e-a858-30c23a812408";
+const livePersonaInlineClassName = mergeStyles({ display: "inline !important" });
 
 
 export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
@@ -12,7 +14,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
 ) => {
   const [isComponentLoaded, setIsComponentLoaded] = useState<boolean>(false);
   const sharedLibrary = useRef<any>(); // eslint-disable-line @typescript-eslint/no-explicit-any
-  const { upn, template, disableHover, serviceScope } = props;
+  const { upn, template, disableHover, inline, serviceScope } = props;
 
   useEffect(() => {
     (async () => {
@@ -30,7 +32,7 @@ export const LivePersona: React.FunctionComponent<ILivePersonatProps> = (
 let renderPersona: JSX.Element = null;
 if (isComponentLoaded) {
     renderPersona = createElement(sharedLibrary.current.LivePersonaCard, {
-        className: 'livePersonaCard',
+      className: `${inline ? livePersonaInlineClassName : ''} livePersonaCard`,
         clientScenario: 'livePersonaCard',
         disableHover:  disableHover,
         hostAppPersonaInfo: {
@@ -39,7 +41,7 @@ if (isComponentLoaded) {
         upn: upn,
         legacyUpn: upn,
         serviceScope: serviceScope,
-    }, createElement("div",{},template));
+    }, createElement(inline ? "span" : "div", {}, template));
 }
 return renderPersona;
 };
