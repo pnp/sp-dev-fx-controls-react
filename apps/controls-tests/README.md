@@ -8,7 +8,7 @@ Short summary on functionality and used technologies.
 
 ## Used SharePoint Framework Version
 
-![version](https://img.shields.io/badge/version-1.19.0-green.svg)
+![version](https://img.shields.io/badge/version-1.23.2-green.svg)
 
 ## Applies to
 
@@ -19,7 +19,9 @@ Short summary on functionality and used technologies.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+Use Node.js 22.14.0 or later within the Node 22 release line and a SharePoint
+Online development tenant. Dependencies are installed through Rush from the
+repository root; the controls library is linked through `workspace:*`.
 
 ## Solution
 
@@ -43,12 +45,10 @@ Short summary on functionality and used technologies.
 ## Minimal Path to Awesome
 
 - Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
-
-> Include any additional steps as needed.
+- From the repository root, run `node common/scripts/install-run-rush.js install`.
+- Run `node common/scripts/install-run-rush.js rebuild` to build and package the library and test app in dependency order.
+- Change to `apps/controls-tests` and run `npm run start` to serve with Heft, or `npm run serve` for fast-serve.
+- Configure your SharePoint tenant in `config/serve.json` and load the hosted workbench.
 
 ## Features
 

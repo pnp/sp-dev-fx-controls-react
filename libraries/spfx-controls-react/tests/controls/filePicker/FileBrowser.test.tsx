@@ -1,12 +1,11 @@
 ///<reference types="jest" />
 import * as React from "react";
-import { mount, configure } from "enzyme";
-import * as Adapter from 'enzyme-adapter-react-16';
+import { mount } from "enzyme";
 import { FileBrowser } from "../../../src/controls/filePicker/controls/FileBrowser/FileBrowser";
 import { MockFileBrowserService } from "../../mock/services/MockFileBrowserService";
-import { IFile } from "../../../src/services/FileBrowserService.types";
+import { IFile, FilesQueryResult } from "../../../src/services/FileBrowserService.types";
+import { IFilePickerResult } from "../../../src/controls/filePicker/FilePicker.types";
 import { assert } from "chai";
-configure({ adapter: new Adapter() });
 
 describe("<FileBrowser />", ()=>{
     test("should render loading animation", async ()=>{
@@ -40,6 +39,7 @@ describe("<FileBrowser />", ()=>{
                 serverRelativeUrl: "/sites/tea-point/Shared Documents/TestFile.docx",
                 isFolder: false,
                 modified: "",
+                modifiedDate: new Date('2024-01-01T00:00:00Z'),
                 fileIcon: "",
                 fileType: "docx",
                 // URL required to generate thumbnail preview
@@ -51,6 +51,7 @@ describe("<FileBrowser />", ()=>{
                 serverRelativeUrl: "/sites/tea-point/Shared Documents/AnotherTestFile.docx",
                 isFolder: false,
                 modified: "",
+                modifiedDate: new Date('2024-01-01T00:00:00Z'),
                 fileIcon: "",
                 fileType: "docx",
                 // URL required to generate thumbnail preview
@@ -100,7 +101,7 @@ describe("<FileBrowser />", ()=>{
         //Same as previously we will have to call lifecycle events and click handlers on our own
         let mockFileBrowserService: MockFileBrowserService = new MockFileBrowserService();
         //First let define first Mock Data
-        let mockData = {
+        let mockData: FilesQueryResult = {
             nextHref: undefined,
             items: [{
                 name: "Test Folder",
@@ -108,6 +109,7 @@ describe("<FileBrowser />", ()=>{
                 serverRelativeUrl: "/sites/tea-point/Shared Documents/Test Folder",
                 isFolder: true,
                 modified: "",
+                modifiedDate: new Date('2024-01-01T00:00:00Z'),
                 fileIcon: "",
                 fileType: "folder",
                 // URL required to generate thumbnail preview
@@ -140,7 +142,7 @@ describe("<FileBrowser />", ()=>{
         //In this case I would lean toward the second option. The first one could fail if exception occur in DetailsList and we don't have to worry about it.
         //However I do plan to include test sample with mocking external components (Will be more useful for functional components)
         //@ts-ignore
-        component.instance()._handleItemInvoked(mockData.items[0]);
+        component.instance()._handleOpenFolder(mockData.items[0]);
 
         assert.isTrue(asserted);
     });
@@ -149,14 +151,15 @@ describe("<FileBrowser />", ()=>{
         //Same as previously we will have to call lifecycle events and click handlers on our own
         let mockFileBrowserService: MockFileBrowserService = new MockFileBrowserService();
         //First let define first Mock Data
-        let mockData = {
+        let mockData: FilesQueryResult = {
             nextHref: undefined,
             items: [{
-                name: "Test File",
+                name: "Test File.docx",
                 absoluteUrl: "https://test.sharepoint.com/sites/tea-point/Shared Documents/Test File.docx",
                 serverRelativeUrl: "/sites/tea-point/Shared Documents/Test File.docx",
                 isFolder: false,
                 modified: "",
+                modifiedDate: new Date('2024-01-01T00:00:00Z'),
                 fileIcon: "",
                 fileType: "docx",
                 // URL required to generate thumbnail preview
@@ -166,8 +169,8 @@ describe("<FileBrowser />", ()=>{
           };
         mockFileBrowserService.getListItemsResult = mockData;
         //Also let's define our expected file
-        const expectedFilePicked = {
-            fileName: "Test File",
+        const expectedFilePicked: IFilePickerResult = {
+            fileName: "Test File.docx",
             fileNameWithoutExtension: "Test File",
             fileAbsoluteUrl: "https://test.sharepoint.com/sites/tea-point/Shared Documents/Test File.docx",
             spItemUrl: "",
@@ -182,7 +185,7 @@ describe("<FileBrowser />", ()=>{
             folderPath="/"
             accepts={["docx","xlsx"]}
             onChange={(filePickerResult) => {
-                assert.deepEqual(filePickerResult,expectedFilePicked);
+                assert.deepEqual(filePickerResult,[expectedFilePicked]);
                 asserted = true;}}
             onOpenFolder={(folder: IFile) => {}}
         />);
@@ -192,7 +195,7 @@ describe("<FileBrowser />", ()=>{
 
         //We can use same approach as in previous test
         //@ts-ignore
-        component.instance()._handleItemInvoked(mockData.items[0]);
+        component.instance()._selection.setIndexSelected(0, true, false);
         
         assert.isTrue(asserted);
     });

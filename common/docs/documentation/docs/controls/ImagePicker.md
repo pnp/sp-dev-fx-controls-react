@@ -33,8 +33,7 @@ import { ImagePicker } from '@pnp/spfx-controls-react/lib/ImagePicker';
   onFileSelected={handleFileSelected}
   onDeleteFile={handleDeleteFile}
   selectedFileUrl={selectedImageUrl}
-  context={appContext}
- >
+  context={appContext} />
 ```
 
 - With the `onFileSelect` property you can get the selected image:
@@ -60,8 +59,8 @@ The HoverReactionsBar control can be configured with the following properties:
 | Property        | Type                                              | Required | Description             |
 | --------------- | ------------------------------------------------- | -------- | ----------------------- |
 | onFileSelected  | onFileSelect: (file: IFilePickerResult ) => void; | yes      | OnSelectedFile Callback |
-| onDeleteFile    | onDeleteFile: () => void                          | no       | onDeleteFile CallBack   |
-| selectedFileUrl | string                                            | no       | Default Selected Image  |
+| onDeleteFile    | onDeleteFile: () => void                          | yes      | onDeleteFile CallBack   |
+| selectedFileUrl | string                                            | yes      | Default Selected Image  |
 | context         | BaseComponentContext                              | yes      | Context                 |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ImagePicker)

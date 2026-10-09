@@ -133,7 +133,7 @@ export const useUtils = (): IUseUtils => {
             base64Str = tempCanvas.toDataURL("image/png", 1);
           } catch (err) {
             if (DEBUG) {
-              console.error(`[ImageService.getBase64Image]: Err='${err.message}'`);
+              console.error(`[ImageService.getBase64Image]: Err='${(err as Error).message}'`);
             }
             return "";
           }
@@ -158,14 +158,14 @@ export const useUtils = (): IUseUtils => {
       return dataURL;
     } catch (err) {
       if (DEBUG) {
-        console.error(`[getBase64ImageFromDOMImg]: Err='${err.message}'`);
+        console.error(`[getBase64ImageFromDOMImg]: Err='${(err as Error).message}'`);
       }
       return undefined;
     }
   }, []);
 
   const getFileFromBlob = React.useCallback((blob: Blob, fileName: string): File => {
-    let result: any = null; // eslint-disable-line @typescript-eslint/no-explicit-any
+    let result: any = null;  
     // IE 11 foesn't support File API, create a workaround to return Blob with fileName assigned.
     try {
       result = new File([blob], fileName);

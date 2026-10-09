@@ -70,15 +70,13 @@ export default class SPTermStorePickerService {
       );
       const jsonResult = await callResult.json();
 
-      const node = jsonResult.find(
-        (x) => x._ObjectType_ === 'SP.Taxonomy.Term'
-      );
+      const node = jsonResult.find((x: { _ObjectType_: string }) => x._ObjectType_ === "SP.Taxonomy.Term");
       if (node && node.Labels && node.Labels._Child_Items_) {
-        result = node.Labels._Child_Items_.map((termLabel) => termLabel.Value);
+        result = node.Labels._Child_Items_.map((termLabel: { Value: string }) => termLabel.Value);
       }
     } catch (error) {
       result = null;
-      console.log(error.message);
+      console.log(error instanceof Error ? error.message : String(error));
     }
     return result;
   }
@@ -333,8 +331,8 @@ export default class SPTermStorePickerService {
     return this.searchTermsByTermSet(searchText);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private getTermsById<T>(termId, useSessionStorage: boolean = true): T | null {
+   
+  private getTermsById<T>(termId: string, useSessionStorage: boolean = true): T | null {
     try {
       if (useSessionStorage && window.sessionStorage) {
         const terms = window.sessionStorage.getItem(termId);

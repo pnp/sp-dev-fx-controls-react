@@ -17,6 +17,17 @@ Please use following logic on submitting your questions or issues to right locat
 
 ## Contributing
 
+The v4 branch uses Rush to manage `libraries/spfx-controls-react` and
+`apps/controls-tests`. Use Node.js 22 (22.14.0 or later), then run
+`node common/scripts/install-run-rush.js install` and
+`node common/scripts/install-run-rush.js rebuild` from the repository root.
+Both projects use Heft and SPFx 1.23.2. The library requires SPFx 1.23.2 or later
+and React 17 in consuming projects.
+
+To serve the test web part and customizers, build the library first, then run
+`npm run start` inside `apps/controls-tests`. Documentation lives in
+`common/docs/documentation`.
+
 We'd love your help! If you have ideas for new features or feedback, let us know by creating an issue in the [issues list](https://github.com/pnp/sp-dev-fx-controls-react/issues). Before you submit a PR with your improvements, please review our [project guides](https://pnp.github.io/sp-dev-fx-controls-react/guides).
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a

@@ -147,5 +147,10 @@ The grid layout control can be configured with the following properties:
 | items | any[] | yes | The array of items you wish to display. |
 | listProps | IListProps | no | Provides additional list properties to customize the underlying list. |
 | onRenderGridItem | function | yes | onRenderGridItem handler for the grid layout. Use this handler to specify how you wish to render each grid item |
+| itemPadding | number | no | Gap between items. |
+| itemMinWidth | number | no | Minimum width for each item. |
+| itemMaxWidth | number | no | Maximum width for each item. |
+| compactThreshold | number | no | Threshold width below which the compact layout is activated. |
+| rowsPerPage | number | no | Number of rows displayed per page. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/gridlayout)

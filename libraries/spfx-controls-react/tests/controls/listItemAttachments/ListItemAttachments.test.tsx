@@ -1,11 +1,10 @@
 ///<reference types="jest" />
 import * as React from "react";
-import { mount, configure } from "enzyme";
-import * as Adapter from 'enzyme-adapter-react-16';
+import { mount } from "enzyme";
 import { ListItemAttachments } from "../../../src/controls/listItemAttachments/ListItemAttachments";
 import { assert}  from "chai";
 
-configure({ adapter: new Adapter() });
+const attachmentTitle = (card: Element): string => card.querySelector('.ms-Label').textContent;
 
 describe("<ListItemAttachments />",()=>{
     test("should render item attachment", async ()=>{
@@ -17,7 +16,7 @@ describe("<ListItemAttachments />",()=>{
             }
         };
         let mockSPService = {
-            getListItemAttachments: (listId, itemId)=>Promise.resolve([{
+            getListItemAttachments: (listId: string, itemId: number)=>Promise.resolve([{
                 FileName : "Test file.docx",
                 ServerRelativeUrl: "/sites/test-site/Shared Documents/TestFile.docx"
             },{
@@ -41,10 +40,10 @@ describe("<ListItemAttachments />",()=>{
         let testExcelCard = attachmentCards[1];
 
         assert.equal(testWordCard.querySelector("img").src,"https://static2.sharepointonline.com/files/fabric/assets/item-types/96/docx.png");
-        assert.equal(testWordCard.textContent,"Test file.docx");
+        assert.equal(attachmentTitle(testWordCard),"Test file.docx");
         
         assert.equal(testExcelCard.querySelector("img").src,"https://static2.sharepointonline.com/files/fabric/assets/item-types/96/xlsx.png");
-        assert.equal(testExcelCard.textContent,"Test file.xlsx");
+        assert.equal(attachmentTitle(testExcelCard),"Test file.xlsx");
     });
     test("should render placeholder if item has no attachments", async ()=>{
         let mockContext = {
@@ -55,7 +54,7 @@ describe("<ListItemAttachments />",()=>{
             }
         };
         let mockSPService = {
-            getListItemAttachments: (listId, itemId)=>Promise.resolve([])
+            getListItemAttachments: (listId: string, itemId: number)=>Promise.resolve([])
         }
 
         let listItemAttachments = mount(<ListItemAttachments 
@@ -80,7 +79,7 @@ describe("<ListItemAttachments />",()=>{
             }
         };
         let mockSPService = {
-            getListItemAttachments: (listId, itemId)=>Promise.resolve([{
+            getListItemAttachments: (listId: string, itemId: number)=>Promise.resolve([{
                 FileName : "Test file.docx",
                 ServerRelativeUrl: "/sites/test-site/Shared Documents/TestFile.docx"
             },{
@@ -114,7 +113,7 @@ describe("<ListItemAttachments />",()=>{
         let listItemAttachmentsRef = React.createRef<ListItemAttachments>();
         let mockFile =  new File([], "Test file.txt");
         let mockSPService = {
-            getListItemAttachments: (listId, itemId)=>Promise.resolve([{
+            getListItemAttachments: (listId: string, itemId: number)=>Promise.resolve([{
                 FileName : "Test file.xlsx",
                 ServerRelativeUrl: "/sites/test-site/Shared Documents/TestFile.xlsx"
             },{
@@ -152,10 +151,10 @@ describe("<ListItemAttachments />",()=>{
         let testTxtCard = attachmentCards[1];
 
         assert.equal(testWordCard.querySelector("img").src,"https://static2.sharepointonline.com/files/fabric/assets/item-types/96/xlsx.png");
-        assert.equal(testWordCard.textContent,"Test file.xlsx");
+        assert.equal(attachmentTitle(testWordCard),"Test file.xlsx");
         
         assert.equal(testTxtCard.querySelector("img").src,"https://static2.sharepointonline.com/files/fabric/assets/item-types/96/txt.png");
-        assert.equal(testTxtCard.textContent,"Test file.txt");
+        assert.equal(attachmentTitle(testTxtCard),"Test file.txt");
 
         assert.isTrue(asserted);
     });
@@ -185,8 +184,8 @@ describe("<ListItemAttachments />",()=>{
         let attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
         let mockFileCard = attachmentCards[0];
         let mockFileCardToDelete = attachmentCards[1];
-        assert.equal(mockFileCard.textContent,"Test file.txt");
-        assert.equal(mockFileCardToDelete.textContent,"Test file to delete.txt");
+        assert.equal(attachmentTitle(mockFileCard),"Test file.txt");
+        assert.equal(attachmentTitle(mockFileCardToDelete),"Test file to delete.txt");
 
         listItemAttachments.instance().setState({
             file: {
@@ -199,7 +198,7 @@ describe("<ListItemAttachments />",()=>{
         
         attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
         mockFileCard = attachmentCards[0];
-        assert.equal(mockFileCard.textContent,"Test file.txt");
+        assert.equal(attachmentTitle(mockFileCard),"Test file.txt");
         assert.isNotOk(attachmentCards[1]);
     });
     test("should delete with itemId provided", async ()=>{
@@ -212,7 +211,7 @@ describe("<ListItemAttachments />",()=>{
         };
         let asserted = false;
         let mockSPService = {
-            getListItemAttachments: (listId, itemId)=>Promise.resolve([]),
+            getListItemAttachments: (listId: string, itemId: number)=>Promise.resolve([]),
             deleteAttachment: (fileName: string, listId: string, itemId: number)=>{
                 assert.equal(fileName, "Test file.txt");
                 assert.equal(listId, "test-list-id");
@@ -247,8 +246,8 @@ describe("<ListItemAttachments />",()=>{
         let attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
         let mockFileCard = attachmentCards[0];
         let mockFileCardToDelete = attachmentCards[1];
-        assert.equal(mockFileCard.textContent,"Test file.xlsx");
-        assert.equal(mockFileCardToDelete.textContent,"Test file.txt");
+        assert.equal(attachmentTitle(mockFileCard),"Test file.xlsx");
+        assert.equal(attachmentTitle(mockFileCardToDelete),"Test file.txt");
         
         listItemAttachments.instance().setState({
             file: {
@@ -263,7 +262,7 @@ describe("<ListItemAttachments />",()=>{
         
         attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
         mockFileCard = attachmentCards[0];
-        assert.equal(mockFileCard.textContent,"Test file.xlsx");
+        assert.equal(attachmentTitle(mockFileCard),"Test file.xlsx");
         assert.isNotOk(attachmentCards[1]);
     })
 });

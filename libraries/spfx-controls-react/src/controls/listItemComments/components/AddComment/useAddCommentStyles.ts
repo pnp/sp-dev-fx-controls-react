@@ -11,7 +11,12 @@ import { AppContext } from '../../common';
 export const useAddCommentStyles: () => {
   documentCardUserStyles: Partial<IDocumentCardStyles>;
   deleteButtonContainerStyles: Partial<IStackStyles>;
-  reactMentionStyles: object;
+  reactMentionStyles: {
+    control: IStyle;
+    '&multiLine': { control: IStyle; highlighter: IStyle; input: IStyle };
+    '&singleLine': object;
+    suggestions: object;
+  };
   itemContainerStyles: IStackStyles;
   searchMentionContainerStyles: Partial<IStackStyles>;
   mentionsClasses: IProcessedStyleSet<{
@@ -21,7 +26,6 @@ export const useAddCommentStyles: () => {
     container: IStyle;
   }>;
 } = () => {
-  // eslint-disable-line @typescript-eslint/explicit-function-return-type
   const { theme } = React.useContext(AppContext);
   const itemContainerStyles: IStackStyles = {
     root: {
@@ -43,14 +47,16 @@ export const useAddCommentStyles: () => {
   const searchMentionContainerStyles: Partial<IStackStyles> = {
     root: {
       borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: 'silver',
-      width: 322,
-      ':focus': {
+      borderStyle: "solid",
+      borderColor: "silver",
+      width: "100%",
+      boxSizing: "border-box",
+      ":focus": {
         borderColor: theme.themePrimary,
       },
       ':hover': {
         borderColor: theme.themePrimary,
+        boxSizing: "border-box",
       },
     },
   };
@@ -59,11 +65,13 @@ export const useAddCommentStyles: () => {
     root: {
       marginTop: 2,
       backgroundColor: theme?.white,
-      boxShadow: '0 5px 15px rgba(50, 50, 90, .1)',
-      ':hover': {
+      boxShadow: "0 5px 15px rgba(50, 50, 90, .1)",
+      boxSizing: "border-box",
+      ":hover": {
         borderColor: theme.themePrimary,
         backgroundColor: theme.neutralLighterAlt,
         borderWidth: 1,
+        boxSizing: "border-box",
       } as IStyle,
     } as IStyle,
   };
@@ -71,18 +79,25 @@ export const useAddCommentStyles: () => {
   const componentClasses = mergeStyleSets({
     container: {
       borderWidth: 1,
-      borderStyle: 'solid',
-      display: 'block',
-      borderColor: 'silver',
-      overflow: 'hidden',
-      width: 320,
-      ':focus': {
+      borderStyle: "solid",
+      display: "block",
+      borderColor: "silver",
+      overflow: "hidden",
+      width: "100%",
+      boxSizing: "border-box",
+      paddingTop: 1,
+      paddingLeft: 1,
+    ":focus": {
         borderWidth: 2,
         borderColor: theme.themePrimary,
+        paddingTop: 0,
+        paddingLeft: 0,
       },
       ':hover': {
         borderWidth: 2,
         borderColor: theme.themePrimary,
+        paddingTop: 0,
+        paddingLeft: 0,
       },
     } as IStyle,
   });

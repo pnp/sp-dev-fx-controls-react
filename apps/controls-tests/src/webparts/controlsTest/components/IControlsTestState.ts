@@ -2,6 +2,7 @@ import {
   ImageSize,
   IProgressAction,
   IFilePickerResult,
+  IFilterBarItem,
 } from '@pnp/spfx-controls-react';
 import { ITag } from '@fluentui/react';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
@@ -20,6 +21,8 @@ export interface IControlsTestState {
   currentProgressActionIndex?: number;
   dateTimeValue?: Date;
   richTextValue: string | undefined;
+  richTextEditMode: boolean;
+  richTextUseCustomFormatting: boolean;
   currentCarouselElement: JSX.Element;
   canMovePrev: boolean;
   canMoveNext: boolean;
@@ -34,6 +37,7 @@ export interface IControlsTestState {
   showErrorDialog?: boolean;
   selectedTeam: ITag[];
   selectedTeamChannels: ITag[];
+  selectedGroups?: ITag[];
   filePickerDefaultFolderAbsolutePath?: string;
   errorMessage?: string;
   termPanelIsOpen?: boolean;
@@ -43,4 +47,8 @@ export interface IControlsTestState {
   termStoreInfo: ITermStoreInfo | null | undefined; // eslint-disable-line @rushstack/no-new-null
   termSetInfo: ITermSetInfo | null | undefined; // eslint-disable-line @rushstack/no-new-null
   testTerms: ITermInfo[];
+  selectedUrlImagePicker: string;
+  isOpenHoverReactionBar: boolean;
+  isOpenShareDialog: boolean;
+  filters: IFilterBarItem[];
 }

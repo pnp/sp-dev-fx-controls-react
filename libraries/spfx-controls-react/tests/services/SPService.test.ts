@@ -231,7 +231,7 @@ describe("SPService", () => {
             }
         }
         let spService = new SPService(ctx as any);
-        let items = await spService.getListItems(filterText, "test-list-id", columnName, field, keyColumnName);
+        let items = await spService.getListItems(filterText, "test-list-id", columnName, { Id: "test-field-id", TypeAsString: "Text" }, keyColumnName);
         assert.equal(calledApi, expectedApi);
     });
 });

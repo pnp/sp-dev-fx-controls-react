@@ -18,7 +18,7 @@ import {
   OFFICE_MONOCHROMATIC12,
   OFFICE_MONOCHROMATIC13
 } from './ChartColorPalettes';
-import * as Color from 'color';
+import Color from 'color';
 
 
 /**

@@ -15,8 +15,8 @@ export const useDeleteFile = ( context: BaseComponentContext) => {
       await graphClient.api(requestURL).delete();
       return true;
     } catch (err) {
-      console.error(`[DeleteFile] Err='${err.message}'`);
-      throw new Error(`Something went wrong when deleting the file. Status='${err.status}`);
+      console.error(`[DeleteFile] Err='${(err as Error).message}'`);
+      throw new Error(`Something went wrong when deleting the file. Status='${(err as any).status}`); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     }
 

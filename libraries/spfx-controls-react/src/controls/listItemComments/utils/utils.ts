@@ -113,7 +113,7 @@ export const getMd5HashForUrl = async (url: string): Promise<string> => {
  * @param userId
  * @returns user photo
  */
-export const getUserPhoto = async (userId): Promise<string> => {
+export const getUserPhoto = async (userId: string | number): Promise<string> => {
   const personaImgUrl = PROFILE_IMAGE_URL + userId;
 
   const url: string = await getImageBase64(personaImgUrl);

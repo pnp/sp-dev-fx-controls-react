@@ -1,11 +1,9 @@
 ///<reference types="jest" />
 import * as React from "react";
-import { mount, configure } from "enzyme";
-import * as Adapter from 'enzyme-adapter-react-16';
+import { mount } from "enzyme";
 import { UploadAttachment } from "../../../src/controls/listItemAttachments/UploadAttachment";
 import { assert}  from "chai";
 
-configure({ adapter: new Adapter() });
 
 describe("<UploadAttachment />", ()=>{
     test("should upload document with itemId provided", async ()=>{
@@ -23,6 +21,7 @@ describe("<UploadAttachment />", ()=>{
                 itemId={1}
                 webUrl="/sites/test-site"
                 context={mockContext as any}
+                onUploadDialogClosed={() => {}}
                 onAttachmentUpload={(file)=>{
                     assert.equal(file,mockFile);
                 }}
@@ -59,6 +58,7 @@ describe("<UploadAttachment />", ()=>{
                 listId="test-list-id"
                 webUrl="/sites/test-site"
                 context={mockContext as any}
+                onUploadDialogClosed={() => {}}
                 onAttachmentUpload={(file)=>{
                     assert.equal(file,mockFile);
                     asserted = true;

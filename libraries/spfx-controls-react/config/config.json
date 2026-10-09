@@ -5,7 +5,7 @@
     "spfx-controls-library": {
       "components": [
         {
-          "entrypoint": "./lib//libraries/spfxControls/SpfxControlsLibrary.js",
+          "entrypoint": "./lib/libraries/spfxControls/SpfxControlsLibrary.js",
           "manifest": "./src/libraries/spfxControls/SpfxControlsLibrary.manifest.json"
         }
       ]

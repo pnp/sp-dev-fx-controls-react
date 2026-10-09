@@ -1,5 +1,5 @@
 {
-  "extends": "./node_modules/@microsoft/rush-stack-compiler-4.7/includes/tsconfig-web.json",
+  "extends": "./node_modules/@microsoft/spfx-web-build-rig/profiles/default/tsconfig-base.json",
   "compilerOptions": {
     "target": "es5",
     "forceConsistentCasingInFileNames": true,
@@ -23,11 +23,12 @@
     "types": [
       "webpack-env",
       "wicg-entries-api",
-      "jest",
+      "jest"
     ],
     "lib": [
       "es5",
       "dom",
+      "es2019",
       "es2015.collection",
       "es2015.promise"
     ]

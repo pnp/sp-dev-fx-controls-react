@@ -2,26 +2,28 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 
 import {
-  IReadonlyTheme,
-  ThemeChangedEventArgs,
-  ThemeProvider,
-} from '@microsoft/sp-component-base';
-import { Version } from '@microsoft/sp-core-library';
+  ControlVisibility,
+  IControlsTestWebPartProps,
+} from './IControlsTestWebPartProps';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneToggle,
 } from '@microsoft/sp-property-pane';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+import {
+  IReadonlyTheme,
+  ThemeChangedEventArgs,
+  ThemeProvider,
+} from '@microsoft/sp-component-base';
 
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import ControlsTest from './components/ControlsTest';
 import { IControlsTestProps } from './components/IControlsTestProps';
 import {
-  ControlVisibility,
-  IControlsTestWebPartProps,
-} from './IControlsTestWebPartProps';
-import { PropertyPaneControlToggles } from './propertyPane/PropertyPaneControlToggles';
+  PropertyPaneControlToggles,
+} from './propertyPane/PropertyPaneControlToggles';
 import { PropertyPaneListPicker } from './propertyPane/PropertyPaneListPicker';
+import { Version } from '@microsoft/sp-core-library';
 
 /**
  * Web part to test the React controls
@@ -86,7 +88,6 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
     if (listItemId < 1 || isNaN(listItemId)) {
       listItemId = undefined;
     }
-    console.log(listItemId);
 
     const element: React.ReactElement<IControlsTestProps> = React.createElement(
       ControlsTest,
@@ -98,17 +99,13 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
         title: this.properties.title ?? 'Sample title',
         displayMode: this.displayMode,
         dynamicFormListId: this.properties.dynamicFormListId,
-        dynamicFormListItemId: listItemId?.toString() ?? '',
-        dynamicFormErrorDialogEnabled:
-          this.properties.dynamicFormErrorDialogEnabled,
-        dynamicFormCustomFormattingEnabled:
-          this.properties.dynamicFormCustomFormattingEnabled,
-        dynamicFormClientSideValidationEnabled:
-          this.properties.dynamicFormClientSideValidationEnabled,
-        dynamicFormFieldValidationEnabled:
-          this.properties.dynamicFormFieldValidationEnabled,
-        dynamicFormFileSelectionEnabled:
-          this.properties.dynamicFormFileSelectionEnabled,
+        dynamicFormListItemId: listItemId?.toString() ?? undefined,
+        dynamicFormErrorDialogEnabled: this.properties.dynamicFormErrorDialogEnabled,
+        dynamicFormCustomFormattingEnabled: this.properties.dynamicFormCustomFormattingEnabled,
+        dynamicFormClientSideValidationEnabled: this.properties.dynamicFormClientSideValidationEnabled,
+        dynamicFormFieldValidationEnabled: this.properties.dynamicFormFieldValidationEnabled,
+        dynamicFormFileSelectionEnabled: this.properties.dynamicFormFileSelectionEnabled,
+        dynamicFormToggleTaxonomyPicker: this.properties.dynamicFormToggleTaxonomyPicker,
         onOpenPropertyPane: () => {
           this.context.propertyPane.open();
         },
@@ -183,7 +180,10 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
                 PropertyPaneToggle('dynamicFormFileSelectionEnabled', {
                   label: 'Dynamic Form File Selection',
                 }),
-              ],
+                PropertyPaneToggle('dynamicFormToggleTaxonomyPicker', {
+                  label: 'Dynamic Form Use Modern Taxonomy Picker'
+                }),
+              ]
             },
             {
               groupName: 'Controls',

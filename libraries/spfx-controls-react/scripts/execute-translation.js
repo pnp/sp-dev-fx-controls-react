@@ -12,7 +12,7 @@ const fs = require('fs');
 const _ = require('lodash');
 // Cognitive services
 const request = require('request-promise');
-const uuidv4 = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 // Replace with process.env.subscriptionKey to get an access to Azure Cognitive services
 const subscriptionKey = process.env.SUBSCRIPTION_KEY;
@@ -240,4 +240,3 @@ const run = async () => {
   }
 };
 run();
-

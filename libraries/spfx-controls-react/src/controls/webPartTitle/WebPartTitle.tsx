@@ -37,7 +37,7 @@ export class WebPartTitle extends React.Component<IWebPartTitleProps, {}> {
   /**
    * Process the text area change
    */
-  private _onChange(event): void {
+  private _onChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     this.props.updateProperty(event.target.value);
   }
 

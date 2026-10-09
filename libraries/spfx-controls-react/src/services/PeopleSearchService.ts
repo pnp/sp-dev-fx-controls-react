@@ -90,27 +90,12 @@ export default class SPPeopleSearchService {
   /**
    * Search person by its email or login name
    */
-  public async searchPersonByEmailOrLogin(
-    email: string,
-    principalTypes: PrincipalType[],
-    siteUrl: string = null,
-    groupId: number | string | (string | number)[] = null,
-    ensureUser: boolean = false,
-    allowUnvalidated: boolean = false
-  ): Promise<IPeoplePickerUserItem> {
+  public async searchPersonByEmailOrLogin(email: string, principalTypes: PrincipalType[], siteUrl: string = null, groupId: number | string | (string | number)[] = null, ensureUser: boolean = false, allowUnvalidated: boolean = false, maximumSuggestions: number = 5): Promise<IPeoplePickerUserItem> {
     // If groupId is array, load data from all groups
     if (Array.isArray(groupId)) {
       let userResults: IPeoplePickerUserItem[] = [];
       for (const id of groupId) {
-        const tmpResults = await this.searchTenant(
-          siteUrl,
-          email,
-          1,
-          principalTypes,
-          ensureUser,
-          allowUnvalidated,
-          id
-        );
+        const tmpResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, id);
         userResults = userResults.concat(tmpResults);
       }
 
@@ -123,16 +108,15 @@ export default class SPPeopleSearchService {
         ? filteredUserResults[0]
         : null;
     } else {
-      const userResults = await this.searchTenant(
-        siteUrl,
-        email,
-        1,
-        principalTypes,
-        ensureUser,
-        allowUnvalidated,
-        groupId
-      );
-      return userResults && userResults.length > 0 ? userResults[0] : null;
+      const userResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, groupId);
+      if (userResults && userResults.length > 0) {
+        const exactMatch = userResults.filter(u => u.loginName?.toLowerCase() === email.toLowerCase() || u.secondaryText?.toLowerCase() === email.toLowerCase() || u.text?.toLowerCase() === email.toLowerCase());
+        if (exactMatch && exactMatch.length > 0) {
+          return exactMatch[0];
+        }
+      }
+      return null;
+      //return (userResults && userResults.length > 0) ? userResults[0] : null;
     }
   }
 
@@ -237,7 +221,7 @@ export default class SPPeopleSearchService {
 
         if (graphUserResponse.value && graphUserResponse.value.length > 0) {
           // Get user loginName from user email
-          const _users = [];
+          const _users: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
           const batch = Web(this.context.absoluteUrl).createBatch();
           for (const value of graphUserResponse.value) {
             sp.web
@@ -301,14 +285,7 @@ export default class SPPeopleSearchService {
 
           // Filter out "UNVALIDATED_EMAIL_ADDRESS"
           if (!allowUnvalidated) {
-            values = values.filter(
-              (v) =>
-                !(
-                  v.EntityData &&
-                  v.EntityData.PrincipalType &&
-                  v.EntityData.PrincipalType === 'UNVALIDATED_EMAIL_ADDRESS'
-                )
-            );
+            values = values.filter((v: any) => !(v.EntityData && v.EntityData.PrincipalType && v.EntityData.PrincipalType === "UNVALIDATED_EMAIL_ADDRESS")); // eslint-disable-line @typescript-eslint/no-explicit-any
           }
 
           // Check if local user IDs need to be retrieved
@@ -333,13 +310,11 @@ export default class SPPeopleSearchService {
           }
 
           // Filter out NULL keys
-          values = values.filter((v) => v.Key !== null);
-          const userResults = values.map((element) => {
-            const accountName: string = element.Description || '';
-            const email: string =
-              element.EntityData?.Email || element.Description;
-            const secondaryText =
-              element.EntityData?.Email || element.ProviderName;
+          values = values.filter((v: any) => v.Key !== null); // eslint-disable-line @typescript-eslint/no-explicit-any
+          const userResults = values.map((element: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+            const accountName: string = element.Description || "";
+            const email: string = element.EntityData?.Email || element.Description;
+            const secondaryText = element.EntityData?.Email || element.ProviderName;
             switch (element.EntityType) {
               case 'User':
                 return {

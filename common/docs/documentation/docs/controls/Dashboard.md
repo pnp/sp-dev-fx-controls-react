@@ -111,6 +111,7 @@ Provides settings of Dashboard's widget
 | controlOptions | IWidgetControlOptions | no | Component rendering options. |
 | body | IWidgetBodyContent[] | no | Widget's content (children) rendered as tabs. |
 | link | IWidgetLink | no | Widget's link rendered at the bottom part of the widget. |
+| rowSpan | number | no | Number of rows the widget should span. If specified, it will override any vertical value set from the size property. |
 
 Interface `IWidgetActionKey`
 

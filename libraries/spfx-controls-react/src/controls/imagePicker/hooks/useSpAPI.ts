@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-for-in-array */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 
 import { BaseComponentContext } from '@microsoft/sp-component-base';
@@ -57,7 +54,7 @@ export const useSpAPI = (context: BaseComponentContext): ISpAPI => {
       const blob: Blob = await fileDownloadResult.blob();
       return  getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[DownloadBingContent] Err='${err.message}'`);
+      console.error(`[DownloadBingContent] Err='${(err as Error).message}'`);
       return null;
     }
   }
@@ -80,7 +77,7 @@ export const useSpAPI = (context: BaseComponentContext): ISpAPI => {
       const blob: Blob = await fileDownloadResult.blob();
       return  getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[DownloadBingContent] Err='${err.message}'`);
+      console.error(`[DownloadBingContent] Err='${(err as Error).message}'`);
       return null;
     }
   };

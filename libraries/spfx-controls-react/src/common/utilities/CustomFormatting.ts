@@ -84,7 +84,7 @@ export default class CustomFormattingHelper {
         } 
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     public renderCustomFormatContent = (node: ICustomFormattingNode, context: Context, rootEl: boolean = false): JSX.Element | string | number => {
 
         // We don't want attempts to render custom format content to kill the component or web part, 
@@ -106,9 +106,10 @@ export default class CustomFormattingHelper {
             // to be evaluated:
             const styleProperties: React.CSSProperties = {};
             if (node.style) {
-                for (const styleAttribute in node.style) {
-                    if (node.style[styleAttribute]) {
-                        styleProperties[styleAttribute] = this.evaluateCustomFormatContent(node.style[styleAttribute], context) as string;
+                const nodeStyle = node.style as Record<string, string>;
+                for (const styleAttribute in nodeStyle) {
+                    if (nodeStyle[styleAttribute]) {
+                        (styleProperties as Record<string, string>)[styleAttribute] = this.evaluateCustomFormatContent(nodeStyle[styleAttribute], context) as string;
                     }
                 }
             }

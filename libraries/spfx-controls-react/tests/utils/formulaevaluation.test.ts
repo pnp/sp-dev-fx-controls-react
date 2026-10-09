@@ -142,10 +142,12 @@ describe('Math Expression Evaluation', () => {
     });
     it('Should return the cosine of a number', () => {
         const result = evaluate("cos(0.5)");
+        if (typeof result !== 'number') throw new Error('Expected a numeric result');
         assert.approximately(result, 0.87758, 0.00001);
     });
     it('Should return the sine of a number', () => {
         const result = evaluate("sin(0.5)");
+        if (typeof result !== 'number') throw new Error('Expected a numeric result');
         assert.approximately(result, 0.47942, 0.00001);
     });
 });
@@ -208,19 +210,20 @@ describe('String Expression Evaluation', () => {
 describe('Date Expression Evaluation', () => {
     it('Should convert a string to a date', () => {
         const result = evaluate("toDate('2023-09-01')"); 
+        if (!(result instanceof Date)) throw new Error('Expected a Date result');
         assert.equal(result.toISOString(), '2023-09-01T00:00:00.000Z');
     });
     it('Should convert a date to a date string', () => {
         const result = evaluate("toDateString(toDate('2023-09-01'))"); 
-        assert.equal(result, 'Fri Sep 01 2023');
+        assert.equal(result, new Date('2023-09-01').toDateString());
     });
     it('Should get the date component of a date', () => {  
         const result = evaluate("getDate(toDate('2023-09-01'))"); 
-        assert.equal(result, 1);
+        assert.equal(result, new Date('2023-09-01').getDate());
     });
     it('Should get the month component of a date', () => {
         const result = evaluate("getMonth(toDate('2023-09-01'))");
-        assert.equal(result, 8);
+        assert.equal(result, new Date('2023-09-01').getMonth());
     });
     it('Should get the year component of a date', () => {
         const result = evaluate("getYear(toDate('2023-09-01'))");
@@ -228,10 +231,12 @@ describe('Date Expression Evaluation', () => {
     });
     it('Should add days to a date', () => {
         const result = evaluate("addDays(toDate('2023-09-01'), 1)");
+        if (!(result instanceof Date)) throw new Error('Expected a Date result');
         assert.equal(result.toISOString(), '2023-09-02T00:00:00.000Z');
     });
     it('Should add minutes to a date', () => {
         const result = evaluate("addMinutes(toDate('2023-09-01'), 1)");
+        if (!(result instanceof Date)) throw new Error('Expected a Date result');
         assert.equal(result.toISOString(), '2023-09-01T00:01:00.000Z');
     });
 });

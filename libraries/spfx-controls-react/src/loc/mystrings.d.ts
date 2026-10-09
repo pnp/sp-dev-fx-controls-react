@@ -1,8 +1,50 @@
 declare interface IControlStrings {
-  ImagePickderSelectLabel: string;
 
-  ImagePickerDeleteImageLabel: string;
+
+  KPISucess: string;
+  KPIDEfaultTitle: string;
+  KPIError: string;
+  KPIExceedsGoalTreshhold: string;
+  KPIGoal: string;
+  KPIHigherIsBetter: string;
+  KPILowerIsBetter: string;
+  KPIMaxAllowedThreshold: string;
+  KPINoDescription: string;
+  KPIProgressGoal: string;
+  KPITotalItemsInScope: string;
+  KPIWithinGoalThreshold: string;
+  KPITotalItems: string;
+    KPICurrentValueAsPercent: string;
+KPIExceedGoal: string;
+KPIOnTrack: string;
+KPIPercentOfTotal: string;
+
+  CalendarControlDayOfWeekSunday: string;
+  CalendarControlDayOfWeekMonday: string;
+  CalendarControlDayOfWeekTuesday: string;
+  CalendarControlDayOfWeekWednesday: string;
+  CalendarControlDayOfWeekThursday: string;
+  CalendarControlDayOfWeekFriday: string;
+  CalendarControlDayOfWeekSaturday: string;
+
+
+  CalendarControlDetailsLabel: string;
+  CalendarControlViewMonthLabel: string;
+  CalendarControlViewWeekLabel: string;
+  CalendarControlViewDayLabel: string;
+  CalendarControlSelectMonthLabel: string;
+  CalendarControlSelectDayLabel: string;
+  CalendarControlSelectWeekLabel: string;
+  CalendarControlTodayLabel: string;
+
+  CalendarControlPreviousLabel: string;
+  CalendarControlNextLabel: string;
+
+  CalendarControlAttendeessLabel: string;
+  CalendarControlFullDaylabel: string;
+
   ImagePickderSelectLabel: string;
+  ImagePickerDeleteImageLabel: string;
   ImagePickerCancelLabel: string;
   ImagePickerPanelHeaderText: string;
   ImagePickerSharePointTabLabel: string;
@@ -28,6 +70,7 @@ declare interface IControlStrings {
   ProgressStepsIndicatorNoSteps: string;
   ListItemCommentsLabel: string;
   ListItemCommentsNoCommentsLabel: string;
+  ListItemCommentsPlaceholder: string;
   ListItemCommentDIalogDeleteSubText: string;
   ListItemCommentsDialogDeleteTitle: string;
 
@@ -40,6 +83,9 @@ declare interface IControlStrings {
   TeamPickerButtonRemoveTitle: string;
   TeamPickerSugestionsHeaderText: string;
   TeamPickernoResultsFoundText: string;
+  GroupPickerSuggestionsHeaderText: string;
+  GroupPickerGroupTypeM365Label: string;
+  GroupPickerGroupTypeSecurityLabel: string;
 
   TeamChannelPickerSugestionHeaderText: string;
   TeamsChannelPickerNoresultsFoundText: string;
@@ -52,6 +98,15 @@ declare interface IControlStrings {
 
   PeoplePickerGroupNotFound: string;
   ListViewFilterLabel: string;
+  DetailsListAriaLabel: string;
+  DetailsListHeaderAriaLabel: string;
+  DetailsListSelectAllRowsAriaLabel: string;
+  DetailsListSelectionAriaLabel: string;
+  DetailsListSelectRowAriaLabel: string;
+  DetailsListResizeColumnAriaLabel: string;
+  DetailsListLoading: string;
+  DetailsListLoadingMore: string;
+  DetailsListNoItems: string;
 
   PeoplePickerSearchText: string;
   peoplePickerComponentTooltipMessage: string;
@@ -93,19 +148,18 @@ declare interface IControlStrings {
   ListItemAttachmentsdialogOKbuttonLabelOnDelete: string;
   ListItemAttachmentsuploadAttachmentDialogTitle: string;
   ListItemAttachmentsuploadAttachmentButtonLabel: string;
-  ListItemAttachmentsuploadAttachmentErrorMsg: String;
+  ListItemAttachmentsuploadAttachmentErrorMsg: string;
   ListItemAttachmentsCommandBarAddAttachmentLabel: string;
   ListItemAttachmentsloadingMessage: string;
   ListItemAttachmentslPlaceHolderIconText: string;
   ListItemAttachmentslPlaceHolderDescription: string;
   ListItemAttachmentslPlaceHolderButtonLabel: string;
-  //Maps
+
   mapsErrorMessage: string;
   mapsLoadingText: string;
   mapsSearchButtonText: string;
   mapsTitlePrefix: string;
 
-  //RichText
   HeaderNormalText: string;
   HeaderH2: string;
   HeaderH3: string;
@@ -349,7 +403,6 @@ declare interface IControlStrings {
   Yes: string;
   OrgAssetsLinkLabel: string;
 
-  // folder explorer
   NewFolderNamePlaceholder: string;
   FolderFilterBoxPlaceholder: string;
   FolderExplorerLoading: string;
@@ -357,15 +410,12 @@ declare interface IControlStrings {
   NewFolderIncorrectSymbolsError: string;
   SomethingWentWrong: string;
 
-  //Icon picker
   SelectedLabel: string;
   SelectIcon: string;
 
-  //Tree View
   TreeViewExpandTitle: string;
   TreeViewCollapseTitle: string;
 
-  // FieldCollectionData
   CollectionDataEmptyFields: string;
   CollectionDataEmptyValue: string;
   CollectionAddRowButtonLabel: string;
@@ -396,10 +446,8 @@ declare interface IControlStrings {
   DynamicFormChooseFileButtonText: string;
   DynamicFormRequiredFileMessage: string;
 
-  // Location picker
   customDisplayName: string;
 
-  // Modern taxonomy picker
   ModernTaxonomyPickerDefaultPlaceHolder: string;
   ModernTaxonomyPickerTreeTitleSingle: string;
   ModernTaxonomyPickerTreeTitleMulti: string;
@@ -424,9 +472,33 @@ declare interface IControlStrings {
   TermSertNaviagtionErrorMessage: string;
 
   HoverReactionBarSearchEmojiPlaceholder: string;
-}
 
-declare interface IDateTimeStrings {
+  // Filter Bar
+  AppliedFiltersAriaLabel: string;
+  ClearAllFiltersTitle: string;
+  ClearFilterTitle: string;
+  ClearAllFiltersText: string;
+  FilterOverflowAriaLabel: string;
+KPIPercentOfTotal: string;
+
+
+  worldMapZoomContent: string;
+  worldMapZoomIn: string;
+  worldMapZoomOut: string;
+  worldMapReset: string;
+  worldMapCoord: string;
+  worldMapE: string;
+worldMapN: string;
+worldMapSearchField: string;
+worldMapSearchLocations: string;
+worldMapTitle: string;
+worldMapFoundLabel: string;
+worldMapLocationLabel: string;
+worldMapLocationPluralLabel: string;
+worldMapLoadintText: string;
+worldMapResetMap: string;
+worldMapFlag: string;
+
   L_RelativeDateTime_AFewSecondsFuture: string;
   L_RelativeDateTime_AFewSeconds: string;
   L_RelativeDateTime_AboutAMinuteFuture: string;
@@ -451,6 +523,19 @@ declare interface IDateTimeStrings {
   L_RelativeDateTime_XDaysFutureIntervals: string;
   L_RelativeDateTime_XDaysIntervals: string;
   L_RelativeDateTime_Today: string;
+  // SP File Picker
+  SPFilePickerButtonText: string;
+  SPFilePickerDialogTitle: string;
+  SPFilePickerMissingBaseUrlError: string;
+  SPFilePickerPopupBlockedError: string;
+  SPFilePickerUnableToObtainTokenError: string;
+
+
+
+
+
+
+
 }
 
 declare module "ControlStrings" {

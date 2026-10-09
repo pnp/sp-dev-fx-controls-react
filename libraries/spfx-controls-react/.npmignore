@@ -2,10 +2,25 @@
 config
 
 gulpfile.js
+gulpfile.sonarqube.js
+eslint.config.js
+versionUpdater.mjs
+tests
+.husky
+.heft
+.rush
+lib-commonjs
+jest-output
+coverage
+**/*.test.*
+teams
+sonar-project.properties
+sp-dev-fx-controls-react.yml
 
 release
 src
 temp
+node_modules
 
 tsconfig.json
 tslint.json

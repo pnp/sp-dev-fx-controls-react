@@ -62,6 +62,10 @@ private _getPeoplePickerItems(items: any[]) {
 
 Sometimes, depending on how your organization is configured regarding users and groups, performing search can be tricky. As the `PeoplePicker` is using the `SP.UI.ApplicationPages.ClientPeoplePickerWebServiceInterface.clientPeoplePickerSearchUser` endpoint under the hood, there is an optional parameter called `useSubstrateSearch`. Setting this to `true` will perform a search using the Microsoft 365 Substrate, which will go through centralized stored data in order to find requested info. More details about this feature can be found [here](https://techcommunity.microsoft.com/t5/video-hub/admin-39-s-guide-to-the-microsoft-365-substrate/ba-p/3633132) and [here](https://youtu.be/uuiTR8r27Os?si=JkPyfiQggvCMj0xg&t=467).
 
+## Enable external users search
+
+To enable external users search, the `allowUnvalidated` property must be set to `true`. Behind the scenes, it will include returned values from search with `EntityData.PrincipalType` set to `UNVALIDATED_EMAIL_ADDRESS`.
+
 ## Implementation
 
 The People picker control can be configured with the following properties:

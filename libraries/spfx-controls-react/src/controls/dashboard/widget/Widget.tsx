@@ -35,6 +35,11 @@ export const Widget = ({
             break
     }
 
+    // Support vertical extension via rowSpan
+    if (widget.rowSpan && widget.rowSpan > 1) {
+        cardStyle.gridRowEnd = `span ${widget.rowSpan}`;
+    }
+
     if(widget.controlOptions && widget.controlOptions.isHidden){
         return null;
     }

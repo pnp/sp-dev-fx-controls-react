@@ -1,16 +1,19 @@
 import * as React from 'react';
 
 import {
+  Body1,
   FluentProvider,
-  makeStyles,
-  shorthands,
+  IdPrefixProvider,
   Theme,
   Title3,
+  makeStyles,
+  shorthands,
 } from '@fluentui/react-components';
-import { createV9Theme } from '@fluentui/react-migration-v8-v9';
+
 import { WebPartContext } from '@microsoft/sp-webpart-base';
 
-import { UserPicker, type IUserInfo } from '@pnp/spfx-controls-react/lib/userPicker';
+import { createV9Theme } from '@fluentui/react-migration-v8-v9';
+import { Kpis } from '@pnp/spfx-controls-react/lib/controls/KPIControl';
 
 const useStyles = makeStyles({
   root: {
@@ -45,7 +48,7 @@ export interface ITestControlProps {
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
   props: React.PropsWithChildren<ITestControlProps>
 ) => {
-  const { themeVariant, context } = props;
+  const { themeVariant } = props;
 
   const styles = useStyles();
 
@@ -53,18 +56,19 @@ export const TestControl: React.FunctionComponent<ITestControlProps> = (
     return createV9Theme(themeVariant);
   }, [themeVariant]);
 
-  const onSelectedUsers = (users: IUserInfo[]) => {
-    console.log('selected users', users);
-  };
-
   return (
     <>
-      <FluentProvider theme={setTheme()}>
+    <IdPrefixProvider value="test-control-">
+      <FluentProvider theme={setTheme()} applyStylesToPortals={true}>
         <div className={styles.title}>
-          <Title3>Test Control - userPicker</Title3>
+          <Title3>KPIS Control Test</Title3>
         </div>
-        <UserPicker context={context} onSelectedUsers={onSelectedUsers} />
+        <Body1>Regular cards</Body1>
+        <Kpis />
+        <Body1>Compact cards</Body1>
+        <Kpis compact={true} />
       </FluentProvider>
+      </IdPrefixProvider>
     </>
   );
 };

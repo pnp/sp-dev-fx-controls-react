@@ -3,11 +3,34 @@ import { findIndex } from '@microsoft/sp-lodash-subset';
 import { IFileTypeIconProps, ApplicationType, ApplicationIconList, IconType, IconSizes, ImageSize, IImageResult, ICON_GENERIC_16, ICON_GENERIC_48, ICON_GENERIC_96, ImageInformation } from './IFileTypeIcon';
 import * as telemetry from '../../common/telemetry';
 import { Icon } from '@fluentui/react/lib/Icon';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
+import { getIcon, registerIcons } from '@fluentui/style-utilities';
 import { ICON_GENERIC_20 } from '.';
 
 const ICON_GENERIC = 'Page';
 const ICON_DEFAULT_SIZE = 'icon16';
-const ICON_CDN_URL = `https://modernb.akamai.odsp.cdn.office.net/files/fabric-cdn-prod_20210703.001/assets/item-types`;
+const ICON_CDN_URL = `https://res-1.cdn.office.net/files/fabric-cdn-prod_20251008.001/assets/item-types`;
+const customIcons = {
+  FileSass: '\uEAE3',
+  VisioDocument: '\uE452',
+  WordDocument: '\uE8A5'
+};
+
+initializeIcons();
+
+const missingIcons = Object.keys(customIcons).reduce((icons: Record<string, string>, iconName) => {
+  const typedIconName = iconName as keyof typeof customIcons;
+
+  if (!getIcon(typedIconName)) {
+    icons[typedIconName] = customIcons[typedIconName];
+  }
+
+  return icons;
+}, {});
+
+if (Object.keys(missingIcons).length > 0) {
+  registerIcons({ icons: missingIcons });
+}
 
 /**
 * File type icon component
@@ -91,7 +114,7 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
   *
   * @param value File path
   */
-  private _getFileExtension(value): string {
+  private _getFileExtension(value: string): string {
     // Split the URL on the dots
     const splittedValue = value.split('.');
     // Take the last value
@@ -265,14 +288,13 @@ export class FileTypeIcon extends React.Component<IFileTypeIconProps, {}> {
     }
 
     // Bind events
-    iconElm.props.onClick = this.props.onClick;
-    iconElm.props.onDoubleClick = this.props.onDoubleClick;
-    iconElm.props.onMouseEnter = this.props.onMouseEnter;
-    iconElm.props.onMouseLeave = this.props.onMouseLeave;
-    iconElm.props.onMouseOver = this.props.onMouseOver;
-    iconElm.props.onMouseUp = this.props.onMouseUp;
-
-    // Return the icon element
-    return iconElm;
+    return React.cloneElement(iconElm, {
+      onClick: this.props.onClick,
+      onDoubleClick: this.props.onDoubleClick,
+      onMouseEnter: this.props.onMouseEnter,
+      onMouseLeave: this.props.onMouseLeave,
+      onMouseOver: this.props.onMouseOver,
+      onMouseUp: this.props.onMouseUp
+    });
   }
 }

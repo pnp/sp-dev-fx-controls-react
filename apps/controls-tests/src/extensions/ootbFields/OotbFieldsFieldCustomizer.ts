@@ -51,10 +51,10 @@ export default class OotbFieldsFieldCustomizer
           context: this.context,
           //cssProps: { backgroundColor: '#f00' },
           className: 'fake-class'
-        });
+        })
 
       ReactDOM.render(ootbFields, event.domElement);
-    });
+    }).catch(() => { });
   }
 
   public onDisposeCell(event: IFieldCustomizerCellEventParameters): void {

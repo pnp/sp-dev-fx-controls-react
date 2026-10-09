@@ -107,8 +107,10 @@ The FilePicker component can be configured with the following properties:
 | includePageLibraries | boolean | no | Specifies if Site Pages library to be visible on Sites tab |
 | allowExternalLinks | boolean | no | Specifies if external links should be allowed. |
 | checkIfFileExists | boolean | no | When using file links, this property allows the user to choose if the control should check if the link point to a file that exists or not. |
+| tabOrder | FilePickerTab[]| no | Defines a custom display order for the tabs. Tabs not listed will follow their default order. |
+| defaultSelectedTab | FilePickerTab  | no | Sets the default selected tab. If not specified, the first visible tab is used. |
 
-interface `IFilePickerResult`
+Interface `IFilePickerResult`
 
 Provides options for carousel buttons location.
 
@@ -119,5 +121,21 @@ Provides options for carousel buttons location.
 | fileAbsoluteUrl | string | Absolute URL of the file. Null in case of file upload. |
 | fileSize | number | Size of the result (in bytes). Set only for file upload |
 | downloadFileContent | () => Promise&lt;File&gt; | Function allows to download file content. Returns File object. |
+
+Enum `FilePickerTab`
+
+Represents the available tabs in the File Picker component. Each tab corresponds to a different source from which users can select files.
+
+| Name            | Description                                           |
+|-----------------|-------------------------------------------------------|
+| Recent          | Displays recently used files.                         |
+| StockImages     | Shows stock image selection.                          |
+| Web             | Allows searching files from the web.                  |
+| OrgAssets       | Displays organizational assets.                       |
+| OneDrive        | Allows file selection from OneDrive.                  |
+| Site            | Enables browsing site files.                          |
+| Upload          | Provides option to upload local files.                |
+| Link            | Lets the user add a file via a URL.                   |
+| MultipleUpload  | Supports uploading multiple files at once.            |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/filePicker/FilePicker)

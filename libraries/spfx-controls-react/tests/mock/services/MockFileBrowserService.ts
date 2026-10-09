@@ -1,10 +1,12 @@
 import { FilesQueryResult, IFile, ILibrary } from "../../../src/services/FileBrowserService.types";
+import { FileBrowserService } from "../../../src/services/FileBrowserService";
 
 export class MockFileBrowserService {
     public getListItemsResult: FilesQueryResult;
     public getFileThumbnailUrlResultMap: Map<string, string> = new Map<string, string>();
     public onGetListItems: (listUrl: string, folderPath: string, acceptedFilesExtensions?: string[], nextPageQueryStringParams?: string) => void;
     public getSiteMediaLibrariesResult: ILibrary[] = [];
+    public getSPFieldNameForFileProperty = FileBrowserService.prototype.getSPFieldNameForFileProperty;
     constructor() {
 
     }

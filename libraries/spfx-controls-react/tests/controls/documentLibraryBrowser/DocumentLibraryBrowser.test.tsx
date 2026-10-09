@@ -1,14 +1,12 @@
 ///<reference types="jest" />
 
 import * as React from "react";
-import { mount, configure } from "enzyme";
-import * as Adapter from 'enzyme-adapter-react-16';
+import { mount } from "enzyme";
 import { DocumentLibraryBrowser } from "../../../src/controls/filePicker/controls/DocumentLibraryBrowser/DocumentLibraryBrowser";
 import { MockFileBrowserService } from "../../mock/services/MockFileBrowserService";
 import { assert } from "chai";
 import { ILibrary } from "../../../src/services/FileBrowserService.types";
 
-configure({ adapter: new Adapter() });
 
 describe("<DocumentLibraryBrowser />", ()=>{
     test("should load initial data", async ()=>{
@@ -20,7 +18,7 @@ describe("<DocumentLibraryBrowser />", ()=>{
             webRelativeUrl: "/sites/test-site/TestLibrary",
             iconPath: "/sites/test-site/Assets/icon.png"
         }]
-        let documentLibraryBrowser = mount(<DocumentLibraryBrowser
+        let documentLibraryBrowser = mount<DocumentLibraryBrowser>(<DocumentLibraryBrowser
             fileBrowserService={browserService as any}
             onOpenLibrary={()=>{
 
@@ -43,18 +41,18 @@ describe("<DocumentLibraryBrowser />", ()=>{
             webRelativeUrl: "/sites/test-site/TestLibrary",
             iconPath: "/sites/test-site/Assets/icon.png"
         }]
-        let documentLibraryBrowser = mount(<DocumentLibraryBrowser
+        let documentLibraryBrowser = mount<DocumentLibraryBrowser>(<DocumentLibraryBrowser
             fileBrowserService={browserService as any}
             onOpenLibrary={()=>{
 
             }}
             />);
-        //@ts-ignore
-        let libraryTitle = documentLibraryBrowser.instance()._onRenderLibraryTile(browserService.getSiteMediaLibrariesResult[0],0);
-        let iconControl = libraryTitle.props.children.props.children.props.children[0];
-        let buttonControl = libraryTitle.props.children.props.children.props.children[1];
-        assert.equal(iconControl.type.displayName,"StyledImageBase");
-        assert.equal(buttonControl.type.displayName,"CustomizedDefaultButton");
+        await documentLibraryBrowser.instance().componentDidMount();
+        documentLibraryBrowser.update();
+        assert.equal(
+            documentLibraryBrowser.getDOMNode().querySelector('.filePickerFolderCardTitle').textContent,
+            "Test library title"
+        );
     });
     test("should call onOpenLibrary", async ()=>{
         let asserted = false;
@@ -66,7 +64,7 @@ describe("<DocumentLibraryBrowser />", ()=>{
             webRelativeUrl: "/sites/test-site/TestLibrary",
             iconPath: "/sites/test-site/Assets/icon.png"
         }]
-        let documentLibraryBrowser = mount(<DocumentLibraryBrowser
+        let documentLibraryBrowser = mount<DocumentLibraryBrowser>(<DocumentLibraryBrowser
             fileBrowserService={browserService as any}
             onOpenLibrary={(selectedLibrary: ILibrary)=>{
                 asserted = true;
@@ -77,18 +75,15 @@ describe("<DocumentLibraryBrowser />", ()=>{
         documentLibraryBrowser.instance()._handleOpenLibrary(browserService.getSiteMediaLibrariesResult[0]);
         assert.isTrue(asserted);
     });
-    test("should _getItemCountForPage 0", async ()=>{
+    test("should render an empty library list", async ()=>{
         let browserService = new MockFileBrowserService();
-        let documentLibraryBrowser = mount(<DocumentLibraryBrowser
+        let documentLibraryBrowser = mount<DocumentLibraryBrowser>(<DocumentLibraryBrowser
             fileBrowserService={browserService as any}
             onOpenLibrary={(selectedLibrary: ILibrary)=>{
             }}
             />);
-        //@ts-ignore
-        documentLibraryBrowser.instance()._columnsCount = 4;
-        //@ts-ignore
-        assert.equal(documentLibraryBrowser.instance()._getItemCountForPage(0,{
-            width: 1000
-        }),12);
+        await documentLibraryBrowser.instance().componentDidMount();
+        documentLibraryBrowser.update();
+        assert.equal(documentLibraryBrowser.find('.filePickerFolderCardTile').length, 0);
     });
 });

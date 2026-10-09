@@ -1,12 +1,10 @@
 ///<reference types="jest" />
 import * as React from "react";
-import { mount, configure } from "enzyme";
-import * as Adapter from 'enzyme-adapter-react-16';
+import { mount } from "enzyme";
 import { MockFileBrowserService } from "../../mock/services/MockFileBrowserService";
 import SiteFilePickerTab from "../../../src/controls/filePicker/SiteFilePickerTab/SiteFilePickerTab";
 import { assert } from "chai";
 
-configure({ adapter: new Adapter() });
 
 describe("<SiteFilePickerTab />", ()=>{
     test("should load initial data", async ()=>{

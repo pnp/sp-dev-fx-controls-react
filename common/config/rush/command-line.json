@@ -11,6 +11,22 @@
    * "rush my-global-command --help".
    */
   "commands": [
+    {
+      "commandKind": "bulk",
+      "name": "build",
+      "summary": "Build, test, and package the SPFx projects using Heft.",
+      "enableParallelism": true,
+      "incremental": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "rebuild",
+      "summary": "Clean, build, test, and package the SPFx projects using Heft.",
+      "shellCommand": "npm run build",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
     // {
     //   /**
     //    * (Required) Determines the type of custom command.

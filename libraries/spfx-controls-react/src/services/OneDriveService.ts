@@ -48,7 +48,7 @@ export class OneDriveService extends FileBrowserService {
       filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensions);
     } catch (error) {
       filesQueryResult.items = null;
-      console.error(error.message);
+      console.error(error instanceof Error ? error.message : String(error));
     }
     return filesQueryResult;
   }
@@ -80,7 +80,7 @@ export class OneDriveService extends FileBrowserService {
       const blob: Blob = await fileDownloadResult.blob();
       return GeneralHelper.getFileFromBlob(blob, fileName);
     } catch (err) {
-      console.error(`[OneDriveService.fetchFileContent] Err='${err.message}'`);
+      console.error(`[OneDriveService.fetchFileContent] Err='${err instanceof Error ? err.message : String(err)}'`);
       return null;
     }
   }
@@ -115,13 +115,13 @@ export class OneDriveService extends FileBrowserService {
       if (!oneDriveLibsData || !oneDriveLibsData.value || oneDriveLibsData.value.length === 0) {
         throw new Error(`Cannot read one drive libs data.`);
       }
-
+      const isDefaultLang = this.isCurrentLanguageDefault();
       const myDocumentsLibrary = oneDriveLibsData.value[0];
-      this.oneDrivePersonalLibraryTitle = myDocumentsLibrary.Title;
-      this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${myDocumentsLibrary.Title}`;
-      this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${myDocumentsLibrary.Title}`;
+      this.oneDrivePersonalLibraryTitle = isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName;
+      this.oneDriveRootFolderRelativeUrl = `${myDocumentsLibrary.ParentWebUrl}/${isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName}`;
+      this.oneDriveRootFolderAbsoluteUrl = `${this.oneDrivePersonalUrl}${isDefaultLang ? myDocumentsLibrary.Title : myDocumentsLibrary.EntityTypeName}`;
     } catch (error) {
-      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`);
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error instanceof Error ? error.message : String(error)}'`);
       this.oneDriveRootFolderAbsoluteUrl = null;
     }
     return this.oneDriveRootFolderAbsoluteUrl;
@@ -171,7 +171,7 @@ export class OneDriveService extends FileBrowserService {
 
       this.oneDrivePersonalUrl = profileData.FollowPersonalSiteUrl;
     } catch (error) {
-      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error.message}'`);
+      console.error(`[FileBrowserService.getOneDrivePersonalUrl] Err='${error instanceof Error ? error.message : String(error)}'`);
       this.oneDrivePersonalUrl = null;
     }
     return this.oneDrivePersonalUrl;
@@ -182,5 +182,12 @@ export class OneDriveService extends FileBrowserService {
    */
   protected buildAbsoluteUrl = (relativeUrl: string): string => {
     return `https://${this.oneDrivePersonalUrl.split("//")[1].split("/")[0]}${relativeUrl}`;
+  }
+
+  /**
+   * Checks if the current language is default (en-US)
+   */
+  public isCurrentLanguageDefault(): boolean {
+    return this.context.pageContext.cultureInfo.currentUICultureName === 'en-US';
   }
 }

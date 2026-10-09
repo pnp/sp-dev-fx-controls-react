@@ -53,6 +53,12 @@ export interface IRichTextProps {
   customColors?: ISwatchColor[];
 
   /**
+   * Optional object-based formatting styles applied by the component itself.
+   * Each key targets a built-in rich text element type.
+   */
+  customStyles?: IRichTextCustomFormattingStyles;
+
+  /**
    * Callback issued when the rich text changes.
    * Returns the text that will be inserted in the rich text control.
    */
@@ -124,6 +130,19 @@ export interface StyleOptions {
   showUnderline?: boolean;
 }
 
+export interface IRichTextCustomFormattingStyles {
+  normal?: React.CSSProperties;
+  header2?: React.CSSProperties;
+  header3?: React.CSSProperties;
+  header4?: React.CSSProperties;
+  blockQuote?: React.CSSProperties;
+  div?: React.CSSProperties;
+  p?: React.CSSProperties;
+  ul?: React.CSSProperties;
+  ol?: React.CSSProperties;
+  li?: React.CSSProperties;
+}
+
 export interface IRichTextState {
   /**
    * Whether the rich text is currently editing (i.e.: has focus)
@@ -183,6 +202,4 @@ export interface IRichTextState {
 
   /** The text */
   text: string;
-
-  wrapperTop: number;
 }
