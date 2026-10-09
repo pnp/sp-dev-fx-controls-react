@@ -2,12 +2,13 @@
   "@microsoft/generator-sharepoint": {
     "plusBeta": false,
     "isCreatingSolution": true,
-    "nodeVersion": "18.19.0",
+    "nodeVersion": "22.22.0",
+    "useGulp": false,
     "sdksVersions": {
       "@microsoft/microsoft-graph-client": "3.0.2",
       "@microsoft/teams-js": "2.24.0"
     },
-    "version": "1.20.0",
+    "version": "1.23.2",
     "libraryName": "sp-dev-fx-controls-react-tests",
     "libraryId": "8040e371-9a26-4c91-a181-afbdd33b41db",
     "environment": "spo",

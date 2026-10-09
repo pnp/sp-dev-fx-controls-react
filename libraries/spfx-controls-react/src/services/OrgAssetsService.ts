@@ -10,6 +10,19 @@ export class OrgAssetsService extends FileBrowserService {
   // Site organization assets library server relative URL
   private _orgAssetsLibraryServerRelativeSiteUrl: string = null;
 
+  private get orgAssetsLibraryServerRelativeSiteUrl(): string {
+    return this._orgAssetsLibraryServerRelativeSiteUrl;
+  }
+
+  private set orgAssetsLibraryServerRelativeSiteUrl(value: string) {
+    if (value === "/") {
+      this._orgAssetsLibraryServerRelativeSiteUrl = "";
+    }
+    else {
+      this._orgAssetsLibraryServerRelativeSiteUrl = value?.replace(/\/$/, "") ?? null
+    }
+  }
+
   /**
    * Constructor
    * @param context Component context
@@ -35,11 +48,11 @@ export class OrgAssetsService extends FileBrowserService {
       }
 
       // Remove all the rest of the folder path
-      let libName = folderPath.replace(`${this._orgAssetsLibraryServerRelativeSiteUrl}/`, '');
+      let libName = folderPath.replace(`${this.orgAssetsLibraryServerRelativeSiteUrl}/`, '');
       libName = libName.split('/')[0];
 
       // Build absolute library URL
-      const libFullUrl = this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libName}`);
+      const libFullUrl = this.buildAbsoluteUrl(`${this.orgAssetsLibraryServerRelativeSiteUrl}/${libName}`);
 
       let queryStringParams: string = "";
       // Do not pass FolderServerRelativeUrl as query parameter
@@ -58,7 +71,7 @@ export class OrgAssetsService extends FileBrowserService {
       filesQueryResult = await this._getListDataAsStream(restApi, null, acceptedFilesExtensions);
     } catch (error) {
       filesQueryResult.items = null;
-      console.error(error.message);
+      console.error(error instanceof Error ? error.message : String(error));
     }
     return filesQueryResult;
   }
@@ -66,7 +79,7 @@ export class OrgAssetsService extends FileBrowserService {
   /**
    * Gets document and media libraries from the site
    * @param includePageLibraries Unused parameter (not used in this implementation)
-   * @returns Document and media libraries from the site 
+   * @returns Document and media libraries from the site
    */
   public getSiteMediaLibraries = async (includePageLibraries: boolean = false): Promise<ILibrary[]> => {
     try {
@@ -81,11 +94,11 @@ export class OrgAssetsService extends FileBrowserService {
         return null;
       }
 
-      this._orgAssetsLibraryServerRelativeSiteUrl = orgAssetsData ? orgAssetsData.OrgAssets.Url.DecodedUrl : null;
-      const libs: ILibrary[] = orgAssetsData && orgAssetsData.OrgAssets ? orgAssetsData.OrgAssets.OrgAssetsLibraries.Items.map((libItem) => { return this._parseOrgAssetsLibraryItem(libItem); }) : [];
+      this.orgAssetsLibraryServerRelativeSiteUrl = orgAssetsData ? orgAssetsData.OrgAssets.Url.DecodedUrl : null;
+      const libs: ILibrary[] = orgAssetsData && orgAssetsData.OrgAssets ? orgAssetsData.OrgAssets.OrgAssetsLibraries.Items.map((libItem: any) => { return this._parseOrgAssetsLibraryItem(libItem); }) : []; // eslint-disable-line @typescript-eslint/no-explicit-any
       return libs;
     } catch (error) {
-      console.error(`[OrgAssetsService.getOrganisationAssetsLibraries]: Err='${error.message}'`);
+      console.error(`[OrgAssetsService.getOrganisationAssetsLibraries]: Err='${error instanceof Error ? error.message : String(error)}'`);
       return null;
     }
   }
@@ -100,7 +113,7 @@ export class OrgAssetsService extends FileBrowserService {
       absoluteUrl: this.buildAbsoluteUrl(libItem.LibraryUrl.DecodedUrl),
       title: libItem.DisplayName,
       serverRelativeUrl: libItem.LibraryUrl.DecodedUrl,
-      iconPath: libItem.ThumbnailUrl && libItem.ThumbnailUrl.DecodedUrl ? this.buildAbsoluteUrl(`${this._orgAssetsLibraryServerRelativeSiteUrl}/${libItem.ThumbnailUrl.DecodedUrl}`) : null
+      iconPath: libItem.ThumbnailUrl && libItem.ThumbnailUrl.DecodedUrl ? this.buildAbsoluteUrl(`${this.orgAssetsLibraryServerRelativeSiteUrl}/${libItem.ThumbnailUrl.DecodedUrl}`) : null
     };
 
     return orgAssetsLibrary;

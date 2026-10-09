@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
+ 
 import * as React from 'react';
 
 import { useAtom } from 'jotai';

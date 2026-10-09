@@ -232,7 +232,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
    * @param param1 custom object with absolute & relative Url
    * @returns initial location parameters set
    */
-  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }): {
+  private _parseInitialLocationState(folderAbsPath: string, { serverRelativeUrl: webServRelUrl, absoluteUrl: webAbsUrl }: { serverRelativeUrl: string; absoluteUrl: string }): {
     libraryServRelUrl: string;
     folderServRelPath: string;
     folderAbsPath: string;

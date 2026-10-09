@@ -13,8 +13,7 @@ import {
   SelectableOptionMenuItemType,
   Icon
 } from '@fluentui/react';
-
-import { Async } from '@uifabric/utilities/lib/Async';
+import { useAsync } from '@fluentui/react-hooks';
 
 import * as telemetry from '../../common/telemetry';
 import { toRelativeUrl } from '../../common/utilities/GeneralHelper';
@@ -67,8 +66,6 @@ const styles = mergeStyleSets({
   },
 });
 
-const async = new Async();
-
 export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
   props: React.PropsWithChildren<ISitePickerProps>
 ) => {
@@ -99,6 +96,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
   const [allSites, setAllSites] = React.useState<ISite[]>();
   const [filteredSites, setFilteredSites] = React.useState<ISite[]>();
   const [searchQuery, setSearchQuery] = React.useState<string>();
+  const async = useAsync();
 
   const onSearchChange = React.useCallback(
     (e, newSearchQuery: string) => {

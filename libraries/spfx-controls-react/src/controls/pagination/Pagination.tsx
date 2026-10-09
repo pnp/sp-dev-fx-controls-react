@@ -113,7 +113,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
     this.props.onChange(page);
   }
 
-  private renderPageNumber(pageNumber): JSX.Element {
+  private renderPageNumber(pageNumber: number): JSX.Element {
     const {
       limiterIcon
     } = this.props;
@@ -127,7 +127,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
         <PrimaryButton
           className={styles.buttonStyle}
           onClick={() => this.onClick(pageNumber)}
-          text={pageNumber} />
+          text={pageNumber.toString()} />
       );
     } else {
       if (!(pageNumber < currentPage - limiter || pageNumber > currentPage + limiter)) {
@@ -135,7 +135,7 @@ export class Pagination extends React.Component<IPaginationProps, IPaginationSta
           <DefaultButton
             className={styles.buttonStyle}
             onClick={() => this.onClick(pageNumber)}
-            text={pageNumber} />);
+            text={pageNumber.toString()} />);
       }
       else if (!(pageNumber < currentPage - limiter - 1 || pageNumber > currentPage + limiter + 1)) {
         if (limiterIcon) {

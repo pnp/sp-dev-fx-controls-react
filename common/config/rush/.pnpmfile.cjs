@@ -14,7 +14,8 @@
  */
 module.exports = {
   hooks: {
-    readPackage
+    readPackage,
+    afterAllResolved
   }
 };
 
@@ -35,4 +36,26 @@ function readPackage(packageJson, context) {
   // }
 
   return packageJson;
+}
+
+function afterAllResolved(lockfile) {
+  for (const [key, packageInfo] of Object.entries(lockfile.packages || {})) {
+    const resolution = packageInfo.resolution;
+    if (!resolution || !resolution.integrity || !resolution.tarball) continue;
+
+    const packageId = key.replace(/^\//, '').split('(')[0];
+    const atSeparator = packageId.lastIndexOf('@');
+    const versionSeparator = atSeparator > 0 ? atSeparator : packageId.lastIndexOf('/');
+    if (versionSeparator < 1) continue;
+    const packageName = packageId.slice(0, versionSeparator);
+    const version = packageId.slice(versionSeparator + 1);
+    const archiveName = packageName.split('/').pop();
+    const expectedPath = `/${packageName}/-/${archiveName}-${version}.tgz`;
+
+    // Standard registry packages should use the installer's registry, not a mirror-specific URL.
+    if (new URL(resolution.tarball).pathname.endsWith(expectedPath)) {
+      delete resolution.tarball;
+    }
+  }
+  return lockfile;
 }

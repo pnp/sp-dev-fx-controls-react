@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Integrate dev fixes and controls into the v4 split workspace; migrate both projects to Heft and require SPFx 1.23.2 and Node 22.",
+      "type": "none",
+      "packageName": "@pnp/spfx-controls-react"
+    }
+  ],
+  "packageName": "@pnp/spfx-controls-react",
+  "email": "aleksei.terentiev@gmail.com"
+}

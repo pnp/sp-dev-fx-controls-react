@@ -11,12 +11,11 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: 22
         registry-url: 'https://registry.npmjs.org'
 
-    - name: Install npm dependencies
-      working-directory: ./libraries/spfx-controls-react
-      run: npm i
+    - name: Install Rush dependencies
+      run: node common/scripts/install-run-rush.js install
 
     - name: Update the package version
       working-directory: ./libraries/spfx-controls-react
@@ -32,8 +31,7 @@ jobs:
       run: npm run localization
 
     - name: Run build
-      working-directory: ./libraries/spfx-controls-react
-      run: npm run build
+      run: node common/scripts/install-run-rush.js rebuild
 
     - name: Publish beta release
       working-directory: ./libraries/spfx-controls-react

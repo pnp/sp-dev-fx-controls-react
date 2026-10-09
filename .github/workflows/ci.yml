@@ -1,27 +1,24 @@
 name: CI
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "v4-dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "v4-dev" ]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 2
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: # Service Account's Name
-          email: # Service Account's Email Address
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
       - name: Verify Change Logs
-        run: node common/scripts/install-run-rush.js change --verify
+        run: node common/scripts/install-run-rush.js change --verify --target-branch origin/v4-dev
       - name: Rush Install
         run: node common/scripts/install-run-rush.js install
+      - name: Verify registry portability
+        run: node --test common/tests/pnpmfile.test.cjs
       - name: Rush rebuild
-        run: node common/scripts/install-run-rush.js rebuild --verbose --production
+        run: node common/scripts/install-run-rush.js rebuild

@@ -46,7 +46,7 @@ export class IFrameDialogContent extends React.Component<IIFrameDialogContentPro
       /* eslint-enable @typescript-eslint/no-explicit-any */
     }
     catch (err) {
-      if (err.name !== 'SecurityError') {
+      if ((err as Error).name !== 'SecurityError') {
         throw err;
       }
     }

@@ -9,4 +9,10 @@ export interface IUploadAttachmentProps {
   context: BaseComponentContext;
   fireUpload?: boolean;
   onAttachmentUpload: (file?: File) => void;
+  onUploadDialogClosed: () => void;
+  /**
+   * Callback function to notify parent components when attachments are modified and the item ETag changes
+   * @param itemData - The updated item data including the new ETag
+   */
+  onAttachmentChange?: (itemData: any) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
 }

@@ -208,7 +208,7 @@ export const AdaptiveCardHost = (
       }
     } catch (cardRenderError) {
       if (props.onError) {
-        props.onError(cardRenderError);
+        props.onError(cardRenderError as Error);
       }
     }
   }, [

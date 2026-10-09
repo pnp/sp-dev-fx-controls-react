@@ -63,7 +63,7 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
     */
     for (const property in nextProps) {
       if (property !== '_onConfigure') {
-        if (nextProps[property] !== this.props[property]) {
+        if (nextProps[property as keyof IPlaceholderProps] !== this.props[property as keyof IPlaceholderProps]) {
           return true;
         }
       }
@@ -118,8 +118,8 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
           const styles = getClassNames(themeToApply);
 
           const iconTextClassNames = `${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : ""}`;
-          const iconTextEl = typeof iconText === 'string' ? <span className={iconTextClassNames}>{this.props.iconText}</span> : iconText(iconTextClassNames);
-          const descriptionEl = typeof description === 'string' ? <span className={styles.placeholderDescriptionText}>{this.props.description}</span> : description(styles.placeholderDescriptionText);
+          const iconTextEl = typeof iconText === 'function' ? iconText(iconTextClassNames) : <span className={iconTextClassNames}>{this.props.iconText}</span>;
+          const descriptionEl = typeof description === 'function' ? description(styles.placeholderDescriptionText) : <span className={styles.placeholderDescriptionText}>{this.props.description}</span>;
 
           return (
             <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>

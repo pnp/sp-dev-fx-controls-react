@@ -19,7 +19,7 @@ Thanks to the "context" property that allows you to pass the SPFx context, wheth
 
 This allows, using Adaptive Cards templating syntax and binding feature of the Designer, to access to the context information.
 
-For more info please to refer tot he documentation of [AdaptiveCardHost ](http://www.google.com)control
+For more info please to refer to the documentation of [AdaptiveCardHost ](http://www.google.com)control
 
 Here is an example of the control in action inside a Web Part:
 

@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { ValidControls } from '../../IControlsTestWebPartProps';
+
 import { TextField, Toggle } from '@fluentui/react';
+
+import { ValidControls } from '../../IControlsTestWebPartProps';
 
 export interface IControlTogglesProps {
     label: string;
-    onChange: (controlName: string, enabled: boolean) => void;
+    onChange: (controlName: ValidControls, enabled: boolean) => void;
     controlVisibility: {
         [K in ValidControls]: boolean;
     };
@@ -26,7 +28,7 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
                 <TextField label="Search" placeholder="Search Controls" onChange={(e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
                     this.setState({ filter: newValue || '' });
                 }} />
-                { this.getValidControls().map((control: keyof typeof this.props.controlVisibility) => {
+                { this.getValidControls().map((control: ValidControls) => {
                     if (this.state && this.state.filter && this.state.filter.length > 0 && control.toLowerCase().indexOf(this.state.filter.toLowerCase()) === -1) {
                         return null;
                     }
@@ -45,27 +47,30 @@ export class ControlToggles extends React.Component<IControlTogglesProps, IContr
         );
     }
 
-    private getValidControls(): string[] {
+    private getValidControls(): ValidControls[] {
         const validControls: ValidControls[] = [
             "all", 
-            "accessibleAccordion", "adaptiveCardDesignerHost", "adaptiveCardHost", 
-            "animatedDialog", "Carousel", "ChartControl", 
-            "ComboBoxListItemPicker", "Dashboard", "DateTimePicker", 
+            "AccessibleAccordion", "AdaptiveCardDesignerHost", "AdaptiveCardHost",
+            "AnimatedDialog", "Carousel", "ChartControl",
+            "ComboBoxListItemPicker", "ContentTypePicker", "Dashboard", "DateTimePicker",
             "DragDropFiles", "DynamicForm", "EnhancedThemeProvider", 
             "FieldCollectionData", "FieldPicker", "FilePicker", 
-            "FileTypeIcon", "FolderExplorer", "FolderPicker",
-            "GridLayout", "IconPicker", "IFrameDialog",
-            "IFramePanel", "ListPicker", "ListItemPicker",
-            "ListItemComments", "ViewPicker", "ListView",
-            "LocationPicker", "Map", "ModernAudio",
+            "FileTypeIcon", "FilterBar", "FolderExplorer", "FolderPicker",
+            "GroupPicker", "GridLayout", "HoverReactionsBar", "IconPicker", "IFrameDialog",
+            "IFramePanel", "ListItemPicker",
+            "ImagePicker", "ListItemAttachments", "ListItemComments",
+            "ListPicker", "ListToolbar", "ListView", "DetailsList", "LivePersona",
+            "LocationPicker", "Map", "ModernAudio", "MonacoEditor",
             "ModernTaxonomyPicker", "Pagination", "PeoplePicker",
-            "Placeholder", "Progress", "RichText",
-            "SecurityTrimmedControl", "SiteBreadcrumb", "SitePicker",
-            "TaxonomyPicker", "TaxonomyTree", "Teams",
-            "TestControl", "Toolbar", "TreeView",
-            "UploadFiles", "VariantThemeProvider", "WebPartTitle"
+            "Placeholder", "Progress", "ProgressStepsIndicator", "RichText",
+            "ShareDialog", "SecurityTrimmedControl", "SiteBreadcrumb", "SitePicker",
+            "SPFilePicker",
+            "TaxonomyPicker", "TaxonomyTree", "Teams", "TermSetNavigation",
+            "TestControl", "Toolbar", "Toast", "TreeView",
+            "UploadFiles", "UserPicker", "VariantThemeProvider",
+            "ViewPicker", "WebPartTitle", "WorldMap", "Calendar"
         ];
-        return validControls as string[];
+        return validControls;
     }
 
     private getProperCase(name: string): string {

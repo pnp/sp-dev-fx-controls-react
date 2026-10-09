@@ -106,7 +106,7 @@ The `Progress` component can be configured with the following properties:
 | hideNotStartedActions | boolean | yes | Specifies if not started actions should not be rendered. |
 | actions | IProgressAction[] | yes | Progress actions |
 | currentActionIndex | number | no | Index of currently executing action |
-| heigth | string | no | Height of the component |
+| height | string | no | Height of the component |
 | longRunningText | string | no | Text to be displayed for long running operations |
 | longRunningTextDisplayDelay | number | no | Delay until longRunningText is displayed im milliseconds. If not set or 0 longRunningText is displayed right away. |
 | className | string | no | Class name to be applied to the component |

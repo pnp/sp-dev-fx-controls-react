@@ -98,7 +98,7 @@ export class CollectionDataItem extends React.Component<ICollectionDataItemProps
 
   }
 
-  private onValueChangedComboBoxMulti = (fieldId: string, option: IComboBoxOption, value: string): void => { // eslint-disable-line @typescript-eslint/no-explicit-any
+  private onValueChangedComboBoxMulti = (fieldId: string, option: IComboBoxOption, value: string): void => {  
 
     let _selectedOption: IComboBoxOption = null;
     let _selected: IComboBoxOption[] = [];

@@ -38,7 +38,7 @@ export const RetryUpload: React.FunctionComponent<IRetryUplaodProps> = (
             icon={<Retry className={styles.iconRefreshStyle} />}
             size="small"
             appearance="transparent"
-            onClick={(e) => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault();
               e.stopPropagation();
               props.onRetry();

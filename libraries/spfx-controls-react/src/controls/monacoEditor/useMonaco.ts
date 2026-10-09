@@ -27,7 +27,7 @@ export const useMonaco = (): {
       } catch (error) {
         setStatus(EStatus.ERROR);
         setMonaco(undefined);
-        setError(error);
+        setError(error as Error);
       }
     })().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
   }, []);

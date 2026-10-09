@@ -48,7 +48,7 @@ The IFrameDialog component can be configured with the following properties:
 | url | string | yes | iframe Url |
 | iframeOnload | iframeOnLoad?: (iframe: any) => {} | no | iframe's onload event handler |
 | width | string | yes | iframe's width |
-| heigth | string | yes | iframe's height |
+| height | string | yes | iframe's height |
 | allowFullScreen | boolean | no | Specifies if iframe content can be displayed in a full screen |
 | allowTransparency | boolean | no | Specifies if transparency is allowed in iframe |
 | marginHeight | number | no | Specifies the top and bottom margins of the content of an iframe |

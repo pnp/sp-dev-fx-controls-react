@@ -22,4 +22,4 @@ jobs:
 
     - name: Build docs
       run: mkdocs gh-deploy --force -m "[ci skip]"
-      working-directory: docs/documentation
+      working-directory: common/docs/documentation

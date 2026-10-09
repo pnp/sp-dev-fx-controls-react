@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+ 
 import { TermStore } from '@microsoft/microsoft-graph-types';
 
 interface IUseUtils {

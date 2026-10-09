@@ -75,6 +75,7 @@ The following controls are currently available:
 - [ContentTypePicker](./controls/ContentTypePicker) (control to pick a content type)
 - [Dashboard](./controls/Dashboard) (renders dashboard in Microsoft Teams)
 - [DateTimePicker](./controls/DateTimePicker) (DateTime Picker)
+- [DetailsList](./controls/DetailsList) (control for rendering detailed lists)
 - [DragDropFiles](./controls/DragDropFiles) (allows drag and drop of files in selected areas)
 - [DynamicForm](./controls/DynamicForm) (Dynamic Form component)
 - [EnhancedThemeProvider](./controls/EnhancedThemeProvider) (enhanced version of Fluent UI Theme Provider control used to improve support for themes and fonts when creating Tab or Personal App in SPFx for Teams or creating Isolated Web Parts)
@@ -82,6 +83,7 @@ The following controls are currently available:
 - [FieldPicker](./controls/FieldPicker) (control to pick one or multiple fields from a list or a site)
 - [FilePicker](./controls/FilePicker) (control that allows to browse and select a file from various places)
 - [FileTypeIcon](./controls/FileTypeIcon) (shows the icon of a specified file path or application)
+- [FilterBar](./controls/FilterBar) (control that renders filters in a similar way to modern lists)
 - [FolderExplorer](./controls/FolderExplorer) (control that allows to browse the folders and sub-folders from a root folder)
 - [FolderPicker](./controls/FolderPicker) (control that allows to browse and select a folder)
 - [GridLayout](./controls/GridLayout) (control that renders a responsive grid layout for your web parts)
@@ -117,11 +119,13 @@ The following controls are currently available:
 - [TeamPicker](./controls/TeamPicker) (Team Picker)
 - [TermSetNavigation](./controls/TermSetNavigation) (control for navigating and selecting a Term from a TermSet)
 - [Toolbar](./controls/Toolbar) (renders Toolbar in Microsoft Teams)
+- [Toast](./controls/Toast) (displays zero-configuration Fluent UI notifications)
 - [TreeView](./controls/TreeView) (Tree View)
 - [UploadFiles](./controls/UploadFiles) (Upload Files)
 - [VariantThemeProvider](./controls/VariantThemeProvider) (Variant Theme Provider)
 - [ViewPicker](./controls/ViewPicker.md) (View Picker Control)
 - [WebPartTitle](./controls/WebPartTitle) (Customizable web part title control)
+- [WorldMap](./controls/WorldMap) (World Map control)
 
 Field customizer controls:
 

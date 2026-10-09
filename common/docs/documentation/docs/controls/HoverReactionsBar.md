@@ -42,24 +42,24 @@ const onSelectEmoji = React.useCallback(async (emoji: string, emojiInfo: IEmojiI
 }, []);
 
 onSelect: (emoji: string | undefined, emojiInfo?: IEmojiInfo) => void;
-  isOpen: boolean;
-  onDismiss: () => void;
-  top4Reactions?: string[];
-  target: HTMLDivElement;
-  themeV8?: Theme ;
+isOpen: boolean;
+onDismiss: () => void;
+top4Reactions?: string[];
+target: HTMLDivElement;
+themeV8?: Theme;
 ```
 
 ## Implementation
 
 The HoverReactionsBar control can be configured with the following properties:
 
-| Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| isOpen | boolean | yes | show hoverReactionsBar |
-| onSelected |onSelect: (emoji: string, emojiInfo?: IEmojiInfo) => void;| yes | selected Emoji |
-| top4Reactions |  string[] | no |  name of emojis to show on the bar  |
-| target | HTMLDivElement | yes | container of controls who fire the HoverReactionsBar |
-| onDismiss | onDismiss: () => void; | yes | function to call to dismiss HoverReactionsBar|
-| themeV8 | Theme | No | Set Fluent UI Theme|
+| Property      | Type                                                       | Required | Description                                          |
+| ------------- | ---------------------------------------------------------- | -------- | ---------------------------------------------------- |
+| isOpen        | boolean                                                    | yes      | show hoverReactionsBar                               |
+| onSelected    | onSelect: (emoji: string, emojiInfo?: IEmojiInfo) => void; | yes      | selected Emoji                                       |
+| top4Reactions | string[]                                                   | no       | name of emojis to show on the bar                    |
+| target        | HTMLDivElement                                             | yes      | container of controls who fire the HoverReactionsBar |
+| onDismiss     | onDismiss: () => void;                                     | yes      | function to call to dismiss HoverReactionsBar        |
+| themeV8       | Theme                                                      | No       | Set Fluent UI Theme                                  |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/HoverReactionsBar)
