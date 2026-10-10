@@ -93,7 +93,9 @@ information, language, selected terms and `setTerms`.
 
 The action renderer receives store/set/term data and, when invoked by the tree,
 a callback accepting new terms, parent terms, updated terms and deleted terms.
-The consumer is responsible for authorization and error presentation.
+`ModernTaxonomyPicker`, `TaxonomyPanelContents` and `TaxonomyTree` all use the
+exported `TaxonomyTreeUpdateCallback` with these four argument positions. The
+consumer is responsible for authorization and error presentation.
 
 For example, an action can create a child using the same SharePoint backend and
 then reload the real term metadata before updating the tree:
@@ -103,12 +105,13 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import { Guid } from "@microsoft/sp-core-library";
 import {
   ITermInfo,
-  SPTaxonomyService
+  SPTaxonomyService,
+  TaxonomyTreeUpdateCallback
 } from "@pnp/spfx-controls-react/lib/ModernTaxonomyPicker";
 
 async function addChild(
   parent: ITermInfo,
-  updateTree: (newTerms?: ITermInfo[], parents?: ITermInfo[]) => void
+  updateTree: TaxonomyTreeUpdateCallback
 ): Promise<void> {
   const webUrl = context.pageContext.web.absoluteUrl;
   const setId = Guid.parse(termSetId).toString();

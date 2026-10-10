@@ -52,6 +52,15 @@ const getstyles = classNamesFunction<IDynamicFormStyleProps, IDynamicFormStyles>
 const getFieldstyles = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
 const theme = getFluentUIThemeOrDefault();
 
+interface IDynamicFormLoadContext {
+  props: Readonly<IDynamicFormProps>;
+  spService: SPservice;
+  taxonomyService: SPTaxonomyService;
+  webUrl: string;
+  installedLanguages?: IInstalledLanguageInfo[];
+  assertCurrent: () => void;
+}
+
 /**
  * DynamicForm Class Control
  */
@@ -66,6 +75,7 @@ export class DynamicFormBase extends React.Component<
   private _dataService: DynamicFormService;
   private _loadVersion = 0;
   private _operationVersion = 0;
+  private _submissionVersion?: number;
   private _unmounted = false;
   private get webURL(): string {
     return this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
@@ -135,6 +145,7 @@ export class DynamicFormBase extends React.Component<
       prevProps.listId !== this.props.listId || prevProps.listItemId !== this.props.listItemId;
     if (targetChanged) {
       this._operationVersion++;
+      this._submissionVersion = undefined;
       this._loadVersion++;
       this._dataService.dispose();
       this._taxonomyService.dispose();
@@ -175,6 +186,7 @@ export class DynamicFormBase extends React.Component<
   public componentWillUnmount(): void {
     this._unmounted = true;
     this._operationVersion++;
+    this._submissionVersion = undefined;
     this._loadVersion++;
     this._dataService.dispose();
     this._taxonomyService.dispose();
@@ -375,8 +387,9 @@ export class DynamicFormBase extends React.Component<
 
   /** Triggered when the user submits the form. */
   private onSubmitClick = async (): Promise<void> => {
-    if (this._unmounted || this.state.isSaving) return;
+    if (this._unmounted || this.state.isSaving || this._submissionVersion !== undefined) return;
     const operationVersion = this._operationVersion;
+    this._submissionVersion = operationVersion;
     const isCurrent = (): boolean => !this._unmounted && operationVersion === this._operationVersion;
     const dataService = this._dataService;
     const spService = this._spService;
@@ -394,12 +407,11 @@ export class DynamicFormBase extends React.Component<
       folderPath
     } = this.props;
 
-    let contentTypeId = this.props.contentTypeId;
-    if (this.state.contentTypeId !== undefined) contentTypeId = this.state.contentTypeId;
-
-    const fileSelectRendered = !listItemId && contentTypeId.startsWith("0x0101") && enableFileSelection === true;
-
     try {
+      this.setState({ isSaving: true });
+      let contentTypeId = this.props.contentTypeId;
+      if (this.state.contentTypeId !== undefined) contentTypeId = this.state.contentTypeId;
+      const fileSelectRendered = !listItemId && contentTypeId?.startsWith("0x0101") && enableFileSelection === true;
 
       /** Set to true to cancel form submission */
       let shouldBeReturnBack = false;
@@ -469,10 +481,6 @@ export class DynamicFormBase extends React.Component<
         });
         return;
       }
-
-      this.setState({
-        isSaving: true,
-      });
 
       /** Item values for save / update */
       const objects: Record<string, unknown> = {};
@@ -722,6 +730,11 @@ export class DynamicFormBase extends React.Component<
         onSubmitError(null, error as Error);
       }
       console.error(`Error onSubmit`, error);
+    } finally {
+      if (this._submissionVersion === operationVersion) {
+        this._submissionVersion = undefined;
+        if (isCurrent()) this.setState({ isSaving: false });
+      }
     }
   };
 
@@ -994,6 +1007,23 @@ export class DynamicFormBase extends React.Component<
    */
   private getListInformation = async (): Promise<void> => {
     const loadVersion = ++this._loadVersion;
+    const isCurrent = (): boolean => !this._unmounted && loadVersion === this._loadVersion;
+    const assertCurrent = (): void => {
+      if (!isCurrent()) {
+        const error = new Error('The form load is no longer current.');
+        error.name = 'AbortError';
+        throw error;
+      }
+    };
+    const props = this.props;
+    const spService = this._spService;
+    const dataService = this._dataService;
+    const webUrl = this.webURL;
+    const loadContext: IDynamicFormLoadContext = {
+      props, spService, webUrl, assertCurrent,
+      taxonomyService: this._taxonomyService,
+      installedLanguages: this.state.installedLanguages
+    };
     const {
       listId,
       listItemId,
@@ -1001,17 +1031,20 @@ export class DynamicFormBase extends React.Component<
       respectETag,
       customIcons,
       onListItemLoaded,
-    } = this.props;
-    let contentTypeId = this.props.contentTypeId;
+      fieldOrder
+    } = props;
+    let contentTypeId = props.contentTypeId;
 
     try {
-
+      assertCurrent();
       // Fetch form rendering information from SharePoint
-      const listInfo = await this._spService.getListFormRenderInfo(listId, this.webURL);
+      const listInfo = await spService.getListFormRenderInfo(listId, webUrl);
+      assertCurrent();
 
       // Fetch additional information about fields from SharePoint
       // (Number fields for min and max values, and fields with validation)
-      const additionalInfo = await this._spService.getAdditionalListFormFieldInfo(listId, this.webURL);
+      const additionalInfo = await spService.getAdditionalListFormFieldInfo(listId, webUrl);
+      assertCurrent();
       const numberFields = additionalInfo?.filter((f) => f.TypeAsString === "Number" || f.TypeAsString === "Currency");
 
       // Build a dictionary of validation formulas and messages
@@ -1061,11 +1094,12 @@ export class DynamicFormBase extends React.Component<
       let extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined = undefined;
 
       if (isEditingItem) {
-        item = await this._dataService.getItem(listId, listItemId, contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101"));
-        if (loadVersion !== this._loadVersion) return;
+        item = await dataService.getItem(listId, listItemId, contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101"));
+        assertCurrent();
 
         if (onListItemLoaded) {
           await onListItemLoaded(item);
+          assertCurrent();
         }
 
         if (respectETag !== false) {
@@ -1076,7 +1110,8 @@ export class DynamicFormBase extends React.Component<
           .filter(field => field.FieldType === 'Note' && (field as IClientFormTextFieldInfo).AppendOnly);
 
         if (appendOnlyFields.length > 0) {
-          extendedInfo = await this._spService.getExtendedListFormData(listId, listItemId, this.webURL);
+          extendedInfo = await spService.getExtendedListFormData(listId, listItemId, webUrl);
+          assertCurrent();
         }
       }
 
@@ -1090,21 +1125,23 @@ export class DynamicFormBase extends React.Component<
         listItemId,
         disabledFields,
         customIcons,
-        extendedInfo
+        extendedInfo,
+        loadContext
       );
+      assertCurrent();
 
-      const sortedFields = this.props.fieldOrder?.length > 0
-        ? this.sortFields(tempFields, this.props.fieldOrder)
+      const sortedFields = fieldOrder?.length > 0
+        ? this.sortFields(tempFields, fieldOrder)
         : tempFields;
 
       // Get installed languages for Currency fields
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
-        installedLanguages = await this._dataService.getInstalledLanguages();
+        installedLanguages = await dataService.getInstalledLanguages();
+        assertCurrent();
       }
 
-      if (loadVersion !== this._loadVersion) return;
-      this.setState({
+      this.setState(() => isCurrent() ? {
         contentTypeId,
         clientValidationFormulas,
         customFormatting: {
@@ -1116,10 +1153,10 @@ export class DynamicFormBase extends React.Component<
         fieldCollection: sortedFields,
         installedLanguages,
         validationFormulas
-      }, () => this.performValidation(true));
+      } : null, () => { if (isCurrent()) this.performValidation(true); });
 
     } catch (error) {
-      if (loadVersion !== this._loadVersion) return;
+      if (!isCurrent()) return;
       this.updateFormMessages(MessageBarType.error, 'An error occurred while loading: ' + (error as Error).message);
       console.error(`An error occurred while loading DynamicForm`, error);
       return null;
@@ -1138,14 +1175,16 @@ export class DynamicFormBase extends React.Component<
    * @returns
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: { [key: string]: string }, extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined): Promise<IDynamicFieldProps[]> {
-    const { useModernTaxonomyPicker } = this.props;
+  private async buildFieldCollection(listInfo: IRenderListDataAsStreamClientFormResult, contentTypeName: string, item: any, numberFields: ISPField[], listId: string, listItemId: number, disabledFields: string[], customIcons: { [key: string]: string }, extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined, loadContext: IDynamicFormLoadContext): Promise<IDynamicFieldProps[]> {
+    const { props, spService, taxonomyService, webUrl, assertCurrent } = loadContext;
+    const { useModernTaxonomyPicker } = props;
     const tempFields: IDynamicFieldProps[] = [];
     let order: number = 0;
-    const hiddenFields = this.props.hiddenFields !== undefined ? this.props.hiddenFields : [];
+    const hiddenFields = props.hiddenFields !== undefined ? props.hiddenFields : [];
     let defaultDayOfWeek: number = 0;
 
     for (let i = 0, len = listInfo.ClientForms.Edit[contentTypeName].length; i < len; i++) {
+      assertCurrent();
       const field = listInfo.ClientForms.Edit[contentTypeName][i];
 
       // Process fields that are not marked as hidden
@@ -1225,7 +1264,7 @@ export class DynamicFormBase extends React.Component<
             }
             showAsPercentage = field.ShowAsPercentage;
             if (field.FieldType === "Currency") {
-              cultureName = this.cultureNameLookup(numberField.CurrencyLocaleId);
+              cultureName = this.cultureNameLookup(numberField.CurrencyLocaleId, loadContext);
             }
           }
 
@@ -1234,13 +1273,14 @@ export class DynamicFormBase extends React.Component<
             lookupListId = field.LookupListId;
             lookupField = field.LookupFieldName;
             if (item !== null) {
-              value = await this._spService.getLookupValues(
+              value = await spService.getLookupValues(
                 listId,
                 listItemId,
                 field.InternalName,
                 lookupField,
-                this.webURL
+                webUrl
               );
+              assertCurrent();
               stringValue = value?.map(dv => dv.key + ';#' + dv.name).join(';#');
               if (item[field.InternalName + "Id"]) {
                 subPropertyValues.id = item[field.InternalName + "Id"];
@@ -1256,14 +1296,14 @@ export class DynamicFormBase extends React.Component<
           if (field.FieldType === "User") {
             if (item !== null) {
               const userEmails: string[] = [];
-              userEmails.push(
-                (await this._spService.getUserUPNFromFieldValue(
-                  listId,
-                  listItemId,
-                  field.InternalName,
-                  this.webURL
-                )) + ""
+              const userEmail = await spService.getUserUPNFromFieldValue(
+                listId,
+                listItemId,
+                field.InternalName,
+                webUrl
               );
+              assertCurrent();
+              userEmails.push(userEmail + "");
               value = userEmails;
               stringValue = userEmails?.map(dv => dv.split('/').shift()).join(';');
               if (item[field.InternalName + "Id"]) {
@@ -1278,12 +1318,13 @@ export class DynamicFormBase extends React.Component<
           }
           if (field.FieldType === "UserMulti") {
             if (item !== null) {
-              value = await this._spService.getUsersUPNFromFieldValue(
+              value = await spService.getUsersUPNFromFieldValue(
                 listId,
                 listItemId,
                 field.InternalName,
-                this.webURL
+                webUrl
               );
+              assertCurrent();
               stringValue = value?.map(dv => dv.split('/').pop()).join(';');
             } else {
               value = [];
@@ -1297,14 +1338,16 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
               if (item !== null) {
-                const response = await this._spService.getSingleManagedMetadataLabel(
+                const response = await spService.getSingleManagedMetadataLabel(
                   listId,
                   listItemId,
                   field.InternalName,
-                  this.webURL
+                  webUrl
                 );
+                assertCurrent();
                 if (response) {
-                  const term = await this._taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(response.TermID));
+                  const term = await taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(response.TermID));
+                  assertCurrent();
                   selectedTags.push({
                     key: response.TermID,
                     name: response.Label,
@@ -1319,7 +1362,8 @@ export class DynamicFormBase extends React.Component<
                     key: termId,
                     name: defaultValue.split("|")[0].split("#")[1],
                   });
-                  const term = await this._taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(termId));
+                  const term = await taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(termId));
+                  assertCurrent();
                   value = term;//selectedTags;
                 }
               }
@@ -1330,7 +1374,8 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId !== Guid.empty.toString() ? field.AnchorId : null;
               if (item && item[field.InternalName]) {
-                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, item[field.InternalName]);
+                const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, item[field.InternalName], loadContext);
+                assertCurrent();
                 // item[field.InternalName].forEach((element) => {
                 //   selectedTags.push({
                 //     key: element.TermGuid,
@@ -1353,7 +1398,8 @@ export class DynamicFormBase extends React.Component<
                   const _selectedTags = await this.getTermsForModernTaxonomyPicker(field.TermSetId, selectedTags.map((dv: { key: string; name: string }) => ({
                     Label: dv.name,
                     TermGuid: dv.key
-                  })));
+                  })), loadContext);
+                  assertCurrent();
                   //value = selectedTags;
                   value = _selectedTags;
                   stringValue = selectedTags?.map((dv: { key: string; name: string }) => dv.key + ';#' + dv.name).join(';#');
@@ -1366,12 +1412,13 @@ export class DynamicFormBase extends React.Component<
               termSetId = field.TermSetId;
               anchorId = field.AnchorId;
               if (item !== null) {
-                const response = await this._spService.getSingleManagedMetadataLabel(
+                const response = await spService.getSingleManagedMetadataLabel(
                   listId,
                   listItemId,
                   field.InternalName,
-                  this.webURL
+                  webUrl
                 );
+                assertCurrent();
                 if (response) {
                   selectedTags.push({
                     key: response.TermID,
@@ -1449,7 +1496,9 @@ export class DynamicFormBase extends React.Component<
             }
 
             dateFormat = field.DisplayFormat === 1 ? "DateTime" : "DateOnly";
-            defaultDayOfWeek = (await this._spService.getRegionalWebSettings(this.webURL)).FirstDayOfWeek;
+            const regionalSettings = await spService.getRegionalWebSettings(webUrl);
+            assertCurrent();
+            defaultDayOfWeek = regionalSettings.FirstDayOfWeek;
           }
 
           // Setup Thumbnail, Location and Boolean fields
@@ -1485,8 +1534,8 @@ export class DynamicFormBase extends React.Component<
             fieldType: field.FieldType,
             // fieldTitle: field.Title,
             defaultValue: defaultValue,
-            context: this.props.context,
-            disabled: this.props.disabled ||
+            context: props.context,
+            disabled: props.disabled ||
               (disabledFields &&
                 disabledFields.indexOf(field.InternalName) > -1),
             // listId: this.props.listId,
@@ -1521,25 +1570,28 @@ export class DynamicFormBase extends React.Component<
   }
 
   private getTermsForModernTaxonomyPicker = async (
-    termsetId: string, terms: { TermGuid: string; Label: string }[]
+    termsetId: string, terms: { TermGuid: string; Label: string }[], loadContext: IDynamicFormLoadContext
   ): Promise<ITermInfo[]> => {
     if (!terms || terms.length === 0) {
       return [];
     }
     return Promise.all(
       terms.map(async fetchedterm => {
+        loadContext.assertCurrent();
         if (!fetchedterm?.TermGuid) {
           throw new Error('A managed metadata value has no term ID.');
         }
-        return this._taxonomyService.getTermById(Guid.parse(termsetId), Guid.parse(fetchedterm.TermGuid));
+        const term = await loadContext.taxonomyService.getTermById(Guid.parse(termsetId), Guid.parse(fetchedterm.TermGuid));
+        loadContext.assertCurrent();
+        return term;
       })
     );
   }
 
-  private cultureNameLookup(lcid: number): string {
-    const pageCulture = this.props.context.pageContext.cultureInfo.currentCultureName;
+  private cultureNameLookup(lcid: number, loadContext: IDynamicFormLoadContext): string {
+    const pageCulture = loadContext.props.context.pageContext.cultureInfo.currentCultureName;
     if (!lcid) return pageCulture;
-    return this.state.installedLanguages?.find(lang => lang.Lcid === lcid)?.DisplayName ?? pageCulture;
+    return loadContext.installedLanguages?.find(lang => lang.Lcid === lcid)?.DisplayName ?? pageCulture;
   }
 
   private uploadImage = async (

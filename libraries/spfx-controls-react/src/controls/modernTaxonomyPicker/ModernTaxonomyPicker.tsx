@@ -3,7 +3,8 @@ import { Guid } from '@microsoft/sp-core-library';
 import {
   ITermInfo,
   ITermSetInfo,
-  ITermStoreInfo
+  ITermStoreInfo,
+  TaxonomyTreeUpdateCallback
 } from '../../services/SPTaxonomyService.types';
 import { useId } from '@uifabric/react-hooks';
 import * as strings from 'ControlStrings';
@@ -66,7 +67,7 @@ export interface IModernTaxonomyPickerProps {
     termStoreInfo: ITermStoreInfo,
     termSetInfo: ITermSetInfo,
     termInfo?: ITermInfo,
-    updateTree?: (newTerms?: ITermInfo[], parents?: ITermInfo[], updatedTerms?: ITermInfo[], deletedTerms?: ITermInfo[]) => void
+    updateTree?: TaxonomyTreeUpdateCallback
   ) => JSX.Element;
   allowSelectingChildren?: boolean;
 }

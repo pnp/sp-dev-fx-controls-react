@@ -10,7 +10,8 @@ import { IBasePickerStyleProps,
        } from '@fluentui/react';
 import { ITermInfo,
          ITermSetInfo,
-         ITermStoreInfo
+         ITermStoreInfo,
+         TaxonomyTreeUpdateCallback
        } from '../../../services/SPTaxonomyService.types';
 import { Guid } from '@microsoft/sp-core-library';
 import * as strings from 'ControlStrings';
@@ -38,7 +39,7 @@ export interface ITaxonomyPanelContentsProps {
   languageTag: string;
   themeVariant?: IReadonlyTheme;
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
-  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
+  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: TaxonomyTreeUpdateCallback) => JSX.Element;
   allowSelectingChildren?: boolean;
 }
 

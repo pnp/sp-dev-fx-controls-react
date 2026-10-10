@@ -41,7 +41,7 @@ import {
 import * as strings from "ControlStrings";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { Guid } from "@microsoft/sp-core-library";
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "../../../services/SPTaxonomyService.types";
+import { ITermInfo, ITermSetInfo, ITermStoreInfo, TaxonomyTreeUpdateCallback } from "../../../services/SPTaxonomyService.types";
 import styles from "./TaxonomyTree.module.scss";
 
 export interface ITaxonomyTreeProps {
@@ -63,12 +63,7 @@ export interface ITaxonomyTreeProps {
     termStoreInfo: ITermStoreInfo,
     termSetInfo: ITermSetInfo,
     termInfo: ITermInfo,
-    updateTaxonomyTreeViewCallback?: (
-      newTermItems?: ITermInfo[],
-      parentTerm?: ITermInfo[], //only for adding new terms
-      updatedTermItems?: ITermInfo[],
-      deletedTermItems?: ITermInfo[]
-    ) => void
+    updateTaxonomyTreeViewCallback?: TaxonomyTreeUpdateCallback
   ) => JSX.Element;
   terms: ITermInfo[];
   setTerms: React.Dispatch<React.SetStateAction<ITermInfo[]>>;
@@ -230,11 +225,8 @@ export function TaxonomyTree(
     }
   };
 
-  const updateTaxonomyTreeView = (
-    newTermItems?: ITermInfo[],
-    parentTerm?:ITermInfo[],
-    updatedTermItems?: ITermInfo[],
-    deletedTermItems?: ITermInfo[]
+  const updateTaxonomyTreeView: TaxonomyTreeUpdateCallback = (
+    newTermItems, parentTerm, updatedTermItems, deletedTermItems
   ): void => {
     if (newTermItems) {
       updateTaxonomyTreeViewWithNewTermItems(newTermItems,parentTerm);

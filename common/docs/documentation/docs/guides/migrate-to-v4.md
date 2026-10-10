@@ -21,6 +21,11 @@ Import the control's data contracts from the controls library instead of PnPjs:
 
 Taxonomy data retains the SharePoint response shape, including parent, children count and tagging metadata. These objects are data, not queryable SDK instances.
 
+All three taxonomy action-renderer interfaces use `TaxonomyTreeUpdateCallback`:
+`(newTerms, parents, updatedTerms, deletedTerms)`. Direct `TaxonomyPanelContents`
+consumers must not interpret the second argument as updated terms or the third
+as deleted terms; its earlier declaration omitted the parents argument.
+
 ## DynamicForm submission
 
 Previously, the callback could receive a live PnPjs item:
@@ -58,6 +63,12 @@ The same callback contract applies to item creation/update, uploaded documents, 
 For incomplete uploads or metadata updates, `partialCommit: true` and `failedPhase` (`identify`, `upload` or `metadata`) distinguish partial persistence from a fully saved item whose final `read` failed. The error reference includes the server-relative path when known; `listItemId` can be absent if identification itself failed. Successful callbacks are invoked once, and callback errors do not trigger a write retry.
 
 Both values of `useModernTaxonomyPicker` remain supported. Existing field overrides, validation, formatting, images, attachments, file selection and taxonomy fields are retained. File uploads retain the existing 10 MB chunk and overwrite defaults. Encoded folder paths remain supported and are decoded once; actual path case is preserved. Changing the web, list or item invalidates pending work so it cannot write to or update the replacement form.
+
+Submission is locked before asynchronous validation, so repeated clicks cannot
+start duplicate saves. Cancelled, rejected and failed submissions release that
+lock. Each form load captures its own services, web and props; obsolete loads stop
+between asynchronous phases instead of issuing requests against a replacement
+target.
 
 ## Request behavior and support
 

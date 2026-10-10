@@ -298,7 +298,7 @@ export default class SPPeopleSearchService {
             switch (element.EntityType) {
               case 'User':
                 return {
-                  id: element.Key,
+                  id: String(element.Key),
                   loginName: element.LoginName
                     ? element.LoginName
                     : element.Key,
@@ -311,7 +311,7 @@ export default class SPPeopleSearchService {
                 } as IPeoplePickerUserItem;
               case 'SecGroup':
                 return {
-                  id: element.Key,
+                  id: String(element.Key),
                   loginName: element.LoginName
                     ? element.LoginName
                     : element.Key,
@@ -321,7 +321,7 @@ export default class SPPeopleSearchService {
                 } as IPeoplePickerUserItem;
               case 'FormsRole':
                 return {
-                  id: element.Key,
+                  id: String(element.Key),
                   loginName: element.LoginName
                     ? element.LoginName
                     : element.Key,
@@ -331,7 +331,7 @@ export default class SPPeopleSearchService {
                 } as IPeoplePickerUserItem;
               default:
                 return {
-                  id: element.EntityData.SPGroupID,
+                  id: String(element.EntityData.SPGroupID ?? element.Key),
                   loginName: element.EntityData.AccountName,
                   imageInitials: this.getFullNameInitials(element.DisplayText),
                   text: element.DisplayText,

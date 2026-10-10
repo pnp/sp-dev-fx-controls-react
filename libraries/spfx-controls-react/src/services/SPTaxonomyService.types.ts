@@ -24,6 +24,13 @@ export interface ITermInfo {
   parent?: ITermInfo;
 }
 
+export type TaxonomyTreeUpdateCallback = (
+  newTerms?: ITermInfo[],
+  parents?: ITermInfo[],
+  updatedTerms?: ITermInfo[],
+  deletedTerms?: ITermInfo[]
+) => void;
+
 export interface ITermSetInfo {
   id: string;
   localizedNames: { name: string; languageTag: string }[];

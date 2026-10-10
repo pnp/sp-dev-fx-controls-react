@@ -98,10 +98,38 @@ describe('PeopleSearchService REST integration', () => {
     const first = await service.searchPeople('Alex', 5, [PrincipalType.User], currentWeb, null, true);
     const second = await service.searchPeople('Alex', 5, [PrincipalType.User], currentWeb, null, true);
     expect(first).toHaveLength(1);
-    expect(second[0].id).toBe(7);
+    expect(first[0].id).toBe('7');
+    expect(second[0].id).toBe('7');
     expect(ensureUser.mock.calls.filter(([login]) => login === member.LoginName)).toHaveLength(1);
 
     await service.searchPeople('Alex', 5, [PrincipalType.User], targetWeb, null, true);
     expect(ensureUser.mock.calls.filter(([login]) => login === member.LoginName)).toHaveLength(2);
+  });
+
+  test.each(['User', 'SecGroup', 'FormsRole'])('returns string IDs for regular %s results', async entityType => {
+    post.mockResolvedValue({
+      ok: true,
+      json: async () => ({ value: JSON.stringify([{
+        Key: member.LoginName, EntityType: entityType, DisplayText: member.Title,
+        Description: member.Email, EntityData: { Email: member.Email }
+      }]) })
+    });
+    ensureUser.mockResolvedValue(member);
+    const users = await service.searchPeople('Alex', 5, [PrincipalType.User], null, null, true);
+    expect(users[0].id).toBe('7');
+    expect(users[0].loginName).toBe(member.LoginName);
+  });
+
+  test('returns string SharePoint group IDs without ensuring groups', async () => {
+    post.mockResolvedValue({
+      ok: true,
+      json: async () => ({ value: JSON.stringify([{
+        Key: 'Members', EntityType: 'SPGroup', DisplayText: 'Members',
+        EntityData: { SPGroupID: 8, AccountName: 'Members' }
+      }]) })
+    });
+    const users = await service.searchPeople('Members', 5, [PrincipalType.SharePointGroup], null, null, true);
+    expect(users[0].id).toBe('8');
+    expect(ensureUser).not.toHaveBeenCalled();
   });
 });
