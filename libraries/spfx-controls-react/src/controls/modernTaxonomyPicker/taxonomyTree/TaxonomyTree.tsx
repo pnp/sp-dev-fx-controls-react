@@ -79,6 +79,11 @@ export function TaxonomyTree(
   const [groupsLoading, setGroupsLoading] = React.useState<string[]>([]);
   const [groups, setGroups] = React.useState<IGroup[]>([]);
 
+  const finishLoading = (group: IGroup): void => {
+    group.data.isLoading = false;
+    setGroupsLoading(previous => previous.filter(key => key !== group.key));
+  };
+
   const updateTaxonomyTreeViewWithNewTermItems = (
     newTermItems: ITermInfo[], parentTerm?: ITermInfo[]
   ): void => {
@@ -285,12 +290,11 @@ export function TaxonomyTree(
           ? props.anchorTermInfo.childrenCount
           : props.termSetInfo.childrenCount) > 0,
     };
+    if (rootGroup.hasMoreData) rootGroup.children = [];
     setGroups([rootGroup]);
-    setGroupsLoading((prevGroupsLoading) => [
-      ...prevGroupsLoading,
-      props.termSetInfo.id,
-    ]);
-    if (props.termSetInfo.childrenCount > 0) {
+    if (rootGroup.hasMoreData) {
+      rootGroup.data.isLoading = true;
+      setGroupsLoading(previous => [...previous, rootGroup.key]);
       props
         .onLoadMoreData(
           Guid.parse(props.termSetInfo.id),
@@ -341,14 +345,10 @@ export function TaxonomyTree(
           rootGroup.children = grps;
           rootGroup.data.skiptoken = loadedTerms.skiptoken;
           rootGroup.hasMoreData = loadedTerms.skiptoken !== "";
-          setGroupsLoading((prevGroupsLoading) =>
-            prevGroupsLoading.filter((value) => value !== props.termSetInfo.id)
-          );
           setGroups([rootGroup]);
         })
-        .catch(() => {
-          // no-op;
-        });
+        .catch(error => { console.error('[TaxonomyTree] Failed to load root terms.', error); })
+        .finally(() => finishLoading(rootGroup));
     }
   }, []);
 
@@ -374,7 +374,7 @@ export function TaxonomyTree(
         return newGroupsState;
       });
 
-      if (group.children && group.children.length === 0) {
+      if (group.children && group.children.length === 0 && !group.data.isLoading) {
         setGroupsLoading((prevGroupsLoading) => [
           ...prevGroupsLoading,
           group.key,
@@ -432,13 +432,9 @@ export function TaxonomyTree(
             group.children = nonExistingChildren;
             group.data.skiptoken = loadedTerms.skiptoken;
             group.hasMoreData = loadedTerms.skiptoken !== "";
-            setGroupsLoading((prevGroupsLoading) =>
-              prevGroupsLoading.filter((value) => value !== group.key)
-            );
           })
-          .catch(() => {
-            // no-op;
-          });
+          .catch(error => { console.error('[TaxonomyTree] Failed to load child terms.', error); })
+          .finally(() => finishLoading(group));
       }
     } else {
       setGroups((prevGroups) => {
@@ -801,6 +797,8 @@ export function TaxonomyTree(
         <div className={styles.loadMoreContainer}>
           <Link
             onClick={() => {
+              if (footerProps.group.data.isLoading) return;
+              footerProps.group.data.isLoading = true;
               setGroupsLoading((prevGroupsLoading) => [
                 ...prevGroupsLoading,
                 footerProps.group.key,
@@ -837,7 +835,7 @@ export function TaxonomyTree(
                       level: footerProps.group.level + 1,
                       isCollapsed: true,
                       data: { skiptoken: "", term: term },
-                      hasMoreData: term.childrenCount > 0,
+                      hasMoreData: props.allowSelectingChildren !== false && term.childrenCount > 0,
                     };
                     if (g.hasMoreData) {
                       g.children = [];
@@ -864,15 +862,9 @@ export function TaxonomyTree(
                   ];
                   footerProps.group.data.skiptoken = loadedTerms.skiptoken;
                   footerProps.group.hasMoreData = loadedTerms.skiptoken !== "";
-                  setGroupsLoading((prevGroupsLoading) =>
-                    prevGroupsLoading.filter(
-                      (value) => value !== footerProps.group.key
-                    )
-                  );
                 })
-                .catch(() => {
-                  // no-op;
-                });
+                .catch(error => { console.error('[TaxonomyTree] Failed to load more terms.', error); })
+                .finally(() => finishLoading(footerProps.group));
             }}
             styles={linkStyles}
           >

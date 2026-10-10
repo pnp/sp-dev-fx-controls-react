@@ -82,7 +82,7 @@ describe('DynamicFormService', () => {
     const { context, fetch } = mockContext();
     fetch.mockResolvedValueOnce(response({ ServerRelativeUrl: '/sites/test/Documents' }))
       .mockResolvedValueOnce(digestResponse())
-      .mockResolvedValueOnce(response({ ServerRelativeUrl: '/sites/test/Documents/New' }))
+      .mockResolvedValueOnce(response('', 204))
       .mockResolvedValue(response({}, 403));
     const pending = new DynamicFormService(context).addFolder(listId, 'New', {});
     await expect(pending).rejects.toBeInstanceOf(DynamicFormSaveError);
@@ -90,6 +90,30 @@ describe('DynamicFormService', () => {
       saveCommitted: true, partialCommit: true, failedPhase: 'identify',
       itemReference: { serverRelativeUrl: '/sites/test/Documents/New' }
     });
+  });
+
+  test.each(['0x0120', '0x0120D520'])('saves a folder/document set after an empty creation response: %s', async contentTypeId => {
+    const { context, fetch } = mockContext();
+    const parent = '/sites/test/Documents/Existing';
+    const name = "O'Brien 50% #1";
+    fetch.mockImplementation(async (url: string, _config: unknown, options: { method: string }) => {
+      if (url.includes('RootFolder')) return response({ ServerRelativeUrl: '/sites/test/Documents' });
+      if (url.endsWith('contextinfo')) return digestResponse();
+      if (url.endsWith('AddSubFolderUsingPath')) return response('', 204);
+      if (url.includes('ListItemAllFields')) return response({ Id: 9 });
+      if (url.includes('ListItemEntityTypeFullName')) return response({ ListItemEntityTypeFullName: 'SP.Data.DocumentsItem' });
+      return options.method === 'GET'
+        ? response({ Id: 9, Title: name, ContentTypeId: contentTypeId, 'odata.etag': '"2"' })
+        : response('', 204);
+    });
+    const result = await new DynamicFormService(context).addFolder(listId, name, { Title: name, ContentTypeId: contentTypeId }, 'Existing');
+    expect(result.reference.listItemId).toBe(9);
+    expect(result.data.ContentTypeId).toBe(contentTypeId);
+    const itemRead = fetch.mock.calls.find(call => call[0].includes('ListItemAllFields'));
+    expect(decodeURIComponent(itemRead[0])).toContain(`${parent}/${name}`.replace(/'/g, "''"));
+    const update = fetch.mock.calls.find(call => call[2].headers['X-HTTP-Method'] === 'MERGE');
+    expect(JSON.parse(update[2].body).ContentTypeId).toBe(contentTypeId);
+    expect(fetch.mock.calls.filter(call => call[0].endsWith('AddSubFolderUsingPath'))).toHaveLength(1);
   });
 
   test('reports a finalized file when its item identification fails', async () => {
@@ -107,5 +131,16 @@ describe('DynamicFormService', () => {
         saveCommitted: true, partialCommit: true, failedPhase: 'identify',
         itemReference: { serverRelativeUrl: '/sites/test/Documents/a.txt' }
       });
+  });
+
+  test('does not update the parent when an unnamed folder cannot be identified', async () => {
+    const { context, fetch } = mockContext();
+    fetch.mockResolvedValueOnce(response({ ServerRelativeUrl: '/sites/test/Documents' }))
+      .mockResolvedValueOnce(digestResponse())
+      .mockResolvedValueOnce(response('', 204));
+    await expect(new DynamicFormService(context).addFolder(listId, '', {})).rejects.toMatchObject({
+      partialCommit: true, failedPhase: 'identify', itemReference: { serverRelativeUrl: undefined }
+    });
+    expect(fetch).toHaveBeenCalledTimes(3);
   });
 });

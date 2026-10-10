@@ -56,6 +56,9 @@ deprecation and per-set tagging availability.
 The browser loads children in pages (50 by default). Selection, locale fallback,
 server ordering, parent paths and tagging/deprecation filtering remain available.
 Service failures are reported separately from an empty term set.
+Failed initial, expansion and load-more requests clear their loading indicator
+without discarding loaded children or the continuation token. The load-more link
+can then retry the failed request.
 
 ## Direct taxonomy service
 

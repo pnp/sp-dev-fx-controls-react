@@ -70,6 +70,11 @@ lock. Each form load captures its own services, web and props; obsolete loads st
 between asynchronous phases instead of issuing requests against a replacement
 target.
 
+Changing targets also clears the previous field values, selected file, content
+type, ETag, validation state and formatting. Submission stays blocked until the
+replacement form has loaded successfully; a failed reload cannot submit old
+values to the new target.
+
 ## Request behavior and support
 
 The replacement transport applies to the migrated PnPjs request paths, not every pre-existing request made anywhere in the library:

@@ -97,16 +97,16 @@ export class DynamicFormService {
     listId: string, name: string, values: Record<string, unknown>, folderPath?: string
   ): Promise<IDynamicFormSaveResult> {
     const parent = await this.folderPath(listId, folderPath);
-    const created = await this.rest.post<{ ServerRelativeUrl: string }>(`${this.folder(parent)}/AddSubFolderUsingPath`, {
+    await this.rest.post(`${this.folder(parent)}/AddSubFolderUsingPath`, {
       leafPath: { __metadata: { type: 'SP.ResourcePath' }, DecodedUrl: name }
     });
     const reference: IDynamicFormPersistedReference = {
-      webAbsoluteUrl: this.rest.webAbsoluteUrl, listId, serverRelativeUrl: created?.ServerRelativeUrl
+      webAbsoluteUrl: this.rest.webAbsoluteUrl, listId, serverRelativeUrl: name ? `${parent}/${name}` : undefined
     };
     let phase: 'identify' | 'metadata' = 'identify';
     let itemId: number | undefined;
     try {
-      if (!reference.serverRelativeUrl) throw new Error('SharePoint did not return the created folder path.');
+      if (!reference.serverRelativeUrl) throw new Error('Unable to identify a folder created without a name.');
       const item = await this.rest.get<{ Id: number }>(`${this.folder(reference.serverRelativeUrl)}/ListItemAllFields`);
       if (!item?.Id) throw new Error('Unable to read the ID of the created folder or document set.');
       itemId = item.Id;

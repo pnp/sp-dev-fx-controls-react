@@ -15,7 +15,7 @@ function createForm(props: IDynamicFormProps, stubLoad = true): DynamicFormBase 
     Object.assign(form.state, typeof update === 'function' ? update(form.state, form.props) : update);
     callback?.();
   };
-  if (stubLoad) form['getListInformation'] = jest.fn().mockResolvedValue(undefined);
+  if (stubLoad) form['getListInformation'] = jest.fn(async () => { form['_isLoading'] = false; });
   return form;
 }
 
@@ -259,6 +259,122 @@ describe('DynamicForm submission target isolation', () => {
       expect(fields).toHaveBeenCalledWith(listId, webUrl);
       expect(form.state.contentTypeId).toBe('0x01');
       expect(form.state.infoErrorMessages).toEqual([]);
+    });
+
+    test.each(['web', 'list', 'item'])('clears old values and blocks saves while the new %s loads', async target => {
+      const { context } = mockContext();
+      const gate = deferred<IRenderListDataAsStreamClientFormResult>();
+      jest.spyOn(SPService.prototype, 'getListFormRenderInfo').mockReturnValue(gate.promise);
+      jest.spyOn(SPService.prototype, 'getAdditionalListFormFieldInfo').mockResolvedValue([]);
+      jest.spyOn(DynamicFormService.prototype, 'getItem').mockResolvedValue({ Id: 2 });
+      const addItem = jest.spyOn(DynamicFormService.prototype, 'addItem').mockResolvedValue(savedResult);
+      const updateItem = jest.spyOn(DynamicFormService.prototype, 'updateItem').mockResolvedValue(savedResult);
+      const addFile = jest.spyOn(DynamicFormService.prototype, 'addFile');
+      const props: IDynamicFormProps = {
+        context, listId, useFieldValidation: false, enableFileSelection: true,
+        ...(target === 'item' ? { listItemId: 1 } : {})
+      };
+      const form = createForm(props, false);
+      form.setState({
+        fieldCollection: [{
+          context, columnInternalName: 'Title', fieldType: 'Text', required: false,
+          defaultValue: 'Old', newValue: 'Old', stringValue: 'Old', Order: 0, firstDayOfWeek: 0
+        }],
+        selectedFile: {
+          fileName: 'old.txt', fileNameWithoutExtension: 'old', fileAbsoluteUrl: undefined,
+          downloadFileContent: jest.fn()
+        },
+        contentTypeId: '0x0101', etag: '"old"', isSaving: true,
+        validationFormulas: { Old: { ValidationFormula: 'old', ValidationMessage: 'old' } },
+        clientValidationFormulas: { Old: { ValidationFormula: 'old', ValidationMessage: 'old' } },
+        validationErrors: { Old: 'old' }, hiddenByFormula: ['Old'],
+        customFormatting: { body: [], header: undefined, footer: undefined },
+        installedLanguages: [{ Lcid: 1033, DisplayName: 'old', LanguageTag: 'en-US' }],
+        missingSelectedFile: true, isValidationErrorDialogOpen: true
+      });
+      const nextProps: IDynamicFormProps = {
+        ...props,
+        ...(target === 'web' ? { webAbsoluteUrl: `${webUrl}-new` } : {}),
+        ...(target === 'list' ? { listId: '22222222-2222-4222-8222-222222222222' } : {}),
+        ...(target === 'item' ? { listItemId: 2 } : {})
+      };
+      const load = jest.fn(form['getListInformation']);
+      form['getListInformation'] = load;
+      Object.defineProperty(form, 'props', { value: nextProps });
+      form.componentDidUpdate(props, form.state);
+      expect(load).toHaveBeenCalled();
+      expect(form.state).toMatchObject({
+        fieldCollection: [], selectedFile: undefined, contentTypeId: undefined, etag: undefined,
+        validationFormulas: {}, clientValidationFormulas: {}, validationErrors: {}, hiddenByFormula: [],
+        customFormatting: undefined, installedLanguages: undefined, isSaving: false,
+        isValidationErrorDialogOpen: false, missingSelectedFile: false
+      });
+      await form['onSubmitClick']();
+      expect(addItem).not.toHaveBeenCalled();
+      expect(updateItem).not.toHaveBeenCalled();
+      expect(addFile).not.toHaveBeenCalled();
+
+      const field = {
+        InternalName: 'Title', Title: 'Title', FieldType: 'Text', Type: 'Text',
+        Hidden: false, DefaultValue: '', Required: false
+      } as ClientFormFieldInfo;
+      gate.resolve(renderInfo([field]));
+      await load.mock.results[0].value;
+      expect(form.state.contentTypeId).toBe('0x01');
+      expect(form.state.fieldCollection[0].newValue).toBeUndefined();
+      expect(form.state.selectedFile).toBeUndefined();
+      form.setState({ fieldCollection: form.state.fieldCollection.map(value => ({ ...value, newValue: 'New target value' })) });
+      await form['onSubmitClick']();
+      if (target === 'item') {
+        expect(updateItem).toHaveBeenCalledWith(nextProps.listId, 2, { Title: 'New target value' }, undefined);
+      } else {
+        expect(addItem).toHaveBeenCalledWith(nextProps.listId, { Title: 'New target value', ContentTypeId: '0x01' });
+      }
+      expect(addFile).not.toHaveBeenCalled();
+    });
+
+    test('does not unlock submission when replacement loading fails', async () => {
+      const { context } = mockContext();
+      jest.spyOn(console, 'error').mockImplementation(() => undefined);
+      jest.spyOn(SPService.prototype, 'getListFormRenderInfo').mockRejectedValue(new Error('Access denied'));
+      const writes = jest.spyOn(DynamicFormService.prototype, 'addItem');
+      const form = createForm({ context, listId }, false);
+      await form['getListInformation']();
+      await form['onSubmitClick']();
+      expect(writes).not.toHaveBeenCalled();
+      expect(form.state.infoErrorMessages[0].message).toContain('Access denied');
+    });
+
+    test('a pending user-field resolution cannot restore fields cleared for a new target', async () => {
+      const { context } = mockContext();
+      const gate = deferred<Awaited<ReturnType<DynamicFormService['ensureUser']>>>();
+      const ensureUser = jest.spyOn(DynamicFormService.prototype, 'ensureUser').mockReturnValue(gate.promise);
+      const props: IDynamicFormProps = { context, listId };
+      const form = createForm(props);
+      form.setState({ fieldCollection: [{
+        context, columnInternalName: 'Owners', fieldType: 'UserMulti', required: false,
+        defaultValue: [], stringValue: '', Order: 0, firstDayOfWeek: 0
+      }] });
+      const pending = form['onChange']('Owners', [
+        { secondaryText: 'one@example.com' }, { secondaryText: 'two@example.com' }
+      ], false);
+      replaceTarget(form, props);
+      gate.resolve({ Id: 7, Title: 'One', Email: 'one@example.com' } as Awaited<ReturnType<DynamicFormService['ensureUser']>>);
+      await pending;
+      expect(ensureUser).toHaveBeenCalledTimes(1);
+      expect(form.state.fieldCollection).toEqual([]);
+    });
+
+    test('blocks submission before React applies the target-state reset', async () => {
+      const { context } = mockContext();
+      const props: IDynamicFormProps = { context, listId, contentTypeId: '0x01', useFieldValidation: false };
+      const form = createForm(props);
+      const write = jest.spyOn(DynamicFormService.prototype, 'addItem');
+      form.setState = jest.fn();
+      Object.defineProperty(form, 'props', { value: { ...props, webAbsoluteUrl: `${webUrl}-new` } });
+      form.componentDidUpdate(props, form.state);
+      await form['onSubmitClick']();
+      expect(write).not.toHaveBeenCalled();
     });
   });
 

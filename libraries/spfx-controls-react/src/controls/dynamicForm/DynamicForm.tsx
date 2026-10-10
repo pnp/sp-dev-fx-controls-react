@@ -76,6 +76,7 @@ export class DynamicFormBase extends React.Component<
   private _loadVersion = 0;
   private _operationVersion = 0;
   private _submissionVersion?: number;
+  private _isLoading = false;
   private _unmounted = false;
   private get webURL(): string {
     return this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
@@ -88,15 +89,7 @@ export class DynamicFormBase extends React.Component<
     this._taxonomyService = new SPTaxonomyService(this.props.context, this.webURL);
 
     // Initialize state
-    this.state = {
-      infoErrorMessages: [],
-      fieldCollection: [],
-      validationFormulas: {},
-      clientValidationFormulas: {},
-      validationErrors: {},
-      hiddenByFormula: [],
-      isValidationErrorDialogOpen: false,
-    };
+    this.state = this.emptyTargetState();
 
     // Get SPService Factory
     this._spService = this.props.webAbsoluteUrl
@@ -108,6 +101,27 @@ export class DynamicFormBase extends React.Component<
 
     // Setup Custom Formatting utils
     this._customFormatter = new CustomFormattingHelper(this._formulaEvaluation);
+  }
+
+  private emptyTargetState(): IDynamicFormState {
+    return {
+      infoErrorMessages: [],
+      fieldCollection: [],
+      validationFormulas: {},
+      clientValidationFormulas: {},
+      validationErrors: {},
+      hiddenByFormula: [],
+      isValidationErrorDialogOpen: false,
+      isSaving: false,
+      selectedFile: undefined,
+      missingSelectedFile: false,
+      contentTypeId: undefined,
+      etag: undefined,
+      installedLanguages: undefined,
+      customFormatting: undefined,
+      headerContent: undefined,
+      footerContent: undefined
+    };
   }
 
   /**
@@ -144,6 +158,7 @@ export class DynamicFormBase extends React.Component<
       prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl ||
       prevProps.listId !== this.props.listId || prevProps.listItemId !== this.props.listItemId;
     if (targetChanged) {
+      this._isLoading = true;
       this._operationVersion++;
       this._submissionVersion = undefined;
       this._loadVersion++;
@@ -155,12 +170,12 @@ export class DynamicFormBase extends React.Component<
       this._formulaEvaluation = new FormulaEvaluation(this.props.context, this.webURL);
       this._customFormatter = new CustomFormattingHelper(this._formulaEvaluation);
     }
-    if (!isEqual(prevProps, this.props)) {
+    if (targetChanged || !isEqual(prevProps, this.props)) {
       // Props have changed due to parent component or workbench config, reset state
-      this.setState({
+      this.setState(targetChanged ? this.emptyTargetState() : {
         infoErrorMessages: [], // Reset info/error messages
         validationErrors: {}, // Reset validation errors
-        isSaving: targetChanged ? false : this.state.isSaving
+        isSaving: this.state.isSaving
       }, () => {
         // If listId or listItemId have changed, reload list information
         if (targetChanged) {
@@ -387,7 +402,7 @@ export class DynamicFormBase extends React.Component<
 
   /** Triggered when the user submits the form. */
   private onSubmitClick = async (): Promise<void> => {
-    if (this._unmounted || this.state.isSaving || this._submissionVersion !== undefined) return;
+    if (this._unmounted || this._isLoading || this.state.isSaving || this._submissionVersion !== undefined) return;
     const operationVersion = this._operationVersion;
     this._submissionVersion = operationVersion;
     const isCurrent = (): boolean => !this._unmounted && operationVersion === this._operationVersion;
@@ -803,7 +818,10 @@ export class DynamicFormBase extends React.Component<
     validate: boolean,
     additionalData?: FieldChangeAdditionalData,
   ): Promise<void> => {
-
+    if (this._unmounted || this._isLoading) return;
+    const operationVersion = this._operationVersion;
+    const isCurrent = (): boolean => !this._unmounted && operationVersion === this._operationVersion;
+    const dataService = this._dataService;
     const fieldCol = cloneDeep(this.state.fieldCollection || []);
     const field = fieldCol.filter((element, i) => {
       return element.columnInternalName === internalName;
@@ -852,7 +870,8 @@ export class DynamicFormBase extends React.Component<
         if (user.indexOf("@") === -1) {
           user = newValue[0].loginName;
         }
-        const result = await this._dataService.ensureUser(user);
+        const result = await dataService.ensureUser(user);
+        if (!isCurrent()) return;
         field.newValue = result.Id;
         field.stringValue = user;
         field.subPropertyValues = {
@@ -877,7 +896,8 @@ export class DynamicFormBase extends React.Component<
           if (user.indexOf("@") === -1) {
             user = element.loginName;
           }
-          const result = await this._dataService.ensureUser(user);
+          const result = await dataService.ensureUser(user);
+          if (!isCurrent()) return;
           field.newValue.push(result.Id);
           emails.push(user);
         } else {
@@ -890,11 +910,11 @@ export class DynamicFormBase extends React.Component<
     const validationErrors = { ...this.state.validationErrors };
     if (validationErrors[field.columnInternalName]) delete validationErrors[field.columnInternalName];
 
-    this.setState({
+    this.setState(() => isCurrent() ? {
       fieldCollection: fieldCol,
       validationErrors
-    }, () => {
-      if (validate) this.performValidation();
+    } : null, () => {
+      if (isCurrent() && validate) this.performValidation();
     });
   };
 
@@ -1014,6 +1034,7 @@ export class DynamicFormBase extends React.Component<
    * Invoked when component first mounts, loads information about the SharePoint list, fields and list item
    */
   private getListInformation = async (): Promise<void> => {
+    this._isLoading = true;
     const loadVersion = ++this._loadVersion;
     const isCurrent = (): boolean => !this._unmounted && loadVersion === this._loadVersion;
     const assertCurrent = (): void => {
@@ -1161,7 +1182,12 @@ export class DynamicFormBase extends React.Component<
         fieldCollection: sortedFields,
         installedLanguages,
         validationFormulas
-      } : null, () => { if (isCurrent()) this.performValidation(true); });
+      } : null, () => {
+        if (isCurrent()) {
+          this._isLoading = false;
+          this.performValidation(true);
+        }
+      });
 
     } catch (error) {
       if (!isCurrent()) return;
