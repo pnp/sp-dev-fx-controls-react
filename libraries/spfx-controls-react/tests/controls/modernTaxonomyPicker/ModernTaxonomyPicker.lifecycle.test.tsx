@@ -6,6 +6,8 @@ import { listId, mockContext } from '../../services/restTestHelpers';
 import { IGroup, IGroupRenderProps, Link } from '@fluentui/react';
 import { TaxonomyTree } from '../../../src/controls/modernTaxonomyPicker/taxonomyTree/TaxonomyTree';
 import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '../../../src/services/SPTaxonomyService.types';
+import { TaxonomyPanelContents } from '../../../src/controls/modernTaxonomyPicker/taxonomyPanelContents';
+import { Guid } from '@microsoft/sp-core-library';
 
 jest.mock('@fluentui/react', () => {
   const react = require('react');
@@ -139,7 +141,110 @@ jest.mock('@fluentui/react/lib/Tooltip', () => {
   const react = require('react');
   return { TooltipHost: (props: { children: React.ReactNode }) => react.createElement('div', {}, props.children) };
 });
-jest.mock('../../../src/controls/modernTaxonomyPicker/modernTermPicker/ModernTermPicker', () => ({ ModernTermPicker: (): null => null }));
+jest.mock('../../../src/controls/modernTaxonomyPicker/modernTermPicker/ModernTermPicker', () => {
+  const react = require('react');
+  return { ModernTermPicker: (props: object) => react.createElement('div', { ...props, 'data-test': 'term-picker' }) };
+});
+jest.mock('@fluentui/react/lib/MessageBar', () => {
+  const react = require('react');
+  return {
+    MessageBar: (props: object) => react.createElement('div', { ...props, 'data-test': 'error' }),
+    MessageBarType: { error: 1 }
+  };
+});
+
+describe('ModernTaxonomyPicker error recovery', () => {
+  afterEach(() => jest.restoreAllMocks());
+
+  async function setup(isPathRendered = false) {
+    jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    const { context } = mockContext();
+    Object.assign(context.pageContext, { cultureInfo: { currentUICultureName: 'en-US' } });
+    jest.spyOn(SPTaxonomyService.prototype, 'getTermStoreInfo').mockResolvedValue({
+      id: 'store', name: 'Store', languageTags: ['en-US'], defaultLanguageTag: 'en-US'
+    });
+    jest.spyOn(SPTaxonomyService.prototype, 'getTermSetInfo').mockResolvedValue({
+      id: listId, localizedNames: [{ name: 'Terms', languageTag: 'en-US' }],
+      childrenCount: 0, description: '', createdDateTime: '', customSortOrder: [],
+      groupId: 'group', isOpen: true, isAvailableForTagging: true, contact: ''
+    });
+    let renderer: ReactTestRenderer;
+    await act(async () => {
+      renderer = create(<ModernTaxonomyPicker
+        context={context} termSetId={listId} label="Terms" panelTitle="Terms" isPathRendered={isPathRendered}
+      />);
+    });
+    return renderer;
+  }
+  function messages(renderer: ReactTestRenderer): string[] {
+    return renderer.root.findAllByProps({ 'data-test': 'error' }).map(node => node.props.children);
+  }
+
+  test('clears only the recovered search or tree operation, keeping unrelated errors', async () => {
+    const children = jest.spyOn(SPTaxonomyService.prototype, 'getTerms')
+      .mockRejectedValueOnce(new Error('Tree failed')).mockResolvedValue({ value: [], skiptoken: '' });
+    const renderer = await setup();
+    const search = jest.spyOn(SPTaxonomyService.prototype, 'searchTerm')
+      .mockRejectedValueOnce(new Error('Search failed')).mockResolvedValue([]);
+    await act(async () => { await renderer.root.findByProps({ 'data-test': 'term-picker' }).props.onResolveSuggestions('term'); });
+    expect(messages(renderer)).toEqual(['Search failed']);
+    await act(async () => renderer.root.findByProps({ 'data-test': 'open' }).props.onClick());
+    const load = () => renderer.root.findByType(TaxonomyPanelContents).props.onLoadMoreData(Guid.parse(listId), Guid.empty, 'page', true, 50);
+    await act(async () => { await load().catch((): void => undefined); });
+    expect(messages(renderer)).toEqual(['Search failed', 'Tree failed']);
+    await act(async () => { await load(); });
+    expect(children).toHaveBeenCalledTimes(2);
+    expect(messages(renderer)).toEqual(['Search failed']);
+    await act(async () => {
+      await renderer.root.findAllByProps({ 'data-test': 'term-picker' })[0].props.onResolveSuggestions('term');
+    });
+    expect(search).toHaveBeenCalledTimes(2);
+    expect(messages(renderer)).toEqual([]);
+    await act(async () => renderer.unmount());
+  });
+
+  test('a success for another tree node does not clear a failed node', async () => {
+    jest.spyOn(SPTaxonomyService.prototype, 'getTerms')
+      .mockRejectedValueOnce(new Error('First node failed')).mockResolvedValue({ value: [], skiptoken: '' });
+    const renderer = await setup();
+    await act(async () => renderer.root.findByProps({ 'data-test': 'open' }).props.onClick());
+    const load = (parent: string) => renderer.root.findByType(TaxonomyPanelContents).props.onLoadMoreData(Guid.parse(listId), Guid.parse(parent), '', true);
+    await act(async () => { await load('first').catch((): void => undefined); });
+    await act(async () => { await load('second'); });
+    expect(messages(renderer)).toEqual(['First node failed']);
+    await act(async () => { await load('first'); });
+    expect(messages(renderer)).toEqual([]);
+    await act(async () => renderer.unmount());
+  });
+
+  test('clears selection-path errors after retry succeeds', async () => {
+    const renderer = await setup(true);
+    const selected = {
+      id: 'term', labels: [{ name: 'Term', languageTag: 'en-US', isDefault: true }]
+    } as ITermInfo;
+    jest.spyOn(SPTaxonomyService.prototype, 'getTermById')
+      .mockRejectedValueOnce(new Error('Path failed')).mockResolvedValue(selected);
+    await act(async () => renderer.root.findByProps({ 'data-test': 'term-picker' }).props.onChange([selected]));
+    expect(messages(renderer)).toEqual(['Path failed']);
+    await act(async () => renderer.root.findByProps({ 'data-test': 'term-picker' }).props.onChange([selected]));
+    expect(messages(renderer)).toEqual([]);
+    expect(renderer.root.findByProps({ 'data-test': 'term-picker' }).props.selectedItems).toEqual([selected]);
+    await act(async () => renderer.unmount());
+  });
+
+  test('ignores an older search failure after the latest search succeeded', async () => {
+    const renderer = await setup();
+    let reject: (error: Error) => void;
+    const oldSearch = new Promise<ITermInfo[]>((_resolve, fail) => { reject = fail; });
+    jest.spyOn(SPTaxonomyService.prototype, 'searchTerm').mockReturnValueOnce(oldSearch).mockResolvedValue([]);
+    let pending: Promise<ITermInfo[]>;
+    await act(async () => { pending = renderer.root.findByProps({ 'data-test': 'term-picker' }).props.onResolveSuggestions('old'); });
+    await act(async () => { await renderer.root.findByProps({ 'data-test': 'term-picker' }).props.onResolveSuggestions('new'); });
+    await act(async () => { reject(new Error('Old failure')); await pending; });
+    expect(messages(renderer)).toEqual([]);
+    await act(async () => renderer.unmount());
+  });
+});
 
 describe('ModernTaxonomyPicker target isolation', () => {
   afterEach(() => jest.restoreAllMocks());

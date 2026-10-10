@@ -20,6 +20,7 @@ export interface IDynamicFormPersistedReference {
   readonly listId: string;
   readonly listItemId?: number;
   readonly serverRelativeUrl?: string;
+  readonly etag?: string;
 }
 
 export class DynamicFormSaveError extends Error {
@@ -29,7 +30,7 @@ export class DynamicFormSaveError extends Error {
   constructor(
     public readonly itemReference: IDynamicFormPersistedReference,
     public readonly originalError: unknown,
-    public readonly failedPhase: 'identify' | 'upload' | 'metadata' | 'read' = 'read',
+    public readonly failedPhase: 'identify' | 'upload' | 'metadata' | 'read' | 'callback' = 'read',
     public readonly partialCommit = false
   ) {
     super(`A SharePoint resource was ${partialCommit ? 'partially saved' : 'saved'}, but the ${failedPhase} step failed: ${originalError instanceof Error ? originalError.message : String(originalError)}`);

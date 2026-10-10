@@ -82,19 +82,45 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
   const [currentAnchorTermInfo, setCurrentAnchorTermInfo] = React.useState<ITermInfo>();
   const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
-  const [errorMessage, setErrorMessage] = React.useState<string>();
+  const [operationErrors, setOperationErrors] = React.useState<Record<string, string>>({});
   const [loadedService, setLoadedService] = React.useState<SPTaxonomyService>();
   const requestVersion = React.useRef(0);
+  const operationVersions = React.useRef<Record<string, number>>({});
 
-  function reportError(error: unknown): void {
+  function reportError(operation: string, error: unknown): void {
     console.error('[ModernTaxonomyPicker]', error);
-    setErrorMessage(error instanceof Error ? error.message : String(error));
+    setOperationErrors(previous => ({
+      ...previous, [operation]: error instanceof Error ? error.message : String(error)
+    }));
+  }
+
+  async function trackOperation<T>(operation: string, action: () => Promise<T>): Promise<T> {
+    const targetVersion = requestVersion.current;
+    const version = (operationVersions.current[operation] || 0) + 1;
+    operationVersions.current[operation] = version;
+    const isCurrent = (): boolean => targetVersion === requestVersion.current && operationVersions.current[operation] === version;
+    try {
+      const result = await action();
+      if (isCurrent()) {
+        setOperationErrors(previous => {
+          if (!isCurrent() || !(operation in previous)) return previous;
+          const next = { ...previous };
+          delete next[operation];
+          return next;
+        });
+      }
+      return result;
+    } catch (error) {
+      if (isCurrent()) reportError(operation, error);
+      throw error;
+    }
   }
 
   React.useEffect(() => {
     const version = ++requestVersion.current;
     initialLoadComplete.current = false;
-    setErrorMessage(undefined);
+    setOperationErrors({});
+    operationVersions.current = {};
     setSelectedOptions([]);
     setSelectedPanelOptions([]);
     Promise.all([
@@ -122,7 +148,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
         initialLoadComplete.current = true;
       })
       .catch(error => {
-        if (version === requestVersion.current) reportError(error);
+        if (version === requestVersion.current) reportError('metadata', error);
       });
     return () => { requestVersion.current++; taxonomyService.dispose(); };
   }, [taxonomyService, props.termSetId, props.anchorTermId]);
@@ -149,12 +175,12 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   function onApply(): void {
     const version = requestVersion.current;
     if (props.isPathRendered) {
-      addParentInformationToTerms([...selectedPanelOptions])
+      trackOperation('selection-path', () => addParentInformationToTerms([...selectedPanelOptions]))
         .then((selectedTermsWithPath) => {
           if (version !== requestVersion.current) return;
           setSelectedOptions(selectedTermsWithPath);
         })
-        .catch(error => { if (version === requestVersion.current) reportError(error); });
+        .catch(() => { /* trackOperation reports the error. */ });
     }
     else {
       setSelectedOptions([...selectedPanelOptions]);
@@ -196,9 +222,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     const version = requestVersion.current;
     let filteredTerms: ITermInfo[];
     try {
-      filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren);
-    } catch (error) {
-      if (version === requestVersion.current) reportError(error);
+      filteredTerms = await trackOperation('search', () =>
+        taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren));
+    } catch {
       return [];
     }
     if (version !== requestVersion.current) return [];
@@ -281,13 +307,13 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   function onTermPickerChange(itms?: ITermInfo[]): void {
     const version = requestVersion.current;
     if (itms && props.isPathRendered) {
-      addParentInformationToTerms(itms)
+      trackOperation('selection-path', () => addParentInformationToTerms(itms))
         .then((itmsWithPath) => {
           if (version !== requestVersion.current) return;
           setSelectedOptions(itmsWithPath || []);
           setSelectedPanelOptions(itmsWithPath || []);
         })
-        .catch(error => { if (version === requestVersion.current) reportError(error); });
+        .catch(() => { /* trackOperation reports the error. */ });
     }
     else {
       setSelectedOptions(itms || []);
@@ -311,7 +337,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
 
   return (
     <div className={styles.modernTaxonomyPicker}>
-      {errorMessage && <MessageBar messageBarType={MessageBarType.error}>{errorMessage}</MessageBar>}
+      {Object.entries(operationErrors).map(([operation, message]) => (
+        <MessageBar key={operation} messageBarType={MessageBarType.error}>{message}</MessageBar>
+      ))}
       {props.label && <Label required={props.required}>{props.label}</Label>}
       <div className={styles.termField}>
         <div className={styles.termFieldInput}>
@@ -376,13 +404,11 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
                 allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={props.termPickerProps?.onResolveSuggestions ?? onResolveSuggestions}
                 onLoadMoreData={async (...args) => {
-                  const version = requestVersion.current;
-                  try {
-                    return await taxonomyService.getTerms(...args);
-                  } catch (error) {
-                    if (version === requestVersion.current) reportError(error);
-                    throw error;
-                  }
+                  const operation = `tree:${JSON.stringify([
+                    args[0].toString(), args[1]?.toString() || Guid.empty.toString(), args[2] || '',
+                    args[3] ?? false, args[4] ?? 50
+                  ])}`;
+                  return trackOperation(operation, () => taxonomyService.getTerms(...args));
                 }}
                 anchorTermInfo={currentAnchorTermInfo}
                 termSetInfo={currentTermSetInfo}

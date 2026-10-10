@@ -59,6 +59,9 @@ Service failures are reported separately from an empty term set.
 Failed initial, expansion and load-more requests clear their loading indicator
 without discarding loaded children or the continuation token. The load-more link
 can then retry the failed request.
+Errors are tracked separately for searches, selection paths and individual tree
+pages. A successful retry clears that operation's error without hiding unrelated
+failures. Older overlapping search results cannot restore an obsolete error.
 
 ## Direct taxonomy service
 

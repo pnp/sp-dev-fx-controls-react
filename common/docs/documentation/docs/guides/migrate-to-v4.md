@@ -62,6 +62,13 @@ The same callback contract applies to item creation/update, uploaded documents, 
 
 For incomplete uploads or metadata updates, `partialCommit: true` and `failedPhase` (`identify`, `upload` or `metadata`) distinguish partial persistence from a fully saved item whose final `read` failed. The error reference includes the server-relative path when known; `listItemId` can be absent if identification itself failed. Successful callbacks are invoked once, and callback errors do not trigger a write retry.
 
+If `onSubmitted` throws or its promise rejects after a successful save,
+`onSubmitError` receives a `DynamicFormSaveError` with `saveCommitted: true`,
+`partialCommit: false` and `failedPhase: "callback"`. Its `itemReference` retains
+the saved item identity and ETag, even when `returnListItemReferenceOnSubmit` is
+false, and `originalError` contains the callback failure. Do not retry the write
+to recover from a consumer callback failure.
+
 Both values of `useModernTaxonomyPicker` remain supported. Existing field overrides, validation, formatting, images, attachments, file selection and taxonomy fields are retained. File uploads retain the existing 10 MB chunk and overwrite defaults. Encoded folder paths remain supported and are decoded once; actual path case is preserved. Changing the web, list or item invalidates pending work so it cannot write to or update the replacement form.
 
 Submission is locked before asynchronous validation, so repeated clicks cannot

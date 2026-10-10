@@ -32,6 +32,59 @@ const savedResult: IDynamicFormSaveResult = {
 describe('DynamicForm submission target isolation', () => {
   afterEach(() => jest.restoreAllMocks());
 
+  test.each([
+    ['update', false], ['item', false], ['folder', false], ['document-set', false], ['file', false],
+    ['update', true], ['item', true], ['folder', true], ['document-set', true], ['file', true]
+  ] as const)('marks %s callback failures as committed (async: %s)', async (branch, asynchronous) => {
+    jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    const { context } = mockContext();
+    const result = { ...savedResult, reference: { ...savedResult.reference, etag: '"saved"' } };
+    const addItem = jest.spyOn(DynamicFormService.prototype, 'addItem').mockResolvedValue(result);
+    const updateItem = jest.spyOn(DynamicFormService.prototype, 'updateItem').mockResolvedValue(result);
+    const addFolder = jest.spyOn(DynamicFormService.prototype, 'addFolder').mockResolvedValue(result);
+    const addFile = jest.spyOn(DynamicFormService.prototype, 'addFile').mockResolvedValue(result);
+    const callbackError = new Error('Consumer callback failed');
+    const onSubmitted = asynchronous
+      ? jest.fn().mockRejectedValue(callbackError)
+      : jest.fn(() => { throw callbackError; });
+    const onSubmitError = jest.fn();
+    const contentTypeId = branch === 'folder' ? '0x0120'
+      : branch === 'document-set' ? '0x0120D520' : branch === 'file' ? '0x0101' : '0x01';
+    const form = createForm({
+      context, listId, contentTypeId, listItemId: branch === 'update' ? 1 : undefined,
+      enableFileSelection: branch === 'file', useFieldValidation: false,
+      returnListItemReferenceOnSubmit: false, onSubmitted, onSubmitError
+    });
+    form.setState({
+      fieldCollection: [{
+        context, columnInternalName: 'Title', fieldType: 'Text', required: false, disabled: false,
+        defaultValue: '', newValue: 'Submitted title', stringValue: '', Order: 0, firstDayOfWeek: 0
+      }],
+      selectedFile: branch === 'file' ? {
+        fileName: 'a.txt', fileNameWithoutExtension: 'a', fileAbsoluteUrl: undefined,
+        downloadFileContent: async () => new File(['content'], 'a.txt')
+      } : undefined
+    });
+    await form['onSubmitClick']();
+
+    expect(addItem.mock.calls.length + updateItem.mock.calls.length + addFolder.mock.calls.length + addFile.mock.calls.length).toBe(1);
+    expect(onSubmitted).toHaveBeenCalledTimes(1);
+    expect(onSubmitted).toHaveBeenCalledWith(result.data, undefined);
+    expect(onSubmitError).toHaveBeenCalledTimes(1);
+    expect(onSubmitError.mock.calls[0][0]).toMatchObject({ Title: 'Submitted title' });
+    const failure: DynamicFormSaveError = onSubmitError.mock.calls[0][1];
+    expect(failure).toBeInstanceOf(DynamicFormSaveError);
+    expect(failure.saveCommitted).toBe(true);
+    expect(failure.partialCommit).toBe(false);
+    expect(failure.failedPhase).toBe('callback');
+    expect(failure.itemReference).toEqual(result.reference);
+    expect(failure.originalError).toBe(callbackError);
+    expect(form.state.isSaving).toBe(false);
+    expect(form.state.infoErrorMessages[0].message).toContain('callback');
+    if (branch === 'update') expect(form.state.etag).toBe('"saved"');
+  });
+
   test.each(['download', 'upload', 'partial-commit'])('preserves submitted values when document %s fails', async failure => {
     jest.spyOn(console, 'error').mockImplementation(() => undefined);
     const { context } = mockContext();

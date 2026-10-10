@@ -28,7 +28,7 @@ import { FilePicker, IFilePickerResult } from "../filePicker";
 import { Guid } from '@microsoft/sp-core-library';
 import { IInstalledLanguageInfo, ChoiceFieldFormatType } from "../../common/SPRestTypes";
 import { ITermInfo } from "../../services/SPTaxonomyService.types";
-import { DynamicFormService } from "../../services/DynamicFormService";
+import { DynamicFormService, DynamicFormSaveError, IDynamicFormSaveResult } from "../../services/DynamicFormService";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -638,14 +638,7 @@ export class DynamicFormBase extends React.Component<
           const iur = await dataService.updateItem(listId, listItemId, objects, this.state.etag);
           if (!isCurrent()) return;
           newETag = iur.reference.etag;
-          if (onSubmitted) {
-            await onSubmitted(
-              iur.data,
-              returnListItemReferenceOnSubmit !== false
-                ? iur.reference
-                : undefined
-            );
-          }
+          await this.notifySubmitted(iur, onSubmitted, returnListItemReferenceOnSubmit);
         } catch (error) {
           if (!isCurrent()) return;
           apiError = (error as Error).message;
@@ -682,14 +675,7 @@ export class DynamicFormBase extends React.Component<
             if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
             const iar = await dataService.addItem(listId, objects);
             if (!isCurrent()) return;
-            if (onSubmitted) {
-              await onSubmitted(
-                iar.data,
-                returnListItemReferenceOnSubmit !== false
-                  ? iar.reference
-                  : undefined
-              );
-            }
+            await this.notifySubmitted(iar, onSubmitted, returnListItemReferenceOnSubmit);
           } catch (error) {
             if (!isCurrent()) return;
             apiError = (error as Error).message;
@@ -708,12 +694,7 @@ export class DynamicFormBase extends React.Component<
           objects[contentTypeIdField] = contentTypeId;
           const iur = await dataService.addFolder(listId, folderFileName, objects, folderPath);
           if (!isCurrent()) return;
-          if (onSubmitted) {
-            await onSubmitted(
-              iur.data,
-              returnListItemReferenceOnSubmit !== false ? iur.reference : undefined
-            );
-          }
+          await this.notifySubmitted(iur, onSubmitted, returnListItemReferenceOnSubmit);
         } catch (error) {
           if (!isCurrent()) return;
           apiError = (error as Error).message;
@@ -798,13 +779,24 @@ export class DynamicFormBase extends React.Component<
           listId, itemTitle, content, objects, folderPath
         );
         if (!isCurrent()) return;
-        if (onSubmitted) {
-          await onSubmitted(iur.data, returnListItemReferenceOnSubmit !== false ? iur.reference : undefined);
-        }
+        await this.notifySubmitted(iur, onSubmitted, returnListItemReferenceOnSubmit);
       } catch (error) {
         console.error("Error uploading document", error);
         throw error;
       }
+    }
+  }
+
+  private async notifySubmitted(
+    result: IDynamicFormSaveResult,
+    onSubmitted: IDynamicFormProps['onSubmitted'],
+    returnReference: boolean | undefined
+  ): Promise<void> {
+    if (!onSubmitted) return;
+    try {
+      await onSubmitted(result.data, returnReference !== false ? result.reference : undefined);
+    } catch (error) {
+      throw new DynamicFormSaveError(result.reference, error, 'callback');
     }
   }
 

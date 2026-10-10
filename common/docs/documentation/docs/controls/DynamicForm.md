@@ -62,7 +62,7 @@ The `DynamicForm` can be configured with the following properties:
 | hiddenFields | string[] | no | InternalName of fields that should be hidden. Default value is `false`|
 | onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
-| onSubmitted | (listItemData: any, listItem?: IDynamicFormItemReference) => void or Promise<void> | no | Receives saved item data and an optional reference containing webAbsoluteUrl, listId, listItemId and etag. The reference is not an SDK object. |
+| onSubmitted | (listItemData: any, listItem?: IDynamicFormItemReference) => void or Promise<void> | no | Receives saved item data and an optional reference containing webAbsoluteUrl, listId, listItemId and etag. The reference is not an SDK object. Callback failures are reported through `onSubmitError` with committed-item context and `failedPhase: "callback"`. |
 | onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. Save failures, including document download/upload and partial-commit failures, receive the submitted values. Failures before the save payload is prepared may receive `null`. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
 | returnListItemReferenceOnSubmit | boolean | no | Pass the item reference as the second `onSubmitted` argument. Default - `true`; `false` omits it. Replaces `returnListItemInstanceOnSubmit`. |
