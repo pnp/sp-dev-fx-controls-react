@@ -132,6 +132,32 @@ describe('SPRestClient', () => {
     expect(fetch.mock.calls[2][2].body).toContain('two@example.com');
   });
 
+  test('parses multiple batch results in the emitted build without String.matchAll', async () => {
+    const descriptor = Object.getOwnPropertyDescriptor(String.prototype, 'matchAll');
+    Object.defineProperty(String.prototype, 'matchAll', { configurable: true, writable: true, value: undefined });
+    try {
+      const { http, fetch } = mockContext();
+      fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(response(
+        '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{"Id":1}\r\n' +
+        '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{"Id":2}\r\n--batchresponse_test--'
+      ));
+      const emitted: typeof import('../../src/services/SPRestClient') = require('../../lib-commonjs/services/SPRestClient');
+      expect(await new emitted.SPRestClient(http, webUrl).ensureUsers(['one@example.com', 'two@example.com']))
+        .toEqual([{ Id: 1 }, { Id: 2 }]);
+      expect(fetch).toHaveBeenCalledTimes(2);
+    } finally {
+      if (descriptor) Object.defineProperty(String.prototype, 'matchAll', descriptor);
+      else Reflect.deleteProperty(String.prototype, 'matchAll');
+    }
+  });
+
+  test('rejects a batch response with missing operation results', async () => {
+    const { http, fetch } = mockContext();
+    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(response('--batchresponse_test--'));
+    await expect(new SPRestClient(http, webUrl).ensureUsers(['one@example.com']))
+      .rejects.toThrow('SharePoint batch response does not match its requests.');
+  });
+
   test('retains partial batch successes after outer retry exhaustion', async () => {
     jest.useFakeTimers();
     const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);

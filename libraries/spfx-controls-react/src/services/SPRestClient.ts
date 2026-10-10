@@ -143,7 +143,13 @@ export class SPRestClient {
           maxAttempts: 1
         });
         const text = await response.text();
-        const parts = Array.from(text.matchAll(/HTTP\/1\.[01] (\d{3})[^\r\n]*\r?\n([\s\S]*?)(?=\r?\n--|$)/g));
+        const pattern = /HTTP\/1\.[01] (\d{3})[^\r\n]*\r?\n([\s\S]*?)(?=\r?\n--|$)/g;
+        const parts: RegExpExecArray[] = [];
+        let match = pattern.exec(text);
+        while (match) {
+          parts.push(match);
+          match = pattern.exec(text);
+        }
         if (parts.length !== pending.length) throw new Error('SharePoint batch response does not match its requests.');
         parts.forEach((part, index) => {
           const status = Number(part[1]);

@@ -63,7 +63,7 @@ The `DynamicForm` can be configured with the following properties:
 | onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
 | onSubmitted | (listItemData: any, listItem?: IDynamicFormItemReference) => void or Promise<void> | no | Receives saved item data and an optional reference containing webAbsoluteUrl, listId, listItemId and etag. The reference is not an SDK object. |
-| onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
+| onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. Save failures, including document download/upload and partial-commit failures, receive the submitted values. Failures before the save payload is prepared may receive `null`. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
 | returnListItemReferenceOnSubmit | boolean | no | Pass the item reference as the second `onSubmitted` argument. Default - `true`; `false` omits it. Replaces `returnListItemInstanceOnSubmit`. |
 | supportedFileExtensions | string[] | no | Specify the supported file extensions for the file picker. Only used when enableFileSelection is `true`. Default value is `["docx", "doc", "pptx", "ppt", "xlsx", "xls", "pdf"]`. |

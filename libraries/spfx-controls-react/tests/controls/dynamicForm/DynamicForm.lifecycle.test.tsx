@@ -1,6 +1,6 @@
 import { DynamicFormBase } from '../../../src/controls/dynamicForm/DynamicForm';
 import { IDynamicFormProps } from '../../../src/controls/dynamicForm/IDynamicFormProps';
-import { DynamicFormService, IDynamicFormSaveResult } from '../../../src/services/DynamicFormService';
+import { DynamicFormService, DynamicFormSaveError, IDynamicFormSaveResult } from '../../../src/services/DynamicFormService';
 import SPService from '../../../src/services/SPService';
 import { SPTaxonomyService } from '../../../src/services/SPTaxonomyService';
 import { ClientFormFieldInfo, IRenderListDataAsStreamClientFormResult } from '../../../src/services/ISPService';
@@ -31,6 +31,44 @@ const savedResult: IDynamicFormSaveResult = {
 
 describe('DynamicForm submission target isolation', () => {
   afterEach(() => jest.restoreAllMocks());
+
+  test.each(['download', 'upload', 'partial-commit'])('preserves submitted values when document %s fails', async failure => {
+    jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    const { context } = mockContext();
+    const error = failure === 'partial-commit'
+      ? new DynamicFormSaveError(
+        { webAbsoluteUrl: webUrl, listId, serverRelativeUrl: '/sites/test/Documents/a.txt' },
+        new Error('Metadata failed'), 'metadata', true
+      ) : new Error(`${failure} failed`);
+    const content = new File(['content'], 'a.txt', { type: 'text/plain' });
+    const downloadFileContent = failure === 'download'
+      ? jest.fn().mockRejectedValue(error) : jest.fn().mockResolvedValue(content);
+    const upload = jest.spyOn(DynamicFormService.prototype, 'addFile').mockRejectedValue(error);
+    const onSubmitError = jest.fn();
+    const onSubmitted = jest.fn();
+    const form = createForm({
+      context, listId, contentTypeId: '0x0101', enableFileSelection: true,
+      useFieldValidation: false, onSubmitError, onSubmitted
+    });
+    form.setState({
+      selectedFile: {
+        fileName: 'a.txt', fileNameWithoutExtension: 'a', fileAbsoluteUrl: undefined, downloadFileContent
+      },
+      fieldCollection: [{
+        context, columnInternalName: 'Title', fieldType: 'Text', required: false, disabled: false,
+        defaultValue: '', value: '', newValue: 'Submitted title', stringValue: '', Order: 0, firstDayOfWeek: 0
+      }]
+    });
+    await form['onSubmitClick']();
+
+    expect(onSubmitError).toHaveBeenCalledTimes(1);
+    expect(onSubmitError).toHaveBeenCalledWith({ Title: 'Submitted title', ContentTypeId: '0x0101' }, error);
+    expect(onSubmitted).not.toHaveBeenCalled();
+    expect(upload).toHaveBeenCalledTimes(failure === 'download' ? 0 : 1);
+    if (failure !== 'download') expect(onSubmitError.mock.calls[0][0]).toBe(upload.mock.calls[0][3]);
+    expect(form.state.isSaving).toBe(false);
+    expect(form.state.infoErrorMessages[0].message).toBe(error.message);
+  });
 
   test('locks synchronously before validation even when React has not applied saving state', async () => {
     const { context } = mockContext();

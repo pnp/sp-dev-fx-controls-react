@@ -649,7 +649,15 @@ export class DynamicFormBase extends React.Component<
           contentTypeId.startsWith("0x01"))
       ) {
         if (fileSelectRendered === true) {
-          await this.addFileToLibrary(objects, dataService, isCurrent);
+          try {
+            await this.addFileToLibrary(objects, dataService, isCurrent);
+          } catch (error) {
+            if (!isCurrent()) return;
+            apiError = (error as Error).message;
+            if (onSubmitError) {
+              onSubmitError(objects, error as Error);
+            }
+          }
         }
         else {
           // We are adding a new list item
