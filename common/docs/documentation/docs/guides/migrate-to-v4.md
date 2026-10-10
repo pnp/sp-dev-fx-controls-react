@@ -21,6 +21,10 @@ Import the control's data contracts from the controls library instead of PnPjs:
 
 Taxonomy data retains the SharePoint response shape, including parent, children count and tagging metadata. These objects are data, not queryable SDK instances.
 
+The library-owned `ISiteUserInfo` retains SharePoint's `IsShareByEmailGuestUser`
+boolean, alongside `IsEmailAuthenticationGuestUser`; consumers can keep reading
+both properties after updating the type import.
+
 All three taxonomy action-renderer interfaces use `TaxonomyTreeUpdateCallback`:
 `(newTerms, parents, updatedTerms, deletedTerms)`. Direct `TaxonomyPanelContents`
 consumers must not interpret the second argument as updated terms or the third

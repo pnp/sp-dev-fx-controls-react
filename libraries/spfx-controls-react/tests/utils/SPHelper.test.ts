@@ -1,6 +1,7 @@
 import { IContext } from '../../src/common/Interfaces';
 import { SPHelper } from '../../src/common/utilities/SPHelper';
 import { SPRestClient } from '../../src/services/SPRestClient';
+import type { ISiteUserInfo } from '../../src/Common';
 
 const mockGet = jest.fn();
 const mockPost = jest.fn();
@@ -34,6 +35,17 @@ describe('SPHelper REST requests', () => {
         legacyPageContext: { viewId: 'view-id' }
       }
     } as unknown as IContext;
+  });
+
+  test.each([true, false])('preserves the public share-by-email guest flag: %s', async isGuest => {
+    const userData: Pick<ISiteUserInfo, 'Id' | 'IsShareByEmailGuestUser'> = {
+      Id: 7, IsShareByEmailGuestUser: isGuest
+    };
+    get.mockResolvedValue(userData);
+    const user: ISiteUserInfo = await SPHelper.getUserById(7, context);
+    const isShareByEmailGuest: boolean = user.IsShareByEmailGuestUser;
+    expect(isShareByEmailGuest).toBe(isGuest);
+    expect(user).toEqual(userData);
   });
 
   test('escapes list names and resolves schema attributes on cache miss and hit', async () => {

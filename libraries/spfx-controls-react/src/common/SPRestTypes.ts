@@ -37,6 +37,7 @@ export interface ISiteUserInfo {
   IsSiteAdmin: boolean;
   Expiration: string;
   IsEmailAuthenticationGuestUser: boolean;
+  IsShareByEmailGuestUser: boolean;
   UserId: { NameId: string; NameIdIssuer: string };
   UserPrincipalName: string | null;
 }
