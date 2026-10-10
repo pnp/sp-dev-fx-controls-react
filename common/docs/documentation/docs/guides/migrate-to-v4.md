@@ -89,7 +89,7 @@ The replacement transport applies to the migrated PnPjs request paths, not every
 - Up to seven application-level attempts, including the initial request. Missing/invalid `Retry-After` uses exponential delays starting at 100 ms; valid seconds or HTTP-date values are honored.
 - Explicit throttling responses can be retried. Reads and known replay-safe operations also handle transient 503/504 responses. Creates, conditional updates and upload finalization are not blindly repeated after an uncertain response.
 - Permission, validation and ETag conflict errors are surfaced rather than repeatedly retried. The existing folder/document-set metadata-update conflict policy permits up to three 100 ms retries, within the request's overall budget.
-- Batch results are handled independently: successful user resolutions remain available, and only eligible failed entries are retried. SharePoint changesets are not transactions.
+- Batch results are correlated by MIME `Content-ID`, not response position. Successful user resolutions retain the order of the requested distinct login names, and only eligible failed entries are retried. Missing, duplicate or unknown response IDs are reported rather than guessed. SharePoint changesets are not transactions.
 - Digest acquisition has the same status-aware retry handling, with per-client/web in-memory caching and expiration. Credentials/digests are not stored persistently.
 - List-item entity type names retain a five-day local-storage cache. This caches metadata, not list-item data. Blocked storage is reported and does not prevent the request.
 

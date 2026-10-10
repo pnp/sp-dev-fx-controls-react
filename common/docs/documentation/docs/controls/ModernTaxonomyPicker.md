@@ -84,7 +84,9 @@ if (firstPage.skiptoken) {
 console.log(store, set);
 ```
 
-Pass `skiptoken` back unchanged. `getTermById` includes parent information.
+Pass `skiptoken` back unchanged. `getTermById` returns `Promise<ITermInfo | undefined>`;
+an empty term ID returns `undefined` without issuing a request. Nonempty term
+results include parent information. Check the result before accessing its fields.
 `searchTerm` accepts a label, language, optional anchor and descendant-selection
 restriction. Failed calls reject; callers should display or log the error.
 `dispose()` prevents additional retry attempts when a service instance is no longer used.
@@ -140,6 +142,7 @@ async function addChild(
   const created: { id: string } = await response.json();
   const service = new SPTaxonomyService(context);
   const term = await service.getTermById(Guid.parse(setId), Guid.parse(created.id));
+  if (!term) throw new Error("Term creation returned an empty term ID.");
   updateTree([term], [parent]);
 }
 ```

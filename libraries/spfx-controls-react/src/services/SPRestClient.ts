@@ -77,6 +77,72 @@ async function wait(delay: number): Promise<void> {
   }
 }
 
+interface IMessagePart {
+  headers: Map<string, string>;
+  body: string;
+}
+
+interface IBatchResponse extends IMessagePart {
+  status: number;
+}
+
+function parseMessage(text: string): IMessagePart {
+  const lines = text.split(/\r?\n/);
+  const separator = lines.indexOf('');
+  if (separator < 0) throw new Error('SharePoint batch response has no header/body separator.');
+  const headers = new Map<string, string>();
+  for (const line of lines.slice(0, separator)) {
+    const header = /^([^:\s]+):[ \t]*(.*)$/.exec(line);
+    if (!header || headers.has(header[1].toLowerCase())) throw new Error('SharePoint batch response contains invalid or duplicate headers.');
+    headers.set(header[1].toLowerCase(), header[2].trim());
+  }
+  return { headers, body: lines.slice(separator + 1).join('\n') };
+}
+
+function parseMultipart(text: string, contentType: string): IMessagePart[] {
+  const boundary = /(?:^|;)\s*boundary=(?:"([^"]+)"|([^;\s]+))/i.exec(contentType || '');
+  if (!/^multipart\/mixed(?:\s*;|$)/i.test(contentType || '') || !boundary) {
+    throw new Error('SharePoint batch response has no valid multipart boundary.');
+  }
+  const delimiter = `--${boundary[1] || boundary[2]}`;
+  const parts: IMessagePart[] = [];
+  let current: string[] | undefined;
+  for (const line of text.split(/\r?\n/)) {
+    const marker = line.trimEnd();
+    if (marker === delimiter || marker === `${delimiter}--`) {
+      if (current) parts.push(parseMessage(current.join('\n')));
+      if (marker === `${delimiter}--`) return parts;
+      current = [];
+    } else if (current) {
+      current.push(line);
+    }
+  }
+  throw new Error('SharePoint batch response is missing its closing boundary.');
+}
+
+function parseBatchResponses(text: string, contentType: string): Map<string, IBatchResponse> {
+  const responses = new Map<string, IBatchResponse>();
+  for (const outer of parseMultipart(text, contentType)) {
+    const outerType = outer.headers.get('content-type') || '';
+    const parts = /^multipart\/mixed(?:\s*;|$)/i.test(outerType)
+      ? parseMultipart(outer.body, outerType) : [outer];
+    for (const part of parts) {
+      const id = part.headers.get('content-id');
+      if (!id || responses.has(id)) throw new Error('SharePoint batch response has a missing or duplicate Content-ID.');
+      if (!/^application\/http(?:\s*;|$)/i.test(part.headers.get('content-type') || '')) {
+        throw new Error('SharePoint batch response contains an unsupported part type.');
+      }
+      const statusLine = /^HTTP\/1\.[01] +(\d{3})[^\r\n]*\r?\n/.exec(part.body);
+      if (!statusLine) throw new Error('SharePoint batch response has an invalid HTTP status line.');
+      responses.set(id, {
+        ...parseMessage(part.body.slice(statusLine[0].length)),
+        status: Number(statusLine[1])
+      });
+    }
+  }
+  return responses;
+}
+
 export class SPRestClient {
   private static readonly digests = new WeakMap<SPHttpClient, Map<string, Promise<IDigest>>>();
   private disposed = false;
@@ -117,24 +183,27 @@ export class SPRestClient {
   }
 
   public async ensureUsers(loginNames: string[]): Promise<ISiteUserInfo[]> {
-    const results: ISiteUserInfo[] = [];
-    let pending = Array.from(new Set(loginNames));
+    const results = new Map<string, ISiteUserInfo>();
+    const requested = Array.from(new Set(loginNames)).map((loginName, index) => ({
+      loginName, contentId: String(index + 1)
+    }));
+    let pending = requested.slice();
     for (let attempt = 1; pending.length && attempt <= 7; attempt++) {
       this.assertActive();
       const boundary = `batch_${Guid.newGuid().toString()}`;
       const changeset = `changeset_${Guid.newGuid().toString()}`;
-      const requests = pending.map((name, index) => [
+      const requests = pending.map(request => [
         `--${changeset}`, 'Content-Type: application/http', 'Content-Transfer-Encoding: binary',
-        `Content-ID: ${index + 1}`, '',
+        `Content-ID: ${request.contentId}`, '',
         `POST ${this.webAbsoluteUrl}/_api/web/ensureuser HTTP/1.1`,
         'Content-Type: application/json;odata=verbose', 'Accept: application/json', '',
-        JSON.stringify({ logonName: name })
+        JSON.stringify({ logonName: request.loginName })
       ].join('\r\n'));
       const body = [
         `--${boundary}`, `Content-Type: multipart/mixed; boundary=${changeset}`, '',
         ...requests, `--${changeset}--`, `--${boundary}--`, ''
       ].join('\r\n');
-      const retry: string[] = [];
+      const retry: typeof pending = [];
       let delay = 0;
       try {
         const response = await this.send('POST', '/_api/$batch', body, {
@@ -142,28 +211,20 @@ export class SPRestClient {
           retrySafe: true,
           maxAttempts: 1
         });
-        const text = await response.text();
-        const pattern = /HTTP\/1\.[01] (\d{3})[^\r\n]*\r?\n([\s\S]*?)(?=\r?\n--|$)/g;
-        const parts: RegExpExecArray[] = [];
-        let match = pattern.exec(text);
-        while (match) {
-          parts.push(match);
-          match = pattern.exec(text);
+        const parts = parseBatchResponses(await response.text(), response.headers.get('Content-Type'));
+        if (parts.size !== pending.length || pending.some(request => !parts.has(request.contentId))) {
+          throw new Error('SharePoint batch response Content-IDs do not match its requests.');
         }
-        if (parts.length !== pending.length) throw new Error('SharePoint batch response does not match its requests.');
-        parts.forEach((part, index) => {
-          const status = Number(part[1]);
-          const separator = /\r?\n\r?\n/.exec(part[2]);
-          if (!separator) throw new Error('SharePoint batch response has no header/body separator.');
-          const headerText = part[2].slice(0, separator.index);
-          const responseBody = part[2].slice(separator.index + separator[0].length);
-          const retryAfter = /^Retry-After:\s*(.+)$/im.exec(headerText)?.[1].trim();
+        pending.forEach(request => {
+          const part = parts.get(request.contentId);
+          const status = part.status;
+          const retryAfter = part.headers.get('retry-after');
           if (status >= 200 && status < 300) {
-            const user = normalizeOData<ISiteUserInfo>(JSON.parse(responseBody));
+            const user = normalizeOData<ISiteUserInfo>(JSON.parse(part.body));
             if (!user?.Id) throw new Error('SharePoint batch ensureuser returned no user ID.');
-            results.push(user);
+            results.set(request.contentId, user);
           } else if ([429, 503, 504].includes(status) && attempt < 7) {
-            retry.push(pending[index]);
+            retry.push(request);
             delay = Math.max(delay, retryDelay(retryAfter, attempt));
           } else {
             console.error('[SPRestClient.ensureUsers]', new SPRestError(status, 'Batch operation failed', attempt));
@@ -184,7 +245,7 @@ export class SPRestClient {
       pending = retry;
       if (pending.length) await wait(delay);
     }
-    return results;
+    return requested.map(request => results.get(request.contentId)).filter((user): user is ISiteUserInfo => user !== undefined);
   }
 
   public resolveUrl(path: string): string {

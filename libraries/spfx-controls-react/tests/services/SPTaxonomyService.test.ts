@@ -3,6 +3,12 @@ import { SPTaxonomyService } from '../../src/services/SPTaxonomyService';
 import { listId, mockContext, response, webUrl } from './restTestHelpers';
 
 describe('SPTaxonomyService REST compatibility', () => {
+  test('returns undefined for an empty term ID without issuing a request', async () => {
+    const { context, fetch } = mockContext();
+    expect(await new SPTaxonomyService(context).getTermById(Guid.parse(listId), Guid.empty)).toBeUndefined();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   test('keeps legacy children paging and opaque tokens, including unbound callback use', async () => {
     const { context, fetch } = mockContext();
     const token = 'a+b/%=';

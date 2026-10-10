@@ -1,6 +1,24 @@
 import { SPRestClient, normalizeOData, retryDelay, escapeODataString } from '../../src/services/SPRestClient';
 import { digestResponse, mockContext, response, webUrl } from './restTestHelpers';
 
+function batchResponse(
+  parts: { contentId?: string; status: number; data: unknown; headers?: Record<string, string> }[],
+  nested = true
+) {
+  const boundary = nested ? 'changeset_response' : 'batch_response';
+  const content = parts.map(part => [
+    `--${boundary}`, 'Content-Type: application/http', 'Content-Transfer-Encoding: binary',
+    ...(part.contentId === undefined ? [] : [`content-id: ${part.contentId}`]), '',
+    `HTTP/1.1 ${part.status} Result`, 'Content-Type: application/json',
+    ...Object.entries(part.headers || {}).map(([key, value]) => `${key}: ${value}`), '',
+    JSON.stringify(part.data), ''
+  ].join('\r\n')).join('') + `--${boundary}--`;
+  return response(nested ? [
+    '--batch_response', 'Content-Type: multipart/mixed; boundary="changeset_response"', '',
+    content, '--batch_response--', ''
+  ].join('\r\n') : content, 200, { 'Content-Type': 'multipart/mixed; boundary="batch_response"' });
+}
+
 describe('SPRestClient', () => {
   afterEach(() => { jest.useRealTimers(); jest.restoreAllMocks(); });
 
@@ -119,17 +137,17 @@ describe('SPRestClient', () => {
   test('only retries throttled batch entries, retaining successes', async () => {
     jest.useFakeTimers();
     const { http, fetch } = mockContext();
-    const batch = (parts: { status: number; data: unknown }[]) => response(parts.map(part =>
-      `--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 ${part.status} Result\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(part.data)}\r\n`
-    ).join('') + '--batchresponse_test--');
     fetch.mockResolvedValueOnce(digestResponse())
-      .mockResolvedValueOnce(batch([{ status: 200, data: { Id: 1 } }, { status: 429, data: {} }]))
-      .mockResolvedValueOnce(batch([{ status: 200, data: { Id: 2 } }]));
+      .mockResolvedValueOnce(batchResponse([
+        { contentId: '1', status: 200, data: { Id: 1 } }, { contentId: '2', status: 429, data: {} }
+      ]))
+      .mockResolvedValueOnce(batchResponse([{ contentId: '2', status: 200, data: { Id: 2 } }]));
     const result = new SPRestClient(http, webUrl).ensureUsers(['one@example.com', 'two@example.com']);
     await jest.runAllTimersAsync();
     expect(await result).toEqual([{ Id: 1 }, { Id: 2 }]);
     expect(fetch.mock.calls[2][2].body).not.toContain('one@example.com');
     expect(fetch.mock.calls[2][2].body).toContain('two@example.com');
+    expect(fetch.mock.calls[2][2].body).toContain('Content-ID: 2');
   });
 
   test('parses multiple batch results in the emitted build without String.matchAll', async () => {
@@ -137,10 +155,10 @@ describe('SPRestClient', () => {
     Object.defineProperty(String.prototype, 'matchAll', { configurable: true, writable: true, value: undefined });
     try {
       const { http, fetch } = mockContext();
-      fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(response(
-        '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{"Id":1}\r\n' +
-        '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{"Id":2}\r\n--batchresponse_test--'
-      ));
+      fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(batchResponse([
+        { contentId: '2', status: 200, data: { Id: 2 } },
+        { contentId: '1', status: 200, data: { Id: 1 } }
+      ]));
       const emitted: typeof import('../../src/services/SPRestClient') = require('../../lib-commonjs/services/SPRestClient');
       expect(await new emitted.SPRestClient(http, webUrl).ensureUsers(['one@example.com', 'two@example.com']))
         .toEqual([{ Id: 1 }, { Id: 2 }]);
@@ -153,19 +171,18 @@ describe('SPRestClient', () => {
 
   test('rejects a batch response with missing operation results', async () => {
     const { http, fetch } = mockContext();
-    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(response('--batchresponse_test--'));
+    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(batchResponse([]));
     await expect(new SPRestClient(http, webUrl).ensureUsers(['one@example.com']))
-      .rejects.toThrow('SharePoint batch response does not match its requests.');
+      .rejects.toThrow('SharePoint batch response Content-IDs do not match its requests.');
   });
 
   test('retains partial batch successes after outer retry exhaustion', async () => {
     jest.useFakeTimers();
     const log = jest.spyOn(console, 'error').mockImplementation(() => undefined);
     const { http, fetch } = mockContext();
-    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(response(
-      '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{"Id":1}\r\n' +
-      '--batchresponse_test\r\nContent-Type: application/http\r\n\r\nHTTP/1.1 429 Throttled\r\nContent-Type: application/json\r\n\r\n{}\r\n--batchresponse_test--'
-    )).mockResolvedValue(response({}, 503));
+    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(batchResponse([
+      { contentId: '1', status: 200, data: { Id: 1 } }, { contentId: '2', status: 429, data: {} }
+    ])).mockResolvedValue(response({}, 503));
     const emitted: typeof import('../../src/services/SPRestClient') = require('../../lib-commonjs/services/SPRestClient');
     const result = new emitted.SPRestClient(http, webUrl).ensureUsers(['one@example.com', 'two@example.com']);
     await jest.runAllTimersAsync();
@@ -188,5 +205,41 @@ describe('SPRestClient', () => {
     expect(await second).toEqual([]);
     expect(fetch).toHaveBeenCalledTimes(7);
     expect(fetch.mock.calls.every(call => call[0].endsWith('/_api/contextinfo'))).toBe(true);
+  });
+
+  test.each([true, false])('correlates reordered results and preserves input order across retries (nested: %s)', async nested => {
+    jest.useFakeTimers();
+    const { http, fetch } = mockContext();
+    fetch.mockResolvedValueOnce(digestResponse())
+      .mockResolvedValueOnce(batchResponse([
+        { contentId: '3', status: 200, data: { Id: 30 } },
+        { contentId: '2', status: 200, data: { Id: 20 } },
+        { contentId: '1', status: 429, data: {}, headers: { 'Retry-After': '2' } }
+      ], nested))
+      .mockResolvedValueOnce(batchResponse([{ contentId: '1', status: 200, data: { Id: 10 } }], nested));
+    const result = new SPRestClient(http, webUrl).ensureUsers(['first', 'second', 'third', 'first']);
+    await jest.advanceTimersByTimeAsync(1999);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    await jest.advanceTimersByTimeAsync(1);
+    expect(await result).toEqual([{ Id: 10 }, { Id: 20 }, { Id: 30 }]);
+    const retryBody: string = fetch.mock.calls[2][2].body;
+    expect(retryBody).toContain('"logonName":"first"');
+    expect(retryBody).toContain('Content-ID: 1');
+    expect(retryBody).not.toContain('second');
+    expect(retryBody).not.toContain('third');
+  });
+
+  test.each([
+    ['missing', undefined, '2'],
+    ['duplicate', '1', '1'],
+    ['unknown', '1', '99']
+  ])('rejects %s Content-IDs instead of guessing a login by position', async (_name, firstId, secondId) => {
+    const { http, fetch } = mockContext();
+    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValueOnce(batchResponse([
+      { contentId: firstId, status: 200, data: { Id: 1 } },
+      { contentId: secondId, status: 429, data: {} }
+    ]));
+    await expect(new SPRestClient(http, webUrl).ensureUsers(['first', 'second'])).rejects.toThrow(/Content-ID/);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 });

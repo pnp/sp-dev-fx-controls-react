@@ -192,6 +192,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     let currentParent = term.parent;
     if(!currentParent) {
       const fullTerm = await taxonomyService.getTermById(Guid.parse(props.termSetId), Guid.parse(term.id));
+      if (!fullTerm) throw new Error('Cannot load a selected taxonomy term with an empty ID.');
       currentParent = fullTerm.parent;
     }
     if(!currentParent) { // Top-level term reached, no parents.
@@ -244,6 +245,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
 
   async function onLoadParentLabel(termId: Guid): Promise<string> {
     const termInfo = await taxonomyService.getTermById(Guid.parse(props.termSetId), termId);
+    if (!termInfo) return '';
     if (termInfo.parent) {
       let labelsWithMatchingLanguageTag = termInfo.parent.labels.filter((termLabel) => (termLabel.languageTag === currentLanguageTag));
       if (labelsWithMatchingLanguageTag.length === 0) {

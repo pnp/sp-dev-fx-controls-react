@@ -37,7 +37,7 @@ export class SPTaxonomyService {
     };
   }
 
-  public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo> {
+  public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo | undefined> {
     if (!this.hasId(termId)) return undefined;
     return this.rest.get(`${this.termPath(termSetId, termId)}?$expand=parent`);
   }

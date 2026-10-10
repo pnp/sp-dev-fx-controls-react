@@ -1374,6 +1374,7 @@ export class DynamicFormBase extends React.Component<
                 if (response) {
                   const term = await taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(response.TermID));
                   assertCurrent();
+                  if (!term) throw new Error('The taxonomy field contains an empty term ID.');
                   selectedTags.push({
                     key: response.TermID,
                     name: response.Label,
@@ -1390,6 +1391,7 @@ export class DynamicFormBase extends React.Component<
                   });
                   const term = await taxonomyService.getTermById(Guid.parse(field.TermSetId), Guid.parse(termId));
                   assertCurrent();
+                  if (!term) throw new Error('The taxonomy field contains an empty term ID.');
                   value = term;//selectedTags;
                 }
               }
@@ -1609,6 +1611,7 @@ export class DynamicFormBase extends React.Component<
         }
         const term = await loadContext.taxonomyService.getTermById(Guid.parse(termsetId), Guid.parse(fetchedterm.TermGuid));
         loadContext.assertCurrent();
+        if (!term) throw new Error('The taxonomy field contains an empty term ID.');
         return term;
       })
     );
