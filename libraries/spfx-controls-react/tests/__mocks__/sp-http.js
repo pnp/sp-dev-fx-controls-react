@@ -1,5 +1,5 @@
 function SPHttpClient() {}
-SPHttpClient.configurations = { v1: 1 };
+SPHttpClient.configurations = { v1: { overrideWith: function(flags) { return flags; } } };
 
 function HttpClient() {}
 HttpClient.configurations = { v1: 1 };

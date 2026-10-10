@@ -8,6 +8,7 @@ nav:
     - 'Minimal Path to Awesome': 'guides/mpa.md'
     - 'Submitting a PR': 'guides/submitting-pr.md'
     - 'Migrate v1 to v2': 'guides/migrate-from-v1.md'
+    - 'v4 PnPjs migration': 'guides/migrate-to-v4.md'
   - Controls:
     - AccessibleAccordion: 'controls/AccessibleAccordion.md'
     - Accordion: 'controls/Accordion.md'

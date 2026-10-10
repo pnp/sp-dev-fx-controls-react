@@ -1,5 +1,6 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IItem } from '@pnp/sp/items';
+import { IDynamicFormItemReference } from '../../services/DynamicFormService';
+export type { IDynamicFormItemReference } from '../../services/DynamicFormService';
 import { IStyle, IStyleFunctionOrObject } from '@fluentui/react';
 import React from 'react';
 import { IDynamicFieldProps, IDynamicFieldStyles } from './dynamicField';
@@ -35,7 +36,7 @@ export interface IDynamicFormProps {
   /**
    * Handler for form submitted event
    */
-  onSubmitted?: (listItemData: any, listItem?: IItem) => void; // eslint-disable-line @typescript-eslint/no-explicit-any
+  onSubmitted?: (listItemData: any, listItem?: IDynamicFormItemReference) => void | Promise<void>; // eslint-disable-line @typescript-eslint/no-explicit-any
   /**
    * Handler of submission error
    */
@@ -65,9 +66,9 @@ export interface IDynamicFormProps {
   };
 
   /**
-   * Specifies if onSubmitted event should pass PnPJS list item (IItem) as a second parameter. Default - true
+   * Pass the saved item's web, list, ID and ETag as the second onSubmitted argument. Default - true.
    */
-  returnListItemInstanceOnSubmit?: boolean;
+  returnListItemReferenceOnSubmit?: boolean;
 
   /**
    * InternalName of fields that should be disabled

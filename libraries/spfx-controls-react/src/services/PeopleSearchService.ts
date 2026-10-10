@@ -1,22 +1,16 @@
 import { ISPHttpClientOptions, SPHttpClient } from '@microsoft/sp-http';
 import { findIndex } from '@microsoft/sp-lodash-subset';
-import { sp } from '@pnp/sp';
-import '@pnp/sp/site-users/web';
-import '@pnp/sp/sputilities';
-import '@pnp/sp/webs';
-import { Web } from '@pnp/sp/webs';
 import { IUserInfo } from '../controls/peoplepicker/IUsers';
-import {
-  IPeoplePickerContext,
-  IPeoplePickerUserItem,
-  PrincipalType,
-} from '../PeoplePicker';
+import { SPRestClient } from './SPRestClient';
+import { IPeoplePickerContext } from '../controls/peoplepicker/IPeoplePickerContext';
+import { IPeoplePickerUserItem } from '../controls/peoplepicker/IPeoplePicker';
+import { PrincipalType } from '../controls/peoplepicker/PrincipalType';
 
 /**
  * Service implementation to search people in SharePoint
  */
 export default class SPPeopleSearchService {
-  private cachedLocalUsers: { [siteUrl: string]: IUserInfo[] };
+  private cachedLocalUsers: { [siteUrl: string]: Pick<IUserInfo, 'Id' | 'LoginName'>[] };
 
   /**
    * Service constructor
@@ -27,14 +21,6 @@ export default class SPPeopleSearchService {
   ) {
     this.cachedLocalUsers = {};
     this.cachedLocalUsers[context.absoluteUrl] = [];
-    // Setup PnPjs
-    sp.setup({
-      pageContext: {
-        web: {
-          absoluteUrl: context.absoluteUrl,
-        },
-      },
-    });
   }
 
   /**
@@ -84,7 +70,7 @@ export default class SPPeopleSearchService {
       false,
       0
     );
-    return groups && groups.length > 0 ? parseInt(groups[0].id) : undefined;
+    return groups && groups.length > 0 ? parseInt(String(groups[0].id), 10) : undefined;
   }
 
   /**
@@ -214,31 +200,25 @@ export default class SPPeopleSearchService {
         const graphClient = await this.context.msGraphClientFactory.getClient(
           '3'
         );
-        const graphUserResponse = await graphClient
+        const graphUserResponse: { value?: { userPrincipalName?: string }[] } = await graphClient
           .api(graphUserRequestUrl)
           .header('ConsistencyLevel', 'eventual')
           .get();
 
         if (graphUserResponse.value && graphUserResponse.value.length > 0) {
-          // Get user loginName from user email
-          const _users: any[] = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-          const batch = Web(this.context.absoluteUrl).createBatch();
-          for (const value of graphUserResponse.value) {
-            sp.web
-              .inBatch(batch)
-              .ensureUser(value.userPrincipalName)
-              .then((u) => _users.push(u.data))
-              .catch(() => {
-                // no-op
-              });
+          const loginNames = graphUserResponse.value
+            .map(value => value.userPrincipalName)
+            .filter((loginName): loginName is string => !!loginName);
+          const client = new SPRestClient(this.context.spHttpClient, siteUrl || this.context.absoluteUrl);
+          const users = await client.ensureUsers(loginNames);
+          if (users.length < loginNames.length) {
+            console.error('PeopleSearchService::searchTenant: some group members could not be ensured.');
           }
 
-          await batch.execute();
-
           const userResult: IPeoplePickerUserItem[] = [];
-          for (const user of _users) {
+          for (const user of users) {
             userResult.push({
-              id: ensureUser ? user.Id : user.LoginName,
+              id: ensureUser ? String(user.Id) : user.LoginName,
               loginName: user.LoginName,
               imageUrl: this.generateUserPhotoLink(user.Email),
               imageInitials: this.getFullNameInitials(user.Title),
@@ -396,21 +376,14 @@ export default class SPPeopleSearchService {
       this.cachedLocalUsers[siteUrl] = [];
     }
 
-    const restApi = `${siteUrl}/_api/web/ensureuser`;
-    const data = await this.context.spHttpClient.post(
-      restApi,
-      SPHttpClient.configurations.v1,
-      {
-        body: JSON.stringify({ logonName: userId }),
-      }
-    );
-
-    if (data.ok) {
-      const user: IUserInfo = await data.json();
+    try {
+      const user = await new SPRestClient(this.context.spHttpClient, siteUrl).ensureUser(userId);
       if (user && user.Id) {
         this.cachedLocalUsers[siteUrl].push(user);
         return user.Id;
       }
+    } catch (error) {
+      console.error('PeopleSearchService::ensureUser: error occurred while ensuring the user.', error);
     }
 
     return null;

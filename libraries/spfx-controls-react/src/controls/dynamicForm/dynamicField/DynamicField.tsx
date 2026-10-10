@@ -1,6 +1,4 @@
-import '@pnp/sp/folders';
-import { ChoiceFieldFormatType, sp } from '@pnp/sp/presets/all';
-import '@pnp/sp/webs';
+import { ChoiceFieldFormatType } from '../../../common/SPRestTypes';
 import * as strings from 'ControlStrings';
 import { ActionButton } from '@fluentui/react/lib/Button';
 import { Dropdown, IDropdownOption, IDropdownProps } from '@fluentui/react/lib/Dropdown';
@@ -33,9 +31,6 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
 
   constructor(props: IDynamicFieldProps) {
     super(props);
-    sp.setup({
-      spfxContext: { pageContext: this.props.context.pageContext }
-    });
     this.state = {
       changedValue: props.defaultValue !== undefined || props.defaultValue !== '' || props.defaultValue !== null || !this.isEmptyArray(props.defaultValue) ? props.defaultValue : null
     };
@@ -566,6 +561,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           {useModernTaxonomyPickerControl ?
             <div className={styles.pickersContainer}>
               <ModernTaxonomyPicker
+                webAbsoluteUrl={this.props.webAbsoluteUrl}
                 label=""
                 disabled={disabled}
                 initialValues={valueToDisplay !== undefined ? valueToDisplay : defaultValue}
@@ -609,6 +605,7 @@ export class DynamicFieldBase extends React.Component<IDynamicFieldProps, IDynam
           {useModernTaxonomyPickerControl ?
             <div className={styles.pickersContainer}>
               <ModernTaxonomyPicker
+                webAbsoluteUrl={this.props.webAbsoluteUrl}
                 label=""
                 disabled={disabled}
                 initialValues={valueToDisplay !== undefined ? [valueToDisplay] : defaultValue}

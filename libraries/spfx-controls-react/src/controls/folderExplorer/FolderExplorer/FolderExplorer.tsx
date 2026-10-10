@@ -9,7 +9,7 @@ import { NewFolder } from "../NewFolder";
 import { Breadcrumb, IBreadcrumbItem } from "@fluentui/react/lib/Breadcrumb";
 import * as telemetry from '../../../common/telemetry';
 import { SearchBox } from '@fluentui/react/lib/SearchBox';
-import { IFileInfo } from '@pnp/sp/files';
+import { IFileInfo } from '../../../common/SPRestTypes';
 
 
 export class FolderExplorer extends React.Component<IFolderExplorerProps, IFolderExplorerState> {

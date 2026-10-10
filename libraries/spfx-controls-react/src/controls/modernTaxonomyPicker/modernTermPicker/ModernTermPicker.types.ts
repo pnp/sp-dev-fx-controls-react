@@ -1,4 +1,4 @@
-import { ITermInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermStoreInfo } from '../../../services/SPTaxonomyService.types';
 import { IStyle, ITheme } from '@fluentui/react/lib/Styling';
 import { IStyleFunctionOrObject } from '@fluentui/react/lib/Utilities';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';

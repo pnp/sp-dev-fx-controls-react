@@ -4,14 +4,9 @@ import { ISPField, ISPFieldLookupValue, IPrincipal, ITerm } from '../SPEntities'
 import * as Constants from '../Constants';
 import { ListItemAccessor } from '@microsoft/sp-listview-extensibility';
 import { SPField } from '@microsoft/sp-page-context';
-import { sp } from '@pnp/sp';
-import '@pnp/sp/fields';
 import { SPHttpClient } from '@microsoft/sp-http';
-import { IFieldInfo } from '@pnp/sp/fields';
-import '@pnp/sp/site-users/web';
-import '@pnp/sp/webs';
-import "@pnp/sp/lists";
-import { ISiteUserInfo } from '@pnp/sp/site-users/types';
+import { IFieldInfo, ISiteUserInfo } from '../SPRestTypes';
+import { SPRestClient } from '../../services/SPRestClient';
 
 interface IFieldLookupInfo extends IFieldInfo {
   LookupWebId: string;
@@ -22,6 +17,18 @@ interface IFieldLookupInfo extends IFieldInfo {
  * Helper class to work with SharePoint objects and entities
  */
 export class SPHelper {
+
+    private static _getRestClient(context: IContext): SPRestClient {
+        return new SPRestClient(context.spHttpClient, context.pageContext.web.absoluteUrl);
+    }
+
+    private static _encodeString(value: string): string {
+        return encodeURIComponent(value.replace(/'/g, "''")).replace(/'/g, "%27");
+    }
+
+    private static _getListFieldPath(listTitle: string, fieldId: string): string {
+        return `_api/web/lists/getByTitle('${SPHelper._encodeString(listTitle)}')/fields/getById('${SPHelper._encodeString(fieldId)}')`;
+    }
 
     /**
      * Gets field's Real Name from FieldNamesMapping
@@ -179,10 +186,6 @@ export class SPHelper {
                 return;
             }
 
-            sp.setup({
-                spfxContext: context
-            });
-
             if (fromSchemaXml) {
                 SPHelper.getFieldSchemaXmlById(fieldId, context.pageContext.list.title, context).then(schemaXml => {
                     let fieldValue: string;
@@ -200,19 +203,22 @@ export class SPHelper {
                     }
                     fieldRecord[propertyName] = fieldValue;
                     SPHelper._updateFieldInSessionStorage(field, context);
-                }, (error) => {
+                    resolve(fieldValue);
+                }).catch(() => {
                     resolve('');
                 });
             }
             else {
-                sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select(propertyName).get().then(f => {
-                    fieldRecord[propertyName] = (f as unknown as Record<string, unknown>)[propertyName];
+                SPHelper._getRestClient(context).get<Record<string, unknown>>(
+                    `${SPHelper._getListFieldPath(context.pageContext.list.title, fieldId)}?$select=${encodeURIComponent(propertyName)}`
+                ).then(f => {
+                    fieldRecord[propertyName] = f[propertyName];
 
                     loadedViewFields[viewId][field.Id] = field;
 
                     SPHelper._updateSessionStorageLoadedViewFields(loadedViewFields);
                     resolve(fieldRecord[propertyName]);
-                }, (error) => {
+                }).catch(() => {
                     resolve('');
                 });
             }
@@ -224,46 +230,27 @@ export class SPHelper {
      * @param fieldId Field Id
      * @param context SPFx Context
      */
-    public static getLookupFieldListDispFormUrl(fieldId: string, context: IContext): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            let loadedViewFields: { [viewId: string]: IFields } = SPHelper._getLoadedViewFieldsFromStorage();
-            const viewId: string = SPHelper.getPageViewId(context);
+    public static async getLookupFieldListDispFormUrl(fieldId: string, context: IContext): Promise<string> {
+        const loadedViewFields = SPHelper._getLoadedViewFieldsFromStorage() || {};
+        const viewId = SPHelper.getPageViewId(context);
+        const field: ISPField = loadedViewFields[viewId]?.[fieldId] || { Id: fieldId };
 
-            if (!loadedViewFields) {
-                loadedViewFields = {};
-            }
+        if (GeneralHelper.isDefined(field.LookupDisplayUrl)) {
+            return field.LookupDisplayUrl;
+        }
 
-            if (!loadedViewFields[viewId]) {
-                loadedViewFields[viewId] = {};
-            }
-
-            let field: ISPField = loadedViewFields[viewId][fieldId];
-            if (!field) {
-                field = {
-                    Id: fieldId
-                };
-            }
-
-            if (GeneralHelper.isDefined(field.LookupDisplayUrl)) {
-                resolve(field.LookupDisplayUrl);
-                return;
-            }
-            sp.setup({
-                spfxContext: context
-            });
-            sp.web.lists.getByTitle(context.pageContext.list.title).fields.getById(fieldId).select('LookupWebId', 'LookupList').get().then((f: IFieldInfo) => {
-                const lookupField = f as unknown as IFieldLookupInfo;
-                sp.site.openWebById(lookupField.LookupWebId).then(openedWeb => {
-                    openedWeb.web.select('Url').get().then(w => {
-                        field.LookupDisplayUrl = `${w.Url}/_layouts/15/listform.aspx?PageType=4&ListId=${lookupField.LookupList}`;
-                        SPHelper._updateFieldInSessionStorage(field, context);
-                        resolve(field.LookupDisplayUrl);
-                    }, (error) => {
-                        reject(error);
-                    });
-                }).catch(() => { /* no-op; */ });
-            }).catch(() => { /* no-op; */ });
-        });
+        const client = SPHelper._getRestClient(context);
+        const lookupField = await client.get<IFieldLookupInfo>(
+            `${SPHelper._getListFieldPath(context.pageContext.list.title, fieldId)}?$select=LookupWebId,LookupList`
+        );
+        const web = await client.post<{ Url: string }>(
+            `_api/site/openWebById('${SPHelper._encodeString(lookupField.LookupWebId)}')`,
+            undefined,
+            { retrySafe: true }
+        );
+        field.LookupDisplayUrl = `${web.Url}/_layouts/15/listform.aspx?PageType=4&ListId=${lookupField.LookupList}`;
+        SPHelper._updateFieldInSessionStorage(field, context);
+        return field.LookupDisplayUrl;
     }
 
     /**
@@ -322,18 +309,16 @@ export class SPHelper {
                 resolve(field.SchemaXml);
                 return;
             }
-            sp.setup({
-                spfxContext: context
-            });
-
-            sp.web.lists.getByTitle(listTitle).fields.getById(fieldId).select('SchemaXml').get().then((f) => {
+            SPHelper._getRestClient(context).get<Pick<IFieldInfo, 'SchemaXml'>>(
+                `${SPHelper._getListFieldPath(listTitle, fieldId)}?$select=SchemaXml`
+            ).then((f) => {
                 field.SchemaXml = f && f.SchemaXml;
 
                 loadedViewFields[viewId][field.Id] = field;
 
                 SPHelper._updateSessionStorageLoadedViewFields(loadedViewFields);
                 resolve(f ? f.SchemaXml : '');
-            }, (error) => {
+            }).catch(() => {
                 resolve('');
             });
         });
@@ -358,11 +343,7 @@ export class SPHelper {
      * @param context SPFx context
      */
     public static async getUserById(id: number, context: IContext): Promise<ISiteUserInfo> {
-        sp.setup({
-            spfxContext: context
-        });
-
-        return sp.web.getUserById(id).get();
+        return SPHelper._getRestClient(context).get<ISiteUserInfo>(`_api/web/getUserById(${id})`);
     }
 
     /**

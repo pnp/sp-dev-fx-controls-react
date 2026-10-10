@@ -107,7 +107,7 @@ import { FilterBar } from '@pnp/spfx-controls-react/lib/FilterBar';
 import { GeneralHelper } from '@pnp/spfx-controls-react/lib/Utilities';
 import { IControlsTestProps } from './IControlsTestProps';
 import { IControlsTestState } from './IControlsTestState';
-import { IFileInfo } from '@pnp/sp/files';
+import { IFileInfo } from '@pnp/spfx-controls-react/lib/Common';
 import {
   IFilePickerResult,
 } from '@pnp/spfx-controls-react/lib/FilePicker';
@@ -168,7 +168,6 @@ import {
 import WorldMap from './WorldMap';
 import { debounce } from 'lodash';
 import { getTheme, mergeStyles } from '@fluentui/react/lib/Styling';
-import { sp } from '@pnp/sp';
 import styles from './ControlsTest.module.scss';
 import type { IRichTextCustomFormattingStyles } from '@pnp/spfx-controls-react/lib/RichText';
 
@@ -767,9 +766,6 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     const response = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
     const items = await response.json();
 
-    sp.setup({
-      spfxContext: this.props.context as any
-    });
 
     this.setState({
       items: items.value ? items.value : [],
@@ -1271,9 +1267,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   listId={this.props.dynamicFormListId}
                   listItemId={dynamicFormListItemId}
                   validationErrorDialogProps={this.props.dynamicFormErrorDialogEnabled ? { showDialogOnValidationError: true } : undefined}
-                  returnListItemInstanceOnSubmit={true}
+                  returnListItemReferenceOnSubmit={true}
                   onCancelled={() => { console.log('Cancelled'); }}
-                  onSubmitted={async (data, item) => { const itemdata = await item.get(); console.log('Saved item', itemdata) }}
+                  onSubmitted={(data, item) => { console.log('Saved item', data, item); }}
                   useClientSideValidation={this.props.dynamicFormClientSideValidationEnabled}
                   useFieldValidation={this.props.dynamicFormFieldValidationEnabled}
                   useCustomFormatting={this.props.dynamicFormCustomFormattingEnabled}

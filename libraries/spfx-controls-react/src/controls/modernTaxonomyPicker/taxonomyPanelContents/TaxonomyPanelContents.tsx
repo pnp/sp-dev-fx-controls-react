@@ -11,7 +11,7 @@ import { IBasePickerStyleProps,
 import { ITermInfo,
          ITermSetInfo,
          ITermStoreInfo
-       } from '@pnp/sp/taxonomy';
+       } from '../../../services/SPTaxonomyService.types';
 import { Guid } from '@microsoft/sp-core-library';
 import * as strings from 'ControlStrings';
 import { useForceUpdate } from '@uifabric/react-hooks';
@@ -120,4 +120,3 @@ export function TaxonomyPanelContents(props: ITaxonomyPanelContentsProps): React
     </div>
   );
 }
-

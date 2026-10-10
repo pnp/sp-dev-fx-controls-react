@@ -1,5 +1,9 @@
 # Taxonomy Picker
 
+On the v4 development branch this control remains available and PnPjs-free. Its
+existing ProcessQuery/internal-suggestion implementation is retained, not
+replaced by Graph. See the [migration and endpoint support notes](../guides/migrate-to-v4.md#taxonomy-endpoint-caveat).
+
 This control allows you to select one or more Terms from a TermSet via its name or TermSet ID. You can also configure the control to select the child terms from a specific term in the TermSet by setting the AnchorId.
 
 !!! note "Disclaimer"

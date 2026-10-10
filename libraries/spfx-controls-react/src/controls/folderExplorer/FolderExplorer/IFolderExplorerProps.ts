@@ -1,5 +1,5 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
-import { IFileInfo } from '@pnp/sp/files';
+import { IFileInfo } from '../../../common/SPRestTypes';
 import { IBreadcrumbItem } from "@fluentui/react/lib/Breadcrumb";
 import { IFolder } from '../../../services/IFolderExplorerService';
 

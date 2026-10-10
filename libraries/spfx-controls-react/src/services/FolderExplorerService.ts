@@ -1,31 +1,37 @@
 import { ServiceKey, ServiceScope } from "@microsoft/sp-core-library";
+import { SPHttpClient } from "@microsoft/sp-http";
 import { PageContext } from "@microsoft/sp-page-context";
 import { IFolderExplorerService } from "./IFolderExplorerService";
 import { IFolder } from "./IFolderExplorerService";
-import { sp } from "@pnp/sp";
-import "@pnp/sp/webs";
-import { Web } from "@pnp/sp/webs";
-import "@pnp/sp/folders";
-import "@pnp/sp/files";
-import "@pnp/sp/lists";
-import { IFolderAddResult } from "@pnp/sp/folders";
-import { IFileInfo } from "@pnp/sp/files";
+import { IFileInfo } from "../common/SPRestTypes";
+import { SPRestClient } from "./SPRestClient";
 
 export class FolderExplorerService implements IFolderExplorerService {
 
   public static readonly serviceKey: ServiceKey<IFolderExplorerService> = ServiceKey.create<IFolderExplorerService>('SPFx:SPService', FolderExplorerService);
+  private readonly _ready: Promise<{ spHttpClient: SPHttpClient; webAbsoluteUrl: string }>;
 
   constructor(serviceScope: ServiceScope) {
-
-    serviceScope.whenFinished(() => {
-
-      const pageContext = serviceScope.consume(PageContext.serviceKey);
-      sp.setup({
-        sp: {
-          baseUrl: pageContext.web.absoluteUrl
+    this._ready = new Promise((resolve, reject) => {
+      serviceScope.whenFinished(() => {
+        try {
+          const pageContext = serviceScope.consume(PageContext.serviceKey);
+          const spHttpClient = serviceScope.consume(SPHttpClient.serviceKey);
+          resolve({ spHttpClient, webAbsoluteUrl: pageContext.web.absoluteUrl });
+        } catch (error) {
+          reject(error);
         }
       });
     });
+  }
+
+  private async _getClient(webAbsoluteUrl: string): Promise<SPRestClient> {
+    const context = await this._ready;
+    return new SPRestClient(context.spHttpClient, webAbsoluteUrl || context.webAbsoluteUrl);
+  }
+
+  private _encodePath(value: string): string {
+    return encodeURIComponent(value.replace(/'/g, "''")).replace(/'/g, "%27");
   }
 
   /**
@@ -43,9 +49,10 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _getDocumentLibraries = async (webAbsoluteUrl: string): Promise<IFolder[]> => {
     let results: IFolder[] = [];
     try {
-      const web = Web(webAbsoluteUrl);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const libraries: any[] = await web.lists.filter('BaseTemplate eq 101 and Hidden eq false').expand('RootFolder').select('Title', 'RootFolder/ServerRelativeUrl').orderBy('Title').get();
+      const client = await this._getClient(webAbsoluteUrl);
+      const libraries = await client.get<{ Title: string; RootFolder: { ServerRelativeUrl: string } }[]>(
+        "_api/web/lists?$filter=BaseTemplate%20eq%20101%20and%20Hidden%20eq%20false&$expand=RootFolder&$select=Title,RootFolder/ServerRelativeUrl&$orderby=Title%20asc"
+      );
 
       results = libraries.map((library): IFolder => {
         return { Name: library.Title, ServerRelativeUrl: library.RootFolder.ServerRelativeUrl };
@@ -83,9 +90,10 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _getFolders = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFolder[]> => {
     let results: IFolder[] = [];
     try {
-      const web = Web(webAbsoluteUrl);
-      //folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
-      const foldersResult: IFolder[] = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.select('Name', 'ServerRelativeUrl').orderBy(orderby, orderAscending).get();
+      const client = await this._getClient(webAbsoluteUrl);
+      const foldersResult = await client.get<IFolder[]>(
+        `_api/web/getFolderByServerRelativePath(decodedUrl='${this._encodePath(folderRelativeUrl)}')/folders?$select=Name,ServerRelativeUrl&$orderby=${encodeURIComponent(orderby)}%20${orderAscending ? "asc" : "desc"}`
+      );
       results = foldersResult.filter(f => f.Name !== "Forms");
     } catch (error) {
       console.error('Error loading folders', error);
@@ -101,9 +109,10 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _getFiles = async (webAbsoluteUrl: string, folderRelativeUrl: string, orderby: string, orderAscending: boolean): Promise<IFileInfo[]> => {
     let results: IFileInfo[] = [];
     try {
-      const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
-      const filesResult = await web.getFolderByServerRelativePath(folderRelativeUrl).files.select('Name', 'ServerRelativeUrl', 'UniqueId', 'Length').orderBy(orderby, orderAscending).get();
+      const client = await this._getClient(webAbsoluteUrl);
+      const filesResult = await client.get<IFileInfo[]>(
+        `_api/web/getFolderByServerRelativePath(decodedUrl='${this._encodePath(folderRelativeUrl)}')/files?$select=Name,ServerRelativeUrl,UniqueId,Length&$orderby=${encodeURIComponent(orderby)}%20${orderAscending ? "asc" : "desc"}`
+      );
       results = filesResult;
     } catch (error) {
       console.error('Error loading files', error);
@@ -130,13 +139,14 @@ export class FolderExplorerService implements IFolderExplorerService {
   private _addFolder = async (webAbsoluteUrl: string, folderRelativeUrl: string, name: string): Promise<IFolder> => {
     let folder: IFolder = null;
     try {
-      const web = Web(webAbsoluteUrl);
-      folderRelativeUrl = folderRelativeUrl.replace(/'/ig, "''");
-      const folderAddResult: IFolderAddResult = await web.getFolderByServerRelativePath(folderRelativeUrl).folders.addUsingPath(name);
-      if (folderAddResult && folderAddResult.data) {
+      const client = await this._getClient(webAbsoluteUrl);
+      const folderAddResult = await client.post<IFolder>(
+        `_api/web/getFolderByServerRelativePath(decodedUrl='${this._encodePath(folderRelativeUrl)}')/folders/addUsingPath(decodedUrl='${this._encodePath(name)}')`
+      );
+      if (folderAddResult) {
         folder = {
-          Name: folderAddResult.data.Name,
-          ServerRelativeUrl: folderAddResult.data.ServerRelativeUrl
+          Name: folderAddResult.Name,
+          ServerRelativeUrl: folderAddResult.ServerRelativeUrl
         };
       }
     } catch (error) {

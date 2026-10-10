@@ -112,7 +112,7 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | columnInternalName | string | yes | InternalName of column to search and get values. |
 | keyColumnInternalName | string | no | InternalName of column to use as the key for the selection. Must be a column with unique values. Default: Id |
 | webUrl | string | yes | Url to web hosting list |
-| spHttpClient | RequestClient | yes | Any implementation of PnPJS RequestClient |
+| spHttpClient | SPHttpClient | yes | The SPFx `SPHttpClient`, normally `context.spHttpClient`. PnPjs is not required. |
 | listId | string | yes | Guid or title of the list. |
 | onSelectedItem | (items: any[]) => void | yes | Callback function which returns the selected items. |
 | className | string | no | ClassName for the picker. |

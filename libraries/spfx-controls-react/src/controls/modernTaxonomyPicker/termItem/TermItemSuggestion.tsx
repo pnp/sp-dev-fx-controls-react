@@ -3,7 +3,7 @@ import { ISuggestionItemProps } from '@fluentui/react/lib/Pickers';
 import styles from './TermItemSuggestions.module.scss';
 import * as strings from 'ControlStrings';
 import { Guid } from '@microsoft/sp-core-library';
-import { ITermInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermStoreInfo } from '../../../services/SPTaxonomyService.types';
 
 export interface ITermItemSuggestionProps<T> extends ISuggestionItemProps<T> {
   term: ITermInfo;

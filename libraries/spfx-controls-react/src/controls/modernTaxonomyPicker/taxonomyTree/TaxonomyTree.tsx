@@ -41,7 +41,7 @@ import {
 import * as strings from "ControlStrings";
 import { IReadonlyTheme } from "@microsoft/sp-component-base";
 import { Guid } from "@microsoft/sp-core-library";
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "../../../services/SPTaxonomyService.types";
 import styles from "./TaxonomyTree.module.scss";
 
 export interface ITaxonomyTreeProps {

@@ -26,14 +26,9 @@ import {
 } from "./dynamicField/IDynamicFieldProps";
 import { FilePicker, IFilePickerResult } from "../filePicker";
 import { Guid } from '@microsoft/sp-core-library';
-// pnp/sp, helpers / utils
-import { sp } from "@pnp/sp";
-import "@pnp/sp/lists";
-import "@pnp/sp/content-types";
-import "@pnp/sp/folders";
-import "@pnp/sp/items";
-import { IFolder } from "@pnp/sp/folders";
-import { IInstalledLanguageInfo, IItemUpdateResult, IList, ITermInfo, ChoiceFieldFormatType } from "@pnp/sp/presets/all";
+import { IInstalledLanguageInfo, ChoiceFieldFormatType } from "../../common/SPRestTypes";
+import { ITermInfo } from "../../services/SPTaxonomyService.types";
+import { DynamicFormService } from "../../services/DynamicFormService";
 import { cloneDeep, isEqual } from "lodash";
 import { ICustomFormatting, ICustomFormattingBodySection, ICustomFormattingNode } from "../../common/utilities/ICustomFormatting";
 import SPservice from "../../services/SPService";
@@ -57,10 +52,6 @@ const getstyles = classNamesFunction<IDynamicFormStyleProps, IDynamicFormStyles>
 const getFieldstyles = classNamesFunction<IDynamicFieldStyleProps, IDynamicFieldStyles>();
 const theme = getFluentUIThemeOrDefault();
 
-const timeout = (ms: number): Promise<void> => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-};
-
 /**
  * DynamicForm Class Control
  */
@@ -72,31 +63,19 @@ export class DynamicFormBase extends React.Component<
   private _formulaEvaluation: FormulaEvaluation;
   private _customFormatter: CustomFormattingHelper;
   private _taxonomyService: SPTaxonomyService;
-  private webURL = this.props.webAbsoluteUrl
-    ? this.props.webAbsoluteUrl
-    : this.props.context.pageContext.web.absoluteUrl;
+  private _dataService: DynamicFormService;
+  private _loadVersion = 0;
+  private _operationVersion = 0;
+  private _unmounted = false;
+  private get webURL(): string {
+    return this.props.webAbsoluteUrl || this.props.context.pageContext.web.absoluteUrl;
+  }
   private _classNames: IProcessedStyleSet<IDynamicFormStyles>;
 
   constructor(props: IDynamicFormProps) {
     super(props);
-    // Initialize pnp sp
-    if (this.props.webAbsoluteUrl) {
-      sp.setup({
-        sp: {
-          headers: {
-            Accept: "application/json;odata=verbose",
-          },
-          baseUrl: this.props.webAbsoluteUrl,
-        },
-      });
-    } else {
-      sp.setup({
-        spfxContext: { pageContext: this.props.context.pageContext },
-      });
-    }
-
-    // Initialize taxonomy service
-    this._taxonomyService = new SPTaxonomyService(this.props.context);
+    this._dataService = new DynamicFormService(this.props.context, this.webURL);
+    this._taxonomyService = new SPTaxonomyService(this.props.context, this.webURL);
 
     // Initialize state
     this.state = {
@@ -151,14 +130,29 @@ export class DynamicFormBase extends React.Component<
   }
 
   public componentDidUpdate(prevProps: IDynamicFormProps, prevState: IDynamicFormState): void {
+    const targetChanged = prevProps.context !== this.props.context ||
+      prevProps.webAbsoluteUrl !== this.props.webAbsoluteUrl ||
+      prevProps.listId !== this.props.listId || prevProps.listItemId !== this.props.listItemId;
+    if (targetChanged) {
+      this._operationVersion++;
+      this._loadVersion++;
+      this._dataService.dispose();
+      this._taxonomyService.dispose();
+      this._dataService = new DynamicFormService(this.props.context, this.webURL);
+      this._taxonomyService = new SPTaxonomyService(this.props.context, this.webURL);
+      this._spService = new SPservice(this.props.context, this.webURL);
+      this._formulaEvaluation = new FormulaEvaluation(this.props.context, this.webURL);
+      this._customFormatter = new CustomFormattingHelper(this._formulaEvaluation);
+    }
     if (!isEqual(prevProps, this.props)) {
       // Props have changed due to parent component or workbench config, reset state
       this.setState({
         infoErrorMessages: [], // Reset info/error messages
-        validationErrors: {} // Reset validation errors
+        validationErrors: {}, // Reset validation errors
+        isSaving: targetChanged ? false : this.state.isSaving
       }, () => {
         // If listId or listItemId have changed, reload list information
-        if (prevProps.listId !== this.props.listId || prevProps.listItemId !== this.props.listItemId) {
+        if (targetChanged) {
           this.getListInformation()
             .then(() => {
               /* no-op; */
@@ -170,6 +164,7 @@ export class DynamicFormBase extends React.Component<
         } else {
           this.performValidation();
         }
+
       });
     }
   }
@@ -177,6 +172,14 @@ export class DynamicFormBase extends React.Component<
   /**
    * Default React component render method
    */
+  public componentWillUnmount(): void {
+    this._unmounted = true;
+    this._operationVersion++;
+    this._loadVersion++;
+    this._dataService.dispose();
+    this._taxonomyService.dispose();
+  }
+
   public render(): JSX.Element {
     const { customFormatting, fieldCollection, hiddenByFormula, infoErrorMessages, isSaving } = this.state;
 
@@ -355,6 +358,7 @@ export class DynamicFormBase extends React.Component<
         key={field.columnInternalName}
         styles={styles}
         {...field}
+        webAbsoluteUrl={this.webURL}
         disabled={field.disabled || isSaving}
         validationErrorMessage={validationErrorMessage}
         itemsQueryCountLimit={this.props.itemsQueryCountLimit}
@@ -371,6 +375,12 @@ export class DynamicFormBase extends React.Component<
 
   /** Triggered when the user submits the form. */
   private onSubmitClick = async (): Promise<void> => {
+    if (this._unmounted || this.state.isSaving) return;
+    const operationVersion = this._operationVersion;
+    const isCurrent = (): boolean => !this._unmounted && operationVersion === this._operationVersion;
+    const dataService = this._dataService;
+    const spService = this._spService;
+    const webUrl = this.webURL;
     const {
       listId,
       listItemId,
@@ -379,8 +389,9 @@ export class DynamicFormBase extends React.Component<
       onSubmitError,
       enableFileSelection,
       validationErrorDialogProps,
-      returnListItemInstanceOnSubmit,
-      useModernTaxonomyPicker
+      returnListItemReferenceOnSubmit,
+      useModernTaxonomyPicker,
+      folderPath
     } = this.props;
 
     let contentTypeId = this.props.contentTypeId;
@@ -431,6 +442,7 @@ export class DynamicFormBase extends React.Component<
       let validationErrors: Record<string, string> = {};
       if (!validationDisabled) {
         validationErrors = await this.evaluateFormulas(this.state.validationFormulas, true, true, this.state.hiddenByFormula) as Record<string, string>;
+        if (!isCurrent()) return;
         if (Object.keys(validationErrors).length > 0) {
           shouldBeReturnBack = true;
         }
@@ -566,7 +578,8 @@ export class DynamicFormBase extends React.Component<
           }
           if (fieldType === "Thumbnail") {
             if (additionalData) {
-              const uploadedImage = await this.uploadImage(additionalData);
+              const uploadedImage = await this.uploadImage(additionalData, isCurrent);
+              if (!isCurrent()) return;
               objects[fieldcolumnInternalName] = JSON.stringify({
                 type: "thumbnail",
                 fileName: uploadedImage.Name,
@@ -582,6 +595,7 @@ export class DynamicFormBase extends React.Component<
 
       if (onBeforeSubmit) {
         const isCancelled = await onBeforeSubmit(objects);
+        if (!isCurrent()) return;
 
         if (isCancelled) {
           this.setState({
@@ -591,26 +605,26 @@ export class DynamicFormBase extends React.Component<
         }
       }
 
+      if (!isCurrent()) return;
       let apiError: string;
 
       // If we have the item ID, we simply need to update it
       let newETag: string | undefined = undefined;
       if (listItemId) {
         try {
-          const iur = await sp.web.lists
-            .getById(listId)
-            .items.getById(listItemId)
-            .update(objects, this.state.etag);
-          newETag = iur.data["odata.etag"];
+          const iur = await dataService.updateItem(listId, listItemId, objects, this.state.etag);
+          if (!isCurrent()) return;
+          newETag = iur.reference.etag;
           if (onSubmitted) {
-            onSubmitted(
+            await onSubmitted(
               iur.data,
-              returnListItemInstanceOnSubmit !== false
-                ? iur.item
+              returnListItemReferenceOnSubmit !== false
+                ? iur.reference
                 : undefined
             );
           }
         } catch (error) {
+          if (!isCurrent()) return;
           apiError = (error as Error).message;
           if (onSubmitError) {
             onSubmitError(objects, error as Error);
@@ -627,7 +641,7 @@ export class DynamicFormBase extends React.Component<
           contentTypeId.startsWith("0x01"))
       ) {
         if (fileSelectRendered === true) {
-          await this.addFileToLibrary(objects);
+          await this.addFileToLibrary(objects, dataService, isCurrent);
         }
         else {
           // We are adding a new list item
@@ -635,16 +649,18 @@ export class DynamicFormBase extends React.Component<
             const contentTypeIdField = "ContentTypeId";
             // check if item contenttype is passed, then update the object with content type id, else, pass the object
             if (contentTypeId !== undefined && contentTypeId.startsWith("0x01")) objects[contentTypeIdField] = contentTypeId;
-            const iar = await sp.web.lists.getById(listId).items.add(objects);
+            const iar = await dataService.addItem(listId, objects);
+            if (!isCurrent()) return;
             if (onSubmitted) {
-              onSubmitted(
+              await onSubmitted(
                 iar.data,
-                this.props.returnListItemInstanceOnSubmit !== false
-                  ? iar.item
+                returnListItemReferenceOnSubmit !== false
+                  ? iar.reference
                   : undefined
               );
             }
           } catch (error) {
+            if (!isCurrent()) return;
             apiError = (error as Error).message;
             if (onSubmitError) {
               onSubmitError(objects, error as Error);
@@ -656,37 +672,19 @@ export class DynamicFormBase extends React.Component<
       else if (contentTypeId.startsWith("0x0120")) {
         // We are adding a folder or a Document Set
         try {
-          const idField = "ID";
           const contentTypeIdField = "ContentTypeId";
-
-          const library = await sp.web.lists.getById(listId);
           const folderFileName = this.getFolderName(objects);
-          const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
-          const newFolder = await folder.addSubFolderUsingPath(folderFileName);
-          const fields = await newFolder.listItemAllFields();
-
-          if (fields[idField]) {
-            // Read the ID of the just created folder or Document Set
-            const folderId = fields[idField];
-
-            // Set the content type ID for the target item
-            (objects as any)[contentTypeIdField] = contentTypeId; // eslint-disable-line @typescript-eslint/no-explicit-any
-            // Update the just created folder or Document Set
-            const iur = await this.updateListItemRetry(library, folderId, objects);
-            if (onSubmitted) {
-              onSubmitted(
-                iur.data,
-                this.props.returnListItemInstanceOnSubmit !== false
-                  ? iur.item
-                  : undefined
-              );
-            }
-          } else {
-            throw new Error(
-              "Unable to read the ID of the just created folder or Document Set"
+          objects[contentTypeIdField] = contentTypeId;
+          const iur = await dataService.addFolder(listId, folderFileName, objects, folderPath);
+          if (!isCurrent()) return;
+          if (onSubmitted) {
+            await onSubmitted(
+              iur.data,
+              returnListItemReferenceOnSubmit !== false ? iur.reference : undefined
             );
           }
         } catch (error) {
+          if (!isCurrent()) return;
           apiError = (error as Error).message;
           if (onSubmitError) {
             onSubmitError(objects, error as Error);
@@ -695,9 +693,11 @@ export class DynamicFormBase extends React.Component<
         }
       }
 
+      if (!isCurrent()) return;
       // Reload append-only history after save
       if (listItemId && this.state.fieldCollection.some(f => f.isAppendOnly)) {
-        const updatedExtendedInfo = await this._spService.getExtendedListFormData(listId, listItemId, this.webURL);
+        const updatedExtendedInfo = await spService.getExtendedListFormData(listId, listItemId, webUrl);
+        if (!isCurrent()) return;
         this.setState(prevState => ({
           fieldCollection: prevState.fieldCollection.map(field =>
             field.isAppendOnly 
@@ -716,17 +716,21 @@ export class DynamicFormBase extends React.Component<
         infoErrorMessages: apiError ? [{ type: MessageBarType.error, message: apiError }] : [],
       });
     } catch (error) {
+      if (!isCurrent()) return;
+      this.setState({ isSaving: false, infoErrorMessages: [{ type: MessageBarType.error, message: (error as Error).message }] });
       if (onSubmitError) {
         onSubmitError(null, error as Error);
       }
-      console.log(`Error onSubmit`, error);
+      console.error(`Error onSubmit`, error);
     }
   };
 
   /**
    * Adds selected file to the library
    */
-  private addFileToLibrary = async (objects: Record<string, unknown>): Promise<void> => {
+  private addFileToLibrary = async (
+    objects: Record<string, unknown>, dataService: DynamicFormService, isCurrent: () => boolean
+  ): Promise<void> => {
     const {
       selectedFile
     } = this.state;
@@ -735,17 +739,14 @@ export class DynamicFormBase extends React.Component<
       listId,
       contentTypeId,
       onSubmitted,
-      onSubmitError,
-      returnListItemInstanceOnSubmit
+      returnListItemReferenceOnSubmit,
+      folderPath
     } = this.props;
 
 
     if (selectedFile !== undefined) {
       try {
-        const idField = "ID";
         const contentTypeIdField = "ContentTypeId";
-
-        const library = await sp.web.lists.getById(listId);
         const itemTitle =
           selectedFile !== undefined && selectedFile.fileName !== undefined && selectedFile.fileName !== ""
             ? (selectedFile.fileName as string).replace(
@@ -754,36 +755,19 @@ export class DynamicFormBase extends React.Component<
             ).trim() // Replace not allowed chars in folder name and trim empty spaces at the start or end.
             : ""; // Empty string will be replaced by SPO with Folder Item ID
 
-        const folder = !this.props.folderPath ? library.rootFolder : await this.getFolderByPath(this.props.folderPath, library.rootFolder);
-        const fileCreatedResult = await folder.files.addChunked(encodeURI(itemTitle), await selectedFile.downloadFileContent());
-        const fields = await fileCreatedResult.file.listItemAllFields();
-
-        if (fields[idField]) {
-          // Read the ID of the just created file
-          const fileId = fields[idField];
-
-          // Set the content type ID for the target item
-          objects[contentTypeIdField] = contentTypeId;
-          // Update the just created file
-          const iur = await this.updateListItemRetry(library, fileId, objects);
-          if (onSubmitted) {
-            onSubmitted(
-              iur.data,
-              returnListItemInstanceOnSubmit !== false
-                ? iur.item
-                : undefined
-            );
-          }
-        } else {
-          throw new Error(
-            "Unable to read the ID of the just created file"
-          );
+        objects[contentTypeIdField] = contentTypeId;
+        const content = await selectedFile.downloadFileContent();
+        if (!isCurrent()) return;
+        const iur = await dataService.addFile(
+          listId, itemTitle, content, objects, folderPath
+        );
+        if (!isCurrent()) return;
+        if (onSubmitted) {
+          await onSubmitted(iur.data, returnListItemReferenceOnSubmit !== false ? iur.reference : undefined);
         }
       } catch (error) {
-        if (onSubmitError) {
-          onSubmitError(objects, error as Error);
-        }
-        console.log("Error", error);
+        console.error("Error uploading document", error);
+        throw error;
       }
     }
   }
@@ -847,13 +831,13 @@ export class DynamicFormBase extends React.Component<
         if (user.indexOf("@") === -1) {
           user = newValue[0].loginName;
         }
-        const result = await sp.web.ensureUser(user);
-        field.newValue = result.data.Id;
+        const result = await this._dataService.ensureUser(user);
+        field.newValue = result.Id;
         field.stringValue = user;
         field.subPropertyValues = {
-          id: result.data.Id,
-          title: result.data.Title,
-          email: result.data.Email,
+          id: result.Id,
+          title: result.Title,
+          email: result.Email,
         };
       } else {
         field.newValue = newValue[0].id;
@@ -872,8 +856,8 @@ export class DynamicFormBase extends React.Component<
           if (user.indexOf("@") === -1) {
             user = element.loginName;
           }
-          const result = await sp.web.ensureUser(user);
-          field.newValue.push(result.data.Id);
+          const result = await this._dataService.ensureUser(user);
+          field.newValue.push(result.Id);
           emails.push(user);
         } else {
           field.newValue.push(element.id);
@@ -1009,6 +993,7 @@ export class DynamicFormBase extends React.Component<
    * Invoked when component first mounts, loads information about the SharePoint list, fields and list item
    */
   private getListInformation = async (): Promise<void> => {
+    const loadVersion = ++this._loadVersion;
     const {
       listId,
       listItemId,
@@ -1070,27 +1055,21 @@ export class DynamicFormBase extends React.Component<
       }
 
       // Load SharePoint list item
-      const spList = sp.web.lists.getById(listId);
       let item = null;
       const isEditingItem = listItemId !== undefined && listItemId !== null && listItemId !== 0;
       let etag: string | undefined = undefined;
       let extendedInfo: (IRenderExtendedListFormDataResultStatic & IRenderExtendedListFormDataResultNotesField) | undefined = undefined;
 
       if (isEditingItem) {
-        const spListItem = spList.items.getById(listItemId);
-
-        if (contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101")) {
-          spListItem.select("*", "FileLeafRef"); // Explainer: FileLeafRef is not loaded by default. Load it to show the file/folder name in the field.
-        }
-
-        item = await spListItem.get().catch(err => this.updateFormMessages(MessageBarType.error, err.message));
+        item = await this._dataService.getItem(listId, listItemId, contentTypeId.startsWith("0x0120") || contentTypeId.startsWith("0x0101"));
+        if (loadVersion !== this._loadVersion) return;
 
         if (onListItemLoaded) {
           await onListItemLoaded(item);
         }
 
         if (respectETag !== false) {
-          etag = item["odata.etag"];
+          etag = typeof item["odata.etag"] === 'string' ? item["odata.etag"] : undefined;
         }
 
         const appendOnlyFields = listInfo.ClientForms.Edit[contentTypeName]
@@ -1121,9 +1100,10 @@ export class DynamicFormBase extends React.Component<
       // Get installed languages for Currency fields
       let installedLanguages: IInstalledLanguageInfo[];
       if (tempFields.filter(f => f.fieldType === "Currency").length > 0) {
-        installedLanguages = await sp.web.regionalSettings.getInstalledLanguages();
+        installedLanguages = await this._dataService.getInstalledLanguages();
       }
 
+      if (loadVersion !== this._loadVersion) return;
       this.setState({
         contentTypeId,
         clientValidationFormulas,
@@ -1139,6 +1119,7 @@ export class DynamicFormBase extends React.Component<
       }, () => this.performValidation(true));
 
     } catch (error) {
+      if (loadVersion !== this._loadVersion) return;
       this.updateFormMessages(MessageBarType.error, 'An error occurred while loading: ' + (error as Error).message);
       console.error(`An error occurred while loading DynamicForm`, error);
       return null;
@@ -1539,65 +1520,34 @@ export class DynamicFormBase extends React.Component<
     return tempFields;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private getTermsForModernTaxonomyPicker = async (termsetId: any, terms: any): Promise<ITermInfo[]> => {
+  private getTermsForModernTaxonomyPicker = async (
+    termsetId: string, terms: { TermGuid: string; Label: string }[]
+  ): Promise<ITermInfo[]> => {
     if (!terms || terms.length === 0) {
       return [];
     }
-    const selectedTerms: ITermInfo[] = await Promise.all(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      terms.map(async (fetchedterm: any) => {
+    return Promise.all(
+      terms.map(async fetchedterm => {
         if (!fetchedterm?.TermGuid) {
-          console.error(`Error: TermGuid is undefined for term`, fetchedterm);
-          return null;
+          throw new Error('A managed metadata value has no term ID.');
         }
-
-        try {
-          const response = await this._taxonomyService.getTermById(
-            Guid.parse(termsetId),
-            Guid.parse(fetchedterm.TermGuid)
-          );
-
-          return {
-            id: response.id,
-            labels: [
-              {
-                name: response.labels?.[0]?.name ?? fetchedterm.Label,
-                isDefault: response.labels?.[0]?.isDefault ?? true,
-                languageTag: response.labels?.[0]?.languageTag ?? "en-US",
-              },
-            ],
-            childrenCount: response.childrenCount ?? 0,
-            createdDateTime: response.createdDateTime ?? new Date().toISOString(),
-            lastModifiedDateTime: response.lastModifiedDateTime ?? new Date().toISOString(),
-            descriptions: response.descriptions ?? [],
-            customSortOrder: response.customSortOrder ?? [],
-            properties: response.properties ?? [],
-            localProperties: response.localProperties ?? [],
-            isDeprecated: response.isDeprecated ?? false,
-            isAvailableForTagging: response.isAvailableForTagging ?? [],
-            topicRequested: response.topicRequested ?? false,
-          } as ITermInfo;
-        } catch (error) {
-          console.error(`Error fetching term ${fetchedterm.TermGuid}:`, error);
-          return null;
-        }
+        return this._taxonomyService.getTermById(Guid.parse(termsetId), Guid.parse(fetchedterm.TermGuid));
       })
     );
-
-    return selectedTerms.filter(term => term !== null);
   }
 
   private cultureNameLookup(lcid: number): string {
     const pageCulture = this.props.context.pageContext.cultureInfo.currentCultureName;
     if (!lcid) return pageCulture;
-    return this.state.installedLanguages?.find(lang => lang.Lcid === lcid).DisplayName ?? pageCulture;
+    return this.state.installedLanguages?.find(lang => lang.Lcid === lcid)?.DisplayName ?? pageCulture;
   }
 
   private uploadImage = async (
-    file: IFilePickerResult
+    file: IFilePickerResult, isCurrent: () => boolean
   ): Promise<IUploadImageResult> => {
     const { listId, listItemId } = this.props;
+    const service = this._spService;
+    const webUrl = this.webURL;
     if (file.fileAbsoluteUrl) {
       return {
         Name: file.fileName,
@@ -1606,14 +1556,16 @@ export class DynamicFormBase extends React.Component<
       };
     } else {
       const fileInstance = await file.downloadFileContent();
+      if (!isCurrent()) throw new Error('The form target changed before image upload.');
       const buffer = await this.getImageArrayBuffer(fileInstance);
-      return await this._spService.uploadImage(
+      if (!isCurrent()) throw new Error('The form target changed before image upload.');
+      return await service.uploadImage(
         listId,
         listItemId,
         file.fileName,
         buffer,
         undefined,
-        this.webURL
+        webUrl
       );
     }
   };
@@ -1749,50 +1701,6 @@ export class DynamicFormBase extends React.Component<
       folderNameValue = objects[titleField] as string;
 
     return folderNameValue.replace(/["|*|:|<|>|?|/|\\||]/g, "_").trim();
-  }
-
-  /**
-   * Returns a pnp/sp folder object based on the folderPath and the library the folder is in.
-   * The folderPath can be a server relative path, but should be in the same library.
-   * @param folderPath The path to the folder coming from the component properties
-   * @param rootFolder The rootFolder object of the library
-   * @returns
-   */
-  private getFolderByPath = async (folderPath: string, rootFolder: IFolder): Promise<IFolder> => {
-    const libraryFolder = await rootFolder();
-    const normalizedFolderPath = decodeURIComponent(folderPath).toLowerCase().replace(/\/$/, "");
-    const serverRelativeLibraryPath = libraryFolder.ServerRelativeUrl.toLowerCase().replace(/\/$/, "");
-
-    // In case of a server relative path in the same library, return the folder
-    if (`${normalizedFolderPath}/`.startsWith(`${serverRelativeLibraryPath}/`)) {
-      return sp.web.getFolderByServerRelativePath(normalizedFolderPath);
-    }
-
-    // In other cases, expect a list-relative path and return the folder
-    const folder = sp.web.getFolderByServerRelativePath(`${serverRelativeLibraryPath}/${normalizedFolderPath}`);
-    return folder;
-  };
-
-  /**
-   * Updates a list item and retries the operation if a 409 (Save Conflict) was thrown.
-   * @param list The list/library on which to execute the operation
-   * @param itemId The item ID
-   * @param objects The values to update the item with
-   * @param retry The retry index
-   * @returns An update result
-   */
-  private updateListItemRetry = async (list: IList, itemId: number, objects: {}, retry: number = 0): Promise<IItemUpdateResult> => {
-    try {
-      return await list.items.getById(itemId).update(objects);
-    }
-    catch (error) {
-      if ((error as { status?: number }).status === 409 && retry < 3) {
-        await timeout(100);
-        return await this.updateListItemRetry(list, itemId, objects, retry + 1);
-      }
-
-      throw error;
-    }
   }
 
 }

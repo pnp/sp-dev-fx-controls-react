@@ -1,4 +1,4 @@
-import { IFileInfo } from "@pnp/sp/files";
+import { IFileInfo } from "../common/SPRestTypes";
 
 export interface IFolder {
   /**

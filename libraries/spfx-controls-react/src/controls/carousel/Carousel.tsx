@@ -10,7 +10,6 @@ import { ICarouselState } from "./ICarouselState";
 import { css, ICssInput } from "@uifabric/utilities/lib";
 import { ProcessingState } from "./ICarouselState";
 import { Spinner } from "@fluentui/react/lib/Spinner";
-import { isArray } from "@pnp/common";
 import * as telemetry from '../../common/telemetry';
 import CarouselImage, { ICarouselImageProps } from "./CarouselImage";
 import { CarouselIndicatorsDisplay } from "./ICarouselProps";
@@ -198,7 +197,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
       return null;
     }
 
-    const elementsCount = triggerPageEvent ? this.props.elementsCount : isArray(this.props.element) ? (this.props.element as (JSX.Element[] | ICarouselImageProps[])).length : 1;
+    const elementsCount = triggerPageEvent ? this.props.elementsCount : Array.isArray(this.props.element) ? (this.props.element as (JSX.Element[] | ICarouselImageProps[])).length : 1;
 
     const indicatorElements: JSX.Element[] = [];
     for (let i = 0; i < elementsCount; i++) {
@@ -439,7 +438,7 @@ export class Carousel extends React.Component<ICarouselProps, ICarouselState> {
     if (!element) {
       result = null;
     }
-    else if (isArray(element) && (arrayLen = (element as JSX.Element[] | ICarouselImageProps[]).length) > 0) {
+    else if (Array.isArray(element) && (arrayLen = (element as JSX.Element[] | ICarouselImageProps[]).length) > 0) {
       // Retrieve proper element from the array
       if (currentIndex >= 0 && arrayLen > currentIndex) {
         const arrayEl = (element as any)[currentIndex]; // eslint-disable-line @typescript-eslint/no-explicit-any

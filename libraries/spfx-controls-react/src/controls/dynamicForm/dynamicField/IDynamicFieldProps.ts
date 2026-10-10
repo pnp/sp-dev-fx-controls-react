@@ -2,7 +2,7 @@ import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { IDropdownOption } from "@fluentui/react/lib/Dropdown";
 import { IStyle, IStyleFunctionOrObject, Theme } from '@fluentui/react';
 import { IFilePickerResult } from '../../filePicker';
-import { ChoiceFieldFormatType } from '@pnp/sp/fields';
+import { ChoiceFieldFormatType } from '../../../common/SPRestTypes';
 import { IAppendOnlyNoteHistoryEntry } from '../../../services/ISPService';
 
 export type DateFormat = 'DateTime' | 'DateOnly';
@@ -10,6 +10,7 @@ export type FieldChangeAdditionalData = IFilePickerResult;
 
 export interface IDynamicFieldProps {
   context: BaseComponentContext;
+  webAbsoluteUrl?: string;
 
   /** Internal column name */
   columnInternalName: string;
