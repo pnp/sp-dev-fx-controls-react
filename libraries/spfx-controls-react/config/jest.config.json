@@ -32,8 +32,6 @@
     "office-ui-fabric-react/lib/(.*)$": "office-ui-fabric-react/lib-commonjs/$1",
     "@fluentui/react-theme-provider/lib/(.*)$": "@fluentui/react-theme-provider/lib-commonjs/$1",
     "src/common/telemetry/(.*)$": "identity-obj-proxy",
-    "@pnp/sp": "identity-obj-proxy",
-    "'@pnp/sp/fields": "identity-obj-proxy",
     "ControlStrings": "<rootDir>/tests/__mocks__/ControlStrings.js",
     "\\.(css|scss)$": "identity-obj-proxy"
   }

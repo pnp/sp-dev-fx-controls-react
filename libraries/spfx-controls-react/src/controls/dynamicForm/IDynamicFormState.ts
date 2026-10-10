@@ -1,4 +1,4 @@
-import { IInstalledLanguageInfo } from '@pnp/sp/regional-settings';
+import { IInstalledLanguageInfo } from '../../common/SPRestTypes';
 import { ISPField } from '../../common/SPEntities';
 import { MessageBarType } from '@fluentui/react/lib/MessageBar';
 import { ICustomFormattingBodySection, ICustomFormattingNode } from '../../common/utilities/ICustomFormatting';

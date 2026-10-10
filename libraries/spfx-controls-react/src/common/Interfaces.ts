@@ -2,7 +2,7 @@ import { SPHttpClient } from '@microsoft/sp-http';
 import { PageContext, SPField } from '@microsoft/sp-page-context';
 import { ListViewAccessor } from '@microsoft/sp-listview-extensibility';
 import { ISPField } from './SPEntities';
-import { INavNodeInfo } from '@pnp/sp/navigation/types';
+import { INavNodeInfo } from './SPRestTypes';
 
 /**
  * Customizer context interface.

@@ -9,7 +9,7 @@ import { initializeComponentRef,
          styled
        } from '@fluentui/react/lib/Utilities';
 
-import { ITermInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo } from '../../../services/SPTaxonomyService.types';
 import { BasePicker, IBasePickerStyleProps, IBasePickerStyles, IPickerItemProps, ISuggestionItemProps } from '@fluentui/react/lib/Pickers';
 import { getStyles } from '@fluentui/react/lib/components/pickers/BasePicker.styles';
 

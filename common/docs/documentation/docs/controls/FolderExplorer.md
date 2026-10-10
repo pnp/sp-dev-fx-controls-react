@@ -61,5 +61,7 @@ The `FolderExplorer` control can be configured with the following properties:
 | onSelect | (folder: IFolder): void | no | Callback function called after a folder is selected. |
 | orderby | string | no | The name of the folder field on which to sort. Name will be used as default. Other examples: Name, TimeCreated, TimeLastModified |
 | orderAscending | boolean | no | If set to true, results will be sorted in ascending order. Otherwise, descending will be used as default |
+| showFiles | boolean | no | Display files as well as folders. |
+| onFileClick | (file: IFileInfo) => void | no | Receives SharePoint file information. Import `IFileInfo` from `@pnp/spfx-controls-react/lib/Common`; no PnPjs installation is required. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/FolderExplorer)

@@ -11,6 +11,8 @@ This repository provides developers with a set of reusable React controls that c
 
 ## Library Versions
 
+The **v4 development branch** removes the PnPjs dependency while retaining the controls. See the [v4 PnPjs migration guide](./guides/migrate-to-v4.md) for callback/type changes and request behavior. This note does not change the release status of the versions below.
+
 Currently there are 3 active versions of the controls. Please, reference the table below to see what version to use in your project.
 
 | Version | SPFx minimal dependency | Fluent UI (Office UI Fabric React) version | SharePoint Version | Comments |

@@ -1,5 +1,12 @@
 # People Picker
 
+The v4 migration removes PnPjs from the remaining user-resolution path. Graph
+group-member suggestions retain successful SharePoint user resolutions when
+other batch entries fail; failures are logged and eligible failed entries are
+retried. Persona IDs are strings, including ensured numeric SharePoint IDs.
+See [request behavior](../guides/migrate-to-v4.md#request-behavior-and-support);
+this does not change every existing Graph/people-search request's retry policy.
+
 This control renders a People picker field which can be used to select one or more users from a SharePoint group or site. The control can be configured as mandatory. It will show a custom error message if field is empty.
 
 !!! Note

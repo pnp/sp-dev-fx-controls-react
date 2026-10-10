@@ -5,7 +5,7 @@ import {
   IFilterBarItem,
 } from '@pnp/spfx-controls-react';
 import { ITag } from '@fluentui/react';
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/spfx-controls-react/lib/ModernTaxonomyPicker';
 
 export interface IControlsTestState {
   imgSize: ImageSize;

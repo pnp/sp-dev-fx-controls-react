@@ -1,17 +1,18 @@
 import { BaseComponentContext, IReadonlyTheme } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { sp } from '@pnp/sp';
 import {
   ITermInfo,
   ITermSetInfo,
-  ITermStoreInfo
-} from '@pnp/sp/taxonomy';
+  ITermStoreInfo,
+  TaxonomyTreeUpdateCallback
+} from '../../services/SPTaxonomyService.types';
 import { useId } from '@uifabric/react-hooks';
 import * as strings from 'ControlStrings';
 import {
   DefaultButton, IButtonStyles, IconButton, PrimaryButton
 } from '@fluentui/react/lib/Button';
 import { IIconProps } from '@fluentui/react/lib/Icon';
+import { MessageBar, MessageBarType } from '@fluentui/react/lib/MessageBar';
 import { Label } from '@fluentui/react/lib/Label';
 import {
   Panel,
@@ -49,6 +50,7 @@ export interface IModernTaxonomyPickerProps {
   panelTitle: string;
   label: string;
   context: BaseComponentContext;
+  webAbsoluteUrl?: string;
   initialValues?: Optional<ITermInfo, "childrenCount" | "createdDateTime" | "lastModifiedDateTime" | "descriptions" | "customSortOrder" | "properties" | "localProperties" | "isDeprecated" | "isAvailableForTagging" | "topicRequested">[];
   disabled?: boolean;
   required?: boolean;
@@ -61,12 +63,17 @@ export interface IModernTaxonomyPickerProps {
   termPickerProps?: Optional<IModernTermPickerProps, 'onResolveSuggestions'>;
   isLightDismiss?: boolean;
   isBlocking?: boolean;
-  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo?: ITermInfo) => JSX.Element;
+  onRenderActionButton?: (
+    termStoreInfo: ITermStoreInfo,
+    termSetInfo: ITermSetInfo,
+    termInfo?: ITermInfo,
+    updateTree?: TaxonomyTreeUpdateCallback
+  ) => JSX.Element;
   allowSelectingChildren?: boolean;
 }
 
 export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Element {
-  const taxonomyService = useMemo(()=>new SPTaxonomyService(props.context), [props.context]);
+  const taxonomyService = useMemo(()=>new SPTaxonomyService(props.context, props.webAbsoluteUrl), [props.context, props.webAbsoluteUrl, props.termSetId, props.anchorTermId]);
   const [panelIsOpen, setPanelIsOpen] = React.useState(false);
   const initialLoadComplete = React.useRef(false);
   const [selectedOptions, setSelectedOptions] = React.useState<ITermInfo[]>([]);
@@ -75,41 +82,76 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
   const [currentAnchorTermInfo, setCurrentAnchorTermInfo] = React.useState<ITermInfo>();
   const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
+  const [operationErrors, setOperationErrors] = React.useState<Record<string, string>>({});
+  const [loadedService, setLoadedService] = React.useState<SPTaxonomyService>();
+  const requestVersion = React.useRef(0);
+  const operationVersions = React.useRef<Record<string, number>>({});
+
+  function reportError(operation: string, error: unknown): void {
+    console.error('[ModernTaxonomyPicker]', error);
+    setOperationErrors(previous => ({
+      ...previous, [operation]: error instanceof Error ? error.message : String(error)
+    }));
+  }
+
+  async function trackOperation<T>(operation: string, action: () => Promise<T>): Promise<T> {
+    const targetVersion = requestVersion.current;
+    const version = (operationVersions.current[operation] || 0) + 1;
+    operationVersions.current[operation] = version;
+    const isCurrent = (): boolean => targetVersion === requestVersion.current && operationVersions.current[operation] === version;
+    try {
+      const result = await action();
+      if (isCurrent()) {
+        setOperationErrors(previous => {
+          if (!isCurrent() || !(operation in previous)) return previous;
+          const next = { ...previous };
+          delete next[operation];
+          return next;
+        });
+      }
+      return result;
+    } catch (error) {
+      if (isCurrent()) reportError(operation, error);
+      throw error;
+    }
+  }
 
   React.useEffect(() => {
-    sp.setup({ pageContext: props.context.pageContext });
-    taxonomyService.getTermStoreInfo()
-      .then((termStoreInfo) => {
+    const version = ++requestVersion.current;
+    initialLoadComplete.current = false;
+    setOperationErrors({});
+    operationVersions.current = {};
+    setSelectedOptions([]);
+    setSelectedPanelOptions([]);
+    Promise.all([
+      taxonomyService.getTermStoreInfo(),
+      taxonomyService.getTermSetInfo(Guid.parse(props.termSetId)),
+      props.anchorTermId && props.anchorTermId !== Guid.empty.toString()
+        ? taxonomyService.getTermById(Guid.parse(props.termSetId), Guid.parse(props.anchorTermId))
+        : Promise.resolve(undefined)
+    ])
+      .then(([termStoreInfo, termSetInfo, anchorTermInfo]) => {
+        if (version !== requestVersion.current) return;
         setCurrentTermStoreInfo(termStoreInfo);
+        setCurrentTermSetInfo(termSetInfo);
+        setCurrentAnchorTermInfo(anchorTermInfo);
         const languageTag = props.context.pageContext.cultureInfo.currentUICultureName !== '' && termStoreInfo.languageTags.includes(props.context.pageContext.cultureInfo.currentUICultureName) ?
           props.context.pageContext.cultureInfo.currentUICultureName :
           termStoreInfo.defaultLanguageTag;
         setCurrentLanguageTag(languageTag);
-        setSelectedOptions(Array.isArray(props.initialValues) ?
+        const initialTerms = Array.isArray(props.initialValues) ?
           props.initialValues.map(term => { return { ...term, languageTag: languageTag, termStoreInfo: termStoreInfo } as ITermInfo; }) :
-          []);
-          initialLoadComplete.current = true;
+          [];
+        setSelectedOptions(initialTerms);
+        setSelectedPanelOptions(initialTerms);
+        setLoadedService(taxonomyService);
+        initialLoadComplete.current = true;
       })
-      .catch(() => {
-        // no-op;
+      .catch(error => {
+        if (version === requestVersion.current) reportError('metadata', error);
       });
-    taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
-      .then((termSetInfo) => {
-        setCurrentTermSetInfo(termSetInfo);
-      })
-      .catch(() => {
-        // no-op;
-      });
-    if (props.anchorTermId && props.anchorTermId !== Guid.empty.toString()) {
-      taxonomyService.getTermById(Guid.parse(props.termSetId), props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty)
-        .then((anchorTermInfo) => {
-          setCurrentAnchorTermInfo(anchorTermInfo);
-        })
-        .catch(() => {
-          // no-op;
-        });
-    }
-  }, []);
+    return () => { requestVersion.current++; taxonomyService.dispose(); };
+  }, [taxonomyService, props.termSetId, props.anchorTermId]);
 
   React.useEffect(() => {
     if (props.onChange && initialLoadComplete.current) {
@@ -131,14 +173,14 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   }
 
   function onApply(): void {
+    const version = requestVersion.current;
     if (props.isPathRendered) {
-      addParentInformationToTerms([...selectedPanelOptions])
+      trackOperation('selection-path', () => addParentInformationToTerms([...selectedPanelOptions]))
         .then((selectedTermsWithPath) => {
+          if (version !== requestVersion.current) return;
           setSelectedOptions(selectedTermsWithPath);
         })
-        .catch(() => {
-          // no-op;
-        });
+        .catch(() => { /* trackOperation reports the error. */ });
     }
     else {
       setSelectedOptions([...selectedPanelOptions]);
@@ -150,6 +192,7 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     let currentParent = term.parent;
     if(!currentParent) {
       const fullTerm = await taxonomyService.getTermById(Guid.parse(props.termSetId), Guid.parse(term.id));
+      if (!fullTerm) throw new Error('Cannot load a selected taxonomy term with an empty ID.');
       currentParent = fullTerm.parent;
     }
     if(!currentParent) { // Top-level term reached, no parents.
@@ -177,7 +220,15 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
     if (filter === '') {
       return [];
     }
-    const filteredTerms = await taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren);
+    const version = requestVersion.current;
+    let filteredTerms: ITermInfo[];
+    try {
+      filteredTerms = await trackOperation('search', () =>
+        taxonomyService.searchTerm(Guid.parse(props.termSetId), filter, currentLanguageTag, props.anchorTermId ? Guid.parse(props.anchorTermId) : Guid.empty, props.allowSelectingChildren));
+    } catch {
+      return [];
+    }
+    if (version !== requestVersion.current) return [];
 
     const filteredTermsWithoutSelectedItems = filteredTerms.filter((term) => {
       if (!selectedItems || selectedItems.length === 0) {
@@ -188,13 +239,13 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
 
     const filteredTermsAndAvailable = filteredTermsWithoutSelectedItems
       .filter((term) =>
-        term.isAvailableForTagging
-          .filter((t) => t.setId === props.termSetId)[0].isAvailable);
+        term.isAvailableForTagging?.some((t) => t.setId === props.termSetId && t.isAvailable));
     return filteredTermsAndAvailable;
   }
 
   async function onLoadParentLabel(termId: Guid): Promise<string> {
     const termInfo = await taxonomyService.getTermById(Guid.parse(props.termSetId), termId);
+    if (!termInfo) return '';
     if (termInfo.parent) {
       let labelsWithMatchingLanguageTag = termInfo.parent.labels.filter((termLabel) => (termLabel.languageTag === currentLanguageTag));
       if (labelsWithMatchingLanguageTag.length === 0) {
@@ -256,15 +307,15 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
   }
 
   function onTermPickerChange(itms?: ITermInfo[]): void {
+    const version = requestVersion.current;
     if (itms && props.isPathRendered) {
-      addParentInformationToTerms(itms)
+      trackOperation('selection-path', () => addParentInformationToTerms(itms))
         .then((itmsWithPath) => {
+          if (version !== requestVersion.current) return;
           setSelectedOptions(itmsWithPath || []);
           setSelectedPanelOptions(itmsWithPath || []);
         })
-        .catch(() => {
-          //no-op;
-        });
+        .catch(() => { /* trackOperation reports the error. */ });
     }
     else {
       setSelectedOptions(itms || []);
@@ -288,6 +339,9 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
 
   return (
     <div className={styles.modernTaxonomyPicker}>
+      {Object.entries(operationErrors).map(([operation, message]) => (
+        <MessageBar key={operation} messageBarType={MessageBarType.error}>{message}</MessageBar>
+      ))}
       {props.label && <Label required={props.required}>{props.label}</Label>}
       <div className={styles.termField}>
         <div className={styles.termFieldInput}>
@@ -346,12 +400,18 @@ export function ModernTaxonomyPicker(props: IModernTaxonomyPickerProps): JSX.Ele
         }}>
 
         {
-          props.termSetId && (
-            <div key={props.termSetId} >
+          loadedService === taxonomyService && props.termSetId && currentTermSetInfo && currentTermStoreInfo && (
+            <div key={requestVersion.current} >
               <TaxonomyPanelContents
                 allowMultipleSelections={props.allowMultipleSelections}
                 onResolveSuggestions={props.termPickerProps?.onResolveSuggestions ?? onResolveSuggestions}
-                onLoadMoreData={taxonomyService.getTerms}
+                onLoadMoreData={async (...args) => {
+                  const operation = `tree:${JSON.stringify([
+                    args[0].toString(), args[1]?.toString() || Guid.empty.toString(), args[2] || '',
+                    args[3] ?? false, args[4] ?? 50
+                  ])}`;
+                  return trackOperation(operation, () => taxonomyService.getTerms(...args));
+                }}
                 anchorTermInfo={currentAnchorTermInfo}
                 termSetInfo={currentTermSetInfo}
                 termStoreInfo={currentTermStoreInfo}

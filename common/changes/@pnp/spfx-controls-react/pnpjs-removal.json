@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "comment": "Remove PnPjs in favor of SPFx REST requests while retaining DynamicForm and taxonomy controls. Replace DynamicForm's IItem callback argument and returnListItemInstanceOnSubmit with an SDK-free item reference and returnListItemReferenceOnSubmit; export owned REST types and document migration and retry behavior.",
+      "type": "major",
+      "packageName": "@pnp/spfx-controls-react"
+    }
+  ],
+  "packageName": "@pnp/spfx-controls-react"
+}

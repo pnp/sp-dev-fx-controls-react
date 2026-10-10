@@ -1,348 +1,170 @@
-# Modern Taxonomy Picker
+# ModernTaxonomyPicker control
 
-This control allows you to select one or more Terms from a TermSet via its TermSet ID. You can also configure the control to select the child terms from a specific term in the TermSet by setting the anchorTermId. This is the modern version of the taxonomy picker that uses the REST API and makes use of some load on demand features which makes it well suited for large term sets.
+Select one or more managed metadata terms, browse a term hierarchy, search labels,
+and optionally show selected terms' parent paths.
 
-!!! note "Disclaimer"
-    Since this control is meant to look as and work in the same way as the out-of-the-box control it lacks some of the features from the legacy ```TaxonomyPicker``` control. If you need some of those features please continue using the legacy version.
+## How to use this control
 
-- Empty term picker:
+Install the controls library as described in [getting started](../index.md#getting-started).
+PnPjs is not required.
 
-![Empty term picker](../assets/modernTaxonomyPicker-empty.png)
+```tsx
+import { ModernTaxonomyPicker, ITermInfo } from "@pnp/spfx-controls-react/lib/ModernTaxonomyPicker";
 
-- Selecting terms:
-
-![Selecting terms](../assets/modernTaxonomyPicker-tree-selection.png)
-
-- Selected terms in picker:
-
-![Selected terms in the input](../assets/modernTaxonomyPicker-selected-terms.png)
-
-- Term picker: Auto Complete:
-
-![Selected terms in the input](../assets/modernTaxonomyPicker-input-autocomplete.png)
-
-## How to use this control in your solutions
-
-- Check that you installed the `@pnp/spfx-controls-react` dependency. Check out the [getting started](../../#getting-started) page for more information about installing the dependency.
-- Import the following modules to your component:
-
-```TypeScript
-import { ModernTaxonomyPicker } from "@pnp/spfx-controls-react/lib/ModernTaxonomyPicker";
-```
-
-- Use the `ModernTaxonomyPicker` control in your code as follows:
-
-```TypeScript
-<ModernTaxonomyPicker allowMultipleSelections={true}
-  termSetId="f233d4b7-68fb-41ef-8b58-2af0bafc0d38"
-  panelTitle="Select Term"
-  label="Taxonomy Picker"
-  context={this.props.context}
-  onChange={this.onTaxPickerChange}
-/>
-```
-
-- With the `onChange` property you can capture the event of when the terms in the picker has changed:
-
-```typescript
-private onTaxPickerChange(terms : ITermInfo[]) {
-  console.log("Terms", terms);
-}
-```
-
-## Advanced example
-
-Custom rendering of a More actions button that displays a context menu for each term in the term set and the term set itself and with different options for the terms and the term set. This could for example be used to add terms to an open term set. It also shows how to set the initialsValues property when just knowing the name and the id of the term.
-
-```TypeScript
-const termSetId = "36d21c3f-b83b-4acc-a223-4df6fa8e946d";
-const [clickedActionTerm, setClickedActionTerm] = React.useState<ITermInfo>();
-
-private addTermSwitch = async (index: number, term: ITermInfo, updateTaxonomyTreeViewCallback: any, isParent: boolean) => {
-    if (isParent) {
-      this.addTerm(index, term, updateTaxonomyTreeViewCallback);
-    } else {
-      this.addChildTerm(index, term, updateTaxonomyTreeViewCallback);
-    }
-  }
-
-  //Below methods are using graphClient to create terms
-  private addTerm = async (index: number, term: ITermInfo, updateTaxonomyTreeViewCallback: any) => {
-    try {
-      if (termSetId) {
-        this.props.context?.msGraphClientFactory?.getClient("3").then((client) => {
-          client
-            .api(`/sites/${this.props.context?.pageContext.site.id}/termStore/sets/${termSetId}/terms/${term.id}`)
-            .post({
-              labels: [
-                {
-                  languageTag: "en-US",
-                  name: "TestTerm",
-                  isDefault: true,
-                },
-              ],
-            })
-            .then((response) => {
-              const { "@odata.context": _, ...filteredResponse } = response;
-              filteredResponse.isAvailableForTagging = [
-                {
-                    "setId": termSetId,
-                    "isAvailable": true
-                }
-            ];
-              // Pass the filtered response to updateTaxonomyTreeViewCallback
-              updateTaxonomyTreeViewCallback([filteredResponse] as ITermInfo[], [term] as ITermInfo[], null, null);
-            })
-            .catch((error) => {
-              console.error("Error adding child term", error);
-            });
-        });
-      } else {
-        console.error("termSetId is undefined");
-      }
-    } catch (error) {
-      console.error("Error adding child term", error);
-    }
-  }
-
-  private addChildTerm = async (index: number, term: ITermInfo, updateTaxonomyTreeViewCallback: any) => {
-    try {
-      if (termSetId) {
-        this.props.context?.msGraphClientFactory?.getClient("3").then((client) => {
-          client
-            .api(`/sites/${this.props.context?.pageContext.site.id}/termStore/sets/${termSetId}/terms/${term.id}/children`)
-            .post({
-              labels: [
-                {
-                  languageTag: "en-US",
-                  name: "TestChild",
-                  isDefault: true,
-                },
-              ],
-            })
-            .then((response) => {
-              // Exclude @odata.context from the response
-              const { "@odata.context": _, ...filteredResponse } = response;
-              filteredResponse.isAvailableForTagging = [
-                {
-                    "setId": termSetId,
-                    "isAvailable": true
-                }
-            ];
-              // Pass the filtered response to updateTaxonomyTreeViewCallback
-              updateTaxonomyTreeViewCallback([filteredResponse] as ITermInfo[], [term] as ITermInfo[], null, null);
-            })
-            .catch((error) => {
-              console.error("Error adding child term", error);
-            });
-        });
-      } else {
-        console.error("termSetId is undefined");
-      }
-    } catch (error) {
-      console.error("Error adding child term", error);
-    }
-  }
-    
-
-  private deleteTerm = (_: number, term: ITermInfo,updateTaxonomyTreeViewCallback: any) => {
-    if (termSetId) {
-      this.props.context?.msGraphClientFactory?.getClient("3").then((client) => {
-        client
-          .api(`/sites/${this.props.context?.pageContext.site.id}/termStore/sets/${termSetId}/terms/${term.id}`)
-          .delete()
-          .then(() => {
-            console.log("Term deleted");
-            updateTaxonomyTreeViewCallback(null,null,[term] as ITermInfo[]);
-          })
-          .catch((error) => {
-            console.error("Error deleting term", error);
-          });
-      });
-    } else {
-      console.error("termSetId is undefined");
-    }
-  }
-
-  //Another example in how to create term
-  const addChildTerm = (parentTermId, updateTaxonomyTreeViewCallback): void => {
-  spPost(sp.termStore.sets.getById(termSetId).terms.getById(parentTermId).children, {
-    body: JSON.stringify({
-      "labels": [
-        {
-          "languageTag": "en-US",
-          "name": "Test",
-          "isDefault": true
-        }
-      ]
-    }),
-  })
-  .then(addedTerm => {
-    return sp.termStore.sets.getById(termSetId).terms.getById(addedTerm.id).expand("parent")();
-  })
-  .then(term => {
-    updateTaxonomyTreeViewCallback([term], null, null);
-  });
-} 
-
-//Usage
 <ModernTaxonomyPicker
-    allowMultipleSelections={true}
-    termSetId={'8ed8c9ea-7052-4c1d-a4d7-b9c10bffea6f'}
-    panelTitle='Select Term'
-    label={'Modern Taxonomy Picker'}
-    context={this.props.context}
-    required={false}
-    disabled={false}
-    onRenderActionButton={(
-      termStoreInfo: any, 
-      termSetInfo: any, 
-      termInfo: ITermInfo,
-      updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], parentTerm?:ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void
-    ): JSX.Element => {
-    const menuIcon: IIconProps = { iconName: 'MoreVertical', 'aria-label': 'Add or delete terms', style: { fontSize: 'medium' } };
-    if (termInfo) {
-      const menuProps: IContextualMenuProps = {
-        items: [
-          {
-            key: 'addTerm',
-            text: 'Add Term',
-            iconProps: { iconName: 'Tag' },
-            onClick: () => { (async () => await this.addTermSwitch(0, termInfo, updateTaxonomyTreeViewCallback, false))(); }
-          },
-          {
-            key: 'deleteTerm',
-            text: 'Delete term',
-            iconProps: { iconName: 'Untag' },
-            onClick: () => this.deleteTerm(0,termInfo, updateTaxonomyTreeViewCallback)
-          },
-        ],
-      };
-      return (
-        <>
-          <IconButton
-          menuProps={menuProps}
-          menuIconProps={menuIcon}
-          style={{opacity: 1}}
-          onMenuClick={(_: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>, __?: IButtonProps) => {
-            console.log('IconButton clicked');
-            this.setClickedActionTerm(termInfo);
-          }}
-        />
-        </>
-      );
-    }
-    else {
-      const menuProps: IContextualMenuProps = {
-        items: [
-          {
-            key: 'addTerm',
-            text: 'Add term',
-            iconProps: { iconName: 'Tag' },
-            onClick: () => { (async () => await this.addTermSwitch(0, termInfo, updateTaxonomyTreeViewCallback, true))(); }
-          },
-        ],
-      };
-      return (
-        <IconButton
-          menuProps={menuProps}
-          menuIconProps={menuIcon}
-          style={{opacity: 1}}
-        />
-      );
-    }
-  }}
+  context={context}
+  termSetId={termSetId}
+  label="Categories"
+  panelTitle="Select categories"
+  allowMultipleSelections={true}
+  onChange={(terms?: ITermInfo[]) => console.log(terms)}
 />
 ```
 
-## Implementation
+Import `ITermInfo`, `ITermSetInfo` and `ITermStoreInfo` from this control's entry
+point, not `@pnp/sp/taxonomy`. See the [v4 migration guide](../guides/migrate-to-v4.md).
+Term data retains the SharePoint shape, including labels, parents, child counts,
+deprecation and per-set tagging availability.
 
-The ModernTaxonomyPicker control can be configured with the following properties:
+## Properties
 
 | Property | Type | Required | Description |
-| ---- | ---- | ---- | ---- |
-| panelTitle | string | yes | TermSet Picker Panel title. |
-| label | string | yes | Text displayed above the Taxonomy Picker. |
-| disabled | boolean | no | Specify if the control should be disabled. Default value is false. |
-| context | BaseComponentContext | yes | Context of the current web part or extension. |
-| initialValues | ITermInfo[] | no | Defines the terms selected by default. This will only set the initial values and cannot be used to use the control in a controlled way. ITermInfo comes from PnP/PnPjs and can be imported with <br/>```import { ITermInfo } from '@pnp/sp/taxonomy';``` |
-| allowMultipleSelections | boolean | no | Defines if the user can select only one or multiple terms. Default value is false. |
-| termSetId | string | yes | The Id of the TermSet that you would like the Taxonomy Picker to select terms from. |
-| onChange | function | no |  Captures the event of when the terms in the picker has changed. |
-| anchorTermId | string | no | Set the id of a child term in the TermSet to be able to select terms from that level and below. |
-| placeHolder | string | no | Short text hint to display in picker. |
-| required | boolean | no | Specifies if to display an asterisk near the label. Default value is false. |
-| customPanelWidth | number | no | Custom panel width in pixels. |
-| termPickerProps | IModernTermPickerProps | no | Custom properties for the term picker (More info: [IBasePickerProps interface](https://developer.microsoft.com/en-us/fluentui#/controls/web/pickers#IBasePickerProps)).  |
-| themeVariant | IReadonlyTheme | no | The current loaded SharePoint theme/section background (More info: [Supporting section backgrounds](https://docs.microsoft.com/sharepoint/dev/spfx/web-parts/guidance/supporting-section-backgrounds)). |
-| isLightDismiss | boolean | no | Whether the panel can be light dismissed. |
-| isBlocking | boolean | no | Whether the panel uses a modal overlay or not. |
-| onRenderActionButton | function | no | Optional custom renderer for adding e.g. a button with additional actions to the terms in the tree view. See advanced example section |
-| isPathRendered | boolean | no | Whether the terms will be rendered with the term label or the full path up to the root. |
-| allowSelectingChildren | boolean | no | Whether child terms can be selected. Default value is true. |
+| --- | --- | --- | --- |
+| context | BaseComponentContext | yes | SPFx context providing the HTTP client and culture. |
+| webAbsoluteUrl | string | no | Target SharePoint web; defaults to the context web. |
+| termSetId | string | yes | Term set GUID. |
+| anchorTermId | string | no | Restrict browsing/search to an anchor term. |
+| panelTitle | string | yes | Picker panel heading. |
+| label | string | yes | Field label. |
+| allowMultipleSelections | boolean | no | Permit multiple selected terms. |
+| isPathRendered | boolean | no | Display parent paths for selected terms. |
+| initialValues | Partial term information[] | no | Initial terms, with ID and labels. This is initialization, not a controlled value. See the exported prop type for optional metadata fields. |
+| onChange | (terms?: ITermInfo[]) => void | no | Selected term data. |
+| disabled | boolean | no | Disable selection. |
+| required | boolean | no | Mark the field required. |
+| placeHolder | string | no | Input placeholder. |
+| customPanelWidth | number | no | Custom panel width. |
+| themeVariant | IReadonlyTheme | no | Theme variant. |
+| termPickerProps | picker props | no | Customize the underlying term picker and suggestion behavior. |
+| isLightDismiss | boolean | no | Allow dismissing the panel outside its bounds. |
+| isBlocking | boolean | no | Block interaction outside the panel. |
+| allowSelectingChildren | boolean | no | Control descendant selection; the service defaults to allowing descendants. |
+| onRenderItem | item renderer | no | Customize selected term rendering. |
+| onRenderSuggestionsItem | suggestion renderer | no | Customize suggestion rendering. |
+| onRenderActionButton | action renderer | no | Render term/set actions; the tree supplies an update callback for refreshing changed terms. |
 
-## Standalone TaxonomyTree control
+The browser loads children in pages (50 by default). Selection, locale fallback,
+server ordering, parent paths and tagging/deprecation filtering remain available.
+Service failures are reported separately from an empty term set.
+Failed initial, expansion and load-more requests clear their loading indicator
+without discarding loaded children or the continuation token. The load-more link
+can then retry the failed request.
+Errors are tracked separately for searches, selection paths and individual tree
+pages. A successful retry clears that operation's error without hiding unrelated
+failures. Older overlapping search results cannot restore an obsolete error.
 
-You can also use the `TaxonomyTree` control separately to just render a stand-alone tree-view of a term set with action buttons.
+## Direct taxonomy service
 
-- Use the `TaxonomyTree` control in your code as follows:  
-  Initialize the taxonomy service and state, load basic info from term store and display the `TaxonomyTree` component.
+`SPTaxonomyService` remains exported and accepts a context plus an optional target web:
 
-```TypeScript
-import * as React from "react";
+```ts
 import { Guid } from "@microsoft/sp-core-library";
-import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { sp } from "@pnp/sp";
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from "@pnp/sp/taxonomy";
-import { SPTaxonomyService, TaxonomyTree } from "@pnp/spfx-controls-react";
+import { SPTaxonomyService } from "@pnp/spfx-controls-react/lib/ModernTaxonomyPicker";
 
-export interface ITestTaxonomyTreeReactHooksProps {
-  context: WebPartContext;
-  termSetId: string;
-  onRenderActionButton?: (termStoreInfo: ITermStoreInfo, termSetInfo: ITermSetInfo, termInfo: ITermInfo, updateTaxonomyTreeViewCallback?: (newTermItems?: ITermInfo[], updatedTermItems?: ITermInfo[], deletedTermItems?: ITermInfo[]) => void) => JSX.Element;
-}
-
-export function TestTaxonomyTreeReactHooks(
-	props: ITestTaxonomyTreeReactHooksProps
-): React.ReactElement<ITestTaxonomyTreeReactHooksProps> {
-  const taxonomyService = new SPTaxonomyService(props.context);
-  const [terms, setTerms] = React.useState<ITermInfo[]>([]);
-  const [currentTermStoreInfo, setCurrentTermStoreInfo] = React.useState<ITermStoreInfo>();
-  const [currentTermSetInfo, setCurrentTermSetInfo] = React.useState<ITermSetInfo>();
-  const [currentLanguageTag, setCurrentLanguageTag] = React.useState<string>("");
-  
-  React.useEffect(() => {
-    sp.setup(props.context);
-    taxonomyService.getTermStoreInfo()
-      .then((termStoreInfo) => {
-        setCurrentTermStoreInfo(termStoreInfo);
-        setCurrentLanguageTag(props.context.pageContext.cultureInfo.currentUICultureName !== '' ?
-          props.context.pageContext.cultureInfo.currentUICultureName :
-          currentTermStoreInfo.defaultLanguageTag);
-      });
-    taxonomyService.getTermSetInfo(Guid.parse(props.termSetId))
-      .then((termSetInfo) => {
-        setCurrentTermSetInfo(termSetInfo);
-      });
-  }, []);
-  
-  return (
-    currentTermStoreInfo && currentTermSetInfo && currentLanguageTag && (
-      <TaxonomyTree
-        languageTag={currentLanguageTag}
-        onLoadMoreData={taxonomyService.getTerms}
-        pageSize={50}
-        setTerms={setTerms}
-        termSetInfo={currentTermSetInfo}
-        termStoreInfo={currentTermStoreInfo}
-        terms={terms}
-        onRenderActionButton={props.onRenderActionButton}
-        hideDeprecatedTerms={false}
-        showIcons={true}
-      />
-    ) || null
+const service = new SPTaxonomyService(context, targetWebUrl);
+const store = await service.getTermStoreInfo();
+const set = await service.getTermSetInfo(Guid.parse(termSetId));
+const firstPage = await service.getTerms(Guid.parse(termSetId), undefined, undefined, true, 50);
+if (firstPage.skiptoken) {
+  const nextPage = await service.getTerms(
+    Guid.parse(termSetId), undefined, firstPage.skiptoken, true, 50
   );
+  console.log(nextPage.value);
+}
+console.log(store, set);
+```
+
+Pass `skiptoken` back unchanged. `getTermById` returns `Promise<ITermInfo | undefined>`;
+an empty term ID returns `undefined` without issuing a request. Nonempty term
+results include parent information. Check the result before accessing its fields.
+`searchTerm` accepts a label, language, optional anchor and descendant-selection
+restriction. Failed calls reject; callers should display or log the error.
+`dispose()` prevents additional retry attempts when a service instance is no longer used.
+
+`ModernTermPicker`, `TaxonomyTree`, `TaxonomyPanelContents` and term rendering
+components remain available from the same entry point. They accept the owned term
+types and existing rendering/selection callbacks. When using `TaxonomyTree`
+directly, supply its `onLoadMoreData` from `service.getTerms`, current store/set
+information, language, selected terms and `setTerms`.
+
+## Custom actions without PnPjs
+
+The action renderer receives store/set/term data and, when invoked by the tree,
+a callback accepting new terms, parent terms, updated terms and deleted terms.
+`ModernTaxonomyPicker`, `TaxonomyPanelContents` and `TaxonomyTree` all use the
+exported `TaxonomyTreeUpdateCallback` with these four argument positions. The
+consumer is responsible for authorization and error presentation.
+
+For example, an action can create a child using the same SharePoint backend and
+then reload the real term metadata before updating the tree:
+
+```ts
+import { SPHttpClient } from "@microsoft/sp-http";
+import { Guid } from "@microsoft/sp-core-library";
+import {
+  ITermInfo,
+  SPTaxonomyService,
+  TaxonomyTreeUpdateCallback
+} from "@pnp/spfx-controls-react/lib/ModernTaxonomyPicker";
+
+async function addChild(
+  parent: ITermInfo,
+  updateTree: TaxonomyTreeUpdateCallback
+): Promise<void> {
+  const webUrl = context.pageContext.web.absoluteUrl;
+  const setId = Guid.parse(termSetId).toString();
+  const parentId = Guid.parse(parent.id).toString();
+  const response = await context.spHttpClient.post(
+    `${webUrl}/_api/v2.1/termstore/sets/${setId}/terms/${parentId}/children`,
+    SPHttpClient.configurations.v1,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "OData-Version": ""
+      },
+      body: JSON.stringify({
+        labels: [{ name: "New term", languageTag: "en-US", isDefault: true }]
+      })
+    }
+  );
+  if (!response.ok) throw new Error(`Term creation failed (${response.status}).`);
+  const created: { id: string } = await response.json();
+  const service = new SPTaxonomyService(context);
+  const term = await service.getTermById(Guid.parse(setId), Guid.parse(created.id));
+  if (!term) throw new Error("Term creation returned an empty term ID.");
+  updateTree([term], [parent]);
 }
 ```
+
+Do not invent `isAvailableForTagging` values for action results. Load the actual
+metadata as above. Similarly, after a successful update reload the term; after a
+successful delete pass it in the deleted-terms argument. These callbacks update
+the UI; they do not perform mutations themselves.
+
+Graph-based consumer actions remain possible but require their own Graph
+permissions and correct site IDs. They are not prerequisites for the built-in
+SharePoint-backed picker.
+
+## Endpoint support
+
+This control intentionally retains SharePoint `/_api/v2.1/termstore`, including
+`getLegacyChildren`, `searchTerm` and parent expansion. These undocumented APIs
+provide metadata/behavior not fully represented by the documented Graph term
+resource. They have no public stability guarantee.
+
+The migration does not introduce new Graph consent for built-in reads.
+SharePoint permissions still apply. See [request behavior and support](../guides/migrate-to-v4.md#request-behavior-and-support)
+for retries, diagnostics and the need for live tenant verification.
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ModernTaxonomyPicker)

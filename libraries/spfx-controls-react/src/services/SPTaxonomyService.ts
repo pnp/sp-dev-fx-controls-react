@@ -1,146 +1,82 @@
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { Guid } from '@microsoft/sp-core-library';
-import { LambdaParser } from '@pnp/odata/parsers';
-import { SharePointQueryableCollection, sp } from '@pnp/sp';
-import '@pnp/sp/taxonomy';
-import { ITermInfo, ITermSetInfo, ITermStoreInfo } from '@pnp/sp/taxonomy';
+import { SPRestClient, escapeODataString } from './SPRestClient';
+import { ITermInfo, ITermSetInfo, ITermStoreInfo } from './SPTaxonomyService.types';
+export * from './SPTaxonomyService.types';
+
+interface ITermPage {
+  value: ITermInfo[];
+  '@odata.nextLink'?: string;
+}
 
 export class SPTaxonomyService {
-  constructor(private context: BaseComponentContext) {}
+  private readonly rest: SPRestClient;
+  private readonly base = '/_api/v2.1/termstore';
 
-  public async getTerms(
-    termSetId: Guid,
-    parentTermId?: Guid,
-    skiptoken?: string,
-    hideDeprecatedTerms?: boolean,
-    pageSize: number = 50
-  ): Promise<{ value: ITermInfo[]; skiptoken: string }> {
-    try {
-      const parser = new LambdaParser(async (r: Response) => {
-        const json = await r.json();
-        let newSkiptoken = '';
-        if (json['@odata.nextLink']) {
-          const urlParams = new URLSearchParams(
-            json['@odata.nextLink'].split('?')[1]
-          );
-          if (urlParams.has('$skiptoken')) {
-            newSkiptoken = urlParams.get('$skiptoken');
-          }
-        }
-        return { value: json.value, skiptoken: newSkiptoken };
-      });
-
-      let legacyChildrenUrlAndQuery = '';
-      if (parentTermId && parentTermId !== Guid.empty) {
-        legacyChildrenUrlAndQuery = sp.termStore.sets
-          .getById(termSetId.toString())
-          .terms.getById(parentTermId.toString())
-          .concat('/getLegacyChildren')
-          .toUrl();
-      } else {
-        legacyChildrenUrlAndQuery = sp.termStore.sets
-          .getById(termSetId.toString())
-          .concat('/getLegacyChildren')
-          .toUrl();
-      }
-      let legacyChildrenQueryable = SharePointQueryableCollection(
-        legacyChildrenUrlAndQuery
-      )
-        .top(pageSize)
-        .usingParser(parser);
-      if (hideDeprecatedTerms) {
-        legacyChildrenQueryable = legacyChildrenQueryable.filter(
-          'isDeprecated eq false'
-        );
-      }
-      if (skiptoken && skiptoken !== '') {
-        legacyChildrenQueryable.query.set('$skiptoken', skiptoken);
-      }
-      const termsResult = (await legacyChildrenQueryable()) as {
-        value: ITermInfo[];
-        skiptoken: string;
-      };
-      return termsResult;
-    } catch {
-      return { value: [], skiptoken: '' };
-    }
+  constructor(context: BaseComponentContext, webAbsoluteUrl?: string) {
+    this.rest = new SPRestClient(context.spHttpClient, webAbsoluteUrl || context.pageContext.web.absoluteUrl);
+    this.getTerms = this.getTerms.bind(this);
   }
 
-  public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo> {
-    if (termId === Guid.empty) {
-      return undefined;
-    }
-    try {
-      const termInfo = await sp.termStore.sets
-        .getById(termSetId.toString())
-        .terms.getById(termId.toString())
-        .expand('parent')();
-      return termInfo;
-    } catch {
-      return undefined;
-    }
+  public dispose(): void {
+    this.rest.dispose();
+  }
+
+  public async getTerms(
+    termSetId: Guid, parentTermId?: Guid, skiptoken?: string, hideDeprecatedTerms?: boolean, pageSize = 50
+  ): Promise<{ value: ITermInfo[]; skiptoken: string }> {
+    const query = new URLSearchParams({ '$top': String(pageSize) });
+    if (hideDeprecatedTerms) query.set('$filter', 'isDeprecated eq false');
+    if (skiptoken) query.set('$skiptoken', skiptoken);
+    const page = await this.rest.getRaw<ITermPage>(`${this.termPath(termSetId, parentTermId)}/getLegacyChildren?${query}`);
+    if (!Array.isArray(page.value)) throw new Error('SharePoint returned an invalid taxonomy page.');
+    const next = page['@odata.nextLink'];
+    return {
+      value: page.value,
+      skiptoken: next ? new URL(this.rest.resolveUrl(next)).searchParams.get('$skiptoken') || '' : ''
+    };
+  }
+
+  public async getTermById(termSetId: Guid, termId: Guid): Promise<ITermInfo | undefined> {
+    if (!this.hasId(termId)) return undefined;
+    return this.rest.get(`${this.termPath(termSetId, termId)}?$expand=parent`);
   }
 
   public async searchTerm(
-    termSetId: Guid,
-    label: string,
-    languageTag: string,
-    parentTermId?: Guid,
-    allowSelectingChildren = true,
-    stringMatchOption: string = 'StartsWith',
-    pageSize: number = 50
+    termSetId: Guid, label: string, languageTag: string, parentTermId?: Guid,
+    allowSelectingChildren = true, stringMatchOption = 'StartsWith', pageSize = 50
   ): Promise<ITermInfo[]> {
-    try {
-      const query = [
-        `label='${label}'`,
-        `setId='${termSetId}'`,
-        `languageTag='${languageTag}'`,
-        `stringMatchOption='${stringMatchOption}'`,
-      ];
-
-      if (parentTermId !== Guid.empty) {
-        query.push(`parentTermId='${parentTermId}'`);
-      }
-
-      const searchTermUrl = sp.termStore
-        .concat(`/searchTerm(${query.join(',')})`)
-        .toUrl();
-      const searchTermQuery =
-        SharePointQueryableCollection(searchTermUrl).top(pageSize);
-      let filteredTerms: ITermInfo[] = await searchTermQuery();
-
-      if (allowSelectingChildren === false) {
-        const hasParentId = parentTermId !== Guid.empty;
-
-        const set = sp.termStore.sets.getById(termSetId.toString());
-        const collection = hasParentId
-          ? set.terms.getById(parentTermId.toString()).children
-          : set.children;
-
-        const childrenIds = await collection
-          .select('id')
-          .get()
-          .then((children) => children.map((c) => c.id));
-        filteredTerms = filteredTerms.filter((term) =>
-          childrenIds.includes(term.id)
-        );
-      }
-
-      return filteredTerms;
-    } catch {
-      return [];
+    const args = [
+      `label='${escapeODataString(label)}'`, `setId='${termSetId}'`,
+      `languageTag='${escapeODataString(languageTag)}'`, `stringMatchOption='${escapeODataString(stringMatchOption)}'`
+    ];
+    if (this.hasId(parentTermId)) args.push(`parentTermId='${parentTermId}'`);
+    const terms = await this.rest.get<ITermInfo[]>(`${this.base}/searchTerm(${args.join(',')})?$top=${pageSize}`);
+    if (allowSelectingChildren) return terms;
+    const ids = new Set<string>();
+    let url = `${this.termPath(termSetId, parentTermId)}/children?$select=id`;
+    while (url) {
+      const page = await this.rest.getRaw<ITermPage>(url);
+      if (!Array.isArray(page.value)) throw new Error('SharePoint returned an invalid taxonomy children page.');
+      page.value.forEach(term => ids.add(term.id));
+      url = page['@odata.nextLink'];
     }
+    return terms.filter(term => ids.has(term.id));
   }
 
-  public async getTermSetInfo(
-    termSetId: Guid
-  ): Promise<ITermSetInfo | undefined> {
-    const tsInfo = await sp.termStore.sets.getById(termSetId.toString()).get();
-    return tsInfo;
+  public getTermSetInfo(termSetId: Guid): Promise<ITermSetInfo> {
+    return this.rest.get(this.termPath(termSetId));
   }
 
-  public async getTermStoreInfo(): Promise<ITermStoreInfo | undefined> {
-    const termStoreInfo = await sp.termStore();
-    return termStoreInfo;
+  public getTermStoreInfo(): Promise<ITermStoreInfo> {
+    return this.rest.get(this.base);
+  }
+
+  private hasId(id?: Guid): boolean {
+    return !!id && id.toString() !== Guid.empty.toString();
+  }
+
+  private termPath(setId: Guid, termId?: Guid): string {
+    return `${this.base}/sets/${setId}${this.hasId(termId) ? `/terms/${termId}` : ''}`;
   }
 }

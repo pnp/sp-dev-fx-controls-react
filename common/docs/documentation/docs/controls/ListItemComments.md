@@ -1,5 +1,9 @@
 # ListItemComments control
 
+Mention suggestions use the shared people-search service. Its migrated user
+resolution no longer requires PnPjs; partial batch failures are reported without
+discarding successful resolutions. See the [migration guide](../guides/migrate-to-v4.md).
+
 This control allows you to manage list item comments, you can add or delete comments to an item. The comments are listed in tile view.
 user can scroll to load more comments if they exist (infinite scroll);
 

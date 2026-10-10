@@ -1,5 +1,11 @@
 # Dynamic Form
 
+The v4 development branch retains both taxonomy modes and the form's existing
+features while removing PnPjs. `onSubmitted` now receives saved data plus a plain
+item reference; rename `returnListItemInstanceOnSubmit` to
+`returnListItemReferenceOnSubmit`. See the [before/after migration examples](../guides/migrate-to-v4.md#dynamicform-submission)
+and notes about ETags, retries and a successful write followed by a failed read.
+
 This control can dynamically generate SharePoint list or SharePoint document library form and everything controlled through list setting.
 
 ## How to use this control in your solutions
@@ -56,10 +62,10 @@ The `DynamicForm` can be configured with the following properties:
 | hiddenFields | string[] | no | InternalName of fields that should be hidden. Default value is `false`|
 | onListItemLoaded | (listItemData: any) => Promise&lt;void&gt; | no | List item loaded handler. Allows to access list item information after it's loaded.|
 | onBeforeSubmit | (listItemData: any) => Promise&lt;boolean&gt; | no | Before submit handler. Allows to modify the object to be submitted or cancel the submission. To cancel, return `true`.|
-| onSubmitted | (listItemData: any, listItem?: IItem) => void | no | Method that returns listItem data JSON object and PnPJS list item instance (`IItem`). |
-| onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. |
+| onSubmitted | (listItemData: any, listItem?: IDynamicFormItemReference) => void or Promise<void> | no | Receives saved item data and an optional reference containing webAbsoluteUrl, listId, listItemId and etag. The reference is not an SDK object. Callback failures are reported through `onSubmitError` with committed-item context and `failedPhase: "callback"`. |
+| onSubmitError | (listItemData: any, error: Error) => void | no | Handler of submission error. Save failures, including document download/upload and partial-commit failures, receive the submitted values. Failures before the save payload is prepared may receive `null`. |
 | onCancelled | () => void | no | Handler when form has been cancelled. |
-| returnListItemInstanceOnSubmit | boolean | no | Specifies if `onSubmitted` event should pass PnPJS list item (`IItem`) as a second parameter. Default - `true` |
+| returnListItemReferenceOnSubmit | boolean | no | Pass the item reference as the second `onSubmitted` argument. Default - `true`; `false` omits it. Replaces `returnListItemInstanceOnSubmit`. |
 | supportedFileExtensions | string[] | no | Specify the supported file extensions for the file picker. Only used when enableFileSelection is `true`. Default value is `["docx", "doc", "pptx", "ppt", "xlsx", "xls", "pdf"]`. |
 | webAbsoluteUrl | string | no | Absolute Web Url of target site (user requires permissions). |
 | fieldOverrides | {[columnInternalName: string] : {(fieldProperties: IDynamicFieldProps): React.ReactElement\<IDynamicFieldProps\>}} | no | Key value pair for fields you want to override.  Key is the internal field name, value is the function to be called for the custom element to render. |
