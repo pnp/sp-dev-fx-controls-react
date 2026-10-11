@@ -99,6 +99,7 @@ export default class SiteFilePickerTab extends React.Component<ISiteFilePickerTa
               fileBrowserService={this.props.fileBrowserService}
               libraryUrl={this.state.libraryUrl}
               folderPath={decodeURIComponent(this.state.libraryPath)}
+              maxNumberOfFiles={this.props.maxNumberOfFiles}
               accepts={this.props.accepts} />}
         </div>
         <div className={styles.actionButtonsContainer}>

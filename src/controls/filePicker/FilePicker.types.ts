@@ -12,6 +12,7 @@ export interface IFilePickerTab {
   accepts: string[];
   onSave: (value: IFilePickerResult[]) => void;
   onClose: () => void;
+  maxNumberOfFiles?: number;
 }
 
 /**

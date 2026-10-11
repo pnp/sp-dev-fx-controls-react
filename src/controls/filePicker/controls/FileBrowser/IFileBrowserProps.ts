@@ -9,4 +9,5 @@ export interface IFileBrowserProps {
   accepts: string[];
   onChange: (filePickerResult: IFilePickerResult[]) => void;
   onOpenFolder: (folder: IFile) => void;
+  maxNumberOfFiles?: number;
 }
