@@ -15,6 +15,7 @@ import { IFilePickerResult } from '../FilePicker.types';
 import { GeneralHelper } from '../../../common/utilities/GeneralHelper';
 import { IRecentFilesTabProps } from './IRecentFilesTabProps';
 import { IRecentFilesTabState } from './IRecentFilesTabState';
+import { enforceMaxNumberOfFiles, getValidMaxNumberOfFiles } from '../FilePickerSelectionHelper';
 
 import * as strings from 'ControlStrings';
 import styles from './RecentFilesTab.module.scss';
@@ -35,6 +36,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   private _rowHeight: number;
   private _selection: Selection;
   private _listElem: List = undefined;
+  private _lastValidSelectedIndices: number[] = [];
 
   constructor(props: IRecentFilesTabProps) {
     super(props);
@@ -54,7 +56,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
   public async componentDidMount(): Promise<void> {
     const recentFilesResult = await this.props.fileSearchService.executeRecentSearch(this.props.accepts);
     this._selection = new Selection({
-      selectionMode: SelectionMode.multiple,
+      selectionMode: this._getSelectionMode(),
       onSelectionChanged: this._onSelectionChanged
     });
     this._selection.setItems(recentFilesResult, true);
@@ -96,7 +98,27 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     );
   }
 
+  private _getSelectionMode = (): SelectionMode => {
+    return getValidMaxNumberOfFiles(this.props.maxNumberOfFiles) === 1
+      ? SelectionMode.single
+      : SelectionMode.multiple;
+  }
+
   private _onSelectionChanged = (): void => {
+    const limit = getValidMaxNumberOfFiles(this.props.maxNumberOfFiles);
+    if (limit !== undefined && limit > 1) {
+      const result = enforceMaxNumberOfFiles<IRecentFile>(
+        this._selection,
+        limit,
+        (item: IRecentFile) => !item.isFolder && !!item.fileUrl,
+        this._lastValidSelectedIndices
+      );
+      this._lastValidSelectedIndices = result.indices;
+      if (result.reverted) {
+        return;
+      }
+    }
+
     const filePickerResults: IFilePickerResult[] = [];
     // Get the selected item
     (this._selection.getSelection() as IRecentFile[]).map((selectedKey: IRecentFile) => {
@@ -165,7 +187,7 @@ export default class RecentFilesTab extends React.Component<IRecentFilesTabProps
     return <span className={styles.recentGridList} role="grid">
       <FocusZone>
         <SelectionZone selection={this._selection}
-          selectionMode={SelectionMode.multiple}
+          selectionMode={this._getSelectionMode()}
           onItemInvoked={
             (item: any) => this._handleItemInvoked(item) // eslint-disable-line @typescript-eslint/no-explicit-any
           }>

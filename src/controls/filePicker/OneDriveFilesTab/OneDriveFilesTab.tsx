@@ -76,6 +76,7 @@ export class OneDriveFilesTab extends React.Component<IOneDriveFilesTabProps, IO
               fileBrowserService={this.props.oneDriveService}
               libraryUrl={this.state.libraryUrl}
               folderPath={this.state.folderPath}
+              maxNumberOfFiles={this.props.maxNumberOfFiles}
               accepts={this.props.accepts} />}
         </div>
         <div className={styles.actionButtonsContainer}>
