@@ -529,6 +529,13 @@ worldMapFlag: string;
   SPFilePickerMissingBaseUrlError: string;
   SPFilePickerPopupBlockedError: string;
   SPFilePickerUnableToObtainTokenError: string;
+  // Tag Picker
+  TagPickerPlaceholder: string;
+  TagPickerNoOptionsText: string;
+  TagPickerSelectAllLabel: string;
+  TagPickerClearAllLabel: string;
+  TagPickerSelectedValuesAriaLabel: string;
+  TagPickerSelectionLimitReachedText: string;
 
 
 

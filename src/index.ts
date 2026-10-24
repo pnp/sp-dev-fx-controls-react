@@ -12,6 +12,7 @@ export * from './ChartControl';
 export * from './Progress';
 export * from './ProgressStepsIndicator';
 export * from './Toast';
+export * from './TagPicker';
 export * from './DateTimePicker';
 export * from './FilePicker';
 export * from './SPFilePicker';

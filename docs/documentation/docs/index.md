@@ -114,6 +114,7 @@ The following controls are currently available:
 - [ShareDialog](./controls/ShareDialog) (Share Dialog control)
 - [SiteBreadcrumb](./controls/SiteBreadcrumb) (Breadcrumb control)
 - [SitePicker](./controls/SitePicker) (Site Picker control)
+- [TagPicker](./controls/TagPicker) (Fluent UI v9 tag picker with grouping, paste, select all, and free-form entries)
 - [TaxonomyPicker](./controls/TaxonomyPicker) (Taxonomy Picker)
 - [TeamChannelPicker](./controls/TeamChannelPicker) (Team Channel Picker)
 - [TeamPicker](./controls/TeamPicker) (Team Picker)

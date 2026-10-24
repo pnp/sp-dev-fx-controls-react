@@ -14,7 +14,7 @@ export type ValidControls = "all" |
   "Placeholder" | "Progress" | "ProgressStepsIndicator" | "RichText" |
   "ShareDialog" | "SecurityTrimmedControl" | "SiteBreadcrumb" | "SitePicker" |
   "SPFilePicker" |
-  "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
+  "TagPicker" | "TaxonomyPicker" | "TaxonomyTree" | "Teams" | "TermSetNavigation" |
   "TestControl" | "Toolbar" | "Toast" | "TreeView" |
   "UploadFiles" | "UserPicker" | "VariantThemeProvider" | "ViewPicker" |
   "WebPartTitle" | "WorldMap" ;
