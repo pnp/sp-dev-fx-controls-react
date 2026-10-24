@@ -82,6 +82,7 @@
           "SiteBreadcrumb": false,
           "SitePicker": false,
           "SPFilePicker": false,
+          "TagPicker": false,
           "TaxonomyPicker": false,
           "TaxonomyTree": false,
           "Teams": false,
