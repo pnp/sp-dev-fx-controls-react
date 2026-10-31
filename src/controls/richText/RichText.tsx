@@ -1026,7 +1026,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	/**
 	 * When user enters the richtext editor, displays the border
 	 */
-	private handleOnFocus = (range: any, source: any, editor: any): void => {
+	private handleOnFocus = (): void => {
 		 
 		if (!this.state.editing) {
 			this.setState({ editing: true });
@@ -1144,19 +1144,17 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	 * Called when richtext selection changes
 	 */
 	private handleChangeSelection = (
-		range: any,
-		oldRange: any,
-		source: any
+		range: ReactQuill.Range
 	): void => {
 		 
 		const quill = this.getEditor();
 		try {
 			if (quill) {
 				// Get the selected text
-				const selectedText = quill.getText(range);
+				const selectedText = range ? quill.getText(range.index, range.length) : '';
 
 				// Get the current format
-				const formats = quill.getFormat(range);
+				const formats = range ? quill.getFormat(range) : {};
 
 				// Get the currently selected url
 				const selectedUrl = formats.link ? formats.link : undefined;
@@ -1167,8 +1165,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 					formats: formats,
 				});
 
-				if (this._propertyPaneRef && this.state.morePaneVisible) {
-					this._propertyPaneRef.onChangeSelection(range, oldRange, source);
+				if (range && this._propertyPaneRef && this.state.morePaneVisible) {
+					this._propertyPaneRef.onChangeSelection(range);
 				}
 			}
 		} catch {

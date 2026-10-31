@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 export interface ITestControlProps {
   context: WebPartContext;
-  themeVariant: any;
+  themeVariant: Parameters<typeof createV9Theme>[0];
 }
 
 export const TestControl: React.FunctionComponent<ITestControlProps> = (
