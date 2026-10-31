@@ -6,18 +6,19 @@
         "new": [
           "`DetailsList`: New control DetailsList added [#2130](https://github.com/pnp/sp-dev-fx-controls-react/pull/2130)",
           "`Toast`: Reusable Fluent UI v9 Toast control [#2131](https://github.com/pnp/sp-dev-fx-controls-react/pull/2131)"
-
         ],
         "enhancements": [
           "SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)",
           "`RichText`: Screen reader doesn't announce state of text formatting controls whether its selected or not when accessing it through tab [#1945](https://github.com/pnp/sp-dev-fx-controls-react/issues/1945)",
-          "`FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)",
-          "`FileTypeIcon`: Some icons are not showing [#2104](https://github.com/pnp/sp-dev-fx-controls-react/issues/2104)",
           "`RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)",
-          "`DynamicForm`: renders DateTime fields as date-only when DateFormat is null [#2132](https://github.com/pnp/sp-dev-fx-controls-react/issues/2132)",
           "`ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)"
         ],
-        "fixes": []
+        "fixes": [
+          "`FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)",
+          "`FileTypeIcon`: Some icons are not showing [#2104](https://github.com/pnp/sp-dev-fx-controls-react/issues/2104)",
+          "`DynamicForm`: renders DateTime fields as date-only when DateFormat is null [#2132](https://github.com/pnp/sp-dev-fx-controls-react/issues/2132)",
+          "`DynamicForm`: hide/show conditional formula doesn't work because it wrongly handles string false values [#2156](https://github.com/pnp/sp-dev-fx-controls-react/issues/2156)"
+        ]
       },
       "contributions": [
         "[gszdev](https://github.com/gszdev)",
@@ -26,7 +27,8 @@
         "[joaojmendes](https://github.com/joaojmendes)",
         "[Shirish Mawande](https://github.com/shirishmawande)",
         "[till-llit](https://github.com/till-llit)",
-        "[UsrRian](https://github.com/UsrRian)"
+        "[UsrRian](https://github.com/UsrRian)",
+        "[wuxiaojun514](https://github.com/wuxiaojun514)"
       ]
     },
     {
@@ -38,7 +40,7 @@
           "`ListView`: Rendering multiline or long text fields [#822](https://github.com/pnp/sp-dev-fx-controls-react/issues/822)",
           "SharePoint Framework v1.23.0 support"
         ],
-        "fixes":[
+        "fixes": [
           "`Calendar` - Remove the dependency of @nuvemerudita/react-controls (deprecated library) [#2119](https://github.com/pnp/sp-dev-fx-controls-react/pull/2119)",
           "Calendar not showing items like #2025, but also completely crashes when changing views - AEST Timezone (GMT+10) [#2115](https://github.com/pnp/sp-dev-fx-controls-react/issues/2115)",
           "tiny fix: correct spelling mistakes in CHANGELOG.json [#2118](https://github.com/pnp/sp-dev-fx-controls-react/pull/2118)",
@@ -69,7 +71,7 @@
           "SharePoint Framework v1.22.2 support",
           "`ModernTaxonomyPicker`: Adding support to display matched synonyms [#2093](https://github.com/pnp/sp-dev-fx-controls-react/pull/2093)"
         ],
-        "fixes":[
+        "fixes": [
           "`PeoplePicker`: Improving documentation page about external users search [#323](https://github.com/pnp/sp-dev-fx-controls-react/issues/323)",
           "`FolderExplorer`: Updated Folder explorer control documentation to correct a typo. [#2072](https://github.com/pnp/sp-dev-fx-controls-react/pull/2072)",
           "Fix ReDoS vulnerability by upgrading markdown-it: [#2089](https://github.com/pnp/sp-dev-fx-controls-react/pull/2089)",

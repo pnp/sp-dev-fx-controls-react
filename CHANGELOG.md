@@ -11,15 +11,19 @@
 
 - SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)
 - `RichText`: Screen reader doesn't announce state of text formatting controls whether its selected or not when accessing it through tab [#1945](https://github.com/pnp/sp-dev-fx-controls-react/issues/1945)
+- `RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)
+- `ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)
+
+### Fixes
+
 - `FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)
 - `FileTypeIcon`: Some icons are not showing [#2104](https://github.com/pnp/sp-dev-fx-controls-react/issues/2104)
-- `RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)
 - `DynamicForm`: renders DateTime fields as date-only when DateFormat is null [#2132](https://github.com/pnp/sp-dev-fx-controls-react/issues/2132)
-- `ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)
+- `DynamicForm`: hide/show conditional formula doesn't work because it wrongly handles string false values [#2156](https://github.com/pnp/sp-dev-fx-controls-react/issues/2156)
 
 ### Contributors
 
-Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Harminder Singh](https://github.com/HarminderSethi), [Joao Livio](https://github.com/jtlivio), [joaojmendes](https://github.com/joaojmendes), [Shirish Mawande](https://github.com/shirishmawande), [till-llit](https://github.com/till-llit), [UsrRian](https://github.com/UsrRian).
+Special thanks to our contributors (in alphabetical order): [gszdev](https://github.com/gszdev), [Harminder Singh](https://github.com/HarminderSethi), [Joao Livio](https://github.com/jtlivio), [joaojmendes](https://github.com/joaojmendes), [Shirish Mawande](https://github.com/shirishmawande), [till-llit](https://github.com/till-llit), [UsrRian](https://github.com/UsrRian), [wuxiaojun514](https://github.com/wuxiaojun514).
 
 ## 3.25.0
 

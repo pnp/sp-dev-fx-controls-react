@@ -100,5 +100,3 @@ describe('<ChartControl />', () => {
   });
 
 });
-
-

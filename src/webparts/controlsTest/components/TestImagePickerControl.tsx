@@ -8,7 +8,7 @@ import { createV9Theme } from '@fluentui/react-migration-v8-v9';
 
 interface ITestImagePickerProps {
   context: BaseComponentContext;
-  themeVariant:any
+  themeVariant: Parameters<typeof createV9Theme>[0];
 }
 
 export const TestImagePickerControl: React.FC<ITestImagePickerProps> = ({ context, themeVariant }) => {
@@ -20,12 +20,12 @@ export const TestImagePickerControl: React.FC<ITestImagePickerProps> = ({ contex
   }, [themeVariant]);
 
 
-  const handleFileSelected = (file: IFilePickerResult) => {
+  const handleFileSelected = (file: IFilePickerResult): void => {
     console.log('File selected:', file);
     setSelectedFileUrl(file.previewDataUrl);
   };
 
-  const handleDeleteFile = () => {
+  const handleDeleteFile = (): void => {
     console.log('File deleted');
     setSelectedFileUrl('');
   };

@@ -40,7 +40,7 @@ const useStyles = makeStyles({
 
 export interface ITestControlProps {
   context: WebPartContext;
-  themeVariant: any;
+  themeVariant: Parameters<typeof createV9Theme>[0];
 }
 
 export const TestUserPickerControl: React.FunctionComponent<ITestControlProps> = (
@@ -54,7 +54,7 @@ export const TestUserPickerControl: React.FunctionComponent<ITestControlProps> =
     return createV9Theme(themeVariant);
   }, [themeVariant]);
 
- const onSelectedUsers = (users: IUserInfo[]) => {
+ const onSelectedUsers = (users: IUserInfo[]): void => {
   console.log('selected users',users);
  };
 

@@ -8,7 +8,8 @@ const ts =  require("typescript");
 require('amd-loader');
 
 const jsPlaceholder =
-`declare var define: any;
+`// eslint-disable-next-line no-var, @typescript-eslint/no-explicit-any
+declare var define: any;
 
 define([], () => {
   return {0};
