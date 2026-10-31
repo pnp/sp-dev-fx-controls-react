@@ -25,6 +25,7 @@ To use the Calendar Control in your React project, import it as follows:
 ```typescript
 import { Calendar } from '@pnp/spfx-controls-react/lib/calendar';
 import { IEvent } from '@pnp/spfx-controls-react/lib/calendar/IEvent';
+import { ECalendarViews } from '@pnp/spfx-controls-react/lib/calendar/models/ECalendarViews';
 ```
 
 ## Calendar Props
