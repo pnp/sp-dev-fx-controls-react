@@ -10,6 +10,7 @@ import { DragDropFiles } from '../../dragDropFiles/DragDropFiles';
 
 import * as strings from 'ControlStrings';
 import styles from './MultipleUploadFilePickerTab.module.scss';
+import { getValidMaxNumberOfFiles } from '../FilePickerSelectionHelper';
 
 
 
@@ -32,6 +33,7 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
   public render(): React.ReactElement<IMultipleUploadFilePickerTabProps> {
     const { filePickerResult } = this.state;
     const acceptedFilesExtensions = this.props.accepts ? this.props.accepts.join(",") : null;
+    const limit = getValidMaxNumberOfFiles(this.props.maxNumberOfFiles);
 
     return (
       <div className={styles.tabContainer}>
@@ -47,7 +49,7 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
               <input
                 className={styles.localTabInput}
                 type="file" id="fileInput"
-                accept={acceptedFilesExtensions} multiple={true} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUploadExplorer(event)}
+                accept={acceptedFilesExtensions} multiple={limit !== 1} onChange={(event: React.ChangeEvent<HTMLInputElement>) => this._handleFileUploadExplorer(event)}
               />
               <label className={styles.localTabLabel} htmlFor="fileInput">
                 {strings.UploadLinkLabel + " " + strings.OneDriveRootFolderName}
@@ -80,9 +82,11 @@ export default class MultipleUploadFilePickerTab extends React.Component<IMultip
     if (files.length < 1) {
       return;
     } else {
+      const limit = getValidMaxNumberOfFiles(this.props.maxNumberOfFiles);
+      const selectedFiles = limit !== undefined ? files.slice(0, limit) : files;
       const filePickerResultsArray: IFilePickerResult[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const file: File = files[i];
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file: File = selectedFiles[i];
         const filePickerResult: IFilePickerResult = {
           fileAbsoluteUrl: null,
           fileName: file.name,

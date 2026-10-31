@@ -17,11 +17,13 @@ import styles from './FileBrowser.module.scss';
 import * as strings from 'ControlStrings';
 import { FileTypeIcon } from '../../../fileTypeIcon/FileTypeIcon';
 import { IconType, ImageSize } from '../../../fileTypeIcon';
+import { enforceMaxNumberOfFiles, getValidMaxNumberOfFiles } from '../../FilePickerSelectionHelper';
 
 const LAYOUT_STORAGE_KEY: string = 'comparerSiteFilesLayout';
 
 export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowserState> {
   private _selection: Selection;
+  private _lastValidSelectedIndices: number[] = [];
   constructor(props: IFileBrowserProps) {
     super(props);
 
@@ -147,6 +149,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
 
     if (this.props.folderPath !== prevProps.folderPath) {
       this._selection.setAllSelected(false);
+      this._lastValidSelectedIndices = [];
       this._getListItems().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     }
   }
@@ -157,9 +160,18 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   public componentDidMount(): void {
     this._getListItems().then(() => { /* no-op; */ }).catch(() => { /* no-op; */ });
     this._selection = new Selection({
-      selectionMode: SelectionMode.multiple,
+      selectionMode: this._getSelectionMode(),
       onSelectionChanged: this._itemSelectionChanged
     });
+  }
+
+  /**
+   * Computes the Fluent selection mode based on the max number of files limit.
+   */
+  private _getSelectionMode = (): SelectionMode => {
+    return getValidMaxNumberOfFiles(this.props.maxNumberOfFiles) === 1
+      ? SelectionMode.single
+      : SelectionMode.multiple;
   }
 
   public render(): React.ReactElement<IFileBrowserProps> {
@@ -184,7 +196,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
                         items={this.state.items}
                         compact={this.state.selectedView === 'compact'}
                         columns={this.state.columns}
-                        selectionMode={SelectionMode.multiple}
+                        selectionMode={this._getSelectionMode()}
                         setKey="set"
                         layoutMode={DetailsListLayoutMode.justified}
                         isHeaderVisible={true}
@@ -442,6 +454,7 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
   private _handleOpenFolder = (item: IFile): void => {
     // De-select the list item that was clicked, the item in the same position
     this._selection.setAllSelected(false);
+    this._lastValidSelectedIndices = [];
     // item in the folder will appear selected
     this.setState({
       loadingState: LoadingState.loading,
@@ -453,6 +466,20 @@ export class FileBrowser extends React.Component<IFileBrowserProps, IFileBrowser
    * Handles selected item change
    */
   private _itemSelectionChanged = (): void => {
+    const limit = getValidMaxNumberOfFiles(this.props.maxNumberOfFiles);
+    if (limit !== undefined && limit > 1) {
+      const result = enforceMaxNumberOfFiles<IFile>(
+        this._selection,
+        limit,
+        (item: IFile) => !item.isFolder,
+        this._lastValidSelectedIndices
+      );
+      this._lastValidSelectedIndices = result.indices;
+      if (result.reverted) {
+        return;
+      }
+    }
+
     const filePickerResults: IFilePickerResult[] = [];
     (this._selection.getSelection() as IFile[]).map((item: IFile, index: number) => {
       if (!item.isFolder) {

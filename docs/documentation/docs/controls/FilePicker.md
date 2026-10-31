@@ -109,6 +109,7 @@ The FilePicker component can be configured with the following properties:
 | checkIfFileExists | boolean | no | When using file links, this property allows the user to choose if the control should check if the link point to a file that exists or not. |
 | tabOrder | FilePickerTab[]| no | Defines a custom display order for the tabs. Tabs not listed will follow their default order. |
 | defaultSelectedTab | FilePickerTab  | no | Sets the default selected tab. If not specified, the first visible tab is used. |
+| maxNumberOfFiles | number | no | Maximum number of files that can be selected. If set to 1, only one file can be selected. If not set (or not a valid integer greater than 0), there is no limit. Applies to the Recent, Site, Organisational assets, OneDrive and Multiple upload tabs; the other tabs always return a single file. |
 
 Interface `IFilePickerResult`
 

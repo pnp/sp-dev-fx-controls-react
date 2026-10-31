@@ -37,6 +37,7 @@ import UploadFilePickerTab from "./UploadFilePickerTab/UploadFilePickerTab";
 import MultipleUploadFilePickerTab from "./MultipleUploadFilePickerTab/MultipleUploadFilePickerTab";
 import WebSearchTab from "./WebSearchTab/WebSearchTab";
 import { FilePickerTab } from "./FilePickerTab";
+import { getValidMaxNumberOfFiles } from "./FilePickerSelectionHelper";
 
 
 export class FilePicker extends React.Component<
@@ -128,6 +129,7 @@ export class FilePicker extends React.Component<
     const linkTabProps = {
       accepts: accepts,
       context: this.props.context,
+      maxNumberOfFiles: this.props.maxNumberOfFiles,
       onClose: () => this._handleClosePanel(),
       onSave: (value: IFilePickerResult[]) => {
         this._handleSave(value);
@@ -318,7 +320,7 @@ export class FilePicker extends React.Component<
    * On save action
    */
   private _handleSave = (filePickerResult: IFilePickerResult[]): void => {
-    this.props.onSave(filePickerResult);
+    this.props.onSave(this._truncateToLimit(filePickerResult));
     this.setState({
       panelOpen: false,
     });
@@ -326,8 +328,16 @@ export class FilePicker extends React.Component<
 
   private _handleOnChange = (filePickerResult: IFilePickerResult[]): void => {
     if (this.props.onChange) {
-      this.props.onChange(filePickerResult);
+      this.props.onChange(this._truncateToLimit(filePickerResult));
     }
+  }
+
+  /**
+   * Truncates the results to the valid max number of files (if any).
+   */
+  private _truncateToLimit = (filePickerResult: IFilePickerResult[]): IFilePickerResult[] => {
+    const limit = getValidMaxNumberOfFiles(this.props.maxNumberOfFiles);
+    return limit !== undefined && filePickerResult ? filePickerResult.slice(0, limit) : filePickerResult;
   }
 
   /**

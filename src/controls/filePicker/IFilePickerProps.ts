@@ -186,4 +186,11 @@ export interface IFilePickerProps {
    * One of the values from the FilePickerTab enum: Recent, StockImages, Web, OrgAssets, OneDrive, Site, Upload, Link, or MultipleUpload.
   */
   defaultSelectedTab?: FilePickerTab;
+  /**
+   * Maximum number of files that can be selected. If not set or invalid
+   * (not an integer greater than 0), no limit is applied.
+   * Applies to the Recent, Site, OrgAssets, OneDrive and MultipleUpload tabs;
+   * the other tabs already return a single file.
+   */
+  maxNumberOfFiles?: number;
 }
