@@ -2111,7 +2111,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
                 <IFrameDialog
                   url={iframeUrl}
-                  iframeOnLoad={() => { console.log('iframe loaded'); }}
+                  iframeOnLoad={(iframe: HTMLIFrameElement) => { console.log('iframe loaded'); }}
                   hidden={!this.state.iFrameDialogOpened}
                   onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
                   modalProps={{
@@ -2148,7 +2148,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   closeButtonAriaLabel="Close"
                   isOpen={this.state.iFramePanelOpened}
                   onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                  iframeOnLoad={() => { console.log('iframe loaded'); }}
+                  iframeOnLoad={(iframe: HTMLIFrameElement) => { console.log('iframe loaded'); }}
                 />
               </div>
             </div>

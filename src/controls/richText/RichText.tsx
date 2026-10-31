@@ -3,7 +3,7 @@ import * as strings from 'ControlStrings';
 import 'react-quill/dist/quill.snow.css';
 import RichTextPropertyPane from './RichTextPropertyPane';
 import ReactQuill, { Quill as ReactQuillInstance } from 'react-quill';
-import type { Quill } from 'quill';
+import type { Quill, Sources } from 'quill';
 import styles from './RichText.module.scss';
 import {
 	IRichTextCustomFormattingStyles,
@@ -1026,7 +1026,11 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	/**
 	 * When user enters the richtext editor, displays the border
 	 */
-	private handleOnFocus = (): void => {
+	private handleOnFocus = (
+		range: ReactQuill.Range,
+		source: Sources,
+		editor: ReactQuill.UnprivilegedEditor
+	): void => {
 		 
 		if (!this.state.editing) {
 			this.setState({ editing: true });
@@ -1144,7 +1148,9 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	 * Called when richtext selection changes
 	 */
 	private handleChangeSelection = (
-		range: ReactQuill.Range
+		range: ReactQuill.Range,
+		source?: Sources,
+		editor?: ReactQuill.UnprivilegedEditor
 	): void => {
 		 
 		const quill = this.getEditor();
@@ -1166,7 +1172,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 				});
 
 				if (range && this._propertyPaneRef && this.state.morePaneVisible) {
-					this._propertyPaneRef.onChangeSelection(range);
+					this._propertyPaneRef.onChangeSelection(range, undefined, source);
 				}
 			}
 		} catch {
