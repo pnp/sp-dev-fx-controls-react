@@ -11,7 +11,8 @@
           "SharePoint Framework v1.23.2 support [#2125](https://github.com/pnp/sp-dev-fx-controls-react/pull/2125)",
           "`RichText`: Screen reader doesn't announce state of text formatting controls whether its selected or not when accessing it through tab [#1945](https://github.com/pnp/sp-dev-fx-controls-react/issues/1945)",
           "`RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)",
-          "`ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)"
+          "`ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)",
+          "`ListItemComments`: render mentions [#2163](https://github.com/pnp/sp-dev-fx-controls-react/pull/2163)"
         ],
         "fixes": [
           "`FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)",
