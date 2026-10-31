@@ -60,6 +60,7 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
               <LivePersona
                 serviceScope={serviceScope}
                 upn={mention.email}
+                inline
                 template={
                   <span
                     style={{ color: theme.themePrimary, whiteSpace: 'nowrap' }}
@@ -74,12 +75,7 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
         }) as JSX.Element[];
       }
       result.push(
-        <Stack
-          horizontal
-          key={`stack-${idx}`}
-          horizontalAlign="start"
-          verticalAlign="center"
-        >
+        <div key={`line-${idx}`}>
           {isArray(lineContent) ? (
              lineContent.length > 0 ?
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,21 +90,23 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
                 const _el: string = el.trim();
                 if (_el.length) {
                   return (
-                    <Text style={{ paddingRight: 5 }} variant="small" key={i}>
+                    <span style={{ paddingRight: 5 }} key={i}>
+                      <Text as="span" variant="small">
                       {convertTextToLinksAndText(he.decode(_el))}
-                    </Text>
+                      </Text>
+                    </span>
                   );
                 }
               }
             }): <br/>
           ) :  lineContent.trim().length > 0 ? (
-            <Text variant="small">
+            <Text as="span" variant="small">
               {convertTextToLinksAndText(he.decode(lineContent))}
             </Text>
           ) : (
             <br/>
           )}
-        </Stack>
+        </div>
       );
     });
     setCommentText(result);

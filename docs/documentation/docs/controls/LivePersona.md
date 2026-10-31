@@ -33,6 +33,17 @@ import { LivePersona } from "@pnp/spfx-controls-react/lib/LivePersona";
 />
 ```
 
+Set `inline` to `true` when the persona should flow with surrounding text, for example when rendering a mention:
+
+```TypeScript
+<LivePersona
+  upn="joao.j.mendes@spteck.com"
+  inline
+  template={<span>@João Mendes</span>}
+  serviceScope={this.context.serviceScope}
+/>
+```
+
 ## Implementation
 
 The `LivePersona` control can be configured with the following properties:
@@ -42,4 +53,5 @@ The `LivePersona` control can be configured with the following properties:
 | serviceScope | ServiceScope          | yes      | The SPFx ServiceScope object loaded from context of web part or extension. |
 | upn          | string                | yes      | User UPN.                                                                  |
 | disableHover | boolean               | no       | If info should not appear on hover.                                        |
+| inline       | boolean               | no       | If `true`, render the persona card inline with surrounding content. Defaults to `false`. |
 | template     | string \| JSX.Element | yes      | The content to wrap with persona info.                                     |
