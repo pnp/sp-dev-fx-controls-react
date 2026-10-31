@@ -479,7 +479,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       },
     },
   };
-  private onSelectedChannel = (teamsId: string, channelId: string) => {
+  private onSelectedChannel = (teamsId: string, channelId: string): void => {
     alert(`TeamId: ${teamsId}\n ChannelId: ${channelId}\n`);
     console.log("TeamsId", teamsId);
     console.log("ChannelId", channelId);
@@ -762,7 +762,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   /**
    * React componentDidMount lifecycle hook
    */
-  public async componentDidMount() {
+  public async componentDidMount(): Promise<void> {
     const restApi = `${this.props.context.pageContext.web.absoluteUrl}/_api/web/GetFolderByServerRelativeUrl('Shared%20Documents')/files?$expand=ListItemAllFields`;
     const response = await this.props.context.spHttpClient.get(restApi, SPHttpClient.configurations.v1);
     const items = await response.json();
@@ -820,7 +820,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   /**
    * Open the property pane
    */
-  private _onConfigure() {
+  private _onConfigure(): void {
     this.props.context.propertyPane.open();
   }
 
@@ -828,7 +828,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected items in the list view
    * @param items
    */
-  private _getSelection(items: any[]) {
+  private _getSelection(items: any[]): void {
     console.log('Items:', items);
   }
 
@@ -837,7 +837,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   * @param files
   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private _getDropFiles = (files: any[]) => {
+  private _getDropFiles = (files: any[]): void => {
     for (let i = 0; i < files.length; i++) {
       console.log("File name: " + files[i].name);
       console.log("Folder Path: " + files[i].fullPath);
@@ -862,7 +862,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected terms from the taxonomy picker
    * @param terms
    */
-  private _onTaxPickerChange = (terms: IPickerTerms) => {
+  private _onTaxPickerChange = (terms: IPickerTerms): void => {
     this.setState({
       initialValues: terms,
       errorMessage: terms.length > 0 ? '' : 'This field is required'
@@ -874,7 +874,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected date/time from the DateTime picker
    * @param dateTimeValue
    */
-  private _onDateTimePickerChange = (dateTimeValue: Date) => {
+  private _onDateTimePickerChange = (dateTimeValue: Date): void => {
     this.setState({ dateTimeValue });
     console.log("Selected Date/Time:", dateTimeValue.toLocaleString());
   }
@@ -883,7 +883,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Selected lists change event
    * @param lists
    */
-  private onListPickerChange = (lists: string | string[]) => {
+  private onListPickerChange = (lists: string | string[]): void => {
     console.log("Lists:", lists);
     this.setState({
       selectedList: typeof lists === "string" ? lists : lists.pop()
@@ -894,14 +894,14 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Selected View change event
    * @param views
    */
-  private onViewPickerChange = (views: string | string[]) => {
+  private onViewPickerChange = (views: string | string[]): void => {
     console.log("Views:", views);
   }
 
   /**
    * Deletes second item from the list
    */
-  private deleteItem = () => {
+  private deleteItem = (): void => {
     const { items } = this.state;
     if (items.length >= 2) {
       items.splice(1, 1);
@@ -915,7 +915,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
    * Method that retrieves the selected items from People  Picker
    * @param items
    */
-  private _getPeoplePickerItems = (items: any[]) => {
+  private _getPeoplePickerItems = (items: any[]): void => {
     this.setState({
       authorEmails: items
     });
@@ -930,11 +930,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
   /**
    * Selected item from the list data picker
    */
-  private listItemPickerDataSelected(item: any) {
+  private listItemPickerDataSelected(item: any): void {
     console.log(item);
   }
 
-  private _startProgress() {
+  private _startProgress(): void {
     let currentIndex = 0;
     const intervalId = setInterval(() => {
       const actions = this.state.progressActions;
@@ -995,7 +995,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }, 500);
   }
 
-  private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]) => {
+  private _onFilePickerSave = async (filePickerResult: IFilePickerResult[]): Promise<void> => {
     if (filePickerResult && filePickerResult.length > 0) {
       for (let i = 0; i < filePickerResult.length; i++) {
         const item = filePickerResult[i];
@@ -1008,13 +1008,13 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     }
   }
 
-  private onToolbarSelectedFiltersChange = (filterIds: string[]) => {
+  private onToolbarSelectedFiltersChange = (filterIds: string[]): void => {
     this.setState({
       selectedFilters: filterIds
     });
   }
 
-  private toggleToolbarFilter = (filterId: string) => {
+  private toggleToolbarFilter = (filterId: string): void => {
     this.setState(({ selectedFilters }) => {
       if (selectedFilters.includes(filterId)) {
         return { selectedFilters: selectedFilters.filter(f => f !== filterId) };
@@ -1034,7 +1034,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
 
   }
 
-  private addFilter = () => {
+  private addFilter = (): void => {
     const number = Math.floor(Math.random()*10)
     const i = { label: `Field${number}`, value: `Field ${number}`};
     this.setState({
@@ -1042,12 +1042,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     });
   }
 
-  private onClearFilters = () => {
+  private onClearFilters = (): void => {
     console.log("Cleared all filters");
     this.setState({ filters: []});
   }
 
-  private onRemoveFilter = (label: string, value: string) => {
+  private onRemoveFilter = (label: string, value: string): void => {
     console.log(`Cleared ${label} ${value}`);
     const itm = this.state.filters.find(i => i.label === label && i.value === value);
     if (itm) {
@@ -3207,7 +3207,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private getRandomCollectionFieldData = () => {
+  private getRandomCollectionFieldData = (): Record<string, unknown>[] => {
     const result: Record<string, unknown>[] = [];
     for (let i = 1; i < 16; i++) {
 
@@ -3228,11 +3228,11 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     return result;
   }
 
-  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean) {
+  private onExpandCollapseTree(item: ITreeItem, isExpanded: boolean): void {
     console.log((isExpanded ? "item expanded: " : "item collapsed: ") + item);
   }
 
-  private onItemSelected(items: ITreeItem[]) {
+  private onItemSelected(items: ITreeItem[]): void {
     console.log("items selected: " + items.length);
   }
 
@@ -3248,7 +3248,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     );
   }
 
-  private _getPage(page: number) {
+  private _getPage(page: number): void {
     console.log('Page:', page);
   }
 

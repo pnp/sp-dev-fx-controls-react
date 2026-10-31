@@ -19,7 +19,7 @@ import * as React from "react";
 import { ThemeContext, useTheme } from "../../../EnhancedThemeProvider";
 import { Placeholder } from "../../../Placeholder";
 
-export const ControlsTestEnhancedThemeProviderFunctionComponent = () => {
+export const ControlsTestEnhancedThemeProviderFunctionComponent = (): JSX.Element => {
   const theme = useTheme();
 
   return (
@@ -88,7 +88,7 @@ export const ControlsTestEnhancedThemeProviderFunctionComponent = () => {
 };
 
 export class ControlsTestEnhancedThemeProvider extends React.Component {
-  public render() {
+  public render(): React.ReactElement {
     return (
       <ThemeContext.Consumer>
         {(theme) => (
