@@ -56,7 +56,7 @@ The HoverReactionsBar control can be configured with the following properties:
 | Property      | Type                                                       | Required | Description                                          |
 | ------------- | ---------------------------------------------------------- | -------- | ---------------------------------------------------- |
 | isOpen        | boolean                                                    | yes      | show hoverReactionsBar                               |
-| onSelected    | onSelect: (emoji: string, emojiInfo?: IEmojiInfo) => void; | yes      | selected Emoji                                       |
+| onSelect      | (emoji: string \| undefined, emojiInfo?: IEmojiInfo) => void | yes      | Callback invoked with the selected emoji and its optional information. |
 | top4Reactions | string[]                                                   | no       | name of emojis to show on the bar                    |
 | target        | HTMLDivElement                                             | yes      | container of controls who fire the HoverReactionsBar |
 | onDismiss     | onDismiss: () => void;                                     | yes      | function to call to dismiss HoverReactionsBar        |
