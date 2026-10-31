@@ -12,7 +12,7 @@
           "`RichText`: Screen reader doesn't announce state of text formatting controls whether its selected or not when accessing it through tab [#1945](https://github.com/pnp/sp-dev-fx-controls-react/issues/1945)",
           "`RichText`: Enhance custom styling and formatting options [#2129](https://github.com/pnp/sp-dev-fx-controls-react/pull/2129)",
           "`ListItemComments`: theme support improvements [#2146](https://github.com/pnp/sp-dev-fx-controls-react/pull/2146)",
-          "`ListItemComments`: render mentions [#2163](https://github.com/pnp/sp-dev-fx-controls-react/pull/2163)"
+          "FilePicker - add maxNumberOfFiles property [#2172](https://github.com/pnp/sp-dev-fx-controls-react/pull/2172)"
         ],
         "fixes": [
           "`FilePicker`: Icons not displayed in FilePicker when using german language [#1978](https://github.com/pnp/sp-dev-fx-controls-react/issues/1978)",
@@ -22,6 +22,7 @@
         ]
       },
       "contributions": [
+        "[Aimery Thomas](https://github.com/a1mery)",
         "[gszdev](https://github.com/gszdev)",
         "[Harminder Singh](https://github.com/HarminderSethi)",
         "[Joao Livio](https://github.com/jtlivio)",
