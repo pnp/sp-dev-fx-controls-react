@@ -1136,7 +1136,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
 		// We use a timeout to ensure that format has been applied and buttons are updated
 		setTimeout(() => {
-			this.handleChangeSelection(quill.getSelection(), undefined, undefined);
+			this.handleChangeSelection(quill.getSelection());
 		}, 100);
 	}
 

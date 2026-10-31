@@ -82,7 +82,7 @@ import {
   PrincipalType,
 } from '../../../controls/peoplepicker';
 //#region Import FluentUI Controls
-import { IPersonaProps, Persona } from '@fluentui/react';
+import { IPersonaProps, Persona, Theme } from '@fluentui/react';
 import {
   IPickerTerms,
   UpdateType,
@@ -3110,7 +3110,9 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   languageTag={this.state.termStoreInfo.defaultLanguageTag}
                   onLoadMoreData={this.spTaxonomyService.getTerms}
                   pageSize={50}
-                  setTerms={(value) => this.setState({ testTerms: value })}
+                  setTerms={(value) => this.setState(state => ({
+                    testTerms: typeof value === 'function' ? value(state.testTerms) : value
+                  }))}
                   termStoreInfo={this.state.termStoreInfo}
                   termSetInfo={this.state.termSetInfo}
                   terms={this.state.testTerms}
@@ -3144,7 +3146,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           }
           {controlVisibility.TestControl &&
             <div id="TestControlDiv" className={styles.container}>
-              <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
+              <TestControl context={this.props.context} themeVariant={this.props.themeVariant as Theme} />
             </div>
           }
           {controlVisibility.UploadFiles &&
@@ -3219,7 +3221,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         "Field2": i,
         "Field3": "https://pnp.github.io/",
         "Field4": true,
-        "Field5": null as any,
+        "Field5": null,
         "Field6": { key: "choice 1", text: "choice 1" },
         "Field7": [{ key: "choice 1", text: "choice 1" }, { key: "choice 2", text: "choice 2" }],
         "Field8": sampleDate
