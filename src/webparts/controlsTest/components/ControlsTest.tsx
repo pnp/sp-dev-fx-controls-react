@@ -125,6 +125,7 @@ import {
 } from '../../../Progress';
 import { ISize } from '@fluentui/react/lib/Utilities';
 import { IStep } from '../../../controls/ProgressStepsIndicator';
+import type { ITagPickerOption } from '../../../controls/tagPicker';
 import { ITerm } from '../../../services/ISPTermStorePickerService';
 import { ImageFit } from '@fluentui/react/lib/Image';
 import { Label } from '@fluentui/react/lib/Label';
@@ -298,6 +299,17 @@ const Placeholder = React.lazy(() => import(/* webpackChunkName: 'placeholder-sh
 
 const Progress = React.lazy(() => import(/* webpackChunkName: 'progress-showcase' */ '../../../Progress').then(module => ({ default: module.Progress })));
 const Toast = React.lazy(() => import(/* webpackChunkName: 'toast-showcase' */ '../../../Toast').then(module => ({ default: module.Toast })));
+const TagPicker = React.lazy(() => import(/* webpackChunkName: 'tag-picker-showcase' */ '../../../TagPicker').then(module => ({ default: module.TagPicker })));
+const tagPickerOptions: ITagPickerOption[] = [
+  { key: 'strategic', text: 'Strategic', groupKey: 'business' },
+  { key: 'financial', text: 'Financial', secondaryText: 'Budget and forecasting', groupKey: 'business' },
+  { key: 'operational', text: 'Operational', groupKey: 'business' },
+  { key: 'hr', text: 'HR', groupKey: 'business' },
+  { key: 'legal', text: 'Legal', groupKey: 'business', disabled: true },
+  { key: 'technical', text: 'Technical', groupKey: 'technical' },
+  { key: 'risk', text: 'Risk', groupKey: 'technical' },
+  { key: 'other', text: 'Other' }
+];
 
 const RichText = React.lazy(() => import(/* webpackChunkName: 'rich-text-showcase' */ '../../../RichText').then(module => ({ default: module.RichText })));
 const ShareDialog = React.lazy(() => import(/* webpackChunkName: 'share-dialog-showcase' */ '../../../ShareDialog').then(module => ({ default: module.ShareDialog })));
@@ -738,6 +750,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       selectedGroups: [],
       errorMessage: "This field is required",
       selectedFilters: ["filter1"],
+      tagPickerSelection: ["financial"],
       termStoreInfo: null,
       termSetInfo: null,
       testTerms: [],
@@ -2367,6 +2380,38 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                 autoDismiss
                 duration={5}
                 durationUnit="seconds"
+              />
+            </div>
+          }
+          {controlVisibility.TagPicker &&
+            <div id="TagPickerDiv" className={styles.container}>
+              <h3>TagPicker</h3>
+              <TagPicker
+                label="Categories"
+                placeholder="Select or paste categories"
+                allowFreeform
+                maxSelections={4}
+                maxSelectedItemsHeight={96}
+                groups={[
+                  { key: 'business', label: 'Business' },
+                  { key: 'technical', label: 'Technical' }
+                ]}
+                options={tagPickerOptions}
+                defaultSelectedOptions={['strategic']}
+                onSelectionChange={(data) => console.log('TagPicker selection changed', data)}
+              />
+              <TagPicker
+                label="Primary category (single)"
+                mode="single"
+                options={tagPickerOptions}
+                onSelectionChange={(data) => console.log('TagPicker single selection changed', data)}
+              />
+              <TagPicker
+                label="Controlled categories"
+                options={tagPickerOptions}
+                selectedOptions={this.state.tagPickerSelection}
+                onSelectionChange={(data) => this.setState({ tagPickerSelection: data.selectedOptions })}
+                hint={`Selected: ${(this.state.tagPickerSelection ?? []).join(', ') || 'none'}`}
               />
             </div>
           }

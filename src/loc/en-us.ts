@@ -473,6 +473,13 @@ define([], () => {
     SPFilePickerPopupBlockedError: "The picker popup was blocked by the browser.",
     SPFilePickerUnableToObtainTokenError: "Unable to obtain a token.",
 
+    TagPickerPlaceholder: "Select values",
+    TagPickerNoOptionsText: "No matching options",
+    TagPickerSelectAllLabel: "Select all",
+    TagPickerClearAllLabel: "Clear all",
+    TagPickerSelectedValuesAriaLabel: "Selected values",
+    TagPickerSelectionLimitReachedText: "Selection limit reached",
+
   CalendarControlDayOfWeekSunday:  "Sunday",
   CalendarControlDayOfWeekMonday: "Monday",
   CalendarControlDayOfWeekTuesday: "Tuesday",

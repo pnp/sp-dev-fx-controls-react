@@ -42,6 +42,7 @@ export interface IControlsTestState {
   actionTermId?: string;
   clickedActionTerm?: ITermInfo;
   selectedFilters?: string[];
+  tagPickerSelection?: string[];
   termStoreInfo: ITermStoreInfo;
   termSetInfo: ITermSetInfo;
   testTerms: ITermInfo[];

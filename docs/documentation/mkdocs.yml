@@ -71,6 +71,7 @@ nav:
     - SiteBreadcrumb: 'controls/SiteBreadcrumb.md'
     - SitePicker: 'controls/SitePicker.md'
     - SPFilePicker: 'controls/SPFilePicker.md'
+    - TagPicker: 'controls/TagPicker.md'
     - TaxonomyPicker: 'controls/TaxonomyPicker.md'
     - TeamChannelPicker: 'controls/TeamChannelPicker.md'
     - TeamPicker: 'controls/TeamPicker.md'
