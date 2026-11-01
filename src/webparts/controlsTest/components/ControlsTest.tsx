@@ -82,7 +82,7 @@ import {
   PrincipalType,
 } from '../../../controls/peoplepicker';
 //#region Import FluentUI Controls
-import { IPersonaProps, Persona } from '@fluentui/react';
+import { IPersonaProps, Persona, Theme } from '@fluentui/react';
 import {
   IPickerTerms,
   UpdateType,
@@ -321,7 +321,7 @@ const UserPicker = React.lazy(() => import(/* webpackChunkName: 'user-picker-sho
 /**
  * The sample data below was randomly generated (except for the title). It is used by the grid layout
  */
-const sampleGridData: any[] = [{
+const sampleGridData = [{
   thumbnail: "https://pixabay.com/get/57e9dd474952a414f1dc8460825668204022dfe05555754d742e7bd6/hot-air-balloons-1984308_640.jpg",
   title: "Adventures in SPFx",
   name: "Perry Losselyong",
@@ -1064,7 +1064,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
     console.log('file click', file);
   }
 
-  private _onRenderGridItem = (item: any, _finalSize: ISize, isCompact: boolean): JSX.Element => {
+  private _onRenderGridItem = (item: typeof sampleGridData[number], _finalSize: ISize, isCompact: boolean): JSX.Element => {
     const previewProps: IDocumentCardPreviewProps = {
       previewImages: [
         {
@@ -2111,7 +2111,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   onClick={() => { this.setState({ iFrameDialogOpened: true }); }} />
                 <IFrameDialog
                   url={iframeUrl}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  iframeOnLoad={(iframe: HTMLIFrameElement) => { console.log('iframe loaded'); }}
                   hidden={!this.state.iFrameDialogOpened}
                   onDismiss={() => { this.setState({ iFrameDialogOpened: false }); }}
                   modalProps={{
@@ -2148,7 +2148,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   closeButtonAriaLabel="Close"
                   isOpen={this.state.iFramePanelOpened}
                   onDismiss={() => { this.setState({ iFramePanelOpened: false }); }}
-                  iframeOnLoad={(iframe: any) => { console.log('iframe loaded'); }}
+                  iframeOnLoad={(iframe: HTMLIFrameElement) => { console.log('iframe loaded'); }}
                 />
               </div>
             </div>
@@ -2376,7 +2376,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
               <GridLayout
                 ariaLabel={"List of content, use right and left arrow keys to navigate, arrow down to access details."}
                 items={sampleGridData}
-                onRenderGridItem={(item: any, finalSize: ISize, isCompact: boolean) => this._onRenderGridItem(item, finalSize, isCompact)}
+                onRenderGridItem={this._onRenderGridItem}
                 itemMinWidth={250}
                 itemMaxWidth={600}
                 itemPadding={60}
@@ -3110,10 +3110,12 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
                   languageTag={this.state.termStoreInfo.defaultLanguageTag}
                   onLoadMoreData={this.spTaxonomyService.getTerms}
                   pageSize={50}
-                  setTerms={(value) => this.setState({ testTerms: value as any })}
+                  setTerms={(value) => this.setState(state => ({
+                    testTerms: typeof value === 'function' ? value(state.testTerms) : value
+                  }))}
                   termStoreInfo={this.state.termStoreInfo}
                   termSetInfo={this.state.termSetInfo}
-                  terms={this.state.testTerms as any[]}
+                  terms={this.state.testTerms}
                   onRenderActionButton={() => <button>test button</button>}
                   hideDeprecatedTerms={false}
                   showIcons={true}
@@ -3144,7 +3146,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
           }
           {controlVisibility.TestControl &&
             <div id="TestControlDiv" className={styles.container}>
-              <TestControl context={this.props.context} themeVariant={this.props.themeVariant} />
+              <TestControl context={this.props.context} themeVariant={this.props.themeVariant as Theme} />
             </div>
           }
           {controlVisibility.UploadFiles &&
@@ -3219,7 +3221,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
         "Field2": i,
         "Field3": "https://pnp.github.io/",
         "Field4": true,
-        "Field5": null as any,
+        "Field5": null,
         "Field6": { key: "choice 1", text: "choice 1" },
         "Field7": [{ key: "choice 1", text: "choice 1" }, { key: "choice 2", text: "choice 2" }],
         "Field8": sampleDate

@@ -3,7 +3,7 @@ import * as strings from 'ControlStrings';
 import 'react-quill/dist/quill.snow.css';
 import RichTextPropertyPane from './RichTextPropertyPane';
 import ReactQuill, { Quill as ReactQuillInstance } from 'react-quill';
-import type { Quill } from 'quill';
+import type { Quill, Sources } from 'quill';
 import styles from './RichText.module.scss';
 import {
 	IRichTextCustomFormattingStyles,
@@ -1026,7 +1026,11 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	/**
 	 * When user enters the richtext editor, displays the border
 	 */
-	private handleOnFocus = (range: any, source: any, editor: any): void => {
+	private handleOnFocus = (
+		range: ReactQuill.Range,
+		source: Sources,
+		editor: ReactQuill.UnprivilegedEditor
+	): void => {
 		 
 		if (!this.state.editing) {
 			this.setState({ editing: true });
@@ -1136,7 +1140,7 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 
 		// We use a timeout to ensure that format has been applied and buttons are updated
 		setTimeout(() => {
-			this.handleChangeSelection(quill.getSelection(), undefined, undefined);
+			this.handleChangeSelection(quill.getSelection());
 		}, 100);
 	}
 
@@ -1144,19 +1148,19 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 	 * Called when richtext selection changes
 	 */
 	private handleChangeSelection = (
-		range: any,
-		oldRange: any,
-		source: any
+		range: ReactQuill.Range,
+		source?: Sources,
+		editor?: ReactQuill.UnprivilegedEditor
 	): void => {
 		 
 		const quill = this.getEditor();
 		try {
 			if (quill) {
 				// Get the selected text
-				const selectedText = quill.getText(range);
+				const selectedText = range ? quill.getText(range.index, range.length) : '';
 
 				// Get the current format
-				const formats = quill.getFormat(range);
+				const formats = range ? quill.getFormat(range) : {};
 
 				// Get the currently selected url
 				const selectedUrl = formats.link ? formats.link : undefined;
@@ -1167,8 +1171,8 @@ export class RichText extends React.Component<IRichTextProps, IRichTextState> {
 					formats: formats,
 				});
 
-				if (this._propertyPaneRef && this.state.morePaneVisible) {
-					this._propertyPaneRef.onChangeSelection(range, oldRange, source);
+				if (range && this._propertyPaneRef && this.state.morePaneVisible) {
+					this._propertyPaneRef.onChangeSelection(range, undefined, source);
 				}
 			}
 		} catch {

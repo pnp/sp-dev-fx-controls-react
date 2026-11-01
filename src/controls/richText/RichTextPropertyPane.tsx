@@ -9,7 +9,7 @@ import { Panel, PanelType } from '@fluentui/react/lib/Panel';
 import { TooltipHost } from '@fluentui/react/lib/Tooltip';
 import { Dropdown, IDropdownOption } from '@fluentui/react/lib/Dropdown';
 import { ThemeColorHelper } from '../../common/utilities/ThemeColorHelper';
-import { RangeStatic } from 'quill';
+import type { RangeStatic, Sources } from 'quill';
 
 const FONT_SIZE_OPTIONS: IDropdownOption[] = [
   { key: 'xsmall', text: '10', data: { px: 10 } },
@@ -101,7 +101,7 @@ export default class RichTextPropertyPane extends React.Component<IRichTextPrope
   /**
    * On selection changed event handler
    */
-  public onChangeSelection = (range: RangeStatic, oldRange?: RangeStatic, source?: RangeStatic): void => {
+  public onChangeSelection = (range: RangeStatic, oldRange?: RangeStatic, source?: Sources): void => {
     const quill = this.props.editor;
     if (quill === undefined || range === undefined) {
       return;
