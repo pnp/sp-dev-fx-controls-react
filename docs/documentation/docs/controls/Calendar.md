@@ -25,6 +25,7 @@ To use the Calendar Control in your React project, import it as follows:
 ```typescript
 import { Calendar } from '@pnp/spfx-controls-react/lib/calendar';
 import { IEvent } from '@pnp/spfx-controls-react/lib/calendar/IEvent';
+import { ECalendarViews } from '@pnp/spfx-controls-react/lib/controls/calendar/models/ECalendarViews';
 ```
 
 ## Calendar Props
@@ -43,6 +44,7 @@ The Calendar Control accepts the following props:
 | onPrev         | (date: Date) => void   | No       | Callback function triggered when navigating to the previous period.            |
 | onViewChange   | (view: string) => void | No       | Callback function triggered when the view changes.                             |
 | onDaySlotClick | (date: Date) => void   | No       | Callback function triggered when an event is clicked on day slot on Month view |
+| defaultView    | ECalendarViews         | No       | Initial calendar view. Use `ECalendarViews.Day`, `ECalendarViews.Week`, or `ECalendarViews.Month`. Defaults to the Month view. |
 
 ## Event Object (IEvent)
 

@@ -53,7 +53,8 @@ The `SelectTeamChannelPicker` control can be configured with the following prope
 | itemLimit           | number                             | no       | number of allowed selected channels                          |
 | label               | string                             | no       | Label of Picker                                              |
 | styles              | IBasePickerStyles                  | no       | Customer Styles of Picker                                    |
-| onSelectedChannels: | (tagsList:ITag[]) => void;         | yes      | callBack with channels Selected                              |
+| onSelectedChannels  | (tagsList: ITag[]) => void          | yes      | Callback invoked with the selected channels.                 |
+| themeVariant        | IReadonlyTheme                      | no       | SharePoint theme variant.                                     |
 
 ## MSGraph Permissions required
 

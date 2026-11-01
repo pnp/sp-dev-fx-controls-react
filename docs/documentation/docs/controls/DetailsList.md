@@ -311,6 +311,8 @@ The `DetailsList` control can be configured with the following properties:
 | columns | readonly IColumn&lt;T&gt;[] | yes | Columns to render and their rendering, sorting, grouping, and resizing configuration. |
 | getKey | (item: T, index: number) =&gt; React.Key | no | Returns the stable key for a row. The index is used when this is not provided. |
 | setKey | string | no | Key used to identify the list instance. |
+| componentRef | React.Ref&lt;IDetailsList&lt;T&gt;&gt; | no | Ref exposing the imperative list methods documented below. |
+| className | string | no | CSS class applied to the list root. |
 | height | number | no | Height of the scrollable viewport. Required for practical virtualization and infinite scrolling. |
 | compact | boolean | no | Renders rows with a compact layout. |
 | layoutMode | DetailsListLayoutMode | no | Uses `fixedColumns` or `justified` column layout. |
@@ -320,6 +322,8 @@ The `DetailsList` control can be configured with the following properties:
 | checkboxVisibility | CheckboxVisibility | no | Uses `onHover`, `always`, or `hidden` selection checkboxes. |
 | selectedKeys | ReadonlySet&lt;React.Key&gt; or readonly React.Key[] | no | Controlled selected row keys. |
 | defaultSelectedKeys | readonly React.Key[] | no | Initial selected row keys for an uncontrolled list. |
+| selectionPreservedOnEmptyClick | boolean | no | Keeps the current selection when the user clicks an empty area of the list. |
+| isSelectedOnFocus | boolean | no | Selects a row when it receives focus. |
 | disabledItemKeys | ReadonlySet&lt;React.Key&gt; or readonly React.Key[] | no | Row keys that cannot be selected or invoked. |
 | onSelectionChanged | (change: IDetailsListSelectionChange&lt;T&gt;) =&gt; void | no | Called after the selected rows change. |
 | onActiveItemChanged | (item: T, index: number, event: React.FocusEvent&lt;HTMLElement&gt;) =&gt; void | no | Called when the active row changes. |
@@ -328,14 +332,21 @@ The `DetailsList` control can be configured with the following properties:
 | onColumnHeaderClick | (event: React.MouseEvent&lt;HTMLElement&gt;, column: IColumn&lt;T&gt;) =&gt; void | no | Handles a column header click, commonly used for sorting. |
 | onColumnHeaderContextMenu | (column: IColumn&lt;T&gt;, event: React.MouseEvent&lt;HTMLElement&gt;) =&gt; void | no | Handles a column header context menu. |
 | onColumnResize | (column: IColumn&lt;T&gt;, width: number, columnIndex: number) =&gt; void | no | Called after a column is resized. |
+| onRenderItemColumn | (item: T, index: number, column: IColumn&lt;T&gt;) =&gt; React.ReactNode | no | Renders a cell when rendering is configured at the list level. |
+| onRenderField | (props: IDetailsListFieldProps&lt;T&gt;, defaultRender: (props: IDetailsListFieldProps&lt;T&gt;) =&gt; React.ReactElement) =&gt; React.ReactNode | no | Customizes a cell while optionally delegating to the default renderer. |
+| onRenderRow | (props: IDetailsRowProps&lt;T&gt;, defaultRender: (props: IDetailsRowProps&lt;T&gt;) =&gt; React.ReactElement) =&gt; React.ReactNode | no | Customizes a row while optionally delegating to the default renderer. |
+| onRenderDetailsHeader | (props: IDetailsHeaderProps&lt;T&gt;, defaultRender: (props: IDetailsHeaderProps&lt;T&gt;) =&gt; React.ReactElement) =&gt; React.ReactNode | no | Customizes the column header while optionally delegating to the default renderer. |
+| onRenderDetailsFooter | (items: readonly T[]) =&gt; React.ReactNode | no | Renders content below the list rows. |
 | columnReorderOptions | IColumnReorderOptions&lt;T&gt; | no | Enables column drag and drop and optionally freezes columns at either edge. |
 | dragDropEvents | IDetailsListRowDragDropEvents&lt;T&gt; | no | Enables row drag and drop callbacks. |
 | groups | readonly IDetailsListGroup&lt;T&gt;[] | no | Group definitions for the flattened items array. |
 | onToggleGroup | (group: IDetailsListGroup&lt;T&gt;, isCollapsed: boolean) =&gt; void | no | Called when a group is expanded or collapsed. |
+| onRenderGroupHeader | (props: IDetailsGroupHeaderProps&lt;T&gt;, defaultRender: (props: IDetailsGroupHeaderProps&lt;T&gt;) =&gt; React.ReactElement) =&gt; React.ReactNode | no | Customizes a group header while optionally delegating to the default renderer. |
 | enableVirtualization | boolean | no | Enables viewport-based row rendering. |
 | rowHeight | number | no | Row height used by virtualization. |
 | groupHeaderHeight | number | no | Group header height used by virtualization. |
 | overscanCount | number | no | Number of extra rows rendered outside the viewport. |
+| initialFocusedIndex | number | no | Index of the row to focus when the list is first rendered. |
 | onShouldVirtualize | (itemCount: number) =&gt; boolean | no | Determines whether virtualization is used for the current item count. |
 | enableInfiniteScroll | boolean | no | Enables loading more rows near the end of the viewport. |
 | infiniteScrollThreshold | number | no | Distance from the end of the viewport that triggers `onLoadMore`. |
@@ -345,12 +356,32 @@ The `DetailsList` control can be configured with the following properties:
 | isLoading | boolean | no | Displays the initial loading state. |
 | enableShimmer | boolean | no | Renders shimmer rows while loading. |
 | shimmerLines | number | no | Number of shimmer rows. |
+| ariaLabelForShimmer | string | no | Accessible label for the shimmer placeholder. |
+| onRenderCustomPlaceholder | (rowProps: IDetailsListShimmerRowProps&lt;T&gt;, index?: number, defaultRender?: (props: IDetailsListShimmerRowProps&lt;T&gt;) =&gt; React.ReactNode) =&gt; React.ReactNode | no | Customizes a shimmer placeholder row. |
 | loadingMessage | React.ReactNode | no | Content shown during the initial loading state. |
 | loadingMoreMessage | React.ReactNode | no | Content shown while loading another page. |
 | emptyState | React.ReactNode | no | Content shown when there are no items. |
 | ariaLabelForGrid | string | no | Accessible label for the list grid. |
+| ariaLabelForListHeader | string | no | Accessible label for the list header. |
+| ariaLabelForSelectAllCheckbox | string | no | Accessible label for the select-all checkbox. |
+| ariaLabelForSelectionColumn | string | no | Accessible label for the selection column. |
 | getRowAriaLabel | (item: T) =&gt; string | no | Returns the accessible label for a row. |
+| getRowAriaDescribedBy | (item: T) =&gt; string or undefined | no | Returns the ID of an element that describes a row. |
 | styles | IDetailsListStyles | no | Inline style object for the root, viewport, grid, header, rows, cells, and group headers. |
+
+### `IDetailsList` methods
+
+The `componentRef` exposes these methods:
+
+| Method | Type | Description |
+| ---- | ---- | ---- |
+| forceUpdate | () =&gt; void | Forces the list to render again. |
+| focusIndex | (index: number, scrollToMode?: DetailsListScrollToMode) =&gt; void | Focuses a row and optionally scrolls it into view. |
+| scrollToIndex | (index: number, scrollToMode?: DetailsListScrollToMode) =&gt; void | Scrolls a row into view. |
+| getStartItemIndexInView | () =&gt; number | Returns the index of the first visible item. |
+| updateColumn | (column: IColumn&lt;T&gt;, options: { width?: number; newColumnIndex?: number }) =&gt; void | Updates a column's width or position. |
+| getSelectedItems | () =&gt; readonly T[] | Returns the selected items. |
+| setSelectedKeys | (keys: readonly React.Key[]) =&gt; void | Sets the selected row keys. |
 
 ## `IColumn` properties
 
@@ -361,15 +392,36 @@ The `DetailsList` control can be configured with the following properties:
 | fieldName | keyof T &amp; string | no | Item property rendered by the default cell renderer. |
 | minWidth | number | yes | Minimum column width. |
 | maxWidth | number | no | Maximum column width. |
+| currentWidth | number | no | Current column width. |
+| flexGrow | number | no | Flex growth factor used when distributing available width. |
+| targetWidthProportion | number | no | Proportion of available width targeted by this column. |
+| ariaLabel | string | no | Accessible label for the column. |
+| className | string | no | CSS class applied to the column cells. |
+| headerClassName | string | no | CSS class applied to the column header. |
 | isResizable | boolean | no | Enables pointer, keyboard, and double-click resizing. |
 | isRowHeader | boolean | no | Marks the column as the row header for accessibility. |
+| isMultiline | boolean | no | Allows cell content to wrap onto multiple lines. |
+| isPadded | boolean | no | Adds standard cell padding. |
 | isSorted | boolean | no | Displays the sorted state. Sorting is handled by the consuming component. |
 | isSortedDescending | boolean | no | Indicates descending sort direction. |
+| isFiltered | boolean | no | Indicates that the column has an active filter. |
 | isGrouped | boolean | no | Marks the column as the grouping column. |
+| isIconOnly | boolean | no | Displays the column header as an icon without its text label. |
+| isCollapsible | boolean | no | Allows the column to collapse when space is limited. |
+| showSortIconWhenUnsorted | boolean | no | Shows the sort icon when the column is not sorted. |
 | columnActionsMode | ColumnActionsMode | no | Uses `disabled`, `clickable`, or `hasDropdown`. |
+| icon | React.ReactNode | no | Icon displayed in the column header. |
+| data | unknown | no | Additional column-specific data. |
+| sortAscendingAriaLabel | string | no | Accessible label for the ascending sort action. |
+| sortDescendingAriaLabel | string | no | Accessible label for the descending sort action. |
+| sortableAriaLabel | string | no | Accessible label indicating that the column can be sorted. |
+| filterAriaLabel | string | no | Accessible label for the column filter action. |
+| groupAriaLabel | string | no | Accessible label for the column grouping action. |
 | onRender | (item: T, index: number, column: IColumn&lt;T&gt;) =&gt; React.ReactNode | no | Renders an individual cell. |
 | onRenderHeader | (column: IColumn&lt;T&gt;) =&gt; React.ReactNode | no | Renders a custom column header. |
 | onColumnClick | (event, column) =&gt; void | no | Handles a column header click. |
+| onColumnContextMenu | (column: IColumn&lt;T&gt;, event: React.MouseEvent&lt;HTMLElement&gt;) =&gt; void | no | Handles a column header context menu. |
+| onColumnKeyDown | (event: React.KeyboardEvent&lt;HTMLElement&gt;, column: IColumn&lt;T&gt;) =&gt; void | no | Handles a keyboard event on the column header. |
 | onColumnResize | (width: number) =&gt; void | no | Handles a resize for this column. |
 
 ## `IColumnReorderOptions` properties

@@ -48,7 +48,8 @@ The `TeamPicker` control can be configured with the following properties:
 | itemLimit        | number                             | no       | number of allowed selected items                             |
 | label            | string                             | no       | Label of Picker                                              |
 | styles           | IBasePickerStyles                  | no       | Customer Styles of Picker                                    |
-| onSelectedTeams: | (tagsList:ITag[]) => void;         | yes      | callBack with teams Selected                                 |
+| onSelectedTeams  | (tagsList: ITag[]) => void          | yes      | Callback invoked with the selected teams.                    |
+| themeVariant      | IReadonlyTheme                      | no       | SharePoint theme variant.                                    |
 
 ## MSGraph Permissions required
 

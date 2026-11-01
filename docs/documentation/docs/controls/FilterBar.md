@@ -60,7 +60,7 @@ private onRemoveFilter = (label: string, value: string) => {
 
 //Render the filter bar
 <FilterBar
-    items={this.state.items}
+    items={this.state.filters}
     inlineItemCount={3}
     onClearFilters={this.onClearFilters} 
     onRemoveFilter={this.onRemoveFilter}>
@@ -75,7 +75,7 @@ The `FilterBar` control can be configured with the following properties:
 | ---- | ---- | ---- | ---- | ---- |
 | items | [IFilterBarItem[]](#ifilterbaritem) | yes | Filters to be displayed. Multiple filters with the same label are grouped together | |
 | inlineItemCount | number | no | Number of filters, after which filters start showing as overflow | 5 |
-| onClearFilters | () => void | no | Callback function called after the next item button is clicked. Not used when triggerPageEvent is specified. | |
+| onClearFilters | () => void | no | Callback function called when the "Clear filters" pill is clicked. | |
 | onRemoveFilter | (label: string, value: string) => void | no | Callback function called after clicking a singular filter pill | |
 
 ## IFilterBarItem

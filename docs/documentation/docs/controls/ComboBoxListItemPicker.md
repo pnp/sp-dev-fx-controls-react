@@ -126,5 +126,14 @@ The `ComboBoxListItemPicker` control can be configured with the following proper
 | itemLimit | number | no | Maximum number of items to be displayed in the combobox. Default: 100 |
 | label | string | no | Specifies the text describing the combobox ListItemPicker. |
 | orderBy | string | no | Specifies the sequence of the items in the comboBox ,same as $orderBy OData parameter|
+| autoComplete | "on" \| "off" | no | Controls whether the browser provides autocomplete suggestions. |
+| autofill | IAutofillProps | no | Props passed to the Fluent UI Autofill component. |
+| comboBoxOptionStyles | Partial&lt;IComboBoxOptionStyles&gt; | no | Styles applied to the combobox options. |
+| allowFreeform | boolean | no | Allows values that do not match a listed option. |
+| keytipProps | IKeytipProps | no | Keytip configuration. Deprecated. |
+| onMenuDismiss | () =&gt; void | no | Callback invoked when the options menu is dismissed. |
+| onMenuOpen | () =&gt; void | no | Callback invoked when the options menu opens. |
+| text | string | no | Text displayed in the combobox. |
+| styles | IComboBoxStyles | no | Styles applied to the Fluent UI combobox. |
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/ComboBoxListItemPicker)
