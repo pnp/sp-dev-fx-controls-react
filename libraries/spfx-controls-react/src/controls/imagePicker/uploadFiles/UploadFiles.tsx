@@ -52,8 +52,8 @@ export const UploadFiles: React.FunctionComponent<IUploadFilesProps> = (
     onSelectedFile(null);
   }, []);
 
-  const onDrop = React.useCallback((acceptedFiles) => {
-    const newFiles = acceptedFiles.map((file: Blob | MediaSource) => {
+  const onDrop = React.useCallback((acceptedFiles: File[]) => {
+    const newFiles = acceptedFiles.map((file: File): IFileExtended => {
       return Object.assign(file, {
         preview: URL.createObjectURL(file),
       });

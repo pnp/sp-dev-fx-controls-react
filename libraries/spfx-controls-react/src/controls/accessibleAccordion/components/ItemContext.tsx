@@ -86,7 +86,7 @@ const Provider = ({
     );
 };
 
-const ProviderWrapper: React.SFC<ProviderWrapperProps> = (
+const ProviderWrapper: React.FC<ProviderWrapperProps> = (
     props: ProviderWrapperProps,
 ): JSX.Element => (
     <AccordionContextConsumer>

@@ -8,7 +8,7 @@
       "@microsoft/microsoft-graph-client": "3.0.2",
       "@microsoft/teams-js": "2.24.0"
     },
-    "version": "1.23.2",
+    "version": "1.24.1",
     "libraryName": "sp-dev-fx-controls-react-tests",
     "libraryId": "8040e371-9a26-4c91-a181-afbdd33b41db",
     "environment": "spo",
@@ -16,7 +16,6 @@
     "solutionName": "sp-dev-fx-controls-react-tests",
     "solutionShortDescription": "sp-dev-fx-controls-react-tests description",
     "skipFeatureDeployment": true,
-    "isDomainIsolated": false,
     "componentType": "webpart"
   }
 }

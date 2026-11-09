@@ -87,7 +87,7 @@ export const CommentText: React.FunctionComponent<ICommentTextProps> = (
               if (isObject(el)) {
                 return (
                   <span key={i} style={{ paddingRight: 5 }}>
-                    {el}
+                    {el as React.ReactNode}
                   </span>
                 );
               } else {

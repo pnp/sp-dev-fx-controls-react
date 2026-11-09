@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 import {
     IPropertyPaneField,
     PropertyPaneFieldType
@@ -23,6 +23,7 @@ export class PropertyPaneControlToggles implements IPropertyPaneField<IPropertyP
     public targetProperty: string;
     public properties: IPropertyPaneControlTogglesInternalProps;
     private elem: HTMLElement;
+    private root: Root | undefined;
 
     constructor(targetProperty: string, properties: IPropertyPaneControlTogglesProps) {
         this.targetProperty = targetProperty;
@@ -45,7 +46,8 @@ export class PropertyPaneControlToggles implements IPropertyPaneField<IPropertyP
     }
 
     private onDispose(element: HTMLElement): void {
-        ReactDom.unmountComponentAtNode(element);
+        this.root?.unmount();
+        this.root = undefined;
     }
 
     private onRender(elem: HTMLElement): void {
@@ -60,7 +62,10 @@ export class PropertyPaneControlToggles implements IPropertyPaneField<IPropertyP
             // required to allow the component to be re-rendered by calling this.render() externally
             // stateKey: new Date().toString()
         });
-        ReactDom.render(element, elem);
+        if (!this.root) {
+            this.root = createRoot(elem);
+        }
+        this.root.render(element);
     }
 
     private onChange(controlName: ValidControls, enabled: boolean): void {

@@ -6,6 +6,10 @@ import { IFieldRendererProps } from '../fieldCommon/IFieldRendererProps';
 import * as telemetry from '../../../common/telemetry';
 
 export interface IFieldBaseTextRendererProps extends IFieldRendererProps {
+     /**
+      * Content rendered inside the control.
+      */
+     children?: React.ReactNode;
     /**
      * text to be displayed
      */

@@ -18,12 +18,12 @@ import { ITheme } from "@fluentui/react/lib/Styling";
 import { ITextField, TextField } from "@fluentui/react/lib/TextField";
 import { IToggle, Toggle } from "@fluentui/react/lib/Toggle";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { getFluentUIThemeFromHostCapability, hostCapabilitiesFluentUIThemeKey } from "./HostCapability";
 
 const internalRender = (renderReact: () => JSX.Element): HTMLElement => {
   const div = document.createElement("div");
-  ReactDOM.render(renderReact(), div); // eslint-disable-line @rushstack/pair-react-dom-render-unmount
+  createRoot(div).render(renderReact());
   return div;
 };
 
@@ -403,7 +403,8 @@ export class FluentUINumberInput extends Input {
       <SpinButton
         id={this.id}
         defaultValue={`${this.defaultValue}`}
-        placeholder={this.placeholder}
+        // `placeholder` is not part of ISpinButtonProps in the React 18 typings but is still forwarded at runtime.
+        {...{ placeholder: this.placeholder }}
         min={this.min}
         max={this.max}
         onChange={() => this.valueChanged()}

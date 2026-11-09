@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 import { ListPicker, IListPickerProps } from "./controls/ListPicker";
 import {
   IPropertyPaneField,
@@ -26,6 +26,7 @@ export class PropertyPaneListPicker implements IPropertyPaneField<IPropertyPaneL
   public targetProperty: string;
   public properties: IPropertyPaneListPickerInternalProps;
   private elem: HTMLElement;
+  private root: Root | undefined;
 
   constructor(targetProperty: string, properties: IPropertyPaneListPickerProps) {
     this.targetProperty = targetProperty;
@@ -50,7 +51,8 @@ export class PropertyPaneListPicker implements IPropertyPaneField<IPropertyPaneL
   }
 
   private onDispose(element: HTMLElement): void {
-    ReactDom.unmountComponentAtNode(element);
+    this.root?.unmount();
+    this.root = undefined;
   }
 
   private onRender(elem: HTMLElement): void {
@@ -67,7 +69,10 @@ export class PropertyPaneListPicker implements IPropertyPaneField<IPropertyPaneL
       // required to allow the component to be re-rendered by calling this.render() externally
       // stateKey: new Date().toString()
     });
-    ReactDom.render(element, elem);
+    if (!this.root) {
+      this.root = createRoot(elem);
+    }
+    this.root.render(element);
   }
 
   private onChange(option: IDropdownOption): void {

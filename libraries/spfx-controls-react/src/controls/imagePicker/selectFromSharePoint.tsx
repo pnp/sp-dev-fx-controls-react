@@ -232,8 +232,8 @@ export const SelectFromSharePoint: React.FunctionComponent<
   );
 
   const onScroll = React.useCallback(
-    async (ev) => {
-      const scrollPosition = getScrollPosition(ev.target);
+    async (ev: React.UIEvent<HTMLDivElement>) => {
+      const scrollPosition = getScrollPosition(ev.target as HTMLDivElement);
       if (scrollPosition > 98 && !isScrolling.current) {
         isScrolling.current = true;
         await getMoreResultsSearch();

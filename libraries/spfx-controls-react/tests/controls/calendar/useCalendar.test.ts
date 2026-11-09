@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { createRoot } from 'react-dom/client';
+import { act } from '../../utils/act';
 
 import { IEvent } from '../../../src/controls/calendar/models/IEvents';
 import { IUseCalendar, useCalendar } from '../../../src/controls/calendar/hooks/useCalendar';
@@ -27,19 +27,22 @@ const createCalendar = (timeZone: string): IUseCalendar => {
 
   document.body.appendChild(container);
 
+  const root = createRoot(container);
+
   act(() => {
-    ReactDOM.render(
+    root.render(
       React.createElement(CalendarHookProbe, {
         timeZone,
         onCalendarReady: (calendarApi: IUseCalendar) => {
           calendar = calendarApi;
         },
-      }),
-      container
+      })
     );
   });
 
-  ReactDOM.unmountComponentAtNode(container);
+  act(() => {
+    root.unmount();
+  });
   container.remove();
 
   return calendar as IUseCalendar;

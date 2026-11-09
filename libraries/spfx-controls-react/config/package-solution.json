@@ -5,7 +5,6 @@
     "id": "92b1e52c-a5fa-490a-bcf4-76080f39442c",
     "version": "1.0.0.0",
     "skipFeatureDeployment": true,
-    "isDomainIsolated": false,
     "includeClientSideAssets": true,
     "developer": {
       "name": "Microsoft 365 PnP",

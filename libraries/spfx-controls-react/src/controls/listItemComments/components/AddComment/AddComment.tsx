@@ -46,7 +46,7 @@ export const AddComment: React.FunctionComponent<IAddCommentProps> = (props: IAd
 
   const _onChange = useCallback(
     (
-      event,
+      event: { target: { value: string } },
       newValue: string,
       newPlainTextValue: string,
       mentions: MentionItem[]

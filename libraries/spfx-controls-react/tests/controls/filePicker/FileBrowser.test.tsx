@@ -1,6 +1,7 @@
 ///<reference types="jest" />
 import * as React from "react";
 import { mount } from "enzyme";
+import { act } from "../../utils/act";
 import { FileBrowser } from "../../../src/controls/filePicker/controls/FileBrowser/FileBrowser";
 import { MockFileBrowserService } from "../../mock/services/MockFileBrowserService";
 import { IFile, FilesQueryResult } from "../../../src/services/FileBrowserService.types";
@@ -84,7 +85,9 @@ describe("<FileBrowser />", ()=>{
         //I want to avoid situation in which broken loading animation would affect test for loading data.
         //Those are two different functionalities I wish to test separately
         //as promised - here we are manually call lifecycle method. Note await keyword.
-        await component.instance().componentDidMount();
+        await act(async () => {
+            await component.instance().componentDidMount();
+        });
         
         //Now, let's make sure our component is rerendered
         component.update();
@@ -134,15 +137,19 @@ describe("<FileBrowser />", ()=>{
             }}
         />);
         //...and await relevant event
-        await component.instance().componentDidMount();
+        await act(async () => {
+            await component.instance().componentDidMount();
+        });
         component.update();
 
         //Now we want to mock click event. There are two ways around it. One possibility is to send click event on some element.
         //The other one is to call private method of our component with specific argument. In our case, that would be our folder.
         //In this case I would lean toward the second option. The first one could fail if exception occur in DetailsList and we don't have to worry about it.
         //However I do plan to include test sample with mocking external components (Will be more useful for functional components)
-        //@ts-ignore
-        component.instance()._handleOpenFolder(mockData.items[0]);
+        act(() => {
+            //@ts-ignore
+            component.instance()._handleOpenFolder(mockData.items[0]);
+        });
 
         assert.isTrue(asserted);
     });
@@ -190,12 +197,16 @@ describe("<FileBrowser />", ()=>{
             onOpenFolder={(folder: IFile) => {}}
         />);
         //...and await relevant event
-        await component.instance().componentDidMount();
+        await act(async () => {
+            await component.instance().componentDidMount();
+        });
         component.update();
 
         //We can use same approach as in previous test
-        //@ts-ignore
-        component.instance()._selection.setIndexSelected(0, true, false);
+        act(() => {
+            //@ts-ignore
+            component.instance()._selection.setIndexSelected(0, true, false);
+        });
         
         assert.isTrue(asserted);
     });

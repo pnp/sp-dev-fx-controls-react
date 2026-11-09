@@ -1,7 +1,10 @@
 const Enzyme = require('enzyme');
-const Adapter = require('@wojtekmaj/enzyme-adapter-react-17');
+const Adapter = require('@cfaester/enzyme-adapter-react-18').default;
 
 Enzyme.configure({ adapter: new Adapter() });
+
+// Tells React 18 that tests wrap updates in act().
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
 jest.mock("@microsoft/decorators", () => {
   return {

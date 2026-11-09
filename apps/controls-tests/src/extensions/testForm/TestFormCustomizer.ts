@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 
 import { Log } from '@microsoft/sp-core-library';
 import {
@@ -23,6 +23,8 @@ const LOG_SOURCE: string = 'TestFormCustomizer';
 export default class TestFormCustomizer
   extends BaseFormCustomizer<ITestFormCustomizerProperties> {
 
+  private _root: Root | undefined;
+
   public onInit(): Promise<void> {
     // Add your custom initialization to this method. The framework will wait
     // for the returned promise to resolve before rendering the form.
@@ -42,12 +44,16 @@ export default class TestFormCustomizer
         onClose: this._onClose
        } as ITestFormProps);
 
-    ReactDOM.render(testForm, this.domElement);
+    if (!this._root) {
+      this._root = createRoot(this.domElement);
+    }
+    this._root.render(testForm);
   }
 
   public onDispose(): void {
     // This method should be used to free any resources that were allocated during rendering.
-    ReactDOM.unmountComponentAtNode(this.domElement);
+    this._root?.unmount();
+    this._root = undefined;
     super.onDispose();
   }
 

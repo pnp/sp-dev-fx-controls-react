@@ -1,4 +1,10 @@
+import type * as React from 'react';
+
 export interface IDragDropFilesProps {
+ /**
+  * Content rendered inside the control.
+  */
+ children?: React.ReactNode;
   /**
  * Specifies the dropEffect, default is 'none'
  * https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/dropEffect

@@ -6,7 +6,10 @@ import { mount, ReactWrapper } from 'enzyme';
 import { ListView } from './ListView';
 import { IViewField } from './IListView';
 
-class Wrapper extends React.Component {
+// React 18.3 exposes `act` on `react`, but @types/react 18.2 does not declare it yet.
+const act = (React as unknown as { act: (callback: () => void) => void }).act;
+
+class Wrapper extends React.Component<{ children?: React.ReactNode }> {
   public render(): React.ReactNode {
     return React.Children.only(this.props.children);
   }
@@ -138,7 +141,9 @@ describe('<ListView />', () => {
     expect((listView.state('columns') as Array<any>)[0]).not.to.have.property('isSorted'); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Test the column click event, this will trigger to sort the items
-    (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    act(() => {
+      (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
 
     // Check if the column is set to sorted
     expect((listView.state('columns') as Array<any>)[0]).to.have.property('isSorted', true); // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -147,14 +152,18 @@ describe('<ListView />', () => {
     expect((listView.state('items') as Array<any>)[0]).to.have.property('id', 0); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Do another sorting test, this should sort the items in descending order
-    (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    act(() => {
+      (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
     expect((listView.state('columns') as Array<any>)[0]).to.have.property('isSorted', true); // eslint-disable-line @typescript-eslint/no-explicit-any
     expect((listView.state('columns') as Array<any>)[0]).to.have.property('isSortedDescending', true); // eslint-disable-line @typescript-eslint/no-explicit-any
     // Check if the first item has ID 0 (ascending order)
     expect((listView.state('items') as Array<any>)[0]).to.have.property('id', 1); // eslint-disable-line @typescript-eslint/no-explicit-any
 
     // Just to be sure, we should go back to ascending order
-    (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    act(() => {
+      (listView.instance() as any)["_columnClick"](null, (listView.state('columns') as Array<any>)[0]); // eslint-disable-line @typescript-eslint/no-explicit-any
+    });
     // Check if the first item has ID 0 (ascending order)
     expect((listView.state('items') as Array<any>)[0]).to.have.property('id', 0); // eslint-disable-line @typescript-eslint/no-explicit-any
 

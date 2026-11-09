@@ -21,8 +21,8 @@ The v4 branch uses Rush to manage `libraries/spfx-controls-react` and
 `apps/controls-tests`. Use Node.js 22 (22.14.0 or later), then run
 `node common/scripts/install-run-rush.js install` and
 `node common/scripts/install-run-rush.js rebuild` from the repository root.
-Both projects use Heft and SPFx 1.23.2. The library requires SPFx 1.23.2 or later
-and React 17 in consuming projects.
+Both projects use Heft and SPFx 1.24.1. The library requires SPFx 1.24.1 or later
+and React 18 in consuming projects.
 
 The v4 development branch no longer requires PnPjs. DynamicForm and both taxonomy
 pickers remain available; see the [migration guide](common/docs/documentation/docs/guides/migrate-to-v4.md)

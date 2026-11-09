@@ -6,7 +6,7 @@ import { BaseButton, Button, CompoundButton, DefaultButton, PrimaryButton } from
 import { initializeIcons } from "@fluentui/react/lib/Icons";
 import { createTheme, ITheme } from "@fluentui/react/lib/Styling";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { fluentUIDefaultTheme } from "../../../common/fluentUIThemes/FluentUIDefaultTheme";
 import { hostCapabilitiesFluentUIThemeKey } from "./HostCapability";
 
@@ -111,8 +111,7 @@ const createActionDiv = (
   theme?: ITheme): HTMLDivElement => {
   const div = document.createElement("div");
   div.className = "fluentUI";
-  // eslint-disable-next-line @rushstack/pair-react-dom-render-unmount
-  ReactDOM.render(
+  createRoot(div).render(
     <ActionButton
       text={title}
       className={baseCssClass}
@@ -122,7 +121,7 @@ const createActionDiv = (
       actionClickHandler={actionClickHandler}
       style={style}
       theme={theme}
-    />, div);
+    />);
   return div;
 };
 

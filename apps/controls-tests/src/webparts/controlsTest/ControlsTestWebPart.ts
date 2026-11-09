@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 
 import {
   ControlVisibility,
@@ -31,6 +31,7 @@ import { Version } from '@microsoft/sp-core-library';
 export default class ControlsTestWebPart extends BaseClientSideWebPart<IControlsTestWebPartProps> {
   private _themeProvider: ThemeProvider;
   private _themeVariant: IReadonlyTheme | undefined;
+  private _root: Root | undefined;
   protected async onInit(): Promise<void> {
     this._themeProvider = this.context.serviceScope.consume(
       ThemeProvider.serviceKey
@@ -119,8 +120,15 @@ export default class ControlsTestWebPart extends BaseClientSideWebPart<IControls
       }
     );
 
-    // eslint-disable-next-line @microsoft/spfx/pair-react-dom-render-unmount
-    ReactDom.render(element, this.domElement);
+    if (!this._root) {
+      this._root = createRoot(this.domElement);
+    }
+    this._root.render(element);
+  }
+
+  protected onDispose(): void {
+    this._root?.unmount();
+    this._root = undefined;
   }
 
   protected get dataVersion(): Version {

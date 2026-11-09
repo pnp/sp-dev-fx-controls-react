@@ -109,7 +109,7 @@ export const DocumentList: React.FunctionComponent<IDocumentListProps> = (
   );
 
   const onSelectAll = React.useCallback(
-    (isAllSelected) => {
+    (isAllSelected: boolean) => {
       if (isAllSelected) {
         setGlobalState((prevState) => {
           return {

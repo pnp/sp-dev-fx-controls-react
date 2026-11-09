@@ -51,7 +51,7 @@ export const ReactionPicker: React.FunctionComponent<IReactionProps> = (
   useOnClickOutside(true, pickerRef, onClose);
 
   const loadEmoji = React.useCallback(
-    (selectedGroup) => {
+    (selectedGroup: string) => {
       isSearchingRef.current = false;
       setSearchValue('');
       if (!groupsRef?.current) {

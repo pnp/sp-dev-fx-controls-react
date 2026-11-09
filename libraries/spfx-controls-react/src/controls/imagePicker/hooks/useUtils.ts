@@ -177,7 +177,7 @@ export const useUtils = (): IUseUtils => {
     return result;
   }, []);
 
-  const formatBytes = React.useCallback((bytes, decimals): string => {
+  const formatBytes = React.useCallback((bytes: number, decimals: number): string => {
     if (bytes === 0) {
       return "0 Bytes";
     }
@@ -201,7 +201,7 @@ export const useUtils = (): IUseUtils => {
     return fileNameWithExtension;
   }, []);
 
-  const getFileExtension = React.useCallback((fileName): string => {
+  const getFileExtension = React.useCallback((fileName: string): string => {
     // Split the URL on the dots
     const splitFileName = fileName.toLowerCase().split(".");
 

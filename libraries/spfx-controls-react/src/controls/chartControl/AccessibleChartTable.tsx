@@ -135,7 +135,7 @@ export class AccessibleChartTable extends React.Component<IAccessibleChartTableP
     // otherwise this is pointless
     return data.labels && (data.labels as string[]).map((labelValue: string, rowIndex: number) => {
       const cells: JSX.Element[] = data.datasets.map((dataSet: ChartDataSets, dsIndex: number) => {
-        return <td key={`dataCell-${Guid.newGuid().toString()}`}>{dataSet.data[rowIndex]}</td>;
+        return <td key={`dataCell-${Guid.newGuid().toString()}`}>{dataSet.data[rowIndex] as React.ReactNode}</td>;
       });
       return <tr key={`dataRow-${Guid.newGuid().toString()}`}>
         <th key={`dataCellHEader-${Guid.newGuid().toString()}`}>{escape(labelValue)}</th>
