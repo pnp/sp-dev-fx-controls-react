@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDom from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 import { Log } from '@microsoft/sp-core-library';
 import {
   BaseApplicationCustomizer,
@@ -24,6 +24,7 @@ export interface ITestApplicationCustomizerProperties {
 /** A Custom Action which can be run during execution of a Client Side Application */
 export default class TestApplicationCustomizer extends BaseApplicationCustomizer<ITestApplicationCustomizerProperties> {
   private _topPlaceHolder: PlaceholderContent | undefined;
+  private _root: Root | undefined;
 
   public onInit(): Promise<void> {
     Log.info(LOG_SOURCE, `Initialized TestApplicationCustomizer`);
@@ -52,11 +53,15 @@ export default class TestApplicationCustomizer extends BaseApplicationCustomizer
     );
 
     if (this._topPlaceHolder) {
-      ReactDom.render(element, this._topPlaceHolder.domElement);
+      if (!this._root) {
+        this._root = createRoot(this._topPlaceHolder.domElement);
+      }
+      this._root.render(element);
     }
   }
 
-  private _onDispose(PlaceholderContent: PlaceholderContent): void {
-    ReactDom.unmountComponentAtNode(PlaceholderContent.domElement);
-  }
+  private _onDispose = (): void => {
+    this._root?.unmount();
+    this._root = undefined;
+  };
 }

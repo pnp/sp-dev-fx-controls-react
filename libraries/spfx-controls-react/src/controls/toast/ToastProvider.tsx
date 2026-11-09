@@ -34,7 +34,7 @@ export interface IToastContextValue extends IToastController {
 
 export const ToastContext = React.createContext<IToastContextValue | undefined>(undefined);
 
-const hasContent = (content: React.ReactNode): boolean => content !== undefined && content !== null;
+const hasContent = (content: unknown): boolean => content !== undefined && content !== null;
 
 interface IToastProviderControllerProps extends Omit<IToastProviderProps, 'toasterId'> {
   theme: Theme;

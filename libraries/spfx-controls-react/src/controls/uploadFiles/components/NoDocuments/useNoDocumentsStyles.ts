@@ -9,7 +9,6 @@ import {
   mergeStyleSets,
 } from '@fluentui/react';
 
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { globalState } from '../../jotai/atoms';
 
 export const useNoDocumentsStyles: () => {

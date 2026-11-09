@@ -1,6 +1,7 @@
 ///<reference types="jest" />
 import * as React from "react";
 import { mount } from "enzyme";
+import { act } from "../../utils/act";
 import { ListItemAttachments } from "../../../src/controls/listItemAttachments/ListItemAttachments";
 import { assert}  from "chai";
 
@@ -32,7 +33,9 @@ describe("<ListItemAttachments />",()=>{
             />);
         //@ts-ignore
         listItemAttachments.instance()._spservice = mockSPService;
-        await listItemAttachments.instance().componentDidMount();
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
         listItemAttachments.update();
         
         let attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
@@ -64,7 +67,9 @@ describe("<ListItemAttachments />",()=>{
             />);
         //@ts-ignore
         listItemAttachments.instance()._spservice = mockSPService;
-        await listItemAttachments.instance().componentDidMount();
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
         listItemAttachments.update();
         
         let placeholder = listItemAttachments.getDOMNode().querySelector('[aria-label="ListItemAttachmentslPlaceHolderButtonLabel"]');
@@ -95,7 +100,9 @@ describe("<ListItemAttachments />",()=>{
             />);
         //@ts-ignore
         listItemAttachments.instance()._spservice = mockSPService;
-        await listItemAttachments.instance().componentDidMount();
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
         listItemAttachments.update();
         
         let placeholder = listItemAttachments.getDOMNode().querySelector('[aria-label="ListItemAttachmentslPlaceHolderButtonLabel"]');
@@ -134,16 +141,28 @@ describe("<ListItemAttachments />",()=>{
             />);
         //@ts-ignore
         listItemAttachments.instance()._spservice = mockSPService;
-        await listItemAttachments.instance().componentDidMount();
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
         let placeholder = listItemAttachments.getDOMNode().querySelector('[aria-label="ListItemAttachmentslPlaceHolderButtonLabel"]');
-        listItemAttachments.instance().setState({
-            filesToUpload:[mockFile]
+        await act(async () => {
+            listItemAttachments.instance().setState({
+                filesToUpload:[mockFile]
+            });
         });
         listItemAttachments.update();
         
         assert.isOk(placeholder)
 
-        await listItemAttachmentsRef.current.uploadAttachments(1);
+        // uploadAttachments resolves from a setState callback, which act() only flushes once its own
+        // callback has resolved, so start the upload in one act() scope and await it in another.
+        let uploadPromise: Promise<void>;
+        await act(async () => {
+            uploadPromise = listItemAttachmentsRef.current.uploadAttachments(1);
+        });
+        await act(async () => {
+            await uploadPromise;
+        });
 
         listItemAttachments.update();
         let attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
@@ -173,11 +192,17 @@ describe("<ListItemAttachments />",()=>{
             listId="test-list-id"
             />);
 
-        await listItemAttachments.instance().componentDidMount();
-        //@ts-ignore
-        await listItemAttachments.instance()._onAttachmentUpload(mockFile);
-        //@ts-ignore
-        await listItemAttachments.instance()._onAttachmentUpload(mockFileToDelete);
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
+        await act(async () => {
+            //@ts-ignore
+            await listItemAttachments.instance()._onAttachmentUpload(mockFile);
+        });
+        await act(async () => {
+            //@ts-ignore
+            await listItemAttachments.instance()._onAttachmentUpload(mockFileToDelete);
+        });
 
         listItemAttachments.update();
         
@@ -187,13 +212,17 @@ describe("<ListItemAttachments />",()=>{
         assert.equal(attachmentTitle(mockFileCard),"Test file.txt");
         assert.equal(attachmentTitle(mockFileCardToDelete),"Test file to delete.txt");
 
-        listItemAttachments.instance().setState({
-            file: {
-                FileName: mockFileToDelete.name
-            }
+        await act(async () => {
+            listItemAttachments.instance().setState({
+                file: {
+                    FileName: mockFileToDelete.name
+                }
+            });
         });
-        //@ts-ignore
-        await listItemAttachments.instance().onConfirmedDeleteAttachment();
+        await act(async () => {
+            //@ts-ignore
+            await listItemAttachments.instance().onConfirmedDeleteAttachment();
+        });
         listItemAttachments.update();
         
         attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
@@ -240,7 +269,9 @@ describe("<ListItemAttachments />",()=>{
 
         //@ts-ignore
         listItemAttachments.instance()._spservice = mockSPService;
-        await listItemAttachments.instance().componentDidMount();
+        await act(async () => {
+            await listItemAttachments.instance().componentDidMount();
+        });
         listItemAttachments.update();
         
         let attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');
@@ -249,15 +280,21 @@ describe("<ListItemAttachments />",()=>{
         assert.equal(attachmentTitle(mockFileCard),"Test file.xlsx");
         assert.equal(attachmentTitle(mockFileCardToDelete),"Test file.txt");
         
-        listItemAttachments.instance().setState({
-            file: {
-                FileName: "Test file.txt"
-            }
+        await act(async () => {
+            listItemAttachments.instance().setState({
+                file: {
+                    FileName: "Test file.txt"
+                }
+            });
         });
-        //@ts-ignore
-        await listItemAttachments.instance().onConfirmedDeleteAttachment();
-        //@ts-ignore
-        await listItemAttachments.instance().loadAttachments();
+        await act(async () => {
+            //@ts-ignore
+            await listItemAttachments.instance().onConfirmedDeleteAttachment();
+        });
+        await act(async () => {
+            //@ts-ignore
+            await listItemAttachments.instance().loadAttachments();
+        });
         listItemAttachments.update();
         
         attachmentCards = listItemAttachments.getDOMNode().querySelectorAll('.ms-DocumentCard');

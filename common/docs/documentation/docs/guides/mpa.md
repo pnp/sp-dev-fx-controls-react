@@ -10,7 +10,7 @@ As this project is based on SPFx, it aligns with the following [development comp
 
 | Version | SPFx Version Supported | Node Versions Supported |
 | ------- | ---------------------- | ----------------------- |
-| 4.0.0   | 1.23.2                 | 22                      |
+| 4.0.0   | 1.24.1                 | 22                      |
 | 3.23.0  | 1.21.1                 | 22                      |
 | 3.22.0  | 1.21.1                 | 22                      |
 | 3.21.0  | 1.21.0                 | 22                      |

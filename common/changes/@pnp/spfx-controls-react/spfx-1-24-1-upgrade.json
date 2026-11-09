@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Upgrade to SPFx 1.24.1 and React 18. Peer dependencies now require SPFx >=1.24.1 <2.0.0 and react/react-dom >=18.3.1 <19; the Adaptive Card host renders with createRoot.",
+      "type": "major",
+      "packageName": "@pnp/spfx-controls-react"
+    }
+  ],
+  "packageName": "@pnp/spfx-controls-react",
+  "email": "aleksei.terentiev@gmail.com"
+}

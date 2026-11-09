@@ -1,8 +1,13 @@
+import type * as React from 'react';
 import { BaseComponentContext } from '@microsoft/sp-component-base';
 import { SPPermission } from '@microsoft/sp-page-context';
 import { PermissionLevel } from '.';
 
 export interface ISecurityTrimmedControlProps {
+   /**
+    * Content rendered inside the control.
+    */
+   children?: React.ReactNode;
   /**
    * Context of the web part, application customizer, field customizer, or list view command set.
    */

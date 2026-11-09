@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
 import * as React from 'react';
 
 import { useAtom } from 'jotai';
@@ -15,7 +13,6 @@ import {
 import { DEFAULT_PAGE_SIZE } from '../../constants/constants';
 import { globalState } from '../../jotai/atoms';
 
-/* eslint-disable @typescript-eslint/no-empty-function */
 export const useDocumentListStyles: () => {
   bootomContainerStyles: IStackStyles;
   documentListStyles: IProcessedStyleSet<{

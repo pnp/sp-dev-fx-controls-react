@@ -12,6 +12,10 @@ import {
 } from '@fluentui/react-components';
 
 export interface IRenderDialogProps {
+  /**
+   * Content rendered inside the control.
+   */
+  children?: React.ReactNode;
   isOpen: boolean;
   dialogTitle?: string | React.ReactNode;
   dialogActions?: JSX.Element;

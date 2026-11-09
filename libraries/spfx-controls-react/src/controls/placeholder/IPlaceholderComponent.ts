@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
 
 /**
@@ -5,6 +6,10 @@ import { IPartialTheme, ITheme } from '@fluentui/react/lib/Styling';
  *
  */
 export interface IPlaceholderProps {
+  /**
+   * Content rendered inside the control.
+   */
+  children?: React.ReactNode;
 
   /**
    * Text description or component for the placeholder. Appears bellow the Icon and IconText.

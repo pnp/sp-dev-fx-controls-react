@@ -118,8 +118,8 @@ export class Placeholder extends React.Component<IPlaceholderProps, IPlaceholder
           const styles = getClassNames(themeToApply);
 
           const iconTextClassNames = `${styles.placeholderText} ${(this.state.width && this.state.width <= 380) ? styles.hide : ""}`;
-          const iconTextEl = typeof iconText === 'function' ? iconText(iconTextClassNames) : <span className={iconTextClassNames}>{this.props.iconText}</span>;
-          const descriptionEl = typeof description === 'function' ? description(styles.placeholderDescriptionText) : <span className={styles.placeholderDescriptionText}>{this.props.description}</span>;
+          const iconTextEl = typeof iconText === 'function' ? iconText(iconTextClassNames) : <span className={iconTextClassNames}>{iconText}</span>;
+          const descriptionEl = typeof description === 'function' ? description(styles.placeholderDescriptionText) : <span className={styles.placeholderDescriptionText}>{description}</span>;
 
           return (
             <div className={`${styles.placeholder} ${this.props.contentClassName ? this.props.contentClassName : ''}`} ref={this._linkElm}>

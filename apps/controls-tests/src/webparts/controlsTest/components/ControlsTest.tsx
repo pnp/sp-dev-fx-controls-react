@@ -1177,7 +1177,7 @@ export default class ControlsTest extends React.Component<IControlsTestProps, IC
       iframeUrl = '/_layouts/15/sharepoint.aspx';
     }
     else if (Environment.type === EnvironmentType.ClassicSharePoint) {
-      iframeUrl = this.context.pageContext.web.serverRelativeUrl;
+      iframeUrl = this.props.context.pageContext.web.serverRelativeUrl;
     }
 
     const linkExample = { href: "#" };

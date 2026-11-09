@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { mount } from "enzyme";
+import { act } from "../../utils/act";
 import { DocumentLibraryBrowser } from "../../../src/controls/filePicker/controls/DocumentLibraryBrowser/DocumentLibraryBrowser";
 import { MockFileBrowserService } from "../../mock/services/MockFileBrowserService";
 import { assert } from "chai";
@@ -26,7 +27,11 @@ describe("<DocumentLibraryBrowser />", ()=>{
             />);
         assert.equal(documentLibraryBrowser.getDOMNode().tagName, "DIV");
 
-        await documentLibraryBrowser.instance().componentDidMount();
+        await act(async () => {
+
+            await documentLibraryBrowser.instance().componentDidMount();
+
+        });
         documentLibraryBrowser.update();
 
         assert.equal(documentLibraryBrowser.getDOMNode().tagName, "DIV");
@@ -47,7 +52,9 @@ describe("<DocumentLibraryBrowser />", ()=>{
 
             }}
             />);
-        await documentLibraryBrowser.instance().componentDidMount();
+        await act(async () => {
+            await documentLibraryBrowser.instance().componentDidMount();
+        });
         documentLibraryBrowser.update();
         assert.equal(
             documentLibraryBrowser.getDOMNode().querySelector('.filePickerFolderCardTitle').textContent,
@@ -71,8 +78,10 @@ describe("<DocumentLibraryBrowser />", ()=>{
                 assert.deepEqual(selectedLibrary,browserService.getSiteMediaLibrariesResult[0]);
             }}
             />);
-        //@ts-ignore
-        documentLibraryBrowser.instance()._handleOpenLibrary(browserService.getSiteMediaLibrariesResult[0]);
+        act(() => {
+            //@ts-ignore
+            documentLibraryBrowser.instance()._handleOpenLibrary(browserService.getSiteMediaLibrariesResult[0]);
+        });
         assert.isTrue(asserted);
     });
     test("should render an empty library list", async ()=>{
@@ -82,7 +91,9 @@ describe("<DocumentLibraryBrowser />", ()=>{
             onOpenLibrary={(selectedLibrary: ILibrary)=>{
             }}
             />);
-        await documentLibraryBrowser.instance().componentDidMount();
+        await act(async () => {
+            await documentLibraryBrowser.instance().componentDidMount();
+        });
         documentLibraryBrowser.update();
         assert.equal(documentLibraryBrowser.find('.filePickerFolderCardTile').length, 0);
     });

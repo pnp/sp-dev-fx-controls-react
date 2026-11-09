@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, type Root } from 'react-dom/client';
 
 import { Log } from '@microsoft/sp-core-library';
 import {
@@ -24,6 +24,7 @@ export default class OotbFieldsFieldCustomizer
   extends BaseFieldCustomizer<IOotbFieldsFieldCustomizerProperties> {
 
     private _shouldRenderUndefiend: boolean = false;
+    private _roots: Map<HTMLElement, Root> = new Map<HTMLElement, Root>();
 
   public onInit(): Promise<void> {
     // Add your custom initialization to this method.  The framework will wait
@@ -53,15 +54,22 @@ export default class OotbFieldsFieldCustomizer
           className: 'fake-class'
         })
 
-      ReactDOM.render(ootbFields, event.domElement);
+      let root = this._roots.get(event.domElement);
+      if (!root) {
+        root = createRoot(event.domElement);
+        this._roots.set(event.domElement, root);
+      }
+      root.render(ootbFields);
     }).catch(() => { });
   }
 
   public onDisposeCell(event: IFieldCustomizerCellEventParameters): void {
     // This method should be used to free any resources that were allocated during rendering.
-    // For example, if your onRenderCell() called ReactDOM.render(), then you should
-    // call ReactDOM.unmountComponentAtNode() here.
-    ReactDOM.unmountComponentAtNode(event.domElement);
+    const root = this._roots.get(event.domElement);
+    if (root) {
+      root.unmount();
+      this._roots.delete(event.domElement);
+    }
     super.onDisposeCell(event);
   }
 }

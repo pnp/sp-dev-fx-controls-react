@@ -99,7 +99,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
   const async = useAsync();
 
   const onSearchChange = React.useCallback(
-    (e, newSearchQuery: string) => {
+    (e: React.ChangeEvent<HTMLInputElement> | undefined, newSearchQuery: string) => {
       if (!allSites) {
         return;
       }
@@ -141,7 +141,7 @@ export const SitePicker: React.FunctionComponent<ISitePickerProps> = (
   };
 
   const onSelectionChange = React.useCallback(
-    (e, item: IDropdownOption, index: number) => {
+    (e: React.FormEvent<HTMLDivElement>, item: IDropdownOption, index: number) => {
       let newSelectedSites: ISite[] = [];
       if (multiSelect !== false) {
         newSelectedSites = sites ? [...sites] : [];

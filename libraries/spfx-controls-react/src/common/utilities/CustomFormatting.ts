@@ -154,7 +154,7 @@ export default class CustomFormattingHelper {
             }
             
             // The resulting HTML element is returned to the callee using React.createElement
-            const el = React.createElement(node.elmType, { style: styleProperties, ...attributes }, textContent, ...children);
+            const el = React.createElement(node.elmType, { style: styleProperties, ...attributes }, textContent as React.ReactNode, ...(children as React.ReactNode[]));
             return el;
         } catch (error) {
             console.error('Unable to render custom formatted content', error);

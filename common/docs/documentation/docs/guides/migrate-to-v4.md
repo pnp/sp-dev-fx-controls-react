@@ -1,6 +1,6 @@
 # Migrating to v4: PnPjs removal
 
-This guide describes the PnPjs-related changes on the v4 development branch. It does not imply that v4 has been released or cover every change from earlier controls versions. The branch requires SPFx 1.23.2 or later (below 2.0.0), React 17 and the supported Node 22 development toolchain.
+This guide describes the PnPjs-related changes on the v4 development branch. It does not imply that v4 has been released or cover every change from earlier controls versions. The branch requires SPFx 1.24.1 or later (below 2.0.0), React 18 and the supported Node 22 development toolchain.
 
 ## Dependencies
 
