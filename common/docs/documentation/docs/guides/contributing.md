@@ -6,11 +6,9 @@ Sharing is caring!
 
 ## Set up your development environment
 
-For v4 development, follow the [contributor setup guide](./rush.md). It explains
+Follow the [contributor setup guide](./rush.md). It explains
 the monorepo layout and provides commands to install dependencies, build, test,
-and run the test application with Rush and Heft. Use `v4-dev` as the base and
-pull request target for v4 work; the `dev` examples below apply to other
-development lines.
+and run the test application with Rush and Heft.
 
 ## You have an idea for a new component
 

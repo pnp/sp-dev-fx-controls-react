@@ -2,7 +2,7 @@
 
 The shortest way to prepare your local copy of the project for development and testing.
 
-For the v4 branch, start with [Contributor setup: build, test, and run with Rush](./rush.md)
+Start with [Contributor setup: build, test, and run with Rush](./rush.md)
 for the complete first-run workflow, certificate and tenant setup, modern-page
 debugging, and troubleshooting.
 
@@ -88,7 +88,7 @@ Run this command inside `apps/controls-tests`. Both argument and value have to b
 
 #### SPFx web part
 
-The web part is called _Controls Test_ and is available for both SharePoint Online and Teams. For v4 SharePoint testing, follow the [modern-page debugging steps](./rush.md#run-the-test-application-in-sharepoint) to load local manifests and add the web part to your development page.
+The web part is called _Controls Test_ and is available for both SharePoint Online and Teams. For SharePoint testing, follow the [modern-page debugging steps](./rush.md#run-the-test-application-in-sharepoint) to load local manifests and add the web part to your development page.
 
 To test it on Teams, once the project deployed on the tenant accordingly, add the web part as a Tab (from a team for example).
 

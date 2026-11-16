@@ -1,7 +1,7 @@
 # Contributor setup: build, test, and run with Rush
 
-This guide covers the **v4 development branch (`v4-dev`)**. Older branches can use
-a different toolchain. Both projects here use SPFx 1.24.1 and Heft, not Gulp.
+This guide covers the repository's contributor workflow. Both projects use
+SPFx 1.24.1 and Heft, not Gulp.
 
 ## How the monorepo works
 
@@ -47,7 +47,7 @@ Fork the repository on GitHub, then clone your fork. Replace `YOUR-GITHUB-USER`
 with your GitHub username:
 
 ```sh
-git clone --branch v4-dev https://github.com/YOUR-GITHUB-USER/sp-dev-fx-controls-react.git
+git clone --branch dev https://github.com/YOUR-GITHUB-USER/sp-dev-fx-controls-react.git
 cd sp-dev-fx-controls-react
 git switch -c my-contribution
 node --version
@@ -249,18 +249,19 @@ For code changes, run the same workspace build used by CI:
 node common/scripts/install-run-rush.js rebuild
 ```
 
-For publishable library changes, generate a Rush change file against the v4
-branch (use `upstream/v4-dev` instead if that remote points to the main repository):
+For publishable library changes, generate a Rush change file against your pull
+request's target branch. This example targets `dev`; replace `origin/dev` if
+your pull request targets a different branch, or use `upstream/dev` if that remote
+points to the main repository:
 
 ```sh
-node common/scripts/install-run-rush.js change --target-branch origin/v4-dev
+node common/scripts/install-run-rush.js change --target-branch origin/dev
 ```
 
 Describe the user-facing change and commit the generated file under
-`common/changes`. CI verifies change files against `origin/v4-dev`. Submit v4
-work to **v4-dev**; older contribution instructions mentioning `dev` apply to
-other development lines. Include relevant automated and browser test results
-in your pull request.
+`common/changes`. CI verifies change files against the target branch. Follow the
+[pull request guidance](./submitting-pr.md) and include relevant automated and
+browser test results in your pull request.
 
 ## Troubleshooting
 
@@ -302,7 +303,7 @@ linking so local development dependencies cannot hide missing public dependencie
 - **Do not install dependencies with npm, pnpm, or yarn directly**: Use Rush to install dependencies and build the workspace. The checked-in lockfile is `common/config/rush/pnpm-lock.yaml`; run `rush update` after changing dependency manifests.
 - **Dependencies in `spfx-controls-react`**: The `spfx-controls-react` package should not contain direct dependencies on SPFx. Instead, use `devDependencies` and `peerDependencies`.
 - **Build warnings**: Rush retains Heft's nonfatal lint warnings in successful builds; compiler, test, and packaging errors still fail the build. `npm run serve` and `npm run start` both use Heft's native development server, replacing the Gulp-dependent fast-serve helper.
-- **Consumer compatibility**: The v4 library requires SPFx 1.24.1 or later (below 2.0.0) and React 18.
+- **Consumer compatibility**: The library requires SPFx 1.24.1 or later (below 2.0.0) and React 18.
 - **Registry configuration**: Rush respects the registry configured in your user-level `.npmrc`, including corporate mirrors. Standard registry tarball URLs are omitted from the shared lockfile while integrity hashes are retained, so the lockfile does not force other contributors to use your mirror.
 
 For more detailed information, refer to the [Rushstack documentation](https://rushstack.io/).
