@@ -131,7 +131,7 @@ async function addChild(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "OData-Version": ""
+        "OData-Version": "4.0"
       },
       body: JSON.stringify({
         labels: [{ name: "New term", languageTag: "en-US", isDefault: true }]
@@ -162,6 +162,12 @@ This control intentionally retains SharePoint `/_api/v2.1/termstore`, including
 `getLegacyChildren`, `searchTerm` and parent expansion. These undocumented APIs
 provide metadata/behavior not fully represented by the documented Graph term
 resource. They have no public stability guarantee.
+
+Term-store requests use `OData-Version: 4.0` and plain JSON rather than the
+classic SharePoint REST `odata=verbose` content type. Do not send an empty
+`OData-Version` header: SharePoint can return HTTP 500 with
+`Value cannot be null or empty. Parameter name: version`, even when opening
+the same URL directly in the browser succeeds.
 
 The migration does not introduce new Graph consent for built-in reads.
 SharePoint permissions still apply. See [request behavior and support](../guides/migrate-to-v4.md#request-behavior-and-support)

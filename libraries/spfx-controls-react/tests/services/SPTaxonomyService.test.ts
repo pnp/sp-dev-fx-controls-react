@@ -9,6 +9,27 @@ describe('SPTaxonomyService REST compatibility', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
+  test.each([webUrl, 'https://example.sharepoint.com'])('uses OData v4 JSON headers for term-store metadata at %s', async targetWeb => {
+    const { context, fetch } = mockContext();
+    fetch.mockResolvedValue(response({}));
+    const service = new SPTaxonomyService(context, targetWeb);
+    await Promise.all([service.getTermStoreInfo(), service.getTermSetInfo(Guid.parse(listId))]);
+    expect(fetch.mock.calls.map(call => call[0])).toEqual([
+      `${targetWeb}/_api/v2.1/termstore`,
+      `${targetWeb}/_api/v2.1/termstore/sets/${listId}`
+    ]);
+    fetch.mock.calls.forEach(call => {
+      expect(call[2]).toMatchObject({
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'OData-Version': '4.0',
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+      });
+    });
+  });
+
   test('keeps legacy children paging and opaque tokens, including unbound callback use', async () => {
     const { context, fetch } = mockContext();
     const token = 'a+b/%=';
