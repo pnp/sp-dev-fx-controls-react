@@ -33,6 +33,25 @@ describe('SPRestClient', () => {
     expect(await client.get('/_api/items')).toEqual([1]);
   });
 
+  test.each([
+    { name: 'classic JSON', body: { Title: 'test' }, options: {}, contentType: 'application/json;odata=verbose;charset=utf-8' },
+    { name: 'binary uploads', body: new ArrayBuffer(1), options: {}, contentType: 'application/octet-stream' },
+    { name: 'explicit overrides', body: 'test', options: { headers: { 'Content-Type': 'text/plain' } }, contentType: 'text/plain' }
+  ])('preserves OData v3 and the content type for $name', async ({ body, options, contentType }) => {
+    const { http, fetch } = mockContext();
+    fetch.mockResolvedValueOnce(digestResponse()).mockResolvedValue(response({}, 204));
+    await new SPRestClient(http, webUrl).post('/_api/web/lists', body, options);
+    expect(fetch.mock.calls[0][2].headers).toMatchObject({
+      'OData-Version': '3.0',
+      'Content-Type': 'application/json;odata=verbose;charset=utf-8'
+    });
+    expect(fetch.mock.calls[1][2].headers).toMatchObject({
+      'OData-Version': '3.0',
+      'Content-Type': contentType,
+      'X-RequestDigest': 'test-digest'
+    });
+  });
+
   test('preserves Error subclass identity in the published ES5 output', () => {
     const emitted: typeof import('../../src/services/SPRestClient') = require('../../lib-commonjs/services/SPRestClient');
     const error = new emitted.SPRestError(429, 'Throttled', 1);

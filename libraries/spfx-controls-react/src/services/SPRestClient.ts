@@ -317,8 +317,9 @@ export class SPRestClient {
       this.assertActive();
       const headers: Record<string, string> = {
         Accept: 'application/json',
-        'OData-Version': taxonomy ? '' : '3.0',
-        'Content-Type': binary ? 'application/octet-stream' : 'application/json;odata=verbose;charset=utf-8',
+        'OData-Version': taxonomy ? '4.0' : '3.0',
+        'Content-Type': binary ? 'application/octet-stream'
+          : taxonomy ? 'application/json;charset=utf-8' : 'application/json;odata=verbose;charset=utf-8',
         ...options.headers
       };
       if (method !== 'GET' && !isContextInfo) headers['X-RequestDigest'] = (await this.digest()).value;
