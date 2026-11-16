@@ -2,6 +2,10 @@
 
 The shortest way to prepare your local copy of the project for development and testing.
 
+For the v4 branch, start with [Contributor setup: build, test, and run with Rush](./rush.md)
+for the complete first-run workflow, certificate and tenant setup, modern-page
+debugging, and troubleshooting.
+
 ## Install prerequisites
 
 Before you start contributing to this project, you will need Node.js. You can use [Node Version Manager](https://github.com/nvm-sh/nvm) or [Node Version Switcher](https://github.com/jasongin/nvs) to switch between different versions of Node.js.
@@ -84,7 +88,7 @@ Run this command inside `apps/controls-tests`. Both argument and value have to b
 
 #### SPFx web part
 
-The web part is called _ControlsTest_ and is available for both SharePoint Online and Teams. To test it on SharePoint, go to the workbench page [https://[SHAREPOINT_SITE].sharepoint.com/_layouts/15/workbench.aspx](https://SHAREPOINT_SITE.sharepoint.com/_layouts/15/workbench.aspx) and add the web part.
+The web part is called _Controls Test_ and is available for both SharePoint Online and Teams. For v4 SharePoint testing, follow the [modern-page debugging steps](./rush.md#run-the-test-application-in-sharepoint) to load local manifests and add the web part to your development page.
 
 To test it on Teams, once the project deployed on the tenant accordingly, add the web part as a Tab (from a team for example).
 

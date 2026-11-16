@@ -17,6 +17,11 @@ Please use following logic on submitting your questions or issues to right locat
 
 ## Contributing
 
+New to Rush or monorepos? Start with the
+[contributor setup guide](common/docs/documentation/docs/guides/rush.md) for
+step-by-step installation, builds, tests, local SharePoint debugging, dependency
+management, and troubleshooting.
+
 The v4 branch uses Rush to manage `libraries/spfx-controls-react` and
 `apps/controls-tests`. Use Node.js 22 (22.14.0 or later), then run
 `node common/scripts/install-run-rush.js install` and

@@ -7,6 +7,6 @@ Following is an overview of guides for this project. If you're considering contr
 - [Submitting a PR](./submitting-pr.md) - how to submit a PR
 - [Migrating from V1](./migrate-from-v1.md) - how to migrate from v1
 - [v4 PnPjs migration](./migrate-to-v4.md) - dependency, callback and type changes on the v4 development branch
-- [Monorepo Management with Rushstack](./rush.md) - how to manage the monorepo with Rushstack
+- [Contributor setup: build, test, and run with Rush](./rush.md) - step-by-step monorepo setup, local development, dependency management, and troubleshooting
 
 ![](https://telemetry.sharepointpnp.com/sp-dev-fx-controls-react/wiki/controls/guides)

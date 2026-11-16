@@ -47,8 +47,8 @@ repository root; the controls library is linked through `workspace:*`.
 - Clone this repository
 - From the repository root, run `node common/scripts/install-run-rush.js install`.
 - Run `node common/scripts/install-run-rush.js rebuild` to build and package the library and test app in dependency order.
-- Change to `apps/controls-tests` and run `npm run start` to serve with Heft, or `npm run serve` for fast-serve.
-- Configure your SharePoint tenant in `config/serve.json` and load the hosted workbench.
+- Follow the [local development instructions](../../common/docs/documentation/docs/guides/rush.md#run-the-test-application-in-sharepoint) to trust the development certificate and configure your SharePoint development page.
+- Change to `apps/controls-tests` and run `npm run start` (or its alias `npm run serve`) to serve with Heft.
 
 ## Features
 

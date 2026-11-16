@@ -2,6 +2,11 @@
 
 We appreciate your initiative and would love to integrate your work with the rest of the project! Here is how you can help us do it as quickly as possible.
 
+For **v4 work**, use `v4-dev` wherever the Git examples below say `dev`, and
+target your pull request at `v4-dev`. Follow the
+[contributor setup guide](./rush.md#before-submitting) for the build and Rush
+change-file commands.
+
 - Check, that your feature branch is up-to-date. If it's not, there is a risk of merge conflicts or other issues that will complicate merging your changes into the main repository. Refer to these resources for more information on syncing your repo:
   - [GitHub Help: Syncing a Fork](https://help.github.com/articles/syncing-a-fork/)
   - [AC: Keep Your Forked Git Repo Updated with Changes from the Original Upstream Repo](http://www.andrewconnell.com/blog/keep-your-forked-git-repo-updated-with-changes-from-the-original-upstream-repo)
@@ -24,7 +29,7 @@ git checkout issue-xyz
 git rebase dev
 ```
 
-- Submit PR to the **dev** branch of the main repo. PRs submitted to other branches will be declined
+- Submit v4 PRs to **v4-dev** in the main repository; use **dev** for the older development line.
 - Let us know what's in the PR: is it a new command, bug fix or a minor update in the docs? The clearer the information you provide, the quicker your PR can be verified and merged
 - Ideally 1 PR = 1 commit - this makes it easier to keep the log clear for everyone and track what's changed. If you're new to working with git, we'll squash your commits for you when merging your changes into the main repo
 - Don't worry about changing the version or adding yourself to the list of contributors in `package.json`. We'll do that for you when merging your changes.
