@@ -5,6 +5,7 @@ nav:
   - Guides:
     - Overview: 'guides/index.md'
     - Contributing: 'guides/contributing.md'
+    - 'Build, test, and run (Rush)': 'guides/rush.md'
     - 'Minimal Path to Awesome': 'guides/mpa.md'
     - 'Submitting a PR': 'guides/submitting-pr.md'
     - 'Migrate v1 to v2': 'guides/migrate-from-v1.md'

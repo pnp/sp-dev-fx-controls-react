@@ -4,6 +4,12 @@ We appreciate that you're interested in helping with moving the project forward.
 
 Sharing is caring!
 
+## Set up your development environment
+
+Follow the [contributor setup guide](./rush.md). It explains
+the monorepo layout and provides commands to install dependencies, build, test,
+and run the test application with Rush and Heft.
+
 ## You have an idea for a new component
 
 Awesome! Good ideas are invaluable for every product. Before you start hacking away, please check if there is no similar idea already listed in the [issue list](https://github.com/pnp/sp-dev-fx-controls-react/issues). If not, please create a new issue describing your idea. Once we agree on the feature scope and architecture, the feature will be ready for building. Don't hesitate to mention in the issue if you'd like to build the feature yourself.

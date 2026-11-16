@@ -17,14 +17,19 @@ Please use following logic on submitting your questions or issues to right locat
 
 ## Contributing
 
-The v4 branch uses Rush to manage `libraries/spfx-controls-react` and
+New to Rush or monorepos? Start with the
+[contributor setup guide](common/docs/documentation/docs/guides/rush.md) for
+step-by-step installation, builds, tests, local SharePoint debugging, dependency
+management, and troubleshooting.
+
+The repository uses Rush to manage `libraries/spfx-controls-react` and
 `apps/controls-tests`. Use Node.js 22 (22.14.0 or later), then run
 `node common/scripts/install-run-rush.js install` and
 `node common/scripts/install-run-rush.js rebuild` from the repository root.
 Both projects use Heft and SPFx 1.24.1. The library requires SPFx 1.24.1 or later
 and React 18 in consuming projects.
 
-The v4 development branch no longer requires PnPjs. DynamicForm and both taxonomy
+The controls library no longer requires PnPjs. DynamicForm and both taxonomy
 pickers remain available; see the [migration guide](common/docs/documentation/docs/guides/migrate-to-v4.md)
 for the SDK-free submission reference, replacement type imports and endpoint caveats.
 PnP telemetry is separate and unchanged.
