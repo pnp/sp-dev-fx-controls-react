@@ -389,7 +389,9 @@ export default class SPTermStorePickerService {
           anchorId: this.props.anchorId ? this.props.anchorId : EmptyGuid,
           isSpanTermStores: false,
           isSpanTermSets: false,
-          isIncludeUnavailable: this.props.hideTagsNotAvailableForTagging !== true,
+          // Terms that are not available for tagging can never be selected (they are disabled in the tree),
+          // so they must not be offered as suggestions either, regardless of hideTagsNotAvailableForTagging.
+          isIncludeUnavailable: false,
           isIncludeDeprecated: this.props.hideDeprecatedTags !== true,
           isAddTerms: false,
           isIncludePathData: false,
