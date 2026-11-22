@@ -76,18 +76,26 @@ export default class SPPeopleSearchService {
       // Remove duplicate results in case user is present in multiple groups
       const logins = userResults.map(u => u.loginName);
       const filteredUserResults = userResults.filter(({ loginName }, index) => !logins.includes(loginName, index + 1));
-      return (filteredUserResults && filteredUserResults.length > 0) ? filteredUserResults[0] : null;
+      return this.findExactMatch(filteredUserResults, email);
     } else {
       const userResults = await this.searchTenant(siteUrl, email, maximumSuggestions, principalTypes, ensureUser, allowUnvalidated, groupId);
-      if (userResults && userResults.length > 0) {
-        const exactMatch = userResults.filter(u => u.loginName?.toLowerCase() === email.toLowerCase() || u.secondaryText?.toLowerCase() === email.toLowerCase() || u.text?.toLowerCase() === email.toLowerCase());
-        if (exactMatch && exactMatch.length > 0) {
-          return exactMatch[0];
-        }
-      }
-      return null;
-      //return (userResults && userResults.length > 0) ? userResults[0] : null;
+      return this.findExactMatch(userResults, email);
     }
+  }
+
+  /**
+   * Returns the first result whose login name, email or display name exactly matches (case-insensitive) the specified value.
+   * The people picker search returns partial matches as well (e.g. user "Adele Vance" for group "Van"),
+   * so the first result cannot be assumed to be the requested principal.
+   */
+  private findExactMatch(userResults: IPeoplePickerUserItem[], value: string): IPeoplePickerUserItem | null {
+    if (!userResults || userResults.length === 0 || !value) {
+      return null;
+    }
+
+    const lowerValue = value.toLowerCase();
+    const exactMatch = userResults.find(u => u && (u.loginName?.toLowerCase() === lowerValue || u.secondaryText?.toLowerCase() === lowerValue || u.text?.toLowerCase() === lowerValue));
+    return exactMatch || null;
   }
 
   /**
