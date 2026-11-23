@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './RteColorPicker.module.scss';
 import { Label } from '@fluentui/react/lib/Label';
 import { ISwatchColorPickerGroupState, ISwatchColorPickerGroupProps, ISwatchColor } from './SwatchColorPickerGroup.types';
-import { FocusZone, FocusZoneDirection, FocusZoneTabbableElements } from '@fluentui/react/lib/FocusZone';
+import { FocusZone, FocusZoneDirection } from '@fluentui/react/lib/FocusZone';
 import { ActionButton } from '@fluentui/react/lib/Button';
 import { chunk } from '@microsoft/sp-lodash-subset';
 
@@ -15,7 +15,6 @@ export default class SwatchColorPickerGroup extends React.Component<ISwatchColor
                className={styles.pickerLabel}>{this.props.groupText}</Label>
         <div key={this.props.groupText}>
           <FocusZone direction={FocusZoneDirection.horizontal}
-                     handleTabKey={FocusZoneTabbableElements.all}
                      isCircularNavigation={true}
                      className={styles.focusedContainer}>
             <table className={styles.tableRoot}>
