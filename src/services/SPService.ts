@@ -252,8 +252,8 @@ export default class SPService implements ISPService {
     }
     else if (SPHelper.isTextFieldType(field.TypeAsString)) {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
-        `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
-        : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
+        `${filterText ? `substringof('${encodeURIComponent(filterText.replace(/'/g, "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
+        : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace(/'/g, "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/items?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&$filter=${filterStr}&$orderby=${orderBy}${top ? `&$top=${top}` : ''}`;
     }
     else { // we need to get FieldValuesAsText and cache them
@@ -314,7 +314,7 @@ export default class SPService implements ISPService {
     filterList?: string
   ): Promise<any[]> { // eslint-disable-line @typescript-eslint/no-explicit-any
     let _filter: string = `$filter=startswith(${internalColumnName},'${encodeURIComponent(
-      filterText.replace("'", "''")
+      filterText.replace(/'/g, "''")
     )}') `;
     let costumfilter: string = filterList
       ? `and ${filterList}`
