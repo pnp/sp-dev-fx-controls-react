@@ -250,7 +250,7 @@ export default class SPService implements ISPService {
       apiUrl = `${webAbsoluteUrl}/_api/web/lists('${listId}')/GetItems(query=@v1)?$select=${keyInternalColumnName || 'Id'},${internalColumnName}&@v1=${JSON.stringify({ ViewXml: camlQuery })}`;
       isPost = true;
     }
-    else if (SPHelper.isTextFieldType(field.TypeAsString)) {
+    else if (field && SPHelper.isTextFieldType(field.TypeAsString)) {
       const filterStr = substringSearch ? // JJ - 20200613 - find by substring as an option
         `${filterText ? `substringof('${encodeURIComponent(filterText.replace("'", "''"))}',${internalColumnName})` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`
         : `${filterText ? `startswith(${internalColumnName},'${encodeURIComponent(filterText.replace("'", "''"))}')` : ''}${filterString ? (filterText ? ' and ' : '') + filterString : ''}`; //string = filterList  ? `and ${filterList}` : '';
@@ -403,7 +403,7 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/getByFileName(@fileName)/RecycleObject?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-      
+
       // Fetch the updated item to get the new ETag
       const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
       const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
@@ -446,7 +446,7 @@ export default class SPService implements ISPService {
       const webAbsoluteUrl = !webUrl ? this._webAbsoluteUrl : webUrl;
       const apiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)/AttachmentFiles/add(FileName=@fileName)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}&@fileName='${encodeURIComponent(fileName.replace(/'/g, "''"))}'`;
       await this._context.spHttpClient.post(apiUrl, SPHttpClient.configurations.v1, spOpts);
-      
+
       // Fetch the updated item to get the new ETag
       const itemApiUrl = `${webAbsoluteUrl}/_api/web/lists(@listId)/items(@itemId)?@listId=guid'${encodeURIComponent(listId)}'&@itemId=${encodeURIComponent(String(itemId))}`;
       const itemData = await this._context.spHttpClient.get(itemApiUrl, SPHttpClient.configurations.v1);
@@ -584,7 +584,7 @@ export default class SPService implements ISPService {
             let value = element[lookupFieldName || 'Title'];
             if (isValidISODateString(value)) {
                 value = new Date(value).toLocaleDateString();
-            }        
+            }
             lookups.push({ key: element.ID, name: value });
           });
           return lookups;
@@ -746,8 +746,8 @@ export default class SPService implements ISPService {
     return result;
   }
 
-  /** 
-   * Get form rendering information for a SharePoint list. 
+  /**
+   * Get form rendering information for a SharePoint list.
    */
   async getListFormRenderInfo(listId: string, webUrl?: string): Promise<IRenderListDataAsStreamClientFormResult> {
     try {
